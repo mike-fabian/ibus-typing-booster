@@ -1,0 +1,19 @@
+prefix=/usr
+exec_prefix=/usr
+datarootdir=${prefix}/share
+libdir=/usr/share
+datadir=/usr/share
+
+extradatadir=/usr/share/ibus-typing-booster/data
+tabledir=/usr/share/ibus-typing-booster/ibus-hunspell-tables
+icondir=/usr/share/ibus-typing-booster/icons
+enginedir=/usr/share/ibus/engine
+
+ibus_table_version=1.3.1
+
+Name: IBus-European-Table
+Description: Table Based Input Method Framework for Intelligent Input Bus for Linux / Unix OS
+Version: 0.0.1
+Requires:
+Libs:
+Cflags:

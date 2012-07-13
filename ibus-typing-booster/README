@@ -1,0 +1,40 @@
+== Introduction ==
+IBus-Hunspell-Table is the IM Engine framework for table-based input methods, and is
+forked from ibus-table whose Project Owner & Developer is Yu Yuwei <acevery@gmail.com>,
+with contributions from Caius "kaio" Chance <cchance@redhat.com>.
+The aim of IBus-Hunspell-Table is to provide a table based boosted environment for using hunspell dictionaries
+https://fedorahosted.org/ibus-hunspell-table
+Definitly, it is far from perfect, so if you have any wish or any
+suggestion, please send me an email <anish.developer@gmail.com>, I would be very please to hear
+from you :)
+
+== Key Bindings ==
+    Notice: Ctrl is "Control Key", Shift_L is the left "Shift Key",
+            Shift_R is the right "Shift Key", Alt is the "Alt Key",
+            Arrow_Left is the "Arrow Key" point to left, Arrow_Right is
+            the "Arrow Key" point to right, similarly as  Arrow_Up and
+            Arrow_Down.
+            Cursor is the one in preedit string.
+            [Num1~Num9] means one key in Num1, Num2, Num3, ... ,
+                Num9
+
+Space               commit inputted string.
+
+
+Arrow_Left          move cursor one character left in preedit string.
+Arrow_Right         move cursor one character right in preedit string.
+Backspace           remove the last input key or last character in
+                        preeidt string.
+Delete              remove one character after the cursor in preedit
+                        string.
+
+Arrow_Down          mext candidate.
+Arrow_Up            previous candidate.
+Esc                 reset the input method.
+Num1 ~ Num9         select the correspondent candidate and commit
+                        inputted string
+
+Page_Up/Page_Down   page up/down the lookup table of candidates.
+-/+                 when not been used as valid input keys, the same as
+                        Page_Up and Page_Down.
+

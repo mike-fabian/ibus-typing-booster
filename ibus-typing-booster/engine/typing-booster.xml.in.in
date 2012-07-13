@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- filename: hunspell-table.xml -->
+<component>
+    <name>org.freedesktop.IBus.IbusTypingBooster</name>
+    <description>Table Component</description>
+    <exec>${libexecdir}/ibus-engine-typing-booster --ibus</exec>
+    <version>0.0.1</version>
+    <author>Anish Patil &lt;anish.developer@gmail.com&gt;</author>
+    <license>GPL</license>
+    <homepage>http://code.google.com/p/ibus</homepage>
+    <textdomain>ibus-typing-booster</textdomain>
+    <observed-paths>
+        <path>${pkgdatadir}/hunspell-tables/</path>
+    </observed-paths>
+    <engines exec='${libexecdir}/ibus-engine-typing-booster --xml'/>
+</component>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   id="svg3219"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   version="1.0"
+   sodipodi:docname="ibus-indic-table.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs3221">
+    <linearGradient
+       id="linearGradient3184">
+      <stop
+         style="stop-color:#3da0ff;stop-opacity:1;"
+         offset="0"
+         id="stop3186" />
+      <stop
+         style="stop-color:#3da0ff;stop-opacity:0;"
+         offset="1"
+         id="stop3188" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3184"
+       id="linearGradient3190"
+       x1="9.3928556"
+       y1="31.814728"
+       x2="56.722221"
+       y2="-10.863844"
+       gradientUnits="userSpaceOnUse" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective3227" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3184"
+       id="linearGradient2392"
+       gradientUnits="userSpaceOnUse"
+       x1="9.3928556"
+       y1="31.814728"
+       x2="56.722221"
+       y2="-10.863844"
+       gradientTransform="matrix(0.9763063,0,0,0.9763063,-0.1768787,0.1691779)" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.959798"
+     inkscape:cx="-6.8549647"
+     inkscape:cy="-9.3680279"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="684"
+     inkscape:window-height="737"
+     inkscape:window-x="-4"
+     inkscape:window-y="0" />
+  <metadata
+     id="metadata3224">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:48.69908905px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#0a3965;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:'方正宋黑体';-inkscape-font-specification:'方正宋黑体'"
+       x="2.082741"
+       y="40.704903"
+       id="text3192"
+       transform="scale(1.0067023,0.9933423)"><tspan
+         sodipodi:role="line"
+         id="tspan3194"
+         x="2.082741"
+         y="40.704903"
+         style="fill:#0a3965;fill-opacity:1">码</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:46.97867966px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:'方正宋黑体';-inkscape-font-specification:'方正宋黑体'"
+       x="0.99210697"
+       y="37.395821"
+       id="text3199"
+       transform="scale(1.0034043,0.9966072)"><tspan
+         sodipodi:role="line"
+         id="tspan3201"
+         x="0.99210697"
+         y="37.395821"
+         style="fill:#ffffff;fill-opacity:1">码</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:46.97867966px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:url(#linearGradient2392);fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:'方正宋黑体';-inkscape-font-specification:'方正宋黑体'"
+       x="0.99210697"
+       y="37.395821"
+       id="text2410"
+       transform="scale(1.0034043,0.9966072)"><tspan
+         sodipodi:role="line"
+         id="tspan2412"
+         x="0.99210697"
+         y="37.395821"
+         style="fill:url(#linearGradient2392);fill-opacity:1">码</tspan></text>
+  </g>
+</svg>

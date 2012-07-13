@@ -1,0 +1,5 @@
+./engine/hunspell_table.py
+./engine/main.py
+./engine/tabsqlitedb.py
+./engine/factory.py
+./engine/tabdict.py
