@@ -68,6 +68,8 @@ AC_CONFIG_FILES([po/Makefile.in
     engine/Makefile
     engine/typing-booster.xml.in
     engine/ibus-engine-typing-booster
+    setup/Makefile
+    setup/ibus-setup-typing-booster
     data/Makefile
     icons/Makefile
     icons/additional/Makefile
