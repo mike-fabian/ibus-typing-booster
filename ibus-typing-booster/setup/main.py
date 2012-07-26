@@ -31,7 +31,7 @@ from pkginstall import InstallPkg
 
 class SetupUI:
     def __init__(self):
-        filename = "setup.glade"
+        filename = path.join(path.dirname(__file__),"setup.glade")
         self.builder = Gtk.Builder()
         self.builder.add_from_file(filename)
         event_handler = EventHander()
