@@ -223,6 +223,9 @@ def main():
             _symbol = SubElement(_engine,'symbol')
             _symbol.text = _sq_db.get_ime_property('symbol')
 
+            _setup = SubElement(_engine,'setup')
+            _setup.text = _sq_db.get_ime_property('setup')
+
         # now format the xmlout pretty
         indent (egs)
         egsout = tostring (egs, encoding='utf8')
