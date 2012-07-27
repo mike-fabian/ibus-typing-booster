@@ -28,6 +28,7 @@ from gi.repository import Gdk
 from gi.repository import Pango
 from pref import DictPref
 from pkginstall import InstallPkg
+from os import path
 
 class SetupUI:
     def __init__(self):
