@@ -38,6 +38,7 @@ class SetupUI:
         event_handler = EventHander()
         self.builder.connect_signals(event_handler)
         maindialog = self.builder.get_object("dialog1")
+        maindialog.set_title('Preferences for ibus-typing-booster')
         maindialog.show()
         choose_lang = self.builder.get_object("choose_lang")
         choose_lang.set_active(0)
