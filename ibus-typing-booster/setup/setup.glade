@@ -71,6 +71,7 @@
                             <property name="can_focus">False</property>
                             <property name="n_rows">2</property>
                             <property name="n_columns">2</property>
+                            <property name="column_spacing">40</property>
                             <property name="row_spacing">20</property>
                             <property name="homogeneous">True</property>
                             <child>
@@ -79,23 +80,6 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Choose Language</property>
                               </object>
-                            </child>
-                            <child>
-                              <object class="GtkComboBox" id="choose_lang">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="model">liststore1</property>
-                                <property name="has_entry">True</property>
-                                <property name="entry_text_column">0</property>
-                              </object>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
-                                <property name="x_options"></property>
-                              </packing>
-                            </child>
-                            <child>
-                              <placeholder/>
                             </child>
                             <child>
                               <object class="GtkHButtonBox" id="hbuttonbox1">
@@ -126,6 +110,27 @@
                                 <property name="top_attach">1</property>
                                 <property name="bottom_attach">2</property>
                               </packing>
+                            </child>
+                            <child>
+                              <object class="GtkComboBox" id="choose_lang">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="model">liststore1</property>
+                                <property name="entry_text_column">0</property>
+                                <child>
+                                  <object class="GtkCellRendererText" id="cellrenderertext1"/>
+                                  <attributes>
+                                    <attribute name="text">0</attribute>
+                                  </attributes>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <placeholder/>
                             </child>
                           </object>
                         </child>
