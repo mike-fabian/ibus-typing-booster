@@ -526,7 +526,10 @@ class editor(object):
                 self._lookup_table.show_cursor (False)
                 if self._tabkey_list:
 #                    self._candidates[0] = self.db.select_words( self._tabkey_list, self._onechar )
-                    self._candidates[0] = self.db.select_words( self._tabkey_list, False )
+                    try:
+                        self._candidates[0] = self.db.select_words( self._tabkey_list, False )
+                    except:
+                        print "Exception in selecting the word from db"
                     self._chars[2] = self._chars[0][:]
                 else:
                     self._candidates[0] =[]
