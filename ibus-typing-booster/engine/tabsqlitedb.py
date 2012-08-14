@@ -164,7 +164,7 @@ class tabsqlitedb:
         # user database:
         if user_db != None:
             home_path = os.getenv ("HOME")
-            tables_path = path.join (home_path, ".ibus",  "hunspell-tables")
+            tables_path = path.join (home_path, ".local/share/.ibus",  "hunspell-tables")
             user_db = path.join (tables_path, user_db)
             if not path.isdir (tables_path):
                 os.makedirs (tables_path)
