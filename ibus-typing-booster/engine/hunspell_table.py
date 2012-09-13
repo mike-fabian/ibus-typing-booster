@@ -84,6 +84,8 @@ N_ = lambda a : a
 
 import dbus
 
+tab_enable = False
+
 class KeyEvent:
     def __init__(self, keyval, is_press, state):
         self.code = keyval
@@ -96,6 +98,7 @@ class KeyEvent:
 
 class editor(object):
     '''Hold user inputs chars and preedit string'''
+
     def __init__ (self, config, phrase_table_index,valid_input_chars, max_key_length, database, parser = tabdict.parse, deparser = tabdict.deparse, max_length = 64):
         self.db = database
         self._config = config
@@ -764,6 +767,15 @@ class editor(object):
         '''Return true if there is only one candidate'''
         return len(self._candidates[0]) == 1
 
+    @classmethod
+    def CONFIG_VALUE_CHANGED(cls, bus, section, name, value):
+        if name == "tab":
+            if value == 1:
+                global tab_enable
+                tab_enable = True  
+            else:
+                global tab_enable
+                tab_enable = False
 
 ########################
 ### Engine Class #####
@@ -778,7 +790,7 @@ class tabengine (ibus.EngineBase):
 
     # lookup table page size
     _page_size = 6
-
+    
     def __init__ (self, bus, obj_path, db ):
         super(tabengine,self).__init__ (bus,obj_path)
         self._bus = bus
@@ -845,7 +857,7 @@ class tabengine (ibus.EngineBase):
         self._prev_char = None
         self._double_quotation_state = False
         self._single_quotation_state = False
-
+        self.is_tab_press = False
         # [EnMode,TabMode] we get TabMode properties from db
         self._full_width_letter = [
                 self._config.get_value (self._config_section,
@@ -1018,7 +1030,14 @@ class tabengine (ibus.EngineBase):
         if self._editor.is_empty ():
             self.hide_lookup_table()
             return
-        self.update_lookup_table ( self._editor.get_lookup_table(), True, False )    
+        if tab_enable:
+            if self.is_tab_press:
+                self.update_lookup_table ( self._editor.get_lookup_table(), True, False )    
+                self.is_tab_press = False
+            else:
+                self.hide_lookup_table()
+        else:
+            self.update_lookup_table ( self._editor.get_lookup_table(), True, False )    
 
     def _update_ui (self):
         '''Update User Interface'''
@@ -1034,41 +1053,6 @@ class tabengine (ibus.EngineBase):
 #        self._prev_char = string[-1]
 
     def _convert_to_full_width (self, c):
-        '''convert half width character to full width'''
-        '''if c in [u".", u"\\", u"^", u"_", u"$", u"\"", u"'", u">", u"<" ]:
-            if c == u".":
-                if self._prev_char and self._prev_char.isdigit () \
-                    and self._prev_key and chr (self._prev_key.code) == self._prev_char:
-                    return u"."
-                else:
-                    return u"\u3002"
-            elif c == u"\\":
-                return u"\u3001"
-            elif c == u"^":
-                return u"\u2026\u2026"
-            elif c == u"_":
-                return u"\u2014\u2014"
-            elif c == u"$":
-                return u"\uffe5"
-            elif c == u"\"":
-                self._double_quotation_state = not self._double_quotation_state
-                if self._double_quotation_state:
-                    return u"\u201c"
-                else:
-                    return u"\u201d"
-            elif c == u"'":
-                self._single_quotation_state = not self._single_quotation_state
-                if self._single_quotation_state:
-                    return u"\u2018"
-                else:
-                    return u"\u2019"
-            elif c == u"<":
-                if self._mode:
-                    return u"\u300a"
-            elif c == u">":
-                if self._mode:
-                    return u"\u300b"'''
-            
         return ibus.unichar_half_to_full (c)
     
     def _match_hotkey (self, key, code, mask):
@@ -1104,9 +1088,10 @@ class tabengine (ibus.EngineBase):
             self._convert_to_full_width (c) if self._full_width_letter [self._mode] else c
         cond_punct_translate = lambda (c): \
             self._convert_to_full_width (c) if self._full_width_punct [self._mode] else c
-
+        
         if key.mask & modifier.RELEASE_MASK:
             return True
+        
         if self._editor.is_empty ():
             # we have not input anything
             if  key.code >= 32 and key.code <= 127 and ( unichr(key.code) not in self._valid_input_chars ) \
@@ -1305,13 +1290,18 @@ class tabengine (ibus.EngineBase):
             return True
         
         elif key.code == keysyms.Tab:
-            if self._editor._candidates[0]:
-                self._editor.commit_to_preedit ()
-                commit_string = self._editor.get_preedit_strings ()
-                self.commit_string(commit_string + " " )
+            self.is_tab_press = True
+            if tab_enable:
+                return True
             else:
-                commit_string = self._editor.get_all_input_strings ()
-                self.commit_string(commit_string + " ")
+                if self._editor._candidates[0]:
+                    self._editor.commit_to_preedit ()
+                    commit_string = self._editor.get_preedit_strings ()
+                    self.commit_string(commit_string + " " )
+                else:
+                    commit_string = self._editor.get_all_input_strings ()
+                    self.commit_string(commit_string + " ")
+                    return True
             return True
 
         return False
@@ -1367,14 +1357,10 @@ class tabengine (ibus.EngineBase):
         return False
 
     # for further implementation :)
-    @classmethod
-    def CONFIG_VALUE_CHANGED(cls, bus, section, name, value):
-        config = bus.get_config()
-        if section != self._config_section:
-            return
     
     @classmethod
     def CONFIG_RELOADED(cls, bus):
+        print "config reloaded"
         config = bus.get_config()
         if section != self._config_section:
             return

@@ -24,10 +24,11 @@
 
 import ibus
 from ibus.exception import *
-import hunspell_table
+import hunspell_table 
 import tabsqlitedb
 import os
 import dbus
+#import _config as config
 from re import compile as re_compile
 
 path_patt = re_compile(r'[^a-zA-Z0-9_/]')
@@ -48,10 +49,13 @@ class EngineFactory (ibus.EngineFactoryBase):
             self.db = None
         self.dbdict = {}
         self.bus = bus
+        #engine.Engine.CONFIG_RELOADED(bus)
         super(EngineFactory,self).__init__ (bus)
         self.engine_id=0
         try:
             bus = dbus.Bus()
+            self.__config = self.bus.get_config()
+            self.__config.connect('value-changed', self.__config_value_changed_cb)
             user = os.path.basename( os.path.expanduser('~') )
             self._sm_bus = bus.get_object ("org.ibus.table.SpeedMeter.%s"\
                     % user, "/org/ibus/table/SpeedMeter")
@@ -59,6 +63,9 @@ class EngineFactory (ibus.EngineFactoryBase):
                     "org.ibus.table.SpeedMeter") 
         except:
             self._sm = None
+
+    def __config_value_changed_cb(self, config, section, name, value):
+        hunspell_table.editor.CONFIG_VALUE_CHANGED(self.bus, section, name, value)
     
     def create_engine(self, engine_name):
         # because we need db to be past to Engine
