@@ -168,8 +168,8 @@ def main():
         files = filter (lambda x: x.endswith('.dic'), hunspell_files)
         for conf in confs:
             str_dic = conf.replace('conf','dic') 
-            if str_dic not in files:
-                confs.remove(conf)
+#            if str_dic not in files:
+#                confs.remove(conf)
 
         egs = Element('engines')
 
