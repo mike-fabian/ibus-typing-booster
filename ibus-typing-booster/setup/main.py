@@ -106,10 +106,14 @@ class EventHander:
         InstallPkg(hunspell_dict)
 
     def onCheck(self,widget):
-        if widget.get_active():
-            SetupUi.config.set_value('key','Tab',GLib.Variant.new_boolean(True))
-        else:
-            SetupUi.config.set_value('key','Tab',GLib.Variant.new_boolean(False))
+        try:
+            if widget.get_active():
+                SetupUi.config.set_value('key','Tab',GLib.Variant.new_boolean(True))
+            else:
+                SetupUi.config.set_value('key','Tab',GLib.Variant.new_boolean(False))
+        except:
+            #Future on error need to check local db
+            pass
 
 SetupUi = SetupUI()
 
