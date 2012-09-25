@@ -107,7 +107,11 @@ class Hunspell:
                 patt_start = re.compile("^"+word+"\w+",re.MULTILINE|re.UNICODE)
         start_words = patt_start.findall(self.dict_buffer)
         words = set(start_words[0:max_words])
-        words =  [word.decode('utf8').rstrip('\r') for word in words ]
+        try:
+            #little hack for european chars
+            words =  [word.decode('utf8').rstrip('\r') for word in words ]
+        except:
+            words =  [word.decode('ISO-8859-1').rstrip('\r') for word in words ]
         # The list consists of words but in there  
         tab_words = [ list(word) for word in words ] 
         # return the words wrt to there numbers e.g the word "abc" will contain numbers '123"
