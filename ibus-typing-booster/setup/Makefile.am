@@ -21,6 +21,22 @@
 
 libexec_SCRIPTS = ibus-setup-typing-booster
 
+desktop_in_in_files = ibus-setup-typing-booster.desktop.in.in
+
+desktop_in_files = $(desktop_in_in_files:.in.in=.in)
+
+ibus-setup-typing-booster.desktop: ibus-setup-typing-booster.desktop.in.in
+	( \
+		PKGDATADIR=$(pkgdatadir); \
+		LIBEXECDIR=$(libexecdir); \
+		s=`cat $<`; \
+		eval "echo \"$${s}\""; \
+	) > $@
+
+desktopdir=$(datadir)/applications
+desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+
+
 setup_typing_booster_PYTHON = \
 	main.py \
 	pkginstall.py \
@@ -36,16 +52,21 @@ setup_typing_booster_built_in_files = $(addsuffix .in, $(setup_typing_booster_bu
 
 setup_typing_boosterdir = $(datadir)/ibus-typing-booster/setup
 
+
+
 CONFIG_CLEAN_FILES = \
 	$(libexec_SCRIPTS) \
 	$(NULL)
 
 CLEANFILES = \
+	$(desktop_DATA) \
+	$(desktop_in_files) \
 	*.pyc \
 	$(NULL)
 
 EXTRA_DIST = \
 	$(setup_typing_booster_built_in_files) \
+	$(desktop_in_in_files) \
 	$(NULL)
 
 # Need a time lag between .py and .py.in files to build .py files

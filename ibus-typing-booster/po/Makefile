@@ -11,7 +11,7 @@
 # Origin: gettext-0.16
 
 PACKAGE = ibus-typing-booster
-VERSION = 1.1.2
+VERSION = 0.0.9
 PACKAGE_BUGREPORT = http://code.google.com/p/ibus/issues/entry
 
 SHELL = /bin/sh
@@ -21,7 +21,7 @@ srcdir = .
 top_srcdir = ..
 
 
-prefix = /usr/local
+prefix = /usr
 exec_prefix = ${prefix}
 datarootdir = ${prefix}/share
 datadir = ${datarootdir}
@@ -34,14 +34,14 @@ INSTALL_DATA = ${INSTALL} -m 644
 # We use $(mkdir_p).
 # In automake <= 1.9.x, $(mkdir_p) is defined either as "mkdir -p --" or as
 # "$(mkinstalldirs)" or as "$(install_sh) -d". For these automake versions,
-# ${SHELL} /home/anish/ibus-hunspell-table/install-sh does not start with $(SHELL), so we add it.
-# In automake >= 1.10, /bin/mkdir -p is derived from ${MKDIR_P}, which is defined
+# ${SHELL} /home/anish/commit/ibus-typing-booster/ibus-typing-booster/install-sh does not start with $(SHELL), so we add it.
+# In automake >= 1.10, /usr/bin/mkdir -p is derived from ${MKDIR_P}, which is defined
 # either as "/path/to/mkdir -p" or ".../install-sh -c -d". For these automake
 # versions, $(mkinstalldirs) and $(install_sh) are unused.
-mkinstalldirs = $(SHELL) ${SHELL} /home/anish/ibus-typing-booster/install-sh -d
-install_sh = $(SHELL) ${SHELL} /home/anish/ibus-typing-booster/install-sh
-MKDIR_P = /bin/mkdir -p
-mkdir_p = /bin/mkdir -p
+mkinstalldirs = $(SHELL) ${SHELL} /home/anish/commit/ibus-typing-booster/ibus-typing-booster/install-sh -d
+install_sh = $(SHELL) ${SHELL} /home/anish/commit/ibus-typing-booster/ibus-typing-booster/install-sh
+MKDIR_P = /usr/bin/mkdir -p
+mkdir_p = /usr/bin/mkdir -p
 
 GMSGFMT_ = /usr/bin/msgfmt
 GMSGFMT_no = /usr/bin/msgfmt
@@ -61,10 +61,10 @@ MSGINIT = msginit
 MSGCONV = msgconv
 MSGFILTER = msgfilter
 
-#POFILES =  zh_CN.po zh_TW.po zh_HK.po
-#GMOFILES =  zh_CN.gmo zh_TW.gmo zh_HK.gmo
-#UPDATEPOFILES =  zh_CN.po-update zh_TW.po-update zh_HK.po-update
-#DUMMYPOFILES =  zh_CN.nop zh_TW.nop zh_HK.nop
+POFILES = 
+GMOFILES = 
+UPDATEPOFILES = 
+DUMMYPOFILES = 
 DISTFILES.common = Makefile.in.in remove-potcdate.sin \
 $(DISTFILES.common.extra1) $(DISTFILES.common.extra2) $(DISTFILES.common.extra3)
 DISTFILES = $(DISTFILES.common) Makevars POTFILES.in \
@@ -78,7 +78,7 @@ POTFILES = \
      .././engine/factory.py \
      .././engine/tabdict.py
 
-CATALOGS =  zh_CN.gmo zh_TW.gmo zh_HK.gmo
+CATALOGS = 
 
 # Makevars gets inserted here. (Don't remove this line!)
 # Makefile variables for PO directory in any package using GNU gettext.
@@ -101,7 +101,7 @@ XGETTEXT_OPTIONS = --keyword=_ --keyword=N_
 # or entity, or to disclaim their copyright.  The empty string stands for
 # the public domain; in this case the translators are expected to disclaim
 # their copyright.
-COPYRIGHT_HOLDER = Anish Patil <apatil@redhat.com>
+COPYRIGHT_HOLDER = Anish Patil <anish.developer@gmail.com>
 
 # This is the email address or URL to which the translators shall report
 # bugs in the untranslated strings:

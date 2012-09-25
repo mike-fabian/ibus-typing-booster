@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=IBus Typing Booster Setup
+Comment=Set ibus-typing-booster Preferences
+Exec=${LIBEXECDIR}/ibus-setup-typing-booster
+Icon=${PKGDATADIR}/icons/ibus-hunspell-table.svg
+NoDisplay=true
+Type=Application
+StartupNotify=true
