@@ -230,6 +230,8 @@ class tabsqlitedb:
 
     def __parse_conf_file(self,conf_file="/usr/share/ibus-typing-booster/hunspell-tables/en_us.conf"):
         key_val_dict = {}
+        if conf_file.find('typing-booster:') > 0 :
+            conf_file=conf_file.replace('typing-booster:','')
         for line in file(conf_file):
             attr,val = line.strip().split ('=')
             key_val_dict[attr.strip()]= val.strip()
