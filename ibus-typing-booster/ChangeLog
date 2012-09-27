@@ -1,4 +1,10 @@
 * Author: Anish Patil <apatil@redhat.com>
+* 27 Sep 2012 Released 0.0.10 version
+* Added .desktop file to support g-c-c
+* Added en_GB.conf file
+* Fixed minor issues
+
+* Author: Anish Patil <apatil@redhat.com>
 * 13 Sep 2012 Released 0.0.9 version
 * Added feature suggestions can be turned on/off dynamically
 * Fixed issues #852994,#852993
