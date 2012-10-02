@@ -66,15 +66,9 @@ class Hunspell:
         self.encoding = encoding
         self.langs = ('fr','da')
         try:
+            self.dict_buffer = codecs.open(loc+dict_name).read().decode(self.encoding)
             if self.m17n:
-                if self.encoding == "UTF-8":
-                    self.dict_buffer = codecs.open(loc+dict_name).read().encode(self.encoding)
-                else:
-                    self.dict_buffer = codecs.open(loc+dict_name).read().decode(self.encoding)
                 self.tab_dict = langdict
-            else:
-                self.dict_buffer = codecs.open(loc+dict_name).read().decode('iso-8859-1').encode('UTF-8')
-
             
             self.aff_handle = open(loc+aff_name)
         except:
