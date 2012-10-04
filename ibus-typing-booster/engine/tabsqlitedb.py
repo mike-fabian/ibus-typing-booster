@@ -100,9 +100,11 @@ class tabsqlitedb:
         # share variables in this class:
         self._mlen = int ( self.get_ime_property ("max_key_length") )
         
-        self.trans_m17_mode = False
-        if self.get_ime_property('languages') != 'en':
-            # This means that it is not in english mode                                                                                      
+        if self.get_ime_property('m17_mim_name') == None:
+            # Not using m17n transliteration:
+            self.trans_m17_mode = False
+        else:
+            # Using m17n transliteration:
             self.trans_m17_mode = True
 
         self._m17db = 'm17n'

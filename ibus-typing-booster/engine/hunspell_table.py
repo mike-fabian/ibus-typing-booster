@@ -137,9 +137,11 @@ class editor(object):
         self._onechar = self._config.get_value (self._config_section, "OneChar", False)
         self._first = 0 
         self.is_down_press = False
-        self.trans_m17_mode = False
-        if self.db.get_ime_property('languages') != 'en':
-            # This means that it is not in english mode
+        if self.db.get_ime_property('m17_mim_name') == None:
+            # Not using m17n transliteration:
+            self.trans_m17_mode = False
+        else:
+            # using m17n transliteration
             self.trans_m17_mode = True
             
         self._latin_chars = []
