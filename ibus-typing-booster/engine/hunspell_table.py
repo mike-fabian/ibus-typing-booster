@@ -816,7 +816,7 @@ class tabengine (ibus.EngineBase):
         # we receive this db from IMEngineFactory
         #self.db = tabsqlitedb.tabsqlitedb( name = dbname )
         
-        # this is the parer which parse the input string to key object
+        # this is the parser which parses the input string to key object
         self._parser = tabdict.parse
         
         self._icon_dir = '%s%s%s%s' % (os.getenv('IBUS_HUNSPELL_TABLE_LOCATION'),
