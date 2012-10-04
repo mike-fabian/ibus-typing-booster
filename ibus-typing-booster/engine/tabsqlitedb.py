@@ -125,11 +125,12 @@ class tabsqlitedb:
                 #print "Failed to create transliterator object ",self._m17_mim_name
                 pass
 
+        self.encoding = self.get_ime_property('encoding')
+
         if self.trans_m17_mode:
-            self.encoding = self.get_ime_property('encoding')
             self.hunspell_obj = hunspell.Hunspell(lang=self.get_ime_property('languages'),dict_name=self.get_ime_property ("hunspell_dict"),m17n=True,langdict=self.lang_dict,encoding=self.encoding)
         else:
-            self.hunspell_obj = hunspell.Hunspell(dict_name=self.get_ime_property ("hunspell_dict"))
+            self.hunspell_obj = hunspell.Hunspell(dict_name=self.get_ime_property ("hunspell_dict"),encoding=self.encoding)
         # for chinese
         self._is_chinese = self.is_chinese()
         # for fast add word
