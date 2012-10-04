@@ -193,7 +193,7 @@
                               <object class="GtkLabel" id="label5">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">Enable suggesions by Tab Key</property>
+                                <property name="label" translatable="yes">Enable suggestions by Tab Key</property>
                               </object>
                             </child>
                             <child>
@@ -218,7 +218,7 @@
                       <object class="GtkLabel" id="frame">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Suggestions options&lt;/b&gt;</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Suggestion options&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </object>
                     </child>
