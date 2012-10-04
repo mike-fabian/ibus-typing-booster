@@ -1115,7 +1115,7 @@ class tabengine (ibus.EngineBase):
                         return True
                     self.commit_string (unichr (key.code))
                     return True
-            elif key.code < 32 or key.code > 127 :
+            elif (key.code < 32 or key.code > 127) and (unichr(key.code) not in self._valid_input_chars):
                 return False
 
         if key.code == keysyms.Escape:
