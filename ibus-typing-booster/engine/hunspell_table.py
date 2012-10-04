@@ -828,7 +828,7 @@ class tabengine (ibus.EngineBase):
  
         self._status = self.db.get_ime_property('status_prompt').encode('utf8')
         # now we check and update the valid input characters
-        self._chars = self.db.get_ime_property('valid_input_chars')
+        self._chars = self.db.get_ime_property('valid_input_chars').decode('utf8')
         self._valid_input_chars = []
         for _c in self._chars:
             self._valid_input_chars.append(_c)
