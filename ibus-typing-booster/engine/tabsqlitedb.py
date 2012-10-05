@@ -110,15 +110,18 @@ class tabsqlitedb:
         self._m17db = 'm17n'
         self._m17_mim_name = ""
         self.trans = None
+        self.lang_chars = self.get_ime_property('lang_chars')
+        if self.lang_chars != None:
+            self.lang_chars = self.lang_chars.decode('utf8')
+        else:
+            self.lang_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
         self.lang_dict = {}
         if self.trans_m17_mode:
             try:
                 self._m17_mim_name = self.get_ime_property('m17_mim_name')
                # self.trans = Translit.Transliterator.get(self._m17db, self._m17_mim_name)
                 self.trans = Transliterator.get(self._m17db, self._m17_mim_name)
-                lang_chars = self.get_ime_property('lang_chars')
-                lang_chars = lang_chars.decode('utf8')
-                for index,char in enumerate(lang_chars):
+                for index,char in enumerate(self.lang_chars):
                     if char:
                         self.lang_dict[char] = index
             except:
@@ -128,9 +131,9 @@ class tabsqlitedb:
         self.encoding = self.get_ime_property('encoding')
 
         if self.trans_m17_mode:
-            self.hunspell_obj = hunspell.Hunspell(lang=self.get_ime_property('languages'),dict_name=self.get_ime_property ("hunspell_dict"),m17n=True,langdict=self.lang_dict,encoding=self.encoding)
+            self.hunspell_obj = hunspell.Hunspell(lang=self.get_ime_property('languages'),dict_name=self.get_ime_property ("hunspell_dict"),m17n=True,langdict=self.lang_dict,encoding=self.encoding,lang_chars=self.lang_chars)
         else:
-            self.hunspell_obj = hunspell.Hunspell(dict_name=self.get_ime_property ("hunspell_dict"),encoding=self.encoding)
+            self.hunspell_obj = hunspell.Hunspell(dict_name=self.get_ime_property ("hunspell_dict"),encoding=self.encoding,lang_chars=self.lang_chars)
         # for chinese
         self._is_chinese = self.is_chinese()
         # for fast add word

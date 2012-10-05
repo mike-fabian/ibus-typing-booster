@@ -59,12 +59,13 @@ system_word = 1
 
 class Hunspell:
     def __init__(self,lang='en',loc='/usr/share/myspell/',dict_name='en_US.dic',aff_name='en_US.aff',m17n=False,langdict=None,
+                 lang_chars='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
                  encoding='UTF-8'):
         self.lang=lang
+        self.lang_chars=lang_chars
         self.m17n=m17n
         self.tab_dict = tab_dict
         self.encoding = encoding
-        self.langs = ('fr','da')
         try:
             self.dict_buffer = codecs.open(loc+dict_name).read().decode(self.encoding)
             if self.m17n:
@@ -86,18 +87,27 @@ class Hunspell:
     def words_start(self,word):
         if type(word) != type(u''):
             word = word.decode('utf8')
-        if self.m17n:
-            if self.lang in self.langs:
-                patt_start = re.compile("^"+word+"\w+",re.MULTILINE|re.UNICODE)
-            else:
-                patt_start = re.compile("^"+word+"\w.+",re.MULTILINE|re.UNICODE)
-        else:
-            try:
-                patt_start = re.compile("^"+word+"\w+",re.MULTILINE|re.UNICODE)
-            except:
-                # Exception here means characters such as ( are present in the string
-                word = word.strip('()+=|-')
-                patt_start = re.compile("^"+word+"\w+",re.MULTILINE|re.UNICODE)
+        char_class = self.lang_chars
+        # We try to match a word in the dictionary by trying to
+        # match the word as typed so far followed by characters
+        # allowed in the language, i.e. followed by characters listed
+        # in the value of 'lang_chars' in the .conf file.
+        #
+        # In case 'lang_chars contains the characters '\', ']', '^', and '-'
+        # they need to be escaped because these are meta-characters
+        # in a regular expression character class.
+        char_class = char_class.replace('\\', '\\\\')
+        char_class = char_class.replace(']', '\\]')
+        char_class = char_class.replace('^', '\\^')
+        char_class = char_class.replace('-', '\\-')
+        try:
+            regexp = '^'+word+'['+char_class+']+'
+            patt_start = re.compile(regexp,re.MULTILINE|re.UNICODE)
+        except:
+            # Exception here means characters such as ( are present in the string
+            word = word.strip('()+=|-')
+            regexp = '^'+word+'['+char_class+']+'
+            patt_start = re.compile(regexp,re.MULTILINE|re.UNICODE)
         start_words = patt_start.findall(self.dict_buffer)
         words = set(start_words[0:max_words])
         try:
