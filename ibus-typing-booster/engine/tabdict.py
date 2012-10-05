@@ -101,7 +101,10 @@ class other_tab_key(object):
         return self._key
 
     def __str__(self):
-        return self._key
+        return str(self._key)
+
+    def __repr__(self):
+        return repr(self._key)
 
     def __int__(self):
         return self._key_id

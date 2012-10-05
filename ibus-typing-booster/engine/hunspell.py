@@ -84,10 +84,9 @@ class Hunspell:
         return num_format
 
     def words_start(self,word):
-        
+        if type(word) != type(u''):
+            word = word.decode('utf8')
         if self.m17n:
-            if self.encoding == "UTF-8":
-                word = word.encode('utf8')
             if self.lang in self.langs:
                 patt_start = re.compile("^"+word+"\w+",re.MULTILINE|re.UNICODE)
             else:
