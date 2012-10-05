@@ -71,7 +71,7 @@ except ImportError:
                                                     ctypes.byref(endpos))
             return (output, endpos.value)
 except:
-   # print "Please install Translist library to use IME other than english"
+   # print "Please install Translit library to use m17n input methods"
     pass
 
 

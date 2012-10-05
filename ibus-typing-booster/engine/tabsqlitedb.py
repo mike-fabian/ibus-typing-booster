@@ -763,7 +763,7 @@ class tabsqlitedb:
                 map ( lambda res: self.add_phrase ( (''.join ( map(self.deparse,res[2:2+int(res[0])] ) ),phrase,(-3 if usrdb[res][0][-1] == -1 else 1),usrdb[res][1]+1  ), database = 'mudb') , usrdb.keys() )                
                 map ( lambda res: self.add_phrase ( ( ''.join ( map(self.deparse,res[2:2+int(res[0])]) ),phrase,2,1 ), database = 'mudb'), sysdb.keys() )
             else:
-                # we come to here when the ime dosen't support user phrase define
+                # we come here when the ime doesn't support user phrase define
                 pass
         except:
             import traceback
