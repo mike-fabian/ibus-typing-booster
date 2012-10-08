@@ -238,9 +238,11 @@ class tabsqlitedb:
         key_val_dict = {}
         if conf_file.find('typing-booster:') > 0 :
             conf_file=conf_file.replace('typing-booster:','')
+        comment_patt = re.compile('^#')
         for line in file(conf_file):
-            attr,val = line.strip().split ('=')
-            key_val_dict[attr.strip()]= val.strip()
+            if not comment_patt.match(line):
+                attr,val = line.strip().split ('=')
+                key_val_dict[attr.strip()]= val.strip()
         return key_val_dict 
 
     def update_phrase (self, entry, database='user_db'):
