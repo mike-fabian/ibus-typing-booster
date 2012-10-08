@@ -99,8 +99,8 @@ class tabsqlitedb:
         
         # share variables in this class:
         self._mlen = int ( self.get_ime_property ("max_key_length") )
-        
-        if self.get_ime_property('m17_mim_name') == None:
+
+        if self.get_ime_property('m17_mim_name') == None or self.get_ime_property('m17_mim_name') == 'NoIme':
             # Not using m17n transliteration:
             self.trans_m17_mode = False
         else:

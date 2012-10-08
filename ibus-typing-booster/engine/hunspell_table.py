@@ -137,7 +137,7 @@ class editor(object):
         self._onechar = self._config.get_value (self._config_section, "OneChar", False)
         self._first = 0 
         self.is_down_press = False
-        if self.db.get_ime_property('m17_mim_name') == None:
+        if self.db.get_ime_property('m17_mim_name') == None or self.db.get_ime_property('m17_mim_name') == 'NoIme':
             # Not using m17n transliteration:
             self.trans_m17_mode = False
         else:
@@ -957,8 +957,11 @@ class tabengine (ibus.EngineBase):
         if self.db.get_ime_property('other_ime') == 'TRUE':
             if 'keymap' in property:
                 ime_name = str(property).split('.')
-                if ime_name[1] in self.ime_names:
+                if ime_name[1] in self.ime_names and self.ime_names[ime_name[1]] != 'NoIme':
+                    self._editor.trans_m17_mode = True
                     self._editor.trans = Transliterator.get(self._editor._m17db, self.ime_names[ime_name[1]])
+                else:
+                    self._editor.trans_m17_mode = False
         self._refresh_properties ()
     
     def _update_preedit (self):
