@@ -116,14 +116,14 @@ class tabsqlitedb:
         else:
             self.lang_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
         self.lang_dict = {}
+        for index,char in enumerate(self.lang_chars):
+            if char:
+                self.lang_dict[char] = index
         if self.trans_m17_mode:
             try:
                 self._m17_mim_name = self.get_ime_property('m17_mim_name')
                # self.trans = Translit.Transliterator.get(self._m17db, self._m17_mim_name)
                 self.trans = Transliterator.get(self._m17db, self._m17_mim_name)
-                for index,char in enumerate(self.lang_chars):
-                    if char:
-                        self.lang_dict[char] = index
             except:
                 #print "Failed to create transliterator object ",self._m17_mim_name
                 pass
@@ -133,7 +133,7 @@ class tabsqlitedb:
         if self.trans_m17_mode:
             self.hunspell_obj = hunspell.Hunspell(lang=self.get_ime_property('languages'),dict_name=self.get_ime_property ("hunspell_dict"),m17n=True,langdict=self.lang_dict,encoding=self.encoding,lang_chars=self.lang_chars)
         else:
-            self.hunspell_obj = hunspell.Hunspell(dict_name=self.get_ime_property ("hunspell_dict"),encoding=self.encoding,lang_chars=self.lang_chars)
+            self.hunspell_obj = hunspell.Hunspell(lang=self.get_ime_property('languages'),dict_name=self.get_ime_property ("hunspell_dict"),m17n=False,langdict=self.lang_dict,encoding=self.encoding,lang_chars=self.lang_chars)
         # for chinese
         self._is_chinese = self.is_chinese()
         # for fast add word
@@ -267,14 +267,9 @@ class tabsqlitedb:
         data_a = filter ( lambda x: x[-2]==2, mudata)
         data_n = filter ( lambda x: x[-2]==-2, mudata)
         #print data_a
-        if self.trans_m17_mode:
-            #print data_a
-            tabdict.id_tab(self.lang_dict)
-            data_a = map (lambda x: (u''.join ( map(tabdict.another_lang_deparser, x[3:3+x[1]])),x[-3],0,x[-1] ), data_a)
-            data_n = map (lambda x: (u''.join ( map(tabdict.another_lang_deparser, x[3:3+x[1]])),x[-3],-1,x[-1] ), data_n)
-        else:
-            data_a = map (lambda x: (u''.join ( map(self.deparse, x[3:3+x[1]])),x[-3],0,x[-1] ), data_a)
-            data_n = map (lambda x: (u''.join ( map(self.deparse, x[3:3+x[1]])),x[-3],-1,x[-1] ), data_n)
+        tabdict.id_tab(self.lang_dict)
+        data_a = map (lambda x: (u''.join ( map(tabdict.another_lang_deparser, x[3:3+x[1]])),x[-3],0,x[-1] ), data_a)
+        data_n = map (lambda x: (u''.join ( map(tabdict.another_lang_deparser, x[3:3+x[1]])),x[-3],-1,x[-1] ), data_n)
         #print data_u
         map (self.update_phrase, data_u)
         #print self.db.execute('select * from user_db.phrases;').fetchall()
@@ -389,10 +384,7 @@ class tabsqlitedb:
             user_freq = 0
         
         try:
-            if self.trans_m17_mode:
-                tbks = tabdict.other_lang_parser (tabkeys.decode('utf8'),self.lang_dict)
-            else:
-                tbks = self.parse (tabkeys)
+            tbks = tabdict.other_lang_parser (tabkeys.decode('utf8'),self.lang_dict)
 
             if len(tbks) != len(tabkeys):
                 print 'In %s %s: we parse tabkeys fail' % (phrase, tabkeys )
@@ -711,10 +703,7 @@ class tabsqlitedb:
         else:
             return 
 
-        if self.trans_m17_mode:
-            tabks = tabdict.other_lang_parser (tabkey.decode('utf8'),self.lang_dict)
-        else:
-            tabks = self.parse (tabkey)
+        tabks = tabdict.other_lang_parser (tabkey.decode('utf8'),self.lang_dict)
 
         tabkids = tuple( map(int,tabks) )
         condition = ' and '.join( map(lambda x: 'm%d = ?' % x, range( len(tabks) )) )
@@ -767,10 +756,9 @@ class tabsqlitedb:
                 map (sysdb.pop, keyout)
                 map (lambda res: self.db.execute ( sqlstr % ''.join( map(lambda x: 'AND m%d = ? ' % x, range(res[0])) ) ,  [ mudb[res][1] + 1 ] + list( res[:2+res[0]]) + list (res[2+self._mlen:]) ) , mudb.keys())
                 self.db.commit()
-                if self.trans_m17_mode:
-                    tabdict.id_tab(self.lang_dict)
-                map ( lambda res: self.add_phrase ( (''.join ( map(self.deparse,res[2:2+int(res[0])] ) ),phrase,(-3 if usrdb[res][0][-1] == -1 else 1),usrdb[res][1]+1  ), database = 'mudb') , usrdb.keys() )                
-                map ( lambda res: self.add_phrase ( ( ''.join ( map(self.deparse,res[2:2+int(res[0])]) ),phrase,2,1 ), database = 'mudb'), sysdb.keys() )
+                tabdict.id_tab(self.lang_dict)
+                map ( lambda res: self.add_phrase ( (''.join ( map(tabdict.another_lang_deparser,res[2:2+int(res[0])] ) ),phrase,(-3 if usrdb[res][0][-1] == -1 else 1),usrdb[res][1]+1  ), database = 'mudb') , usrdb.keys() )
+                map ( lambda res: self.add_phrase ( ( ''.join ( map(tabdict.another_lang_deparser,res[2:2+int(res[0])]) ),phrase,2,1 ), database = 'mudb'), sysdb.keys() )
             else:
                 # we come here when the ime doesn't support user phrase define
                 pass

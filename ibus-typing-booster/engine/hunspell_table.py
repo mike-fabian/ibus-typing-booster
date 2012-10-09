@@ -148,17 +148,20 @@ class editor(object):
         self._m17db = 'm17n'
         self._m17_mim_name = ""
         self.trans = None
+        self.lang_chars = self.db.get_ime_property('lang_chars')
+        if self.lang_chars != None:
+            self.lang_chars = self.lang_chars.decode('utf8')
+        else:
+            self.lang_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
         self.lang_dict = {}
+        for index,char in enumerate(self.lang_chars):
+            if char:
+                self.lang_dict[char] = index
         if self.trans_m17_mode:
             try:
                 self._m17_mim_name = self.db.get_ime_property('m17_mim_name')
                 #self.trans = Translit.Transliterator.get(self._m17db, self._m17_mim_name)
                 self.trans = Transliterator.get(self._m17db, self._m17_mim_name)
-                lang_chars = self.db.get_ime_property('lang_chars')
-                lang_chars = lang_chars.decode('utf8')
-                for index,char in enumerate(lang_chars):
-                    if char:
-                        self.lang_dict[char] = index
             except:
                 pass
 
@@ -216,7 +219,7 @@ class editor(object):
                     self._tabkey_list += tabdict.other_lang_parser (trans_char,self.lang_dict)
                     self._t_chars.append(trans_char)
             else:
-                self._tabkey_list += self._parser (c)
+                self._tabkey_list += tabdict.other_lang_parser (c, self.lang_dict)
                 self._chars[0].append (c) 
                 self._t_chars.append(c)
         res = self.update_candidates ()

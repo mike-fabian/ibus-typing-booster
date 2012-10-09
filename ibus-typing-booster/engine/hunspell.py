@@ -66,11 +66,11 @@ class Hunspell:
         self.m17n=m17n
         self.tab_dict = tab_dict
         self.encoding = encoding
+        if langdict != None:
+            self.tab_dict = langdict
+
         try:
             self.dict_buffer = codecs.open(loc+dict_name).read().decode(self.encoding)
-            if self.m17n:
-                self.tab_dict = langdict
-            
             self.aff_handle = open(loc+aff_name)
         except:
             #print "Dictionary file %s or AFF file is not present %s ",(dict_name,aff_name)
