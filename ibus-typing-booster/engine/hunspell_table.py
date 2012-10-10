@@ -33,6 +33,9 @@ from ibus import modifier
 from ibus import ascii
 #import tabsqlitedb
 import tabdict
+import keysym2ucs
+from keysym2ucs import keysym2ucs
+from keysym2ucs import keysym2unichr
 import re
 try:
     from gi.repository import Translit
