@@ -116,9 +116,10 @@ class tabsqlitedb:
         else:
             self.lang_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
         self.lang_dict = {}
+        self.lang_dict['0'] = 0
         for index,char in enumerate(self.lang_chars):
             if char:
-                self.lang_dict[char] = index
+                self.lang_dict[char] = index + 1
         if self.trans_m17_mode:
             try:
                 self._m17_mim_name = self.get_ime_property('m17_mim_name')
