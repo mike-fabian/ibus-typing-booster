@@ -1106,26 +1106,26 @@ class tabengine (ibus.EngineBase):
         
         if self._editor.is_empty ():
             # we have not input anything
-            if  key.code >= 32 and key.code <= 127 and ( unichr(key.code) not in self._valid_input_chars ) \
+            if  key.code >= 32 and key.code <= 127 and ( keysym2unichr(key.code) not in self._valid_input_chars ) \
                     and (not key.mask & modifier.ALT_MASK + modifier.CONTROL_MASK):
                 if key.code == keysyms.space:
-                    self.commit_string (unichr (key.code))
+                    self.commit_string (keysym2unichr (key.code))
                     return True
                 if ascii.ispunct (key.code):
                     if self._editor.trans_m17_mode:
-                        res = self._editor.add_input ( unichr(key.code) )
+                        res = self._editor.add_input ( keysym2unichr(key.code) )
                         self._update_ui ()
                         return True
-                    self.commit_string (unichr (key.code))
+                    self.commit_string (keysym2unichr (key.code))
                     return True
                 if ascii.isdigit (key.code):
                     if self._editor.trans_m17_mode:
-                        key_code = self._editor.trans.transliterate(unichr (key.code))[0].decode('utf8')
+                        key_code = self._editor.trans.transliterate(keysym2unichr (key.code))[0].decode('utf8')
                         self.commit_string (key_code)
                         return True
-                    self.commit_string (unichr (key.code))
+                    self.commit_string (keysym2unichr (key.code))
                     return True
-            elif (key.code < 32 or key.code > 127) and (unichr(key.code) not in self._valid_input_chars):
+            elif (key.code < 32 or key.code > 127) and (keysym2unichr(key.code) not in self._valid_input_chars):
                 return False
 
         if key.code == keysyms.Escape:
@@ -1234,8 +1234,8 @@ class tabengine (ibus.EngineBase):
         elif key.mask & modifier.ALT_MASK:
             return False
 
-        elif unichr(key.code) in self._valid_input_chars or \
-                (unichr(key.code) in u'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-_+=\|}]{[:;/>.<,~`?\'"' ):
+        elif keysym2unichr(key.code) in self._valid_input_chars or \
+                (keysym2unichr(key.code) in u'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-_+=\|}]{[:;/>.<,~`?\'"' ):
             self._editor._first = 0
             if self._auto_commit and ( len(self._editor._chars[0]) == self._ml \
                     or len (self._editor._chars[0]) in self.db.pkeylens ):
@@ -1247,12 +1247,12 @@ class tabengine (ibus.EngineBase):
                     #self.add_string_len(sp_res[1])
                     self.db.check_phrase (sp_res[1],sp_res[2])
                     
-            res = self._editor.add_input ( unichr(key.code) )
+            res = self._editor.add_input ( keysym2unichr(key.code) )
             if not res:
                 if ascii.ispunct (key.code):
-                    key_char = unichr (key.code)
+                    key_char = keysym2unichr (key.code)
                 else:
-                    key_char = unichr (key.code)
+                    key_char = keysym2unichr (key.code)
                 sp_res = self._editor.space ()
                 #return (KeyProcessResult,whethercommit,commitstring)
                 if sp_res[0]:
@@ -1298,7 +1298,7 @@ class tabengine (ibus.EngineBase):
         elif key.code <= 127:
             comm_str = self._editor.get_all_input_strings ()
             self._editor.clear ()
-            self.commit_string (comm_str + unichr (key.code))
+            self.commit_string (comm_str + keysym2unichr (key.code))
             return True
         
         elif key.code == keysyms.Tab:
