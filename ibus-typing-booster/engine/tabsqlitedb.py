@@ -63,6 +63,11 @@ except ImportError:
 
         def transliterate(self, _input):
             endpos = ctypes.c_ulong()
+            # _input needs to be in UTF-8, if we get Python’s Unicode
+            # type here, convert to UTF-8 first:
+            if type(_input) == type(u''):
+                _input = _input.encode('utf8')
+            # the return value “output” is also UTF-8 encoded:
             output = Transliterator.__transliterate(self.__trans,
                                                     _input,
                                                     ctypes.byref(endpos))
@@ -471,7 +476,11 @@ class tabsqlitedb:
         '''
         # firstly, we make sure the len we used is equal or less than the max key length
         _len = min( len(tabkeys),self._mlen )
-        en_word = map(str,tabkeys[:_len])
+        # “map(str,tabkeys[:_len])” would convert the Unicode back to UTF-8.
+        # This could be fixed by converting back to Unicode
+        # in the end with “en_word = ''.join(en_word).decode('utf8')”
+        # or by using eval(repr()) instead of str():
+        en_word = map(eval,map(repr,tabkeys[:_len]))
         en_word = ''.join(en_word)
         _condition = ''
         _condition += ''.join ( map (lambda x: 'AND m%d = ? ' %x, range(_len) ) )

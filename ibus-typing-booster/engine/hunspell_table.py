@@ -69,6 +69,11 @@ except ImportError:
 
         def transliterate(self, _input):
             endpos = ctypes.c_ulong()
+            # _input needs to be in UTF-8, if we get Python’s Unicode
+            # type here, convert to UTF-8 first:
+            if type(_input) == type(u''):
+                _input = _input.encode('utf8')
+            # the return value “output” is also UTF-8 encoded:
             output = Transliterator.__transliterate(self.__trans,
                                                     _input,
                                                     ctypes.byref(endpos))
