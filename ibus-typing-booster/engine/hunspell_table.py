@@ -738,7 +738,7 @@ class editor(object):
             return False
     
     def r_shift (self):
-        '''Proess Right Shift Key Event as changed between PinYin Mode and Table Mode'''
+        '''Process Right Shift Key Event as changed between PinYin Mode and Table Mode'''
         if self._chars[0]:
             self.commit_to_preedit ()
         return True

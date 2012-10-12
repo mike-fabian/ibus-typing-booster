@@ -111,17 +111,17 @@ class Hunspell:
         start_words = patt_start.findall(self.dict_buffer)
         words = set(start_words[0:max_words])
         try:
-            #little hack for european chars
+            # little hack for European chars
             words =  [word.decode('utf8').rstrip('\r') for word in words ]
         except:
             words =  [word.decode('ISO-8859-1').rstrip('\r') for word in words ]
         # The list consists of words but in there  
         tab_words = [ list(word) for word in words ] 
-        # return the words wrt to there numbers e.g the word "abc" will contain numbers '123"
+        # return the words wrt to their numbers e.g the word "abc" will contain numbers "123"
         #self.num_words = self.convert_tab_dict(self.tab_words)
         return words,self.convert_tab_dict(tab_words)
 
-    ''' You need to send data in the following protocol==> sq no,len,len,string upto 50 char,string,-1,1'''
+    ''' You need to send data in the following protocol==> sq no,len,len,string up to 50 char,string,-1,1'''
     def convert_to_lists(self,words,num_words):
         formated_words = []
         for seq,word in enumerate(words):

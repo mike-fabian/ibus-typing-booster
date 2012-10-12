@@ -68,7 +68,7 @@ except ImportError:
                                                     ctypes.byref(endpos))
             return (output, endpos.value)
 except:
-   # print "Please install Translist library to use IME other than english"
+   # print "Please install Translit library to use m17n input methods
     pass
 
 
@@ -516,7 +516,7 @@ class tabsqlitedb:
         for ele in hunspell_list:
             result.append(tuple(ele))
         # here in order to get high speed, I use complicated map
-        # to subtitute for
+        # to substitute for
         usrdb={}
         mudb={}
         sysdb={}
