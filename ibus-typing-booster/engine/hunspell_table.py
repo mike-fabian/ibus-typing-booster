@@ -817,10 +817,11 @@ class tabengine (ibus.EngineBase):
         if tabengine._page_size > 15:
             tabengine._page_size = 6
         
-        self.trans_m17_mode = False
-
-        if self.db.get_ime_property('languages') != 'en':
-            # This means that it is not in english mode
+        if self.db.get_ime_property('m17_mim_name') == None or self.db.get_ime_property('m17_mim_name') == 'NoIme':
+            # Not using m17n transliteration:
+            self.trans_m17_mode = False
+        else:
+            # using m17n transliteration:
             self.trans_m17_mode = True
 
         self._lookup_table = ibus.LookupTable (tabengine._page_size)
