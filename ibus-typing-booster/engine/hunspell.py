@@ -135,9 +135,7 @@ class Hunspell:
             (formated_words[seq]).append(system_freq)
         return formated_words
 
-    def suggest(self,word,localized_word=None):
-        if localized_word:
-            word = localized_word
+    def suggest(self,word):
         words,num_words = self.words_start(word)
         suggestions = []
         if words:

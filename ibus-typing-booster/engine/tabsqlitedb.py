@@ -31,51 +31,6 @@ import uuid
 import time
 import re
 import hunspell 
-try:
-    from gi.repository import Translit
-    Transliterator = Translit.Transliterator
-except ImportError:
-    # Load libtranslit through ctypes, instead of gi. Maybe the code
-    # below could be removed once ibus-table switches to pygobject3.
-    import ctypes
-
-    class Transliterator(object):
-        __libtranslit = ctypes.CDLL("libtranslit.so.0",
-                                    mode=ctypes.RTLD_GLOBAL)
-
-        __get = __libtranslit.translit_transliterator_get
-        __get.argtypes = [ctypes.c_char_p,
-                          ctypes.c_char_p]
-        __get.restype = ctypes.c_void_p
-
-        __transliterate = __libtranslit.translit_transliterator_transliterate
-        __transliterate.argtypes = [ctypes.c_void_p,
-                                    ctypes.c_char_p,
-                                    ctypes.c_void_p]
-        __transliterate.restype = ctypes.c_char_p
-
-        def __init__(self, trans):
-            self.__trans = trans
-
-        @staticmethod
-        def get(backend, name):
-            return Transliterator(Transliterator.__get(backend, name))
-
-        def transliterate(self, _input):
-            endpos = ctypes.c_ulong()
-            # _input needs to be in UTF-8, if we get Python’s Unicode
-            # type here, convert to UTF-8 first:
-            if type(_input) == type(u''):
-                _input = _input.encode('utf8')
-            # the return value “output” is also UTF-8 encoded:
-            output = Transliterator.__transliterate(self.__trans,
-                                                    _input,
-                                                    ctypes.byref(endpos))
-            return (output, endpos.value)
-except:
-   # print "Please install Translit library to use m17n input methods
-    pass
-
 
 patt_r = re.compile(r'c([ea])(\d):(.*)')
 patt_p = re.compile(r'p(-{0,1}\d)(-{0,1}\d)')
@@ -105,16 +60,8 @@ class tabsqlitedb:
         # share variables in this class:
         self._mlen = int ( self.get_ime_property ("max_key_length") )
 
-        if self.get_ime_property('m17_mim_name') == None or self.get_ime_property('m17_mim_name') == 'NoIme':
-            # Not using m17n transliteration:
-            self.trans_m17_mode = False
-        else:
-            # Using m17n transliteration:
-            self.trans_m17_mode = True
-
         self._m17db = 'm17n'
         self._m17_mim_name = ""
-        self.trans = None
         self.lang_chars = self.get_ime_property('lang_chars')
         if self.lang_chars != None:
             self.lang_chars = self.lang_chars.decode('utf8')
@@ -125,20 +72,14 @@ class tabsqlitedb:
         for index,char in enumerate(self.lang_chars):
             if char:
                 self.lang_dict[char] = index + 1
-        if self.trans_m17_mode:
-            try:
-                self._m17_mim_name = self.get_ime_property('m17_mim_name')
-               # self.trans = Translit.Transliterator.get(self._m17db, self._m17_mim_name)
-                self.trans = Transliterator.get(self._m17db, self._m17_mim_name)
-            except:
-                #print "Failed to create transliterator object ",self._m17_mim_name
-                pass
 
         self.encoding = self.get_ime_property('encoding')
 
-        if self.trans_m17_mode:
+        if self.get_ime_property('m17_mim_name') == None or self.get_ime_property('m17_mim_name') == 'NoIme':
+            # Not using m17n transliteration:
             self.hunspell_obj = hunspell.Hunspell(lang=self.get_ime_property('languages'),dict_name=self.get_ime_property ("hunspell_dict"),m17n=True,langdict=self.lang_dict,encoding=self.encoding,lang_chars=self.lang_chars)
         else:
+            # Using m17n transliteration:
             self.hunspell_obj = hunspell.Hunspell(lang=self.get_ime_property('languages'),dict_name=self.get_ime_property ("hunspell_dict"),m17n=False,langdict=self.lang_dict,encoding=self.encoding,lang_chars=self.lang_chars)
         # for chinese
         self._is_chinese = self.is_chinese()
@@ -516,12 +457,7 @@ class tabsqlitedb:
                 break
             x_len += 1
         
-        if self.trans_m17_mode:
-            # this means that it not in english mode
-            hunspell_list = self.hunspell_obj.suggest(en_word,self.trans.transliterate(en_word)[0].decode('utf8'))
-        else:
-            hunspell_list = self.hunspell_obj.suggest(en_word)
-        
+        hunspell_list = self.hunspell_obj.suggest(en_word)
         for ele in hunspell_list:
             result.append(tuple(ele))
         # here in order to get high speed, I use complicated map
