@@ -39,6 +39,7 @@ tables_DATA = en_US.conf \
 	fr_CA.conf \
 	fr_BE.conf \
 	fr_CH.conf \
+	fr_FR.conf \
 	fr_LU.conf \
 	fr_MC.conf \
 	da_DK.conf \
