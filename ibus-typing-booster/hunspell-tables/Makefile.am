@@ -62,7 +62,9 @@ tables_DATA = en_US.conf \
 	en_GB.conf \
 	el_GR.conf \
 	ro_RO.conf \
-	ar_TN.conf
+	ar_TN.conf \
+	de_AT.conf \
+	de_CH.conf
 
 tables_DATA += $(NULL)
 
