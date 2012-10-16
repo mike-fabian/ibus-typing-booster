@@ -26,6 +26,7 @@ __all__ = (
 )
 
 import os
+import unicodedata
 import ibus
 #from ibus import Property
 from ibus import keysyms
@@ -217,6 +218,7 @@ class editor(object):
             self._chars[1].append (c)
         else:
             self._typed_chars.append(c)
+            self._typed_chars = list(unicodedata.normalize('NFC', ''.join(self._typed_chars)))
             if self.trans_m17n_mode:
                 trans_chars = self.trans.transliterate(''.join(self._typed_chars))[0].decode('utf8')
             else:
