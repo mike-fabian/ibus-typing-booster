@@ -68,7 +68,8 @@ tables_DATA = en_US.conf \
 	he_IL.conf \
 	yi_US.conf \
 	hy_AM.conf \
-	km_KH.conf
+	km_KH.conf \
+	th_TH.conf
 
 tables_DATA += $(NULL)
 
