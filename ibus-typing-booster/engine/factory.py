@@ -74,8 +74,11 @@ class EngineFactory (ibus.EngineFactoryBase):
         self.engine_path = engine_base_path % path_patt.sub ('_', name)
         try:
             db_dir = "/usr/share/ibus-typing-booster/hunspell-tables"
-            self.db = tabsqlitedb.tabsqlitedb(filename=name+'.conf')
-            self.dbdict[name] = self.db
+            if name in self.dbdict:
+                self.db = self.dbdict[name]
+            else:
+                self.db = tabsqlitedb.tabsqlitedb(filename=name+'.conf')
+                self.dbdict[name] = self.db
             engine = hunspell_table.tabengine(self.bus, self.engine_path \
                     + str(self.engine_id), self.db)
             self.engine_id += 1
