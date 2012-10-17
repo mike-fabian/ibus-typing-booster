@@ -188,7 +188,7 @@ class tabsqlitedb:
         comment_patt = re.compile('^#')
         for line in file(conf_file):
             if not comment_patt.match(line):
-                attr,val = line.strip().split ('=')
+                attr,val = line.strip().split ('=', 1)
                 key_val_dict[attr.strip()]= val.strip()
         return key_val_dict 
 
