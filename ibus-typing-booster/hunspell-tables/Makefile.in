@@ -237,7 +237,8 @@ tables_DATA = en_US.conf en_HK.conf en_JM.conf en_AG.conf en_AU.conf \
 	km_KH.conf \
 	th_TH.conf \
 	ku_TR.conf \
-	si_LK.conf $(NULL)
+	si_LK.conf \
+	be_BY.conf $(NULL)
 tablesdir = $(datadir)/ibus-typing-booster/hunspell-tables
 EXTRA_DIST = $(tables_DATA) \
 	$(NULL)

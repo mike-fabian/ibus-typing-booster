@@ -71,7 +71,8 @@ tables_DATA = en_US.conf \
 	km_KH.conf \
 	th_TH.conf \
 	ku_TR.conf \
-	si_LK.conf
+	si_LK.conf \
+	be_BY.conf
 
 tables_DATA += $(NULL)
 
