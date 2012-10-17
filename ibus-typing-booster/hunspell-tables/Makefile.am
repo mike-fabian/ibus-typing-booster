@@ -73,7 +73,20 @@ tables_DATA = en_US.conf \
 	ku_TR.conf \
 	si_LK.conf \
 	be_BY.conf \
-	uk_UA.conf
+	uk_UA.conf \
+	bg_BG.conf \
+	cs_CZ.conf \
+	es_ES.conf \
+	hu_HU.conf \
+	is_IS.conf \
+	it_IT.conf \
+	nb_NO.conf \
+	nl_NL.conf \
+	nn_NO.conf \
+	pl_PL.conf \
+	pt_BR.conf \
+	pt_PT.conf \
+	sv_SE.conf
 
 tables_DATA += $(NULL)
 
