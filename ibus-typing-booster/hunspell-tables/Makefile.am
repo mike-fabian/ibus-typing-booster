@@ -65,6 +65,7 @@ tables_DATA = en_US.conf \
 	ar_TN.conf \
 	de_AT.conf \
 	de_CH.conf \
+	de_DE.conf \
 	he_IL.conf \
 	yi_US.conf \
 	hy_AM.conf \

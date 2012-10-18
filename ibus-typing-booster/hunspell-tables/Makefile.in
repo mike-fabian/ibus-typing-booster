@@ -231,6 +231,7 @@ tables_DATA = en_US.conf en_HK.conf en_JM.conf en_AG.conf en_AU.conf \
 	ar_TN.conf \
 	de_AT.conf \
 	de_CH.conf \
+	de_DE.conf \
 	he_IL.conf \
 	yi_US.conf \
 	hy_AM.conf \
