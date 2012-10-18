@@ -933,7 +933,7 @@ class tabengine (ibus.EngineBase):
         self.ime_names = {}
         self.__prop_dict = {}
         self.properties= ibus.PropList ()
-        if self.db.get_ime_property('other_ime') == 'TRUE':
+        if self.db.get_ime_property('other_ime').lower() == u'true':
             imes = self.db.get_ime_property('imes').split(',')
             for item in imes:
                 label = item.split(':')
