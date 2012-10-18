@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 18 Oct 2012 Released 0.0.13 version
+* add de_DE.conf to Makefile.am and Makefile.in it was missing from the release tarball
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 18 Oct 2012 Released 0.0.12 version
 * add missing file keysym2ucs.py to release tarball
 
