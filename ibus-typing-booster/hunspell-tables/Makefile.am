@@ -87,7 +87,8 @@ tables_DATA = en_US.conf \
 	pl_PL.conf \
 	pt_BR.conf \
 	pt_PT.conf \
-	sv_SE.conf
+	sv_SE.conf \
+	ru_RU.conf
 
 tables_DATA += $(NULL)
 
