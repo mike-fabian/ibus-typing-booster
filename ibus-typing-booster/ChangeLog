@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 18 Oct 2012 Released 0.0.12 version
+* add missing file keysym2ucs.py to release tarball
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 18 Oct 2012 Released 0.0.11 version
 * Add .conf files for many languages and improve some existing .conf files
 * Read other_ime option case insensitively
