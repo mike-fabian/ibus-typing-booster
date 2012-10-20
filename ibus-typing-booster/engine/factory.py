@@ -48,6 +48,7 @@ class EngineFactory (ibus.EngineFactoryBase):
         else:
             self.db = None
         self.dbdict = {}
+        self.enginedict = {}
         self.bus = bus
         #engine.Engine.CONFIG_RELOADED(bus)
         super(EngineFactory,self).__init__ (bus)
@@ -79,9 +80,13 @@ class EngineFactory (ibus.EngineFactoryBase):
             else:
                 self.db = tabsqlitedb.tabsqlitedb(filename=name+'.conf')
                 self.dbdict[name] = self.db
-            engine = hunspell_table.tabengine(self.bus, self.engine_path \
-                    + str(self.engine_id), self.db)
-            self.engine_id += 1
+            if name in self.enginedict:
+                engine = self.enginedict[name]
+            else:
+                engine = hunspell_table.tabengine(self.bus, self.engine_path \
+                        + str(self.engine_id), self.db)
+                self.enginedict[name] = engine
+                self.engine_id += 1
             #return engine.get_dbus_object()
             return engine
         except:
