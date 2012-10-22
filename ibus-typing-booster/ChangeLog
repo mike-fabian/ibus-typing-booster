@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 22 Oct 2012 Released 0.0.15 version
+* Make sure the lookup table is hidden if there are no candidates to suggest (Resolves: #869050)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 22 Oct 2012 Released 0.0.14 version
 * Show an obvious warning when the hunspell dictionary needed is not found
 * Show exact matches in the .dic files as suggestions as well
