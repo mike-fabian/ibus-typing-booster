@@ -1047,6 +1047,14 @@ class tabengine (ibus.EngineBase):
         if self._editor.is_empty ():
             self.hide_lookup_table()
             return
+        # Also make sure to hide lookup table if there are
+        # no candidates to display. On f17, this makes no
+        # difference but gnome-shell in f18 will display
+        # an empty suggestion popup if the number of candidates
+        # is zero!
+        if len(self._editor._candidates[0]) == 0:
+            self.hide_lookup_table()
+            return
         if tab_enable:
             if self.is_tab_press:
                 self.update_lookup_table ( self._editor.get_lookup_table(), True, False )    
