@@ -101,12 +101,12 @@ class Hunspell:
         char_class = char_class.replace('^', '\\^')
         char_class = char_class.replace('-', '\\-')
         try:
-            regexp = '^'+word+'['+char_class+']+'
+            regexp = '^'+word+'['+char_class+']*'
             patt_start = re.compile(regexp,re.MULTILINE|re.UNICODE)
         except:
             # Exception here means characters such as ( are present in the string
             word = word.strip('()+=|-')
-            regexp = '^'+word+'['+char_class+']+'
+            regexp = '^'+word+'['+char_class+']*'
             patt_start = re.compile(regexp,re.MULTILINE|re.UNICODE)
         start_words = patt_start.findall(self.dict_buffer)
         words = set(start_words[0:max_words])
