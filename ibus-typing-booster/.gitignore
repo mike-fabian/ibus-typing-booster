@@ -1,0 +1,11 @@
+/ABOUT-NLS
+Makefile
+Makefile.in
+/aclocal.m4
+/config.log
+/config.rpath
+/config.status
+/configure
+/ibus-typing-booster.pc
+/autom4te.cache/
+/m4/

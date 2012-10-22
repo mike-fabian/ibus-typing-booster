@@ -1,0 +1,6 @@
+Makevars.template
+POTFILES
+Rules-quot
+boldquot.sed
+quot.sed
+remove-potcdate.sin
