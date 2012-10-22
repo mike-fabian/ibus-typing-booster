@@ -62,6 +62,8 @@ class Hunspell:
                  lang_chars='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
                  encoding='UTF-8'):
         self.lang=lang
+        self.loc = loc
+        self.dict_name = dict_name
         self.lang_chars=lang_chars
         self.m17n=m17n
         self.tab_dict = tab_dict
@@ -73,7 +75,9 @@ class Hunspell:
             self.dict_buffer = codecs.open(loc+dict_name).read().decode(self.encoding)
             self.aff_handle = open(loc+aff_name)
         except:
-            #print "Dictionary file %s or AFF file is not present %s ",(dict_name,aff_name)
+            # print "Dictionary file %s or AFF file is not present %s ",(dict_name,aff_name)
+            self.dict_buffer = None
+            self.aff_handle = None
             pass
 
 
@@ -108,7 +112,10 @@ class Hunspell:
             word = word.strip('()+=|-')
             regexp = '^'+word+'['+char_class+']*'
             patt_start = re.compile(regexp,re.MULTILINE|re.UNICODE)
-        start_words = patt_start.findall(self.dict_buffer)
+        if self.dict_buffer != None:
+            start_words = patt_start.findall(self.dict_buffer)
+        else:
+            start_words = [unicode('☹ %(loc)s%(dict_name)s not found.' %{'loc': self.loc, 'dict_name': self.dict_name}, 'utf-8'), unicode('☹ please install hunspell dictionary!', 'utf-8') ]
         words = set(start_words[0:max_words])
         try:
             # little hack for European chars
