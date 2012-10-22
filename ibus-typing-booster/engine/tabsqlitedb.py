@@ -60,8 +60,8 @@ class tabsqlitedb:
         # share variables in this class:
         self._mlen = int ( self.get_ime_property ("max_key_length") )
 
-        self._m17db = 'm17n'
-        self._m17_mim_name = ""
+        self._m17ndb = 'm17n'
+        self._m17n_mim_name = ""
         self.lang_chars = self.get_ime_property('lang_chars')
         if self.lang_chars != None:
             self.lang_chars = self.lang_chars.decode('utf8')
@@ -75,7 +75,7 @@ class tabsqlitedb:
 
         self.encoding = self.get_ime_property('encoding')
 
-        if self.get_ime_property('m17_mim_name') == None or self.get_ime_property('m17_mim_name') == 'NoIme':
+        if self.get_ime_property('m17n_mim_name') == None or self.get_ime_property('m17n_mim_name') == 'NoIme':
             # Not using m17n transliteration:
             self.hunspell_obj = hunspell.Hunspell(lang=self.get_ime_property('languages'),dict_name=self.get_ime_property ("hunspell_dict"),m17n=True,langdict=self.lang_dict,encoding=self.encoding,lang_chars=self.lang_chars)
         else:

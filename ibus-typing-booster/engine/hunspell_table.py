@@ -145,16 +145,16 @@ class editor(object):
         self._onechar = self._config.get_value (self._config_section, "OneChar", False)
         self._first = 0 
         self.is_down_press = False
-        if self.db.get_ime_property('m17_mim_name') == None or self.db.get_ime_property('m17_mim_name') == 'NoIme':
+        if self.db.get_ime_property('m17n_mim_name') == None or self.db.get_ime_property('m17n_mim_name') == 'NoIme':
             # Not using m17n transliteration:
-            self.trans_m17_mode = False
+            self.trans_m17n_mode = False
         else:
             # using m17n transliteration
-            self.trans_m17_mode = True
+            self.trans_m17n_mode = True
             
         self._latin_chars = []
-        self._m17db = 'm17n'
-        self._m17_mim_name = ""
+        self._m17ndb = 'm17n'
+        self._m17n_mim_name = ""
         self.trans = None
         self.lang_chars = self.db.get_ime_property('lang_chars')
         if self.lang_chars != None:
@@ -166,11 +166,11 @@ class editor(object):
         for index,char in enumerate(self.lang_chars):
             if char:
                 self.lang_dict[char] = index + 1
-        if self.trans_m17_mode:
+        if self.trans_m17n_mode:
             try:
-                self._m17_mim_name = self.db.get_ime_property('m17_mim_name')
-                #self.trans = Translit.Transliterator.get(self._m17db, self._m17_mim_name)
-                self.trans = Transliterator.get(self._m17db, self._m17_mim_name)
+                self._m17n_mim_name = self.db.get_ime_property('m17n_mim_name')
+                #self.trans = Translit.Transliterator.get(self._m17ndb, self._m17n_mim_name)
+                self.trans = Transliterator.get(self._m17ndb, self._m17n_mim_name)
             except:
                 pass
 
@@ -216,7 +216,7 @@ class editor(object):
         if self._chars[1]:
             self._chars[1].append (c)
         else:
-            if self.trans_m17_mode:
+            if self.trans_m17n_mode:
                 # this is other than english mode
                 self._latin_chars.append(c)
                 trans_chars = self.trans.transliterate(''.join(self._latin_chars))[0].decode('utf8')
@@ -240,13 +240,13 @@ class editor(object):
         if self._chars[1]:
             _c = self._chars[1].pop ()
         elif self._chars[0]:
-            if self.trans_m17_mode:
+            if self.trans_m17n_mode:
                 if self._latin_chars:
                     self._latin_chars.pop()
             _c = self._chars[0].pop ()
             if self._tabkey_list:
                 self._tabkey_list.pop()
-            if self.trans_m17_mode:
+            if self.trans_m17n_mode:
                 if not self._tabkey_list:
                     if  self._latin_chars:
                          self._latin_chars = []
@@ -817,12 +817,12 @@ class tabengine (ibus.EngineBase):
         if tabengine._page_size > 15:
             tabengine._page_size = 6
         
-        if self.db.get_ime_property('m17_mim_name') == None or self.db.get_ime_property('m17_mim_name') == 'NoIme':
+        if self.db.get_ime_property('m17n_mim_name') == None or self.db.get_ime_property('m17n_mim_name') == 'NoIme':
             # Not using m17n transliteration:
-            self.trans_m17_mode = False
+            self.trans_m17n_mode = False
         else:
             # using m17n transliteration:
-            self.trans_m17_mode = True
+            self.trans_m17n_mode = True
 
         self._lookup_table = ibus.LookupTable (tabengine._page_size)
         # this is the backend sql db we need for our IME
@@ -971,10 +971,10 @@ class tabengine (ibus.EngineBase):
             if 'keymap' in property:
                 ime_name = str(property).split('.')
                 if ime_name[1] in self.ime_names and self.ime_names[ime_name[1]] != 'NoIme':
-                    self._editor.trans_m17_mode = True
-                    self._editor.trans = Transliterator.get(self._editor._m17db, self.ime_names[ime_name[1]])
+                    self._editor.trans_m17n_mode = True
+                    self._editor.trans = Transliterator.get(self._editor._m17ndb, self.ime_names[ime_name[1]])
                 else:
-                    self._editor.trans_m17_mode = False
+                    self._editor.trans_m17n_mode = False
         self._refresh_properties ()
     
     def _update_preedit (self):
@@ -1118,14 +1118,14 @@ class tabengine (ibus.EngineBase):
                     self.commit_string (keysym2unichr (key.code))
                     return True
                 if ascii.ispunct (key.code):
-                    if self._editor.trans_m17_mode:
+                    if self._editor.trans_m17n_mode:
                         res = self._editor.add_input ( keysym2unichr(key.code) )
                         self._update_ui ()
                         return True
                     self.commit_string (keysym2unichr (key.code))
                     return True
                 if ascii.isdigit (key.code):
-                    if self._editor.trans_m17_mode:
+                    if self._editor.trans_m17n_mode:
                         key_code = self._editor.trans.transliterate(keysym2unichr (key.code))[0].decode('utf8')
                         self.commit_string (key_code)
                         return True
