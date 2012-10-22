@@ -93,7 +93,7 @@ class Hunspell:
         # allowed in the language, i.e. followed by characters listed
         # in the value of 'lang_chars' in the .conf file.
         #
-        # In case 'lang_chars contains the characters '\', ']', '^', and '-'
+        # In case 'lang_chars' contains the characters '\', ']', '^', and '-'
         # they need to be escaped because these are meta-characters
         # in a regular expression character class.
         char_class = char_class.replace('\\', '\\\\')
