@@ -117,11 +117,6 @@ class Hunspell:
         else:
             start_words = [unicode('☹ %(loc)s%(dict_name)s not found.' %{'loc': self.loc, 'dict_name': self.dict_name}, 'utf-8'), unicode('☹ please install hunspell dictionary!', 'utf-8') ]
         words = set(start_words[0:max_words])
-        try:
-            # little hack for European chars
-            words =  [word.decode('utf8').rstrip('\r') for word in words ]
-        except:
-            words =  [word.decode('ISO-8859-1').rstrip('\r') for word in words ]
         # The list consists of words but in there  
         tab_words = [ list(word) for word in words ] 
         # return the words wrt to their numbers e.g the word "abc" will contain numbers "123"
