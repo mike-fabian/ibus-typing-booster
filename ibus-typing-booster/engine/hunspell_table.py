@@ -217,7 +217,6 @@ class editor(object):
             self._chars[1].append (c)
         else:
             if self.trans_m17n_mode:
-                # this is other than english mode
                 self._latin_chars.append(c)
                 trans_chars = self.trans.transliterate(''.join(self._latin_chars))[0].decode('utf8')
                 self._chars[0] = []
