@@ -871,7 +871,7 @@ class tabengine (ibus.EngineBase):
         self._prev_char = None
         self._double_quotation_state = False
         self._single_quotation_state = False
-        self.is_tab_press = False
+        self.is_lookup_table_enabled_by_tab = False
         # [EnMode,TabMode] we get TabMode properties from db
         self._full_width_letter = [
                 self._config.get_value (self._config_section,
@@ -1045,6 +1045,11 @@ class tabengine (ibus.EngineBase):
     def _update_lookup_table (self):
         '''Update Lookup Table in UI'''
         if self._editor.is_empty ():
+            if tab_enable:
+                # if everything has been cleard from the editor
+                # for example by backspace, disable a tab enabled
+                # lookup table again:
+                self.is_lookup_table_enabled_by_tab = False
             self.hide_lookup_table()
             return
         # Also make sure to hide lookup table if there are
@@ -1056,9 +1061,8 @@ class tabengine (ibus.EngineBase):
             self.hide_lookup_table()
             return
         if tab_enable:
-            if self.is_tab_press:
+            if self.is_lookup_table_enabled_by_tab:
                 self.update_lookup_table ( self._editor.get_lookup_table(), True, False )    
-                self.is_tab_press = False
             else:
                 self.hide_lookup_table()
         else:
@@ -1072,6 +1076,12 @@ class tabengine (ibus.EngineBase):
 
      
     def commit_string (self,string):
+        if tab_enable:
+            # after each commit, disable a tab enabled lookup
+            # table again, i.e. one needs to press tab again
+            # while typing the next word to show the lookup table
+            # again:
+            self.is_lookup_table_enabled_by_tab = False
         self._editor.clear ()
         self._update_ui ()
         super(tabengine,self).commit_text ( ibus.Text(string) )
@@ -1315,8 +1325,16 @@ class tabengine (ibus.EngineBase):
             return True
         
         elif key.code == keysyms.Tab:
-            self.is_tab_press = True
             if tab_enable:
+                # toggle whether the lookup table should be displayed
+                # or not
+                if self.is_lookup_table_enabled_by_tab == True:
+                    self.is_lookup_table_enabled_by_tab = False
+                else:
+                    self.is_lookup_table_enabled_by_tab = True
+                # update the ui here to see the effect immediately
+                # do not wait for the next keypress:
+                self._update_ui()
                 return True
             else:
                 if self._editor._candidates[0]:
