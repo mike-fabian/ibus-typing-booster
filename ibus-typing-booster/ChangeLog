@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 24 Oct 2012 Released 0.0.16 version
+* Make enabling the lookup table with the TAB key work correctly (Resolves: #869687)
+* Simplify code in add_input()
+* Make German input typed in NFD work
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 22 Oct 2012 Released 0.0.15 version
 * Make sure the lookup table is hidden if there are no candidates to suggest (Resolves: #869050)
 
