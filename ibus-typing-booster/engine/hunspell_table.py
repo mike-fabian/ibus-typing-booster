@@ -152,7 +152,7 @@ class editor(object):
             # using m17n transliteration
             self.trans_m17n_mode = True
             
-        self._latin_chars = []
+        self._typed_chars = []
         self._m17ndb = 'm17n'
         self._m17n_mim_name = ""
         self.trans = None
@@ -179,7 +179,7 @@ class editor(object):
         self.over_input ()
         self._t_chars = []
         self._strings = []
-        self._latin_chars = []
+        self._typed_chars = []
         self._cursor = [0,0]
         self._py_mode = False
         self.update_candidates
@@ -196,7 +196,7 @@ class editor(object):
         self._lookup_table.clean()
         self._lookup_table.show_cursor(False)
         self._candidates = [[],[]]
-        self._latin_chars = []
+        self._typed_chars = []
 
     def over_input (self):
         '''
@@ -204,7 +204,7 @@ class editor(object):
         '''
         self.clear_input ()
         self._u_chars = []
-        self._latin_chars = []
+        self._typed_chars = []
 
     def set_parser (self, parser):
         '''change input parser'''
@@ -216,20 +216,18 @@ class editor(object):
         if self._chars[1]:
             self._chars[1].append (c)
         else:
+            self._typed_chars.append(c)
             if self.trans_m17n_mode:
-                self._latin_chars.append(c)
-                trans_chars = self.trans.transliterate(''.join(self._latin_chars))[0].decode('utf8')
-                self._chars[0] = []
-                self._tabkey_list = []
-                self._t_chars = []
-                for trans_char in trans_chars:
-                    self._chars[0].append(trans_char)
-                    self._tabkey_list += tabdict.other_lang_parser (trans_char,self.lang_dict)
-                    self._t_chars.append(trans_char)
+                trans_chars = self.trans.transliterate(''.join(self._typed_chars))[0].decode('utf8')
             else:
-                self._tabkey_list += tabdict.other_lang_parser (c, self.lang_dict)
-                self._chars[0].append (c) 
-                self._t_chars.append(c)
+                trans_chars = ''.join(self._typed_chars)
+            self._chars[0] = []
+            self._tabkey_list = []
+            self._t_chars = []
+            for trans_char in trans_chars:
+                self._chars[0].append(trans_char)
+                self._tabkey_list += tabdict.other_lang_parser (trans_char,self.lang_dict)
+                self._t_chars.append(trans_char)
         res = self.update_candidates ()
         return res
 
@@ -239,16 +237,14 @@ class editor(object):
         if self._chars[1]:
             _c = self._chars[1].pop ()
         elif self._chars[0]:
-            if self.trans_m17n_mode:
-                if self._latin_chars:
-                    self._latin_chars.pop()
+            if self._typed_chars:
+                self._typed_chars.pop()
             _c = self._chars[0].pop ()
             if self._tabkey_list:
                 self._tabkey_list.pop()
-            if self.trans_m17n_mode:
-                if not self._tabkey_list:
-                    if  self._latin_chars:
-                         self._latin_chars = []
+            if not self._tabkey_list:
+                if  self._typed_chars:
+                     self._typed_chars = []
             if (not self._chars[0]) and self._u_chars:
                 self._chars[0] = self._u_chars.pop()
                 self._chars[1] = self._chars[1][:-1]
@@ -750,7 +746,7 @@ class editor(object):
     def space (self):
         '''Process space Key Event
         return (KeyProcessResult,whethercommit,commitstring)'''
-        self._latin_chars = []
+        self._typed_chars = []
         if self._chars[1]:
             # we have invalid input, so do not commit 
             return (False,u'')
