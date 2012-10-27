@@ -1044,7 +1044,7 @@ class tabengine (ibus.EngineBase):
         '''Update Lookup Table in UI'''
         if self._editor.is_empty ():
             if tab_enable:
-                # if everything has been cleard from the editor
+                # if everything has been cleared from the editor
                 # for example by backspace, disable a tab enabled
                 # lookup table again:
                 self.is_lookup_table_enabled_by_tab = False
