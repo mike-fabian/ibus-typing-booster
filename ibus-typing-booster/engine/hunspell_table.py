@@ -21,6 +21,7 @@ __all__ = (
 )
 
 import os
+import string
 import unicodedata
 import ibus
 #from ibus import Property
@@ -88,8 +89,6 @@ N_ = lambda a : a
 
 import dbus
 
-tab_enable = False
-
 class KeyEvent:
     def __init__(self, keyval, is_press, state):
         self.code = keyval
@@ -107,7 +106,7 @@ class editor(object):
         self.db = database
         self._config = config
         self._name = self.db.get_ime_property('name')
-        self._config_section = "engine/Table/%s" % self._name
+        self._config_section = "engine/typing-booster/%s" % self._name
         self._pt = phrase_table_index
         self._parser = parser
         self._deparser = deparser
@@ -773,16 +772,6 @@ class editor(object):
         '''Return true if there is only one candidate'''
         return len(self._candidates[0]) == 1
 
-    @classmethod
-    def CONFIG_VALUE_CHANGED(cls, bus, section, name, value):
-        if name == "tab":
-            if value == 1:
-                global tab_enable
-                tab_enable = True  
-            else:
-                global tab_enable
-                tab_enable = False
-
 ########################
 ### Engine Class #####
 ####################
@@ -852,10 +841,11 @@ class tabengine (ibus.EngineBase):
         
         # name for config section
         self._name = self.db.get_ime_property('name')
-        self._config_section = "engine/Table/%s" % self._name
+        self._config_section = "engine/typing-booster/%s" % self._name
         
         # config module
         self._config = self._bus.get_config ()
+        self._config.connect('value-changed', self.__config_value_changed_cb)
         # Containers we used:
         self._editor = editor(self._config, self._pt, self._valid_input_chars, self._ml, self.db)
         # some other vals we used:
@@ -865,6 +855,10 @@ class tabengine (ibus.EngineBase):
         self._double_quotation_state = False
         self._single_quotation_state = False
         self.is_lookup_table_enabled_by_tab = False
+        self._tab_enable = self._config.get_value (
+            self._config_section,
+            "tabenable",
+            self.db.get_ime_property('tab_enable').lower() == u'true')
         # [EnMode,TabMode] we get TabMode properties from db
         self._full_width_letter = [
                 self._config.get_value (self._config_section,
@@ -1038,7 +1032,7 @@ class tabengine (ibus.EngineBase):
     def _update_lookup_table (self):
         '''Update Lookup Table in UI'''
         if self._editor.is_empty ():
-            if tab_enable:
+            if self._tab_enable:
                 # if everything has been cleared from the editor
                 # for example by backspace, disable a tab enabled
                 # lookup table again:
@@ -1053,7 +1047,7 @@ class tabengine (ibus.EngineBase):
         if len(self._editor._candidates[0]) == 0:
             self.hide_lookup_table()
             return
-        if tab_enable:
+        if self._tab_enable:
             if self.is_lookup_table_enabled_by_tab:
                 self.update_lookup_table ( self._editor.get_lookup_table(), True, False )    
             else:
@@ -1069,7 +1063,7 @@ class tabengine (ibus.EngineBase):
 
      
     def commit_string (self,string):
-        if tab_enable:
+        if self._tab_enable:
             # after each commit, disable a tab enabled lookup
             # table again, i.e. one needs to press tab again
             # while typing the next word to show the lookup table
@@ -1318,7 +1312,7 @@ class tabengine (ibus.EngineBase):
             return True
         
         elif key.code == keysyms.Tab:
-            if tab_enable:
+            if self._tab_enable:
                 # toggle whether the lookup table should be displayed
                 # or not
                 if self.is_lookup_table_enabled_by_tab == True:
@@ -1392,11 +1386,24 @@ class tabengine (ibus.EngineBase):
             return True
         return False
 
-    # for further implementation :)
-    
-    @classmethod
-    def CONFIG_RELOADED(cls, bus):
-        print "config reloaded"
-        config = bus.get_config()
-        if section != self._config_section:
+    def config_section_normalize(self, section):
+        # This function replaces _: with - in the dconf
+        # section and converts to lower case to make
+        # the comparison of the dconf sections work correctly.
+        # I avoid using .lower() here because it is locale dependent,
+        # when using .lower() this would not achieve the desired
+        # effect of comparing the dconf sections case insentively
+        # in some locales, it would fail for example if Turkish
+        # locale (tr_TR.UTF-8) is set.
+        return re.sub(r'[_:]', r'-', section).translate(
+            string.maketrans(string.ascii_uppercase, string.ascii_lowercase ))
+
+    def __config_value_changed_cb(self, config, section, name, value):
+        if self.config_section_normalize(self._config_section) != self.config_section_normalize(section):
             return
+        print "config value for engine %s changed" %self._name
+        if name == "tabenable":
+            if value == 1:
+                self._tab_enable = True
+            else:
+                self._tab_enable = False

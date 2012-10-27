@@ -17,6 +17,33 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 
+import sys
+import os
+from os import path
+import optparse
+
+opt = optparse.OptionParser()
+opt.set_usage ('%prog [options]')
+opt.add_option('-n', '--name',
+        action = 'store',type = 'string',dest = 'name',default = '',
+        help = 'Set the name of the ime engine, default: %default')
+opt.add_option( '-q', '--no-debug',
+        action = 'store_false',dest = 'debug',default = True,
+        help = 'redirect stdout and stderr to ~/.local/share/.ibus/ibus-typing-booster/setup-debug.log, default: %default')
+
+(options, args) = opt.parse_args()
+
+if options.debug:
+    if not os.access ( os.path.expanduser('~/.local/share/.ibus/ibus-typing-booster'), os.F_OK):
+        os.system ('mkdir -p ~/.local/share/.ibus/ibus-typing-booster')
+    logfile = os.path.expanduser('~/.local/share/.ibus/ibus-typing-booster/setup-debug.log')
+    sys.stdout = open (logfile,'a',0)
+    sys.stderr = open (logfile,'a',0)
+    from time import strftime
+    print '--- ', strftime('%Y-%m-%d: %H:%M:%S'), ' ---'
+
+config_section = "engine/typing-booster/%s" %options.name
+
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Pango
@@ -24,7 +51,6 @@ from gi.repository import IBus
 from gi.repository import GLib
 from pref import DictPref
 from pkginstall import InstallPkg
-from os import path
 
 class SetupUI:
     def __init__(self):
@@ -51,7 +77,7 @@ class SetupUI:
         close_button.connect('clicked', event_handler.onCloseClicked)
         chkbox = self.builder.get_object("checkbutton1")
         chkbox.connect('clicked', event_handler.onCheck)
-        if self.variant_to_value(self.config.get_value('Key','Tab')) == True:
+        if self.variant_to_value(self.config.get_value(config_section,'tabenable')) == True:
             chkbox.set_active(True)
 
     def __run_message_dialog(self, message, type=Gtk.MessageType.INFO):
@@ -102,9 +128,9 @@ class EventHander:
     def onCheck(self,widget):
         try:
             if widget.get_active():
-                SetupUi.config.set_value('key','Tab',GLib.Variant.new_boolean(True))
+                SetupUi.config.set_value(config_section,'tabenable',GLib.Variant.new_boolean(True))
             else:
-                SetupUi.config.set_value('key','Tab',GLib.Variant.new_boolean(False))
+                SetupUi.config.set_value(config_section,'tabenable',GLib.Variant.new_boolean(False))
         except:
             #Future on error need to check local db
             pass

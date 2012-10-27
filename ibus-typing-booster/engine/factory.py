@@ -50,8 +50,6 @@ class EngineFactory (ibus.EngineFactoryBase):
         self.engine_id=0
         try:
             bus = dbus.Bus()
-            self.__config = self.bus.get_config()
-            self.__config.connect('value-changed', self.__config_value_changed_cb)
             user = os.path.basename( os.path.expanduser('~') )
             self._sm_bus = bus.get_object ("org.ibus.table.SpeedMeter.%s"\
                     % user, "/org/ibus/table/SpeedMeter")
@@ -60,9 +58,6 @@ class EngineFactory (ibus.EngineFactoryBase):
         except:
             self._sm = None
 
-    def __config_value_changed_cb(self, config, section, name, value):
-        hunspell_table.editor.CONFIG_VALUE_CHANGED(self.bus, section, name, value)
-    
     def create_engine(self, engine_name):
         # because we need db to be past to Engine
         # the type (engine_name) == dbus.String
