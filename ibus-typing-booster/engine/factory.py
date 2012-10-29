@@ -90,10 +90,10 @@ class EngineFactory (ibus.EngineFactoryBase):
             #return engine.get_dbus_object()
             return engine
         except:
-            print "fail to create engine %s" % engine_name
+            print "failed to create engine %s" % engine_name
             import traceback
             traceback.print_exc ()
-            raise IBusException("Can not create engine %s" % engine_name)
+            raise IBusException("Cannot create engine %s" % engine_name)
 
     def do_destroy (self):
         '''Destructor, which finish some task for IME'''
