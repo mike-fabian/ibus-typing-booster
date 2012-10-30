@@ -1,149 +1,131 @@
-### File header must not be modified
-### This file must be encoded into UTF-8.
-### This table under LGPL
-### comments start with ### not single #
-### Derive from the format of SCIM Table, so you can modify the table from
-### scim-tables' table
-SCIM_Generic_Table_Phrase_Library_TEXT
-VERSION_1_0
-
-### Begin Table definition.
-BEGIN_DEFINITION
-
-### License
-LICENSE = LGPL
-
-### An unique id to distinguish this table among others.
-### Use uuidgen to generate this kind of id.
-UUID = 48595aae-0dda-4812-b023-d71b181ffdff
-
-### A unique number indicates the version of this file.
-### For example the last modified date of this file.
-### This number must be less than 2^32.
-### Just make your table version-able
-SERIAL_NUMBER = 20090218
-
-### ICON can be any format as long as your pygtk can recognized
-### the most widely ones are "png" and "svg", letter one is recommended
-ICON = ibus-indic-table.svg
-
-### The default name of this table, this is needed
-NAME = Table
-
-### The local names of this table, this is optional
-NAME.zh_CN = 形码
-NAME.zh_HK = 形碼
-NAME.zh_TW = 形碼
-
-### Description
-DESCRIPTION = This is a template engine table for IBus Table.
-
-### Supported languages of this table
-### sigle "zh_CN" just be recognized as zh_CN,
-### but "zh_CN, zh_HK" or more zh_XX will be recognized as zh;
-### and "en_US, zh_CN" will be just ignored.
-LANGUAGES = mr_IN
-
-### The author of this table
-AUTHOR = Naveen Kumar <nav007@gmail.com> 
-
-### Prompt string to be displayed in the status area, CN will be replaced by
-### the gettext tools in runtime as 中.
-STATUS_PROMPT = CN
-
-### Valid input chars.
-VALID_INPUT_CHARS = abcdefghijklmnopqrstuvwxyz
-
-### Layout
-LAYOUT = us
-
-### The max number of input keys for every phrase or character.
-MAX_KEY_LENGTH = 4
-
-### Use auto_commit mode as default
-AUTO_COMMIT = FALSE
-
-### Use full width punctuation by default
-DEF_FULL_WIDTH_PUNCT = TRUE
-### Not use full width letter by default
-DEF_FULL_WIDTH_LETTER = FALSE
-
-### Whether user are allow to define phrase, default is true
-### You have to define the word construction rules below.
-### For input methods which do not input phrases, set this to False
-USER_CAN_DEFINE_PHRASE = TRUE
-
-### Whether support PinYin Mode, default is true.
-### this feature is just for Chinese, set it to False if your IM is not
-### Chinese.
-PINYIN_MODE = TRUE
-
-### If true then the phrases' frequencies will be adjusted dynamically
-### according your using frequency.
-DYNAMIC_ADJUST = TRUE 
-
-### Some characters whose frequencies should be fix all the time, e.g. 
-### some punctuations
-### NO_CHECK_CHARS = 
-
-### Rules for constructing user defined phrase
-### "ce" stands for "ci equal", a Chinese English :), means "phrase length
-### equal to", thus ce2 -> phrase length equal to 2; and "ca" means "phrase
-### length equal or above", so ca4 -> phrase length equal or above 4.
-### p21 -> the 1st key of 2nd character in the phrase, and so on.
-### Each rule separate via ";". 
-### Example below is a complete rule-set, 
-### becuase [2,2] ∩ [3,3] ∩ [4,+∞] = [2,+∞], which is the range of length
-### of phrase. This have to be satisfied if you need ibus-indic-table to build up
-### your own inputed phrase via your daily using.
-RULES = ce2:p11+p12+p21+p22;ce3:p11+p21+p22+p31;ca4:p11+p21+p31+p41
-
-INSCRIPT=FALSE
-END_DEFINITION
-
-### Begin Table data.
-### Format of every line whose formated in "input_keys\tphrase\tfreq\n" is an
-### entry.
-### From left to right, the 1st column are the input key combination that you
-### entered via keyboard; the 2nd column are presented character or phrase of
-### the key combination you want; the 3rd column are frequency of the character
-### or phrase.
-BEGIN_TABLE
-input_keys	aim_chars	freq
-input_keys	aim_chars	freq
-input_keys	aim_chars	freq
-END_TABlE
-
-### Since some input methods use different table for every character to make
-### phrase, such as ZhengMa, they need explict define the goucima (the
-### phrase-building code for the given character), the format of every entry is
-### "character\tgoucima\n". 
-### For the input method which just use the full code as word-building code
-### just skip this field. The ibus-indic-table will build the codes needed from
-### above TABLE.
-### if you don't need different word-building code, please comment out the
-### next few lines with ###, just like these lines you are look at now.
-BEGIN_GOUCI
-character_1	goucima_1
-character_1	goucima_2
-END_GOUCI
-BEGIN_DEFINATION_INKEYS
-  ENG_KEY : INSCRIPT_KEY
-  !: ऍ
-  1: १
-  @:ॅ
-  2: २
-  #:#
-END_DEFINATION_INKEYS
-#### Numbers
-BEGIN_DEFINATION_NUMBERS
-  1 @ १
-  2 @ २
-  3 @ ३
-  4 @ ४
-  5 @ ५
-  6 @ ६
-  7 @ ७
-  8 @ ८
-  9 @ ९
-END_DEFINATION_NUMBERS
+# Commented sample file to be used as a template to create new .conf files
+#
+# .conf files must be encoded in UTF-8.
+# comment lines start with #
+license = GPL
+# “serial_number” is a unique number to indicate the version
+# of the file. For example, one can use the last modification date of the file.
+# This number must be less than 2^32.
+# (this line is not used at the moment).
+serial_number = 20120930
+# The icon can be in any format as long as pygtk can recognize it.
+# The most widely used formats are "png" and "svg", the latter one
+# is recommended.
+icon = english.png
+# Internal name of the engine. Required.
+# For the names of the engine displayed to the user, see “ime_name”
+# and “symbol”.
+name = typing-booster:de_DE
+# Long text describing the engine
+description = This is a typing booster engine table for German in Germany (de_DE). German characters can be typed using a keyboard layout which has all German characters or with any keyboard layout which can be used to type ASCII characters using the m17n input methods “latn-post” or “latn-pre”
+# Languages supported by the engine.
+languages = de
+# Author of the .conf file.
+author = Mike FABIAN <mfabian@redhat.com>
+# Status prompt.
+status_prompt = de
+# “valid_input_chars” contains the list of characters the user can
+# type to write words which should be completed.
+# If possible, one should avoid including the numbers 0-9 in
+# “valid_input_chars” becaused that prevents selecting a suggested
+# completion candidate by typing a number, candidates can only
+# be selected using the arrow keys then. If having numbers
+# in “valid_input_chars” is more useful than being able to select
+# completion candidates by typing numbers, it is OK to include
+# numbers in “valid_input_chars” though.
+valid_input_chars = ́̀̂̈̃-.ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyzÁÀÂÄÉÊÑÖÜßáàâäéêñöü
+# Keyboard layout. “default” means not to change the keyboard layout
+# which is already set when the engine is activated. Usually “default”
+# is best here because some engines need different keyboard layouts
+# depending on whether transliteration is used or not. For example,
+# the Russian typing booster supports direct keyboard input, thus
+# requiring a keyboard layout which can input Cyrillic characters.
+# The same Russian typing booster also supports several transliteration
+# input methods which need a keyboard layout which can input ASCII
+# characters.
+# Even if all input methods supported by an engine could be used
+# with the same keyboard, it does not really make sense to force
+# the user of that typing-booster engine to use a specific keyboard
+# layout. For example, the German typing booster does not have to be
+# used with a German keyboard layout, it works just as well with
+# any keyboard layout which can be used to type the special German
+# characters äöüßÄÖÜ somehow. If one of the transliteration input
+# methods is selected for German, any keyboard layout which can input
+# ASCII will do.
+# Therefore, better use “default” here and let the user decide the
+# keyboard layout.
+layout = default
+auto_wildcard = TRUE
+# The maximum number of characters which can be typed in a word
+# and still get suggestions for completion.
+max_key_length = 50
+auto_commit = FALSE
+discard_invalid_key=FALSE
+def_full_width_punct = TRUE
+def_full_width_letter = TRUE
+user_can_define_phrase = TRUE
+pinyin_mode = FALSE
+dynamic_adjust = TRUE
+# The hunspell dictionary file used to find the completions
+hunspell_dict = de_DE.dic
+# The encoding of the hunspell dictionary file
+encoding  = ISO8859-1
+# Long display name of the typing booster engine.
+# Displayed for example in the menu of input methods shown when clicking on
+# the input method selector in the gnome-shell panel.
+ime_name = German - DE(Hunspell)
+# The maximum number of candidates to display in one page.
+page_size = 6
+# Short display name of the typing booster engine.
+# Displayed for example in the gnome-shell panel, showing the
+# currently active input method.
+symbol= de-DE(Hunspell)
+# “lang_chars” contains a *complete* list of characters which may occur in
+# words in the language. “lang_chars” is also used for matching words in
+# the dictionary. A match in the dictionary is found if a line
+# starts with the characters already typed by the user. The
+# match continues in the same line as long as characters from “lang_chars”
+# follow. The first character not in “lang_chars” ends the match.
+# By tuning “lang_chars”, one can prevent undesired matches, for example
+# prevent matching comment lines in the dictionaries or other stuff
+# which would not be helpful when matched.
+# “lang_chars” should *never* contain a / because
+# words in the hunspell dictionaries may optionally be followed by a /
+# and flags for affix rules. Therefore, / can never be part of a word.
+# For example, the en_US.dic dictionary file has a line containing:
+#     “workaholic/SM”
+# and if the user types “work”, “workaholic” is one of the possible matches
+# but the trailing affix rules “/SM” should not show up in the matches.
+lang_chars = ́̀̂̈̃-.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyzÁÀÂÄÉÊÑÖÜßáàâäéêñöü
+# “m17n_mim_name” selects the default input method. Omit this key or
+# set it to the the special value “NoIme” to use no input method
+# by default. If a keyboard layout is available which has all
+# needed characters, no input method is necessary and using
+# the keyboard layout directly might be more convenient.
+m17n_mim_name = NoIme
+# “other_ime” should be set to TRUE if the user should be able to select
+# between different possible input methods for the language.
+other_ime = TRUE
+# “imes” lists the possible input methods.
+# Format is a comma separated list of
+#   <Display Name>:<Input Method>
+# values. “Display Name” is the text which should be presented to the
+# user in the menu to select the input method, “Input Method” is the
+# name of the input method as libtranslit needs it to load the input method.
+# There is one special value “NoIme” for “Input Method”, this value
+# means “Do not use any m17n transliteration at all, use the characters
+# as they are produced by the keyboard layout directly without any
+# transliteration.
+imes = Native Keyboard:NoIme,Latin-Pre:t-latn-pre,Latin-Post:t-latn-post
+# The setup program to use for this engine. Full command line with options.
+# Usually this should be “/usr/libexec/ibus-setup-typing-booster”
+# with the “--name” option giving the internal name of the engine
+# (see the “name” key above).
+setup = /usr/libexec/ibus-setup-typing-booster --name typing-booster:de_DE
+# If “tab_enable” is “False”, completion suggestions are always shown
+# as soon as something is typed which matches something in the dictionary.
+# If “tab_enable” is “True”, the completion suggestions are hidden
+# until the user types “Tab”, only then the menu with the completion
+# candidates pops up. Typing “Tab” again hides the menu with the
+# candidates again.
+tab_enable = False
