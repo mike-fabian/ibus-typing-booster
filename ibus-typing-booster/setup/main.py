@@ -21,6 +21,8 @@ import sys
 import os
 from os import path
 import optparse
+import locale
+from i18n import DOMAINNAME, _, N_, init as i18n_init
 
 opt = optparse.OptionParser()
 opt.set_usage ('%prog [options]')
@@ -56,6 +58,7 @@ class SetupUI:
     def __init__(self):
         filename = path.join(path.dirname(__file__),"setup.glade")
         self.builder = Gtk.Builder()
+        self.builder.set_translation_domain(DOMAINNAME)
         self.builder.add_from_file(filename)
         event_handler = EventHander()
         self.builder.connect_signals(event_handler)
@@ -66,7 +69,7 @@ class SetupUI:
 
         self.config = IBus.Bus().get_config()
         maindialog = self.builder.get_object("dialog1")
-        maindialog.set_title('Preferences for ibus-typing-booster')
+        maindialog.set_title(_("Preferences for ibus-typing-booster"))
         maindialog.show()
         choose_lang = self.builder.get_object("choose_lang")
         choose_lang.set_active(0)
@@ -135,8 +138,13 @@ class EventHander:
             #Future on error need to check local db
             pass
 
-SetupUi = SetupUI()
-
 if __name__ == '__main__':
+    try:
+        locale.setlocale(locale.LC_ALL, '')
+    except locale.Error:
+        print >> sys.stderr, "IBUS-WARNING **: Using the fallback 'C' locale"
+        locale.setlocale(locale.LC_ALL, 'C')
+    i18n_init()
+    SetupUi = SetupUI()
     Gtk.main()
 

@@ -35,6 +35,7 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 
 setup_typing_booster_PYTHON = \
+	i18n.py \
 	main.py \
 	pkginstall.py \
 	pref.py \
