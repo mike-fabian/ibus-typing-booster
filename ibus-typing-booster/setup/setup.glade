@@ -300,7 +300,7 @@
         <col id="0" translatable="yes">Urdu</col>
       </row>
       <row>
-        <col id="0" translatable="yes">Farsi</col>
+        <col id="0" translatable="yes">Persian</col>
       </row>
       <row>
         <col id="0" translatable="yes">Nepali</col>
@@ -315,7 +315,7 @@
         <col id="0" translatable="yes">Oriya</col>
       </row>
       <row>
-        <col id="0" translatable="yes">Telgu</col>
+        <col id="0" translatable="yes">Telugu</col>
       </row>
       <row>
         <col id="0" translatable="yes">Tamil</col>
@@ -324,13 +324,13 @@
         <col id="0" translatable="yes">Punjabi</col>
       </row>
       <row>
-        <col id="0" translatable="yes">Gujrathi</col>
+        <col id="0" translatable="yes">Gujarati</col>
       </row>
       <row>
         <col id="0" translatable="yes">Maithili</col>
       </row>
       <row>
-        <col id="0" translatable="yes">Assami</col>
+        <col id="0" translatable="yes">Assamese</col>
       </row>
       <row>
         <col id="0" translatable="yes">Kannada</col>
