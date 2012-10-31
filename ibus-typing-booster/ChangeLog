@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 31 Oct 2012 Released 0.0.17 version
+* Save setup option “Enable suggestions by Tab Key” correctly in dconf (Resolves: #871056)
+* Make setup dialog translatable and add German translations
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 24 Oct 2012 Released 0.0.16 version
 * Make enabling the lookup table with the TAB key work correctly (Resolves: #869687)
 * Simplify code in add_input()
