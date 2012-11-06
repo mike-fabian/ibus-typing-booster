@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2012-11-06 09:21+0100\n"
+"POT-Creation-Date: 2012-11-07 13:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,42 +17,39 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: setup/main.py:67
+#: setup/main.py:72
 msgid "ibus is not running."
 msgstr ""
 
-#: setup/main.py:73
-msgid "Preferences for ibus-typing-booster"
+#: setup/main.py:78
+#, python-format
+msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr ""
 
-#: setup/setup.glade:25
+#: setup/setup.glade:24
 msgid "Close"
 msgstr ""
 
-#: setup/setup.glade:84
-msgid "Choose Language"
+#: setup/setup.glade:68
+msgid "Enable suggestions by Tab key"
 msgstr ""
 
-#: setup/setup.glade:97 setup/setup.glade:166
-msgid "Install"
-msgstr ""
-
-#: setup/setup.glade:146
-msgid "<b>Installation of Dictionaries</b>"
-msgstr ""
-
-#: setup/setup.glade:196
-msgid "Enable suggestions by Tab Key"
-msgstr ""
-
-#: setup/setup.glade:221
+#: setup/setup.glade:89
 msgid "<b>Suggestion options</b>"
 msgstr ""
 
-#: setup/setup.glade:244
-msgid "page 2"
+#: setup/setup.glade:109
+msgid "Options"
 msgstr ""
 
-#: setup/setup.glade:258
-msgid "Options"
+#: setup/setup.glade:146
+msgid "Install"
+msgstr ""
+
+#: setup/setup.glade:170
+msgid "<b>Install the dictionary package for this engine</b>"
+msgstr ""
+
+#: setup/setup.glade:190
+msgid "Install dictionary"
 msgstr ""

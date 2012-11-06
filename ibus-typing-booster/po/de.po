@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-typing-booster 0.0.16\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2012-11-06 09:21+0100\n"
-"PO-Revision-Date: 2012-11-06 09:23+0100\n"
+"POT-Creation-Date: 2012-11-07 13:18+0100\n"
+"PO-Revision-Date: 2012-11-07 13:19+0100\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <trans-de@lists.fedoraproject.org>\n"
 "Language: de\n"
@@ -20,42 +20,40 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: setup/main.py:67
+#: setup/main.py:72
 msgid "ibus is not running."
 msgstr "Ibus läuft nicht."
 
-#: setup/main.py:73
-msgid "Preferences for ibus-typing-booster"
-msgstr "Ibus Typing Booster Einstellungen"
+#: setup/main.py:78
+#, python-format
+msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
+msgstr "Ibus Typing Booster \"%(symbol)s\" Einstellungen"
 
-#: setup/setup.glade:25
+#: setup/setup.glade:24
 msgid "Close"
 msgstr "Schließen"
 
-#: setup/setup.glade:84
-msgid "Choose Language"
-msgstr "Wählen Sie die Sprache"
-
-#: setup/setup.glade:97 setup/setup.glade:166
-msgid "Install"
-msgstr "Installieren"
-
-#: setup/setup.glade:146
-msgid "<b>Installation of Dictionaries</b>"
-msgstr "<b>Installation von Wörterbüchern</b>"
-
-#: setup/setup.glade:196
-msgid "Enable suggestions by Tab Key"
+#: setup/setup.glade:68
+msgid "Enable suggestions by Tab key"
 msgstr "Vorschläge nur bei Drücken von TAB"
 
-#: setup/setup.glade:221
+#: setup/setup.glade:89
 msgid "<b>Suggestion options</b>"
 msgstr "<b>Optionen für Vorschläge</b>"
 
-#: setup/setup.glade:244
-msgid "page 2"
-msgstr "Seite 2"
-
-#: setup/setup.glade:258
+#: setup/setup.glade:109
 msgid "Options"
 msgstr "Optionen"
+
+#: setup/setup.glade:146
+msgid "Install"
+msgstr "Installieren"
+
+#: setup/setup.glade:170
+msgid "<b>Install the dictionary package for this engine</b>"
+msgstr "<b>Installiere das Wörterbuchpaket für diesen Engine</b>"
+
+#: setup/setup.glade:190
+msgid "Install dictionary"
+msgstr "Installiere Wörterbuch"
+

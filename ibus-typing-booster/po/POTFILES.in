@@ -8,5 +8,4 @@ engine/tabdict.py
 engine/tabsqlitedb.py
 setup/main.py
 setup/pkginstall.py
-setup/pref.py
 setup/setup.glade

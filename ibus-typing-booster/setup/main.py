@@ -25,11 +25,14 @@ import optparse
 import locale
 from i18n import DOMAINNAME, _, N_, init as i18n_init
 
+sys.path = [sys.path[0]+'/../engine'] + sys.path
+import tabsqlitedb
+
 opt = optparse.OptionParser()
 opt.set_usage ('%prog [options]')
-opt.add_option('-n', '--name',
-        action = 'store',type = 'string',dest = 'name',default = '',
-        help = 'Set the name of the ime engine, default: %default')
+opt.add_option('-c', '--config-file',
+        action = 'store',type = 'string',dest = 'config_file',default = '',
+        help = 'Set the file name of config file for the ime engine, default: %default')
 opt.add_option( '-q', '--no-debug',
         action = 'store_false',dest = 'debug',default = True,
         help = 'redirect stdout and stderr to ~/.local/share/.ibus/ibus-typing-booster/setup-debug.log, default: %default')
@@ -45,18 +48,20 @@ if options.debug:
     from time import strftime
     print '--- ', strftime('%Y-%m-%d: %H:%M:%S'), ' ---'
 
-config_section = "engine/typing-booster/%s" %options.name
-
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Pango
 from gi.repository import IBus
 from gi.repository import GLib
-from pref import DictPref
 from pkginstall import InstallPkg
 
 class SetupUI:
     def __init__(self):
+        self.db = tabsqlitedb.tabsqlitedb (filename=options.config_file)
+        self.name = self.db.get_ime_property('name')
+        self.config_section = "engine/typing-booster/%s" % self.name
+        self.hunspell_dict_package = self.db.get_ime_property('hunspell_dict_package')
+        self.symbol = self.db.get_ime_property('symbol')
         filename = path.join(path.dirname(__file__),"setup.glade")
         self.builder = Gtk.Builder()
         self.builder.set_translation_domain(DOMAINNAME)
@@ -70,18 +75,18 @@ class SetupUI:
 
         self.config = IBus.Bus().get_config()
         maindialog = self.builder.get_object("dialog1")
-        maindialog.set_title(_("Preferences for ibus-typing-booster"))
+        maindialog.set_title(_("Preferences for ibus-typing-booster \"%(symbol)s\"") %{'symbol': self.symbol})
         maindialog.show()
-        choose_lang = self.builder.get_object("choose_lang")
-        choose_lang.set_active(0)
-        choose_lang.connect('changed', event_handler.changeSrcLang)
         install_button = self.builder.get_object("button1")
         install_button.connect('clicked', event_handler.onInstallClicked)
         close_button = self.builder.get_object("button2")
         close_button.connect('clicked', event_handler.onCloseClicked)
         chkbox = self.builder.get_object("checkbutton1")
         chkbox.connect('clicked', event_handler.onCheck)
-        if self.variant_to_value(self.config.get_value(config_section,'tabenable')) == True:
+        self.tab_enable = self.variant_to_value(self.config.get_value(self.config_section, 'tabenable'))
+        if self.tab_enable == None:
+            self.tab_enable = self.db.get_ime_property('tab_enable').lower() == u'true'
+        if  self.tab_enable == True:
             chkbox.set_active(True)
 
     def __run_message_dialog(self, message, type=Gtk.MessageType.INFO):
@@ -119,22 +124,17 @@ class EventHandler:
     def onCloseClicked(self, *args):
         Gtk.main_quit()
 
-    def changeSrcLang(self,widget):
-        model = widget.get_model()
-        index = widget.get_active()
-        if index > -1:
-            self.lang = model[index][0]
-
     def onInstallClicked(self,widget):
-        hunspell_dict = DictPref().get_hunspell_dict(self.lang)
-        InstallPkg(hunspell_dict)
+        InstallPkg(SetupUi.hunspell_dict_package)
 
     def onCheck(self,widget):
         try:
             if widget.get_active():
-                SetupUi.config.set_value(config_section,'tabenable',GLib.Variant.new_boolean(True))
+                SetupUi.tab_enable = True
+                SetupUi.config.set_value(SetupUi.config_section,'tabenable',GLib.Variant.new_boolean(True))
             else:
-                SetupUi.config.set_value(config_section,'tabenable',GLib.Variant.new_boolean(False))
+                SetupUi.tab_enable = False
+                SetupUi.config.set_value(SetupUi.config_section,'tabenable',GLib.Variant.new_boolean(False))
         except:
             #Future on error need to check local db
             pass

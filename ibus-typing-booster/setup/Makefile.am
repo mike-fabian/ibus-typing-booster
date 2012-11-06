@@ -38,7 +38,6 @@ setup_typing_booster_PYTHON = \
 	i18n.py \
 	main.py \
 	pkginstall.py \
-	pref.py \
 	setup.glade \
 	$(NULL)
 
