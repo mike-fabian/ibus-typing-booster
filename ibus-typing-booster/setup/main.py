@@ -61,7 +61,7 @@ class SetupUI:
         self.builder = Gtk.Builder()
         self.builder.set_translation_domain(DOMAINNAME)
         self.builder.add_from_file(filename)
-        event_handler = EventHander()
+        event_handler = EventHandler()
         self.builder.connect_signals(event_handler)
         if IBus.get_address() == None:
             self.__run_message_dialog(("ibus is not running."), Gtk.MessageType.ERROR)
@@ -109,7 +109,7 @@ class SetupUI:
             return variant
 
 
-class EventHander:
+class EventHandler:
     def __init__(self):
         self.lang = 'English'
 
