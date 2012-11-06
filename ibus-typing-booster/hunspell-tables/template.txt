@@ -123,9 +123,9 @@ other_ime = TRUE
 imes = Native Keyboard:NoIme,Latin-Pre:t-latn-pre,Latin-Post:t-latn-post
 # The setup program to use for this engine. Full command line with options.
 # Usually this should be “/usr/libexec/ibus-setup-typing-booster”
-# with the “--name” option giving the internal name of the engine
-# (see the “name” key above).
-setup = /usr/libexec/ibus-setup-typing-booster --name typing-booster:de_DE
+# with the “--config-file” option giving the file name of the
+# config file for this engine.
+setup = /usr/libexec/ibus-setup-typing-booster --config-file de_DE.conf
 # If “tab_enable” is “False”, completion suggestions are always shown
 # as soon as something is typed which matches something in the dictionary.
 # If “tab_enable” is “True”, the completion suggestions are hidden
