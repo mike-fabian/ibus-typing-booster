@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-typing-booster 0.0.16\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2012-10-30 10:10+0100\n"
-"PO-Revision-Date: 2012-10-30 10:36+0100\n"
+"POT-Creation-Date: 2012-11-06 09:21+0100\n"
+"PO-Revision-Date: 2012-11-06 09:23+0100\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <trans-de@lists.fedoraproject.org>\n"
 "Language: de\n"
@@ -20,7 +20,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: setup/main.py:78
+#: setup/main.py:67
+msgid "ibus is not running."
+msgstr "Ibus läuft nicht."
+
+#: setup/main.py:73
 msgid "Preferences for ibus-typing-booster"
 msgstr "Ibus Typing Booster Einstellungen"
 
