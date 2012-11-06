@@ -77,7 +77,7 @@ class IMApp:
         self.__bus = ibus.Bus()
         self.__bus.connect("disconnected", self.__bus_destroy_cb)
         self.__factory = factory.EngineFactory(self.__bus, dbfile)
-        self.destroied = False
+        self.destroyed = False
         if exec_by_ibus:
             self.__bus.request_name("org.freedesktop.IBus.IbusTypingBooster", 0)
         else:
@@ -121,11 +121,11 @@ class IMApp:
         self.__bus_destroy_cb()
 
     def __bus_destroy_cb(self, bus=None):
-        if self.destroied:
+        if self.destroyed:
             return
         print "finalizing:)"
         self.__factory.do_destroy()
-        self.destroied = True
+        self.destroyed = True
         self.__mainloop.quit()
 
 def cleanup (ima_ins):
