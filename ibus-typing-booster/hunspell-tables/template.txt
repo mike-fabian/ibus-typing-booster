@@ -68,6 +68,10 @@ pinyin_mode = FALSE
 dynamic_adjust = TRUE
 # The hunspell dictionary file used to find the completions
 hunspell_dict = de_DE.dic
+# The name of the (rpm-)package containing the dictionary file.
+# This is used for the setup dialog to install a possibly missing
+# dictionary.
+hunspell_dict_package = hunspell-de
 # The encoding of the hunspell dictionary file
 encoding  = ISO8859-1
 # Long display name of the typing booster engine.
