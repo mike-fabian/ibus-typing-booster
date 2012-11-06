@@ -65,7 +65,7 @@ class SetupUI:
         self.builder.connect_signals(event_handler)
         if IBus.get_address() == None:
             self.__run_message_dialog(_("ibus is not running."), Gtk.MessageType.ERROR)
-            self.builder.connect_signals(event_handler)
+            sys.exit(1)
             return
 
         self.config = IBus.Bus().get_config()
