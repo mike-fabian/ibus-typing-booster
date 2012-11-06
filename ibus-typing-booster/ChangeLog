@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 06 Nov 2012 Released 0.0.19 version
+* fix rpmlint warning “incorrect-fsf-address”
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 31 Oct 2012 Released 0.0.18 version
 * Add “import sys” back to keysym2ucs.py
 
