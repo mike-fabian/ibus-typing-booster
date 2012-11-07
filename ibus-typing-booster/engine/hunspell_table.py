@@ -784,9 +784,6 @@ class tabengine (ibus.EngineBase):
 #    _user_phrase_color         = 0xffffff
 #    _new_phrase_color         = 0xffffff
 
-    # lookup table page size
-    _page_size = 6
-    
     def __init__ (self, bus, obj_path, db ):
         super(tabengine,self).__init__ (bus,obj_path)
         self._bus = bus
