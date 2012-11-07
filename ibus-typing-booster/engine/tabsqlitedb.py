@@ -176,7 +176,7 @@ class tabsqlitedb:
         self.db.execute ('ATTACH DATABASE "%s" AS mudb;' % mudb )
         self.create_tables ("mudb")
 
-    def __parse_conf_file(self,conf_file="/usr/share/ibus-typing-booster/hunspell-tables/en_us.conf"):
+    def __parse_conf_file(self,conf_file="/usr/share/ibus-typing-booster/hunspell-tables/en_US.conf"):
         key_val_dict = {}
         if conf_file.find('typing-booster:') > 0 :
             conf_file=conf_file.replace('typing-booster:','')
