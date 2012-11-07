@@ -787,14 +787,23 @@ class tabengine (ibus.EngineBase):
     def __init__ (self, bus, obj_path, db ):
         super(tabengine,self).__init__ (bus,obj_path)
         self._bus = bus
-        self.db = db 
-        try:
-            tabengine._page_size = int(self.db.get_ime_property('page_size'))
-        except:
-            tabengine._page_size = 6
+        self.db = db
+        # config
+        self._name = self.db.get_ime_property('name')
+        self._config_section = "engine/typing-booster/%s" % self._name
+        self._config = self._bus.get_config ()
+        self._config.connect('value-changed', self.__config_value_changed_cb)
 
-        if tabengine._page_size > 15:
-            tabengine._page_size = 6
+        tabengine._page_size = self._config.get_value(
+            self._config_section,
+            'pagesize',
+            int(self.db.get_ime_property('page_size')))
+        if tabengine._page_size == None:
+            tabengine._page_size = 6 # reasonable default page size
+        if tabengine._page_size < 1:
+            tabengine._page_size = 1 # minimum page size supported
+        if tabengine._page_size > 9:
+            tabengine._page_size = 9 # maximum page size supported
         
         if self.db.get_ime_property('m17n_mim_name') == None or self.db.get_ime_property('m17n_mim_name') == 'NoIme':
             # Not using m17n transliteration:
@@ -836,13 +845,6 @@ class tabengine (ibus.EngineBase):
         self._pt = self.db.get_phrase_table_index ()
         self._ml = int(self.db.get_ime_property ('max_key_length'))
         
-        # name for config section
-        self._name = self.db.get_ime_property('name')
-        self._config_section = "engine/typing-booster/%s" % self._name
-        
-        # config module
-        self._config = self._bus.get_config ()
-        self._config.connect('value-changed', self.__config_value_changed_cb)
         # Containers we used:
         self._editor = editor(self._config, self._pt, self._valid_input_chars, self._ml, self.db)
         # some other vals we used:
@@ -1404,3 +1406,10 @@ class tabengine (ibus.EngineBase):
                 self._tab_enable = True
             else:
                 self._tab_enable = False
+            return
+        if name == "pagesize":
+            if value >= 1 and value <= 9:
+                tabengine._page_size = value
+                self._editor._lookup_table = ibus.LookupTable (tabengine._page_size,-1,False)
+                self.reset()
+            return

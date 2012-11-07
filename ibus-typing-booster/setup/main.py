@@ -88,6 +88,15 @@ class SetupUI:
             self.tab_enable = self.db.get_ime_property('tab_enable').lower() == u'true'
         if  self.tab_enable == True:
             chkbox.set_active(True)
+        self.page_size_adjustment = self.builder.get_object("page_size_adjustment")
+        self.page_size_adjustment.connect('value-changed', event_handler.onPageSizeAdjustmentValueChanged)
+        self.page_size = self.variant_to_value(self.config.get_value(self.config_section, 'pagesize'))
+        if self.page_size == None:
+            self.page_size = self.db.get_ime_property('page_size')
+        if self.page_size != None:
+            self.page_size_adjustment.set_value(int(self.page_size))
+        else:
+            self.page_size_adjustment.set_value(6)
 
     def __run_message_dialog(self, message, type=Gtk.MessageType.INFO):
         dlg = Gtk.MessageDialog(parent=self.builder.get_object('main'),
@@ -138,6 +147,10 @@ class EventHandler:
         except:
             #Future on error need to check local db
             pass
+
+    def onPageSizeAdjustmentValueChanged(self,widget):
+        self.page_size = SetupUi.page_size_adjustment.get_value()
+        SetupUi.config.set_value(SetupUi.config_section,'pagesize',GLib.Variant.new_int32(self.page_size))
 
 if __name__ == '__main__':
     try:
