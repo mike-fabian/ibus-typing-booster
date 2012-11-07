@@ -803,7 +803,6 @@ class tabengine (ibus.EngineBase):
             # using m17n transliteration:
             self.trans_m17n_mode = True
 
-        self._lookup_table = ibus.LookupTable (tabengine._page_size)
         # this is the backend sql db we need for our IME
         # we receive this db from IMEngineFactory
         #self.db = tabsqlitedb.tabsqlitedb( name = dbname )
