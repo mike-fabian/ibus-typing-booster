@@ -1,4 +1,14 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 08 Nov 2012 Released 0.0.20 version
+* Add the names of the dictionary packages to the .conf files
+* Pass the name of the config file to the setup tool instead the name of the engine
+* Improve setup GUI to make correct dictionary installable (Resolves #874421)
+* Add page size spin button to setup tool
+* Connect signals in __init__ of SetupUI after setting the initial values
+* Make the setup tool find the right config file in gnome-shell on Fedora 18
+* Update German translation
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 06 Nov 2012 Released 0.0.19 version
 * fix rpmlint warning “incorrect-fsf-address”
 
