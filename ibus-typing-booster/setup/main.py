@@ -82,14 +82,13 @@ class SetupUI:
         close_button = self.builder.get_object("button2")
         close_button.connect('clicked', event_handler.onCloseClicked)
         chkbox = self.builder.get_object("checkbutton1")
-        chkbox.connect('clicked', event_handler.onCheck)
         self.tab_enable = self.variant_to_value(self.config.get_value(self.config_section, 'tabenable'))
         if self.tab_enable == None:
             self.tab_enable = self.db.get_ime_property('tab_enable').lower() == u'true'
         if  self.tab_enable == True:
             chkbox.set_active(True)
+        chkbox.connect('clicked', event_handler.onCheck)
         self.page_size_adjustment = self.builder.get_object("page_size_adjustment")
-        self.page_size_adjustment.connect('value-changed', event_handler.onPageSizeAdjustmentValueChanged)
         self.page_size = self.variant_to_value(self.config.get_value(self.config_section, 'pagesize'))
         if self.page_size == None:
             self.page_size = self.db.get_ime_property('page_size')
@@ -97,6 +96,7 @@ class SetupUI:
             self.page_size_adjustment.set_value(int(self.page_size))
         else:
             self.page_size_adjustment.set_value(6)
+        self.page_size_adjustment.connect('value-changed', event_handler.onPageSizeAdjustmentValueChanged)
 
     def __run_message_dialog(self, message, type=Gtk.MessageType.INFO):
         dlg = Gtk.MessageDialog(parent=self.builder.get_object('main'),
@@ -137,16 +137,12 @@ class EventHandler:
         InstallPkg(SetupUi.hunspell_dict_package)
 
     def onCheck(self,widget):
-        try:
-            if widget.get_active():
-                SetupUi.tab_enable = True
-                SetupUi.config.set_value(SetupUi.config_section,'tabenable',GLib.Variant.new_boolean(True))
-            else:
-                SetupUi.tab_enable = False
-                SetupUi.config.set_value(SetupUi.config_section,'tabenable',GLib.Variant.new_boolean(False))
-        except:
-            #Future on error need to check local db
-            pass
+        if widget.get_active():
+            SetupUi.tab_enable = True
+            SetupUi.config.set_value(SetupUi.config_section,'tabenable',GLib.Variant.new_boolean(True))
+        else:
+            SetupUi.tab_enable = False
+            SetupUi.config.set_value(SetupUi.config_section,'tabenable',GLib.Variant.new_boolean(False))
 
     def onPageSizeAdjustmentValueChanged(self,widget):
         self.page_size = SetupUi.page_size_adjustment.get_value()
