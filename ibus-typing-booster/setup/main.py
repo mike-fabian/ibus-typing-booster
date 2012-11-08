@@ -57,17 +57,57 @@ from pkginstall import InstallPkg
 
 class SetupUI:
     def __init__(self):
-        self.db = tabsqlitedb.tabsqlitedb (filename=options.config_file)
-        self.name = self.db.get_ime_property('name')
-        self.config_section = "engine/typing-booster/%s" % self.name
-        self.hunspell_dict_package = self.db.get_ime_property('hunspell_dict_package')
-        self.symbol = self.db.get_ime_property('symbol')
         filename = path.join(path.dirname(__file__),"setup.glade")
         self.builder = Gtk.Builder()
         self.builder.set_translation_domain(DOMAINNAME)
         self.builder.add_from_file(filename)
         event_handler = EventHandler()
         self.builder.connect_signals(event_handler)
+
+        # Try to figure out the config file name:
+        self.config_file = None
+        if options.config_file:
+            # If the config file is specified on the command line, use that:
+            self.config_file = options.config_file
+        else:
+            # If the config file is not specified on the command line,
+            # try to get it from the environment. This is necessary
+            # in gnome-shell on Fedora 18 because the setup tool is
+            # called without command line options there but the
+            # environment variable IBUS_ENGINE_NAME is set:
+            try:
+                ibus_engine_name = os.environ['IBUS_ENGINE_NAME']
+                if ibus_engine_name.startswith('typing-booster:'):
+                    self.config_file = ibus_engine_name.replace('typing-booster:','') + '.conf'
+                else:
+                    self.__run_message_dialog(
+                        _("Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s")
+                        %{'name': ibus_engine_name},
+                        Gtk.MessageType.WARNING)
+            except:
+                self.__run_message_dialog(
+                    _("IBUS_ENGINE_NAME environment variable is not set."),
+                    Gtk.MessageType.WARNING)
+        if self.config_file == None:
+            self.__run_message_dialog(
+                _("Cannot determine the config file for this engine. Please use the --config-file option."),
+                Gtk.MessageType.ERROR)
+            sys.exit(1)
+            return
+        config_file_full_path = "/usr/share/ibus-typing-booster/hunspell-tables/" + self.config_file
+        if not os.path.isfile(config_file_full_path):
+            self.__run_message_dialog(
+                _("Config file %(file)s does not exist.")
+                %{'file': config_file_full_path},
+                Gtk.MessageType.ERROR)
+            sys.exit(1)
+            return
+
+        self.db = tabsqlitedb.tabsqlitedb (filename=self.config_file)
+        self.name = self.db.get_ime_property('name')
+        self.config_section = "engine/typing-booster/%s" % self.name
+        self.hunspell_dict_package = self.db.get_ime_property('hunspell_dict_package')
+        self.symbol = self.db.get_ime_property('symbol')
         if IBus.get_address() == None:
             self.__run_message_dialog(_("ibus is not running."), Gtk.MessageType.ERROR)
             sys.exit(1)
