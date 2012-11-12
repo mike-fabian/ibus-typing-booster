@@ -83,7 +83,7 @@ page_size = 6
 # Short display name of the typing booster engine.
 # Displayed for example in the gnome-shell panel, showing the
 # currently active input method.
-symbol= de-DE(Hunspell)
+symbol= de-DE✓
 # “lang_chars” contains a *complete* list of characters which may occur in
 # words in the language. “lang_chars” is also used for matching words in
 # the dictionary. A match in the dictionary is found if a line
