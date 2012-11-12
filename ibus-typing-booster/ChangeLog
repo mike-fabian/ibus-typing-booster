@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 12 Nov 2012 Released 0.0.21 version
+* Shorten symbol displayed in gnome panel (Resolves: #875285)
+* Add space before ( in long display name
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 08 Nov 2012 Released 0.0.20 version
 * Add the names of the dictionary packages to the .conf files
 * Pass the name of the config file to the setup tool instead the name of the engine
