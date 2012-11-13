@@ -138,6 +138,41 @@ class SetupUI:
             self.page_size_adjustment.set_value(6)
         self.page_size_adjustment.connect('value-changed', event_handler.onPageSizeAdjustmentValueChanged)
 
+        self.other_ime = self.db.get_ime_property('other_ime').lower() == u'true'
+        ime_combobox = self.builder.get_object("input_method_combobox")
+        ime_label = self.builder.get_object("input_method_label")
+        if self.other_ime:
+            ime_store = Gtk.ListStore(str, str)
+            imes = self.db.get_ime_property('imes').split(',')
+            for item in imes:
+                ime_store.append([item.split(':')[0], item.split(':')[1]])
+            ime_combobox.set_model(ime_store)
+            renderer_text = Gtk.CellRendererText()
+            ime_combobox.pack_start(renderer_text, True)
+            ime_combobox.add_attribute(renderer_text, "text", 0)
+            self.ime = self.variant_to_value(self.config.get_value(self.config_section, 'inputmethod'))
+            if self.ime == None:
+                # ime was not in settings, get the default from 'ime_name':
+                self.ime = self.db.get_ime_property('m17n_mim_name')
+            combobox_has_ime = False
+            for i in xrange(len(ime_store)):
+                if ime_store[i][1] == self.ime:
+                    ime_combobox.set_active(i)
+                    combobox_has_ime = True
+            if combobox_has_ime == False:
+                # the combobox did not have the ime from the settings or
+                # the default ime, take the ime from the first row of
+                # the combobox as the fallback:
+                self.ime = ime_store[0][1]
+                ime_combobox.set_active(0)
+            ime_combobox.connect("changed", event_handler.onImeComboboxChanged)
+        else:
+            # 'other_ime' is false in the .conf file, i.e. there is only
+            # one possible input method. In that case, we do not want
+            # to show an input method selection combobox:
+            ime_combobox.set_visible(False)
+            ime_label.set_visible(False)
+
     def __run_message_dialog(self, message, type=Gtk.MessageType.INFO):
         dlg = Gtk.MessageDialog(parent=self.builder.get_object('main'),
                                 flags=Gtk.DialogFlags.MODAL,
@@ -187,6 +222,13 @@ class EventHandler:
     def onPageSizeAdjustmentValueChanged(self,widget):
         self.page_size = SetupUi.page_size_adjustment.get_value()
         SetupUi.config.set_value(SetupUi.config_section,'pagesize',GLib.Variant.new_int32(self.page_size))
+
+    def onImeComboboxChanged(self,widget):
+        tree_iter = widget.get_active_iter()
+        if tree_iter != None:
+            model = widget.get_model()
+            self.ime = model[tree_iter][1]
+            SetupUi.config.set_value(SetupUi.config_section,'inputmethod',GLib.Variant.new_string(self.ime))
 
 if __name__ == '__main__':
     try:
