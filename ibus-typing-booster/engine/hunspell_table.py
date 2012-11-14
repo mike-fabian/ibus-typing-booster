@@ -141,16 +141,9 @@ class editor(object):
         self._onechar = self._config.get_value (self._config_section, "OneChar", False)
         self._first = 0 
         self.is_down_press = False
-        if self.db.get_ime_property('m17n_mim_name') == None or self.db.get_ime_property('m17n_mim_name') == 'NoIme':
-            # Not using m17n transliteration:
-            self.trans_m17n_mode = False
-        else:
-            # using m17n transliteration
-            self.trans_m17n_mode = True
-            
+
         self._typed_chars = []
         self._m17ndb = 'm17n'
-        self._m17n_mim_name = ""
         self.trans = None
         self.lang_chars = self.db.get_ime_property('lang_chars')
         if self.lang_chars != None:
@@ -162,12 +155,42 @@ class editor(object):
         for index,char in enumerate(self.lang_chars):
             if char:
                 self.lang_dict[char] = index + 1
-        if self.trans_m17n_mode:
+
+        self._supported_imes = []
+        if self.db.get_ime_property('m17n_mim_name') != None:
+            self._supported_imes.append(self.db.get_ime_property('m17n_mim_name'))
+        self._other_ime = self.db.get_ime_property('other_ime').lower() == u'true'
+        if self._other_ime:
+            imes = self.db.get_ime_property('imes').split(',')
+            for item in imes:
+                mim_name = item.split(':')[1]
+                if not mim_name in self._supported_imes:
+                    self._supported_imes.append(mim_name)
+        if self._other_ime:
+            # Several imes are selectable, try to get the selected one from dconf:
+            self._current_ime = self._config.get_value(self._config_section, 'inputmethod', None)
+            if self._current_ime == None or not self._current_ime in self._supported_imes:
+                # There is no ime set in dconf or an unsupported ime,
+                # fall back to the “main” ime from the config file
+                # or if that one does not exist either to the first of
+                # the supported imes:
+                self._current_ime = self.db.get_ime_property('m17n_mim_name')
+                if self._current_ime == None:
+                    self._current_ime = self._supported_imes[0]
+        else:
+            # There is only one ime, get it from the config file:
+            self._current_ime = self.db.get_ime_property('m17n_mim_name')
+        if self._current_ime == None or self._current_ime == 'NoIme':
+            # Not using m17n transliteration:
+            self.trans_m17n_mode = False
+        else:
+            # using m17n transliteration
+            self.trans_m17n_mode = True
             try:
-                self._m17n_mim_name = self.db.get_ime_property('m17n_mim_name')
-                #self.trans = Translit.Transliterator.get(self._m17ndb, self._m17n_mim_name)
-                self.trans = Transliterator.get(self._m17ndb, self._m17n_mim_name)
+                #self.trans = Translit.Transliterator.get(self._m17ndb, self._current_ime)
+                self.trans = Transliterator.get(self._m17ndb, self._current_ime)
             except:
+                print "error: could not get Transliterator"
                 pass
 
     def clear (self):
@@ -804,13 +827,6 @@ class tabengine (ibus.EngineBase):
             tabengine._page_size = 1 # minimum page size supported
         if tabengine._page_size > 9:
             tabengine._page_size = 9 # maximum page size supported
-        
-        if self.db.get_ime_property('m17n_mim_name') == None or self.db.get_ime_property('m17n_mim_name') == 'NoIme':
-            # Not using m17n transliteration:
-            self.trans_m17n_mode = False
-        else:
-            # using m17n transliteration:
-            self.trans_m17n_mode = True
 
         # this is the backend sql db we need for our IME
         # we receive this db from IMEngineFactory
@@ -905,7 +921,6 @@ class tabengine (ibus.EngineBase):
         self._single_quotation_state = False
         self._prev_key = None
         #self._editor._onechar = False    
-        self._init_properties ()
         self._update_ui ()
     
     def do_destroy(self):
@@ -914,54 +929,12 @@ class tabengine (ibus.EngineBase):
         #self.db.sync_usrdb ()
         super(tabengine,self).do_destroy()
 
-    def _init_properties (self):
-        self.ime_names = {}
-        self.__prop_dict = {}
-        self.properties= ibus.PropList ()
-        if self.db.get_ime_property('other_ime').lower() == u'true':
-            imes = self.db.get_ime_property('imes').split(',')
-            for item in imes:
-                label = item.split(':')
-                self.ime_names[label[0]]=label[1]
-            input_mode_prop = ibus.Property(key=u"Keymap",
-                                            type=ibus.PROP_TYPE_MENU,
-                                            label=u"Select Keymap",
-                                            tooltip=("Switch input mode"))
-            self.__prop_dict[u"InputMode"] = input_mode_prop
-            props = ibus.PropList()
-            for ime in self.ime_names:
-                props.append(ibus.Property(key="keymap."+ime,
-                                           type=ibus.PROP_TYPE_RADIO,
-                                           label=(ime)))
-            for prop in props:
-                self.__prop_dict[prop.key] = prop
-            input_mode_prop.set_sub_props(props)
-            self.properties.insert(1,input_mode_prop)
-        self.register_properties (self.properties)
-        self._refresh_properties ()
-    
-    def _refresh_properties (self):
-        '''Method used to update properties'''
-        map (self.update_property, self.properties)
-    
     def _change_mode (self):
         '''Shift input mode, TAB -> EN -> TAB
         '''
         self.reset ()
         self._update_ui ()
 
-    def property_activate (self, property,prop_state = ibus.PROP_STATE_UNCHECKED):
-        '''Shift property'''
-        if self.db.get_ime_property('other_ime') == 'TRUE':
-            if 'keymap' in property:
-                ime_name = str(property).split('.')
-                if ime_name[1] in self.ime_names and self.ime_names[ime_name[1]] != 'NoIme':
-                    self._editor.trans_m17n_mode = True
-                    self._editor.trans = Transliterator.get(self._editor._m17ndb, self.ime_names[ime_name[1]])
-                else:
-                    self._editor.trans_m17n_mode = False
-        self._refresh_properties ()
-    
     def _update_preedit (self):
         '''Update Preedit String in UI'''
         _str = self._editor.get_preedit_strings ()
@@ -1233,7 +1206,6 @@ class tabengine (ibus.EngineBase):
                 if sp_res[1] == u' ':
                     self.commit_string ((" "))
 
-            self._refresh_properties ()
             self._update_ui ()
             return True
         # now we ignore all else hotkeys
@@ -1298,7 +1270,6 @@ class tabengine (ibus.EngineBase):
             if res:
                 commit_string = self._editor.get_preedit_strings ()
                 self.commit_string (commit_string+ " ")
-                self._refresh_properties ()
                 self._update_ui ()
                 # modify freq info
                 self.db.check_phrase (commit_string, input_keys)
@@ -1338,8 +1309,6 @@ class tabengine (ibus.EngineBase):
     # below for initial test
     def focus_in (self):
         if self._on:
-            self.register_properties (self.properties)
-            self._refresh_properties ()
             self._update_ui ()
             #try:
             #    if self._sm_on:
@@ -1412,4 +1381,18 @@ class tabengine (ibus.EngineBase):
                 tabengine._page_size = value
                 self._editor._lookup_table = ibus.LookupTable (tabengine._page_size,-1,False)
                 self.reset()
+            return
+        if name == "inputmethod":
+            if value in self._editor._supported_imes:
+                self._editor._current_ime = value
+                if value != 'NoIme':
+                    print "Switching to transliteration using  ime=%s" %value
+                    self._editor.trans_m17n_mode = True
+                    self._editor.trans = Transliterator.get(self._editor._m17ndb, value)
+                else:
+                    print "Switching off transliteration."
+                    self._editor.trans_m17n_mode = False
+            else:
+                print "error: trying to set unsupported ime: ", value
+            self.reset()
             return
