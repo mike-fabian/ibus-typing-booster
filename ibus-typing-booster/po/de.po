@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-typing-booster 0.0.16\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2012-11-08 16:10+0100\n"
-"PO-Revision-Date: 2012-11-08 15:14+0100\n"
+"POT-Creation-Date: 2012-11-14 18:02+0100\n"
+"PO-Revision-Date: 2012-11-14 18:03+0100\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <trans-de@lists.fedoraproject.org>\n"
 "Language: de\n"
@@ -55,30 +55,30 @@ msgstr "Ibus Typing Booster \"%(symbol)s\" Einstellungen"
 msgid "Close"
 msgstr "Schließen"
 
-#: setup/setup.glade:69
+#: setup/setup.glade:72
 msgid "Enable suggestions by Tab key"
 msgstr "Vorschläge nur bei Drücken von TAB"
 
-#: setup/setup.glade:92
+#: setup/setup.glade:96
 msgid "Candidate window page size:"
 msgstr "Anzahl der Vorschläge pro Seite:"
 
-#: setup/setup.glade:130
-msgid "<b>Suggestion options</b>"
-msgstr "<b>Optionen für Vorschläge</b>"
+#: setup/setup.glade:132
+msgid "Input Method:"
+msgstr "Eingabemethode:"
 
-#: setup/setup.glade:150
+#: setup/setup.glade:181
 msgid "Options"
 msgstr "Optionen"
 
-#: setup/setup.glade:187
+#: setup/setup.glade:218
 msgid "Install"
 msgstr "Installieren"
 
-#: setup/setup.glade:211
+#: setup/setup.glade:242
 msgid "<b>Install the dictionary package for this engine</b>"
 msgstr "<b>Installiere das Wörterbuchpaket für diesen Engine</b>"
 
-#: setup/setup.glade:231
+#: setup/setup.glade:262
 msgid "Install dictionary"
 msgstr "Installiere Wörterbuch"
