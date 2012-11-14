@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 14 Nov 2012 Released 0.0.22 version
+* Add combobox to setup GUI to select input method
+* Make the engine use the input method from the dconf setting (Resolves: #876666)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 12 Nov 2012 Released 0.0.21 version
 * Shorten symbol displayed in gnome panel (Resolves: #875285)
 * Add space before ( in long display name
