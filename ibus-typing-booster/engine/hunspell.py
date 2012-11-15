@@ -53,14 +53,13 @@ system_freq = 0
 system_word = 1
 
 class Hunspell:
-    def __init__(self,lang='en',loc='/usr/share/myspell/',dict_name='en_US.dic',aff_name='en_US.aff',m17n=False,langdict=None,
+    def __init__(self,lang='en',loc='/usr/share/myspell/',dict_name='en_US.dic',aff_name='en_US.aff',langdict=None,
                  lang_chars='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
                  encoding='UTF-8'):
         self.lang=lang
         self.loc = loc
         self.dict_name = dict_name
         self.lang_chars=lang_chars
-        self.m17n=m17n
         self.tab_dict = tab_dict
         self.encoding = encoding
         if langdict != None:

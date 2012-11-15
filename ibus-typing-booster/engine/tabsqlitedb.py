@@ -70,12 +70,8 @@ class tabsqlitedb:
 
         self.encoding = self.get_ime_property('encoding')
 
-        if self.get_ime_property('m17n_mim_name') == None or self.get_ime_property('m17n_mim_name') == 'NoIme':
-            # Not using m17n transliteration:
-            self.hunspell_obj = hunspell.Hunspell(lang=self.get_ime_property('languages'),dict_name=self.get_ime_property ("hunspell_dict"),m17n=True,langdict=self.lang_dict,encoding=self.encoding,lang_chars=self.lang_chars)
-        else:
-            # Using m17n transliteration:
-            self.hunspell_obj = hunspell.Hunspell(lang=self.get_ime_property('languages'),dict_name=self.get_ime_property ("hunspell_dict"),m17n=False,langdict=self.lang_dict,encoding=self.encoding,lang_chars=self.lang_chars)
+        self.hunspell_obj = hunspell.Hunspell(lang=self.get_ime_property('languages'),dict_name=self.get_ime_property ("hunspell_dict"),langdict=self.lang_dict,encoding=self.encoding,lang_chars=self.lang_chars)
+
         # for chinese
         self._is_chinese = self.is_chinese()
         # for fast add word
