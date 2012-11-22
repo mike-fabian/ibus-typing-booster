@@ -23,6 +23,7 @@ import os
 from os import path
 import optparse
 import locale
+from time import strftime
 from i18n import DOMAINNAME, _, N_, init as i18n_init
 
 sys.path = [sys.path[0]+'/../engine'] + sys.path
@@ -45,7 +46,6 @@ if options.debug:
     logfile = os.path.expanduser('~/.local/share/.ibus/ibus-typing-booster/setup-debug.log')
     sys.stdout = open (logfile,'a',0)
     sys.stderr = open (logfile,'a',0)
-    from time import strftime
     print '--- ', strftime('%Y-%m-%d: %H:%M:%S'), ' ---'
 
 from gi.repository import Gtk
@@ -210,6 +210,10 @@ class EventHandler:
 
     def onInstallClicked(self,widget):
         InstallPkg(SetupUi.hunspell_dict_package)
+        # Write a timestamp to dconf to trigger the callback
+        # for changed dconf values in the engine and reload
+        # the dictionary:
+        SetupUi.config.set_value(SetupUi.config_section,'dictionaryinstalltimestamp',GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
 
     def onCheck(self,widget):
         if widget.get_active():

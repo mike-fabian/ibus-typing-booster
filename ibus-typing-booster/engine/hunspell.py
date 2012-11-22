@@ -59,21 +59,25 @@ class Hunspell:
         self.lang=lang
         self.loc = loc
         self.dict_name = dict_name
+        self.aff_name = aff_name
         self.lang_chars=lang_chars
         self.tab_dict = tab_dict
         self.encoding = encoding
         if langdict != None:
             self.tab_dict = langdict
+        self.dict_buffer = None
+        self.aff_handle = None
+        self.load_dictionary()
 
+    def load_dictionary(self):
         try:
-            self.dict_buffer = codecs.open(loc+dict_name).read().decode(self.encoding)
-            self.aff_handle = open(loc+aff_name)
+            self.dict_buffer = codecs.open(self.loc+self.dict_name).read().decode(self.encoding)
+            self.aff_handle = open(self.loc+self.aff_name)
         except:
             # print "Dictionary file %s or AFF file is not present %s ",(dict_name,aff_name)
             self.dict_buffer = None
             self.aff_handle = None
             pass
-
 
     ''' This function takes list as input and converts the words in the list into tab_dict format'''
     def convert_tab_dict(self,words):

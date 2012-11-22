@@ -1369,7 +1369,7 @@ class tabengine (ibus.EngineBase):
     def __config_value_changed_cb(self, config, section, name, value):
         if self.config_section_normalize(self._config_section) != self.config_section_normalize(section):
             return
-        print "config value for engine %s changed" %self._name
+        print "config value %(n)s for engine %(en)s changed" %{'n': name, 'en': self._name}
         if name == "tabenable":
             if value == 1:
                 self._tab_enable = True
@@ -1394,5 +1394,11 @@ class tabengine (ibus.EngineBase):
                     self._editor.trans_m17n_mode = False
             else:
                 print "error: trying to set unsupported ime: ", value
+            self.reset()
+            return
+        if name == "dictionaryinstalltimestamp":
+            # The dictionary has bin updated or installed, (re)load it:
+            print "Reloading dictionary ..."
+            self.db.hunspell_obj.load_dictionary()
             self.reset()
             return
