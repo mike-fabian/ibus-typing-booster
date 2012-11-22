@@ -24,11 +24,11 @@ __all__ = (
 import os
 import string
 import unicodedata
+import curses.ascii
 import ibus
 #from ibus import Property
 from ibus import keysyms
 from ibus import modifier
-from ibus import ascii
 #import tabsqlitedb
 import tabdict
 import keysym2ucs
@@ -1093,14 +1093,14 @@ class tabengine (ibus.EngineBase):
                 if key.code == keysyms.space:
                     self.commit_string (keysym2unichr (key.code))
                     return True
-                if ascii.ispunct (key.code):
+                if curses.ascii.ispunct (key.code):
                     if self._editor.trans_m17n_mode:
                         res = self._editor.add_input ( keysym2unichr(key.code) )
                         self._update_ui ()
                         return True
                     self.commit_string (keysym2unichr (key.code))
                     return True
-                if ascii.isdigit (key.code):
+                if curses.ascii.isdigit (key.code):
                     if self._editor.trans_m17n_mode:
                         key_code = self._editor.trans.transliterate(keysym2unichr (key.code))[0].decode('utf8')
                         self.commit_string (key_code)
@@ -1230,7 +1230,7 @@ class tabengine (ibus.EngineBase):
                     
             res = self._editor.add_input ( keysym2unichr(key.code) )
             if not res:
-                if ascii.ispunct (key.code):
+                if curses.ascii.ispunct (key.code):
                     key_char = keysym2unichr (key.code)
                 else:
                     key_char = keysym2unichr (key.code)
