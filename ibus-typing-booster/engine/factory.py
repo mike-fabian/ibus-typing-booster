@@ -24,7 +24,6 @@ import hunspell_table
 import tabsqlitedb
 import os
 import dbus
-#import _config as config
 from re import compile as re_compile
 
 path_patt = re_compile(r'[^a-zA-Z0-9_/]')

@@ -26,10 +26,8 @@ import string
 import unicodedata
 import curses.ascii
 import ibus
-#from ibus import Property
 from ibus import keysyms
 from ibus import modifier
-#import tabsqlitedb
 import tabdict
 import keysym2ucs
 from keysym2ucs import keysym2ucs
