@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 23 Nov 2012 Released 0.0.23 version
+* Make the engine reload the dictionary when the dictionary is installed via the setup tool (Resolves: #879262)
+* get rid of unused parameter “m17n” in “class Hunspell”
+* Use “import curses.ascii” instead of “from ibus import ascii”
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 14 Nov 2012 Released 0.0.22 version
 * Add combobox to setup GUI to select input method
 * Make the engine use the input method from the dconf setting (Resolves: #876666)
