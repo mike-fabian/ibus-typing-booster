@@ -70,7 +70,13 @@ class tabsqlitedb:
 
         self.encoding = self.get_ime_property('encoding')
 
-        self.hunspell_obj = hunspell.Hunspell(lang=self.get_ime_property('languages'),dict_name=self.get_ime_property ("hunspell_dict"),langdict=self.lang_dict,encoding=self.encoding,lang_chars=self.lang_chars)
+        self.hunspell_obj = hunspell.Hunspell(
+            lang=self.get_ime_property('languages'),
+            dict_name=self.get_ime_property ("hunspell_dict"),
+            aff_name=self.get_ime_property ("hunspell_dict").replace('.dic', '.aff'),
+            langdict=self.lang_dict,
+            encoding=self.encoding,
+            lang_chars=self.lang_chars)
 
         # for chinese
         self._is_chinese = self.is_chinese()
