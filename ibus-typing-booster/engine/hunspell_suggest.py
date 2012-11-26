@@ -20,6 +20,11 @@
 
 import re
 import codecs
+try:
+    import hunspell
+    import_hunspell_successful = True
+except:
+    import_hunspell_successful = False
 
 tab_dict = {
     '0':0,
@@ -70,13 +75,23 @@ class Hunspell:
         self.load_dictionary()
 
     def load_dictionary(self):
+        self.dict_buffer = None
+        self.aff_handle = None
+        self.pyhunspell_object = None
         try:
             self.dict_buffer = codecs.open(self.loc+self.dict_name).read().decode(self.encoding)
             self.aff_handle = open(self.loc+self.aff_name)
+            if import_hunspell_successful:
+                self.pyhunspell_object = hunspell.HunSpell(
+                    self.loc+self.dict_name,
+                    self.loc+self.aff_name)
         except:
             # print "Dictionary file %s or AFF file is not present %s ",(dict_name,aff_name)
             self.dict_buffer = None
             self.aff_handle = None
+            self.pyhunspell_object = None
+            import traceback
+            traceback.print_exc()
             pass
 
     ''' This function takes list as input and converts the words in the list into tab_dict format'''
@@ -112,6 +127,14 @@ class Hunspell:
             patt_start = re.compile(regexp,re.MULTILINE|re.UNICODE)
         if self.dict_buffer != None:
             start_words = patt_start.findall(self.dict_buffer)
+            if self.pyhunspell_object != None:
+                if len(word) >= 4:
+                    extra_suggestions = map(
+                        lambda x: x.decode(self.encoding),
+                        self.pyhunspell_object.suggest(word.encode(self.encoding)))
+                    for suggestion in extra_suggestions:
+                        if suggestion not in start_words:
+                            start_words.append(suggestion)
         else:
             start_words = [unicode('☹ %(loc)s%(dict_name)s not found.' %{'loc': self.loc, 'dict_name': self.dict_name}, 'utf-8'), unicode('☹ please install hunspell dictionary!', 'utf-8') ]
         words = set(start_words[0:max_words])
