@@ -25,7 +25,7 @@ import tabdict
 import uuid
 import time
 import re
-import hunspell 
+import hunspell_suggest
 
 patt_r = re.compile(r'c([ea])(\d):(.*)')
 patt_p = re.compile(r'p(-{0,1}\d)(-{0,1}\d)')
@@ -70,7 +70,7 @@ class tabsqlitedb:
 
         self.encoding = self.get_ime_property('encoding')
 
-        self.hunspell_obj = hunspell.Hunspell(
+        self.hunspell_obj = hunspell_suggest.Hunspell(
             lang=self.get_ime_property('languages'),
             dict_name=self.get_ime_property ("hunspell_dict"),
             aff_name=self.get_ime_property ("hunspell_dict").replace('.dic', '.aff'),
