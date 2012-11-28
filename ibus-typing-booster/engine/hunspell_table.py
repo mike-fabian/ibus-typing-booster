@@ -1317,6 +1317,7 @@ class tabengine (ibus.EngineBase):
             #    pass
     
     def focus_out (self):
+        self.reset()
         #try:
         #    self._sm.Hide()
         #except:
