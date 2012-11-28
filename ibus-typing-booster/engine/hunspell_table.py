@@ -515,14 +515,19 @@ class editor(object):
         # this is the part of tabkey
         #attrs.append( ibus.AttributeForeground ( 0x1973a2, 0, \
         #    len(_phrase) + len(_tbks)))
-        if candi[-2] < 0:
+        if not _phrase.startswith(self.get_input_chars_string()):
+            # this is a candidate which does not start exactly
+            # with the characters typed, i.e. it is a suggestion
+            # for a spelling correction:
+            attrs.append ( ibus.AttributeForeground (0xFF0000, 0, len(_phrase)) )
+        elif candi[-2] < 0:
             # this is a user defined phrase:
             attrs.append ( ibus.AttributeForeground (0x7700c3, 0, len(_phrase)) )
         elif candi[-1] > 0:
-            # this is a sys phrase used by user:
-            attrs.append ( ibus.AttributeForeground (0x000000, 0, len(_phrase)) )
+            # this is a system phrase which has already been used by the user:
+            attrs.append ( ibus.AttributeForeground (0xFF7F00, 0, len(_phrase)) )
         else:
-            # this is a system phrase haven't been used:
+            # this is a system phrase that has not been used yet:
             attrs.append ( ibus.AttributeForeground (0x000000, 0, len(_phrase)) )
         self._lookup_table.append_candidate ( ibus.Text(_phrase, attrs) )
         self._lookup_table.show_cursor (False)
