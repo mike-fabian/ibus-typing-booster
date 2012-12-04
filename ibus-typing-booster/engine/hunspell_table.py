@@ -280,7 +280,7 @@ class editor(object):
 
     def get_input_chars_string (self):
         '''Get valid input char string'''
-        return u''.join(map(str,self._t_chars))
+        return u''.join(self._t_chars)
 
     def get_all_input_strings (self):
         '''Get all uncommit input characters, used in English mode or direct commit'''
