@@ -963,8 +963,7 @@ class tabengine (ibus.EngineBase):
                 #attrs.append( ibus.AttributeForeground(0x1b3f03,lg1+lg2,lg3) )
             else:
                 attrs.append( ibus.AttributeForeground(0x1b3f03,0,len(_str)) )
-#            attrs = ibus.AttrList()
-#            attrs.append(ibus.AttributeUnderline(ibus.ATTR_UNDERLINE_SINGLE, 0, len(_str)))
+            attrs.append(ibus.AttributeUnderline(ibus.ATTR_UNDERLINE_SINGLE, 0, len(_str)))
 
 
             super(tabengine, self).update_preedit_text(ibus.Text(_str, attrs), self._editor.get_caret(), True)
