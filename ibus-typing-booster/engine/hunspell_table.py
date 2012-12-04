@@ -975,29 +975,12 @@ class tabengine (ibus.EngineBase):
     
     def _update_aux (self):
         '''Update Aux String in UI'''
-        '''
-        _ic = self._editor.get_strings ()
-        if _ic:
-            res = patt_edit.match (_ic)
-            if res:
-                _ic = u''
-                ures = patt_uncommit.match (res.group(1))
-                if ures:
-                    _ic = u''.join (ures.groups())
-                else:
-                    _ic += res.group (1)
-                _ic += res.group(2)
-                _ic += res.group(3)
-        if _ic in self._editor._ap_dict:
-            _ic =  self._editor.get_aux_strings()+self._editor._ap_dict[_ic]
-        '''
         _ic = self._editor.get_aux_strings()
-        ins_str = ''
-        _ic = None
+        _ic = None # we do not use the aux string at the moment
         if _ic:
+            # Colours do not work at the moment in the auxiliary text!
+            # Needs fix in ibus.
             attrs = ibus.AttrList([ ibus.AttributeForeground(0x9515b5,0, len(_ic)) ])
-            #attrs = [ scim.Attribute(0,len(_ic),scim.ATTR_FOREGROUND,0x5540c1)]
-
             super(tabengine, self).update_auxiliary_text(ibus.Text(_ic, attrs), True)
         else:
             self.hide_auxiliary_text()
