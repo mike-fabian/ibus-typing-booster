@@ -503,18 +503,11 @@ class editor(object):
             return True
         else:
             return False
+
     def ap_candidate (self, candi):
         '''append candidate to lookup_table'''
-        _p_index = self.get_index('phrase')
-        # _tbks = u''.join( map(self._deparser , candi[ len(self._tabkey_list) : _p_index ] ) )
-        _phrase = candi[_p_index]
-        # further color implementation needed :)
-        # here -2 is the pos of num, -1 is the pos of . 0 is the pos of string
-        #attrs = ibus.AttrList ([ibus.AttributeForeground (0x8e2626, -2, 1)])
+        _phrase= candi[self.get_index('phrase')]
         attrs = ibus.AttrList ()
-        # this is the part of tabkey
-        #attrs.append( ibus.AttributeForeground ( 0x1973a2, 0, \
-        #    len(_phrase) + len(_tbks)))
         if not _phrase.startswith(self.get_input_chars_string()):
             # this is a candidate which does not start exactly
             # with the characters typed, i.e. it is a suggestion
