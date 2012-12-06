@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 06 Dec 2012 Released 0.0.24 version
+* Use pyhunspell to add spell-checking suggestions (Resolves #884808)
+* Use underline for preedit
+* Colourize spellchecking suggestions and system phrases already used
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 23 Nov 2012 Released 0.0.23 version
 * Make the engine reload the dictionary when the dictionary is installed via the setup tool (Resolves: #879262)
 * get rid of unused parameter “m17n” in “class Hunspell”
