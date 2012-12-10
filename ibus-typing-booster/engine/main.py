@@ -18,8 +18,8 @@
 import os
 import sys
 import optparse
-import ibus
-import gobject
+from gi.repository import IBus
+from gi.repository import GLib
 import re
 patt = re.compile (r'<\?.*\?>\n')
 from signal import signal, SIGTERM, SIGINT
@@ -73,19 +73,22 @@ if (not options.xml) and options.debug:
 
 class IMApp:
     def __init__(self, dbfile, exec_by_ibus):
-        self.__mainloop = gobject.MainLoop()
-        self.__bus = ibus.Bus()
+        print "mike IMApp __init__ dbfile=%(db)s exec_by_ibus=%(ei)s" %{'db': dbfile, 'ei': exec_by_ibus}
+        self.__mainloop = GLib.MainLoop()
+        self.__bus = IBus.Bus()
         self.__bus.connect("disconnected", self.__bus_destroy_cb)
         self.__factory = factory.EngineFactory(self.__bus, dbfile)
         self.destroyed = False
         if exec_by_ibus:
             self.__bus.request_name("org.freedesktop.IBus.IbusTypingBooster", 0)
         else:
-            self.__component = ibus.Component("org.freedesktop.IBus.IbusTypingBooster",
-                                              "Table Component",
-                                              "0.1.0",
-                                              "GPL",
-                                              "Anish Patil <apatill@redhat.com>")
+            self.__component = IBus.Component(name="org.freedesktop.IBus.IbusTypingBooster",
+                                              description="Table Component",
+                                              version="0.1.0",
+                                              license="GPL",
+                                              author="Anish Patil <apatill@redhat.com>",
+                                              homepage="http://code.google.com/p/ibus/",
+                                              textdomain="ibus-typing-booster")
             # now we get IME info from self.__factory.db
             name = self.__factory.db.get_ime_property ("name")
             longname = self.__factory.db.get_ime_property ("ime_name")
@@ -101,15 +104,16 @@ class IMApp:
             layout = self.__factory.db.get_ime_property ("layout")
             symbol = self.__factory.db.get_ime_property("symbol")
 
-            self.__component.add_engine(name,
-                                        longname,
-                                        description,
-                                        language,
-                                        license,
-                                        author,
-                                        icon,
-                                        layout,
-                                        symbol)
+            engine = IBus.EngineDesc(name=name,
+                                     longname=longname,
+                                     description=description,
+                                     language=language,
+                                     license=license,
+                                     author=author,
+                                     icon=icon,
+                                     layout=layout,
+                                     symbol=symbol)
+            self.__component.add_engine(engine)
             self.__bus.register_component(self.__component)
 
 

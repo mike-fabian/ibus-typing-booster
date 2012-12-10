@@ -18,12 +18,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 
-import ibus
-from ibus.exception import *
+from gi.repository import IBus
 import hunspell_table 
 import tabsqlitedb
 import os
-import dbus
 from re import compile as re_compile
 
 path_patt = re_compile(r'[^a-zA-Z0-9_/]')
@@ -35,7 +33,7 @@ N_ = lambda a : a
 engine_base_path = "/com/redhat/IBus/engines/table/%s/engine/"
 
 
-class EngineFactory (ibus.EngineFactoryBase):
+class EngineFactory (IBus.Factory):
     """Table IM Engine Factory"""
     def __init__ (self, bus, db="", icon=""):
         if db:
@@ -46,19 +44,11 @@ class EngineFactory (ibus.EngineFactoryBase):
         self.enginedict = {}
         self.bus = bus
         #engine.Engine.CONFIG_RELOADED(bus)
-        super(EngineFactory,self).__init__ (bus)
+        super(EngineFactory,self).__init__ (connection=bus.get_connection(),object_path=IBus.PATH_FACTORY)
         self.engine_id=0
-        try:
-            bus = dbus.Bus()
-            user = os.path.basename( os.path.expanduser('~') )
-            self._sm_bus = bus.get_object ("org.ibus.table.SpeedMeter.%s"\
-                    % user, "/org/ibus/table/SpeedMeter")
-            self._sm =  dbus.Interface(self._sm_bus,\
-                    "org.ibus.table.SpeedMeter") 
-        except:
-            self._sm = None
 
-    def create_engine(self, engine_name):
+    def do_create_engine(self, engine_name):
+        print "mike EngineFactory do_create_engine() engine_name=", engine_name
         # because we need db to be past to Engine
         # the type (engine_name) == dbus.String
         name = engine_name.encode ('utf8')
@@ -83,7 +73,7 @@ class EngineFactory (ibus.EngineFactoryBase):
             print "failed to create engine %s" % engine_name
             import traceback
             traceback.print_exc ()
-            raise IBusException("Cannot create engine %s" % engine_name)
+            raise Exception("Cannot create engine %s" % engine_name)
 
     def do_destroy (self):
         '''Destructor, which finish some task for IME'''
@@ -92,10 +82,6 @@ class EngineFactory (ibus.EngineFactoryBase):
         for _db in self.dbdict:
             self.dbdict[_db].sync_usrdb ()
         ##print "Have synced user db\n"
-        try:
-            self._sm.Quit()
-        except:
-            pass
-        super(EngineFactory,self).do_destroy()
+        super(EngineFactory,self).destroy()
 
 
