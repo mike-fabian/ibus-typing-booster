@@ -698,12 +698,18 @@ class editor(object):
         return res
     
     def number (self, index):
-        '''Select the candidates in Lookup Table
-        index should start from 0'''
-        self._lookup_table.set_cursor_pos_in_current_page ( index )
-        if index != self._lookup_table.get_cursor_pos_in_current_page ():
-            # the index given is out of range we do not commit string
+        '''
+        Commit a candidate in the lookup table which was selected by
+        typing a number. The index parameter should start from 0.
+        '''
+        cursor_pos = self._lookup_table.get_cursor_pos()
+        cursor_in_page = self._lookup_table.get_cursor_in_page()
+        current_page_start = cursor_pos - cursor_in_page
+        real_index = current_page_start + index
+        if real_index >= len (self._candidates[0]):
+            # the index given is out of range we do not commit anything
             return False
+        self._lookup_table.set_cursor_pos(real_index)
         self.commit_to_preedit ()
         return True
 
