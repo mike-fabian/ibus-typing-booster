@@ -1142,7 +1142,7 @@ class tabengine (IBus.Engine):
         if self._editor.is_empty ():
             # we have not input anything
             if  key.code >= 32 and key.code <= 127 and ( keysym2unichr(key.code) not in self._valid_input_chars ) \
-                    and (not key.mask & IBus.ModifierType.MOD1_MASK + IBus.ModifierType.CONTROL_MASK):
+                    and (not (key.mask & (IBus.ModifierType.MOD1_MASK | IBus.ModifierType.CONTROL_MASK))):
                 if key.code == IBus.KEY_space:
                     self.commit_string (keysym2unichr (key.code))
                     return True
