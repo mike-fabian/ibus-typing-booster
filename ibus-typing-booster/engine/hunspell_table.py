@@ -924,33 +924,6 @@ class tabengine (IBus.Engine):
             "tabenable"))
         if self._tab_enable == None:
             self._tab_enable = self.db.get_ime_property('tab_enable').lower() == u'true'
-        # [EnMode,TabMode] we get TabMode properties from db
-        self._full_width_letter = [
-                variant_to_value(self._config.get_value(
-                    self._config_section,
-                    "EnDefFullWidthLetter")),
-                variant_to_value(self._config.get_value(
-                    self._config_section,
-                    "TabDefFullWidthLetter"))
-                ]
-        if self._full_width_letter[0] == None:
-            self._full_width_letter[0] = False
-        if self._full_width_letter[1] == None:
-            self._full_width_letter[1] = self.db.get_ime_property('def_full_width_letter').lower() == u'true'
-        self._full_width_punct = [
-                variant_to_value(self._config.get_value(
-                    self._config_section,
-                    "EnDefFullWidthPunct")),
-                variant_to_value(self._config.get_value(
-                    self._config_section,
-                    "TabDefFullWidthPunct"))
-                ]
-        if self._full_width_punct[0] == None:
-            self._full_width_punct[0] = False
-        if self._full_width_punct[1] == None:
-            self._full_width_punct[1] = self.db.get_ime_property('def_full_width_punct').lower() == u'true'
-        # some properties we will involved, Property is taken from scim.
-        #self._setup_property = Property ("setup", _("Setup"))
         self._auto_commit = variant_to_value(self._config.get_value(
                 self._config_section,
                 "AutoCommit"))
@@ -1091,9 +1064,6 @@ class tabengine (IBus.Engine):
         super(tabengine,self).commit_text(IBus.Text.new_from_string(string))
 #        self._prev_char = string[-1]
 
-    def _convert_to_full_width (self, c):
-        return ibus.unichar_half_to_full (c)
-    
     def _match_hotkey (self, key, code, mask):
         
         if key.code == code and key.mask == mask:
@@ -1123,10 +1093,6 @@ class tabengine (IBus.Engine):
         
     def _table_mode_process_key_event (self, key):
         '''Xingma Mode Process Key Event'''
-        cond_letter_translate = lambda (c): \
-            self._convert_to_full_width (c) if self._full_width_letter [self._mode] else c
-        cond_punct_translate = lambda (c): \
-            self._convert_to_full_width (c) if self._full_width_punct [self._mode] else c
         
         if key.mask & IBus.ModifierType.RELEASE_MASK:
             return True
