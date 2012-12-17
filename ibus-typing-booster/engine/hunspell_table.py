@@ -159,10 +159,6 @@ class editor(object):
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
 
-#        tabengine.hide_lookup_table(tabengine)
-#        self._lookup_table.set_cursor_pos_in_current_page(0)
-        # self._py_mode: whether in pinyin mode
-        self._py_mode = False
         # self._caret: caret position in lookup_table
         self._caret = 0
         self._first = 0 
@@ -228,7 +224,6 @@ class editor(object):
         self._strings = []
         self._typed_chars = []
         self._cursor = [0,0]
-        self._py_mode = False
         self.update_candidates
     
     def is_empty (self):
