@@ -165,12 +165,6 @@ class editor(object):
         self._py_mode = False
         # self._caret: caret position in lookup_table
         self._caret = 0
-        # self._onechar: whether we only select single character
-        self._onechar = variant_to_value(self._config.get_value(
-                self._config_section,
-                "OneChar"))
-        if self._onechar == None:
-            self._onechar = False
         self._first = 0 
         self.is_down_press = False
 
@@ -598,9 +592,8 @@ class editor(object):
                 self._lookup_table.clear()
                 self._lookup_table.set_cursor_visible(False)
                 if self._tabkey_list:
-#                    self._candidates[0] = self.db.select_words( self._tabkey_list, self._onechar )
                     try:
-                        self._candidates[0] = self.db.select_words( self._tabkey_list, False )
+                        self._candidates[0] = self.db.select_words(self._tabkey_list)
                     except:
                         print "Exception in selecting the word from db"
                     self._chars[2] = self._chars[0][:]
@@ -984,7 +977,6 @@ class tabengine (IBus.Engine):
         self._double_quotation_state = False
         self._single_quotation_state = False
         self._prev_key = None
-        #self._editor._onechar = False    
         self._update_ui ()
     
     def do_destroy(self):
