@@ -1089,10 +1089,6 @@ class tabengine (IBus.Engine):
 
     def _process_key_event (self, key):
         '''Internal method to process key event'''
-        return self._table_mode_process_key_event (key)
-        
-    def _table_mode_process_key_event (self, key):
-        '''Xingma Mode Process Key Event'''
         
         if key.mask & IBus.ModifierType.RELEASE_MASK:
             return True
