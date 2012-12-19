@@ -602,7 +602,7 @@ class editor(object):
             return True
 
     def commit_to_preedit (self):
-        '''Add select phrase in lookup table to preedit string'''
+        '''Add selected phrase in lookup table to preedit string'''
         _p_index = self.get_index('phrase')
         try:
             if self._candidates[0]:
@@ -615,7 +615,7 @@ class editor(object):
             pass
     
     def auto_commit_to_preedit (self):
-        '''Add select phrase in lookup table to preedit string'''
+        '''Add selected phrase in lookup table to preedit string'''
         _p_index = self.get_index('phrase')
         try:
             self._u_chars.append( self._chars[0][:] )
