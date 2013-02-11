@@ -11,7 +11,7 @@ serial_number = 20120930
 # The icon can be in any format as long as pygtk can recognize it.
 # The most widely used formats are "png" and "svg", the latter one
 # is recommended.
-icon = english.png
+icon = english.svg
 # Internal name of the engine. Required.
 # For the names of the engine displayed to the user, see “ime_name”
 # and “symbol”.
