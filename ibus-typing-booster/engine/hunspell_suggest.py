@@ -49,8 +49,13 @@ tab_dict = {
     '6':91, '7':92, '8':93, '9':94
     }
 
-# Maximum words that needs to be returned 
-max_words = 9
+# Maximum words that should be returned.
+# This should a rather big number in order not
+# to throw away useful matches. But making it very huge
+# makes the performance worse. For example when setting
+# it to 1000, I see a noticable delay when typing the first
+# letter of a word until the candidate lookup table pops up.
+max_words = 100
 max_words_row = 50
 # System frequency by default it is kept as 0
 system_freq = 0
