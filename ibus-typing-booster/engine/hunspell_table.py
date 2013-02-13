@@ -626,20 +626,6 @@ class editor(object):
         except:
             pass
 
-    def get_aux_strings (self):
-        '''Get aux strings'''
-        input_chars = self.get_input_chars ()
-        if input_chars:
-            #aux_string =  u' '.join( map( u''.join, self._u_chars + [self._chars[0]] ) )
-            aux_string =   u''.join (self._chars[0]) 
-            return aux_string
-
-        aux_string = u''
-        cstr = u''.join(self._strings)
-        if self.db.user_can_define_phrase:
-            if len (cstr ) > 1:
-                aux_string += (u'\t#: ' + self.db.parse_phrase_to_tabkeys (cstr))
-        return aux_string
     def arrow_down(self):
         '''Process Arrow Down Key Event
         Move Lookup Table cursor down'''
@@ -1003,16 +989,29 @@ class tabengine (IBus.Engine):
     
     def _update_aux (self):
         '''Update Aux String in UI'''
-        _ic = self._editor.get_aux_strings()
-        _ic = None # we do not use the aux string at the moment
-        if _ic:
+        aux_string = u'(%d / %d)' % (self._editor._lookup_table.get_cursor_pos() + 1,
+                                   self._editor._lookup_table.get_number_of_candidates())
+        if aux_string:
             # Colours do not work at the moment in the auxiliary text!
             # Needs fix in ibus.
-            attrs = IBus.AttrList([ IBus.AttributeForeground(0x9515b5,0, len(_ic)) ])
-            super(tabengine, self).update_auxiliary_text(IBus.Text(_ic, attrs), True)
+            attrs = IBus.AttrList()
+            attrs.append(IBus.attr_foreground_new(rgb(0x95,0x15,0xb5),0,len(aux_string)))
+            text = IBus.Text.new_from_string(aux_string)
+            i = 0
+            while attrs.get(i) != None:
+                attr = attrs.get(i)
+                text.append_attribute(attr.get_attr_type(),
+                                      attr.get_value(),
+                                      attr.get_start_index(),
+                                      attr.get_end_index())
+                i += 1
+            visible = True
+            if self._editor._lookup_table.get_number_of_candidates() == 0 or (
+                self._tab_enable and not self.is_lookup_table_enabled_by_tab):
+                visible = False
+            super(tabengine, self).update_auxiliary_text(text, visible)
         else:
             self.hide_auxiliary_text()
-            #self.update_aux_string (u'', None, False)
 
     def _update_lookup_table (self):
         '''Update Lookup Table in UI'''
