@@ -858,6 +858,12 @@ class tabengine (IBus.Engine):
         if tabengine._page_size > 9:
             tabengine._page_size = 9 # maximum page size supported
 
+        self._show_number_of_candidates = variant_to_value(self._config.get_value(
+                self._config_section,
+                'shownumberofcandidates'))
+        if self._show_number_of_candidates == None:
+            self._show_number_of_candidates = False
+
         # this is the backend sql db we need for our IME
         # we receive this db from IMEngineFactory
         #self.db = tabsqlitedb.tabsqlitedb( name = dbname )
@@ -1006,8 +1012,9 @@ class tabengine (IBus.Engine):
                                       attr.get_end_index())
                 i += 1
             visible = True
-            if self._editor._lookup_table.get_number_of_candidates() == 0 or (
-                self._tab_enable and not self.is_lookup_table_enabled_by_tab):
+            if self._editor._lookup_table.get_number_of_candidates() == 0 \
+                    or self._show_number_of_candidates == False \
+                    or (self._tab_enable and not self.is_lookup_table_enabled_by_tab):
                 visible = False
             super(tabengine, self).update_auxiliary_text(text, visible)
         else:
@@ -1388,6 +1395,13 @@ class tabengine (IBus.Engine):
                     cursor_visible=False,
                     round=True)
                 self.reset()
+            return
+        if name == "shownumberofcandidates":
+            if value == True:
+                self._show_number_of_candidates = True
+            else:
+                self._show_number_of_candidates = False
+            self.reset()
             return
         if name == "inputmethod":
             if value in self._editor._supported_imes:

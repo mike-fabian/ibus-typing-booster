@@ -121,13 +121,20 @@ class SetupUI:
         install_button.connect('clicked', event_handler.onInstallClicked)
         close_button = self.builder.get_object("button2")
         close_button.connect('clicked', event_handler.onCloseClicked)
-        chkbox = self.builder.get_object("checkbutton1")
+        chkbox1 = self.builder.get_object("checkbutton1")
         self.tab_enable = self.variant_to_value(self.config.get_value(self.config_section, 'tabenable'))
         if self.tab_enable == None:
             self.tab_enable = self.db.get_ime_property('tab_enable').lower() == u'true'
         if  self.tab_enable == True:
-            chkbox.set_active(True)
-        chkbox.connect('clicked', event_handler.onCheck)
+            chkbox1.set_active(True)
+        chkbox1.connect('clicked', event_handler.onCheck1)
+        chkbox2 = self.builder.get_object("checkbutton2")
+        self.show_number_of_candidates = self.variant_to_value(self.config.get_value(self.config_section, 'shownumberofcandidates'))
+        if self.show_number_of_candidates == None:
+            self.show_number_of_candidates = False
+        if  self.show_number_of_candidates == True:
+            chkbox2.set_active(True)
+        chkbox2.connect('clicked', event_handler.onCheck2)
         self.page_size_adjustment = self.builder.get_object("page_size_adjustment")
         self.page_size = self.variant_to_value(self.config.get_value(self.config_section, 'pagesize'))
         if self.page_size == None:
@@ -215,13 +222,21 @@ class EventHandler:
         # the dictionary:
         SetupUi.config.set_value(SetupUi.config_section,'dictionaryinstalltimestamp',GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
 
-    def onCheck(self,widget):
+    def onCheck1(self,widget):
         if widget.get_active():
             SetupUi.tab_enable = True
             SetupUi.config.set_value(SetupUi.config_section,'tabenable',GLib.Variant.new_boolean(True))
         else:
             SetupUi.tab_enable = False
             SetupUi.config.set_value(SetupUi.config_section,'tabenable',GLib.Variant.new_boolean(False))
+
+    def onCheck2(self,widget):
+        if widget.get_active():
+            SetupUi.show_number_of_candidates = True
+            SetupUi.config.set_value(SetupUi.config_section,'shownumberofcandidates',GLib.Variant.new_boolean(True))
+        else:
+            SetupUi.show_number_of_candidates = False
+            SetupUi.config.set_value(SetupUi.config_section,'shownumberofcandidates',GLib.Variant.new_boolean(False))
 
     def onPageSizeAdjustmentValueChanged(self,widget):
         self.page_size = SetupUi.page_size_adjustment.get_value()

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2012-11-14 18:02+0100\n"
+"POT-Creation-Date: 2013-02-13 22:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,18 +62,22 @@ msgstr ""
 msgid "Input Method:"
 msgstr ""
 
-#: setup/setup.glade:181
+#: setup/setup.glade:156
+msgid "Show number of candidates"
+msgstr ""
+
+#: setup/setup.glade:199
 msgid "Options"
 msgstr ""
 
-#: setup/setup.glade:218
+#: setup/setup.glade:236
 msgid "Install"
 msgstr ""
 
-#: setup/setup.glade:242
+#: setup/setup.glade:260
 msgid "<b>Install the dictionary package for this engine</b>"
 msgstr ""
 
-#: setup/setup.glade:262
+#: setup/setup.glade:280
 msgid "Install dictionary"
 msgstr ""
