@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 14 Feb 2013 Released 0.0.26 version
+* Fix mouse clickable arrow icons in lookup table
+* Use different .svg icons for all engines
+* Increase number of suggestions from hunspell
+* Use the auxiliary text to display the number of candidates
+* Make the display of the number of candidates in the auxiliary text optional
+* Display of the number of candidates needs to be updated on page-up and page-down
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 18 Dec 2012 Released 0.0.25 version
 * Port to use pygobject3
 * Remove some code inherited from ibus-table which makes no sense for ibus-typing-booster
