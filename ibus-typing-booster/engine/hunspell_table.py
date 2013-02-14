@@ -662,9 +662,9 @@ class editor(object):
         return res
     
     def page_up(self):
-        self._lookup_table.set_cursor_visible(True)
         '''Process Page Up Key Event
         move Lookup Table page up'''
+        self._lookup_table.set_cursor_visible(True)
         res = self._lookup_table.page_up()
         self.update_candidates ()
         if not res and self._candidates[0]:
