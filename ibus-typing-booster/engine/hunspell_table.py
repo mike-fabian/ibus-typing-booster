@@ -1263,13 +1263,13 @@ class tabengine (IBus.Engine):
         elif key.code in self._page_down_keys \
                 and self._editor._candidates[0]:
             res = self._editor.page_down()
-            self._update_lookup_table ()
+            self._update_ui ()
             return res
 
         elif key.code in self._page_up_keys \
                 and self._editor._candidates[0]:
             res = self._editor.page_up ()
-            self._update_lookup_table ()
+            self._update_ui ()
             return res
         
         elif key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates[0]:
@@ -1353,13 +1353,13 @@ class tabengine (IBus.Engine):
 
     def do_page_up (self):
         if self._editor.page_up ():
-            self._update_lookup_table ()
+            self._update_ui ()
             return True
         return True
 
     def do_page_down (self):
         if self._editor.page_down ():
-            self._update_lookup_table ()
+            self._update_ui ()
             return True
         return False
 
