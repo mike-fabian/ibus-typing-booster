@@ -420,30 +420,13 @@ class tabsqlitedb:
         # or by using eval(repr()) instead of str():
         en_word = map(eval,map(repr,tabkeys[:_len]))
         en_word = ''.join(en_word)
-        _condition = ''
-        _condition += ''.join ( map (lambda x: 'AND m%d = ? ' %x, range(_len) ) )
+        sqlstr = '''SELECT * FROM user_db.phrases WHERE phrase LIKE "%(w1)s%%"
+                    UNION ALL
+                    SELECT  * FROM mudb.phrases WHERE phrase LIKE "%(w2)s%%"
+                    ORDER BY user_freq DESC, freq DESC, id ASC, mlen ASC
+                    limit 1000;''' %{'w1': en_word, 'w2': en_word}
+        result = self.db.execute(sqlstr).fetchall()
 
-        # you can increase the x in _len + x to include more result, but in the most case, we only need one more key result, so we don't need the extra overhead :)
-        # we start search for 1 key more, if nothing, then 2 key more and so on
-        # this is the max len we need to add into the select cause.
-        w_len = self._mlen - _len +1
-        # we start from 2, because it is < in the sqlite select, which need 1 more.
-        x_len = 30
-
-        result = []
-        while x_len <= w_len + 1:
-            sqlstr = '''SELECT * FROM user_db.phrases WHERE mlen < %(mk)d %(condition)s 
-                        UNION ALL
-                        SELECT * FROM mudb.phrases WHERE mlen < %(mk)d %(condition)s 
-                        ORDER BY user_freq DESC, freq DESC, id ASC, mlen ASC limit 100;''' % { 'mk':_len+x_len, 'condition':_condition}
-                # we have redefine the __int__(self) in class tabdict.tab_key to return the key id, so we can use map to got key id :)
-            _tabkeys = map(int,tabkeys[:_len])
-            _tabkeys += _tabkeys 
-            result = self.db.execute(sqlstr, _tabkeys).fetchall()
-            if len(result) >0:
-                break
-            x_len += 1
-        
         hunspell_list = self.hunspell_obj.suggest(en_word)
         for ele in hunspell_list:
             result.append(tuple(ele))
