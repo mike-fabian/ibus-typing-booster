@@ -26,29 +26,6 @@ try:
 except:
     import_hunspell_successful = False
 
-tab_dict = {
-    '0':0,
-    'a':1, 'b':2, 'c':3, 'd':4, 'e':5,
-    'f':6, 'g':7, 'h':8, 'i':9, 'j':10,
-    'k':11, 'l':12, 'm':13, 'n':14, 'o':15,
-    'p':16, 'q':17, 'r':18, 's':19, 't':20,
-    'u':21, 'v':22, 'w':23, 'x':24, 'y':25,
-    'z':26, "'":27, ';':28, '`':29, '~':30,
-    '!':31, '@':32, '#':33, '$':34, '%':35,
-    '^':36, '&':37, '*':38, '(':39, ')':40,
-    '-':41, '_':42, '=':43, '+':44, '[':45,
-    ']':46, '{':47, '}':48, '|':49, '/':50,
-    ':':51, '"':52,  '<':53, '>':54, ',':55,
-    '.':56, '?':57, '\\':58, 'A':59, 'B':60,
-    'C':61, 'D':62, 'E':63, 'F':64, 'G':65,
-    'H':66, 'I':67, 'J':68, 'K':69, 'L':70,
-    'M':71, 'N':72, 'O':73, 'P':74, 'Q':75,
-    'R':76, 'S':77, 'T':78, 'U':79, 'V':80,
-    'W':81, 'X':82, 'Y':83, 'Z':84, '0':85,
-    '1':86, '2':87, '3':88, '4':89, '5':90,
-    '6':91, '7':92, '8':93, '9':94
-    }
-
 # Maximum words that should be returned.
 # This should a rather big number in order not
 # to throw away useful matches. But making it very huge
@@ -63,7 +40,7 @@ system_freq = 0
 system_word = 1
 
 class Hunspell:
-    def __init__(self,lang='en',loc='/usr/share/myspell/',dict_name='en_US.dic',aff_name='en_US.aff',langdict=None,
+    def __init__(self,lang='en',loc='/usr/share/myspell/',dict_name='en_US.dic',aff_name='en_US.aff',
                  lang_chars='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
                  encoding='UTF-8'):
         self.lang=lang
@@ -71,10 +48,7 @@ class Hunspell:
         self.dict_name = dict_name
         self.aff_name = aff_name
         self.lang_chars=lang_chars
-        self.tab_dict = tab_dict
         self.encoding = encoding
-        if langdict != None:
-            self.tab_dict = langdict
         self.dict_buffer = None
         self.aff_handle = None
         self.load_dictionary()
@@ -98,13 +72,6 @@ class Hunspell:
             import traceback
             traceback.print_exc()
             pass
-
-    ''' This function takes list as input and converts the words in the list into tab_dict format'''
-    def convert_tab_dict(self,words):
-        # The function checks the key is tab dict or not if it is there get the val otherwise -1
-        ch_tab_dict = lambda x : self.tab_dict[x]  if x in self.tab_dict.keys() else  -1 
-        num_format = [ map(ch_tab_dict,word) for word in words ]
-        return num_format
 
     def words_start(self,word):
         if type(word) != type(u''):
@@ -145,9 +112,7 @@ class Hunspell:
         words = set(start_words[0:max_words])
         # The list consists of words but in there  
         tab_words = [ list(word) for word in words ] 
-        # return the words wrt to their numbers e.g the word "abc" will contain numbers "123"
-        #self.num_words = self.convert_tab_dict(self.tab_words)
-        return words,self.convert_tab_dict(tab_words)
+        return words,tab_words
 
     ''' You need to send data in the following protocol==> sq no,len,len,string up to 50 char,string,-1,1'''
     def convert_to_lists(self,words,num_words):

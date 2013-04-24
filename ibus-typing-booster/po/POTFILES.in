@@ -4,7 +4,6 @@ engine/factory.py
 engine/hunspell_suggest.py
 engine/hunspell_table.py
 engine/main.py
-engine/tabdict.py
 engine/tabsqlitedb.py
 setup/main.py
 setup/pkginstall.py

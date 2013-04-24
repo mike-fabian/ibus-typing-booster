@@ -21,7 +21,6 @@ import os
 import os.path as path
 from sys import stderr
 import sqlite3
-import tabdict
 import uuid
 import time
 import re
@@ -39,9 +38,6 @@ class tabsqlitedb:
     def __init__(self, name = 'table.db', user_db = None, filename = None ):
         # use filename when you are creating db from source
         # use name when you are using db
-        # first we use the Parse in tabdict, which transform the char(a,b,c,...) to int(1,2,3,...) to fasten the sql enquiry
-        self.parse = tabdict.parse
-        self.deparse = tabdict.deparse
         self._add_phrase_sqlstr = ''
         self.old_phrases=[]
         
@@ -62,11 +58,6 @@ class tabsqlitedb:
             self.lang_chars = self.lang_chars.decode('utf8')
         else:
             self.lang_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        self.lang_dict = {}
-        self.lang_dict['0'] = 0
-        for index,char in enumerate(self.lang_chars):
-            if char:
-                self.lang_dict[char] = index + 1
 
         self.encoding = self.get_ime_property('encoding')
 
@@ -74,7 +65,6 @@ class tabsqlitedb:
             lang=self.get_ime_property('languages'),
             dict_name=self.get_ime_property ("hunspell_dict"),
             aff_name=self.get_ime_property ("hunspell_dict").replace('.dic', '.aff'),
-            langdict=self.lang_dict,
             encoding=self.encoding,
             lang_chars=self.lang_chars)
 
@@ -153,12 +143,10 @@ class tabsqlitedb:
         self.create_tables ("user_db")
         if self.old_phrases:
             # (mlen, phrase, freq, user_freq)
-            # the phrases will be deparse again, and then be added     
-            # the characters will be discard :(
             #chars = filter (lambda x: x[0] == 1, self.old_phrases)
             # print chars
             phrases = filter (lambda x: x[0] > 1, self.old_phrases)
-            phrases = map(lambda x: [self.parse_phrase_to_tabkeys(x[1])]\
+            phrases = map(lambda x: [x[1]]\
                     + list(x[1:]) , phrases)
  
             map (self.u_add_phrase,phrases)
@@ -220,9 +208,8 @@ class tabsqlitedb:
         data_a = filter ( lambda x: x[-2]==2, mudata)
         data_n = filter ( lambda x: x[-2]==-2, mudata)
         #print data_a
-        tabdict.id_tab(self.lang_dict)
-        data_a = map (lambda x: (u''.join ( map(tabdict.another_lang_deparser, x[3:3+x[1]])),x[-3],0,x[-1] ), data_a)
-        data_n = map (lambda x: (u''.join ( map(tabdict.another_lang_deparser, x[3:3+x[1]])),x[-3],-1,x[-1] ), data_n)
+        data_a = map (lambda x: (u''.join (x[3:3+x[1]]),x[-3],0,x[-1] ), data_a)
+        data_n = map (lambda x: (u''.join (x[3:3+x[1]]),x[-3],-1,x[-1] ), data_n)
         #print data_u
         map (self.update_phrase, data_u)
         #print self.db.execute('select * from user_db.phrases;').fetchall()
@@ -244,7 +231,7 @@ class tabsqlitedb:
                 mlen INTEGER, clen INTEGER, ' % database
         #for i in range(self._mlen):
         #    sqlstr += 'm%d INTEGER, ' % i 
-        sqlstr += ''.join ( map (lambda x: 'm%d INTEGER, ' % x, range(self._mlen)) )
+        sqlstr += ''.join ( map (lambda x: 'm%d TEXT, ' % x, range(self._mlen)) )
         sqlstr += 'phrase TEXT, freq INTEGER, user_freq INTEGER);'
         self.db.execute ( sqlstr )
         self.db.commit()
@@ -284,15 +271,11 @@ class tabsqlitedb:
             user_freq = 0
         
         try:
-            tbks = tabdict.other_lang_parser (tabkeys.decode('utf8'),self.lang_dict)
-
-            if len(tbks) != len(tabkeys):
-                print 'In %s %s: we parse tabkeys fail' % (phrase, tabkeys )
-                return
+            tbks = list(tabkeys.decode('utf8'))
             record = [None] * (5 + self._mlen)
             record [0] = len (tabkeys)
             record [1] = len (phrase)
-            record [2: 2+len(tabkeys)] = map (lambda x: tbks[x].get_key_id(), range(0,len(tabkeys)))
+            record [2: 2+len(tabkeys)] = map (lambda x: tbks[x], range(0,len(tabkeys)))
             record[-3:] = phrase, freq, user_freq
             self.db.execute (sqlstr % database, record)
             if commit:
@@ -370,7 +353,6 @@ class tabsqlitedb:
                     ORDER BY user_freq DESC, freq DESC, id ASC, mlen ASC
                     limit 1000;''' %{'w1': en_word, 'w2': en_word}
         result = self.db.execute(sqlstr).fetchall()
-
         hunspell_list = self.hunspell_obj.suggest(en_word)
         for ele in hunspell_list:
             result.append(tuple(ele))
@@ -499,18 +481,6 @@ class tabsqlitedb:
         except:
             return 0
 
-    def parse_phrase_to_tabkeys (self,phrase):
-        '''Get the Table encoding of the phrase in string form'''
-        try:
-            tabres = self.parse_phrase (phrase) [2:-1]
-        except:
-            tabres = None
-        if tabres:
-            tabkeys= u''.join ( map(self.deparse, tabres) )
-        else:
-            tabkeys= u''
-        return tabkeys
-
     def check_phrase (self,phrase,tabkey=None,database='main'):
         # if IME didn't support user define phrase,
         # we divide user input phrase into characters,
@@ -531,9 +501,9 @@ class tabsqlitedb:
         if len(phrase) < 4:
             return 
 
-        tabks = tabdict.other_lang_parser (tabkey.decode('utf8'),self.lang_dict)
+        tabks = list(tabkey.decode('utf8'))
+        tabkids = tuple(map(unicode,tabks))
 
-        tabkids = tuple( map(int,tabks) )
         condition = ' and '.join( map(lambda x: 'm%d = ?' % x, range( len(tabks) )) )
         sqlstr = '''SELECT * FROM user_db.phrases WHERE phrase = ? and %(cond)s
                 UNION ALL SELECT * FROM mudb.phrases WHERE phrase = ? and %(cond)s
@@ -584,9 +554,8 @@ class tabsqlitedb:
                 map (sysdb.pop, keyout)
                 map (lambda res: self.db.execute ( sqlstr % ''.join( map(lambda x: 'AND m%d = ? ' % x, range(res[0])) ) ,  [ mudb[res][1] + 1 ] + list( res[:2+res[0]]) + list (res[2+self._mlen:]) ) , mudb.keys())
                 self.db.commit()
-                tabdict.id_tab(self.lang_dict)
-                map ( lambda res: self.add_phrase ( (''.join ( map(tabdict.another_lang_deparser,res[2:2+int(res[0])] ) ),phrase,(-3 if usrdb[res][0][-1] == -1 else 1),usrdb[res][1]+1  ), database = 'mudb') , usrdb.keys() )
-                map ( lambda res: self.add_phrase ( ( ''.join ( map(tabdict.another_lang_deparser,res[2:2+int(res[0])]) ),phrase,2,1 ), database = 'mudb'), sysdb.keys() )
+                map (lambda res: self.add_phrase ((''.join(res[2:2+int(res[0])]),phrase,(-3 if usrdb[res][0][-1] == -1 else 1),usrdb[res][1]+1  ), database = 'mudb') , usrdb.keys() )
+                map (lambda res: self.add_phrase ((''.join(res[2:2+int(res[0])]),phrase,2,1 ), database = 'mudb'), sysdb.keys() )
             else:
                 # we come here when the ime doesn't support user phrase define
                 pass

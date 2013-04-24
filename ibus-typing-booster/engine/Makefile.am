@@ -19,7 +19,6 @@ engine_table_PYTHON = \
 	factory.py \
 	main.py \
 	hunspell_table.py \
-	tabdict.py \
 	hunspell_suggest.py \
 	tabsqlitedb.py \
 	keysym2ucs.py \

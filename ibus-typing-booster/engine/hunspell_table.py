@@ -25,7 +25,6 @@ import os
 import string
 import unicodedata
 import curses.ascii
-import tabdict
 import keysym2ucs
 from keysym2ucs import keysym2ucs
 from keysym2ucs import keysym2unichr
@@ -127,14 +126,12 @@ class KeyEvent:
 class editor(object):
     '''Hold user inputs chars and preedit string'''
 
-    def __init__ (self, config, phrase_table_index,valid_input_chars, max_key_length, database, parser = tabdict.parse, deparser = tabdict.deparse, max_length = 64):
+    def __init__ (self, config, phrase_table_index,valid_input_chars, max_key_length, database, max_length = 64):
         self.db = database
         self._config = config
         self._name = self.db.get_ime_property('name')
         self._config_section = "engine/typing-booster/%s" % self._name
         self._pt = phrase_table_index
-        self._parser = parser
-        self._deparser = deparser
         self._max_key_len = int(max_key_length)
         self._max_length = max_length
         self._valid_input_chars = valid_input_chars
@@ -167,16 +164,6 @@ class editor(object):
         self._typed_chars = []
         self._m17ndb = 'm17n'
         self.trans = None
-        self.lang_chars = self.db.get_ime_property('lang_chars')
-        if self.lang_chars != None:
-            self.lang_chars = self.lang_chars.decode('utf8')
-        else:
-            self.lang_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        self.lang_dict = {}
-        self.lang_dict['0'] = 0
-        for index,char in enumerate(self.lang_chars):
-            if char:
-                self.lang_dict[char] = index + 1
 
         self._supported_imes = []
         if self.db.get_ime_property('m17n_mim_name') != None:
@@ -248,11 +235,6 @@ class editor(object):
         self._u_chars = []
         self._typed_chars = []
 
-    def set_parser (self, parser):
-        '''change input parser'''
-        self.clear ()
-        self._parser = parser
-        
     def add_input (self,c):
         '''add input character'''
         if self._chars[1]:
@@ -264,13 +246,10 @@ class editor(object):
                 trans_chars = self.trans.transliterate(''.join(self._typed_chars))[0].decode('utf8')
             else:
                 trans_chars = ''.join(self._typed_chars)
-            self._chars[0] = []
-            self._tabkey_list = []
-            self._t_chars = []
-            for trans_char in trans_chars:
-                self._chars[0].append(trans_char)
-                self._tabkey_list += tabdict.other_lang_parser (trans_char,self.lang_dict)
-                self._t_chars.append(trans_char)
+
+            self._chars[0] = list(trans_chars)
+            self._tabkey_list = list(trans_chars)
+            self._t_chars = list(trans_chars)
         res = self.update_candidates ()
         return res
 
@@ -291,7 +270,7 @@ class editor(object):
             if (not self._chars[0]) and self._u_chars:
                 self._chars[0] = self._u_chars.pop()
                 self._chars[1] = self._chars[1][:-1]
-                self._tabkey_list = self._parser (self._chars[0])
+                self._tabkey_list = self._chars[0]
                 self._strings.pop (self._cursor[0] - 1 )
                 self._cursor[0] -= 1
         self._t_chars.pop()
@@ -867,9 +846,6 @@ class tabengine (IBus.Engine):
         # this is the backend sql db we need for our IME
         # we receive this db from IMEngineFactory
         #self.db = tabsqlitedb.tabsqlitedb( name = dbname )
-        
-        # this is the parser which parses the input string to key object
-        self._parser = tabdict.parse
         
         self._icon_dir = '%s%s%s%s' % (os.getenv('IBUS_HUNSPELL_TABLE_LOCATION'),
                 os.path.sep, 'icons', os.path.sep)
