@@ -554,26 +554,6 @@ class tabsqlitedb:
                 return 0
         except:
             return 0
-    
-    def parse_phrase (self, phrase):
-        '''Parse phrase to get its Table code'''
-        # first we make sure that we are parsing unicode string
-        try:
-            phrase = unicode(phrase)
-        except:
-            phrase = phrase.decode('utf8')
-        p_len = len(phrase) 
-        tabkeylist = []
-        if p_len < 2:
-            # phrase should not be shorter than 2
-            return []
-        #print p_len
-        try:
-            return [len( tabkeylist)] + [p_len]  + tabkeylist[:] + [phrase]
-        except:
-            print "pharse pharse \"%s\" fail." % phrase.encode("utf-8")
-            #import traceback
-            #traceback.print_exc ()
 
     def parse_phrase_to_tabkeys (self,phrase):
         '''Get the Table encoding of the phrase in string form'''
@@ -604,15 +584,7 @@ class tabsqlitedb:
         if type(phrase) != type(u''):
             phrase = phrase.decode('utf8')
             
-
-        if len(phrase) > 3:
-            try:
-                wordattr = self.parse_phrase ( phrase )
-                _len = len (wordattr) -3
-            except:
-                # if we don't have goucima:
-                return
-        else:
+        if len(phrase) < 4:
             return 
 
         tabks = tabdict.other_lang_parser (tabkey.decode('utf8'),self.lang_dict)
