@@ -78,8 +78,6 @@ class tabsqlitedb:
             encoding=self.encoding,
             lang_chars=self.lang_chars)
 
-        # for chinese
-        self._is_chinese = self.is_chinese()
         # for fast add word
         self._set_add_phrase_sqlstr()
         #(ID, MLEN, CLEN, M0, M1, M2, M3, M4, CATEGORY, PHRASE, FREQ, USER_FREQ) = range (0,12)
@@ -221,16 +219,6 @@ class tabsqlitedb:
         map (self.u_add_phrase,data_n)
         self.db.commit ()
     
-    def is_chinese (self):
-        __lang = self.get_ime_property ('languages')
-        if __lang:
-            __langs = __lang.split(',')
-            for _l in __langs:
-                if _l.lower().find('zh') != -1:
-                    return True
-        return False
-
-
     def create_tables (self, database):
         '''Create hunspell-tables that contain all phrase'''
 
