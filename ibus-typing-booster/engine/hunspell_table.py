@@ -126,12 +126,12 @@ class KeyEvent:
 class editor(object):
     '''Hold user inputs chars and preedit string'''
 
-    def __init__ (self, config, phrase_table_index,valid_input_chars, max_key_length, database, max_length = 64):
+    def __init__ (self, config, phrase_table_column_names,valid_input_chars, max_key_length, database, max_length = 64):
         self.db = database
         self._config = config
         self._name = self.db.get_ime_property('name')
         self._config_section = "engine/typing-booster/%s" % self._name
-        self._pt = phrase_table_index
+        self._phrase_table_column_names = phrase_table_column_names
         self._max_key_len = int(max_key_length)
         self._max_length = max_length
         self._valid_input_chars = valid_input_chars
@@ -294,8 +294,14 @@ class editor(object):
 
     
     def get_index(self,key):
-        '''Get the index of key in database table'''
-        return self._pt.index(key)
+        '''
+        Get the index of the column with the name “key” in the phrase table
+
+        For example the index of 'clen' in the following list
+        of column names is 2:
+        ['id', 'mlen', 'clen', 'm0', 'm1', ...]
+        '''
+        return self._phrase_table_column_names.index(key)
 
     def split_phrase (self):
         '''Split current phrase into two phrases'''
@@ -870,11 +876,11 @@ class tabengine (IBus.Engine):
             self._page_down_keys.append (IBus.KEY_equal)
             self._page_up_keys.append (IBus.KEY_minus)
         
-        self._pt = self.db.get_phrase_table_index ()
+        self._phrase_table_column_names = self.db.get_phrase_table_column_names()
         self._ml = int(self.db.get_ime_property ('max_key_length'))
         
         # Containers we used:
-        self._editor = editor(self._config, self._pt, self._valid_input_chars, self._ml, self.db)
+        self._editor = editor(self._config, self._phrase_table_column_names, self._valid_input_chars, self._ml, self.db)
         # some other vals we used:
         # self._prev_key: hold the key event last time.
         self._prev_key = None

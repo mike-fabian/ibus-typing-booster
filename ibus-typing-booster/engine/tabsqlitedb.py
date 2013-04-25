@@ -19,12 +19,14 @@
 
 import os
 import os.path as path
-from sys import stderr
+import sys
 import sqlite3
 import uuid
 import time
 import re
 import hunspell_suggest
+
+user_database_version = '0.6'
 
 patt_r = re.compile(r'c([ea])(\d):(.*)')
 patt_p = re.compile(r'p(-{0,1}\d)(-{0,1}\d)')
@@ -71,10 +73,10 @@ class tabsqlitedb:
         # for fast add word
         self._set_add_phrase_sqlstr()
         #(ID, MLEN, CLEN, M0, M1, M2, M3, M4, CATEGORY, PHRASE, FREQ, USER_FREQ) = range (0,12)
-        self._pt_index = ['id', 'mlen', 'clen']
+        self._phrase_table_column_names = ['id', 'mlen', 'clen']
         for i in range(self._mlen):
-            self._pt_index.append ('m%d' %i)
-        self._pt_index += ['phrase','freq','user_freq']
+            self._phrase_table_column_names.append ('m%d' %i)
+        self._phrase_table_column_names += ['phrase','freq','user_freq']
         self.user_can_define_phrase = self.get_ime_property('user_can_define_phrase')
         if self.user_can_define_phrase:
             if self.user_can_define_phrase.lower() == u'true' :
@@ -106,21 +108,33 @@ class tabsqlitedb:
                 os.makedirs (tables_path)
             try:
                 desc = self.get_database_desc (user_db)
-                if desc == None :
-                    self.init_user_db (user_db)
-                elif desc["version"] != "0.5":
+                if desc == None \
+                    or desc["version"] != user_database_version \
+                    or self.get_number_of_columns_of_phrase_table(user_db) != len(self._phrase_table_column_names):
+                    sys.stderr.write("The user database %(udb)s seems to be incompatible.\n" %{'udb': user_db})
+                    if desc == None:
+                        sys.stderr.write("There is no version information in the database.\n")
+                    elif desc["version"] != user_database_version:
+                        sys.stderr.write("The version of the database does not match (too old or too new?).\n")
+                        sys.stderr.write("ibus-typing-booster wants version=%s\n" %user_database_version)
+                        sys.stderr.write("But the  database actually has version=%s\n" %desc["version"])
+                    elif self.get_number_of_columns_of_phrase_table(user_db) != len(self._phrase_table_column_names):
+                        sys.stderr.write("The number of columns of the database does not match.\n")
+                        sys.stderr.write("ibus-typing-booster expects %(col)s columns.\n" 
+                            %{'col': len(self._phrase_table_column_names)})
+                        sys.stderr.write("But the database actually has %(col)s columns.\n"
+                            %{'col': self.get_number_of_columns_of_phrase_table(user_db)})
+                    sys.stderr.write("Trying to recover the phrases from the old, incompatible database.\n")
+                    self.old_phrases = self.extract_user_phrases( user_db )
                     new_name = "%s.%d" %(user_db, os.getpid())
-                    print >> stderr, "Can not support the user db. We will rename it to %s" % new_name
-                    self.old_phrases = self.extra_user_phrases( user_db )
+                    sys.stderr.write("Renaming the incompatible database to \"%(name)s\".\n" %{'name': new_name})
                     os.rename (user_db, new_name)
+                    sys.stderr.write("Creating a new, empty database \"%(name)s\".\n"  %{'name': user_db})
                     self.init_user_db (user_db)
-                elif self.get_table_phrase_len(user_db) != len(self._pt_index):
-                    print >> stderr, "user db format outdated."
-                    # store old user phrases
-                    self.old_phrases = self.extra_user_phrases( user_db )
-                    new_name = "%s.%d" %(user_db, os.getpid())
-                    os.rename (user_db, new_name)
-                    self.init_user_db (user_db)
+                    sys.stderr.write("If user phrases were successfully recovered from the old,\n")
+                    sys.stderr.write("incompatible database, they will be used to initialize the new database.\n")
+                else:
+                    sys.stderr.write("Compatible database %(db)s found.\n" %{'db': user_db})
             except:
                 import traceback
                 traceback.print_exc()
@@ -129,28 +143,27 @@ class tabsqlitedb:
 
         # open user phrase database
         try:
-            self.db = sqlite3.connect(user_db )
-            self.db.execute( 'PRAGMA page_size = 8192; ' )
-            self.db.execute( 'PRAGMA cache_size = 20000; ' )
-            self.db.execute( 'PRAGMA temp_store = MEMORY; ' )
-            self.db.execute( 'PRAGMA synchronous = OFF; ' )
-            self.db.execute ('ATTACH DATABASE "%s" AS user_db;' % user_db)
+            self.db = sqlite3.connect(user_db)
+            self.db.execute('PRAGMA page_size = 8192; ')
+            self.db.execute('PRAGMA cache_size = 20000; ')
+            self.db.execute('PRAGMA temp_store = MEMORY; ')
+            self.db.execute('PRAGMA synchronous = OFF; ')
+            self.db.execute('ATTACH DATABASE "%s" AS user_db;' % user_db)
         except:
-            print >> stderr, "The user database was damaged. We will recreate it!"
-            os.rename (user_db, "%s.%d" % (user_db, os.getpid ()))
-            self.init_user_db (user_db)
-            self.db.execute ('ATTACH DATABASE "%s" AS user_db;' % user_db)
-        self.create_tables ("user_db")
+            sys.stderr.write("Could not open the database %(name)s.\n" %{'name': user_db})
+            new_name = "%s.%d" %(user_db, os.getpid())
+            sys.stderr.write("Renaming the incompatible database to \"%(name)s\".\n" %{'name': new_name})
+            os.rename(user_db, new_name)
+            sys.stderr.write("Creating a new, empty database \"%(name)s\".\n"  %{'name': user_db})
+            self.init_user_db(user_db)
+            self.db.execute('ATTACH DATABASE "%s" AS user_db;' % user_db)
+        self.create_tables("user_db")
         if self.old_phrases:
             # (mlen, phrase, freq, user_freq)
-            #chars = filter (lambda x: x[0] == 1, self.old_phrases)
-            # print chars
-            phrases = filter (lambda x: x[0] > 1, self.old_phrases)
-            phrases = map(lambda x: [x[1]]\
-                    + list(x[1:]) , phrases)
- 
-            map (self.u_add_phrase,phrases)
-            self.db.commit ()
+            phrases = filter(lambda x: x[0] > 1, self.old_phrases)
+            phrases = map(lambda x: [x[1]] + list(x[1:]), phrases)
+            map(self.u_add_phrase, phrases)
+            self.db.commit()
 
         # do not call this always on intialization for the moment.
         # It makes the already slow “python engine/main.py --xml”
@@ -218,22 +231,18 @@ class tabsqlitedb:
         self.db.commit ()
     
     def create_tables (self, database):
-        '''Create hunspell-tables that contain all phrase'''
-
+        '''Create table for the phrases.'''
         try:
             self.db.execute( 'PRAGMA cache_size = 20000; ' )
             # increase the cache size to speedup sqlite enquiry
         except:
             pass
-   
-        # create phrase table (mabiao)
-        sqlstr = 'CREATE TABLE IF NOT EXISTS %s.phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,\
-                mlen INTEGER, clen INTEGER, ' % database
-        #for i in range(self._mlen):
-        #    sqlstr += 'm%d INTEGER, ' % i 
-        sqlstr += ''.join ( map (lambda x: 'm%d TEXT, ' % x, range(self._mlen)) )
+        sqlstr = '''CREATE TABLE IF NOT EXISTS %s.phrases
+                    (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    mlen INTEGER, clen INTEGER, ''' % database
+        sqlstr += ''.join(map(lambda x: 'm%d TEXT, ' % x, range(self._mlen)))
         sqlstr += 'phrase TEXT, freq INTEGER, user_freq INTEGER);'
-        self.db.execute ( sqlstr )
+        self.db.execute(sqlstr)
         self.db.commit()
     
     def get_start_chars (self):
@@ -420,16 +429,16 @@ class tabsqlitedb:
         else:
             return self.ime_property_cache[attr]
 
-    def get_phrase_table_index (self):
+    def get_phrase_table_column_names (self):
         '''get a list of phrase table columns name'''
-        return self._pt_index[:]
+        return self._phrase_table_column_names[:]
 
     def generate_userdb_desc (self):
         try:
             sqlstring = 'CREATE TABLE IF NOT EXISTS user_db.desc (name PRIMARY KEY, value);'
             self.db.executescript (sqlstring)
             sqlstring = 'INSERT OR IGNORE INTO user_db.desc  VALUES (?, ?);'
-            self.db.execute (sqlstring, ('version', '0.5'))
+            self.db.execute (sqlstring, ('version', user_database_version))
             sqlstring = 'INSERT OR IGNORE INTO user_db.desc  VALUES (?, DATETIME("now", "localtime"));'
             self.db.execute (sqlstring, ("create-time", ))
             self.db.commit ()
@@ -446,33 +455,43 @@ class tabsqlitedb:
             db.execute( 'PRAGMA synchronous = OFF; ' )
             db.commit()
     
-    def get_database_desc (self, db_file):
-        if not path.exists (db_file):
+    def get_database_desc(self, db_file):
+        if not path.exists(db_file):
             return None
         try:
-            db = sqlite3.connect (db_file)
-            db.execute('PRAGMA page_size = 4096;')
-            db.execute( 'PRAGMA cache_size = 20000;' )
-            db.execute( 'PRAGMA temp_store = MEMORY; ' )
-            db.execute( 'PRAGMA synchronous = OFF; ' )
+            db = sqlite3.connect(db_file)
             desc = {}
-            for row in db.execute ("SELECT * FROM desc;").fetchall():
-                desc [row[0]] = row[1]
-            self.db.commit()
+            for row in db.execute("SELECT * FROM desc;").fetchall():
+                desc[row[0]] = row[1]
             return desc
         except:
             return None
 
-    def get_table_phrase_len(self, db_file):
-        table_patt = re.compile(r'.*\((.*)\)')
+    def get_number_of_columns_of_phrase_table(self, db_file):
+        '''
+        Get the number of columns in the 'phrases' table in
+        the database in db_file.
+
+        Determines the number of columns by parsing this:
+
+        sqlite> select sql from sqlite_master where name='phrases';
+CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen INTEGER, clen INTEGER, m0 TEXT, m1 TEXT, m2 TEXT, m3 TEXT, m4 TEXT, m5 TEXT, m6 TEXT, m7 TEXT, m8 TEXT, m9 TEXT, m10 TEXT, m11 TEXT, m12 TEXT, m13 TEXT, m14 TEXT, m15 TEXT, m16 TEXT, m17 TEXT, m18 TEXT, m19 TEXT, m20 TEXT, m21 TEXT, m22 TEXT, m23 TEXT, m24 TEXT, m25 TEXT, m26 TEXT, m27 TEXT, m28 TEXT, m29 TEXT, m30 TEXT, m31 TEXT, m32 TEXT, m33 TEXT, m34 TEXT, m35 TEXT, m36 TEXT, m37 TEXT, m38 TEXT, m39 TEXT, m40 TEXT, m41 TEXT, m42 TEXT, m43 TEXT, m44 TEXT, m45 TEXT, m46 TEXT, m47 TEXT, m48 TEXT, m49 TEXT, phrase TEXT, freq INTEGER, user_freq INTEGER)
+        sqlite>
+
+        This result could be on a single line, as above, or on multiple
+        lines.
+        '''
         if not path.exists (db_file):
             return 0
         try:
             db = sqlite3.connect (db_file)
-            tp_res = db.execute("select sql from sqlite_master\
-                    where name='phrases';").fetchall()
-            self.db.commit()
-            res = table_patt.match(tp_res[0][0])
+            tp_res = db.execute(
+                "select sql from sqlite_master where name='phrases';"
+            ).fetchall()
+            # Remove possible line breaks from the string where we
+            # want to match:
+            str = ' '.join(tp_res[0][0].splitlines())
+            res = re.match(r'.*\((.*)\)', str)
             if res:
                 tp = res.group(1).split(',')
                 return len(tp)
@@ -590,7 +609,7 @@ class tabsqlitedb:
             self.db.execute(sqlstr,_ph[1:])
             self.db.commit()
 
-    def extra_user_phrases(self, udb, only_defined=False):
+    def extract_user_phrases(self, udb, only_defined=False):
         '''extract user phrases from database'''
         try:
             db = sqlite3.connect(udb)
