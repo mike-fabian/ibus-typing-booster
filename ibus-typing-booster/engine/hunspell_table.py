@@ -319,7 +319,7 @@ class editor(object):
         return self._pt.index(key)
 
     def split_phrase (self):
-        '''Splite current phrase into two phrase'''
+        '''Split current phrase into two phrases'''
         _head = u''
         _end = u''
         try:
