@@ -48,7 +48,6 @@ class EngineFactory (IBus.Factory):
         self.engine_id=0
 
     def do_create_engine(self, engine_name):
-        print "mike EngineFactory do_create_engine() engine_name=", engine_name
         # because we need db to be past to Engine
         # the type (engine_name) == dbus.String
         name = engine_name.encode ('utf8')

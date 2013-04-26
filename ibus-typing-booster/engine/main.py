@@ -73,7 +73,6 @@ if (not options.xml) and options.debug:
 
 class IMApp:
     def __init__(self, dbfile, exec_by_ibus):
-        print "mike IMApp __init__ dbfile=%(db)s exec_by_ibus=%(ei)s" %{'db': dbfile, 'ei': exec_by_ibus}
         self.__mainloop = GLib.MainLoop()
         self.__bus = IBus.Bus()
         self.__bus.connect("disconnected", self.__bus_destroy_cb)
