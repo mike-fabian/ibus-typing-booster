@@ -136,7 +136,7 @@ class tabsqlitedb:
                 traceback.print_exc()
         else:
             user_db = ":memory:"
-        
+
         # open user phrase database
         try:
             self.db = sqlite3.connect(user_db )
@@ -164,6 +164,13 @@ class tabsqlitedb:
             map (self.u_add_phrase,phrases)
             self.db.commit ()
 
+        try:
+            print "optimizing database ..."
+            self.optimize_database()
+        except:
+            print "exception in optimize_database()"
+            import traceback
+            traceback.print_exc ()
 
         # try create all hunspell-tables in user database
         self.create_indexes ("user_db",commit=False)
@@ -328,15 +335,12 @@ class tabsqlitedb:
             INSERT INTO %(database)s.phrases SELECT * FROM tmp ORDER BY
             %(tabkeystr)s mlen ASC, user_freq DESC, freq DESC, id ASC;
             DROP TABLE tmp;
-            CREATE TABLE tmp AS SELECT * FROM %(database)s.goucima;
-            DELETE FROM %(database)s.goucima;
-            INSERT INTO %(database)s.goucima SELECT * FROM tmp ORDER BY zi,g0,g1;
-            DROP TABLE tmp;
             '''
         tabkeystr = ''
         for i in range(self._mlen):
             tabkeystr +='m%d, ' % i
-        self.db.executescript (sqlstr % {'database':database,'tabkeystr':tabkeystr })
+        sqlstr = sqlstr % {'database':database,'tabkeystr':tabkeystr}
+        self.db.executescript (sqlstr)
         self.db.executescript ("VACUUM;")
         self.db.commit()
     
