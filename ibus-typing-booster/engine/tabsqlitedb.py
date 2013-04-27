@@ -328,7 +328,7 @@ class tabsqlitedb:
             record[-3:] = phrase, freq, user_freq
             self.db.execute (sqlstr % database, record)
             if commit:
-                self.db.commit()    
+                self.db.commit()
         except Exception:
             import traceback
             traceback.print_exc()
