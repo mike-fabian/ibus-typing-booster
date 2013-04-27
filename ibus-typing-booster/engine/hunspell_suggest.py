@@ -110,29 +110,21 @@ class Hunspell:
         else:
             start_words = [unicode('☹ %(loc)s%(dict_name)s not found.' %{'loc': self.loc, 'dict_name': self.dict_name}, 'utf-8'), unicode('☹ please install hunspell dictionary!', 'utf-8') ]
         words = set(start_words[0:max_words])
-        # The list consists of words but in there  
-        tab_words = [ list(word) for word in words ] 
-        return words,tab_words
+        return words
 
-    ''' You need to send data in the following protocol==> sq no,len,len,string up to 50 char,string,-1,1'''
-    def convert_to_lists(self,words,num_words):
+    ''' You need to send data in the following protocol==> sq no,len,len,string ,string,-1,0'''
+    def convert_to_lists(self,words):
         formated_words = []
         for seq,word in enumerate(words):
             w_len = len(word)
-            formated_words.append([seq,w_len,w_len])
-            (formated_words[seq]).extend(num_words[seq]) # a bit of c-style :(
-            filler_len = max_words_row - w_len
-            (formated_words[seq]).extend([None for i in range(filler_len)])
-            (formated_words[seq]).append(word)
-            (formated_words[seq]).append(system_word)
-            (formated_words[seq]).append(system_freq)
+            formated_words.append([seq, w_len, w_len, word, word, system_word, system_freq])
         return formated_words
 
     def suggest(self,word):
-        words,num_words = self.words_start(word)
+        words = self.words_start(word)
         suggestions = []
         if words:
-            suggestions = self.convert_to_lists(words,num_words)
+            suggestions = self.convert_to_lists(words)
         return suggestions
 
 

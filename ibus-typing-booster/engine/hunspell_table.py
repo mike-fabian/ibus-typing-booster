@@ -573,7 +573,7 @@ class editor(object):
                 self._lookup_table.set_cursor_visible(False)
                 if self._tabkey_list:
                     try:
-                        self._candidates[0] = self.db.select_words(self._tabkey_list)
+                        self._candidates[0] = self.db.select_words(u''.join(self._tabkey_list))
                     except:
                         print "Exception in selecting the word from db"
                     self._chars[2] = self._chars[0][:]
@@ -689,7 +689,8 @@ class editor(object):
             can = self._candidates[0][real_index]
             if can[-2] < 0:
                 # freq of this candidate is -1, means this a user phrase
-                self.db.remove_phrase (can)
+                self.db.remove_phrase (can, 'user_db')
+                self.db.remove_phrase (can, 'mudb')
                 # make update_candidates do sql enquiry
                 self._chars[2].pop()
                 self.update_candidates ()

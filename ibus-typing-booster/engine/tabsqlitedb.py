@@ -26,21 +26,16 @@ import time
 import re
 import hunspell_suggest
 
-user_database_version = '0.6'
+user_database_version = '0.61'
 
 patt_r = re.compile(r'c([ea])(\d):(.*)')
 patt_p = re.compile(r'p(-{0,1}\d)(-{0,1}\d)')
 
-# first make some number index we will used :)
-#(MLEN, CLEN, M0, M1, M2, M3, M4, PHRASE, FREQ, USER_FREQ) = range (0,10)
-
-        
 class tabsqlitedb:
     '''Phrase database for hunspell-tables'''
     def __init__(self, name = 'table.db', user_db = None, filename = None ):
         # use filename when you are creating db from source
         # use name when you are using db
-        self._add_phrase_sqlstr = ''
         self.old_phrases=[]
         
         self._conf_file_path = "/usr/share/ibus-typing-booster/hunspell-tables/"
@@ -70,13 +65,7 @@ class tabsqlitedb:
             encoding=self.encoding,
             lang_chars=self.lang_chars)
 
-        # for fast add word
-        self._set_add_phrase_sqlstr()
-        #(ID, MLEN, CLEN, M0, M1, M2, M3, M4, CATEGORY, PHRASE, FREQ, USER_FREQ) = range (0,12)
-        self._phrase_table_column_names = ['id', 'mlen', 'clen']
-        for i in range(self._mlen):
-            self._phrase_table_column_names.append ('m%d' %i)
-        self._phrase_table_column_names += ['phrase','freq','user_freq']
+        self._phrase_table_column_names = ['id', 'mlen', 'clen', 'input_phrase', 'phrase','freq','user_freq']
         self.user_can_define_phrase = self.get_ime_property('user_can_define_phrase')
         if self.user_can_define_phrase:
             if self.user_can_define_phrase.lower() == u'true' :
@@ -201,29 +190,32 @@ class tabsqlitedb:
 
     def update_phrase (self, entry, database='user_db'):
         '''update phrase freqs'''
-        #print entry
-        _con = [ entry[-1] ] + list(entry[1:3+entry[1]]) + [entry[-3]]
-        #print _con
-        _condition = u''.join( map(lambda x: 'AND m%d = ? ' % x, range(entry[1]) )    )
-        #print _condition
-        sqlstr = 'UPDATE %s.phrases SET user_freq = ? WHERE mlen = ? AND clen = ? %s AND phrase = ?;' % (database, _condition)
-        #print sqlstr
-        self.db.execute ( sqlstr , _con )
-        # because we may update different db, we'd better commit every time.
+        input_phrase, phrase, freq, user_freq = entry
+        sqlstr = '''UPDATE %(database)s.phrases
+                    SET user_freq = %(user_freq)s
+                    WHERE mlen = %(mlen)s
+                    AND clen = %(clen)s
+                    AND input_phrase = "%(input_phrase)s"
+                    AND phrase = "%(phrase)s";
+        ''' %{'database':database,
+              'user_freq': user_freq,
+              'mlen': len(input_phrase),
+              'clen': len(phrase),
+              'input_phrase': input_phrase,
+              'phrase': phrase}
+        self.db.execute(sqlstr)
         self.db.commit()
 
     def sync_usrdb (self):
         # we need to update the user_db
         #print 'sync userdb'
         mudata = self.db.execute ('SELECT * FROM mudb.phrases;').fetchall()
-        #print mudata
         data_u = filter ( lambda x: x[-2] in [1,-3], mudata)
         data_a = filter ( lambda x: x[-2]==2, mudata)
         data_n = filter ( lambda x: x[-2]==-2, mudata)
-        #print data_a
-        data_a = map (lambda x: (u''.join (x[3:3+x[1]]),x[-3],0,x[-1] ), data_a)
-        data_n = map (lambda x: (u''.join (x[3:3+x[1]]),x[-3],-1,x[-1] ), data_n)
-        #print data_u
+        data_u = map (lambda x: (x[3],x[-3],x[-2],x[-1] ), data_u)
+        data_a = map (lambda x: (x[3],x[-3],0,x[-1] ), data_a)
+        data_n = map (lambda x: (x[3],x[-3],-1,x[-1] ), data_n)
         map (self.update_phrase, data_u)
         #print self.db.execute('select * from user_db.phrases;').fetchall()
         map (self.u_add_phrase,data_a)
@@ -239,9 +231,9 @@ class tabsqlitedb:
             pass
         sqlstr = '''CREATE TABLE IF NOT EXISTS %s.phrases
                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    mlen INTEGER, clen INTEGER, ''' % database
-        sqlstr += ''.join(map(lambda x: 'm%d TEXT, ' % x, range(self._mlen)))
-        sqlstr += 'phrase TEXT, freq INTEGER, user_freq INTEGER);'
+                    mlen INTEGER, clen INTEGER,
+                    input_phrase TEXT, phrase TEXT,
+                    freq INTEGER, user_freq INTEGER);''' % database
         self.db.execute(sqlstr)
         self.db.commit()
     
@@ -256,57 +248,38 @@ class tabsqlitedb:
         '''Add a phrase to userdb'''
         self.add_phrase (nphrase,database='user_db',commit=False)
 
-    def _set_add_phrase_sqlstr(self):
-        '''Create the sqlstr for add phrase according to self._mlen.'''
-        sqlstr = 'INSERT INTO %s.phrases ( mlen, clen, '
-        sql_suffix = 'VALUES ( ?, ?, '
-        mmlen = range(self._mlen)
-        sqlstr += ''.join ( map(lambda x: 'm%d, ' %x , mmlen) )
-        sql_suffix += ''.join ( map (lambda x: '?, ' , mmlen) )
-        sqlstr += 'phrase, freq, user_freq) '
-        sql_suffix += '?, ?, ? );'
-        sqlstr += sql_suffix
-        self._add_phrase_sqlstr = sqlstr
-
     def add_phrase (self, aphrase, database = 'main',commit=True):
-        '''Add phrase to database, phrase is a object of
-        (tabkeys, phrase, freq ,user_freq)
         '''
-        sqlstr = self._add_phrase_sqlstr
+        Add phrase to database, phrase is a object of
+        (input_phrase, phrase, freq ,user_freq)
+        '''
+        sqlstr = '''INSERT INTO %(database)s.phrases
+                    (mlen, clen, input_phrase, phrase, freq, user_freq)
+                    VALUES ( ?, ?, ?, ?, ?, ? );''' %{'database': database}
         try:
-            tabkeys,phrase,freq,user_freq = aphrase
+            input_phrase,phrase,freq,user_freq = aphrase
         except:
-            tabkeys,phrase,freq = aphrase
+            input_phrase,phrase,freq = aphrase
             user_freq = 0
         
         try:
-            tbks = list(tabkeys.decode('utf8'))
-            record = [None] * (5 + self._mlen)
-            record [0] = len (tabkeys)
-            record [1] = len (phrase)
-            record [2: 2+len(tabkeys)] = map (lambda x: tbks[x], range(0,len(tabkeys)))
-            record[-3:] = phrase, freq, user_freq
-            self.db.execute (sqlstr % database, record)
+            record = [len(input_phrase), len(phrase),
+                      input_phrase, phrase,
+                      freq, user_freq]
+            self.db.execute (sqlstr, record)
             if commit:
                 self.db.commit()
         except Exception:
             import traceback
             traceback.print_exc()
     
-
-    
     def optimize_database (self, database='main'):
         sqlstr = '''
             CREATE TABLE tmp AS SELECT * FROM %(database)s.phrases;
             DELETE FROM %(database)s.phrases;
             INSERT INTO %(database)s.phrases SELECT * FROM tmp ORDER BY
-            %(tabkeystr)s mlen ASC, user_freq DESC, freq DESC, id ASC;
-            DROP TABLE tmp;
-            '''
-        tabkeystr = ''
-        for i in range(self._mlen):
-            tabkeystr +='m%d, ' % i
-        sqlstr = sqlstr % {'database':database,'tabkeystr':tabkeystr}
+            input_phrase, mlen ASC, user_freq DESC, freq DESC, id ASC;
+            DROP TABLE tmp;''' %{'database':database,}
         self.db.executescript (sqlstr)
         self.db.executescript ("VACUUM;")
         self.db.commit()
@@ -323,14 +296,11 @@ class tabsqlitedb:
         self.db.commit()
     
     def create_indexes(self, database, commit=True):
-        tabkeystr = ''
-        for i in range(self._mlen):
-            tabkeystr +='m%d,' % i
         sqlstr = '''
             CREATE INDEX IF NOT EXISTS %(database)s.phrases_index_p ON phrases
-            (%(tabkeystr)s mlen ASC, freq DESC, id ASC);
-            CREATE INDEX IF NOT EXISTS %(database)s.phrases_index_i ON phrases (phrase, mlen ASC);
-            ''' %{'database':database,'tabkeystr':tabkeystr}
+            (input_phrase, mlen ASC, freq DESC, id ASC);
+            CREATE INDEX IF NOT EXISTS %(database)s.phrases_index_i ON phrases
+            (phrase, mlen ASC);''' %{'database':database}
         self.db.executescript (sqlstr)
         if commit:
             self.db.commit()
@@ -341,28 +311,30 @@ class tabsqlitedb:
         return -(cmp (x[-1], y[-1])) or (cmp (x[1], y[1])) \
                 or -(cmp (x[-2], y[-2])) or (cmp (x[0], y[0]))
 
-    def select_words(self, tabkeys):
+    def select_words(self, input_phrase):
         '''
         Get phrases from database by tab_key objects
         ( which should be equal or less than the max key length)
         This method is called in hunspell_table.py by passing UserInput held data
-        Return result[:] 
+        Returns a list of matches where each match is a tuple
+        in the form of a database row, i.e. returns something like
+        [(id, mlen, clen, input_phrase, phrase, freq, user_freq), ...]
         '''
-        # firstly, we make sure the len we used is equal or less than the max key length
-        _len = min( len(tabkeys),self._mlen )
-        # “map(str,tabkeys[:_len])” would convert the Unicode back to UTF-8.
-        # This could be fixed by converting back to Unicode
-        # in the end with “en_word = ''.join(en_word).decode('utf8')”
-        # or by using eval(repr()) instead of str():
-        en_word = map(eval,map(repr,tabkeys[:_len]))
-        en_word = ''.join(en_word)
-        sqlstr = '''SELECT * FROM user_db.phrases WHERE phrase LIKE "%(w1)s%%"
+        if type(input_phrase) != type(u''):
+            input_phrase = input_phrase.decode('utf8')
+        # limit length of input phrase to max key length
+        # (Now that the  input_phrase is stored in a single
+        # column of type TEXT in sqlite3, this limit can be set as high
+        # as the maximum string length in sqlite3
+        # (by default 10^9, see http://www.sqlite.org/limits.html))
+        input_phrase = input_phrase[:self._mlen]
+        sqlstr = '''SELECT * FROM user_db.phrases WHERE phrase LIKE "%(input_phrase)s%%"
                     UNION ALL
-                    SELECT  * FROM mudb.phrases WHERE phrase LIKE "%(w2)s%%"
+                    SELECT  * FROM mudb.phrases WHERE phrase LIKE "%(input_phrase)s%%"
                     ORDER BY user_freq DESC, freq DESC, id ASC, mlen ASC
-                    limit 1000;''' %{'w1': en_word, 'w2': en_word}
+                    limit 1000;''' %{'input_phrase': input_phrase}
         result = self.db.execute(sqlstr).fetchall()
-        hunspell_list = self.hunspell_obj.suggest(en_word)
+        hunspell_list = self.hunspell_obj.suggest(input_phrase)
         for ele in hunspell_list:
             result.append(tuple(ele))
         # here in order to get high speed, I use complicated map
@@ -475,7 +447,7 @@ class tabsqlitedb:
         Determines the number of columns by parsing this:
 
         sqlite> select sql from sqlite_master where name='phrases';
-CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen INTEGER, clen INTEGER, m0 TEXT, m1 TEXT, m2 TEXT, m3 TEXT, m4 TEXT, m5 TEXT, m6 TEXT, m7 TEXT, m8 TEXT, m9 TEXT, m10 TEXT, m11 TEXT, m12 TEXT, m13 TEXT, m14 TEXT, m15 TEXT, m16 TEXT, m17 TEXT, m18 TEXT, m19 TEXT, m20 TEXT, m21 TEXT, m22 TEXT, m23 TEXT, m24 TEXT, m25 TEXT, m26 TEXT, m27 TEXT, m28 TEXT, m29 TEXT, m30 TEXT, m31 TEXT, m32 TEXT, m33 TEXT, m34 TEXT, m35 TEXT, m36 TEXT, m37 TEXT, m38 TEXT, m39 TEXT, m40 TEXT, m41 TEXT, m42 TEXT, m43 TEXT, m44 TEXT, m45 TEXT, m46 TEXT, m47 TEXT, m48 TEXT, m49 TEXT, phrase TEXT, freq INTEGER, user_freq INTEGER)
+CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen INTEGER, clen INTEGER, input_phrase TEXT, phrase TEXT, freq INTEGER, user_freq INTEGER)
         sqlite>
 
         This result could be on a single line, as above, or on multiple
@@ -500,40 +472,40 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
         except:
             return 0
 
-    def check_phrase (self,phrase,tabkey=None,database='main'):
+    def check_phrase(self, phrase, input_phrase=None, database='main'):
         # if IME didn't support user define phrase,
         # we divide user input phrase into characters,
         # and then check its frequence
         if type(phrase) != type(u''):
             phrase = phrase.decode('utf8')
+        if type(input_phrase) != type(u''):
+            input_phrase = input_phrase.decode('utf8')
         if self.user_can_define_phrase:
-            self.check_phrase_internal (phrase, tabkey, database)
+            self.check_phrase_internal (phrase, input_phrase, database)
         else:
             map(self.check_phrase_internal, phrase)
     
-    def check_phrase_internal (self,phrase,tabkey=None,database='main'):
+    def check_phrase_internal (self,phrase,input_phrase=None,database='main'):
         '''Check word freq and user_freq
         '''
         if type(phrase) != type(u''):
             phrase = phrase.decode('utf8')
+        if type(input_phrase) != type(u''):
+            input_phrase = input_phrase.decode('utf8')
             
         if len(phrase) < 4:
             return 
 
-        tabks = list(tabkey.decode('utf8'))
-        tabkids = tuple(map(unicode,tabks))
-
-        condition = ' and '.join( map(lambda x: 'm%d = ?' % x, range( len(tabks) )) )
-        sqlstr = '''SELECT * FROM user_db.phrases WHERE phrase = ? and %(cond)s
-                UNION ALL SELECT * FROM mudb.phrases WHERE phrase = ? and %(cond)s
-                ORDER BY user_freq DESC, freq DESC, id ASC;
-                 ''' % {'cond':condition}
-        result = self.db.execute(sqlstr, ((phrase,)+tabkids)*2 ).fetchall()
-        hunspell_list = self.hunspell_obj.suggest(phrase[:-1])
+        sqlstr = '''
+                SELECT * FROM user_db.phrases WHERE phrase = "%(phrase)s" and input_phrase = "%(input_phrase)s"
+                UNION ALL
+                SELECT * FROM mudb.phrases WHERE phrase = "%(phrase)s" and input_phrase = "%(input_phrase)s"
+                ORDER BY user_freq DESC, freq DESC, id ASC;''' %{'phrase': phrase, 'input_phrase': input_phrase}
+        result = self.db.execute(sqlstr).fetchall()
+        hunspell_list = self.hunspell_obj.suggest(phrase) #phrase[:-1])
         for ele in hunspell_list:
             if ele[-3] == phrase:
                 result.append(tuple(ele))
-        
         sysdb = {}
         usrdb = {}
         mudb = {}
@@ -553,11 +525,10 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
         map (lambda x: mudb.update(x[2]), reslist)
         #print "mudb is ", mudb
         
-        sqlstr = 'UPDATE mudb.phrases SET user_freq = ? WHERE mlen = ? AND clen = ? %s AND phrase = ?;'
         try:        
             if len (result) == 0 and self.user_can_define_phrase:
                 # this is a new phrase, we add it into user_db
-                self.add_phrase ( (tabkey,phrase,-2,1), database = 'mudb')
+                self.add_phrase ( (input_phrase,phrase,-2,1), database = 'mudb')
             elif len (result) > 0:
                 if not self.dynamic_adjust:
                     # we should change the frequency of words
@@ -565,16 +536,18 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
                 # we remove the keys contained in mudb from usrdb
                 user_def= [elem for elem in result if elem[-3]== phrase]
                 if not user_def:
-                    self.add_phrase ( (tabkey,phrase,-2,1), database = 'mudb')
+                    self.add_phrase ( (input_phrase,phrase,-2,1), database = 'mudb')
                 keyout = filter (lambda k: mudb.has_key(k), usrdb.keys() )
                 map (usrdb.pop, keyout)
                 # we remove the keys contained in mudb and usrdb from sysdb
                 keyout = filter (lambda k: mudb.has_key(k) or usrdb.has_key(k) , sysdb.keys() )
                 map (sysdb.pop, keyout)
-                map (lambda res: self.db.execute ( sqlstr % ''.join( map(lambda x: 'AND m%d = ? ' % x, range(res[0])) ) ,  [ mudb[res][1] + 1 ] + list( res[:2+res[0]]) + list (res[2+self._mlen:]) ) , mudb.keys())
+                sqlstr = '''UPDATE mudb.phrases SET user_freq = ? WHERE mlen = ? AND clen = ? AND input_phrase = ? AND phrase = ?;'''
+                map (lambda res: self.db.execute (sqlstr, [mudb[res][1] + 1] + list(res[:2+res[0]]) + list(res[2+self._mlen:])), mudb.keys())
                 self.db.commit()
-                map (lambda res: self.add_phrase ((''.join(res[2:2+int(res[0])]),phrase,(-3 if usrdb[res][0][-1] == -1 else 1),usrdb[res][1]+1  ), database = 'mudb') , usrdb.keys() )
-                map (lambda res: self.add_phrase ((''.join(res[2:2+int(res[0])]),phrase,2,1 ), database = 'mudb'), sysdb.keys() )
+                map(lambda res: self.add_phrase((res[2],phrase,2,1), database = 'mudb'), sysdb.keys())
+                map(lambda res: self.add_phrase((res[2],phrase,(-3 if usrdb[res][0][-1] == -1 else 1),usrdb[res][1]+1), database = 'mudb'), usrdb.keys())
+                map(lambda res: self.add_phrase((res[2],phrase,2,1), database = 'mudb'), sysdb.keys())
             else:
                 # we come here when the ime doesn't support user phrase define
                 pass
@@ -583,30 +556,38 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
             traceback.print_exc ()
 
     def remove_phrase (self,phrase,database='user_db'):
-        '''Remove phrase from database, default is from user_db
-        phrase should be the a row of select * result from database
-        Like (id, mlen,clen,m0,m1,m2,m3,phrase,freq,user_freq)
         '''
-        _ph = list(phrase[:-2])
-        _condition = ''    
-        for i in range(_ph[1]):
-            _condition += 'AND m%d = ? ' % i
-        nn =_ph.count(None)
-        if nn:
-            for i in range(nn):
-                _ph.remove(None)
-        msqlstr= 'SELECT * FROM %(database)s.phrases WHERE mlen = ? and clen = ? %(condition)s AND phrase = ? ;' % { 'database':database, 'condition':_condition }
+        Remove phrase from database.
+        phrase should be a tuple like a row in the database, i.e.
+        like the result lines of a "select * from phrases;"
+        Like (id, mlen,clen,input_phrase,phrase,freq,user_freq)
+        '''
+        id, mlen, clen, input_phrase, phrase, freq, user_freq = phrase
+        select_sqlstr= '''
+        SELECT * FROM %(database)s.phrases
+        WHERE mlen = %(mlen)s
+        AND clen = %(clen)s
+        AND input_phrase = "%(input_phrase)s"
+        AND phrase = "%(phrase)s";
+        ''' %{'database': database,
+              'mlen': mlen,
+              'clen': clen,
+              'input_phrase': input_phrase,
+              'phrase': phrase}
 
-        if self.db.execute(msqlstr, _ph[1:]).fetchall():
-            sqlstr = 'DELETE FROM %(database)s.phrases WHERE mlen = ? AND clen =? %(condition)s AND phrase = ?  ;' % { 'database':database, 'condition':_condition }
-            self.db.execute(sqlstr,_ph[1:])
-            self.db.commit()
-        
-        msqlstr= 'SELECT * FROM mudb.phrases WHERE mlen = ? and clen = ? %(condition)s AND phrase = ? ;' % { 'condition':_condition }
-
-        if self.db.execute(msqlstr, _ph[1:]).fetchall():
-            sqlstr = 'DELETE FROM mudb.phrases WHERE mlen = ? AND clen =? %(condition)s AND phrase = ?  ;' % {  'condition':_condition }
-            self.db.execute(sqlstr,_ph[1:])
+        if self.db.execute(select_sqlstr).fetchall():
+            delete_sqlstr = '''
+            DELETE FROM %(database)s.phrases
+            WHERE mlen = %(mlen)s
+            AND clen =%(clen)s
+            AND input_phrase = "%(input_phrase)s"
+            AND phrase = "%(phrase)s";
+            ''' %{'database': database,
+                  'mlen': mlen,
+                  'clen': clen,
+                  'input_phrase': input_phrase,
+                  'phrase': phrase}
+            self.db.execute(delete_sqlstr)
             self.db.commit()
 
     def extract_user_phrases(self, udb, only_defined=False):
