@@ -105,8 +105,6 @@ class tabsqlitedb:
             print 'Could not find "dynamic_adjust" entry from database, is it a outdated database?'
             self.dynamic_adjust = False
         
-        self.pkeylens = []
-        self.pkeylens = self.phrase_keys_len ()
         self.startchars = self.get_start_chars ()
         user_db = self.get_ime_property("name")+'-user.db'
         # user database:
@@ -237,18 +235,6 @@ class tabsqlitedb:
         sqlstr += 'phrase TEXT, freq INTEGER, user_freq INTEGER);'
         self.db.execute ( sqlstr )
         self.db.commit()
-    
-
-    def phrase_keys_len (self):
-        '''Return the phrase possible key length'''
-        try:
-            least_commit_len = int(self.get_ime_property('least_commit_length'))
-        except:
-            least_commit_len = 0
-            if least_commit_len > 0:
-                return range (least_commit_len, self._mlen + 1)
-            else:
-                return []
     
     def get_start_chars (self):
         '''return possible start chars of IME'''
