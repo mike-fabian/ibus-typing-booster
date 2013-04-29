@@ -92,7 +92,7 @@ class tabsqlitedb:
             else:
                 self.user_can_define_phrase = False
         else:
-            print 'Could not find "user_can_define_phrase" entry from database, is it a outdated database?'
+            print 'Could not find "user_can_define_phrase" entry from database, is it an outdated database?'
             self.user_can_define_phrase = False
         
         self.dynamic_adjust = self.get_ime_property('dynamic_adjust')
@@ -102,7 +102,7 @@ class tabsqlitedb:
             else:
                 self.dynamic_adjust = False
         else:
-            print 'Could not find "dynamic_adjust" entry from database, is it a outdated database?'
+            print 'Could not find "dynamic_adjust" entry from database, is it an outdated database?'
             self.dynamic_adjust = False
         
         self.startchars = self.get_start_chars ()
