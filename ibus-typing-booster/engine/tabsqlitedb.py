@@ -347,7 +347,6 @@ class tabsqlitedb:
     def drop_indexes(self, database):
         '''Drop the index in database to reduce it's size'''
         sqlstr = '''
-            DROP INDEX IF EXISTS %(database)s.goucima_index_z;
             DROP INDEX IF EXISTS %(database)s.phrases_index_p;
             DROP INDEX IF EXISTS %(database)s.phrases_index_i;
             VACUUM; 
