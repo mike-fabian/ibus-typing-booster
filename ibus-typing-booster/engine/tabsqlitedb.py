@@ -250,15 +250,6 @@ class tabsqlitedb:
         except:
             return ''
 
-    def get_no_check_chars (self):
-        '''Get the characters which engine should not change freq'''
-        _chars= self.get_ime_property('no_check_chars')
-        try:
-            _chars = _chars.decode('utf-8')
-        except:
-            pass
-        return _chars
-
     def add_phrases (self, phrases, database = 'main'):
         '''Add phrases to database, phrases is a iterable object
         Like: [(tabkeys, phrase, freq ,user_freq), (tabkeys, phrase, freq, user_freq), ...]
