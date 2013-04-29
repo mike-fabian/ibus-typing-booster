@@ -357,22 +357,14 @@ class tabsqlitedb:
         self.db.commit()
     
     def create_indexes(self, database, commit=True):
-        sqlstr = '''
-            CREATE INDEX IF NOT EXISTS %(database)s.goucima_index_z ON goucima (zi);
-            ''' % { 'database':database }
-
-        sqlstr_t = '''
-            CREATE INDEX IF NOT EXISTS %(database)s.phrases_index_p ON phrases
-            (%(tabkeystr)s mlen ASC, freq DESC, id ASC);
-            CREATE INDEX IF NOT EXISTS %(database)s.phrases_index_i ON phrases (phrase, mlen ASC);
-            ''' 
         tabkeystr = ''
         for i in range(self._mlen):
             tabkeystr +='m%d,' % i
-        if database == 'main':
-            sqlstr = sqlstr_t % {'database':database,'tabkeystr':tabkeystr } + sqlstr
-        else:
-            sqlstr = sqlstr_t % {'database':database,'tabkeystr':tabkeystr }
+        sqlstr = '''
+            CREATE INDEX IF NOT EXISTS %(database)s.phrases_index_p ON phrases
+            (%(tabkeystr)s mlen ASC, freq DESC, id ASC);
+            CREATE INDEX IF NOT EXISTS %(database)s.phrases_index_i ON phrases (phrase, mlen ASC);
+            ''' %{'database':database,'tabkeystr':tabkeystr}
         self.db.executescript (sqlstr)
         if commit:
             self.db.commit()
