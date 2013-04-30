@@ -250,28 +250,6 @@ class tabsqlitedb:
         except:
             return ''
 
-    def add_phrases (self, phrases, database = 'main'):
-        '''Add phrases to database, phrases is a iterable object
-        Like: [(tabkeys, phrase, freq ,user_freq), (tabkeys, phrase, freq, user_freq), ...]
-        '''
-        map (self.add_phrase, phrases, [database]*len(phrases),[False]*len(phrases) )
-        self.db.commit()
-    
-    def add_new_phrases (self, nphrases, database='main'):
-        '''Add new phrases into db, new phrases is a object
-        of [(phrase,freq), (phrase,freq),...]'''
-        n_phrases=[]
-        for _ph, _freq in nphrases:
-            try:
-                _tabkey = self.parse_phrase_to_tabkeys(_ph)
-                if not self.check_phrase_internal (_ph, _tabkey, database):
-                    # we don't have this phrase
-                    n_phrases.append ( (_tabkey, _ph, _freq, 0) )
-            except:
-                print '\"%s\" would not been added' % _ph
-        if n_phrases:
-            self.add_phrases ( n_phrases, database )
-    
     def u_add_phrase (self,nphrase):
         '''Add a phrase to userdb'''
         self.add_phrase (nphrase,database='user_db',commit=False)
