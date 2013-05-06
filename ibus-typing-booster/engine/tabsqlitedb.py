@@ -164,13 +164,19 @@ class tabsqlitedb:
             map (self.u_add_phrase,phrases)
             self.db.commit ()
 
-        try:
-            print "optimizing database ..."
-            self.optimize_database()
-        except:
-            print "exception in optimize_database()"
-            import traceback
-            traceback.print_exc ()
+        # do not call this always on intialization for the moment.
+        # It makes the already slow “python engine/main.py --xml”
+        # to list the engines even slower and may break the listing
+        # of the engines completely if there is a problem with
+        # optimizing the databases. Probably bring this back as an
+        # option later if the code in self.optimize_database() is
+        # improved to do anything useful.
+        #try:
+        #    self.optimize_database()
+        #except:
+        #    print "exception in optimize_database()"
+        #    import traceback
+        #    traceback.print_exc ()
 
         # try create all hunspell-tables in user database
         self.create_indexes ("user_db",commit=False)
