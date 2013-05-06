@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 06 May 2013 Released 0.0.27 version
+* simplify code in select_words()
+* remove some unused functions
+* fix some typos in comments
+* fix spelling error in language name for Assamese (Resolves: #959860 - [as_IN] Wrong keymap name Assami )
+* fix spelling error in language name for Gujarati (Resolves: #958770 - [ibus-typing-Booster][gu-IN]- Typo error)
+* remove ✓ from symbol in the .conf files (Resolves: #875285 - IME names too long in gnome-shell Input Sources indicator)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 14 Feb 2013 Released 0.0.26 version
 * Fix mouse clickable arrow icons in lookup table
 * Use different .svg icons for all engines
