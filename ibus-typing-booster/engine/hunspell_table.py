@@ -129,7 +129,7 @@ class editor(object):
     def __init__ (self, config, phrase_table_column_names,valid_input_chars, max_key_length, database, max_length = 64):
         self.db = database
         self._config = config
-        self._name = self.db.get_ime_property('name')
+        self._name = self.db.ime_properties.get('name')
         self._config_section = "engine/typing-booster/%s" % self._name
         self._phrase_table_column_names = phrase_table_column_names
         self._max_key_len = int(max_key_length)
@@ -166,11 +166,11 @@ class editor(object):
         self.trans = None
 
         self._supported_imes = []
-        if self.db.get_ime_property('m17n_mim_name') != None:
-            self._supported_imes.append(self.db.get_ime_property('m17n_mim_name'))
-        self._other_ime = self.db.get_ime_property('other_ime').lower() == u'true'
+        if self.db.ime_properties.get('m17n_mim_name') != None:
+            self._supported_imes.append(self.db.ime_properties.get('m17n_mim_name'))
+        self._other_ime = self.db.ime_properties.get('other_ime').lower() == u'true'
         if self._other_ime:
-            imes = self.db.get_ime_property('imes').split(',')
+            imes = self.db.ime_properties.get('imes').split(',')
             for item in imes:
                 mim_name = item.split(':')[1]
                 if not mim_name in self._supported_imes:
@@ -185,12 +185,12 @@ class editor(object):
                 # fall back to the “main” ime from the config file
                 # or if that one does not exist either to the first of
                 # the supported imes:
-                self._current_ime = self.db.get_ime_property('m17n_mim_name')
+                self._current_ime = self.db.ime_properties.get('m17n_mim_name')
                 if self._current_ime == None:
                     self._current_ime = self._supported_imes[0]
         else:
             # There is only one ime, get it from the config file:
-            self._current_ime = self.db.get_ime_property('m17n_mim_name')
+            self._current_ime = self.db.ime_properties.get('m17n_mim_name')
         if self._current_ime == None or self._current_ime == 'NoIme':
             # Not using m17n transliteration:
             self.trans_m17n_mode = False
@@ -827,7 +827,7 @@ class tabengine (IBus.Engine):
         self._bus = bus
         self.db = db
         # config
-        self._name = self.db.get_ime_property('name')
+        self._name = self.db.ime_properties.get('name')
         self._config_section = "engine/typing-booster/%s" % self._name
         self._config = self._bus.get_config ()
         self._config.connect('value-changed', self.__config_value_changed_cb)
@@ -836,7 +836,7 @@ class tabengine (IBus.Engine):
                 self._config_section,
                 'pagesize'))
         if tabengine._page_size == None:
-            tabengine._page_size = self.db.get_ime_property('page_size')
+            tabengine._page_size = self.db.ime_properties.get('page_size')
         if tabengine._page_size == None:
             tabengine._page_size = 6 # reasonable default page size
         if tabengine._page_size < 1:
@@ -861,9 +861,9 @@ class tabengine (IBus.Engine):
         self._mode = 1
         # self._ime_py: True / False this IME support pinyin mode
  
-        self._status = self.db.get_ime_property('status_prompt').encode('utf8')
+        self._status = self.db.ime_properties.get('status_prompt').encode('utf8')
         # now we check and update the valid input characters
-        self._chars = self.db.get_ime_property('valid_input_chars').decode('utf8')
+        self._chars = self.db.ime_properties.get('valid_input_chars').decode('utf8')
         self._valid_input_chars = []
         for _c in self._chars:
             self._valid_input_chars.append(_c)
@@ -878,7 +878,7 @@ class tabengine (IBus.Engine):
             self._page_up_keys.append (IBus.KEY_minus)
         
         self._phrase_table_column_names = self.db.get_phrase_table_column_names()
-        self._ml = int(self.db.get_ime_property ('max_key_length'))
+        self._ml = int(self.db.ime_properties.get ('max_key_length'))
         
         # Containers we used:
         self._editor = editor(self._config, self._phrase_table_column_names, self._valid_input_chars, self._ml, self.db)
@@ -893,12 +893,12 @@ class tabengine (IBus.Engine):
             self._config_section,
             "tabenable"))
         if self._tab_enable == None:
-            self._tab_enable = self.db.get_ime_property('tab_enable').lower() == u'true'
+            self._tab_enable = self.db.ime_properties.get('tab_enable').lower() == u'true'
         self._auto_commit = variant_to_value(self._config.get_value(
                 self._config_section,
                 "AutoCommit"))
         if self._auto_commit == None:
-            self._auto_commit = self.db.get_ime_property('auto_commit').lower() == u'true'
+            self._auto_commit = self.db.ime_properties.get('auto_commit').lower() == u'true'
         # the commit phrases length
         self._len_list = [0]
         # connect to SpeedMeter

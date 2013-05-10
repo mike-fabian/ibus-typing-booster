@@ -31,6 +31,31 @@ user_database_version = '0.61'
 patt_r = re.compile(r'c([ea])(\d):(.*)')
 patt_p = re.compile(r'p(-{0,1}\d)(-{0,1}\d)')
 
+class ImeProperties:
+    def __init__(self, configfile_path=None):
+        '''
+        configfile_path is the full path to the config file, for example
+        “/usr/share/ibus-typing-booster/hunspell-tables/en_US.conf”
+        '''
+        self.ime_property_cache = {}
+        if configfile_path.find('typing-booster:') > 0:
+            configfile_path=configfile_path.replace(
+                'typing-booster:','')
+        if os.path.exists(configfile_path) and os.path.isfile(configfile_path):
+            comment_patt = re.compile('^#')
+            for line in file(configfile_path):
+                if not comment_patt.match(line):
+                    attr,val = line.strip().split ('=', 1)
+                    self.ime_property_cache[attr.strip()]= val.strip()
+        else:
+            sys.stderr.write("Error: ImeProperties: No such file: %s" %configfile_path)
+
+    def get(self, key):
+        if key in self.ime_property_cache:
+            return self.ime_property_cache[key]
+        else:
+            return None
+
 class tabsqlitedb:
     '''Phrase database for hunspell-tables'''
     def __init__(self, name = 'table.db', user_db = None, filename = None ):
@@ -39,34 +64,31 @@ class tabsqlitedb:
         self.old_phrases=[]
         
         self._conf_file_path = "/usr/share/ibus-typing-booster/hunspell-tables/"
-        
-        if filename:
-            self.ime_property_cache = self.__parse_conf_file(self._conf_file_path+filename)
-        else:
-            self.ime_property_cache = self.__parse_conf_file()
-        
+
+        self.ime_properties = ImeProperties(self._conf_file_path+filename)
+
         # share variables in this class:
-        self._mlen = int ( self.get_ime_property ("max_key_length") )
+        self._mlen = int(self.ime_properties.get("max_key_length"))
 
         self._m17ndb = 'm17n'
         self._m17n_mim_name = ""
-        self.lang_chars = self.get_ime_property('lang_chars')
+        self.lang_chars = self.ime_properties.get('lang_chars')
         if self.lang_chars != None:
             self.lang_chars = self.lang_chars.decode('utf8')
         else:
             self.lang_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-        self.encoding = self.get_ime_property('encoding')
+        self.encoding = self.ime_properties.get('encoding')
 
         self.hunspell_obj = hunspell_suggest.Hunspell(
-            lang=self.get_ime_property('languages'),
-            dict_name=self.get_ime_property ("hunspell_dict"),
-            aff_name=self.get_ime_property ("hunspell_dict").replace('.dic', '.aff'),
+            lang=self.ime_properties.get('languages'),
+            dict_name=self.ime_properties.get("hunspell_dict"),
+            aff_name=self.ime_properties.get("hunspell_dict").replace('.dic', '.aff'),
             encoding=self.encoding,
             lang_chars=self.lang_chars)
 
         self._phrase_table_column_names = ['id', 'mlen', 'clen', 'input_phrase', 'phrase','freq','user_freq']
-        self.user_can_define_phrase = self.get_ime_property('user_can_define_phrase')
+        self.user_can_define_phrase = self.ime_properties.get('user_can_define_phrase')
         if self.user_can_define_phrase:
             if self.user_can_define_phrase.lower() == u'true' :
                 self.user_can_define_phrase = True
@@ -76,7 +98,7 @@ class tabsqlitedb:
             print 'Could not find "user_can_define_phrase" entry from database, is it an outdated database?'
             self.user_can_define_phrase = False
         
-        self.dynamic_adjust = self.get_ime_property('dynamic_adjust')
+        self.dynamic_adjust = self.ime_properties.get('dynamic_adjust')
         if self.dynamic_adjust:
             if self.dynamic_adjust.lower() == u'true' :
                 self.dynamic_adjust = True
@@ -87,7 +109,7 @@ class tabsqlitedb:
             self.dynamic_adjust = False
         
         self.startchars = self.get_start_chars ()
-        user_db = self.get_ime_property("name")+'-user.db'
+        user_db = self.ime_properties.get("name")+'-user.db'
         # user database:
         if user_db != None:
             home_path = os.getenv ("HOME")
@@ -240,7 +262,7 @@ class tabsqlitedb:
     def get_start_chars (self):
         '''return possible start chars of IME'''
         try:
-            return self.get_ime_property('start_chars')
+            return self.ime_properties.get('start_chars')
         except:
             return ''
 
@@ -391,15 +413,6 @@ class tabsqlitedb:
         sqlstr = 'SELECT * FROM '+d_name+'.'+t_name+';'
         _result = self.db.execute( sqlstr).fetchall()
         return _result
-
-    def get_ime_property( self, attr ):
-        '''get IME property from database, attr is the string of property,
-        which should be str.lower() :)
-        '''
-        if not attr in self.ime_property_cache:
-            return None
-        else:
-            return self.ime_property_cache[attr]
 
     def get_phrase_table_column_names (self):
         '''get a list of phrase table columns name'''
