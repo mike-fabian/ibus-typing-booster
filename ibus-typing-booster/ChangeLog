@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 10 May 2013 Released 0.0.28 version
+* Speed up generating the xml list of the engines (Resolves: #961923 - python /usr/share/ibus-typing-booster/engine/main.py --xml is extremely slow when many hunspell dictionaries are installed)
+* Put the input phrase into a single column in the databases instead of using one column for each character
+* Get rid of tab_dict
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 06 May 2013 Released 0.0.27 version
 * simplify code in select_words()
 * remove some unused functions
