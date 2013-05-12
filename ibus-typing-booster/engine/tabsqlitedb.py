@@ -371,8 +371,7 @@ class tabsqlitedb:
         _cand = []
 
         searchres = map ( lambda res: [ int(res[-2]), int(res[-1]),
-            [(res[1:-2],[res[:-1],res[-1:]])] ], result)
-        
+            [(res[1:-2],res[:])] ], result)
         reslist=filter( lambda x: not x[1], searchres )
         map (lambda x: sysdb.update(x[2]), reslist)
 
@@ -382,20 +381,19 @@ class tabsqlitedb:
         # for mudb
         reslist=filter( lambda x: ( x[0] not in [0,-1] ) and x[1], searchres )
         map (lambda x: mudb.update(x[2]), reslist)
-
         # first process mudb
-        searchres = map ( lambda key: mudb[key][0] + mudb[key][1], mudb )
+        searchres = map ( lambda key: mudb[key], mudb )
         #print searchres
         map (_cand.append, searchres)
 
         # now process usrdb
-        searchres = map ( lambda key:  (not mudb.has_key(key))  and usrdb[key][0] + usrdb[key][1]\
+        searchres = map ( lambda key:  (not mudb.has_key(key))  and usrdb[key]\
                 or None , usrdb )
         searchres = filter(lambda x: bool(x), searchres )
         #print searchres
         map (_cand.append, searchres)
 
-        searchres = map ( lambda key: ((not mudb.has_key(key)) and (not usrdb.has_key(key)) )and sysdb[key][0] + sysdb[key][1]\
+        searchres = map ( lambda key: ((not mudb.has_key(key)) and (not usrdb.has_key(key)) )and sysdb[key]\
                 or None, sysdb )
         searchres = filter (lambda x: bool(x), searchres)
         if searchres:
@@ -403,12 +401,12 @@ class tabsqlitedb:
 
         #for key in usrdb:
         #    if not sysdb.has_key (key):
-        #        _cand.append( usrdb[key][0] + usrdb[key][1] )
+        #        _cand.append(usrdb[key])
         #    else:
-        #        _cand.append( sysdb[key][0] + usrdb[key][1] )
+        #        _cand.append(sysdb[key])
         #for key in sysdb:
         #    if not usrdb.has_key (key):
-        #        _cand.append( sysdb[key][0] + sysdb[key][1] )
+        #        _cand.append( sysdb[key])
         _cand.sort(cmp=self.compare)
         return _cand[:]
 
