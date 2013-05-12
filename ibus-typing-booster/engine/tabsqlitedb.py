@@ -526,7 +526,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
         mudb = {}
         #print "result is: ", result 
         searchres = map ( lambda res: [ int(res[-2]), int(res[-1]),
-            [(res[1:-2],[res[:-1],res[-1]])] ], result)
+            [(res[1:-2],res[:])] ], result)
         # for sysdb
         reslist=filter( lambda x: not x[1], searchres )
         map (lambda x: sysdb.update(x[2]), reslist)
@@ -558,10 +558,10 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
                 keyout = filter (lambda k: mudb.has_key(k) or usrdb.has_key(k) , sysdb.keys() )
                 map (sysdb.pop, keyout)
                 sqlstr = '''UPDATE mudb.phrases SET user_freq = ? WHERE mlen = ? AND clen = ? AND input_phrase = ? AND phrase = ?;'''
-                map (lambda res: self.db.execute (sqlstr, [mudb[res][1] + 1] + list(res[:2+res[0]]) + list(res[2+self._mlen:])), mudb.keys())
+                map (lambda res: self.db.execute(sqlstr, [mudb[res][-1] + 1] + list(res)), mudb.keys())
                 self.db.commit()
                 map(lambda res: self.add_phrase((res[2],phrase,2,1), database = 'mudb'), sysdb.keys())
-                map(lambda res: self.add_phrase((res[2],phrase,(-3 if usrdb[res][0][-1] == -1 else 1),usrdb[res][1]+1), database = 'mudb'), usrdb.keys())
+                map(lambda res: self.add_phrase((res[2],phrase,(-3 if usrdb[res][-2] == -1 else 1),usrdb[res][-1]+1), database = 'mudb'), usrdb.keys())
                 map(lambda res: self.add_phrase((res[2],phrase,2,1), database = 'mudb'), sysdb.keys())
             else:
                 # we come here when the ime doesn't support user phrase define
