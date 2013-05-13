@@ -114,46 +114,50 @@ class tabsqlitedb:
         if user_db != None:
             home_path = os.getenv ("HOME")
             tables_path = path.join (home_path, ".local/share/.ibus",  "hunspell-tables")
-            user_db = path.join (tables_path, user_db)
             if not path.isdir (tables_path):
                 os.makedirs (tables_path)
-            try:
-                desc = self.get_database_desc (user_db)
-                if desc == None \
-                    or desc["version"] != user_database_version \
-                    or self.get_number_of_columns_of_phrase_table(user_db) != len(self._phrase_table_column_names):
-                    sys.stderr.write("The user database %(udb)s seems to be incompatible.\n" %{'udb': user_db})
-                    if desc == None:
-                        sys.stderr.write("There is no version information in the database.\n")
-                    elif desc["version"] != user_database_version:
-                        sys.stderr.write("The version of the database does not match (too old or too new?).\n")
-                        sys.stderr.write("ibus-typing-booster wants version=%s\n" %user_database_version)
-                        sys.stderr.write("But the  database actually has version=%s\n" %desc["version"])
-                    elif self.get_number_of_columns_of_phrase_table(user_db) != len(self._phrase_table_column_names):
-                        sys.stderr.write("The number of columns of the database does not match.\n")
-                        sys.stderr.write("ibus-typing-booster expects %(col)s columns.\n" 
-                            %{'col': len(self._phrase_table_column_names)})
-                        sys.stderr.write("But the database actually has %(col)s columns.\n"
-                            %{'col': self.get_number_of_columns_of_phrase_table(user_db)})
-                    sys.stderr.write("Trying to recover the phrases from the old, incompatible database.\n")
-                    self.old_phrases = self.extract_user_phrases( user_db )
-                    new_name = "%s.%d" %(user_db, os.getpid())
-                    sys.stderr.write("Renaming the incompatible database to \"%(name)s\".\n" %{'name': new_name})
-                    os.rename (user_db, new_name)
-                    sys.stderr.write("Creating a new, empty database \"%(name)s\".\n"  %{'name': user_db})
-                    self.init_user_db (user_db)
-                    sys.stderr.write("If user phrases were successfully recovered from the old,\n")
-                    sys.stderr.write("incompatible database, they will be used to initialize the new database.\n")
-                else:
-                    sys.stderr.write("Compatible database %(db)s found.\n" %{'db': user_db})
-            except:
-                import traceback
-                traceback.print_exc()
+            user_db = path.join (tables_path, user_db)
+            if not path.exists(user_db):
+                sys.stderr.write("The user database %(udb)s does not exist yet.\n" %{'udb': user_db})
+            else:
+                try:
+                    desc = self.get_database_desc (user_db)
+                    if desc == None \
+                        or desc["version"] != user_database_version \
+                        or self.get_number_of_columns_of_phrase_table(user_db) != len(self._phrase_table_column_names):
+                        sys.stderr.write("The user database %(udb)s seems to be incompatible.\n" %{'udb': user_db})
+                        if desc == None:
+                            sys.stderr.write("There is no version information in the database.\n")
+                        elif desc["version"] != user_database_version:
+                            sys.stderr.write("The version of the database does not match (too old or too new?).\n")
+                            sys.stderr.write("ibus-typing-booster wants version=%s\n" %user_database_version)
+                            sys.stderr.write("But the  database actually has version=%s\n" %desc["version"])
+                        elif self.get_number_of_columns_of_phrase_table(user_db) != len(self._phrase_table_column_names):
+                            sys.stderr.write("The number of columns of the database does not match.\n")
+                            sys.stderr.write("ibus-typing-booster expects %(col)s columns.\n"
+                                %{'col': len(self._phrase_table_column_names)})
+                            sys.stderr.write("But the database actually has %(col)s columns.\n"
+                                %{'col': self.get_number_of_columns_of_phrase_table(user_db)})
+                        sys.stderr.write("Trying to recover the phrases from the old, incompatible database.\n")
+                        self.old_phrases = self.extract_user_phrases( user_db )
+                        new_name = "%s.%d" %(user_db, os.getpid())
+                        sys.stderr.write("Renaming the incompatible database to \"%(name)s\".\n" %{'name': new_name})
+                        os.rename(user_db, new_name)
+                        sys.stderr.write("Creating a new, empty database \"%(name)s\".\n"  %{'name': user_db})
+                        self.init_user_db(user_db)
+                        sys.stderr.write("If user phrases were successfully recovered from the old,\n")
+                        sys.stderr.write("incompatible database, they will be used to initialize the new database.\n")
+                    else:
+                        sys.stderr.write("Compatible database %(db)s found.\n" %{'db': user_db})
+                except:
+                    import traceback
+                    traceback.print_exc()
         else:
             user_db = ":memory:"
 
         # open user phrase database
         try:
+            sys.stderr.write("Connect to the database %(name)s.\n" %{'name': user_db})
             self.db = sqlite3.connect(user_db)
             self.db.execute('PRAGMA page_size = 8192; ')
             self.db.execute('PRAGMA cache_size = 20000; ')
