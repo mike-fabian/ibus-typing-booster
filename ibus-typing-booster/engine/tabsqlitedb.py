@@ -560,15 +560,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
 
         delete_sqlstr = '''
         DELETE FROM %(database)s.phrases
-        WHERE mlen = :mlen
-        AND clen = :clen
-        AND input_phrase = :input_phrase
-        AND phrase = :phrase
+        WHERE input_phrase = :input_phrase AND phrase = :phrase
         ;''' %{'database': database}
-        delete_sqlargs = {'mlen': mlen,
-                          'clen': clen,
-                          'input_phrase': input_phrase,
-                          'phrase': phrase}
+        delete_sqlargs = {'input_phrase': input_phrase, 'phrase': phrase}
         self.db.execute(delete_sqlstr, delete_sqlargs)
         self.db.commit()
 
