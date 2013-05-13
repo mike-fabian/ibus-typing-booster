@@ -557,32 +557,20 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
         Like (id, mlen,clen,input_phrase,phrase,freq,user_freq)
         '''
         id, mlen, clen, input_phrase, phrase, freq, user_freq = phrase
-        select_sqlstr= '''
-        SELECT * FROM %(database)s.phrases
-        WHERE mlen = %(mlen)s
-        AND clen = %(clen)s
-        AND input_phrase = "%(input_phrase)s"
-        AND phrase = "%(phrase)s";
-        ''' %{'database': database,
-              'mlen': mlen,
-              'clen': clen,
-              'input_phrase': input_phrase,
-              'phrase': phrase}
 
-        if self.db.execute(select_sqlstr).fetchall():
-            delete_sqlstr = '''
-            DELETE FROM %(database)s.phrases
-            WHERE mlen = %(mlen)s
-            AND clen =%(clen)s
-            AND input_phrase = "%(input_phrase)s"
-            AND phrase = "%(phrase)s";
-            ''' %{'database': database,
-                  'mlen': mlen,
-                  'clen': clen,
-                  'input_phrase': input_phrase,
-                  'phrase': phrase}
-            self.db.execute(delete_sqlstr)
-            self.db.commit()
+        delete_sqlstr = '''
+        DELETE FROM %(database)s.phrases
+        WHERE mlen = :mlen
+        AND clen = :clen
+        AND input_phrase = :input_phrase
+        AND phrase = :phrase
+        ;''' %{'database': database}
+        delete_sqlargs = {'mlen': mlen,
+                          'clen': clen,
+                          'input_phrase': input_phrase,
+                          'phrase': phrase}
+        self.db.execute(delete_sqlstr, delete_sqlargs)
+        self.db.commit()
 
     def extract_user_phrases(self, udb, only_defined=False):
         '''extract user phrases from database'''
