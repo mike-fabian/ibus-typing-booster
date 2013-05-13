@@ -496,58 +496,42 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
                 SELECT * FROM mudb.phrases WHERE phrase = "%(phrase)s" and input_phrase = "%(input_phrase)s"
                 ORDER BY user_freq DESC, freq DESC, id ASC;''' %{'phrase': phrase, 'input_phrase': input_phrase}
         result = self.db.execute(sqlstr).fetchall()
-        hunspell_list = self.hunspell_obj.suggest(phrase) #phrase[:-1])
-        for ele in hunspell_list:
-            if ele[-3] == phrase:
-                result.append(tuple(ele))
+        # If phrase is among the suggestions of self.hunspell_obj.suggest(input_phrase)
+        # append it to results:
+        filter(lambda x: x[-3] == phrase and result.append(tuple(x)),
+               self.hunspell_obj.suggest(input_phrase))
+        if len(result) == 0:
+            if self.user_can_define_phrase:
+                # The phrase was neither found in user_db nor mudb nor
+                # does hunspell_obj.suggest(input_phrase) suggest such
+                # a phrase. Therefore, it is a completely new, user
+                # defined phrase and we add it into mudb:
+                self.add_phrase((input_phrase,phrase,-2,1), database = 'mudb')
+            else:
+                return
+        if not self.dynamic_adjust:
+            # we are not allowed to change the frequency of words
+            return
+
         sysdb = {}
         usrdb = {}
         mudb = {}
-        #print "result is: ", result 
-        searchres = map ( lambda res: [ int(res[-2]), int(res[-1]),
-            [(res[1:-2],res[:])] ], result)
-        # for sysdb
-        reslist=filter( lambda x: not x[1], searchres )
-        map (lambda x: sysdb.update(x[2]), reslist)
-        #print "sysdb is ", sysdb
-        # for usrdb
-        reslist=filter( lambda x: ( x[0] in [0,-1] ) and x[1], searchres )
-        map (lambda x: usrdb.update(x[2]), reslist)
-        #print "usrdb is ", usrdb 
-        # for mudb
-        reslist=filter( lambda x: (x[0] not in [0,-1])  and x[1], searchres )
-        map (lambda x: mudb.update(x[2]), reslist)
-        #print "mudb is ", mudb
-        
-        try:        
-            if len (result) == 0 and self.user_can_define_phrase:
-                # this is a new phrase, we add it into user_db
-                self.add_phrase ( (input_phrase,phrase,-2,1), database = 'mudb')
-            elif len (result) > 0:
-                if not self.dynamic_adjust:
-                    # we should change the frequency of words
-                    return
-                # we remove the keys contained in mudb from usrdb
-                user_def= [elem for elem in result if elem[-3]== phrase]
-                if not user_def:
-                    self.add_phrase ( (input_phrase,phrase,-2,1), database = 'mudb')
-                keyout = filter (lambda k: mudb.has_key(k), usrdb.keys() )
-                map (usrdb.pop, keyout)
-                # we remove the keys contained in mudb and usrdb from sysdb
-                keyout = filter (lambda k: mudb.has_key(k) or usrdb.has_key(k) , sysdb.keys() )
-                map (sysdb.pop, keyout)
-                sqlstr = '''UPDATE mudb.phrases SET user_freq = ? WHERE mlen = ? AND clen = ? AND input_phrase = ? AND phrase = ?;'''
-                map (lambda res: self.db.execute(sqlstr, [mudb[res][-1] + 1] + list(res)), mudb.keys())
-                self.db.commit()
-                map(lambda res: self.add_phrase((res[2],phrase,2,1), database = 'mudb'), sysdb.keys())
-                map(lambda res: self.add_phrase((res[2],phrase,(-3 if usrdb[res][-2] == -1 else 1),usrdb[res][-1]+1), database = 'mudb'), usrdb.keys())
-                map(lambda res: self.add_phrase((res[2],phrase,2,1), database = 'mudb'), sysdb.keys())
-            else:
-                # we come here when the ime doesn't support user phrase define
-                pass
-        except:
-            import traceback
-            traceback.print_exc ()
+        map(lambda x: sysdb.update([(x[3:-2],x[:])]), filter(lambda x: not x[-1], result))
+        map(lambda x: usrdb.update([(x[3:-2], x[:])]), filter(lambda x: (x[-2] in [0,-1]) and x[-1], result))
+        map(lambda x: mudb.update([(x[3:-2], x[:])]), filter(lambda x: (x[-2] not in [0,-1]) and x[-1], result))
+
+        # we remove the keys already contained in mudb{} from usrdb{}
+        map(usrdb.pop, filter(lambda key: key in mudb, usrdb.keys()))
+        # we remove the keys already contained in mudb{} or usrdb{} from sysdb{}
+        map(sysdb.pop, filter(lambda key: key in mudb or key in usrdb, sysdb.keys()))
+
+        map(lambda res: self.add_phrase((res[0],phrase,(-3 if usrdb[res][-2] == -1 else 1),usrdb[res][-1]+1), database = 'mudb'), usrdb.keys())
+        map(lambda res: self.add_phrase((res[0],phrase,2,1), database = 'mudb'), sysdb.keys())
+
+        map(lambda key:
+            self.update_phrase((mudb[key][3], mudb[key][4], mudb[key][5], mudb[key][6]+1),
+                               database='mudb'),
+            mudb.keys())
 
     def remove_phrase (self,phrase,database='user_db'):
         '''
