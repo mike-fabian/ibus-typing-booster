@@ -279,20 +279,32 @@ class tabsqlitedb:
         Add phrase to database, phrase is a object of
         (input_phrase, phrase, freq ,user_freq)
         '''
-        sqlstr = '''INSERT INTO %(database)s.phrases
-                    (mlen, clen, input_phrase, phrase, freq, user_freq)
-                    VALUES ( ?, ?, ?, ?, ?, ? );''' %{'database': database}
         try:
             input_phrase,phrase,freq,user_freq = aphrase
         except:
             input_phrase,phrase,freq = aphrase
             user_freq = 0
         
+        select_sqlstr= '''
+        SELECT * FROM %(database)s.phrases
+        WHERE input_phrase = :input_phrase AND phrase = :phrase
+        ;'''  %{'database': database}
+        select_sqlargs = {'input_phrase': input_phrase, 'phrase': phrase}
+        if self.db.execute(select_sqlstr, select_sqlargs).fetchall():
+            # there is already such a phrase, i.e. add_phrase was called
+            # in error, do nothing to avoid duplicate entries.
+            return
+
+        insert_sqlstr = '''
+        INSERT INTO %(database)s.phrases
+        (mlen, clen, input_phrase, phrase, freq, user_freq)
+        VALUES ( :mlen, :clen, :input_phrase, :phrase, :freq, :user_freq)
+        ;''' %{'database': database}
+        insert_sqlargs = {'mlen': len(input_phrase), 'clen': len(phrase),
+                          'input_phrase': input_phrase, 'phrase': phrase,
+                          'freq': freq, 'user_freq': user_freq}
         try:
-            record = [len(input_phrase), len(phrase),
-                      input_phrase, phrase,
-                      freq, user_freq]
-            self.db.execute (sqlstr, record)
+            self.db.execute (insert_sqlstr, insert_sqlargs)
             if commit:
                 self.db.commit()
         except Exception:
