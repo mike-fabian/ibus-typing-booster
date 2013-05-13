@@ -363,50 +363,17 @@ class tabsqlitedb:
         hunspell_list = self.hunspell_obj.suggest(input_phrase)
         for ele in hunspell_list:
             result.append(tuple(ele))
-        # here in order to get high speed, I use complicated map
-        # to substitute for
+
         usrdb={}
         mudb={}
         sysdb={}
-        _cand = []
+        map(lambda x: sysdb.update([(x[3:-2],x[:])]), filter(lambda x: not x[-1], result))
+        map(lambda x: usrdb.update([(x[3:-2], x[:])]), filter(lambda x: (x[-2] in [0,-1]) and x[-1], result))
+        map(lambda x: mudb.update([(x[3:-2], x[:])]), filter(lambda x: (x[-2] not in [0,-1]) and x[-1], result))
 
-        searchres = map ( lambda res: [ int(res[-2]), int(res[-1]),
-            [(res[1:-2],res[:])] ], result)
-        reslist=filter( lambda x: not x[1], searchres )
-        map (lambda x: sysdb.update(x[2]), reslist)
-
-        # for usrdb
-        reslist=filter( lambda x: ( x[0] in [0,-1] ) and x[1], searchres )
-        map (lambda x: usrdb.update(x[2]), reslist)
-        # for mudb
-        reslist=filter( lambda x: ( x[0] not in [0,-1] ) and x[1], searchres )
-        map (lambda x: mudb.update(x[2]), reslist)
-        # first process mudb
-        searchres = map ( lambda key: mudb[key], mudb )
-        #print searchres
-        map (_cand.append, searchres)
-
-        # now process usrdb
-        searchres = map ( lambda key:  (not mudb.has_key(key))  and usrdb[key]\
-                or None , usrdb )
-        searchres = filter(lambda x: bool(x), searchres )
-        #print searchres
-        map (_cand.append, searchres)
-
-        searchres = map ( lambda key: ((not mudb.has_key(key)) and (not usrdb.has_key(key)) )and sysdb[key]\
-                or None, sysdb )
-        searchres = filter (lambda x: bool(x), searchres)
-        if searchres:
-            map (_cand.append, searchres)
-
-        #for key in usrdb:
-        #    if not sysdb.has_key (key):
-        #        _cand.append(usrdb[key])
-        #    else:
-        #        _cand.append(sysdb[key])
-        #for key in sysdb:
-        #    if not usrdb.has_key (key):
-        #        _cand.append( sysdb[key])
+        _cand = mudb.values()
+        map(_cand.append, filter(lambda x: x, map(lambda key: key not in mudb and usrdb[key], usrdb)))
+        map(_cand.append, filter(lambda x: x, map(lambda key: key not in mudb and key not in usrdb and sysdb[key], sysdb)))
         _cand.sort(cmp=self.compare)
         return _cand[:]
 
