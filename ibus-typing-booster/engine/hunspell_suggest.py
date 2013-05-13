@@ -112,19 +112,22 @@ class Hunspell:
         words = set(start_words[0:max_words])
         return words
 
-    ''' You need to send data in the following protocol==> sq no,len,len,string ,string,-1,0'''
-    def convert_to_lists(self,words):
-        formated_words = []
-        for seq,word in enumerate(words):
-            w_len = len(word)
-            formated_words.append([seq, w_len, w_len, word, word, system_word, system_freq])
-        return formated_words
+    def convert_to_lists(self, input_phrase, phrases):
+        '''
+        convert to database rows  in the format
+        ['id', 'mlen', 'clen', 'input_phrase', 'phrase','freq','user_freq']
+        '''
+        db_rows = []
+        for seq, phrase in enumerate(phrases):
+            i_len = len(input_phrase)
+            db_rows.append([seq, i_len, len(phrase), input_phrase, phrase, system_word, system_freq])
+        return db_rows
 
-    def suggest(self,word):
-        words = self.words_start(word)
+    def suggest(self, input_phrase):
+        phrases = self.words_start(input_phrase)
         suggestions = []
-        if words:
-            suggestions = self.convert_to_lists(words)
+        if phrases:
+            suggestions = self.convert_to_lists(input_phrase, phrases)
         return suggestions
 
 
