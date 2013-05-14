@@ -9,10 +9,10 @@
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #  This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-#  You should have received a copy of the GNU General Public License 
+#  You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 import os
@@ -162,7 +162,7 @@ def main():
         hunspell_files = os.listdir(hunspell_dir)
         files = filter (lambda x: x.endswith('.dic'), hunspell_files)
         for conf in confs:
-            str_dic = conf.replace('conf','dic') 
+            str_dic = conf.replace('conf','dic')
 #            if str_dic not in files:
 #                confs.remove(conf)
 
@@ -172,10 +172,10 @@ def main():
             _ime_properties = tabsqlitedb.ImeProperties(
                 os.path.join(config_file_dir,conf))
             _engine = SubElement (egs,'engine')
-            
+
             _name = SubElement (_engine, 'name')
             _name.text = _ime_properties.get('name')
-            
+
             _longname = SubElement (_engine, 'longname')
             _longname.text = ''
             try:
@@ -185,7 +185,7 @@ def main():
                 pass
             if not _longname.text:
                 _longname.text = _name.text
-            
+
             _language = SubElement (_engine, 'language')
             _langs = _ime_properties.get ('languages')
             if _langs:
@@ -206,16 +206,16 @@ def main():
             _icon_basename = _ime_properties.get ('icon')
             if _icon_basename:
                 _icon.text = os.path.join (icon_dir, _icon_basename)
-            
+
             _layout = SubElement (_engine, 'layout')
             _layout.text = _ime_properties.get ('layout')
 
             _desc = SubElement (_engine, 'description')
             _desc.text = _ime_properties.get ('description')
-            
+
             _page_size_ibus = SubElement(_engine,'page_size')
             _page_size_ibus.text = _ime_properties.get('page_size')
-            
+
             _symbol = SubElement(_engine,'symbol')
             _symbol.text = _ime_properties.get('symbol')
 
@@ -227,7 +227,7 @@ def main():
         egsout = tostring (egs, encoding='utf8')
         egsout = patt.sub ('',egsout)
         print egsout
-        
+
         return 0
 
     if options.daemon :

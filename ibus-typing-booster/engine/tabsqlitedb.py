@@ -11,10 +11,10 @@
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #  This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-#  You should have received a copy of the GNU General Public License 
+#  You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 import os
@@ -62,7 +62,7 @@ class tabsqlitedb:
         # use filename when you are creating db from source
         # use name when you are using db
         self.old_phrases=[]
-        
+
         self._conf_file_path = "/usr/share/ibus-typing-booster/hunspell-tables/"
 
         self.ime_properties = ImeProperties(self._conf_file_path+filename)
@@ -97,7 +97,7 @@ class tabsqlitedb:
         else:
             print 'Could not find "user_can_define_phrase" entry from database, is it an outdated database?'
             self.user_can_define_phrase = False
-        
+
         self.dynamic_adjust = self.ime_properties.get('dynamic_adjust')
         if self.dynamic_adjust:
             if self.dynamic_adjust.lower() == u'true' :
@@ -107,7 +107,7 @@ class tabsqlitedb:
         else:
             print 'Could not find "dynamic_adjust" entry from database, is it an outdated database?'
             self.dynamic_adjust = False
-        
+
         self.startchars = self.get_start_chars ()
         user_db = self.ime_properties.get("name")+'-user.db'
         # user database:
@@ -197,9 +197,9 @@ class tabsqlitedb:
         # try create all hunspell-tables in user database
         self.create_indexes ("user_db",commit=False)
         self.generate_userdb_desc ()
-        
+
         # attach mudb for working process
-        mudb = ":memory:"  
+        mudb = ":memory:"
         self.db.execute ('ATTACH DATABASE "%s" AS mudb;' % mudb )
         self.create_tables ("mudb")
 
@@ -212,7 +212,7 @@ class tabsqlitedb:
             if not comment_patt.match(line):
                 attr,val = line.strip().split ('=', 1)
                 key_val_dict[attr.strip()]= val.strip()
-        return key_val_dict 
+        return key_val_dict
 
     def update_phrase (self, entry, database='user_db'):
         '''update phrase freqs'''
@@ -247,7 +247,7 @@ class tabsqlitedb:
         map (self.u_add_phrase,data_a)
         map (self.u_add_phrase,data_n)
         self.db.commit ()
-    
+
     def create_tables (self, database):
         '''Create table for the phrases.'''
         try:
@@ -262,7 +262,7 @@ class tabsqlitedb:
                     freq INTEGER, user_freq INTEGER);''' % database
         self.db.execute(sqlstr)
         self.db.commit()
-    
+
     def get_start_chars (self):
         '''return possible start chars of IME'''
         try:
@@ -284,7 +284,7 @@ class tabsqlitedb:
         except:
             input_phrase,phrase,freq = aphrase
             user_freq = 0
-        
+
         select_sqlstr= '''
         SELECT * FROM %(database)s.phrases
         WHERE input_phrase = :input_phrase AND phrase = :phrase
@@ -310,7 +310,7 @@ class tabsqlitedb:
         except Exception:
             import traceback
             traceback.print_exc()
-    
+
     def optimize_database (self, database='main'):
         sqlstr = '''
             CREATE TABLE tmp AS SELECT * FROM %(database)s.phrases;
@@ -321,18 +321,18 @@ class tabsqlitedb:
         self.db.executescript (sqlstr)
         self.db.executescript ("VACUUM;")
         self.db.commit()
-    
+
     def drop_indexes(self, database):
         '''Drop the index in database to reduce it's size'''
         sqlstr = '''
             DROP INDEX IF EXISTS %(database)s.phrases_index_p;
             DROP INDEX IF EXISTS %(database)s.phrases_index_i;
-            VACUUM; 
+            VACUUM;
             ''' % { 'database':database }
-        
+
         self.db.executescript (sqlstr)
         self.db.commit()
-    
+
     def create_indexes(self, database, commit=True):
         sqlstr = '''
             CREATE INDEX IF NOT EXISTS %(database)s.phrases_index_p ON phrases
@@ -342,7 +342,7 @@ class tabsqlitedb:
         self.db.executescript (sqlstr)
         if commit:
             self.db.commit()
-    
+
     def compare (self,x,y):
 #        return cmp (x[1], y[1]) or -(cmp (x[-1], y[-1])) \
 #                or -(cmp (x[-2], y[-2])) or (cmp (x[0], y[0]))
@@ -389,7 +389,7 @@ class tabsqlitedb:
         _cand.sort(cmp=self.compare)
         return _cand[:]
 
-    
+
     def get_all_values(self,d_name='main',t_name='inks'):
         sqlstr = 'SELECT * FROM '+d_name+'.'+t_name+';'
         _result = self.db.execute( sqlstr).fetchall()
@@ -420,7 +420,7 @@ class tabsqlitedb:
             db.execute( 'PRAGMA temp_store = MEMORY; ' )
             db.execute( 'PRAGMA synchronous = OFF; ' )
             db.commit()
-    
+
     def get_database_desc(self, db_file):
         if not path.exists(db_file):
             return None
@@ -478,7 +478,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
             self.check_phrase_internal (phrase, input_phrase, database)
         else:
             map(self.check_phrase_internal, phrase)
-    
+
     def check_phrase_internal (self,phrase,input_phrase=None,database='main'):
         '''Check word freq and user_freq
         '''
@@ -486,9 +486,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
             phrase = phrase.decode('utf8')
         if type(input_phrase) != type(u''):
             input_phrase = input_phrase.decode('utf8')
-            
+
         if len(phrase) < 4:
-            return 
+            return
 
         sqlstr = '''
                 SELECT * FROM user_db.phrases WHERE phrase = "%(phrase)s" and input_phrase = "%(input_phrase)s"

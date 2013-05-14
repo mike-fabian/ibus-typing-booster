@@ -11,10 +11,10 @@
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #  This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of 
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-#  You should have received a copy of the GNU General Public License 
+#  You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 __all__ = (
@@ -144,7 +144,7 @@ class editor(object):
         self._tabkey_list = []
         # self._strings: hold preedit strings
         self._strings = []
-        # self._cursor: the caret position in preedit phrases 
+        # self._cursor: the caret position in preedit phrases
         self._cursor = [0,0]
         # self._candidates: hold candidates selected from database [[now],[pre]]
         self._candidates = [[],[]]
@@ -158,7 +158,7 @@ class editor(object):
 
         # self._caret: caret position in lookup_table
         self._caret = 0
-        self._first = 0 
+        self._first = 0
         self.is_down_press = False
 
         self._typed_chars = []
@@ -212,7 +212,7 @@ class editor(object):
         self._typed_chars = []
         self._cursor = [0,0]
         self.update_candidates
-    
+
     def is_empty (self):
         return len(self._t_chars) == 0
 
@@ -276,11 +276,11 @@ class editor(object):
         self._t_chars.pop()
         self.update_candidates ()
         return _c
-    
+
     def get_input_chars (self):
         '''get characters held, valid and invalid'''
         #return self._chars[0] + self._chars[1]
-        return self._chars[0] 
+        return self._chars[0]
 
     def get_input_chars_string (self):
         '''Get valid input char string'''
@@ -292,7 +292,7 @@ class editor(object):
         #    + [self._chars[1]]) )
         return  u''.join( map(u''.join, self._u_chars + [self._chars[0]]) )
 
-    
+
     def get_index(self,key):
         '''
         Get the index of the column with the name “key” in the phrase table
@@ -317,7 +317,7 @@ class editor(object):
             self._cursor[1] = 0
         except:
             pass
-    
+
     def remove_before_string (self):
         '''Remove string before cursor'''
         if self._cursor[1] != 0:
@@ -330,7 +330,7 @@ class editor(object):
         # if we remove all characters in preedit string, we need to clear the self._t_chars
         if self._cursor == [0,0]:
             self._t_chars =[]
-    
+
     def remove_after_string (self):
         '''Remove string after cursor'''
         if self._cursor[1] != 0:
@@ -339,7 +339,7 @@ class editor(object):
             pass
         else:
             self._strings.pop(self._cursor[0])
-    
+
     def remove_before_char (self):
         '''Remove character before cursor'''
         if self._cursor[1] > 0:
@@ -383,7 +383,7 @@ class editor(object):
     def get_invalid_input_string (self):
         '''get invalid characters in string form'''
         return u''.join (self._chars[1])
-        
+
     def get_preedit_strings (self):
         '''Get preedit strings'''
         if self._candidates[0]:
@@ -411,7 +411,7 @@ class editor(object):
         else:
             return _candi
 
-    
+
     def get_strings (self):
         '''Get  strings'''
         if self._candidates[0]:
@@ -437,9 +437,9 @@ class editor(object):
             map (self.add_caret,self._strings[:self._cursor[0]])
         self._caret += self._cursor[1]
         _candi = u''.join( map( str,self.get_input_chars()) )
-        self._caret += len( _candi ) 
+        self._caret += len( _candi )
         return self._caret
-    
+
     def arrow_left (self):
         '''Process Arrow Left Key Event.
         Update cursor data when move caret left'''
@@ -458,7 +458,7 @@ class editor(object):
             return True
         else:
             return False
-    
+
     def arrow_right (self):
         '''Process Arrow Right Key Event.
         Update cursor data when move caret right'''
@@ -495,7 +495,7 @@ class editor(object):
             return True
         else:
             return False
-    
+
     def control_arrow_right (self):
         '''Process Control + Arrow Right Key Event.
         Update cursor data when move caret to string right'''
@@ -547,7 +547,7 @@ class editor(object):
     def filter_candidates (self, candidates):
         '''Filter candidates '''
         return candidates[:]
-        
+
 
     def update_candidates (self):
         '''Update lookuptable'''
@@ -598,7 +598,7 @@ class editor(object):
         except:
             print "exception"
             pass
-    
+
     def auto_commit_to_preedit (self):
         '''Add selected phrase in lookup table to preedit string'''
         _p_index = self.get_index('phrase')
@@ -625,7 +625,7 @@ class editor(object):
             if not res and self._candidates[0]:
                 return True
             return res
-    
+
     def arrow_up(self):
         '''Process Arrow Up Key Event
         Move Lookup Table cursor up'''
@@ -635,7 +635,7 @@ class editor(object):
         if not res and self._candidates[0]:
             return True
         return res
-    
+
     def page_down(self):
         '''Process Page Down Key Event
         Move Lookup Table page down'''
@@ -645,7 +645,7 @@ class editor(object):
         if not res and self._candidates[0]:
             return True
         return res
-    
+
     def page_up(self):
         '''Process Page Up Key Event
         move Lookup Table page up'''
@@ -655,7 +655,7 @@ class editor(object):
         if not res and self._candidates[0]:
             return True
         return res
-    
+
     def number (self, index):
         '''
         Commit a candidate in the lookup table which was selected by
@@ -709,7 +709,7 @@ class editor(object):
     def is_lt_visible (self):
         '''Check whether lookup table is visible'''
         return self._lookup_table.is_cursor_visible ()
-    
+
     def backspace (self):
         '''Process backspace Key Event'''
         if self.get_input_chars():
@@ -720,7 +720,7 @@ class editor(object):
             return True
         else:
             return False
-    
+
     def control_backspace (self):
         '''Process control+backspace Key Event'''
         if self.get_input_chars():
@@ -741,7 +741,7 @@ class editor(object):
             return True
         else:
             return False
-    
+
     def control_delete (self):
         '''Process control+delete Key Event'''
         if self.get_input_chars ():
@@ -771,7 +771,7 @@ class editor(object):
             return True
         else:
             return False
-    
+
     def r_shift (self):
         '''Process Right Shift Key Event as changed between PinYin Mode and Table Mode'''
         if self._chars[0]:
@@ -783,7 +783,7 @@ class editor(object):
         return (KeyProcessResult,whethercommit,commitstring)'''
         self._typed_chars = []
         if self._chars[1]:
-            # we have invalid input, so do not commit 
+            # we have invalid input, so do not commit
             return (False,u'')
         if self._t_chars :
             _ic = self.get_strings ()
@@ -806,7 +806,7 @@ class editor(object):
             return (True,pstr,istr)
         else:
             return (False,u'',u'')
-    
+
     def one_candidate (self):
         '''Return true if there is only one candidate'''
         return len(self._candidates[0]) == 1
@@ -816,7 +816,7 @@ class editor(object):
 ####################
 class tabengine (IBus.Engine):
     '''The IM Engine for Tables'''
-    
+
     # colors
 #    _phrase_color             = 0xffffff
 #    _user_phrase_color         = 0xffffff
@@ -853,14 +853,14 @@ class tabengine (IBus.Engine):
         # this is the backend sql db we need for our IME
         # we receive this db from IMEngineFactory
         #self.db = tabsqlitedb.tabsqlitedb( name = dbname )
-        
+
         self._icon_dir = '%s%s%s%s' % (os.getenv('IBUS_HUNSPELL_TABLE_LOCATION'),
                 os.path.sep, 'icons', os.path.sep)
         # 0 = english input mode
         # 1 = table input mode
         self._mode = 1
         # self._ime_py: True / False this IME support pinyin mode
- 
+
         self._status = self.db.ime_properties.get('status_prompt').encode('utf8')
         # now we check and update the valid input characters
         self._chars = self.db.ime_properties.get('valid_input_chars').decode('utf8')
@@ -876,10 +876,10 @@ class tabengine (IBus.Engine):
                 and '-' not in self._valid_input_chars:
             self._page_down_keys.append (IBus.KEY_equal)
             self._page_up_keys.append (IBus.KEY_minus)
-        
+
         self._phrase_table_column_names = self.db.get_phrase_table_column_names()
         self._ml = int(self.db.ime_properties.get ('max_key_length'))
-        
+
         # Containers we used:
         self._editor = editor(self._config, self._phrase_table_column_names, self._valid_input_chars, self._ml, self.db)
         # some other vals we used:
@@ -908,7 +908,7 @@ class tabengine (IBus.Engine):
         #    self._sm_bus = bus.get_object ("org.ibus.table.SpeedMeter.%s"\
         #            % user, "/org/ibus/table/SpeedMeter")
         #    self._sm =  dbus.Interface(self._sm_bus,\
-        #            "org.ibus.table.SpeedMeter") 
+        #            "org.ibus.table.SpeedMeter")
         #except:
         #    self._sm = None
         #self._sm_on = False
@@ -921,7 +921,7 @@ class tabengine (IBus.Engine):
         self._single_quotation_state = False
         self._prev_key = None
         self._update_ui ()
-    
+
     def do_destroy(self):
         self.reset ()
         self.do_focus_out ()
@@ -975,7 +975,7 @@ class tabengine (IBus.Engine):
                                       attr.get_end_index())
                 i += 1
             super(tabengine, self).update_preedit_text(text, self._editor.get_caret(), True)
-    
+
     def _update_aux (self):
         '''Update Aux String in UI'''
         aux_string = u'(%d / %d)' % (self._editor._lookup_table.get_cursor_pos() + 1,
@@ -1035,7 +1035,7 @@ class tabengine (IBus.Engine):
         self._update_preedit ()
         self._update_aux ()
 
-     
+
     def commit_string (self,string):
         if self._tab_enable:
             # after each commit, disable a tab enabled lookup
@@ -1049,7 +1049,7 @@ class tabengine (IBus.Engine):
 #        self._prev_char = string[-1]
 
     def _match_hotkey (self, key, code, mask):
-        
+
         if key.code == code and key.mask == mask:
             if self._prev_key and key.code == self._prev_key.code and key.mask & IBus.ModifierType.RELEASE_MASK:
                 return True
@@ -1057,7 +1057,7 @@ class tabengine (IBus.Engine):
                 return True
 
         return False
-    
+
     def do_process_key_event(self, keyval, keycode, state):
         '''Process Key Events
         Key Events include Key Press and Key Release,
@@ -1073,10 +1073,10 @@ class tabengine (IBus.Engine):
 
     def _process_key_event (self, key):
         '''Internal method to process key event'''
-        
+
         if key.mask & IBus.ModifierType.RELEASE_MASK:
             return True
-        
+
         if self._editor.is_empty ():
             # we have not input anything
             if  key.code >= 32 and key.code <= 127 and ( keysym2unichr(key.code) not in self._valid_input_chars ) \
@@ -1105,57 +1105,57 @@ class tabengine (IBus.Engine):
             self.reset ()
             self._update_ui ()
             return True
-        
+
         elif key.code in (IBus.KEY_Return, IBus.KEY_KP_Enter):
             commit_string = self._editor.get_all_input_strings ()
             self.commit_string (commit_string )
             return False
-        
+
         elif key.code in (IBus.KEY_Down, IBus.KEY_KP_Down) :
             res = self._editor.arrow_down ()
             self._update_ui ()
             return res
-        
+
         elif key.code in (IBus.KEY_Up, IBus.KEY_KP_Up):
             res = self._editor.arrow_up ()
             self._update_ui ()
             return res
-        
+
         elif key.code in (IBus.KEY_Left, IBus.KEY_KP_Left) and key.mask & IBus.ModifierType.CONTROL_MASK:
             res = self._editor.control_arrow_left ()
             self._update_ui ()
             return res
-        
+
         elif key.code in (IBus.KEY_Right, IBus.KEY_KP_Right) and key.mask & IBus.ModifierType.CONTROL_MASK:
             res = self._editor.control_arrow_right ()
             self._update_ui ()
             return res
-        
+
         elif key.code in (IBus.KEY_Left, IBus.KEY_KP_Left):
             res = self._editor.arrow_left ()
             self._update_ui ()
             return res
-        
+
         elif key.code in (IBus.KEY_Right, IBus.KEY_KP_Right):
             res = self._editor.arrow_right ()
             self._update_ui ()
             return res
-        
+
         elif key.code == IBus.KEY_BackSpace and key.mask & IBus.ModifierType.CONTROL_MASK:
             res = self._editor.control_backspace ()
             self._update_ui ()
             return res
-        
+
         elif key.code == IBus.KEY_BackSpace:
             res = self._editor.backspace ()
             self._update_ui ()
             return res
-        
+
         elif key.code == IBus.KEY_Delete  and key.mask & IBus.ModifierType.CONTROL_MASK:
             res = self._editor.control_delete ()
             self._update_ui ()
             return res
-        
+
         elif key.code == IBus.KEY_Delete:
             res = self._editor.delete ()
             self._update_ui ()
@@ -1218,7 +1218,7 @@ class tabengine (IBus.Engine):
                     self.commit_string (sp_res[1])
                     #self.add_string_len(sp_res[1])
                     self.db.check_phrase (sp_res[1],sp_res[2])
-                    
+
             res = self._editor.add_input ( keysym2unichr(key.code) )
             if not res:
                 if curses.ascii.ispunct (key.code):
@@ -1242,7 +1242,7 @@ class tabengine (IBus.Engine):
 
             self._update_ui ()
             return True
-        
+
         elif key.code in self._page_down_keys \
                 and self._editor._candidates[0]:
             res = self._editor.page_down()
@@ -1254,7 +1254,7 @@ class tabengine (IBus.Engine):
             res = self._editor.page_up ()
             self._update_ui ()
             return res
-        
+
         elif key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates[0]:
             input_keys = self._editor.get_all_input_strings ()
             res = self._editor.number (key.code - IBus.KEY_1)
@@ -1265,13 +1265,13 @@ class tabengine (IBus.Engine):
                 # modify freq info
                 self.db.check_phrase (commit_string, input_keys)
             return True
-        
+
         elif key.code <= 127:
             comm_str = self._editor.get_all_input_strings ()
             self._editor.clear ()
             self.commit_string (comm_str + keysym2unichr (key.code))
             return True
-        
+
         elif key.code == IBus.KEY_Tab:
             if self._tab_enable:
                 # toggle whether the lookup table should be displayed
@@ -1308,7 +1308,7 @@ class tabengine (IBus.Engine):
             #        self._sm.Hide ()
             #except:
             #    pass
-    
+
     def do_focus_out (self):
         self.reset()
         #try:
