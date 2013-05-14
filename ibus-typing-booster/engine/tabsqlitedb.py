@@ -407,12 +407,6 @@ class tabsqlitedb:
         if commit:
             self.db.commit()
 
-    def compare (self,x,y):
-#        return cmp (x[1], y[1]) or -(cmp (x[-1], y[-1])) \
-#                or -(cmp (x[-2], y[-2])) or (cmp (x[0], y[0]))
-        return -(cmp (x[-1], y[-1])) or (cmp (x[1], y[1])) \
-                or -(cmp (x[-2], y[-2])) or (cmp (x[0], y[0]))
-
     def select_words(self, input_phrase):
         '''
         Get phrases from database by tab_key objects
@@ -450,7 +444,12 @@ class tabsqlitedb:
         _cand = mudb.values()
         map(_cand.append, filter(lambda x: x, map(lambda key: key not in mudb and usrdb[key], usrdb)))
         map(_cand.append, filter(lambda x: x, map(lambda key: key not in mudb and key not in usrdb and sysdb[key], sysdb)))
-        _cand.sort(cmp=self.compare)
+        _cand.sort(cmp=(lambda x,y:
+                        -(cmp(x[-1], y[-1]))    # user_freq descending
+                        or (cmp(x[1], y[1]))    # len(input_phrase) ascending
+                        or -(cmp(x[-2], y[-2])) # freq descending
+                        or (cmp(x[0], y[0]))    # id ascending
+                    )
         return _cand[:]
 
 
