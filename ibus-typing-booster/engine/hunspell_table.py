@@ -859,7 +859,6 @@ class tabengine (IBus.Engine):
         # 0 = english input mode
         # 1 = table input mode
         self._mode = 1
-        # self._ime_py: True / False this IME support pinyin mode
 
         self._status = self.db.ime_properties.get('status_prompt').encode('utf8')
         # now we check and update the valid input characters
