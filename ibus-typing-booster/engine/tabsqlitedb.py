@@ -57,10 +57,75 @@ class ImeProperties:
             return None
 
 class tabsqlitedb:
-    '''Phrase database for hunspell-tables'''
+    '''Phrase databases for ibus-typing-booster
+
+    The phrases tables in the databases have columns with the names:
+
+    “id”, “mlen”, “clen”, “input_phrase”, “phrase”, “freq”, “user_freq”
+
+    There are 3 databases, sysdb, userdb, mudb.
+
+    Overview over the meaning of values in the “freq” and “user_freq” columns:
+
+              freq                   user_freq
+    sysdb      1                     0
+
+    user_db    0 system phrase       >= 1
+              -1 user phrase         >= 1
+    mudb
+               2 new system phrase   >= 1
+               1 old system phrase   >= 1
+              -2 new user phrase     >= 1
+              -3 old user phrase     >= 1
+
+    sysdb: “Database” with the suggestions from the hunspell dictionaries
+        user_freq = 0 always.
+        freq      = 1 always.
+
+        Actually there is no Sqlite3 database called “sysdb”, these
+        are the suggestions coming from hunspell_suggest, i.e. from
+        grepping the hunspell dictionaries and from pyhunspell. But
+        these suggestions are supplied as tuples or lists in the same
+        form as the database rows (Historic note: ibus-typing-booster
+        started as a fork of ibus-table, in ibus-table “sysdb” is a
+        Sqlite3 database which is installed systemwide and readonly
+        for the user)
+
+    user_db: Database on disk where the phrases learned from the user are stored
+        user_freq >= 1: The number of times the user has used this phrase
+        freq = -1: user defined phrase, hunspell_suggest does not suggest
+                   a phrase like this.
+        freq = 0:  system phrase, hunspell_suggest does suggest
+                   such a phrase.
+
+        (Note: If the hunspell dictionary is updated, what could be suggested
+        by hunspell might change. Is it necessary to update the contents
+        of user_db then to reflect this?)
+
+        Data is written to user_db only when ibus-typing-booster exits.
+        Until then, the data learned from the user is stored only in mudb.
+
+    mudb: Database in memory where the phrases learned from the user are stored
+        user_freq >= 1: The number of times the user has used this phrase
+        freq =  2: new system phrase, i.e. this phrase originally came from
+                   hunspell_suggest during the current session, it did not
+                   come from user_db.
+        freq =  1: old system phrase, i.e. this phrase came from user_db
+                   but  was marked there with “freq = 0”, i.e. it is a
+                   phrase which could be suggest by hunspell_suggest.
+        freq = -2: new user phrase, i.e. this is a phrase which hunspell_suggest
+                   cannot suggest and which was typed by the user in the current
+                   session.
+        freq = -3: old user phrase, i.e. this is also a phrase which hunspell_suggest
+                   cannot suggest. But it was already typed by the user in a previous
+                   session and has been saved on exit of ibus-typing-booster
+                   to user_db. The current session got it from user_db.
+    '''
     def __init__(self, name = 'table.db', user_db = None, filename = None ):
         # use filename when you are creating db from source
         # use name when you are using db
+        self._phrase_table_column_names = ['id', 'mlen', 'clen', 'input_phrase', 'phrase','freq','user_freq']
+
         self.old_phrases=[]
 
         self._conf_file_path = "/usr/share/ibus-typing-booster/hunspell-tables/"
@@ -87,7 +152,6 @@ class tabsqlitedb:
             encoding=self.encoding,
             lang_chars=self.lang_chars)
 
-        self._phrase_table_column_names = ['id', 'mlen', 'clen', 'input_phrase', 'phrase','freq','user_freq']
         self.user_can_define_phrase = self.ime_properties.get('user_can_define_phrase')
         if self.user_can_define_phrase:
             if self.user_can_define_phrase.lower() == u'true' :
