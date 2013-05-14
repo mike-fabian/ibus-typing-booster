@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 14 May 2013 Released 0.0.29 version
+* Fix setup tool to use the new class for parsing the config files (Resolves: #962609 https://bugzilla.redhat.com/show_bug.cgi?id=962609)
+* Improve code in select_words() and check_phrase_internal()
+* Avoid adding duplicates to the database by checking first whether phrase is already there in add_phrase()
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 10 May 2013 Released 0.0.28 version
 * Speed up generating the xml list of the engines (Resolves: #961923 - python /usr/share/ibus-typing-booster/engine/main.py --xml is extremely slow when many hunspell dictionaries are installed)
 * Put the input phrase into a single column in the databases instead of using one column for each character
