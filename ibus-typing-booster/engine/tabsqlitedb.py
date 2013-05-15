@@ -510,13 +510,6 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
             return 0
 
     def check_phrase(self, phrase, input_phrase=None, database='main'):
-        if type(phrase) != type(u''):
-            phrase = phrase.decode('utf8')
-        if type(input_phrase) != type(u''):
-            input_phrase = input_phrase.decode('utf8')
-        self.check_phrase_internal (phrase, input_phrase, database)
-
-    def check_phrase_internal (self,phrase,input_phrase=None,database='main'):
         '''Check word freq and user_freq
         '''
         if type(phrase) != type(u''):
