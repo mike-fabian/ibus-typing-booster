@@ -152,26 +152,6 @@ class tabsqlitedb:
             encoding=self.encoding,
             lang_chars=self.lang_chars)
 
-        self.user_can_define_phrase = self.ime_properties.get('user_can_define_phrase')
-        if self.user_can_define_phrase:
-            if self.user_can_define_phrase.lower() == u'true' :
-                self.user_can_define_phrase = True
-            else:
-                self.user_can_define_phrase = False
-        else:
-            print 'Could not find "user_can_define_phrase" entry from database, is it an outdated database?'
-            self.user_can_define_phrase = False
-
-        self.dynamic_adjust = self.ime_properties.get('dynamic_adjust')
-        if self.dynamic_adjust:
-            if self.dynamic_adjust.lower() == u'true' :
-                self.dynamic_adjust = True
-            else:
-                self.dynamic_adjust = False
-        else:
-            print 'Could not find "dynamic_adjust" entry from database, is it an outdated database?'
-            self.dynamic_adjust = False
-
         self.startchars = self.get_start_chars ()
         user_db = self.ime_properties.get("name")+'-user.db'
         # user database:
@@ -530,17 +510,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
             return 0
 
     def check_phrase(self, phrase, input_phrase=None, database='main'):
-        # if IME didn't support user define phrase,
-        # we divide user input phrase into characters,
-        # and then check its frequence
         if type(phrase) != type(u''):
             phrase = phrase.decode('utf8')
         if type(input_phrase) != type(u''):
             input_phrase = input_phrase.decode('utf8')
-        if self.user_can_define_phrase:
-            self.check_phrase_internal (phrase, input_phrase, database)
-        else:
-            map(self.check_phrase_internal, phrase)
+        self.check_phrase_internal (phrase, input_phrase, database)
 
     def check_phrase_internal (self,phrase,input_phrase=None,database='main'):
         '''Check word freq and user_freq
@@ -564,17 +538,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
         filter(lambda x: x[-3] == phrase and result.append(tuple(x)),
                self.hunspell_obj.suggest(input_phrase))
         if len(result) == 0:
-            if self.user_can_define_phrase:
-                # The phrase was neither found in user_db nor mudb nor
-                # does hunspell_obj.suggest(input_phrase) suggest such
-                # a phrase. Therefore, it is a completely new, user
-                # defined phrase and we add it into mudb:
-                self.add_phrase((input_phrase,phrase,-2,1), database = 'mudb')
-            else:
-                return
-        if not self.dynamic_adjust:
-            # we are not allowed to change the frequency of words
-            return
+            # The phrase was neither found in user_db nor mudb nor
+            # does hunspell_obj.suggest(input_phrase) suggest such
+            # a phrase. Therefore, it is a completely new, user
+            # defined phrase and we add it into mudb:
+            self.add_phrase((input_phrase,phrase,-2,1), database = 'mudb')
 
         sysdb = {}
         usrdb = {}
