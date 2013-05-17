@@ -429,7 +429,7 @@ class tabsqlitedb:
                         or (cmp(x[1], y[1]))    # len(input_phrase) ascending
                         or -(cmp(x[-2], y[-2])) # freq descending
                         or (cmp(x[0], y[0]))    # id ascending
-                    )
+                    ))
         return _cand[:]
 
 
