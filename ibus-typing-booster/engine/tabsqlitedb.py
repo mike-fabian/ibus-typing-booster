@@ -416,14 +416,75 @@ class tabsqlitedb:
         _cand = mudb.values()
         map(_cand.append, filter(lambda x: x, map(lambda key: key not in mudb and usrdb[key], usrdb)))
         map(_cand.append, filter(lambda x: x, map(lambda key: key not in mudb and key not in usrdb and sysdb[key], sysdb)))
+        # Now merge all the candidates which share the same phrase
+        # into one, summing up their user frequencies.
+        #
+        # For example, if the database contains the following rows:
+        #
+        # 1|5|6|colou|colour|0|1
+        # 2|3|6|col|colour|0|2
+        # 3|2|6|co|colour|0|1
+        # 4|2|4|co|cold|0|1
+        # 5|9|10|conspirac|conspiracy|0|1
+        # 6|6|10|conspi|conspiracy|0|1
+        # 7|1|10|c|conspiracy|-1|1
+        #
+        # and the current input_phrase is “co”, the last line with
+        # input_phrase = “c” and phrase “conspiracy” would not
+        # have matched here because we used “LIKE "co%"” in the SQL
+        # statement. It we used the remaining candidates as is, we
+        # would see duplicate entries in the lookup table, for exaple
+        # we would see “colour” 3 times in the lookup table which
+        # makes no sense. Therefore, we merge the candidates which
+        # share the same phrase and sum the frequencies.  Doing this
+        # we get for the above example:
+        #
+        # 1|2|6|co|colour|0|4
+        # 2|2|4|co|cold|0|1
+        # 3|9|10|co|conspiracy|0|2
+        #
+        # I.e. for the input phrase pattern “co%”, “colour”
+        # matched 4 times total, “conspiracy” matched 2 times total
+        # and “cold” matched just once.
+        #
+        # We do the merge by creating a dictionary of phrases and
+        # their total user frequencies first:
+        phrase_frequencies = {}
+        for db_row in _cand:
+            phrase = db_row[4]
+            user_freq = db_row[-1]
+            if phrase not in phrase_frequencies:
+                phrase_frequencies[phrase] = user_freq
+            else:
+                phrase_frequencies[phrase] += user_freq
+        # Then we create a new list of candidates from that
+        # dictionary. The input phrase in this new candidate list is
+        # always the input phrase the user actually typed, i.e. “co”
+        # in our example, never the possibly longer input phrases in
+        # the matches for “co%”:
+        _cand = []
+        id = 0
+        for phrase in phrase_frequencies:
+            id += 1
+            _cand.append((id,len(input_phrase), len(phrase), input_phrase, phrase, 0, phrase_frequencies[phrase]))
+        # And finally we sort the candidates by descending user frequency
+        # to get the most used candidates on top of the lookup table.
+        # If candidates have the same user frequency, we put the candidate
+        # with the shorter phrase first.
+        # If they still sort the same, we break the tie using frequency
+        # and id, which doesn’t really do anything useful, possibly
+        # this tie breaking could be omitted, if candidates have
+        # the same user frequency and phrase length, it does not really
+        # matter anymore which one comes first in the lookup table.
+        # But maybe better break the tie anyway to get a predictable,
+        # stable sort result:
         _cand.sort(cmp=(lambda x,y:
                         -(cmp(x[-1], y[-1]))    # user_freq descending
-                        or (cmp(x[1], y[1]))    # len(input_phrase) ascending
+                        or (cmp(x[2], y[2]))    # len(phrase) ascending
                         or -(cmp(x[-2], y[-2])) # freq descending
                         or (cmp(x[0], y[0]))    # id ascending
                     ))
         return _cand[:]
-
 
     def get_all_values(self,d_name='main',t_name='inks'):
         sqlstr = 'SELECT * FROM '+d_name+'.'+t_name+';'
