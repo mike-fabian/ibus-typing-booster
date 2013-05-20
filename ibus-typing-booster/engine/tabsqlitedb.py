@@ -261,19 +261,20 @@ class tabsqlitedb:
     def update_phrase (self, entry, database='user_db'):
         '''update phrase freqs'''
         input_phrase, phrase, freq, user_freq = entry
-        sqlstr = '''UPDATE %(database)s.phrases
-                    SET user_freq = %(user_freq)s
-                    WHERE mlen = %(mlen)s
-                    AND clen = %(clen)s
-                    AND input_phrase = "%(input_phrase)s"
-                    AND phrase = "%(phrase)s";
-        ''' %{'database':database,
-              'user_freq': user_freq,
-              'mlen': len(input_phrase),
-              'clen': len(phrase),
-              'input_phrase': input_phrase,
-              'phrase': phrase}
-        self.db.execute(sqlstr)
+        sqlstr = '''
+        UPDATE %(database)s.phrases
+        SET user_freq = :user_freq
+        WHERE mlen = :mlen
+        AND clen = :clen
+        AND input_phrase = :input_phrase
+        AND phrase = :phrase
+        ;''' %{'database':database}
+        sqlargs = {'user_freq': user_freq,
+                   'mlen': len(input_phrase),
+                   'clen': len(phrase),
+                   'input_phrase': input_phrase,
+                   'phrase': phrase}
+        self.db.execute(sqlstr, sqlargs)
         self.db.commit()
 
     def sync_usrdb (self):
@@ -404,12 +405,15 @@ class tabsqlitedb:
         # as the maximum string length in sqlite3
         # (by default 10^9, see http://www.sqlite.org/limits.html))
         input_phrase = input_phrase[:self._mlen]
-        sqlstr = '''SELECT * FROM user_db.phrases WHERE phrase LIKE "%(input_phrase)s%%"
-                    UNION ALL
-                    SELECT  * FROM mudb.phrases WHERE phrase LIKE "%(input_phrase)s%%"
-                    ORDER BY user_freq DESC, freq DESC, id ASC, mlen ASC
-                    limit 1000;''' %{'input_phrase': input_phrase}
-        result = self.db.execute(sqlstr).fetchall()
+        sqlstr = '''
+        SELECT * FROM user_db.phrases WHERE input_phrase LIKE :input_phrase
+        UNION ALL
+        SELECT  * FROM mudb.phrases WHERE input_phrase LIKE :input_phrase
+        ORDER BY user_freq DESC, freq DESC, id ASC, mlen ASC
+        limit 1000
+        ;'''
+        sqlargs = {'input_phrase': input_phrase+'%'}
+        result = self.db.execute(sqlstr, sqlargs).fetchall()
         hunspell_list = self.hunspell_obj.suggest(input_phrase)
         for ele in hunspell_list:
             result.append(tuple(ele))
@@ -521,11 +525,15 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
             return
 
         sqlstr = '''
-                SELECT * FROM user_db.phrases WHERE phrase = "%(phrase)s" and input_phrase = "%(input_phrase)s"
-                UNION ALL
-                SELECT * FROM mudb.phrases WHERE phrase = "%(phrase)s" and input_phrase = "%(input_phrase)s"
-                ORDER BY user_freq DESC, freq DESC, id ASC;''' %{'phrase': phrase, 'input_phrase': input_phrase}
-        result = self.db.execute(sqlstr).fetchall()
+        SELECT * FROM user_db.phrases
+        WHERE phrase = :phrase AND input_phrase = :input_phrase
+        UNION ALL
+        SELECT * FROM mudb.phrases
+        WHERE phrase = :phrase AND input_phrase = :input_phrase
+        ORDER BY user_freq DESC, freq DESC, id ASC
+        ;'''
+        sqlargs = {'phrase': phrase, 'input_phrase': input_phrase}
+        result = self.db.execute(sqlstr, sqlargs).fetchall()
         # If phrase is among the suggestions of self.hunspell_obj.suggest(input_phrase)
         # append it to results:
         filter(lambda x: x[-3] == phrase and result.append(tuple(x)),
