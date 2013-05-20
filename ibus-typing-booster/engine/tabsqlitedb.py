@@ -264,14 +264,10 @@ class tabsqlitedb:
         sqlstr = '''
         UPDATE %(database)s.phrases
         SET user_freq = :user_freq
-        WHERE mlen = :mlen
-        AND clen = :clen
-        AND input_phrase = :input_phrase
+        WHERE input_phrase = :input_phrase
         AND phrase = :phrase
         ;''' %{'database':database}
         sqlargs = {'user_freq': user_freq,
-                   'mlen': len(input_phrase),
-                   'clen': len(phrase),
                    'input_phrase': input_phrase,
                    'phrase': phrase}
         self.db.execute(sqlstr, sqlargs)
