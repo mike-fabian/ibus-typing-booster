@@ -926,7 +926,6 @@ class tabengine (IBus.Engine):
     def do_destroy(self):
         self.reset ()
         self.do_focus_out ()
-        #self.db.sync_usrdb ()
         super(tabengine,self).destroy()
 
     def _change_mode (self):
@@ -1304,7 +1303,8 @@ class tabengine (IBus.Engine):
 
     def do_focus_out (self):
         self.reset()
-        pass
+        self.db.sync_usrdb()
+        return
 
     def do_enable (self):
         self._on = True
