@@ -900,17 +900,6 @@ class tabengine (IBus.Engine):
             self._auto_commit = self.db.ime_properties.get('auto_commit').lower() == u'true'
         # the commit phrases length
         self._len_list = [0]
-        # connect to SpeedMeter
-        #try:
-        #    bus = dbus.SessionBus()
-        #    user = os.path.basename( os.path.expanduser('~') )
-        #    self._sm_bus = bus.get_object ("org.ibus.table.SpeedMeter.%s"\
-        #            % user, "/org/ibus/table/SpeedMeter")
-        #    self._sm =  dbus.Interface(self._sm_bus,\
-        #            "org.ibus.table.SpeedMeter")
-        #except:
-        #    self._sm = None
-        #self._sm_on = False
         self._on = False
         self.reset ()
 
@@ -1296,42 +1285,21 @@ class tabengine (IBus.Engine):
 
         return False
 
-    # below for initial test
     def do_focus_in (self):
         if self._on:
             self._update_ui ()
-            #try:
-            #    if self._sm_on:
-            #        self._sm.Show ()
-            #    else:
-            #        self._sm.Hide ()
-            #except:
-            #    pass
 
     def do_focus_out (self):
         self.reset()
-        #try:
-        #    self._sm.Hide()
-        #except:
-        #    pass
         pass
 
     def do_enable (self):
-        #try:
-        #    self._sm.Reset()
-        #except:
-        #    pass
         self._on = True
         self.do_focus_in()
 
     def do_disable (self):
         self.reset()
-        #try:
-        #    self._sm.Hide()
-        #except:
-        #    pass
         self._on = False
-
 
     def do_page_up (self):
         if self._editor.page_up ():
