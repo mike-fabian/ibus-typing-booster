@@ -224,7 +224,9 @@ class tabsqlitedb:
             # (mlen, phrase, freq, user_freq)
             phrases = filter(lambda x: x[0] > 1, self.old_phrases)
             phrases = map(lambda x: [x[1]] + list(x[1:]), phrases)
-            map(self.u_add_phrase, phrases)
+            map(lambda x: self.add_phrase(
+                input_phrase=x[0], phrase=x[1], freq=x[2], user_freq=x[4],
+                database = 'user_db', commit = False), phrases)
             self.db.commit()
 
         # do not call this always on intialization for the moment.
@@ -281,8 +283,12 @@ class tabsqlitedb:
         map(lambda x: self.update_phrase(
             input_phrase=x[0], phrase=x[1], user_freq=x[3]), data_u)
         #print self.db.execute('select * from user_db.phrases;').fetchall()
-        map (self.u_add_phrase,data_a)
-        map (self.u_add_phrase,data_n)
+        map (lambda x: self.add_phrase(
+            input_phrase=x[0], phrase=x[1], freq=x[2], user_freq=x[3],
+            database='user_db', commit=False), data_a)
+        map (lambda x: self.add_phrase(
+            input_phrase=x[0], phrase=x[1], freq=x[2], user_freq=x[3],
+            database='user_db', commit=False), data_n)
         self.db.commit ()
 
     def create_tables (self, database):
@@ -307,21 +313,12 @@ class tabsqlitedb:
         except:
             return ''
 
-    def u_add_phrase (self,nphrase):
-        '''Add a phrase to userdb'''
-        self.add_phrase (nphrase,database='user_db',commit=False)
-
-    def add_phrase (self, aphrase, database = 'main',commit=True):
+    def add_phrase (self, input_phrase='', phrase='', freq=0, user_freq=0, database = 'main', commit=True):
         '''
-        Add phrase to database, phrase is a object of
-        (input_phrase, phrase, freq ,user_freq)
+        Add phrase to database
         '''
-        try:
-            input_phrase,phrase,freq,user_freq = aphrase
-        except:
-            input_phrase,phrase,freq = aphrase
-            user_freq = 0
-
+        if not input_phrase or not phrase:
+            return
         select_sqlstr= '''
         SELECT * FROM %(database)s.phrases
         WHERE input_phrase = :input_phrase AND phrase = :phrase
@@ -597,8 +594,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
             # does hunspell_obj.suggest(input_phrase) suggest such
             # a phrase. Therefore, it is a completely new, user
             # defined phrase and we add it into mudb:
-            self.add_phrase((input_phrase,phrase,-2,1), database = 'mudb')
-
+            self.add_phrase(input_phrase = input_phrase,
+                            phrase = phrase,
+                            freq = -2,
+                            user_freq = 1,
+                            database = 'mudb')
         sysdb = {}
         usrdb = {}
         mudb = {}
@@ -611,8 +611,17 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
         # we remove the keys already contained in mudb{} or usrdb{} from sysdb{}
         map(sysdb.pop, filter(lambda key: key in mudb or key in usrdb, sysdb.keys()))
 
-        map(lambda res: self.add_phrase((res[0],phrase,(-3 if usrdb[res][-2] == -1 else 1),usrdb[res][-1]+1), database = 'mudb'), usrdb.keys())
-        map(lambda res: self.add_phrase((res[0],phrase,2,1), database = 'mudb'), sysdb.keys())
+        map(lambda key: self.add_phrase(
+            input_phrase = key[0], phrase = phrase,
+            freq = (-3 if usrdb[key][-2] == -1 else 1),
+            user_freq = usrdb[key][-1]+1,
+            database = 'mudb'), usrdb.keys())
+        map(lambda key: self.add_phrase(
+            input_phrase = key[0],
+            phrase = phrase,
+            freq = 2,
+            user_freq = 1,
+            database = 'mudb'), sysdb.keys())
 
         map(lambda key:
             self.update_phrase(input_phrase = mudb[key][3],
