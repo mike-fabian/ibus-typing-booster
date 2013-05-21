@@ -271,25 +271,25 @@ class tabsqlitedb:
         self.db.commit()
 
     def sync_usrdb (self):
-        # we need to update the user_db
-        #print 'sync userdb'
-        mudata = self.db.execute ('SELECT * FROM mudb.phrases;').fetchall()
-        data_u = filter ( lambda x: x[-2] in [1,-3], mudata)
-        data_a = filter ( lambda x: x[-2]==2, mudata)
-        data_n = filter ( lambda x: x[-2]==-2, mudata)
-        data_u = map (lambda x: (x[3],x[-3],x[-2],x[-1] ), data_u)
-        data_a = map (lambda x: (x[3],x[-3],0,x[-1] ), data_a)
-        data_n = map (lambda x: (x[3],x[-3],-1,x[-1] ), data_n)
+        '''
+        Sync mudb to user_db
+        '''
+        mudata = self.db.execute('SELECT input_phrase, phrase, freq, user_freq FROM mudb.phrases;').fetchall()
+        # old system and user phrases:
         map(lambda x: self.update_phrase(
-            input_phrase=x[0], phrase=x[1], user_freq=x[3]), data_u)
-        #print self.db.execute('select * from user_db.phrases;').fetchall()
-        map (lambda x: self.add_phrase(
-            input_phrase=x[0], phrase=x[1], freq=x[2], user_freq=x[3],
-            database='user_db', commit=False), data_a)
-        map (lambda x: self.add_phrase(
-            input_phrase=x[0], phrase=x[1], freq=x[2], user_freq=x[3],
-            database='user_db', commit=False), data_n)
-        self.db.commit ()
+            input_phrase=x[0], phrase=x[1], user_freq=x[3]),
+            filter(lambda x: x[2] in [1,-3], mudata))
+        # new system phrases:
+        map(lambda x: self.add_phrase(
+            input_phrase=x[0], phrase=x[1], freq=0, user_freq=x[3],
+            database='user_db', commit=False),
+            filter(lambda x: x[2] == 2, mudata))
+        # new user phrases:
+        map(lambda x: self.add_phrase(
+            input_phrase=x[0], phrase=x[1], freq=-1, user_freq=x[3],
+            database='user_db', commit=False),
+            filter(lambda x: x[2] == -2, mudata))
+        self.db.commit()
 
     def create_tables (self, database):
         '''Create table for the phrases.'''
