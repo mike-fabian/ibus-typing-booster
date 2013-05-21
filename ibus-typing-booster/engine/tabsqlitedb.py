@@ -289,6 +289,9 @@ class tabsqlitedb:
             input_phrase=x[0], phrase=x[1], freq=-1, user_freq=x[3],
             database='user_db', commit=False),
             filter(lambda x: x[2] == -2, mudata))
+        # now that all phrases from mudb have been synced to user_db
+        # delete all records in mudb:
+        self.db.execute('DELETE FROM mudb.phrases;')
         self.db.commit()
 
     def create_tables (self, database):
