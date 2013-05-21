@@ -250,9 +250,12 @@ class tabsqlitedb:
         self.db.execute ('ATTACH DATABASE "%s" AS mudb;' % mudb )
         self.create_tables ("mudb")
 
-    def update_phrase (self, entry, database='user_db'):
-        '''update phrase freqs'''
-        input_phrase, phrase, freq, user_freq = entry
+    def update_phrase (self, input_phrase='', phrase='', user_freq=0, database='user_db'):
+        '''
+        update the user frequency of a phrase
+        '''
+        if not input_phrase or not phrase:
+            return
         sqlstr = '''
         UPDATE %(database)s.phrases
         SET user_freq = :user_freq
@@ -275,7 +278,8 @@ class tabsqlitedb:
         data_u = map (lambda x: (x[3],x[-3],x[-2],x[-1] ), data_u)
         data_a = map (lambda x: (x[3],x[-3],0,x[-1] ), data_a)
         data_n = map (lambda x: (x[3],x[-3],-1,x[-1] ), data_n)
-        map (self.update_phrase, data_u)
+        map(lambda x: self.update_phrase(
+            input_phrase=x[0], phrase=x[1], user_freq=x[3]), data_u)
         #print self.db.execute('select * from user_db.phrases;').fetchall()
         map (self.u_add_phrase,data_a)
         map (self.u_add_phrase,data_n)
@@ -611,7 +615,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
         map(lambda res: self.add_phrase((res[0],phrase,2,1), database = 'mudb'), sysdb.keys())
 
         map(lambda key:
-            self.update_phrase((mudb[key][3], mudb[key][4], mudb[key][5], mudb[key][6]+1),
+            self.update_phrase(input_phrase = mudb[key][3],
+                               phrase = mudb[key][4],
+                               user_freq = mudb[key][6]+1,
                                database='mudb'),
             mudb.keys())
 
