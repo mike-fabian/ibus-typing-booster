@@ -615,19 +615,24 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
                                database='mudb'),
             mudb.keys())
 
-    def remove_phrase (self,phrase,database='user_db'):
+    def remove_phrase (self, input_phrase='', phrase='', database='user_db'):
         '''
-        Remove phrase from database.
-        phrase should be a tuple like a row in the database, i.e.
-        like the result lines of a "select * from phrases;"
-        Like (id, mlen,clen,input_phrase,phrase,freq,user_freq)
+        Remove all rows matching “input_phrase” and “phrase” from database.
+        Or, if “input_phrase” is “None”, remove all rows matching “phrase”
+        no matter for what input phrase from the database.
         '''
-        id, mlen, clen, input_phrase, phrase, freq, user_freq = phrase
-
-        delete_sqlstr = '''
-        DELETE FROM %(database)s.phrases
-        WHERE input_phrase = :input_phrase AND phrase = :phrase
-        ;''' %{'database': database}
+        if not phrase:
+            return
+        if input_phrase:
+            delete_sqlstr = '''
+            DELETE FROM %(database)s.phrases
+            WHERE input_phrase = :input_phrase AND phrase = :phrase
+            ;''' %{'database': database}
+        else:
+            delete_sqlstr = '''
+            DELETE FROM %(database)s.phrases
+            WHERE phrase = :phrase
+            ;''' %{'database': database}
         delete_sqlargs = {'input_phrase': input_phrase, 'phrase': phrase}
         self.db.execute(delete_sqlstr, delete_sqlargs)
         self.db.commit()

@@ -673,12 +673,29 @@ class editor(object):
         return True
 
     def alt_number (self,index):
-        '''
-        Remove a user defined phrase.
+        '''Remove the phrase selected with Alt+Number from the user database.
 
-        If the candidate selected in the lookup table by typing
-        Alt+Number is a user defined phrase, it is removed from
-        the user_db. The index parameter should start from 0.
+        The index parameter should start from 0.
+
+        The removal is done independent of the input phrase, all
+        rows in the user database for that phrase are deleted.
+
+        It does not matter either whether this is a user defined
+        phrase or a phrase which can be found in the hunspell
+        dictionaries.  In both cases, it is removed from the user
+        database.
+
+        In case of a system phrase, which can be found in the hunspell
+        dictionaries, this means that the phrase could still appear in
+        the suggestions after removing it from the user database
+        because it still can be suggested by the hunspell
+        dictionaries. But it becomes less likely because removing a
+        system phrase from the user database resets its user frequency
+        to 0 again.
+
+        So the user can always type Alt+Number on a phrase he does not
+        want the phrase to be suggested wich such a high priority, no
+        matter whether it is a system phrase or a user defined phrase.
         '''
         cursor_pos = self._lookup_table.get_cursor_pos()
         cursor_in_page = self._lookup_table.get_cursor_in_page()
@@ -687,13 +704,14 @@ class editor(object):
         if  len (self._candidates[0]) > real_index:
             # this index is valid
             can = self._candidates[0][real_index]
-            if can[-2] < 0:
-                # freq of this candidate is -1, means this a user phrase
-                self.db.remove_phrase (can, 'user_db')
-                self.db.remove_phrase (can, 'mudb')
-                # make update_candidates do sql enquiry
-                self._chars[2].pop()
-                self.update_candidates ()
+            self.db.remove_phrase(input_phrase=can[3], phrase=can[4], database='user_db')
+            self.db.remove_phrase(input_phrase=can[3], phrase=can[4], database='mudb')
+            # sync user database immediately after removing
+            # phrases:
+            self.db.sync_usrdb()
+            self._chars[2].pop()
+            # call update_candidates() to get a new SQL query:
+            self.update_candidates ()
             return True
         else:
             return False
