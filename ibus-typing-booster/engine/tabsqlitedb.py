@@ -221,12 +221,11 @@ class tabsqlitedb:
             self.db.execute('ATTACH DATABASE "%s" AS user_db;' % user_db)
         self.create_tables("user_db")
         if self.old_phrases:
-            # (mlen, phrase, freq, user_freq)
-            phrases = filter(lambda x: x[0] > 1, self.old_phrases)
-            phrases = map(lambda x: [x[1]] + list(x[1:]), phrases)
+            # (phrase, freq, user_freq)
             map(lambda x: self.add_phrase(
-                input_phrase=x[0], phrase=x[1], freq=x[2], user_freq=x[4],
-                database = 'user_db', commit = False), phrases)
+                input_phrase=x[0], phrase=x[0], freq=x[1], user_freq=x[2],
+                database = 'user_db', commit = False),
+                self.old_phrases)
             self.db.commit()
 
         # do not call this always on intialization for the moment.
@@ -658,23 +657,16 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
         if commit:
             self.db.commit()
 
-    def extract_user_phrases(self, udb, only_defined=False):
+    def extract_user_phrases(self, database='user_db'):
         '''extract user phrases from database'''
         try:
-            db = sqlite3.connect(udb)
+            db = sqlite3.connect(database)
+            phrases = db.execute(
+                '''
+                SELECT phrase, freq, sum(user_freq)
+                FROM phrases
+                GROUP BY phrase
+                ;''').fetchall()
+            return phrases[:]
         except:
-            return None
-        if only_defined:
-            _phrases = db.execute(\
-                    "SELECT clen, phrase, freq, sum(user_freq)\
-                    FROM phrases \
-                    WHERE freq=-1 AND mlen != 0 \
-                    GROUP BY clen,phrase;").fetchall()
-        else:
-            _phrases = db.execute(\
-                    "SELECT clen, phrase, freq, sum(user_freq)\
-                    FROM phrases\
-                    WHERE mlen !=0 \
-                    GROUP BY clen,phrase;").fetchall()
-        db.commit()
-        return _phrases[:]
+            return []
