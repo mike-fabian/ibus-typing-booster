@@ -297,9 +297,9 @@ class editor(object):
         '''
         Get the index of the column with the name “key” in the phrase table
 
-        For example the index of 'clen' in the following list
+        For example the index of 'phrase' in the following list
         of column names is 2:
-        ['id', 'mlen', 'clen', 'm0', 'm1', ...]
+        ['id', 'input_phrase', 'phrase', 'freq', 'user_freq']
         '''
         return self._phrase_table_column_names.index(key)
 
@@ -704,8 +704,8 @@ class editor(object):
         if  len (self._candidates[0]) > real_index:
             # this index is valid
             can = self._candidates[0][real_index]
-            self.db.remove_phrase(input_phrase=can[3], phrase=can[4], database='user_db', commit=False)
-            self.db.remove_phrase(input_phrase=can[3], phrase=can[4], database='mudb', commit=True)
+            self.db.remove_phrase(input_phrase=can[1], phrase=can[2], database='user_db', commit=False)
+            self.db.remove_phrase(input_phrase=can[1], phrase=can[2], database='mudb', commit=True)
             # sync user database immediately after removing
             # phrases:
             self.db.sync_usrdb()

@@ -115,12 +115,11 @@ class Hunspell:
     def convert_to_lists(self, input_phrase, phrases):
         '''
         convert to database rows  in the format
-        ['id', 'mlen', 'clen', 'input_phrase', 'phrase','freq','user_freq']
+        ['id', 'input_phrase', 'phrase','freq','user_freq']
         '''
         db_rows = []
         for seq, phrase in enumerate(phrases):
-            i_len = len(input_phrase)
-            db_rows.append([seq, i_len, len(phrase), input_phrase, phrase, system_word, system_freq])
+            db_rows.append([seq, input_phrase, phrase, system_word, system_freq])
         return db_rows
 
     def suggest(self, input_phrase):

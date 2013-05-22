@@ -26,7 +26,7 @@ import time
 import re
 import hunspell_suggest
 
-user_database_version = '0.61'
+user_database_version = '0.62'
 
 patt_r = re.compile(r'c([ea])(\d):(.*)')
 patt_p = re.compile(r'p(-{0,1}\d)(-{0,1}\d)')
@@ -61,7 +61,7 @@ class tabsqlitedb:
 
     The phrases tables in the databases have columns with the names:
 
-    “id”, “mlen”, “clen”, “input_phrase”, “phrase”, “freq”, “user_freq”
+    “id”, “input_phrase”, “phrase”, “freq”, “user_freq”
 
     There are 3 databases, sysdb, userdb, mudb.
 
@@ -124,7 +124,7 @@ class tabsqlitedb:
     def __init__(self, name = 'table.db', user_db = None, filename = None ):
         # use filename when you are creating db from source
         # use name when you are using db
-        self._phrase_table_column_names = ['id', 'mlen', 'clen', 'input_phrase', 'phrase','freq','user_freq']
+        self._phrase_table_column_names = ['id', 'input_phrase', 'phrase','freq','user_freq']
 
         self.old_phrases=[]
 
@@ -133,7 +133,7 @@ class tabsqlitedb:
         self.ime_properties = ImeProperties(self._conf_file_path+filename)
 
         # share variables in this class:
-        self._mlen = int(self.ime_properties.get("max_key_length"))
+        self._max_key_length = int(self.ime_properties.get("max_key_length"))
 
         self._m17ndb = 'm17n'
         self._m17n_mim_name = ""
@@ -304,7 +304,6 @@ class tabsqlitedb:
             pass
         sqlstr = '''CREATE TABLE IF NOT EXISTS %s.phrases
                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    mlen INTEGER, clen INTEGER,
                     input_phrase TEXT, phrase TEXT,
                     freq INTEGER, user_freq INTEGER);''' % database
         self.db.execute(sqlstr)
@@ -335,11 +334,10 @@ class tabsqlitedb:
 
         insert_sqlstr = '''
         INSERT INTO %(database)s.phrases
-        (mlen, clen, input_phrase, phrase, freq, user_freq)
-        VALUES ( :mlen, :clen, :input_phrase, :phrase, :freq, :user_freq)
+        (input_phrase, phrase, freq, user_freq)
+        VALUES (:input_phrase, :phrase, :freq, :user_freq)
         ;''' %{'database': database}
-        insert_sqlargs = {'mlen': len(input_phrase), 'clen': len(phrase),
-                          'input_phrase': input_phrase, 'phrase': phrase,
+        insert_sqlargs = {'input_phrase': input_phrase, 'phrase': phrase,
                           'freq': freq, 'user_freq': user_freq}
         try:
             self.db.execute (insert_sqlstr, insert_sqlargs)
@@ -354,7 +352,7 @@ class tabsqlitedb:
             CREATE TABLE tmp AS SELECT * FROM %(database)s.phrases;
             DELETE FROM %(database)s.phrases;
             INSERT INTO %(database)s.phrases SELECT * FROM tmp ORDER BY
-            input_phrase, mlen ASC, user_freq DESC, freq DESC, id ASC;
+            input_phrase, user_freq DESC, freq DESC, id ASC;
             DROP TABLE tmp;''' %{'database':database,}
         self.db.executescript (sqlstr)
         self.db.executescript ("VACUUM;")
@@ -373,10 +371,11 @@ class tabsqlitedb:
 
     def create_indexes(self, database, commit=True):
         sqlstr = '''
-            CREATE INDEX IF NOT EXISTS %(database)s.phrases_index_p ON phrases
-            (input_phrase, mlen ASC, freq DESC, id ASC);
-            CREATE INDEX IF NOT EXISTS %(database)s.phrases_index_i ON phrases
-            (phrase, mlen ASC);''' %{'database':database}
+        CREATE INDEX IF NOT EXISTS %(database)s.phrases_index_p ON phrases
+        (input_phrase, freq DESC, id ASC);
+        CREATE INDEX IF NOT EXISTS %(database)s.phrases_index_i ON phrases
+        (phrase)
+        ;''' %{'database':database}
         self.db.executescript (sqlstr)
         if commit:
             self.db.commit()
@@ -388,7 +387,7 @@ class tabsqlitedb:
         This method is called in hunspell_table.py by passing UserInput held data
         Returns a list of matches where each match is a tuple
         in the form of a database row, i.e. returns something like
-        [(id, mlen, clen, input_phrase, phrase, freq, user_freq), ...]
+        [(id, input_phrase, phrase, freq, user_freq), ...]
         '''
         if type(input_phrase) != type(u''):
             input_phrase = input_phrase.decode('utf8')
@@ -397,12 +396,12 @@ class tabsqlitedb:
         # column of type TEXT in sqlite3, this limit can be set as high
         # as the maximum string length in sqlite3
         # (by default 10^9, see http://www.sqlite.org/limits.html))
-        input_phrase = input_phrase[:self._mlen]
+        input_phrase = input_phrase[:self._max_key_length]
         sqlstr = '''
         SELECT * FROM user_db.phrases WHERE input_phrase LIKE :input_phrase
         UNION ALL
         SELECT  * FROM mudb.phrases WHERE input_phrase LIKE :input_phrase
-        ORDER BY user_freq DESC, freq DESC, id ASC, mlen ASC
+        ORDER BY user_freq DESC, freq DESC, id ASC
         limit 1000
         ;'''
         sqlargs = {'input_phrase': input_phrase+'%'}
@@ -414,9 +413,9 @@ class tabsqlitedb:
         usrdb={}
         mudb={}
         sysdb={}
-        map(lambda x: sysdb.update([(x[3:-2],x[:])]), filter(lambda x: not x[-1], result))
-        map(lambda x: usrdb.update([(x[3:-2], x[:])]), filter(lambda x: (x[-2] in [0,-1]) and x[-1], result))
-        map(lambda x: mudb.update([(x[3:-2], x[:])]), filter(lambda x: (x[-2] not in [0,-1]) and x[-1], result))
+        map(lambda x: sysdb.update([(x[1:3],x[:])]), filter(lambda x: not x[-1], result))
+        map(lambda x: usrdb.update([(x[1:3], x[:])]), filter(lambda x: (x[-2] in [0,-1]) and x[-1], result))
+        map(lambda x: mudb.update([(x[1:3], x[:])]), filter(lambda x: (x[-2] not in [0,-1]) and x[-1], result))
 
         _cand = mudb.values()
         map(_cand.append, filter(lambda x: x, map(lambda key: key not in mudb and usrdb[key], usrdb)))
@@ -426,13 +425,13 @@ class tabsqlitedb:
         #
         # For example, if the database contains the following rows:
         #
-        # 1|5|6|colou|colour|0|1
-        # 2|3|6|col|colour|0|2
-        # 3|2|6|co|colour|0|1
-        # 4|2|4|co|cold|0|1
-        # 5|9|10|conspirac|conspiracy|0|1
-        # 6|6|10|conspi|conspiracy|0|1
-        # 7|1|10|c|conspiracy|-1|1
+        # 1|colou|colour|0|1
+        # 2|col|colour|0|2
+        # 3|co|colour|0|1
+        # 4|co|cold|0|1
+        # 5|conspirac|conspiracy|0|1
+        # 6|conspi|conspiracy|0|1
+        # 7|c|conspiracy|-1|1
         #
         # and the current input_phrase is “co”, the last line with
         # input_phrase = “c” and phrase “conspiracy” would not
@@ -444,9 +443,9 @@ class tabsqlitedb:
         # share the same phrase and sum the frequencies.  Doing this
         # we get for the above example:
         #
-        # 1|2|6|co|colour|0|4
-        # 2|2|4|co|cold|0|1
-        # 3|9|10|co|conspiracy|0|2
+        # 1|co|colour|0|4
+        # 2|co|cold|0|1
+        # 3|co|conspiracy|0|2
         #
         # I.e. for the input phrase pattern “co%”, “colour”
         # matched 4 times total, “conspiracy” matched 2 times total
@@ -456,7 +455,7 @@ class tabsqlitedb:
         # their total user frequencies first:
         phrase_frequencies = {}
         for db_row in _cand:
-            phrase = db_row[4]
+            phrase = db_row[2]
             user_freq = db_row[-1]
             if phrase not in phrase_frequencies:
                 phrase_frequencies[phrase] = user_freq
@@ -471,7 +470,7 @@ class tabsqlitedb:
         id = 0
         for phrase in phrase_frequencies:
             id += 1
-            _cand.append((id,len(input_phrase), len(phrase), input_phrase, phrase, 0, phrase_frequencies[phrase]))
+            _cand.append((id, input_phrase, phrase, 0, phrase_frequencies[phrase]))
         # And finally we sort the candidates by descending user frequency
         # to get the most used candidates on top of the lookup table.
         # If candidates have the same user frequency, we put the candidate
@@ -485,7 +484,7 @@ class tabsqlitedb:
         # stable sort result:
         _cand.sort(cmp=(lambda x,y:
                         -(cmp(x[-1], y[-1]))    # user_freq descending
-                        or (cmp(x[2], y[2]))    # len(phrase) ascending
+                        or (cmp(len(x[2]), len(y[2])))    # len(phrase) ascending
                         or -(cmp(x[-2], y[-2])) # freq descending
                         or (cmp(x[0], y[0]))    # id ascending
                     ))
@@ -543,7 +542,7 @@ class tabsqlitedb:
         Determines the number of columns by parsing this:
 
         sqlite> select sql from sqlite_master where name='phrases';
-CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen INTEGER, clen INTEGER, input_phrase TEXT, phrase TEXT, freq INTEGER, user_freq INTEGER)
+CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, phrase TEXT, freq INTEGER, user_freq INTEGER)
         sqlite>
 
         This result could be on a single line, as above, or on multiple
@@ -591,7 +590,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
         result = self.db.execute(sqlstr, sqlargs).fetchall()
         # If phrase is among the suggestions of self.hunspell_obj.suggest(input_phrase)
         # append it to results:
-        filter(lambda x: x[-3] == phrase and result.append(tuple(x)),
+        filter(lambda x: x[2] == phrase and result.append(tuple(x)),
                self.hunspell_obj.suggest(input_phrase))
         if len(result) == 0:
             # The phrase was neither found in user_db nor mudb nor
@@ -606,9 +605,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
         sysdb = {}
         usrdb = {}
         mudb = {}
-        map(lambda x: sysdb.update([(x[3:-2],x[:])]), filter(lambda x: not x[-1], result))
-        map(lambda x: usrdb.update([(x[3:-2], x[:])]), filter(lambda x: (x[-2] in [0,-1]) and x[-1], result))
-        map(lambda x: mudb.update([(x[3:-2], x[:])]), filter(lambda x: (x[-2] not in [0,-1]) and x[-1], result))
+        map(lambda x: sysdb.update([(x[1:3],x[:])]), filter(lambda x: not x[-1], result))
+        map(lambda x: usrdb.update([(x[1:3], x[:])]), filter(lambda x: (x[-2] in [0,-1]) and x[-1], result))
+        map(lambda x: mudb.update([(x[1:3], x[:])]), filter(lambda x: (x[-2] not in [0,-1]) and x[-1], result))
 
         # we remove the keys already contained in mudb{} from usrdb{}
         map(usrdb.pop, filter(lambda key: key in mudb, usrdb.keys()))
@@ -628,9 +627,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT,                mlen 
             database = 'mudb'), sysdb.keys())
 
         map(lambda key:
-            self.update_phrase(input_phrase = mudb[key][3],
-                               phrase = mudb[key][4],
-                               user_freq = mudb[key][6]+1,
+            self.update_phrase(input_phrase = key[0],
+                               phrase = phrase,
+                               user_freq = mudb[key][-1]+1,
                                database='mudb'),
             mudb.keys())
 
