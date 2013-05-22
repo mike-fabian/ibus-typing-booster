@@ -577,9 +577,6 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
         if type(input_phrase) != type(u''):
             input_phrase = input_phrase.decode('utf8')
 
-        if len(phrase) < 4:
-            return
-
         # There should never be more than 1 database row for the same
         # input_phrase *and* phrase. So the following queries on the
         # mudb and user_db databases should match at most one database
