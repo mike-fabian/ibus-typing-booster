@@ -252,7 +252,7 @@ class tabsqlitedb:
         self.db.execute ('ATTACH DATABASE "%s" AS mudb;' % mudb )
         self.create_tables ("mudb")
 
-    def update_phrase (self, input_phrase='', phrase='', user_freq=0, database='user_db'):
+    def update_phrase (self, input_phrase='', phrase='', user_freq=0, database='user_db', commit=True):
         '''
         update the user frequency of a phrase
         '''
@@ -268,7 +268,8 @@ class tabsqlitedb:
                    'input_phrase': input_phrase,
                    'phrase': phrase}
         self.db.execute(sqlstr, sqlargs)
-        self.db.commit()
+        if commit:
+            self.db.commit()
 
     def sync_usrdb (self):
         '''
@@ -277,7 +278,8 @@ class tabsqlitedb:
         mudata = self.db.execute('SELECT input_phrase, phrase, freq, user_freq FROM mudb.phrases;').fetchall()
         # old system and user phrases:
         map(lambda x: self.update_phrase(
-            input_phrase=x[0], phrase=x[1], user_freq=x[3]),
+            input_phrase=x[0], phrase=x[1], user_freq=x[3],
+            database='user_db', commit=False),
             filter(lambda x: x[2] in [1,-3], mudata))
         # new system phrases:
         map(lambda x: self.add_phrase(
