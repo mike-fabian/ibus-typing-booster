@@ -184,7 +184,8 @@ class tabsqlitedb:
                                 %{'col': self.get_number_of_columns_of_phrase_table(user_db)})
                         sys.stderr.write("Trying to recover the phrases from the old, incompatible database.\n")
                         self.old_phrases = self.extract_user_phrases( user_db )
-                        new_name = "%s.%d" %(user_db, os.getpid())
+                        from time import strftime
+                        new_name = "%(basename)s.%(time)s" %{'basename': user_db, 'time': strftime('%Y-%m-%d_%H:%M:%S')}
                         sys.stderr.write("Renaming the incompatible database to \"%(name)s\".\n" %{'name': new_name})
                         os.rename(user_db, new_name)
                         sys.stderr.write("Creating a new, empty database \"%(name)s\".\n"  %{'name': user_db})
@@ -210,7 +211,8 @@ class tabsqlitedb:
             self.db.execute('ATTACH DATABASE "%s" AS user_db;' % user_db)
         except:
             sys.stderr.write("Could not open the database %(name)s.\n" %{'name': user_db})
-            new_name = "%s.%d" %(user_db, os.getpid())
+            from time import strftime
+            new_name = "%(basename)s.%(time)s" %{'basename': user_db, 'time': strftime('%Y-%m-%d_%H:%M:%S')}
             sys.stderr.write("Renaming the incompatible database to \"%(name)s\".\n" %{'name': new_name})
             os.rename(user_db, new_name)
             sys.stderr.write("Creating a new, empty database \"%(name)s\".\n"  %{'name': user_db})
