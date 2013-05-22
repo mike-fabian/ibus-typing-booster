@@ -578,60 +578,70 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
         if len(phrase) < 4:
             return
 
+        # There should never be more than 1 database row for the same
+        # input_phrase *and* phrase. So the following queries on the
+        # mudb and user_db databases should match at most one database
+        # row each and the length of the result array should be 0 or
+        # 1. So the “GROUP BY phrase” is actually redundant. It is
+        # only a safeguard for the case when duplicate rows have been
+        # added to the database accidentally (But in that case there
+        # is a bug somewhere else which should be fixed).
         sqlstr = '''
-        SELECT * FROM user_db.phrases
+        SELECT input_phrase, phrase, freq, sum(user_freq) FROM mudb.phrases
         WHERE phrase = :phrase AND input_phrase = :input_phrase
-        UNION ALL
-        SELECT * FROM mudb.phrases
-        WHERE phrase = :phrase AND input_phrase = :input_phrase
-        ORDER BY user_freq DESC, freq DESC, id ASC
+        GROUP BY phrase
         ;'''
         sqlargs = {'phrase': phrase, 'input_phrase': input_phrase}
         result = self.db.execute(sqlstr, sqlargs).fetchall()
-        # If phrase is among the suggestions of self.hunspell_obj.suggest(input_phrase)
-        # append it to results:
-        filter(lambda x: x[2] == phrase and result.append(tuple(x)),
-               self.hunspell_obj.suggest(input_phrase))
+        if len(result) > 0:
+            # A match was already found in mudb, increase the user
+            # frequency by 1 and return, there is no need to check
+            # user_db or hunspell.
+            self.update_phrase(input_phrase = input_phrase,
+                               phrase = phrase,
+                               user_freq = result[0][3]+1,
+                               database='mudb', commit=True);
+            return
+        sqlstr = '''
+        SELECT input_phrase, phrase, freq, sum(user_freq) FROM user_db.phrases
+        WHERE phrase = :phrase AND input_phrase = :input_phrase
+        GROUP BY phrase
+        ;'''
+        sqlargs = {'phrase': phrase, 'input_phrase': input_phrase}
+        result = self.db.execute(sqlstr, sqlargs).fetchall()
+        if len(result) > 0:
+            # A match was found in user_db, add the phrase to
+            # mudb with the user frequency increased by 1
+            # and return. No need to check hunspell.
+            self.add_phrase(input_phrase = input_phrase,
+                            phrase = phrase,
+                            freq = (-3 if result[0][2] == -1 else 1),
+                            user_freq = result[0][3]+1,
+                            database='mudb', commit=True);
+            return
+        # The phrase was neither found in mudb nor in user_db.
+        # Check if the phrase is among the suggestions of self.hunspell_obj.suggest(input_phrase):
+        result = filter(lambda x: x[2] == phrase, self.hunspell_obj.suggest(input_phrase))
         if len(result) == 0:
-            # The phrase was neither found in user_db nor mudb nor
-            # does hunspell_obj.suggest(input_phrase) suggest such
-            # a phrase. Therefore, it is a completely new, user
-            # defined phrase and we add it into mudb:
+            # hunspell_obj.suggest(input_phrase) doesn’t suggest such
+            # a phrase either. Therefore, it is a completely new, user
+            # defined phrase and we add it as such to mudb:
             self.add_phrase(input_phrase = input_phrase,
                             phrase = phrase,
                             freq = -2,
                             user_freq = 1,
-                            database = 'mudb')
-        sysdb = {}
-        usrdb = {}
-        mudb = {}
-        map(lambda x: sysdb.update([(x[1:3],x[:])]), filter(lambda x: not x[-1], result))
-        map(lambda x: usrdb.update([(x[1:3], x[:])]), filter(lambda x: (x[-2] in [0,-1]) and x[-1], result))
-        map(lambda x: mudb.update([(x[1:3], x[:])]), filter(lambda x: (x[-2] not in [0,-1]) and x[-1], result))
-
-        # we remove the keys already contained in mudb{} from usrdb{}
-        map(usrdb.pop, filter(lambda key: key in mudb, usrdb.keys()))
-        # we remove the keys already contained in mudb{} or usrdb{} from sysdb{}
-        map(sysdb.pop, filter(lambda key: key in mudb or key in usrdb, sysdb.keys()))
-
-        map(lambda key: self.add_phrase(
-            input_phrase = key[0], phrase = phrase,
-            freq = (-3 if usrdb[key][-2] == -1 else 1),
-            user_freq = usrdb[key][-1]+1,
-            database = 'mudb'), usrdb.keys())
-        map(lambda key: self.add_phrase(
-            input_phrase = key[0],
-            phrase = phrase,
-            freq = 2,
-            user_freq = 1,
-            database = 'mudb'), sysdb.keys())
-
-        map(lambda key:
-            self.update_phrase(input_phrase = key[0],
-                               phrase = phrase,
-                               user_freq = mudb[key][-1]+1,
-                               database='mudb'),
-            mudb.keys())
+                            database = 'mudb', commit=True)
+            return
+        else:
+            # hunspell_obj.suggest(input_phrase) does suggest such a phrase.
+            # Therefore it is a new (i.e. not used before) system phrase.
+            # Add it as such to mudb:
+            self.add_phrase(input_phrase = input_phrase,
+                            phrase = phrase,
+                            freq = 2,
+                            user_freq = 1,
+                            database = 'mudb', commit=True)
+            return
 
     def remove_phrase (self, input_phrase='', phrase='', database='user_db', commit=True):
         '''
