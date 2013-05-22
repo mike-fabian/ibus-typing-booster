@@ -406,7 +406,9 @@ class tabsqlitedb:
         ;'''
         sqlargs = {'input_phrase': input_phrase+'%'}
         result = self.db.execute(sqlstr, sqlargs).fetchall()
-        hunspell_list = self.hunspell_obj.suggest(input_phrase)
+        hunspell_list = []
+        map(lambda x: hunspell_list.append((0, input_phrase, x, 1, 0)),
+            self.hunspell_obj.suggest(input_phrase))
         for ele in hunspell_list:
             result.append(tuple(ele))
 
@@ -621,8 +623,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
             return
         # The phrase was neither found in mudb nor in user_db.
         # Check if the phrase is among the suggestions of self.hunspell_obj.suggest(input_phrase):
-        result = filter(lambda x: x[2] == phrase, self.hunspell_obj.suggest(input_phrase))
-        if len(result) == 0:
+        if not phrase in self.hunspell_obj.suggest(input_phrase):
             # hunspell_obj.suggest(input_phrase) doesn’t suggest such
             # a phrase either. Therefore, it is a completely new, user
             # defined phrase and we add it as such to mudb:

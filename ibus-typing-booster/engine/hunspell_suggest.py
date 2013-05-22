@@ -34,10 +34,6 @@ except:
 # letter of a word until the candidate lookup table pops up.
 max_words = 100
 max_words_row = 50
-# System frequency by default it is kept as 0
-system_freq = 0
-# The system word is 1 and user defined word is -1
-system_word = 1
 
 class Hunspell:
     def __init__(self,lang='en',loc='/usr/share/myspell/',dict_name='en_US.dic',aff_name='en_US.aff',
@@ -109,25 +105,10 @@ class Hunspell:
                             start_words.append(suggestion)
         else:
             start_words = [unicode('☹ %(loc)s%(dict_name)s not found.' %{'loc': self.loc, 'dict_name': self.dict_name}, 'utf-8'), unicode('☹ please install hunspell dictionary!', 'utf-8') ]
-        words = set(start_words[0:max_words])
-        return words
-
-    def convert_to_lists(self, input_phrase, phrases):
-        '''
-        convert to database rows  in the format
-        ['id', 'input_phrase', 'phrase','freq','user_freq']
-        '''
-        db_rows = []
-        for seq, phrase in enumerate(phrases):
-            db_rows.append([seq, input_phrase, phrase, system_word, system_freq])
-        return db_rows
+        return list(set(start_words[0:max_words]))
 
     def suggest(self, input_phrase):
-        phrases = self.words_start(input_phrase)
-        suggestions = []
-        if phrases:
-            suggestions = self.convert_to_lists(input_phrase, phrases)
-        return suggestions
+        return self.words_start(input_phrase)
 
 
 
