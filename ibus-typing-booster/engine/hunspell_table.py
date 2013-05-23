@@ -387,8 +387,7 @@ class editor(object):
     def get_preedit_strings (self):
         '''Get preedit strings'''
         if self._candidates[0]:
-            _p_index = self.get_index ('phrase')
-            #_candi = u'###' + self._candidates[0][ int (self._lookup_table.get_cursor_pos() ) ][ _p_index ] + u'###'
+            #_candi = u'###' + self._candidates[0][int(self._lookup_table.get_cursor_pos())][0] + u'###'
             input_chars = self.get_input_chars ()
             _candi = u''.join( ['###'] + map( str, input_chars) + ['###'] )
         else:
@@ -415,8 +414,7 @@ class editor(object):
     def get_strings (self):
         '''Get  strings'''
         if self._candidates[0]:
-            _p_index = self.get_index ('phrase')
-            _candi = u'###' + self._candidates[0][ int (self._lookup_table.get_cursor_pos() ) ][ _p_index ] + u'###'
+            _candi = u'###' + self._candidates[0][int(self._lookup_table.get_cursor_pos())][0] + u'###'
             return _candi
         else:
             input_chars = self.get_input_chars ()
@@ -516,21 +514,18 @@ class editor(object):
 
     def ap_candidate (self, candi):
         '''append candidate to lookup_table'''
-        _phrase= candi[self.get_index('phrase')]
+        _phrase= candi[0]
         attrs = IBus.AttrList ()
         if not _phrase.startswith(self.get_input_chars_string()):
             # this is a candidate which does not start exactly
             # with the characters typed, i.e. it is a suggestion
             # for a spelling correction:
             attrs.append(IBus.attr_foreground_new(rgb(0xff,0x00,0x00), 0, len(_phrase)))
-        elif candi[-2] < 0:
-            # this is a user defined phrase:
-            attrs.append(IBus.attr_foreground_new(rgb(0x77,0x00,0xc3), 0, len(_phrase)))
-        elif candi[-1] > 0:
-            # this is a system phrase which has already been used by the user:
+        elif candi[1] > 10:
+            # this is a frequently used phrase:
             attrs.append(IBus.attr_foreground_new(rgb(0xff,0x7f,0x00), 0, len(_phrase)))
         else:
-            # this is a system phrase that has not been used yet:
+            # this is a system phrase that has been use less then 10 times or maybe never:
             attrs.append(IBus.attr_foreground_new(rgb(0x00,0x00,0x00), 0, len(_phrase)))
         text = IBus.Text.new_from_string(_phrase)
         i = 0
@@ -588,10 +583,9 @@ class editor(object):
 
     def commit_to_preedit (self):
         '''Add selected phrase in lookup table to preedit string'''
-        _p_index = self.get_index('phrase')
         try:
             if self._candidates[0]:
-                self._strings.insert(self._cursor[0], self._candidates[0][ self.get_cursor_pos() ][_p_index])
+                self._strings.insert(self._cursor[0], self._candidates[0][self.get_cursor_pos()][0])
                 self._cursor [0] += 1
             self.over_input ()
             self.update_candidates ()
@@ -601,10 +595,9 @@ class editor(object):
 
     def auto_commit_to_preedit (self):
         '''Add selected phrase in lookup table to preedit string'''
-        _p_index = self.get_index('phrase')
         try:
             self._u_chars.append( self._chars[0][:] )
-            self._strings.insert(self._cursor[0], self._candidates[0][ self.get_cursor_pos() ][_p_index])
+            self._strings.insert(self._cursor[0], self._candidates[0][self.get_cursor_pos()][0])
             self._cursor [0] += 1
             self.clear_input()
             self.update_candidates ()
@@ -704,8 +697,8 @@ class editor(object):
         if  len (self._candidates[0]) > real_index:
             # this index is valid
             can = self._candidates[0][real_index]
-            self.db.remove_phrase(input_phrase=can[1], phrase=can[2], database='user_db', commit=False)
-            self.db.remove_phrase(input_phrase=can[1], phrase=can[2], database='mudb', commit=True)
+            self.db.remove_phrase(input_phrase=u''.join(self._tabkey_list), phrase=can[0], database='user_db', commit=False)
+            self.db.remove_phrase(input_phrase=u''.join(self._tabkey_list), phrase=can[0], database='mudb', commit=True)
             # sync user database immediately after removing
             # phrases:
             self.db.sync_usrdb()

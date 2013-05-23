@@ -496,7 +496,7 @@ class tabsqlitedb:
                                             len(x[0]), # len(phrase) ascending
                                             x[0]       # phrase alphabetical
                                         )):
-            candidates.append((0, input_phrase, phrase, 0, user_freq))
+            candidates.append((phrase, user_freq))
         return candidates[:]
 
     def get_all_values(self,d_name='main',t_name='inks'):
