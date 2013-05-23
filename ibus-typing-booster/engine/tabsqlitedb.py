@@ -204,6 +204,7 @@ class tabsqlitedb:
         try:
             sys.stderr.write("Connect to the database %(name)s.\n" %{'name': user_db})
             self.db = sqlite3.connect(user_db)
+            self.db.execute('PRAGMA case_sensitive_like = true;')
             self.db.execute('PRAGMA page_size = 8192; ')
             self.db.execute('PRAGMA cache_size = 20000; ')
             self.db.execute('PRAGMA temp_store = MEMORY; ')
@@ -449,6 +450,7 @@ class tabsqlitedb:
     def init_user_db (self,db_file):
         if not path.exists (db_file):
             db = sqlite3.connect (db_file)
+            db.execute('PRAGMA case_sensitive_like = true;')
             db.execute('PRAGMA page_size = 4096;')
             db.execute( 'PRAGMA cache_size = 20000;' )
             db.execute( 'PRAGMA temp_store = MEMORY; ' )
