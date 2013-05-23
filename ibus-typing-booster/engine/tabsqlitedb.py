@@ -397,100 +397,107 @@ class tabsqlitedb:
         # as the maximum string length in sqlite3
         # (by default 10^9, see http://www.sqlite.org/limits.html))
         input_phrase = input_phrase[:self._max_key_length]
+
+        # Get (phrase, user_freq) pairs from mudb and user_db.
+        #
+        # Example: Let’s assume the user typed “co” and user_db contains
+        #
+        #     1|colou|colour|0|1
+        #     2|col|colour|0|2
+        #     3|co|colour|0|1
+        #     4|co|cold|0|1
+        #     5|conspirac|conspiracy|0|5
+        #     6|conspi|conspiracy|0|1
+        #     7|c|conspiracy|-1|1
+        #
+        # and mudb contains:
+        #
+        #     1|col|colour|1|3
+        #     2|conspi|conspiracy|1|3
+        #     3|colonel|colonel|2|1
+        #     4|c|conspiracy|-3|2
+        #     5|coooool|coooool|-2|1
+        #
+        # If the same pairs of (input_phrase, phrase) exists in both
+        # mudb and user_db, the user_freq *must* always be higher in mudb.
+        # Because, if a phrase which is in user_db is used, it is added to mudb
+        # and user_freq is increased by one. If the same phrase is used again,
+        # its frequency in mudb is again increased by one.
+        #
+        # That means for (input_phrase, phrase) pairs found in both
+        # mudb and user_db, only that from mudb should be selected
+        # which is the one with the bigger user_freq (Therefore, the
+        # max(user_freq) in the SQL statement).
+        #
+        # I.e., for the above example, after the UNION of mudb and user_db
+        # and selecting max(user_freq) grouped by (input_phrase, phrase) we
+        # get:
+        #
+        #     colou|colour|0|1
+        #     col|colour|1|3
+        #     co|colour|0|1
+        #     co|cold|0|1
+        #     conspirac|conspiracy|0|5
+        #     conspi|conspiracy|1|3
+        #     coooool|coooool|-2|1
+        #     colonel|colonel|2|1
+        #
+        # (“c|conspiracy|-3|2” is not selected because it doesn’t
+        # match the user input “LIKE co%”!)
+        #
+        # Now the outermost SELECT groups by phrase and sums the user
+        # frequencies, so the end result returned by .fetchall() is:
+        #
+        # [(u'colour', 5), (u'cold', 1), (u'conspiracy', 8), (u'coooool', 1), (u'colonel', 1)]
+        #
         sqlstr = '''
-        SELECT * FROM user_db.phrases WHERE input_phrase LIKE :input_phrase
-        UNION ALL
-        SELECT  * FROM mudb.phrases WHERE input_phrase LIKE :input_phrase
-        ORDER BY user_freq DESC, freq DESC, id ASC
+        SELECT phrase, sum(user_freq)
+        FROM (
+            SELECT input_phrase, phrase, max(user_freq) as user_freq
+            FROM (
+                SELECT input_phrase, phrase, user_freq
+                FROM user_db.phrases WHERE input_phrase LIKE :input_phrase
+                UNION
+                SELECT input_phrase, phrase, user_freq
+                FROM mudb.phrases WHERE input_phrase LIKE :input_phrase
+            )
+            GROUP BY input_phrase, phrase
+        )
+        GROUP BY phrase
         limit 1000
         ;'''
         sqlargs = {'input_phrase': input_phrase+'%'}
-        result = self.db.execute(sqlstr, sqlargs).fetchall()
-        hunspell_list = []
-        map(lambda x: hunspell_list.append((0, input_phrase, x, 1, 0)),
-            self.hunspell_obj.suggest(input_phrase))
-        for ele in hunspell_list:
-            result.append(tuple(ele))
-
-        usrdb={}
-        mudb={}
-        sysdb={}
-        map(lambda x: sysdb.update([(x[1:3],x[:])]), filter(lambda x: not x[-1], result))
-        map(lambda x: usrdb.update([(x[1:3], x[:])]), filter(lambda x: (x[-2] in [0,-1]) and x[-1], result))
-        map(lambda x: mudb.update([(x[1:3], x[:])]), filter(lambda x: (x[-2] not in [0,-1]) and x[-1], result))
-
-        _cand = mudb.values()
-        map(_cand.append, filter(lambda x: x, map(lambda key: key not in mudb and usrdb[key], usrdb)))
-        map(_cand.append, filter(lambda x: x, map(lambda key: key not in mudb and key not in usrdb and sysdb[key], sysdb)))
-        # Now merge all the candidates which share the same phrase
-        # into one, summing up their user frequencies.
-        #
-        # For example, if the database contains the following rows:
-        #
-        # 1|colou|colour|0|1
-        # 2|col|colour|0|2
-        # 3|co|colour|0|1
-        # 4|co|cold|0|1
-        # 5|conspirac|conspiracy|0|1
-        # 6|conspi|conspiracy|0|1
-        # 7|c|conspiracy|-1|1
-        #
-        # and the current input_phrase is “co”, the last line with
-        # input_phrase = “c” and phrase “conspiracy” would not
-        # have matched here because we used “LIKE "co%"” in the SQL
-        # statement. It we used the remaining candidates as is, we
-        # would see duplicate entries in the lookup table, for exaple
-        # we would see “colour” 3 times in the lookup table which
-        # makes no sense. Therefore, we merge the candidates which
-        # share the same phrase and sum the frequencies.  Doing this
-        # we get for the above example:
-        #
-        # 1|co|colour|0|4
-        # 2|co|cold|0|1
-        # 3|co|conspiracy|0|2
-        #
-        # I.e. for the input phrase pattern “co%”, “colour”
-        # matched 4 times total, “conspiracy” matched 2 times total
-        # and “cold” matched just once.
-        #
-        # We do the merge by creating a dictionary of phrases and
-        # their total user frequencies first:
+        try:
+            results = self.db.execute(sqlstr, sqlargs).fetchall()
+        except:
+            import traceback
+            traceback.print_exc()
         phrase_frequencies = {}
-        for db_row in _cand:
-            phrase = db_row[2]
-            user_freq = db_row[-1]
-            if phrase not in phrase_frequencies:
-                phrase_frequencies[phrase] = user_freq
-            else:
-                phrase_frequencies[phrase] += user_freq
-        # Then we create a new list of candidates from that
-        # dictionary. The input phrase in this new candidate list is
-        # always the input phrase the user actually typed, i.e. “co”
-        # in our example, never the possibly longer input phrases in
-        # the matches for “co%”:
-        _cand = []
-        id = 0
-        for phrase in phrase_frequencies:
-            id += 1
-            _cand.append((id, input_phrase, phrase, 0, phrase_frequencies[phrase]))
-        # And finally we sort the candidates by descending user frequency
-        # to get the most used candidates on top of the lookup table.
-        # If candidates have the same user frequency, we put the candidate
-        # with the shorter phrase first.
-        # If they still sort the same, we break the tie using frequency
-        # and id, which doesn’t really do anything useful, possibly
-        # this tie breaking could be omitted, if candidates have
-        # the same user frequency and phrase length, it does not really
-        # matter anymore which one comes first in the lookup table.
-        # But maybe better break the tie anyway to get a predictable,
-        # stable sort result:
-        _cand.sort(cmp=(lambda x,y:
-                        -(cmp(x[-1], y[-1]))    # user_freq descending
-                        or (cmp(len(x[2]), len(y[2])))    # len(phrase) ascending
-                        or -(cmp(x[-2], y[-2])) # freq descending
-                        or (cmp(x[0], y[0]))    # id ascending
-                    ))
-        return _cand[:]
+        map(lambda x: phrase_frequencies.update([(x, 0)]), self.hunspell_obj.suggest(input_phrase))
+        # Now phrase_frequencies might contain something like this:
+        #
+        # {u'code': 0, u'communicability': 0, u'cold': 0, u'colour': 0}
+        #
+        # Updating this dictionary filled only with hunspell data
+        # so far with the results of the SELECT statement, i.e.
+        #
+        # [(u'colour', 5), (u'cold', 1), (u'conspiracy', 8), (u'coooool', 1), (u'colonel', 1)]
+        #
+        # then gives us
+        #
+        # {u'conspiracy': 8, u'coooool': 1, u'colonel': 1, u'code': 0,
+        #  u'communicability': 0, u'cold': 1, u'colour': 5}
+        phrase_frequencies.update(results)
+
+        candidates = []
+        for phrase, user_freq in sorted(phrase_frequencies.items(),
+                                        key=lambda x: (
+                                            -1*x[1],   # user_freq descending
+                                            len(x[0]), # len(phrase) ascending
+                                            x[0]       # phrase alphabetical
+                                        )):
+            candidates.append((0, input_phrase, phrase, 0, user_freq))
+        return candidates[:]
 
     def get_all_values(self,d_name='main',t_name='inks'):
         sqlstr = 'SELECT * FROM '+d_name+'.'+t_name+';'
