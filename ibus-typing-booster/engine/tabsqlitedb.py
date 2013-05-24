@@ -137,11 +137,6 @@ class tabsqlitedb:
 
         self._m17ndb = 'm17n'
         self._m17n_mim_name = ""
-        self.lang_chars = self.ime_properties.get('lang_chars')
-        if self.lang_chars != None:
-            self.lang_chars = self.lang_chars.decode('utf8')
-        else:
-            self.lang_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
         self.encoding = self.ime_properties.get('encoding')
 
@@ -149,8 +144,7 @@ class tabsqlitedb:
             lang=self.ime_properties.get('languages'),
             dict_name=self.ime_properties.get("hunspell_dict"),
             aff_name=self.ime_properties.get("hunspell_dict").replace('.dic', '.aff'),
-            encoding=self.encoding,
-            lang_chars=self.lang_chars)
+            encoding=self.encoding)
 
         self.startchars = self.get_start_chars ()
         user_db = self.ime_properties.get("name")+'-user.db'

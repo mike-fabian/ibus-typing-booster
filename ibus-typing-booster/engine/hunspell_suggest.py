@@ -37,13 +37,11 @@ max_words_row = 50
 
 class Hunspell:
     def __init__(self,lang='en',loc='/usr/share/myspell/',dict_name='en_US.dic',aff_name='en_US.aff',
-                 lang_chars='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
                  encoding='UTF-8'):
         self.lang=lang
         self.loc = loc
         self.dict_name = dict_name
         self.aff_name = aff_name
-        self.lang_chars=lang_chars
         self.encoding = encoding
         self.dict_buffer = None
         self.aff_handle = None

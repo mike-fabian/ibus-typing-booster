@@ -77,23 +77,6 @@ page_size = 6
 # Displayed for example in the gnome-shell panel, showing the
 # currently active input method.
 symbol= de-DE✓
-# “lang_chars” contains a *complete* list of characters which may occur in
-# words in the language. “lang_chars” is also used for matching words in
-# the dictionary. A match in the dictionary is found if a line
-# starts with the characters already typed by the user. The
-# match continues in the same line as long as characters from “lang_chars”
-# follow. The first character not in “lang_chars” ends the match.
-# By tuning “lang_chars”, one can prevent undesired matches, for example
-# prevent matching comment lines in the dictionaries or other stuff
-# which would not be helpful when matched.
-# “lang_chars” should *never* contain a / because
-# words in the hunspell dictionaries may optionally be followed by a /
-# and flags for affix rules. Therefore, / can never be part of a word.
-# For example, the en_US.dic dictionary file has a line containing:
-#     “workaholic/SM”
-# and if the user types “work”, “workaholic” is one of the possible matches
-# but the trailing affix rules “/SM” should not show up in the matches.
-lang_chars = ́̀̂̈̃-.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyzÁÀÂÄÉÊÑÖÜßáàâäéêñöü
 # “m17n_mim_name” selects the default input method. Omit this key or
 # set it to the the special value “NoIme” to use no input method
 # by default. If a keyboard layout is available which has all
