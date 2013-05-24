@@ -72,26 +72,29 @@ class Hunspell:
     def words_start(self,word):
         if type(word) != type(u''):
             word = word.decode('utf8')
-        char_class = self.lang_chars
-        # We try to match a word in the dictionary by trying to
-        # match the word as typed so far followed by characters
-        # allowed in the language, i.e. followed by characters listed
-        # in the value of 'lang_chars' in the .conf file.
+        # http://pwet.fr/man/linux/fichiers_speciaux/hunspell says:
         #
-        # In case 'lang_chars' contains the characters '\', ']', '^', and '-'
-        # they need to be escaped because these are meta-characters
-        # in a regular expression character class.
-        char_class = char_class.replace('\\', '\\\\')
-        char_class = char_class.replace(']', '\\]')
-        char_class = char_class.replace('^', '\\^')
-        char_class = char_class.replace('-', '\\-')
+        # > A dictionary file (*.dic) contains a list of words, one per
+        # > line. The first line of the dictionaries (except personal
+        # > dictionaries) contains the word count. Each word may
+        # > optionally be followed by a slash ("/") and one or more
+        # > flags, which represents affixes or special attributes.
+        #
+        # I.e. if '/' is already contained in the input, it cannot
+        # match a word in the dictionary and we return an empty list
+        # immediately:
+        if '/' in word:
+            return []
+        # And we should not match further than '/'.
+        # Take care to use a non-greedy regexp to match only
+        # one line and not accidentally big chunks of the file!
         try:
-            regexp = '^'+word+'['+char_class+']*'
+            regexp = r'^'+word+r'.*?(?=/|$)'
             patt_start = re.compile(regexp,re.MULTILINE|re.UNICODE)
         except:
             # Exception here means characters such as ( are present in the string
             word = word.strip('()+=|-')
-            regexp = '^'+word+'['+char_class+']*'
+            regexp = r'^'+word+r'.*?(?=/|$)'
             patt_start = re.compile(regexp,re.MULTILINE|re.UNICODE)
         if self.dict_buffer != None:
             start_words = patt_start.findall(self.dict_buffer)
