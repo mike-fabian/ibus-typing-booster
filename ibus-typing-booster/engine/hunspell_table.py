@@ -697,8 +697,8 @@ class editor(object):
         if  len (self._candidates[0]) > real_index:
             # this index is valid
             can = self._candidates[0][real_index]
-            self.db.remove_phrase(input_phrase=u''.join(self._tabkey_list), phrase=can[0], database='user_db', commit=False)
-            self.db.remove_phrase(input_phrase=u''.join(self._tabkey_list), phrase=can[0], database='mudb', commit=True)
+            self.db.remove_phrase(phrase=can[0], database='user_db', commit=False)
+            self.db.remove_phrase(phrase=can[0], database='mudb', commit=True)
             # sync user database immediately after removing
             # phrases:
             self.db.sync_usrdb()
