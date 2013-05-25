@@ -59,7 +59,6 @@ layout = default
 # and still get suggestions for completion.
 max_key_length = 50
 auto_commit = FALSE
-discard_invalid_key=FALSE
 user_can_define_phrase = TRUE
 dynamic_adjust = TRUE
 # The hunspell dictionary file used to find the completions
