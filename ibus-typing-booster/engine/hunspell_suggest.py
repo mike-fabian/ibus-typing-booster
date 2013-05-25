@@ -58,7 +58,7 @@ class Hunspell:
         self.aff_handle = None
         self.pyhunspell_object = None
         try:
-            self.dict_buffer = codecs.open(self.loc+self.dict_name).read().decode(self.encoding)
+            self.dict_buffer = codecs.open(self.loc+self.dict_name).read().decode(self.encoding).replace('\r\n', '\n')
             self.aff_handle = open(self.loc+self.aff_name)
             if import_hunspell_successful:
                 self.pyhunspell_object = hunspell.HunSpell(
