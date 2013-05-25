@@ -249,17 +249,6 @@ class tabsqlitedb:
         self.db.execute ('ATTACH DATABASE "%s" AS mudb;' % mudb )
         self.create_tables ("mudb")
 
-    def __parse_conf_file(self,conf_file="/usr/share/ibus-typing-booster/hunspell-tables/en_US.conf"):
-        key_val_dict = {}
-        if conf_file.find('typing-booster:') > 0 :
-            conf_file=conf_file.replace('typing-booster:','')
-        comment_patt = re.compile('^#')
-        for line in file(conf_file):
-            if not comment_patt.match(line):
-                attr,val = line.strip().split ('=', 1)
-                key_val_dict[attr.strip()]= val.strip()
-        return key_val_dict
-
     def update_phrase (self, entry, database='user_db'):
         '''update phrase freqs'''
         input_phrase, phrase, freq, user_freq = entry
