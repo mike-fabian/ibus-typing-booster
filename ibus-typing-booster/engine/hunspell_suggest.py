@@ -87,13 +87,11 @@ class Hunspell:
         # Take care to use a non-greedy regexp to match only
         # one line and not accidentally big chunks of the file!
         try:
-            regexp = r'^'+word+r'.*?(?=/|$)'
+            regexp = r'^'+re.escape(word)+r'.*?(?=/|$)'
             patt_start = re.compile(regexp,re.MULTILINE|re.UNICODE)
         except:
-            # Exception here means characters such as ( are present in the string
-            word = word.strip('()+=|-')
-            regexp = r'^'+word+r'.*?(?=/|$)'
-            patt_start = re.compile(regexp,re.MULTILINE|re.UNICODE)
+            import traceback
+            traceback.print_exc()
         if self.dict_buffer != None:
             start_words = patt_start.findall(self.dict_buffer)
             if self.pyhunspell_object != None:
