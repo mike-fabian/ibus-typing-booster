@@ -55,7 +55,6 @@ valid_input_chars = ́̀̂̈̃-.ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstu
 # Therefore, better use “default” here and let the user decide the
 # keyboard layout.
 layout = default
-auto_wildcard = TRUE
 # The maximum number of characters which can be typed in a word
 # and still get suggestions for completion.
 max_key_length = 50
