@@ -861,12 +861,7 @@ class tabengine (IBus.Engine):
         self._mode = 1
 
         self._status = self.db.ime_properties.get('status_prompt').encode('utf8')
-        # now we check and update the valid input characters
-        self._chars = self.db.ime_properties.get('valid_input_chars').decode('utf8')
-        self._valid_input_chars = []
-        for _c in self._chars:
-            self._valid_input_chars.append(_c)
-        del self._chars
+        self._valid_input_chars = list(self.db.ime_properties.get('valid_input_chars').decode('utf8'))
 
         # check whether we can use '=' and '-' for page_down/up
         self._page_down_keys = [IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down]
