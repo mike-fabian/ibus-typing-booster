@@ -361,14 +361,6 @@ class editor(object):
                 string = self._strings[ self._cursor[0] ]
                 self._strings[ self._cursor[0] ] = string[:self._cursor[1]] + string[ self._cursor[1] + 1 : ]
 
-    def get_invalid_input_chars (self):
-        '''get invalid characters held'''
-        return self._chars[1]
-
-    def get_invalid_input_string (self):
-        '''get invalid characters in string form'''
-        return u''.join (self._chars[1])
-
     def get_preedit_strings (self):
         '''Get preedit strings'''
         if self._candidates[0]:
