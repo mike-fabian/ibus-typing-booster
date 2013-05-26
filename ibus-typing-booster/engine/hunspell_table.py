@@ -387,20 +387,6 @@ class editor(object):
         else:
             return _candi
 
-
-    def get_strings (self):
-        '''Get  strings'''
-        if self._candidates[0]:
-            _candi = u'###' + self._candidates[0][int(self._lookup_table.get_cursor_pos())][0] + u'###'
-            return _candi
-        else:
-            input_chars = self.get_input_chars ()
-            if input_chars:
-                _candi = u''.join( ['###'] + map( str, input_chars) + ['###'] )
-            else:
-                _candi = u''
-            return _candi
-
     def add_caret (self, addstr):
         '''add length to caret position'''
         self._caret += len(addstr)
