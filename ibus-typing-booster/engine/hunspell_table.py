@@ -363,16 +363,11 @@ class editor(object):
 
     def get_preedit_strings (self):
         '''Get preedit strings'''
-        if self._candidates[0]:
-            #_candi = u'###' + self._candidates[0][int(self._lookup_table.get_cursor_pos())][0] + u'###'
-            input_chars = self.get_input_chars ()
+        input_chars = self.get_input_chars ()
+        if input_chars:
             _candi = u''.join( ['###'] + map( str, input_chars) + ['###'] )
         else:
-            input_chars = self.get_input_chars ()
-            if input_chars:
-                _candi = u''.join( ['###'] + map( str, input_chars) + ['###'] )
-            else:
-                _candi = u''
+            _candi = u''
         if self._strings:
             res = u''
             _cursor = self._cursor[0]
