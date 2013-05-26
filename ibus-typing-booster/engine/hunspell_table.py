@@ -562,17 +562,6 @@ class editor(object):
             print "exception"
             pass
 
-    def auto_commit_to_preedit (self):
-        '''Add selected phrase in lookup table to preedit string'''
-        try:
-            self._u_chars.append( self._chars[0][:] )
-            self._strings.insert(self._cursor[0], self._candidates[0][self.get_cursor_pos()][0])
-            self._cursor [0] += 1
-            self.clear_input()
-            self.update_candidates ()
-        except:
-            pass
-
     def arrow_down(self):
         '''Process Arrow Down Key Event
         Move Lookup Table cursor down'''
