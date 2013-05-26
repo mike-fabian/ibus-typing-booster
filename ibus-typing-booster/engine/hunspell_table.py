@@ -709,32 +709,6 @@ class editor(object):
         else:
             return False
 
-    def l_shift (self):
-        '''Process Left Shift Key Event as immediately commit to preedit strings'''
-        if self._chars[0]:
-            _ic = self.get_strings ()
-            if _ic:
-                res = patt_edit.match (_ic)
-                if res:
-                    _ic = u''
-                    ures = patt_uncommit.match (res.group(1))
-                    if ures:
-                        _ic = u''.join (ures.groups())
-                    else:
-                        _ic += res.group (1)
-                    _ic += res.group(2)
-                    _ic += res.group(3)
-            self.commit_to_preedit ()
-            return True
-        else:
-            return False
-
-    def r_shift (self):
-        '''Process Right Shift Key Event as changed between PinYin Mode and Table Mode'''
-        if self._chars[0]:
-            self.commit_to_preedit ()
-        return True
-
     def space (self):
         '''Process space Key Event
         return (KeyProcessResult,whethercommit,commitstring)'''
