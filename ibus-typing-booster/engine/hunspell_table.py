@@ -1202,8 +1202,7 @@ class tabengine (IBus.Engine):
         elif keysym2unichr(key.code) in self._valid_input_chars or \
                 (keysym2unichr(key.code) in u'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-_+=\|}]{[:;/>.<,~`?\'"' ):
             self._editor._first = 0
-            if self._auto_commit and ( len(self._editor._chars[0]) == self._ml \
-                    or len (self._editor._chars[0]) in self.db.pkeylens ):
+            if self._auto_commit and len(self._editor._chars[0]) == self._ml:
                 # it is time to direct commit
                 sp_res = self._editor.space ()
                 #return (whethercommit,commitstring)
