@@ -743,18 +743,6 @@ class editor(object):
             # we have invalid input, so do not commit
             return (False,u'')
         if self._t_chars :
-            _ic = self.get_strings ()
-            if _ic:
-                res = patt_edit.match (_ic)
-                if res:
-                    _ic = u''
-                    ures = patt_uncommit.match (res.group(1))
-                    if ures:
-                        _ic = u''.join (ures.groups())
-                    else:
-                        _ic += res.group (1)
-                    _ic += res.group(2)
-                    _ic += res.group(3)
             # user has input sth
             istr = self.get_all_input_strings ()
             self.commit_to_preedit ()
