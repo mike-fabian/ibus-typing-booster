@@ -526,11 +526,6 @@ class editor(object):
         self._lookup_table.append_candidate(text)
         self._lookup_table.set_cursor_visible(False)
 
-    def filter_candidates (self, candidates):
-        '''Filter candidates '''
-        return candidates[:]
-
-
     def update_candidates (self):
         '''Update lookuptable'''
         # first check whether the IME have defined start_chars
@@ -561,8 +556,6 @@ class editor(object):
                     self._chars[2] = self._chars[0][:]
                 else:
                     self._candidates[0] =[]
-                if self._candidates[0]:
-                    self._candidates[0] = self.filter_candidates (self._candidates[0])
                 if self._candidates[0]:
                     map ( self.ap_candidate,self._candidates[0] )
                 self._candidates[1] = self._candidates[0]
