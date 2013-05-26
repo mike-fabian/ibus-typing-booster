@@ -717,7 +717,6 @@ class tabengine (IBus.Engine):
         self._mode = 1
 
         self._status = self.db.ime_properties.get('status_prompt').encode('utf8')
-        self._valid_input_chars = list(self.db.ime_properties.get('valid_input_chars').decode('utf8'))
 
         self._page_down_keys = [IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down]
         self._page_up_keys = [IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up]
@@ -875,121 +874,205 @@ class tabengine (IBus.Engine):
         return result
 
     def _process_key_event (self, key):
-        '''Internal method to process key event'''
+        '''Internal method to process key event
+
+        Returns True if the key event has been completely handled by
+        ibus-typing-booster and should not be passed through anymore.
+        Returns False if the key event has not been handled completely
+        and is passed through.
+
+        '''
 
         if key.mask & IBus.ModifierType.RELEASE_MASK:
             return True
 
         if self._editor.is_empty ():
-            # we have not input anything
-            if  key.code >= 32 and key.code <= 127 and ( keysym2unichr(key.code) not in self._valid_input_chars ) \
-                    and (not (key.mask & (IBus.ModifierType.MOD1_MASK | IBus.ModifierType.CONTROL_MASK))):
-                if key.code == IBus.KEY_space:
-                    self.commit_string (keysym2unichr (key.code))
-                    return True
+            # This is the first character typed since the last commit
+            # there is nothing in the preëdit yet.
+            if key.code < 32:
+                # If the first character of a new word is a control
+                # character, return False to pass the character through as is,
+                # it makes no sense trying to complete something
+                # starting with a control character:
+                return False
+            if key.code == IBus.KEY_space:
+                # if the first character is a space, just pass it through
+                # it makes not sense trying to complete:
+                return False
+            if  key.code >= 32 and key.code <= 127 and (not (key.mask & (IBus.ModifierType.MOD1_MASK | IBus.ModifierType.CONTROL_MASK))):
+                # If the first character typed is punctuation or a digit,
+                # we might want to avoid completion and commit something
+                # immediately:
                 if curses.ascii.ispunct(key.code):
                     if not self._editor.trans_m17n_mode:
-                        # If no transliteration is used, we can commit
-                        # punctuation characters immediately:
-                        self.commit_string(keysym2unichr(key.code))
-                        return True
-                    # If transliteration is used, we cannot commit
-                    # punctuation characters immediately. For example,
+                        # If the first cahracter is a digit and no
+                        # transliteration is used, we can pass it
+                        # through:
+                        return False
+                    # If transliteration is used, we may need to
+                    # handle a punctuation character. For example,
                     # “.c” is transliterated to “ċ” in the
                     # “t-latn-pre” transliteration method, therefore
-                    # we cannot commit immediately. Just add it to the
-                    # input so far and see what comes next:
+                    # we cannot just pass it through. Just add it to
+                    # the input so far and see what comes next:
                     res = self._editor.add_input(keysym2unichr(key.code))
                     self._update_ui()
                     return True
                 if curses.ascii.isdigit(key.code):
                     if not self._editor.trans_m17n_mode:
                         # If a digit has been typed and no transliteration
-                        # is used, we can commit immediately:
-                        self.commit_string(keysym2unichr (key.code))
-                        return True
+                        # is used, we can pass it through
+                        return False
                     # If a digit has been typed and we use
-                    # transliteration, we may want to convert it
-                    # to native digits. For example, with
-                    # mr-inscript we want “3” to be converted to
-                    # “३”. So we try to transliterate before we commit:
+                    # transliteration, we may want to convert it to
+                    # native digits. For example, with mr-inscript we
+                    # want “3” to be converted to “३”. So we try
+                    # to transliterate and commit the result:
                     self.commit_string(
                         self._editor.trans.transliterate(keysym2unichr(key.code))[0].decode('utf8'))
                     return True
-            elif (key.code < 32 or key.code > 127) and (keysym2unichr(key.code) not in self._valid_input_chars):
-                return False
 
         if key.code == IBus.KEY_Escape:
+            if self._editor.is_empty():
+                return False
             self.reset ()
             self._update_ui ()
             return True
 
-        elif key.code in (IBus.KEY_Return, IBus.KEY_KP_Enter):
+        if key.code in (IBus.KEY_Return, IBus.KEY_KP_Enter):
+            if self._editor.is_empty():
+                return False
             commit_string = self._editor.get_all_input_strings ()
             self.commit_string (commit_string )
             return False
 
-        elif key.code in (IBus.KEY_Down, IBus.KEY_KP_Down) :
+        if key.code in (IBus.KEY_Down, IBus.KEY_KP_Down):
+            if self._editor.is_empty():
+                return False
             res = self._editor.arrow_down ()
             self._update_ui ()
             return res
 
-        elif key.code in (IBus.KEY_Up, IBus.KEY_KP_Up):
+        if key.code in (IBus.KEY_Up, IBus.KEY_KP_Up):
+            if self._editor.is_empty():
+                return False
             res = self._editor.arrow_up ()
             self._update_ui ()
             return res
 
-        elif key.code in (IBus.KEY_Left, IBus.KEY_KP_Left) and key.mask & IBus.ModifierType.CONTROL_MASK:
+        if key.code in self._page_down_keys and self._editor._candidates:
+            res = self._editor.page_down()
+            self._update_ui ()
+            return res
+
+        if key.code in self._page_up_keys and self._editor._candidates:
+            res = self._editor.page_up ()
+            self._update_ui ()
+            return res
+
+        if key.code in (IBus.KEY_Left, IBus.KEY_KP_Left) and key.mask & IBus.ModifierType.CONTROL_MASK:
+            if self._editor.is_empty():
+                return False
             res = self._editor.control_arrow_left ()
             self._update_ui ()
             return res
 
-        elif key.code in (IBus.KEY_Right, IBus.KEY_KP_Right) and key.mask & IBus.ModifierType.CONTROL_MASK:
+        if key.code in (IBus.KEY_Right, IBus.KEY_KP_Right) and key.mask & IBus.ModifierType.CONTROL_MASK:
+            if self._editor.is_empty():
+                return False
             res = self._editor.control_arrow_right ()
             self._update_ui ()
             return res
 
-        elif key.code in (IBus.KEY_Left, IBus.KEY_KP_Left):
+        if key.code in (IBus.KEY_Left, IBus.KEY_KP_Left):
+            if self._editor.is_empty():
+                return False
             res = self._editor.arrow_left ()
             self._update_ui ()
             return res
 
-        elif key.code in (IBus.KEY_Right, IBus.KEY_KP_Right):
+        if key.code in (IBus.KEY_Right, IBus.KEY_KP_Right):
+            if self._editor.is_empty():
+                return False
             res = self._editor.arrow_right ()
             self._update_ui ()
             return res
 
-        elif key.code == IBus.KEY_BackSpace and key.mask & IBus.ModifierType.CONTROL_MASK:
+        if key.code == IBus.KEY_BackSpace and key.mask & IBus.ModifierType.CONTROL_MASK:
+            if self._editor.is_empty():
+                return False
             res = self._editor.control_backspace ()
             self._update_ui ()
             return res
 
-        elif key.code == IBus.KEY_BackSpace:
+        if key.code == IBus.KEY_BackSpace:
+            if self._editor.is_empty():
+                return False
             res = self._editor.backspace ()
             self._update_ui ()
             return res
 
-        elif key.code == IBus.KEY_Delete  and key.mask & IBus.ModifierType.CONTROL_MASK:
+        if key.code == IBus.KEY_Delete  and key.mask & IBus.ModifierType.CONTROL_MASK:
+            if self._editor.is_empty():
+                return False
             res = self._editor.control_delete ()
             self._update_ui ()
             return res
 
-        elif key.code == IBus.KEY_Delete:
+        if key.code == IBus.KEY_Delete:
+            if self._editor.is_empty():
+                return False
             res = self._editor.delete ()
             self._update_ui ()
             return res
 
-        elif key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates and key.mask & IBus.ModifierType.CONTROL_MASK:
+        if key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates and key.mask & IBus.ModifierType.CONTROL_MASK:
             res = self._editor.number (key.code - IBus.KEY_1)
             self._update_ui ()
             return res
 
-        elif key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates and key.mask & IBus.ModifierType.MOD1_MASK:
+        if key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates and key.mask & IBus.ModifierType.MOD1_MASK:
             res = self._editor.alt_number (key.code - IBus.KEY_1)
             self._update_ui ()
             return res
 
-        elif key.code == IBus.KEY_space:
+        if key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates:
+            input_keys = self._editor.get_all_input_strings ()
+            res = self._editor.number (key.code - IBus.KEY_1)
+            if res:
+                commit_string = self._editor.get_preedit_strings ()
+                self.commit_string (commit_string+ " ")
+                self._update_ui ()
+                # modify freq info
+                self.db.check_phrase (commit_string, input_keys)
+            return True
+
+        if key.code == IBus.KEY_Tab:
+            if self._tab_enable:
+                # toggle whether the lookup table should be displayed
+                # or not
+                if self.is_lookup_table_enabled_by_tab == True:
+                    self.is_lookup_table_enabled_by_tab = False
+                else:
+                    self.is_lookup_table_enabled_by_tab = True
+                # update the ui here to see the effect immediately
+                # do not wait for the next keypress:
+                self._update_ui()
+                return True
+            else:
+                if self._editor._candidates:
+                    self._editor.commit_to_preedit ()
+                    commit_string = self._editor.get_preedit_strings ()
+                    self.commit_string(commit_string + " " )
+                else:
+                    commit_string = self._editor.get_all_input_strings ()
+                    self.commit_string(commit_string + " ")
+                    return True
+            return True
+
+        if key.code == IBus.KEY_space:
+            if self._editor.is_empty():
+                return False
             in_str = self._editor.get_all_input_strings()
             sp_res = self._editor.space ()
             #return (KeyProcessResult,whethercommit,commitstring)
@@ -1011,72 +1094,19 @@ class tabengine (IBus.Engine):
             else:
                 if sp_res[1] == u' ':
                     self.commit_string ((" "))
-
             self._update_ui ()
             return True
-        # now we ignore all else hotkeys
-        elif key.mask & (IBus.ModifierType.CONTROL_MASK|IBus.ModifierType.MOD1_MASK):
+
+        # We pass all other hotkeys through:
+        if key.mask & (IBus.ModifierType.CONTROL_MASK|IBus.ModifierType.MOD1_MASK):
             return False
 
-        elif key.mask & IBus.ModifierType.MOD1_MASK:
+        if key.mask & IBus.ModifierType.MOD1_MASK:
             return False
 
-        elif keysym2unichr(key.code) in self._valid_input_chars or \
-                (keysym2unichr(key.code) in u'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-_+=\|}]{[:;/>.<,~`?\'"' ):
+        if keysym2unichr(key.code):
             self._editor.add_input(keysym2unichr(key.code))
             self._update_ui ()
-            return True
-
-        elif key.code in self._page_down_keys \
-                and self._editor._candidates:
-            res = self._editor.page_down()
-            self._update_ui ()
-            return res
-
-        elif key.code in self._page_up_keys \
-                and self._editor._candidates:
-            res = self._editor.page_up ()
-            self._update_ui ()
-            return res
-
-        elif key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates:
-            input_keys = self._editor.get_all_input_strings ()
-            res = self._editor.number (key.code - IBus.KEY_1)
-            if res:
-                commit_string = self._editor.get_preedit_strings ()
-                self.commit_string (commit_string+ " ")
-                self._update_ui ()
-                # modify freq info
-                self.db.check_phrase (commit_string, input_keys)
-            return True
-
-        elif key.code <= 127:
-            comm_str = self._editor.get_all_input_strings ()
-            self._editor.clear ()
-            self.commit_string (comm_str + keysym2unichr (key.code))
-            return True
-
-        elif key.code == IBus.KEY_Tab:
-            if self._tab_enable:
-                # toggle whether the lookup table should be displayed
-                # or not
-                if self.is_lookup_table_enabled_by_tab == True:
-                    self.is_lookup_table_enabled_by_tab = False
-                else:
-                    self.is_lookup_table_enabled_by_tab = True
-                # update the ui here to see the effect immediately
-                # do not wait for the next keypress:
-                self._update_ui()
-                return True
-            else:
-                if self._editor._candidates:
-                    self._editor.commit_to_preedit ()
-                    commit_string = self._editor.get_preedit_strings ()
-                    self.commit_string(commit_string + " " )
-                else:
-                    commit_string = self._editor.get_all_input_strings ()
-                    self.commit_string(commit_string + " ")
-                    return True
             return True
 
         return False
