@@ -883,10 +883,10 @@ class tabengine (IBus.Engine):
             self._page_up_keys.append (IBus.KEY_minus)
 
         self._phrase_table_column_names = self.db.get_phrase_table_column_names()
-        self._ml = int(self.db.ime_properties.get ('max_key_length'))
+        self._max_key_length = int(self.db.ime_properties.get ('max_key_length'))
 
         # Containers we used:
-        self._editor = editor(self._config, self._phrase_table_column_names, self._valid_input_chars, self._ml, self.db)
+        self._editor = editor(self._config, self._phrase_table_column_names, self._valid_input_chars, self._max_key_length, self.db)
         # some other vals we used:
         # self._prev_key: hold the key event last time.
         self._prev_key = None
@@ -1202,7 +1202,7 @@ class tabengine (IBus.Engine):
         elif keysym2unichr(key.code) in self._valid_input_chars or \
                 (keysym2unichr(key.code) in u'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-_+=\|}]{[:;/>.<,~`?\'"' ):
             self._editor._first = 0
-            if self._auto_commit and len(self._editor._chars[0]) == self._ml:
+            if self._auto_commit and len(self._editor._chars[0]) == self._max_key_length:
                 # it is time to direct commit
                 sp_res = self._editor.space ()
                 #return (whethercommit,commitstring)
@@ -1229,7 +1229,7 @@ class tabengine (IBus.Engine):
                     return True
             else:
                 if self._auto_commit and self._editor.one_candidate () and \
-                        (len(self._editor._chars[0]) == self._ml ):
+                        (len(self._editor._chars[0]) == self._max_key_length):
                     return True
 
             self._update_ui ()
