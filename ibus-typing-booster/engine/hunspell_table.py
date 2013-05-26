@@ -290,17 +290,6 @@ class editor(object):
         #    + [self._chars[1]]) )
         return  u''.join( map(u''.join, self._u_chars + [self._chars[0]]) )
 
-
-    def get_index(self,key):
-        '''
-        Get the index of the column with the name “key” in the phrase table
-
-        For example the index of 'phrase' in the following list
-        of column names is 2:
-        ['id', 'input_phrase', 'phrase', 'freq', 'user_freq']
-        '''
-        return self._phrase_table_column_names.index(key)
-
     def split_phrase (self):
         '''Split current phrase into two phrases'''
         _head = u''
