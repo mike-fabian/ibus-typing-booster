@@ -1022,19 +1022,34 @@ class tabengine (IBus.Engine):
                 if key.code == IBus.KEY_space:
                     self.commit_string (keysym2unichr (key.code))
                     return True
-                if curses.ascii.ispunct (key.code):
-                    if self._editor.trans_m17n_mode:
-                        res = self._editor.add_input ( keysym2unichr(key.code) )
-                        self._update_ui ()
+                if curses.ascii.ispunct(key.code):
+                    if not self._editor.trans_m17n_mode:
+                        # If no transliteration is used, we can commit
+                        # punctuation characters immediately:
+                        self.commit_string(keysym2unichr(key.code))
                         return True
-                    self.commit_string (keysym2unichr (key.code))
+                    # If transliteration is used, we cannot commit
+                    # punctuation characters immediately. For example,
+                    # “.c” is transliterated to “ċ” in the
+                    # “t-latn-pre” transliteration method, therefore
+                    # we cannot commit immediately. Just add it to the
+                    # input so far and see what comes next:
+                    res = self._editor.add_input(keysym2unichr(key.code))
+                    self._update_ui()
                     return True
-                if curses.ascii.isdigit (key.code):
-                    if self._editor.trans_m17n_mode:
-                        key_code = self._editor.trans.transliterate(keysym2unichr (key.code))[0].decode('utf8')
-                        self.commit_string (key_code)
+                if curses.ascii.isdigit(key.code):
+                    if not self._editor.trans_m17n_mode:
+                        # If a digit has been typed and no transliteration
+                        # is used, we can commit immediately:
+                        self.commit_string(keysym2unichr (key.code))
                         return True
-                    self.commit_string (keysym2unichr (key.code))
+                    # If a digit has been typed and we use
+                    # transliteration, we may want to convert it
+                    # to native digits. For example, with
+                    # mr-inscript we want “3” to be converted to
+                    # “३”. So we try to transliterate before we commit:
+                    self.commit_string(
+                        self._editor.trans.transliterate(keysym2unichr(key.code))[0].decode('utf8'))
                     return True
             elif (key.code < 32 or key.code > 127) and (keysym2unichr(key.code) not in self._valid_input_chars):
                 return False
