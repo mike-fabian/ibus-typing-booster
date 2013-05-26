@@ -126,13 +126,12 @@ class KeyEvent:
 class editor(object):
     '''Hold user inputs chars and preedit string'''
 
-    def __init__ (self, config, phrase_table_column_names,valid_input_chars, database):
+    def __init__ (self, config, phrase_table_column_names, database):
         self.db = database
         self._config = config
         self._name = self.db.ime_properties.get('name')
         self._config_section = "engine/typing-booster/%s" % self._name
         self._phrase_table_column_names = phrase_table_column_names
-        self._valid_input_chars = valid_input_chars
         self._chars = [[],[],[]]
         #self._t_chars: hold total input for table mode for input check
         self._t_chars = []
@@ -857,7 +856,7 @@ class tabengine (IBus.Engine):
         self._max_key_length = int(self.db.ime_properties.get ('max_key_length'))
 
         # Containers we used:
-        self._editor = editor(self._config, self._phrase_table_column_names, self._valid_input_chars, self.db)
+        self._editor = editor(self._config, self._phrase_table_column_names, self.db)
         # some other vals we used:
         # self._prev_key: hold the key event last time.
         self._prev_key = None
