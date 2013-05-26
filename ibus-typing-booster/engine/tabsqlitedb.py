@@ -146,7 +146,6 @@ class tabsqlitedb:
             aff_name=self.ime_properties.get("hunspell_dict").replace('.dic', '.aff'),
             encoding=self.encoding)
 
-        self.startchars = self.get_start_chars ()
         user_db = self.ime_properties.get("name")+'-user.db'
         # user database:
         if user_db != None:
@@ -302,13 +301,6 @@ class tabsqlitedb:
                     freq INTEGER, user_freq INTEGER);''' % database
         self.db.execute(sqlstr)
         self.db.commit()
-
-    def get_start_chars (self):
-        '''return possible start chars of IME'''
-        try:
-            return self.ime_properties.get('start_chars')
-        except:
-            return ''
 
     def add_phrase (self, input_phrase='', phrase='', freq=0, user_freq=0, database = 'main', commit=True):
         '''

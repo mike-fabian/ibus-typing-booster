@@ -528,38 +528,29 @@ class editor(object):
 
     def update_candidates (self):
         '''Update lookuptable'''
-        # first check whether the IME have defined start_chars
-        if self.db.startchars and ( len(self._chars[0]) == 1 )\
-                and ( len(self._chars[1]) == 0 ) \
-                and ( self._chars[0][0] not in self.db.startchars):
-            self._u_chars.append ( self._chars[0][0] )
-            self._strings.insert ( self._cursor[0], self._chars[0][0] )
-            self._cursor [0] += 1
-            self.clear_input()
+        if (self._chars[0] == self._chars[2] and self._candidates[0]) \
+                or self._chars[1]:
+            # if no change in valid input char or we have invalid input,
+            # we do not do sql enquery
+            pass
         else:
-            if (self._chars[0] == self._chars[2] and self._candidates[0]) \
-                    or self._chars[1]:
-                # if no change in valid input char or we have invalid input,
-                # we do not do sql enquery
-                pass
+            # check whether last time we have only one candidate
+            only_one_last = self.one_candidate()
+            # do enquiry
+            self._lookup_table.clear()
+            self._lookup_table.set_cursor_visible(False)
+            if self._tabkey_list:
+                try:
+                    self._candidates[0] = self.db.select_words(u''.join(self._tabkey_list))
+                except:
+                    print "Exception in selecting the word from db"
+                self._chars[2] = self._chars[0][:]
             else:
-                # check whether last time we have only one candidate
-                only_one_last = self.one_candidate()
-                # do enquiry
-                self._lookup_table.clear()
-                self._lookup_table.set_cursor_visible(False)
-                if self._tabkey_list:
-                    try:
-                        self._candidates[0] = self.db.select_words(u''.join(self._tabkey_list))
-                    except:
-                        print "Exception in selecting the word from db"
-                    self._chars[2] = self._chars[0][:]
-                else:
-                    self._candidates[0] =[]
-                if self._candidates[0]:
-                    map ( self.ap_candidate,self._candidates[0] )
-                self._candidates[1] = self._candidates[0]
-            return True
+                self._candidates[0] =[]
+            if self._candidates[0]:
+                map ( self.ap_candidate,self._candidates[0] )
+            self._candidates[1] = self._candidates[0]
+        return True
 
     def commit_to_preedit (self):
         '''Add selected phrase in lookup table to preedit string'''
