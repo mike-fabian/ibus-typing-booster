@@ -126,13 +126,12 @@ class KeyEvent:
 class editor(object):
     '''Hold user inputs chars and preedit string'''
 
-    def __init__ (self, config, phrase_table_column_names,valid_input_chars, database, max_length = 64):
+    def __init__ (self, config, phrase_table_column_names,valid_input_chars, database):
         self.db = database
         self._config = config
         self._name = self.db.ime_properties.get('name')
         self._config_section = "engine/typing-booster/%s" % self._name
         self._phrase_table_column_names = phrase_table_column_names
-        self._max_length = max_length
         self._valid_input_chars = valid_input_chars
         self._chars = [[],[],[]]
         #self._t_chars: hold total input for table mode for input check
