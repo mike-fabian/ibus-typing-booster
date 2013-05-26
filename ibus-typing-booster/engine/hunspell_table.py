@@ -1158,10 +1158,7 @@ class tabengine (IBus.Engine):
 
             res = self._editor.add_input ( keysym2unichr(key.code) )
             if not res:
-                if curses.ascii.ispunct (key.code):
-                    key_char = keysym2unichr (key.code)
-                else:
-                    key_char = keysym2unichr (key.code)
+                key_char = keysym2unichr (key.code)
                 sp_res = self._editor.space ()
                 #return (KeyProcessResult,whethercommit,commitstring)
                 if sp_res[0]:
