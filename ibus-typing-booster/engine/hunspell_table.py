@@ -675,10 +675,6 @@ class editor(object):
         '''Get lookup table'''
         return self._lookup_table
 
-    def is_lt_visible (self):
-        '''Check whether lookup table is visible'''
-        return self._lookup_table.is_cursor_visible ()
-
     def backspace (self):
         '''Process backspace Key Event'''
         if self.get_input_chars():
