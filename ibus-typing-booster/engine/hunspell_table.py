@@ -512,7 +512,7 @@ class editor(object):
             # this is a frequently used phrase:
             attrs.append(IBus.attr_foreground_new(rgb(0xff,0x7f,0x00), 0, len(_phrase)))
         else:
-            # this is a system phrase that has been use less then 10 times or maybe never:
+            # this is a system phrase that has been used less then 10 times or maybe never:
             attrs.append(IBus.attr_foreground_new(rgb(0x00,0x00,0x00), 0, len(_phrase)))
         text = IBus.Text.new_from_string(_phrase)
         i = 0
