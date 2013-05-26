@@ -1,4 +1,20 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 26 May 2013 Released 0.0.30 version
+* simplify database structure and code
+* The Swedish hunspell dictionary is in UTF-8, not ISO-8859-1
+* SQL LIKE should behave case sensitively
+* Do not throw away the input phrase in hunspell_suggest.suggest()
+* Merge candidates which have the same resulting phrase in select_words()
+* Remove phrases always from the user database when typing Alt+Number
+* Sync memory user database “mudb” to disk user database “user_db” on focus out
+* Delete all records from mudb after syncing to user_db
+* Do not prevent phrases of length < 4 to be added to the frequency database
+* Do not use lang_chars for matching in the hunspell dictionaries, return immediately if input contains a “/” (Resolves: #966947 https://bugzilla.redhat.com/show_bug.cgi?id=966947)
+* Remove lang_chars variable
+* Use re.escape() to escape the string typed by the user correctly for use in a regular expression
+* When removing a phrase with Alt+Number, remove it independent of the input_phrase
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 14 May 2013 Released 0.0.29 version
 * Fix setup tool to use the new class for parsing the config files (Resolves: #962609 https://bugzilla.redhat.com/show_bug.cgi?id=962609)
 * Improve code in select_words() and check_phrase_internal()
