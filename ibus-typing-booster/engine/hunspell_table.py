@@ -150,8 +150,6 @@ class editor(object):
 
         # self._caret: caret position in lookup_table
         self._caret = 0
-        self._first = 0
-        self.is_down_press = False
 
         self._typed_chars = []
         self._m17ndb = 'm17n'
@@ -499,10 +497,8 @@ class editor(object):
     def arrow_down(self):
         '''Process Arrow Down Key Event
         Move Lookup Table cursor down'''
-        self._first = self._first + 1
-        self._lookup_table.set_cursor_visible(True)
-        self.is_down_press = True
-        if self._first == 1:
+        if not self._lookup_table.cursor_visible:
+            self._lookup_table.set_cursor_visible(True)
             return True
         else:
             res = self._lookup_table.cursor_down()
@@ -657,9 +653,12 @@ class editor(object):
         if self._t_chars :
             # user has input sth
             istr = self.get_all_input_strings ()
-            self.commit_to_preedit ()
+            if self._lookup_table.cursor_visible:
+                self.commit_to_preedit()
+                self._lookup_table.set_cursor_visible(True)
+            else:
+                self.commit_to_preedit()
             pstr = self.get_preedit_strings ()
-            self.clear()
             return (True,pstr,istr)
         else:
             return (False,u'',u'')
@@ -992,15 +991,12 @@ class tabengine (IBus.Engine):
             return res
 
         elif key.code == IBus.KEY_space:
-            self._editor._first = 0
-
             in_str = self._editor.get_all_input_strings()
             sp_res = self._editor.space ()
             #return (KeyProcessResult,whethercommit,commitstring)
             if sp_res[0]:
-                if self._editor.is_down_press:
+                if self._editor._lookup_table.cursor_visible:
                     if sp_res[1]:
-                        self._editor.is_down_press = False
                         self.commit_string (sp_res[1]+ " ")
                         self.db.check_phrase (sp_res[1], in_str)
                     else:
@@ -1028,7 +1024,6 @@ class tabengine (IBus.Engine):
 
         elif keysym2unichr(key.code) in self._valid_input_chars or \
                 (keysym2unichr(key.code) in u'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-_+=\|}]{[:;/>.<,~`?\'"' ):
-            self._editor._first = 0
             self._editor.add_input(keysym2unichr(key.code))
             self._update_ui ()
             return True
