@@ -78,8 +78,6 @@ except:
     pass
 
 
-patt_edit = re.compile (r'(.*)###(.*)###(.*)')
-
 from gettext import dgettext
 _  = lambda a : dgettext ("ibus-typing-booster", a)
 N_ = lambda a : a
@@ -355,7 +353,7 @@ class editor(object):
         '''Get preedit strings'''
         input_chars = self.get_input_chars ()
         if input_chars:
-            _candi = u''.join( ['###'] + map( str, input_chars) + ['###'] )
+            _candi = u''.join(map(str, input_chars))
         else:
             _candi = u''
         if self._strings:
@@ -805,18 +803,7 @@ class tabengine (IBus.Engine):
             super(tabengine, self).update_preedit_text(IBus.Text.new_from_string(u''), 0, False)
         else:
             attrs = IBus.AttrList()
-            res = patt_edit.match (_str)
-            if res:
-                _str = u''
-                _str += res.group(1)
-                _str += res.group(2)
-                _str += res.group(3)
-                lg1 = len(res.group(1))
-                lg2 = len(res.group(2))
-                lg3 = len(res.group(3))
-                attrs.append(IBus.attr_foreground_new(rgb(0x0e,0x0e,0xa0),lg1,lg2))
-            else:
-                attrs.append(IBus.attr_foreground_new(rgb(0x1b,0x3f,0x03),0,len(_str)))
+            attrs.append(IBus.attr_foreground_new(rgb(0x0e,0x0e,0xa0), 0, len(_str)))
             attrs.append(IBus.attr_underline_new(IBus.AttrUnderline.SINGLE, 0, len(_str)))
             text = IBus.Text.new_from_string(_str)
             i = 0
