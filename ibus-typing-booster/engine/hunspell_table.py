@@ -1111,7 +1111,6 @@ class tabengine (IBus.Engine):
                 #return (whethercommit,commitstring)
                 if sp_res[0]:
                     self.commit_string (sp_res[1])
-                    #self.add_string_len(sp_res[1])
                     self.db.check_phrase (sp_res[1],sp_res[2])
 
             res = self._editor.add_input ( keysym2unichr(key.code) )
@@ -1121,7 +1120,6 @@ class tabengine (IBus.Engine):
                 #return (KeyProcessResult,whethercommit,commitstring)
                 if sp_res[0]:
                     self.commit_string (sp_res[1] + key_char)
-                    #self.add_string_len(sp_res[1])
                     self.db.check_phrase (sp_res[1],sp_res[2])
                     return True
                 else:
