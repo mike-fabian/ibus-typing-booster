@@ -128,11 +128,12 @@ class editor(object):
         self._config = config
         self._name = self.db.ime_properties.get('name')
         self._config_section = "engine/typing-booster/%s" % self._name
-        self._chars = [[],[],[]]
+        self._chars = []
         #self._t_chars: hold total input for table mode for input check
         self._t_chars = []
         # self._tabkey_list: hold tab_key objects transform from user input chars
         self._tabkey_list = []
+        self._tabkey_list_when_update_candidates_was_last_called = []
         # self._strings: hold preedit strings
         self._strings = []
         # self._cursor: the caret position in preedit phrases
@@ -211,7 +212,7 @@ class editor(object):
         '''
         Remove input characters held for Table mode,
         '''
-        self._chars = [[],[],[]]
+        self._chars = []
         self._tabkey_list = []
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
@@ -227,31 +228,26 @@ class editor(object):
 
     def add_input (self,c):
         '''add input character'''
-        if self._chars[1]:
-            self._chars[1].append (c)
+        self._typed_chars.append(c)
+        self._typed_chars = list(unicodedata.normalize('NFC', ''.join(self._typed_chars)))
+        if self.trans_m17n_mode:
+            trans_chars = self.trans.transliterate(''.join(self._typed_chars))[0].decode('utf8')
         else:
-            self._typed_chars.append(c)
-            self._typed_chars = list(unicodedata.normalize('NFC', ''.join(self._typed_chars)))
-            if self.trans_m17n_mode:
-                trans_chars = self.trans.transliterate(''.join(self._typed_chars))[0].decode('utf8')
-            else:
-                trans_chars = ''.join(self._typed_chars)
+            trans_chars = ''.join(self._typed_chars)
 
-            self._chars[0] = list(trans_chars)
-            self._tabkey_list = list(trans_chars)
-            self._t_chars = list(trans_chars)
+        self._chars = list(trans_chars)
+        self._tabkey_list = list(trans_chars)
+        self._t_chars = list(trans_chars)
         res = self.update_candidates ()
         return res
 
     def pop_input (self):
         '''remove and display last input char held'''
         _c =''
-        if self._chars[1]:
-            _c = self._chars[1].pop ()
-        elif self._chars[0]:
+        if self._chars:
             if self._typed_chars:
                 self._typed_chars.pop()
-            _c = self._chars[0].pop ()
+            _c = self._chars.pop()
             if self._tabkey_list:
                 self._tabkey_list.pop()
             if not self._tabkey_list:
@@ -262,19 +258,16 @@ class editor(object):
         return _c
 
     def get_input_chars (self):
-        '''get characters held, valid and invalid'''
-        #return self._chars[0] + self._chars[1]
-        return self._chars[0]
+        '''get characters held'''
+        return self._chars
 
     def get_input_chars_string (self):
         '''Get valid input char string'''
         return u''.join(self._t_chars)
 
     def get_all_input_strings (self):
-        '''Get all uncommit input characters, used in English mode or direct commit'''
-        #return  u''.join( map(u''.join, [self._chars[0]] \
-        #    + [self._chars[1]]) )
-        return  u''.join( map(u''.join, [self._chars[0]]) )
+        '''Get all uncommited input characters, used in English mode or direct commit'''
+        return  u''.join(map(u''.join, [self._chars]))
 
     def split_phrase (self):
         '''Split current phrase into two phrases'''
@@ -481,27 +474,22 @@ class editor(object):
 
     def update_candidates (self):
         '''Update lookuptable'''
-        if (self._chars[0] == self._chars[2] and self._candidates) \
-                or self._chars[1]:
-            # if no change in valid input char or we have invalid input,
-            # we do not do sql enquery
-            pass
+        if self._tabkey_list == self._tabkey_list_when_update_candidates_was_last_called:
+            # The input did not change since we came here last, do nothing and leave
+            # candidates and lookup table unchanged:
+            return True
+        self._tabkey_list_when_update_candidates_was_last_called = self._tabkey_list[:]
+        self._lookup_table.clear()
+        self._lookup_table.set_cursor_visible(False)
+        if self._tabkey_list:
+            try:
+                self._candidates = self.db.select_words(u''.join(self._tabkey_list))
+            except:
+                print "Exception in selecting the word from db"
         else:
-            # check whether last time we have only one candidate
-            only_one_last = self.one_candidate()
-            # do enquiry
-            self._lookup_table.clear()
-            self._lookup_table.set_cursor_visible(False)
-            if self._tabkey_list:
-                try:
-                    self._candidates = self.db.select_words(u''.join(self._tabkey_list))
-                except:
-                    print "Exception in selecting the word from db"
-                self._chars[2] = self._chars[0][:]
-            else:
-                self._candidates =[]
-            if self._candidates:
-                map(self.ap_candidate, self._candidates)
+            self._candidates =[]
+        if self._candidates:
+            map(self.ap_candidate, self._candidates)
         return True
 
     def commit_to_preedit (self):
@@ -614,7 +602,6 @@ class editor(object):
             # sync user database immediately after removing
             # phrases:
             self.db.sync_usrdb()
-            self._chars[2].pop()
             # call update_candidates() to get a new SQL query:
             self.update_candidates ()
             return True
@@ -675,9 +662,6 @@ class editor(object):
         '''Process space Key Event
         return (KeyProcessResult,whethercommit,commitstring)'''
         self._typed_chars = []
-        if self._chars[1]:
-            # we have invalid input, so do not commit
-            return (False,u'')
         if self._t_chars :
             # user has input sth
             istr = self.get_all_input_strings ()
@@ -687,10 +671,6 @@ class editor(object):
             return (True,pstr,istr)
         else:
             return (False,u'',u'')
-
-    def one_candidate (self):
-        '''Return true if there is only one candidate'''
-        return len(self._candidates) == 1
 
 ########################
 ### Engine Class #####
