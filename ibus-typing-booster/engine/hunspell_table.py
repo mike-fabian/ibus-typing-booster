@@ -203,7 +203,6 @@ class editor(object):
         self._strings = []
         self._typed_chars = []
         self._cursor = [0,0]
-        self.update_candidates
 
     def is_empty (self):
         return len(self._t_chars) == 0
