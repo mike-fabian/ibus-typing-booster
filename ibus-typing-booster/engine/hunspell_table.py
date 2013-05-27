@@ -134,8 +134,6 @@ class editor(object):
         self._chars = [[],[],[]]
         #self._t_chars: hold total input for table mode for input check
         self._t_chars = []
-        # self._u_chars: hold user input but not manual comitted chars
-        self._u_chars = []
         # self._tabkey_list: hold tab_key objects transform from user input chars
         self._tabkey_list = []
         # self._strings: hold preedit strings
@@ -228,7 +226,6 @@ class editor(object):
         Remove input characters held for Table mode,
         '''
         self.clear_input ()
-        self._u_chars = []
         self._typed_chars = []
 
     def add_input (self,c):
@@ -263,12 +260,6 @@ class editor(object):
             if not self._tabkey_list:
                 if  self._typed_chars:
                      self._typed_chars = []
-            if (not self._chars[0]) and self._u_chars:
-                self._chars[0] = self._u_chars.pop()
-                self._chars[1] = self._chars[1][:-1]
-                self._tabkey_list = self._chars[0]
-                self._strings.pop (self._cursor[0] - 1 )
-                self._cursor[0] -= 1
         self._t_chars.pop()
         self.update_candidates ()
         return _c
@@ -284,9 +275,9 @@ class editor(object):
 
     def get_all_input_strings (self):
         '''Get all uncommit input characters, used in English mode or direct commit'''
-        #return  u''.join( map(u''.join, self._u_chars + [self._chars[0]] \
+        #return  u''.join( map(u''.join, [self._chars[0]] \
         #    + [self._chars[1]]) )
-        return  u''.join( map(u''.join, self._u_chars + [self._chars[0]]) )
+        return  u''.join( map(u''.join, [self._chars[0]]) )
 
     def split_phrase (self):
         '''Split current phrase into two phrases'''
@@ -371,13 +362,7 @@ class editor(object):
         if self._strings:
             res = u''
             _cursor = self._cursor[0]
-            _luc = len (self._u_chars)
-            if _luc:
-                _candi = _candi == u'' and u'######' or _candi
-                res =u''.join( self._strings[ : _cursor - _luc] +[u'@@@'] + self._strings[_cursor - _luc : _cursor ]  + [ _candi  ] + self\
-._strings[ _cursor : ])
-            else:
-                res = u''.join( self._strings[ : _cursor ] + [ _candi  ] + self._strings[ _cursor : ])
+            res = u''.join(self._strings[:_cursor] + [_candi] + self._strings[_cursor:])
             return res
         else:
             return _candi
@@ -400,7 +385,7 @@ class editor(object):
         '''Process Arrow Left Key Event.
         Update cursor data when move caret left'''
         if self.get_preedit_strings ():
-            if not( self.get_input_chars () or self._u_chars ):
+            if not self.get_input_chars():
                 if self._cursor[1] > 0:
                     self._cursor[1] -= 1
                 else:
@@ -419,7 +404,7 @@ class editor(object):
         '''Process Arrow Right Key Event.
         Update cursor data when move caret right'''
         if self.get_preedit_strings ():
-            if not( self.get_input_chars () or self._u_chars ):
+            if not self.get_input_chars():
                 if self._cursor[1] == 0:
                     if self._cursor[0] == len (self._strings):
                         self._cursor[0] = 0
@@ -439,7 +424,7 @@ class editor(object):
         '''Process Control + Arrow Left Key Event.
         Update cursor data when move caret to string left'''
         if self.get_preedit_strings ():
-            if not( self.get_input_chars () or self._u_chars ):
+            if not self.get_input_chars():
                 if self._cursor[1] == 0:
                     if self._cursor[0] == 0:
                         self._cursor[0] = len (self._strings) - 1
@@ -456,7 +441,7 @@ class editor(object):
         '''Process Control + Arrow Right Key Event.
         Update cursor data when move caret to string right'''
         if self.get_preedit_strs ():
-            if not( self.get_input_chars () or self._u_chars ):
+            if not self.get_input_chars():
                 if self._cursor[1] == 0:
                     if self._cursor[0] == len (self._strings):
                         self._cursor[0] = 1
