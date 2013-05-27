@@ -132,9 +132,6 @@ class tabsqlitedb:
 
         self.ime_properties = ImeProperties(self._conf_file_path+filename)
 
-        # share variables in this class:
-        self._max_key_length = int(self.ime_properties.get("max_key_length"))
-
         self._m17ndb = 'm17n'
         self._m17n_mim_name = ""
 
@@ -368,22 +365,14 @@ class tabsqlitedb:
 
     def select_words(self, input_phrase):
         '''
-        Get phrases from database by tab_key objects
-        ( which should be equal or less than the max key length)
-        This method is called in hunspell_table.py by passing UserInput held data
-        Returns a list of matches where each match is a tuple
-        in the form of a database row, i.e. returns something like
-        [(id, input_phrase, phrase, freq, user_freq), ...]
+        Get phrases from database completing input_phrase.
+
+        Returns a list of matches where each match is a tuple in the
+        form of (phrase, user_freq), i.e. returns something like
+        [(phrase, user_freq), ...]
         '''
         if type(input_phrase) != type(u''):
             input_phrase = input_phrase.decode('utf8')
-        # limit length of input phrase to max key length
-        # (Now that the  input_phrase is stored in a single
-        # column of type TEXT in sqlite3, this limit can be set as high
-        # as the maximum string length in sqlite3
-        # (by default 10^9, see http://www.sqlite.org/limits.html))
-        input_phrase = input_phrase[:self._max_key_length]
-
         # Get (phrase, user_freq) pairs from mudb and user_db.
         #
         # Example: Let’s assume the user typed “co” and user_db contains

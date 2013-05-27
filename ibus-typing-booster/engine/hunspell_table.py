@@ -752,8 +752,6 @@ class tabengine (IBus.Engine):
             self._page_down_keys.append (IBus.KEY_equal)
             self._page_up_keys.append (IBus.KEY_minus)
 
-        self._max_key_length = int(self.db.ime_properties.get ('max_key_length'))
-
         # Containers we used:
         self._editor = editor(self._config, self.db)
         # some other vals we used:
@@ -768,11 +766,6 @@ class tabengine (IBus.Engine):
             "tabenable"))
         if self._tab_enable == None:
             self._tab_enable = self.db.ime_properties.get('tab_enable').lower() == u'true'
-        self._auto_commit = variant_to_value(self._config.get_value(
-                self._config_section,
-                "AutoCommit"))
-        if self._auto_commit == None:
-            self._auto_commit = self.db.ime_properties.get('auto_commit').lower() == u'true'
         # the commit phrases length
         self._len_list = [0]
         self._on = False
@@ -1064,14 +1057,6 @@ class tabengine (IBus.Engine):
         elif keysym2unichr(key.code) in self._valid_input_chars or \
                 (keysym2unichr(key.code) in u'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-_+=\|}]{[:;/>.<,~`?\'"' ):
             self._editor._first = 0
-            if self._auto_commit and len(self._editor._chars[0]) == self._max_key_length:
-                # it is time to direct commit
-                sp_res = self._editor.space ()
-                #return (whethercommit,commitstring)
-                if sp_res[0]:
-                    self.commit_string (sp_res[1])
-                    self.db.check_phrase (sp_res[1],sp_res[2])
-
             res = self._editor.add_input ( keysym2unichr(key.code) )
             if not res:
                 key_char = keysym2unichr (key.code)
@@ -1083,10 +1068,6 @@ class tabengine (IBus.Engine):
                     return True
                 else:
                     self.commit_string ( key_char )
-                    return True
-            else:
-                if self._auto_commit and self._editor.one_candidate () and \
-                        (len(self._editor._chars[0]) == self._max_key_length):
                     return True
 
             self._update_ui ()
