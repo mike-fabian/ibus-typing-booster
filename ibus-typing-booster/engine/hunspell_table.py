@@ -142,8 +142,8 @@ class editor(object):
         self._strings = []
         # self._cursor: the caret position in preedit phrases
         self._cursor = [0,0]
-        # self._candidates: hold candidates selected from database [[now],[pre]]
-        self._candidates = [[],[]]
+        # self._candidates: hold candidates selected from database and hunspell
+        self._candidates = []
         self._lookup_table = IBus.LookupTable.new(
             page_size=tabengine._page_size,
             cursor_pos=0,
@@ -220,7 +220,7 @@ class editor(object):
         self._tabkey_list = []
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
-        self._candidates = [[],[]]
+        self._candidates = []
         self._typed_chars = []
 
     def over_input (self):
@@ -499,7 +499,7 @@ class editor(object):
 
     def update_candidates (self):
         '''Update lookuptable'''
-        if (self._chars[0] == self._chars[2] and self._candidates[0]) \
+        if (self._chars[0] == self._chars[2] and self._candidates) \
                 or self._chars[1]:
             # if no change in valid input char or we have invalid input,
             # we do not do sql enquery
@@ -512,22 +512,21 @@ class editor(object):
             self._lookup_table.set_cursor_visible(False)
             if self._tabkey_list:
                 try:
-                    self._candidates[0] = self.db.select_words(u''.join(self._tabkey_list))
+                    self._candidates = self.db.select_words(u''.join(self._tabkey_list))
                 except:
                     print "Exception in selecting the word from db"
                 self._chars[2] = self._chars[0][:]
             else:
-                self._candidates[0] =[]
-            if self._candidates[0]:
-                map ( self.ap_candidate,self._candidates[0] )
-            self._candidates[1] = self._candidates[0]
+                self._candidates =[]
+            if self._candidates:
+                map(self.ap_candidate, self._candidates)
         return True
 
     def commit_to_preedit (self):
         '''Add selected phrase in lookup table to preedit string'''
         try:
-            if self._candidates[0]:
-                self._strings.insert(self._cursor[0], self._candidates[0][self.get_cursor_pos()][0])
+            if self._candidates:
+                self._strings.insert(self._cursor[0], self._candidates[self.get_cursor_pos()][0])
                 self._cursor [0] += 1
             self.over_input ()
             self.update_candidates ()
@@ -546,7 +545,7 @@ class editor(object):
         else:
             res = self._lookup_table.cursor_down()
             self.update_candidates ()
-            if not res and self._candidates[0]:
+            if not res and self._candidates:
                 return True
             return res
 
@@ -556,7 +555,7 @@ class editor(object):
         self._lookup_table.set_cursor_visible(True)
         res = self._lookup_table.cursor_up()
         self.update_candidates ()
-        if not res and self._candidates[0]:
+        if not res and self._candidates:
             return True
         return res
 
@@ -566,7 +565,7 @@ class editor(object):
         self._lookup_table.set_cursor_visible(True)
         res = self._lookup_table.page_down()
         self.update_candidates ()
-        if not res and self._candidates[0]:
+        if not res and self._candidates:
             return True
         return res
 
@@ -576,7 +575,7 @@ class editor(object):
         self._lookup_table.set_cursor_visible(True)
         res = self._lookup_table.page_up()
         self.update_candidates ()
-        if not res and self._candidates[0]:
+        if not res and self._candidates:
             return True
         return res
 
@@ -589,7 +588,7 @@ class editor(object):
         cursor_in_page = self._lookup_table.get_cursor_in_page()
         current_page_start = cursor_pos - cursor_in_page
         real_index = current_page_start + index
-        if real_index >= len (self._candidates[0]):
+        if real_index >= len (self._candidates):
             # the index given is out of range we do not commit anything
             return False
         self._lookup_table.set_cursor_pos(real_index)
@@ -625,9 +624,9 @@ class editor(object):
         cursor_in_page = self._lookup_table.get_cursor_in_page()
         current_page_start = cursor_pos - cursor_in_page
         real_index = current_page_start + index
-        if  len (self._candidates[0]) > real_index:
+        if  len (self._candidates) > real_index:
             # this index is valid
-            can = self._candidates[0][real_index]
+            can = self._candidates[real_index]
             self.db.remove_phrase(phrase=can[0], database='user_db', commit=False)
             self.db.remove_phrase(phrase=can[0], database='mudb', commit=True)
             # sync user database immediately after removing
@@ -709,7 +708,7 @@ class editor(object):
 
     def one_candidate (self):
         '''Return true if there is only one candidate'''
-        return len(self._candidates[0]) == 1
+        return len(self._candidates) == 1
 
 ########################
 ### Engine Class #####
@@ -899,7 +898,7 @@ class tabengine (IBus.Engine):
         # difference but gnome-shell in f18 will display
         # an empty suggestion popup if the number of candidates
         # is zero!
-        if len(self._editor._candidates[0]) == 0:
+        if len(self._editor._candidates) == 0:
             self.hide_lookup_table()
             return
         if self._tab_enable:
@@ -1057,12 +1056,12 @@ class tabengine (IBus.Engine):
             self._update_ui ()
             return res
 
-        elif key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates[0] and key.mask & IBus.ModifierType.CONTROL_MASK:
+        elif key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates and key.mask & IBus.ModifierType.CONTROL_MASK:
             res = self._editor.number (key.code - IBus.KEY_1)
             self._update_ui ()
             return res
 
-        elif key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates[0] and key.mask & IBus.ModifierType.MOD1_MASK:
+        elif key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates and key.mask & IBus.ModifierType.MOD1_MASK:
             res = self._editor.alt_number (key.code - IBus.KEY_1)
             self._update_ui ()
             return res
@@ -1134,18 +1133,18 @@ class tabengine (IBus.Engine):
             return True
 
         elif key.code in self._page_down_keys \
-                and self._editor._candidates[0]:
+                and self._editor._candidates:
             res = self._editor.page_down()
             self._update_ui ()
             return res
 
         elif key.code in self._page_up_keys \
-                and self._editor._candidates[0]:
+                and self._editor._candidates:
             res = self._editor.page_up ()
             self._update_ui ()
             return res
 
-        elif key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates[0]:
+        elif key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates:
             input_keys = self._editor.get_all_input_strings ()
             res = self._editor.number (key.code - IBus.KEY_1)
             if res:
@@ -1175,7 +1174,7 @@ class tabengine (IBus.Engine):
                 self._update_ui()
                 return True
             else:
-                if self._editor._candidates[0]:
+                if self._editor._candidates:
                     self._editor.commit_to_preedit ()
                     commit_string = self._editor.get_preedit_strings ()
                     self.commit_string(commit_string + " " )
