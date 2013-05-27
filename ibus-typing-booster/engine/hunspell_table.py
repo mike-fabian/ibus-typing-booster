@@ -353,7 +353,7 @@ class editor(object):
         '''Get preedit strings'''
         input_chars = self.get_input_chars ()
         if input_chars:
-            _candi = u''.join(map(str, input_chars))
+            _candi = u''.join(input_chars)
         else:
             _candi = u''
         if self._strings:
