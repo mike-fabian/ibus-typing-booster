@@ -1029,19 +1029,7 @@ class tabengine (IBus.Engine):
         elif keysym2unichr(key.code) in self._valid_input_chars or \
                 (keysym2unichr(key.code) in u'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-_+=\|}]{[:;/>.<,~`?\'"' ):
             self._editor._first = 0
-            res = self._editor.add_input ( keysym2unichr(key.code) )
-            if not res:
-                key_char = keysym2unichr (key.code)
-                sp_res = self._editor.space ()
-                #return (KeyProcessResult,whethercommit,commitstring)
-                if sp_res[0]:
-                    self.commit_string (sp_res[1] + key_char)
-                    self.db.check_phrase (sp_res[1],sp_res[2])
-                    return True
-                else:
-                    self.commit_string ( key_char )
-                    return True
-
+            self._editor.add_input(keysym2unichr(key.code))
             self._update_ui ()
             return True
 
