@@ -79,7 +79,6 @@ except:
 
 
 patt_edit = re.compile (r'(.*)###(.*)###(.*)')
-patt_uncommit = re.compile (r'(.*)@@@(.*)')
 
 from gettext import dgettext
 _  = lambda a : dgettext ("ibus-typing-booster", a)
@@ -809,24 +808,13 @@ class tabengine (IBus.Engine):
             res = patt_edit.match (_str)
             if res:
                 _str = u''
-                ures = patt_uncommit.match (res.group(1))
-                if ures:
-                    _str=u''.join (ures.groups())
-                    lc = len (ures.group(1) )
-                    lu = len (ures.group(2) )
-                    attrs.append(IBus.attr_foreground_new(rgb(0x1b,0x3f,0x03),0,lc))
-                    attrs.append(IBus.attr_foreground_new(rgb(0x08,0x95,0xa2),lc,lu))
-                    lg1 = len (_str)
-                else:
-                    _str += res.group (1)
-                    lg1 = len ( res.group(1) )
-                 #   attrs.append(IBus.attr_foreground_new(rgb(0x1b,0x3f,0x03),0,lg1))
+                _str += res.group(1)
                 _str += res.group(2)
                 _str += res.group(3)
-                lg2 = len ( res.group(2) )
-                lg3 = len ( res.group(3) )
+                lg1 = len(res.group(1))
+                lg2 = len(res.group(2))
+                lg3 = len(res.group(3))
                 attrs.append(IBus.attr_foreground_new(rgb(0x0e,0x0e,0xa0),lg1,lg2))
-                #attrs.append(IBus.attr_foreground_new(rgb(0x1b,0x3f,0x03),lg1+lg2,lg3))
             else:
                 attrs.append(IBus.attr_foreground_new(rgb(0x1b,0x3f,0x03),0,len(_str)))
             attrs.append(IBus.attr_underline_new(IBus.AttrUnderline.SINGLE, 0, len(_str)))
