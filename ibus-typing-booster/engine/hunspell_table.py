@@ -198,7 +198,7 @@ class editor(object):
 
     def clear (self):
         '''Remove data holded'''
-        self.over_input ()
+        self.clear_input()
         self._t_chars = []
         self._strings = []
         self._typed_chars = []
@@ -217,13 +217,6 @@ class editor(object):
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
         self._candidates = []
-        self._typed_chars = []
-
-    def over_input (self):
-        '''
-        Remove input characters held for Table mode,
-        '''
-        self.clear_input ()
         self._typed_chars = []
 
     def add_input (self,c):
@@ -498,7 +491,7 @@ class editor(object):
             if self._candidates:
                 self._strings.insert(self._cursor[0], self._candidates[self.get_cursor_pos()][0])
                 self._cursor [0] += 1
-            self.over_input ()
+            self.clear_input()
             self.update_candidates ()
         except:
             print "exception"
@@ -630,7 +623,7 @@ class editor(object):
     def control_backspace (self):
         '''Process control+backspace Key Event'''
         if self.get_input_chars():
-            self.over_input ()
+            self.clear_input()
             return True
         elif self.get_preedit_strings ():
             self.remove_before_string ()
