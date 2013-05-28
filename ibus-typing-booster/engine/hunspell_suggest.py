@@ -98,7 +98,7 @@ class Hunspell:
                 if len(word) >= 4:
                     extra_suggestions = map(
                         lambda x: x.decode(self.encoding),
-                        self.pyhunspell_object.suggest(word.encode(self.encoding)))
+                        self.pyhunspell_object.suggest(word.encode(self.encoding, 'replace')))
                     for suggestion in extra_suggestions:
                         if suggestion not in start_words:
                             start_words.append(suggestion)
