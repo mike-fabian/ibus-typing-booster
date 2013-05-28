@@ -191,8 +191,8 @@ class editor(object):
                 #self.trans = Translit.Transliterator.get(self._m17ndb, self._current_ime)
                 self.trans = Transliterator.get(self._m17ndb, self._current_ime)
             except:
-                print "error: could not get Transliterator"
-                pass
+                import traceback
+                traceback.print_exc()
 
     def clear (self):
         '''Remove data holded'''
@@ -474,7 +474,8 @@ class editor(object):
             try:
                 self._candidates = self.db.select_words(u''.join(self._tabkey_list))
             except:
-                print "Exception in selecting the word from db"
+                import traceback
+                traceback.print_exc()
         else:
             self._candidates =[]
         if self._candidates:
@@ -490,8 +491,8 @@ class editor(object):
             self.clear_input()
             self.update_candidates ()
         except:
-            print "exception"
-            pass
+            import traceback
+            traceback.print_exc()
 
     def arrow_down(self):
         '''Process Arrow Down Key Event
