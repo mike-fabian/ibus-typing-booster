@@ -796,11 +796,12 @@ def keysym2ucs(keysym):
     if keysym in keysymtab:
         return keysymtab[keysym]
     else:
-        # we don't know this keysym, return it
-        # untranslated. Don't return an error code
-        # like -1 here, it causes problems with
-        # handling the backspace key for example:
-        return keysym
+        # we don't know this keysym
+        return 0
 
 def keysym2unichr(keysym):
-    return unichr(keysym2ucs(keysym))
+    ucs = keysym2ucs(keysym)
+    if ucs > 0:
+        return unichr(ucs)
+    else:
+        return u''
