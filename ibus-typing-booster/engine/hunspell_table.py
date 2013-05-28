@@ -199,7 +199,6 @@ class editor(object):
         self.clear_input()
         self._t_chars = []
         self._strings = []
-        self._typed_chars = []
         self._cursor = [0,0]
 
     def is_empty (self):
