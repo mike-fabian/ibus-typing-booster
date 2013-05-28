@@ -714,13 +714,8 @@ class tabengine (IBus.Engine):
         self._status = self.db.ime_properties.get('status_prompt').encode('utf8')
         self._valid_input_chars = list(self.db.ime_properties.get('valid_input_chars').decode('utf8'))
 
-        # check whether we can use '=' and '-' for page_down/up
         self._page_down_keys = [IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down]
         self._page_up_keys = [IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up]
-        if '=' not in self._valid_input_chars \
-                and '-' not in self._valid_input_chars:
-            self._page_down_keys.append (IBus.KEY_equal)
-            self._page_up_keys.append (IBus.KEY_minus)
 
         # Containers we used:
         self._editor = editor(self._config, self.db)
