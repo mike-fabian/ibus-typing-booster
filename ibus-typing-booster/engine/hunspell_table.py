@@ -256,7 +256,7 @@ class editor(object):
 
     def get_all_input_strings (self):
         '''Get all uncommited input characters, used in English mode or direct commit'''
-        return  u''.join(map(u''.join, [self._chars]))
+        return  u''.join(self._chars)
 
     def split_phrase (self):
         '''Split current phrase into two phrases'''
