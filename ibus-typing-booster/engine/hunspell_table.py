@@ -356,7 +356,7 @@ class editor(object):
         if self._cursor[0] and self._strings:
             map (self.add_caret,self._strings[:self._cursor[0]])
         self._caret += self._cursor[1]
-        _candi = u''.join( map( str,self.get_input_chars()) )
+        _candi = u''.join(self.get_input_chars())
         self._caret += len( _candi )
         return self._caret
 
