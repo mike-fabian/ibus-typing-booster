@@ -1,4 +1,17 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 29 May 2013 Released 0.0.31 version
+* Remove lots of unused and/or useless code
+* Simplify some code
+* Fix the problem that after “page down” the first “arrow down” does not move down in the lookup table
+* Never use “-” or “=” as page up and page down keys
+* Print more useful debug output when an exception happens
+* Replace unencodable characters when asking pyhunspell for suggestions
+* Get dictionary encoding from .aff file
+* Get rid of the the variable “valid_input_chars” (Resolves: rhbz#968209 https://bugzilla.redhat.com/show_bug.cgi?id=968209)
+* Remove option “valid_input_chars” from .conf files and template.txt
+* Replace keysym2unichr(key.code) with IBus.keyval_to_unicode(key.code)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 26 May 2013 Released 0.0.30 version
 * simplify database structure and code
 * The Swedish hunspell dictionary is in UTF-8, not ISO-8859-1
