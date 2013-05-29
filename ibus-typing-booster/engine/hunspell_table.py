@@ -25,9 +25,6 @@ import os
 import string
 import unicodedata
 import curses.ascii
-import keysym2ucs
-from keysym2ucs import keysym2ucs
-from keysym2ucs import keysym2unichr
 import re
 from gi.repository import IBus
 from gi.repository import GLib
@@ -915,7 +912,7 @@ class tabengine (IBus.Engine):
                     # “t-latn-pre” transliteration method, therefore
                     # we cannot just pass it through. Just add it to
                     # the input so far and see what comes next:
-                    res = self._editor.add_input(keysym2unichr(key.code))
+                    res = self._editor.add_input(IBus.keyval_to_unicode(key.code).decode('UTF-8'))
                     self._update_ui()
                     return True
                 if curses.ascii.isdigit(key.code):
@@ -929,7 +926,7 @@ class tabengine (IBus.Engine):
                     # want “3” to be converted to “३”. So we try
                     # to transliterate and commit the result:
                     self.commit_string(
-                        self._editor.trans.transliterate(keysym2unichr(key.code))[0].decode('utf8'))
+                        self._editor.trans.transliterate(IBus.keyval_to_unicode(key.code))[0].decode('utf8'))
                     return True
 
         if key.code == IBus.KEY_Escape:
@@ -1104,8 +1101,8 @@ class tabengine (IBus.Engine):
         if key.mask & IBus.ModifierType.MOD1_MASK:
             return False
 
-        if keysym2unichr(key.code):
-            self._editor.add_input(keysym2unichr(key.code))
+        if IBus.keyval_to_unicode(key.code):
+            self._editor.add_input(IBus.keyval_to_unicode(key.code).decode('UTF-8'))
             self._update_ui ()
             return True
 

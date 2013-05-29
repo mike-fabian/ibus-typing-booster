@@ -21,7 +21,6 @@ engine_table_PYTHON = \
 	hunspell_table.py \
 	hunspell_suggest.py \
 	tabsqlitedb.py \
-	keysym2ucs.py \
 	$(NULL)
 engine_table_DATA = \
 	$(NULL)
