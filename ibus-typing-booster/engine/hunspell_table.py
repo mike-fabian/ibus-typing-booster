@@ -218,11 +218,11 @@ class editor(object):
     def add_input (self,c):
         '''add input character'''
         self._typed_chars.append(c)
-        self._typed_chars = list(unicodedata.normalize('NFC', ''.join(self._typed_chars)))
+        self._typed_chars = list(unicodedata.normalize('NFC', u''.join(self._typed_chars)))
         if self.trans_m17n_mode:
-            trans_chars = self.trans.transliterate(''.join(self._typed_chars))[0].decode('utf8')
+            trans_chars = self.trans.transliterate(u''.join(self._typed_chars))[0].decode('utf8')
         else:
-            trans_chars = ''.join(self._typed_chars)
+            trans_chars = u''.join(self._typed_chars)
 
         self._chars = list(trans_chars)
         self._tabkey_list = list(trans_chars)
