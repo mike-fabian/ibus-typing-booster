@@ -135,13 +135,10 @@ class tabsqlitedb:
         self._m17ndb = 'm17n'
         self._m17n_mim_name = ""
 
-        self.encoding = self.ime_properties.get('encoding')
-
         self.hunspell_obj = hunspell_suggest.Hunspell(
             lang=self.ime_properties.get('languages'),
             dict_name=self.ime_properties.get("hunspell_dict"),
-            aff_name=self.ime_properties.get("hunspell_dict").replace('.dic', '.aff'),
-            encoding=self.encoding)
+            aff_name=self.ime_properties.get("hunspell_dict").replace('.dic', '.aff'))
 
         user_db = self.ime_properties.get("name")+'-user.db'
         # user database:

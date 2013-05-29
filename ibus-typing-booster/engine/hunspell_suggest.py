@@ -17,7 +17,7 @@
 #  You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-
+import os
 import re
 import codecs
 try:
@@ -36,36 +36,63 @@ max_words = 100
 max_words_row = 50
 
 class Hunspell:
-    def __init__(self,lang='en',loc='/usr/share/myspell/',dict_name='en_US.dic',aff_name='en_US.aff',
-                 encoding='UTF-8'):
+    def __init__(self,lang='en',loc='/usr/share/myspell/',dict_name='en_US.dic',aff_name='en_US.aff'):
         self.lang=lang
         self.loc = loc
         self.dict_name = dict_name
         self.aff_name = aff_name
-        self.encoding = encoding
+        self.encoding = 'UTF-8'
         self.dict_buffer = None
-        self.aff_handle = None
+        self.aff_buffer = None
         self.load_dictionary()
 
     def load_dictionary(self):
+        self.encoding = 'UTF-8'
         self.dict_buffer = None
-        self.aff_handle = None
+        self.aff_buffer = None
         self.pyhunspell_object = None
+        print "load_dictionary() ..."
+        if not os.path.isfile(self.loc+self.dict_name) or not os.path.isfile(self.loc+self.aff_name):
+            print "load_dictionary(): .dic or .aff file missing."
+            return
         try:
-            self.dict_buffer = codecs.open(self.loc+self.dict_name).read().decode(self.encoding).replace('\r\n', '\n')
-            self.aff_handle = open(self.loc+self.aff_name)
-            if import_hunspell_successful:
-                self.pyhunspell_object = hunspell.HunSpell(
-                    self.loc+self.dict_name,
-                    self.loc+self.aff_name)
+            self.aff_buffer = open(
+                self.loc+self.aff_name).read().replace('\r\n', '\n')
         except:
-            # print "Dictionary file %s or AFF file is not present %s ",(dict_name,aff_name)
-            self.dict_buffer = None
-            self.aff_handle = None
-            self.pyhunspell_object = None
             import traceback
             traceback.print_exc()
-            pass
+        if self.aff_buffer:
+            encoding_pattern = re.compile(
+                r'^[\s]*SET[\s]+(?P<encoding>[-a-zA-Z0-9_]+)[\s]*$',
+                re.MULTILINE|re.UNICODE)
+            match = encoding_pattern.search(self.aff_buffer)
+            if match:
+                self.encoding = match.group('encoding')
+                print "load_dictionary(): encoding=%(enc)s found in %(aff)s" %{
+                    'enc': self.encoding, 'aff': self.loc+self.aff_name}
+        try:
+            self.dict_buffer = codecs.open(
+                self.loc+self.dict_name).read().decode(self.encoding).replace('\r\n', '\n')
+        except:
+            print "load_dictionary(): loading %(dic)s as %(enc)s encoding failed, fall back to ISO-8859-1." %{
+                'dic': self.loc+self.dict_name, 'enc': self.encoding}
+            self.encoding = 'ISO-8859-1'
+            try:
+                self.dict_buffer = codecs.open(
+                    self.loc+self.dict_name).read().decode(self.encoding).replace('\r\n', '\n')
+            except:
+                print "load_dictionary(): loading %(dic)s as %(enc)s encoding failed, giving up." %{
+                    'dic': self.loc+self.dict_name, 'enc': self.encoding}
+                self.dict_buffer = None
+                self.aff_buffer = None
+                import traceback
+                traceback.print_exc()
+        if import_hunspell_successful:
+            self.pyhunspell_object = hunspell.HunSpell(
+                self.loc+self.dict_name,
+                self.loc+self.aff_name)
+        else:
+            self.pyhunspell_object = None
 
     def words_start(self,word):
         if type(word) != type(u''):
