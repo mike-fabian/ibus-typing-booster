@@ -46,7 +46,7 @@ class ImeProperties:
             for line in file(configfile_path):
                 if not comment_patt.match(line):
                     attr,val = line.strip().split ('=', 1)
-                    self.ime_property_cache[attr.strip()]= val.strip()
+                    self.ime_property_cache[attr.strip()]= val.strip().decode('utf-8')
         else:
             sys.stderr.write("Error: ImeProperties: No such file: %s" %configfile_path)
 
