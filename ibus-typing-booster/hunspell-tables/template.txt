@@ -24,16 +24,6 @@ languages = de
 author = Mike FABIAN <mfabian@redhat.com>
 # Status prompt.
 status_prompt = de
-# “valid_input_chars” contains the list of characters the user can
-# type to write words which should be completed.
-# If possible, one should avoid including the numbers 0-9 in
-# “valid_input_chars” becaused that prevents selecting a suggested
-# completion candidate by typing a number, candidates can only
-# be selected using the arrow keys then. If having numbers
-# in “valid_input_chars” is more useful than being able to select
-# completion candidates by typing numbers, it is OK to include
-# numbers in “valid_input_chars” though.
-valid_input_chars = ́̀̂̈̃-.ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyzÁÀÂÄÉÊÑÖÜßáàâäéêñöü
 # Keyboard layout. “default” means not to change the keyboard layout
 # which is already set when the engine is activated. Usually “default”
 # is best here because some engines need different keyboard layouts
