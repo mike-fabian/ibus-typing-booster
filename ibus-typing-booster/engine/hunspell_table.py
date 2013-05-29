@@ -590,8 +590,12 @@ class editor(object):
             # sync user database immediately after removing
             # phrases:
             self.db.sync_usrdb()
-            # call update_candidates() to get a new SQL query:
-            self.update_candidates ()
+            # call update_candidates() to get a new SQL query.
+            # The input has not really changed, therefore we must clear
+            # the remembered list of input characters to force update_candidates()
+            # to really do something and not return immediately:
+            self._tabkey_list_when_update_candidates_was_last_called = []
+            self.update_candidates()
             return True
         else:
             return False
