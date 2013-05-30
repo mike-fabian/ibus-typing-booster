@@ -551,6 +551,19 @@ class editor(object):
             return u''
         return self._candidates[real_index][0]
 
+    def get_string_from_lookup_table_cursor_pos(self):
+        '''
+        Get the candidate at the current cursor position in the lookup
+        table.
+        '''
+        if not self._candidates:
+            return u''
+        index = self._lookup_table.get_cursor_pos()
+        if index >= len (self._candidates):
+            # the index given is out of range
+            return u''
+        return self._candidates[index][0]
+
     def alt_number (self,index):
         '''Remove the phrase selected with Alt+Number from the user database.
 
@@ -1057,12 +1070,19 @@ class tabengine (IBus.Engine):
                 return True
             else:
                 if self._editor._candidates:
-                    self._editor.commit_to_preedit ()
-                    commit_string = self._editor.get_preedit_strings ()
-                    self.commit_string(commit_string + " " )
+                    phrase = self._editor.get_string_from_lookup_table_cursor_pos()
+                    if phrase:
+                        input_phrase = self._editor.get_all_input_strings()
+                        self.commit_string(phrase + u' ')
+                        # Update frequency information in user database:
+                        self.db.check_phrase(phrase, input_phrase)
+                    return True
                 else:
-                    commit_string = self._editor.get_all_input_strings ()
-                    self.commit_string(commit_string + " ")
+                    input_phrase = self._editor.get_all_input_strings()
+                    if input_phrase:
+                        self.commit_string(input_phrase + u' ')
+                        # Update frequency information in user database:
+                        self.db.check_phrase(input_phrase, input_phrase)
                     return True
             return True
 
