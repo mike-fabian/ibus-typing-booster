@@ -1024,7 +1024,7 @@ class tabengine (IBus.Engine):
             return res
 
         if key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates and key.mask & IBus.ModifierType.CONTROL_MASK:
-            res = self._editor.number (key.code - IBus.KEY_1)
+            res = self._editor.alt_number (key.code - IBus.KEY_1)
             self._update_ui ()
             return res
 
