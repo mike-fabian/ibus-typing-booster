@@ -534,21 +534,22 @@ class editor(object):
             return True
         return res
 
-    def number (self, index):
+    def get_string_from_lookup_table_current_page(self, index):
         '''
-        Commit a candidate in the lookup table which was selected by
-        typing a number. The index parameter should start from 0.
+        Get the candidate at “index” in the currently visible
+        page of the lookup table. The topmost candidate
+        has the index 0 and has the label “1.”.
         '''
+        if not self._candidates:
+            return u''
         cursor_pos = self._lookup_table.get_cursor_pos()
         cursor_in_page = self._lookup_table.get_cursor_in_page()
         current_page_start = cursor_pos - cursor_in_page
         real_index = current_page_start + index
         if real_index >= len (self._candidates):
-            # the index given is out of range we do not commit anything
-            return False
-        self._lookup_table.set_cursor_pos(real_index)
-        self.commit_to_preedit ()
-        return True
+            # the index given is out of range
+            return u''
+        return self._candidates[real_index][0]
 
     def alt_number (self,index):
         '''Remove the phrase selected with Alt+Number from the user database.
@@ -1034,14 +1035,12 @@ class tabengine (IBus.Engine):
             return res
 
         if key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates:
-            input_keys = self._editor.get_all_input_strings ()
-            res = self._editor.number (key.code - IBus.KEY_1)
-            if res:
-                commit_string = self._editor.get_preedit_strings ()
-                self.commit_string (commit_string+ " ")
-                self._update_ui ()
-                # modify freq info
-                self.db.check_phrase (commit_string, input_keys)
+            phrase = self._editor.get_string_from_lookup_table_current_page(key.code - IBus.KEY_1)
+            if phrase:
+                input_phrase = self._editor.get_all_input_strings ()
+                self.commit_string(phrase + u' ')
+                # Update frequency information in user database:
+                self.db.check_phrase(phrase, input_phrase)
             return True
 
         if key.code == IBus.KEY_Tab:
