@@ -134,6 +134,15 @@ class Hunspell:
         return list(set(start_words[0:max_words]))
 
     def suggest(self, input_phrase):
+        # If the input phrase is very long, don’t try looking
+        # something up in the hunspell dictionaries. The regexp match
+        # gets very slow if the input phrase is very long. And there
+        # are no very long words in the hunspell dictionaries anyway,
+        # the longest word in the German hunspell dictionary currently
+        # seems to be “Geschwindigkeitsübertretungsverfahren” trying
+        # to match words longer than that just wastes time.
+        if len(input_phrase) > 40:
+            return []
         return self.words_start(input_phrase)
 
 
