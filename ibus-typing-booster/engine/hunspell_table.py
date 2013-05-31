@@ -191,13 +191,6 @@ class editor(object):
                 import traceback
                 traceback.print_exc()
 
-    def clear (self):
-        '''Remove data holded'''
-        self.clear_input()
-        self._t_chars = []
-        self._strings = []
-        self._cursor = [0,0]
-
     def is_empty (self):
         return len(self._t_chars) == 0
 
@@ -211,6 +204,9 @@ class editor(object):
         self._lookup_table.set_cursor_visible(False)
         self._candidates = []
         self._typed_chars = []
+        self._t_chars = []
+        self._strings = []
+        self._cursor = [0,0]
 
     def add_input (self,c):
         '''add input character'''
@@ -723,7 +719,7 @@ class tabengine (IBus.Engine):
         self.reset ()
 
     def reset (self):
-        self._editor.clear ()
+        self._editor.clear_input()
         self._double_quotation_state = False
         self._single_quotation_state = False
         self._prev_key = None
@@ -827,7 +823,7 @@ class tabengine (IBus.Engine):
             # while typing the next word to show the lookup table
             # again:
             self.is_lookup_table_enabled_by_tab = False
-        self._editor.clear ()
+        self._editor.clear_input()
         self._update_ui ()
         super(tabengine,self).commit_text(IBus.Text.new_from_string(string))
 #        self._prev_char = string[-1]
