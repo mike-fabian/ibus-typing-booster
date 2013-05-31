@@ -661,23 +661,6 @@ class editor(object):
         else:
             return False
 
-    def space (self):
-        '''Process space Key Event
-        return (KeyProcessResult,whethercommit,commitstring)'''
-        self._typed_chars = []
-        if self._t_chars :
-            # user has input sth
-            istr = self.get_all_input_strings ()
-            if self._lookup_table.cursor_visible:
-                self.commit_to_preedit()
-                self._lookup_table.set_cursor_visible(True)
-            else:
-                self.commit_to_preedit()
-            pstr = self.get_preedit_strings ()
-            return (True,pstr,istr)
-        else:
-            return (False,u'',u'')
-
 ########################
 ### Engine Class #####
 ####################
@@ -1089,28 +1072,30 @@ class tabengine (IBus.Engine):
         if key.code == IBus.KEY_space:
             if self._editor.is_empty():
                 return False
-            in_str = self._editor.get_all_input_strings()
-            sp_res = self._editor.space ()
-            #return (KeyProcessResult,whethercommit,commitstring)
-            if sp_res[0]:
-                if self._editor._lookup_table.cursor_visible:
-                    if sp_res[1]:
-                        self.commit_string (sp_res[1]+ " ")
-                        self.db.check_phrase (sp_res[1], in_str)
-                    else:
-                        self.commit_string (in_str+ " ")
-                        self.db.check_phrase (in_str, in_str)
-                else:
-                    if sp_res[1].lower() == in_str.lower():
-                        self.commit_string (sp_res[1]+ " ")
-                        self.db.check_phrase (sp_res[1], in_str)
-                    else:
-                        self.commit_string (in_str+ " ")
-                        self.db.check_phrase (in_str, in_str)
+            input_phrase = self._editor.get_all_input_strings()
+            if not input_phrase:
+                return False
+            if not self._editor._candidates:
+                self.commit_string(input_phrase + u' ')
+                # Update frequency information in user database:
+                self.db.check_phrase(input_phrase, input_phrase)
+                return True
+            phrase = self._editor.get_string_from_lookup_table_cursor_pos()
+            if not phrase:
+                return False
+            if self._editor._lookup_table.cursor_visible:
+                self.commit_string(phrase + u' ')
+                # Update frequency information in user database:
+                self.db.check_phrase(phrase, input_phrase)
             else:
-                if sp_res[1] == u' ':
-                    self.commit_string ((" "))
-            self._update_ui ()
+                if phrase.lower() == input_phrase.lower():
+                    self.commit_string(phrase + u' ')
+                    # Update frequency information in user database:
+                    self.db.check_phrase(phrase, input_phrase)
+                else:
+                    self.commit_string(input_phrase + u' ')
+                    # Update frequency information in user database:
+                    self.db.check_phrase(input_phrase, input_phrase)
             return True
 
         # We pass all other hotkeys through:
