@@ -933,13 +933,6 @@ class tabengine (IBus.Engine):
             self._update_ui ()
             return True
 
-        if key.code in (IBus.KEY_Return, IBus.KEY_KP_Enter):
-            if self._editor.is_empty():
-                return False
-            commit_string = self._editor.get_all_input_strings ()
-            self.commit_string (commit_string )
-            return False
-
         if key.code in (IBus.KEY_Down, IBus.KEY_KP_Down):
             if self._editor.is_empty():
                 return False
@@ -1066,30 +1059,30 @@ class tabengine (IBus.Engine):
                     return True
             return True
 
-        if key.code == IBus.KEY_space:
+        if key.code in (IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_space):
             if self._editor.is_empty():
                 return False
             input_phrase = self._editor.get_all_input_strings()
             if not input_phrase:
                 return False
             if not self._editor._candidates:
-                self.commit_string(input_phrase + u' ')
+                self.commit_string(input_phrase)
                 self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase)
-                return True
+                return False
             phrase = self._editor.get_string_from_lookup_table_cursor_pos()
             if not phrase:
                 return False
             if self._editor._lookup_table.cursor_visible:
-                self.commit_string(phrase + u' ')
+                self.commit_string(phrase)
                 self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase)
             else:
                 if phrase.lower() == input_phrase.lower():
-                    self.commit_string(phrase + u' ')
+                    self.commit_string(phrase)
                     self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase)
                 else:
-                    self.commit_string(input_phrase + u' ')
+                    self.commit_string(input_phrase)
                     self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase)
-            return True
+            return False
 
         # We pass all other hotkeys through:
         if key.mask & (IBus.ModifierType.CONTROL_MASK|IBus.ModifierType.MOD1_MASK):
