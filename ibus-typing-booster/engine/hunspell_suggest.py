@@ -18,6 +18,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 import os
+import sys
+import unicodedata
 import re
 import codecs
 try:
@@ -37,7 +39,10 @@ max_words_row = 50
 
 class Hunspell:
     def __init__(self,lang='en',loc='/usr/share/myspell/',dict_name='en_US.dic',aff_name='en_US.aff'):
-        self.lang=lang
+        self.language=lang
+        self.normalization_form_internal = 'NFD'
+        if self.language.startswith('ko'):
+            self.normalization_form_internal = 'NFKD'
         self.loc = loc
         self.dict_name = dict_name
         self.aff_name = aff_name
@@ -87,6 +92,9 @@ class Hunspell:
                 self.aff_buffer = None
                 import traceback
                 traceback.print_exc()
+        if self.dict_buffer:
+            self.dict_buffer = unicodedata.normalize(
+                self.normalization_form_internal, self.dict_buffer)
         if import_hunspell_successful:
             self.pyhunspell_object = hunspell.HunSpell(
                 self.loc+self.dict_name,
@@ -123,8 +131,15 @@ class Hunspell:
             start_words = patt_start.findall(self.dict_buffer)
             if self.pyhunspell_object != None:
                 if len(word) >= 4:
+                    # Always pass NFC to pyhunspell and convert the
+                    # result back to NFKD, even for Korean (For
+                    # Korean, hunspell does a NFC -> NFKD conversion
+                    # of the input and NFKD->NFC conversion of the
+                    # output)
+                    word = unicodedata.normalize('NFC', word)
                     extra_suggestions = map(
-                        lambda x: x.decode(self.encoding),
+                        lambda x: unicodedata.normalize(
+                            self.normalization_form_internal, x.decode(self.encoding)),
                         self.pyhunspell_object.suggest(word.encode(self.encoding, 'replace')))
                     for suggestion in extra_suggestions:
                         if suggestion not in start_words:

@@ -20,6 +20,7 @@
 import os
 import os.path as path
 import sys
+import unicodedata
 import sqlite3
 import uuid
 import time
@@ -131,12 +132,15 @@ class tabsqlitedb:
         self._conf_file_path = "/usr/share/ibus-typing-booster/hunspell-tables/"
 
         self.ime_properties = ImeProperties(self._conf_file_path+filename)
-
+        self._language = self.ime_properties.get('language')
+        self._normalization_form_internal = 'NFD'
+        if self._language.startswith('ko'):
+            self._normalization_form_internal = 'NFKD'
         self._m17ndb = 'm17n'
         self._m17n_mim_name = ""
 
         self.hunspell_obj = hunspell_suggest.Hunspell(
-            lang=self.ime_properties.get('language'),
+            lang=self._language,
             dict_name=self.ime_properties.get("hunspell_dict"),
             aff_name=self.ime_properties.get("hunspell_dict").replace('.dic', '.aff'))
 
@@ -244,6 +248,10 @@ class tabsqlitedb:
         '''
         if not input_phrase or not phrase:
             return
+        input_phrase = unicodedata.normalize(
+            self._normalization_form_internal, input_phrase)
+        phrase = unicodedata.normalize(
+            self._normalization_form_internal, phrase)
         sqlstr = '''
         UPDATE %(database)s.phrases
         SET user_freq = :user_freq
@@ -296,12 +304,16 @@ class tabsqlitedb:
         self.db.execute(sqlstr)
         self.db.commit()
 
-    def add_phrase (self, input_phrase='', phrase='', freq=0, user_freq=0, database = 'main', commit=True):
+    def add_phrase (self, input_phrase=u'', phrase=u'', freq=0, user_freq=0, database = 'main', commit=True):
         '''
         Add phrase to database
         '''
         if not input_phrase or not phrase:
             return
+        input_phrase = unicodedata.normalize(
+            self._normalization_form_internal, input_phrase)
+        phrase = unicodedata.normalize(
+            self._normalization_form_internal, phrase)
         select_sqlstr= '''
         SELECT * FROM %(database)s.phrases
         WHERE input_phrase = :input_phrase AND phrase = :phrase
@@ -370,6 +382,8 @@ class tabsqlitedb:
         '''
         if type(input_phrase) != type(u''):
             input_phrase = input_phrase.decode('utf8')
+        input_phrase = unicodedata.normalize(
+            self._normalization_form_internal, input_phrase)
         # Get (phrase, user_freq) pairs from mudb and user_db.
         #
         # Example: Let’s assume the user typed “co” and user_db contains
@@ -562,6 +576,10 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
             phrase = phrase.decode('utf8')
         if type(input_phrase) != type(u''):
             input_phrase = input_phrase.decode('utf8')
+        phrase = unicodedata.normalize(
+            self._normalization_form_internal, phrase)
+        input_phrase = unicodedata.normalize(
+            self._normalization_form_internal, input_phrase)
 
         # There should never be more than 1 database row for the same
         # input_phrase *and* phrase. So the following queries on the
@@ -627,7 +645,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
                             database = 'mudb', commit=True)
             return
 
-    def remove_phrase (self, input_phrase='', phrase='', database='user_db', commit=True):
+    def remove_phrase (self, input_phrase=u'', phrase=u'', database='user_db', commit=True):
         '''
         Remove all rows matching “input_phrase” and “phrase” from database.
         Or, if “input_phrase” is “None”, remove all rows matching “phrase”
@@ -635,6 +653,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
         '''
         if not phrase:
             return
+        phrase = unicodedata.normalize(
+            self._normalization_form_internal, phrase)
+        if input_phrase:
+            input_phrase = unicodedata.normalize(
+                self._normalization_form_internal, input_phrase)
         if input_phrase:
             delete_sqlstr = '''
             DELETE FROM %(database)s.phrases

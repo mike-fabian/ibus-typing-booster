@@ -203,8 +203,6 @@ class editor(object):
                 self._typed_string)[0].decode('UTF-8')
         else:
             self._transliterated_string = self._typed_string
-        self._transliterated_string = unicodedata.normalize(
-            'NFC', self._transliterated_string)
 
     def get_transliterated_string(self):
         return self._transliterated_string
@@ -330,8 +328,10 @@ class editor(object):
         '''append candidate to lookup_table'''
         if not phrase:
             return
+        phrase = unicodedata.normalize('NFC', phrase)
+        transliterated_string = unicodedata.normalize('NFC', self._transliterated_string)
         attrs = IBus.AttrList ()
-        if not phrase.startswith(self._transliterated_string):
+        if not phrase.startswith(transliterated_string):
             # this is a candidate which does not start exactly
             # as the transliterated user input, i.e. it is a suggestion
             # for a spelling correction:
@@ -578,7 +578,8 @@ class tabengine (IBus.Engine):
 
     def _update_preedit (self):
         '''Update Preedit String in UI'''
-        _str = self._editor.get_transliterated_string()
+        # editor.get_caret() should also use NFC!
+        _str = unicodedata.normalize('NFC', self._editor.get_transliterated_string())
         if _str == u'':
             super(tabengine, self).update_preedit_text(IBus.Text.new_from_string(u''), 0, False)
         else:
@@ -664,6 +665,8 @@ class tabengine (IBus.Engine):
             self.is_lookup_table_enabled_by_tab = False
         self._editor.clear_input()
         self._update_ui ()
+        # commit always in NFC:
+        string = unicodedata.normalize('NFC', string)
         super(tabengine,self).commit_text(IBus.Text.new_from_string(string))
 
     def do_process_key_event(self, keyval, keycode, state):
