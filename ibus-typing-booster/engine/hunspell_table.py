@@ -948,7 +948,7 @@ class tabengine (IBus.Engine):
         # in some locales, it would fail for example if Turkish
         # locale (tr_TR.UTF-8) is set.
         return re.sub(r'[_:]', r'-', section).translate(
-            string.maketrans(string.ascii_uppercase, string.ascii_lowercase ))
+            string.maketrans(string.ascii_uppercase, string.ascii_lowercase).decode('ISO-8859-1'))
 
     def __config_value_changed_cb(self, config, section, name, value):
         if self.config_section_normalize(self._config_section) != self.config_section_normalize(section):
