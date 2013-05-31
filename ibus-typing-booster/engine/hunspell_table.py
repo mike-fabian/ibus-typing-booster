@@ -549,8 +549,6 @@ class tabengine (IBus.Engine):
         self._page_up_keys = [IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up]
 
         self._editor = editor(self._config, self.db)
-        # self._prev_key: hold the key event last time.
-        self._prev_key = None
         self.is_lookup_table_enabled_by_tab = False
         self._tab_enable = variant_to_value(self._config.get_value (
             self._config_section,
@@ -562,7 +560,6 @@ class tabengine (IBus.Engine):
 
     def reset (self):
         self._editor.clear_input()
-        self._prev_key = None
         self._update_ui ()
 
     def do_destroy(self):
@@ -676,7 +673,6 @@ class tabengine (IBus.Engine):
         key.mask &= ~IBus.ModifierType.MOD2_MASK
 
         result = self._process_key_event (key)
-        self._prev_key = key
         return result
 
     def _process_key_event (self, key):
