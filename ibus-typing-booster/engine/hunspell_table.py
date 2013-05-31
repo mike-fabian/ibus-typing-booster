@@ -125,16 +125,10 @@ class editor(object):
         self._config = config
         self._name = self.db.ime_properties.get('name')
         self._config_section = "engine/typing-booster/%s" % self._name
-        self._chars = []
-        #self._t_chars: hold total input for table mode for input check
-        self._t_chars = []
-        # self._tabkey_list: hold tab_key objects transform from user input chars
-        self._tabkey_list = []
-        self._tabkey_list_when_update_candidates_was_last_called = []
-        # self._strings: hold preedit strings
-        self._strings = []
-        # self._cursor: the caret position in preedit phrases
-        self._cursor = [0,0]
+        self._typed_string = u''
+        self._typed_string_cursor = 0
+        self._typed_string_when_update_candidates_was_last_called = u''
+        self._transliterated_string = u''
         # self._candidates: hold candidates selected from database and hunspell
         self._candidates = []
         self._lookup_table = IBus.LookupTable.new(
@@ -148,7 +142,6 @@ class editor(object):
         # self._caret: caret position in lookup_table
         self._caret = 0
 
-        self._typed_chars = []
         self._m17ndb = 'm17n'
         self.trans = None
 
@@ -191,249 +184,155 @@ class editor(object):
                 import traceback
                 traceback.print_exc()
 
-    def is_empty (self):
-        return len(self._t_chars) == 0
+    def is_empty(self):
+        return len(self._typed_string) == 0
 
-    def clear_input (self):
-        '''
-        Remove input characters held for Table mode,
-        '''
-        self._chars = []
-        self._tabkey_list = []
+    def clear_input(self):
+        '''Clear all input'''
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
         self._candidates = []
-        self._typed_chars = []
-        self._t_chars = []
-        self._strings = []
-        self._cursor = [0,0]
+        self._typed_string = u''
+        self._typed_string_cursor = 0
+        self._typed_string_when_update_candidates_was_last_called = u''
+        self._transliterated_string = u''
 
-    def add_input (self,c):
-        '''add input character'''
-        self._typed_chars.append(c)
-        self._typed_chars = list(unicodedata.normalize('NFC', u''.join(self._typed_chars)))
+    def update_transliterated_string(self):
         if self.trans_m17n_mode:
-            trans_chars = self.trans.transliterate(u''.join(self._typed_chars))[0].decode('utf8')
+            self._transliterated_string = self.trans.transliterate(
+                self._typed_string)[0].decode('UTF-8')
         else:
-            trans_chars = u''.join(self._typed_chars)
+            self._transliterated_string = self._typed_string
+        self._transliterated_string = unicodedata.normalize(
+            'NFC', self._transliterated_string)
 
-        self._chars = list(trans_chars)
-        self._tabkey_list = list(trans_chars)
-        self._t_chars = list(trans_chars)
-        res = self.update_candidates ()
-        return res
+    def get_transliterated_string(self):
+        return self._transliterated_string
 
-    def pop_input (self):
-        '''remove and display last input char held'''
-        _c =''
-        if self._chars:
-            if self._typed_chars:
-                self._typed_chars.pop()
-            _c = self._chars.pop()
-            if self._tabkey_list:
-                self._tabkey_list.pop()
-            if not self._tabkey_list:
-                if  self._typed_chars:
-                     self._typed_chars = []
-        self._t_chars.pop()
+    def insert_string_at_cursor(self, string_to_insert):
+        '''Insert typed string at cursor position'''
+        self._typed_string = self._typed_string[:self._typed_string_cursor] \
+                             +string_to_insert \
+                             +self._typed_string[self._typed_string_cursor:]
+        self._typed_string_cursor += len(string_to_insert)
+        self.update_transliterated_string()
         self.update_candidates ()
-        return _c
 
-    def get_input_chars (self):
-        '''get characters held'''
-        return self._chars
+    def remove_string_before_cursor(self):
+        '''Remove typed string before cursor'''
+        if self._typed_string_cursor > 0:
+            self._typed_string = self._typed_string[self._typed_string_cursor:]
+            self._typed_string_cursor = 0
+            self.update_transliterated_string()
+            self.update_candidates()
 
-    def get_input_chars_string (self):
-        '''Get valid input char string'''
-        return u''.join(self._t_chars)
+    def remove_string_after_cursor(self):
+        '''Remove typed string after cursor'''
+        if self._typed_string_cursor < len(self._typed_string):
+            self._typed_string = self._typed_string[:self._typed_string_cursor]
+            self.update_transliterated_string()
+            self.update_candidates()
 
-    def get_all_input_strings (self):
-        '''Get all uncommited input characters, used in English mode or direct commit'''
-        return  u''.join(self._chars)
+    def remove_character_before_cursor(self):
+        '''Remove typed character before cursor'''
+        if self._typed_string_cursor > 0:
+            self._typed_string = self._typed_string[:self._typed_string_cursor-1] \
+                                 +self._typed_string[self._typed_string_cursor:]
+            self._typed_string_cursor -= 1
+            self.update_transliterated_string()
+            self.update_candidates()
 
-    def split_phrase (self):
-        '''Split current phrase into two phrases'''
-        _head = u''
-        _end = u''
-        try:
-            _head = self._strings[self._cursor[0]][:self._cursor[1]]
-            _end = self._strings[self._cursor[0]][self._cursor[1]:]
-            self._strings.pop(self._cursor[0])
-            self._strings.insert(self._cursor[0],_head)
-            self._strings.insert(self._cursor[0]+1,_end)
-            self._cursor[0] +=1
-            self._cursor[1] = 0
-        except:
-            pass
-
-    def remove_before_string (self):
-        '''Remove string before cursor'''
-        if self._cursor[1] != 0:
-            self.split_phrase()
-        if self._cursor[0] > 0:
-            self._strings.pop(self._cursor[0]-1)
-            self._cursor[0] -= 1
-        else:
-            pass
-        # if we remove all characters in preedit string, we need to clear the self._t_chars
-        if self._cursor == [0,0]:
-            self._t_chars =[]
-
-    def remove_after_string (self):
-        '''Remove string after cursor'''
-        if self._cursor[1] != 0:
-            self.split_phrase()
-        if self._cursor[0] >= len (self._strings):
-            pass
-        else:
-            self._strings.pop(self._cursor[0])
-
-    def remove_before_char (self):
-        '''Remove character before cursor'''
-        if self._cursor[1] > 0:
-            _str = self._strings[ self._cursor[0] ]
-            self._strings[ self._cursor[0] ] = _str[ : self._cursor[1]-1] + _str[ self._cursor[1] :]
-            self._cursor[1] -= 1
-        else:
-            if self._cursor[0] == 0:
-                pass
-            else:
-                if len ( self._strings[self._cursor[0] - 1] ) == 1:
-                    self.remove_before_string()
-                else:
-                    self._strings[self._cursor[0] - 1] = self._strings[self._cursor[0] - 1][:-1]
-        # if we remove all characters in preedit string, we need to clear the self._t_chars
-        if self._cursor == [0,0]:
-            self._t_chars =[]
-
-    def remove_after_char (self):
-        '''Remove character after cursor'''
-        if self._cursor[1] == 0:
-            if self._cursor[0] == len ( self._strings):
-                pass
-            else:
-                if len( self._strings[ self._cursor[0] ]) == 1:
-                    self.remove_after_string ()
-                else:
-                    self._strings[ self._cursor[0] ] = self._strings[ self._cursor[0] ][1:]
-        else:
-            if ( self._cursor[1] + 1 ) == len( self._strings[ self._cursor[0] ] ) :
-                self.split_phrase ()
-                self.remove_after_string ()
-            else:
-                string = self._strings[ self._cursor[0] ]
-                self._strings[ self._cursor[0] ] = string[:self._cursor[1]] + string[ self._cursor[1] + 1 : ]
-
-    def get_preedit_strings (self):
-        '''Get preedit strings'''
-        input_chars = self.get_input_chars ()
-        if input_chars:
-            _candi = u''.join(input_chars)
-        else:
-            _candi = u''
-        if self._strings:
-            res = u''
-            _cursor = self._cursor[0]
-            res = u''.join(self._strings[:_cursor] + [_candi] + self._strings[_cursor:])
-            return res
-        else:
-            return _candi
-
-    def add_caret (self, addstr):
-        '''add length to caret position'''
-        self._caret += len(addstr)
+    def remove_character_after_cursor(self):
+        '''Remove typed character after cursor'''
+        if self._typed_string_cursor < len(self._typed_string):
+            self._typed_string = self._typed_string[:self._typed_string_cursor] \
+                                 +self._typed_string[self._typed_string_cursor+1:]
+            self.update_transliterated_string()
+            self.update_candidates()
 
     def get_caret (self):
-        '''Get caret position in preedit strings'''
-        self._caret = 0
-        if self._cursor[0] and self._strings:
-            map (self.add_caret,self._strings[:self._cursor[0]])
-        self._caret += self._cursor[1]
-        _candi = u''.join(self.get_input_chars())
-        self._caret += len( _candi )
-        return self._caret
+        '''
+        Get caret position in preëdit string
+
+        The preëdit contains the transliterated string, the caret
+        position can only be approximated from the cursor position in
+        the typed string.
+
+        For example, if the type string is “gru"n” and the
+        transliteration method used is “Latin Postfix”, this
+        transliterates to “grün”. Now if the cursor position in the
+        typed string is “3”, then the cursor is between the “u”
+        and the “"”.  In the transliterated string, this would be in the
+        middle of the “ü”. But the caret cannot be shown there of course.
+
+        So the caret position is approximated by transliterating the
+        string up to the cursor, i.e. transliterating “gru” which
+        gives “gru” and return the length of that
+        transliteration as the caret position. Therefore, the caret
+        is displayed after the “ü” instead of in the middle of the “ü”.
+
+        This has the effect that when typing “arrow left” over a
+        preëdit string “grün” which has been typed as “gru"n”
+        using Latin Postfix translation, one needs to type “arrow
+        left” two times to get over the “ü”.
+
+        If the cursor is at position 3 in the input string “gru"n”,
+        and one types an “a” there, the input string becomes
+        “grua"n” and the transliterated string, i.e. the preëdit,
+        becomes “gruän”, which might be a bit surprising, but that
+        is at least consistent and better then nothing at the moment.
+
+        This problem is certainly worse in languages like Marathi where
+        these length differences between the input and the transliteration
+        are worse.
+
+        But until this change, the code to move around and edit in
+        the preëdit did not work at all. Now it works fine if
+        no transliteration is used and works better than nothing
+        even if transliteration is used.
+        '''
+        if self.trans_m17n_mode:
+            transliterated_string_up_to_cursor = self.trans.transliterate(
+                self._typed_string[:self._typed_string_cursor])[0].decode('UTF-8')
+        else:
+            transliterated_string_up_to_cursor = self._typed_string[:self._typed_string_cursor]
+        transliterated_string_up_to_cursor = unicodedata.normalize(
+            'NFC', transliterated_string_up_to_cursor)
+        return len(transliterated_string_up_to_cursor)
 
     def arrow_left (self):
-        '''Process Arrow Left Key Event.
-        Update cursor data when move caret left'''
-        if self.get_preedit_strings ():
-            if not self.get_input_chars():
-                if self._cursor[1] > 0:
-                    self._cursor[1] -= 1
-                else:
-                    if self._cursor[0] > 0:
-                        self._cursor[1] = len (self._strings[self._cursor[0]-1]) - 1
-                        self._cursor[0] -= 1
-                    else:
-                        self._cursor[0] = len(self._strings)
-                        self._cursor[1] = 0
-                self.update_candidates ()
-            return True
-        else:
-            return False
+        '''
+        Move cursor left in the typed string.
+        '''
+        if self._typed_string_cursor > 0:
+            self._typed_string_cursor -= 1
 
     def arrow_right (self):
-        '''Process Arrow Right Key Event.
-        Update cursor data when move caret right'''
-        if self.get_preedit_strings ():
-            if not self.get_input_chars():
-                if self._cursor[1] == 0:
-                    if self._cursor[0] == len (self._strings):
-                        self._cursor[0] = 0
-                    else:
-                        self._cursor[1] += 1
-                else:
-                    self._cursor[1] += 1
-                if self._cursor[1] == len(self._strings[ self._cursor[0] ]):
-                    self._cursor[0] += 1
-                    self._cursor[1] = 0
-                self.update_candidates ()
-            return True
-        else:
-            return False
+        '''
+        Move cursor right in the typed string.
+        '''
+        if self._typed_string_cursor < len(self._typed_string):
+            self._typed_string_cursor += 1
 
     def control_arrow_left (self):
-        '''Process Control + Arrow Left Key Event.
-        Update cursor data when move caret to string left'''
-        if self.get_preedit_strings ():
-            if not self.get_input_chars():
-                if self._cursor[1] == 0:
-                    if self._cursor[0] == 0:
-                        self._cursor[0] = len (self._strings) - 1
-                    else:
-                        self._cursor[0] -= 1
-                else:
-                    self._cursor[1] = 0
-                self.update_candidates ()
-            return True
-        else:
-            return False
+        '''
+        Move cursor to the beginning of the typed string
+        '''
+        self._typed_string_cursor = 0
 
     def control_arrow_right (self):
-        '''Process Control + Arrow Right Key Event.
-        Update cursor data when move caret to string right'''
-        if self.get_preedit_strs ():
-            if not self.get_input_chars():
-                if self._cursor[1] == 0:
-                    if self._cursor[0] == len (self._strings):
-                        self._cursor[0] = 1
-                    else:
-                        self._cursor[0] += 1
-                else:
-                    self._cursor[0] += 1
-                    self._cursor[1] = 0
-                self.update_candidates ()
-            return True
-        else:
-            return False
+        '''
+        Move cursor to the end of the typed string
+        '''
+        self._typed_string_cursor = len(self._typed_string)
 
     def ap_candidate (self, candi):
         '''append candidate to lookup_table'''
         _phrase= candi[0]
         attrs = IBus.AttrList ()
-        if not _phrase.startswith(self.get_input_chars_string()):
+        if not _phrase.startswith(self._transliterated_string):
             # this is a candidate which does not start exactly
-            # with the characters typed, i.e. it is a suggestion
+            # as the transliterated user input, i.e. it is a suggestion
             # for a spelling correction:
             attrs.append(IBus.attr_foreground_new(rgb(0xff,0x00,0x00), 0, len(_phrase)))
         elif candi[1] > 10:
@@ -456,16 +355,16 @@ class editor(object):
 
     def update_candidates (self):
         '''Update lookuptable'''
-        if self._tabkey_list == self._tabkey_list_when_update_candidates_was_last_called:
+        if self._typed_string == self._typed_string_when_update_candidates_was_last_called:
             # The input did not change since we came here last, do nothing and leave
             # candidates and lookup table unchanged:
             return True
-        self._tabkey_list_when_update_candidates_was_last_called = self._tabkey_list[:]
+        self._typed_string_when_update_candidates_was_last_called = self._typed_string[:]
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
-        if self._tabkey_list:
+        if self._transliterated_string:
             try:
-                self._candidates = self.db.select_words(u''.join(self._tabkey_list))
+                self._candidates = self.db.select_words(self._transliterated_string)
             except:
                 import traceback
                 traceback.print_exc()
@@ -585,11 +484,12 @@ class editor(object):
             # sync user database immediately after removing
             # phrases:
             self.db.sync_usrdb()
-            # call update_candidates() to get a new SQL query.
-            # The input has not really changed, therefore we must clear
-            # the remembered list of input characters to force update_candidates()
-            # to really do something and not return immediately:
-            self._tabkey_list_when_update_candidates_was_last_called = []
+            # call update_candidates() to get a new SQL query.  The
+            # input has not really changed, therefore we must clear
+            # the remembered list of transliterated characters to
+            # force update_candidates() to really do something and not
+            # return immediately:
+            self._typed_string_when_update_candidates_was_last_called = u''
             self.update_candidates()
             return True
         else:
@@ -602,48 +502,6 @@ class editor(object):
     def get_lookup_table (self):
         '''Get lookup table'''
         return self._lookup_table
-
-    def backspace (self):
-        '''Process backspace Key Event'''
-        if self.get_input_chars():
-            self.pop_input ()
-            return True
-        elif self.get_preedit_strings ():
-            self.remove_before_char ()
-            return True
-        else:
-            return False
-
-    def control_backspace (self):
-        '''Process control+backspace Key Event'''
-        if self.get_input_chars():
-            self.clear_input()
-            return True
-        elif self.get_preedit_strings ():
-            self.remove_before_string ()
-            return True
-        else:
-            return False
-
-    def delete (self):
-        '''Process delete Key Event'''
-        if self.get_input_chars():
-            return True
-        elif self.get_preedit_strings ():
-            self.remove_after_char ()
-            return True
-        else:
-            return False
-
-    def control_delete (self):
-        '''Process control+delete Key Event'''
-        if self.get_input_chars ():
-            return True
-        elif self.get_preedit_strings ():
-            self.remove_after_string ()
-            return True
-        else:
-            return False
 
 ########################
 ### Engine Class #####
@@ -738,7 +596,7 @@ class tabengine (IBus.Engine):
 
     def _update_preedit (self):
         '''Update Preedit String in UI'''
-        _str = self._editor.get_preedit_strings ()
+        _str = self._editor.get_transliterated_string()
         if _str == u'':
             super(tabengine, self).update_preedit_text(IBus.Text.new_from_string(u''), 0, False)
         else:
@@ -814,7 +672,6 @@ class tabengine (IBus.Engine):
         self._update_lookup_table ()
         self._update_preedit ()
         self._update_aux ()
-
 
     def commit_string (self,string):
         if self._tab_enable:
@@ -893,7 +750,7 @@ class tabengine (IBus.Engine):
                     # “t-latn-pre” transliteration method, therefore
                     # we cannot just pass it through. Just add it to
                     # the input so far and see what comes next:
-                    res = self._editor.add_input(IBus.keyval_to_unicode(key.code).decode('UTF-8'))
+                    self._editor.insert_string_at_cursor(IBus.keyval_to_unicode(key.code).decode('UTF-8'))
                     self._update_ui()
                     return True
                 if curses.ascii.isdigit(key.code):
@@ -944,23 +801,23 @@ class tabengine (IBus.Engine):
         if key.code in (IBus.KEY_Left, IBus.KEY_KP_Left) and key.mask & IBus.ModifierType.CONTROL_MASK:
             if self._editor.is_empty():
                 return False
-            res = self._editor.control_arrow_left ()
-            self._update_ui ()
-            return res
+            self._editor.control_arrow_left()
+            self._update_ui()
+            return True
 
         if key.code in (IBus.KEY_Right, IBus.KEY_KP_Right) and key.mask & IBus.ModifierType.CONTROL_MASK:
             if self._editor.is_empty():
                 return False
-            res = self._editor.control_arrow_right ()
-            self._update_ui ()
-            return res
+            self._editor.control_arrow_right()
+            self._update_ui()
+            return True
 
         if key.code in (IBus.KEY_Left, IBus.KEY_KP_Left):
             if self._editor.is_empty():
                 return False
-            res = self._editor.arrow_left ()
-            self._update_ui ()
-            return res
+            self._editor.arrow_left()
+            self._update_ui()
+            return True
 
         if key.code in (IBus.KEY_Right, IBus.KEY_KP_Right):
             if self._editor.is_empty():
@@ -972,30 +829,30 @@ class tabengine (IBus.Engine):
         if key.code == IBus.KEY_BackSpace and key.mask & IBus.ModifierType.CONTROL_MASK:
             if self._editor.is_empty():
                 return False
-            res = self._editor.control_backspace ()
-            self._update_ui ()
-            return res
+            self._editor.remove_string_before_cursor()
+            self._update_ui()
+            return True
 
         if key.code == IBus.KEY_BackSpace:
             if self._editor.is_empty():
                 return False
-            res = self._editor.backspace ()
-            self._update_ui ()
-            return res
+            self._editor.remove_character_before_cursor()
+            self._update_ui()
+            return True
 
         if key.code == IBus.KEY_Delete  and key.mask & IBus.ModifierType.CONTROL_MASK:
             if self._editor.is_empty():
                 return False
-            res = self._editor.control_delete ()
-            self._update_ui ()
-            return res
+            self._editor.remove_string_after_cursor()
+            self._update_ui()
+            return True
 
         if key.code == IBus.KEY_Delete:
             if self._editor.is_empty():
                 return False
-            res = self._editor.delete ()
-            self._update_ui ()
-            return res
+            self._editor.remove_character_after_cursor()
+            self._update_ui()
+            return True
 
         if key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates and key.mask & IBus.ModifierType.CONTROL_MASK:
             res = self._editor.alt_number (key.code - IBus.KEY_1)
@@ -1010,7 +867,7 @@ class tabengine (IBus.Engine):
         if key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates:
             phrase = self._editor.get_string_from_lookup_table_current_page(key.code - IBus.KEY_1)
             if phrase:
-                input_phrase = self._editor.get_all_input_strings ()
+                input_phrase = self._editor.get_transliterated_string()
                 self.commit_string(phrase + u' ')
                 self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase)
             return True
@@ -1031,12 +888,12 @@ class tabengine (IBus.Engine):
                 if self._editor._candidates:
                     phrase = self._editor.get_string_from_lookup_table_cursor_pos()
                     if phrase:
-                        input_phrase = self._editor.get_all_input_strings()
+                        input_phrase = self._editor.get_transliterated_string()
                         self.commit_string(phrase + u' ')
                         self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase)
                     return True
                 else:
-                    input_phrase = self._editor.get_all_input_strings()
+                    input_phrase = self._editor.get_transliterated_string()
                     if input_phrase:
                         self.commit_string(input_phrase + u' ')
                         self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase)
@@ -1046,7 +903,7 @@ class tabengine (IBus.Engine):
         if key.code in (IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_space):
             if self._editor.is_empty():
                 return False
-            input_phrase = self._editor.get_all_input_strings()
+            input_phrase = self._editor.get_transliterated_string()
             if not input_phrase:
                 return False
             if not self._editor._candidates:
@@ -1076,8 +933,8 @@ class tabengine (IBus.Engine):
             return False
 
         if IBus.keyval_to_unicode(key.code):
-            self._editor.add_input(IBus.keyval_to_unicode(key.code).decode('UTF-8'))
-            self._update_ui ()
+            self._editor.insert_string_at_cursor(IBus.keyval_to_unicode(key.code).decode('UTF-8'))
+            self._update_ui()
             return True
 
         return False
