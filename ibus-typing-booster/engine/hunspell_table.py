@@ -551,7 +551,6 @@ class tabengine (IBus.Engine):
         self._editor = editor(self._config, self.db)
         # self._prev_key: hold the key event last time.
         self._prev_key = None
-        self._prev_char = None
         self.is_lookup_table_enabled_by_tab = False
         self._tab_enable = variant_to_value(self._config.get_value (
             self._config_section,
@@ -666,7 +665,6 @@ class tabengine (IBus.Engine):
         self._editor.clear_input()
         self._update_ui ()
         super(tabengine,self).commit_text(IBus.Text.new_from_string(string))
-#        self._prev_char = string[-1]
 
     def _match_hotkey (self, key, code, mask):
 
