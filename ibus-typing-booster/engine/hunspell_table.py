@@ -666,16 +666,6 @@ class tabengine (IBus.Engine):
         self._update_ui ()
         super(tabengine,self).commit_text(IBus.Text.new_from_string(string))
 
-    def _match_hotkey (self, key, code, mask):
-
-        if key.code == code and key.mask == mask:
-            if self._prev_key and key.code == self._prev_key.code and key.mask & IBus.ModifierType.RELEASE_MASK:
-                return True
-            if not key.mask & IBus.ModifierType.RELEASE_MASK:
-                return True
-
-        return False
-
     def do_process_key_event(self, keyval, keycode, state):
         '''Process Key Events
         Key Events include Key Press and Key Release,
