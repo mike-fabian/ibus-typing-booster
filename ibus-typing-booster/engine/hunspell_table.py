@@ -479,18 +479,6 @@ class editor(object):
             map(self.ap_candidate, self._candidates)
         return True
 
-    def commit_to_preedit (self):
-        '''Add selected phrase in lookup table to preedit string'''
-        try:
-            if self._candidates:
-                self._strings.insert(self._cursor[0], self._candidates[self.get_cursor_pos()][0])
-                self._cursor [0] += 1
-            self.clear_input()
-            self.update_candidates ()
-        except:
-            import traceback
-            traceback.print_exc()
-
     def arrow_down(self):
         '''Process Arrow Down Key Event
         Move Lookup Table cursor down'''
