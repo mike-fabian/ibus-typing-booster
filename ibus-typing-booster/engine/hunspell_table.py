@@ -563,8 +563,6 @@ class tabengine (IBus.Engine):
         # self._prev_key: hold the key event last time.
         self._prev_key = None
         self._prev_char = None
-        self._double_quotation_state = False
-        self._single_quotation_state = False
         self.is_lookup_table_enabled_by_tab = False
         self._tab_enable = variant_to_value(self._config.get_value (
             self._config_section,
@@ -578,8 +576,6 @@ class tabengine (IBus.Engine):
 
     def reset (self):
         self._editor.clear_input()
-        self._double_quotation_state = False
-        self._single_quotation_state = False
         self._prev_key = None
         self._update_ui ()
 
