@@ -69,6 +69,7 @@ tables_DATA = en_US.conf \
 	he_IL.conf \
 	yi_US.conf \
 	hy_AM.conf \
+	ko_KR.conf \
 	km_KH.conf \
 	th_TH.conf \
 	ku_TR.conf \

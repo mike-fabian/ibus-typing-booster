@@ -69,6 +69,7 @@ icons_DATA = \
 	ibus-hunspell-table.svg \
 	is_IS.svg \
 	it_IT.svg \
+	ko_KR.svg \
 	km_KH.svg \
 	kn_IN.svg \
 	ku_TR.svg \
