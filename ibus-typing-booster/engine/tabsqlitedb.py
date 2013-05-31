@@ -548,9 +548,16 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
         except:
             return 0
 
-    def check_phrase(self, phrase, input_phrase=None, database='main'):
-        '''Check word freq and user_freq
+    def check_phrase_and_update_frequency(self, input_phrase=u'', phrase=u'', database='main'):
         '''
+        Check whether input_phrase and phrase are already in the user
+        database. If they are in the database, update the user
+        frequency, if not add them.
+        '''
+        if not input_phrase:
+            input_phrase = phrase
+        if not phrase:
+            return
         if type(phrase) != type(u''):
             phrase = phrase.decode('utf8')
         if type(input_phrase) != type(u''):

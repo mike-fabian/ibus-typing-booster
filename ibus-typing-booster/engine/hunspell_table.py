@@ -1035,8 +1035,7 @@ class tabengine (IBus.Engine):
             if phrase:
                 input_phrase = self._editor.get_all_input_strings ()
                 self.commit_string(phrase + u' ')
-                # Update frequency information in user database:
-                self.db.check_phrase(phrase, input_phrase)
+                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase)
             return True
 
         if key.code == IBus.KEY_Tab:
@@ -1057,15 +1056,13 @@ class tabengine (IBus.Engine):
                     if phrase:
                         input_phrase = self._editor.get_all_input_strings()
                         self.commit_string(phrase + u' ')
-                        # Update frequency information in user database:
-                        self.db.check_phrase(phrase, input_phrase)
+                        self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase)
                     return True
                 else:
                     input_phrase = self._editor.get_all_input_strings()
                     if input_phrase:
                         self.commit_string(input_phrase + u' ')
-                        # Update frequency information in user database:
-                        self.db.check_phrase(input_phrase, input_phrase)
+                        self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase)
                     return True
             return True
 
@@ -1077,25 +1074,21 @@ class tabengine (IBus.Engine):
                 return False
             if not self._editor._candidates:
                 self.commit_string(input_phrase + u' ')
-                # Update frequency information in user database:
-                self.db.check_phrase(input_phrase, input_phrase)
+                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase)
                 return True
             phrase = self._editor.get_string_from_lookup_table_cursor_pos()
             if not phrase:
                 return False
             if self._editor._lookup_table.cursor_visible:
                 self.commit_string(phrase + u' ')
-                # Update frequency information in user database:
-                self.db.check_phrase(phrase, input_phrase)
+                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase)
             else:
                 if phrase.lower() == input_phrase.lower():
                     self.commit_string(phrase + u' ')
-                    # Update frequency information in user database:
-                    self.db.check_phrase(phrase, input_phrase)
+                    self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase)
                 else:
                     self.commit_string(input_phrase + u' ')
-                    # Update frequency information in user database:
-                    self.db.check_phrase(input_phrase, input_phrase)
+                    self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase)
             return True
 
         # We pass all other hotkeys through:
