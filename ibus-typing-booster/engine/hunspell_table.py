@@ -569,8 +569,6 @@ class tabengine (IBus.Engine):
             "tabenable"))
         if self._tab_enable == None:
             self._tab_enable = self.db.ime_properties.get('tab_enable').lower() == u'true'
-        # the commit phrases length
-        self._len_list = [0]
         self._on = False
         self.reset ()
 
