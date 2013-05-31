@@ -509,11 +509,6 @@ class editor(object):
 class tabengine (IBus.Engine):
     '''The IM Engine for Tables'''
 
-    # colors
-#    _phrase_color             = 0xffffff
-#    _user_phrase_color         = 0xffffff
-#    _new_phrase_color         = 0xffffff
-
     def __init__ (self, bus, obj_path, db ):
         super(tabengine,self).__init__ (connection=bus.get_connection(),object_path=obj_path)
         self._bus = bus
@@ -542,10 +537,6 @@ class tabengine (IBus.Engine):
         if self._show_number_of_candidates == None:
             self._show_number_of_candidates = False
 
-        # this is the backend sql db we need for our IME
-        # we receive this db from IMEngineFactory
-        #self.db = tabsqlitedb.tabsqlitedb( name = dbname )
-
         self._icon_dir = '%s%s%s%s' % (os.getenv('IBUS_HUNSPELL_TABLE_LOCATION'),
                 os.path.sep, 'icons', os.path.sep)
         # 0 = english input mode
@@ -557,9 +548,7 @@ class tabengine (IBus.Engine):
         self._page_down_keys = [IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down]
         self._page_up_keys = [IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up]
 
-        # Containers we used:
         self._editor = editor(self._config, self.db)
-        # some other vals we used:
         # self._prev_key: hold the key event last time.
         self._prev_key = None
         self._prev_char = None
