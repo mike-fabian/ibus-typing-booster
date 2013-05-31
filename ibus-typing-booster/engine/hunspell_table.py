@@ -326,22 +326,23 @@ class editor(object):
         '''
         self._typed_string_cursor = len(self._typed_string)
 
-    def ap_candidate (self, candi):
+    def append_candidate_to_lookup_table(self, phrase=u'', user_freq=0):
         '''append candidate to lookup_table'''
-        _phrase= candi[0]
+        if not phrase:
+            return
         attrs = IBus.AttrList ()
-        if not _phrase.startswith(self._transliterated_string):
+        if not phrase.startswith(self._transliterated_string):
             # this is a candidate which does not start exactly
             # as the transliterated user input, i.e. it is a suggestion
             # for a spelling correction:
-            attrs.append(IBus.attr_foreground_new(rgb(0xff,0x00,0x00), 0, len(_phrase)))
-        elif candi[1] > 10:
+            attrs.append(IBus.attr_foreground_new(rgb(0xff,0x00,0x00), 0, len(phrase)))
+        elif user_freq > 10:
             # this is a frequently used phrase:
-            attrs.append(IBus.attr_foreground_new(rgb(0xff,0x7f,0x00), 0, len(_phrase)))
+            attrs.append(IBus.attr_foreground_new(rgb(0xff,0x7f,0x00), 0, len(phrase)))
         else:
             # this is a system phrase that has been used less then 10 times or maybe never:
-            attrs.append(IBus.attr_foreground_new(rgb(0x00,0x00,0x00), 0, len(_phrase)))
-        text = IBus.Text.new_from_string(_phrase)
+            attrs.append(IBus.attr_foreground_new(rgb(0x00,0x00,0x00), 0, len(phrase)))
+        text = IBus.Text.new_from_string(phrase)
         i = 0
         while attrs.get(i) != None:
             attr = attrs.get(i)
@@ -371,7 +372,9 @@ class editor(object):
         else:
             self._candidates =[]
         if self._candidates:
-            map(self.ap_candidate, self._candidates)
+            map(lambda x:
+                self.append_candidate_to_lookup_table(phrase=x[0], user_freq=x[1]),
+                self._candidates)
         return True
 
     def arrow_down(self):
