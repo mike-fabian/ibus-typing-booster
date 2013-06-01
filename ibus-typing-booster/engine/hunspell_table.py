@@ -32,48 +32,9 @@ from gi.repository import GLib
 try:
     from gi.repository import Translit
     Transliterator = Translit.Transliterator
-except ImportError:
-    # Load libtranslit through ctypes, instead of gi. Maybe the code
-    # below could be removed once ibus-table switches to pygobject3.
-    import ctypes
-
-    class Transliterator(object):
-        __libtranslit = ctypes.CDLL("libtranslit.so.0",
-                                    mode=ctypes.RTLD_GLOBAL)
-
-        __get = __libtranslit.translit_transliterator_get
-        __get.argtypes = [ctypes.c_char_p,
-                          ctypes.c_char_p]
-        __get.restype = ctypes.c_void_p
-
-        __transliterate = __libtranslit.translit_transliterator_transliterate
-        __transliterate.argtypes = [ctypes.c_void_p,
-                                    ctypes.c_char_p,
-                                    ctypes.c_void_p]
-        __transliterate.restype = ctypes.c_char_p
-
-        def __init__(self, trans):
-            self.__trans = trans
-
-        @staticmethod
-        def get(backend, name):
-            return Transliterator(Transliterator.__get(backend, name))
-
-        def transliterate(self, _input):
-            endpos = ctypes.c_ulong()
-            # _input needs to be in UTF-8, if we get Python’s Unicode
-            # type here, convert to UTF-8 first:
-            if type(_input) == type(u''):
-                _input = _input.encode('utf8')
-            # the return value “output” is also UTF-8 encoded:
-            output = Transliterator.__transliterate(self.__trans,
-                                                    _input,
-                                                    ctypes.byref(endpos))
-            return (output, endpos.value)
 except:
-   # print "Please install Translit library to use m17n input methods"
-    pass
-
+    import traceback
+    traceback.print_exc()
 
 from gettext import dgettext
 _  = lambda a : dgettext ("ibus-typing-booster", a)
