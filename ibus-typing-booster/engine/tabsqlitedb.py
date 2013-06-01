@@ -27,7 +27,7 @@ import time
 import re
 import hunspell_suggest
 
-user_database_version = '0.62'
+user_database_version = '0.63'
 
 class ImeProperties:
     def __init__(self, configfile_path=None):
@@ -59,70 +59,33 @@ class tabsqlitedb:
 
     The phrases tables in the databases have columns with the names:
 
-    “id”, “input_phrase”, “phrase”, “freq”, “user_freq”
+    “id”, “input_phrase”, “phrase”, “user_freq”
 
     There are 3 databases, sysdb, userdb, mudb.
 
-    Overview over the meaning of values in the “freq” and “user_freq” columns:
-
-              freq                   user_freq
-    sysdb      1                     0
-
-    user_db    0 system phrase       >= 1
-              -1 user phrase         >= 1
-    mudb
-               2 new system phrase   >= 1
-               1 old system phrase   >= 1
-              -2 new user phrase     >= 1
-              -3 old user phrase     >= 1
-
     sysdb: “Database” with the suggestions from the hunspell dictionaries
         user_freq = 0 always.
-        freq      = 1 always.
 
         Actually there is no Sqlite3 database called “sysdb”, these
         are the suggestions coming from hunspell_suggest, i.e. from
-        grepping the hunspell dictionaries and from pyhunspell. But
-        these suggestions are supplied as tuples or lists in the same
-        form as the database rows (Historic note: ibus-typing-booster
-        started as a fork of ibus-table, in ibus-table “sysdb” is a
-        Sqlite3 database which is installed systemwide and readonly
-        for the user)
+        grepping the hunspell dictionaries and from pyhunspell.
+        (Historic note: ibus-typing-booster started as a fork of
+        ibus-table, in ibus-table “sysdb” is a Sqlite3 database
+        which is installed systemwide and readonly for the user)
 
     user_db: Database on disk where the phrases learned from the user are stored
         user_freq >= 1: The number of times the user has used this phrase
-        freq = -1: user defined phrase, hunspell_suggest does not suggest
-                   a phrase like this.
-        freq = 0:  system phrase, hunspell_suggest does suggest
-                   such a phrase.
-
-        (Note: If the hunspell dictionary is updated, what could be suggested
-        by hunspell might change. Is it necessary to update the contents
-        of user_db then to reflect this?)
 
         Data is written to user_db only when ibus-typing-booster exits.
         Until then, the data learned from the user is stored only in mudb.
 
     mudb: Database in memory where the phrases learned from the user are stored
         user_freq >= 1: The number of times the user has used this phrase
-        freq =  2: new system phrase, i.e. this phrase originally came from
-                   hunspell_suggest during the current session, it did not
-                   come from user_db.
-        freq =  1: old system phrase, i.e. this phrase came from user_db
-                   but  was marked there with “freq = 0”, i.e. it is a
-                   phrase which could be suggest by hunspell_suggest.
-        freq = -2: new user phrase, i.e. this is a phrase which hunspell_suggest
-                   cannot suggest and which was typed by the user in the current
-                   session.
-        freq = -3: old user phrase, i.e. this is also a phrase which hunspell_suggest
-                   cannot suggest. But it was already typed by the user in a previous
-                   session and has been saved on exit of ibus-typing-booster
-                   to user_db. The current session got it from user_db.
     '''
     def __init__(self, name = 'table.db', user_db = None, filename = None ):
         # use filename when you are creating db from source
         # use name when you are using db
-        self._phrase_table_column_names = ['id', 'input_phrase', 'phrase','freq','user_freq']
+        self._phrase_table_column_names = ['id', 'input_phrase', 'phrase', 'user_freq']
 
         self.old_phrases=[]
 
@@ -209,9 +172,9 @@ class tabsqlitedb:
             self.db.execute('ATTACH DATABASE "%s" AS user_db;' % user_db)
         self.create_tables("user_db")
         if self.old_phrases:
-            # (phrase, freq, user_freq)
+            # (phrase, user_freq)
             map(lambda x: self.add_phrase(
-                input_phrase=x[0], phrase=x[0], freq=x[1], user_freq=x[2],
+                input_phrase=x[0], phrase=x[0], user_freq=x[1],
                 database = 'user_db', commit = False),
                 self.old_phrases)
             self.db.commit()
@@ -266,22 +229,14 @@ class tabsqlitedb:
         '''
         Sync mudb to user_db
         '''
-        mudata = self.db.execute('SELECT input_phrase, phrase, freq, user_freq FROM mudb.phrases;').fetchall()
-        # old system and user phrases:
+        mudata = self.db.execute('SELECT input_phrase, phrase, user_freq FROM mudb.phrases;').fetchall()
+        # add phrase does nothing if the phrase is already there:
+        map(lambda x: self.add_phrase(
+            input_phrase=x[0], phrase=x[1], user_freq=x[2], database='user_db', commit=False),
+            mudata)
         map(lambda x: self.update_phrase(
-            input_phrase=x[0], phrase=x[1], user_freq=x[3],
-            database='user_db', commit=False),
-            filter(lambda x: x[2] in [1,-3], mudata))
-        # new system phrases:
-        map(lambda x: self.add_phrase(
-            input_phrase=x[0], phrase=x[1], freq=0, user_freq=x[3],
-            database='user_db', commit=False),
-            filter(lambda x: x[2] == 2, mudata))
-        # new user phrases:
-        map(lambda x: self.add_phrase(
-            input_phrase=x[0], phrase=x[1], freq=-1, user_freq=x[3],
-            database='user_db', commit=False),
-            filter(lambda x: x[2] == -2, mudata))
+            input_phrase=x[0], phrase=x[1], user_freq=x[2], database='user_db', commit=False),
+            mudata)
         # now that all phrases from mudb have been synced to user_db
         # delete all records in mudb:
         self.db.execute('DELETE FROM mudb.phrases;')
@@ -297,11 +252,11 @@ class tabsqlitedb:
         sqlstr = '''CREATE TABLE IF NOT EXISTS %s.phrases
                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
                     input_phrase TEXT, phrase TEXT,
-                    freq INTEGER, user_freq INTEGER);''' % database
+                    user_freq INTEGER);''' % database
         self.db.execute(sqlstr)
         self.db.commit()
 
-    def add_phrase (self, input_phrase=u'', phrase=u'', freq=0, user_freq=0, database = 'main', commit=True):
+    def add_phrase (self, input_phrase=u'', phrase=u'', user_freq=0, database = 'main', commit=True):
         '''
         Add phrase to database
         '''
@@ -323,11 +278,11 @@ class tabsqlitedb:
 
         insert_sqlstr = '''
         INSERT INTO %(database)s.phrases
-        (input_phrase, phrase, freq, user_freq)
-        VALUES (:input_phrase, :phrase, :freq, :user_freq)
+        (input_phrase, phrase, user_freq)
+        VALUES (:input_phrase, :phrase, :user_freq)
         ;''' %{'database': database}
         insert_sqlargs = {'input_phrase': input_phrase, 'phrase': phrase,
-                          'freq': freq, 'user_freq': user_freq}
+                          'user_freq': user_freq}
         try:
             self.db.execute (insert_sqlstr, insert_sqlargs)
             if commit:
@@ -341,7 +296,7 @@ class tabsqlitedb:
             CREATE TABLE tmp AS SELECT * FROM %(database)s.phrases;
             DELETE FROM %(database)s.phrases;
             INSERT INTO %(database)s.phrases SELECT * FROM tmp ORDER BY
-            input_phrase, user_freq DESC, freq DESC, id ASC;
+            input_phrase, user_freq DESC, id ASC;
             DROP TABLE tmp;''' %{'database':database,}
         self.db.executescript (sqlstr)
         self.db.executescript ("VACUUM;")
@@ -361,7 +316,7 @@ class tabsqlitedb:
     def create_indexes(self, database, commit=True):
         sqlstr = '''
         CREATE INDEX IF NOT EXISTS %(database)s.phrases_index_p ON phrases
-        (input_phrase, freq DESC, id ASC);
+        (input_phrase, id ASC);
         CREATE INDEX IF NOT EXISTS %(database)s.phrases_index_i ON phrases
         (phrase)
         ;''' %{'database':database}
@@ -385,21 +340,21 @@ class tabsqlitedb:
         #
         # Example: Let’s assume the user typed “co” and user_db contains
         #
-        #     1|colou|colour|0|1
-        #     2|col|colour|0|2
-        #     3|co|colour|0|1
-        #     4|co|cold|0|1
-        #     5|conspirac|conspiracy|0|5
-        #     6|conspi|conspiracy|0|1
-        #     7|c|conspiracy|-1|1
+        #     1|colou|colour|1
+        #     2|col|colour|2
+        #     3|co|colour|1
+        #     4|co|cold|1
+        #     5|conspirac|conspiracy|5
+        #     6|conspi|conspiracy|1
+        #     7|c|conspiracy|1
         #
         # and mudb contains:
         #
-        #     1|col|colour|1|3
-        #     2|conspi|conspiracy|1|3
-        #     3|colonel|colonel|2|1
-        #     4|c|conspiracy|-3|2
-        #     5|coooool|coooool|-2|1
+        #     1|col|colour|3
+        #     2|conspi|conspiracy|3
+        #     3|colonel|colonel|1
+        #     4|c|conspiracy|2
+        #     5|coooool|coooool|1
         #
         # If the same pairs of (input_phrase, phrase) exists in both
         # mudb and user_db, the user_freq *must* always be higher in mudb.
@@ -416,16 +371,16 @@ class tabsqlitedb:
         # and selecting max(user_freq) grouped by (input_phrase, phrase) we
         # get:
         #
-        #     colou|colour|0|1
-        #     col|colour|1|3
-        #     co|colour|0|1
-        #     co|cold|0|1
-        #     conspirac|conspiracy|0|5
-        #     conspi|conspiracy|1|3
-        #     coooool|coooool|-2|1
-        #     colonel|colonel|2|1
+        #     colou|colour|1
+        #     col|colour|3
+        #     co|colour|1
+        #     co|cold|1
+        #     conspirac|conspiracy|5
+        #     conspi|conspiracy|3
+        #     coooool|coooool|1
+        #     colonel|colonel|1
         #
-        # (“c|conspiracy|-3|2” is not selected because it doesn’t
+        # (“c|conspiracy|2” is not selected because it doesn’t
         # match the user input “LIKE co%”!)
         #
         # Now the outermost SELECT groups by phrase and sums the user
@@ -534,7 +489,7 @@ class tabsqlitedb:
         Determines the number of columns by parsing this:
 
         sqlite> select sql from sqlite_master where name='phrases';
-CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, phrase TEXT, freq INTEGER, user_freq INTEGER)
+CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, phrase TEXT, user_freq INTEGER)
         sqlite>
 
         This result could be on a single line, as above, or on multiple
@@ -587,7 +542,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
         # added to the database accidentally (But in that case there
         # is a bug somewhere else which should be fixed).
         sqlstr = '''
-        SELECT input_phrase, phrase, freq, sum(user_freq) FROM mudb.phrases
+        SELECT sum(user_freq) FROM mudb.phrases
         WHERE phrase = :phrase AND input_phrase = :input_phrase
         GROUP BY phrase
         ;'''
@@ -599,11 +554,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
             # user_db or hunspell.
             self.update_phrase(input_phrase = input_phrase,
                                phrase = phrase,
-                               user_freq = result[0][3]+1,
+                               user_freq = result[0][0]+1,
                                database='mudb', commit=True);
             return
         sqlstr = '''
-        SELECT input_phrase, phrase, freq, sum(user_freq) FROM user_db.phrases
+        SELECT sum(user_freq) FROM user_db.phrases
         WHERE phrase = :phrase AND input_phrase = :input_phrase
         GROUP BY phrase
         ;'''
@@ -612,35 +567,19 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
         if len(result) > 0:
             # A match was found in user_db, add the phrase to
             # mudb with the user frequency increased by 1
-            # and return. No need to check hunspell.
+            # and return.
             self.add_phrase(input_phrase = input_phrase,
                             phrase = phrase,
-                            freq = (-3 if result[0][2] == -1 else 1),
-                            user_freq = result[0][3]+1,
+                            user_freq = result[0][0]+1,
                             database='mudb', commit=True);
             return
         # The phrase was neither found in mudb nor in user_db.
-        # Check if the phrase is among the suggestions of self.hunspell_obj.suggest(input_phrase):
-        if not phrase in self.hunspell_obj.suggest(input_phrase):
-            # hunspell_obj.suggest(input_phrase) doesn’t suggest such
-            # a phrase either. Therefore, it is a completely new, user
-            # defined phrase and we add it as such to mudb:
-            self.add_phrase(input_phrase = input_phrase,
-                            phrase = phrase,
-                            freq = -2,
-                            user_freq = 1,
-                            database = 'mudb', commit=True)
-            return
-        else:
-            # hunspell_obj.suggest(input_phrase) does suggest such a phrase.
-            # Therefore it is a new (i.e. not used before) system phrase.
-            # Add it as such to mudb:
-            self.add_phrase(input_phrase = input_phrase,
-                            phrase = phrase,
-                            freq = 2,
-                            user_freq = 1,
-                            database = 'mudb', commit=True)
-            return
+        # Add it as a new phrase, i.e. with user_freq = 1, to mudb:
+        self.add_phrase(input_phrase = input_phrase,
+                        phrase = phrase,
+                        user_freq = 1,
+                        database = 'mudb', commit=True)
+        return
 
     def remove_phrase (self, input_phrase=u'', phrase=u'', database='user_db', commit=True):
         '''
@@ -676,7 +615,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
             db = sqlite3.connect(database)
             phrases = db.execute(
                 '''
-                SELECT phrase, freq, sum(user_freq)
+                SELECT phrase, sum(user_freq)
                 FROM phrases
                 GROUP BY phrase
                 ;''').fetchall()
