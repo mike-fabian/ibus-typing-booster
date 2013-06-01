@@ -92,7 +92,7 @@ class IMApp:
             name = self.__factory.db.ime_properties.get("name")
             longname = self.__factory.db.ime_properties.get("ime_name")
             description = self.__factory.db.ime_properties.get("description")
-            language = self.__factory.db.ime_properties.get("languages")
+            language = self.__factory.db.ime_properties.get("language")
             license = self.__factory.db.ime_properties.get("credit")
             author = self.__factory.db.ime_properties.get("author")
             icon = self.__factory.db.ime_properties.get("icon")
@@ -187,7 +187,7 @@ def main():
                 _longname.text = _name.text
 
             _language = SubElement (_engine, 'language')
-            _langs = _ime_properties.get ('languages')
+            _langs = _ime_properties.get ('language')
             if _langs:
                 _langs = _langs.split (',')
                 if len (_langs) == 1:

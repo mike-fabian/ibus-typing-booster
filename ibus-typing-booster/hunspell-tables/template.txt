@@ -18,8 +18,8 @@ icon = english.svg
 name = typing-booster:de_DE
 # Long text describing the engine
 description = This is a typing booster engine table for German in Germany (de_DE). German characters can be typed using a keyboard layout which has all German characters or with any keyboard layout which can be used to type ASCII characters using the m17n input methods “latn-post” or “latn-pre”
-# Languages supported by the engine.
-languages = de
+# Language supported by the engine.
+language = de
 # Author of the .conf file.
 author = Mike FABIAN <mfabian@redhat.com>
 # Status prompt.

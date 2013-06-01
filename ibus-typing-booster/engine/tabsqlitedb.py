@@ -136,7 +136,7 @@ class tabsqlitedb:
         self._m17n_mim_name = ""
 
         self.hunspell_obj = hunspell_suggest.Hunspell(
-            lang=self.ime_properties.get('languages'),
+            lang=self.ime_properties.get('language'),
             dict_name=self.ime_properties.get("hunspell_dict"),
             aff_name=self.ime_properties.get("hunspell_dict").replace('.dic', '.aff'))
 
