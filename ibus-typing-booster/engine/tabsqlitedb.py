@@ -29,9 +29,6 @@ import hunspell_suggest
 
 user_database_version = '0.62'
 
-patt_r = re.compile(r'c([ea])(\d):(.*)')
-patt_p = re.compile(r'p(-{0,1}\d)(-{0,1}\d)')
-
 class ImeProperties:
     def __init__(self, configfile_path=None):
         '''
