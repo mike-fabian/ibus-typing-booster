@@ -845,15 +845,15 @@ class tabengine (IBus.Engine):
             if not phrase:
                 return False
             if self._editor._lookup_table.cursor_visible:
+                # something is selected in the lookup table, commit
+                # the selected phrase
                 self.commit_string(phrase)
                 self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase)
             else:
-                if phrase.lower() == input_phrase.lower():
-                    self.commit_string(phrase)
-                    self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase)
-                else:
-                    self.commit_string(input_phrase)
-                    self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase)
+                # nothing is selected in the lookup table, commit the
+                # input_phrase
+                self.commit_string(input_phrase)
+                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase)
             return False
 
         # We pass all other hotkeys through:
