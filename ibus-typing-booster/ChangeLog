@@ -1,4 +1,18 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 02 Jun 2013 Released 0.0.32 version
+* Fix behaviour of Control+Number
+* When committing by typing TAB, update frequency data in user database
+* When committing by tying RETURN or ENTER, update frequency data in user database
+* Do not try to match very long words in the hunspell dictionaries
+* Rewrite the code for moving and editing within the preëdit (Resolves: rhbz#969847 https://bugzilla.redhat.com/show_bug.cgi?id=969847)
+* Fix encoding error when changing values with the setup tool
+* Add ko_KR.conf and ko_KR.svg
+* Use normalization forms NFD or NFKD internally and NFC externally
+* Remove old way of using libtranslit via ctypes
+* Get rid of “freq” column in databases
+* Remove too simpleminded auto-capitalization
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 29 May 2013 Released 0.0.31 version
 * Remove lots of unused and/or useless code
 * Simplify some code
