@@ -76,11 +76,8 @@ class EngineFactory (IBus.Factory):
 
     def do_destroy (self):
         '''Destructor, which finish some task for IME'''
-        #
-        ## we need to sync the temp userdb in memory to the user_db on disk
         for _db in self.dbdict:
-            self.dbdict[_db].sync_usrdb ()
-        ##print "Have synced user db\n"
+            self.dbdict[_db].sync_usrdb()
         super(EngineFactory,self).destroy()
 
 

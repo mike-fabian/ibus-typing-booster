@@ -57,11 +57,11 @@ class ImeProperties:
 class tabsqlitedb:
     '''Phrase databases for ibus-typing-booster
 
-    The phrases tables in the databases have columns with the names:
+    The phrases table in the database has columns with the names:
 
     “id”, “input_phrase”, “phrase”, “user_freq”
 
-    There are 3 databases, sysdb, userdb, mudb.
+    There are 2 databases, sysdb, userdb.
 
     sysdb: “Database” with the suggestions from the hunspell dictionaries
         user_freq = 0 always.
@@ -74,12 +74,6 @@ class tabsqlitedb:
         which is installed systemwide and readonly for the user)
 
     user_db: Database on disk where the phrases learned from the user are stored
-        user_freq >= 1: The number of times the user has used this phrase
-
-        Data is written to user_db only when ibus-typing-booster exits.
-        Until then, the data learned from the user is stored only in mudb.
-
-    mudb: Database in memory where the phrases learned from the user are stored
         user_freq >= 1: The number of times the user has used this phrase
     '''
     def __init__(self, name = 'table.db', user_db = None, filename = None ):
@@ -155,11 +149,13 @@ class tabsqlitedb:
         try:
             sys.stderr.write("Connect to the database %(name)s.\n" %{'name': user_db})
             self.db = sqlite3.connect(user_db)
+            self.db.execute('PRAGMA encoding = "UTF-8";')
             self.db.execute('PRAGMA case_sensitive_like = true;')
-            self.db.execute('PRAGMA page_size = 8192; ')
-            self.db.execute('PRAGMA cache_size = 20000; ')
-            self.db.execute('PRAGMA temp_store = MEMORY; ')
-            self.db.execute('PRAGMA synchronous = OFF; ')
+            self.db.execute('PRAGMA page_size = 4096; ')
+            self.db.execute('PRAGMA cache_size = 20000;')
+            self.db.execute('PRAGMA temp_store = MEMORY;')
+            self.db.execute('PRAGMA journal_mode = WAL;')
+            self.db.execute('PRAGMA synchronous = NORMAL;')
             self.db.execute('ATTACH DATABASE "%s" AS user_db;' % user_db)
         except:
             sys.stderr.write("Could not open the database %(name)s.\n" %{'name': user_db})
@@ -197,12 +193,7 @@ class tabsqlitedb:
         self.create_indexes ("user_db",commit=False)
         self.generate_userdb_desc ()
 
-        # attach mudb for working process
-        mudb = ":memory:"
-        self.db.execute ('ATTACH DATABASE "%s" AS mudb;' % mudb )
-        self.create_tables ("mudb")
-
-    def update_phrase (self, input_phrase='', phrase='', user_freq=0, database='user_db', commit=True):
+    def update_phrase (self, input_phrase=u'', phrase=u'', user_freq=0, database='user_db', commit=True):
         '''
         update the user frequency of a phrase
         '''
@@ -227,28 +218,13 @@ class tabsqlitedb:
 
     def sync_usrdb (self):
         '''
-        Sync mudb to user_db
+        Trigger a checkpoint operation.
         '''
-        mudata = self.db.execute('SELECT input_phrase, phrase, user_freq FROM mudb.phrases;').fetchall()
-        # add phrase does nothing if the phrase is already there:
-        map(lambda x: self.add_phrase(
-            input_phrase=x[0], phrase=x[1], user_freq=x[2], database='user_db', commit=False),
-            mudata)
-        map(lambda x: self.update_phrase(
-            input_phrase=x[0], phrase=x[1], user_freq=x[2], database='user_db', commit=False),
-            mudata)
-        # now that all phrases from mudb have been synced to user_db
-        # delete all records in mudb:
-        self.db.execute('DELETE FROM mudb.phrases;')
         self.db.commit()
+        self.db.execute('PRAGMA wal_checkpoint;')
 
     def create_tables (self, database):
         '''Create table for the phrases.'''
-        try:
-            self.db.execute( 'PRAGMA cache_size = 20000; ' )
-            # increase the cache size to speedup sqlite enquiry
-        except:
-            pass
         sqlstr = '''CREATE TABLE IF NOT EXISTS %s.phrases
                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
                     input_phrase TEXT, phrase TEXT,
@@ -336,7 +312,7 @@ class tabsqlitedb:
             input_phrase = input_phrase.decode('utf8')
         input_phrase = unicodedata.normalize(
             self._normalization_form_internal, input_phrase)
-        # Get (phrase, user_freq) pairs from mudb and user_db.
+        # Get (phrase, user_freq) pairs from user_db.
         #
         # Example: Let’s assume the user typed “co” and user_db contains
         #
@@ -348,59 +324,15 @@ class tabsqlitedb:
         #     6|conspi|conspiracy|1
         #     7|c|conspiracy|1
         #
-        # and mudb contains:
+        # Then the result returned by .fetchall() is:
         #
-        #     1|col|colour|3
-        #     2|conspi|conspiracy|3
-        #     3|colonel|colonel|1
-        #     4|c|conspiracy|2
-        #     5|coooool|coooool|1
+        # [(u'colour', 4), (u'cold', 1), (u'conspiracy', 6)]
         #
-        # If the same pairs of (input_phrase, phrase) exists in both
-        # mudb and user_db, the user_freq *must* always be higher in mudb.
-        # Because, if a phrase which is in user_db is used, it is added to mudb
-        # and user_freq is increased by one. If the same phrase is used again,
-        # its frequency in mudb is again increased by one.
-        #
-        # That means for (input_phrase, phrase) pairs found in both
-        # mudb and user_db, only that from mudb should be selected
-        # which is the one with the bigger user_freq (Therefore, the
-        # max(user_freq) in the SQL statement).
-        #
-        # I.e., for the above example, after the UNION of mudb and user_db
-        # and selecting max(user_freq) grouped by (input_phrase, phrase) we
-        # get:
-        #
-        #     colou|colour|1
-        #     col|colour|3
-        #     co|colour|1
-        #     co|cold|1
-        #     conspirac|conspiracy|5
-        #     conspi|conspiracy|3
-        #     coooool|coooool|1
-        #     colonel|colonel|1
-        #
-        # (“c|conspiracy|2” is not selected because it doesn’t
+        # (“c|conspiracy|1” is not selected because it doesn’t
         # match the user input “LIKE co%”!)
-        #
-        # Now the outermost SELECT groups by phrase and sums the user
-        # frequencies, so the end result returned by .fetchall() is:
-        #
-        # [(u'colour', 5), (u'cold', 1), (u'conspiracy', 8), (u'coooool', 1), (u'colonel', 1)]
-        #
         sqlstr = '''
         SELECT phrase, sum(user_freq)
-        FROM (
-            SELECT input_phrase, phrase, max(user_freq) as user_freq
-            FROM (
-                SELECT input_phrase, phrase, user_freq
-                FROM user_db.phrases WHERE input_phrase LIKE :input_phrase
-                UNION
-                SELECT input_phrase, phrase, user_freq
-                FROM mudb.phrases WHERE input_phrase LIKE :input_phrase
-            )
-            GROUP BY input_phrase, phrase
-        )
+        FROM user_db.phrases WHERE input_phrase LIKE :input_phrase
         GROUP BY phrase
         limit 1000
         ;'''
@@ -419,12 +351,11 @@ class tabsqlitedb:
         # Updating this dictionary filled only with hunspell data
         # so far with the results of the SELECT statement, i.e.
         #
-        # [(u'colour', 5), (u'cold', 1), (u'conspiracy', 8), (u'coooool', 1), (u'colonel', 1)]
+        # [(u'colour', 4), (u'cold', 1), (u'conspiracy', 6)]
         #
         # then gives us
         #
-        # {u'conspiracy': 8, u'coooool': 1, u'colonel': 1, u'code': 0,
-        #  u'communicability': 0, u'cold': 1, u'colour': 5}
+        # {u'conspiracy': 6, u'code': 0, u'communicability': 0, u'cold': 1, u'colour': 4}
         phrase_frequencies.update(results)
 
         candidates = []
@@ -453,11 +384,17 @@ class tabsqlitedb:
     def init_user_db (self,db_file):
         if not path.exists (db_file):
             db = sqlite3.connect (db_file)
+            db.execute('PRAGMA encoding = "UTF-8";')
             db.execute('PRAGMA case_sensitive_like = true;')
             db.execute('PRAGMA page_size = 4096;')
-            db.execute( 'PRAGMA cache_size = 20000;' )
-            db.execute( 'PRAGMA temp_store = MEMORY; ' )
-            db.execute( 'PRAGMA synchronous = OFF; ' )
+            # a database containing the complete German Hunspell
+            # dictionary has less then 6000 pages. 20000 pages
+            # should be enough to cache the complete database
+            # in most cases.
+            db.execute('PRAGMA cache_size = 20000;')
+            db.execute('PRAGMA temp_store = MEMORY; ')
+            db.execute('PRAGMA journal_mode = WAL;')
+            db.execute('PRAGMA synchronous = NORMAL;')
             db.commit()
 
     def get_database_desc(self, db_file):
@@ -505,11 +442,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
         except:
             return 0
 
-    def check_phrase_and_update_frequency(self, input_phrase=u'', phrase=u'', database='main'):
+    def check_phrase_and_update_frequency(self, input_phrase=u'', phrase=u'', database='user_db'):
         '''
-        Check whether input_phrase and phrase are already in the user
-        database. If they are in the database, update the user
-        frequency, if not add them.
+        Check whether input_phrase and phrase are already in database. If
+        they are in the database, increase the frequency by 1, if not
+        add them.
         '''
         if not input_phrase:
             input_phrase = phrase
@@ -525,51 +462,33 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
             self._normalization_form_internal, input_phrase)
 
         # There should never be more than 1 database row for the same
-        # input_phrase *and* phrase. So the following queries on the
-        # mudb and user_db databases should match at most one database
-        # row each and the length of the result array should be 0 or
+        # input_phrase *and* phrase. So the following query on
+        # the database should match at most one database
+        # row and the length of the result array should be 0 or
         # 1. So the “GROUP BY phrase” is actually redundant. It is
         # only a safeguard for the case when duplicate rows have been
         # added to the database accidentally (But in that case there
         # is a bug somewhere else which should be fixed).
         sqlstr = '''
-        SELECT sum(user_freq) FROM mudb.phrases
+        SELECT max(user_freq) FROM user_db.phrases
         WHERE phrase = :phrase AND input_phrase = :input_phrase
         GROUP BY phrase
         ;'''
         sqlargs = {'phrase': phrase, 'input_phrase': input_phrase}
         result = self.db.execute(sqlstr, sqlargs).fetchall()
         if len(result) > 0:
-            # A match was already found in mudb, increase the user
-            # frequency by 1 and return, there is no need to check
-            # user_db or hunspell.
+            # A match was found in user_db, increase user frequency by 1
             self.update_phrase(input_phrase = input_phrase,
                                phrase = phrase,
                                user_freq = result[0][0]+1,
-                               database='mudb', commit=True);
+                               database='user_db', commit=True);
             return
-        sqlstr = '''
-        SELECT sum(user_freq) FROM user_db.phrases
-        WHERE phrase = :phrase AND input_phrase = :input_phrase
-        GROUP BY phrase
-        ;'''
-        sqlargs = {'phrase': phrase, 'input_phrase': input_phrase}
-        result = self.db.execute(sqlstr, sqlargs).fetchall()
-        if len(result) > 0:
-            # A match was found in user_db, add the phrase to
-            # mudb with the user frequency increased by 1
-            # and return.
-            self.add_phrase(input_phrase = input_phrase,
-                            phrase = phrase,
-                            user_freq = result[0][0]+1,
-                            database='mudb', commit=True);
-            return
-        # The phrase was neither found in mudb nor in user_db.
-        # Add it as a new phrase, i.e. with user_freq = 1, to mudb:
+        # The phrase was not found in user_db.
+        # Add it as a new phrase, i.e. with user_freq = 1:
         self.add_phrase(input_phrase = input_phrase,
                         phrase = phrase,
                         user_freq = 1,
-                        database = 'mudb', commit=True)
+                        database = 'user_db', commit=True)
         return
 
     def remove_phrase (self, input_phrase=u'', phrase=u'', database='user_db', commit=True):

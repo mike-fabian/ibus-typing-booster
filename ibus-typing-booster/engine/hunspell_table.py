@@ -440,11 +440,7 @@ class editor(object):
         if  len (self._candidates) > real_index:
             # this index is valid
             can = self._candidates[real_index]
-            self.db.remove_phrase(phrase=can[0], database='user_db', commit=False)
-            self.db.remove_phrase(phrase=can[0], database='mudb', commit=True)
-            # sync user database immediately after removing
-            # phrases:
-            self.db.sync_usrdb()
+            self.db.remove_phrase(phrase=can[0], database='user_db', commit=True)
             # call update_candidates() to get a new SQL query.  The
             # input has not really changed, therefore we must clear
             # the remembered list of transliterated characters to
@@ -876,7 +872,6 @@ class tabengine (IBus.Engine):
 
     def do_focus_out (self):
         self.reset()
-        self.db.sync_usrdb()
         return
 
     def do_enable (self):
