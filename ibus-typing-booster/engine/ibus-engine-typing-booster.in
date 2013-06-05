@@ -22,7 +22,11 @@ datarootdir=@datarootdir@
 datadir=@datadir@
 export IBUS_HUNSPELL_TABLE_LOCATION=@datarootdir@/ibus-typing-booster
 
-# set this to some file if you want benchmarking in the debug output
+# Set this variable to something > 0 to get more debug output.
+# (Debug output may show up in the log file and/or in the lookup table):
+# export IBUS_TYPING_BOOSTER_DEBUG_LEVEL=1
+#
+# set this to some file if you want benchmarking
 # export IBUS_TYPING_BOOSTER_PROFILE_FILE=/tmp/ibus-typing-booster.profile
 #
 # Then after using ibus-typing-booster for a while, stop it with “ibus exit”

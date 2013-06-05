@@ -29,6 +29,8 @@ import re
 from gi.repository import IBus
 from gi.repository import GLib
 
+debug_level = int(0)
+
 try:
     from gi.repository import Translit
     Transliterator = Translit.Transliterator
@@ -293,6 +295,8 @@ class editor(object):
             # this is a candidate which does not start exactly
             # as the transliterated user input, i.e. it is a suggestion
             # for a spelling correction:
+            if debug_level > 0:
+                phrase = phrase + u' ✓'
             attrs.append(IBus.attr_foreground_new(rgb(0xff,0x00,0x00), 0, len(phrase)))
         elif user_freq > 10:
             # this is a frequently used phrase:
@@ -300,6 +304,10 @@ class editor(object):
         else:
             # this is a system phrase that has been used less then 10 times or maybe never:
             attrs.append(IBus.attr_foreground_new(rgb(0x00,0x00,0x00), 0, len(phrase)))
+        if debug_level > 0:
+            phrase = phrase + u' ' + str(user_freq)
+            attrs.append(IBus.attr_foreground_new(
+                rgb(0x00,0xff,0x00), len(phrase) - len(str(user_freq)), len(phrase)))
         text = IBus.Text.new_from_string(phrase)
         i = 0
         while attrs.get(i) != None:
@@ -468,9 +476,13 @@ class tabengine (IBus.Engine):
 
     def __init__ (self, bus, obj_path, db ):
         super(tabengine,self).__init__ (connection=bus.get_connection(),object_path=obj_path)
+        global debug_level
+        try:
+            debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+        except ValueError:
+            debug_level = int(0)
         self._bus = bus
         self.db = db
-        # config
         self._name = self.db.ime_properties.get('name')
         self._config_section = "engine/typing-booster/%s" % self._name
         self._config = self._bus.get_config ()
