@@ -405,6 +405,7 @@ class tabsqlitedb:
             desc = {}
             for row in db.execute("SELECT * FROM desc;").fetchall():
                 desc[row[0]] = row[1]
+            db.close()
             return desc
         except:
             return None
@@ -529,6 +530,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
                 FROM phrases
                 GROUP BY phrase
                 ;''').fetchall()
+            db.close()
             return phrases[:]
         except:
             return []
