@@ -437,10 +437,6 @@ class tabsqlitedb:
             candidates.append((phrase, user_freq))
         return candidates[:]
 
-    def get_phrase_table_column_names (self):
-        '''get a list of phrase table columns name'''
-        return self._phrase_table_column_names[:]
-
     def generate_userdb_desc (self):
         try:
             sqlstring = 'CREATE TABLE IF NOT EXISTS user_db.desc (name PRIMARY KEY, value);'
