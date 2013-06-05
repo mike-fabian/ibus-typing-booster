@@ -437,11 +437,6 @@ class tabsqlitedb:
             candidates.append((phrase, user_freq))
         return candidates[:]
 
-    def get_all_values(self,d_name='main',t_name='inks'):
-        sqlstr = 'SELECT * FROM '+d_name+'.'+t_name+';'
-        _result = self.db.execute( sqlstr).fetchall()
-        return _result
-
     def get_phrase_table_column_names (self):
         '''get a list of phrase table columns name'''
         return self._phrase_table_column_names[:]
