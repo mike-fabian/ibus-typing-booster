@@ -92,6 +92,8 @@ class editor(object):
         self._typed_string_cursor = 0
         self._typed_string_when_update_candidates_was_last_called = u''
         self._transliterated_string = u''
+        self._p_phrase = u''
+        self._pp_phrase = u''
         # self._candidates: hold candidates selected from database and hunspell
         self._candidates = []
         self._lookup_table = IBus.LookupTable.new(
@@ -305,7 +307,7 @@ class editor(object):
             # this is a system phrase that has been used less then 10 times or maybe never:
             attrs.append(IBus.attr_foreground_new(rgb(0x00,0x00,0x00), 0, len(phrase)))
         if debug_level > 0:
-            phrase = phrase + u' ' + str(user_freq)
+            phrase += u' ' + str(user_freq)
             attrs.append(IBus.attr_foreground_new(
                 rgb(0x00,0xff,0x00), len(phrase) - len(str(user_freq)), len(phrase)))
         text = IBus.Text.new_from_string(phrase)
@@ -331,7 +333,7 @@ class editor(object):
         self._lookup_table.set_cursor_visible(False)
         if self._transliterated_string:
             try:
-                self._candidates = self.db.select_words(self._transliterated_string)
+                self._candidates = self.db.select_words(self._transliterated_string, p_phrase=self._p_phrase, pp_phrase=self._pp_phrase)
             except:
                 import traceback
                 traceback.print_exc()
@@ -468,6 +470,14 @@ class editor(object):
         '''Get lookup table'''
         return self._lookup_table
 
+    def push_context(self, phrase):
+        self._pp_phrase = self._p_phrase
+        self._p_phrase = phrase
+
+    def clear_context(self):
+        self._pp_phrase = u''
+        self._p_phrase = u''
+
 ########################
 ### Engine Class #####
 ####################
@@ -524,6 +534,7 @@ class tabengine (IBus.Engine):
             "tabenable"))
         if self._tab_enable == None:
             self._tab_enable = self.db.ime_properties.get('tab_enable').lower() == u'true'
+        self._commit_happened_after_focus_in = False
         self.reset ()
 
     def reset (self):
@@ -571,6 +582,11 @@ class tabengine (IBus.Engine):
             # Needs fix in ibus.
             attrs = IBus.AttrList()
             attrs.append(IBus.attr_foreground_new(rgb(0x95,0x15,0xb5),0,len(aux_string)))
+            if debug_level > 0:
+                context = u' ' + self._editor._pp_phrase + u' ' + self._editor._p_phrase
+                aux_string += context
+                attrs.append(IBus.attr_foreground_new(
+                    rgb(0x00,0xff,0x00),len(aux_string)-len(context), len(aux_string)))
             text = IBus.Text.new_from_string(aux_string)
             i = 0
             while attrs.get(i) != None:
@@ -632,7 +648,42 @@ class tabengine (IBus.Engine):
         self._update_ui ()
         # commit always in NFC:
         string = unicodedata.normalize('NFC', string)
+        self._editor.push_context(string)
+        self._commit_happened_after_focus_in = True
         super(tabengine,self).commit_text(IBus.Text.new_from_string(string))
+
+    def get_context(self):
+        if not (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT):
+            # If getting the surrounding text is not supported, leave
+            # the context as it is, i.e. rely on remembering what was
+            # typed last.
+            return
+        surrounding_text = self.get_surrounding_text()
+        text = surrounding_text[0].get_text().decode('UTF-8')
+        cursor_pos = surrounding_text[1]
+        anchor_pos = surrounding_text[2]
+        if not surrounding_text:
+            return
+        if not self._commit_happened_after_focus_in:
+            # Before the first commit or cursor movement, the
+            # surrounding text is probably from the previously
+            # focused window (bug!), don’t use it.
+            return
+        pattern_two_words = re.compile(
+            r'(?P<word1>[\S]+)[\s]+(?P<word2>[\S]+)[\s]*$',
+            re.UNICODE)
+        match = pattern_two_words.search(text[:cursor_pos])
+        if match and match.group('word1') and match.group('word2'):
+            self._editor._pp_phrase = match.group('word1')
+            self._editor._p_phrase = match.group('word2')
+            return
+        pattern_one_word = re.compile(
+            r'(?P<word>[\S]+)[\s]*$',
+            re.UNICODE)
+        match = pattern_one_word.search(text[:cursor_pos])
+        if match and match.group('word'):
+            self._editor._p_phrase = match.group('word')
+            return
 
     def do_process_key_event(self, keyval, keycode, state):
         '''Process Key Events
@@ -806,8 +857,8 @@ class tabengine (IBus.Engine):
             phrase = self._editor.get_string_from_lookup_table_current_page(key.code - IBus.KEY_1)
             if phrase:
                 input_phrase = self._editor.get_transliterated_string()
+                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
                 self.commit_string(phrase + u' ')
-                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase)
             return True
 
         if key.code == IBus.KEY_Tab:
@@ -827,14 +878,14 @@ class tabengine (IBus.Engine):
                     phrase = self._editor.get_string_from_lookup_table_cursor_pos()
                     if phrase:
                         input_phrase = self._editor.get_transliterated_string()
+                        self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
                         self.commit_string(phrase + u' ')
-                        self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase)
                     return True
                 else:
                     input_phrase = self._editor.get_transliterated_string()
                     if input_phrase:
+                        self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
                         self.commit_string(input_phrase + u' ')
-                        self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase)
                     return True
             return True
 
@@ -845,8 +896,8 @@ class tabengine (IBus.Engine):
             if not input_phrase:
                 return False
             if not self._editor._candidates:
+                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
                 self.commit_string(input_phrase)
-                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase)
                 return False
             phrase = self._editor.get_string_from_lookup_table_cursor_pos()
             if not phrase:
@@ -854,13 +905,13 @@ class tabengine (IBus.Engine):
             if self._editor._lookup_table.cursor_visible:
                 # something is selected in the lookup table, commit
                 # the selected phrase
+                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
                 self.commit_string(phrase)
-                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase)
             else:
                 # nothing is selected in the lookup table, commit the
                 # input_phrase
+                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
                 self.commit_string(input_phrase)
-                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase)
             return False
 
         # We pass all other hotkeys through:
@@ -871,6 +922,10 @@ class tabengine (IBus.Engine):
             return False
 
         if IBus.keyval_to_unicode(key.code):
+            if self._editor.is_empty():
+                # first key typed, we will try to complete something now
+                # get the context if possible
+                self.get_context()
             self._editor.insert_string_at_cursor(IBus.keyval_to_unicode(key.code).decode('UTF-8'))
             self._update_ui()
             return True
@@ -878,13 +933,19 @@ class tabengine (IBus.Engine):
         return False
 
     def do_focus_in (self):
+        self._editor.clear_context()
+        self._commit_happened_after_focus_in = False
         self._update_ui ()
 
     def do_focus_out (self):
+        self._editor.clear_context()
         self.reset()
         return
 
     def do_enable (self):
+        # Tell the input-context that the engine will utilize
+        # surrounding-text:
+        self.get_surrounding_text()
         self.do_focus_in()
 
     def do_disable (self):

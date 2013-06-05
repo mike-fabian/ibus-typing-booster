@@ -27,7 +27,7 @@ import time
 import re
 import hunspell_suggest
 
-user_database_version = '0.63'
+user_database_version = '0.64'
 
 class ImeProperties:
     def __init__(self, configfile_path=None):
@@ -59,7 +59,7 @@ class tabsqlitedb:
 
     The phrases table in the database has columns with the names:
 
-    “id”, “input_phrase”, “phrase”, “user_freq”
+    “id”, “input_phrase”, “phrase”, “p_phrase”, “pp_phrase”, “user_freq”
 
     There are 2 databases, sysdb, userdb.
 
@@ -79,7 +79,7 @@ class tabsqlitedb:
     def __init__(self, name = 'table.db', user_db = None, filename = None ):
         # use filename when you are creating db from source
         # use name when you are using db
-        self._phrase_table_column_names = ['id', 'input_phrase', 'phrase', 'user_freq']
+        self._phrase_table_column_names = ['id', 'input_phrase', 'phrase', 'p_phrase', 'pp_phrase', 'user_freq']
 
         self.old_phrases=[]
 
@@ -212,7 +212,7 @@ class tabsqlitedb:
         self.create_indexes ("user_db",commit=False)
         self.generate_userdb_desc ()
 
-    def update_phrase (self, input_phrase=u'', phrase=u'', user_freq=0, database='user_db', commit=True):
+    def update_phrase (self, input_phrase=u'', phrase=u'', p_phrase=u'', pp_phrase=u'', user_freq=0, database='user_db', commit=True):
         '''
         update the user frequency of a phrase
         '''
@@ -222,15 +222,19 @@ class tabsqlitedb:
             self._normalization_form_internal, input_phrase)
         phrase = unicodedata.normalize(
             self._normalization_form_internal, phrase)
+        p_phrase = unicodedata.normalize(
+            self._normalization_form_internal, p_phrase)
+        pp_phrase = unicodedata.normalize(
+            self._normalization_form_internal, pp_phrase)
         sqlstr = '''
         UPDATE %(database)s.phrases
         SET user_freq = :user_freq
         WHERE input_phrase = :input_phrase
-        AND phrase = :phrase
+         AND phrase = :phrase AND p_phrase = :p_phrase AND pp_phrase = :pp_phrase
         ;''' %{'database':database}
         sqlargs = {'user_freq': user_freq,
                    'input_phrase': input_phrase,
-                   'phrase': phrase}
+                   'phrase': phrase, 'p_phrase': p_phrase, 'pp_phrase': pp_phrase}
         self.db.execute(sqlstr, sqlargs)
         if commit:
             self.db.commit()
@@ -246,12 +250,12 @@ class tabsqlitedb:
         '''Create table for the phrases.'''
         sqlstr = '''CREATE TABLE IF NOT EXISTS %s.phrases
                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    input_phrase TEXT, phrase TEXT,
+                    input_phrase TEXT, phrase TEXT, p_phrase TEXT, pp_phrase TEXT,
                     user_freq INTEGER);''' % database
         self.db.execute(sqlstr)
         self.db.commit()
 
-    def add_phrase (self, input_phrase=u'', phrase=u'', user_freq=0, database = 'main', commit=True):
+    def add_phrase (self, input_phrase=u'', phrase=u'', p_phrase=u'', pp_phrase=u'', user_freq=0, database = 'main', commit=True):
         '''
         Add phrase to database
         '''
@@ -261,11 +265,17 @@ class tabsqlitedb:
             self._normalization_form_internal, input_phrase)
         phrase = unicodedata.normalize(
             self._normalization_form_internal, phrase)
+        p_phrase = unicodedata.normalize(
+            self._normalization_form_internal, p_phrase)
+        pp_phrase = unicodedata.normalize(
+            self._normalization_form_internal, pp_phrase)
         select_sqlstr= '''
         SELECT * FROM %(database)s.phrases
-        WHERE input_phrase = :input_phrase AND phrase = :phrase
+        WHERE input_phrase = :input_phrase
+        AND phrase = :phrase AND p_phrase = :p_phrase AND pp_phrase = :pp_phrase
         ;'''  %{'database': database}
-        select_sqlargs = {'input_phrase': input_phrase, 'phrase': phrase}
+        select_sqlargs = {'input_phrase': input_phrase,
+                          'phrase': phrase, 'p_phrase': p_phrase, 'pp_phrase': pp_phrase}
         if self.db.execute(select_sqlstr, select_sqlargs).fetchall():
             # there is already such a phrase, i.e. add_phrase was called
             # in error, do nothing to avoid duplicate entries.
@@ -273,10 +283,11 @@ class tabsqlitedb:
 
         insert_sqlstr = '''
         INSERT INTO %(database)s.phrases
-        (input_phrase, phrase, user_freq)
-        VALUES (:input_phrase, :phrase, :user_freq)
+        (input_phrase, phrase, p_phrase, pp_phrase, user_freq)
+        VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq)
         ;''' %{'database': database}
-        insert_sqlargs = {'input_phrase': input_phrase, 'phrase': phrase,
+        insert_sqlargs = {'input_phrase': input_phrase,
+                          'phrase': phrase, 'p_phrase': p_phrase, 'pp_phrase': pp_phrase,
                           'user_freq': user_freq}
         try:
             self.db.execute (insert_sqlstr, insert_sqlargs)
@@ -319,7 +330,18 @@ class tabsqlitedb:
         if commit:
             self.db.commit()
 
-    def select_words(self, input_phrase):
+    def best_candidates(self, phrase_frequencies):
+        candidates = []
+        for phrase, user_freq in sorted(phrase_frequencies.items(),
+                                        key=lambda x: (
+                                            -1*x[1],   # user_freq descending
+                                            len(x[0]), # len(phrase) ascending
+                                            x[0]       # phrase alphabetical
+                                        )):
+            candidates.append((phrase, user_freq))
+        return candidates[:20]
+
+    def select_words(self, input_phrase, p_phrase=u'', pp_phrase=u''):
         '''
         Get phrases from database completing input_phrase.
 
@@ -329,63 +351,111 @@ class tabsqlitedb:
         '''
         if type(input_phrase) != type(u''):
             input_phrase = input_phrase.decode('utf8')
+        if type(p_phrase) != type(u''):
+            p_phrase = p_phrase.decode('utf8')
+        if type(pp_phrase) != type(u''):
+            pp_phrase = pp_phrase.decode('utf8')
         input_phrase = unicodedata.normalize(
             self._normalization_form_internal, input_phrase)
-        # Get (phrase, user_freq) pairs from user_db.
-        #
-        # Example: Let’s assume the user typed “co” and user_db contains
-        #
-        #     1|colou|colour|1
-        #     2|col|colour|2
-        #     3|co|colour|1
-        #     4|co|cold|1
-        #     5|conspirac|conspiracy|5
-        #     6|conspi|conspiracy|1
-        #     7|c|conspiracy|1
-        #
-        # Then the result returned by .fetchall() is:
-        #
-        # [(u'colour', 4), (u'cold', 1), (u'conspiracy', 6)]
-        #
-        # (“c|conspiracy|1” is not selected because it doesn’t
-        # match the user input “LIKE co%”!)
-        sqlstr = '''
-        SELECT phrase, sum(user_freq)
-        FROM user_db.phrases WHERE input_phrase LIKE :input_phrase
-        GROUP BY phrase
-        limit 1000
-        ;'''
-        sqlargs = {'input_phrase': input_phrase+'%'}
-        try:
-            results = self.db.execute(sqlstr, sqlargs).fetchall()
-        except:
-            import traceback
-            traceback.print_exc()
+        p_phrase = unicodedata.normalize(
+            self._normalization_form_internal, p_phrase)
+        pp_phrase = unicodedata.normalize(
+            self._normalization_form_internal, pp_phrase)
         phrase_frequencies = {}
         map(lambda x: phrase_frequencies.update([(x, 0)]), self.hunspell_obj.suggest(input_phrase))
         # Now phrase_frequencies might contain something like this:
         #
         # {u'code': 0, u'communicability': 0, u'cold': 0, u'colour': 0}
-        #
-        # Updating this dictionary filled only with hunspell data
-        # so far with the results of the SELECT statement, i.e.
-        #
-        # [(u'colour', 4), (u'cold', 1), (u'conspiracy', 6)]
-        #
-        # then gives us
-        #
-        # {u'conspiracy': 6, u'code': 0, u'communicability': 0, u'cold': 1, u'colour': 4}
-        phrase_frequencies.update(results)
-
-        candidates = []
-        for phrase, user_freq in sorted(phrase_frequencies.items(),
-                                        key=lambda x: (
-                                            -1*x[1],   # user_freq descending
-                                            len(x[0]), # len(phrase) ascending
-                                            x[0]       # phrase alphabetical
-                                        )):
-            candidates.append((phrase, user_freq))
-        return candidates[:]
+        sqlargs = {'input_phrase': input_phrase+'%', 'p_phrase': p_phrase, 'pp_phrase': pp_phrase}
+        sqlstr = 'SELECT phrase, sum(user_freq) FROM user_db.phrases WHERE input_phrase LIKE :input_phrase GROUP BY phrase;'
+        try:
+            # Get “unigram” data from user_db.
+            #
+            # Example: Let’s assume the user typed “co” and user_db contains
+            #
+            #     1|colou|colour|green|nice|1
+            #     2|col|colour|yellow|ugly|2
+            #     3|co|colour|green|awesome|1
+            #     4|co|cold|||1
+            #     5|conspirac|conspiracy|||5
+            #     6|conspi|conspiracy|||1
+            #     7|c|conspiracy|||1
+            results_uni = self.db.execute(sqlstr, sqlargs).fetchall()
+            # Then the result returned by .fetchall() is:
+            #
+            # [(u'colour', 4), (u'cold', 1), (u'conspiracy', 6)]
+            #
+            # (“c|conspiracy|1” is not selected because it doesn’t match the user input “LIKE co%”!)
+        except:
+            import traceback
+            traceback.print_exc()
+        if not results_uni:
+            # If no unigrams matched, bigrams and trigrams cannot
+            # match either. We can stop here and return what we got
+            # from hunspell.
+            return self.best_candidates(phrase_frequencies)
+        # Now normalize the unigram frequencies with the total count
+        # (which is 11 in the above example), which gives us the
+        # normalized result:
+        # [(u'colour', 4/11), (u'cold', 1/11), (u'conspiracy', 6/11)]
+        sqlstr = 'SELECT sum(user_freq) FROM user_db.phrases WHERE input_phrase LIKE :input_phrase;'
+        try:
+            count = self.db.execute(sqlstr, sqlargs).fetchall()[0][0]
+        except:
+            import traceback
+            traceback.print_exc()
+        # Updating the phrase_frequency dictionary with the normalized results gives:
+        # {u'conspiracy': 6/11, u'code': 0, u'communicability': 0, u'cold': 1/11, u'colour': 4/11}
+        map(lambda x: phrase_frequencies.update([(x[0], x[1]/float(count))]), results_uni)
+        if not p_phrase:
+            # If no context for bigram matching is available, return what we have so far:
+            return self.best_candidates(phrase_frequencies)
+        sqlstr = 'SELECT phrase, sum(user_freq) FROM user_db.phrases WHERE p_phrase = :p_phrase AND input_phrase LIKE :input_phrase GROUP BY phrase;'
+        try:
+            results_bi = self.db.execute(sqlstr, sqlargs).fetchall()
+        except:
+            import traceback
+            traceback.print_exc()
+        if not results_bi:
+            # If no bigram could be matched, return what we have so far:
+            return self.best_candidates(phrase_frequencies)
+        # get the total count of p_phrase to normalize the bigram frequencies:
+        sqlstr = 'SELECT sum(user_freq) FROM user_db.phrases WHERE p_phrase = :p_phrase AND input_phrase LIKE :input_phrase;'
+        try:
+            count_p_phrase = self.db.execute(sqlstr, sqlargs).fetchall()[0][0]
+        except:
+            import traceback
+            traceback.print_exc()
+        # Update the phrase frequency dictionary by using a linear
+        # combination of the unigram and the bigram results, giving
+        # both the weight of 0.5:
+        map(lambda x: phrase_frequencies.update([(x[0], 0.5*x[1]/float(count_p_phrase)+0.5*phrase_frequencies[x[0]])]), results_bi)
+        if not pp_phrase:
+            # If no context for trigram matching is available, return what we have so far:
+            return self.best_candidates(phrase_frequencies)
+        sqlstr = 'SELECT phrase, sum(user_freq) FROM user_db.phrases WHERE p_phrase = :p_phrase AND pp_phrase = :pp_phrase AND input_phrase LIKE :input_phrase GROUP BY phrase;'
+        try:
+            results_tri = self.db.execute(sqlstr, sqlargs).fetchall()
+        except:
+            import traceback
+            traceback.print_exc()
+        if not results_tri:
+            # if no trigram could be matched, return what we have so far:
+            return self.best_candidates(phrase_frequencies)
+        # get the total count of (p_phrase, pp_phrase) pairs to normalize the bigram frequencies:
+        sqlstr = 'SELECT sum(user_freq) FROM user_db.phrases WHERE p_phrase = :p_phrase AND pp_phrase = :pp_phrase AND input_phrase LIKE :input_phrase;'
+        try:
+            count_pp_phrase_p_phrase = self.db.execute(sqlstr, sqlargs).fetchall()[0][0]
+        except:
+            import traceback
+            traceback.print_exc()
+        # Update the phrase frequency dictionary by using a linear
+        # combination of the bigram and the trigram results, giving
+        # both the weight of 0.5 (that makes the total weights: 0.25 *
+        # unigram + 0.25 * bigram + 0.5 * trigram, i.e. the trigrams
+        # get higher weight):
+        map(lambda x: phrase_frequencies.update([(x[0], 0.5*x[1]/float(count_pp_phrase_p_phrase)+0.5*phrase_frequencies[x[0]])]), results_tri)
+        return self.best_candidates(phrase_frequencies)
 
     def generate_userdb_desc (self):
         try:
@@ -437,7 +507,7 @@ class tabsqlitedb:
         Determines the number of columns by parsing this:
 
         sqlite> select sql from sqlite_master where name='phrases';
-CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, phrase TEXT, user_freq INTEGER)
+CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, phrase TEXT, p_phrase TEXT, pp_phrase TEXT, user_freq INTEGER)
         sqlite>
 
         This result could be on a single line, as above, or on multiple
@@ -462,7 +532,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
         except:
             return 0
 
-    def check_phrase_and_update_frequency(self, input_phrase=u'', phrase=u'', database='user_db'):
+    def check_phrase_and_update_frequency(self, input_phrase=u'', phrase=u'', p_phrase=u'', pp_phrase=u'', database='user_db'):
         '''
         Check whether input_phrase and phrase are already in database. If
         they are in the database, increase the frequency by 1, if not
@@ -474,10 +544,18 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
             return
         if type(phrase) != type(u''):
             phrase = phrase.decode('utf8')
+        if type(p_phrase) != type(u''):
+            p_phrase = p_phrase.decode('utf8')
+        if type(pp_phrase) != type(u''):
+            pp_phrase = pp_phrase.decode('utf8')
         if type(input_phrase) != type(u''):
             input_phrase = input_phrase.decode('utf8')
         phrase = unicodedata.normalize(
             self._normalization_form_internal, phrase)
+        p_phrase = unicodedata.normalize(
+            self._normalization_form_internal, p_phrase)
+        pp_phrase = unicodedata.normalize(
+            self._normalization_form_internal, pp_phrase)
         input_phrase = unicodedata.normalize(
             self._normalization_form_internal, input_phrase)
 
@@ -491,22 +569,24 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
         # is a bug somewhere else which should be fixed).
         sqlstr = '''
         SELECT max(user_freq) FROM user_db.phrases
-        WHERE phrase = :phrase AND input_phrase = :input_phrase
+        WHERE input_phrase = :input_phrase
+        AND phrase = :phrase AND p_phrase = :p_phrase AND pp_phrase = :pp_phrase
         GROUP BY phrase
         ;'''
-        sqlargs = {'phrase': phrase, 'input_phrase': input_phrase}
+        sqlargs = {'input_phrase': input_phrase,
+                   'phrase': phrase, 'p_phrase': p_phrase, 'pp_phrase': pp_phrase}
         result = self.db.execute(sqlstr, sqlargs).fetchall()
         if len(result) > 0:
             # A match was found in user_db, increase user frequency by 1
             self.update_phrase(input_phrase = input_phrase,
-                               phrase = phrase,
+                               phrase = phrase, p_phrase = p_phrase, pp_phrase = pp_phrase,
                                user_freq = result[0][0]+1,
                                database='user_db', commit=True);
             return
         # The phrase was not found in user_db.
         # Add it as a new phrase, i.e. with user_freq = 1:
         self.add_phrase(input_phrase = input_phrase,
-                        phrase = phrase,
+                        phrase = phrase, p_phrase = p_phrase, pp_phrase = pp_phrase,
                         user_freq = 1,
                         database = 'user_db', commit=True)
         return
