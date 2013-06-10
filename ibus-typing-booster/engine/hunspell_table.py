@@ -679,7 +679,7 @@ class tabengine (IBus.Engine):
                 # immediately:
                 if curses.ascii.ispunct(key.code):
                     if not self._editor.trans_m17n_mode:
-                        # If the first cahracter is a digit and no
+                        # If the first character is a digit and no
                         # transliteration is used, we can pass it
                         # through:
                         return False
