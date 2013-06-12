@@ -23,6 +23,7 @@ import hunspell_table
 import tabsqlitedb
 import os
 import re
+import sys
 
 from gettext import dgettext
 _  = lambda a : dgettext ("ibus-typing-booster", a)

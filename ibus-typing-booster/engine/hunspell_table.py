@@ -87,6 +87,8 @@ class editor(object):
     '''Hold user inputs chars and preedit string'''
 
     def __init__ (self, config, database):
+        if debug_level > 1:
+            sys.stderr.write("editor __init__()\n")
         self.db = database
         self._config = config
         self._name = self.db.ime_properties.get('name')
@@ -143,6 +145,10 @@ class editor(object):
             # using m17n transliteration
             self.trans_m17n_mode = True
             try:
+                if debug_level > 1:
+                    sys.stderr.write(
+                        "calling Transliterator.get(%(m17n)s, %(cur)s)\n"
+                        %{'m17n': self._m17ndb, 'cur': self._current_ime})
                 self.trans = Transliterator.get(self._m17ndb, self._current_ime)
             except:
                 import traceback
@@ -173,12 +179,36 @@ class editor(object):
                     'NFKD', self._transliterated_string)
         else:
             self._transliterated_string = self._typed_string
+        if debug_level > 1:
+            sys.stderr.write(
+                "update_transliterated_string() self._typed_string=%s\n"
+                %self._typed_string.encode('UTF-8'))
+            sys.stderr.write(
+                "update_transliterated_string() repr(self._typed_string)=%s\n"
+                %repr(self._typed_string))
+            sys.stderr.write(
+                "update_transliterated_string() "
+                + "self._transliterated_string=%s\n"
+                %self._transliterated_string.encode('UTF-8'))
+            sys.stderr.write(
+                "update_transliterated_string() "
+                + "repr(self._transliterated_string)=%s\n"
+                %repr(self._transliterated_string))
 
     def get_transliterated_string(self):
         return self._transliterated_string
 
     def insert_string_at_cursor(self, string_to_insert):
         '''Insert typed string at cursor position'''
+        if debug_level > 1:
+            sys.stderr.write("insert_string_at_cursor() string_to_insert=%s\n"
+                             %string_to_insert.encode('UTF-8'))
+            sys.stderr.write("insert_string_at_cursor() "
+                             + "self._typed_string=%s\n"
+                             %self._typed_string.encode('UTF-8'))
+            sys.stderr.write("insert_string_at_cursor() "
+                             + "self._typed_string_cursor=%s\n"
+                             %self._typed_string_cursor)
         self._typed_string = self._typed_string[:self._typed_string_cursor] \
                              +string_to_insert \
                              +self._typed_string[self._typed_string_cursor:]
@@ -334,6 +364,9 @@ class editor(object):
 
     def update_candidates (self):
         '''Update lookuptable'''
+        if debug_level > 1:
+            sys.stderr.write("update_candidates() self._typed_string=%s\n"
+                             %self._typed_string.encode('UTF-8'))
         if (self._typed_string
             == self._typed_string_when_update_candidates_was_last_called):
             # The input did not change since we came here last, do
@@ -517,13 +550,15 @@ class tabengine (IBus.Engine):
     '''The IM Engine for Tables'''
 
     def __init__ (self, bus, obj_path, db ):
-        super(tabengine, self).__init__(
-            connection=bus.get_connection(),object_path=obj_path)
         global debug_level
         try:
             debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
         except (TypeError, ValueError):
             debug_level = int(0)
+        if debug_level > 1:
+            sys.stderr.write("tabengine.__init__() obj_path=%s\n" %obj_path)
+        super(tabengine, self).__init__(
+            connection=bus.get_connection(), object_path=obj_path)
         self._input_purpose = 0
         self._has_input_purpose = False
         if hasattr(IBus, 'InputPurpose'):
@@ -632,6 +667,8 @@ class tabengine (IBus.Engine):
     def _change_mode (self):
         '''Shift input mode, TAB -> EN -> TAB
         '''
+        if debug_level > 1:
+            sys.stderr.write("tabengine._change_mode()\n")
         self.reset ()
         self._update_ui ()
 
@@ -818,8 +855,20 @@ class tabengine (IBus.Engine):
             and self._input_purpose
             in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN]):
             return False
-
+        if debug_level > 1:
+            sys.stderr.write(
+                "do_process_key_event(keyval=%(kv)s, "
+                + "keycode=%(kc)s, state=%(st)s)\n"
+                %{'kv': keyval, 'kc': keycode, 'st': state})
         key = KeyEvent(keyval, keycode, state)
+        if debug_level > 1:
+            sys.stderr.write(
+                "process_key_event() after KeyEvent() "
+                + "key.val=%(kval)s "
+                + "IBus.keyval_to_unicode(%(key.code)s)=%(uc)s\n"
+                %{'kval': key.val,
+                  'key.code': key.code,
+                  'uc': IBus.keyval_to_unicode(key.code)})
         # ignore NumLock mask
         key.state &= ~IBus.ModifierType.MOD2_MASK
 
@@ -840,6 +889,17 @@ class tabengine (IBus.Engine):
             return True
 
         if self._editor.is_empty ():
+            if debug_level > 1:
+                sys.stderr.write(
+                    "_process_key_event() self._editor.is_empty ():\n")
+                sys.stderr.write(
+                    "key.val=%(key.val)s "
+                    + "IBus.keyval_to_unicode(key.val)=%(keychar)s\n"
+                    %{'key.val': key.val,
+                      'keychar': IBus.keyval_to_unicode(key.val)})
+                sys.stderr.write(
+                    "IBus.keyval_name(key.val)=%s\n"
+                    %IBus.keyval_name(key.val))
             # This is the first character typed since the last commit
             # there is nothing in the preëdit yet.
             if key.val < 32:
@@ -1133,6 +1193,10 @@ class tabengine (IBus.Engine):
             typed_character = IBus.keyval_to_unicode(key.val)
             if type(typed_character) != type(u''):
                 typed_character = typed_character.decode('UTF-8')
+            if debug_level > 1:
+                sys.stderr.write(
+                    "MOD5_MASK=%(bit)s\n"
+                    %{'bit': key.state & IBus.ModifierType.MOD5_MASK})
             self._editor.insert_string_at_cursor(typed_character)
             if (typed_character
                 and unicodedata.category(typed_character)

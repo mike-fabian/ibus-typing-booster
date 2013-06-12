@@ -29,6 +29,8 @@ import re
 import itb_util
 import hunspell_suggest
 
+debug_level = int(0)
+
 user_database_version = '0.65'
 
 class ImeProperties:
@@ -80,6 +82,13 @@ class tabsqlitedb:
         user_freq >= 1: The number of times the user has used this phrase
     '''
     def __init__(self, config_filename=None):
+        global debug_level
+        try:
+            debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+        except:
+            debug_level = int(0)
+        if debug_level > 1:
+            sys.stderr.write("tabsqlitedb.__init__()")
         self._phrase_table_column_names = ['id', 'input_phrase', 'phrase', 'p_phrase', 'pp_phrase', 'user_freq', 'timestamp']
 
         self.old_phrases=[]
@@ -241,6 +250,11 @@ class tabsqlitedb:
                    'input_phrase': input_phrase,
                    'phrase': phrase, 'p_phrase': p_phrase, 'pp_phrase': pp_phrase,
                    'timestamp': time.time()}
+        if debug_level > 1:
+            sys.stderr.write(
+                "tabsqlitedb.update_phrase() sqlstr=%s\n" %sqlstr)
+            sys.stderr.write(
+                "tabsqlitedb.update_phrase() sqlargs=%s\n" %sqlargs)
         try:
             self.db.execute(sqlstr, sqlargs)
             if commit:
@@ -253,8 +267,16 @@ class tabsqlitedb:
         '''
         Trigger a checkpoint operation.
         '''
+        if debug_level > 1:
+            sys.stderr.write(
+                "tabsqlitedb.sync_userdb() "
+                + "commit and execute checkpoint ...\n")
         self.db.commit()
         self.db.execute('PRAGMA wal_checkpoint;')
+        if debug_level > 1:
+            sys.stderr.write(
+                "tabsqlitedb.sync_userdb() "
+                + "commit and execute checkpoint done.\n")
 
     def create_tables (self, database):
         '''Create table for the phrases.'''
@@ -269,6 +291,17 @@ class tabsqlitedb:
         '''
         Add phrase to database
         '''
+        if debug_level > 1:
+            sys.stderr.write(
+                "tabsqlitedb.add_phrase() "
+                + "input_phrase=%(ip)s "
+                + "phrase=%(p)s "
+                + "user_freq=%(uf)s "
+                + "database=%(db)s\n"
+                %{'ip': input_phrase.encode('UTF-8'),
+                  'p': phrase.encode('UTF-8'),
+                  'uf': user_freq,
+                  'db': database})
         if not input_phrase or not phrase:
             return
         input_phrase = unicodedata.normalize(
@@ -299,6 +332,11 @@ class tabsqlitedb:
         insert_sqlargs = {'input_phrase': input_phrase,
                           'phrase': phrase, 'p_phrase': p_phrase, 'pp_phrase': pp_phrase,
                           'user_freq': user_freq, 'timestamp': time.time()}
+        if debug_level > 1:
+            sys.stderr.write(
+                "tabsqlitedb.add_phrase() insert_sqlstr=%s\n" %insert_sqlstr)
+            sys.stderr.write(
+                "tabsqlitedb.add_phrase() insert_sqlargs=%s\n" %insert_sqlargs)
         try:
             self.db.execute (insert_sqlstr, insert_sqlargs)
             if commit:
@@ -368,9 +406,22 @@ class tabsqlitedb:
             self._normalization_form_internal, p_phrase)
         pp_phrase = unicodedata.normalize(
             self._normalization_form_internal, pp_phrase)
+        if debug_level > 1:
+            sys.stderr.write(
+                "tabsqlitedb.select_words() "
+                + "input_phrase=%(ip)s "
+                + "p_phrase=%(p)s "
+                + "pp_phrase=%(pp)s\n"
+                %{'ip': input_phrase.encode('UTF-8'),
+                  'p': p_phrase.encode('UTF-8'),
+                  'pp': pp_phrase.encode('UTF-8')})
         phrase_frequencies = {}
         for x in self.hunspell_obj.suggest(input_phrase):
             phrase_frequencies.update([(x, 0)])
+        if debug_level > 1:
+            sys.stderr.write(
+                "tabsqlitedb.select_words() hunspell: best_candidates=%s\n"
+                %self.best_candidates(phrase_frequencies))
         # Now phrase_frequencies might contain something like this:
         #
         # {u'code': 0, u'communicability': 0, u'cold': 0, u'colour': 0}
@@ -437,6 +488,10 @@ class tabsqlitedb:
         # {u'conspiracy': 6/11, u'code': 0, u'communicability': 0, u'cold': 1/11, u'colour': 4/11}
         for x in results_uni:
             phrase_frequencies.update([(x[0], x[1]/float(count))])
+        if debug_level > 1:
+            sys.stderr.write(
+                "tabsqlitedb.select_words() Unigram best_candidates=%s\n"
+                %self.best_candidates(phrase_frequencies))
         if not p_phrase:
             # If no context for bigram matching is available, return what we have so far:
             return self.best_candidates(phrase_frequencies)
@@ -461,6 +516,10 @@ class tabsqlitedb:
         # both the weight of 0.5:
         for x in results_bi:
             phrase_frequencies.update([(x[0], 0.5*x[1]/float(count_p_phrase)+0.5*phrase_frequencies[x[0]])])
+        if debug_level > 1:
+            sys.stderr.write(
+                "tabsqlitedb.select_words() Bigram best_candidates=%s\n"
+                %self.best_candidates(phrase_frequencies))
         if not pp_phrase:
             # If no context for trigram matching is available, return what we have so far:
             return self.best_candidates(phrase_frequencies)
@@ -487,6 +546,10 @@ class tabsqlitedb:
         # get higher weight):
         for x in results_tri:
             phrase_frequencies.update([(x[0], 0.5*x[1]/float(count_pp_phrase_p_phrase)+0.5*phrase_frequencies[x[0]])])
+        if debug_level > 1:
+            sys.stderr.write(
+                "tabsqlitedb.select_words() Trigram best_candidates=%s\n"
+                %self.best_candidates(phrase_frequencies))
         return self.best_candidates(phrase_frequencies)
 
     def generate_userdb_desc (self):
@@ -592,6 +655,16 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         input_phrase = unicodedata.normalize(
             self._normalization_form_internal, input_phrase)
 
+        if debug_level > 1:
+            sys.stderr.write(
+                "tabsqlitedb.check_phrase_and_update_frequency() "
+                + "phrase=%(p)s, "
+                + "input_phrase=%(t)s, "
+                + "database=%(d)s\n"
+                %{'p': phrase.encode('UTF-8'),
+                  't': input_phrase.encode('UTF-8'),
+                  'd': database})
+
         # There should never be more than 1 database row for the same
         # input_phrase *and* phrase. So the following query on
         # the database should match at most one database
@@ -608,7 +681,17 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         ;'''
         sqlargs = {'input_phrase': input_phrase,
                    'phrase': phrase, 'p_phrase': p_phrase, 'pp_phrase': pp_phrase}
+        if debug_level > 1:
+            sys.stderr.write(
+                "tabsqlitedb.check_phrase_and_update_frequency() sqlstr=%s\n"
+                %sqlstr)
+            sys.stderr.write(
+                "tabsqlitedb.check_phrase_and_update_frequency() sqlargs=%s\n"
+                %sqlargs)
         result = self.db.execute(sqlstr, sqlargs).fetchall()
+        if debug_level > 1:
+            sys.stderr.write(
+                "check_phrase_and_update_frequency() result=%s\n" %result)
         if len(result) > 0:
             # A match was found in user_db, increase user frequency by 1
             self.update_phrase(input_phrase = input_phrase,
@@ -630,6 +713,13 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         Or, if “input_phrase” is “None”, remove all rows matching “phrase”
         no matter for what input phrase from the database.
         '''
+        if debug_level > 1:
+            sys.stderr.write(
+                "tabsqlitedb.remove_phrase() phrase=%(p)s\n"
+                %{'p': phrase.encode('UTF-8')})
+            sys.stderr.write(
+                "tabsqlitedb.remove_phrase() database=%s\n"
+                %database)
         if not phrase:
             return
         phrase = unicodedata.normalize(

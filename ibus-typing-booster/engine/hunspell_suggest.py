@@ -22,6 +22,8 @@ import sys
 import unicodedata
 import re
 
+debug_level = int(0)
+
 import_enchant_successful = False
 import_hunspell_successful = False
 try:
@@ -47,6 +49,9 @@ normalization_form_internal = 'NFD'
 
 class Dictionary:
     def __init__(self, name=u'en_US'):
+        if debug_level > 1:
+            sys.stderr.write(
+                "Dictionary.__init__(name=%s)" %name)
         self.loc = '/usr/share/myspell'
         self.name = name
         self.encoding = 'UTF-8'
@@ -104,11 +109,24 @@ class Dictionary:
 
 class Hunspell:
     def __init__(self, dictionary_names=['en_US']):
+        global debug_level
+        try:
+            debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+        except:
+            debug_level = int(0)
+        if debug_level > 1:
+            sys.stderr.write(
+                "Hunspell.__init__(dictionary_names=%s)\n"
+                %dictionary_names)
         self.dictionary_names = dictionary_names
         self.dictionaries = []
         self.load_dictionaries()
 
     def load_dictionaries(self):
+        if debug_level > 1:
+            sys.stderr.write(
+                "Hunspell.load_dictionaries() dictionary_names=%s\n"
+                %self.dictionary_names)
         for dictionary_name in self.dictionary_names:
             self.dictionaries.append(Dictionary(name=dictionary_name))
 
@@ -124,6 +142,10 @@ class Hunspell:
             return []
         if type(input_phrase) != type(u''):
             input_phrase = input_phrase.decode('utf8')
+        if debug_level > 1:
+            sys.stderr.write(
+                "Hunspell.suggest() input_phrase=%(ip)s\n"
+                %{'ip': input_phrase.encode('UTF-8')})
         # http://pwet.fr/man/linux/fichiers_speciaux/hunspell says:
         #
         # > A dictionary file (*.dic) contains a list of words, one per
