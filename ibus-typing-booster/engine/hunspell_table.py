@@ -524,7 +524,6 @@ class tabengine (IBus.Engine):
             "tabenable"))
         if self._tab_enable == None:
             self._tab_enable = self.db.ime_properties.get('tab_enable').lower() == u'true'
-        self._on = False
         self.reset ()
 
     def reset (self):
@@ -879,20 +878,17 @@ class tabengine (IBus.Engine):
         return False
 
     def do_focus_in (self):
-        if self._on:
-            self._update_ui ()
+        self._update_ui ()
 
     def do_focus_out (self):
         self.reset()
         return
 
     def do_enable (self):
-        self._on = True
         self.do_focus_in()
 
     def do_disable (self):
         self.reset()
-        self._on = False
 
     def do_page_up (self):
         if self._editor.page_up ():
