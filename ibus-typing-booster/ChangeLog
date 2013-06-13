@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 13 Jun 2013 Released 1.0.0 version
+* Remove mudb and use “Write-Ahead Logging”
+* Introduce an environment variable IBUS_TYPING_BOOSTER_DEBUG_LEVEL for debugging
+* Speed up converting an old database to the current format
+* Make prediction more intelligent by using context of up to 2 previous words
+* Automatically remove whitespace between the last word and a punctuation character ending a sentence
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 02 Jun 2013 Released 0.0.32 version
 * Fix behaviour of Control+Number
 * When committing by typing TAB, update frequency data in user database
