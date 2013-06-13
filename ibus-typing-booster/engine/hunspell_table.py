@@ -637,20 +637,27 @@ class tabengine (IBus.Engine):
         self._update_preedit ()
         self._update_aux ()
 
-    def commit_string (self,string):
+    def commit_string (self,string, input_phrase=u''):
         if self._tab_enable:
             # after each commit, disable a tab enabled lookup
             # table again, i.e. one needs to press tab again
             # while typing the next word to show the lookup table
             # again:
             self.is_lookup_table_enabled_by_tab = False
-        self._editor.clear_input()
-        self._update_ui ()
+        if not input_phrase:
+            input_phrase = self._editor.get_transliterated_string()
         # commit always in NFC:
         string = unicodedata.normalize('NFC', string)
-        self._editor.push_context(string)
-        self._commit_happened_after_focus_in = True
         super(tabengine,self).commit_text(IBus.Text.new_from_string(string))
+        self._editor.clear_input()
+        self._update_ui ()
+        self._commit_happened_after_focus_in = True
+        # we want neither leading nor trailing whitespace for
+        # in the frequency database or the context:
+        string = string.strip()
+        self.db.check_phrase_and_update_frequency(
+            input_phrase=input_phrase, phrase=string, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
+        self._editor.push_context(string)
 
     def get_context(self):
         if not (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT):
@@ -729,10 +736,12 @@ class tabengine (IBus.Engine):
                 # immediately:
                 if curses.ascii.ispunct(key.code):
                     if not self._editor.trans_m17n_mode:
-                        # If the first character is a digit and no
-                        # transliteration is used, we can pass it
-                        # through:
-                        return False
+                        # If the first character is punctuation and no
+                        # transliteration is used, don’t just pass it through.
+                        # Commit it so it gets added to the remembered context:
+                        punctuation = IBus.keyval_to_unicode(key.code).decode('UTF-8')
+                        self.commit_string(punctuation, input_phrase = punctuation)
+                        return True
                     # If transliteration is used, we may need to
                     # handle a punctuation character. For example,
                     # “.c” is transliterated to “ċ” in the
@@ -752,8 +761,9 @@ class tabengine (IBus.Engine):
                     # native digits. For example, with mr-inscript we
                     # want “3” to be converted to “३”. So we try
                     # to transliterate and commit the result:
-                    self.commit_string(
-                        self._editor.trans.transliterate(IBus.keyval_to_unicode(key.code))[0].decode('utf8'))
+                    transliterated_digit = self._editor.trans.transliterate(
+                        IBus.keyval_to_unicode(key.code))[0].decode('utf8')
+                    self.commit_string(transliterated_digit, input_phrase=transliterated_digit)
                     return True
 
         if key.code == IBus.KEY_Escape:
@@ -856,8 +866,6 @@ class tabengine (IBus.Engine):
         if key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates:
             phrase = self._editor.get_string_from_lookup_table_current_page(key.code - IBus.KEY_1)
             if phrase:
-                input_phrase = self._editor.get_transliterated_string()
-                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
                 self.commit_string(phrase + u' ')
             return True
 
@@ -877,15 +885,12 @@ class tabengine (IBus.Engine):
                 if self._editor._candidates:
                     phrase = self._editor.get_string_from_lookup_table_cursor_pos()
                     if phrase:
-                        input_phrase = self._editor.get_transliterated_string()
-                        self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
                         self.commit_string(phrase + u' ')
                     return True
                 else:
                     input_phrase = self._editor.get_transliterated_string()
                     if input_phrase:
-                        self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
-                        self.commit_string(input_phrase + u' ')
+                        self.commit_string(input_phrase + u' ', input_phrase = input_phrase)
                     return True
             return True
 
@@ -896,8 +901,7 @@ class tabengine (IBus.Engine):
             if not input_phrase:
                 return False
             if not self._editor._candidates:
-                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
-                self.commit_string(input_phrase)
+                self.commit_string(input_phrase, input_phrase = input_phrase)
                 return False
             phrase = self._editor.get_string_from_lookup_table_cursor_pos()
             if not phrase:
@@ -905,13 +909,11 @@ class tabengine (IBus.Engine):
             if self._editor._lookup_table.cursor_visible:
                 # something is selected in the lookup table, commit
                 # the selected phrase
-                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
-                self.commit_string(phrase)
+                self.commit_string(phrase, input_phrase = input_phrase)
             else:
                 # nothing is selected in the lookup table, commit the
                 # input_phrase
-                self.db.check_phrase_and_update_frequency(input_phrase=input_phrase, phrase=input_phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
-                self.commit_string(input_phrase)
+                self.commit_string(input_phrase, input_phrase = input_phrase)
             return False
 
         # We pass all other hotkeys through:
