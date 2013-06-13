@@ -637,9 +637,9 @@ class tabengine (IBus.Engine):
         self._update_preedit ()
         self._update_aux ()
 
-    def commit_string (self,string, input_phrase=u''):
+    def commit_string (self, commit_phrase, input_phrase=u''):
         if self._tab_enable:
-            # after each commit, disable a tab enabled lookup
+            # After each commit, disable a tab enabled lookup
             # table again, i.e. one needs to press tab again
             # while typing the next word to show the lookup table
             # again:
@@ -647,17 +647,44 @@ class tabengine (IBus.Engine):
         if not input_phrase:
             input_phrase = self._editor.get_transliterated_string()
         # commit always in NFC:
-        string = unicodedata.normalize('NFC', string)
-        super(tabengine,self).commit_text(IBus.Text.new_from_string(string))
+        commit_phrase = unicodedata.normalize('NFC', commit_phrase)
+        super(tabengine,self).commit_text(IBus.Text.new_from_string(commit_phrase))
         self._editor.clear_input()
         self._update_ui ()
         self._commit_happened_after_focus_in = True
-        # we want neither leading nor trailing whitespace for
-        # in the frequency database or the context:
-        string = string.strip()
+        if self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT:
+            # If a character ending a sentence is committed (possibly
+            # followed by whitespace) remove trailing white space
+            # before the committed string. For example if commit_phrase is “!”,
+            # and the context before is “word ”, make the result “word!”.
+            # And if the commit_phrase is “! ” and the context before is “word ”
+            # make the result “word! ”.
+            pattern_sentence_end = re.compile(r'^[.,;:?!][\s]*$', re.UNICODE)
+            if pattern_sentence_end.search(commit_phrase):
+                surrounding_text = self.get_surrounding_text()
+                text = surrounding_text[0].get_text().decode('UTF-8')
+                cursor_pos = surrounding_text[1]
+                anchor_pos = surrounding_text[2]
+                # The commit_phrase is *not* yet in the surrounding text, it will
+                # show up there only when the next key event is processed:
+                pattern = re.compile(r'(?P<white_space>[\s]+)$', re.UNICODE)
+                match = pattern.search(text[:cursor_pos])
+                if match:
+                    nchars = len(match.group('white_space'))
+                    # when the “delete surrounding text” happens,
+                    # the commit_phrase *is* already in the
+                    # surrounding text. Therefore, the offset is not
+                    # only -nchars but -(nchars +
+                    # len(commit_phrase)):
+                    offset =  -(nchars + len(commit_phrase))
+                    self.delete_surrounding_text(offset, nchars)
+        # Update context and user frequencies.  We want neither
+        # leading nor trailing whitespace, neither in the frequency
+        # database nor in the context:
+        commit_phrase = commit_phrase.strip()
+        self._editor.push_context(commit_phrase)
         self.db.check_phrase_and_update_frequency(
-            input_phrase=input_phrase, phrase=string, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
-        self._editor.push_context(string)
+            input_phrase=input_phrase, phrase=commit_phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
 
     def get_context(self):
         if not (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT):
