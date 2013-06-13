@@ -128,11 +128,16 @@ class tabsqlitedb:
                             sys.stderr.write("But the database actually has %(col)s columns.\n"
                                 %{'col': self.get_number_of_columns_of_phrase_table(user_db)})
                         sys.stderr.write("Trying to recover the phrases from the old, incompatible database.\n")
-                        self.old_phrases = self.extract_user_phrases( user_db )
+                        self.old_phrases = self.extract_user_phrases(user_db)
                         from time import strftime
-                        new_name = "%(basename)s.%(time)s" %{'basename': user_db, 'time': strftime('%Y-%m-%d_%H:%M:%S')}
-                        sys.stderr.write("Renaming the incompatible database to \"%(name)s\".\n" %{'name': new_name})
-                        os.rename(user_db, new_name)
+                        timestamp = strftime('-%Y-%m-%d_%H:%M:%S')
+                        sys.stderr.write("Renaming the incompatible database to \"%(name)s\".\n" %{'name': user_db+timestamp})
+                        if os.path.exists(user_db):
+                            os.rename(user_db, user_db+timestamp)
+                        if os.path.exists(user_db+'-shm'):
+                            os.rename(user_db+'-shm', user_db+'-shm'+timestamp)
+                        if os.path.exists(user_db+'-wal'):
+                            os.rename(user_db+'-wal', user_db+'-wal'+timestamp)
                         sys.stderr.write("Creating a new, empty database \"%(name)s\".\n"  %{'name': user_db})
                         self.init_user_db(user_db)
                         sys.stderr.write("If user phrases were successfully recovered from the old,\n")
@@ -160,20 +165,34 @@ class tabsqlitedb:
         except:
             sys.stderr.write("Could not open the database %(name)s.\n" %{'name': user_db})
             from time import strftime
-            new_name = "%(basename)s.%(time)s" %{'basename': user_db, 'time': strftime('%Y-%m-%d_%H:%M:%S')}
-            sys.stderr.write("Renaming the incompatible database to \"%(name)s\".\n" %{'name': new_name})
-            os.rename(user_db, new_name)
-            sys.stderr.write("Creating a new, empty database \"%(name)s\".\n"  %{'name': user_db})
+            timestamp = strftime('-%Y-%m-%d_%H:%M:%S')
+            sys.stderr.write("Renaming the incompatible database to \"%(name)s\".\n" %{'name': user_db+timestamp})
+            if os.path.exists(user_db):
+                os.rename(user_db, user_db+timestamp)
+            if os.path.exists(user_db+'-shm'):
+                os.rename(user_db+'-shm', user_db+'-shm'+timestamp)
+            if os.path.exists(user_db+'-wal'):
+                os.rename(user_db+'-wal', user_db+'-wal'+timestamp)
+            sys.stderr.write("Creating a new, empty database \"%(name)s\".\n" %{'name': user_db})
             self.init_user_db(user_db)
             self.db.execute('ATTACH DATABASE "%s" AS user_db;' % user_db)
         self.create_tables("user_db")
         if self.old_phrases:
-            # (phrase, user_freq)
-            map(lambda x: self.add_phrase(
-                input_phrase=x[0], phrase=x[0], user_freq=x[1],
-                database = 'user_db', commit = False),
+            sqlargs = []
+            map(lambda x: sqlargs.append(
+                {'input_phrase': x[0], 'phrase': x[0], 'p_phrase': u'', 'pp_phrase': u'', 'user_freq': x[1]}),
                 self.old_phrases)
+            sqlstr = '''
+            INSERT INTO user_db.phrases (input_phrase, phrase, p_phrase, pp_phrase, user_freq)
+            VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq)
+            ;'''
+            try:
+                self.db.executemany(sqlstr, sqlargs)
+            except:
+                import traceback
+                traceback.print_exc()
             self.db.commit()
+            self.db.execute('PRAGMA wal_checkpoint;')
 
         # do not call this always on intialization for the moment.
         # It makes the already slow “python engine/main.py --xml”
@@ -524,13 +543,15 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
         '''extract user phrases from database'''
         try:
             db = sqlite3.connect(database)
+            db.execute('PRAGMA wal_checkpoint;')
             phrases = db.execute(
-                '''
-                SELECT phrase, sum(user_freq)
-                FROM phrases
-                GROUP BY phrase
-                ;''').fetchall()
+                'SELECT phrase, sum(user_freq) FROM phrases GROUP BY phrase;').fetchall()
             db.close()
+            map(lambda x:
+                [(unicodedata.normalize(self._normalization_form_internal, x[0]), x[1])],
+                phrases)
             return phrases[:]
         except:
+            import traceback
+            traceback.print_exc()
             return []
