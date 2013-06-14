@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 14 Jun 2013 Released 1.0.1 version
+* Fix problem when IBUS_TYPING_BOOSTER_DEBUG_LEVEL is not set
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 13 Jun 2013 Released 1.0.0 version
 * Remove mudb and use “Write-Ahead Logging”
 * Introduce an environment variable IBUS_TYPING_BOOSTER_DEBUG_LEVEL for debugging
