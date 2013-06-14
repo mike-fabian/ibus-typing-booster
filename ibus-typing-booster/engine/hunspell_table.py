@@ -489,7 +489,7 @@ class tabengine (IBus.Engine):
         global debug_level
         try:
             debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
-        except ValueError:
+        except:
             debug_level = int(0)
         self._bus = bus
         self.db = db
