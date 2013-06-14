@@ -682,9 +682,9 @@ class tabengine (IBus.Engine):
         # leading nor trailing whitespace, neither in the frequency
         # database nor in the context:
         commit_phrase = commit_phrase.strip()
-        self._editor.push_context(commit_phrase)
         self.db.check_phrase_and_update_frequency(
             input_phrase=input_phrase, phrase=commit_phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
+        self._editor.push_context(commit_phrase)
 
     def get_context(self):
         if not (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT):
