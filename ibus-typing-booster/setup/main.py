@@ -36,14 +36,14 @@ opt.add_option('-c', '--config-file',
         help = 'Set the file name of config file for the ime engine, default: %default')
 opt.add_option( '-q', '--no-debug',
         action = 'store_false',dest = 'debug',default = True,
-        help = 'redirect stdout and stderr to ~/.local/share/.ibus/ibus-typing-booster/setup-debug.log, default: %default')
+        help = 'redirect stdout and stderr to ~/.local/share/ibus-typing-booster/setup-debug.log, default: %default')
 
 (options, args) = opt.parse_args()
 
 if options.debug:
-    if not os.access ( os.path.expanduser('~/.local/share/.ibus/ibus-typing-booster'), os.F_OK):
-        os.system ('mkdir -p ~/.local/share/.ibus/ibus-typing-booster')
-    logfile = os.path.expanduser('~/.local/share/.ibus/ibus-typing-booster/setup-debug.log')
+    if not os.access ( os.path.expanduser('~/.local/share/ibus-typing-booster'), os.F_OK):
+        os.system ('mkdir -p ~/.local/share/ibus-typing-booster')
+    logfile = os.path.expanduser('~/.local/share/ibus-typing-booster/setup-debug.log')
     sys.stdout = open (logfile,'a',0)
     sys.stderr = open (logfile,'a',0)
     print '--- ', strftime('%Y-%m-%d: %H:%M:%S'), ' ---'

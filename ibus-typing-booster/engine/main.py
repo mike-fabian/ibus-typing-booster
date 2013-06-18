@@ -55,16 +55,16 @@ opt.add_option('--xml', '-x',
 
 opt.add_option('--no-debug', '-n',
         action = 'store_false',dest = 'debug',default = True,
-        help = 'redirect stdout and stderr to ~/.local/share/.ibus/ibus-typing-booster/debug.log, default: %default')
+        help = 'redirect stdout and stderr to ~/.local/share/ibus-typing-booster/debug.log, default: %default')
 
 (options, args) = opt.parse_args()
 #if not options.db:
 #    opt.error('no db found!')
 
 if (not options.xml) and options.debug:
-    if not os.access ( os.path.expanduser('~/.local/share/.ibus/ibus-typing-booster'), os.F_OK):
-        os.system ('mkdir -p ~/.local/share/.ibus/ibus-typing-booster')
-    logfile = os.path.expanduser('~/.local/share/.ibus/ibus-typing-booster/debug.log')
+    if not os.access(os.path.expanduser('~/.local/share/ibus-typing-booster'), os.F_OK):
+        os.system('mkdir -p ~/.local/share/ibus-typing-booster')
+    logfile = os.path.expanduser('~/.local/share/ibus-typing-booster/debug.log')
     sys.stdout = open (logfile,'a',0)
     sys.stderr = open (logfile,'a',0)
     from time import strftime
