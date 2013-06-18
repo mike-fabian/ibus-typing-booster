@@ -214,9 +214,6 @@ def main():
             _desc = SubElement (_engine, 'description')
             _desc.text = _ime_properties.get ('description')
 
-            _page_size_ibus = SubElement(_engine,'page_size')
-            _page_size_ibus.text = _ime_properties.get('page_size')
-
             _symbol = SubElement(_engine,'symbol')
             _symbol.text = _ime_properties.get('symbol')
 
