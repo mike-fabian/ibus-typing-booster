@@ -4,7 +4,7 @@
 # ibus-typing-booster - The Tables engine for IBus
 #
 # Copyright (c) 2012-2013 Anish Patil <apatil@redhat.com>
-# Copyright (c) 2012 Mike FABIAN <mfabian@redhat.com>
+# Copyright (c) 2012-2013 Mike FABIAN <mfabian@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
