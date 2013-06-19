@@ -540,7 +540,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
         except:
             return 0
 
-    def check_phrase_and_update_frequency(self, input_phrase=u'', phrase=u'', p_phrase=u'', pp_phrase=u'', database='user_db'):
+    def check_phrase_and_update_frequency(self, input_phrase=u'', phrase=u'', p_phrase=u'', pp_phrase=u'', database='user_db', commit=True):
         '''
         Check whether input_phrase and phrase are already in database. If
         they are in the database, increase the frequency by 1, if not
@@ -589,14 +589,14 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, p
             self.update_phrase(input_phrase = input_phrase,
                                phrase = phrase, p_phrase = p_phrase, pp_phrase = pp_phrase,
                                user_freq = result[0][0]+1,
-                               database='user_db', commit=True);
+                               database='user_db', commit=commit);
             return
         # The phrase was not found in user_db.
         # Add it as a new phrase, i.e. with user_freq = 1:
         self.add_phrase(input_phrase = input_phrase,
                         phrase = phrase, p_phrase = p_phrase, pp_phrase = pp_phrase,
                         user_freq = 1,
-                        database = 'user_db', commit=True)
+                        database = 'user_db', commit=commit)
         return
 
     def remove_phrase (self, input_phrase=u'', phrase=u'', database='user_db', commit=True):
