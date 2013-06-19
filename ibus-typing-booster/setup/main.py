@@ -103,11 +103,11 @@ class SetupUI:
             sys.exit(1)
             return
 
-        self.db = tabsqlitedb.tabsqlitedb (filename=self.config_file)
-        self.name = self.db.ime_properties.get('name')
+        self.tabsqlitedb = tabsqlitedb.tabsqlitedb (filename=self.config_file)
+        self.name = self.tabsqlitedb.ime_properties.get('name')
         self.config_section = "engine/typing-booster/%s" % self.name
-        self.hunspell_dict_package = self.db.ime_properties.get('hunspell_dict_package')
-        self.symbol = self.db.ime_properties.get('symbol')
+        self.hunspell_dict_package = self.tabsqlitedb.ime_properties.get('hunspell_dict_package')
+        self.symbol = self.tabsqlitedb.ime_properties.get('symbol')
         if IBus.get_address() == None:
             self.__run_message_dialog(_("ibus is not running."), Gtk.MessageType.ERROR)
             sys.exit(1)
@@ -124,7 +124,7 @@ class SetupUI:
         chkbox1 = self.builder.get_object("checkbutton1")
         self.tab_enable = self.variant_to_value(self.config.get_value(self.config_section, 'tabenable'))
         if self.tab_enable == None:
-            self.tab_enable = self.db.ime_properties.get('tab_enable').lower() == u'true'
+            self.tab_enable = self.tabsqlitedb.ime_properties.get('tab_enable').lower() == u'true'
         if  self.tab_enable == True:
             chkbox1.set_active(True)
         chkbox1.connect('clicked', event_handler.onCheck1)
@@ -138,19 +138,19 @@ class SetupUI:
         self.page_size_adjustment = self.builder.get_object("page_size_adjustment")
         self.page_size = self.variant_to_value(self.config.get_value(self.config_section, 'pagesize'))
         if self.page_size == None:
-            self.page_size = self.db.ime_properties.get('page_size')
+            self.page_size = self.tabsqlitedb.ime_properties.get('page_size')
         if self.page_size != None:
             self.page_size_adjustment.set_value(int(self.page_size))
         else:
             self.page_size_adjustment.set_value(6)
         self.page_size_adjustment.connect('value-changed', event_handler.onPageSizeAdjustmentValueChanged)
 
-        self.other_ime = self.db.ime_properties.get('other_ime').lower() == u'true'
+        self.other_ime = self.tabsqlitedb.ime_properties.get('other_ime').lower() == u'true'
         ime_combobox = self.builder.get_object("input_method_combobox")
         ime_label = self.builder.get_object("input_method_label")
         if self.other_ime:
             ime_store = Gtk.ListStore(str, str)
-            imes = self.db.ime_properties.get('imes').split(',')
+            imes = self.tabsqlitedb.ime_properties.get('imes').split(',')
             for item in imes:
                 ime_store.append([item.split(':')[0], item.split(':')[1]])
             ime_combobox.set_model(ime_store)
@@ -160,7 +160,7 @@ class SetupUI:
             self.ime = self.variant_to_value(self.config.get_value(self.config_section, 'inputmethod'))
             if self.ime == None:
                 # ime was not in settings, get the default from 'ime_name':
-                self.ime = self.db.ime_properties.get('m17n_mim_name')
+                self.ime = self.tabsqlitedb.ime_properties.get('m17n_mim_name')
             combobox_has_ime = False
             for i in xrange(len(ime_store)):
                 if ime_store[i][1] == self.ime:
