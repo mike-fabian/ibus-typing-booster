@@ -20,6 +20,7 @@
 import os
 import os.path as path
 import sys
+import codecs
 import unicodedata
 import sqlite3
 import uuid
@@ -160,6 +161,7 @@ class tabsqlitedb:
             self.db.execute('PRAGMA cache_size = 20000;')
             self.db.execute('PRAGMA temp_store = MEMORY;')
             self.db.execute('PRAGMA journal_mode = WAL;')
+            self.db.execute('PRAGMA journal_size_limit = 1000000;')
             self.db.execute('PRAGMA synchronous = NORMAL;')
             self.db.execute('ATTACH DATABASE "%s" AS user_db;' % user_db)
         except:
@@ -182,6 +184,7 @@ class tabsqlitedb:
             self.db.execute('PRAGMA cache_size = 20000;')
             self.db.execute('PRAGMA temp_store = MEMORY;')
             self.db.execute('PRAGMA journal_mode = WAL;')
+            self.db.execute('PRAGMA journal_size_limit = 1000000;')
             self.db.execute('PRAGMA synchronous = NORMAL;')
             self.db.execute('ATTACH DATABASE "%s" AS user_db;' % user_db)
         self.create_tables("user_db")
@@ -491,6 +494,7 @@ class tabsqlitedb:
             db.execute('PRAGMA cache_size = 20000;')
             db.execute('PRAGMA temp_store = MEMORY; ')
             db.execute('PRAGMA journal_mode = WAL;')
+            db.execute('PRAGMA journal_size_limit = 1000000;')
             db.execute('PRAGMA synchronous = NORMAL;')
             db.commit()
 
@@ -643,3 +647,62 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             import traceback
             traceback.print_exc()
             return []
+
+    def read_training_data_from_file(self, filename):
+        if not os.path.isfile(filename):
+            return
+        rows = self.db.execute('SELECT input_phrase, phrase, p_phrase, pp_phrase, user_freq FROM phrases;').fetchall()
+        p_token = u''
+        pp_token = u''
+        database_dict = {}
+        map(lambda x:
+            database_dict.update([((x[0], x[1], x[2], x[3]),
+                                   {'input_phrase': x[0],
+                                    'phrase': x[1],
+                                    'p_phrase': x[2],
+                                    'pp_phrase': x[3],
+                                    'user_freq': x[4]}
+                               )]), rows)
+        pattern = re.compile(r'[\s]+', re.UNICODE)
+        with codecs.open(filename, encoding='UTF-8') as file:
+            lines = map(lambda x: unicodedata.normalize(self._normalization_form_internal, x), file.readlines())
+            for line in lines:
+                tokens = pattern.split(line.strip())
+                for token in tokens:
+                    key = (token, token, p_token, pp_token)
+                    if key in database_dict:
+                        database_dict[key]['user_freq'] += 1
+                    else:
+                        database_dict[key] = {'input_phrase': token,
+                                              'phrase': token,
+                                              'p_phrase': p_token,
+                                              'pp_phrase': pp_token,
+                                              'user_freq': 1}
+                    pp_token = p_token
+                    p_token = token
+        sqlargs = []
+        map(lambda x: sqlargs.append(database_dict[x]), database_dict.keys())
+        sqlstr = '''
+        INSERT INTO user_db.phrases (input_phrase, phrase, p_phrase, pp_phrase, user_freq)
+        VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq)
+        ;'''
+        try:
+            self.db.execute('DELETE FROM phrases;')
+            # Without the following commit, the self.db.executemany() fails
+            # with “OperationalError: database is locked”.
+            self.db.commit()
+            self.db.executemany(sqlstr, sqlargs)
+            self.db.commit()
+            self.db.execute('PRAGMA wal_checkpoint;')
+        except:
+            import traceback
+            traceback.print_exc()
+
+    def remove_all_phrases(self):
+        try:
+            self.db.execute('DELETE FROM phrases;')
+            self.db.commit()
+            self.db.execute('PRAGMA wal_checkpoint;')
+        except:
+            import traceback
+            traceback.print_exc()

@@ -118,8 +118,14 @@ class SetupUI:
         maindialog = self.builder.get_object("main_dialog")
         maindialog.set_title(_("Preferences for ibus-typing-booster \"%(symbol)s\"") %{'symbol': self.symbol})
         maindialog.show()
-        install_dictionary_button = self.builder.get_object("install_dictionary_button")
-        install_dictionary_button.connect('clicked', event_handler.onInstallDictionaryClicked)
+        self.install_dictionary_button = self.builder.get_object("install_dictionary_button")
+        self.install_dictionary_button.connect('clicked', event_handler.onInstallDictionaryClicked)
+        self.install_pyhunspell_button = self.builder.get_object("install_pyhunspell_button")
+        self.install_pyhunspell_button.connect('clicked', event_handler.onInstallPyhunspellClicked)
+        self.learn_from_file_button = self.builder.get_object("learn_from_file_button")
+        self.learn_from_file_button.connect('clicked', event_handler.onLearnFromFileClicked)
+        self.delete_learned_data_button = self.builder.get_object("delete_learned_data_button")
+        self.delete_learned_data_button.connect('clicked', event_handler.onDeleteLearnedDataClicked)
         close_button = self.builder.get_object("close_button")
         close_button.connect('clicked', event_handler.onCloseClicked)
         tab_enable_checkbox = self.builder.get_object("tab_enable_checkbox")
@@ -217,11 +223,58 @@ class EventHandler:
         Gtk.main_quit()
 
     def onInstallDictionaryClicked(self,widget):
+        SetupUi.install_dictionary_button.set_sensitive(False)
         InstallPkg(SetupUi.hunspell_dict_package)
         # Write a timestamp to dconf to trigger the callback
         # for changed dconf values in the engine and reload
         # the dictionary:
         SetupUi.config.set_value(SetupUi.config_section,'dictionaryinstalltimestamp',GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
+        SetupUi.install_dictionary_button.set_sensitive(True)
+
+    def onInstallPyhunspellClicked(self,widget):
+        SetupUi.install_pyhunspell_button.set_sensitive(False)
+        InstallPkg('pyhunspell')
+        import subprocess
+        subprocess.call(['ibus', 'restart'])
+        SetupUi.install_pyhunspell_button.set_sensitive(True)
+
+    def onLearnFromFileClicked(self,widget):
+        SetupUi.learn_from_file_button.set_sensitive(False)
+        filename = u''
+        chooser = Gtk.FileChooserDialog(
+            _('Open File ...'), SetupUi.builder.get_object('main'),
+            Gtk.FileChooserAction.OPEN,
+            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+             Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+        response = chooser.run()
+        if response == Gtk.ResponseType.OK:
+            filename = chooser.get_filename()
+        chooser.destroy()
+        while Gtk.events_pending():
+            Gtk.main_iteration()
+        if filename and os.path.isfile(filename):
+            SetupUi.tabsqlitedb.read_training_data_from_file(filename)
+        SetupUi.learn_from_file_button.set_sensitive(True)
+
+    def onDeleteLearnedDataClicked(self,widget):
+        SetupUi.delete_learned_data_button.set_sensitive(False)
+        confirm_question = Gtk.Dialog(
+            title=_('Are you sure?'),
+            parent=SetupUi.builder.get_object('main'),
+            buttons=(
+                Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        box = confirm_question.get_content_area()
+        box.add(Gtk.Label(
+            _('Do you really want to delete all language \ndata learned from typing or reading files?')))
+        confirm_question.show_all()
+        response = confirm_question.run()
+        confirm_question.destroy()
+        while Gtk.events_pending():
+            Gtk.main_iteration()
+        if response == Gtk.ResponseType.OK:
+            SetupUi.tabsqlitedb.remove_all_phrases()
+        SetupUi.delete_learned_data_button.set_sensitive(True)
 
     def onTabEnableCheckbox(self,widget):
         if widget.get_active():

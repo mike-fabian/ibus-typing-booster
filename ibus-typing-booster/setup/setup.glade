@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
+  <object class="GtkAdjustment" id="page_size_adjustment">
+    <property name="lower">1</property>
+    <property name="upper">9</property>
+    <property name="value">6</property>
+    <property name="step_increment">1</property>
+  </object>
   <object class="GtkDialog" id="main_dialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
@@ -222,44 +228,131 @@
                           <object class="GtkTable" id="table1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="n_rows">4</property>
+                            <property name="n_columns">2</property>
                             <property name="column_spacing">8</property>
                             <property name="row_spacing">4</property>
                             <property name="homogeneous">True</property>
                             <child>
-                              <object class="GtkHButtonBox" id="hbuttonbox1">
+                              <object class="GtkButton" id="install_dictionary_button">
+                                <property name="label" translatable="yes">Install dictionary</property>
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="spacing">8</property>
-                                <property name="layout_style">center</property>
-                                <child>
-                                  <object class="GtkButton" id="install_dictionary_button">
-                                    <property name="label" translatable="yes">Install</property>
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
                               </object>
                               <packing>
-                                <property name="y_options">GTK_FILL</property>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                                <property name="x_options">GTK_EXPAND</property>
+                                <property name="y_options">GTK_EXPAND</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="install_pyhunspell_button">
+                                <property name="label" translatable="yes">Install pyhunspell</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
+                                <property name="x_options">GTK_EXPAND</property>
+                                <property name="y_options">GTK_EXPAND</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="learn_from_file_button">
+                                <property name="label" translatable="yes">Learn from text file</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
+                                <property name="x_options">GTK_EXPAND</property>
+                                <property name="y_options">GTK_EXPAND</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="install_dictionary_label">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">Install the dictionary package for this engine</property>
+                                <property name="wrap">True</property>
+                                <property name="width_chars">20</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="install_pyhunspell_label">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">Install pyhunspell package to get spellchecking suggestions</property>
+                                <property name="wrap">True</property>
+                                <property name="width_chars">20</property>
+                              </object>
+                              <packing>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="learn_from_file_label">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">Learn your style by reading a text file</property>
+                                <property name="wrap">True</property>
+                                <property name="width_chars">20</property>
+                              </object>
+                              <packing>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="delete_learned_data_label">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">Delete all personal language data learned from typing or from reading files</property>
+                                <property name="wrap">True</property>
+                                <property name="width_chars">20</property>
+                              </object>
+                              <packing>
+                                <property name="top_attach">3</property>
+                                <property name="bottom_attach">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="delete_learned_data_button">
+                                <property name="label" translatable="yes">Delete learned data</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                                <property name="top_attach">3</property>
+                                <property name="bottom_attach">4</property>
+                                <property name="x_options">GTK_EXPAND</property>
+                                <property name="y_options">GTK_EXPAND</property>
                               </packing>
                             </child>
                           </object>
                         </child>
                       </object>
                     </child>
-                    <child type="label">
-                      <object class="GtkLabel" id="label3">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Install the dictionary package for this engine&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
-                      </object>
+                    <child type="label_item">
+                      <placeholder/>
                     </child>
                   </object>
                   <packing>
@@ -277,7 +370,7 @@
               <object class="GtkLabel" id="label2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Install dictionary</property>
+                <property name="label" translatable="yes">Dictionaries and personal data</property>
               </object>
               <packing>
                 <property name="position">1</property>
@@ -305,11 +398,5 @@
     <action-widgets>
       <action-widget response="0">close_button</action-widget>
     </action-widgets>
-  </object>
-  <object class="GtkAdjustment" id="page_size_adjustment">
-    <property name="lower">1</property>
-    <property name="upper">9</property>
-    <property name="value">6</property>
-    <property name="step_increment">1</property>
   </object>
 </interface>
