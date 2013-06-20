@@ -137,9 +137,9 @@ class SetupUI:
         chkbox2.connect('clicked', event_handler.onCheck2)
         self.page_size_adjustment = self.builder.get_object("page_size_adjustment")
         self.page_size = self.variant_to_value(self.config.get_value(self.config_section, 'pagesize'))
-        if self.page_size == None:
+        if not self.page_size:
             self.page_size = self.tabsqlitedb.ime_properties.get('page_size')
-        if self.page_size != None:
+        if self.page_size:
             self.page_size_adjustment.set_value(int(self.page_size))
         else:
             self.page_size_adjustment.set_value(6)
