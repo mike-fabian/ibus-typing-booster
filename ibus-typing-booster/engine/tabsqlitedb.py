@@ -257,7 +257,7 @@ class tabsqlitedb:
     def create_tables (self, database):
         '''Create table for the phrases.'''
         sqlstr = '''CREATE TABLE IF NOT EXISTS %s.phrases
-                    (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    (id INTEGER PRIMARY KEY,
                     input_phrase TEXT, phrase TEXT, p_phrase TEXT, pp_phrase TEXT,
                     user_freq INTEGER);''' % database
         self.db.execute(sqlstr)
@@ -515,7 +515,7 @@ class tabsqlitedb:
         Determines the number of columns by parsing this:
 
         sqlite> select sql from sqlite_master where name='phrases';
-CREATE TABLE phrases (id INTEGER PRIMARY KEY AUTOINCREMENT, input_phrase TEXT, phrase TEXT, p_phrase TEXT, pp_phrase TEXT, user_freq INTEGER)
+CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_phrase TEXT, pp_phrase TEXT, user_freq INTEGER)
         sqlite>
 
         This result could be on a single line, as above, or on multiple
