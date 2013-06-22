@@ -21,6 +21,7 @@
 import sys
 import os
 from os import path
+import signal
 import optparse
 import locale
 from time import strftime
@@ -250,6 +251,10 @@ class EventHandler:
             SetupUi.config.set_value(SetupUi.config_section,'inputmethod',GLib.Variant.new_string(self.ime))
 
 if __name__ == '__main__':
+    # Workaround for
+    # https://bugzilla.gnome.org/show_bug.cgi?id=622084
+    # Bug 622084 - Ctrl+C does not exit gtk app
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
     try:
         locale.setlocale(locale.LC_ALL, '')
     except locale.Error:
@@ -258,4 +263,3 @@ if __name__ == '__main__':
     i18n_init()
     SetupUi = SetupUI()
     Gtk.main()
-
