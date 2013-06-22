@@ -114,27 +114,27 @@ class SetupUI:
             return
 
         self.config = IBus.Bus().get_config()
-        maindialog = self.builder.get_object("dialog1")
+        maindialog = self.builder.get_object("main_dialog")
         maindialog.set_title(_("Preferences for ibus-typing-booster \"%(symbol)s\"") %{'symbol': self.symbol})
         maindialog.show()
-        install_button = self.builder.get_object("button1")
-        install_button.connect('clicked', event_handler.onInstallClicked)
-        close_button = self.builder.get_object("button2")
+        install_dictionary_button = self.builder.get_object("install_dictionary_button")
+        install_dictionary_button.connect('clicked', event_handler.onInstallDictionaryClicked)
+        close_button = self.builder.get_object("close_button")
         close_button.connect('clicked', event_handler.onCloseClicked)
-        chkbox1 = self.builder.get_object("checkbutton1")
+        tab_enable_checkbox = self.builder.get_object("tab_enable_checkbox")
         self.tab_enable = self.variant_to_value(self.config.get_value(self.config_section, 'tabenable'))
         if self.tab_enable == None:
             self.tab_enable = self.tabsqlitedb.ime_properties.get('tab_enable').lower() == u'true'
         if  self.tab_enable == True:
-            chkbox1.set_active(True)
-        chkbox1.connect('clicked', event_handler.onCheck1)
-        chkbox2 = self.builder.get_object("checkbutton2")
+            tab_enable_checkbox.set_active(True)
+        tab_enable_checkbox.connect('clicked', event_handler.onTabEnableCheckbox)
+        show_number_of_candidates_checkbox = self.builder.get_object("show_number_of_candidates_checkbox")
         self.show_number_of_candidates = self.variant_to_value(self.config.get_value(self.config_section, 'shownumberofcandidates'))
         if self.show_number_of_candidates == None:
             self.show_number_of_candidates = False
         if  self.show_number_of_candidates == True:
-            chkbox2.set_active(True)
-        chkbox2.connect('clicked', event_handler.onCheck2)
+            show_number_of_candidates_checkbox.set_active(True)
+        show_number_of_candidates_checkbox.connect('clicked', event_handler.onShowNumberOfCandidatesCheckbox)
         self.page_size_adjustment = self.builder.get_object("page_size_adjustment")
         self.page_size = self.variant_to_value(self.config.get_value(self.config_section, 'pagesize'))
         if not self.page_size:
@@ -215,14 +215,14 @@ class EventHandler:
     def onCloseClicked(self, *args):
         Gtk.main_quit()
 
-    def onInstallClicked(self,widget):
+    def onInstallDictionaryClicked(self,widget):
         InstallPkg(SetupUi.hunspell_dict_package)
         # Write a timestamp to dconf to trigger the callback
         # for changed dconf values in the engine and reload
         # the dictionary:
         SetupUi.config.set_value(SetupUi.config_section,'dictionaryinstalltimestamp',GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
 
-    def onCheck1(self,widget):
+    def onTabEnableCheckbox(self,widget):
         if widget.get_active():
             SetupUi.tab_enable = True
             SetupUi.config.set_value(SetupUi.config_section,'tabenable',GLib.Variant.new_boolean(True))
@@ -230,7 +230,7 @@ class EventHandler:
             SetupUi.tab_enable = False
             SetupUi.config.set_value(SetupUi.config_section,'tabenable',GLib.Variant.new_boolean(False))
 
-    def onCheck2(self,widget):
+    def onShowNumberOfCandidatesCheckbox(self,widget):
         if widget.get_active():
             SetupUi.show_number_of_candidates = True
             SetupUi.config.set_value(SetupUi.config_section,'shownumberofcandidates',GLib.Variant.new_boolean(True))

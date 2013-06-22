@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkDialog" id="dialog1">
+  <object class="GtkDialog" id="main_dialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="type_hint">dialog</property>
@@ -20,7 +20,7 @@
               <placeholder/>
             </child>
             <child>
-              <object class="GtkButton" id="button2">
+              <object class="GtkButton" id="close_button">
                 <property name="label" translatable="yes">Close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -68,7 +68,7 @@
                             <property name="column_spacing">8</property>
                             <property name="row_spacing">4</property>
                             <child>
-                              <object class="GtkCheckButton" id="checkbutton1">
+                              <object class="GtkCheckButton" id="tab_enable_checkbox">
                                 <property name="label" translatable="yes">Enable suggestions by Tab key</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -135,7 +135,7 @@
                                 <property name="top_attach">3</property>
                                 <property name="bottom_attach">4</property>
                                 <property name="x_options">GTK_FILL</property>
-                                <property name="y_options"></property>
+                                <property name="y_options"/>
                               </packing>
                             </child>
                             <child>
@@ -148,11 +148,11 @@
                                 <property name="right_attach">2</property>
                                 <property name="top_attach">3</property>
                                 <property name="bottom_attach">4</property>
-                                <property name="y_options"></property>
+                                <property name="y_options"/>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkCheckButton" id="checkbutton2">
+                              <object class="GtkCheckButton" id="show_number_of_candidates_checkbox">
                                 <property name="label" translatable="yes">Show number of candidates</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -232,7 +232,7 @@
                                 <property name="spacing">8</property>
                                 <property name="layout_style">center</property>
                                 <child>
-                                  <object class="GtkButton" id="button1">
+                                  <object class="GtkButton" id="install_dictionary_button">
                                     <property name="label" translatable="yes">Install</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
@@ -303,7 +303,7 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="0">button2</action-widget>
+      <action-widget response="0">close_button</action-widget>
     </action-widgets>
   </object>
   <object class="GtkAdjustment" id="page_size_adjustment">
