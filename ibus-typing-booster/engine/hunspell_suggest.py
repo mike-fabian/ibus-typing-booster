@@ -145,7 +145,7 @@ class Hunspell:
                         if suggestion not in start_words:
                             start_words.append(suggestion)
         else:
-            start_words = [unicode('☹ %(loc)s%(dict_name)s not found.' %{'loc': self.loc, 'dict_name': self.dict_name}, 'utf-8'), unicode('☹ please install hunspell dictionary!', 'utf-8') ]
+            start_words = [u'☹ %(loc)s%(dict_name)s not found.' %{'loc': self.loc, 'dict_name': self.dict_name}, u'☹ please install hunspell dictionary!']
         return list(set(start_words[0:max_words]))
 
     def suggest(self, input_phrase):
