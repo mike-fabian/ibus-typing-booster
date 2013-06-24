@@ -1,4 +1,14 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 24 Jun 2013 Released 1.1.0 version
+* Add a commit=True parameter to check_phrase_and_update_frequency()
+* Fix that the page_size is shown as 0 in the setup tool if it has not been set before
+* Do not use AUTOINCREMENT
+* Make it possible to exit the setup tool by typing Control-C in the terminal
+* Add feature to read a text file for training the user database
+* Update German translations and .pot file
+* Fix error when the hunspell dictionary for an engine is missing
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 18 Jun 2013 Released 1.0.3 version
 * Don’t output page_size in “/usr/libexec/ibus-engine-typing-booster --xml” (Resolves: rhbz#975449 - ibus-daemon prints warnings because “/usr/libexec/ibus-engine-typing-booster --xml” prints the invalid element “page_size”)
 * Use ~/.local/share/ibus-typing-booster/ to store user data and log files (Resolves: rhbz#949035 - don't use a hidden directory under .local/share)
