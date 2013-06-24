@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2013-02-13 22:30+0100\n"
+"POT-Creation-Date: 2013-06-24 17:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,67 +17,106 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: setup/main.py:84
+#: setup/main.py:85
 #, python-format
 msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
 msgstr ""
 
-#: setup/main.py:89
+#: setup/main.py:90
 msgid "IBUS_ENGINE_NAME environment variable is not set."
 msgstr ""
 
-#: setup/main.py:93
+#: setup/main.py:94
 msgid ""
 "Cannot determine the config file for this engine. Please use the --config-"
 "file option."
 msgstr ""
 
-#: setup/main.py:100
+#: setup/main.py:101
 #, python-format
 msgid "Config file %(file)s does not exist."
 msgstr ""
 
-#: setup/main.py:112
+#: setup/main.py:113
 msgid "ibus is not running."
 msgstr ""
 
-#: setup/main.py:118
+#: setup/main.py:119
 #, python-format
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr ""
 
-#: setup/setup.glade:24
+#: setup/main.py:245
+msgid "Open File ..."
+msgstr ""
+
+#: setup/main.py:262
+msgid "Are you sure?"
+msgstr ""
+
+#: setup/main.py:269
+msgid ""
+"Do you really want to delete all language \n"
+"data learned from typing or reading files?"
+msgstr ""
+
+#: setup/setup.glade:30
 msgid "Close"
 msgstr ""
 
-#: setup/setup.glade:72
+#: setup/setup.glade:78
 msgid "Enable suggestions by Tab key"
 msgstr ""
 
-#: setup/setup.glade:96
+#: setup/setup.glade:102
 msgid "Candidate window page size:"
 msgstr ""
 
-#: setup/setup.glade:132
+#: setup/setup.glade:138
 msgid "Input Method:"
 msgstr ""
 
-#: setup/setup.glade:156
+#: setup/setup.glade:162
 msgid "Show number of candidates"
 msgstr ""
 
-#: setup/setup.glade:199
+#: setup/setup.glade:205
 msgid "Options"
 msgstr ""
 
-#: setup/setup.glade:236
-msgid "Install"
-msgstr ""
-
-#: setup/setup.glade:260
-msgid "<b>Install the dictionary package for this engine</b>"
-msgstr ""
-
-#: setup/setup.glade:280
+#: setup/setup.glade:238
 msgid "Install dictionary"
+msgstr ""
+
+#: setup/setup.glade:252
+msgid "Install pyhunspell"
+msgstr ""
+
+#: setup/setup.glade:268
+msgid "Learn from text file"
+msgstr ""
+
+#: setup/setup.glade:287
+msgid "Install the dictionary package for this engine"
+msgstr ""
+
+#: setup/setup.glade:297
+msgid "Install pyhunspell package to get spellchecking suggestions"
+msgstr ""
+
+#: setup/setup.glade:311
+msgid "Learn your style by reading a text file"
+msgstr ""
+
+#: setup/setup.glade:325
+msgid ""
+"Delete all personal language data learned from typing or from reading files"
+msgstr ""
+
+#: setup/setup.glade:336
+msgid "Delete learned data"
+msgstr ""
+
+#: setup/setup.glade:373
+msgid "Dictionaries and personal data"
 msgstr ""
