@@ -29,7 +29,7 @@ import re
 import itb_util
 import hunspell_suggest
 
-user_database_version = '0.64'
+user_database_version = '0.65'
 
 class ImeProperties:
     def __init__(self, configfile_path=None):
@@ -61,7 +61,7 @@ class tabsqlitedb:
 
     The phrases table in the database has columns with the names:
 
-    “id”, “input_phrase”, “phrase”, “p_phrase”, “pp_phrase”, “user_freq”
+    “id”, “input_phrase”, “phrase”, “p_phrase”, “pp_phrase”, “user_freq”, “timestamp”
 
     There are 2 databases, sysdb, userdb.
 
@@ -79,7 +79,7 @@ class tabsqlitedb:
         user_freq >= 1: The number of times the user has used this phrase
     '''
     def __init__(self, config_filename=None):
-        self._phrase_table_column_names = ['id', 'input_phrase', 'phrase', 'p_phrase', 'pp_phrase', 'user_freq']
+        self._phrase_table_column_names = ['id', 'input_phrase', 'phrase', 'p_phrase', 'pp_phrase', 'user_freq', 'timestamp']
 
         self.old_phrases=[]
 
@@ -184,11 +184,11 @@ class tabsqlitedb:
         if self.old_phrases:
             sqlargs = []
             map(lambda x: sqlargs.append(
-                {'input_phrase': x[0], 'phrase': x[0], 'p_phrase': u'', 'pp_phrase': u'', 'user_freq': x[1]}),
+                {'input_phrase': x[0], 'phrase': x[0], 'p_phrase': u'', 'pp_phrase': u'', 'user_freq': x[1], 'timestamp': time.time()}),
                 self.old_phrases)
             sqlstr = '''
-            INSERT INTO user_db.phrases (input_phrase, phrase, p_phrase, pp_phrase, user_freq)
-            VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq)
+            INSERT INTO user_db.phrases (input_phrase, phrase, p_phrase, pp_phrase, user_freq, timestamp)
+            VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq, :timestamp)
             ;'''
             try:
                 self.db.executemany(sqlstr, sqlargs)
@@ -232,16 +232,21 @@ class tabsqlitedb:
             self._normalization_form_internal, pp_phrase)
         sqlstr = '''
         UPDATE %(database)s.phrases
-        SET user_freq = :user_freq
+        SET user_freq = :user_freq, timestamp = :timestamp
         WHERE input_phrase = :input_phrase
          AND phrase = :phrase AND p_phrase = :p_phrase AND pp_phrase = :pp_phrase
         ;''' %{'database':database}
         sqlargs = {'user_freq': user_freq,
                    'input_phrase': input_phrase,
-                   'phrase': phrase, 'p_phrase': p_phrase, 'pp_phrase': pp_phrase}
-        self.db.execute(sqlstr, sqlargs)
-        if commit:
-            self.db.commit()
+                   'phrase': phrase, 'p_phrase': p_phrase, 'pp_phrase': pp_phrase,
+                   'timestamp': time.time()}
+        try:
+            self.db.execute(sqlstr, sqlargs)
+            if commit:
+                self.db.commit()
+        except:
+            import traceback
+            traceback.print_exc()
 
     def sync_usrdb (self):
         '''
@@ -255,7 +260,7 @@ class tabsqlitedb:
         sqlstr = '''CREATE TABLE IF NOT EXISTS %s.phrases
                     (id INTEGER PRIMARY KEY,
                     input_phrase TEXT, phrase TEXT, p_phrase TEXT, pp_phrase TEXT,
-                    user_freq INTEGER);''' % database
+                    user_freq INTEGER, timestamp REAL);''' % database
         self.db.execute(sqlstr)
         self.db.commit()
 
@@ -287,12 +292,12 @@ class tabsqlitedb:
 
         insert_sqlstr = '''
         INSERT INTO %(database)s.phrases
-        (input_phrase, phrase, p_phrase, pp_phrase, user_freq)
-        VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq)
+        (input_phrase, phrase, p_phrase, pp_phrase, user_freq, timestamp)
+        VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq, :timestamp)
         ;''' %{'database': database}
         insert_sqlargs = {'input_phrase': input_phrase,
                           'phrase': phrase, 'p_phrase': p_phrase, 'pp_phrase': pp_phrase,
-                          'user_freq': user_freq}
+                          'user_freq': user_freq, 'timestamp': time.time()}
         try:
             self.db.execute (insert_sqlstr, insert_sqlargs)
             if commit:
@@ -533,7 +538,7 @@ class tabsqlitedb:
         Determines the number of columns by parsing this:
 
         sqlite> select sql from sqlite_master where name='phrases';
-CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_phrase TEXT, pp_phrase TEXT, user_freq INTEGER)
+CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_phrase TEXT, pp_phrase TEXT, user_freq INTEGER, timestamp REAL)
         sqlite>
 
         This result could be on a single line, as above, or on multiple
@@ -665,7 +670,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
     def read_training_data_from_file(self, filename):
         if not os.path.isfile(filename):
             return False
-        rows = self.db.execute('SELECT input_phrase, phrase, p_phrase, pp_phrase, user_freq FROM phrases;').fetchall()
+        rows = self.db.execute('SELECT input_phrase, phrase, p_phrase, pp_phrase, user_freq, timestamp FROM phrases;').fetchall()
         p_token = u''
         pp_token = u''
         database_dict = {}
@@ -675,7 +680,8 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                                     'phrase': x[1],
                                     'p_phrase': x[2],
                                     'pp_phrase': x[3],
-                                    'user_freq': x[4]}
+                                    'user_freq': x[4],
+                                    'timestamp': x[5]}
                                )]), rows)
         with codecs.open(filename, encoding='UTF-8') as file:
             lines = map(lambda x: unicodedata.normalize(self._normalization_form_internal, x), file.readlines())
@@ -684,19 +690,21 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                     key = (token, token, p_token, pp_token)
                     if key in database_dict:
                         database_dict[key]['user_freq'] += 1
+                        database_dict[key]['timestamp'] = time.time()
                     else:
                         database_dict[key] = {'input_phrase': token,
                                               'phrase': token,
                                               'p_phrase': p_token,
                                               'pp_phrase': pp_token,
-                                              'user_freq': 1}
+                                              'user_freq': 1,
+                                              'timestamp': time.time()}
                     pp_token = p_token
                     p_token = token
         sqlargs = []
         map(lambda x: sqlargs.append(database_dict[x]), database_dict.keys())
         sqlstr = '''
-        INSERT INTO user_db.phrases (input_phrase, phrase, p_phrase, pp_phrase, user_freq)
-        VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq)
+        INSERT INTO user_db.phrases (input_phrase, phrase, p_phrase, pp_phrase, user_freq, timestamp)
+        VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq, :timestamp)
         ;'''
         try:
             self.db.execute('DELETE FROM phrases;')
