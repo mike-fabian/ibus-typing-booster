@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 28 Jun 2013 Released 1.2.0 version
+* Make TAB when used to enable/disable the lookup table work as a toogle
+* Create a VIEW for “LIKE input_phrase%” in select_words() and use that in the following SELECT statements (Makes candidate calculation more than 10 times faster)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 24 Jun 2013 Released 1.1.0 version
 * Add a commit=True parameter to check_phrase_and_update_frequency()
 * Fix that the page_size is shown as 0 in the setup tool if it has not been set before
