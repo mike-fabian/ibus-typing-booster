@@ -608,11 +608,6 @@ class tabengine (IBus.Engine):
     def _update_lookup_table (self):
         '''Update Lookup Table in UI'''
         if self._editor.is_empty ():
-            if self._tab_enable:
-                # if everything has been cleared from the editor
-                # for example by backspace, disable a tab enabled
-                # lookup table again:
-                self.is_lookup_table_enabled_by_tab = False
             self.hide_lookup_table()
             return
         # Also make sure to hide lookup table if there are
@@ -638,12 +633,6 @@ class tabengine (IBus.Engine):
         self._update_aux ()
 
     def commit_string (self, commit_phrase, input_phrase=u''):
-        if self._tab_enable:
-            # After each commit, disable a tab enabled lookup
-            # table again, i.e. one needs to press tab again
-            # while typing the next word to show the lookup table
-            # again:
-            self.is_lookup_table_enabled_by_tab = False
         if not input_phrase:
             input_phrase = self._editor.get_transliterated_string()
         # commit always in NFC:
