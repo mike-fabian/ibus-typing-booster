@@ -377,8 +377,27 @@ class tabsqlitedb:
         # Now phrase_frequencies might contain something like this:
         #
         # {u'code': 0, u'communicability': 0, u'cold': 0, u'colour': 0}
-        sqlargs = {'input_phrase': input_phrase+'%', 'p_phrase': p_phrase, 'pp_phrase': pp_phrase}
-        sqlstr = 'SELECT phrase, sum(user_freq) FROM user_db.phrases WHERE input_phrase LIKE :input_phrase GROUP BY phrase;'
+
+        # To quote a string to be used as a parameter when assembling
+        # an sqlite statement with Python string operations, remove
+        # all NUL characters, replace " with "" and wrap the whole
+        # string in double quotes. Assembling sqlite statements using
+        # parameters containing user input with python string operations
+        # is not recommended because of the risk of SQL injection attacks
+        # if the quoting is not done the right way. So it is better to use
+        # the parameter substitution of the sqlite3 python interface.
+        # But unfortunately that does not work when creating views,
+        # (“OperationalError: parameters are not allowed in views”).
+        quoted_input_phrase = input_phrase.replace('\x00', '').replace('"', '""')
+        self.db.execute('DROP VIEW IF EXISTS like_input_phrase_view;')
+        sqlstr = '''
+        CREATE TEMPORARY VIEW IF NOT EXISTS like_input_phrase_view AS
+        SELECT * FROM user_db.phrases
+        WHERE input_phrase LIKE "%(quoted_input_phrase)s%%"
+        ;''' %{'quoted_input_phrase': quoted_input_phrase}
+        self.db.execute(sqlstr)
+        sqlargs = {'p_phrase': p_phrase, 'pp_phrase': pp_phrase}
+        sqlstr = 'SELECT phrase, sum(user_freq) FROM like_input_phrase_view GROUP BY phrase;'
         try:
             # Get “unigram” data from user_db.
             #
@@ -396,7 +415,9 @@ class tabsqlitedb:
             #
             # [(u'colour', 4), (u'cold', 1), (u'conspiracy', 6)]
             #
-            # (“c|conspiracy|1” is not selected because it doesn’t match the user input “LIKE co%”!)
+            # (“c|conspiracy|1” is not selected because it doesn’t
+            # match the user input “LIKE co%”! I.e. this is filtered
+            # out by the VIEW created above already)
         except:
             import traceback
             traceback.print_exc()
@@ -409,7 +430,7 @@ class tabsqlitedb:
         # (which is 11 in the above example), which gives us the
         # normalized result:
         # [(u'colour', 4/11), (u'cold', 1/11), (u'conspiracy', 6/11)]
-        sqlstr = 'SELECT sum(user_freq) FROM user_db.phrases WHERE input_phrase LIKE :input_phrase;'
+        sqlstr = 'SELECT sum(user_freq) FROM like_input_phrase_view;'
         try:
             count = self.db.execute(sqlstr, sqlargs).fetchall()[0][0]
         except:
@@ -421,7 +442,7 @@ class tabsqlitedb:
         if not p_phrase:
             # If no context for bigram matching is available, return what we have so far:
             return self.best_candidates(phrase_frequencies)
-        sqlstr = 'SELECT phrase, sum(user_freq) FROM user_db.phrases WHERE p_phrase = :p_phrase AND input_phrase LIKE :input_phrase GROUP BY phrase;'
+        sqlstr = 'SELECT phrase, sum(user_freq) FROM like_input_phrase_view WHERE p_phrase = :p_phrase GROUP BY phrase;'
         try:
             results_bi = self.db.execute(sqlstr, sqlargs).fetchall()
         except:
@@ -431,7 +452,7 @@ class tabsqlitedb:
             # If no bigram could be matched, return what we have so far:
             return self.best_candidates(phrase_frequencies)
         # get the total count of p_phrase to normalize the bigram frequencies:
-        sqlstr = 'SELECT sum(user_freq) FROM user_db.phrases WHERE p_phrase = :p_phrase AND input_phrase LIKE :input_phrase;'
+        sqlstr = 'SELECT sum(user_freq) FROM like_input_phrase_view WHERE p_phrase = :p_phrase;'
         try:
             count_p_phrase = self.db.execute(sqlstr, sqlargs).fetchall()[0][0]
         except:
@@ -444,7 +465,7 @@ class tabsqlitedb:
         if not pp_phrase:
             # If no context for trigram matching is available, return what we have so far:
             return self.best_candidates(phrase_frequencies)
-        sqlstr = 'SELECT phrase, sum(user_freq) FROM user_db.phrases WHERE p_phrase = :p_phrase AND pp_phrase = :pp_phrase AND input_phrase LIKE :input_phrase GROUP BY phrase;'
+        sqlstr = 'SELECT phrase, sum(user_freq) FROM like_input_phrase_view WHERE p_phrase = :p_phrase AND pp_phrase = :pp_phrase GROUP BY phrase;'
         try:
             results_tri = self.db.execute(sqlstr, sqlargs).fetchall()
         except:
@@ -454,7 +475,7 @@ class tabsqlitedb:
             # if no trigram could be matched, return what we have so far:
             return self.best_candidates(phrase_frequencies)
         # get the total count of (p_phrase, pp_phrase) pairs to normalize the bigram frequencies:
-        sqlstr = 'SELECT sum(user_freq) FROM user_db.phrases WHERE p_phrase = :p_phrase AND pp_phrase = :pp_phrase AND input_phrase LIKE :input_phrase;'
+        sqlstr = 'SELECT sum(user_freq) FROM like_input_phrase_view WHERE p_phrase = :p_phrase AND pp_phrase = :pp_phrase;'
         try:
             count_pp_phrase_p_phrase = self.db.execute(sqlstr, sqlargs).fetchall()[0][0]
         except:
