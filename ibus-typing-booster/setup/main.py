@@ -253,7 +253,22 @@ class EventHandler:
         while Gtk.events_pending():
             Gtk.main_iteration()
         if filename and os.path.isfile(filename):
-            SetupUi.tabsqlitedb.read_training_data_from_file(filename)
+            if SetupUi.tabsqlitedb.read_training_data_from_file(filename):
+                dialog = Gtk.MessageDialog(
+                    parent=SetupUi.builder.get_object('main'),
+                    flags=Gtk.DialogFlags.MODAL,
+                    message_type=Gtk.MessageType.INFO,
+                    buttons=Gtk.ButtonsType.OK,
+                    message_format=_("Learned successfully from file %(filename)s.") %{'filename': filename})
+            else:
+                dialog = Gtk.MessageDialog(
+                    parent=SetupUi.builder.get_object('main'),
+                    flags=Gtk.DialogFlags.MODAL,
+                    message_type=Gtk.MessageType.ERROR,
+                    buttons=Gtk.ButtonsType.OK,
+                    message_format=_("Learning from file %(filename)s failed.") %{'filename': filename})
+            dialog.run()
+            dialog.destroy()
         SetupUi.learn_from_file_button.set_sensitive(True)
 
     def onDeleteLearnedDataClicked(self,widget):

@@ -671,7 +671,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
 
     def read_training_data_from_file(self, filename):
         if not os.path.isfile(filename):
-            return
+            return False
         rows = self.db.execute('SELECT input_phrase, phrase, p_phrase, pp_phrase, user_freq FROM phrases;').fetchall()
         p_token = u''
         pp_token = u''
@@ -718,6 +718,8 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         except:
             import traceback
             traceback.print_exc()
+            return False
+        return True
 
     def remove_all_phrases(self):
         try:
