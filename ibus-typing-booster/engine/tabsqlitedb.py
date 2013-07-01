@@ -26,6 +26,7 @@ import sqlite3
 import uuid
 import time
 import re
+import itb_util
 import hunspell_suggest
 
 user_database_version = '0.64'
@@ -684,12 +685,10 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                                     'pp_phrase': x[3],
                                     'user_freq': x[4]}
                                )]), rows)
-        pattern = re.compile(r'[\s]+', re.UNICODE)
         with codecs.open(filename, encoding='UTF-8') as file:
             lines = map(lambda x: unicodedata.normalize(self._normalization_form_internal, x), file.readlines())
             for line in lines:
-                tokens = pattern.split(line.strip())
-                for token in tokens:
+                for token in itb_util.tokenize(line):
                     key = (token, token, p_token, pp_token)
                     if key in database_dict:
                         database_dict[key]['user_freq'] += 1

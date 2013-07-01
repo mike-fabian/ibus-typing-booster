@@ -28,6 +28,7 @@ import curses.ascii
 import re
 from gi.repository import IBus
 from gi.repository import GLib
+import itb_util
 
 debug_level = int(0)
 
@@ -331,15 +332,23 @@ class editor(object):
         self._typed_string_when_update_candidates_was_last_called = self._typed_string[:]
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
+        self._candidates = []
+        prefix_length = 0
+        prefix = u''
         if self._transliterated_string:
-            try:
-                self._candidates = self.db.select_words(self._transliterated_string, p_phrase=self._p_phrase, pp_phrase=self._pp_phrase)
-            except:
-                import traceback
-                traceback.print_exc()
-        else:
-            self._candidates =[]
+            stripped_transliterated_string = itb_util.lstrip_token(self._transliterated_string)
+            if stripped_transliterated_string:
+                prefix_length = len(self._transliterated_string) - len(stripped_transliterated_string)
+                if prefix_length:
+                    prefix = self._transliterated_string[0:prefix_length]
+                try:
+                    self._candidates = self.db.select_words(stripped_transliterated_string, p_phrase=self._p_phrase, pp_phrase=self._pp_phrase)
+                except:
+                    import traceback
+                    traceback.print_exc()
         if self._candidates:
+            if prefix:
+                self._candidates = map(lambda x: (prefix+x[0], x[1]), self._candidates)
             map(lambda x:
                 self.append_candidate_to_lookup_table(phrase=x[0], user_freq=x[1]),
                 self._candidates)
@@ -667,13 +676,14 @@ class tabengine (IBus.Engine):
                     # len(commit_phrase)):
                     offset =  -(nchars + len(commit_phrase))
                     self.delete_surrounding_text(offset, nchars)
-        # Update context and user frequencies.  We want neither
-        # leading nor trailing whitespace, neither in the frequency
-        # database nor in the context:
-        commit_phrase = commit_phrase.strip()
+        stripped_input_phrase = itb_util.strip_token(input_phrase)
+        stripped_commit_phrase = itb_util.strip_token(commit_phrase)
         self.db.check_phrase_and_update_frequency(
-            input_phrase=input_phrase, phrase=commit_phrase, p_phrase=self._editor._p_phrase, pp_phrase=self._editor._pp_phrase)
-        self._editor.push_context(commit_phrase)
+            input_phrase=stripped_input_phrase,
+            phrase=stripped_commit_phrase,
+            p_phrase=self._editor._p_phrase,
+            pp_phrase=self._editor._pp_phrase)
+        self._editor.push_context(stripped_commit_phrase)
 
     def get_context(self):
         if not (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT):
@@ -692,21 +702,11 @@ class tabengine (IBus.Engine):
             # surrounding text is probably from the previously
             # focused window (bug!), don’t use it.
             return
-        pattern_two_words = re.compile(
-            r'(?P<word1>[\S]+)[\s]+(?P<word2>[\S]+)[\s]*$',
-            re.UNICODE)
-        match = pattern_two_words.search(text[:cursor_pos])
-        if match and match.group('word1') and match.group('word2'):
-            self._editor._pp_phrase = match.group('word1')
-            self._editor._p_phrase = match.group('word2')
-            return
-        pattern_one_word = re.compile(
-            r'(?P<word>[\S]+)[\s]*$',
-            re.UNICODE)
-        match = pattern_one_word.search(text[:cursor_pos])
-        if match and match.group('word'):
-            self._editor._p_phrase = match.group('word')
-            return
+        tokens = map(itb_util.strip_token, itb_util.tokenize(text[:cursor_pos]))
+        if len(tokens):
+            self._editor._p_phrase = tokens[-1]
+        if len(tokens) > 1:
+            self._editor._pp_phrase = tokens[-2]
 
     def do_process_key_event(self, keyval, keycode, state):
         '''Process Key Events
