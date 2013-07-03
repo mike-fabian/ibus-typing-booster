@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 03 Jul 2013 Released 1.2.1 version
+* Pop up a message box when a file has been read to train the database, indicating success or failure (Resolves: rhbz#979933)
+* Ignore most punctuation characters and mathematical symbols when tokenizing (Resolves: rhbz#979939)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 28 Jun 2013 Released 1.2.0 version
 * Make TAB when used to enable/disable the lookup table work as a toogle
 * Create a VIEW for “LIKE input_phrase%” in select_words() and use that in the following SELECT statements (Makes candidate calculation more than 10 times faster)
