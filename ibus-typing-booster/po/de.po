@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-typing-booster 0.0.16\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2013-06-24 17:08+0200\n"
-"PO-Revision-Date: 2013-06-24 18:55+0200\n"
+"POT-Creation-Date: 2013-07-03 15:27+0200\n"
+"PO-Revision-Date: 2013-07-03 15:52+0200\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <trans-de@lists.fedoraproject.org>\n"
 "Language: de\n"
@@ -56,10 +56,20 @@ msgid "Open File ..."
 msgstr "Öffne Datei"
 
 #: setup/main.py:262
+#, python-format
+msgid "Learned successfully from file %(filename)s."
+msgstr "Das Lernen aus der Datei %(filename)s war erfolgreich."
+
+#: setup/main.py:269
+#, python-format
+msgid "Learning from file %(filename)s failed."
+msgstr "Fehler beim Lernen aus der Datai %(filename)s."
+
+#: setup/main.py:277
 msgid "Are you sure?"
 msgstr "Sind Sie sicher?"
 
-#: setup/main.py:269
+#: setup/main.py:284
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
