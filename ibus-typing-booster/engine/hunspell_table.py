@@ -746,28 +746,32 @@ class tabengine (IBus.Engine):
                 # if the first character is a space, just pass it through
                 # it makes not sense trying to complete:
                 return False
-            if  key.code >= 32 and key.code <= 127 and (not (key.mask & (IBus.ModifierType.MOD1_MASK | IBus.ModifierType.CONTROL_MASK))):
-                # If the first character typed is punctuation or a digit,
-                # we might want to avoid completion and commit something
-                # immediately:
-                if curses.ascii.ispunct(key.code):
+            if  key.code >= 32 and (not (key.mask & (IBus.ModifierType.MOD1_MASK | IBus.ModifierType.CONTROL_MASK))):
+                typed_character = IBus.keyval_to_unicode(key.code).decode('UTF-8')
+                # If the first character typed is a character which is
+                # very unlikely to be part of a word
+                # (e.g. punctuation, a symbol, ..), we might want to
+                # avoid completion and commit something immediately:
+                if typed_character and unicodedata.category(typed_character) in itb_util.categories_to_trigger_immediate_commit:
                     if not self._editor.trans_m17n_mode:
-                        # If the first character is punctuation and no
-                        # transliteration is used, don’t just pass it through.
-                        # Commit it so it gets added to the remembered context:
-                        punctuation = IBus.keyval_to_unicode(key.code).decode('UTF-8')
-                        self.commit_string(punctuation, input_phrase = punctuation)
+                        # Do not just pass the character through,
+                        # commit it properly.  For example if it is a
+                        # “.” we might want to remove whitespace
+                        # between the “.” and the previous word and this is
+                        # done in commit_string().
+                        self.commit_string(typed_character, input_phrase = typed_character)
                         return True
                     # If transliteration is used, we may need to
-                    # handle a punctuation character. For example,
-                    # “.c” is transliterated to “ċ” in the
-                    # “t-latn-pre” transliteration method, therefore
-                    # we cannot just pass it through. Just add it to
-                    # the input so far and see what comes next:
-                    self._editor.insert_string_at_cursor(IBus.keyval_to_unicode(key.code).decode('UTF-8'))
+                    # handle a punctuation or symbol character. For
+                    # example, “.c” is transliterated to “ċ” in
+                    # the “t-latn-pre” transliteration method,
+                    # therefore we cannot just pass it through. Just
+                    # add it to the input so far and see what comes
+                    # next:
+                    self._editor.insert_string_at_cursor(typed_character)
                     self._update_ui()
                     return True
-                if curses.ascii.isdigit(key.code):
+                if typed_character and unicodedata.digit(typed_character, -1) != -1:
                     if not self._editor.trans_m17n_mode:
                         # If a digit has been typed and no transliteration
                         # is used, we can pass it through
@@ -778,7 +782,7 @@ class tabengine (IBus.Engine):
                     # want “3” to be converted to “३”. So we try
                     # to transliterate and commit the result:
                     transliterated_digit = self._editor.trans.transliterate(
-                        IBus.keyval_to_unicode(key.code))[0].decode('utf8')
+                        typed_character)[0].decode('utf8')
                     self.commit_string(transliterated_digit, input_phrase=transliterated_digit)
                     return True
 
@@ -944,7 +948,12 @@ class tabengine (IBus.Engine):
                 # first key typed, we will try to complete something now
                 # get the context if possible
                 self.get_context()
-            self._editor.insert_string_at_cursor(IBus.keyval_to_unicode(key.code).decode('UTF-8'))
+            typed_character = IBus.keyval_to_unicode(key.code).decode('UTF-8')
+            self._editor.insert_string_at_cursor(typed_character)
+            if typed_character and unicodedata.category(typed_character) in itb_util.categories_to_trigger_immediate_commit:
+                input_phrase = self._editor.get_transliterated_string()
+                if input_phrase and input_phrase[-1] == typed_character and not self._editor.trans_m17n_mode:
+                    self.commit_string(input_phrase + u' ', input_phrase = input_phrase)
             self._update_ui()
             return True
 

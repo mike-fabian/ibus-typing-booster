@@ -19,6 +19,22 @@
 import re
 import unicodedata
 
+# If a character of one of these categories is typed and no
+# transliteration is used, the preëdit can be committed immediately.
+# However, if transliteration is used, we may need to handle a
+# punctuation or symbol character. For example, “.c” is
+# transliterated to “ċ” in the “t-latn-pre” transliteration
+# method, therefore we cannot just pass it through, we have to add
+# it to the input and see what comes next.
+#
+# This list is very similar to the list of categories to strip from
+# tokens. But I removed the 'Pd' (Punctuation, Dash) category because
+# of words like “up-to-date”. Triggering a commit at the first “-”
+# prevents learning such words from user input. I.e. the list of
+# categories to trigger immediate commit should contain only categories
+# which are very unlikely to appear as parts of words.
+categories_to_trigger_immediate_commit = ['Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Sm', 'Sc', 'Cf']
+
 categories_to_strip_from_tokens = ['Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Pd', 'Sm', 'Sc', 'Cf']
 
 def lstrip_token(token):
