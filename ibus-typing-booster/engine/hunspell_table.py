@@ -89,6 +89,15 @@ class editor(object):
         self._config = config
         self._name = self.db.ime_properties.get('name')
         self._config_section = "engine/typing-booster/%s" % self._name
+        self._min_char_complete = variant_to_value(self._config.get_value(
+            self._config_section,
+            'mincharcomplete'))
+        if self._min_char_complete == None:
+            self._min_char_complete = 1 # default
+        if self._min_char_complete < 1:
+            self._min_char_complete = 1 # minimum
+        if self._min_char_complete > 9:
+            self._min_char_complete = 9 # maximum
         self._typed_string = u''
         self._typed_string_cursor = 0
         self._typed_string_when_update_candidates_was_last_called = u''
@@ -337,7 +346,7 @@ class editor(object):
         prefix = u''
         if self._transliterated_string:
             stripped_transliterated_string = itb_util.lstrip_token(self._transliterated_string)
-            if stripped_transliterated_string:
+            if len(stripped_transliterated_string) >= self._min_char_complete:
                 prefix_length = len(self._transliterated_string) - len(stripped_transliterated_string)
                 if prefix_length:
                     prefix = self._transliterated_string[0:prefix_length]
@@ -1021,6 +1030,11 @@ class tabengine (IBus.Engine):
                     cursor_pos=0,
                     cursor_visible=False,
                     round=True)
+                self.reset()
+            return
+        if name == "mincharcomplete":
+            if value >= 1 and value <= 9:
+                self._editor._min_char_complete = value
                 self.reset()
             return
         if name == "shownumberofcandidates":

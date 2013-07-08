@@ -152,6 +152,14 @@ class SetupUI:
             self.page_size_adjustment.set_value(6)
         self.page_size_adjustment.connect('value-changed', event_handler.onPageSizeAdjustmentValueChanged)
 
+        self.min_char_complete_adjustment = self.builder.get_object("min_char_complete_adjustment")
+        self.min_char_complete = self.variant_to_value(self.config.get_value(self.config_section, 'mincharcomplete'))
+        if self.min_char_complete:
+            self.min_char_complete_adjustment.set_value(int(self.min_char_complete))
+        else:
+            self.min_char_complete_adjustment.set_value(1)
+        self.min_char_complete_adjustment.connect('value-changed', event_handler.onMinCharCompleteAdjustmentValueChanged)
+
         self.other_ime = self.tabsqlitedb.ime_properties.get('other_ime').lower() == u'true'
         ime_combobox = self.builder.get_object("input_method_combobox")
         ime_label = self.builder.get_object("input_method_label")
@@ -310,6 +318,10 @@ class EventHandler:
     def onPageSizeAdjustmentValueChanged(self,widget):
         self.page_size = SetupUi.page_size_adjustment.get_value()
         SetupUi.config.set_value(SetupUi.config_section,'pagesize',GLib.Variant.new_int32(self.page_size))
+
+    def onMinCharCompleteAdjustmentValueChanged(self,widget):
+        self.min_char_complete = SetupUi.min_char_complete_adjustment.get_value()
+        SetupUi.config.set_value(SetupUi.config_section,'mincharcomplete',GLib.Variant.new_int32(self.min_char_complete))
 
     def onImeComboboxChanged(self,widget):
         tree_iter = widget.get_active_iter()
