@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2013-07-03 15:27+0200\n"
+"POT-Creation-Date: 2013-07-15 11:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,87 +46,91 @@ msgstr ""
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr ""
 
-#: setup/main.py:245
+#: setup/main.py:253
 msgid "Open File ..."
 msgstr ""
 
-#: setup/main.py:262
+#: setup/main.py:270
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr ""
 
-#: setup/main.py:269
+#: setup/main.py:277
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr ""
 
-#: setup/main.py:277
+#: setup/main.py:285
 msgid "Are you sure?"
 msgstr ""
 
-#: setup/main.py:284
+#: setup/main.py:292
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
 msgstr ""
 
-#: setup/setup.glade:30
+#: setup/setup.glade:29
 msgid "Close"
 msgstr ""
 
-#: setup/setup.glade:78
+#: setup/setup.glade:77
 msgid "Enable suggestions by Tab key"
 msgstr ""
 
-#: setup/setup.glade:102
+#: setup/setup.glade:101
 msgid "Candidate window page size:"
 msgstr ""
 
-#: setup/setup.glade:138
+#: setup/setup.glade:137
 msgid "Input Method:"
 msgstr ""
 
-#: setup/setup.glade:162
+#: setup/setup.glade:161
 msgid "Show number of candidates"
 msgstr ""
 
-#: setup/setup.glade:205
+#: setup/setup.glade:186
+msgid "Minimum number of chars for completion:"
+msgstr ""
+
+#: setup/setup.glade:244
 msgid "Options"
 msgstr ""
 
-#: setup/setup.glade:238
+#: setup/setup.glade:277
 msgid "Install dictionary"
 msgstr ""
 
-#: setup/setup.glade:252
+#: setup/setup.glade:291
 msgid "Install pyhunspell"
 msgstr ""
 
-#: setup/setup.glade:268
+#: setup/setup.glade:307
 msgid "Learn from text file"
 msgstr ""
 
-#: setup/setup.glade:287
+#: setup/setup.glade:326
 msgid "Install the dictionary package for this engine"
 msgstr ""
 
-#: setup/setup.glade:297
+#: setup/setup.glade:336
 msgid "Install pyhunspell package to get spellchecking suggestions"
 msgstr ""
 
-#: setup/setup.glade:311
+#: setup/setup.glade:350
 msgid "Learn your style by reading a text file"
 msgstr ""
 
-#: setup/setup.glade:325
+#: setup/setup.glade:364
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
 
-#: setup/setup.glade:336
+#: setup/setup.glade:375
 msgid "Delete learned data"
 msgstr ""
 
-#: setup/setup.glade:373
+#: setup/setup.glade:412
 msgid "Dictionaries and personal data"
 msgstr ""
