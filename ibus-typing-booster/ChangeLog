@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 06 Aug 2013 Released 1.2.3 version
+* Fix exception handling when trying to install a rpm package (Resolves: rhbz#986178)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 15 Jul 2013 Released 1.2.2 version
 * Commit immediately when certain punctuation characters are typed and transliteration is not used (Resolves: rhbz#981179)
 * Add an option to try completion only when a minimum number of characters has been typed
