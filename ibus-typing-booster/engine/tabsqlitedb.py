@@ -90,8 +90,6 @@ class tabsqlitedb:
         self.ime_properties = ImeProperties(self._conf_file_path+filename)
         self._language = self.ime_properties.get('language')
         self._normalization_form_internal = 'NFD'
-        if self._language.startswith('ko'):
-            self._normalization_form_internal = 'NFKD'
         self._m17ndb = 'm17n'
         self._m17n_mim_name = ""
 

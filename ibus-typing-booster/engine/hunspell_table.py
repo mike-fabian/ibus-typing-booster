@@ -173,6 +173,9 @@ class editor(object):
         if self.trans_m17n_mode:
             self._transliterated_string = self.trans.transliterate(
                 self._typed_string)[0].decode('UTF-8')
+            if self._current_ime in ['ko-romaja', 'ko-han2']:
+                self._transliterated_string = unicodedata.normalize(
+                    'NFKD', self._transliterated_string)
         else:
             self._transliterated_string = self._typed_string
 
@@ -266,6 +269,9 @@ class editor(object):
                 self._typed_string[:self._typed_string_cursor])[0].decode('UTF-8')
         else:
             transliterated_string_up_to_cursor = self._typed_string[:self._typed_string_cursor]
+        if self._current_ime in ['ko-romaja', 'ko-han2']:
+            transliterated_string_up_to_cursor = unicodedata.normalize(
+                'NFKD', transliterated_string_up_to_cursor)
         transliterated_string_up_to_cursor = unicodedata.normalize(
             'NFC', transliterated_string_up_to_cursor)
         return len(transliterated_string_up_to_cursor)

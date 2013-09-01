@@ -41,8 +41,6 @@ class Hunspell:
     def __init__(self,lang='en',loc='/usr/share/myspell/',dict_name='en_US.dic',aff_name='en_US.aff'):
         self.language=lang
         self.normalization_form_internal = 'NFD'
-        if self.language.startswith('ko'):
-            self.normalization_form_internal = 'NFKD'
         self.loc = loc
         self.dict_name = dict_name
         self.aff_name = aff_name
