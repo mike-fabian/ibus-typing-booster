@@ -90,8 +90,6 @@ class tabsqlitedb:
         self.ime_properties = ImeProperties(self._conf_file_path+filename)
         self._language = self.ime_properties.get('language')
         self._normalization_form_internal = 'NFD'
-        self._m17ndb = 'm17n'
-        self._m17n_mim_name = ""
 
         self.hunspell_obj = hunspell_suggest.Hunspell(
             lang=self._language,
