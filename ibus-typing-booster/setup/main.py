@@ -144,8 +144,6 @@ class SetupUI:
         show_number_of_candidates_checkbox.connect('clicked', event_handler.onShowNumberOfCandidatesCheckbox)
         self.page_size_adjustment = self.builder.get_object("page_size_adjustment")
         self.page_size = self.variant_to_value(self.config.get_value(self.config_section, 'pagesize'))
-        if not self.page_size:
-            self.page_size = self.tabsqlitedb.ime_properties.get('page_size')
         if self.page_size:
             self.page_size_adjustment.set_value(int(self.page_size))
         else:

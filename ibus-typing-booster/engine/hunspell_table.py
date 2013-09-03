@@ -526,8 +526,6 @@ class tabengine (IBus.Engine):
                 self._config_section,
                 'pagesize'))
         if tabengine._page_size == None:
-            tabengine._page_size = self.db.ime_properties.get('page_size')
-        if tabengine._page_size == None:
             tabengine._page_size = 6 # reasonable default page size
         if tabengine._page_size < 1:
             tabengine._page_size = 1 # minimum page size supported

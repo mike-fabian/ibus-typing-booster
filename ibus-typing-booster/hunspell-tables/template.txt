@@ -55,8 +55,6 @@ hunspell_dict_package = hunspell-de
 # Displayed for example in the menu of input methods shown when clicking on
 # the input method selector in the gnome-shell panel.
 ime_name = German - DE (Hunspell)
-# The maximum number of candidates to display in one page.
-page_size = 6
 # Short display name of the typing booster engine.
 # Displayed for example in the gnome-shell panel, showing the
 # currently active input method.
