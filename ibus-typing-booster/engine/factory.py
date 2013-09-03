@@ -37,7 +37,7 @@ class EngineFactory (IBus.Factory):
     """Table IM Engine Factory"""
     def __init__ (self, bus, db="", icon=""):
         if db:
-            self.db = tabsqlitedb.tabsqlitedb(filename=db)
+            self.db = tabsqlitedb.tabsqlitedb(config_filename=db)
         else:
             self.db = None
         self.dbdict = {}
@@ -57,7 +57,7 @@ class EngineFactory (IBus.Factory):
             if name in self.dbdict:
                 self.db = self.dbdict[name]
             else:
-                self.db = tabsqlitedb.tabsqlitedb(filename=name+'.conf')
+                self.db = tabsqlitedb.tabsqlitedb(config_filename=name+'.conf')
                 self.dbdict[name] = self.db
             if name in self.enginedict:
                 engine = self.enginedict[name]

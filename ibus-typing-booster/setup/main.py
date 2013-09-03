@@ -104,7 +104,7 @@ class SetupUI:
             sys.exit(1)
             return
 
-        self.tabsqlitedb = tabsqlitedb.tabsqlitedb (filename=self.config_file)
+        self.tabsqlitedb = tabsqlitedb.tabsqlitedb (config_filename=self.config_file)
         self.name = self.tabsqlitedb.ime_properties.get('name')
         self.config_section = "engine/typing-booster/%s" % self.name
         self.hunspell_dict_package = self.tabsqlitedb.ime_properties.get('hunspell_dict_package')

@@ -78,16 +78,14 @@ class tabsqlitedb:
     user_db: Database on disk where the phrases learned from the user are stored
         user_freq >= 1: The number of times the user has used this phrase
     '''
-    def __init__(self, name = 'table.db', user_db = None, filename = None ):
-        # use filename when you are creating db from source
-        # use name when you are using db
+    def __init__(self, config_filename=None):
         self._phrase_table_column_names = ['id', 'input_phrase', 'phrase', 'p_phrase', 'pp_phrase', 'user_freq']
 
         self.old_phrases=[]
 
         self._conf_file_path = "/usr/share/ibus-typing-booster/hunspell-tables/"
 
-        self.ime_properties = ImeProperties(self._conf_file_path+filename)
+        self.ime_properties = ImeProperties(self._conf_file_path+config_filename)
         self._language = self.ime_properties.get('language')
         self._normalization_form_internal = 'NFD'
 
