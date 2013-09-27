@@ -92,7 +92,7 @@ class tabsqlitedb:
         self.hunspell_obj = hunspell_suggest.Hunspell(
             dict_name=self.ime_properties.get("hunspell_dict").replace('.dic', ''))
 
-        user_db = self.ime_properties.get("name")+'-user.db'
+        user_db = 'user.db'
         # user database:
         if user_db != None:
             home_path = os.getenv ("HOME")
