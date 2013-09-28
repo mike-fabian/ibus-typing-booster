@@ -515,6 +515,10 @@ class tabengine (IBus.Engine):
             debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
         except:
             debug_level = int(0)
+        self._input_purpose = 0
+        self._has_input_purpose = False
+        if hasattr(IBus, 'InputPurpose'):
+            self._has_input_purpose = True
         self._bus = bus
         self.db = db
         self._name = self.db.ime_properties.get('name')
@@ -726,6 +730,9 @@ class tabengine (IBus.Engine):
         Key Events include Key Press and Key Release,
         modifier means Key Pressed
         '''
+        if self._has_input_purpose and self._input_purpose == IBus.InputPurpose.PASSWORD:
+            return False
+
         key = KeyEvent(keyval, state & IBus.ModifierType.RELEASE_MASK == 0, state)
         # ignore NumLock mask
         key.mask &= ~IBus.ModifierType.MOD2_MASK
@@ -978,9 +985,15 @@ class tabengine (IBus.Engine):
         self._update_ui ()
 
     def do_focus_out (self):
+        if self._has_input_purpose:
+            self._input_purpose = 0
         self._editor.clear_context()
         self.reset()
         return
+
+    def do_set_content_type(self, purpose, hints):
+        if self._has_input_purpose:
+            self._input_purpose = purpose
 
     def do_enable (self):
         # Tell the input-context that the engine will utilize
