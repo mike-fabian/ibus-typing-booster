@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 28 Sep 2013 Released 1.2.4 version
+* Use normalization form NFD internally for Korean as well
+* Add check for input purpose for gnome-shell password dialog (Resolves: rhbz#1013008 - ibus-typing-booster shows entered text in password fields)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 06 Aug 2013 Released 1.2.3 version
 * Fix exception handling when trying to install a rpm package (Resolves: rhbz#986178)
 
