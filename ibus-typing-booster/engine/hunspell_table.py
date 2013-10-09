@@ -559,7 +559,7 @@ class tabengine (IBus.Engine):
             self._config_section,
             "tabenable"))
         if self._tab_enable == None:
-            self._tab_enable = self.db.ime_properties.get('tab_enable').lower() == u'true'
+            self._tab_enable = False
         self._commit_happened_after_focus_in = False
         self.reset ()
 

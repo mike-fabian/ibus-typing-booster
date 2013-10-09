@@ -131,7 +131,7 @@ class SetupUI:
         tab_enable_checkbox = self.builder.get_object("tab_enable_checkbox")
         self.tab_enable = self.variant_to_value(self.config.get_value(self.config_section, 'tabenable'))
         if self.tab_enable == None:
-            self.tab_enable = self.tabsqlitedb.ime_properties.get('tab_enable').lower() == u'true'
+            self.tab_enable = False
         if  self.tab_enable == True:
             tab_enable_checkbox.set_active(True)
         tab_enable_checkbox.connect('clicked', event_handler.onTabEnableCheckbox)
