@@ -544,9 +544,6 @@ class tabengine (IBus.Engine):
 
         self._icon_dir = '%s%s%s%s' % (os.getenv('IBUS_HUNSPELL_TABLE_LOCATION'),
                 os.path.sep, 'icons', os.path.sep)
-        # 0 = english input mode
-        # 1 = table input mode
-        self._mode = 1
 
         self._status = self.db.ime_properties.get('status_prompt').encode('utf8')
 
