@@ -118,31 +118,21 @@ class editor(object):
         self.trans = None
 
         self._supported_imes = []
-        if self.db.ime_properties.get('m17n_mim_name') != None:
-            self._supported_imes.append(self.db.ime_properties.get('m17n_mim_name'))
-        self._other_ime = self.db.ime_properties.get('other_ime').lower() == u'true'
-        if self._other_ime:
-            imes = self.db.ime_properties.get('imes').split(',')
-            for item in imes:
-                mim_name = item.split(':')[1]
-                if not mim_name in self._supported_imes:
-                    self._supported_imes.append(mim_name)
-        if self._other_ime:
-            # Several imes are selectable, try to get the selected one from dconf:
-            self._current_ime = variant_to_value(self._config.get_value(
-                    self._config_section,
-                    'inputmethod'))
-            if self._current_ime == None or not self._current_ime in self._supported_imes:
-                # There is no ime set in dconf or an unsupported ime,
-                # fall back to the “main” ime from the config file
-                # or if that one does not exist either to the first of
-                # the supported imes:
-                self._current_ime = self.db.ime_properties.get('m17n_mim_name')
-                if self._current_ime == None:
-                    self._current_ime = self._supported_imes[0]
-        else:
-            # There is only one ime, get it from the config file:
-            self._current_ime = self.db.ime_properties.get('m17n_mim_name')
+        imes = self.db.ime_properties.get('imes').split(',')
+        for item in imes:
+            mim_name = item.split(':')[1]
+            if not mim_name in self._supported_imes:
+                self._supported_imes.append(mim_name)
+        if not self._supported_imes:
+            self._supported_imes = ['NoIme']
+        # Try to get the selected input method from dconf:
+        self._current_ime = variant_to_value(self._config.get_value(
+                self._config_section,
+                'inputmethod'))
+        if self._current_ime == None or not self._current_ime in self._supported_imes:
+            # There is no ime set in dconf or an unsupported ime, fall
+            # back to the first of the supported imes:
+            self._current_ime = self._supported_imes[0]
         if self._current_ime == None or self._current_ime == 'NoIme':
             # Not using m17n transliteration:
             self.trans_m17n_mode = False

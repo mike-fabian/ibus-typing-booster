@@ -59,15 +59,6 @@ ime_name = German - DE (Hunspell)
 # Displayed for example in the gnome-shell panel, showing the
 # currently active input method.
 symbol= de-DE✓
-# “m17n_mim_name” selects the default input method. Omit this key or
-# set it to the the special value “NoIme” to use no input method
-# by default. If a keyboard layout is available which has all
-# needed characters, no input method is necessary and using
-# the keyboard layout directly might be more convenient.
-m17n_mim_name = NoIme
-# “other_ime” should be set to TRUE if the user should be able to select
-# between different possible input methods for the language.
-other_ime = TRUE
 # “imes” lists the possible input methods.
 # Format is a comma separated list of
 #   <Display Name>:<Input Method>
@@ -78,6 +69,8 @@ other_ime = TRUE
 # means “Do not use any m17n transliteration at all, use the characters
 # as they are produced by the keyboard layout directly without any
 # transliteration.
+# The first input method in this list selects the default input method
+# if no input method has been set by the user in dconf.
 imes = Native Keyboard:NoIme,Latin-Pre:t-latn-pre,Latin-Post:t-latn-post
 # The setup program to use for this engine. Full command line with options.
 # Usually this should be “/usr/libexec/ibus-setup-typing-booster”

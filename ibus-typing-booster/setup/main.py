@@ -21,9 +21,11 @@
 import sys
 import os
 from os import path
+import re
 import signal
 import optparse
 import locale
+import codecs
 from time import strftime
 from i18n import DOMAINNAME, _, N_, init as i18n_init
 
@@ -158,43 +160,43 @@ class SetupUI:
             self.min_char_complete_adjustment.set_value(1)
         self.min_char_complete_adjustment.connect('value-changed', event_handler.onMinCharCompleteAdjustmentValueChanged)
 
-        self.other_ime = self.tabsqlitedb.ime_properties.get('other_ime').lower() == u'true'
-        ime_combobox = self.builder.get_object("input_method_combobox")
+        self.ime_combobox = self.builder.get_object("input_method_combobox")
         ime_label = self.builder.get_object("input_method_label")
-        if self.other_ime:
-            ime_store = Gtk.ListStore(str, str)
-            imes = self.tabsqlitedb.ime_properties.get('imes').split(',')
-            for item in imes:
-                ime_store.append([item.split(':')[0], item.split(':')[1]])
-            ime_combobox.set_model(ime_store)
-            renderer_text = Gtk.CellRendererText()
-            ime_combobox.pack_start(renderer_text, True)
-            ime_combobox.add_attribute(renderer_text, "text", 0)
-            self.ime = self.variant_to_value(self.config.get_value(self.config_section, 'inputmethod'))
-            if self.ime == None:
-                # ime was not in settings, get the default from 'ime_name':
-                self.ime = self.tabsqlitedb.ime_properties.get('m17n_mim_name')
-            combobox_has_ime = False
-            for i in xrange(len(ime_store)):
-                if ime_store[i][1] == self.ime:
-                    ime_combobox.set_active(i)
-                    combobox_has_ime = True
-            if combobox_has_ime == False:
-                # the combobox did not have the ime from the settings or
-                # the default ime, take the ime from the first row of
-                # the combobox as the fallback:
-                self.ime = ime_store[0][1]
-                ime_combobox.set_active(0)
-            ime_combobox.connect("changed", event_handler.onImeComboboxChanged)
-        else:
-            # 'other_ime' is false in the .conf file, i.e. there is only
-            # one possible input method. In that case, we do not want
-            # to show an input method selection combobox:
-            ime_combobox.set_visible(False)
-            ime_label.set_visible(False)
+        self.input_method_help_button = self.builder.get_object("input_method_help_button")
+        ime_store = Gtk.ListStore(str, str)
+        imes = self.tabsqlitedb.ime_properties.get('imes').split(',')
+        if not imes:
+            imes = ['Native Keyboard:NoIme']
+        for item in imes:
+            ime_store.append([item.split(':')[0], item.split(':')[1]])
+        self.ime_combobox.set_model(ime_store)
+        renderer_text = Gtk.CellRendererText()
+        self.ime_combobox.pack_start(renderer_text, True)
+        self.ime_combobox.add_attribute(renderer_text, "text", 0)
+        self.ime = self.variant_to_value(self.config.get_value(self.config_section, 'inputmethod'))
+        if self.ime == None:
+            # ime was not in settings, use the first value from the combobox as the default:
+            self.ime = ime_store[0][1]
+        combobox_has_ime = False
+        for i in xrange(len(ime_store)):
+            if ime_store[i][1] == self.ime:
+                self.ime_combobox.set_active(i)
+                combobox_has_ime = True
+        if combobox_has_ime == False:
+            # the combobox did not have the ime from the settings
+            # take the ime from the first row of
+            # the combobox as the fallback:
+            self.ime = ime_store[0][1]
+            self.ime_combobox.set_active(0)
+        self.ime_combobox.connect("changed", event_handler.onImeComboboxChanged)
+        if len(ime_store) < 2:
+            self.ime_combobox.set_sensitive(False)
+        self.input_method_help_button.connect('clicked', event_handler.onInputMethodHelpButtonClicked)
+        if self.ime == 'NoIme':
+            self.input_method_help_button.set_sensitive(False)
 
     def __run_message_dialog(self, message, type=Gtk.MessageType.INFO):
-        dlg = Gtk.MessageDialog(parent=self.builder.get_object('main'),
+        dlg = Gtk.MessageDialog(parent=self.builder.get_object('main_dialog'),
                                 flags=Gtk.DialogFlags.MODAL,
                                 message_type=type,
                                 buttons=Gtk.ButtonsType.OK,
@@ -217,6 +219,40 @@ class SetupUI:
         else:
             return variant
 
+class InputMethodHelpWindow(Gtk.Window):
+    def __init__(self, parent=None, title='', description='', long_description=''):
+        Gtk.Window.__init__(self, title=title)
+        self.set_parent(parent)
+        self.set_transient_for(parent)
+        self.set_destroy_with_parent(False)
+        self.set_default_size(600, 500)
+        self.vbox = Gtk.VBox(spacing=0)
+        self.add(self.vbox)
+        self.text_buffer = Gtk.TextBuffer()
+        self.text_buffer.insert_at_cursor(description)
+        self.text_buffer.insert_at_cursor('\n\n######################################################################\n')
+        self.text_buffer.insert_at_cursor('Complete file implementing the input method follows here:\n')
+        self.text_buffer.insert_at_cursor('######################################################################\n')
+        self.text_buffer.insert_at_cursor(long_description)
+        self.text_view = Gtk.TextView()
+        self.text_view.set_buffer(self.text_buffer)
+        self.text_view.set_editable(False)
+        self.text_view.set_cursor_visible(False)
+        self.text_view.set_justification(Gtk.Justification.LEFT)
+        self.text_view.set_wrap_mode(Gtk.WrapMode.WORD)
+        self.scrolledwindow = Gtk.ScrolledWindow()
+        self.scrolledwindow.set_hexpand(True)
+        self.scrolledwindow.set_vexpand(True)
+        self.scrolledwindow.add(self.text_view)
+        self.vbox.pack_start(self.scrolledwindow, True, True, 0)
+        self.close_button = Gtk.Button(stock=Gtk.STOCK_CLOSE)
+        self.close_button.connect("clicked", self.on_close_button_clicked)
+        self.hbox = Gtk.HBox(spacing=0)
+        self.hbox.pack_end(self.close_button, False, False, 0)
+        self.vbox.pack_start(self.hbox, False, False, 5)
+
+    def on_close_button_clicked(self, widget):
+        self.destroy()
 
 class EventHandler:
     def __init__(self):
@@ -248,7 +284,7 @@ class EventHandler:
         SetupUi.learn_from_file_button.set_sensitive(False)
         filename = u''
         chooser = Gtk.FileChooserDialog(
-            _('Open File ...'), SetupUi.builder.get_object('main'),
+            _('Open File ...'), SetupUi.builder.get_object('main_dialog'),
             Gtk.FileChooserAction.OPEN,
             (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
              Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
@@ -261,14 +297,14 @@ class EventHandler:
         if filename and os.path.isfile(filename):
             if SetupUi.tabsqlitedb.read_training_data_from_file(filename):
                 dialog = Gtk.MessageDialog(
-                    parent=SetupUi.builder.get_object('main'),
+                    parent=SetupUi.builder.get_object('main_dialog'),
                     flags=Gtk.DialogFlags.MODAL,
                     message_type=Gtk.MessageType.INFO,
                     buttons=Gtk.ButtonsType.OK,
                     message_format=_("Learned successfully from file %(filename)s.") %{'filename': filename})
             else:
                 dialog = Gtk.MessageDialog(
-                    parent=SetupUi.builder.get_object('main'),
+                    parent=SetupUi.builder.get_object('main_dialog'),
                     flags=Gtk.DialogFlags.MODAL,
                     message_type=Gtk.MessageType.ERROR,
                     buttons=Gtk.ButtonsType.OK,
@@ -281,7 +317,7 @@ class EventHandler:
         SetupUi.delete_learned_data_button.set_sensitive(False)
         confirm_question = Gtk.Dialog(
             title=_('Are you sure?'),
-            parent=SetupUi.builder.get_object('main'),
+            parent=SetupUi.builder.get_object('main_dialog'),
             buttons=(
                 Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                 Gtk.STOCK_OK, Gtk.ResponseType.OK))
@@ -325,8 +361,49 @@ class EventHandler:
         tree_iter = widget.get_active_iter()
         if tree_iter != None:
             model = widget.get_model()
-            self.ime = model[tree_iter][1]
-            SetupUi.config.set_value(SetupUi.config_section,'inputmethod',GLib.Variant.new_string(self.ime))
+            ime = model[tree_iter][1]
+            SetupUi.config.set_value(SetupUi.config_section,'inputmethod',GLib.Variant.new_string(ime))
+            if ime == 'NoIme':
+                SetupUi.input_method_help_button.set_sensitive(False)
+            else:
+                SetupUi.input_method_help_button.set_sensitive(True)
+
+    def onInputMethodHelpButtonClicked(self,widget):
+        tree_iter = SetupUi.ime_combobox.get_active_iter()
+        if tree_iter != None:
+            model = SetupUi.ime_combobox.get_model()
+            ime_name = model[tree_iter][1]
+        if not ime_name or ime_name == 'NoIme':
+            return
+        mim_file_names = {'t-latn-post': 'latn-post',
+                          't-latn-pre': 'latn-pre',
+                          'ne-inscript2': 'ne-inscript2-deva',
+                          'si-transliteration': 'si-trans'}
+        if ime_name in mim_file_names:
+            mim_file = mim_file_names[ime_name]+'.mim'
+        else:
+            mim_file = ime_name+'.mim'
+        mim_file_contents = None
+        try:
+            mim_file_contents = codecs.open(
+                '/usr/share/m17n/%(mim)s' %{'mim': mim_file}).read().decode('UTF-8')
+        except:
+            import traceback
+            traceback.print_exc()
+        if mim_file_contents:
+            description_pattern = re.compile(
+                r'\([\s]*description[\s]*"(?P<description>.+?)(?<!\\)"[\s]*\)',
+                re.DOTALL|re.MULTILINE|re.UNICODE)
+            match = description_pattern.search(mim_file_contents)
+            description = u''
+            if match:
+                description = match.group('description').replace('\\"', '"')
+            win = InputMethodHelpWindow(
+                parent=SetupUi.builder.get_object('main_dialog'),
+                title=mim_file,
+                description=description,
+                long_description = mim_file_contents)
+            win.show_all()
 
 if __name__ == '__main__':
     # Workaround for
