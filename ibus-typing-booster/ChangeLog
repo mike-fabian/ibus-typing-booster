@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 11 Oct 2013 Released 1.2.5 version
+* Add feature to display input method description to setup tool
+* Remove the options “m17n_mim_name” and “other_ime” from the .conf files
+* remove tab_enable option from config files
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 28 Sep 2013 Released 1.2.4 version
 * Use normalization form NFD internally for Korean as well
 * Add check for input purpose for gnome-shell password dialog (Resolves: rhbz#1013008 - ibus-typing-booster shows entered text in password fields)
