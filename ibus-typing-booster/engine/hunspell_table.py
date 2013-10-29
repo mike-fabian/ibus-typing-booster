@@ -717,7 +717,7 @@ class tabengine (IBus.Engine):
         Key Events include Key Press and Key Release,
         modifier means Key Pressed
         '''
-        if self._has_input_purpose and self._input_purpose == IBus.InputPurpose.PASSWORD:
+        if self._has_input_purpose and self._input_purpose in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN]:
             return False
 
         key = KeyEvent(keyval, state & IBus.ModifierType.RELEASE_MASK == 0, state)
