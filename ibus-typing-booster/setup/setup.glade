@@ -158,7 +158,7 @@
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="show_number_of_candidates_checkbox">
-                                <property name="label" translatable="yes">Show number of candidates</property>
+                                <property name="label" translatable="yes">Display total number of candidates</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>

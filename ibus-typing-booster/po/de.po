@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-typing-booster 0.0.16\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2013-10-11 14:25+0200\n"
-"PO-Revision-Date: 2013-10-11 14:27+0200\n"
+"POT-Creation-Date: 2013-11-14 12:58+0100\n"
+"PO-Revision-Date: 2013-11-14 12:59+0100\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <trans-de@lists.fedoraproject.org>\n"
 "Language: de\n"
@@ -51,25 +51,25 @@ msgstr "Ibus läuft nicht."
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Ibus Typing Booster \"%(symbol)s\" Einstellungen"
 
-#: setup/main.py:284
+#: setup/main.py:287
 msgid "Open File ..."
 msgstr "Öffne Datei"
 
-#: setup/main.py:301
+#: setup/main.py:304
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Das Lernen aus der Datei %(filename)s war erfolgreich."
 
-#: setup/main.py:308
+#: setup/main.py:311
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Fehler beim Lernen aus der Datai %(filename)s."
 
-#: setup/main.py:316
+#: setup/main.py:319
 msgid "Are you sure?"
 msgstr "Sind Sie sicher?"
 
-#: setup/main.py:323
+#: setup/main.py:326
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -94,8 +94,8 @@ msgid "Input Method:"
 msgstr "Eingabemethode:"
 
 #: setup/setup.glade:161
-msgid "Show number of candidates"
-msgstr "Anzahl der Kandidaten anzeigen"
+msgid "Display total number of candidates"
+msgstr "Gesamtzahl der Kandidaten anzeigen"
 
 #: setup/setup.glade:186
 msgid "Minimum number of chars for completion:"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2013-10-11 14:25+0200\n"
+"POT-Creation-Date: 2013-11-14 12:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,25 +46,25 @@ msgstr ""
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr ""
 
-#: setup/main.py:284
+#: setup/main.py:287
 msgid "Open File ..."
 msgstr ""
 
-#: setup/main.py:301
+#: setup/main.py:304
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr ""
 
-#: setup/main.py:308
+#: setup/main.py:311
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr ""
 
-#: setup/main.py:316
+#: setup/main.py:319
 msgid "Are you sure?"
 msgstr ""
 
-#: setup/main.py:323
+#: setup/main.py:326
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -87,7 +87,7 @@ msgid "Input Method:"
 msgstr ""
 
 #: setup/setup.glade:161
-msgid "Show number of candidates"
+msgid "Display total number of candidates"
 msgstr ""
 
 #: setup/setup.glade:186
