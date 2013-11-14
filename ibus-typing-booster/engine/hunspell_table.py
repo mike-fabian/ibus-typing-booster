@@ -712,6 +712,11 @@ class tabengine (IBus.Engine):
         if len(tokens) > 1:
             self._editor._pp_phrase = tokens[-2]
 
+    def do_candidate_clicked(self, index, button, state):
+        phrase = self._editor.get_string_from_lookup_table_current_page(index)
+        if phrase:
+            self.commit_string(phrase + u' ')
+
     def do_process_key_event(self, keyval, keycode, state):
         '''Process Key Events
         Key Events include Key Press and Key Release,
