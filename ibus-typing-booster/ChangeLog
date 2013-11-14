@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 14 Nov 2013 Released 1.2.6 version
+* Change wording of the option to show the total number of candidates (Resolves: rhbz#1029748)
+* Commit candidate clicked on with the mouse (Resolves: rhbz#1029822)
+* Use direct input also for IBus.InputPurpose.PIN
+* remove unused und superfluous arguments of constructor of Hunspell class
+* Add some transliteration options to .conf files which had only native keyboard enabled
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 11 Oct 2013 Released 1.2.5 version
 * Add feature to display input method description to setup tool
 * Remove the options “m17n_mim_name” and “other_ime” from the .conf files
