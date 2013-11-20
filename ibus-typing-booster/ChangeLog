@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 20 Nov 2013 Released 1.2.7 version
+* Don’t strip characters with Unicode category “Cf” (Other, format) from tokens (Resolves: rhbz#1032504)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 14 Nov 2013 Released 1.2.6 version
 * Change wording of the option to show the total number of candidates (Resolves: rhbz#1029748)
 * Commit candidate clicked on with the mouse (Resolves: rhbz#1029822)
