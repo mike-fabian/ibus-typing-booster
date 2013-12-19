@@ -758,6 +758,40 @@ class tabengine (IBus.Engine):
                 # if the first character is a space, just pass it through
                 # it makes not sense trying to complete:
                 return False
+            if key.code in (IBus.KEY_BackSpace,):
+                # When the end of a word is reached again by typing backspace,
+                # try to get that word back into preedit:
+                if not (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT):
+                    return False
+                surrounding_text = self.get_surrounding_text()
+                text = surrounding_text[0].get_text().decode('UTF-8')
+                cursor_pos = surrounding_text[1]
+                anchor_pos = surrounding_text[2]
+                if not surrounding_text:
+                    return False
+                if not self._commit_happened_after_focus_in:
+                    # Before the first commit or cursor movement, the
+                    # surrounding text is probably from the previously
+                    # focused window (bug!), don’t use it.
+                    return False
+                pattern = re.compile(r'(^|.*[\s]+)(?P<token>[\S]+)[\s]$', re.UNICODE)
+                match = pattern.match(text[:cursor_pos])
+                if not match:
+                    return False
+                # The pattern has matched, i.e. left of the cursor is
+                # a single whitespace and left of that a token was
+                # found.  Delete the whitespace and the token from the
+                # application, get the context to the left of the
+                # token, put the token into the preedit again and
+                # update the candidates. Do not pass the backspace
+                # back to the application because the whitespace has
+                # already been deleted.
+                token = match.group('token')
+                self.delete_surrounding_text(-1-len(token),1+len(token))
+                self.get_context()
+                self._editor.insert_string_at_cursor(token)
+                self._update_ui()
+                return True
             if  key.code >= 32 and (not (key.mask & (IBus.ModifierType.MOD1_MASK | IBus.ModifierType.CONTROL_MASK))):
                 typed_character = IBus.keyval_to_unicode(key.code).decode('UTF-8')
                 # If the first character typed is a character which is
