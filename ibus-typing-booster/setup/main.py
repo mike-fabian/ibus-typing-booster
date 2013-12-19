@@ -28,6 +28,7 @@ import locale
 import codecs
 from time import strftime
 from i18n import DOMAINNAME, _, N_, init as i18n_init
+import dbus, dbus.service, dbus.glib
 
 sys.path = [sys.path[0]+'/../engine'] + sys.path
 import tabsqlitedb
@@ -66,7 +67,8 @@ class SetupUI:
         self.builder.add_from_file(filename)
         event_handler = EventHandler()
         self.builder.connect_signals(event_handler)
-
+        if not self.check_instance():
+            service = SetupService()
         # Try to figure out the config file name:
         self.config_file = None
         if options.config_file:
@@ -204,6 +206,12 @@ class SetupUI:
         dlg.run()
         dlg.destroy()
 
+    def check_instance(self):
+        if dbus.SessionBus().request_name("org.ibus.typingbooster") != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER:
+            self.__run_message_dialog(_("Another instance of this app is already running."), Gtk.MessageType.ERROR)
+            sys.exit(1)
+        else:
+            return False
 
     def variant_to_value(self, variant):
         if type(variant) != GLib.Variant:
@@ -404,6 +412,11 @@ class EventHandler:
                 description=description,
                 long_description = mim_file_contents)
             win.show_all()
+
+class SetupService(dbus.service.Object):
+    def __init__(self):
+        bus_name = dbus.service.BusName('org.ibus.typingbooster', bus = dbus.SessionBus())
+        dbus.service.Object.__init__(self, bus_name, '/org/ibus/typingbooster')
 
 if __name__ == '__main__':
     # Workaround for
