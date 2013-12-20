@@ -1,7 +1,7 @@
 * Author: Anish Patil <apatil@redhat.com>
 * 20 Dec 2013 Released 1.2.8 version
-* change of IME name for oriya language
-* Fixed issue multiple instance of set up menu
+* change of IME name for oriya language(#1045299)
+* Fixed issue multiple instance of set up menu(#1045294)
 
 * Author: Mike FABIAN <mfabian@redhat.com>
 * 20 Nov 2013 Released 1.2.7 version
