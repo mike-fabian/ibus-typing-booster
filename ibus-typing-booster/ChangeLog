@@ -1,3 +1,8 @@
+* Author: Anish Patil <apatil@redhat.com>
+* 20 Dec 2013 Released 1.2.8 version
+* change of IME name for oriya language
+* Fixed issue multiple instance of set up menu
+
 * Author: Mike FABIAN <mfabian@redhat.com>
 * 20 Nov 2013 Released 1.2.7 version
 * Don’t strip characters with Unicode category “Cf” (Other, format) from tokens (Resolves: rhbz#1032504)

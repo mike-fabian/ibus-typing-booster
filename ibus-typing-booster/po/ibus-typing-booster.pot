@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2013-11-14 12:58+0100\n"
+"POT-Creation-Date: 2013-12-20 11:18+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,54 +17,58 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: setup/main.py:87
+#: setup/main.py:89
 #, python-format
 msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
 msgstr ""
 
-#: setup/main.py:92
+#: setup/main.py:94
 msgid "IBUS_ENGINE_NAME environment variable is not set."
 msgstr ""
 
-#: setup/main.py:96
+#: setup/main.py:98
 msgid ""
 "Cannot determine the config file for this engine. Please use the --config-"
 "file option."
 msgstr ""
 
-#: setup/main.py:103
+#: setup/main.py:105
 #, python-format
 msgid "Config file %(file)s does not exist."
 msgstr ""
 
-#: setup/main.py:115
+#: setup/main.py:117
 msgid "ibus is not running."
 msgstr ""
 
-#: setup/main.py:121
+#: setup/main.py:123
 #, python-format
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr ""
 
-#: setup/main.py:287
+#: setup/main.py:211
+msgid "Another instance of this app is already running."
+msgstr ""
+
+#: setup/main.py:295
 msgid "Open File ..."
 msgstr ""
 
-#: setup/main.py:304
+#: setup/main.py:312
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr ""
 
-#: setup/main.py:311
+#: setup/main.py:319
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr ""
 
-#: setup/main.py:319
+#: setup/main.py:327
 msgid "Are you sure?"
 msgstr ""
 
-#: setup/main.py:326
+#: setup/main.py:334
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
