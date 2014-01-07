@@ -853,9 +853,9 @@ class tabengine (IBus.Engine):
         if key.code in (IBus.KEY_Right, IBus.KEY_KP_Right):
             if self._editor.is_empty():
                 return False
-            res = self._editor.arrow_right ()
+            self._editor.arrow_right ()
             self._update_ui ()
-            return res
+            return True
 
         if key.code == IBus.KEY_BackSpace and key.mask & IBus.ModifierType.CONTROL_MASK:
             if self._editor.is_empty():
