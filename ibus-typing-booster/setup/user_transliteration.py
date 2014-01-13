@@ -22,6 +22,7 @@ import sys
 import re
 import codecs
 import sqlite3
+import time
 from gi.repository import Translit
 
 
@@ -160,10 +161,13 @@ class LatinConvert:
         sql_table_name = "phrases"
         try:
             conn = sqlite3.connect(self.user_db)
-            sql = "INSERT INTO %s (input_phrase, phrase) values(:input_phrase, :phrase);" % (sql_table_name)
+            sql = "INSERT INTO %s (input_phrase, phrase, user_freq, timestamp) values(:input_phrase, :phrase, :user_freq, :timestamp);" % (sql_table_name)
             sqlargs = []
             map(lambda x: sqlargs.append(
-                {'input_phrase': x.decode('utf-8'), 'phrase': x.decode('utf-8')}),
+                {'input_phrase': x.decode('utf-8'),
+                 'phrase': x.decode('utf-8'),
+                 'user_freq': 0,
+                 'timestamp': time.time()}),
                 words)
             conn.executemany(sql,sqlargs)
             conn.commit()
