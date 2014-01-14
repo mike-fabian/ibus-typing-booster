@@ -1068,8 +1068,9 @@ class tabengine (IBus.Engine):
             self.reset()
             return
         if name == "dictionaryinstalltimestamp":
-            # The dictionary has bin updated or installed, (re)load it:
-            print "Reloading dictionary ..."
-            self.db.hunspell_obj.load_dictionary()
+            # A dictionary has bin updated or installed,
+            # (re)load all dictionaries:
+            print "Reloading dictionaries ..."
+            self.db.hunspell_obj.load_dictionaries()
             self.reset()
             return
