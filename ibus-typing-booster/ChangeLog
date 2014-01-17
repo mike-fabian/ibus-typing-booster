@@ -1,3 +1,14 @@
+* Author: Mike FABIAN <mfabian@redhat.com>
+* 17 Jan 2014 Released 1.2.9 version
+* Fix behaviour of arrow right keys in preëdit (Resolves: rhbz#1049324)
+* Add timestamps to entries in the user database
+* Add timestamp support to user_transliteration.py
+* Use a single user database for all engines
+* Add *-inscript2 transliteration options to the Indian languages where these were still missing (Resolves: rhbz#1051405)
+* Make it possible to use multiple hunspell dictionaries at the same time
+* Make it possible to specify a list of dictionaries in the config files
+* Make it possible to get a word back into preëdit by using backspace (Resolves: rhbz#1032442)
+
 * Author: Anish Patil <apatil@redhat.com>
 * 20 Dec 2013 Released 1.2.8 version
 * change of IME name for oriya language(#1045299)
