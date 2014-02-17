@@ -72,11 +72,9 @@ def rgb(r, g, b):
     return argb(255, r, g, b)
 
 class KeyEvent:
-    def __init__(self, keyval, is_press, state):
+    def __init__(self, keyval, state):
         self.code = keyval
         self.mask = state
-        if not is_press:
-            self.mask |= IBus.ModifierType.RELEASE_MASK
     def __str__(self):
         return "%s 0x%08x" % (IBus.keyval_name(self.code), self.mask)
 
@@ -725,7 +723,7 @@ class tabengine (IBus.Engine):
         if self._has_input_purpose and self._input_purpose in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN]:
             return False
 
-        key = KeyEvent(keyval, state & IBus.ModifierType.RELEASE_MASK == 0, state)
+        key = KeyEvent(keyval, state)
         # ignore NumLock mask
         key.mask &= ~IBus.ModifierType.MOD2_MASK
 
