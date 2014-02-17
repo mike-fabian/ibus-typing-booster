@@ -49,7 +49,7 @@ class Dictionary:
         self.load_dictionary()
 
     def load_dictionary(self):
-        print "load_dictionary() ..."
+        print("load_dictionary() ...")
         dic_path = os.path.join(self.loc, self.name+'.dic')
         aff_path = os.path.join(self.loc, self.name+'.aff')
         if not os.path.isfile(dic_path) or not os.path.isfile(aff_path):
@@ -68,14 +68,14 @@ class Dictionary:
             match = encoding_pattern.search(aff_buffer)
             if match:
                 self.encoding = match.group('encoding')
-                print "load_dictionary(): encoding=%(enc)s found in %(aff)s" %{
-                    'enc': self.encoding, 'aff': aff_path}
+                print("load_dictionary(): encoding=%(enc)s found in %(aff)s" %{
+                    'enc': self.encoding, 'aff': aff_path})
         try:
             self.buffer = codecs.open(
                 dic_path).read().decode(self.encoding).replace('\r\n', '\n')
         except:
-            print "load_dictionary(): loading %(dic)s as %(enc)s encoding failed, fall back to ISO-8859-1." %{
-                'dic': dic_path, 'enc': self.encoding}
+            print("load_dictionary(): loading %(dic)s as %(enc)s encoding failed, fall back to ISO-8859-1." %{
+                'dic': dic_path, 'enc': self.encoding})
             self.encoding = 'ISO-8859-1'
             try:
                 self.buffer = codecs.open(

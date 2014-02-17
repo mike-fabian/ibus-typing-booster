@@ -50,7 +50,7 @@ if options.debug:
     logfile = os.path.expanduser('~/.local/share/ibus-typing-booster/setup-debug.log')
     sys.stdout = open (logfile,'a',0)
     sys.stderr = open (logfile,'a',0)
-    print '--- ', strftime('%Y-%m-%d: %H:%M:%S'), ' ---'
+    print('--- %s ---' %strftime('%Y-%m-%d: %H:%M:%S'))
 
 from gi.repository import Gtk
 from gi.repository import Gdk

@@ -69,7 +69,7 @@ class EngineFactory (IBus.Factory):
             #return engine.get_dbus_object()
             return engine
         except:
-            print "failed to create engine %s" % engine_name
+            print("failed to create engine %s" %engine_name)
             import traceback
             traceback.print_exc ()
             raise Exception("Cannot create engine %s" % engine_name)

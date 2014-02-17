@@ -68,7 +68,7 @@ if (not options.xml) and options.debug:
     sys.stdout = open (logfile,'a',0)
     sys.stderr = open (logfile,'a',0)
     from time import strftime
-    print '--- ', strftime('%Y-%m-%d: %H:%M:%S'), ' ---'
+    print('--- %s ---' %strftime('%Y-%m-%d: %H:%M:%S'))
 
 
 
@@ -127,7 +127,7 @@ class IMApp:
     def __bus_destroy_cb(self, bus=None):
         if self.destroyed:
             return
-        print "finalizing:)"
+        print("finalizing:)")
         self.__factory.do_destroy()
         self.destroyed = True
         self.__mainloop.quit()
@@ -224,7 +224,7 @@ def main():
         indent (egs)
         egsout = tostring (egs, encoding='utf8')
         egsout = patt.sub ('',egsout)
-        print egsout
+        print('%s' %egsout)
 
         return 0
 

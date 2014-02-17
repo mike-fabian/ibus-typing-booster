@@ -62,7 +62,7 @@ def variant_to_value(variant):
         else:
             return variant.dup_strv()
     else:
-        print 'error: unknown variant type:', type_string
+        print('error: unknown variant type: %s' %type_string)
     return variant
 
 def argb(a, r, g, b):
@@ -1057,7 +1057,7 @@ class tabengine (IBus.Engine):
     def __config_value_changed_cb(self, config, section, name, value):
         if self.config_section_normalize(self._config_section) != self.config_section_normalize(section):
             return
-        print "config value %(n)s for engine %(en)s changed" %{'n': name, 'en': self._name}
+        print("config value %(n)s for engine %(en)s changed" %{'n': name, 'en': self._name})
         value = variant_to_value(value)
         if name == "tabenable":
             if value == 1:
@@ -1091,20 +1091,20 @@ class tabengine (IBus.Engine):
             if value in self._editor._supported_imes:
                 self._editor._current_ime = value
                 if value != 'NoIme':
-                    print "Switching to transliteration using  ime=%s" %value
+                    print("Switching to transliteration using  ime=%s" %value)
                     self._editor.trans_m17n_mode = True
                     self._editor.trans = Transliterator.get(self._editor._m17ndb, value)
                 else:
-                    print "Switching off transliteration."
+                    print("Switching off transliteration.")
                     self._editor.trans_m17n_mode = False
             else:
-                print "error: trying to set unsupported ime: ", value
+                print("error: trying to set unsupported ime: %s" %value)
             self.reset()
             return
         if name == "dictionaryinstalltimestamp":
             # A dictionary has bin updated or installed,
             # (re)load all dictionaries:
-            print "Reloading dictionaries ..."
+            print("Reloading dictionaries ...")
             self.db.hunspell_obj.load_dictionaries()
             self.reset()
             return
