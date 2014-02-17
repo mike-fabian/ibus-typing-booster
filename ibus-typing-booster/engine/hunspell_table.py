@@ -981,9 +981,8 @@ class tabengine (IBus.Engine):
             return False
 
         # We pass all other hotkeys through:
-        if key.mask & (IBus.ModifierType.CONTROL_MASK|IBus.ModifierType.MOD1_MASK):
+        if key.mask & IBus.ModifierType.CONTROL_MASK:
             return False
-
         if key.mask & IBus.ModifierType.MOD1_MASK:
             return False
 
