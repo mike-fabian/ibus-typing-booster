@@ -57,7 +57,7 @@ class Dictionary:
                   %{'n': self.name, 'd': dic_path, 'a': aff_path})
             return
         try:
-            aff_buffer = open(aff_path).read().replace('\r\n', '\n')
+            aff_buffer = codecs.open(aff_path, mode='r', encoding='ISO-8859-1', errors='ignore').read().replace('\r\n', '\n')
         except:
             import traceback
             traceback.print_exc()
@@ -150,10 +150,13 @@ class Hunspell:
                         # result back to the internal normalization form (NFD)
                         # (hunspell does the right thing for Korean if the input is NFC).
                         input_phrase = unicodedata.normalize('NFC', input_phrase)
-                        extra_suggestions = map(
-                            lambda x: unicodedata.normalize(
-                                normalization_form_internal, x.decode(dictionary.encoding)),
-                            dictionary.pyhunspell_object.suggest(input_phrase.encode(dictionary.encoding, 'replace')))
+                        extra_suggestions = [
+                            unicodedata.normalize(
+                                normalization_form_internal, x.decode(dictionary.encoding))
+                            for x in
+                            dictionary.pyhunspell_object.suggest(
+                                input_phrase.encode(dictionary.encoding, 'replace'))
+                        ]
                         for suggestion in extra_suggestions:
                             if suggestion not in suggested_words:
                                 suggested_words.append(suggestion)

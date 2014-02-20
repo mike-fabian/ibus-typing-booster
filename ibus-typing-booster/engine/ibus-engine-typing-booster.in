@@ -22,6 +22,7 @@ prefix=@prefix@
 datarootdir=@datarootdir@
 datadir=@datadir@
 export IBUS_HUNSPELL_TABLE_LOCATION=@datarootdir@/ibus-typing-booster
+export PYTHONIOENCODING=UTF-8
 
 # Set this variable to something > 0 to get more debug output.
 # (Debug output may show up in the log file and/or in the lookup table):

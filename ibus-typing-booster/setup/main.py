@@ -48,8 +48,8 @@ if options.debug:
     if not os.access ( os.path.expanduser('~/.local/share/ibus-typing-booster'), os.F_OK):
         os.system ('mkdir -p ~/.local/share/ibus-typing-booster')
     logfile = os.path.expanduser('~/.local/share/ibus-typing-booster/setup-debug.log')
-    sys.stdout = open (logfile,'a',0)
-    sys.stderr = open (logfile,'a',0)
+    sys.stdout = open(logfile, mode='a', buffering=1)
+    sys.stderr = open(logfile, mode='a', buffering=1)
     print('--- %s ---' %strftime('%Y-%m-%d: %H:%M:%S'))
 
 from gi.repository import Gtk
@@ -180,7 +180,7 @@ class SetupUI:
             # ime was not in settings, use the first value from the combobox as the default:
             self.ime = ime_store[0][1]
         combobox_has_ime = False
-        for i in xrange(len(ime_store)):
+        for i in range(len(ime_store)):
             if ime_store[i][1] == self.ime:
                 self.ime_combobox.set_active(i)
                 combobox_has_ime = True
@@ -426,7 +426,7 @@ if __name__ == '__main__':
     try:
         locale.setlocale(locale.LC_ALL, '')
     except locale.Error:
-        print >> sys.stderr, "IBUS-WARNING **: Using the fallback 'C' locale"
+        sys.stderr.write("IBUS-WARNING **: Using the fallback 'C' locale")
         locale.setlocale(locale.LC_ALL, 'C')
     i18n_init()
     SetupUi = SetupUI()

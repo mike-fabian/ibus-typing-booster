@@ -43,10 +43,11 @@ class ImeProperties:
                 'typing-booster:','')
         if os.path.exists(configfile_path) and os.path.isfile(configfile_path):
             comment_patt = re.compile('^#')
-            for line in file(configfile_path):
-                if not comment_patt.match(line):
-                    attr,val = line.strip().split ('=', 1)
-                    self.ime_property_cache[attr.strip()]= val.strip().decode('utf-8')
+            with codecs.open(configfile_path, mode='r', encoding='UTF-8') as file:
+                for line in file:
+                    if not comment_patt.match(line):
+                        attr,val = line.strip().split ('=', 1)
+                        self.ime_property_cache[attr.strip()]= val.strip()
         else:
             sys.stderr.write("Error: ImeProperties: No such file: %s" %configfile_path)
 
@@ -183,9 +184,9 @@ class tabsqlitedb:
         self.create_tables("user_db")
         if self.old_phrases:
             sqlargs = []
-            map(lambda x: sqlargs.append(
-                {'input_phrase': x[0], 'phrase': x[0], 'p_phrase': u'', 'pp_phrase': u'', 'user_freq': x[1], 'timestamp': time.time()}),
-                self.old_phrases)
+            for x in self.old_phrases:
+                sqlargs.append(
+                    {'input_phrase': x[0], 'phrase': x[0], 'p_phrase': u'', 'pp_phrase': u'', 'user_freq': x[1], 'timestamp': time.time()})
             sqlstr = '''
             INSERT INTO user_db.phrases (input_phrase, phrase, p_phrase, pp_phrase, user_freq, timestamp)
             VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq, :timestamp)
@@ -368,7 +369,8 @@ class tabsqlitedb:
         pp_phrase = unicodedata.normalize(
             self._normalization_form_internal, pp_phrase)
         phrase_frequencies = {}
-        map(lambda x: phrase_frequencies.update([(x, 0)]), self.hunspell_obj.suggest(input_phrase))
+        for x in self.hunspell_obj.suggest(input_phrase):
+            phrase_frequencies.update([(x, 0)])
         # Now phrase_frequencies might contain something like this:
         #
         # {u'code': 0, u'communicability': 0, u'cold': 0, u'colour': 0}
@@ -433,7 +435,8 @@ class tabsqlitedb:
             traceback.print_exc()
         # Updating the phrase_frequency dictionary with the normalized results gives:
         # {u'conspiracy': 6/11, u'code': 0, u'communicability': 0, u'cold': 1/11, u'colour': 4/11}
-        map(lambda x: phrase_frequencies.update([(x[0], x[1]/float(count))]), results_uni)
+        for x in results_uni:
+            phrase_frequencies.update([(x[0], x[1]/float(count))])
         if not p_phrase:
             # If no context for bigram matching is available, return what we have so far:
             return self.best_candidates(phrase_frequencies)
@@ -456,7 +459,8 @@ class tabsqlitedb:
         # Update the phrase frequency dictionary by using a linear
         # combination of the unigram and the bigram results, giving
         # both the weight of 0.5:
-        map(lambda x: phrase_frequencies.update([(x[0], 0.5*x[1]/float(count_p_phrase)+0.5*phrase_frequencies[x[0]])]), results_bi)
+        for x in results_bi:
+            phrase_frequencies.update([(x[0], 0.5*x[1]/float(count_p_phrase)+0.5*phrase_frequencies[x[0]])])
         if not pp_phrase:
             # If no context for trigram matching is available, return what we have so far:
             return self.best_candidates(phrase_frequencies)
@@ -481,7 +485,8 @@ class tabsqlitedb:
         # both the weight of 0.5 (that makes the total weights: 0.25 *
         # unigram + 0.25 * bigram + 0.5 * trigram, i.e. the trigrams
         # get higher weight):
-        map(lambda x: phrase_frequencies.update([(x[0], 0.5*x[1]/float(count_pp_phrase_p_phrase)+0.5*phrase_frequencies[x[0]])]), results_tri)
+        for x in results_tri:
+            phrase_frequencies.update([(x[0], 0.5*x[1]/float(count_pp_phrase_p_phrase)+0.5*phrase_frequencies[x[0]])])
         return self.best_candidates(phrase_frequencies)
 
     def generate_userdb_desc (self):
@@ -655,9 +660,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             phrases = db.execute(
                 'SELECT phrase, sum(user_freq) FROM phrases GROUP BY phrase;').fetchall()
             db.close()
-            map(lambda x:
-                [(unicodedata.normalize(self._normalization_form_internal, x[0]), x[1])],
-                phrases)
+            phrases = [
+                (unicodedata.normalize(self._normalization_form_internal, x[0]), x[1])
+                for x in
+                phrases
+            ]
             return phrases[:]
         except:
             import traceback
@@ -671,7 +678,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         p_token = u''
         pp_token = u''
         database_dict = {}
-        map(lambda x:
+        for x  in rows:
             database_dict.update([((x[0], x[1], x[2], x[3]),
                                    {'input_phrase': x[0],
                                     'phrase': x[1],
@@ -679,9 +686,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                                     'pp_phrase': x[3],
                                     'user_freq': x[4],
                                     'timestamp': x[5]}
-                               )]), rows)
+                               )])
         with codecs.open(filename, encoding='UTF-8') as file:
-            lines = map(lambda x: unicodedata.normalize(self._normalization_form_internal, x), file.readlines())
+            lines = [unicodedata.normalize(self._normalization_form_internal, x) for x in file.readlines()]
             for line in lines:
                 for token in itb_util.tokenize(line):
                     key = (token, token, p_token, pp_token)
@@ -698,7 +705,8 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                     pp_token = p_token
                     p_token = token
         sqlargs = []
-        map(lambda x: sqlargs.append(database_dict[x]), database_dict.keys())
+        for x in database_dict.keys():
+            sqlargs.append(database_dict[x])
         sqlstr = '''
         INSERT INTO user_db.phrases (input_phrase, phrase, p_phrase, pp_phrase, user_freq, timestamp)
         VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq, :timestamp)

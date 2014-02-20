@@ -22,7 +22,6 @@ import optparse
 from gi.repository import IBus
 from gi.repository import GLib
 import re
-patt = re.compile (r'<\?.*\?>\n')
 from signal import signal, SIGTERM, SIGINT
 
 import factory
@@ -61,8 +60,8 @@ if (not options.xml) and options.debug:
     if not os.access(os.path.expanduser('~/.local/share/ibus-typing-booster'), os.F_OK):
         os.system('mkdir -p ~/.local/share/ibus-typing-booster')
     logfile = os.path.expanduser('~/.local/share/ibus-typing-booster/debug.log')
-    sys.stdout = open (logfile,'a',0)
-    sys.stderr = open (logfile,'a',0)
+    sys.stdout = open(logfile, mode='a', buffering=1)
+    sys.stderr = open(logfile, mode='a', buffering=1)
     from time import strftime
     print('--- %s ---' %strftime('%Y-%m-%d: %H:%M:%S'))
 
@@ -165,7 +164,7 @@ def main():
         from xml.etree.ElementTree import Element, SubElement, tostring
         # Find all config files in config_file_dir, extract the ime
         # properties and print the xml file for the engines
-        confs = filter(lambda x: x.endswith('.conf'), os.listdir(config_file_dir))
+        confs = [ x for x in os.listdir(config_file_dir) if x.endswith('.conf')]
         for conf in confs:
             str_dic = conf.replace('conf','dic')
 
@@ -223,10 +222,10 @@ def main():
 
         # now format the xmlout pretty
         indent (egs)
-        egsout = tostring (egs, encoding='utf8')
-        egsout = patt.sub ('',egsout)
+        egsout = tostring(egs, encoding='utf8', method='xml').decode('utf-8')
+        patt = re.compile('<\?.*\?>\n')
+        egsout = patt.sub('',egsout)
         print('%s' %egsout)
-
         return 0
 
     if options.daemon :

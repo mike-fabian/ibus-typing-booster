@@ -22,6 +22,7 @@ __all__ = (
 )
 
 import os
+import sys
 import string
 import unicodedata
 import curses.ascii
@@ -160,7 +161,9 @@ class editor(object):
     def update_transliterated_string(self):
         if self.trans_m17n_mode:
             self._transliterated_string = self.trans.transliterate(
-                self._typed_string)[0].decode('UTF-8')
+                self._typed_string)[0]
+            if type(self._transliterated_string) != type(u''):
+                self._transliterated_string = self._transliterated_string.decode('UTF-8')
             if self._current_ime in ['ko-romaja', 'ko-han2']:
                 self._transliterated_string = unicodedata.normalize(
                     'NFKD', self._transliterated_string)
@@ -254,7 +257,9 @@ class editor(object):
         '''
         if self.trans_m17n_mode:
             transliterated_string_up_to_cursor = self.trans.transliterate(
-                self._typed_string[:self._typed_string_cursor])[0].decode('UTF-8')
+                self._typed_string[:self._typed_string_cursor])[0]
+            if type(transliterated_string_up_to_cursor) != type(u''):
+                transliterated_string_up_to_cursor = transliterated_string_up_to_cursor.decode('UTF-8')
         else:
             transliterated_string_up_to_cursor = self._typed_string[:self._typed_string_cursor]
         if self._current_ime in ['ko-romaja', 'ko-han2']:
@@ -351,10 +356,9 @@ class editor(object):
                     traceback.print_exc()
         if self._candidates:
             if prefix:
-                self._candidates = map(lambda x: (prefix+x[0], x[1]), self._candidates)
-            map(lambda x:
-                self.append_candidate_to_lookup_table(phrase=x[0], user_freq=x[1]),
-                self._candidates)
+                self._candidates = [(prefix+x[0], x[1]) for x in self._candidates]
+            for x in self._candidates:
+                self.append_candidate_to_lookup_table(phrase=x[0], user_freq=x[1])
         return True
 
     def arrow_down(self):
@@ -662,7 +666,9 @@ class tabengine (IBus.Engine):
             pattern_sentence_end = re.compile(r'^[.,;:?!][\s]*$', re.UNICODE)
             if pattern_sentence_end.search(commit_phrase):
                 surrounding_text = self.get_surrounding_text()
-                text = surrounding_text[0].get_text().decode('UTF-8')
+                text = surrounding_text[0].get_text()
+                if type(text) != type(u''):
+                    text = text.decode('UTF-8')
                 cursor_pos = surrounding_text[1]
                 anchor_pos = surrounding_text[2]
                 # The commit_phrase is *not* yet in the surrounding text, it will
@@ -694,7 +700,9 @@ class tabengine (IBus.Engine):
             # typed last.
             return
         surrounding_text = self.get_surrounding_text()
-        text = surrounding_text[0].get_text().decode('UTF-8')
+        text = surrounding_text[0].get_text()
+        if type(text) != type(u''):
+            text = text.decode('UTF-8')
         cursor_pos = surrounding_text[1]
         anchor_pos = surrounding_text[2]
         if not surrounding_text:
@@ -704,7 +712,7 @@ class tabengine (IBus.Engine):
             # surrounding text is probably from the previously
             # focused window (bug!), don’t use it.
             return
-        tokens = map(itb_util.strip_token, itb_util.tokenize(text[:cursor_pos]))
+        tokens = [itb_util.strip_token(x) for x in itb_util.tokenize(text[:cursor_pos])]
         if len(tokens):
             self._editor._p_phrase = tokens[-1]
         if len(tokens) > 1:
@@ -762,7 +770,9 @@ class tabengine (IBus.Engine):
                 if not (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT):
                     return False
                 surrounding_text = self.get_surrounding_text()
-                text = surrounding_text[0].get_text().decode('UTF-8')
+                text = surrounding_text[0].get_text()
+                if type(text) != type(u''):
+                    text = text.decode('UTF-8')
                 cursor_pos = surrounding_text[1]
                 anchor_pos = surrounding_text[2]
                 if not surrounding_text:
@@ -791,7 +801,9 @@ class tabengine (IBus.Engine):
                 self._update_ui()
                 return True
             if  key.code >= 32 and (not (key.mask & (IBus.ModifierType.MOD1_MASK | IBus.ModifierType.CONTROL_MASK))):
-                typed_character = IBus.keyval_to_unicode(key.code).decode('UTF-8')
+                typed_character = IBus.keyval_to_unicode(key.code)
+                if type(typed_character) != type(u''):
+                    typed_character = typed_character.decode('UTF-8')
                 # If the first character typed is a character which is
                 # very unlikely to be part of a word
                 # (e.g. punctuation, a symbol, ..), we might want to
@@ -826,7 +838,9 @@ class tabengine (IBus.Engine):
                     # want “3” to be converted to “३”. So we try
                     # to transliterate and commit the result:
                     transliterated_digit = self._editor.trans.transliterate(
-                        typed_character)[0].decode('utf8')
+                        typed_character)[0]
+                    if type(transliterated_digit) != type(u''):
+                        transliterated_digit = transliterated_digit.decode('utf8')
                     self.commit_string(transliterated_digit, input_phrase=transliterated_digit)
                     return True
 
@@ -991,7 +1005,9 @@ class tabengine (IBus.Engine):
                 # first key typed, we will try to complete something now
                 # get the context if possible
                 self.get_context()
-            typed_character = IBus.keyval_to_unicode(key.code).decode('UTF-8')
+            typed_character = IBus.keyval_to_unicode(key.code)
+            if type(typed_character) != type(u''):
+                typed_character = typed_character.decode('UTF-8')
             self._editor.insert_string_at_cursor(typed_character)
             if typed_character and unicodedata.category(typed_character) in itb_util.categories_to_trigger_immediate_commit:
                 input_phrase = self._editor.get_transliterated_string()
@@ -1048,8 +1064,16 @@ class tabengine (IBus.Engine):
         # effect of comparing the dconf sections case insentively
         # in some locales, it would fail for example if Turkish
         # locale (tr_TR.UTF-8) is set.
-        return re.sub(r'[_:]', r'-', section).translate(
-            string.maketrans(string.ascii_uppercase, string.ascii_lowercase).decode('ISO-8859-1'))
+        if sys.version_info >= (3,0,0): # Python3
+            return re.sub(r'[_:]', r'-', section).translate(
+                ''.maketrans(
+                string.ascii_uppercase,
+                string.ascii_lowercase))
+        else: # Python2
+            return re.sub(r'[_:]', r'-', section).translate(
+                string.maketrans(
+                string.ascii_uppercase,
+                string.ascii_lowercase).decode('ISO-8859-1'))
 
     def __config_value_changed_cb(self, config, section, name, value):
         if self.config_section_normalize(self._config_section) != self.config_section_normalize(section):
