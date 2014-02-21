@@ -159,13 +159,8 @@ def main():
         # Find all config files in config_file_dir, extract the ime
         # properties and print the xml file for the engines
         confs = filter(lambda x: x.endswith('.conf'), os.listdir(config_file_dir))
-        hunspell_dir = "/usr/share/myspell"
-        hunspell_files = os.listdir(hunspell_dir)
-        files = filter (lambda x: x.endswith('.dic'), hunspell_files)
         for conf in confs:
             str_dic = conf.replace('conf','dic')
-#            if str_dic not in files:
-#                confs.remove(conf)
 
         egs = Element('engines')
 
