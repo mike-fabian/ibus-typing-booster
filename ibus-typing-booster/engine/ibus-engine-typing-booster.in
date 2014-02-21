@@ -42,15 +42,15 @@ export IBUS_HUNSPELL_TABLE_LOCATION=@datarootdir@/ibus-typing-booster
 for arg in $@; do
 	case $arg in
 	--xml | -x)
-		exec python @datarootdir@/ibus-typing-booster/engine/main.py --xml;;
+		exec @PYTHON@ @datarootdir@/ibus-typing-booster/engine/main.py --xml;;
 	--help | -h)
-		exec python @datarootdir@/ibus-typing-booster/engine/main.py $@;;
+		exec @PYTHON@ @datarootdir@/ibus-typing-booster/engine/main.py $@;;
         *)
 		if [ "x${IBUS_TYPING_BOOSTER_PROFILE_FILE}" != "x" ]; then
 		        rm -f ${IBUS_TYPING_BOOSTER_PROFILE_FILE}
-                        exec python -m cProfile -o ${IBUS_TYPING_BOOSTER_PROFILE_FILE} @datarootdir@/ibus-typing-booster/engine/main.py $@
+                        exec @PYTHON@ -m cProfile -o ${IBUS_TYPING_BOOSTER_PROFILE_FILE} @datarootdir@/ibus-typing-booster/engine/main.py $@
                 else
-                        exec python @datarootdir@/ibus-typing-booster/engine/main.py $@
+                        exec @PYTHON@ @datarootdir@/ibus-typing-booster/engine/main.py $@
                 fi
                 exit 0
                 ;;
