@@ -28,6 +28,7 @@ import time
 import re
 import itb_util
 import hunspell_suggest
+import itertools
 
 user_database_version = '0.65'
 
@@ -340,15 +341,13 @@ class tabsqlitedb:
             self.db.commit()
 
     def best_candidates(self, phrase_frequencies):
-        candidates = []
-        for phrase, user_freq in sorted(phrase_frequencies.items(),
+        candidates = itertools.islice(sorted(phrase_frequencies.items(),
                                         key=lambda x: (
                                             -1*x[1],   # user_freq descending
                                             len(x[0]), # len(phrase) ascending
                                             x[0]       # phrase alphabetical
-                                        )):
-            candidates.append((phrase, user_freq))
-        return candidates[:20]
+                                        )),20)
+        return list(candidates)
 
     def select_words(self, input_phrase, p_phrase=u'', pp_phrase=u''):
         '''
