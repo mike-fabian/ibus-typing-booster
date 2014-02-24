@@ -154,7 +154,6 @@ def indent(elem, level=0):
 
 def main():
     if options.xml:
-        from locale import getdefaultlocale
         from xml.etree.ElementTree import Element, SubElement, tostring
         # Find all config files in config_file_dir, extract the ime
         # properties and print the xml file for the engines
@@ -175,7 +174,6 @@ def main():
             _longname = SubElement (_engine, 'longname')
             _longname.text = ''
             try:
-                _locale = getdefaultlocale()[0].lower()
                 _longname.text = _ime_properties.get('ime_name')
             except:
                 pass
