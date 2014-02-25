@@ -17,6 +17,7 @@
 #  You should have received a copy of the GNU General Public License 
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+PYTHON=@PYTHON@
 prefix=@prefix@
 datarootdir=@datarootdir@
 datadir=@datadir@
@@ -26,31 +27,21 @@ export IBUS_HUNSPELL_TABLE_LOCATION=@datarootdir@/ibus-typing-booster
 # (Debug output may show up in the log file and/or in the lookup table):
 # export IBUS_TYPING_BOOSTER_DEBUG_LEVEL=1
 #
-# set this to some file if you want benchmarking
-# export IBUS_TYPING_BOOSTER_PROFILE_FILE=/tmp/ibus-typing-booster.profile
-#
-# Then after using ibus-typing-booster for a while, stop it with “ibus exit”
-# and check the profile data with a python script like (for more  see
-# http://docs.python.org/2/library/profile.html):
-#
-# import pstats
-# p = pstats.Stats('/tmp/ibus-typing-booster.profile')
-# p.strip_dirs()
-# p.sort_stats('cumulative')
-# p.print_stats('tabsqlite', 25)
+# Set this to something if you want benchmarking (The profiling output
+# will appear in the debug long when "ibus restart" is executed):
+# export IBUS_TYPING_BOOSTER_PROFILE=yes
 
 for arg in $@; do
 	case $arg in
 	--xml | -x)
-		exec @PYTHON@ @datarootdir@/ibus-typing-booster/engine/main.py --xml;;
+		exec ${PYTHON} @datarootdir@/ibus-typing-booster/engine/main.py --xml;;
 	--help | -h)
-		exec @PYTHON@ @datarootdir@/ibus-typing-booster/engine/main.py $@;;
+		exec ${PYTHON} @datarootdir@/ibus-typing-booster/engine/main.py $@;;
         *)
-		if [ "x${IBUS_TYPING_BOOSTER_PROFILE_FILE}" != "x" ]; then
-		        rm -f ${IBUS_TYPING_BOOSTER_PROFILE_FILE}
-                        exec @PYTHON@ -m cProfile -o ${IBUS_TYPING_BOOSTER_PROFILE_FILE} @datarootdir@/ibus-typing-booster/engine/main.py $@
+		if [ "x${IBUS_TYPING_BOOSTER_PROFILE}" != "x" ]; then
+                        exec ${PYTHON} @datarootdir@/ibus-typing-booster/engine/main.py --profile $@
                 else
-                        exec @PYTHON@ @datarootdir@/ibus-typing-booster/engine/main.py $@
+                        exec ${PYTHON} @datarootdir@/ibus-typing-booster/engine/main.py $@
                 fi
                 exit 0
                 ;;
