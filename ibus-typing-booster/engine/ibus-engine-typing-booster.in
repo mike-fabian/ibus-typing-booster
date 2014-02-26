@@ -28,7 +28,7 @@ export IBUS_HUNSPELL_TABLE_LOCATION=@datarootdir@/ibus-typing-booster
 # export IBUS_TYPING_BOOSTER_DEBUG_LEVEL=1
 #
 # Set this to something if you want benchmarking (The profiling output
-# will appear in the debug long when "ibus restart" is executed):
+# will appear in the debug log when "ibus restart" is executed):
 # export IBUS_TYPING_BOOSTER_PROFILE=yes
 
 for arg in $@; do
