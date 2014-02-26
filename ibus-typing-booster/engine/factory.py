@@ -22,16 +22,11 @@ from gi.repository import IBus
 import hunspell_table
 import tabsqlitedb
 import os
-from re import compile as re_compile
-
-path_patt = re_compile(r'[^a-zA-Z0-9_/]')
+import re
 
 from gettext import dgettext
 _  = lambda a : dgettext ("ibus-typing-booster", a)
 N_ = lambda a : a
-
-engine_base_path = "/com/redhat/IBus/engines/table/%s/engine/"
-
 
 class EngineFactory (IBus.Factory):
     """Table IM Engine Factory"""
@@ -48,25 +43,23 @@ class EngineFactory (IBus.Factory):
         self.engine_id=0
 
     def do_create_engine(self, engine_name):
-        # because we need db to be past to Engine
-        # the type (engine_name) == dbus.String
-        name = engine_name.encode ('utf8')
-        self.engine_path = engine_base_path % path_patt.sub ('_', name)
+        engine_base_path = "/com/redhat/IBus/engines/table/%s/engine/"
+        path_patt = re.compile(r'[^a-zA-Z0-9_/]')
+        self.engine_path = engine_base_path %path_patt.sub ('_', engine_name)
         try:
             db_dir = "/usr/share/ibus-typing-booster/hunspell-tables"
-            if name in self.dbdict:
-                self.db = self.dbdict[name]
+            if engine_name in self.dbdict:
+                self.db = self.dbdict[engine_name]
             else:
-                self.db = tabsqlitedb.tabsqlitedb(config_filename=name+'.conf')
-                self.dbdict[name] = self.db
-            if name in self.enginedict:
-                engine = self.enginedict[name]
+                self.db = tabsqlitedb.tabsqlitedb(config_filename=engine_name+'.conf')
+                self.dbdict[engine_name] = self.db
+            if engine_name in self.enginedict:
+                engine = self.enginedict[engine_name]
             else:
                 engine = hunspell_table.tabengine(self.bus, self.engine_path \
                         + str(self.engine_id), self.db)
-                self.enginedict[name] = engine
+                self.enginedict[engine_name] = engine
                 self.engine_id += 1
-            #return engine.get_dbus_object()
             return engine
         except:
             print("failed to create engine %s" %engine_name)
