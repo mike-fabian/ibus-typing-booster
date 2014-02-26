@@ -38,10 +38,7 @@ except:
 
 opt = optparse.OptionParser()
 
-opt.set_usage ('%prog --table a_table.db')
-opt.add_option('--table', '-t',
-        action = 'store',type = 'string',dest = 'db',default = '',
-        help = 'Set the IME table file, default: %default')
+opt.set_usage ('%prog')
 opt.add_option('--daemon','-d',
         action = 'store_true',dest = 'daemon',default=False,
         help = 'Run as daemon, default: %default')
@@ -59,8 +56,6 @@ opt.add_option('--profile', '-p',
         help = 'print profiling information into the debug log. Works only together with --debug.')
 
 (options, args) = opt.parse_args()
-#if not options.db:
-#    opt.error('no db found!')
 
 if (not options.xml) and options.debug:
     if not os.access(os.path.expanduser('~/.local/share/ibus-typing-booster'), os.F_OK):
@@ -237,12 +232,8 @@ def main():
     if options.daemon :
         if os.fork():
                 sys.exit()
-    if options.db:
-        db = options.db
-    else:
-        db=""
 
-    ima=IMApp(db, options.ibus)
+    ima=IMApp('', options.ibus)
     signal (SIGTERM, lambda signum, stack_frame: cleanup(ima))
     signal (SIGINT, lambda signum, stack_frame: cleanup(ima))
     try:
