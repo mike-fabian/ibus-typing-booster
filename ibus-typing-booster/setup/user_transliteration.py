@@ -180,25 +180,25 @@ class LatinConvert:
             import traceback
             traceback.print_exc()
 
-def parse_args():
-    import argparse
-    parser = argparse.ArgumentParser(
-        description='translit')
-    parser.add_argument('-u', '--userdictionary',
-                        nargs='?',
-                        type=str,
-                        default='',
-                        help='user dictionary')
-    parser.add_argument('-d', '--hunspelldict',
-                        nargs='?',
-                        type=str,
-                        default='',
-                        help='hunspell file path')
-    return parser.parse_args()
-
+import argparse
+parser = argparse.ArgumentParser(
+    description='translit')
+parser.add_argument('-u', '--userdictionary',
+                    nargs='?',
+                    type=str,
+                    default='',
+                    help='user dictionary')
+parser.add_argument('-d', '--hunspelldict',
+                    nargs='?',
+                    type=str,
+                    default='',
+                    help='hunspell file path')
+args = parser.parse_args()
 
 def main():
-    args = parse_args()
+    if not args.userdictionary or not args.hunspelldict:
+        parser.print_help()
+        sys.exit(1)
     user_dict = args.userdictionary
     hunspell_dict = args.hunspelldict
     dict_name = args.hunspelldict
