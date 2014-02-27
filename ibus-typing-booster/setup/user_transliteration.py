@@ -1,9 +1,10 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/python3
 # vim:et sts=4 sw=4
 #
 # ibus-typing-booster - The Tables engine for IBus
 #
 # Copyright (c) 2012-2013 Anish Patil <apatil@redhat.com>
+# Copyright (c) 2014 Mike FABIAN <mfabian@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -92,8 +93,8 @@ class LatinConvert:
         encoding = None
         dict_buffer = None
         try:
-            aff_buffer = open(
-                self.aff_file).read().replace('\r\n', '\n')
+            aff_buffer = codecs.open(
+                self.aff_file, mode='r', encoding='ISO-8859-1').read().replace('\r\n', '\n')
         except:
             import traceback
             traceback.print_exc()
@@ -104,21 +105,21 @@ class LatinConvert:
             match = encoding_pattern.search(aff_buffer)
             if match:
                 encoding = match.group('encoding')
-                print "load_dictionary(): encoding=%(enc)s found in %(aff)s" %{
-                    'enc': encoding, 'aff': self.aff_file}
+                print("load_dictionary(): encoding=%(enc)s found in %(aff)s" %{
+                    'enc': encoding, 'aff': self.aff_file})
         try:
             dict_buffer = codecs.open(
                 self.hunspell_dict).read().decode(encoding).replace('\r\n', '\n')
         except:
-            print "load_dictionary(): loading %(dic)s as %(enc)s encoding failed, fall back to ISO-8859-1." %{
-                'dic': self.hunspell_dict, 'enc': encoding}
+            print("load_dictionary(): loading %(dic)s as %(enc)s encoding failed, fall back to ISO-8859-1." %{
+                'dic': self.hunspell_dict, 'enc': encoding})
             encoding = 'ISO-8859-1'
             try:
                 dict_buffer = codecs.open(
                     self.hunspell_dict).read().decode(encoding).replace('\r\n', '\n')
             except:
-                print "load_dictionary(): loading %(dic)s as %(enc)s encoding failed, giving up." %{
-                    'dic': self.hunspell_dict, 'enc': encoding}
+                print("load_dictionary(): loading %(dic)s as %(enc)s encoding failed, giving up." %{
+                    'dic': self.hunspell_dict, 'enc': encoding})
         if dict_buffer[0] == u'\ufeff':
             dict_buffer = dict_buffer[1:]
         return dict_buffer
@@ -135,14 +136,15 @@ class LatinConvert:
         try:
             return self.trans.transliterate(word)[0]
         except:
-            print "Error while transliteration"
+            print("Error while transliteration")
 
     def remove_accent(self,word):
-        word = word.decode('utf-8')
+        if type(word) != type(u''):
+            word = word.decode('utf-8')
         new_word  = []
         # To- Do use list compression
         for char in word:
-            if self.lang_table.has_key(char):
+            if char in self.lang_table:
                 new_word.append(self.lang_table[char])
             elif char in[ u'\u0325', u'\u0310',u'\u0304', u'\u0315',u'\u0314']:
                 pass
@@ -152,23 +154,26 @@ class LatinConvert:
 
     def get_converted_words(self):
         words = self.get_words()
-        icu_words = map(self.trans_word,words)
-        ascii_words = map(self.remove_accent,icu_words)
+        icu_words = list(map(self.trans_word,words))
+        ascii_words = list(map(self.remove_accent,icu_words))
         return ascii_words
 
     def insert_into_db(self):
         words = self.get_converted_words()
+        for w in words:
+            if type(w) != type(u''):
+                w = w.decode('UTF-8')
         sql_table_name = "phrases"
         try:
             conn = sqlite3.connect(self.user_db)
             sql = "INSERT INTO %s (input_phrase, phrase, user_freq, timestamp) values(:input_phrase, :phrase, :user_freq, :timestamp);" % (sql_table_name)
             sqlargs = []
-            map(lambda x: sqlargs.append(
-                {'input_phrase': x.decode('utf-8'),
-                 'phrase': x.decode('utf-8'),
+            list(map(lambda x: sqlargs.append(
+                {'input_phrase': x,
+                 'phrase': x,
                  'user_freq': 0,
                  'timestamp': time.time()}),
-                words)
+                words))
             conn.executemany(sql,sqlargs)
             conn.commit()
         except:
