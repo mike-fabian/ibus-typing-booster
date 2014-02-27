@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 27 Feb 2014 Released 1.2.10 version
+* make profiling work again and make it easier to use
+* tiny performance improvement
+* some code simplification
+* port from Python2 to Python3
+* minor improvements in user_transliteration.py
+* add python-enchant support
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 17 Jan 2014 Released 1.2.9 version
 * Fix behaviour of arrow right keys in preëdit (Resolves: rhbz#1049324)
 * Add timestamps to entries in the user database
