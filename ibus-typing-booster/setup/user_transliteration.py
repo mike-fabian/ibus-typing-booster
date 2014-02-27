@@ -3,7 +3,7 @@
 #
 # ibus-typing-booster - The Tables engine for IBus
 #
-# Copyright (c) 2012-2013 Anish Patil <apatil@redhat.com>
+# Copyright (c) 2012-2014 Anish Patil <apatil@redhat.com>
 # Copyright (c) 2014 Mike FABIAN <mfabian@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -182,17 +182,17 @@ class LatinConvert:
 
 import argparse
 parser = argparse.ArgumentParser(
-    description='translit')
+    description='Transliterate a hunspell dictionary to Latin script and insert it into the user database. Currently works only for mr_IN.dic.')
 parser.add_argument('-u', '--userdictionary',
                     nargs='?',
                     type=str,
                     default='',
-                    help='user dictionary')
+                    help='user dictionary. For example ~/.local/share/ibus-typing-booster/user.db. A full path can be given or only the basename. When only the basename is given, ~/.local/share/ibus-typing-booster/ is prepended automatically.')
 parser.add_argument('-d', '--hunspelldict',
                     nargs='?',
                     type=str,
                     default='',
-                    help='hunspell file path')
+                    help='hunspell file path. For example /usr/share/myspell/mr_IN.dic. A full path can be given or only the basename. When only the basename is given, /usr/share/myspell/ is prepended automatically.')
 args = parser.parse_args()
 
 def main():
@@ -201,12 +201,15 @@ def main():
         sys.exit(1)
     user_dict = args.userdictionary
     hunspell_dict = args.hunspelldict
-    dict_name = args.hunspelldict
     if user_dict:
         #check whether user dict exists in the path
         home_path = os.getenv ("HOME")
         tables_path = path.join (home_path, ".local/share/ibus-typing-booster")
-        user_dict = path.join (tables_path, user_dict)
+        if '/' not in user_dict:
+            # if user_dict already contains a '/' full path was given
+            # on the command line. If there is no '/', it is only the file
+            # name, add the default path:
+            user_dict = path.join (tables_path, user_dict)
         if not path.exists(user_dict):
             sys.stderr.write(
                 "The user database %(udb)s does not exist .\n" %{'udb': user_dict})
@@ -214,16 +217,19 @@ def main():
     if hunspell_dict:
         # Not sure how to get hunspell dict path from env
         hunspell_path = "/usr/share/myspell/"
-        hunspell_dict = path.join(hunspell_path,hunspell_dict)
+        if '/' not in hunspell_dict:
+            # if hunspell_dict already contains a '/' full path was given
+            # on the command line. If there is no '/', it is only the file
+            # name, add the default path:
+            hunspell_dict = path.join(hunspell_path,hunspell_dict)
         if not path.exists(hunspell_dict):
             sys.stderr.write(
                 "The hunspell dictionary  %(hud)s does not exists .\n" %{'hud': hunspell_dict})
             sys.exit(1)
-    aff_name = hunspell_dict.replace('.dic','.aff')
     lt = LatinConvert(user_dict,
                       hunspell_dict,
-                      aff_name,
-                      dict_name)
+                      hunspell_dict.replace('.dic', '.aff'),
+                      os.path.basename(hunspell_dict))
     lt.insert_into_db()
 
 if __name__ == '__main__':
