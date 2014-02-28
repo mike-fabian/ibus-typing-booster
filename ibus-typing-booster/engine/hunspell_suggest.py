@@ -22,11 +22,18 @@ import sys
 import unicodedata
 import re
 import codecs
+
+import_enchant_successful = False
+import_hunspell_successful = False
 try:
-    import hunspell
-    import_hunspell_successful = True
+    import enchant
+    import_enchant_successful = True
 except:
-    import_hunspell_successful = False
+    try:
+        import hunspell # only available for Python2
+        import_hunspell_successful = True
+    except:
+        pass
 
 # Maximum words that should be returned.
 # This should a rather big number in order not
@@ -45,6 +52,7 @@ class Dictionary:
         self.name = name
         self.encoding = 'UTF-8'
         self.buffer = None
+        self.enchant_dict = None
         self.pyhunspell_object = None
         self.load_dictionary()
 
@@ -90,11 +98,10 @@ class Dictionary:
         if self.buffer:
             self.buffer = unicodedata.normalize(
                 normalization_form_internal, self.buffer)
-            if import_hunspell_successful:
-                self.pyhunspell_object = hunspell.HunSpell(
-                    dic_path, aff_path)
-            else:
-                self.pyhunspell_object = None
+            if import_enchant_successful:
+                self.enchant_dict = enchant.Dict(self.name)
+            elif import_hunspell_successful:
+                self.pyhunspell_object = hunspell.HunSpell(dic_path, aff_path)
 
 class Hunspell:
     def __init__(self, dictionary_names=['en_US']):
@@ -144,7 +151,27 @@ class Hunspell:
         for dictionary in self.dictionaries:
             if dictionary.buffer:
                 suggested_words += patt_start.findall(dictionary.buffer)
-                if dictionary.pyhunspell_object:
+                if dictionary.enchant_dict:
+                    if len(input_phrase) >= 4:
+                        # Always pass NFC to enchant and convert the
+                        # result back to the internal normalization form (NFD)
+                        # (enchant does the right thing for Korean if the input is NFC).
+                        # enchant takes unicode strings and returns unicode strings,
+                        # no encoding and decoding to and from the hunspell dictionary
+                        # encoding is necessary (neither for Python2 nor Python3).
+                        # (pyhunspell (which works only for Python2) needs to get
+                        # its input passed in dictionary encoding and also returns it in
+                        # dictionary encoding).
+                        input_phrase = unicodedata.normalize('NFC', input_phrase)
+                        extra_suggestions = [
+                            unicodedata.normalize(normalization_form_internal, x)
+                            for x in
+                            dictionary.enchant_dict.suggest(input_phrase)
+                        ]
+                        for suggestion in extra_suggestions:
+                            if suggestion not in suggested_words:
+                                suggested_words.append(suggestion)
+                elif dictionary.pyhunspell_object:
                     if len(input_phrase) >= 4:
                         # Always pass NFC to pyhunspell and convert the
                         # result back to the internal normalization form (NFD)
