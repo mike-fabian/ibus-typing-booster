@@ -225,7 +225,7 @@ def main():
         egsout = tostring(egs, encoding='utf8', method='xml').decode('utf-8')
         patt = re.compile('<\?.*\?>\n')
         egsout = patt.sub('',egsout)
-        print('%s' %egsout)
+        sys.stdout.buffer.write((egsout+'\n').encode('utf-8'))
         return 0
 
     if options.daemon :
