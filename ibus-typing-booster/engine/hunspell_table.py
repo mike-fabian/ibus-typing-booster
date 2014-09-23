@@ -73,11 +73,12 @@ def rgb(r, g, b):
     return argb(255, r, g, b)
 
 class KeyEvent:
-    def __init__(self, keyval, state):
-        self.code = keyval
-        self.mask = state
+    def __init__(self, keyval, keycode, state):
+        self.val = keyval
+        self.code = keycode
+        self.state = state
     def __str__(self):
-        return "%s 0x%08x" % (IBus.keyval_name(self.code), self.mask)
+        return "%s 0x%08x" % (IBus.keyval_name(self.val), self.state)
 
 
 class editor(object):
@@ -731,9 +732,9 @@ class tabengine (IBus.Engine):
         if self._has_input_purpose and self._input_purpose in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN]:
             return False
 
-        key = KeyEvent(keyval, state)
+        key = KeyEvent(keyval, keycode, state)
         # ignore NumLock mask
-        key.mask &= ~IBus.ModifierType.MOD2_MASK
+        key.state &= ~IBus.ModifierType.MOD2_MASK
 
         result = self._process_key_event (key)
         return result
@@ -748,23 +749,23 @@ class tabengine (IBus.Engine):
 
         '''
 
-        if key.mask & IBus.ModifierType.RELEASE_MASK:
+        if key.state & IBus.ModifierType.RELEASE_MASK:
             return True
 
         if self._editor.is_empty ():
             # This is the first character typed since the last commit
             # there is nothing in the preëdit yet.
-            if key.code < 32:
+            if key.val < 32:
                 # If the first character of a new word is a control
                 # character, return False to pass the character through as is,
                 # it makes no sense trying to complete something
                 # starting with a control character:
                 return False
-            if key.code == IBus.KEY_space:
+            if key.val == IBus.KEY_space:
                 # if the first character is a space, just pass it through
                 # it makes not sense trying to complete:
                 return False
-            if key.code in (IBus.KEY_BackSpace,):
+            if key.val in (IBus.KEY_BackSpace,):
                 # When the end of a word is reached again by typing backspace,
                 # try to get that word back into preedit:
                 if not (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT):
@@ -800,8 +801,8 @@ class tabengine (IBus.Engine):
                 self._editor.insert_string_at_cursor(token)
                 self._update_ui()
                 return True
-            if  key.code >= 32 and (not (key.mask & (IBus.ModifierType.MOD1_MASK | IBus.ModifierType.CONTROL_MASK))):
-                typed_character = IBus.keyval_to_unicode(key.code)
+            if  key.val >= 32 and (not (key.state & (IBus.ModifierType.MOD1_MASK | IBus.ModifierType.CONTROL_MASK))):
+                typed_character = IBus.keyval_to_unicode(key.val)
                 if type(typed_character) != type(u''):
                     typed_character = typed_character.decode('UTF-8')
                 # If the first character typed is a character which is
@@ -844,110 +845,110 @@ class tabengine (IBus.Engine):
                     self.commit_string(transliterated_digit, input_phrase=transliterated_digit)
                     return True
 
-        if key.code == IBus.KEY_Escape:
+        if key.val == IBus.KEY_Escape:
             if self._editor.is_empty():
                 return False
             self.reset ()
             self._update_ui ()
             return True
 
-        if key.code in (IBus.KEY_Down, IBus.KEY_KP_Down):
+        if key.val in (IBus.KEY_Down, IBus.KEY_KP_Down):
             if self._editor.is_empty():
                 return False
             res = self._editor.arrow_down ()
             self._update_ui ()
             return res
 
-        if key.code in (IBus.KEY_Up, IBus.KEY_KP_Up):
+        if key.val in (IBus.KEY_Up, IBus.KEY_KP_Up):
             if self._editor.is_empty():
                 return False
             res = self._editor.arrow_up ()
             self._update_ui ()
             return res
 
-        if key.code in self._page_down_keys and self._editor._candidates:
+        if key.val in self._page_down_keys and self._editor._candidates:
             res = self._editor.page_down()
             self._update_ui ()
             return res
 
-        if key.code in self._page_up_keys and self._editor._candidates:
+        if key.val in self._page_up_keys and self._editor._candidates:
             res = self._editor.page_up ()
             self._update_ui ()
             return res
 
-        if key.code in (IBus.KEY_Left, IBus.KEY_KP_Left) and key.mask & IBus.ModifierType.CONTROL_MASK:
+        if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left) and key.state & IBus.ModifierType.CONTROL_MASK:
             if self._editor.is_empty():
                 return False
             self._editor.control_arrow_left()
             self._update_ui()
             return True
 
-        if key.code in (IBus.KEY_Right, IBus.KEY_KP_Right) and key.mask & IBus.ModifierType.CONTROL_MASK:
+        if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right) and key.state & IBus.ModifierType.CONTROL_MASK:
             if self._editor.is_empty():
                 return False
             self._editor.control_arrow_right()
             self._update_ui()
             return True
 
-        if key.code in (IBus.KEY_Left, IBus.KEY_KP_Left):
+        if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left):
             if self._editor.is_empty():
                 return False
             self._editor.arrow_left()
             self._update_ui()
             return True
 
-        if key.code in (IBus.KEY_Right, IBus.KEY_KP_Right):
+        if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right):
             if self._editor.is_empty():
                 return False
             self._editor.arrow_right ()
             self._update_ui ()
             return True
 
-        if key.code == IBus.KEY_BackSpace and key.mask & IBus.ModifierType.CONTROL_MASK:
+        if key.val == IBus.KEY_BackSpace and key.state & IBus.ModifierType.CONTROL_MASK:
             if self._editor.is_empty():
                 return False
             self._editor.remove_string_before_cursor()
             self._update_ui()
             return True
 
-        if key.code == IBus.KEY_BackSpace:
+        if key.val == IBus.KEY_BackSpace:
             if self._editor.is_empty():
                 return False
             self._editor.remove_character_before_cursor()
             self._update_ui()
             return True
 
-        if key.code == IBus.KEY_Delete  and key.mask & IBus.ModifierType.CONTROL_MASK:
+        if key.val == IBus.KEY_Delete  and key.state & IBus.ModifierType.CONTROL_MASK:
             if self._editor.is_empty():
                 return False
             self._editor.remove_string_after_cursor()
             self._update_ui()
             return True
 
-        if key.code == IBus.KEY_Delete:
+        if key.val == IBus.KEY_Delete:
             if self._editor.is_empty():
                 return False
             self._editor.remove_character_after_cursor()
             self._update_ui()
             return True
 
-        if key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates and key.mask & IBus.ModifierType.CONTROL_MASK:
-            res = self._editor.alt_number (key.code - IBus.KEY_1)
+        if key.val >= IBus.KEY_1 and key.val <= IBus.KEY_9 and self._editor._candidates and key.state & IBus.ModifierType.CONTROL_MASK:
+            res = self._editor.alt_number (key.val - IBus.KEY_1)
             self._update_ui ()
             return res
 
-        if key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates and key.mask & IBus.ModifierType.MOD1_MASK:
-            res = self._editor.alt_number (key.code - IBus.KEY_1)
+        if key.val >= IBus.KEY_1 and key.val <= IBus.KEY_9 and self._editor._candidates and key.state & IBus.ModifierType.MOD1_MASK:
+            res = self._editor.alt_number (key.val - IBus.KEY_1)
             self._update_ui ()
             return res
 
-        if key.code >= IBus.KEY_1 and key.code <= IBus.KEY_9 and self._editor._candidates:
-            phrase = self._editor.get_string_from_lookup_table_current_page(key.code - IBus.KEY_1)
+        if key.val >= IBus.KEY_1 and key.val <= IBus.KEY_9 and self._editor._candidates:
+            phrase = self._editor.get_string_from_lookup_table_current_page(key.val - IBus.KEY_1)
             if phrase:
                 self.commit_string(phrase + u' ')
             return True
 
-        if key.code == IBus.KEY_Tab:
+        if key.val == IBus.KEY_Tab:
             if self._tab_enable:
                 # toggle whether the lookup table should be displayed
                 # or not
@@ -972,7 +973,7 @@ class tabengine (IBus.Engine):
                     return True
             return True
 
-        if key.code in (IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_space):
+        if key.val in (IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_space):
             if self._editor.is_empty():
                 return False
             input_phrase = self._editor.get_transliterated_string()
@@ -995,17 +996,17 @@ class tabengine (IBus.Engine):
             return False
 
         # We pass all other hotkeys through:
-        if key.mask & IBus.ModifierType.CONTROL_MASK:
+        if key.state & IBus.ModifierType.CONTROL_MASK:
             return False
-        if key.mask & IBus.ModifierType.MOD1_MASK:
+        if key.state & IBus.ModifierType.MOD1_MASK:
             return False
 
-        if IBus.keyval_to_unicode(key.code):
+        if IBus.keyval_to_unicode(key.val):
             if self._editor.is_empty():
                 # first key typed, we will try to complete something now
                 # get the context if possible
                 self.get_context()
-            typed_character = IBus.keyval_to_unicode(key.code)
+            typed_character = IBus.keyval_to_unicode(key.val)
             if type(typed_character) != type(u''):
                 typed_character = typed_character.decode('UTF-8')
             self._editor.insert_string_at_cursor(typed_character)
