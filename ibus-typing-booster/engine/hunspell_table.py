@@ -270,20 +270,6 @@ class editor(object):
             'NFC', transliterated_string_up_to_cursor)
         return len(transliterated_string_up_to_cursor)
 
-    def arrow_left (self):
-        '''
-        Move cursor left in the typed string.
-        '''
-        if self._typed_string_cursor > 0:
-            self._typed_string_cursor -= 1
-
-    def arrow_right (self):
-        '''
-        Move cursor right in the typed string.
-        '''
-        if self._typed_string_cursor < len(self._typed_string):
-            self._typed_string_cursor += 1
-
     def control_arrow_left (self):
         '''
         Move cursor to the beginning of the typed string
@@ -890,20 +876,6 @@ class tabengine (IBus.Engine):
             self._update_ui()
             return True
 
-        if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left):
-            if self._editor.is_empty():
-                return False
-            self._editor.arrow_left()
-            self._update_ui()
-            return True
-
-        if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right):
-            if self._editor.is_empty():
-                return False
-            self._editor.arrow_right ()
-            self._update_ui ()
-            return True
-
         if key.val == IBus.KEY_BackSpace and key.state & IBus.ModifierType.CONTROL_MASK:
             if self._editor.is_empty():
                 return False
@@ -973,9 +945,21 @@ class tabengine (IBus.Engine):
                     return True
             return True
 
-        if key.val in (IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_space):
+        if key.val in (IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_space,
+                       IBus.KEY_Right, IBus.KEY_KP_Right,
+                       IBus.KEY_Left, IBus.KEY_KP_Left):
             if self._editor.is_empty():
                 return False
+            if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right):
+                if self._editor._typed_string_cursor < len(self._editor._typed_string):
+                    self._editor._typed_string_cursor += 1
+                    self._update_ui()
+                    return True
+            if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left):
+                if self._editor._typed_string_cursor > 0:
+                    self._editor._typed_string_cursor -= 1
+                    self._update_ui()
+                    return True
             input_phrase = self._editor.get_transliterated_string()
             if not input_phrase:
                 return False
@@ -988,11 +972,23 @@ class tabengine (IBus.Engine):
             if self._editor._lookup_table.cursor_visible:
                 # something is selected in the lookup table, commit
                 # the selected phrase
-                self.commit_string(phrase, input_phrase = input_phrase)
+                commit_string = phrase
             else:
                 # nothing is selected in the lookup table, commit the
                 # input_phrase
-                self.commit_string(input_phrase, input_phrase = input_phrase)
+                commit_string = input_phrase
+            self.commit_string(commit_string, input_phrase = input_phrase)
+            if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left):
+                # After committing, the cursor is at the right side of
+                # the committed string. When the string has been
+                # committed because of arrow-left, the cursor has
+                # to be moved to the left side of the string. This
+                # should be done in a way which works even when
+                # surrounding text is not supported. We can do it by
+                # forwarding as many arrow-left events to the application
+                # as the committed string has characters:
+                for c in commit_string:
+                    self.forward_key_event(key.val, key.code, key.state)
             return False
 
         # We pass all other hotkeys through:
