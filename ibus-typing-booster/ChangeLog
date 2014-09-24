@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 24 Sep 2014 Released 1.2.11 version
+* Require Python >= 3.3
+* Always write xml output in UTF-8 encoding, not in the encoding of the current locale
+* Change class “KeyEvent” to store the keycode as well
+* Commit when hitting the borders of the preëdit with the arrow keys (Resolves: rhbz#1140502)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 27 Feb 2014 Released 1.2.10 version
 * make profiling work again and make it easier to use
 * tiny performance improvement
