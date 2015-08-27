@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 27 Aug 2015 Released 1.2.12 version
+* Use open() instead of codecs.open() to fix dictionary loading problem on F23 (Resolves: rhbz#1257465)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 24 Sep 2014 Released 1.2.11 version
 * Require Python >= 3.3
 * Always write xml output in UTF-8 encoding, not in the encoding of the current locale
