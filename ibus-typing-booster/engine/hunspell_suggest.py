@@ -106,10 +106,10 @@ class Dictionary:
 class Hunspell:
     def __init__(self, dictionary_names=['en_US']):
         self.dictionary_names = dictionary_names
+        self.dictionaries = []
         self.load_dictionaries()
 
     def load_dictionaries(self):
-        self.dictionaries = []
         for dictionary_name in self.dictionary_names:
             self.dictionaries.append(Dictionary(name=dictionary_name))
 
@@ -143,7 +143,7 @@ class Hunspell:
         # one line and not accidentally big chunks of the file!
         try:
             regexp = r'^'+re.escape(input_phrase)+r'.*?(?=/|$)'
-            patt_start = re.compile(regexp,re.MULTILINE|re.UNICODE)
+            patt_start = re.compile(regexp, re.MULTILINE|re.UNICODE)
         except:
             import traceback
             traceback.print_exc()
