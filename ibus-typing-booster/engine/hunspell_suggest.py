@@ -21,7 +21,6 @@ import os
 import sys
 import unicodedata
 import re
-import codecs
 
 import_enchant_successful = False
 import_hunspell_successful = False
@@ -65,7 +64,7 @@ class Dictionary:
                   %{'n': self.name, 'd': dic_path, 'a': aff_path})
             return
         try:
-            aff_buffer = codecs.open(aff_path, mode='r', encoding='ISO-8859-1', errors='ignore').read().replace('\r\n', '\n')
+            aff_buffer = open(aff_path, mode='r', encoding='ISO-8859-1', errors='ignore').read().replace('\r\n', '\n')
         except:
             import traceback
             traceback.print_exc()
@@ -79,15 +78,15 @@ class Dictionary:
                 print("load_dictionary(): encoding=%(enc)s found in %(aff)s" %{
                     'enc': self.encoding, 'aff': aff_path})
         try:
-            self.buffer = codecs.open(
-                dic_path).read().decode(self.encoding).replace('\r\n', '\n')
+            self.buffer = open(
+                dic_path, encoding=self.encoding).read().replace('\r\n', '\n')
         except:
             print("load_dictionary(): loading %(dic)s as %(enc)s encoding failed, fall back to ISO-8859-1." %{
                 'dic': dic_path, 'enc': self.encoding})
             self.encoding = 'ISO-8859-1'
             try:
-                self.buffer = codecs.open(
-                    dic_path).read().decode(self.encoding).replace('\r\n', '\n')
+                self.buffer = open(
+                    dic_path, encoding=self.encoding).read().replace('\r\n', '\n')
             except:
                 print("load_dictionary(): loading %(dic)s as %(enc)s encoding failed, giving up." %{
                     'dic': dic_path, 'enc': self.encoding})
