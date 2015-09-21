@@ -500,6 +500,7 @@ class tabengine (IBus.Engine):
             self._has_input_purpose = True
         self._bus = bus
         self.db = db
+        self._setup_pid = 0
         self._name = self.db.ime_properties.get('name')
         self._config_section = "engine/typing-booster/%s" % self._name
         self._config = self._bus.get_config ()
@@ -537,7 +538,51 @@ class tabengine (IBus.Engine):
         if self._tab_enable == None:
             self._tab_enable = False
         self._commit_happened_after_focus_in = False
+
+        self._init_properties()
+
         self.reset ()
+
+    def _init_properties(self):
+        self.properties = IBus.PropList()
+        self._setup_property = IBus.Property(
+            key = u'setup',
+            label = _('Setup'),
+            icon = 'gtk-preferences',
+            tooltip = _('Configure ibus-typing-booster “%(name)s”') %{
+                'name': self._name.replace('typing-booster:', '')},
+            sensitive = True,
+            visible = True)
+        self.properties.append(self._setup_property)
+        self.register_properties(self.properties)
+
+    def do_property_activate(self, property, prop_state = IBus.PropState.UNCHECKED):
+        '''
+        Handle clicks on properties
+        '''
+        if property == "setup":
+            self._start_setup()
+            return
+
+    def _start_setup(self):
+        if self._setup_pid != 0:
+            pid, state = os.waitpid(self._setup_pid, os.P_NOWAIT)
+            if pid != self._setup_pid:
+                # If the last setup tool started from here is still
+                # running the pid returned by the above os.waitpid()
+                # is 0. In that case just return, don’t start a
+                # second setup tool.
+                return
+            self._setup_pid = 0
+        setup_cmd = os.path.join(
+            os.getenv('IBUS_HUNSPELL_LIB_LOCATION'),
+            'ibus-setup-typing-booster')
+        config_file = self._name.replace('typing-booster:', '') + '.conf'
+        self._setup_pid = os.spawnl(
+            os.P_NOWAIT,
+            setup_cmd,
+            'ibus-setup-typing-booster',
+            '--config-file %s' %config_file)
 
     def reset (self):
         self._editor.clear_input()
@@ -1016,6 +1061,7 @@ class tabengine (IBus.Engine):
         return False
 
     def do_focus_in (self):
+        self.register_properties(self.properties)
         self._editor.clear_context()
         self._commit_happened_after_focus_in = False
         self._update_ui ()
