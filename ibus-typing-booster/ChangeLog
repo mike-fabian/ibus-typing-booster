@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 22 Sep 2015 Released 1.2.13 version
+* Add a property to start the setup tool (Resolves: rhbz#1260088)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 27 Aug 2015 Released 1.2.12 version
 * Use open() instead of codecs.open() to fix dictionary loading problem on F23 (Resolves: rhbz#1257465)
 
