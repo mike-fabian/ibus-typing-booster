@@ -25,7 +25,6 @@ import os
 import sys
 import string
 import unicodedata
-import curses.ascii
 import re
 from gi.repository import IBus
 from gi.repository import GLib
@@ -67,7 +66,10 @@ def variant_to_value(variant):
     return variant
 
 def argb(a, r, g, b):
-    return ((a & 0xff)<<24) + ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff)
+    return (((a & 0xff)<<24)
+            + ((r & 0xff) << 16)
+            + ((g & 0xff) << 8)
+            + (b & 0xff))
 
 def rgb(r, g, b):
     return argb(255, r, g, b)
@@ -129,7 +131,8 @@ class editor(object):
         self._current_ime = variant_to_value(self._config.get_value(
                 self._config_section,
                 'inputmethod'))
-        if self._current_ime == None or not self._current_ime in self._supported_imes:
+        if (self._current_ime == None
+            or not self._current_ime in self._supported_imes):
             # There is no ime set in dconf or an unsupported ime, fall
             # back to the first of the supported imes:
             self._current_ime = self._supported_imes[0]
@@ -140,7 +143,6 @@ class editor(object):
             # using m17n transliteration
             self.trans_m17n_mode = True
             try:
-                #self.trans = Translit.Transliterator.get(self._m17ndb, self._current_ime)
                 self.trans = Transliterator.get(self._m17ndb, self._current_ime)
             except:
                 import traceback
@@ -164,7 +166,8 @@ class editor(object):
             self._transliterated_string = self.trans.transliterate(
                 self._typed_string)[0]
             if type(self._transliterated_string) != type(u''):
-                self._transliterated_string = self._transliterated_string.decode('UTF-8')
+                self._transliterated_string = (
+                    self._transliterated_string.decode('UTF-8'))
             if self._current_ime in ['ko-romaja', 'ko-han2']:
                 self._transliterated_string = unicodedata.normalize(
                     'NFKD', self._transliterated_string)
@@ -201,8 +204,9 @@ class editor(object):
     def remove_character_before_cursor(self):
         '''Remove typed character before cursor'''
         if self._typed_string_cursor > 0:
-            self._typed_string = self._typed_string[:self._typed_string_cursor-1] \
-                                 +self._typed_string[self._typed_string_cursor:]
+            self._typed_string = (
+                self._typed_string[:self._typed_string_cursor-1]
+                +self._typed_string[self._typed_string_cursor:])
             self._typed_string_cursor -= 1
             self.update_transliterated_string()
             self.update_candidates()
@@ -210,8 +214,9 @@ class editor(object):
     def remove_character_after_cursor(self):
         '''Remove typed character after cursor'''
         if self._typed_string_cursor < len(self._typed_string):
-            self._typed_string = self._typed_string[:self._typed_string_cursor] \
-                                 +self._typed_string[self._typed_string_cursor+1:]
+            self._typed_string = (
+                self._typed_string[:self._typed_string_cursor]
+                +self._typed_string[self._typed_string_cursor+1:])
             self.update_transliterated_string()
             self.update_candidates()
 
@@ -260,9 +265,11 @@ class editor(object):
             transliterated_string_up_to_cursor = self.trans.transliterate(
                 self._typed_string[:self._typed_string_cursor])[0]
             if type(transliterated_string_up_to_cursor) != type(u''):
-                transliterated_string_up_to_cursor = transliterated_string_up_to_cursor.decode('UTF-8')
+                transliterated_string_up_to_cursor = (
+                    transliterated_string_up_to_cursor.decode('UTF-8'))
         else:
-            transliterated_string_up_to_cursor = self._typed_string[:self._typed_string_cursor]
+            transliterated_string_up_to_cursor = (
+                self._typed_string[:self._typed_string_cursor])
         if self._current_ime in ['ko-romaja', 'ko-han2']:
             transliterated_string_up_to_cursor = unicodedata.normalize(
                 'NFKD', transliterated_string_up_to_cursor)
@@ -287,7 +294,8 @@ class editor(object):
         if not phrase:
             return
         phrase = unicodedata.normalize('NFC', phrase)
-        transliterated_string = unicodedata.normalize('NFC', self._transliterated_string)
+        transliterated_string = unicodedata.normalize(
+            'NFC', self._transliterated_string)
         attrs = IBus.AttrList ()
         if not phrase.startswith(transliterated_string):
             # this is a candidate which does not start exactly
@@ -295,17 +303,23 @@ class editor(object):
             # for a spelling correction:
             if debug_level > 0:
                 phrase = phrase + u' ✓'
-            attrs.append(IBus.attr_foreground_new(rgb(0xff,0x00,0x00), 0, len(phrase)))
+            attrs.append(IBus.attr_foreground_new(
+                rgb(0xff, 0x00, 0x00), 0, len(phrase)))
         elif user_freq > 10:
             # this is a frequently used phrase:
-            attrs.append(IBus.attr_foreground_new(rgb(0xff,0x7f,0x00), 0, len(phrase)))
+            attrs.append(IBus.attr_foreground_new(
+                rgb(0xff, 0x7f, 0x00), 0, len(phrase)))
         else:
-            # this is a system phrase that has been used less then 10 times or maybe never:
-            attrs.append(IBus.attr_foreground_new(rgb(0x00,0x00,0x00), 0, len(phrase)))
+            # this is a system phrase that has been used less
+            # then 10 times or maybe never:
+            attrs.append(IBus.attr_foreground_new(
+                rgb(0x00, 0x00, 0x00), 0, len(phrase)))
         if debug_level > 0:
             phrase += u' ' + str(user_freq)
             attrs.append(IBus.attr_foreground_new(
-                rgb(0x00,0xff,0x00), len(phrase) - len(str(user_freq)), len(phrase)))
+                rgb(0x00, 0xff, 0x00),
+                len(phrase) - len(str(user_freq)),
+                len(phrase)))
         text = IBus.Text.new_from_string(phrase)
         i = 0
         while attrs.get(i) != None:
@@ -320,32 +334,42 @@ class editor(object):
 
     def update_candidates (self):
         '''Update lookuptable'''
-        if self._typed_string == self._typed_string_when_update_candidates_was_last_called:
-            # The input did not change since we came here last, do nothing and leave
-            # candidates and lookup table unchanged:
+        if (self._typed_string
+            == self._typed_string_when_update_candidates_was_last_called):
+            # The input did not change since we came here last, do
+            # nothing and leave candidates and lookup table unchanged:
             return True
-        self._typed_string_when_update_candidates_was_last_called = self._typed_string[:]
+        self._typed_string_when_update_candidates_was_last_called = (
+            self._typed_string[:])
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
         self._candidates = []
         prefix_length = 0
         prefix = u''
         if self._transliterated_string:
-            stripped_transliterated_string = itb_util.lstrip_token(self._transliterated_string)
+            stripped_transliterated_string = (
+                itb_util.lstrip_token(self._transliterated_string))
             if len(stripped_transliterated_string) >= self._min_char_complete:
-                prefix_length = len(self._transliterated_string) - len(stripped_transliterated_string)
+                prefix_length = (
+                    len(self._transliterated_string)
+                    - len(stripped_transliterated_string))
                 if prefix_length:
                     prefix = self._transliterated_string[0:prefix_length]
                 try:
-                    self._candidates = self.db.select_words(stripped_transliterated_string, p_phrase=self._p_phrase, pp_phrase=self._pp_phrase)
+                    self._candidates = self.db.select_words(
+                        stripped_transliterated_string,
+                        p_phrase=self._p_phrase,
+                        pp_phrase=self._pp_phrase)
                 except:
                     import traceback
                     traceback.print_exc()
         if self._candidates:
             if prefix:
-                self._candidates = [(prefix+x[0], x[1]) for x in self._candidates]
+                self._candidates = (
+                    [(prefix+x[0], x[1]) for x in self._candidates])
             for x in self._candidates:
-                self.append_candidate_to_lookup_table(phrase=x[0], user_freq=x[1])
+                self.append_candidate_to_lookup_table(
+                    phrase=x[0], user_freq=x[1])
         return True
 
     def arrow_down(self):
@@ -421,7 +445,7 @@ class editor(object):
             return u''
         return self._candidates[index][0]
 
-    def alt_number (self,index):
+    def alt_number (self, index):
         '''Remove the phrase selected with Alt+Number from the user database.
 
         The index parameter should start from 0.
@@ -453,7 +477,8 @@ class editor(object):
         if  len (self._candidates) > real_index:
             # this index is valid
             can = self._candidates[real_index]
-            self.db.remove_phrase(phrase=can[0], database='user_db', commit=True)
+            self.db.remove_phrase(
+                phrase=can[0], database='user_db', commit=True)
             # call update_candidates() to get a new SQL query.  The
             # input has not really changed, therefore we must clear
             # the remembered list of transliterated characters to
@@ -473,6 +498,10 @@ class editor(object):
         '''Get lookup table'''
         return self._lookup_table
 
+    def get_candidates(self):
+        '''Get list of candidates'''
+        return self._candidates
+
     def push_context(self, phrase):
         self._pp_phrase = self._p_phrase
         self._p_phrase = phrase
@@ -488,11 +517,12 @@ class tabengine (IBus.Engine):
     '''The IM Engine for Tables'''
 
     def __init__ (self, bus, obj_path, db ):
-        super(tabengine,self).__init__ (connection=bus.get_connection(),object_path=obj_path)
+        super(tabengine, self).__init__(
+            connection=bus.get_connection(),object_path=obj_path)
         global debug_level
         try:
             debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
-        except:
+        except (TypeError, ValueError):
             debug_level = int(0)
         self._input_purpose = 0
         self._has_input_purpose = False
@@ -516,16 +546,19 @@ class tabengine (IBus.Engine):
         if tabengine._page_size > 9:
             tabengine._page_size = 9 # maximum page size supported
 
-        self._show_number_of_candidates = variant_to_value(self._config.get_value(
+        self._show_number_of_candidates = variant_to_value(
+            self._config.get_value(
                 self._config_section,
                 'shownumberofcandidates'))
         if self._show_number_of_candidates == None:
             self._show_number_of_candidates = False
 
-        self._icon_dir = '%s%s%s%s' % (os.getenv('IBUS_HUNSPELL_TABLE_LOCATION'),
-                os.path.sep, 'icons', os.path.sep)
+        self._icon_dir = '%s%s%s%s' % (
+            os.getenv('IBUS_HUNSPELL_TABLE_LOCATION'),
+            os.path.sep, 'icons', os.path.sep)
 
-        self._status = self.db.ime_properties.get('status_prompt').encode('utf8')
+        self._status = self.db.ime_properties.get(
+            'status_prompt').encode('utf8')
 
         self._page_down_keys = [IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down]
         self._page_up_keys = [IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up]
@@ -539,6 +572,8 @@ class tabengine (IBus.Engine):
             self._tab_enable = False
         self._commit_happened_after_focus_in = False
 
+        self.properties = []
+        self._setup_property = None
         self._init_properties()
 
         self.reset ()
@@ -556,11 +591,12 @@ class tabengine (IBus.Engine):
         self.properties.append(self._setup_property)
         self.register_properties(self.properties)
 
-    def do_property_activate(self, property, prop_state = IBus.PropState.UNCHECKED):
+    def do_property_activate(
+            self, ibus_property, prop_state = IBus.PropState.UNCHECKED):
         '''
         Handle clicks on properties
         '''
-        if property == "setup":
+        if ibus_property == "setup":
             self._start_setup()
             return
 
@@ -591,7 +627,7 @@ class tabengine (IBus.Engine):
     def do_destroy(self):
         self.reset ()
         self.do_focus_out ()
-        super(tabengine,self).destroy()
+        super(tabengine, self).destroy()
 
     def _change_mode (self):
         '''Shift input mode, TAB -> EN -> TAB
@@ -602,13 +638,17 @@ class tabengine (IBus.Engine):
     def _update_preedit (self):
         '''Update Preedit String in UI'''
         # editor.get_caret() should also use NFC!
-        _str = unicodedata.normalize('NFC', self._editor.get_transliterated_string())
+        _str = unicodedata.normalize(
+            'NFC', self._editor.get_transliterated_string())
         if _str == u'':
-            super(tabengine, self).update_preedit_text(IBus.Text.new_from_string(u''), 0, False)
+            super(tabengine, self).update_preedit_text(
+                IBus.Text.new_from_string(u''), 0, False)
         else:
             attrs = IBus.AttrList()
-            attrs.append(IBus.attr_foreground_new(rgb(0x0e,0x0e,0xa0), 0, len(_str)))
-            attrs.append(IBus.attr_underline_new(IBus.AttrUnderline.SINGLE, 0, len(_str)))
+            attrs.append(IBus.attr_foreground_new(
+                rgb(0x0e, 0x0e, 0xa0), 0, len(_str)))
+            attrs.append(IBus.attr_underline_new(
+                IBus.AttrUnderline.SINGLE, 0, len(_str)))
             text = IBus.Text.new_from_string(_str)
             i = 0
             while attrs.get(i) != None:
@@ -618,22 +658,31 @@ class tabengine (IBus.Engine):
                                       attr.get_start_index(),
                                       attr.get_end_index())
                 i += 1
-            super(tabengine, self).update_preedit_text(text, self._editor.get_caret(), True)
+            super(tabengine, self).update_preedit_text(
+                text, self._editor.get_caret(), True)
 
     def _update_aux (self):
         '''Update Aux String in UI'''
-        aux_string = u'(%d / %d)' % (self._editor._lookup_table.get_cursor_pos() + 1,
-                                   self._editor._lookup_table.get_number_of_candidates())
+        aux_string = u'(%d / %d)' % (
+            self._editor.get_lookup_table().get_cursor_pos() + 1,
+            self._editor.get_lookup_table().get_number_of_candidates())
         if aux_string:
             # Colours do not work at the moment in the auxiliary text!
             # Needs fix in ibus.
             attrs = IBus.AttrList()
-            attrs.append(IBus.attr_foreground_new(rgb(0x95,0x15,0xb5),0,len(aux_string)))
+            attrs.append(IBus.attr_foreground_new(
+                rgb(0x95, 0x15, 0xb5),
+                0,
+                len(aux_string)))
             if debug_level > 0:
-                context = u' ' + self._editor._pp_phrase + u' ' + self._editor._p_phrase
+                context = (
+                    u' ' + self._editor._pp_phrase
+                    + u' ' + self._editor._p_phrase)
                 aux_string += context
                 attrs.append(IBus.attr_foreground_new(
-                    rgb(0x00,0xff,0x00),len(aux_string)-len(context), len(aux_string)))
+                    rgb(0x00, 0xff, 0x00),
+                    len(aux_string)-len(context),
+                    len(aux_string)))
             text = IBus.Text.new_from_string(aux_string)
             i = 0
             while attrs.get(i) != None:
@@ -644,9 +693,10 @@ class tabengine (IBus.Engine):
                                       attr.get_end_index())
                 i += 1
             visible = True
-            if self._editor._lookup_table.get_number_of_candidates() == 0 \
-                    or self._show_number_of_candidates == False \
-                    or (self._tab_enable and not self.is_lookup_table_enabled_by_tab):
+            if (self._editor.get_lookup_table().get_number_of_candidates() == 0
+                or self._show_number_of_candidates == False
+                or (self._tab_enable
+                    and not self.is_lookup_table_enabled_by_tab)):
                 visible = False
             super(tabengine, self).update_auxiliary_text(text, visible)
         else:
@@ -662,7 +712,7 @@ class tabengine (IBus.Engine):
         # difference but gnome-shell in f18 will display
         # an empty suggestion popup if the number of candidates
         # is zero!
-        if len(self._editor._candidates) == 0:
+        if len(self._editor.get_candidates()) == 0:
             self.hide_lookup_table()
             return
         if self._tab_enable:
@@ -684,7 +734,8 @@ class tabengine (IBus.Engine):
             input_phrase = self._editor.get_transliterated_string()
         # commit always in NFC:
         commit_phrase = unicodedata.normalize('NFC', commit_phrase)
-        super(tabengine,self).commit_text(IBus.Text.new_from_string(commit_phrase))
+        super(tabengine, self).commit_text(
+            IBus.Text.new_from_string(commit_phrase))
         self._editor.clear_input()
         self._update_ui ()
         self._commit_happened_after_focus_in = True
@@ -703,8 +754,9 @@ class tabengine (IBus.Engine):
                     text = text.decode('UTF-8')
                 cursor_pos = surrounding_text[1]
                 anchor_pos = surrounding_text[2]
-                # The commit_phrase is *not* yet in the surrounding text, it will
-                # show up there only when the next key event is processed:
+                # The commit_phrase is *not* yet in the surrounding text,
+                # it will show up there only when the next key event is
+                # processed:
                 pattern = re.compile(r'(?P<white_space>[\s]+)$', re.UNICODE)
                 match = pattern.search(text[:cursor_pos])
                 if match:
@@ -744,7 +796,9 @@ class tabengine (IBus.Engine):
             # surrounding text is probably from the previously
             # focused window (bug!), don’t use it.
             return
-        tokens = [itb_util.strip_token(x) for x in itb_util.tokenize(text[:cursor_pos])]
+        tokens = ([
+            itb_util.strip_token(x)
+            for x in itb_util.tokenize(text[:cursor_pos])])
         if len(tokens):
             self._editor._p_phrase = tokens[-1]
         if len(tokens) > 1:
@@ -760,7 +814,9 @@ class tabengine (IBus.Engine):
         Key Events include Key Press and Key Release,
         modifier means Key Pressed
         '''
-        if self._has_input_purpose and self._input_purpose in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN]:
+        if (self._has_input_purpose
+            and self._input_purpose
+            in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN]):
             return False
 
         key = KeyEvent(keyval, keycode, state)
@@ -799,7 +855,8 @@ class tabengine (IBus.Engine):
             if key.val in (IBus.KEY_BackSpace,):
                 # When the end of a word is reached again by typing backspace,
                 # try to get that word back into preedit:
-                if not (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT):
+                if not (self.client_capabilities
+                        & IBus.Capabilite.SURROUNDING_TEXT):
                     return False
                 surrounding_text = self.get_surrounding_text()
                 text = surrounding_text[0].get_text()
@@ -814,7 +871,8 @@ class tabengine (IBus.Engine):
                     # surrounding text is probably from the previously
                     # focused window (bug!), don’t use it.
                     return False
-                pattern = re.compile(r'(^|.*[\s]+)(?P<token>[\S]+)[\s]$', re.UNICODE)
+                pattern = re.compile(
+                    r'(^|.*[\s]+)(?P<token>[\S]+)[\s]$', re.UNICODE)
                 match = pattern.match(text[:cursor_pos])
                 if not match:
                     return False
@@ -827,12 +885,15 @@ class tabengine (IBus.Engine):
                 # back to the application because the whitespace has
                 # already been deleted.
                 token = match.group('token')
-                self.delete_surrounding_text(-1-len(token),1+len(token))
+                self.delete_surrounding_text(-1-len(token), 1+len(token))
                 self.get_context()
                 self._editor.insert_string_at_cursor(token)
                 self._update_ui()
                 return True
-            if  key.val >= 32 and (not (key.state & (IBus.ModifierType.MOD1_MASK | IBus.ModifierType.CONTROL_MASK))):
+            if (key.val >= 32
+                and (not (key.state & (
+                    IBus.ModifierType.MOD1_MASK
+                    | IBus.ModifierType.CONTROL_MASK)))):
                 typed_character = IBus.keyval_to_unicode(key.val)
                 if type(typed_character) != type(u''):
                     typed_character = typed_character.decode('UTF-8')
@@ -840,14 +901,17 @@ class tabengine (IBus.Engine):
                 # very unlikely to be part of a word
                 # (e.g. punctuation, a symbol, ..), we might want to
                 # avoid completion and commit something immediately:
-                if typed_character and unicodedata.category(typed_character) in itb_util.categories_to_trigger_immediate_commit:
+                if (typed_character
+                    and unicodedata.category(typed_character)
+                    in itb_util.categories_to_trigger_immediate_commit):
                     if not self._editor.trans_m17n_mode:
                         # Do not just pass the character through,
                         # commit it properly.  For example if it is a
                         # “.” we might want to remove whitespace
                         # between the “.” and the previous word and this is
                         # done in commit_string().
-                        self.commit_string(typed_character, input_phrase = typed_character)
+                        self.commit_string(
+                            typed_character, input_phrase = typed_character)
                         return True
                     # If transliteration is used, we may need to
                     # handle a punctuation or symbol character. For
@@ -859,7 +923,8 @@ class tabengine (IBus.Engine):
                     self._editor.insert_string_at_cursor(typed_character)
                     self._update_ui()
                     return True
-                if typed_character and unicodedata.digit(typed_character, -1) != -1:
+                if (typed_character
+                    and unicodedata.digit(typed_character, -1) != -1):
                     if not self._editor.trans_m17n_mode:
                         # If a digit has been typed and no transliteration
                         # is used, we can pass it through
@@ -872,8 +937,10 @@ class tabengine (IBus.Engine):
                     transliterated_digit = self._editor.trans.transliterate(
                         typed_character)[0]
                     if type(transliterated_digit) != type(u''):
-                        transliterated_digit = transliterated_digit.decode('utf8')
-                    self.commit_string(transliterated_digit, input_phrase=transliterated_digit)
+                        transliterated_digit = (
+                            transliterated_digit.decode('utf8'))
+                    self.commit_string(
+                        transliterated_digit, input_phrase=transliterated_digit)
                     return True
 
         if key.val == IBus.KEY_Escape:
@@ -897,31 +964,34 @@ class tabengine (IBus.Engine):
             self._update_ui ()
             return res
 
-        if key.val in self._page_down_keys and self._editor._candidates:
+        if key.val in self._page_down_keys and self._editor.get_candidates():
             res = self._editor.page_down()
             self._update_ui ()
             return res
 
-        if key.val in self._page_up_keys and self._editor._candidates:
+        if key.val in self._page_up_keys and self._editor.get_candidates():
             res = self._editor.page_up ()
             self._update_ui ()
             return res
 
-        if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left) and key.state & IBus.ModifierType.CONTROL_MASK:
+        if (key.val in (IBus.KEY_Left, IBus.KEY_KP_Left)
+            and key.state & IBus.ModifierType.CONTROL_MASK):
             if self._editor.is_empty():
                 return False
             self._editor.control_arrow_left()
             self._update_ui()
             return True
 
-        if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right) and key.state & IBus.ModifierType.CONTROL_MASK:
+        if (key.val in (IBus.KEY_Right, IBus.KEY_KP_Right)
+            and key.state & IBus.ModifierType.CONTROL_MASK):
             if self._editor.is_empty():
                 return False
             self._editor.control_arrow_right()
             self._update_ui()
             return True
 
-        if key.val == IBus.KEY_BackSpace and key.state & IBus.ModifierType.CONTROL_MASK:
+        if (key.val == IBus.KEY_BackSpace
+            and key.state & IBus.ModifierType.CONTROL_MASK):
             if self._editor.is_empty():
                 return False
             self._editor.remove_string_before_cursor()
@@ -935,7 +1005,8 @@ class tabengine (IBus.Engine):
             self._update_ui()
             return True
 
-        if key.val == IBus.KEY_Delete  and key.state & IBus.ModifierType.CONTROL_MASK:
+        if (key.val == IBus.KEY_Delete
+            and key.state & IBus.ModifierType.CONTROL_MASK):
             if self._editor.is_empty():
                 return False
             self._editor.remove_string_after_cursor()
@@ -949,18 +1020,27 @@ class tabengine (IBus.Engine):
             self._update_ui()
             return True
 
-        if key.val >= IBus.KEY_1 and key.val <= IBus.KEY_9 and self._editor._candidates and key.state & IBus.ModifierType.CONTROL_MASK:
+        if (key.val >= IBus.KEY_1
+            and key.val <= IBus.KEY_9
+            and self._editor.get_candidates()
+            and key.state & IBus.ModifierType.CONTROL_MASK):
             res = self._editor.alt_number (key.val - IBus.KEY_1)
             self._update_ui ()
             return res
 
-        if key.val >= IBus.KEY_1 and key.val <= IBus.KEY_9 and self._editor._candidates and key.state & IBus.ModifierType.MOD1_MASK:
+        if (key.val >= IBus.KEY_1
+            and key.val <= IBus.KEY_9
+            and self._editor.get_candidates()
+            and key.state & IBus.ModifierType.MOD1_MASK):
             res = self._editor.alt_number (key.val - IBus.KEY_1)
             self._update_ui ()
             return res
 
-        if key.val >= IBus.KEY_1 and key.val <= IBus.KEY_9 and self._editor._candidates:
-            phrase = self._editor.get_string_from_lookup_table_current_page(key.val - IBus.KEY_1)
+        if (key.val >= IBus.KEY_1
+            and key.val <= IBus.KEY_9
+            and self._editor.get_candidates()):
+            phrase = self._editor.get_string_from_lookup_table_current_page(
+                key.val - IBus.KEY_1)
             if phrase:
                 self.commit_string(phrase + u' ')
             return True
@@ -978,15 +1058,17 @@ class tabengine (IBus.Engine):
                 self._update_ui()
                 return True
             else:
-                if self._editor._candidates:
-                    phrase = self._editor.get_string_from_lookup_table_cursor_pos()
+                if self._editor.get_candidates():
+                    phrase = (
+                        self._editor.get_string_from_lookup_table_cursor_pos())
                     if phrase:
                         self.commit_string(phrase + u' ')
                     return True
                 else:
                     input_phrase = self._editor.get_transliterated_string()
                     if input_phrase:
-                        self.commit_string(input_phrase + u' ', input_phrase = input_phrase)
+                        self.commit_string(
+                            input_phrase + u' ', input_phrase = input_phrase)
                     return True
             return True
 
@@ -996,7 +1078,8 @@ class tabengine (IBus.Engine):
             if self._editor.is_empty():
                 return False
             if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right):
-                if self._editor._typed_string_cursor < len(self._editor._typed_string):
+                if (self._editor._typed_string_cursor
+                    < len(self._editor._typed_string)):
                     self._editor._typed_string_cursor += 1
                     self._update_ui()
                     return True
@@ -1008,7 +1091,7 @@ class tabengine (IBus.Engine):
             input_phrase = self._editor.get_transliterated_string()
             if not input_phrase:
                 return False
-            if not self._editor._candidates:
+            if not self._editor.get_candidates():
                 self.commit_string(input_phrase, input_phrase = input_phrase)
                 return False
             phrase = self._editor.get_string_from_lookup_table_cursor_pos()
@@ -1051,10 +1134,15 @@ class tabengine (IBus.Engine):
             if type(typed_character) != type(u''):
                 typed_character = typed_character.decode('UTF-8')
             self._editor.insert_string_at_cursor(typed_character)
-            if typed_character and unicodedata.category(typed_character) in itb_util.categories_to_trigger_immediate_commit:
+            if (typed_character
+                and unicodedata.category(typed_character)
+                in itb_util.categories_to_trigger_immediate_commit):
                 input_phrase = self._editor.get_transliterated_string()
-                if input_phrase and input_phrase[-1] == typed_character and not self._editor.trans_m17n_mode:
-                    self.commit_string(input_phrase + u' ', input_phrase = input_phrase)
+                if (input_phrase
+                    and input_phrase[-1] == typed_character
+                    and not self._editor.trans_m17n_mode):
+                    self.commit_string(
+                        input_phrase + u' ', input_phrase = input_phrase)
             self._update_ui()
             return True
 
@@ -1107,7 +1195,7 @@ class tabengine (IBus.Engine):
         # effect of comparing the dconf sections case insentively
         # in some locales, it would fail for example if Turkish
         # locale (tr_TR.UTF-8) is set.
-        if sys.version_info >= (3,0,0): # Python3
+        if sys.version_info >= (3, 0, 0): # Python3
             return re.sub(r'[_:]', r'-', section).translate(
                 ''.maketrans(
                 string.ascii_uppercase,
@@ -1119,9 +1207,11 @@ class tabengine (IBus.Engine):
                 string.ascii_lowercase).decode('ISO-8859-1'))
 
     def __config_value_changed_cb(self, config, section, name, value):
-        if self.config_section_normalize(self._config_section) != self.config_section_normalize(section):
+        if (self.config_section_normalize(self._config_section)
+            != self.config_section_normalize(section)):
             return
-        print("config value %(n)s for engine %(en)s changed" %{'n': name, 'en': self._name})
+        print("config value %(n)s for engine %(en)s changed"
+              %{'n': name, 'en': self._name})
         value = variant_to_value(value)
         if name == "tabenable":
             if value == 1:
@@ -1157,7 +1247,8 @@ class tabengine (IBus.Engine):
                 if value != 'NoIme':
                     print("Switching to transliteration using  ime=%s" %value)
                     self._editor.trans_m17n_mode = True
-                    self._editor.trans = Transliterator.get(self._editor._m17ndb, value)
+                    self._editor.trans = Transliterator.get(
+                        self._editor._m17ndb, value)
                 else:
                     print("Switching off transliteration.")
                     self._editor.trans_m17n_mode = False
