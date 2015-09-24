@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-typing-booster 0.0.16\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2013-12-20 11:18+0530\n"
-"PO-Revision-Date: 2013-11-14 12:59+0100\n"
+"POT-Creation-Date: 2015-09-24 13:49+0200\n"
+"PO-Revision-Date: 2015-09-24 13:51+0200\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <trans-de@lists.fedoraproject.org>\n"
 "Language: de\n"
@@ -19,6 +19,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: engine/hunspell_table.py:550
+msgid "Setup"
+msgstr "Einstellungen"
+
+#: engine/hunspell_table.py:552
+#, python-format
+msgid "Configure ibus-typing-booster “%(name)s”"
+msgstr "Ibus Typing Booster \"%(name)s\" Einstellungen"
 
 #: setup/main.py:89
 #, python-format
@@ -53,7 +62,7 @@ msgstr "Ibus Typing Booster \"%(symbol)s\" Einstellungen"
 
 #: setup/main.py:211
 msgid "Another instance of this app is already running."
-msgstr ""
+msgstr "Eine Instanz dieses Programms läuft schon."
 
 #: setup/main.py:295
 msgid "Open File ..."

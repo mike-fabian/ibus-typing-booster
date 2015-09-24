@@ -8,14 +8,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2013-12-20 11:18+0530\n"
+"POT-Creation-Date: 2015-09-24 13:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: engine/hunspell_table.py:550
+msgid "Setup"
+msgstr ""
+
+#: engine/hunspell_table.py:552
+#, python-format
+msgid "Configure ibus-typing-booster “%(name)s”"
+msgstr ""
 
 #: setup/main.py:89
 #, python-format
