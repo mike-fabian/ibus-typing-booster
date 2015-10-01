@@ -1,0 +1,149 @@
+# Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2015. #zanata
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
+"POT-Creation-Date: 2013-12-20 11:18+0530\n"
+"PO-Revision-Date: 2015-09-30 09:03-0400\n"
+"Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
+"Language-Team: Catalan\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
+"X-Generator: Zanata 3.7.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: setup/main.py:89
+#, python-format
+msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
+msgstr "Format desconegut del nom del motor: IBUS_ENGINE_NAME=%(name)s"
+
+#: setup/main.py:94
+msgid "IBUS_ENGINE_NAME environment variable is not set."
+msgstr "La variable d'entorn IBUS_ENGINE_NAME no està establerta."
+
+#: setup/main.py:98
+msgid ""
+"Cannot determine the config file for this engine. Please use the --config-"
+"file option."
+msgstr ""
+"No es pot determinar cap fitxer de configuració per a aquest motor. Si us "
+"plau, utilitzeu l'opció --config-file."
+
+#: setup/main.py:105
+#, python-format
+msgid "Config file %(file)s does not exist."
+msgstr "El fitxer de configuració %(file)s no existeix."
+
+#: setup/main.py:117
+msgid "ibus is not running."
+msgstr "ibus no s'està executant."
+
+#: setup/main.py:123
+#, python-format
+msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
+msgstr "Preferències per a l'ibus-typing-booster \"%(symbol)s\""
+
+#: setup/main.py:211
+msgid "Another instance of this app is already running."
+msgstr "Ja s'està executant una altra instància d'aquesta aplicació."
+
+#: setup/main.py:295
+msgid "Open File ..."
+msgstr "Obre el fitxer..."
+
+#: setup/main.py:312
+#, python-format
+msgid "Learned successfully from file %(filename)s."
+msgstr "S'ha après correctament del fitxer %(filename)s."
+
+#: setup/main.py:319
+#, python-format
+msgid "Learning from file %(filename)s failed."
+msgstr "Ha fallat l'aprenentatge del fitxer %(filename)s."
+
+#: setup/main.py:327
+msgid "Are you sure?"
+msgstr "Esteu segur?"
+
+#: setup/main.py:334
+msgid ""
+"Do you really want to delete all language \n"
+"data learned from typing or reading files?"
+msgstr ""
+"Realment voleu eliminar totes les dades de l'idioma \n"
+"que s'han après de l'escriptura o la lectura de fitxers? "
+
+#: setup/setup.glade:29
+msgid "Close"
+msgstr "Tanca"
+
+#: setup/setup.glade:77
+msgid "Enable suggestions by Tab key"
+msgstr "Habilita els suggeriments amb la tecla Tab"
+
+#: setup/setup.glade:101
+msgid "Candidate window page size:"
+msgstr "Mida de la pàgina de la finestra dels candidats:"
+
+#: setup/setup.glade:137
+msgid "Input Method:"
+msgstr "Mètode d'entrada:"
+
+#: setup/setup.glade:161
+msgid "Display total number of candidates"
+msgstr "Mostra el nombre total de candidats"
+
+#: setup/setup.glade:186
+msgid "Minimum number of chars for completion:"
+msgstr "Nombre màxim de caràcter per a la conclusió:"
+
+#: setup/setup.glade:219
+msgid "Input Method Help"
+msgstr "Ajuda del mètode d'entrada"
+
+#: setup/setup.glade:258
+msgid "Options"
+msgstr "Opcions"
+
+#: setup/setup.glade:291
+msgid "Install dictionary"
+msgstr "Instal·la el diccionari"
+
+#: setup/setup.glade:305
+msgid "Install pyhunspell"
+msgstr "Instal·la pyhunspell"
+
+#: setup/setup.glade:321
+msgid "Learn from text file"
+msgstr "Aprèn del fitxer de text"
+
+#: setup/setup.glade:340
+msgid "Install the dictionary package for this engine"
+msgstr "Instal·la el paquet del diccionari per a aquest motor"
+
+#: setup/setup.glade:350
+msgid "Install pyhunspell package to get spellchecking suggestions"
+msgstr ""
+"Instal·la el paquet pyhunspell per obtenir els suggeriments de la revisió "
+"ortogràfica"
+
+#: setup/setup.glade:364
+msgid "Learn your style by reading a text file"
+msgstr "Aprèn el vostre estil amb la lectura d'un fitxer de text"
+
+#: setup/setup.glade:378
+msgid ""
+"Delete all personal language data learned from typing or from reading files"
+msgstr ""
+"Elimina totes les dades de l'idioma personal que s'han après de l'escriptura "
+"o de la lectura de fitxers"
+
+#: setup/setup.glade:389
+msgid "Delete learned data"
+msgstr "Elimina les dades que s'han après"
+
+#: setup/setup.glade:426
+msgid "Dictionaries and personal data"
+msgstr "Diccionaris i dades personals"
