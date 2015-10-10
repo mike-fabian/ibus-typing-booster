@@ -33,19 +33,25 @@ import unicodedata
 # prevents learning such words from user input. I.e. the list of
 # categories to trigger immediate commit should contain only categories
 # which are very unlikely to appear as parts of words.
-categories_to_trigger_immediate_commit = ['Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Sm', 'Sc']
+categories_to_trigger_immediate_commit = [
+    'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Sm', 'Sc']
 
-categories_to_strip_from_tokens = ['Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Pd', 'Sm', 'Sc']
+categories_to_strip_from_tokens = [
+    'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Pd', 'Sm', 'Sc']
 
 def lstrip_token(token):
     token = token.lstrip()
-    while len(token) > 0 and unicodedata.category(token[0]) in categories_to_strip_from_tokens:
+    while (len(token) > 0
+           and
+           unicodedata.category(token[0]) in categories_to_strip_from_tokens):
         token = token[1:]
     return token
 
 def rstrip_token(token):
     token = token.rstrip()
-    while len(token) > 0 and unicodedata.category(token[-1]) in categories_to_strip_from_tokens:
+    while (len(token) > 0
+           and
+           unicodedata.category(token[-1]) in categories_to_strip_from_tokens):
         token = token[0:-1]
     return token
 

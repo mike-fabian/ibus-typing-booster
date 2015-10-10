@@ -69,7 +69,11 @@ class Dictionary:
                   %{'n': self.name, 'd': dic_path, 'a': aff_path})
             return
         try:
-            aff_buffer = open(aff_path, mode='r', encoding='ISO-8859-1', errors='ignore').read().replace('\r\n', '\n')
+            aff_buffer = open(
+                aff_path,
+                mode='r',
+                encoding='ISO-8859-1',
+                errors='ignore').read().replace('\r\n', '\n')
         except:
             import traceback
             traceback.print_exc()
@@ -86,15 +90,20 @@ class Dictionary:
             self.buffer = open(
                 dic_path, encoding=self.encoding).read().replace('\r\n', '\n')
         except:
-            print("load_dictionary(): loading %(dic)s as %(enc)s encoding failed, fall back to ISO-8859-1." %{
-                'dic': dic_path, 'enc': self.encoding})
+            print("load_dictionary(): "
+                  + "loading %(dic)s as %(enc)s encoding failed, "
+                  %{'dic': dic_path, 'enc': self.encoding}
+                  + "fall back to ISO-8859-1.")
             self.encoding = 'ISO-8859-1'
             try:
                 self.buffer = open(
-                    dic_path, encoding=self.encoding).read().replace('\r\n', '\n')
+                    dic_path,
+                    encoding=self.encoding).read().replace('\r\n', '\n')
             except:
-                print("load_dictionary(): loading %(dic)s as %(enc)s encoding failed, giving up." %{
-                    'dic': dic_path, 'enc': self.encoding})
+                print("load_dictionary(): "
+                      + "loading %(dic)s as %(enc)s encoding failed, "
+                      %{'dic': dic_path, 'enc': self.encoding}
+                      + "giving up.")
                 self.buffer = None
                 import traceback
                 traceback.print_exc()
@@ -175,17 +184,22 @@ class Hunspell:
                 if dictionary.enchant_dict:
                     if len(input_phrase) >= 4:
                         # Always pass NFC to enchant and convert the
-                        # result back to the internal normalization form (NFD)
-                        # (enchant does the right thing for Korean if the input is NFC).
-                        # enchant takes unicode strings and returns unicode strings,
-                        # no encoding and decoding to and from the hunspell dictionary
-                        # encoding is necessary (neither for Python2 nor Python3).
-                        # (pyhunspell (which works only for Python2) needs to get
-                        # its input passed in dictionary encoding and also returns it in
-                        # dictionary encoding).
-                        input_phrase = unicodedata.normalize('NFC', input_phrase)
+                        # result back to the internal normalization
+                        # form (NFD) (enchant does the right thing for
+                        # Korean if the input is NFC).  enchant takes
+                        # unicode strings and returns unicode strings,
+                        # no encoding and decoding to and from the
+                        # hunspell dictionary encoding is necessary
+                        # (neither for Python2 nor Python3).
+                        # (pyhunspell (which works only for Python2)
+                        # needs to get its input passed in dictionary
+                        # encoding and also returns it in dictionary
+                        # encoding).
+                        input_phrase = unicodedata.normalize(
+                            'NFC', input_phrase)
                         extra_suggestions = [
-                            unicodedata.normalize(normalization_form_internal, x)
+                            unicodedata.normalize(
+                                normalization_form_internal, x)
                             for x in
                             dictionary.enchant_dict.suggest(input_phrase)
                         ]
@@ -194,16 +208,20 @@ class Hunspell:
                                 suggested_words.append(suggestion)
                 elif dictionary.pyhunspell_object:
                     if len(input_phrase) >= 4:
-                        # Always pass NFC to pyhunspell and convert the
-                        # result back to the internal normalization form (NFD)
-                        # (hunspell does the right thing for Korean if the input is NFC).
-                        input_phrase = unicodedata.normalize('NFC', input_phrase)
+                        # Always pass NFC to pyhunspell and convert
+                        # the result back to the internal
+                        # normalization form (NFD) (hunspell does the
+                        # right thing for Korean if the input is NFC).
+                        input_phrase = unicodedata.normalize(
+                            'NFC', input_phrase)
                         extra_suggestions = [
                             unicodedata.normalize(
-                                normalization_form_internal, x.decode(dictionary.encoding))
+                                normalization_form_internal, x.decode(
+                                    dictionary.encoding))
                             for x in
                             dictionary.pyhunspell_object.suggest(
-                                input_phrase.encode(dictionary.encoding, 'replace'))
+                                input_phrase.encode(
+                                    dictionary.encoding, 'replace'))
                         ]
                         for suggestion in extra_suggestions:
                             if suggestion not in suggested_words:
@@ -211,6 +229,9 @@ class Hunspell:
             else:
                 dic_path = os.path.join(dictionary.loc, dictionary.name+'.dic')
                 suggested_words.insert(
-                    0, u'☹ %(dic_path)s not found. Please install hunspell dictionary!' %{'dic_path': dic_path})
+                    0,
+                    u'☹ %(dic_path)s not found. '
+                    %{'dic_path': dic_path}
+                    + 'Please install hunspell dictionary!')
         return suggested_words[0:max_words]
 

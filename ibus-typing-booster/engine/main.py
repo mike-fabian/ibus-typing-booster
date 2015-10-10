@@ -28,8 +28,12 @@ import factory
 import tabsqlitedb
 
 try:
-    config_file_dir = os.path.join (os.getenv('IBUS_TYPING_BOOSTER_LOCATION'),'hunspell-tables')
-    icon_dir = os.path.join (os.getenv('IBUS_TYPING_BOOSTER_LOCATION'),'icons')
+    config_file_dir = os.path.join(
+        os.getenv('IBUS_TYPING_BOOSTER_LOCATION'),
+        'hunspell-tables')
+    icon_dir = os.path.join(
+        os.getenv('IBUS_TYPING_BOOSTER_LOCATION'),
+        'icons')
 except:
     config_file_dir = "/usr/share/ibus-typing-booster/hunspell-tables"
     icon_dir = "/usr/share/ibus-typing-booster/icons"
@@ -38,7 +42,7 @@ except:
 opt = optparse.OptionParser()
 
 opt.set_usage ('%prog')
-opt.add_option('--daemon','-d',
+opt.add_option('--daemon', '-d',
         action = 'store_true',dest = 'daemon',default=False,
         help = 'Run as daemon, default: %default')
 opt.add_option('--ibus', '-i',
@@ -49,15 +53,20 @@ opt.add_option('--xml', '-x',
         help = 'output the engines xml part, default: %default')
 opt.add_option('--no-debug', '-n',
         action = 'store_false',dest = 'debug',default = True,
-        help = 'redirect stdout and stderr to ~/.local/share/ibus-typing-booster/debug.log, default: %default')
+        help = 'redirect stdout and stderr to '
+               + '~/.local/share/ibus-typing-booster/debug.log, '
+               + 'default: %default')
 opt.add_option('--profile', '-p',
         action = 'store_true', dest = 'profile', default = False,
-        help = 'print profiling information into the debug log. Works only together with --debug.')
+        help = 'print profiling information into the debug log. '
+               + 'Works only together with --debug.')
 
 (options, args) = opt.parse_args()
 
 if (not options.xml) and options.debug:
-    if not os.access(os.path.expanduser('~/.local/share/ibus-typing-booster'), os.F_OK):
+    if not os.access(
+            os.path.expanduser('~/.local/share/ibus-typing-booster'),
+            os.F_OK):
         os.system('mkdir -p ~/.local/share/ibus-typing-booster')
     logfile = os.path.expanduser('~/.local/share/ibus-typing-booster/debug.log')
     sys.stdout = open(logfile, mode='a', buffering=1)
@@ -79,19 +88,20 @@ class IMApp:
         if exec_by_ibus:
             self.__bus.request_name("org.freedesktop.IBus.IbusTypingBooster", 0)
         else:
-            self.__component = IBus.Component(name="org.freedesktop.IBus.IbusTypingBooster",
-                                              description="Table Component",
-                                              version="0.1.0",
-                                              license="GPL",
-                                              author="Anish Patil <apatill@redhat.com>",
-                                              homepage="http://code.google.com/p/ibus/",
-                                              textdomain="ibus-typing-booster")
+            self.__component = IBus.Component(
+                name="org.freedesktop.IBus.IbusTypingBooster",
+                description="Table Component",
+                version="0.1.0",
+                license="GPL",
+                author="Anish Patil <apatill@redhat.com>",
+                homepage="http://code.google.com/p/ibus/",
+                textdomain="ibus-typing-booster")
             # now we get IME info from self.__factory.db
             name = self.__factory.db.ime_properties.get("name")
             longname = self.__factory.db.ime_properties.get("ime_name")
             description = self.__factory.db.ime_properties.get("description")
             language = self.__factory.db.ime_properties.get("language")
-            license = self.__factory.db.ime_properties.get("credit")
+            credit = self.__factory.db.ime_properties.get("credit")
             author = self.__factory.db.ime_properties.get("author")
             icon = self.__factory.db.ime_properties.get("icon")
             if icon:
@@ -105,7 +115,7 @@ class IMApp:
                                      longname=longname,
                                      description=description,
                                      language=language,
-                                     license=license,
+                                     license=credit,
                                      author=author,
                                      icon=icon,
                                      layout=layout,
@@ -164,9 +174,9 @@ def main():
         from xml.etree.ElementTree import Element, SubElement, tostring
         # Find all config files in config_file_dir, extract the ime
         # properties and print the xml file for the engines
-        confs = [ x for x in os.listdir(config_file_dir) if x.endswith('.conf')]
+        confs = [x for x in os.listdir(config_file_dir) if x.endswith('.conf')]
         for conf in confs:
-            str_dic = conf.replace('conf','dic')
+            str_dic = conf.replace('conf', 'dic')
 
         egs = Element('engines')
 
@@ -224,15 +234,15 @@ def main():
         indent (egs)
         egsout = tostring(egs, encoding='utf8', method='xml').decode('utf-8')
         patt = re.compile('<\?.*\?>\n')
-        egsout = patt.sub('',egsout)
+        egsout = patt.sub('', egsout)
         sys.stdout.buffer.write((egsout+'\n').encode('utf-8'))
         return 0
 
     if options.daemon :
         if os.fork():
-                sys.exit()
+            sys.exit()
 
-    ima=IMApp('', options.ibus)
+    ima = IMApp('', options.ibus)
     signal (SIGTERM, lambda signum, stack_frame: cleanup(ima))
     signal (SIGINT, lambda signum, stack_frame: cleanup(ima))
     try:

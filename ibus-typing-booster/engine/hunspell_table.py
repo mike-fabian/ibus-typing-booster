@@ -535,6 +535,26 @@ class editor(object):
         '''Get list of candidates'''
         return self._candidates
 
+    def get_p_phrase(self):
+        '''Get previous word'''
+        return self._p_phrase
+
+    def get_pp_phrase(self):
+        '''Get word before previous word'''
+        return self._pp_phrase
+
+    def get_supported_imes(self):
+        '''Get list of supported input methods'''
+        return self._supported_imes
+
+    def get_current_ime(self):
+        '''Get current imput method'''
+        return self._current_ime
+
+    def set_current_ime(self, ime):
+        '''Get current imput method'''
+        self._current_ime = ime
+
     def push_context(self, phrase):
         self._pp_phrase = self._p_phrase
         self._p_phrase = phrase
@@ -713,8 +733,8 @@ class tabengine (IBus.Engine):
                 len(aux_string)))
             if debug_level > 0:
                 context = (
-                    u' ' + self._editor._pp_phrase
-                    + u' ' + self._editor._p_phrase)
+                    u' ' + self._editor.get_pp_phrase()
+                    + u' ' + self._editor.get_p_phrase())
                 aux_string += context
                 attrs.append(IBus.attr_foreground_new(
                     rgb(0x00, 0xff, 0x00),
@@ -810,8 +830,8 @@ class tabengine (IBus.Engine):
         self.db.check_phrase_and_update_frequency(
             input_phrase=stripped_input_phrase,
             phrase=stripped_commit_phrase,
-            p_phrase=self._editor._p_phrase,
-            pp_phrase=self._editor._pp_phrase)
+            p_phrase=self._editor.get_p_phrase(),
+            pp_phrase=self._editor.get_pp_phrase())
         self._editor.push_context(stripped_commit_phrase)
 
     def get_context(self):
@@ -1306,8 +1326,8 @@ class tabengine (IBus.Engine):
             self.reset()
             return
         if name == "inputmethod":
-            if value in self._editor._supported_imes:
-                self._editor._current_ime = value
+            if value in self._editor.get_supported_imes():
+                self._editor.set_current_ime(value)
                 if value != 'NoIme':
                     print("Switching to transliteration using  ime=%s" %value)
                     self._editor.trans_m17n_mode = True
