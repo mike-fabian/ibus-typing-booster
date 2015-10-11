@@ -96,6 +96,7 @@ icons_DATA = \
 	uk_UA.svg \
 	ur_PK.svg \
 	yi_US.svg \
+	ca_ES.svg \
 	$(NULL)
 
 iconsdir = $(pkgdatadir)/icons
