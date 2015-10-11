@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 11 Oct 2015 Released 1.2.14 version
+* Add Catalan translations, thanks to Robert Antoni Buj Gelonch <rbuj@fedoraproject.org> (Resolves: rhbz#1268153)
+* Add Catalan engine
+* Add optional debug code
+* Update German translations
+* Fix some pylint warnings
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 22 Sep 2015 Released 1.2.13 version
 * Add a property to start the setup tool (Resolves: rhbz#1260088)
 
