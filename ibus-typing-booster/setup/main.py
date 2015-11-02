@@ -25,7 +25,6 @@ import re
 import signal
 import optparse
 import locale
-import codecs
 from time import strftime
 from i18n import DOMAINNAME, _, N_, init as i18n_init
 import dbus, dbus.service, dbus.glib
@@ -393,8 +392,12 @@ class EventHandler:
             mim_file = ime_name+'.mim'
         mim_file_contents = None
         try:
-            mim_file_contents = codecs.open(
-                '/usr/share/m17n/%(mim)s' %{'mim': mim_file}).read().decode('UTF-8')
+            mim_file_contents = open(
+                '/usr/share/m17n/%(mim)s' %{'mim': mim_file},
+                mode = 'r',
+                encoding = 'UTF-8',
+                errors = 'ignore'
+            ).read()
         except:
             import traceback
             traceback.print_exc()
