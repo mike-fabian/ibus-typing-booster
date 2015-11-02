@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 02 Nov 2015 Released 1.2.15 version
+* Use open() instead of codecs.open() to make the input method help button work again (Resolves: rhbz#1276992)
+* Fix some pylint warnings
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 11 Oct 2015 Released 1.2.14 version
 * Add Catalan translations, thanks to Robert Antoni Buj Gelonch <rbuj@fedoraproject.org> (Resolves: rhbz#1268153)
 * Add Catalan engine
