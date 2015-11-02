@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-typing-booster 1.2.14\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2015-10-11 21:00+0200\n"
+"POT-Creation-Date: 2015-11-02 14:16+0900\n"
 "PO-Revision-Date: 2015-10-11 20:54+0200\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
 "Language-Team: Catalan\n"
@@ -23,16 +23,16 @@ msgstr "Preferències"
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Preferències per a l'ibus-typing-booster “%(name)s”"
 
-#: setup/main.py:89
+#: setup/main.py:103
 #, python-format
 msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
 msgstr "Format desconegut del nom del motor: IBUS_ENGINE_NAME=%(name)s"
 
-#: setup/main.py:94
+#: setup/main.py:108
 msgid "IBUS_ENGINE_NAME environment variable is not set."
 msgstr "La variable d'entorn IBUS_ENGINE_NAME no està establerta."
 
-#: setup/main.py:98
+#: setup/main.py:112
 msgid ""
 "Cannot determine the config file for this engine. Please use the --config-"
 "file option."
@@ -40,43 +40,43 @@ msgstr ""
 "No es pot determinar cap fitxer de configuració per a aquest motor. Si us "
 "plau, utilitzeu l'opció --config-file."
 
-#: setup/main.py:105
+#: setup/main.py:121
 #, python-format
 msgid "Config file %(file)s does not exist."
 msgstr "El fitxer de configuració %(file)s no existeix."
 
-#: setup/main.py:117
+#: setup/main.py:136
 msgid "ibus is not running."
 msgstr "ibus no s'està executant."
 
-#: setup/main.py:123
+#: setup/main.py:143
 #, python-format
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Preferències per a l'ibus-typing-booster \"%(symbol)s\""
 
-#: setup/main.py:211
+#: setup/main.py:262
 msgid "Another instance of this app is already running."
 msgstr "Ja s'està executant una altra instància d'aquesta aplicació."
 
-#: setup/main.py:295
+#: setup/main.py:357
 msgid "Open File ..."
 msgstr "Obre el fitxer..."
 
-#: setup/main.py:312
+#: setup/main.py:375
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "S'ha après correctament del fitxer %(filename)s."
 
-#: setup/main.py:319
+#: setup/main.py:384
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Ha fallat l'aprenentatge del fitxer %(filename)s."
 
-#: setup/main.py:327
+#: setup/main.py:393
 msgid "Are you sure?"
 msgstr "Esteu segur?"
 
-#: setup/main.py:334
+#: setup/main.py:400
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
