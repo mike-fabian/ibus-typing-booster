@@ -28,16 +28,10 @@ import unicodedata
 import re
 from gi.repository import IBus
 from gi.repository import GLib
+from m17n_translit import Transliterator
 import itb_util
 
 debug_level = int(0)
-
-try:
-    from gi.repository import Translit
-    Transliterator = Translit.Transliterator
-except:
-    import traceback
-    traceback.print_exc()
 
 from gettext import dgettext
 _  = lambda a : dgettext ("ibus-typing-booster", a)
@@ -102,9 +96,9 @@ class editor(object):
             self._min_char_complete = 1 # minimum
         if self._min_char_complete > 9:
             self._min_char_complete = 9 # maximum
-        self._typed_string = u''
+        self._typed_string = []
         self._typed_string_cursor = 0
-        self._typed_string_when_update_candidates_was_last_called = u''
+        self._typed_string_when_update_candidates_was_last_called = []
         self._transliterated_string = u''
         self._p_phrase = u''
         self._pp_phrase = u''
@@ -147,10 +141,11 @@ class editor(object):
             try:
                 if debug_level > 1:
                     sys.stderr.write(
-                        "calling Transliterator.get(%(m17n)s, %(cur)s)\n"
-                        %{'m17n': self._m17ndb, 'cur': self._current_ime})
-                self.trans = Transliterator.get(self._m17ndb, self._current_ime)
-            except:
+                        "calling Transliterator(%(cur)s)\n"
+                        %{'cur': self._current_ime})
+                self.trans = Transliterator(self._current_ime)
+            except ValueError as e:
+                sys.stderr.write('Error initializing Transliterator: %s' %e)
                 import traceback
                 traceback.print_exc()
 
@@ -162,15 +157,15 @@ class editor(object):
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
         self._candidates = []
-        self._typed_string = u''
+        self._typed_string = []
         self._typed_string_cursor = 0
-        self._typed_string_when_update_candidates_was_last_called = u''
+        self._typed_string_when_update_candidates_was_last_called = []
         self._transliterated_string = u''
 
     def update_transliterated_string(self):
         if self.trans_m17n_mode:
             self._transliterated_string = self.trans.transliterate(
-                self._typed_string)[0]
+                self._typed_string)
             if type(self._transliterated_string) != type(u''):
                 self._transliterated_string = (
                     self._transliterated_string.decode('UTF-8'))
@@ -178,22 +173,15 @@ class editor(object):
                 self._transliterated_string = unicodedata.normalize(
                     'NFKD', self._transliterated_string)
         else:
-            self._transliterated_string = self._typed_string
+            self._transliterated_string = u''.join.self._typed_string
         if debug_level > 1:
             sys.stderr.write(
                 "update_transliterated_string() self._typed_string=%s\n"
-                %self._typed_string.encode('UTF-8'))
-            sys.stderr.write(
-                "update_transliterated_string() repr(self._typed_string)=%s\n"
-                %repr(self._typed_string))
+                %self._typed_string)
             sys.stderr.write(
                 "update_transliterated_string() "
                 + "self._transliterated_string=%s\n"
-                %self._transliterated_string.encode('UTF-8'))
-            sys.stderr.write(
-                "update_transliterated_string() "
-                + "repr(self._transliterated_string)=%s\n"
-                %repr(self._transliterated_string))
+                %self._transliterated_string)
 
     def get_transliterated_string(self):
         return self._transliterated_string
@@ -202,10 +190,10 @@ class editor(object):
         '''Insert typed string at cursor position'''
         if debug_level > 1:
             sys.stderr.write("insert_string_at_cursor() string_to_insert=%s\n"
-                             %string_to_insert.encode('UTF-8'))
+                             %string_to_insert)
             sys.stderr.write("insert_string_at_cursor() "
                              + "self._typed_string=%s\n"
-                             %self._typed_string.encode('UTF-8'))
+                             %self._typed_string)
             sys.stderr.write("insert_string_at_cursor() "
                              + "self._typed_string_cursor=%s\n"
                              %self._typed_string_cursor)
@@ -258,7 +246,7 @@ class editor(object):
         position can only be approximated from the cursor position in
         the typed string.
 
-        For example, if the type string is “gru"n” and the
+        For example, if the typed string is “gru"n” and the
         transliteration method used is “Latin Postfix”, this
         transliterates to “grün”. Now if the cursor position in the
         typed string is “3”, then the cursor is between the “u”
@@ -293,13 +281,13 @@ class editor(object):
         '''
         if self.trans_m17n_mode:
             transliterated_string_up_to_cursor = self.trans.transliterate(
-                self._typed_string[:self._typed_string_cursor])[0]
+                self._typed_string[:self._typed_string_cursor])
             if type(transliterated_string_up_to_cursor) != type(u''):
                 transliterated_string_up_to_cursor = (
                     transliterated_string_up_to_cursor.decode('UTF-8'))
         else:
             transliterated_string_up_to_cursor = (
-                self._typed_string[:self._typed_string_cursor])
+                u''.join(self._typed_string[:self._typed_string_cursor]))
         if self._current_ime in ['ko-romaja', 'ko-han2']:
             transliterated_string_up_to_cursor = unicodedata.normalize(
                 'NFKD', transliterated_string_up_to_cursor)
@@ -366,7 +354,7 @@ class editor(object):
         '''Update lookuptable'''
         if debug_level > 1:
             sys.stderr.write("update_candidates() self._typed_string=%s\n"
-                             %self._typed_string.encode('UTF-8'))
+                             %self._typed_string)
         if (self._typed_string
             == self._typed_string_when_update_candidates_was_last_called):
             # The input did not change since we came here last, do
@@ -517,7 +505,7 @@ class editor(object):
             # the remembered list of transliterated characters to
             # force update_candidates() to really do something and not
             # return immediately:
-            self._typed_string_when_update_candidates_was_last_called = u''
+            self._typed_string_when_update_candidates_was_last_called = []
             self.update_candidates()
             return True
         else:
@@ -966,7 +954,7 @@ class tabengine (IBus.Engine):
                 token = match.group('token')
                 self.delete_surrounding_text(-1-len(token), 1+len(token))
                 self.get_context()
-                self._editor.insert_string_at_cursor(token)
+                self._editor.insert_string_at_cursor(list(token))
                 self._update_ui()
                 return True
             if (key.val >= 32
@@ -999,7 +987,7 @@ class tabengine (IBus.Engine):
                     # therefore we cannot just pass it through. Just
                     # add it to the input so far and see what comes
                     # next:
-                    self._editor.insert_string_at_cursor(typed_character)
+                    self._editor.insert_string_at_cursor(list(typed_character))
                     self._update_ui()
                     return True
                 if (typed_character
@@ -1014,7 +1002,7 @@ class tabengine (IBus.Engine):
                     # want “3” to be converted to “३”. So we try
                     # to transliterate and commit the result:
                     transliterated_digit = self._editor.trans.transliterate(
-                        typed_character)[0]
+                        list(typed_character))
                     if type(transliterated_digit) != type(u''):
                         transliterated_digit = (
                             transliterated_digit.decode('utf8'))
@@ -1216,7 +1204,7 @@ class tabengine (IBus.Engine):
                 sys.stderr.write(
                     "MOD5_MASK=%(bit)s\n"
                     %{'bit': key.state & IBus.ModifierType.MOD5_MASK})
-            self._editor.insert_string_at_cursor(typed_character)
+            self._editor.insert_string_at_cursor(list(typed_character))
             if (typed_character
                 and unicodedata.category(typed_character)
                 in itb_util.categories_to_trigger_immediate_commit):
