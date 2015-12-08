@@ -889,8 +889,6 @@ class tabengine (IBus.Engine):
                 %{'kval': key.val,
                   'key.code': key.code,
                   'uc': IBus.keyval_to_unicode(key.code)})
-        # ignore NumLock mask
-        key.state &= ~IBus.ModifierType.MOD2_MASK
 
         result = self._process_key_event (key)
         return result
