@@ -1139,6 +1139,7 @@ class tabengine (IBus.Engine):
                     return True
             return True
 
+        # These keys may trigger a commit:
         if key.val in (IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_space,
                        IBus.KEY_Right, IBus.KEY_KP_Right,
                        IBus.KEY_Left, IBus.KEY_KP_Left):
@@ -1229,6 +1230,14 @@ class tabengine (IBus.Engine):
             self._update_ui()
             return True
 
+        # What kind of key was this??
+        #
+        #     keychar = IBus.keyval_to_unicode(key.val)
+        #
+        # returned no result. And apparently it was not handled as
+        # a select key or other special key either.
+        # So whatever this was, we cannot handle it,
+        # just pass it through to the application by returning “False”.
         return False
 
     def do_focus_in (self):
