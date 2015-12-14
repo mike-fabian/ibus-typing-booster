@@ -1184,7 +1184,19 @@ class tabengine (IBus.Engine):
                 # as the committed string has characters:
                 for c in commit_string:
                     self.forward_key_event(key.val, key.code, key.state)
-            return False
+            # Forward the key event which triggered the commit here
+            # and return True instead of trying to pass that key event
+            # to the application by returning False. Doing it by
+            # returning false works correctly in GTK applications but
+            # not in Qt or X11 applications. When “return False” is
+            # used, the key event which triggered the commit here
+            # arrives in Qt or X11 *before* the committed
+            # string. I.e. when typing “word ” the space which
+            # triggered the commit gets to application first and the
+            # applications receives “ word”.
+            # See: https://bugzilla.redhat.com/show_bug.cgi?id=1291238
+            self.forward_key_event(key.val, key.code, key.state)
+            return True
 
         # We pass all other hotkeys through:
         if key.state & IBus.ModifierType.CONTROL_MASK:
