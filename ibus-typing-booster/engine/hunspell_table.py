@@ -878,17 +878,18 @@ class tabengine (IBus.Engine):
         if debug_level > 1:
             sys.stderr.write(
                 "do_process_key_event(keyval=%(kv)s, "
+                %{'kv': keyval}
                 + "keycode=%(kc)s, state=%(st)s)\n"
-                %{'kv': keyval, 'kc': keycode, 'st': state})
+                %{'kc': keycode, 'st': state})
         key = KeyEvent(keyval, keycode, state)
         if debug_level > 1:
             sys.stderr.write(
                 "process_key_event() after KeyEvent() "
-                + "key.val=%(kval)s "
-                + "IBus.keyval_to_unicode(%(key.code)s)=%(uc)s\n"
-                %{'kval': key.val,
-                  'key.code': key.code,
-                  'uc': IBus.keyval_to_unicode(key.code)})
+                + "key.code=%(key.code)s "
+                %{'key.code': key.code}
+                + "IBus.keyval_to_unicode(%(key.val)s)='%(uc)s'\n"
+                %{'key.val': key.val,
+                  'uc': IBus.keyval_to_unicode(key.val)})
 
         result = self._process_key_event (key)
         return result
@@ -912,9 +913,9 @@ class tabengine (IBus.Engine):
                     "_process_key_event() self._editor.is_empty ():\n")
                 sys.stderr.write(
                     "key.val=%(key.val)s "
-                    + "IBus.keyval_to_unicode(key.val)=%(keychar)s\n"
-                    %{'key.val': key.val,
-                      'keychar': IBus.keyval_to_unicode(key.val)})
+                    %{'key.val': key.val}
+                    + "IBus.keyval_to_unicode(key.val)='%(keychar)s'\n"
+                    %{'keychar': IBus.keyval_to_unicode(key.val)})
                 sys.stderr.write(
                     "IBus.keyval_name(key.val)=%s\n"
                     %IBus.keyval_name(key.val))
