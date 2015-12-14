@@ -879,6 +879,15 @@ class tabengine (IBus.Engine):
                 + "IBus.keyval_to_unicode(%(key.val)s)='%(uc)s'\n"
                 %{'key.val': key.val,
                   'uc': IBus.keyval_to_unicode(key.val)})
+            sys.stderr.write(
+                "CONTROL_MASK=%(bit)s\n"
+                %{'bit': key.state & IBus.ModifierType.CONTROL_MASK})
+            sys.stderr.write(
+                "MOD1_MASK=%(bit)s\n"
+                %{'bit': key.state & IBus.ModifierType.MOD1_MASK})
+            sys.stderr.write(
+                "MOD5_MASK=%(bit)s\n"
+                %{'bit': key.state & IBus.ModifierType.MOD5_MASK})
 
         result = self._process_key_event (key)
         return result
@@ -1209,10 +1218,6 @@ class tabengine (IBus.Engine):
             typed_character = IBus.keyval_to_unicode(key.val)
             if type(typed_character) != type(u''):
                 typed_character = typed_character.decode('UTF-8')
-            if debug_level > 1:
-                sys.stderr.write(
-                    "MOD5_MASK=%(bit)s\n"
-                    %{'bit': key.state & IBus.ModifierType.MOD5_MASK})
             self._editor.insert_string_at_cursor(list(typed_character))
             if (typed_character
                 and unicodedata.category(typed_character)
