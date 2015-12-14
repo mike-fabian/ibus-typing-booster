@@ -466,8 +466,9 @@ class editor(object):
             return u''
         return self._candidates[index][0]
 
-    def alt_number (self, index):
-        '''Remove the phrase selected with Alt+Number from the user database.
+    def remove_candidate_from_user_database (self, index):
+        '''Remove the candidate shown at index in the candidate list
+        from the user database.
 
         The index parameter should start from 0.
 
@@ -487,7 +488,7 @@ class editor(object):
         system phrase from the user database resets its user frequency
         to 0 again.
 
-        So the user can always type Alt+Number on a phrase he does not
+        So the user can always try to delete a phrase if he does not
         want the phrase to be suggested wich such a high priority, no
         matter whether it is a system phrase or a user defined phrase.
         '''
@@ -1087,30 +1088,31 @@ class tabengine (IBus.Engine):
             self._update_ui()
             return True
 
-        if (key.val >= IBus.KEY_1
-            and key.val <= IBus.KEY_9
-            and self._editor.get_candidates()
-            and key.state & IBus.ModifierType.CONTROL_MASK):
-            res = self._editor.alt_number (key.val - IBus.KEY_1)
-            self._update_ui ()
-            return res
-
-        if (key.val >= IBus.KEY_1
-            and key.val <= IBus.KEY_9
-            and self._editor.get_candidates()
-            and key.state & IBus.ModifierType.MOD1_MASK):
-            res = self._editor.alt_number (key.val - IBus.KEY_1)
-            self._update_ui ()
-            return res
-
-        if (key.val >= IBus.KEY_1
-            and key.val <= IBus.KEY_9
-            and self._editor.get_candidates()):
-            phrase = self._editor.get_string_from_lookup_table_current_page(
-                key.val - IBus.KEY_1)
-            if phrase:
-                self.commit_string(phrase + u' ')
-            return True
+        # Commit or remove a candidate:
+        if self._editor.get_candidates():
+            index = -1
+            if key.val >= IBus.KEY_1 and key.val <= IBus.KEY_9:
+                index = key.val - IBus.KEY_1
+            if key.val >= IBus.KEY_KP_1 and key.val <= IBus.KEY_KP_9:
+                index = key.val - IBus.KEY_KP_1
+            if key.val >= IBus.KEY_F1 and key.val <= IBus.KEY_F9:
+                index = key.val - IBus.KEY_F1
+            if index >= 0 and index < self._page_size:
+                if (key.state & IBus.ModifierType.CONTROL_MASK
+                    or key.state & IBus.ModifierType.MOD1_MASK):
+                    # Remove the candidate from the user database
+                    res = self._editor.remove_candidate_from_user_database(
+                        index)
+                    self._update_ui()
+                    return res
+                else:
+                    # Commit a candidate:
+                    phrase = (
+                        self._editor.get_string_from_lookup_table_current_page(
+                            index))
+                    if phrase:
+                        self.commit_string(phrase + u' ')
+                    return True
 
         if key.val == IBus.KEY_Tab:
             if self._tab_enable:
