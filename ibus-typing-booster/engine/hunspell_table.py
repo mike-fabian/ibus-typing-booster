@@ -1199,12 +1199,6 @@ class tabengine (IBus.Engine):
             self.forward_key_event(key.val, key.code, key.state)
             return True
 
-        # We pass all other hotkeys through:
-        if key.state & IBus.ModifierType.CONTROL_MASK:
-            return False
-        if key.state & IBus.ModifierType.MOD1_MASK:
-            return False
-
         if IBus.keyval_to_unicode(key.val):
             if self._editor.is_empty():
                 # first key typed, we will try to complete something now
