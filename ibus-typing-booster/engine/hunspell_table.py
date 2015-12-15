@@ -73,9 +73,34 @@ class KeyEvent:
         self.val = keyval
         self.code = keycode
         self.state = state
+        self.name = IBus.keyval_name(self.val)
+        self.unicode = IBus.keyval_to_unicode(self.val)
+        self.msymbol = self.unicode
+        self.control = 0 != self.state & IBus.ModifierType.CONTROL_MASK
+        self.mod1 = 0 != self.state & IBus.ModifierType.MOD1_MASK
+        self.mod5 = 0 != self.state & IBus.ModifierType.MOD5_MASK
+        self.release = 0 != self.state & IBus.ModifierType.RELEASE_MASK
+        if itb_util.is_ascii(self.msymbol):
+            if self.control:
+                self.msymbol = 'C-' + self.msymbol
+            if self.mod1:
+                self.msymbol = 'A-' + self.msymbol
+            if self.mod5:
+                self.msymbol = 'G-' + self.msymbol
     def __str__(self):
-        return "%s 0x%08x" % (IBus.keyval_name(self.val), self.state)
-
+        return (
+            "val=%s code=%s state=0x%08x name='%s' unicode='%s' msymbol='%s' "
+            % (self.val,
+               self.code,
+               self.state,
+               self.name,
+               self.unicode,
+               self.msymbol)
+            + "control=%s mod1=%s mod5=%s release=%s\n"
+            % (self.control,
+               self.mod1,
+               self.mod5,
+               self.release))
 
 class editor(object):
     '''Hold user inputs chars and preedit string'''
@@ -846,30 +871,11 @@ class tabengine (IBus.Engine):
             and self._input_purpose
             in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN]):
             return False
-        if debug_level > 1:
-            sys.stderr.write(
-                "do_process_key_event(keyval=%(kv)s, "
-                %{'kv': keyval}
-                + "keycode=%(kc)s, state=%(st)s)\n"
-                %{'kc': keycode, 'st': state})
         key = KeyEvent(keyval, keycode, state)
         if debug_level > 1:
             sys.stderr.write(
-                "process_key_event() after KeyEvent() "
-                + "key.code=%(key.code)s "
-                %{'key.code': key.code}
-                + "IBus.keyval_to_unicode(%(key.val)s)='%(uc)s'\n"
-                %{'key.val': key.val,
-                  'uc': IBus.keyval_to_unicode(key.val)})
-            sys.stderr.write(
-                "CONTROL_MASK=%(bit)s\n"
-                %{'bit': key.state & IBus.ModifierType.CONTROL_MASK})
-            sys.stderr.write(
-                "MOD1_MASK=%(bit)s\n"
-                %{'bit': key.state & IBus.ModifierType.MOD1_MASK})
-            sys.stderr.write(
-                "MOD5_MASK=%(bit)s\n"
-                %{'bit': key.state & IBus.ModifierType.MOD5_MASK})
+                "process_key_event() "
+                "KeyEvent object: %s" % key)
 
         result = self._process_key_event (key)
         return result
@@ -890,15 +896,8 @@ class tabengine (IBus.Engine):
         if self._editor.is_empty ():
             if debug_level > 1:
                 sys.stderr.write(
-                    "_process_key_event() self._editor.is_empty ():\n")
-                sys.stderr.write(
-                    "key.val=%(key.val)s "
-                    %{'key.val': key.val}
-                    + "IBus.keyval_to_unicode(key.val)='%(keychar)s'\n"
-                    %{'keychar': IBus.keyval_to_unicode(key.val)})
-                sys.stderr.write(
-                    "IBus.keyval_name(key.val)=%s\n"
-                    %IBus.keyval_name(key.val))
+                    "_process_key_event() self._editor.is_empty(): "
+                    "KeyEvent object: %s\n" % key)
             # This is the first character typed since the last commit
             # there is nothing in the preëdit yet.
             if key.val < 32:
