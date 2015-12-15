@@ -946,15 +946,13 @@ class tabengine (IBus.Engine):
                 self._editor.insert_string_at_cursor(list(token))
                 self._update_ui()
                 return True
-            if (key.val >= 32
-                and (not (key.state & IBus.ModifierType.CONTROL_MASK))):
-                typed_character = IBus.keyval_to_unicode(key.val)
+            if key.val >= 32 and not key.control:
                 # If the first character typed is a character which is
                 # very unlikely to be part of a word
                 # (e.g. punctuation, a symbol, ..), we might want to
                 # avoid completion and commit something immediately:
-                if (typed_character
-                    and unicodedata.category(typed_character)
+                if (len(key.msymbol) == 1
+                    and unicodedata.category(key.msymbol)
                     in itb_util.categories_to_trigger_immediate_commit):
                     if not self._editor.trans_m17n_mode:
                         # Do not just pass the character through,
@@ -963,7 +961,7 @@ class tabengine (IBus.Engine):
                         # between the “.” and the previous word and this is
                         # done in commit_string().
                         self.commit_string(
-                            typed_character, input_phrase = typed_character)
+                            key.msymbol, input_phrase = key.msymbol)
                         return True
                     # If transliteration is used, we may need to
                     # handle a punctuation or symbol character. For
@@ -972,11 +970,11 @@ class tabengine (IBus.Engine):
                     # therefore we cannot just pass it through. Just
                     # add it to the input so far and see what comes
                     # next:
-                    self._editor.insert_string_at_cursor(list(typed_character))
+                    self._editor.insert_string_at_cursor([key.msymbol])
                     self._update_ui()
                     return True
                 if (self._use_digits_as_select_keys
-                    and typed_character
+                    and key.msymbol
                     in ('1', '2', '3', '4', '5', '6', '7', '8', '9')):
                     # If digits are used as keys to select candidates
                     # it is not possibly to type them while the preëdit
@@ -995,7 +993,7 @@ class tabengine (IBus.Engine):
                     # want “3” to be converted to “३”. So we try
                     # to transliterate and commit the result:
                     transliterated_digit = self._editor.trans.transliterate(
-                        list(typed_character))
+                        [key.msymbol])
                     self.commit_string(
                         transliterated_digit, input_phrase=transliterated_digit)
                     return True
@@ -1033,8 +1031,7 @@ class tabengine (IBus.Engine):
             self._update_ui ()
             return res
 
-        if (key.val == IBus.KEY_BackSpace
-            and key.state & IBus.ModifierType.CONTROL_MASK):
+        if key.val == IBus.KEY_BackSpace and key.control:
             if self._editor.is_empty():
                 return False
             self._editor.remove_string_before_cursor()
@@ -1048,8 +1045,7 @@ class tabengine (IBus.Engine):
             self._update_ui()
             return True
 
-        if (key.val == IBus.KEY_Delete
-            and key.state & IBus.ModifierType.CONTROL_MASK):
+        if key.val == IBus.KEY_Delete and key.control:
             if self._editor.is_empty():
                 return False
             self._editor.remove_string_after_cursor()
@@ -1063,8 +1059,16 @@ class tabengine (IBus.Engine):
             self._update_ui()
             return True
 
-        # Commit or remove a candidate:
-        if self._editor.get_candidates():
+        # Select a candidate to commit or remove:
+        if self._editor.get_candidates() and not key.mod1 and not key.mod5:
+            # key.mod1 (= Alt) and key.mod5 (= AltGr) should not be set
+            # here because:
+            #
+            # - in case of the digits these are used for input, not to select
+            #   (e.g. mr-inscript2 transliterates AltGr-4 to “₹”)
+            #
+            # - in case of the F1-F9 keys I want to reserve the Alt and AltGr
+            #   modifiers for possible future extensions.
             index = -1
             if self._use_digits_as_select_keys:
                 if key.val >= IBus.KEY_1 and key.val <= IBus.KEY_9:
@@ -1074,7 +1078,7 @@ class tabengine (IBus.Engine):
             if key.val >= IBus.KEY_F1 and key.val <= IBus.KEY_F9:
                 index = key.val - IBus.KEY_F1
             if index >= 0 and index < self._page_size:
-                if (key.state & IBus.ModifierType.CONTROL_MASK):
+                if key.control:
                     # Remove the candidate from the user database
                     res = self._editor.remove_candidate_from_user_database(
                         index)
@@ -1125,7 +1129,7 @@ class tabengine (IBus.Engine):
             if (key.val in (IBus.KEY_Right, IBus.KEY_KP_Right)
                 and (self._editor._typed_string_cursor
                      < len(self._editor._typed_string))):
-                if key.state & IBus.ModifierType.CONTROL_MASK:
+                if key.control:
                     # Move cursor to the end of the typed string
                     self._editor._typed_string_cursor = len(
                         self._editor._typed_string)
@@ -1135,7 +1139,7 @@ class tabengine (IBus.Engine):
                 return True
             if (key.val in (IBus.KEY_Left, IBus.KEY_KP_Left)
                 and self._editor._typed_string_cursor > 0):
-                if key.state & IBus.ModifierType.CONTROL_MASK:
+                if key.control:
                     # Move cursor to the beginning of the typed string
                     self._editor._typed_string_cursor = 0
                 else:
@@ -1190,19 +1194,18 @@ class tabengine (IBus.Engine):
             self.forward_key_event(key.val, key.code, key.state)
             return True
 
-        if IBus.keyval_to_unicode(key.val):
+        if key.unicode:
             if self._editor.is_empty():
                 # first key typed, we will try to complete something now
                 # get the context if possible
                 self.get_context()
-            typed_character = IBus.keyval_to_unicode(key.val)
-            self._editor.insert_string_at_cursor(list(typed_character))
-            if (typed_character
-                and unicodedata.category(typed_character)
+            self._editor.insert_string_at_cursor([key.msymbol])
+            if (len(key.msymbol) == 1
+                and unicodedata.category(key.msymbol)
                 in itb_util.categories_to_trigger_immediate_commit):
                 input_phrase = self._editor.get_transliterated_string()
                 if (input_phrase
-                    and input_phrase[-1] == typed_character
+                    and input_phrase[-1] == key.msymbol
                     and not self._editor.trans_m17n_mode):
                     self.commit_string(
                         input_phrase + u' ', input_phrase = input_phrase)
@@ -1211,12 +1214,11 @@ class tabengine (IBus.Engine):
 
         # What kind of key was this??
         #
-        #     keychar = IBus.keyval_to_unicode(key.val)
-        #
-        # returned no result. And apparently it was not handled as
-        # a select key or other special key either.
-        # So whatever this was, we cannot handle it,
-        # just pass it through to the application by returning “False”.
+        # The unicode character for this key is apparently the empty
+        # string.  And apparently it was not handled as a select key
+        # or other special key either.  So whatever this was, we
+        # cannot handle it, just pass it through to the application by
+        # returning “False”.
         return False
 
     def do_focus_in (self):
