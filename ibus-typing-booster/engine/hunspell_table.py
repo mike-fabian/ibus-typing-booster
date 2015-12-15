@@ -295,18 +295,6 @@ class editor(object):
             'NFC', transliterated_string_up_to_cursor)
         return len(transliterated_string_up_to_cursor)
 
-    def control_arrow_left (self):
-        '''
-        Move cursor to the beginning of the typed string
-        '''
-        self._typed_string_cursor = 0
-
-    def control_arrow_right (self):
-        '''
-        Move cursor to the end of the typed string
-        '''
-        self._typed_string_cursor = len(self._typed_string)
-
     def append_candidate_to_lookup_table(self, phrase=u'', user_freq=0):
         '''append candidate to lookup_table'''
         if not phrase:
@@ -1050,22 +1038,6 @@ class tabengine (IBus.Engine):
             self._update_ui ()
             return res
 
-        if (key.val in (IBus.KEY_Left, IBus.KEY_KP_Left)
-            and key.state & IBus.ModifierType.CONTROL_MASK):
-            if self._editor.is_empty():
-                return False
-            self._editor.control_arrow_left()
-            self._update_ui()
-            return True
-
-        if (key.val in (IBus.KEY_Right, IBus.KEY_KP_Right)
-            and key.state & IBus.ModifierType.CONTROL_MASK):
-            if self._editor.is_empty():
-                return False
-            self._editor.control_arrow_right()
-            self._update_ui()
-            return True
-
         if (key.val == IBus.KEY_BackSpace
             and key.state & IBus.ModifierType.CONTROL_MASK):
             if self._editor.is_empty():
@@ -1155,17 +1127,26 @@ class tabengine (IBus.Engine):
                        IBus.KEY_Left, IBus.KEY_KP_Left):
             if self._editor.is_empty():
                 return False
-            if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right):
-                if (self._editor._typed_string_cursor
-                    < len(self._editor._typed_string)):
+            if (key.val in (IBus.KEY_Right, IBus.KEY_KP_Right)
+                and (self._editor._typed_string_cursor
+                     < len(self._editor._typed_string))):
+                if key.state & IBus.ModifierType.CONTROL_MASK:
+                    # Move cursor to the end of the typed string
+                    self._editor._typed_string_cursor = len(
+                        self._editor._typed_string)
+                else:
                     self._editor._typed_string_cursor += 1
-                    self._update_ui()
-                    return True
-            if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left):
-                if self._editor._typed_string_cursor > 0:
+                self._update_ui()
+                return True
+            if (key.val in (IBus.KEY_Left, IBus.KEY_KP_Left)
+                and self._editor._typed_string_cursor > 0):
+                if key.state & IBus.ModifierType.CONTROL_MASK:
+                    # Move cursor to the beginning of the typed string
+                    self._editor._typed_string_cursor = 0
+                else:
                     self._editor._typed_string_cursor -= 1
-                    self._update_ui()
-                    return True
+                self._update_ui()
+                return True
             input_phrase = self._editor.get_transliterated_string()
             if not input_phrase:
                 return False
@@ -1187,14 +1168,19 @@ class tabengine (IBus.Engine):
             if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left):
                 # After committing, the cursor is at the right side of
                 # the committed string. When the string has been
-                # committed because of arrow-left, the cursor has
-                # to be moved to the left side of the string. This
-                # should be done in a way which works even when
-                # surrounding text is not supported. We can do it by
-                # forwarding as many arrow-left events to the application
-                # as the committed string has characters:
+                # committed because of arrow-left or
+                # control-arrow-left, the cursor has to be moved to
+                # the left side of the string. This should be done in
+                # a way which works even when surrounding text is not
+                # supported. We can do it by forwarding as many
+                # arrow-left events to the application as the
+                # committed string has characters. Because it might
+                # have been control-arrow-left, we need to clear the
+                # CONTROL_MASK:
                 for c in commit_string:
-                    self.forward_key_event(key.val, key.code, key.state)
+                    self.forward_key_event(
+                        key.val, key.code,
+                        key.state & ~IBus.ModifierType.CONTROL_MASK)
             # Forward the key event which triggered the commit here
             # and return True instead of trying to pass that key event
             # to the application by returning False. Doing it by
