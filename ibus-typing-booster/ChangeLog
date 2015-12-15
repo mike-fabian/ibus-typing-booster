@@ -1,4 +1,15 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 15 Dez 2015 Released 1.3.0 version
+* Use libm17n directly instead of going through libtranslit
+* Forward key events triggering a commit using “forward_key_event()” instead of relying on “return False” (Resolves: rhbz#1291238)
+* Add code to use F1-F9 as well as keys to select candidates for commit or remove
+* Don’t commit invisible candidates with select keys with numbers greater than the length of a page of the candidate list
+* Control-arrow-left and Control-arrow-right now commit when the edges of the preëdit string are reached
+* Alt-<number> does not delete a prediction anymore, now only Control-<number> does this
+* Add an option to disable the use of the digits 1-9 as selection keys (useful if one wants easier number input, selection then works only with the F1-F9 keys)
+* Support input methods using AltGr (e.g. mr-inscript2) and Alt keys (e.g. ta-lk-renganathan) (Resolves: rhbz#1051405, rhbz#772665)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 02 Nov 2015 Released 1.2.15 version
 * Use open() instead of codecs.open() to make the input method help button work again (Resolves: rhbz#1276992)
 * Fix some pylint warnings
