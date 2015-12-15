@@ -941,9 +941,7 @@ class tabengine (IBus.Engine):
                 self._update_ui()
                 return True
             if (key.val >= 32
-                and (not (key.state & (
-                    IBus.ModifierType.MOD1_MASK
-                    | IBus.ModifierType.CONTROL_MASK)))):
+                and (not (key.state & IBus.ModifierType.CONTROL_MASK))):
                 typed_character = IBus.keyval_to_unicode(key.val)
                 # If the first character typed is a character which is
                 # very unlikely to be part of a word
@@ -1061,8 +1059,7 @@ class tabengine (IBus.Engine):
             if key.val >= IBus.KEY_F1 and key.val <= IBus.KEY_F9:
                 index = key.val - IBus.KEY_F1
             if index >= 0 and index < self._page_size:
-                if (key.state & IBus.ModifierType.CONTROL_MASK
-                    or key.state & IBus.ModifierType.MOD1_MASK):
+                if (key.state & IBus.ModifierType.CONTROL_MASK):
                     # Remove the candidate from the user database
                     res = self._editor.remove_candidate_from_user_database(
                         index)
