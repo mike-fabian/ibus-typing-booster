@@ -3,7 +3,7 @@
 #
 # ibus-typing-booster - The Tables engine for IBus
 #
-# Copyright (c) 2013 Mike FABIAN <mfabian@redhat.com>
+# Copyright (c) 2013-2015 Mike FABIAN <mfabian@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -65,3 +65,30 @@ def tokenize(text):
         tokens.append(strip_token(s))
     return tokens
 
+def is_ascii(text):
+    '''Checks whether all characters in text are ASCII characters
+
+    Returns “True” if the text is all ASCII, “False” if not.
+
+    :param text: The text to check
+    :type text: string
+    :rtype: bool
+
+    Examples:
+
+    >>> is_ascii('Abc')
+    True
+
+    >>> is_ascii('Naïve')
+    False
+    '''
+    try:
+        text.encode('ascii')
+    except UnicodeEncodeError:
+        return False
+    else:
+        return True
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
