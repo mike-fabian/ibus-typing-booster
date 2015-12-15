@@ -166,9 +166,6 @@ class editor(object):
         if self.trans_m17n_mode:
             self._transliterated_string = self.trans.transliterate(
                 self._typed_string)
-            if type(self._transliterated_string) != type(u''):
-                self._transliterated_string = (
-                    self._transliterated_string.decode('UTF-8'))
             if self._current_ime in ['ko-romaja', 'ko-han2']:
                 self._transliterated_string = unicodedata.normalize(
                     'NFKD', self._transliterated_string)
@@ -282,9 +279,6 @@ class editor(object):
         if self.trans_m17n_mode:
             transliterated_string_up_to_cursor = self.trans.transliterate(
                 self._typed_string[:self._typed_string_cursor])
-            if type(transliterated_string_up_to_cursor) != type(u''):
-                transliterated_string_up_to_cursor = (
-                    transliterated_string_up_to_cursor.decode('UTF-8'))
         else:
             transliterated_string_up_to_cursor = (
                 u''.join(self._typed_string[:self._typed_string_cursor]))
@@ -781,8 +775,6 @@ class tabengine (IBus.Engine):
             if pattern_sentence_end.search(commit_phrase):
                 surrounding_text = self.get_surrounding_text()
                 text = surrounding_text[0].get_text()
-                if type(text) != type(u''):
-                    text = text.decode('UTF-8')
                 cursor_pos = surrounding_text[1]
                 anchor_pos = surrounding_text[2]
                 # The commit_phrase is *not* yet in the surrounding text,
@@ -816,8 +808,6 @@ class tabengine (IBus.Engine):
             return
         surrounding_text = self.get_surrounding_text()
         text = surrounding_text[0].get_text()
-        if type(text) != type(u''):
-            text = text.decode('UTF-8')
         cursor_pos = surrounding_text[1]
         anchor_pos = surrounding_text[2]
         if not surrounding_text:
@@ -922,8 +912,6 @@ class tabengine (IBus.Engine):
                     return False
                 surrounding_text = self.get_surrounding_text()
                 text = surrounding_text[0].get_text()
-                if type(text) != type(u''):
-                    text = text.decode('UTF-8')
                 cursor_pos = surrounding_text[1]
                 anchor_pos = surrounding_text[2]
                 if not surrounding_text:
@@ -957,8 +945,6 @@ class tabengine (IBus.Engine):
                     IBus.ModifierType.MOD1_MASK
                     | IBus.ModifierType.CONTROL_MASK)))):
                 typed_character = IBus.keyval_to_unicode(key.val)
-                if type(typed_character) != type(u''):
-                    typed_character = typed_character.decode('UTF-8')
                 # If the first character typed is a character which is
                 # very unlikely to be part of a word
                 # (e.g. punctuation, a symbol, ..), we might want to
@@ -998,9 +984,6 @@ class tabengine (IBus.Engine):
                     # to transliterate and commit the result:
                     transliterated_digit = self._editor.trans.transliterate(
                         list(typed_character))
-                    if type(transliterated_digit) != type(u''):
-                        transliterated_digit = (
-                            transliterated_digit.decode('utf8'))
                     self.commit_string(
                         transliterated_digit, input_phrase=transliterated_digit)
                     return True
@@ -1201,8 +1184,6 @@ class tabengine (IBus.Engine):
                 # get the context if possible
                 self.get_context()
             typed_character = IBus.keyval_to_unicode(key.val)
-            if type(typed_character) != type(u''):
-                typed_character = typed_character.decode('UTF-8')
             self._editor.insert_string_at_cursor(list(typed_character))
             if (typed_character
                 and unicodedata.category(typed_character)

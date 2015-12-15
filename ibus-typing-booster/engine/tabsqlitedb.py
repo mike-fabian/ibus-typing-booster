@@ -458,12 +458,6 @@ class tabsqlitedb:
         form of (phrase, user_freq), i.e. returns something like
         [(phrase, user_freq), ...]
         '''
-        if type(input_phrase) != type(u''):
-            input_phrase = input_phrase.decode('utf8')
-        if type(p_phrase) != type(u''):
-            p_phrase = p_phrase.decode('utf8')
-        if type(pp_phrase) != type(u''):
-            pp_phrase = pp_phrase.decode('utf8')
         input_phrase = unicodedata.normalize(
             self._normalization_form_internal, input_phrase)
         p_phrase = unicodedata.normalize(
@@ -726,14 +720,6 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             input_phrase = phrase
         if not phrase:
             return
-        if type(phrase) != type(u''):
-            phrase = phrase.decode('utf8')
-        if type(p_phrase) != type(u''):
-            p_phrase = p_phrase.decode('utf8')
-        if type(pp_phrase) != type(u''):
-            pp_phrase = pp_phrase.decode('utf8')
-        if type(input_phrase) != type(u''):
-            input_phrase = input_phrase.decode('utf8')
         phrase = unicodedata.normalize(
             self._normalization_form_internal, phrase)
         p_phrase = unicodedata.normalize(

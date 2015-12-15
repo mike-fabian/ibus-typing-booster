@@ -149,8 +149,6 @@ class Hunspell:
         # to match words longer than that just wastes time.
         if len(input_phrase) > 40:
             return []
-        if type(input_phrase) != type(u''):
-            input_phrase = input_phrase.decode('utf8')
         if debug_level > 1:
             sys.stderr.write(
                 "Hunspell.suggest() input_phrase=%(ip)s\n"
