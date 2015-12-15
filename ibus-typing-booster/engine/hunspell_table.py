@@ -604,9 +604,6 @@ class tabengine (IBus.Engine):
         self._status = self.db.ime_properties.get(
             'status_prompt').encode('utf8')
 
-        self._page_down_keys = [IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down]
-        self._page_up_keys = [IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up]
-
         self._editor = editor(self._config, self.db)
         self.is_lookup_table_enabled_by_tab = False
         self._tab_enable = variant_to_value(self._config.get_value (
@@ -1041,12 +1038,14 @@ class tabengine (IBus.Engine):
             self._update_ui ()
             return res
 
-        if key.val in self._page_down_keys and self._editor.get_candidates():
+        if (key.val in [IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down]
+            and self._editor.get_candidates()):
             res = self._editor.page_down()
             self._update_ui ()
             return res
 
-        if key.val in self._page_up_keys and self._editor.get_candidates():
+        if (key.val in [IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up]
+            and self._editor.get_candidates()):
             res = self._editor.page_up ()
             self._update_ui ()
             return res
