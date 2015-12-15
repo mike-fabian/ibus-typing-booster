@@ -579,6 +579,13 @@ class tabengine (IBus.Engine):
         if self._show_number_of_candidates == None:
             self._show_number_of_candidates = False
 
+        self._use_digits_as_select_keys = variant_to_value(
+            self._config.get_value(
+                self._config_section,
+                'usedigitsasselectkeys'))
+        if self._use_digits_as_select_keys == None:
+            self._use_digits_as_select_keys = True
+
         self._icon_dir = '%s%s%s%s' % (
             os.getenv('IBUS_HUNSPELL_TABLE_LOCATION'),
             os.path.sep, 'icons', os.path.sep)
@@ -969,8 +976,16 @@ class tabengine (IBus.Engine):
                     self._editor.insert_string_at_cursor(list(typed_character))
                     self._update_ui()
                     return True
-                if (typed_character
-                    and unicodedata.digit(typed_character, -1) != -1):
+                if (self._use_digits_as_select_keys
+                    and typed_character
+                    in ('1', '2', '3', '4', '5', '6', '7', '8', '9')):
+                    # If digits are used as keys to select candidates
+                    # it is not possibly to type them while the preëdit
+                    # is non-empty and candidates are displayed.
+                    # In that case we have to make it possible to
+                    # type digits here where the preëdit is still empty.
+                    # If digits are not used to select candidates, they
+                    # can be treated just like any other input keys.
                     if not self._editor.trans_m17n_mode:
                         # If a digit has been typed and no transliteration
                         # is used, we can pass it through
@@ -1052,10 +1067,11 @@ class tabengine (IBus.Engine):
         # Commit or remove a candidate:
         if self._editor.get_candidates():
             index = -1
-            if key.val >= IBus.KEY_1 and key.val <= IBus.KEY_9:
-                index = key.val - IBus.KEY_1
-            if key.val >= IBus.KEY_KP_1 and key.val <= IBus.KEY_KP_9:
-                index = key.val - IBus.KEY_KP_1
+            if self._use_digits_as_select_keys:
+                if key.val >= IBus.KEY_1 and key.val <= IBus.KEY_9:
+                    index = key.val - IBus.KEY_1
+                if key.val >= IBus.KEY_KP_1 and key.val <= IBus.KEY_KP_9:
+                    index = key.val - IBus.KEY_KP_1
             if key.val >= IBus.KEY_F1 and key.val <= IBus.KEY_F9:
                 index = key.val - IBus.KEY_F1
             if index >= 0 and index < self._page_size:
@@ -1295,6 +1311,13 @@ class tabengine (IBus.Engine):
                 self._show_number_of_candidates = True
             else:
                 self._show_number_of_candidates = False
+            self.reset()
+            return
+        if name == "usedigitsasselectkeys":
+            if value == True:
+                self._use_digits_as_select_keys = True
+            else:
+                self._use_digits_as_select_keys = False
             self.reset()
             return
         if name == "inputmethod":

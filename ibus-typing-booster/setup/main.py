@@ -181,6 +181,17 @@ class SetupUI:
             show_number_of_candidates_checkbox.set_active(True)
         show_number_of_candidates_checkbox.connect(
             'clicked', event_handler.onShowNumberOfCandidatesCheckbox)
+        use_digits_as_select_keys_checkbox = self.builder.get_object(
+            "use_digits_as_select_keys_checkbox")
+        self.use_digits_as_select_keys = self.variant_to_value(
+            self.config.get_value(
+                self.config_section, 'usedigitsasselectkeys'))
+        if self.use_digits_as_select_keys == None:
+            self.use_digits_as_select_keys = True
+        if  self.use_digits_as_select_keys == True:
+            use_digits_as_select_keys_checkbox.set_active(True)
+        use_digits_as_select_keys_checkbox.connect(
+            'clicked', event_handler.onUseDigitsAsSelectKeysCheckbox)
         self.page_size_adjustment = self.builder.get_object(
             "page_size_adjustment")
         self.page_size = self.variant_to_value(self.config.get_value(
@@ -434,6 +445,20 @@ class EventHandler:
             SetupUi.config.set_value(
                 SetupUi.config_section,
                 'shownumberofcandidates',
+                GLib.Variant.new_boolean(False))
+
+    def onUseDigitsAsSelectKeysCheckbox(self, widget):
+        if widget.get_active():
+            SetupUi.use_digits_as_select_keys = True
+            SetupUi.config.set_value(
+                SetupUi.config_section,
+                'usedigitsasselectkeys',
+                GLib.Variant.new_boolean(True))
+        else:
+            SetupUi.use_digits_as_select_keys = False
+            SetupUi.config.set_value(
+                SetupUi.config_section,
+                'usedigitsasselectkeys',
                 GLib.Variant.new_boolean(False))
 
     def onPageSizeAdjustmentValueChanged(self, widget):
