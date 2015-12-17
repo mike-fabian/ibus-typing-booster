@@ -205,6 +205,13 @@ class Transliterator:
     >>> trans.transliterate(['3', 'G-3'])
     '३G-3'
 
+    In mr-inscript2, 'G-1' transliterates to U+200D ZERO WIDTH JOINER
+    ('\xe2\x80\x8d' in UTF-8 encoding):
+
+    >>> trans = Transliterator('mr-inscript2')
+    >>> trans.transliterate(['j', 'd', 'G-1', '/']).encode('utf-8')
+    b'\xe0\xa4\xb0\xe0\xa5\x8d\xe2\x80\x8d\xe0\xa4\xaf'
+
     >>> trans = Transliterator('t-latn-post')
     >>> trans.transliterate(list('gru"n'))
     'grün'
