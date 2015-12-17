@@ -194,7 +194,7 @@ class editor(object):
                 self._transliterated_string = unicodedata.normalize(
                     'NFKD', self._transliterated_string)
         else:
-            self._transliterated_string = u''.join.self._typed_string
+            self._transliterated_string = u''.join(self._typed_string)
         if debug_level > 1:
             sys.stderr.write(
                 "update_transliterated_string() self._typed_string=%s\n"
