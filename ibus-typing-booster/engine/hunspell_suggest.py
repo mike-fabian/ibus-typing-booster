@@ -51,7 +51,7 @@ class Dictionary:
     def __init__(self, name=u'en_US'):
         if debug_level > 1:
             sys.stderr.write(
-                "Dictionary.__init__(name=%s)" %name)
+                "Dictionary.__init__(name=%s)\n" %name)
         self.loc = '/usr/share/myspell'
         self.name = name
         self.encoding = 'UTF-8'

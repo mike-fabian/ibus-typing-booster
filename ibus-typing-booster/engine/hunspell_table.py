@@ -107,7 +107,8 @@ class editor(object):
 
     def __init__ (self, config, database):
         if debug_level > 1:
-            sys.stderr.write("editor __init__()\n")
+            sys.stderr.write("editor __init__(config=%s, database=%s)\n"
+                             %(config, database))
         self.db = database
         self._config = config
         self._name = self.db.ime_properties.get('name')
@@ -165,7 +166,7 @@ class editor(object):
             try:
                 if debug_level > 1:
                     sys.stderr.write(
-                        "calling Transliterator(%(cur)s)\n"
+                        "instantiating Transliterator(%(cur)s)\n"
                         %{'cur': self._current_ime})
                 self.trans = Transliterator(self._current_ime)
             except ValueError as e:
@@ -571,7 +572,9 @@ class tabengine (IBus.Engine):
         except (TypeError, ValueError):
             debug_level = int(0)
         if debug_level > 1:
-            sys.stderr.write("tabengine.__init__() obj_path=%s\n" %obj_path)
+            sys.stderr.write(
+                "tabengine.__init__(bus=%s, obj_path=%s, db=%s)\n"
+                % (bus, obj_path, db))
         super(tabengine, self).__init__(
             connection=bus.get_connection(), object_path=obj_path)
         self._input_purpose = 0

@@ -22,14 +22,26 @@ from gi.repository import IBus
 import hunspell_table
 import tabsqlitedb
 import re
+import os
+import sys
 
 from gettext import dgettext
 _  = lambda a : dgettext ("ibus-typing-booster", a)
 N_ = lambda a : a
 
+debug_level = int(0)
+
 class EngineFactory (IBus.Factory):
     """Table IM Engine Factory"""
     def __init__(self, bus, db="", icon=""):
+        global debug_level
+        try:
+            debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+        except (TypeError, ValueError):
+            debug_level = int(0)
+        if debug_level > 1:
+            sys.stderr.write("EngineFactory.__init__(bus=%s, db=%s, icon=%s)\n"
+                             % (bus, db, icon))
         if db:
             self.db = tabsqlitedb.tabsqlitedb(config_filename=db)
         else:
@@ -43,6 +55,9 @@ class EngineFactory (IBus.Factory):
         self.engine_id = 0
 
     def do_create_engine(self, engine_name):
+        if debug_level > 1:
+            sys.stderr.write("EngineFactory.do_create_engine(engine_name=%s)\n"
+                             % engine_name)
         engine_base_path = "/com/redhat/IBus/engines/table/%s/engine/"
         path_patt = re.compile(r'[^a-zA-Z0-9_/]')
         self.engine_path = engine_base_path % path_patt.sub ('_', engine_name)
@@ -70,6 +85,8 @@ class EngineFactory (IBus.Factory):
 
     def do_destroy (self):
         '''Destructor, which finish some task for IME'''
+        if debug_level > 1:
+            sys.stderr.write("EngineFactory.do_destroy()\n")
         for _db in self.dbdict:
             self.dbdict[_db].sync_usrdb()
         super(EngineFactory, self).destroy()

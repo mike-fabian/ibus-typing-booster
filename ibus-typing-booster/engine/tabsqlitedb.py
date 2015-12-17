@@ -89,7 +89,8 @@ class tabsqlitedb:
         except (TypeError, ValueError):
             debug_level = int(0)
         if debug_level > 1:
-            sys.stderr.write("tabsqlitedb.__init__()")
+            sys.stderr.write("tabsqlitedb.__init__(config_filename=%s)\n"
+                             %config_filename)
         self._phrase_table_column_names = [
             'id',
             'input_phrase',

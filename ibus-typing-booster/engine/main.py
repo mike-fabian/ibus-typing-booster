@@ -27,6 +27,12 @@ from signal import signal, SIGTERM, SIGINT
 import factory
 import tabsqlitedb
 
+debug_level = int(0)
+try:
+    debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+except (TypeError, ValueError):
+    debug_level = int(0)
+
 try:
     config_file_dir = os.path.join(
         os.getenv('IBUS_TYPING_BOOSTER_LOCATION'),
@@ -80,6 +86,10 @@ if options.profile:
 
 class IMApp:
     def __init__(self, dbfile, exec_by_ibus):
+        if debug_level > 1:
+            sys.stderr.write(
+                "IMApp.__init__(dbfile=%s, exec_by_ibus=%s)\n"
+                % (dbfile, exec_by_ibus))
         self.__mainloop = GLib.MainLoop()
         self.__bus = IBus.Bus()
         self.__bus.connect("disconnected", self.__bus_destroy_cb)
@@ -125,15 +135,21 @@ class IMApp:
 
 
     def run(self):
+        if debug_level > 1:
+            sys.stderr.write("IMApp.run()\n")
         if options.profile:
             profile.enable()
         self.__mainloop.run()
         self.__bus_destroy_cb()
 
     def quit(self):
+        if debug_level > 1:
+            sys.stderr.write("IMApp.quit()\n")
         self.__bus_destroy_cb()
 
     def __bus_destroy_cb(self, bus=None):
+        if debug_level > 1:
+            sys.stderr.write("IMApp.__bus_destroy_cb(bus=%s)\n" % bus)
         if self.destroyed:
             return
         print("finalizing:)")
