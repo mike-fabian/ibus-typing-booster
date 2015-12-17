@@ -210,7 +210,7 @@ class Transliterator:
     'grün'
 
     If initializing the transliterator fails, for example
-    because a non-existing input method was give as the argument,
+    because a non-existing input method was given as the argument,
     a ValueError is raised:
 
     >>> trans = Transliterator('ru-translitx')
