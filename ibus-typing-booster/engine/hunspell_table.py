@@ -137,7 +137,6 @@ class editor(object):
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
 
-        self._m17ndb = 'm17n'
         self.trans = None
 
         self._supported_imes = []
