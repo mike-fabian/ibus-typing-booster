@@ -1329,8 +1329,7 @@ class tabengine (IBus.Engine):
                 if value != 'NoIme':
                     print("Switching to transliteration using  ime=%s" %value)
                     self._editor.trans_m17n_mode = True
-                    self._editor.trans = Transliterator.get(
-                        self._editor._m17ndb, value)
+                    self._editor.trans = Transliterator(value)
                 else:
                     print("Switching off transliteration.")
                     self._editor.trans_m17n_mode = False
