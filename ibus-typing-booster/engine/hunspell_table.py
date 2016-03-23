@@ -125,7 +125,6 @@ class editor(object):
         self._typed_string = []
         self._typed_string_cursor = 0
         self._typed_string_when_update_candidates_was_last_called = []
-        self._transliterated_string = u''
         self._p_phrase = u''
         self._pp_phrase = u''
         # self._candidates: hold candidates selected from database and hunspell
@@ -138,41 +137,83 @@ class editor(object):
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
 
-        self.trans = None
-
+        self._add_direct_input = variant_to_value(self._config.get_value(
+            self._config_section,
+            'adddirectinput'))
+        if self._add_direct_input == None:
+            self._add_direct_input = False
+        dictionary = variant_to_value(self._config.get_value(
+            self._config_section,
+            'dictionary'))
+        if dictionary:
+            # There is a dictionary setting in dconf, use that instead
+            # of the default dictionary from the config file:
+            self.db.hunspell_obj.set_dictionary_names(
+                [x.strip() for x in dictionary.split(',')])
+        if self._add_direct_input == True:
+            # if direct input is used as well, add the British English
+            # dictionary unless it is already there:
+            dictionary_names = self.db.hunspell_obj.get_dictionary_names()
+            if 'en_GB' not in dictionary_names:
+                dictionary_names.append('en_GB')
+                self.db.hunspell_obj.set_dictionary_names(dictionary_names)
+                # write changed default dictionary list to dconf:
+                self._config.set_value(
+                    self._config_section,
+                    'dictionary',
+                    GLib.Variant.new_string(','.join(dictionary_names)))
         self._supported_imes = []
         imes = self.db.ime_properties.get('imes').split(',')
         for item in imes:
             mim_name = item.split(':')[1]
             if not mim_name in self._supported_imes:
                 self._supported_imes.append(mim_name)
-        if not self._supported_imes:
+        if self._supported_imes == []:
             self._supported_imes = ['NoIme']
-        # Try to get the selected input method from dconf:
-        self._current_ime = variant_to_value(self._config.get_value(
+        self._current_imes = []
+        # Try to get the selected input methods from dconf:
+        inputmethod = variant_to_value(self._config.get_value(
                 self._config_section,
                 'inputmethod'))
-        if (self._current_ime == None
-            or not self._current_ime in self._supported_imes):
-            # There is no ime set in dconf or an unsupported ime, fall
+        if inputmethod:
+            inputmethods = [x.strip() for x in inputmethod.split(',')]
+            for ime in inputmethods:
+                self._current_imes.append(ime)
+        if self._current_imes == []:
+            # There is no ime set in dconf, fall
             # back to the first of the supported imes:
-            self._current_ime = self._supported_imes[0]
-        if self._current_ime == None or self._current_ime == 'NoIme':
-            # Not using m17n transliteration:
-            self.trans_m17n_mode = False
-        else:
-            # using m17n transliteration
-            self.trans_m17n_mode = True
-            try:
+            self._current_imes = [self._supported_imes[0]]
+            if self._add_direct_input and 'NoIme' not in self._current_imes:
+                self._current_imes.append('NoIme')
+            # No imes were found in dconf, write the default:
+            self._config.set_value(
+                self._config_section,
+                'inputmethod',
+                GLib.Variant.new_string(','.join(self._current_imes)))
+        self.init_transliterators()
+
+    def init_transliterators(self):
+        self._transliterated_strings = {}
+        self._transliterators = {}
+        for ime in self._current_imes:
+            self._transliterated_strings[ime] = u''
+            if ime == 'NoIme':
+                # Not using m17n transliteration:
                 if debug_level > 1:
-                    sys.stderr.write(
-                        "instantiating Transliterator(%(cur)s)\n"
-                        %{'cur': self._current_ime})
-                self.trans = Transliterator(self._current_ime)
-            except ValueError as e:
-                sys.stderr.write('Error initializing Transliterator: %s' %e)
-                import traceback
-                traceback.print_exc()
+                    sys.stderr.write("Adding dummy Transliterator 'None'\n")
+                self._transliterators['NoIme'] = None
+            else:
+                # using m17n transliteration
+                try:
+                    if debug_level > 1:
+                        sys.stderr.write(
+                            "instantiating Transliterator(%(ime)s)\n"
+                            %{'ime': ime})
+                    self._transliterators[ime] = Transliterator(ime)
+                except ValueError as e:
+                    sys.stderr.write('Error initializing Transliterator: %s' %e)
+                    import traceback
+                    traceback.print_exc()
 
     def is_empty(self):
         return len(self._typed_string) == 0
@@ -185,28 +226,32 @@ class editor(object):
         self._typed_string = []
         self._typed_string_cursor = 0
         self._typed_string_when_update_candidates_was_last_called = []
-        self._transliterated_string = u''
+        for ime in self._current_imes:
+            self._transliterated_strings[ime] = u''
 
-    def update_transliterated_string(self):
-        if self.trans_m17n_mode:
-            self._transliterated_string = self.trans.transliterate(
-                self._typed_string)
-            if self._current_ime in ['ko-romaja', 'ko-han2']:
-                self._transliterated_string = unicodedata.normalize(
-                    'NFKD', self._transliterated_string)
-        else:
-            self._transliterated_string = u''.join(self._typed_string)
+    def update_transliterated_strings(self):
+        self._transliterated_strings = {}
+        for ime in self._current_imes:
+            if ime == 'NoIme':
+                self._transliterated_strings['NoIme'] = u''.join(
+                    self._typed_string)
+            else:
+                self._transliterated_strings[ime] = (
+                    self._transliterators[ime].transliterate(self._typed_string))
+                if ime in ['ko-romaja', 'ko-han2']:
+                    self._transliterated_strings[ime] = unicodedata.normalize(
+                        'NFKD', self._transliterated_strings[ime])
         if debug_level > 1:
             sys.stderr.write(
-                "update_transliterated_string() self._typed_string=%s\n"
+                "update_transliterated_strings() self._typed_string=%s\n"
                 %self._typed_string)
             sys.stderr.write(
-                "update_transliterated_string() "
-                + "self._transliterated_string=%s\n"
-                %self._transliterated_string)
+                "update_transliterated_strings() "
+                + "self._transliterated_strings=%s\n"
+                %self._transliterated_strings)
 
-    def get_transliterated_string(self):
-        return self._transliterated_string
+    def get_transliterated_strings(self):
+        return self._transliterated_strings
 
     def insert_string_at_cursor(self, string_to_insert):
         '''Insert typed string at cursor position'''
@@ -223,22 +268,22 @@ class editor(object):
                              +string_to_insert \
                              +self._typed_string[self._typed_string_cursor:]
         self._typed_string_cursor += len(string_to_insert)
-        self.update_transliterated_string()
-        self.update_candidates ()
+        self.update_transliterated_strings()
+        self.update_candidates()
 
     def remove_string_before_cursor(self):
         '''Remove typed string before cursor'''
         if self._typed_string_cursor > 0:
             self._typed_string = self._typed_string[self._typed_string_cursor:]
             self._typed_string_cursor = 0
-            self.update_transliterated_string()
+            self.update_transliterated_strings()
             self.update_candidates()
 
     def remove_string_after_cursor(self):
         '''Remove typed string after cursor'''
         if self._typed_string_cursor < len(self._typed_string):
             self._typed_string = self._typed_string[:self._typed_string_cursor]
-            self.update_transliterated_string()
+            self.update_transliterated_strings()
             self.update_candidates()
 
     def remove_character_before_cursor(self):
@@ -248,7 +293,7 @@ class editor(object):
                 self._typed_string[:self._typed_string_cursor-1]
                 +self._typed_string[self._typed_string_cursor:])
             self._typed_string_cursor -= 1
-            self.update_transliterated_string()
+            self.update_transliterated_strings()
             self.update_candidates()
 
     def remove_character_after_cursor(self):
@@ -257,7 +302,7 @@ class editor(object):
             self._typed_string = (
                 self._typed_string[:self._typed_string_cursor]
                 +self._typed_string[self._typed_string_cursor+1:])
-            self.update_transliterated_string()
+            self.update_transliterated_strings()
             self.update_candidates()
 
     def get_caret (self):
@@ -301,13 +346,15 @@ class editor(object):
         no transliteration is used and works better than nothing
         even if transliteration is used.
         '''
-        if self.trans_m17n_mode:
-            transliterated_string_up_to_cursor = self.trans.transliterate(
-                self._typed_string[:self._typed_string_cursor])
-        else:
+        preedit_ime = self._current_imes[0]
+        if preedit_ime == 'NoIme':
             transliterated_string_up_to_cursor = (
                 u''.join(self._typed_string[:self._typed_string_cursor]))
-        if self._current_ime in ['ko-romaja', 'ko-han2']:
+        else:
+            transliterated_string_up_to_cursor = (
+                self._transliterators[preedit_ime].transliterate(
+                    self._typed_string[:self._typed_string_cursor]))
+        if preedit_ime in ['ko-romaja', 'ko-han2']:
             transliterated_string_up_to_cursor = unicodedata.normalize(
                 'NFKD', transliterated_string_up_to_cursor)
         transliterated_string_up_to_cursor = unicodedata.normalize(
@@ -319,13 +366,17 @@ class editor(object):
         if not phrase:
             return
         phrase = unicodedata.normalize('NFC', phrase)
-        transliterated_string = unicodedata.normalize(
-            'NFC', self._transliterated_string)
         attrs = IBus.AttrList ()
-        if not phrase.startswith(transliterated_string):
-            # this is a candidate which does not start exactly
-            # as the transliterated user input, i.e. it is a suggestion
-            # for a spelling correction:
+        is_spelling_correction = True
+        for ime in self._current_imes:
+            if phrase.startswith(
+                    unicodedata.normalize(
+                        'NFC', self._transliterated_strings[ime])):
+                is_spelling_correction = False
+        if is_spelling_correction:
+            # this is a candidate which does not start exactly as any
+            # of the transliterations of the user input, i.e. it must
+            # be a spelling correction suggestion:
             if debug_level > 0:
                 phrase = phrase + u' ✓'
             attrs.append(IBus.attr_foreground_new(
@@ -371,33 +422,41 @@ class editor(object):
             self._typed_string[:])
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
-        self._candidates = []
-        prefix_length = 0
-        prefix = u''
-        if self._transliterated_string:
-            stripped_transliterated_string = (
-                itb_util.lstrip_token(self._transliterated_string))
-            if len(stripped_transliterated_string) >= self._min_char_complete:
-                prefix_length = (
-                    len(self._transliterated_string)
-                    - len(stripped_transliterated_string))
-                if prefix_length:
-                    prefix = self._transliterated_string[0:prefix_length]
-                try:
-                    self._candidates = self.db.select_words(
-                        stripped_transliterated_string,
-                        p_phrase=self._p_phrase,
-                        pp_phrase=self._pp_phrase)
-                except:
-                    import traceback
-                    traceback.print_exc()
-        if self._candidates:
-            if prefix:
-                self._candidates = (
-                    [(prefix+x[0], x[1]) for x in self._candidates])
-            for x in self._candidates:
-                self.append_candidate_to_lookup_table(
-                    phrase=x[0], user_freq=x[1])
+        phrase_frequencies = {}
+        for ime in self._current_imes:
+            if self._transliterated_strings[ime]:
+                candidates = []
+                prefix_length = 0
+                prefix = u''
+                stripped_transliterated_string = (
+                    itb_util.lstrip_token(self._transliterated_strings[ime]))
+                if (len(stripped_transliterated_string)
+                    >= self._min_char_complete):
+                    prefix_length = (
+                        len(self._transliterated_strings[ime])
+                        - len(stripped_transliterated_string))
+                    if prefix_length:
+                        prefix = self._transliterated_string[0:prefix_length]
+                    try:
+                        candidates = self.db.select_words(
+                            stripped_transliterated_string,
+                            p_phrase=self._p_phrase,
+                            pp_phrase=self._pp_phrase)
+                    except:
+                        import traceback
+                        traceback.print_exc()
+                if candidates and prefix:
+                    candidates = [(prefix+x[0], x[1]) for x in candidates]
+                for x in candidates:
+                    if x[0] in phrase_frequencies:
+                        phrase_frequencies[x[0]] = max(
+                            phrase_frequencies[x[0]], x[1])
+                    else:
+                        phrase_frequencies[x[0]] = x[1]
+        self._candidates = self.db.best_candidates(phrase_frequencies)
+        for x in self._candidates:
+            self.append_candidate_to_lookup_table(
+                phrase=x[0], user_freq=x[1])
         return True
 
     def arrow_down(self):
@@ -543,13 +602,13 @@ class editor(object):
         '''Get list of supported input methods'''
         return self._supported_imes
 
-    def get_current_ime(self):
-        '''Get current imput method'''
-        return self._current_ime
+    def get_current_imes(self):
+        '''Get current list of input methods'''
+        return self._current_imes
 
-    def set_current_ime(self, ime):
-        '''Get current imput method'''
-        self._current_ime = ime
+    def set_current_imes(self, imes):
+        '''Set current list of input methods'''
+        self._current_imes = imes
 
     def push_context(self, phrase):
         self._pp_phrase = self._p_phrase
@@ -690,7 +749,8 @@ class tabengine (IBus.Engine):
         '''Update Preedit String in UI'''
         # editor.get_caret() should also use NFC!
         _str = unicodedata.normalize(
-            'NFC', self._editor.get_transliterated_string())
+            'NFC', self._editor.get_transliterated_strings()[
+                self._editor.get_current_imes()[0]])
         if _str == u'':
             super(tabengine, self).update_preedit_text(
                 IBus.Text.new_from_string(u''), 0, False)
@@ -717,6 +777,9 @@ class tabengine (IBus.Engine):
         aux_string = u'(%d / %d)' % (
             self._editor.get_lookup_table().get_cursor_pos() + 1,
             self._editor.get_lookup_table().get_number_of_candidates())
+        preedit_ime = self._editor.get_current_imes()[0]
+        if preedit_ime != 'NoIme':
+            aux_string += u' ' + preedit_ime
         if aux_string:
             # Colours do not work at the moment in the auxiliary text!
             # Needs fix in ibus.
@@ -782,7 +845,8 @@ class tabengine (IBus.Engine):
 
     def commit_string (self, commit_phrase, input_phrase=u''):
         if not input_phrase:
-            input_phrase = self._editor.get_transliterated_string()
+            input_phrase = self._editor.get_transliterated_strings()[
+                self._editor.get_current_imes()[0]]
         # commit always in NFC:
         commit_phrase = unicodedata.normalize('NFC', commit_phrase)
         super(tabengine, self).commit_text(
@@ -948,7 +1012,7 @@ class tabengine (IBus.Engine):
                 if (len(key.msymbol) == 1
                     and unicodedata.category(key.msymbol)
                     in itb_util.categories_to_trigger_immediate_commit):
-                    if not self._editor.trans_m17n_mode:
+                    if self._editor.get_current_imes()[0] == 'NoIme':
                         # Do not just pass the character through,
                         # commit it properly.  For example if it is a
                         # “.” we might want to remove whitespace
@@ -977,7 +1041,7 @@ class tabengine (IBus.Engine):
                     # type digits here where the preëdit is still empty.
                     # If digits are not used to select candidates, they
                     # can be treated just like any other input keys.
-                    if not self._editor.trans_m17n_mode:
+                    if self._editor.get_current_imes()[0] == 'NoIme':
                         # If a digit has been typed and no transliteration
                         # is used, we can pass it through
                         return False
@@ -986,8 +1050,9 @@ class tabengine (IBus.Engine):
                     # native digits. For example, with mr-inscript we
                     # want “3” to be converted to “३”. So we try
                     # to transliterate and commit the result:
-                    transliterated_digit = self._editor.trans.transliterate(
-                        [key.msymbol])
+                    transliterated_digit = self._editor.trans[
+                        self._editor.get_current_imes()[0]
+                    ].transliterate([key.msymbol])
                     self.commit_string(
                         transliterated_digit, input_phrase=transliterated_digit)
                     return True
@@ -997,6 +1062,24 @@ class tabengine (IBus.Engine):
                 return False
             self.reset ()
             self._update_ui ()
+            return True
+
+        if key.val in (IBus.KEY_Down, IBus.KEY_KP_Down) and key.control:
+            # remove the first ime from the list and append it to the end.
+            imes = self._editor.get_current_imes()
+            self._editor.set_current_imes(imes[1:] + imes[:1])
+            if self._editor.is_empty():
+                return True
+            self._update_ui()
+            return True
+
+        if key.val in (IBus.KEY_Up, IBus.KEY_KP_Up) and key.control:
+            # remove the last ime in the list and add it in front:
+            imes = self._editor.get_current_imes()
+            self._editor.set_current_imes(imes[-1:] + imes[:-1])
+            if self._editor.is_empty():
+                return True
+            self._update_ui()
             return True
 
         if key.val in (IBus.KEY_Down, IBus.KEY_KP_Down):
@@ -1107,7 +1190,9 @@ class tabengine (IBus.Engine):
                         self.commit_string(phrase + u' ')
                     return True
                 else:
-                    input_phrase = self._editor.get_transliterated_string()
+                    input_phrase = (
+                        self._editor.get_transliterated_strings()[
+                            self._editor.get_current_imes()[0]])
                     if input_phrase:
                         self.commit_string(
                             input_phrase + u' ', input_phrase = input_phrase)
@@ -1140,7 +1225,9 @@ class tabengine (IBus.Engine):
                     self._editor._typed_string_cursor -= 1
                 self._update_ui()
                 return True
-            input_phrase = self._editor.get_transliterated_string()
+            input_phrase = (
+                self._editor.get_transliterated_strings()[
+                    self._editor.get_current_imes()[0]])
             if not input_phrase:
                 return False
             if not self._editor.get_candidates():
@@ -1197,10 +1284,12 @@ class tabengine (IBus.Engine):
             if (len(key.msymbol) == 1
                 and unicodedata.category(key.msymbol)
                 in itb_util.categories_to_trigger_immediate_commit):
-                input_phrase = self._editor.get_transliterated_string()
+                input_phrase = (
+                    self._editor.get_transliterated_strings()[
+                        self._editor.get_current_imes()[0]])
                 if (input_phrase
                     and input_phrase[-1] == key.msymbol
-                    and not self._editor.trans_m17n_mode):
+                    and self._editor.get_current_imes()[0] == 'NoIme'):
                     self.commit_string(
                         input_phrase + u' ', input_phrase = input_phrase)
             self._update_ui()
@@ -1316,17 +1405,45 @@ class tabengine (IBus.Engine):
             self.reset()
             return
         if name == "inputmethod":
-            if value in self._editor.get_supported_imes():
-                self._editor.set_current_ime(value)
-                if value != 'NoIme':
-                    print("Switching to transliteration using  ime=%s" %value)
-                    self._editor.trans_m17n_mode = True
-                    self._editor.trans = Transliterator(value)
-                else:
-                    print("Switching off transliteration.")
-                    self._editor.trans_m17n_mode = False
+            imes = [x.strip() for x in value.split(',')]
+            self._editor.set_current_imes(imes)
+            self._editor.init_transliterators()
+            self.reset()
+            return
+        if name == "dictionary":
+            dictionary_names = [x.strip() for x in value.split(',')]
+            self.db.hunspell_obj.set_dictionary_names(dictionary_names)
+            self.reset()
+            return
+        if name == "adddirectinput":
+            imes = self._editor.get_current_imes()
+            dictionary_names = self.db.hunspell_obj.get_dictionary_names()
+            self._editor._add_direct_input = value
+            if value == True:
+                if 'NoIme' not in imes:
+                    imes.append('NoIme')
+                if 'en_GB' not in dictionary_names:
+                    dictionary_names.append('en_GB')
             else:
-                print("error: trying to set unsupported ime: %s" %value)
+                imes = [x for x in imes if x != 'NoIme']
+                if not imes:
+                    imes = ['NoIme']
+                # always keep the first dictionary, i.e. always keep
+                # the original one from the config file
+                dictionary_names = (
+                    [dictionary_names[0]]
+                    + [x for x in dictionary_names[1:] if x != 'en_GB'])
+            self._editor.set_current_imes(imes)
+            self._editor.init_transliterators()
+            self._config.set_value(
+                self._config_section,
+                'inputmethod',
+                GLib.Variant.new_string(','.join(imes)))
+            self.db.hunspell_obj.set_dictionary_names(dictionary_names)
+            self._config.set_value(
+                self._config_section,
+                'dictionary',
+                GLib.Variant.new_string(','.join(dictionary_names)))
             self.reset()
             return
         if name == "dictionaryinstalltimestamp":

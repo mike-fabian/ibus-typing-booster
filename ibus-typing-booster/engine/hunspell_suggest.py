@@ -109,6 +109,9 @@ class Dictionary:
                 traceback.print_exc()
                 return
         if self.buffer:
+            print("load_dictionary(): "
+                  + "Successfully loaded %(dic)s using %(enc)s encoding."
+                  %{'dic': dic_path, 'enc': self.encoding})
             self.buffer = unicodedata.normalize(
                 normalization_form_internal, self.buffer)
             if import_enchant_successful:
@@ -127,18 +130,35 @@ class Hunspell:
             sys.stderr.write(
                 "Hunspell.__init__(dictionary_names=%s)\n"
                 %dictionary_names)
-        self.dictionary_names = dictionary_names
-        self.dictionaries = []
+        self._dictionary_names = dictionary_names
+        self._dictionaries = []
         self.init_dictionaries()
 
     def init_dictionaries(self):
         if debug_level > 1:
             sys.stderr.write(
                 "Hunspell.init_dictionaries() dictionary_names=%s\n"
-                %self.dictionary_names)
-        self.dictionaries = []
-        for dictionary_name in self.dictionary_names:
-            self.dictionaries.append(Dictionary(name=dictionary_name))
+                %self._dictionary_names)
+        self._dictionaries = []
+        for dictionary_name in self._dictionary_names:
+            self._dictionaries.append(Dictionary(name=dictionary_name))
+
+    def get_dictionary_names(self):
+        '''Returns a copy of the list of dictionary names.
+
+        It is important to return a copy, we do not want to change
+        the private member variable directly.'''
+        return self._dictionary_names[:]
+
+    def set_dictionary_names(self, dictionary_names):
+        '''Sets the list of dictionary names.
+
+        If the new list of dictionary names differs from the existing
+        one, re-initilize the dictionaries.
+        '''
+        if dictionary_names != self._dictionary_names:
+            self._dictionary_names = dictionary_names
+            self.init_dictionaries()
 
     def suggest(self, input_phrase):
         # If the input phrase is very long, don’t try looking
@@ -177,7 +197,7 @@ class Hunspell:
             import traceback
             traceback.print_exc()
         suggested_words = []
-        for dictionary in self.dictionaries:
+        for dictionary in self._dictionaries:
             if dictionary.buffer:
                 suggested_words += patt_start.findall(dictionary.buffer)
                 if dictionary.enchant_dict:

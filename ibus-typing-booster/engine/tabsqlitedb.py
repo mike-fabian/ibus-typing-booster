@@ -109,9 +109,10 @@ class tabsqlitedb:
         self._language = self.ime_properties.get('language')
         self._normalization_form_internal = 'NFD'
 
-        self.hunspell_obj = hunspell_suggest.Hunspell(
-            dictionary_names=self.ime_properties.get(
-                "hunspell_dict").replace('.dic', '').split(', '))
+        dictionary_names = [
+            x.replace('.dic', '').strip()
+            for x in self.ime_properties.get("hunspell_dict").split(',')]
+        self.hunspell_obj = hunspell_suggest.Hunspell(dictionary_names)
 
         user_db = 'user.db'
         # user database:
