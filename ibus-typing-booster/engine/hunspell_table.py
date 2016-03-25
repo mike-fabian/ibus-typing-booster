@@ -686,14 +686,6 @@ class tabengine (IBus.Engine):
         self.do_focus_out ()
         super(tabengine, self).destroy()
 
-    def _change_mode (self):
-        '''Shift input mode, TAB -> EN -> TAB
-        '''
-        if debug_level > 1:
-            sys.stderr.write("tabengine._change_mode()\n")
-        self.reset ()
-        self._update_ui ()
-
     def _update_preedit (self):
         '''Update Preedit String in UI'''
         # editor.get_caret() should also use NFC!
