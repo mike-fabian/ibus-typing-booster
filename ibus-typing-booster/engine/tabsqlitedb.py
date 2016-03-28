@@ -473,7 +473,10 @@ class tabsqlitedb:
                 + "pp_phrase=%s\n" % pp_phrase.encode('UTF-8'))
         phrase_frequencies = {}
         for x in self.hunspell_obj.suggest(input_phrase):
-            phrase_frequencies.update([(x, 0)])
+            if  x.startswith(input_phrase):
+                phrase_frequencies[x] = 0
+            else:
+                phrase_frequencies[x] = -1 # spelling correction suggestion
         if debug_level > 1:
             sys.stderr.write(
                 "tabsqlitedb.select_words() hunspell: best_candidates=%s\n"
