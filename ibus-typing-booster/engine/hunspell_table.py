@@ -1333,6 +1333,6 @@ class tabengine (IBus.Engine):
             # A dictionary has bin updated or installed,
             # (re)load all dictionaries:
             print("Reloading dictionaries ...")
-            self.db.hunspell_obj.load_dictionaries()
+            self.db.hunspell_obj.init_dictionaries()
             self.reset()
             return

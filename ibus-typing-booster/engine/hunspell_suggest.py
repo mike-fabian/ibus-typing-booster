@@ -129,12 +129,12 @@ class Hunspell:
                 %dictionary_names)
         self.dictionary_names = dictionary_names
         self.dictionaries = []
-        self.load_dictionaries()
+        self.init_dictionaries()
 
-    def load_dictionaries(self):
+    def init_dictionaries(self):
         if debug_level > 1:
             sys.stderr.write(
-                "Hunspell.load_dictionaries() dictionary_names=%s\n"
+                "Hunspell.init_dictionaries() dictionary_names=%s\n"
                 %self.dictionary_names)
         self.dictionaries = []
         for dictionary_name in self.dictionary_names:
