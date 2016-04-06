@@ -969,7 +969,7 @@ class tabengine (IBus.Engine):
                     return True
                 if (self._use_digits_as_select_keys
                     and key.msymbol
-                    in ('1', '2', '3', '4', '5', '6', '7', '8', '9')):
+                    in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
                     # If digits are used as keys to select candidates
                     # it is not possibly to type them while the preëdit
                     # is non-empty and candidates are displayed.
