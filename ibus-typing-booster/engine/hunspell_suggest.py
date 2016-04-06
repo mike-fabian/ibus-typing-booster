@@ -136,6 +136,7 @@ class Hunspell:
             sys.stderr.write(
                 "Hunspell.load_dictionaries() dictionary_names=%s\n"
                 %self.dictionary_names)
+        self.dictionaries = []
         for dictionary_name in self.dictionary_names:
             self.dictionaries.append(Dictionary(name=dictionary_name))
 
