@@ -23,8 +23,8 @@
 m4_define([package_name], [ibus-typing-booster])
 m4_define([ibus_released], [1])
 m4_define([ibus_major_version], [1])
-m4_define([ibus_minor_version], [3])
-m4_define([ibus_micro_version], [1])
+m4_define([ibus_minor_version], [4])
+m4_define([ibus_micro_version], [0])
 m4_define(ibus_maybe_datestamp,
     m4_esyscmd([if test x]ibus_released[ != x1; then date +.%Y%m%d | tr -d '\n\r'; fi]))
 
