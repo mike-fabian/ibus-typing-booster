@@ -143,6 +143,7 @@ class SetupUI:
             _("Preferences for ibus-typing-booster \"%(symbol)s\"")
             %{'symbol': self.symbol})
         maindialog.show()
+
         self.install_dictionary_button = self.builder.get_object(
             "install_dictionary_button")
         self.install_dictionary_button.connect(
@@ -159,8 +160,10 @@ class SetupUI:
             "delete_learned_data_button")
         self.delete_learned_data_button.connect(
             'clicked', event_handler.onDeleteLearnedDataClicked)
+
         close_button = self.builder.get_object("close_button")
         close_button.connect('clicked', event_handler.onCloseClicked)
+
         tab_enable_checkbox = self.builder.get_object("tab_enable_checkbox")
         self.tab_enable = self.variant_to_value(
             self.config.get_value(self.config_section, 'tabenable'))
@@ -170,6 +173,7 @@ class SetupUI:
             tab_enable_checkbox.set_active(True)
         tab_enable_checkbox.connect(
             'clicked', event_handler.onTabEnableCheckbox)
+
         show_number_of_candidates_checkbox = self.builder.get_object(
             "show_number_of_candidates_checkbox")
         self.show_number_of_candidates = self.variant_to_value(
@@ -181,6 +185,7 @@ class SetupUI:
             show_number_of_candidates_checkbox.set_active(True)
         show_number_of_candidates_checkbox.connect(
             'clicked', event_handler.onShowNumberOfCandidatesCheckbox)
+
         use_digits_as_select_keys_checkbox = self.builder.get_object(
             "use_digits_as_select_keys_checkbox")
         self.use_digits_as_select_keys = self.variant_to_value(
@@ -192,6 +197,19 @@ class SetupUI:
             use_digits_as_select_keys_checkbox.set_active(True)
         use_digits_as_select_keys_checkbox.connect(
             'clicked', event_handler.onUseDigitsAsSelectKeysCheckbox)
+
+        add_direct_input_checkbox = self.builder.get_object(
+            "add_direct_input_checkbox")
+        self.add_direct_input = self.variant_to_value(
+            self.config.get_value(
+                self.config_section, 'adddirectinput'))
+        if self.add_direct_input == None:
+            self.add_direct_input = True
+        if  self.add_direct_input == True:
+            add_direct_input_checkbox.set_active(True)
+        add_direct_input_checkbox.connect(
+            'clicked', event_handler.onAddDirectInputCheckbox)
+
         self.page_size_adjustment = self.builder.get_object(
             "page_size_adjustment")
         self.page_size = self.variant_to_value(self.config.get_value(
@@ -459,6 +477,20 @@ class EventHandler:
             SetupUi.config.set_value(
                 SetupUi.config_section,
                 'usedigitsasselectkeys',
+                GLib.Variant.new_boolean(False))
+
+    def onAddDirectInputCheckbox(self, widget):
+        if widget.get_active():
+            SetupUi.add_direct_input = True
+            SetupUi.config.set_value(
+                SetupUi.config_section,
+                'adddirectinput',
+                GLib.Variant.new_boolean(True))
+        else:
+            SetupUi.adddirectinput = False
+            SetupUi.config.set_value(
+                SetupUi.config_section,
+                'adddirectinput',
                 GLib.Variant.new_boolean(False))
 
     def onPageSizeAdjustmentValueChanged(self, widget):
