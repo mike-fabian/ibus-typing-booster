@@ -487,7 +487,7 @@ class EventHandler:
                 'adddirectinput',
                 GLib.Variant.new_boolean(True))
         else:
-            SetupUi.adddirectinput = False
+            SetupUi.add_direct_input = False
             SetupUi.config.set_value(
                 SetupUi.config_section,
                 'adddirectinput',
