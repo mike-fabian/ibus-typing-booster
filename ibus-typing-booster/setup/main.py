@@ -204,7 +204,7 @@ class SetupUI:
             self.config.get_value(
                 self.config_section, 'adddirectinput'))
         if self.add_direct_input == None:
-            self.add_direct_input = True
+            self.add_direct_input = False
         if  self.add_direct_input == True:
             add_direct_input_checkbox.set_active(True)
         add_direct_input_checkbox.connect(
