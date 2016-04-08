@@ -239,31 +239,44 @@ class SetupUI:
         self.input_method_help_button = self.builder.get_object(
             "input_method_help_button")
         ime_store = Gtk.ListStore(str, str)
+        self.supported_imes = []
         imes = self.tabsqlitedb.ime_properties.get('imes').split(',')
         if not imes:
             imes = ['Native Keyboard:NoIme']
         for item in imes:
             ime_store.append([item.split(':')[0], item.split(':')[1]])
+            self.supported_imes.append(item.split(':')[1])
         self.ime_combobox.set_model(ime_store)
         renderer_text = Gtk.CellRendererText()
         self.ime_combobox.pack_start(renderer_text, True)
         self.ime_combobox.add_attribute(renderer_text, "text", 0)
-        self.ime = self.variant_to_value(self.config.get_value(
+        self.current_imes = []
+        inputmethod = self.variant_to_value(self.config.get_value(
             self.config_section, 'inputmethod'))
-        if self.ime == None:
-            # ime was not in settings, use the first value from the
-            # combobox as the default:
-            self.ime = ime_store[0][1]
+        if inputmethod:
+            inputmethods = [x.strip() for x in inputmethod.split(',')]
+            for ime in inputmethods:
+                self.current_imes.append(ime)
+        if self.current_imes == []:
+            # There is no ime set in dconf, use the first value from
+            # the combobox as the default:
+            self.current_imes = [ime_store[0][1]]
+            if self.add_direct_input and 'NoIme' not in self.current_imes:
+                self.current_imes.append('NoIme')
+        if len(self.current_imes) == 1:
+            self.main_ime = self.current_imes[0]
+        else:
+            self.main_ime = [x for x in self.current_imes if x != 'NoIme'][0]
         combobox_has_ime = False
         for i in range(len(ime_store)):
-            if ime_store[i][1] == self.ime:
+            if ime_store[i][1] == self.main_ime:
                 self.ime_combobox.set_active(i)
                 combobox_has_ime = True
         if combobox_has_ime == False:
             # the combobox did not have the ime from the settings
             # take the ime from the first row of
             # the combobox as the fallback:
-            self.ime = ime_store[0][1]
+            self.main_ime = ime_store[0][1]
             self.ime_combobox.set_active(0)
         self.ime_combobox.connect(
             "changed", event_handler.onImeComboboxChanged)
@@ -271,7 +284,7 @@ class SetupUI:
             self.ime_combobox.set_sensitive(False)
         self.input_method_help_button.connect(
             'clicked', event_handler.onInputMethodHelpButtonClicked)
-        if self.ime == 'NoIme':
+        if self.main_ime == 'NoIme':
             self.input_method_help_button.set_sensitive(False)
 
     def __run_message_dialog(self, message, message_type=Gtk.MessageType.INFO):
@@ -512,12 +525,22 @@ class EventHandler:
         tree_iter = widget.get_active_iter()
         if tree_iter != None:
             model = widget.get_model()
-            ime = model[tree_iter][1]
+            main_ime = model[tree_iter][1]
+            # Remove all supported imes and 'NoIme' from the current imes.
+            # This is to keep additional imes which might have been added
+            # setting the dconf key directly instead of using this setup tool.
+            SetupUi.current_imes = [
+                x for x in SetupUi.current_imes if (
+                    x not in SetupUi.supported_imes and x != 'NoIme')]
+            SetupUi.current_imes = [main_ime] + SetupUi.current_imes
+            if ('NoIme' not in SetupUi.current_imes
+                and SetupUi.add_direct_input == True):
+                SetupUi.current_imes.append('NoIme')
             SetupUi.config.set_value(
                 SetupUi.config_section,
                 'inputmethod',
-                GLib.Variant.new_string(ime))
-            if ime == 'NoIme':
+                GLib.Variant.new_string(','.join(SetupUi.current_imes)))
+            if main_ime == 'NoIme':
                 SetupUi.input_method_help_button.set_sensitive(False)
             else:
                 SetupUi.input_method_help_button.set_sensitive(True)
