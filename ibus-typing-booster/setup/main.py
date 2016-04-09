@@ -70,7 +70,7 @@ from gi.repository import GLib
 from pkginstall import InstallPkg
 
 class SetupUI:
-    def __init__(self):
+    def __init__(self, bus):
         filename = path.join(path.dirname(__file__),"setup.glade")
         self.builder = Gtk.Builder()
         self.builder.set_translation_domain(DOMAINNAME)
@@ -131,13 +131,9 @@ class SetupUI:
         self.hunspell_dict_package = self.tabsqlitedb.ime_properties.get(
             'hunspell_dict_package')
         self.symbol = self.tabsqlitedb.ime_properties.get('symbol')
-        if IBus.get_address() == None:
-            self.__run_message_dialog(
-                _("ibus is not running."), Gtk.MessageType.ERROR)
-            sys.exit(1)
-            return
 
-        self.config = IBus.Bus().get_config()
+        self.bus = bus
+        self.config = self.bus.get_config()
         maindialog = self.builder.get_object("main_dialog")
         maindialog.set_title(
             _("Preferences for ibus-typing-booster \"%(symbol)s\"")
@@ -603,5 +599,14 @@ if __name__ == '__main__':
         sys.stderr.write("IBUS-WARNING **: Using the fallback 'C' locale")
         locale.setlocale(locale.LC_ALL, 'C')
     i18n_init()
-    SetupUi = SetupUI()
+    if IBus.get_address() == None:
+        dlg = Gtk.MessageDialog(
+            flags = Gtk.DialogFlags.MODAL,
+            message_type = Gtk.MessageType.ERROR,
+            buttons = Gtk.ButtonsType.OK,
+            message_format = _('ibus is not running.'))
+        dlg.run()
+        dlg.destroy()
+        sys.exit(1)
+    SetupUi = SetupUI(IBus.Bus())
     Gtk.main()
