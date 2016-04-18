@@ -193,10 +193,8 @@ class editor(object):
         self.init_transliterators()
 
     def init_transliterators(self):
-        self._transliterated_strings = {}
         self._transliterators = {}
         for ime in self._current_imes:
-            self._transliterated_strings[ime] = u''
             if ime == 'NoIme':
                 # Not using m17n transliteration:
                 if debug_level > 1:
@@ -214,6 +212,7 @@ class editor(object):
                     sys.stderr.write('Error initializing Transliterator: %s' %e)
                     import traceback
                     traceback.print_exc()
+        self.update_transliterated_strings()
 
     def is_empty(self):
         return len(self._typed_string) == 0
@@ -608,6 +607,14 @@ class editor(object):
 
     def set_current_imes(self, imes):
         '''Set current list of input methods'''
+        if set(imes) != set(self._current_imes):
+            # Input methods have been added or removed from the list
+            # of current input methods. Initialize the
+            # transliterators. If only the order of the input methods
+            # has changed, initialising the transliterators is not
+            # necessary (and neither is updating the transliterated
+            # strings necessary).
+            self.init_transliterators()
         self._current_imes = imes
 
     def push_context(self, phrase):
@@ -1407,13 +1414,14 @@ class tabengine (IBus.Engine):
         if name == "inputmethod":
             imes = [x.strip() for x in value.split(',')]
             self._editor.set_current_imes(imes)
-            self._editor.init_transliterators()
-            self.reset()
+            if not self._editor.is_empty():
+                self._update_ui()
             return
         if name == "dictionary":
             dictionary_names = [x.strip() for x in value.split(',')]
             self.db.hunspell_obj.set_dictionary_names(dictionary_names)
-            self.reset()
+            if not self._editor.is_empty():
+                self._update_ui()
             return
         if name == "adddirectinput":
             imes = self._editor.get_current_imes()
@@ -1434,7 +1442,6 @@ class tabengine (IBus.Engine):
                     [dictionary_names[0]]
                     + [x for x in dictionary_names[1:] if x != 'en_GB'])
             self._editor.set_current_imes(imes)
-            self._editor.init_transliterators()
             self._config.set_value(
                 self._config_section,
                 'inputmethod',
@@ -1444,7 +1451,8 @@ class tabengine (IBus.Engine):
                 self._config_section,
                 'dictionary',
                 GLib.Variant.new_string(','.join(dictionary_names)))
-            self.reset()
+            if not self._editor.is_empty():
+                self._update_ui()
             return
         if name == "dictionaryinstalltimestamp":
             # A dictionary has bin updated or installed,
