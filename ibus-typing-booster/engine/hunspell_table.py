@@ -170,6 +170,12 @@ class editor(object):
                 self._supported_imes.append(mim_name)
         if self._supported_imes == []:
             self._supported_imes = ['NoIme']
+        # The number of current imes needs to be limited to some fixed
+        # maximum number because of the property menu to select the preëdit
+        # ime. Unfortunately the number of sub-properties for such a menu
+        # cannot be changed, as a workaround a fixed number can be used
+        # and unused entries can be hidden.
+        self._current_imes_max = 10
         self._current_imes = []
         # Try to get the selected input methods from dconf:
         inputmethod = variant_to_value(self._config.get_value(
@@ -601,6 +607,10 @@ class editor(object):
         '''Get list of supported input methods'''
         return self._supported_imes
 
+    def get_current_imes_max(self):
+        '''Get maximum allowed number of current imes'''
+        return self._current_imes_max
+
     def get_current_imes(self):
         '''Get current list of input methods'''
         return self._current_imes
@@ -695,32 +705,188 @@ class tabengine (IBus.Engine):
             self._tab_enable = False
         self._commit_happened_after_focus_in = False
 
-        self.properties = []
+        self._prop_dict = {}
+        self.main_prop_list = []
+        self.preedit_ime_sub_properties_prop_list = []
+        self.update_preedit_ime_menu_dicts()
         self._setup_property = None
         self._init_properties()
 
         self.reset ()
 
+    def get_current_imes_max(self):
+        '''Get maximum allowed number of current imes from editor'''
+        return self._editor.get_current_imes_max()
+
+    def get_current_imes(self):
+        '''Get current list of input methods from editor'''
+        return self._editor.get_current_imes()
+
+    def set_current_imes(self, imes):
+        '''Set current list of input methods in editor'''
+        if imes == self.get_current_imes(): # nothing to do
+            return
+        if len(imes) > self.get_current_imes_max():
+            sys.stderr.write(
+                'Trying to set more than the allowed maximum of %s '
+                %self.get_current_imes_max()
+                + 'input methods.\n'
+                + 'Trying to set: %s\n' %imes
+                + 'Really setting: %s\n' %imes[:self.get_current_imes_max()])
+            imes = imes[:self.get_current_imes_max()]
+        self._editor.set_current_imes(imes)
+        self.update_preedit_ime_menu_dicts()
+        self._init_or_update_property_menu_preedit_ime(
+            self.preedit_ime_menu, current_mode = 0)
+        if not self._editor.is_empty():
+            self._update_ui()
+
+    def update_preedit_ime_menu_dicts(self):
+        self.preedit_ime_properties = {}
+        current_imes = self.get_current_imes()
+        current_imes_max = self.get_current_imes_max()
+        for i in range(0, current_imes_max):
+            if i < len(current_imes):
+                self.preedit_ime_properties[
+                    'PreeditIme.' + str(i)
+                ] = {'number': i,
+                     'symbol': current_imes[i],
+                     'label': current_imes[i],
+                     'tooltip': _('Switch preedit input method to %(ime)s') %{
+                         'ime': current_imes[i]}}
+            else:
+                self.preedit_ime_properties[
+                    'PreeditIme.'+str(i)
+                ] = {'number': i, 'symbol': '', 'label': '', 'tooltip': ''}
+        self.preedit_ime_menu = {
+            'key': 'PreeditIme',
+            'label': _('Preedit input method'),
+            'tooltip': _('Switch preedit input method'),
+            'shortcut_hint': '(Ctrl+ArrowUp, Ctrl+ArrowDown)',
+            'sub_properties': self.preedit_ime_properties}
+
+    def _init_or_update_property_menu_preedit_ime(self, menu, current_mode=0):
+        key = menu['key']
+        sub_properties = menu['sub_properties']
+        for prop in sub_properties:
+            if sub_properties[prop]['number'] == int(current_mode):
+                symbol = sub_properties[prop]['symbol']
+                label = '%(label)s (%(symbol)s) %(shortcut_hint)s' % {
+                    'label': menu['label'],
+                    'symbol': symbol,
+                    'shortcut_hint': menu['shortcut_hint']}
+                tooltip = '%(tooltip)s\n%(shortcut_hint)s' % {
+                    'tooltip': menu['tooltip'],
+                    'shortcut_hint': menu['shortcut_hint']}
+        if len(self.get_current_imes()) > 1:
+            visible = True
+        else:
+            visible = False
+        self._init_or_update_sub_properties_preedit_ime(
+            sub_properties, current_mode=current_mode)
+        if not key in self._prop_dict: # initialize property
+            self._prop_dict[key] = IBus.Property(
+                key = key,
+                prop_type = IBus.PropType.MENU,
+                label = IBus.Text.new_from_string(label),
+                symbol = IBus.Text.new_from_string(symbol),
+                tooltip = IBus.Text.new_from_string(tooltip),
+                sensitive = visible,
+                visible= visible,
+                state = IBus.PropState.UNCHECKED,
+                sub_props = self.preedit_ime_sub_properties_prop_list)
+            self.main_prop_list.append(self._prop_dict[key])
+        else:  # update the property
+            self._prop_dict[key].set_label(IBus.Text.new_from_string(label))
+            self._prop_dict[key].set_symbol(IBus.Text.new_from_string(symbol))
+            self._prop_dict[key].set_tooltip(IBus.Text.new_from_string(tooltip))
+            self._prop_dict[key].set_sensitive(visible)
+            self._prop_dict[key].set_visible(visible)
+            self.update_property(self._prop_dict[key]) # important!
+
+    def _init_or_update_sub_properties_preedit_ime(self, modes, current_mode=0):
+        if not self.preedit_ime_sub_properties_prop_list:
+            update = False
+            self.preedit_ime_sub_properties_prop_list = IBus.PropList()
+        else:
+            update = True
+        number_of_current_imes = len(self._editor.get_current_imes())
+        for mode in sorted(modes, key=lambda x: (modes[x]['number'])):
+            if modes[mode]['number'] < number_of_current_imes:
+                visible = True
+            else:
+                visible = False
+            if modes[mode]['number'] == int(current_mode):
+                state = IBus.PropState.CHECKED
+            else:
+                state = IBus.PropState.UNCHECKED
+            label = modes[mode]['label']
+            tooltip = modes[mode]['tooltip']
+            if not update: # initialize property
+                self._prop_dict[mode] = IBus.Property(
+                    key = mode,
+                    prop_type = IBus.PropType.RADIO,
+                    label = IBus.Text.new_from_string(label),
+                    tooltip = IBus.Text.new_from_string(tooltip),
+                    sensitive = visible,
+                    visible = visible,
+                    state = state,
+                    sub_props = None)
+                self.preedit_ime_sub_properties_prop_list.append(
+                    self._prop_dict[mode])
+            else: # update property
+                self._prop_dict[mode].set_label(
+                    IBus.Text.new_from_string(label))
+                self._prop_dict[mode].set_tooltip(
+                    IBus.Text.new_from_string(tooltip))
+                self._prop_dict[mode].set_sensitive(visible)
+                self._prop_dict[mode].set_visible(visible)
+                self.update_property(self._prop_dict[mode]) # important!
+
     def _init_properties(self):
-        self.properties = IBus.PropList()
+        self._prop_dict = {}
+        self.main_prop_list = IBus.PropList()
+
+        self._init_or_update_property_menu_preedit_ime(
+            self.preedit_ime_menu, current_mode = 0)
+
         self._setup_property = IBus.Property(
             key = u'setup',
-            label = _('Setup'),
+            label = IBus.Text.new_from_string(_('Setup')),
             icon = 'gtk-preferences',
-            tooltip = _('Configure ibus-typing-booster “%(name)s”') %{
-                'name': self._name.replace('typing-booster:', '')},
+            tooltip = IBus.Text.new_from_string(
+                _('Configure ibus-typing-booster “%(name)s”') %{
+                    'name': self._name.replace('typing-booster:', '')}),
             sensitive = True,
             visible = True)
-        self.properties.append(self._setup_property)
-        self.register_properties(self.properties)
+        self.main_prop_list.append(self._setup_property)
+        self.register_properties(self.main_prop_list)
 
     def do_property_activate(
             self, ibus_property, prop_state = IBus.PropState.UNCHECKED):
         '''
         Handle clicks on properties
         '''
+        if debug_level > 1:
+            sys.stderr.write(
+                "do_property_activate() property=%(p)s prop_state=%(ps)s\n"
+                % {'p': property, 'ps': prop_state})
         if ibus_property == "setup":
             self._start_setup()
+            return
+        if prop_state != IBus.PropState.CHECKED:
+            # If the mouse just hovered over a menu button and
+            # no sub-menu entry was clicked, there is nothing to do:
+            return
+        if ibus_property.startswith(self.preedit_ime_menu['key']+'.'):
+            number = self.preedit_ime_properties[ibus_property]['number']
+            if number != 0:
+                # If number 0 has been clicked, there is nothing to
+                # do, the first one is already the preedit input
+                # method
+                imes = self.get_current_imes()
+                self.set_current_imes(
+                    [imes[number]] + imes[number+1:] + imes[:number] )
             return
 
     def _start_setup(self):
@@ -757,7 +923,7 @@ class tabengine (IBus.Engine):
         # editor.get_caret() should also use NFC!
         _str = unicodedata.normalize(
             'NFC', self._editor.get_transliterated_strings()[
-                self._editor.get_current_imes()[0]])
+                self.get_current_imes()[0]])
         if _str == u'':
             super(tabengine, self).update_preedit_text(
                 IBus.Text.new_from_string(u''), 0, False)
@@ -784,7 +950,7 @@ class tabengine (IBus.Engine):
         aux_string = u'(%d / %d)' % (
             self._editor.get_lookup_table().get_cursor_pos() + 1,
             self._editor.get_lookup_table().get_number_of_candidates())
-        preedit_ime = self._editor.get_current_imes()[0]
+        preedit_ime = self.get_current_imes()[0]
         if preedit_ime != 'NoIme':
             aux_string += u' ' + preedit_ime
         if aux_string:
@@ -853,7 +1019,7 @@ class tabengine (IBus.Engine):
     def commit_string (self, commit_phrase, input_phrase=u''):
         if not input_phrase:
             input_phrase = self._editor.get_transliterated_strings()[
-                self._editor.get_current_imes()[0]]
+                self.get_current_imes()[0]]
         # commit always in NFC:
         commit_phrase = unicodedata.normalize('NFC', commit_phrase)
         super(tabengine, self).commit_text(
@@ -1019,7 +1185,7 @@ class tabengine (IBus.Engine):
                 if (len(key.msymbol) == 1
                     and unicodedata.category(key.msymbol)
                     in itb_util.categories_to_trigger_immediate_commit):
-                    if self._editor.get_current_imes()[0] == 'NoIme':
+                    if self.get_current_imes()[0] == 'NoIme':
                         # Do not just pass the character through,
                         # commit it properly.  For example if it is a
                         # “.” we might want to remove whitespace
@@ -1048,7 +1214,7 @@ class tabengine (IBus.Engine):
                     # type digits here where the preëdit is still empty.
                     # If digits are not used to select candidates, they
                     # can be treated just like any other input keys.
-                    if self._editor.get_current_imes()[0] == 'NoIme':
+                    if self.get_current_imes()[0] == 'NoIme':
                         # If a digit has been typed and no transliteration
                         # is used, we can pass it through
                         return False
@@ -1058,7 +1224,7 @@ class tabengine (IBus.Engine):
                     # want “3” to be converted to “३”. So we try
                     # to transliterate and commit the result:
                     transliterated_digit = self._editor.trans[
-                        self._editor.get_current_imes()[0]
+                        self.get_current_imes()[0]
                     ].transliterate([key.msymbol])
                     self.commit_string(
                         transliterated_digit, input_phrase=transliterated_digit)
@@ -1073,20 +1239,14 @@ class tabengine (IBus.Engine):
 
         if key.val in (IBus.KEY_Down, IBus.KEY_KP_Down) and key.control:
             # remove the first ime from the list and append it to the end.
-            imes = self._editor.get_current_imes()
-            self._editor.set_current_imes(imes[1:] + imes[:1])
-            if self._editor.is_empty():
-                return True
-            self._update_ui()
+            imes = self.get_current_imes()
+            self.set_current_imes(imes[1:] + imes[:1])
             return True
 
         if key.val in (IBus.KEY_Up, IBus.KEY_KP_Up) and key.control:
             # remove the last ime in the list and add it in front:
-            imes = self._editor.get_current_imes()
-            self._editor.set_current_imes(imes[-1:] + imes[:-1])
-            if self._editor.is_empty():
-                return True
-            self._update_ui()
+            imes = self.get_current_imes()
+            self.set_current_imes(imes[-1:] + imes[:-1])
             return True
 
         if key.val in (IBus.KEY_Down, IBus.KEY_KP_Down):
@@ -1199,7 +1359,7 @@ class tabengine (IBus.Engine):
                 else:
                     input_phrase = (
                         self._editor.get_transliterated_strings()[
-                            self._editor.get_current_imes()[0]])
+                            self.get_current_imes()[0]])
                     if input_phrase:
                         self.commit_string(
                             input_phrase + u' ', input_phrase = input_phrase)
@@ -1234,7 +1394,7 @@ class tabengine (IBus.Engine):
                 return True
             input_phrase = (
                 self._editor.get_transliterated_strings()[
-                    self._editor.get_current_imes()[0]])
+                    self.get_current_imes()[0]])
             if not input_phrase:
                 return False
             if not self._editor.get_candidates():
@@ -1293,10 +1453,10 @@ class tabengine (IBus.Engine):
                 in itb_util.categories_to_trigger_immediate_commit):
                 input_phrase = (
                     self._editor.get_transliterated_strings()[
-                        self._editor.get_current_imes()[0]])
+                        self.get_current_imes()[0]])
                 if (input_phrase
                     and input_phrase[-1] == key.msymbol
-                    and self._editor.get_current_imes()[0] == 'NoIme'):
+                    and self.get_current_imes()[0] == 'NoIme'):
                     self.commit_string(
                         input_phrase + u' ', input_phrase = input_phrase)
             self._update_ui()
@@ -1312,7 +1472,7 @@ class tabengine (IBus.Engine):
         return False
 
     def do_focus_in (self):
-        self.register_properties(self.properties)
+        self.register_properties(self.main_prop_list)
         self._editor.clear_context()
         self._commit_happened_after_focus_in = False
         self._update_ui ()
@@ -1413,9 +1573,7 @@ class tabengine (IBus.Engine):
             return
         if name == "inputmethod":
             imes = [x.strip() for x in value.split(',')]
-            self._editor.set_current_imes(imes)
-            if not self._editor.is_empty():
-                self._update_ui()
+            self.set_current_imes(imes)
             return
         if name == "dictionary":
             dictionary_names = [x.strip() for x in value.split(',')]
@@ -1424,7 +1582,7 @@ class tabengine (IBus.Engine):
                 self._update_ui()
             return
         if name == "adddirectinput":
-            imes = self._editor.get_current_imes()
+            imes = self.get_current_imes()
             dictionary_names = self.db.hunspell_obj.get_dictionary_names()
             self._editor._add_direct_input = value
             if value == True:
@@ -1441,18 +1599,16 @@ class tabengine (IBus.Engine):
                 dictionary_names = (
                     [dictionary_names[0]]
                     + [x for x in dictionary_names[1:] if x != 'en_GB'])
-            self._editor.set_current_imes(imes)
-            self._config.set_value(
-                self._config_section,
-                'inputmethod',
-                GLib.Variant.new_string(','.join(imes)))
             self.db.hunspell_obj.set_dictionary_names(dictionary_names)
             self._config.set_value(
                 self._config_section,
                 'dictionary',
                 GLib.Variant.new_string(','.join(dictionary_names)))
-            if not self._editor.is_empty():
-                self._update_ui()
+            self.set_current_imes(imes)
+            self._config.set_value(
+                self._config_section,
+                'inputmethod',
+                GLib.Variant.new_string(','.join(imes)))
             return
         if name == "dictionaryinstalltimestamp":
             # A dictionary has bin updated or installed,
