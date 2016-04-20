@@ -84,6 +84,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
+                                <property name="tooltip_text" translatable="yes">Toggle whether a list of suggestions pops up with the Tab key.</property>
                                 <property name="xalign">0</property>
                                 <property name="image_position">right</property>
                                 <property name="draw_indicator">True</property>
@@ -103,6 +104,7 @@
                                   <object class="GtkLabel" id="page_size_label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="tooltip_text" translatable="yes">How many suggestion candidates to show in one page of the candidate list.</property>
                                     <property name="label" translatable="yes">Candidate window page size:</property>
                                     <property name="xalign">0</property>
                                   </object>
@@ -139,6 +141,7 @@
                               <object class="GtkLabel" id="input_method_label">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="tooltip_text" translatable="yes">The input method to use. See also the option “Add direct input” to add British English as a second language.</property>
                                 <property name="label" translatable="yes">Input Method:</property>
                                 <property name="xalign">0</property>
                               </object>
@@ -168,6 +171,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
+                                <property name="tooltip_text" translatable="yes">Display how many candidates there are and which one is selected on top of the list of candidates.</property>
                                 <property name="xalign">0</property>
                                 <property name="image_position">right</property>
                                 <property name="draw_indicator">True</property>
@@ -189,6 +193,7 @@
                                   <object class="GtkLabel" id="min_chars_completion_label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="tooltip_text" translatable="yes">Show no suggestions when less than this number of characters have been typed.</property>
                                     <property name="label" translatable="yes">Minimum number of chars for completion:</property>
                                   </object>
                                   <packing>
@@ -226,6 +231,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <property name="tooltip_text" translatable="yes">Display some help showing how to use the input method selected above.</property>
                               </object>
                               <packing>
                                 <property name="right_attach">2</property>
@@ -240,6 +246,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
+                                <property name="tooltip_text" translatable="yes">Use the regular digits 1-9 as select keys. If that option is on, numbers can only by typed while no suggestions are shown. Therefore, completions for numbers cannot be suggested. And typing words containing numbers, like “A4” is more difficult as typing “4” would select the 4th suggestion. On the other hand, selecting suggestions using 1-9 is easier then using the always enabled select keys F1-F9 as the latter keys are farther away from the fingers.</property>
                                 <property name="xalign">0</property>
                                 <property name="yalign">0.51999998092651367</property>
                                 <property name="draw_indicator">True</property>
@@ -258,6 +265,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
+                                <property name="tooltip_text" translatable="yes">This option adds British English as a second language to use in addition to the main language of this input method.</property>
                                 <property name="xalign">0</property>
                                 <property name="yalign">0.51999998092651367</property>
                                 <property name="draw_indicator">True</property>
