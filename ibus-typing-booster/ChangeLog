@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 20 Apr 2016 Released 1.4.1 version
+* Avoid unnessary initialization of transliterators when the set of input methods has not changed
+* Add  property menu to choose the current preedit input method
+* Display preëdit input method in aux_string also when number of candidates is not shown
+* Add some tooltips to the setup tool
+* Update German translations
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 08 Apr 2016 Released 1.4.0 version
 * Call IBus.Bus() in __main__, not in __init__ of class SetupUI (Resolves: rhbz#1325338)
 * Multilingual support, more than one language in an engine
