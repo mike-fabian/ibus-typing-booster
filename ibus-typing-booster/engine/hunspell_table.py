@@ -947,47 +947,46 @@ class tabengine (IBus.Engine):
 
     def _update_aux (self):
         '''Update Aux String in UI'''
-        aux_string = u'(%d / %d)' % (
-            self._editor.get_lookup_table().get_cursor_pos() + 1,
-            self._editor.get_lookup_table().get_number_of_candidates())
+        aux_string = u''
+        if self._show_number_of_candidates:
+           aux_string = u'(%d / %d) ' % (
+               self._editor.get_lookup_table().get_cursor_pos() + 1,
+               self._editor.get_lookup_table().get_number_of_candidates())
         preedit_ime = self.get_current_imes()[0]
         if preedit_ime != 'NoIme':
-            aux_string += u' ' + preedit_ime
-        if aux_string:
-            # Colours do not work at the moment in the auxiliary text!
-            # Needs fix in ibus.
-            attrs = IBus.AttrList()
+            aux_string += preedit_ime + u' '
+        # Colours do not work at the moment in the auxiliary text!
+        # Needs fix in ibus.
+        attrs = IBus.AttrList()
+        attrs.append(IBus.attr_foreground_new(
+            rgb(0x95, 0x15, 0xb5),
+            0,
+            len(aux_string)))
+        if debug_level > 0:
+            context = (
+                u'Context: ' + self._editor.get_pp_phrase()
+                + u' ' + self._editor.get_p_phrase())
+            aux_string += context
             attrs.append(IBus.attr_foreground_new(
-                rgb(0x95, 0x15, 0xb5),
-                0,
+                rgb(0x00, 0xff, 0x00),
+                len(aux_string)-len(context),
                 len(aux_string)))
-            if debug_level > 0:
-                context = (
-                    u' ' + self._editor.get_pp_phrase()
-                    + u' ' + self._editor.get_p_phrase())
-                aux_string += context
-                attrs.append(IBus.attr_foreground_new(
-                    rgb(0x00, 0xff, 0x00),
-                    len(aux_string)-len(context),
-                    len(aux_string)))
-            text = IBus.Text.new_from_string(aux_string)
-            i = 0
-            while attrs.get(i) != None:
-                attr = attrs.get(i)
-                text.append_attribute(attr.get_attr_type(),
-                                      attr.get_value(),
-                                      attr.get_start_index(),
-                                      attr.get_end_index())
-                i += 1
-            visible = True
-            if (self._editor.get_lookup_table().get_number_of_candidates() == 0
-                or self._show_number_of_candidates == False
-                or (self._tab_enable
-                    and not self.is_lookup_table_enabled_by_tab)):
-                visible = False
-            super(tabengine, self).update_auxiliary_text(text, visible)
-        else:
-            self.hide_auxiliary_text()
+        text = IBus.Text.new_from_string(aux_string)
+        i = 0
+        while attrs.get(i) != None:
+            attr = attrs.get(i)
+            text.append_attribute(attr.get_attr_type(),
+                                  attr.get_value(),
+                                  attr.get_start_index(),
+                                  attr.get_end_index())
+            i += 1
+        visible = True
+        if (self._editor.get_lookup_table().get_number_of_candidates() == 0
+            or (self._tab_enable
+                and not self.is_lookup_table_enabled_by_tab)
+            or not aux_string):
+            visible = False
+        super(tabengine, self).update_auxiliary_text(text, visible)
 
     def _update_lookup_table (self):
         '''Update Lookup Table in UI'''
