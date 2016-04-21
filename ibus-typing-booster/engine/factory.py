@@ -60,9 +60,8 @@ class EngineFactory (IBus.Factory):
                              % engine_name)
         engine_base_path = "/com/redhat/IBus/engines/table/%s/engine/"
         path_patt = re.compile(r'[^a-zA-Z0-9_/]')
-        self.engine_path = engine_base_path % path_patt.sub ('_', engine_name)
+        engine_path = engine_base_path % path_patt.sub ('_', engine_name)
         try:
-            db_dir = "/usr/share/ibus-typing-booster/hunspell-tables"
             if engine_name in self.dbdict:
                 self.db = self.dbdict[engine_name]
             else:
@@ -72,8 +71,8 @@ class EngineFactory (IBus.Factory):
             if engine_name in self.enginedict:
                 engine = self.enginedict[engine_name]
             else:
-                engine = hunspell_table.tabengine(self.bus, self.engine_path \
-                        + str(self.engine_id), self.db)
+                engine = hunspell_table.tabengine(
+                    self.bus, engine_path + str(self.engine_id), self.db)
                 self.enginedict[engine_name] = engine
                 self.engine_id += 1
             return engine

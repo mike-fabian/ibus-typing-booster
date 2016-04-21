@@ -105,7 +105,7 @@ class KeyEvent:
 class editor(object):
     '''Hold user inputs chars and preedit string'''
 
-    def __init__ (self, config, database):
+    def __init__ (self, config, database, lookup_table):
         if debug_level > 1:
             sys.stderr.write("editor __init__(config=%s, database=%s)\n"
                              %(config, database))
@@ -129,11 +129,7 @@ class editor(object):
         self._pp_phrase = u''
         # self._candidates: hold candidates selected from database and hunspell
         self._candidates = []
-        self._lookup_table = IBus.LookupTable.new(
-            page_size=tabengine._page_size,
-            cursor_pos=0,
-            cursor_visible=False,
-            round=True)
+        self._lookup_table = lookup_table
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
 
@@ -196,6 +192,8 @@ class editor(object):
                 self._config_section,
                 'inputmethod',
                 GLib.Variant.new_string(','.join(self._current_imes)))
+        self._transliterated_strings = {}
+        self._transliterators = {}
         self.init_transliterators()
 
     def init_transliterators(self):
@@ -242,7 +240,8 @@ class editor(object):
                     self._typed_string)
             else:
                 self._transliterated_strings[ime] = (
-                    self._transliterators[ime].transliterate(self._typed_string))
+                    self._transliterators[ime].transliterate(
+                        self._typed_string))
                 if ime in ['ko-romaja', 'ko-han2']:
                     self._transliterated_strings[ime] = unicodedata.normalize(
                         'NFKD', self._transliterated_strings[ime])
@@ -257,6 +256,15 @@ class editor(object):
 
     def get_transliterated_strings(self):
         return self._transliterated_strings
+
+    def get_typed_string(self):
+        return self._typed_string
+
+    def get_typed_string_cursor(self):
+        return self._typed_string_cursor
+
+    def set_typed_string_cursor(self, cursor):
+        self._typed_string_cursor = cursor
 
     def insert_string_at_cursor(self, string_to_insert):
         '''Insert typed string at cursor position'''
@@ -591,6 +599,10 @@ class editor(object):
         '''Get lookup table'''
         return self._lookup_table
 
+    def set_lookup_table (self, lookup_table):
+        '''Set lookup table'''
+        self._lookup_table = lookup_table
+
     def get_candidates(self):
         '''Get list of candidates'''
         return self._candidates
@@ -665,15 +677,15 @@ class tabengine (IBus.Engine):
         self._config = self._bus.get_config ()
         self._config.connect('value-changed', self.__config_value_changed_cb)
 
-        tabengine._page_size = variant_to_value(self._config.get_value(
+        self._page_size = variant_to_value(self._config.get_value(
                 self._config_section,
                 'pagesize'))
-        if tabengine._page_size == None:
-            tabengine._page_size = 6 # reasonable default page size
-        if tabengine._page_size < 1:
-            tabengine._page_size = 1 # minimum page size supported
-        if tabengine._page_size > 9:
-            tabengine._page_size = 9 # maximum page size supported
+        if self._page_size == None:
+            self._page_size = 6 # reasonable default page size
+        if self._page_size < 1:
+            self._page_size = 1 # minimum page size supported
+        if self._page_size > 9:
+            self._page_size = 9 # maximum page size supported
 
         self._show_number_of_candidates = variant_to_value(
             self._config.get_value(
@@ -696,7 +708,14 @@ class tabengine (IBus.Engine):
         self._status = self.db.ime_properties.get(
             'status_prompt').encode('utf8')
 
-        self._editor = editor(self._config, self.db)
+        self._editor = editor(
+            self._config,
+            self.db,
+            IBus.LookupTable.new(
+                page_size = self._page_size,
+                cursor_pos = 0,
+                cursor_visible = False,
+                round = True))
         self.is_lookup_table_enabled_by_tab = False
         self._tab_enable = variant_to_value(self._config.get_value (
             self._config_section,
@@ -707,6 +726,8 @@ class tabengine (IBus.Engine):
 
         self._prop_dict = {}
         self.main_prop_list = []
+        self.preedit_ime_menu = {}
+        self.preedit_ime_properties = {}
         self.preedit_ime_sub_properties_prop_list = []
         self.update_preedit_ime_menu_dicts()
         self._setup_property = None
@@ -891,7 +912,7 @@ class tabengine (IBus.Engine):
 
     def _start_setup(self):
         if self._setup_pid != 0:
-            pid, state = os.waitpid(self._setup_pid, os.P_NOWAIT)
+            pid, dummy_state = os.waitpid(self._setup_pid, os.P_NOWAIT)
             if pid != self._setup_pid:
                 # If the last setup tool started from here is still
                 # running the pid returned by the above os.waitpid()
@@ -949,9 +970,9 @@ class tabengine (IBus.Engine):
         '''Update Aux String in UI'''
         aux_string = u''
         if self._show_number_of_candidates:
-           aux_string = u'(%d / %d) ' % (
-               self._editor.get_lookup_table().get_cursor_pos() + 1,
-               self._editor.get_lookup_table().get_number_of_candidates())
+            aux_string = u'(%d / %d) ' % (
+                self._editor.get_lookup_table().get_cursor_pos() + 1,
+                self._editor.get_lookup_table().get_number_of_candidates())
         preedit_ime = self.get_current_imes()[0]
         if preedit_ime != 'NoIme':
             aux_string += preedit_ime + u' '
@@ -1038,7 +1059,7 @@ class tabengine (IBus.Engine):
                 surrounding_text = self.get_surrounding_text()
                 text = surrounding_text[0].get_text()
                 cursor_pos = surrounding_text[1]
-                anchor_pos = surrounding_text[2]
+                dummy_anchor_pos = surrounding_text[2]
                 # The commit_phrase is *not* yet in the surrounding text,
                 # it will show up there only when the next key event is
                 # processed:
@@ -1071,7 +1092,7 @@ class tabengine (IBus.Engine):
         surrounding_text = self.get_surrounding_text()
         text = surrounding_text[0].get_text()
         cursor_pos = surrounding_text[1]
-        anchor_pos = surrounding_text[2]
+        dummy_anchor_pos = surrounding_text[2]
         if not surrounding_text:
             return
         if not self._commit_happened_after_focus_in:
@@ -1087,7 +1108,7 @@ class tabengine (IBus.Engine):
         if len(tokens) > 1:
             self._editor._pp_phrase = tokens[-2]
 
-    def do_candidate_clicked(self, index, button, state):
+    def do_candidate_clicked(self, index, dummy_button, dummy_state):
         phrase = self._editor.get_string_from_lookup_table_current_page(index)
         if phrase:
             self.commit_string(phrase + u' ')
@@ -1149,7 +1170,7 @@ class tabengine (IBus.Engine):
                 surrounding_text = self.get_surrounding_text()
                 text = surrounding_text[0].get_text()
                 cursor_pos = surrounding_text[1]
-                anchor_pos = surrounding_text[2]
+                dummy_anchor_pos = surrounding_text[2]
                 if not surrounding_text:
                     return False
                 if not self._commit_happened_after_focus_in:
@@ -1372,23 +1393,25 @@ class tabengine (IBus.Engine):
             if self._editor.is_empty():
                 return False
             if (key.val in (IBus.KEY_Right, IBus.KEY_KP_Right)
-                and (self._editor._typed_string_cursor
-                     < len(self._editor._typed_string))):
+                and (self._editor.get_typed_string_cursor()
+                     < len(self._editor.get_typed_string()))):
                 if key.control:
                     # Move cursor to the end of the typed string
-                    self._editor._typed_string_cursor = len(
-                        self._editor._typed_string)
+                    self._editor.set_typed_string_cursor(
+                        len(self._editor.get_typed_string()))
                 else:
-                    self._editor._typed_string_cursor += 1
+                    self._editor.set_typed_string_cursor(
+                        self._editor.get_typed_string_cursor() + 1)
                 self._update_ui()
                 return True
             if (key.val in (IBus.KEY_Left, IBus.KEY_KP_Left)
-                and self._editor._typed_string_cursor > 0):
+                and self._editor.get_typed_string_cursor() > 0):
                 if key.control:
                     # Move cursor to the beginning of the typed string
-                    self._editor._typed_string_cursor = 0
+                    self._editor.set_typed_string_cursor(0)
                 else:
-                    self._editor._typed_string_cursor -= 1
+                    self._editor.set_typed_string_cursor(
+                        self._editor.get_typed_string_cursor() - 1)
                 self._update_ui()
                 return True
             input_phrase = (
@@ -1402,7 +1425,7 @@ class tabengine (IBus.Engine):
             phrase = self._editor.get_string_from_lookup_table_cursor_pos()
             if not phrase:
                 return False
-            if self._editor._lookup_table.cursor_visible:
+            if self._editor.get_lookup_table().cursor_visible:
                 # something is selected in the lookup table, commit
                 # the selected phrase
                 commit_string = phrase
@@ -1423,7 +1446,7 @@ class tabengine (IBus.Engine):
                 # committed string has characters. Because it might
                 # have been control-arrow-left, we need to clear the
                 # CONTROL_MASK:
-                for c in commit_string:
+                for dummy_char in commit_string:
                     self.forward_key_event(
                         key.val, key.code,
                         key.state & ~IBus.ModifierType.CONTROL_MASK)
@@ -1483,7 +1506,7 @@ class tabengine (IBus.Engine):
         self.reset()
         return
 
-    def do_set_content_type(self, purpose, hints):
+    def do_set_content_type(self, purpose, dummy_hints):
         if self._has_input_purpose:
             self._input_purpose = purpose
 
@@ -1543,12 +1566,13 @@ class tabengine (IBus.Engine):
             return
         if name == "pagesize":
             if value >= 1 and value <= 9:
-                tabengine._page_size = value
-                self._editor._lookup_table = IBus.LookupTable.new(
-                    page_size=tabengine._page_size,
-                    cursor_pos=0,
-                    cursor_visible=False,
-                    round=True)
+                self._page_size = value
+                self._editor.set_lookup_table(
+                    IBus.LookupTable.new(
+                        page_size = self._page_size,
+                        cursor_pos = 0,
+                        cursor_visible = False,
+                        round = True))
                 self.reset()
             return
         if name == "mincharcomplete":
