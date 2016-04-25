@@ -1059,7 +1059,13 @@ class tabengine (IBus.Engine):
                 surrounding_text = self.get_surrounding_text()
                 text = surrounding_text[0].get_text()
                 cursor_pos = surrounding_text[1]
-                dummy_anchor_pos = surrounding_text[2]
+                anchor_pos = surrounding_text[2]
+                if debug_level > 1:
+                    sys.stderr.write(
+                        'Removing whitespace before sentence end char. '
+                        + 'surrounding_text = '
+                        + '[text = "%s", cursor_pos = %s, anchor_pos = %s]'
+                        %(text, cursor_pos, anchor_pos) + '\n')
                 # The commit_phrase is *not* yet in the surrounding text,
                 # it will show up there only when the next key event is
                 # processed:
@@ -1074,6 +1080,16 @@ class tabengine (IBus.Engine):
                     # len(commit_phrase)):
                     offset =  -(nchars + len(commit_phrase))
                     self.delete_surrounding_text(offset, nchars)
+                    if debug_level > 1:
+                        surrounding_text = self.get_surrounding_text()
+                        text = surrounding_text[0].get_text()
+                        cursor_pos = surrounding_text[1]
+                        anchor_pos = surrounding_text[2]
+                        sys.stderr.write(
+                            'Removed whitespace before sentence end char. '
+                            + 'surrounding_text = '
+                            + '[text = "%s", cursor_pos = %s, anchor_pos = %s]'
+                            %(text, cursor_pos, anchor_pos) + '\n')
         stripped_input_phrase = itb_util.strip_token(input_phrase)
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
         self.db.check_phrase_and_update_frequency(
@@ -1493,13 +1509,13 @@ class tabengine (IBus.Engine):
         # returning “False”.
         return False
 
-    def do_focus_in (self):
+    def do_focus_in(self):
         self.register_properties(self.main_prop_list)
         self._editor.clear_context()
         self._commit_happened_after_focus_in = False
-        self._update_ui ()
+        self._update_ui()
 
-    def do_focus_out (self):
+    def do_focus_out(self):
         if self._has_input_purpose:
             self._input_purpose = 0
         self._editor.clear_context()
