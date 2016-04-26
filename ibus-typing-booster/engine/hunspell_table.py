@@ -449,7 +449,8 @@ class editor(object):
                         len(self._transliterated_strings[ime])
                         - len(stripped_transliterated_string))
                     if prefix_length:
-                        prefix = self._transliterated_string[0:prefix_length]
+                        prefix = (
+                            self._transliterated_strings[ime][0:prefix_length])
                     try:
                         candidates = self.db.select_words(
                             stripped_transliterated_string,
