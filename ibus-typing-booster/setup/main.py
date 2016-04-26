@@ -206,6 +206,18 @@ class SetupUI:
         add_direct_input_checkbox.connect(
             'clicked', event_handler.onAddDirectInputCheckbox)
 
+        remember_last_used_preedit_ime_checkbox = self.builder.get_object(
+            "remember_last_used_preedit_ime_checkbox")
+        self.remember_last_used_predit_ime = self.variant_to_value(
+            self.config.get_value(
+                self.config_section, 'rememberlastusedpreeditime'))
+        if self.remember_last_used_predit_ime == None:
+            self.remember_last_used_predit_ime = False
+        if  self.remember_last_used_predit_ime == True:
+            remember_last_used_preedit_ime_checkbox.set_active(True)
+        remember_last_used_preedit_ime_checkbox.connect(
+            'clicked', event_handler.onRememberLastUsedPreeditImeCheckbox)
+
         self.page_size_adjustment = self.builder.get_object(
             "page_size_adjustment")
         self.page_size = self.variant_to_value(self.config.get_value(
@@ -500,6 +512,20 @@ class EventHandler:
             SetupUi.config.set_value(
                 SetupUi.config_section,
                 'adddirectinput',
+                GLib.Variant.new_boolean(False))
+
+    def onRememberLastUsedPreeditImeCheckbox(self, widget):
+        if widget.get_active():
+            SetupUi.remember_last_used_predit_ime = True
+            SetupUi.config.set_value(
+                SetupUi.config_section,
+                'rememberlastusedpreeditime',
+                GLib.Variant.new_boolean(True))
+        else:
+            SetupUi.remember_last_used_predit_ime = False
+            SetupUi.config.set_value(
+                SetupUi.config_section,
+                'rememberlastusedpreeditime',
                 GLib.Variant.new_boolean(False))
 
     def onPageSizeAdjustmentValueChanged(self, widget):

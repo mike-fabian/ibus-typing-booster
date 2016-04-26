@@ -74,7 +74,7 @@
                           <object class="GtkTable" id="table4">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="n_rows">8</property>
+                            <property name="n_rows">9</property>
                             <property name="n_columns">2</property>
                             <property name="column_spacing">8</property>
                             <property name="row_spacing">4</property>
@@ -131,8 +131,8 @@
                               </object>
                               <packing>
                                 <property name="right_attach">2</property>
-                                <property name="top_attach">4</property>
-                                <property name="bottom_attach">5</property>
+                                <property name="top_attach">5</property>
+                                <property name="bottom_attach">6</property>
                                 <property name="x_options">GTK_FILL</property>
                                 <property name="y_options">GTK_FILL</property>
                               </packing>
@@ -146,8 +146,8 @@
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
-                                <property name="top_attach">6</property>
-                                <property name="bottom_attach">7</property>
+                                <property name="top_attach">7</property>
+                                <property name="bottom_attach">8</property>
                                 <property name="x_options">GTK_FILL</property>
                                 <property name="y_options"/>
                               </packing>
@@ -160,8 +160,8 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
-                                <property name="top_attach">6</property>
-                                <property name="bottom_attach">7</property>
+                                <property name="top_attach">7</property>
+                                <property name="bottom_attach">8</property>
                                 <property name="y_options"/>
                               </packing>
                             </child>
@@ -219,8 +219,8 @@
                               </object>
                               <packing>
                                 <property name="right_attach">2</property>
-                                <property name="top_attach">5</property>
-                                <property name="bottom_attach">6</property>
+                                <property name="top_attach">6</property>
+                                <property name="bottom_attach">7</property>
                                 <property name="x_options">GTK_FILL</property>
                                 <property name="y_options">GTK_FILL</property>
                               </packing>
@@ -235,8 +235,8 @@
                               </object>
                               <packing>
                                 <property name="right_attach">2</property>
-                                <property name="top_attach">7</property>
-                                <property name="bottom_attach">8</property>
+                                <property name="top_attach">8</property>
+                                <property name="bottom_attach">9</property>
                                 <property name="y_options"/>
                               </packing>
                             </child>
@@ -248,7 +248,6 @@
                                 <property name="receives_default">False</property>
                                 <property name="tooltip_text" translatable="yes">Use the regular digits 1-9 as select keys. If that option is on, numbers can only by typed while no suggestions are shown. Therefore, completions for numbers cannot be suggested. And typing words containing numbers, like “A4” is more difficult as typing “4” would select the 4th suggestion. On the other hand, selecting suggestions using 1-9 is easier then using the always enabled select keys F1-F9 as the latter keys are farther away from the fingers.</property>
                                 <property name="xalign">0</property>
-                                <property name="yalign">0.51999998092651367</property>
                                 <property name="draw_indicator">True</property>
                               </object>
                               <packing>
@@ -267,13 +266,30 @@
                                 <property name="receives_default">False</property>
                                 <property name="tooltip_text" translatable="yes">This option adds British English as a second language to use in addition to the main language of this input method.</property>
                                 <property name="xalign">0</property>
-                                <property name="yalign">0.51999998092651367</property>
                                 <property name="draw_indicator">True</property>
                               </object>
                               <packing>
                                 <property name="right_attach">2</property>
                                 <property name="top_attach">3</property>
                                 <property name="bottom_attach">4</property>
+                                <property name="x_options">GTK_FILL</property>
+                                <property name="y_options">GTK_FILL</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="remember_last_used_preedit_ime_checkbox">
+                                <property name="label" translatable="yes">Remember last used preedit input method</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="tooltip_text" translatable="yes">If more then one input method is used at the same time, one of them is used for the preedit.  Which input method is used for the preedit can be changed via the menu or via shortcut keys. If this option is enabled, such a change is remembered even if the session is restarted. </property>
+                                <property name="xalign">0</property>
+                                <property name="draw_indicator">True</property>
+                              </object>
+                              <packing>
+                                <property name="right_attach">2</property>
+                                <property name="top_attach">4</property>
+                                <property name="bottom_attach">5</property>
                                 <property name="x_options">GTK_FILL</property>
                                 <property name="y_options">GTK_FILL</property>
                               </packing>

@@ -717,12 +717,22 @@ class tabengine (IBus.Engine):
                 cursor_pos = 0,
                 cursor_visible = False,
                 round = True))
+
         self.is_lookup_table_enabled_by_tab = False
         self._tab_enable = variant_to_value(self._config.get_value (
             self._config_section,
             "tabenable"))
         if self._tab_enable == None:
             self._tab_enable = False
+
+        self._remember_last_used_preedit_ime = False
+        self._remember_last_used_preedit_ime = variant_to_value(
+            self._config.get_value(
+                self._config_section,
+                "rememberlastusedpreeditime"))
+        if self._remember_last_used_preedit_ime == None:
+            self._remember_last_used_preedit_ime = False
+
         self._commit_happened_after_focus_in = False
 
         self._prop_dict = {}
@@ -756,6 +766,11 @@ class tabengine (IBus.Engine):
                 + 'Trying to set: %s\n' %imes
                 + 'Really setting: %s\n' %imes[:self.get_current_imes_max()])
             imes = imes[:self.get_current_imes_max()]
+        if self._remember_last_used_preedit_ime:
+            self._config.set_value(
+                self._config_section,
+                'inputmethod',
+                GLib.Variant.new_string(','.join(imes)))
         self._editor.set_current_imes(imes)
         self.update_preedit_ime_menu_dicts()
         self._init_or_update_property_menu_preedit_ime(
@@ -1580,6 +1595,12 @@ class tabengine (IBus.Engine):
                 self._tab_enable = True
             else:
                 self._tab_enable = False
+            return
+        if name == "rememberlastusedpreeditime":
+            if value == 1:
+                self._remember_last_used_preedit_ime = True
+            else:
+                self._remember_last_used_preedit_ime = False
             return
         if name == "pagesize":
             if value >= 1 and value <= 9:
