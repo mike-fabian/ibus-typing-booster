@@ -274,7 +274,8 @@ class SetupUI:
         if len(self.current_imes) == 1:
             self.main_ime = self.current_imes[0]
         else:
-            self.main_ime = [x for x in self.current_imes if x != 'NoIme'][0]
+            self.main_ime = (
+                [x for x in self.current_imes if x in self.supported_imes][0])
         combobox_has_ime = False
         for i in range(len(ime_store)):
             if ime_store[i][1] == self.main_ime:
