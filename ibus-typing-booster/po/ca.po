@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-typing-booster 1.2.14\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-04-20 14:25+0200\n"
+"POT-Creation-Date: 2016-04-27 09:14+0200\n"
 "PO-Revision-Date: 2015-10-11 20:54+0200\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
 "Language-Team: Catalan\n"
@@ -14,25 +14,25 @@ msgstr ""
 "X-Generator: Zanata 3.7.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: engine/hunspell_table.py:755
+#: engine/hunspell_table.py:792
 #, python-format
 msgid "Switch preedit input method to %(ime)s"
 msgstr ""
 
-#: engine/hunspell_table.py:763
+#: engine/hunspell_table.py:800
 #, fuzzy
 msgid "Preedit input method"
 msgstr "Mètode d'entrada:"
 
-#: engine/hunspell_table.py:764
+#: engine/hunspell_table.py:801
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:855
+#: engine/hunspell_table.py:892
 msgid "Setup"
 msgstr "Preferències"
 
-#: engine/hunspell_table.py:858
+#: engine/hunspell_table.py:895
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Preferències per a l'ibus-typing-booster “%(name)s”"
@@ -64,29 +64,29 @@ msgstr "El fitxer de configuració %(file)s no existeix."
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Preferències per a l'ibus-typing-booster \"%(symbol)s\""
 
-#: setup/main.py:300
+#: setup/main.py:312
 msgid "Another instance of this app is already running."
 msgstr "Ja s'està executant una altra instància d'aquesta aplicació."
 
-#: setup/main.py:395
+#: setup/main.py:407
 msgid "Open File ..."
 msgstr "Obre el fitxer..."
 
-#: setup/main.py:413
+#: setup/main.py:425
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "S'ha après correctament del fitxer %(filename)s."
 
-#: setup/main.py:422
+#: setup/main.py:434
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Ha fallat l'aprenentatge del fitxer %(filename)s."
 
-#: setup/main.py:431
+#: setup/main.py:443
 msgid "Are you sure?"
 msgstr "Esteu segur?"
 
-#: setup/main.py:438
+#: setup/main.py:450
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -94,7 +94,7 @@ msgstr ""
 "Realment voleu eliminar totes les dades de l'idioma \n"
 "que s'han après de l'escriptura o la lectura de fitxers? "
 
-#: setup/main.py:607
+#: setup/main.py:633
 msgid "ibus is not running."
 msgstr "ibus no s'està executant."
 
@@ -171,57 +171,70 @@ msgid ""
 "fingers."
 msgstr ""
 
-#: setup/setup.glade:264
+#: setup/setup.glade:263
 msgid "Add direct input"
 msgstr ""
 
-#: setup/setup.glade:268
+#: setup/setup.glade:267
 msgid ""
 "This option adds British English as a second language to use in addition to "
 "the main language of this input method."
 msgstr ""
 
-#: setup/setup.glade:308
+#: setup/setup.glade:281
+#, fuzzy
+msgid "Remember last used preedit input method"
+msgstr "Mètode d'entrada:"
+
+#: setup/setup.glade:285
+msgid ""
+"If more then one input method is used at the same time, one of them is used "
+"for the preedit.  Which input method is used for the preedit can be changed "
+"via the menu or via shortcut keys. If this option is enabled, such a change "
+"is remembered even if the session is restarted. "
+msgstr ""
+
+#: setup/setup.glade:324
 msgid "Options"
 msgstr "Opcions"
 
-#: setup/setup.glade:341
+#: setup/setup.glade:357
 msgid "Install dictionary"
 msgstr "Instal·la el diccionari"
 
-#: setup/setup.glade:355
+#: setup/setup.glade:371
 msgid "Install pyhunspell"
 msgstr "Instal·la pyhunspell"
 
-#: setup/setup.glade:371
+#: setup/setup.glade:387
 msgid "Learn from text file"
 msgstr "Aprèn del fitxer de text"
 
-#: setup/setup.glade:389
+#: setup/setup.glade:405
 msgid "Install the dictionary package for this engine"
 msgstr "Instal·la el paquet del diccionari per a aquest motor"
 
-#: setup/setup.glade:399
+#: setup/setup.glade:415
 msgid "Install pyhunspell package to get spellchecking suggestions"
 msgstr ""
 "Instal·la el paquet pyhunspell per obtenir els suggeriments de la revisió "
 "ortogràfica"
 
-#: setup/setup.glade:413
+#: setup/setup.glade:429
 msgid "Learn your style by reading a text file"
 msgstr "Aprèn el vostre estil amb la lectura d'un fitxer de text"
 
-#: setup/setup.glade:427
+#: setup/setup.glade:443
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
 "Elimina totes les dades de l'idioma personal que s'han après de l'escriptura "
 "o de la lectura de fitxers"
 
-#: setup/setup.glade:439
+#: setup/setup.glade:455
 msgid "Delete learned data"
 msgstr "Elimina les dades que s'han après"
 
-#: setup/setup.glade:476
+#: setup/setup.glade:492
 msgid "Dictionaries and personal data"
 msgstr "Diccionaris i dades personals"

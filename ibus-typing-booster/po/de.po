@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-typing-booster 0.0.16\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-04-20 14:25+0200\n"
-"PO-Revision-Date: 2016-04-20 14:44+0200\n"
+"POT-Creation-Date: 2016-04-27 09:14+0200\n"
+"PO-Revision-Date: 2016-04-27 09:35+0200\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <trans-de@lists.fedoraproject.org>\n"
 "Language: de\n"
@@ -20,24 +20,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: engine/hunspell_table.py:755
+#: engine/hunspell_table.py:792
 #, python-format
 msgid "Switch preedit input method to %(ime)s"
 msgstr "Umschalten der Preedit-Eingabemethode auf %(ime)s"
 
-#: engine/hunspell_table.py:763
+#: engine/hunspell_table.py:800
 msgid "Preedit input method"
 msgstr "Preedit-Eingabemethode:"
 
-#: engine/hunspell_table.py:764
+#: engine/hunspell_table.py:801
 msgid "Switch preedit input method"
 msgstr "Umschalten der Preedit-Eingabemethode"
 
-#: engine/hunspell_table.py:855
+#: engine/hunspell_table.py:892
 msgid "Setup"
 msgstr "Einstellungen"
 
-#: engine/hunspell_table.py:858
+#: engine/hunspell_table.py:895
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Ibus Typing Booster \"%(name)s\" Einstellungen"
@@ -69,29 +69,29 @@ msgstr "Die Konfigurationsdatei %(file)s existiert nicht."
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Ibus Typing Booster \"%(symbol)s\" Einstellungen"
 
-#: setup/main.py:300
+#: setup/main.py:312
 msgid "Another instance of this app is already running."
 msgstr "Eine Instanz dieses Programms läuft schon."
 
-#: setup/main.py:395
+#: setup/main.py:407
 msgid "Open File ..."
 msgstr "Öffne Datei"
 
-#: setup/main.py:413
+#: setup/main.py:425
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Das Lernen aus der Datei %(filename)s war erfolgreich."
 
-#: setup/main.py:422
+#: setup/main.py:434
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Fehler beim Lernen aus der Datai %(filename)s."
 
-#: setup/main.py:431
+#: setup/main.py:443
 msgid "Are you sure?"
 msgstr "Sind Sie sicher?"
 
-#: setup/main.py:438
+#: setup/main.py:450
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -99,7 +99,7 @@ msgstr ""
 "Wollen Sie wirklich alle Sprachdaten löschen, die aus den\n"
 "Usereingaben oder aus Dateien gelernt wurden?"
 
-#: setup/main.py:607
+#: setup/main.py:633
 msgid "ibus is not running."
 msgstr "Ibus läuft nicht."
 
@@ -193,11 +193,11 @@ msgstr ""
 "1-9 etwas leichter als mit F1-F9 (geht immer), weil F1-F9 weiter von den "
 "Fingern weg sind."
 
-#: setup/setup.glade:264
+#: setup/setup.glade:263
 msgid "Add direct input"
 msgstr "Direkte Eingabe hinzufügen"
 
-#: setup/setup.glade:268
+#: setup/setup.glade:267
 msgid ""
 "This option adds British English as a second language to use in addition to "
 "the main language of this input method."
@@ -205,47 +205,65 @@ msgstr ""
 "Diese Option fügt britisches Englisch als zweite Sprache zusätzlich zur "
 "Hauptsprache dieser Eingabemethode hinzu."
 
-#: setup/setup.glade:308
+#: setup/setup.glade:281
+msgid "Remember last used preedit input method"
+msgstr "Merken der zuletzt benutzten Preedit-Eingabemethode"
+
+#: setup/setup.glade:285
+msgid ""
+"If more then one input method is used at the same time, one of them is used "
+"for the preedit.  Which input method is used for the preedit can be changed "
+"via the menu or via shortcut keys. If this option is enabled, such a change "
+"is remembered even if the session is restarted. "
+msgstr ""
+"Wenn mehr als eine Inputmethode gleichzeitig benutzt wird, dann wird eine "
+"davon für das Preedit benutzt. Welche Inputmethode für das Preedit benutzt "
+"wird kann über das Menü oder über Tastaturkürzel gewählt werden. Wenn diese "
+"Option zum Merken eingeschaltet ist, wird ein Wechsel der Inputmethode für "
+"das Preedit abgespeichert, so daß nach einem Neustart wieder die zuletzt "
+"benutzte Inputmethdoe für das Preedit benutzt wird."
+
+#: setup/setup.glade:324
 msgid "Options"
 msgstr "Optionen"
 
-#: setup/setup.glade:341
+#: setup/setup.glade:357
 msgid "Install dictionary"
 msgstr "Installiere Wörterbuch"
 
-#: setup/setup.glade:355
+#: setup/setup.glade:371
 msgid "Install pyhunspell"
 msgstr "pyhunspell installieren"
 
-#: setup/setup.glade:371
+#: setup/setup.glade:387
 msgid "Learn from text file"
 msgstr "Aus Textdatei lernen"
 
-#: setup/setup.glade:389
+#: setup/setup.glade:405
 msgid "Install the dictionary package for this engine"
 msgstr "Installiere das Wörterbuchpaket für diesen Engine"
 
-#: setup/setup.glade:399
+#: setup/setup.glade:415
 msgid "Install pyhunspell package to get spellchecking suggestions"
 msgstr ""
 "Das pyhunspell Paket installieren um Tippfehlerkorrekturvorschläge zu "
 "bekommen"
 
-#: setup/setup.glade:413
+#: setup/setup.glade:429
 msgid "Learn your style by reading a text file"
 msgstr "Ihren Stil aus einer Textdatei lernen"
 
-#: setup/setup.glade:427
+#: setup/setup.glade:443
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
 "Alle Daten löschen, die aus den Benutzereingaben oder aus Dateien gelernt "
 "wurden"
 
-#: setup/setup.glade:439
+#: setup/setup.glade:455
 msgid "Delete learned data"
 msgstr "Gelernte Daten löschen"
 
-#: setup/setup.glade:476
+#: setup/setup.glade:492
 msgid "Dictionaries and personal data"
 msgstr "Wörterbücher und persönliche Daten"

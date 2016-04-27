@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-04-20 14:25+0200\n"
+"POT-Creation-Date: 2016-04-27 09:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,24 +17,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: engine/hunspell_table.py:755
+#: engine/hunspell_table.py:792
 #, python-format
 msgid "Switch preedit input method to %(ime)s"
 msgstr ""
 
-#: engine/hunspell_table.py:763
+#: engine/hunspell_table.py:800
 msgid "Preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:764
+#: engine/hunspell_table.py:801
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:855
+#: engine/hunspell_table.py:892
 msgid "Setup"
 msgstr ""
 
-#: engine/hunspell_table.py:858
+#: engine/hunspell_table.py:895
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr ""
@@ -64,35 +64,35 @@ msgstr ""
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr ""
 
-#: setup/main.py:300
+#: setup/main.py:312
 msgid "Another instance of this app is already running."
 msgstr ""
 
-#: setup/main.py:395
+#: setup/main.py:407
 msgid "Open File ..."
 msgstr ""
 
-#: setup/main.py:413
+#: setup/main.py:425
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr ""
 
-#: setup/main.py:422
+#: setup/main.py:434
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr ""
 
-#: setup/main.py:431
+#: setup/main.py:443
 msgid "Are you sure?"
 msgstr ""
 
-#: setup/main.py:438
+#: setup/main.py:450
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
 msgstr ""
 
-#: setup/main.py:607
+#: setup/main.py:633
 msgid "ibus is not running."
 msgstr ""
 
@@ -169,53 +169,65 @@ msgid ""
 "fingers."
 msgstr ""
 
-#: setup/setup.glade:264
+#: setup/setup.glade:263
 msgid "Add direct input"
 msgstr ""
 
-#: setup/setup.glade:268
+#: setup/setup.glade:267
 msgid ""
 "This option adds British English as a second language to use in addition to "
 "the main language of this input method."
 msgstr ""
 
-#: setup/setup.glade:308
+#: setup/setup.glade:281
+msgid "Remember last used preedit input method"
+msgstr ""
+
+#: setup/setup.glade:285
+msgid ""
+"If more then one input method is used at the same time, one of them is used "
+"for the preedit.  Which input method is used for the preedit can be changed "
+"via the menu or via shortcut keys. If this option is enabled, such a change "
+"is remembered even if the session is restarted. "
+msgstr ""
+
+#: setup/setup.glade:324
 msgid "Options"
 msgstr ""
 
-#: setup/setup.glade:341
+#: setup/setup.glade:357
 msgid "Install dictionary"
 msgstr ""
 
-#: setup/setup.glade:355
+#: setup/setup.glade:371
 msgid "Install pyhunspell"
 msgstr ""
 
-#: setup/setup.glade:371
+#: setup/setup.glade:387
 msgid "Learn from text file"
 msgstr ""
 
-#: setup/setup.glade:389
+#: setup/setup.glade:405
 msgid "Install the dictionary package for this engine"
 msgstr ""
 
-#: setup/setup.glade:399
+#: setup/setup.glade:415
 msgid "Install pyhunspell package to get spellchecking suggestions"
 msgstr ""
 
-#: setup/setup.glade:413
+#: setup/setup.glade:429
 msgid "Learn your style by reading a text file"
 msgstr ""
 
-#: setup/setup.glade:427
+#: setup/setup.glade:443
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
 
-#: setup/setup.glade:439
+#: setup/setup.glade:455
 msgid "Delete learned data"
 msgstr ""
 
-#: setup/setup.glade:476
+#: setup/setup.glade:492
 msgid "Dictionaries and personal data"
 msgstr ""
