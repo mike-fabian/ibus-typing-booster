@@ -8,4 +8,5 @@ Makefile.in
 /configure
 /ibus-typing-booster.pc
 /autom4te.cache/
-/m4/
+compile
+ibus-typing-booster-*.tar.gz
