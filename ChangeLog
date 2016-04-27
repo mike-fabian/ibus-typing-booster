@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 27 Apr 2016 Released 1.4.2 version
+* Fix mistyped variable name (Resolves: rhbz#1330461)
+* Add option to remember the preëdit input method used last
+* Update German translations
+* The combobox in the setup tool should show the first supported ime from dconf
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 20 Apr 2016 Released 1.4.1 version
 * Avoid unnessary initialization of transliterators when the set of input methods has not changed
 * Add  property menu to choose the current preedit input method
