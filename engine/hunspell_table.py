@@ -254,6 +254,9 @@ class editor(object):
                 + "self._transliterated_strings=%s\n"
                 %self._transliterated_strings)
 
+    def get_transliterators(self):
+        return self._transliterators
+
     def get_transliterated_strings(self):
         return self._transliterated_strings
 
@@ -1275,7 +1278,7 @@ class tabengine (IBus.Engine):
                     # native digits. For example, with mr-inscript we
                     # want “3” to be converted to “३”. So we try
                     # to transliterate and commit the result:
-                    transliterated_digit = self._editor.trans[
+                    transliterated_digit = self._editor.get_transliterators()[
                         self.get_current_imes()[0]
                     ].transliterate([key.msymbol])
                     self.commit_string(
