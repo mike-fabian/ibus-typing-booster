@@ -1,40 +1,142 @@
 == Introduction ==
-IBus-Hunspell-Table is the IM Engine framework for table-based input methods, and is
-forked from ibus-table whose Project Owner & Developer is Yu Yuwei <acevery@gmail.com>,
-with contributions from Caius "kaio" Chance <cchance@redhat.com>.
-The aim of IBus-Hunspell-Table is to provide a table based boosted environment for using hunspell dictionaries
-https://fedorahosted.org/ibus-hunspell-table
-Definitly, it is far from perfect, so if you have any wish or any
-suggestion, please send me an email <anish.developer@gmail.com>, I would be very please to hear
-from you :)
+ibus-typing-booster is a completion input method to speedup typing.
+
+Originally it was forked from ibus-table whose Project Owner &
+Developer is Yu Yuwei <acevery@gmail.com>, with contributions from
+Caius "kaio" Chance <cchance@redhat.com>.
+
+Developers:
+
+Mike FABIAN <mfabian@redhat.com>
+Anish Patil <anish.developer@gmail.com>
 
 == Key Bindings ==
-    Notice: Ctrl is "Control Key", Shift_L is the left "Shift Key",
-            Shift_R is the right "Shift Key", Alt is the "Alt Key",
-            Arrow_Left is the "Arrow Key" point to left, Arrow_Right is
-            the "Arrow Key" point to right, similarly as  Arrow_Up and
-            Arrow_Down.
-            Cursor is the one in preedit string.
-            [Num1~Num9] means one key in Num1, Num2, Num3, ... ,
-                Num9
+Space               Commit the preëdit and send a space to the application,
+                    i.e. commit the typed string followed by a space.
+Return              Commit the preëdit and send a Return to the application.
+Enter               Commit the preëdit and send a Enter to the application.
+Tab                 If the option “Enable suggestions by Tab key” is
+                    *not* set:
+                        “Tab” behaves like “Space”, i.e. it commits
+                        the typed string followed by a space.
+                    If the option “Enable suggestions by Tab key” is
+                    set:
+                        “Tab” toggles the display of the candidate list.
+                        I.e. it shows the candidate list if it was
+                        hidden and hides the candidate list if it was
+                        shown.
 
-Space               commit inputted string.
+Escape              Clear preëdit and discard contents.
+
+Left  (Arrow left)  Move cursor one typed key left in the preëdit text.
+                    May trigger a commit if the left end of the preëdit
+                    is reached.
+Control+Left        Move cursor to the left end of the preëdit text.
+                    If the cursor is already at the left end of the preëdit
+                    text, trigger a commit and send a Control+Left
+                    to the application.
+Right (Arrow right) Move cursor one typed key right in preëdit text.
+                    May trigger a commit if the right end of the preëdit
+                    is reached.
+Control+Right       Move cursor to the right end of the preëdit text.
+                    If the cursor is already at the right end of the preëdit
+                    text, trigger a commit and send a Control+Right
+                    to the application.
+Backspace           Remove the typed key to the left of the cursor in
+                    the preëdit text.
+Control+Backspace   Remove everything to the left of the cursor in the
+                    preëdit text.
+Delete              Remove the typed key to the right of the cursor in the
+                    preëdit text.
+Control+Delete      Remove everything to the right of the cursor in the
+                    preëdit text.
+
+Down  (Arrow down)  Select the next candidate.
+Up    (Arrow up)    Select the previous candidate.
+Page_Up             Show next page of candidates.
+Page_Down           Show previous page of candidates.
+
+F1                  Commit the candidate with the label “1”
+F2                  Commit the candidate with the label “2”
+...
+F9                  Commit the candidate with the label “9”
+1-9                 Same as F1-F9 if the option “Use digits as select keys”
+                    is enabled. This makes selecting candidates a bit easier
+                    because the number keys 1-9 are closer to the fingers then
+                    F1-F9 on most keyboards. On the other hand, it makes
+                    completing when typing numbers impossible and it makes
+                    typing strings which are combinations of letters and
+                    numbers like “A4” more difficult. If digits are used as
+                    select keys, numbers can only be typed when no candidate
+                    list is shown. In most cases this means that numbers can
+                    only be typed when nothing else has been typed yet and
+                    the preëdit is empty.
+
+When more than one input method at the same time is used:
+
+Control+Down        Switch input method used for the preëdit to the
+                    next input method
+Control+Up          Switch input method used for the preëdit to the
+                    previous input method.
 
 
-Arrow_Left          move cursor one character left in preedit string.
-Arrow_Right         move cursor one character right in preedit string.
-Backspace           remove the last input key or last character in
-                        preeidt string.
-Delete              remove one character after the cursor in preedit
-                        string.
+== Multilingual input ==
 
-Arrow_Down          mext candidate.
-Arrow_Up            previous candidate.
-Esc                 reset the input method.
-Num1 ~ Num9         select the correspondent candidate and commit
-                        inputted string
+ibus-typing-booster supports using more than one input
+method/transliteration at the same time.
 
-Page_Up/Page_Down   page up/down the lookup table of candidates.
--/+                 when not been used as valid input keys, the same as
-                        Page_Up and Page_Down.
+For example, if one uses the ibus-typing-booster engine "mr-IN",
+i.e. the engine for the Indian language Marathi, one can select one of
+the Marathi input methods mr-itrans, mr-phonetic, mr-inscript, and
+mr-inscript2 in the setup tool. Keys typed will be transliterated
+using the selected transliteration method and looked up in the mr_IN
+hunspell dictionary and the user database of previous input.
 
+To add English as a second language to use at the same time, one can
+use the checkbox option “Add direct input” in the setup tool. If that
+option is selected, direct keyboard input is added as a second input
+method and the en_GB (British English) dictionary is added as a second
+dictionary in addition to the mr_IN dictionary.
+
+If more than one input/transliteration method is enabled, the typed
+keys will will be transliterated with each transliteration
+method and each result will be looked up in the enabled dictionaries
+and in the user database of previous input.
+
+That way, to type English, one does not have to switch off the Marathi
+engine of ibus-typing-booster, one can just type and suitable English
+candidates will show up as well in the candidate list. After typing a
+few characters, Marathi input is unlikely to match English candidates
+and English input is unlikely to match Marathi candidates. This works
+even better after ibus-typing-booster has learned a while from the
+user input because ibus-typing-booster tries to complete the currently
+typed word by also using the last few words typed before as additional
+information. Therefore, if the user types a combination of words again
+he has already typed previously, the prediction for the currently
+typed word will be much better.
+
+Using the setup tool it is currently only possible to add British
+English as a second language to the main language of an
+ibus-typing-booster engine.
+
+But internally, ibus-typing-booser already supports any combination
+of input methods and dictionaries, only the setup tool is not
+yet able to set this up. It can be done by setting the
+appropriate dconf keys manually though.
+
+Example:
+
+Setting three input/transliteration methods:
+
+    $ dconf write /desktop/ibus/engine/typing-booster/typing-booster-mr-in/inputmethod '"mr-itrans,t-latn-post,NoIme"'
+
+sets the three transliteration methods, “mr-itrans” (Marathi Itrans),
+“t-latn-post” (A postscript input method to type accented Latin
+characters, e.g. typing “u"” will produce “ü”), and “NoIme” (direct
+keyboard input without any transliteration).
+
+Setting 3 dictionaries:
+
+    $ dconf write /desktop/ibus/engine/typing-booster/typing-booster-mr-in/dictionary='"mr_IN,en_GB,de_DE"'
+
+sets the Marathi, the British English,and the German dictionary.
