@@ -1,0 +1,255 @@
+---
+layout: default
+---
+<h1>Documentation</h1>
+
+<br>
+<a name="contents"></a>
+<br>
+<h2>Contents</h2>
+
+<ul>
+  <li><a href="#key-bindings">Key bindings</a></li>
+  <li><a href="#multilingual-input">Multilingual input</a></li>
+</ul>
+
+<br>
+<a name="key-bindings"></a>
+<br>
+<h2>Key bindings</h2>
+
+<table border="2" cellspacing="10" cellpadding="10">
+<thead>
+<tr>
+<th>Key combination</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Space</td>
+<td>Commit the preëdit and send a space to the application,
+i.e. commit the typed string followed by a space.</td>
+</tr>
+<tr>
+<td>Return</td>
+<td>Commit the preëdit and send a Return to the application.</td>
+</tr>
+<tr>
+<td>Enter</td>
+<td>Commit the preëdit and send a Enter to the application.</td>
+</tr>
+<tr>
+<td>Tab</td>
+<td>If the option “Enable suggestions by Tab key” is <em>not</em> set:
+“Tab” behaves like “Space”, i.e. it commits the typed string followed
+by a space. If the option “Enable suggestions by Tab key” is set:
+“Tab” toggles the display of the candidate list. I.e. it shows the
+candidate list if it was hidden and hides the candidate list if it was
+shown.</td>
+</tr>
+<tr>
+<td>Escape</td>
+<td>Clear preëdit and discard contents.</td>
+</tr>
+<tr>
+<td>Left  (Arrow left)</td>
+<td>Move cursor one typed key left in the preëdit text. May trigger a
+commit if the left end of the preëdit is reached.</td>
+</tr>
+<tr>
+<td>Control+Left</td>
+<td>Move cursor to the left end of the preëdit text. If the cursor is
+already at the left end of the preëdit text, trigger a commit and send
+a Control+Left to the application.</td>
+</tr>
+<tr>
+<td>Right (Arrow right)</td>
+<td>Move cursor one typed key right in preëdit text. May trigger a
+commit if the right end of the preëdit is reached.</td>
+</tr>
+<tr>
+<td>Control+Right</td>
+<td>Move cursor to the right end of the preëdit text. If the cursor is
+already at the right end of the preëdit text, trigger a commit and
+send a Control+Right to the application.</td>
+</tr>
+<tr>
+<td>Backspace</td>
+<td>Remove the typed key to the left of the cursor in the preëdit
+text.</td>
+</tr>
+<tr>
+<td>Control+Backspace</td>
+<td>Remove everything to the left of the cursor in the preëdit
+text.</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>Remove the typed key to the right of the cursor in the preëdit
+text.</td>
+</tr>
+<tr>
+<td>Control+Delete</td>
+<td>Remove everything to the right of the cursor in the preëdit
+text.</td>
+</tr>
+<tr>
+<td>Down  (Arrow down)</td>
+<td>Select the next candidate.</td>
+</tr>
+<tr>
+<td>Up    (Arrow up)</td>
+<td>Select the previous candidate.</td>
+</tr>
+<tr>
+<td>Page_Up</td>
+<td>Show next page of candidates.</td>
+</tr>
+<tr>
+<td>Page_Down</td>
+<td>Show previous page of candidates.</td>
+</tr>
+<tr>
+<td>F1</td>
+<td>Commit the candidate with the label “1”</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>Commit the candidate with the label “2”</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>F9</td>
+<td>Commit the candidate with the label “9”</td>
+</tr>
+<tr>
+<td>Control+F1</td>
+<td>Remove the candidate with the label “1” from the database of
+learned user input</td>
+</tr>
+<tr>
+<td>Control+F2</td>
+<td>Remove the candidate with the label “2” from the database of
+learned user input</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+<tr>
+<td>Control+F9</td>
+<td>Remove the candidate with the label “9” from the database of
+learned user input</td>
+</tr>
+<tr>
+<td>1 … 9</td>
+<td>Same as F1 … F9 if the option “Use digits as select keys” is
+enabled. Enabling that option makes selecting candidates a bit easier
+because the number keys 1 … 9 are closer to the fingers then F1 … F9 on
+most keyboards. On the other hand, it makes completing when typing
+numbers impossible and it makes typing strings which are combinations
+of letters and numbers like “A4” more difficult. If digits are used as
+select keys, numbers can only be typed when no candidate list is
+shown. In most cases this means that numbers can only be typed when
+nothing else has been typed yet and the preëdit is empty.</td>
+</tr>
+<td>Control+1 … Control+9</td>
+<td>Same as Control+F1 … Control+F9 if the option “Use digits as
+select keys” is enabled.
+</td>
+</tr>
+</tbody>
+</table>
+
+<br>
+<p>When more than one input method at the same time is used, the
+following additional key bindings are available:</p>
+
+<table border="2" cellspacing="10" cellpadding="10">
+<thead>
+<tr>
+<th>Key combination</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Control+Down</td>
+<td>Switch input method used for the preëdit to the next input
+method</td>
+</tr>
+<tr>
+<td>Control+Up</td>
+<td>Switch input method used for the preëdit to the previous input
+method.</td>
+</tr>
+</tbody>
+</table>
+
+<br>
+<a name="multilingual-input"></a>
+<br>
+<h2>Multilingual input</h2>
+
+<p>ibus-typing-booster supports using more than one input
+method/transliteration at the same time.</p>
+
+<p>For example, if one uses the ibus-typing-booster engine “mr-IN”,
+i.e. the engine for the Indian language Marathi, one can select one of
+the Marathi input methods mr-itrans, mr-phonetic, mr-inscript, and
+mr-inscript2 in the setup tool. Keys typed will be transliterated
+using the selected transliteration method and looked up in the mr_IN
+hunspell dictionary and the user database of previous input.</p>
+
+<p>To add English as a second language to use at the same time, one
+can use the checkbox option “Add direct input” in the setup tool. If
+that option is selected, direct keyboard input is added as a second
+input method and the en_GB (British English) dictionary is added as a
+second dictionary in addition to the mr_IN dictionary.</p>
+
+<p>If more than one input/transliteration method is enabled, the typed
+keys will will be transliterated with each transliteration method and
+each result will be looked up in the enabled dictionaries and in the
+user database of previous input.</p>
+
+<p>That way, to type English, one does not have to switch off the
+Marathi engine of ibus-typing-booster, one can just type and suitable
+English candidates will show up as well in the candidate list. After
+typing a few characters, Marathi input is unlikely to match English
+candidates and English input is unlikely to match Marathi
+candidates. This works even better after ibus-typing-booster has
+learned a while from the user input because ibus-typing-booster tries
+to complete the currently typed word by also using the last few words
+typed before as additional information. Therefore, if the user types a
+combination of words again he has already typed previously, the
+prediction for the currently typed word will be much better.</p>
+
+<p>Using the setup tool it is currently only possible to add British
+English as a second language to the main language of an
+ibus-typing-booster engine.</p>
+
+<p>But internally, ibus-typing-booser already supports any combination
+of input methods and dictionaries, only the setup tool is not yet able
+to set this up. It can be done by setting the appropriate dconf keys
+manually though.</p>
+
+<p>Example:</p>
+
+<p>Setting three input/transliteration methods:</p>
+
+<p><pre><code>$ dconf write /desktop/ibus/engine/typing-booster/typing-booster-mr-in/inputmethod '"mr-itrans,t-latn-post,NoIme"'</code></pre></p>
+
+<p>sets the three transliteration methods, “mr-itrans” (Marathi Itrans),
+“t-latn-post” (A postscript input method to type accented Latin
+characters, e.g. typing “u"” will produce “ü”), and “NoIme” (direct
+keyboard input without any transliteration).</p>
+
+<p>Setting 3 dictionaries:</p>
+
+<p><pre><code>$ dconf write /desktop/ibus/engine/typing-booster/typing-booster-mr-in/dictionary='"mr_IN,en_GB,de_DE"'</code></pre></p>
+
+<p>sets the Marathi, the British English,and the German dictionary.</p>
