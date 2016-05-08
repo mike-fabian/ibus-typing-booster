@@ -1,7 +1,7 @@
 ---
 navigation:
 - text: Overview
-  url: https://mike-fabian.github.io/ibus-typing-booster/index.html
+  url: index.html
 - text: News
   url: news.html
 - text: Documentation
@@ -44,7 +44,7 @@ navigation:
 	  <ul class="nav">
 	    {% for link in page.navigation %}
 	    <li {% if link.url == page.url %}class="active"{% endif %}>
-	      <a href="{{ link.url | remove: 'index.html' }}">
+	      <a href="{{ link.url }}">
                 {{ link.text }}</a></li>
 	    {% endfor %}
 	  </ul>
