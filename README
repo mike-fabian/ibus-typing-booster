@@ -137,6 +137,6 @@ keyboard input without any transliteration).
 
 Setting 3 dictionaries:
 
-    $ dconf write /desktop/ibus/engine/typing-booster/typing-booster-mr-in/dictionary='"mr_IN,en_GB,de_DE"'
+    $ dconf write /desktop/ibus/engine/typing-booster/typing-booster-mr-in/dictionary '"mr_IN,en_GB,de_DE"'
 
 sets the Marathi, the British English,and the German dictionary.
