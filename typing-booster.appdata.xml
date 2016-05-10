@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="inputmethod">
+  <id>typing-booster.xml</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>Typing Booster</name>
+  <summary>Predictive input method</summary>
+  <description>
+    <p>
+      Ibus-Typing Booster is a predictive input method and predicts
+      complete words based on partial input.  One can then simply
+      select the desired word from a list of suggestions and improve
+      one’s typing speed and spelling.
+    </p>
+    <p>
+      Input methods are typing systems allowing users to input complex
+      languages.  They are necessary because these contain too many
+      characters to simply be laid out on a traditional keyboard.
+    </p>
+  </description>
+  <url type="homepage">https://mike-fabian.github.io/ibus-typing-booster/</url>
+  <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
+  <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
+  <releases>
+    <release version="1.4.3" date="2016-04-28" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Fix AttributeError: 'editor' object has no attribute
+            'trans' (Resolves: rhbz#1331338)
+          </li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+  <project_license>GPL-3.0+</project_license>
+  <developer_name>Mike FABIAN</developer_name>
+  <update_contact>mfabian@redhat.com</update_contact>
+</component>
