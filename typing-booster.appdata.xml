@@ -21,6 +21,16 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.4.4" date="2016-05-10" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            self._current_imes needs to be updated before
+            self.init_transliterators() (Resolves: rhbz#1334579)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.4.3" date="2016-04-28" urgency="medium">
       <description>
         <ul>

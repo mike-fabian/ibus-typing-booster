@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 10 May 2016 Released 1.4.4 version
+* self._current_imes needs to be updated before self.init_transliterators() (Resolves: rhbz#1334579)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 28 Apr 2016 Released 1.4.3 version
 * Fix AttributeError: 'editor' object has no attribute 'trans (Resolves: rhbz#1331338)
 
