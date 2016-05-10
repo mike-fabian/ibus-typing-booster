@@ -640,8 +640,10 @@ class editor(object):
             # has changed, initialising the transliterators is not
             # necessary (and neither is updating the transliterated
             # strings necessary).
+            self._current_imes = imes
             self.init_transliterators()
-        self._current_imes = imes
+        else:
+            self._current_imes = imes
 
     def push_context(self, phrase):
         self._pp_phrase = self._p_phrase
