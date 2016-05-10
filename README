@@ -58,12 +58,19 @@ Page_Down           Show previous page of candidates.
 
 F1                  Commit the candidate with the label “1”
 F2                  Commit the candidate with the label “2”
-...
+…
 F9                  Commit the candidate with the label “9”
-1-9                 Same as F1-F9 if the option “Use digits as select keys”
+Control+F1          Remove the candidate with the label “1” from the
+                    database of learned user input
+Control+F2          Remove the candidate with the label “2” from the
+                    database of learned user input
+…
+Control+F9          Remove the candidate with the label “9” from the
+                    database of learned user input
+1…9                 Same as F1…F9 if the option “Use digits as select keys”
                     is enabled. This makes selecting candidates a bit easier
-                    because the number keys 1-9 are closer to the fingers then
-                    F1-F9 on most keyboards. On the other hand, it makes
+                    because the number keys 1…9 are closer to the fingers then
+                    F1…F9 on most keyboards. On the other hand, it makes
                     completing when typing numbers impossible and it makes
                     typing strings which are combinations of letters and
                     numbers like “A4” more difficult. If digits are used as
@@ -71,6 +78,8 @@ F9                  Commit the candidate with the label “9”
                     list is shown. In most cases this means that numbers can
                     only be typed when nothing else has been typed yet and
                     the preëdit is empty.
+Control+1…Control+9 Same as Control+F1…Control+F9 if the option
+                    “Use digits as select keys” is enabled.
 
 When more than one input method at the same time is used:
 
