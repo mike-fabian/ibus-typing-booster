@@ -3,7 +3,7 @@
 #
 # ibus-typing-booster - The Tables engine for IBus
 #
-# Copyright (c) 2015 Mike FABIAN <mfabian@redhat.com>
+# Copyright (c) 2015-2016 Mike FABIAN <mfabian@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -66,9 +66,12 @@ def mtext_to_string(mtext_pointer):
     libm17n__mconv_reset_converter(_utf8_converter)
     # one Unicode character cannot have more than 6 UTF-8 bytes
     # (actually not more than 4 ...)
-    conversion_buffer = bytes(libm17n__mtext_len(mtext_pointer) * 6)
+    bufsize = (libm17n__mtext_len(mtext_pointer) + 1) * 6
+    conversion_buffer = bytes(bufsize)
     libm17n__mconv_rebind_buffer(
-        _utf8_converter, ctypes.c_char_p(conversion_buffer), ctypes.c_int(10))
+        _utf8_converter,
+        ctypes.c_char_p(conversion_buffer),
+        ctypes.c_int(bufsize))
     libm17n__mconv_encode(_utf8_converter, mtext_pointer)
     # maybe not all of the buffer was really used for the conversion,
     # cut of the unused part:
@@ -189,6 +192,14 @@ class Transliterator:
     >>> trans = Transliterator('mr-itrans')
     >>> trans.transliterate(list('praviN'))
     'प्रविण्'
+    >>> trans.transliterate(list('namaste'))
+    'नमस्ते'
+
+    Hindi transliteration:
+
+    >>> trans = Transliterator('hi-itrans')
+    >>> trans.transliterate(list('namaste'))
+    'नमस्ते'
 
     Hindi-Inscript2 uses the AltGr key a lot, 'G-4' is
     the MSymbol name for AltGr-4 and it transliterates
