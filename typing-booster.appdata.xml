@@ -21,6 +21,20 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.4.5" date="2016-05-11" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Do not colourize the preëdit dark blue, that is unreadable
+            on dark backgrounds (Resolves: rhbz#1335021).
+          </li>
+          <li>
+            Set the size of the libm17n mconv conversion buffer
+            correctly (Resolves: rhbz#1335021).
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.4.4" date="2016-05-10" urgency="medium">
       <description>
         <ul>

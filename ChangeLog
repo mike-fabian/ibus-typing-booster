@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 11 May 2016 Released 1.4.5 version
+* Do not colourize the preëdit dark blue, that is unreadable on dark backgrounds (Resolves: rhbz#1335201)
+* Set the size of the libm17n mconv conversion buffer correctly (Resolves: rhbz#1335021)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 10 May 2016 Released 1.4.4 version
 * self._current_imes needs to be updated before self.init_transliterators() (Resolves: rhbz#1334579)
 
