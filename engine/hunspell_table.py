@@ -971,8 +971,6 @@ class tabengine (IBus.Engine):
                 IBus.Text.new_from_string(u''), 0, False)
         else:
             attrs = IBus.AttrList()
-            attrs.append(IBus.attr_foreground_new(
-                rgb(0x0e, 0x0e, 0xa0), 0, len(_str)))
             attrs.append(IBus.attr_underline_new(
                 IBus.AttrUnderline.SINGLE, 0, len(_str)))
             text = IBus.Text.new_from_string(_str)
