@@ -645,6 +645,10 @@ class editor(object):
         else:
             self._current_imes = imes
 
+    def get_transliterators(self):
+        '''Get current dictionary of transliterator objects'''
+        return self._transliterators
+
     def push_context(self, phrase):
         self._pp_phrase = self._p_phrase
         self._p_phrase = phrase
@@ -1504,6 +1508,45 @@ class tabengine (IBus.Engine):
                 # first key typed, we will try to complete something now
                 # get the context if possible
                 self.get_context()
+            if (self._editor.is_empty() and len(key.msymbol) == 3
+                and key.msymbol[:2] in ('A-', 'C-', 'G-')):
+                # See:
+                # https://bugzilla.redhat.com/show_bug.cgi?id=1351748
+                # If the user types AltGr-<something> or
+                # Control-<something>, this might have a
+                # transliteration in some input methods.  For example,
+                # AltGr-4 (key.msymbol = 'G-4') transliterates to ₹
+                # when the “hi-inscript2” input method is used.  But
+                # trying to handle all Alt-, Control-, and AltGr-
+                # stuff as input is not nice because it prevents the
+                # use of such key combinations for other purposes.
+                # C-c is usually used for for copying, C-v for pasting
+                # for example. If the user has typed a key combination
+                # starting with such a modifier key, check whether any
+                # of the current input methods actually transliterates
+                # it to something. If none of the current input
+                # methods uses it, the key combination can be passed
+                # through to be used for its original purpose.  But do
+                # this only when the preëdit is empty, if there is
+                # already something in the preëdit, it seems to
+                # confusing to me to pass it through. If the preëdit
+                # is non empty, keep handling key.msymbol as input,
+                # that seems more obvious.
+                has_transliteration = False
+                for ime in self.get_current_imes():
+                    if ime != 'NoIme':
+                        if self._editor.get_transliterators()[
+                                ime].transliterate(
+                                    [key.msymbol]) != key.msymbol:
+                            has_transliteration = True
+                if not has_transliteration:
+                    if debug_level > 1:
+                        sys.stderr.write(
+                            "_process_key_event() "
+                            + "key.msymbol=%s has no transliteration, "
+                            %key.msymbol
+                            + "passing through.")
+                    return False
             self._editor.insert_string_at_cursor([key.msymbol])
             if (len(key.msymbol) == 1
                 and unicodedata.category(key.msymbol)
