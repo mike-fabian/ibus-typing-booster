@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 01 Jul 2016 Released 1.4.6 version
+* Pass modifier key combinations through if there is no possible transliteration for that key combination (Resolves: rhbz#1351748)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 11 May 2016 Released 1.4.5 version
 * Do not colourize the preëdit dark blue, that is unreadable on dark backgrounds (Resolves: rhbz#1335201)
 * Set the size of the libm17n mconv conversion buffer correctly (Resolves: rhbz#1335021)

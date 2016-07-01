@@ -21,6 +21,17 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.4.6" date="2016-07-01" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Pass modifier key combinations through if there is no
+            possible transliteration for that key combination
+            (Resolves: rhbz#1351748).
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.4.5" date="2016-05-11" urgency="medium">
       <description>
         <ul>

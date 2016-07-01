@@ -11,7 +11,7 @@ enginedir=/usr/share/ibus/engine
 
 Name: IBus-Typing-Booster
 Description: Table Based Input Method Framework for Intelligent Input Bus for Linux / Unix OS
-Version: 1.4.5
+Version: 1.4.6
 Requires:
 Libs:
 Cflags:
