@@ -201,6 +201,9 @@ class Transliterator:
     >>> trans.transliterate(list('namaste'))
     'नमस्ते'
 
+    >>> trans.transliterate(list('. '))
+    '। '
+
     Hindi-Inscript2 uses the AltGr key a lot, 'G-4' is
     the MSymbol name for AltGr-4 and it transliterates
     to something different than just '4':

@@ -1453,9 +1453,26 @@ class tabengine (IBus.Engine):
                         self._editor.get_typed_string_cursor() - 1)
                 self._update_ui()
                 return True
-            input_phrase = (
-                self._editor.get_transliterated_strings()[
-                    self.get_current_imes()[0]])
+            # This key does not only a cursor movement in the preëdit,
+            # it really triggers a commit. We need to transliterate
+            # the preëdit again here, because adding the commit key to
+            # the input might influence the transliteration. For example
+            # When using hi-itrans, “. ” translates to “। ”
+            # (See: https://bugzilla.redhat.com/show_bug.cgi?id=1353672)
+            preedit_ime = self.get_current_imes()[0]
+            if preedit_ime == 'NoIme':
+                input_phrase = (
+                    self._editor.get_transliterated_strings()[preedit_ime])
+            else:
+                input_phrase = self._editor.get_transliterators()[
+                    preedit_ime].transliterate(
+                        self._editor.get_typed_string() + [key.msymbol])
+            # If the transliteration now ends with the commit key, cut
+            # it off because the commit key is passed to the
+            # application later anyway and we do not want to pass it
+            # twice:
+            if len(key.msymbol) and input_phrase.endswith(key.msymbol):
+                input_phrase = input_phrase[:-len(key.msymbol)]
             if not input_phrase:
                 return False
             if not self._editor.get_candidates():
