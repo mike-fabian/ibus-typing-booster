@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 11 Jul 2016 Released 1.4.7 version
+* Check if the commit key would change the transliteration if used as regular input (Resolves: rhbz#1353672)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 01 Jul 2016 Released 1.4.6 version
 * Pass modifier key combinations through if there is no possible transliteration for that key combination (Resolves: rhbz#1351748)
 

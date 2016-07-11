@@ -21,6 +21,16 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.4.7" date="2016-07-11" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Check if the commit key would change the transliteration
+            if used as regular input (Resolves: rhbz#1353672).
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.4.6" date="2016-07-01" urgency="medium">
       <description>
         <ul>
