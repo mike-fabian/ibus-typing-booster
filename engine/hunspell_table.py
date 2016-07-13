@@ -199,23 +199,17 @@ class editor(object):
     def init_transliterators(self):
         self._transliterators = {}
         for ime in self._current_imes:
-            if ime == 'NoIme':
-                # Not using m17n transliteration:
+            # using m17n transliteration
+            try:
                 if debug_level > 1:
-                    sys.stderr.write("Adding dummy Transliterator 'None'\n")
-                self._transliterators['NoIme'] = None
-            else:
-                # using m17n transliteration
-                try:
-                    if debug_level > 1:
-                        sys.stderr.write(
-                            "instantiating Transliterator(%(ime)s)\n"
-                            %{'ime': ime})
-                    self._transliterators[ime] = Transliterator(ime)
-                except ValueError as e:
-                    sys.stderr.write('Error initializing Transliterator: %s' %e)
-                    import traceback
-                    traceback.print_exc()
+                    sys.stderr.write(
+                        "instantiating Transliterator(%(ime)s)\n"
+                        %{'ime': ime})
+                self._transliterators[ime] = Transliterator(ime)
+            except ValueError as e:
+                sys.stderr.write('Error initializing Transliterator: %s' %e)
+                import traceback
+                traceback.print_exc()
         self.update_transliterated_strings()
 
     def is_empty(self):
@@ -235,16 +229,12 @@ class editor(object):
     def update_transliterated_strings(self):
         self._transliterated_strings = {}
         for ime in self._current_imes:
-            if ime == 'NoIme':
-                self._transliterated_strings['NoIme'] = u''.join(
-                    self._typed_string)
-            else:
-                self._transliterated_strings[ime] = (
-                    self._transliterators[ime].transliterate(
-                        self._typed_string))
-                if ime in ['ko-romaja', 'ko-han2']:
-                    self._transliterated_strings[ime] = unicodedata.normalize(
-                        'NFKD', self._transliterated_strings[ime])
+            self._transliterated_strings[ime] = (
+                self._transliterators[ime].transliterate(
+                    self._typed_string))
+            if ime in ['ko-romaja', 'ko-han2']:
+                self._transliterated_strings[ime] = unicodedata.normalize(
+                    'NFKD', self._transliterated_strings[ime])
         if debug_level > 1:
             sys.stderr.write(
                 "update_transliterated_strings() self._typed_string=%s\n"
@@ -363,13 +353,9 @@ class editor(object):
         even if transliteration is used.
         '''
         preedit_ime = self._current_imes[0]
-        if preedit_ime == 'NoIme':
-            transliterated_string_up_to_cursor = (
-                u''.join(self._typed_string[:self._typed_string_cursor]))
-        else:
-            transliterated_string_up_to_cursor = (
-                self._transliterators[preedit_ime].transliterate(
-                    self._typed_string[:self._typed_string_cursor]))
+        transliterated_string_up_to_cursor = (
+            self._transliterators[preedit_ime].transliterate(
+                self._typed_string[:self._typed_string_cursor]))
         if preedit_ime in ['ko-romaja', 'ko-han2']:
             transliterated_string_up_to_cursor = unicodedata.normalize(
                 'NFKD', transliterated_string_up_to_cursor)
@@ -1459,14 +1445,9 @@ class tabengine (IBus.Engine):
             # the input might influence the transliteration. For example
             # When using hi-itrans, “. ” translates to “। ”
             # (See: https://bugzilla.redhat.com/show_bug.cgi?id=1353672)
-            preedit_ime = self.get_current_imes()[0]
-            if preedit_ime == 'NoIme':
-                input_phrase = (
-                    self._editor.get_transliterated_strings()[preedit_ime])
-            else:
-                input_phrase = self._editor.get_transliterators()[
-                    preedit_ime].transliterate(
-                        self._editor.get_typed_string() + [key.msymbol])
+            input_phrase = self._editor.get_transliterators()[
+                self.get_current_imes()[0]].transliterate(
+                    self._editor.get_typed_string() + [key.msymbol])
             # If the transliteration now ends with the commit key, cut
             # it off because the commit key is passed to the
             # application later anyway and we do not want to pass it
@@ -1550,12 +1531,11 @@ class tabengine (IBus.Engine):
                 # is non empty, keep handling key.msymbol as input,
                 # that seems more obvious.
                 has_transliteration = False
+                transliterators = self._editor.get_transliterators()
                 for ime in self.get_current_imes():
-                    if ime != 'NoIme':
-                        if self._editor.get_transliterators()[
-                                ime].transliterate(
-                                    [key.msymbol]) != key.msymbol:
-                            has_transliteration = True
+                    if transliterators[ime].transliterate(
+                                [key.msymbol]) != key.msymbol:
+                        has_transliteration = True
                 if not has_transliteration:
                     if debug_level > 1:
                         sys.stderr.write(
