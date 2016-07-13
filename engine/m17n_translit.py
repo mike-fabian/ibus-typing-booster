@@ -212,6 +212,10 @@ class Transliterator:
     >>> trans.transliterate(['4', 'G-4'])
     '४₹'
 
+    >>> trans = Transliterator('hi-inscript2')
+    >>> trans.transliterate(['G-p'])
+    'ज़'
+
     AltGr-3 ('G-3') is not used though in Hindi-Inscript2.
     Therefore, 'G-3' transliterates just as 'G-3':
 
