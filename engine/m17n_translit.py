@@ -230,6 +230,10 @@ class Transliterator:
     >>> trans.transliterate(list('gru"n'))
     'grün'
 
+    >>> trans = Transliterator('NoIme')
+    >>> trans.transliterate(['a', 'b', 'c', 'C-c', 'G-4'])
+    'abcC-cG-4'
+
     If initializing the transliterator fails, for example
     because a non-existing input method was given as the argument,
     a ValueError is raised:
@@ -250,9 +254,17 @@ class Transliterator:
         Raises ValueError if something fails.
 
         :param ime: Full name of the m17n input method, for example
-                    “hi-inscript2” or “t-latn-post”
+                    “hi-inscript2” or “t-latn-post”. There is one
+                    special input method name “NoIme”. The input method
+                    “NoIme” is just a dummy which does not transliteration
+                    at all, it only joins the list of Msymbol names to
+                    a string.
         :type ime: string
         '''
+        self._dummy = False
+        if ime == 'NoIme':
+            self._dummy = True
+            return
         language = ime.split('-')[0]
         name = '-'.join(ime.split('-')[1:])
         self._im = libm17n__minput_open_im(
@@ -272,13 +284,20 @@ class Transliterator:
     def transliterate(self, msymbol_list):
         '''Transliterate a list of Msymbol names
 
-        :param msymbol_list: A list of python strings which
-                             are interpreted as the names of Msymbols
-                             to transliterate
+        Returns the transliteration as  a string.
+
+        :param msymbol_list: A list of strings which are interpreted
+                             as the names of Msymbols to transliterate.
+                             If the input method has the special name “NoIme”,
+                             no transliteration is done, the list of
+                             Msymbols is just joined to a single string.
+        :type msymbol_list: A list of strings
         :rtype: string
         '''
         if type(msymbol_list) != type([]):
             raise ValueError('Argument of transliterate() must be a list.')
+        if self._dummy:
+            return u''.join(msymbol_list)
         libm17n__minput_reset_ic(self._ic)
         output = ''
         for symbol in msymbol_list + ['nil']:
