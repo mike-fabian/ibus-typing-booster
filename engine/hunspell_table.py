@@ -1045,6 +1045,20 @@ class tabengine (IBus.Engine):
         self._update_preedit ()
         self._update_aux ()
 
+    def has_transliteration(self, msymbol_list):
+        transliterators = self._editor.get_transliterators()
+        for ime in self.get_current_imes():
+            if transliterators[ime].transliterate(
+                    msymbol_list) != ''.join(msymbol_list):
+                if debug_level > 1:
+                    sys.stderr.write(
+                        "has_transliteration(%s) == True\n" %msymbol_list)
+                return True
+        if debug_level > 1:
+            sys.stderr.write(
+                "has_transliteration(%s) == False\n" %msymbol_list)
+        return False
+
     def commit_string (self, commit_phrase, input_phrase=u''):
         if not input_phrase:
             input_phrase = self._editor.get_transliterated_strings()[
@@ -1412,9 +1426,34 @@ class tabengine (IBus.Engine):
             return True
 
         # These keys may trigger a commit:
-        if key.val in (IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_space,
-                       IBus.KEY_Right, IBus.KEY_KP_Right,
-                       IBus.KEY_Left, IBus.KEY_KP_Left):
+        if (key.val in (IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_space,
+                        IBus.KEY_Right, IBus.KEY_KP_Right,
+                        IBus.KEY_Left, IBus.KEY_KP_Left)
+            or (len(key.msymbol) == 3
+                and key.msymbol[:2] in ('A-', 'C-', 'G-')
+                and not self.has_transliteration([key.msymbol]))):
+                # See:
+                # https://bugzilla.redhat.com/show_bug.cgi?id=1351748
+                # If the user types a modifier key combination, it
+                # might have a transliteration in some input methods.
+                # For example, AltGr-4 (key.msymbol = 'G-4')
+                # transliterates to ₹ when the “hi-inscript2” input
+                # method is used.  But trying to handle all modifier
+                # key combinations as input is not nice because it
+                # prevents the use of such key combinations for other
+                # purposes.  C-c is usually used for for copying, C-v
+                # for pasting for example. If the user has typed a
+                # modifier key combination, check whether any of the
+                # current input methods actually transliterates it to
+                # something. If none of the current input methods uses
+                # it, the key combination can be passed through to be
+                # used for its original purpose.  If the preëdit is
+                # non empty, commit the preëdit first before passing
+                # the modifier key combination through. (Passing
+                # something like C-a through without committing the
+                # preëdit would be quite confusing, C-a usually goes
+                # to the beginning of the current line, leaving the
+                # preëdit open while moving would be strange).
             if self._editor.is_empty():
                 return False
             if (key.val in (IBus.KEY_Right, IBus.KEY_KP_Right)
@@ -1506,44 +1545,6 @@ class tabengine (IBus.Engine):
                 # first key typed, we will try to complete something now
                 # get the context if possible
                 self.get_context()
-            if (self._editor.is_empty() and len(key.msymbol) == 3
-                and key.msymbol[:2] in ('A-', 'C-', 'G-')):
-                # See:
-                # https://bugzilla.redhat.com/show_bug.cgi?id=1351748
-                # If the user types AltGr-<something> or
-                # Control-<something>, this might have a
-                # transliteration in some input methods.  For example,
-                # AltGr-4 (key.msymbol = 'G-4') transliterates to ₹
-                # when the “hi-inscript2” input method is used.  But
-                # trying to handle all Alt-, Control-, and AltGr-
-                # stuff as input is not nice because it prevents the
-                # use of such key combinations for other purposes.
-                # C-c is usually used for for copying, C-v for pasting
-                # for example. If the user has typed a key combination
-                # starting with such a modifier key, check whether any
-                # of the current input methods actually transliterates
-                # it to something. If none of the current input
-                # methods uses it, the key combination can be passed
-                # through to be used for its original purpose.  But do
-                # this only when the preëdit is empty, if there is
-                # already something in the preëdit, it seems to
-                # confusing to me to pass it through. If the preëdit
-                # is non empty, keep handling key.msymbol as input,
-                # that seems more obvious.
-                has_transliteration = False
-                transliterators = self._editor.get_transliterators()
-                for ime in self.get_current_imes():
-                    if transliterators[ime].transliterate(
-                                [key.msymbol]) != key.msymbol:
-                        has_transliteration = True
-                if not has_transliteration:
-                    if debug_level > 1:
-                        sys.stderr.write(
-                            "_process_key_event() "
-                            + "key.msymbol=%s has no transliteration, "
-                            %key.msymbol
-                            + "passing through.")
-                    return False
             self._editor.insert_string_at_cursor([key.msymbol])
             if (len(key.msymbol) == 1
                 and unicodedata.category(key.msymbol)
