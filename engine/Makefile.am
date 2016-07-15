@@ -22,6 +22,7 @@ engine_table_PYTHON = \
 	hunspell_suggest.py \
 	tabsqlitedb.py \
 	itb_util.py \
+	itb_emoji.py \
 	m17n_translit.py \
 	$(NULL)
 engine_table_DATA = \
