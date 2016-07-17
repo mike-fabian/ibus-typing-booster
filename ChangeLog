@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 17 Jul 2016 Released 1.4.8 version
+* Make m17n_translit handle “NoIme” as a dummy input method
+* Simplify some code in hunspell_table.py which did treat “NoIme” as a special case
+* Commit preëdit if modifier keys without transliteration are typed and pass the key through (Resolves: rhbz#1351748)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 11 Jul 2016 Released 1.4.7 version
 * Check if the commit key would change the transliteration if used as regular input (Resolves: rhbz#1353672)
 

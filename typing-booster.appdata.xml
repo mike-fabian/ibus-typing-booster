@@ -21,6 +21,22 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.4.8" date="2016-07-17" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Commit preëdit if modifier keys without transliteration
+            are typed and pass the key through (Resolves:
+            rhbz#1351748).  Solve this bug in a better way, for the
+            modifier key combinations which do not have a
+            transliteration, pass them through not only when the
+            preëdit is empty, if the preëdit is non-empty, commit the
+            preëdit and then pass the modifier key combination
+            through.
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.4.7" date="2016-07-11" urgency="medium">
       <description>
         <ul>
