@@ -1,15 +1,4 @@
 ---
-navigation:
-- text: Overview
-  url: index.html
-- text: News
-  url: news.html
-- text: Documentation
-  url: documentation.html
-- text: Development
-  url: development.html
-- text: Blurb
-  url: blurb.html
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -42,11 +31,11 @@ navigation:
       <div class="navbar-inner">
 	<div class="container">
 	  <ul class="nav">
-	    {% for link in page.navigation %}
-	    <li {% if link.url == page.url %}class="active"{% endif %}>
-	      <a href="{{ link.url }}">
-                {{ link.text }}</a></li>
-	    {% endfor %}
+            <li><a href='/'>Overview</a></li>
+            <li><a href='/news.html'>News</a></li>
+            <li><a href='/documentation.html'>Documentation</a></li>
+            <li><a href='/development.html'>Development</a></li>
+            <li><a href='/blurb.html'>Blurb</a></li>
 	  </ul>
 	</div>
       </div>
