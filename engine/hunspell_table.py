@@ -1196,7 +1196,7 @@ class tabengine (IBus.Engine):
                 # it makes no sense trying to complete something
                 # starting with a control character:
                 return False
-            if key.val == IBus.KEY_space:
+            if key.val == IBus.KEY_space and not key.mod5:
                 # if the first character is a space, just pass it through
                 # it makes not sense trying to complete:
                 return False
@@ -1426,12 +1426,14 @@ class tabengine (IBus.Engine):
             return True
 
         # These keys may trigger a commit:
-        if (key.val in (IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_space,
-                        IBus.KEY_Right, IBus.KEY_KP_Right,
-                        IBus.KEY_Left, IBus.KEY_KP_Left)
-            or (len(key.msymbol) == 3
-                and key.msymbol[:2] in ('A-', 'C-', 'G-')
-                and not self.has_transliteration([key.msymbol]))):
+        if (key.msymbol not in ('G- ',)
+            and (key.val in (IBus.KEY_space,
+                             IBus.KEY_Return, IBus.KEY_KP_Enter,
+                             IBus.KEY_Right, IBus.KEY_KP_Right,
+                             IBus.KEY_Left, IBus.KEY_KP_Left)
+                 or (len(key.msymbol) == 3
+                     and key.msymbol[:2] in ('A-', 'C-', 'G-')
+                     and not self.has_transliteration([key.msymbol])))):
                 # See:
                 # https://bugzilla.redhat.com/show_bug.cgi?id=1351748
                 # If the user types a modifier key combination, it
@@ -1454,6 +1456,10 @@ class tabengine (IBus.Engine):
                 # preëdit would be quite confusing, C-a usually goes
                 # to the beginning of the current line, leaving the
                 # preëdit open while moving would be strange).
+                #
+                # 'G- ' (AltGr-Space) is prevented from triggering
+                # a commit here, because it is used to enter spaces
+                # into the preëdit, if possible.
             if self._editor.is_empty():
                 return False
             if (key.val in (IBus.KEY_Right, IBus.KEY_KP_Right)
@@ -1479,7 +1485,10 @@ class tabengine (IBus.Engine):
                 self._update_ui()
                 return True
             # This key does not only a cursor movement in the preëdit,
-            # it really triggers a commit. We need to transliterate
+            # it really triggers a commit.
+            if debug_level > 1:
+                sys.stderr.write('_process_key_event() commit triggered.\n')
+            # We need to transliterate
             # the preëdit again here, because adding the commit key to
             # the input might influence the transliteration. For example
             # When using hi-itrans, “. ” translates to “। ”
@@ -1545,7 +1554,11 @@ class tabengine (IBus.Engine):
                 # first key typed, we will try to complete something now
                 # get the context if possible
                 self.get_context()
-            self._editor.insert_string_at_cursor([key.msymbol])
+            if (key.msymbol in ('G- ',)
+                and not self.has_transliteration([key.msymbol])):
+                self._editor.insert_string_at_cursor([' '])
+            else:
+                self._editor.insert_string_at_cursor([key.msymbol])
             if (len(key.msymbol) == 1
                 and unicodedata.category(key.msymbol)
                 in itb_util.categories_to_trigger_immediate_commit):
