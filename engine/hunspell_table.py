@@ -593,10 +593,6 @@ class editor(object):
         '''Set lookup table'''
         self._lookup_table = lookup_table
 
-    def get_candidates(self):
-        '''Get list of candidates'''
-        return self._candidates
-
     def get_p_phrase(self):
         '''Get previous word'''
         return self._p_phrase
@@ -1028,7 +1024,7 @@ class tabengine (IBus.Engine):
         # difference but gnome-shell in f18 will display
         # an empty suggestion popup if the number of candidates
         # is zero!
-        if len(self._editor.get_candidates()) == 0:
+        if self._editor.get_lookup_table().get_number_of_candidates() == 0:
             self.hide_lookup_table()
             return
         if self._tab_enable:
@@ -1323,13 +1319,13 @@ class tabengine (IBus.Engine):
             return res
 
         if (key.val in [IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down]
-            and self._editor.get_candidates()):
+            and self._editor.get_lookup_table().get_number_of_candidates()):
             res = self._editor.page_down()
             self._update_ui ()
             return res
 
         if (key.val in [IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up]
-            and self._editor.get_candidates()):
+            and self._editor.get_lookup_table().get_number_of_candidates()):
             res = self._editor.page_up ()
             self._update_ui ()
             return res
@@ -1363,7 +1359,8 @@ class tabengine (IBus.Engine):
             return True
 
         # Select a candidate to commit or remove:
-        if self._editor.get_candidates() and not key.mod1 and not key.mod5:
+        if (self._editor.get_lookup_table().get_number_of_candidates()
+            and not key.mod1 and not key.mod5):
             # key.mod1 (= Alt) and key.mod5 (= AltGr) should not be set
             # here because:
             #
@@ -1409,7 +1406,7 @@ class tabengine (IBus.Engine):
                 self._update_ui()
                 return True
             else:
-                if self._editor.get_candidates():
+                if self._editor.get_lookup_table().get_number_of_candidates():
                     phrase = (
                         self._editor.get_string_from_lookup_table_cursor_pos())
                     if phrase:
@@ -1504,7 +1501,7 @@ class tabengine (IBus.Engine):
                 input_phrase = input_phrase[:-len(key.msymbol)]
             if not input_phrase:
                 return False
-            if not self._editor.get_candidates():
+            if not self._editor.get_lookup_table().get_number_of_candidates():
                 self.commit_string(input_phrase, input_phrase = input_phrase)
                 return False
             phrase = self._editor.get_string_from_lookup_table_cursor_pos()
