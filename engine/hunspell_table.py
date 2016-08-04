@@ -275,7 +275,6 @@ class editor(object):
                              +self._typed_string[self._typed_string_cursor:]
         self._typed_string_cursor += len(string_to_insert)
         self.update_transliterated_strings()
-        self.update_candidates()
 
     def remove_string_before_cursor(self):
         '''Remove typed string before cursor'''
@@ -283,14 +282,12 @@ class editor(object):
             self._typed_string = self._typed_string[self._typed_string_cursor:]
             self._typed_string_cursor = 0
             self.update_transliterated_strings()
-            self.update_candidates()
 
     def remove_string_after_cursor(self):
         '''Remove typed string after cursor'''
         if self._typed_string_cursor < len(self._typed_string):
             self._typed_string = self._typed_string[:self._typed_string_cursor]
             self.update_transliterated_strings()
-            self.update_candidates()
 
     def remove_character_before_cursor(self):
         '''Remove typed character before cursor'''
@@ -300,7 +297,6 @@ class editor(object):
                 +self._typed_string[self._typed_string_cursor:])
             self._typed_string_cursor -= 1
             self.update_transliterated_strings()
-            self.update_candidates()
 
     def remove_character_after_cursor(self):
         '''Remove typed character after cursor'''
@@ -309,7 +305,6 @@ class editor(object):
                 self._typed_string[:self._typed_string_cursor]
                 +self._typed_string[self._typed_string_cursor+1:])
             self.update_transliterated_strings()
-            self.update_candidates()
 
     def get_caret (self):
         '''
@@ -1026,11 +1021,12 @@ class tabengine (IBus.Engine):
         else:
             self.update_lookup_table(self._editor.get_lookup_table(), True)
 
-    def _update_ui (self):
+    def _update_ui(self):
         '''Update User Interface'''
-        self._update_lookup_table ()
-        self._update_preedit ()
-        self._update_aux ()
+        self._update_preedit()
+        self._editor.update_candidates()
+        self._update_lookup_table()
+        self._update_aux()
 
     def has_transliteration(self, msymbol_list):
         transliterators = self._editor.get_transliterators()
