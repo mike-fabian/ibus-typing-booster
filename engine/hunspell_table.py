@@ -468,42 +468,33 @@ class editor(object):
         if not self._lookup_table.cursor_visible:
             self._lookup_table.set_cursor_visible(True)
             return True
-        else:
-            res = self._lookup_table.cursor_down()
-            self.update_candidates ()
-            if not res and self._candidates:
-                return True
-            return res
+        elif self._lookup_table.cursor_down():
+            return True
+        return False
 
     def arrow_up(self):
         '''Process Arrow Up Key Event
         Move Lookup Table cursor up'''
         self._lookup_table.set_cursor_visible(True)
-        res = self._lookup_table.cursor_up()
-        self.update_candidates ()
-        if not res and self._candidates:
+        if self._lookup_table.cursor_up():
             return True
-        return res
+        return False
 
     def page_down(self):
         '''Process Page Down Key Event
         Move Lookup Table page down'''
         self._lookup_table.set_cursor_visible(True)
-        res = self._lookup_table.page_down()
-        self.update_candidates ()
-        if not res and self._candidates:
+        if self._lookup_table.page_down():
             return True
-        return res
+        return False
 
     def page_up(self):
         '''Process Page Up Key Event
         move Lookup Table page up'''
         self._lookup_table.set_cursor_visible(True)
-        res = self._lookup_table.page_up()
-        self.update_candidates ()
-        if not res and self._candidates:
+        if self._lookup_table.page_up():
             return True
-        return res
+        return False
 
     def get_string_from_lookup_table_current_page(self, index):
         '''
