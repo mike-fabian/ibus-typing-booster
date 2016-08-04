@@ -647,6 +647,7 @@ class tabengine (IBus.Engine):
         self._has_input_purpose = False
         if hasattr(IBus, 'InputPurpose'):
             self._has_input_purpose = True
+        self._lookup_table_is_invalid = False
         self._bus = bus
         self.db = db
         self._setup_pid = 0
@@ -1021,12 +1022,19 @@ class tabengine (IBus.Engine):
         else:
             self.update_lookup_table(self._editor.get_lookup_table(), True)
 
-    def _update_ui(self):
-        '''Update User Interface'''
-        self._update_preedit()
+    def _update_candidates_and_lookup_table(self):
         self._editor.update_candidates()
         self._update_lookup_table()
         self._update_aux()
+        self._lookup_table_is_invalid = False
+
+    def _update_ui(self):
+        '''Update User Interface'''
+        self._update_preedit()
+        if self._lookup_table_is_invalid:
+            return
+        self._lookup_table_is_invalid = True
+        GLib.idle_add(self._update_candidates_and_lookup_table)
 
     def has_transliteration(self, msymbol_list):
         transliterators = self._editor.get_transliterators()
