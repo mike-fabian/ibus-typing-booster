@@ -30,6 +30,7 @@ from gi.repository import IBus
 from gi.repository import GLib
 from m17n_translit import Transliterator
 import itb_util
+import itb_emoji
 
 debug_level = int(0)
 
@@ -113,6 +114,11 @@ class editor(object):
         self._config = config
         self._name = self.db.ime_properties.get('name')
         self._config_section = "engine/typing-booster/%s" % self._name
+        self._emoji_predictions = variant_to_value(self._config.get_value(
+            self._config_section,
+            'emojipredictions'))
+        if self._emoji_predictions == None:
+            self._emoji_predictions = True # default
         self._min_char_complete = variant_to_value(self._config.get_value(
             self._config_section,
             'mincharcomplete'))
@@ -146,18 +152,27 @@ class editor(object):
             # of the default dictionary from the config file:
             self.db.hunspell_obj.set_dictionary_names(
                 [x.strip() for x in dictionary.split(',')])
+        self._dictionary_names = self.db.hunspell_obj.get_dictionary_names()
         if self._add_direct_input == True:
             # if direct input is used as well, add the British English
             # dictionary unless it is already there:
-            dictionary_names = self.db.hunspell_obj.get_dictionary_names()
-            if 'en_GB' not in dictionary_names:
-                dictionary_names.append('en_GB')
-                self.db.hunspell_obj.set_dictionary_names(dictionary_names)
+            if 'en_GB' not in self._dictionary_names:
+                self._dictionary_names.append('en_GB')
+                self.db.hunspell_obj.set_dictionary_names(
+                    self._dictionary_names)
                 # write changed default dictionary list to dconf:
                 self._config.set_value(
                     self._config_section,
                     'dictionary',
-                    GLib.Variant.new_string(','.join(dictionary_names)))
+                    GLib.Variant.new_string(','.join(self._dictionary_names)))
+        if  self._emoji_predictions:
+            if debug_level > 1:
+                sys.stderr.write('Instantiate EmojiMatcher(languages = %s\n'
+                                 %self._dictionary_names)
+            self.emoji_matcher = itb_emoji.EmojiMatcher(
+                languages = self._dictionary_names)
+            if debug_level > 1:
+                sys.stderr.write('EmojiMatcher() instantiated.\n')
         self._supported_imes = []
         imes = self.db.ime_properties.get('imes').split(',')
         for item in imes:
@@ -358,35 +373,39 @@ class editor(object):
             'NFC', transliterated_string_up_to_cursor)
         return len(transliterated_string_up_to_cursor)
 
-    def append_candidate_to_lookup_table(self, phrase=u'', user_freq=0):
+    def append_candidate_to_lookup_table(
+            self, phrase=u'', user_freq=0, comment=''):
         '''append candidate to lookup_table'''
         if not phrase:
             return
         phrase = unicodedata.normalize('NFC', phrase)
         attrs = IBus.AttrList ()
-        is_spelling_correction = True
-        for ime in self._current_imes:
-            if phrase.startswith(
-                    unicodedata.normalize(
-                        'NFC', self._transliterated_strings[ime])):
-                is_spelling_correction = False
-        if is_spelling_correction:
-            # this is a candidate which does not start exactly as any
-            # of the transliterations of the user input, i.e. it must
-            # be a spelling correction suggestion:
-            if debug_level > 0:
-                phrase = phrase + u' ✓'
-            attrs.append(IBus.attr_foreground_new(
-                rgb(0xff, 0x00, 0x00), 0, len(phrase)))
-        elif user_freq > 10:
-            # this is a frequently used phrase:
-            attrs.append(IBus.attr_foreground_new(
-                rgb(0xff, 0x7f, 0x00), 0, len(phrase)))
+        if comment:
+            phrase += ' ' + comment
         else:
-            # this is a system phrase that has been used less
-            # then 10 times or maybe never:
-            attrs.append(IBus.attr_foreground_new(
-                rgb(0x00, 0x00, 0x00), 0, len(phrase)))
+            is_spelling_correction = True
+            for ime in self._current_imes:
+                if phrase.startswith(
+                        unicodedata.normalize(
+                            'NFC', self._transliterated_strings[ime])):
+                    is_spelling_correction = False
+            if is_spelling_correction:
+                # this is a candidate which does not start exactly as any
+                # of the transliterations of the user input, i.e. it must
+                # be a spelling correction suggestion:
+                if debug_level > 0:
+                    phrase = phrase + u' ✓'
+                attrs.append(IBus.attr_foreground_new(
+                    rgb(0xff, 0x00, 0x00), 0, len(phrase)))
+            elif user_freq > 10:
+                # this is a frequently used phrase:
+                attrs.append(IBus.attr_foreground_new(
+                    rgb(0xff, 0x7f, 0x00), 0, len(phrase)))
+            else:
+                # this is a system phrase that has been used less
+                # then 10 times or maybe never:
+                attrs.append(IBus.attr_foreground_new(
+                    rgb(0x00, 0x00, 0x00), 0, len(phrase)))
         if debug_level > 0:
             phrase += u' ' + str(user_freq)
             attrs.append(IBus.attr_foreground_new(
@@ -419,6 +438,7 @@ class editor(object):
             self._typed_string[:])
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
+        self._candidates = []
         phrase_frequencies = {}
         for ime in self._current_imes:
             if self._transliterated_strings[ime]:
@@ -451,10 +471,56 @@ class editor(object):
                             phrase_frequencies[x[0]], x[1])
                     else:
                         phrase_frequencies[x[0]] = x[1]
-        self._candidates = self.db.best_candidates(phrase_frequencies)
+        phrase_candidates = self.db.best_candidates(phrase_frequencies)
+        if self._emoji_predictions:
+            emoji_scores = {}
+            for ime in self._current_imes:
+                if self._transliterated_strings[ime]:
+                    emoji_candidates = self.emoji_matcher.candidates(
+                        self._transliterated_strings[ime])
+                    for x in emoji_candidates:
+                        if (x[0] not in emoji_scores
+                            or x[2] > emoji_scores[x[0]][0]):
+                                emoji_scores[x[0]] = (x[2], x[1])
+            phrase_candidates_emoji_name = []
+            for x in phrase_candidates:
+                if x[0] in emoji_scores:
+                    phrase_candidates_emoji_name.append((
+                        x[0], x[1], emoji_scores[x[0]][1]))
+                    # avoid duplicates in the lookup table:
+                    del emoji_scores[x[0]]
+                else:
+                    phrase_candidates_emoji_name.append((
+                        x[0], x[1], self.emoji_matcher.name(
+                            x[0], languages = self._dictionary_names)))
+            emoji_candidates = []
+            for (key, value) in sorted(
+                    emoji_scores.items(),
+                    key=lambda x: (
+                        - x[1][0],   # score
+                        - len(x[0]), # length of emoji string
+                        x[1][1]      # name of emoji
+                    ))[:20]:
+                emoji_candidates.append((key, value[0], value[1]))
+            page_size = self._lookup_table.get_page_size()
+            phrase_candidates_top = phrase_candidates_emoji_name[:page_size-1]
+            phrase_candidates_rest = phrase_candidates_emoji_name[page_size-1:]
+            emoji_candidates_top = emoji_candidates[:page_size]
+            emoji_candidates_rest = emoji_candidates[page_size:]
+            for x in phrase_candidates_top:
+                self._candidates.append((x[0], x[1], x[2]))
+            for x in emoji_candidates_top:
+                self._candidates.append((x[0], x[1], x[2]))
+            for x in phrase_candidates_rest:
+                self._candidates.append((x[0], x[1], x[2]))
+            for x in emoji_candidates_rest:
+                self._candidates.append((x[0], x[1], x[2]))
+        else:
+            for x in phrase_candidates:
+                self._candidates.append((x[0], x[1], ''))
         for x in self._candidates:
             self.append_candidate_to_lookup_table(
-                phrase=x[0], user_freq=x[1])
+                phrase=x[0], user_freq=x[1], comment=x[2])
         return True
 
     def arrow_down(self):
@@ -1639,6 +1705,16 @@ class tabengine (IBus.Engine):
         print("config value %(n)s for engine %(en)s changed"
               %{'n': name, 'en': self._name})
         value = variant_to_value(value)
+        if name == "emojipredictions":
+            if value == 1:
+                self._editor._emoji_predictions = True
+                self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
+                    languages = self._editor._dictionary_names)
+            else:
+                self._editor._emoji_predictions = False
+            self._editor._typed_string_when_update_candidates_was_last_called = []
+            self._update_ui()
+            return
         if name == "tabenable":
             if value == 1:
                 self._tab_enable = True
@@ -1686,8 +1762,13 @@ class tabengine (IBus.Engine):
             self.set_current_imes(imes)
             return
         if name == "dictionary":
-            dictionary_names = [x.strip() for x in value.split(',')]
-            self.db.hunspell_obj.set_dictionary_names(dictionary_names)
+            self._editor._dictionary_names = [
+                x.strip() for x in value.split(',')]
+            self.db.hunspell_obj.set_dictionary_names(
+                self._editor._dictionary_names)
+            if self._editor._emoji_predictions:
+                self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
+                    languages=self._editor._dictionary_names)
             if not self._editor.is_empty():
                 self._update_ui()
             return
@@ -1710,6 +1791,7 @@ class tabengine (IBus.Engine):
                     [dictionary_names[0]]
                     + [x for x in dictionary_names[1:] if x != 'en_GB'])
             self.db.hunspell_obj.set_dictionary_names(dictionary_names)
+            self._editor._dictionary_names = dictionary_names
             self._config.set_value(
                 self._config_section,
                 'dictionary',

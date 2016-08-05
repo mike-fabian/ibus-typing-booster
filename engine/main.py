@@ -164,6 +164,7 @@ class IMApp:
             p.print_stats('tabsqlite', 25)
             p.print_stats('hunspell_suggest', 25)
             p.print_stats('hunspell_table', 25)
+            p.print_stats('itb_emoji', 25)
 
 def cleanup (ima_ins):
     ima_ins.quit()
