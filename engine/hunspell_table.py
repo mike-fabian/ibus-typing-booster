@@ -1170,9 +1170,9 @@ class tabengine (IBus.Engine):
         and is passed through.
 
         '''
-
+        # Ignore key release events
         if key.state & IBus.ModifierType.RELEASE_MASK:
-            return True
+            return False
 
         if self._editor.is_empty ():
             if debug_level > 1:
