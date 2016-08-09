@@ -558,7 +558,7 @@ class editor(object):
                 phrase=can[0], database='user_db', commit=True)
             # call update_candidates() to get a new SQL query.  The
             # input has not really changed, therefore we must clear
-            # the remembered list of transliterated characters to
+            # the remembered list of typed characters to
             # force update_candidates() to really do something and not
             # return immediately:
             self._typed_string_when_update_candidates_was_last_called = []
@@ -1721,7 +1721,7 @@ class tabengine (IBus.Engine):
                 GLib.Variant.new_string(','.join(imes)))
             return
         if name == "dictionaryinstalltimestamp":
-            # A dictionary has bin updated or installed,
+            # A dictionary has been updated or installed,
             # (re)load all dictionaries:
             print("Reloading dictionaries ...")
             self.db.hunspell_obj.init_dictionaries()
