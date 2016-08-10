@@ -6,15 +6,10 @@
   <summary>Predictive input method</summary>
   <description>
     <p>
-      Ibus-Typing Booster is a predictive input method and predicts
-      complete words based on partial input.  One can then simply
-      select the desired word from a list of suggestions and improve
-      one’s typing speed and spelling.
-    </p>
-    <p>
-      Input methods are typing systems allowing users to input complex
-      languages.  They are necessary because these contain too many
-      characters to simply be laid out on a traditional keyboard.
+      Ibus-typing-booster is a predictive input method and predicts
+      complete words based on context and partial input.  One can then
+      simply select the desired word from a list of suggestions and
+      improve one’s typing speed and spelling.
     </p>
   </description>
   <url type="homepage">https://mike-fabian.github.io/ibus-typing-booster/</url>

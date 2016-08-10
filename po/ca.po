@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-typing-booster 1.2.14\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-04-27 09:14+0200\n"
+"POT-Creation-Date: 2016-08-10 15:45+0200\n"
 "PO-Revision-Date: 2015-10-11 20:54+0200\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
 "Language-Team: Catalan\n"
@@ -14,25 +14,25 @@ msgstr ""
 "X-Generator: Zanata 3.7.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: engine/hunspell_table.py:792
+#: engine/hunspell_table.py:836
 #, python-format
 msgid "Switch preedit input method to %(ime)s"
 msgstr ""
 
-#: engine/hunspell_table.py:800
+#: engine/hunspell_table.py:844
 #, fuzzy
 msgid "Preedit input method"
 msgstr "Mètode d'entrada:"
 
-#: engine/hunspell_table.py:801
+#: engine/hunspell_table.py:845
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:892
+#: engine/hunspell_table.py:936
 msgid "Setup"
 msgstr "Preferències"
 
-#: engine/hunspell_table.py:895
+#: engine/hunspell_table.py:939
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Preferències per a l'ibus-typing-booster “%(name)s”"
@@ -64,29 +64,29 @@ msgstr "El fitxer de configuració %(file)s no existeix."
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Preferències per a l'ibus-typing-booster \"%(symbol)s\""
 
-#: setup/main.py:312
+#: setup/main.py:313
 msgid "Another instance of this app is already running."
 msgstr "Ja s'està executant una altra instància d'aquesta aplicació."
 
-#: setup/main.py:407
+#: setup/main.py:408
 msgid "Open File ..."
 msgstr "Obre el fitxer..."
 
-#: setup/main.py:425
+#: setup/main.py:426
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "S'ha après correctament del fitxer %(filename)s."
 
-#: setup/main.py:434
+#: setup/main.py:435
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Ha fallat l'aprenentatge del fitxer %(filename)s."
 
-#: setup/main.py:443
+#: setup/main.py:444
 msgid "Are you sure?"
 msgstr "Esteu segur?"
 
-#: setup/main.py:450
+#: setup/main.py:451
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -94,7 +94,7 @@ msgstr ""
 "Realment voleu eliminar totes les dades de l'idioma \n"
 "que s'han après de l'escriptura o la lectura de fitxers? "
 
-#: setup/main.py:633
+#: setup/main.py:634
 msgid "ibus is not running."
 msgstr "ibus no s'està executant."
 
@@ -238,3 +238,23 @@ msgstr "Elimina les dades que s'han après"
 #: setup/setup.glade:492
 msgid "Dictionaries and personal data"
 msgstr "Diccionaris i dades personals"
+
+#: typing-booster.appdata.xml:5
+msgid "Typing Booster"
+msgstr ""
+
+#: typing-booster.appdata.xml:6
+#, fuzzy
+msgid "Predictive input method"
+msgstr "Mètode d'entrada:"
+
+#: typing-booster.appdata.xml:8
+msgid ""
+"Ibus-typing-booster is a predictive input method and predicts complete words "
+"based on context and partial input. One can then simply select the desired "
+"word from a list of suggestions and improve one’s typing speed and spelling."
+msgstr ""
+
+#: typing-booster.appdata.xml:92
+msgid "Mike FABIAN"
+msgstr ""

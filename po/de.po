@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-typing-booster 0.0.16\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-04-27 09:14+0200\n"
-"PO-Revision-Date: 2016-04-27 09:35+0200\n"
+"POT-Creation-Date: 2016-08-10 15:45+0200\n"
+"PO-Revision-Date: 2016-08-10 15:47+0200\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <trans-de@lists.fedoraproject.org>\n"
 "Language: de\n"
@@ -20,24 +20,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: engine/hunspell_table.py:792
+#: engine/hunspell_table.py:836
 #, python-format
 msgid "Switch preedit input method to %(ime)s"
 msgstr "Umschalten der Preedit-Eingabemethode auf %(ime)s"
 
-#: engine/hunspell_table.py:800
+#: engine/hunspell_table.py:844
 msgid "Preedit input method"
 msgstr "Preedit-Eingabemethode:"
 
-#: engine/hunspell_table.py:801
+#: engine/hunspell_table.py:845
 msgid "Switch preedit input method"
 msgstr "Umschalten der Preedit-Eingabemethode"
 
-#: engine/hunspell_table.py:892
+#: engine/hunspell_table.py:936
 msgid "Setup"
 msgstr "Einstellungen"
 
-#: engine/hunspell_table.py:895
+#: engine/hunspell_table.py:939
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Ibus Typing Booster \"%(name)s\" Einstellungen"
@@ -69,29 +69,29 @@ msgstr "Die Konfigurationsdatei %(file)s existiert nicht."
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Ibus Typing Booster \"%(symbol)s\" Einstellungen"
 
-#: setup/main.py:312
+#: setup/main.py:313
 msgid "Another instance of this app is already running."
 msgstr "Eine Instanz dieses Programms läuft schon."
 
-#: setup/main.py:407
+#: setup/main.py:408
 msgid "Open File ..."
 msgstr "Öffne Datei"
 
-#: setup/main.py:425
+#: setup/main.py:426
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Das Lernen aus der Datei %(filename)s war erfolgreich."
 
-#: setup/main.py:434
+#: setup/main.py:435
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Fehler beim Lernen aus der Datai %(filename)s."
 
-#: setup/main.py:443
+#: setup/main.py:444
 msgid "Are you sure?"
 msgstr "Sind Sie sicher?"
 
-#: setup/main.py:450
+#: setup/main.py:451
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -99,7 +99,7 @@ msgstr ""
 "Wollen Sie wirklich alle Sprachdaten löschen, die aus den\n"
 "Usereingaben oder aus Dateien gelernt wurden?"
 
-#: setup/main.py:633
+#: setup/main.py:634
 msgid "ibus is not running."
 msgstr "Ibus läuft nicht."
 
@@ -267,3 +267,27 @@ msgstr "Gelernte Daten löschen"
 #: setup/setup.glade:492
 msgid "Dictionaries and personal data"
 msgstr "Wörterbücher und persönliche Daten"
+
+#: typing-booster.appdata.xml:5
+msgid "Typing Booster"
+msgstr "Tippbeschleuniger"
+
+#: typing-booster.appdata.xml:6
+msgid "Predictive input method"
+msgstr "Vorrausschauende Eingabemethode:"
+
+#: typing-booster.appdata.xml:8
+msgid ""
+"Ibus-typing-booster is a predictive input method and predicts complete words "
+"based on context and partial input. One can then simply select the desired "
+"word from a list of suggestions and improve one’s typing speed and spelling."
+msgstr ""
+"Ibus-typing-booster ist eine vorausschauende Eingabemethode, die "
+"vollständige Wörter basiered auf dem Kontext und teilweisem Input "
+"vorschlägt. Man kann einfach das gewünschte Wort aus einer List von "
+"Vorschlägen auswählen und so seine Tippgeschwindigkeit und Rechtschreibung "
+"verbessern."
+
+#: typing-booster.appdata.xml:92
+msgid "Mike FABIAN"
+msgstr "Mike FABIAN"
