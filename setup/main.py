@@ -189,10 +189,22 @@ class SetupUI:
                 self.config_section, 'usedigitsasselectkeys'))
         if self.use_digits_as_select_keys == None:
             self.use_digits_as_select_keys = True
-        if  self.use_digits_as_select_keys == True:
+        if self.use_digits_as_select_keys == True:
             use_digits_as_select_keys_checkbox.set_active(True)
         use_digits_as_select_keys_checkbox.connect(
             'clicked', event_handler.onUseDigitsAsSelectKeysCheckbox)
+
+        emoji_predictions_checkbox = self.builder.get_object(
+            "emoji_predictions_checkbox")
+        self.emoji_predictions = self.variant_to_value(
+            self.config.get_value(
+                self.config_section, 'emojipredictions'))
+        if self.emoji_predictions == None:
+            self.emoji_predictions = True
+        if self.emoji_predictions == True:
+            emoji_predictions_checkbox.set_active(True)
+        emoji_predictions_checkbox.connect(
+            'clicked', event_handler.onEmojiPredictionsCheckbox)
 
         add_direct_input_checkbox = self.builder.get_object(
             "add_direct_input_checkbox")
@@ -499,6 +511,20 @@ class EventHandler:
             SetupUi.config.set_value(
                 SetupUi.config_section,
                 'usedigitsasselectkeys',
+                GLib.Variant.new_boolean(False))
+
+    def onEmojiPredictionsCheckbox(self, widget):
+        if widget.get_active():
+            SetupUi.emoji_predictions = True
+            SetupUi.config.set_value(
+                SetupUi.config_section,
+                'emojipredictions',
+                GLib.Variant.new_boolean(True))
+        else:
+            SetupUi.emoji_predictions = False
+            SetupUi.config.set_value(
+                SetupUi.config_section,
+                'emojipredictions',
                 GLib.Variant.new_boolean(False))
 
     def onAddDirectInputCheckbox(self, widget):
