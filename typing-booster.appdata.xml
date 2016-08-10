@@ -16,6 +16,48 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.0" date="2016-08-10" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            If the lookup table shows related words, “Escape” shows
+            the original lookup table
+          </li>
+          <li>
+            Use itb_nltk.py to find related words (synonyms,
+            hypernyms, and hyponyms)
+          </li>
+          <li>
+            Add a module to find related words using NLTK
+          </li>
+          <li>
+            Add a feature to find similar emoji
+          </li>
+          <li>
+            Add predictions for emoji (optional, on by default)
+          </li>
+          <li>
+            Add a module to match emoji using Unicode, CLDR, and
+            emojione data
+          </li>
+          <li>
+            Make typing-booster.appdata.xml translatable
+          </li>
+          <li>
+            When ignoring key release events, “False” should be
+            returned, not “True” (Resolves: rhbz#1365497)
+          </li>
+          <li>
+            Make typing smoother by updating the candidates using
+            GLib.idle_add()
+          </li>
+          <li>
+            Make it possible to enter a space into the preëdit by
+            typing “G- ” (AltGr+Space)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.4.8" date="2016-07-17" urgency="medium">
       <description>
         <ul>
