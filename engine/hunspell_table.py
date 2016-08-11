@@ -1102,6 +1102,37 @@ class tabengine (IBus.Engine):
         self._lookup_table_is_invalid = True
         GLib.idle_add(self._update_candidates_and_lookup_table)
 
+    def _lookup_related_candidates(self):
+        phrase  = ''
+        if (self._editor.get_lookup_table().get_number_of_candidates()
+            and  self._editor.get_lookup_table().cursor_visible):
+            phrase = self._editor.get_string_from_lookup_table_cursor_pos()
+        else:
+            phrase  = self._editor.get_transliterated_strings()[
+                self.get_current_imes()[0]]
+        if not phrase:
+            return
+        related_candidates = self._editor.emoji_matcher.similar(
+            phrase,
+            languages  = self.db.hunspell_obj.get_dictionary_names())
+        if debug_level > 1:
+            sys.stderr.write(
+                '_lookup_related_candidates():'
+                +  ' related_candidates of “%s” = %s\n'
+                %(phrase, related_candidates))
+        if not related_candidates:
+            return
+        self._editor._candidates = []
+        self._editor.get_lookup_table().clear()
+        self._editor.get_lookup_table().set_cursor_visible(False)
+        for x in related_candidates:
+            self._editor._candidates.append((x[0], x[2], x[1]))
+            self._editor.append_candidate_to_lookup_table(
+                phrase = x[0], user_freq = x[2], comment = x[1])
+        self._update_lookup_table()
+        self._update_aux()
+        self._lookup_table_is_invalid = False
+
     def has_transliteration(self, msymbol_list):
         transliterators = self._editor.get_transliterators()
         for ime in self.get_current_imes():
@@ -1453,6 +1484,10 @@ class tabengine (IBus.Engine):
                     if phrase:
                         self.commit_string(phrase + u' ')
                     return True
+
+        if key.val == IBus.KEY_F12 and key.mod1 and not self._editor.is_empty():
+            self._lookup_related_candidates()
+            return True
 
         if key.val == IBus.KEY_Tab:
             if self._tab_enable:
