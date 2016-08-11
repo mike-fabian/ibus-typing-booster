@@ -854,6 +854,99 @@ class EmojiMatcher():
                 return self._emoji_dict[(emoji_string, language)]['names'][0]
         return ''
 
+    def similar(self, emoji_string, languages = ('en',), match_limit = 1000):
+        '''Find similar emojis
+
+        “Similar” means they share categories or keywords.
+
+        :param emoji_string: The string of Unicode  characters which are
+                             used to encode the emoji
+        :type emoji_string: A string
+        :param languages: A list or tuple of languages in the order
+                          of preference
+        :type languages: A list of strings
+        :rtype: A list of tuples of the form (<emoji>, <name>, <score>),
+                i.e. a list like this:
+
+                [('🐫', "cammello ['animale', 'gobba']", 2), ...]
+
+                The name includes the list of categories or keywords
+                which matched, the score is the number of categories
+                or keywords matched.
+
+                The list is sorted by preferred language, then score,
+                then name.
+
+        Examples:
+
+        >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+
+        >>> matcher.similar('this is not an emoji', match_limit = 5)
+        []
+
+        >>> matcher.similar('☺', match_limit = 5)
+        [('☺', "white smiling face ['face', 'happy', 'outlined', 'people', 'relaxed', 'smile', 'smiley']", 7), ('😋', "face savouring delicious food ['face', 'happy', 'people', 'smile', 'smiley']", 5), ('😁', "grinning face with smiling eyes ['face', 'happy', 'people', 'smile', 'smiley']", 5), ('🙂', "slightly smiling face ['face', 'happy', 'people', 'smile', 'smiley']", 5), ('😍', "smiling face with heart-shaped eyes ['face', 'happy', 'people', 'smile', 'smiley']", 5)]
+
+        >>> matcher.similar('☺', languages = ['ru_RU'], match_limit = 5)
+        [('☺', "white smiling face ['face', 'happy', 'outlined', 'people', 'relaxed', 'smile', 'smiley']", 7), ('😋', "face savouring delicious food ['face', 'happy', 'people', 'smile', 'smiley']", 5), ('😁', "grinning face with smiling eyes ['face', 'happy', 'people', 'smile', 'smiley']", 5), ('🙂', "slightly smiling face ['face', 'happy', 'people', 'smile', 'smiley']", 5), ('😍', "smiling face with heart-shaped eyes ['face', 'happy', 'people', 'smile', 'smiley']", 5)]
+
+        >>> matcher.similar('☺', languages = ['it_IT'], match_limit = 5)
+        [('☺', "faccina sorridente ['contorno faccina sorridente', 'emozionarsi', 'faccina', 'sorridente']", 4), ('😺', "gatto che sorride ['faccina', 'sorridente']", 2), ('👽', "alieno ['faccina']", 1), ('👼', "angioletto ['faccina']", 1), ('🤑', "avidità di denaro ['faccina']", 1)]
+
+        >>> matcher.similar('🐫', match_limit = 5)
+        [('🐫', "bactrian camel ['animal', 'bactrian', 'camel', 'hump', 'hump day', 'nature', 'wildlife']", 7), ('🐪', "dromedary camel ['animal', 'hump', 'nature', 'wildlife']", 4), ('🐻', "bear face ['animal', 'nature', 'wildlife']", 3), ('🐦', "bird ['animal', 'nature', 'wildlife']", 3), ('🐡', "blowfish ['animal', 'nature', 'wildlife']", 3)]
+
+        >>> matcher.similar('🐫', languages = ['it_IT', 'en_US'], match_limit = 5)
+        [('🐫', "cammello ['animale', 'gobba']", 2), ('🐪', "dromedario ['animale', 'gobba']", 2), ('🐀', "Ratto ['animale']", 1), ('🐁', "Topo ['animale']", 1), ('\U0001f986', "anatra ['animale']", 1)]
+
+        >>> matcher.similar('🐫', languages = ['de_DE', 'it_IT'], match_limit = 5)
+        [('🐫', "Kamel ['Tier', 'zweihöckrig']", 2), ('🐒', "Affe ['Tier']", 1), ('🐵', "Affengesicht ['Tier']", 1), ('🐜', "Ameise ['Tier']", 1), ('🐝', "Biene ['Tier']", 1)]
+
+        >>> matcher.similar('🐫', languages = ['es_MX', 'it_IT'], match_limit = 5)
+        [('🐫', "camello ['animal', 'joroba']", 2), ('🐪', "dromedario ['animal', 'joroba']", 2), ('🐝', "abeja ['animal']", 1), ('🕷', "araña ['animal']", 1), ('🐿', "ardilla ['animal']", 1)]
+
+        >>> matcher.similar('🐫', languages = ['es_ES', 'it_IT'], match_limit = 5)
+        [('🐫', "cammello ['animale', 'gobba']", 2), ('🐪', "dromedario ['animale', 'gobba']", 2), ('🐀', "Ratto ['animale']", 1), ('🐁', "Topo ['animale']", 1), ('\U0001f986', "anatra ['animale']", 1)]
+        '''
+        candidate_scores = {}
+        expanded_languages = _expand_languages(languages)
+        for language in expanded_languages:
+            emoji_key = (emoji_string, language)
+            if emoji_key not in self._emoji_dict:
+                continue
+            original_labels_for_language = set()
+            label_keys = ('categories', 'keywords')
+            for label_key in label_keys:
+                if label_key in self._emoji_dict[emoji_key]:
+                    for label in self._emoji_dict[emoji_key][label_key]:
+                        original_labels_for_language.add(label)
+            for similar_key, similar_value in self._emoji_dict.items():
+                if similar_key[1] != language:
+                    continue
+                similar_string = similar_key[0]
+                similar_name = self._emoji_dict[similar_key]['names'][0]
+                for label_key in label_keys:
+                    if label_key in self._emoji_dict[similar_key]:
+                        for label in self._emoji_dict[similar_key][label_key]:
+                            if label in original_labels_for_language:
+                                scores_key = (
+                                    similar_string, language, similar_name)
+                                if scores_key in candidate_scores:
+                                    candidate_scores[scores_key].add(label)
+                                else:
+                                    candidate_scores[scores_key] = set([label])
+        candidates = []
+        for x in sorted(candidate_scores.items(),
+                        key = lambda x:(
+                            expanded_languages.index(x[0][1]), # language index
+                            - len(x[1]), # number of matching labels
+                            - len(x[0][0]), # length of emoji string
+                            x[0][2], # emoji name
+                        ))[:match_limit]:
+            candidates.append(
+                (x[0][0], x[0][2] + ' ' + repr(sorted(x[1])), len(x[1])))
+        return candidates
+
     def debug_loading_data(self):
         '''To debug whether the data has been loaded correctly'''
         count = 0
