@@ -1115,6 +1115,16 @@ class tabengine (IBus.Engine):
         related_candidates = self._editor.emoji_matcher.similar(
             phrase,
             languages  = self.db.hunspell_obj.get_dictionary_names())
+        try:
+            import itb_nltk
+            for x in itb_nltk.synonyms(phrase, keep_original = False):
+                related_candidates.append((x, '[synonym]', 0))
+            for x in itb_nltk.hypernyms(phrase, keep_original = False):
+                related_candidates.append((x, '[hypernym]', 0))
+            for x in itb_nltk.hyponyms(phrase, keep_original = False):
+                related_candidates.append((x, '[hyponym]', 0))
+        except (ImportError, LookupError):
+            pass
         if debug_level > 1:
             sys.stderr.write(
                 '_lookup_related_candidates():'
