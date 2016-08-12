@@ -1114,9 +1114,11 @@ class tabengine (IBus.Engine):
                 self.get_current_imes()[0]]
         if not phrase:
             return
-        related_candidates = self._editor.emoji_matcher.similar(
-            phrase,
-            languages  = self.db.hunspell_obj.get_dictionary_names())
+        related_candidates = []
+        if self._editor._emoji_predictions:
+            related_candidates = self._editor.emoji_matcher.similar(
+                phrase,
+                languages  = self.db.hunspell_obj.get_dictionary_names())
         try:
             import itb_nltk
             for x in itb_nltk.synonyms(phrase, keep_original = False):
