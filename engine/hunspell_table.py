@@ -714,6 +714,7 @@ class tabengine (IBus.Engine):
         if hasattr(IBus, 'InputPurpose'):
             self._has_input_purpose = True
         self._lookup_table_is_invalid = False
+        self._lookup_table_shows_related_candidates = False
         self._bus = bus
         self.db = db
         self._setup_pid = 0
@@ -1097,6 +1098,7 @@ class tabengine (IBus.Engine):
     def _update_ui(self):
         '''Update User Interface'''
         self._update_preedit()
+        self._lookup_table_shows_related_candidates = False
         if self._lookup_table_is_invalid:
             return
         self._lookup_table_is_invalid = True
@@ -1142,6 +1144,7 @@ class tabengine (IBus.Engine):
         self._update_lookup_table()
         self._update_aux()
         self._lookup_table_is_invalid = False
+        self._lookup_table_shows_related_candidates = True
 
     def has_transliteration(self, msymbol_list):
         transliterators = self._editor.get_transliterators()
@@ -1390,8 +1393,13 @@ class tabengine (IBus.Engine):
         if key.val == IBus.KEY_Escape:
             if self._editor.is_empty():
                 return False
-            self.reset ()
-            self._update_ui ()
+            if self._lookup_table_shows_related_candidates:
+                # Force an update to the original lookup table:
+                self._editor._typed_string_when_update_candidates_was_last_called = []
+                self._update_ui()
+            else:
+                self.reset()
+                self._update_ui()
             return True
 
         if key.val in (IBus.KEY_Down, IBus.KEY_KP_Down) and key.control:
