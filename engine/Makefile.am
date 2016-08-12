@@ -23,6 +23,7 @@ engine_table_PYTHON = \
 	tabsqlitedb.py \
 	itb_util.py \
 	itb_emoji.py \
+	itb_nltk.py \
 	m17n_translit.py \
 	$(NULL)
 engine_table_DATA = \
