@@ -16,6 +16,29 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.1" date="2016-08-29" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            If the query string in EmojiMatcher.candidates() is an
+            emoji itself, match similar ones.
+          </li>
+          <li>
+            Data files should not be stored gzipped in the repository.
+          </li>
+          <li>
+            Change displayed input method name from “Hunspell” to.
+            “Typing Booster”
+          </li>
+          <li>
+            French translations added (100% translated).
+          </li>
+          <li>
+            Polish translations added (100% translated).
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.0" date="2016-08-10" urgency="medium">
       <description>
         <ul>

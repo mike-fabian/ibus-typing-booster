@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 29 Aug 2016 Released 1.5.1 version
+* If the query string in EmojiMatcher.candidates() is an emoji itself, match similar ones
+* Data files should not be stored gzipped in the repository
+* Change displayed input method name from “Hunspell” to “Typing Booster”
+* Use Zanata to get more translations
+* French translations added (100% translated)
+* Polish translations added (100% translated)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 10 Aug 2016 Released 1.5.0 version
 * If the lookup table shows related words, “Escape” shows the original lookup table
 * Use itb_nltk.py to find related words (synonyms, hypernyms, and hyponyms)
