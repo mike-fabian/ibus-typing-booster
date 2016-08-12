@@ -11,6 +11,8 @@ layout: default
 <ul>
   <li><a href="#key-bindings">Key bindings</a></li>
   <li><a href="#multilingual-input">Multilingual input</a></li>
+  <li><a href="#emoji-predictions">Emoji predictions</a></li>
+  <li><a href="#related-words-nltk">Using NLTK to find related words</a></li>
 </ul>
 
 <br>
@@ -162,6 +164,11 @@ nothing else has been typed yet and the preëdit is empty.</td>
 select keys” is enabled.
 </td>
 </tr>
+</tr>
+<td>Alt+F12</td>
+<td>Show related emoji or related words
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -208,7 +215,7 @@ using the selected transliteration method and looked up in the mr_IN
 hunspell dictionary and the user database of previous input.</p>
 
 <p>To add English as a second language to use at the same time, one
-can use the checkbox option “Add direct input” in the setup tool. If
+can use the check box option “Add direct input” in the setup tool. If
 that option is selected, direct keyboard input is added as a second
 input method and the en_GB (British English) dictionary is added as a
 second dictionary in addition to the mr_IN dictionary.</p>
@@ -255,3 +262,107 @@ keyboard input without any transliteration).</p>
 <p><pre><code>$ dconf write /desktop/ibus/engine/typing-booster/typing-booster-mr-in/dictionary '"mr_IN,en_GB,de_DE"'</code></pre></p>
 
 <p>sets the Marathi, the British English,and the German dictionary.</p>
+
+<br>
+<a name="emoji-predictions"></a>
+<br>
+<h2>Emoji predictions</h2>
+
+<img style="float:left; margin-right:20px; margin-bottom:10px" src="images/emoji-castle.png" alt="Emoji example when typing “castle”">
+
+<p>ibus-typing-booster supports prediction of emoji as well.  This can
+be enabled or disabled with the option “Emoji predictions” seen in the
+screen shot (on by default).</p>
+
+<p>The screen shot shows coloured emoji, to make that work
+an <a href="http://www.hadess.net/2016/05/blog-backlog-post-1-emoji.html">experimental
+patch for cairo</a> and a suitable font is needed. If this is not
+installed, the emoji support in ibus-typing-booster will still work
+but the emoji will be displayed in black and white. A good black and
+white font for emoji is
+the <a href="http://users.teilar.gr/~g1951d/">Symbola</a> font by
+George Douros (also available as a package for Fedora). Best use the
+latest version updated for Unicode 9.0.0.</p>
+
+<p>In the screen shot, the emoji 🏰 (U+1F3F0 EUROPEAN CASTLE) is shown
+as the last candidate in the first page when the text “castle” is
+typed. If a reasonable matches for emoji are found, the first match is
+shown as the last candidate in the first page. If more than one emoji
+has matched the input, the other matches can be found by scrolling
+down the candidate page. If an emoji is selected and committed, it
+will be remembered just like ibus-typing-booster remembers other words
+and will be shown with higher priority next time.</p>
+
+<img style="float:left; margin-right:20px; margin-bottom:10px" src="images/emoji-castle-related.png" alt="Example for looking up related emoji for “castle”">
+
+<p>It is also possible to look up related emoji which may not have
+matched the typed text well but are related to the emoji shown because
+they share keywords or categories. To show related emoji, select an
+emoji in the candidate list by moving up or down in the candidate list
+using the arrow-up/arrow-down keys or the page-up/page-down keys until
+the desired emoji is highlighted, then press Alt+F12. As seen in the
+screen shot, emoji for other types of castles or buildings are then
+shown. The lists of words shown in square brackets are the keywords
+the shown emoji have in common with the originally selected emoji. By
+typing the “Escape” key, one can go back to the original list.</p>
+
+<p>By the way, the related emoji shown in the screen shot have German
+names and keywords. That’s because I am using German as the main
+language for ibus-typing-booster here with English as a second
+language (See <a href="#multilingual-input">Multilingual
+input</a>). Because I am using English as a second language, the input
+text “castle” did match (The German equivalent “Schloss” would have
+matched as well). When looking up related emoji, they are shown in all
+languages ibus-typing-booster is setup to use, but they are sorted in
+the order of preference of the languages. So German is on top because
+it is the main languages, English matches for related emoji are
+further down in the candidate list.</p>
+
+<p>The following screenshot shows another example using Hindi as the
+main language:</p>
+
+<img style="float:left; margin-right:20px; margin-bottom:10px" src="images/emoji-namaste.png" alt="Emoji example when typing “namaste”">
+
+<p>With Hindi as well, one can highlight the emoji which matched
+the typed string नमस्ते (“namaste”) and show related emoji:</p>
+
+<img style="float:left; margin-right:20px; margin-bottom:10px" src="images/emoji-namaste-related.png" alt="Example for looking up related emoji for “namaste”">
+
+<br>
+<a name="related-words-nltk"></a>
+<br>
+<h2>Using NLTK to find related words</h2>
+
+<img style="float:left; margin-right:20px; margin-bottom:10px" src="images/castle-word-related.png" alt="Example for looking up related words for “castle”">
+
+<p>ibus-typing-booster can also find words which are related to any of
+the candidates displayed. To show related words for a candidate, move
+up or down in the candidate list using the arrow-up/arrow-down keys or
+the page-up/page-down keys until the desired emoji is highlighted,
+then press Alt+F12 (When Alt+F12 is pressed <emph>before</emph> moving
+in the candidate list, i.e. when no candidate at all is highlighted in
+the candidate list, the word from the preëdit is used to lookup
+related words). In the screen shot shown, “castle” was typed followed
+by Alt+F12 and synonyms for “castle” are displayed. hypernyms or
+hyponyms may also be displayed.</p>
+
+<p>Looking up related words like this currently only works for
+English. When trying to find related words for non-English words,
+nothing will happen.</p>
+
+<p>The lookup of related words uses NLTK and will only work when NLTK
+for Python3 and the wordnet corpus for NLTK are installed. On Fedora,
+you can install it like this:</p>
+
+<p><pre><code>
+      sudo dnf install python3-nltk
+      python3
+      import nltk
+      nltk.download()
+</code></pre></p>
+
+<p>A download tool for NLTK data as seen in the next screen shot
+opens, select the wordnet corpus and click the “Download” button:</p>
+
+<img style="float:left; margin-right:20px; margin-bottom:10px" src="images/nltk-wordnet-corpus-download.png" alt="wordnet corpus download for NLTK">
+
