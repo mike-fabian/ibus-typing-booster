@@ -26,4 +26,4 @@ and dictionaries.
 </p>
 
 <p>For details how to setup this new feature see <a
-href="/documentation#multilingual-input">Multilingual input</a>.</p>
+href="{{ site.github.url }}/documentation#multilingual-input">Multilingual input</a>.</p>
