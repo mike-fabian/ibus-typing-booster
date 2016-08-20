@@ -136,10 +136,11 @@ class EmojiMatcher():
                       good enough.
         :type quick: Boolean
         '''
+        self._languages = languages
         self._quick = quick
         self._enchant_dicts = []
         if import_enchant_successful:
-            for language in languages:
+            for language in self._languages:
                 if enchant.dict_exists(language):
                     self._enchant_dicts.append(enchant.Dict(language))
         # From the documentation
@@ -171,7 +172,7 @@ class EmojiMatcher():
             self._load_unicode_data()
         self._load_emojione_data()
         if cldr_data:
-            for language in languages:
+            for language in self._languages:
                 self._load_cldr_annotation_data(language)
 
     def _add_to_emoji_dict(self, emoji_dict_key, values_key, values):
@@ -536,6 +537,9 @@ class EmojiMatcher():
 
         >>> mq = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
 
+        >>> mq.candidates('😺', match_limit = 3)
+        [('😺', "smiling cat face with open mouth ['animal', 'cat', 'face', 'happy', 'mouth', 'open', 'people', 'smile']", 8), ('😸', "grinning cat face with smiling eyes ['animal', 'cat', 'face', 'happy', 'people', 'smile']", 6), ('😃', "smiling face with open mouth ['face', 'happy', 'mouth', 'open', 'people', 'smile']", 6)]
+
         >>> mq.candidates('ant')[0][:2]
         ('🐜', 'ant')
 
@@ -755,6 +759,11 @@ class EmojiMatcher():
         if ((query_string, match_limit) in self._candidate_cache
             and not debug):
             return self._candidate_cache[(query_string, match_limit)]
+        if (query_string, 'en') in self._emoji_dict:
+            # the query_string is itself an emoji, match similar ones:
+            candidates = self.similar(query_string, match_limit = match_limit)
+            self._candidate_cache[(query_string, match_limit)] = candidates
+            return candidates
         self._set_seq2(query_string)
         candidates = []
         for emoji_key, emoji_value in self._emoji_dict.items():
