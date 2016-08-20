@@ -11,7 +11,7 @@ email: Mike FABIAN <mfabian@redhat.com>
 description: > # this means to ignore newlines until "baseurl:"
   Ibus-typing-booster is a completion input method
   for faster typing.
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "/ibus-typing-booster" # the subpath of your site, e.g. /blog
 url: "https://mike-fabian.github.io" # the base hostname & protocol for your site
 # twitter_username: mfabian1963
 github_username:  mike-fabian
