@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Multilingual input implemented in ibus-typing-booster >= 1.4.0"
+author: Mike FABIAN
 ---
 
 <p>Since version 1.4.0, ibus-typing-booster supports using more than
