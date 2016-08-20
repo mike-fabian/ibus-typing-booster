@@ -491,8 +491,7 @@ class editor(object):
                     del emoji_scores[x[0]]
                 else:
                     phrase_candidates_emoji_name.append((
-                        x[0], x[1], self.emoji_matcher.name(
-                            x[0], languages = self._dictionary_names)))
+                        x[0], x[1], self.emoji_matcher.name(x[0])))
             emoji_candidates = []
             for (key, value) in sorted(
                     emoji_scores.items(),
@@ -1116,9 +1115,7 @@ class tabengine (IBus.Engine):
             return
         related_candidates = []
         if self._editor._emoji_predictions:
-            related_candidates = self._editor.emoji_matcher.similar(
-                phrase,
-                languages  = self.db.hunspell_obj.get_dictionary_names())
+            related_candidates = self._editor.emoji_matcher.similar(phrase)
         try:
             import itb_nltk
             for x in itb_nltk.synonyms(phrase, keep_original = False):
