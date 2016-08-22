@@ -62,7 +62,6 @@ MAINTAINERCLEANFILES = \
 
 EXTRA_DIST = \
 	config.rpath \
-	autogen.sh \
 	typing-booster.appdata.xml \
 	@PACKAGE_NAME@.spec \
 	$(NULL)
