@@ -26,6 +26,8 @@ import sys
 import string
 import unicodedata
 import re
+from gi import require_version
+require_version('IBus', '1.0')
 from gi.repository import IBus
 from gi.repository import GLib
 from m17n_translit import Transliterator

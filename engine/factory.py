@@ -18,6 +18,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 
+from gi import require_version
+require_version('IBus', '1.0')
 from gi.repository import IBus
 import hunspell_table
 import tabsqlitedb

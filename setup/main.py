@@ -28,6 +28,13 @@ import locale
 from time import strftime
 from i18n import DOMAINNAME, _, N_, init as i18n_init
 import dbus, dbus.service, dbus.glib
+from gi import require_version
+require_version('Gtk', '3.0')
+from gi.repository import Gtk
+require_version('IBus', '1.0')
+from gi.repository import IBus
+from gi.repository import GLib
+from pkginstall import InstallPkg
 
 sys.path = [sys.path[0]+'/../engine'] + sys.path
 import tabsqlitedb
@@ -63,11 +70,6 @@ if options.debug:
     sys.stdout = open(logfile, mode='a', buffering=1)
     sys.stderr = open(logfile, mode='a', buffering=1)
     print('--- %s ---' %strftime('%Y-%m-%d: %H:%M:%S'))
-
-from gi.repository import Gtk
-from gi.repository import IBus
-from gi.repository import GLib
-from pkginstall import InstallPkg
 
 class SetupUI:
     def __init__(self, bus):

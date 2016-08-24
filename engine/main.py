@@ -19,6 +19,8 @@
 import os
 import sys
 import optparse
+from gi import require_version
+require_version('IBus', '1.0')
 from gi.repository import IBus
 from gi.repository import GLib
 import re
