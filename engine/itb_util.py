@@ -59,7 +59,7 @@ def strip_token(token):
     return rstrip_token(lstrip_token(token))
 
 def tokenize(text):
-    pattern = re.compile(r'[\s]+', re.UNICODE)
+    pattern = re.compile(r'[\s]+')
     tokens = []
     for s in pattern.split(text.strip()):
         tokens.append(strip_token(s))

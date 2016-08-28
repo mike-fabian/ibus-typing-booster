@@ -80,7 +80,7 @@ class Dictionary:
         if aff_buffer:
             encoding_pattern = re.compile(
                 r'^[\s]*SET[\s]+(?P<encoding>[-a-zA-Z0-9_]+)[\s]*$',
-                re.MULTILINE|re.UNICODE)
+                re.MULTILINE)
             match = encoding_pattern.search(aff_buffer)
             if match:
                 self.encoding = match.group('encoding')
@@ -192,7 +192,7 @@ class Hunspell:
         # one line and not accidentally big chunks of the file!
         try:
             regexp = r'^'+re.escape(input_phrase)+r'.*?(?=/|$)'
-            patt_start = re.compile(regexp, re.MULTILINE|re.UNICODE)
+            patt_start = re.compile(regexp, re.MULTILINE)
         except:
             import traceback
             traceback.print_exc()

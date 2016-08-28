@@ -1179,7 +1179,7 @@ class tabengine (IBus.Engine):
             # and the context before is “word ”, make the result “word!”.
             # And if the commit_phrase is “! ” and the context before is “word ”
             # make the result “word! ”.
-            pattern_sentence_end = re.compile(r'^[.,;:?!][\s]*$', re.UNICODE)
+            pattern_sentence_end = re.compile(r'^[.,;:?!][\s]*$')
             if pattern_sentence_end.search(commit_phrase):
                 surrounding_text = self.get_surrounding_text()
                 text = surrounding_text[0].get_text()
@@ -1194,7 +1194,7 @@ class tabengine (IBus.Engine):
                 # The commit_phrase is *not* yet in the surrounding text,
                 # it will show up there only when the next key event is
                 # processed:
-                pattern = re.compile(r'(?P<white_space>[\s]+)$', re.UNICODE)
+                pattern = re.compile(r'(?P<white_space>[\s]+)$')
                 match = pattern.search(text[:cursor_pos])
                 if match:
                     nchars = len(match.group('white_space'))
@@ -1320,7 +1320,7 @@ class tabengine (IBus.Engine):
                     # focused window (bug!), don’t use it.
                     return False
                 pattern = re.compile(
-                    r'(^|.*[\s]+)(?P<token>[\S]+)[\s]$', re.UNICODE)
+                    r'(^|.*[\s]+)(?P<token>[\S]+)[\s]$')
                 match = pattern.match(text[:cursor_pos])
                 if not match:
                     return False
