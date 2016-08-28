@@ -89,6 +89,49 @@ def is_ascii(text):
     else:
         return True
 
+# Mapping of Unicode ordinals to Unicode ordinals, strings, or None.
+# Unmapped characters are left untouched. Characters mapped to None
+# are deleted.
+
+TRANS_TABLE = {
+    ord('ẞ'): 'SS',
+    ord('ß'): 'ss',
+    ord('Ø'): 'O',
+    ord('ø'): 'o',
+    ord('Æ'): 'AE',
+    ord('æ'): 'ae',
+    ord('Œ'): 'OE',
+    ord('œ'): 'oe',
+    ord('Ł'): 'L',
+    ord('ł'): 'l',
+}
+
+def remove_accents(text):
+    '''Removes accents from the text
+
+    Returns the text with all accents removed
+
+    Using “from unidecode import unidecode” is more
+    sophisticated, but I am not sure whether I can require
+    “unidecode”.
+
+    :param text: The text to change
+    :type text: string
+    :rtype: string
+
+    Examples:
+
+    >>> remove_accents('Ångstrøm')
+    'Angstrom'
+
+    >>> remove_accents('ÅÆæŒœĳøßẞü')
+    'AAEaeOEoeijossSSu'
+
+    '''
+    return ''.join([
+        x for x in unicodedata.normalize('NFKD', text)
+        if unicodedata.category(x) != 'Mn']).translate(TRANS_TABLE)
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
