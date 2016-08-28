@@ -112,6 +112,19 @@ class Dictionary:
             print("load_dictionary(): "
                   + "Successfully loaded %(dic)s using %(enc)s encoding."
                   %{'dic': dic_path, 'enc': self.encoding})
+            # http://pwet.fr/man/linux/fichiers_speciaux/hunspell says:
+            #
+            # > A dictionary file (*.dic) contains a list of words, one per
+            # > line. The first line of the dictionaries (except personal
+            # > dictionaries) contains the word count. Each word may
+            # > optionally be followed by a slash ("/") and one or more
+            # > flags, which represents affixes or special attributes.
+            #
+            # Therefore, remove '/' and the following flags from each
+            # line to make the buffer a bit smaller and the regular
+            # expressions we use later to match words in the
+            # dictionary slightly simpler and maybe a tiny bit faster:
+            self.buffer = re.sub(r'/.*', '', self.buffer)
             self.buffer = unicodedata.normalize(
                 normalization_form_internal, self.buffer)
             if import_enchant_successful:
@@ -187,12 +200,13 @@ class Hunspell:
         # immediately:
         if '/' in input_phrase:
             return []
-        # And we should not match further than '/'.
-        # Take care to use a non-greedy regexp to match only
-        # one line and not accidentally big chunks of the file!
+        # '/' is already removed from the buffer, we do not need to
+        # take care of it in the regexp.  Take care to use a
+        # non-greedy regexp to match only one line and not
+        # accidentally big chunks of the file!
         try:
-            regexp = r'^'+re.escape(input_phrase)+r'.*?(?=/|$)'
-            patt_start = re.compile(regexp, re.MULTILINE)
+            patt_start = re.compile(r'^' + re.escape(input_phrase) + r'.*?$',
+                                    re.MULTILINE)
         except:
             import traceback
             traceback.print_exc()
