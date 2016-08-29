@@ -301,7 +301,7 @@ class Transliterator:
         if type(msymbol_list) != type([]):
             raise ValueError('Argument of transliterate() must be a list.')
         if self._dummy:
-            return u''.join(msymbol_list)
+            return ''.join(msymbol_list)
         libm17n__minput_reset_ic(self._ic)
         output = ''
         for symbol in msymbol_list + ['nil']:

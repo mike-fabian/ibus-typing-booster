@@ -48,7 +48,7 @@ max_words_row = 50
 normalization_form_internal = 'NFD'
 
 class Dictionary:
-    def __init__(self, name=u'en_US'):
+    def __init__(self, name = 'en_US'):
         if debug_level > 1:
             sys.stderr.write(
                 "Dictionary.__init__(name=%s)\n" %name)
@@ -249,7 +249,7 @@ class Hunspell:
                 dic_path = os.path.join(dictionary.loc, dictionary.name+'.dic')
                 suggested_words.insert(
                     0,
-                    u'☹ %(dic_path)s not found. '
+                    '☹ %(dic_path)s not found. '
                     %{'dic_path': dic_path}
                     + 'Please install hunspell dictionary!')
         return suggested_words[0:max_words]

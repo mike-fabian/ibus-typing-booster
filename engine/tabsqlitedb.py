@@ -249,8 +249,8 @@ class tabsqlitedb:
                 sqlargs.append(
                     {'input_phrase': x[0],
                      'phrase': x[0],
-                     'p_phrase': u'',
-                     'pp_phrase': u'',
+                     'p_phrase': '',
+                     'pp_phrase': '',
                      'user_freq': x[1],
                      'timestamp': time.time()})
             sqlstr = '''
@@ -283,8 +283,8 @@ class tabsqlitedb:
         self.create_indexes("user_db", commit=False)
         self.generate_userdb_desc()
 
-    def update_phrase(self, input_phrase=u'', phrase=u'',
-                      p_phrase=u'', pp_phrase=u'',
+    def update_phrase(self, input_phrase = '', phrase = '',
+                      p_phrase = '', pp_phrase = '',
                       user_freq=0, database='user_db', commit=True):
         '''
         update the user frequency of a phrase
@@ -348,8 +348,8 @@ class tabsqlitedb:
         self.db.execute(sqlstr)
         self.db.commit()
 
-    def add_phrase(self, input_phrase=u'', phrase=u'',
-                   p_phrase=u'', pp_phrase=u'',
+    def add_phrase(self, input_phrase = '', phrase = '',
+                   p_phrase = '', pp_phrase = '',
                    user_freq=0, database = 'main', commit=True):
         '''
         Add phrase to database
@@ -452,7 +452,7 @@ class tabsqlitedb:
                           x[0]       # phrase alphabetical
                       ))[:20]
 
-    def select_words(self, input_phrase, p_phrase=u'', pp_phrase=u''):
+    def select_words(self, input_phrase, p_phrase = '', pp_phrase = ''):
         '''
         Get phrases from database completing input_phrase.
 
@@ -484,7 +484,7 @@ class tabsqlitedb:
                 %self.best_candidates(phrase_frequencies))
         # Now phrase_frequencies might contain something like this:
         #
-        # {u'code': 0, u'communicability': 0, u'cold': 0, u'colour': 0}
+        # {'code': 0, 'communicability': 0, 'cold': 0, 'colour': 0}
 
         # To quote a string to be used as a parameter when assembling
         # an sqlite statement with Python string operations, remove
@@ -524,7 +524,7 @@ class tabsqlitedb:
             results_uni = self.db.execute(sqlstr, sqlargs).fetchall()
             # Then the result returned by .fetchall() is:
             #
-            # [(u'colour', 4), (u'cold', 1), (u'conspiracy', 6)]
+            # [('colour', 4), ('cold', 1), ('conspiracy', 6)]
             #
             # (“c|conspiracy|1” is not selected because it doesn’t
             # match the user input “LIKE co%”! I.e. this is filtered
@@ -540,7 +540,7 @@ class tabsqlitedb:
         # Now normalize the unigram frequencies with the total count
         # (which is 11 in the above example), which gives us the
         # normalized result:
-        # [(u'colour', 4/11), (u'cold', 1/11), (u'conspiracy', 6/11)]
+        # [('colour', 4/11), ('cold', 1/11), ('conspiracy', 6/11)]
         sqlstr = 'SELECT sum(user_freq) FROM like_input_phrase_view;'
         try:
             count = self.db.execute(sqlstr, sqlargs).fetchall()[0][0]
@@ -548,8 +548,8 @@ class tabsqlitedb:
             import traceback
             traceback.print_exc()
         # Updating the phrase_frequency dictionary with the normalized
-        # results gives: {u'conspiracy': 6/11, u'code': 0,
-        # u'communicability': 0, u'cold': 1/11, u'colour': 4/11}
+        # results gives: {'conspiracy': 6/11, 'code': 0,
+        # 'communicability': 0, 'cold': 1/11, 'colour': 4/11}
         for x in results_uni:
             phrase_frequencies.update([(x[0], x[1]/float(count))])
         if debug_level > 1:
@@ -714,8 +714,8 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             return 0
 
     def check_phrase_and_update_frequency(
-            self, input_phrase=u'', phrase=u'', p_phrase=u'',
-            pp_phrase=u'', database='user_db', commit=True):
+            self, input_phrase = '', phrase = '', p_phrase = '',
+            pp_phrase = '', database = 'user_db', commit=True):
         '''
         Check whether input_phrase and phrase are already in database. If
         they are in the database, increase the frequency by 1, if not
@@ -792,8 +792,8 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                         commit=commit)
         return
 
-    def remove_phrase(self, input_phrase=u'',
-                      phrase=u'', database='user_db', commit=True):
+    def remove_phrase(self, input_phrase = '',
+                      phrase = '', database = 'user_db', commit = True):
         '''
         Remove all rows matching “input_phrase” and “phrase” from database.
         Or, if “input_phrase” is “None”, remove all rows matching “phrase”
@@ -855,8 +855,8 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         rows = self.db.execute(
             'SELECT input_phrase, phrase, p_phrase, pp_phrase, '
             + 'user_freq, timestamp FROM phrases;').fetchall()
-        p_token = u''
-        pp_token = u''
+        p_token = ''
+        pp_token = ''
         database_dict = {}
         for x  in rows:
             database_dict.update([((x[0], x[1], x[2], x[3]),
