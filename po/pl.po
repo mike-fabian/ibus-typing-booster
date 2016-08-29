@@ -1,0 +1,295 @@
+# Piotr Drąg <piotrdrag@gmail.com>, 2016. #zanata
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
+"issues\n"
+"POT-Creation-Date: 2016-08-10 16:31+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2016-08-25 07:56-0400\n"
+"Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
+"Language-Team: Polish\n"
+"Language: pl\n"
+"X-Generator: Zanata 3.9.3\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2)\n"
+
+#: engine/hunspell_table.py:836
+#, python-format
+msgid "Switch preedit input method to %(ime)s"
+msgstr ""
+"Przełącz metodę wprowadzania wcześniej wprowadzonego tekstu na %(ime)s"
+
+#: engine/hunspell_table.py:844
+msgid "Preedit input method"
+msgstr "Metoda wprowadzania wcześniej wprowadzonego tekstu"
+
+#: engine/hunspell_table.py:845
+msgid "Switch preedit input method"
+msgstr "Przełącz metodę wprowadzania wcześniej wprowadzonego tekstu"
+
+#: engine/hunspell_table.py:936
+msgid "Setup"
+msgstr "Ustawienia"
+
+#: engine/hunspell_table.py:939
+#, python-format
+msgid "Configure ibus-typing-booster “%(name)s”"
+msgstr "Skonfiguruj ibus-typing-booster „%(name)s”"
+
+#: setup/main.py:101
+#, python-format
+msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
+msgstr "Nieznany format nazwy mechanizmu: IBUS_ENGINE_NAME=%(name)s"
+
+#: setup/main.py:107
+msgid "IBUS_ENGINE_NAME environment variable is not set."
+msgstr "Nie ustawiono zmiennej środowiskowej IBUS_ENGINE_NAME"
+
+#: setup/main.py:111
+msgid ""
+"Cannot determine the config file for this engine. Please use the --config-"
+"file option."
+msgstr ""
+"Nie można ustalić pliku konfiguracji dla tego mechanizmu. Proszę użyć opcji "
+"„--config-file”."
+
+#: setup/main.py:121
+#, python-format
+msgid "Config file %(file)s does not exist."
+msgstr "Plik konfiguracji %(file)s nie istnieje."
+
+#: setup/main.py:139
+#, python-format
+msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
+msgstr "Preferencje dla ibus-typing-booster „%(symbol)s”"
+
+#: setup/main.py:325
+msgid "Another instance of this app is already running."
+msgstr "Inna kopia tej aplikacji jest już uruchomiona."
+
+#: setup/main.py:420
+msgid "Open File ..."
+msgstr "Otwórz plik…"
+
+#: setup/main.py:438
+#, python-format
+msgid "Learned successfully from file %(filename)s."
+msgstr "Pomyślnie nauczono się z pliku %(filename)s."
+
+#: setup/main.py:447
+#, python-format
+msgid "Learning from file %(filename)s failed."
+msgstr "Nauczenie się z pliku %(filename)s się nie powiodło."
+
+#: setup/main.py:456
+msgid "Are you sure?"
+msgstr "Na pewno?"
+
+#: setup/main.py:463
+msgid ""
+"Do you really want to delete all language \n"
+"data learned from typing or reading files?"
+msgstr ""
+"Na pewno usunąć wszystkie dane języków\n"
+"nauczone podczas pisania i odczytywania plików?"
+
+#: setup/main.py:660
+msgid "ibus is not running."
+msgstr "Usługa IBus nie jest uruchomiona."
+
+#: setup/setup.glade:35
+msgid "Close"
+msgstr "Zamknij"
+
+#: setup/setup.glade:83
+msgid "Enable suggestions by Tab key"
+msgstr "Włączenie sugestii za pomocą klawisza Tab"
+
+#: setup/setup.glade:87
+msgid "Toggle whether a list of suggestions pops up with the Tab key."
+msgstr "Przełączenie wyświetlania listy sugestii za pomocą klawisza Tab."
+
+#: setup/setup.glade:107
+msgid ""
+"How many suggestion candidates to show in one page of the candidate list."
+msgstr ""
+"Ile kandydatów sugestii wyświetlać na jednej stronie listy kandydatów."
+
+#: setup/setup.glade:108
+msgid "Candidate window page size:"
+msgstr "Rozmiar strony okna kandydata:"
+
+#: setup/setup.glade:144
+msgid ""
+"The input method to use. See also the option “Add direct input” to add "
+"British English as a second language."
+msgstr ""
+"Używana metoda wprowadzania. Opcja „Dodanie bezpośredniego wprowadzania” "
+"umożliwia dodanie brytyjskiego angielskiego jako drugiego języka."
+
+#: setup/setup.glade:145
+msgid "Input Method:"
+msgstr "Metoda wprowadzania:"
+
+#: setup/setup.glade:170
+msgid "Display total number of candidates"
+msgstr "Wyświetlanie całkowitej liczby kandydatów"
+
+#: setup/setup.glade:174
+msgid ""
+"Display how many candidates there are and which one is selected on top of "
+"the list of candidates."
+msgstr ""
+"Wyświetlanie tylu kandydatów, ile istnieje, i który jest wybrany na górze "
+"listy kandydatów."
+
+#: setup/setup.glade:196
+msgid ""
+"Show no suggestions when less than this number of characters have been typed."
+""
+msgstr "Bez wyświetlania sugestii, kiedy wpisano mniej niż tę liczbę znaków."
+
+#: setup/setup.glade:197
+msgid "Minimum number of chars for completion:"
+msgstr "Minimalna liczba znaków do uzupełniania:"
+
+#: setup/setup.glade:230
+msgid "Input Method Help"
+msgstr "Pomoc metody wprowadzania"
+
+#: setup/setup.glade:234
+msgid "Display some help showing how to use the input method selected above."
+msgstr ""
+"Wyświetlanie pomocy pokazującej, jak używać metody wprowadzania wybranej "
+"powyżej."
+
+#: setup/setup.glade:245
+msgid "Use digits as select keys"
+msgstr "Użycie cyfr jako klawiszy wyboru"
+
+#: setup/setup.glade:249
+msgid ""
+"Use the regular digits 1-9 as select keys. If that option is on, numbers can "
+"only by typed while no suggestions are shown. Therefore, completions for "
+"numbers cannot be suggested. And typing words containing numbers, like “A4” "
+"is more difficult as typing “4” would select the 4th suggestion. On the "
+"other hand, selecting suggestions using 1-9 is easier then using the always "
+"enabled select keys F1-F9 as the latter keys are farther away from the "
+"fingers."
+msgstr ""
+"Używa zwykłych klawiszy cyfr 1-9 jako klawiszy wyboru. Jeśli ta opcja jest "
+"włączona, to liczby mogą być wprowadzane tylko, kiedy żadne sugestie nie są "
+"wyświetlane. Z tego powodu nie można sugerować uzupełnień liczb, a pisanie "
+"słów zawierających liczby, takich jak „A4”, jest trudniejsze, ponieważ "
+"wpisanie „4” spowodowałoby wybranie czwartej sugestii. Z drugiej strony, "
+"wybieranie sugestii używając klawiszy 1-9 jest łatwiejsze niż używanie "
+"zawsze włączonych klawiszy wyboru F1-F9, ponieważ te drugie są dalej od "
+"palców."
+
+#: setup/setup.glade:263
+msgid "Add direct input"
+msgstr "Dodanie bezpośredniego wprowadzania"
+
+#: setup/setup.glade:267
+msgid ""
+"This option adds British English as a second language to use in addition to "
+"the main language of this input method."
+msgstr ""
+"Ta opcja dodaje brytyjski angielski jako drugi używany język, w dodatku do "
+"głównego języka tej metody wprowadzania."
+
+#: setup/setup.glade:281
+msgid "Remember last used preedit input method"
+msgstr ""
+"Zapamiętanie ostatnio używanej metody wprowadzania wcześniej wprowadzonego "
+"tekstu"
+
+#: setup/setup.glade:285
+msgid ""
+"If more then one input method is used at the same time, one of them is used "
+"for the preedit.  Which input method is used for the preedit can be changed "
+"via the menu or via shortcut keys. If this option is enabled, such a change "
+"is remembered even if the session is restarted. "
+msgstr ""
+"Jeśli więcej niż jedna metoda wprowadzania jest używana w tym samym czasie, "
+"to jedna z nich jest używana do wcześniejszego wprowadzania. Która metoda "
+"jest używana do wcześniejszego wprowadzania może być zmieniane w menu lub za "
+"pomocą skrótów klawiszowych. Jeśli ta opcja jest włączona, to ta zmiana jest "
+"zapamiętywana nawet po ponownym uruchomieniu sesji."
+
+#: setup/setup.glade:299
+msgid "Emoji predictions"
+msgstr "Przewidywanie emoji"
+
+#: setup/setup.glade:303
+msgid "Whether emoji should be included in the predictions."
+msgstr "Czy uwzględniać emoji w przewidywaniach."
+
+#: setup/setup.glade:342
+msgid "Options"
+msgstr "Opcje"
+
+#: setup/setup.glade:375
+msgid "Install dictionary"
+msgstr "Zainstaluj słownik"
+
+#: setup/setup.glade:389
+msgid "Install pyhunspell"
+msgstr "Zainstaluj pakiet pyhunspell"
+
+#: setup/setup.glade:405
+msgid "Learn from text file"
+msgstr "Naucz się z pliku tekstowego"
+
+#: setup/setup.glade:423
+msgid "Install the dictionary package for this engine"
+msgstr "Instaluje pakiet słownika dla tego mechanizmu"
+
+#: setup/setup.glade:433
+msgid "Install pyhunspell package to get spellchecking suggestions"
+msgstr "Instaluje pakiet pyhunspell dla sugestii sprawdzania pisowni"
+
+#: setup/setup.glade:447
+msgid "Learn your style by reading a text file"
+msgstr "Uczy się stylu odczytując plik tekstowy"
+
+#: setup/setup.glade:461
+msgid ""
+"Delete all personal language data learned from typing or from reading files"
+msgstr ""
+"Usuwa wszystkie osobiste dane języka nauczone podczas pisania lub "
+"odczytywania plików"
+
+#: setup/setup.glade:473
+msgid "Delete learned data"
+msgstr "Usuwa nauczone dane"
+
+#: setup/setup.glade:510
+msgid "Dictionaries and personal data"
+msgstr "Słowniki i dane osobiste"
+
+#: typing-booster.appdata.xml:5
+msgid "Typing Booster"
+msgstr "Wspieranie pisania"
+
+#: typing-booster.appdata.xml:6
+msgid "Predictive input method"
+msgstr "Przewidująca metoda wprowadzania"
+
+#: typing-booster.appdata.xml:8
+msgid ""
+"Ibus-typing-booster is a predictive input method and predicts complete words "
+"based on context and partial input. One can then simply select the desired "
+"word from a list of suggestions and improve one’s typing speed and spelling."
+msgstr ""
+"ibus-typing-booster to przewidująca metoda wprowadzania, przewidująca całe "
+"słowa w oparciu o kontekst i częściowo wprowadzone słowa. Można po prostu "
+"wybierać żądane słowa z listy sugestii i dzięki temu zwiększyć swoją "
+"prędkość i dokładność pisania."
+
+#: typing-booster.appdata.xml:92
+msgid "Mike FABIAN"
+msgstr "Mike FABIAN"
