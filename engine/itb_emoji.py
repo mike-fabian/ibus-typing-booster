@@ -930,7 +930,7 @@ class EmojiMatcher():
                 if label_key in self._emoji_dict[emoji_key]:
                     for label in self._emoji_dict[emoji_key][label_key]:
                         original_labels_for_language.add(label)
-            for similar_key, similar_value in self._emoji_dict.items():
+            for similar_key in self._emoji_dict:
                 if similar_key[1] != language:
                     continue
                 similar_string = similar_key[0]

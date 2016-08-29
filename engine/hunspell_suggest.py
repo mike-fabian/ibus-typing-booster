@@ -133,7 +133,7 @@ class Dictionary:
                 self.pyhunspell_object = hunspell.HunSpell(dic_path, aff_path)
 
 class Hunspell:
-    def __init__(self, dictionary_names=['en_US']):
+    def __init__(self, dictionary_names = ('en_US',)):
         global debug_level
         try:
             debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))

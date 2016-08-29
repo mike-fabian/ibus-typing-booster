@@ -262,6 +262,7 @@ class editor(object):
                 %self._transliterated_strings)
 
     def get_transliterators(self):
+        '''Get current dictionary of transliterator objects'''
         return self._transliterators
 
     def get_transliterated_strings(self):
@@ -679,10 +680,6 @@ class editor(object):
             self.init_transliterators()
         else:
             self._current_imes = imes
-
-    def get_transliterators(self):
-        '''Get current dictionary of transliterator objects'''
-        return self._transliterators
 
     def push_context(self, phrase):
         self._pp_phrase = self._p_phrase
