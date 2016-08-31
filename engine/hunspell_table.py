@@ -559,22 +559,23 @@ class editor(object):
             return True
         return False
 
-    def get_string_from_lookup_table_current_page(self, index):
+    def set_lookup_table_cursor_pos_in_current_page(self, index):
+        '''Sets the cursor in the lookup table to index in the current page
+
+        Returns True if successful, False if not.
+
+        The topmost candidate has the index 0 and the label “1”.
         '''
-        Get the candidate at “index” in the currently visible
-        page of the lookup table. The topmost candidate
-        has the index 0 and has the label “1.”.
-        '''
-        if not self._candidates:
-            return ''
-        cursor_pos = self._lookup_table.get_cursor_pos()
-        cursor_in_page = self._lookup_table.get_cursor_in_page()
-        current_page_start = cursor_pos - cursor_in_page
-        real_index = current_page_start + index
-        if real_index >= len (self._candidates):
-            # the index given is out of range
-            return ''
-        return self._candidates[real_index][0]
+        page_size = self._lookup_table.get_page_size()
+        if index > page_size:
+            return False
+        page, dummy_pos_in_page = divmod(self._lookup_table.get_cursor_pos(),
+                                         page_size)
+        new_pos = page * page_size + index
+        if new_pos > self._lookup_table.get_number_of_candidates():
+            return False
+        self._lookup_table.set_cursor_pos(new_pos)
+        return True
 
     def get_string_from_lookup_table_cursor_pos(self):
         '''
@@ -589,7 +590,17 @@ class editor(object):
             return ''
         return self._candidates[index][0]
 
-    def remove_candidate_from_user_database (self, index):
+    def get_string_from_lookup_table_current_page(self, index):
+        '''
+        Get the candidate at “index” in the currently visible
+        page of the lookup table. The topmost candidate
+        has the index 0 and has the label “1.”.
+        '''
+        if not self.set_lookup_table_cursor_pos_in_current_page(index):
+            return ''
+        return self.get_string_from_lookup_table_cursor_pos()
+
+    def remove_candidate_from_user_database(self, index):
         '''Remove the candidate shown at index in the candidate list
         from the user database.
 
@@ -615,25 +626,21 @@ class editor(object):
         want the phrase to be suggested wich such a high priority, no
         matter whether it is a system phrase or a user defined phrase.
         '''
-        cursor_pos = self._lookup_table.get_cursor_pos()
-        cursor_in_page = self._lookup_table.get_cursor_in_page()
-        current_page_start = cursor_pos - cursor_in_page
-        real_index = current_page_start + index
-        if  len (self._candidates) > real_index:
-            # this index is valid
-            can = self._candidates[real_index]
-            self.db.remove_phrase(
-                phrase=can[0], database='user_db', commit=True)
-            # call update_candidates() to get a new SQL query.  The
-            # input has not really changed, therefore we must clear
-            # the remembered list of typed characters to
-            # force update_candidates() to really do something and not
-            # return immediately:
-            self._typed_string_when_update_candidates_was_last_called = []
-            self.update_candidates()
-            return True
-        else:
+        if not self.set_lookup_table_cursor_pos_in_current_page(index):
             return False
+        phrase = self.get_string_from_lookup_table_cursor_pos()
+        if not phrase:
+            return False
+        self.db.remove_phrase(
+            phrase=phrase, database='user_db', commit=True)
+        # call update_candidates() to get a new SQL query.  The
+        # input has not really changed, therefore we must clear
+        # the remembered list of typed characters to
+        # force update_candidates() to really do something and not
+        # return immediately:
+        self._typed_string_when_update_candidates_was_last_called = []
+        self.update_candidates()
+        return True
 
     def get_cursor_pos (self):
         '''get lookup table cursor position'''
@@ -1246,8 +1253,14 @@ class tabengine (IBus.Engine):
         if len(tokens) > 1:
             self._editor._pp_phrase = tokens[-2]
 
-    def do_candidate_clicked(self, index, dummy_button, dummy_state):
-        phrase = self._editor.get_string_from_lookup_table_current_page(index)
+    def do_candidate_clicked(self, index, button, state):
+        if debug_level > 1:
+            sys.stderr.write(
+                'do_candidate_clicked() index = %s button = %s state = %s\n'
+                %(index, button, state))
+        if not self._editor.set_lookup_table_cursor_pos_in_current_page(index):
+            return
+        phrase = self._editor.get_string_from_lookup_table_cursor_pos()
         if phrase:
             self.commit_string(phrase + ' ')
 
