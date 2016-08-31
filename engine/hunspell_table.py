@@ -1260,9 +1260,19 @@ class tabengine (IBus.Engine):
                 %(index, button, state))
         if not self._editor.set_lookup_table_cursor_pos_in_current_page(index):
             return
-        phrase = self._editor.get_string_from_lookup_table_cursor_pos()
-        if phrase:
-            self.commit_string(phrase + ' ')
+        self._editor._lookup_table.set_cursor_visible(True)
+        if button == 1:
+            phrase = self._editor.get_string_from_lookup_table_cursor_pos()
+            if phrase:
+                self.commit_string(phrase + ' ')
+            return
+        if button == 2:
+            self._editor.remove_candidate_from_user_database(index)
+            self._update_ui()
+            return
+        if button == 3:
+            self._lookup_related_candidates()
+            return
 
     def do_process_key_event(self, keyval, keycode, state):
         '''Process Key Events
