@@ -1399,6 +1399,14 @@ class tabengine (IBus.Engine):
         if key.val == IBus.KEY_Escape:
             if self._editor.is_empty():
                 return False
+            if self._editor.get_lookup_table().cursor_visible:
+                # A candidate is selected in the lookup table.
+                # Deselect it and show the first page of the candidate
+                # list:
+                self._editor.get_lookup_table().set_cursor_visible(False)
+                self._editor.get_lookup_table().set_cursor_pos(0)
+                self._update_lookup_table_and_aux()
+                return True
             if self._lookup_table_shows_related_candidates:
                 # Force an update to the original lookup table:
                 self._update_ui()
