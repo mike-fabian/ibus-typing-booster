@@ -132,7 +132,6 @@ class editor(object):
             self._min_char_complete = 9 # maximum
         self._typed_string = []
         self._typed_string_cursor = 0
-        self._typed_string_when_update_candidates_was_last_called = []
         self._p_phrase = ''
         self._pp_phrase = ''
         # self._candidates: hold candidates selected from database and hunspell
@@ -239,7 +238,6 @@ class editor(object):
         self._candidates = []
         self._typed_string = []
         self._typed_string_cursor = 0
-        self._typed_string_when_update_candidates_was_last_called = []
         for ime in self._current_imes:
             self._transliterated_strings[ime] = ''
 
@@ -432,13 +430,6 @@ class editor(object):
         if debug_level > 1:
             sys.stderr.write("update_candidates() self._typed_string=%s\n"
                              %self._typed_string)
-        if (self._typed_string
-            == self._typed_string_when_update_candidates_was_last_called):
-            # The input did not change since we came here last, do
-            # nothing and leave candidates and lookup table unchanged:
-            return True
-        self._typed_string_when_update_candidates_was_last_called = (
-            self._typed_string[:])
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
         self._candidates = []
@@ -633,13 +624,6 @@ class editor(object):
             return False
         self.db.remove_phrase(
             phrase=phrase, database='user_db', commit=True)
-        # call update_candidates() to get a new SQL query.  The
-        # input has not really changed, therefore we must clear
-        # the remembered list of typed characters to
-        # force update_candidates() to really do something and not
-        # return immediately:
-        self._typed_string_when_update_candidates_was_last_called = []
-        self.update_candidates()
         return True
 
     def get_cursor_pos (self):
@@ -1094,11 +1078,14 @@ class tabengine (IBus.Engine):
         else:
             self.update_lookup_table(self._editor.get_lookup_table(), True)
 
-    def _update_candidates_and_lookup_table(self):
-        self._editor.update_candidates()
+    def _update_lookup_table_and_aux(self):
         self._update_lookup_table()
         self._update_aux()
         self._lookup_table_is_invalid = False
+
+    def _update_candidates_and_lookup_table_and_aux(self):
+        self._editor.update_candidates()
+        self._update_lookup_table_and_aux()
 
     def _update_ui(self):
         '''Update User Interface'''
@@ -1107,7 +1094,7 @@ class tabengine (IBus.Engine):
         if self._lookup_table_is_invalid:
             return
         self._lookup_table_is_invalid = True
-        GLib.idle_add(self._update_candidates_and_lookup_table)
+        GLib.idle_add(self._update_candidates_and_lookup_table_and_aux)
 
     def _lookup_related_candidates(self):
         phrase  = ''
@@ -1146,9 +1133,7 @@ class tabengine (IBus.Engine):
             self._editor._candidates.append((x[0], x[2], x[1]))
             self._editor.append_candidate_to_lookup_table(
                 phrase = x[0], user_freq = x[2], comment = x[1])
-        self._update_lookup_table()
-        self._update_aux()
-        self._lookup_table_is_invalid = False
+        self._update_lookup_table_and_aux()
         self._lookup_table_shows_related_candidates = True
 
     def has_transliteration(self, msymbol_list):
@@ -1416,7 +1401,6 @@ class tabengine (IBus.Engine):
                 return False
             if self._lookup_table_shows_related_candidates:
                 # Force an update to the original lookup table:
-                self._editor._typed_string_when_update_candidates_was_last_called = []
                 self._update_ui()
             else:
                 self.reset()
@@ -1438,27 +1422,27 @@ class tabengine (IBus.Engine):
         if key.val in (IBus.KEY_Down, IBus.KEY_KP_Down):
             if self._editor.is_empty():
                 return False
-            res = self._editor.arrow_down ()
-            self._update_ui ()
+            res = self._editor.arrow_down()
+            self._update_lookup_table_and_aux()
             return res
 
         if key.val in (IBus.KEY_Up, IBus.KEY_KP_Up):
             if self._editor.is_empty():
                 return False
-            res = self._editor.arrow_up ()
-            self._update_ui ()
+            res = self._editor.arrow_up()
+            self._update_lookup_table_and_aux()
             return res
 
         if (key.val in [IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down]
             and self._editor.get_lookup_table().get_number_of_candidates()):
             res = self._editor.page_down()
-            self._update_ui ()
+            self._update_lookup_table_and_aux()
             return res
 
         if (key.val in [IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up]
             and self._editor.get_lookup_table().get_number_of_candidates()):
             res = self._editor.page_up ()
-            self._update_ui ()
+            self._update_lookup_table_and_aux()
             return res
 
         if key.val == IBus.KEY_BackSpace and key.control:
@@ -1604,7 +1588,8 @@ class tabengine (IBus.Engine):
                 else:
                     self._editor.set_typed_string_cursor(
                         self._editor.get_typed_string_cursor() + 1)
-                self._update_ui()
+                self._update_preedit()
+                self._update_lookup_table_and_aux()
                 return True
             if (key.val in (IBus.KEY_Left, IBus.KEY_KP_Left)
                 and self._editor.get_typed_string_cursor() > 0):
@@ -1614,7 +1599,8 @@ class tabengine (IBus.Engine):
                 else:
                     self._editor.set_typed_string_cursor(
                         self._editor.get_typed_string_cursor() - 1)
-                self._update_ui()
+                self._update_preedit()
+                self._update_lookup_table_and_aux()
                 return True
             # This key does not only a cursor movement in the preëdit,
             # it really triggers a commit.
@@ -1742,13 +1728,13 @@ class tabengine (IBus.Engine):
 
     def do_page_up (self):
         if self._editor.page_up ():
-            self._update_ui ()
+            self._update_lookup_table_and_aux()
             return True
         return True
 
     def do_page_down (self):
         if self._editor.page_down ():
-            self._update_ui ()
+            self._update_lookup_table_and_aux()
             return True
         return False
 
@@ -1786,7 +1772,6 @@ class tabengine (IBus.Engine):
                     languages = self._editor._dictionary_names)
             else:
                 self._editor._emoji_predictions = False
-            self._editor._typed_string_when_update_candidates_was_last_called = []
             self._update_ui()
             return
         if name == "tabenable":
