@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: Copied by Zanata <copied-by-zanata@zanata.org>\n"
 "Language-Team: Catalan\n"
 "Language: ca\n"
-"X-Generator: Zanata 3.9.3\n"
+"X-Generator: Zanata 3.9.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: engine/hunspell_table.py:836

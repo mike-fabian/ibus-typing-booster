@@ -8,11 +8,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-08-25 07:56-0400\n"
+"PO-Revision-Date: 2016-09-01 10:45-0400\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
-"X-Generator: Zanata 3.9.3\n"
+"X-Generator: Zanata 3.9.5\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2)\n"
 
@@ -77,12 +77,12 @@ msgstr "Otwórz plik…"
 #: setup/main.py:438
 #, python-format
 msgid "Learned successfully from file %(filename)s."
-msgstr "Pomyślnie nauczono się z pliku %(filename)s."
+msgstr "Pomyślnie nauczono się z pliku %(filename)s."
 
 #: setup/main.py:447
 #, python-format
 msgid "Learning from file %(filename)s failed."
-msgstr "Nauczenie się z pliku %(filename)s się nie powiodło."
+msgstr "Nauczenie się z pliku %(filename)s się nie powiodło."
 
 #: setup/main.py:456
 msgid "Are you sure?"
@@ -94,7 +94,7 @@ msgid ""
 "data learned from typing or reading files?"
 msgstr ""
 "Na pewno usunąć wszystkie dane języków\n"
-"nauczone podczas pisania i odczytywania plików?"
+"nauczone podczas pisania i odczytywania plików?"
 
 #: setup/main.py:660
 msgid "ibus is not running."
@@ -143,7 +143,7 @@ msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
 msgstr ""
-"Wyświetlanie tylu kandydatów, ile istnieje, i który jest wybrany na górze "
+"Wyświetlanie tylu kandydatów, ile istnieje, i który jest wybrany na górze "
 "listy kandydatów."
 
 #: setup/setup.glade:196
@@ -182,9 +182,9 @@ msgid ""
 msgstr ""
 "Używa zwykłych klawiszy cyfr 1-9 jako klawiszy wyboru. Jeśli ta opcja jest "
 "włączona, to liczby mogą być wprowadzane tylko, kiedy żadne sugestie nie są "
-"wyświetlane. Z tego powodu nie można sugerować uzupełnień liczb, a pisanie "
+"wyświetlane. Z tego powodu nie można sugerować uzupełnień liczb, a pisanie "
 "słów zawierających liczby, takich jak „A4”, jest trudniejsze, ponieważ "
-"wpisanie „4” spowodowałoby wybranie czwartej sugestii. Z drugiej strony, "
+"wpisanie „4” spowodowałoby wybranie czwartej sugestii. Z drugiej strony, "
 "wybieranie sugestii używając klawiszy 1-9 jest łatwiejsze niż używanie "
 "zawsze włączonych klawiszy wyboru F1-F9, ponieważ te drugie są dalej od "
 "palców."
@@ -198,7 +198,7 @@ msgid ""
 "This option adds British English as a second language to use in addition to "
 "the main language of this input method."
 msgstr ""
-"Ta opcja dodaje brytyjski angielski jako drugi używany język, w dodatku do "
+"Ta opcja dodaje brytyjski angielski jako drugi używany język, w dodatku do "
 "głównego języka tej metody wprowadzania."
 
 #: setup/setup.glade:281
@@ -214,9 +214,9 @@ msgid ""
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted. "
 msgstr ""
-"Jeśli więcej niż jedna metoda wprowadzania jest używana w tym samym czasie, "
-"to jedna z nich jest używana do wcześniejszego wprowadzania. Która metoda "
-"jest używana do wcześniejszego wprowadzania może być zmieniane w menu lub za "
+"Jeśli więcej niż jedna metoda wprowadzania jest używana w tym samym czasie, "
+"to jedna z nich jest używana do wcześniejszego wprowadzania. Która metoda "
+"jest używana do wcześniejszego wprowadzania może być zmieniane w menu lub za "
 "pomocą skrótów klawiszowych. Jeśli ta opcja jest włączona, to ta zmiana jest "
 "zapamiętywana nawet po ponownym uruchomieniu sesji."
 
@@ -226,7 +226,7 @@ msgstr "Przewidywanie emoji"
 
 #: setup/setup.glade:303
 msgid "Whether emoji should be included in the predictions."
-msgstr "Czy uwzględniać emoji w przewidywaniach."
+msgstr "Czy uwzględniać emoji w przewidywaniach."
 
 #: setup/setup.glade:342
 msgid "Options"
@@ -242,7 +242,7 @@ msgstr "Zainstaluj pakiet pyhunspell"
 
 #: setup/setup.glade:405
 msgid "Learn from text file"
-msgstr "Naucz się z pliku tekstowego"
+msgstr "Naucz się z pliku tekstowego"
 
 #: setup/setup.glade:423
 msgid "Install the dictionary package for this engine"
@@ -269,7 +269,7 @@ msgstr "Usuwa nauczone dane"
 
 #: setup/setup.glade:510
 msgid "Dictionaries and personal data"
-msgstr "Słowniki i dane osobiste"
+msgstr "Słowniki i dane osobiste"
 
 #: typing-booster.appdata.xml:5
 msgid "Typing Booster"
@@ -286,9 +286,9 @@ msgid ""
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
 "ibus-typing-booster to przewidująca metoda wprowadzania, przewidująca całe "
-"słowa w oparciu o kontekst i częściowo wprowadzone słowa. Można po prostu "
-"wybierać żądane słowa z listy sugestii i dzięki temu zwiększyć swoją "
-"prędkość i dokładność pisania."
+"słowa w oparciu o kontekst i częściowo wprowadzone słowa. Można po prostu "
+"wybierać żądane słowa z listy sugestii i dzięki temu zwiększyć swoją "
+"prędkość i dokładność pisania."
 
 #: typing-booster.appdata.xml:92
 msgid "Mike FABIAN"

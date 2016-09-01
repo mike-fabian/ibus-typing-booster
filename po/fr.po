@@ -1,5 +1,6 @@
 # Alexandre Moine <nobrakal@gmail.com>, 2016. #zanata
 # Jibec <jean-baptiste@holcroft.fr>, 2016. #zanata
+# José Fournier <jaaf64@zoraldia.com>, 2016. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2016. #zanata
 msgid ""
 msgstr ""
@@ -10,11 +11,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-08-29 03:30-0400\n"
-"Last-Translator: Jibec <jean-baptiste@holcroft.fr>\n"
+"PO-Revision-Date: 2016-08-31 02:40-0400\n"
+"Last-Translator: José Fournier <jaaf64@zoraldia.com>\n"
 "Language-Team: French\n"
 "Language: fr\n"
-"X-Generator: Zanata 3.9.3\n"
+"X-Generator: Zanata 3.9.5\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
 #: engine/hunspell_table.py:836
@@ -28,7 +29,7 @@ msgstr "Méthode de saisie pour la pré-édition."
 
 #: engine/hunspell_table.py:845
 msgid "Switch preedit input method"
-msgstr "Basculer vers la méthode de saisie de pré-édition."
+msgstr "Changer la méthode de pré-édition"
 
 #: engine/hunspell_table.py:936
 msgid "Setup"
@@ -112,12 +113,13 @@ msgstr "Activer les suggestions avec la touche tabulation"
 #: setup/setup.glade:87
 msgid "Toggle whether a list of suggestions pops up with the Tab key."
 msgstr ""
-"Basculer si une liste de suggestions apparaît avec la touche tabulation."
+"Active/désactive l'apparition d'une liste de suggestion si la touche tab est "
+"pressée."
 
 #: setup/setup.glade:107
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
-msgstr "Nombre de suggestions affichées par page sur la liste des candidats."
+msgstr "Nombre de suggestions affichées par page de la liste des candidats."
 
 #: setup/setup.glade:108
 msgid "Candidate window page size:"
@@ -152,8 +154,8 @@ msgid ""
 "Show no suggestions when less than this number of characters have been typed."
 ""
 msgstr ""
-"Désactiver les suggestions quand moins que ce nombre de caractère a été tapé."
-""
+"Ne pas afficher de suggestion quand moins que ce nombre de caractères a été "
+"saisi."
 
 #: setup/setup.glade:197
 msgid "Minimum number of chars for completion:"
@@ -217,7 +219,7 @@ msgid ""
 "is remembered even if the session is restarted. "
 msgstr ""
 "Si plusieurs méthodes de saisies sont utilisées simultanément, l’une d’entre "
-"elles est utilisée pour la pré-édition. Le menu ou les raccourcis claviers "
+"elles est utilisée pour la pré-édition. Le menu ou les raccourcis clavier "
 "permettent de changer la méthode de saisie utilisée pour la pré-édition. Si "
 "cette option est activée, de tels changements sont enregistrés même si la "
 "session est redémarrée."
@@ -228,7 +230,7 @@ msgstr "Prédictions des émoticônes"
 
 #: setup/setup.glade:303
 msgid "Whether emoji should be included in the predictions."
-msgstr "Si les émoticônes doivent être inclus dans les predictions."
+msgstr "Si les émoticônes doivent être incluses dans les prédictions."
 
 #: setup/setup.glade:342
 msgid "Options"
