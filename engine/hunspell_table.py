@@ -1532,26 +1532,10 @@ class tabengine (IBus.Engine):
                 # do not wait for the next keypress:
                 self._update_ui()
                 return True
-            else:
-                if self._editor.get_lookup_table().get_number_of_candidates():
-                    phrase = (
-                        self._editor.get_string_from_lookup_table_cursor_pos())
-                    if phrase:
-                        self.commit_string(phrase + ' ')
-                    return True
-                else:
-                    input_phrase = (
-                        self._editor.get_transliterated_strings()[
-                            self.get_current_imes()[0]])
-                    if input_phrase:
-                        self.commit_string(
-                            input_phrase + ' ', input_phrase = input_phrase)
-                    return True
-            return True
 
         # These keys may trigger a commit:
         if (key.msymbol not in ('G- ',)
-            and (key.val in (IBus.KEY_space,
+            and (key.val in (IBus.KEY_space, IBus.KEY_Tab,
                              IBus.KEY_Return, IBus.KEY_KP_Enter,
                              IBus.KEY_Right, IBus.KEY_KP_Right,
                              IBus.KEY_Left, IBus.KEY_KP_Left)
