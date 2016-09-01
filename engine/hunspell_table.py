@@ -1056,6 +1056,7 @@ class tabengine (IBus.Engine):
             or not aux_string):
             visible = False
         super(tabengine, self).update_auxiliary_text(text, visible)
+        self._current_auxiliary_text = text
 
     def _update_lookup_table (self):
         '''Update Lookup Table in UI'''
@@ -1094,13 +1095,22 @@ class tabengine (IBus.Engine):
             # sure the lookup table and the auxiliary text are really
             # hidden and return immediately:
             self.hide_lookup_table()
+            self._current_auxiliary_text = IBus.Text.new_from_string('')
             super(tabengine, self).update_auxiliary_text(
-                IBus.Text.new_from_string(''), False)
+                self._current_auxiliary_text, False)
             return
         self._lookup_table_shows_related_candidates = False
         if self._lookup_table_is_invalid:
             return
         self._lookup_table_is_invalid = True
+        # Don’t show the lookup table if it is invalid anway
+        self._editor.get_lookup_table().clear()
+        self._editor.get_lookup_table().set_cursor_visible(False)
+        self.hide_lookup_table()
+        # Show an hourglass with moving sand in the auxiliary text to
+        # indicate that the lookup table is being updated:
+        super(tabengine, self).update_auxiliary_text(
+            IBus.Text.new_from_string('⏳'), True)
         GLib.idle_add(self._update_candidates_and_lookup_table_and_aux)
 
     def _lookup_related_candidates(self):
@@ -1113,6 +1123,15 @@ class tabengine (IBus.Engine):
                 self.get_current_imes()[0]]
         if not phrase:
             return
+        # Hide lookup table and show an hourglass with moving sand in
+        # the auxiliary text to indicate that the lookup table is
+        # being updated. Don’t clear the lookup table here because we
+        # might want to show it quickly again if nothing related is
+        # found:
+        if self._editor.get_lookup_table().get_number_of_candidates():
+            self.hide_lookup_table()
+        super(tabengine, self).update_auxiliary_text(
+            IBus.Text.new_from_string('⏳'), True)
         related_candidates = []
         if self._editor._emoji_predictions:
             related_candidates = self._editor.emoji_matcher.similar(phrase)
@@ -1132,6 +1151,16 @@ class tabengine (IBus.Engine):
                 +  ' related_candidates of “%s” = %s\n'
                 %(phrase, related_candidates))
         if not related_candidates:
+            # Nothing related found, show the original lookup table and original
+            # auxiliary text again:
+            if self._current_auxiliary_text:
+                super(tabengine, self).update_auxiliary_text(
+                    self._current_auxiliary_text, True)
+            else:
+                super(tabengine, self).update_auxiliary_text(
+                    IBus.Text.new_from_string(''), False)
+            if self._editor.get_lookup_table().get_number_of_candidates():
+                self.update_lookup_table(self._editor.get_lookup_table(), True)
             return
         self._editor._candidates = []
         self._editor.get_lookup_table().clear()
