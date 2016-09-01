@@ -1,4 +1,20 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 02 Sep 2016 Released 1.5.2 version
+* get_supported_imes(self) and def get_current_imes(self) should return copies not the lists directly (Resolves: rhbz#1372660)
+* Update emojione.json, version from 2016-07-16
+* Change tooltip of the “Enable suggestions by Tab key” option
+* Pull translations from Zanata: Fixes for fr and pl. New: uk
+* Changes in itb_emoji.py necessary because of the update of the CLDR emoji annotations
+* Update emoji annotations from CLDR (be, bs, cy, eu, gl, zu are new, the others updated)
+* Shortcut keys which look up related candidates should enable the candidate list
+* Show ⏳ HOURGLASS WITH FLOWING SAND in the auxiliary text when the lookup table is being updated
+* Fix bug when committing the preëdit with Space when no candidates are available
+* Improve the behaviour of the “Tab” key
+* Improve the behaviour of the “Escape” key.
+* Make mouse clicks in the candidate list behave differently depending on the mouse button
+* Add hu-rovas-post.mim to hu_HU.conf
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 29 Aug 2016 Released 1.5.1 version
 * If the query string in EmojiMatcher.candidates() is an emoji itself, match similar ones
 * Data files should not be stored gzipped in the repository

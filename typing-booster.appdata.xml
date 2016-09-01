@@ -16,6 +16,59 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.2" date="2016-09-02" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            get_supported_imes(self) and def get_current_imes(self)
+            should return copies not the lists directly (Resolves:
+            rhbz#1372660)
+          </li>
+          <li>
+            Update emojione.json, version from 2016-07-16
+          </li>
+          <li>
+            Change tooltip of the “Enable suggestions by Tab key” option
+          </li>
+          <li>
+            Pull translations from Zanata: Fixes for fr and pl. New: uk
+          </li>
+          <li>
+            Changes in itb_emoji.py necessary because of the update of
+            the CLDR emoji annotations
+          </li>
+          <li>
+            Update emoji annotations from CLDR (be, bs, cy, eu, gl, zu
+            are new, the others updated)
+          </li>
+          <li>
+            Shortcut keys which look up related candidates should
+            enable the candidate list
+          </li>
+          <li>
+            Show ⏳ HOURGLASS WITH FLOWING SAND in the auxiliary text
+            when the lookup table is being updated
+          </li>
+          <li>
+            Fix bug when committing the preëdit with Space when no
+            candidates are available
+          </li>
+          <li>
+            Improve the behaviour of the “Tab” key
+          </li>
+          <li>
+            Improve the behaviour of the “Escape” key.
+          </li>
+          <li>
+            Make mouse clicks in the candidate list behave differently
+            depending on the mouse button
+          </li>
+          <li>
+            Add hu-rovas-post.mim to hu_HU.conf
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.1" date="2016-08-29" urgency="medium">
       <description>
         <ul>
