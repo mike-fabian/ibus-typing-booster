@@ -1083,6 +1083,20 @@ class tabengine (IBus.Engine):
     def _update_ui(self):
         '''Update User Interface'''
         self._update_preedit()
+        if self._editor.is_empty():
+            # Hide lookup table again if prëdit became empty and
+            # suggestions are only enabled by Tab key:
+            self.is_lookup_table_enabled_by_tab = False
+        if (self._editor.is_empty()
+            or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
+            # If the lookup table would be hidden anyway, there is no
+            # point in updating the candidates, save some time by making
+            # sure the lookup table and the auxiliary text are really
+            # hidden and return immediately:
+            self.hide_lookup_table()
+            super(tabengine, self).update_auxiliary_text(
+                IBus.Text.new_from_string(''), False)
+            return
         self._lookup_table_shows_related_candidates = False
         if self._lookup_table_is_invalid:
             return
@@ -1144,6 +1158,14 @@ class tabengine (IBus.Engine):
         return False
 
     def commit_string (self, commit_phrase, input_phrase = ''):
+        if self._tab_enable:
+            # If the suggestions are only enabled by Tab key, i.e. the
+            # lookup table is not shown until Tab has been typed, hide
+            # the lookup table again after each commit. That means
+            # that after each commit, when typing continues the
+            # lookup table is first hidden again and one has to type
+            # Tab again to show it.
+            self.is_lookup_table_enabled_by_tab = False
         if not input_phrase:
             input_phrase = self._editor.get_transliterated_strings()[
                 self.get_current_imes()[0]]
@@ -1513,18 +1535,15 @@ class tabengine (IBus.Engine):
             self._lookup_related_candidates()
             return True
 
-        if key.val == IBus.KEY_Tab:
-            if self._tab_enable:
-                # toggle whether the lookup table should be displayed
-                # or not
-                if self.is_lookup_table_enabled_by_tab == True:
-                    self.is_lookup_table_enabled_by_tab = False
-                else:
-                    self.is_lookup_table_enabled_by_tab = True
-                # update the ui here to see the effect immediately
-                # do not wait for the next keypress:
-                self._update_ui()
-                return True
+        if (key.val == IBus.KEY_Tab
+            and self._tab_enable
+            and not self.is_lookup_table_enabled_by_tab
+            and not self._editor.is_empty()):
+            self.is_lookup_table_enabled_by_tab = True
+            # update the ui here to see the effect immediately
+            # do not wait for the next keypress:
+            self._update_ui()
+            return True
 
         # These keys may trigger a commit:
         if (key.msymbol not in ('G- ',)
