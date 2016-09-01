@@ -1628,7 +1628,11 @@ class tabengine (IBus.Engine):
                 return False
             if not self._editor.get_lookup_table().get_number_of_candidates():
                 self.commit_string(input_phrase, input_phrase = input_phrase)
-                return False
+                # See comment below why forward_key_event() and “return True”
+                # is used here instead of “return False” (Does not work in Qt
+                # or X11 applications when using “return False”)
+                self.forward_key_event(key.val, key.code, key.state)
+                return True
             phrase = self._editor.get_string_from_lookup_table_cursor_pos()
             if not phrase:
                 return False
