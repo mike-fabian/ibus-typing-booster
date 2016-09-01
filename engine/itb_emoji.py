@@ -712,7 +712,7 @@ class EmojiMatcher():
         ('🐫', 'bactrian camel “two-hump camel”')
 
         >>> mq.candidates('people')[0][:2]
-        ('👯', 'woman with bunny ears “people partying”')
+        ('👯', 'woman with bunny ears “people with bunny ears partying”')
 
         >>> mq.candidates('nature')[0][:2]
         ('🌼', 'blossom {nature}')
@@ -755,6 +755,29 @@ class EmojiMatcher():
 
         >>> mq.candidates('fery')[0][:2]
         ('⛴', 'ferry')
+
+        >>> mq = EmojiMatcher(languages = ['fr_FR'])
+        >>> mq.candidates('chat')[0][:2]
+        ('🐈', 'chat')
+
+        fr.xml from CLDR has no name (tts) for 🤔.
+        Therefore, we get the English name as a fallback:
+
+        >>> mq.candidates('réflexion')[0][:2]
+        ('🤔', 'thinking face [réflexion]')
+
+        >>> mq.candidates('🤔', match_limit = 3)
+        [('🤔', "thinking face ['réflexion', 'visage']", 2), ('💆\u200d♀', "femme qui se fait masser le visage ['visage']", 1), ('💆\u200d♂', "homme qui se fait masser le visage ['visage']", 1)]
+
+        fr.xml from CLDR has no name (tts) for 🤔, but de.xml has a German name for 🤔.
+        Therefore, we get the German name as a fallback here:
+
+        >>> mq = EmojiMatcher(languages = ['fr_FR', 'de_DE'])
+        >>> mq.candidates('réflexion')[0][:2]
+        ('🤔', 'Nachdenkender Smiley [réflexion]')
+
+        >>> mq.candidates('🤔', match_limit = 3)
+        [('🤔', "Nachdenkender Smiley ['réflexion', 'visage']", 2), ('💆\u200d♀', "femme qui se fait masser le visage ['visage']", 1), ('💆\u200d♂', "homme qui se fait masser le visage ['visage']", 1)]
         '''
         if ((query_string, match_limit) in self._candidate_cache
             and not debug):
@@ -780,11 +803,12 @@ class EmojiMatcher():
             name_good_match = ''
             category_good_match = ''
             keyword_good_match = ''
-            for name in emoji_value['names']:
-                score = 2 * self._match(name, debug = debug_match)
-                if score >= good_match_score:
-                    name_good_match = name
-                total_score += score
+            if 'names' in emoji_value:
+                for name in emoji_value['names']:
+                    score = 2 * self._match(name, debug = debug_match)
+                    if score >= good_match_score:
+                        name_good_match = name
+                    total_score += score
             if 'categories' in emoji_value:
                 for category in emoji_value['categories']:
                     score = self._match(category, debug = debug_match)
@@ -799,7 +823,10 @@ class EmojiMatcher():
                     total_score += score
 
             if total_score > 0:
-                display_name = emoji_value['names'][0]
+                if 'names' in emoji_value:
+                    display_name = emoji_value['names'][0]
+                else:
+                    display_name = self.name(emoji_key[0])
                 # If the match was good because something else
                 # but the main name had a good match, show it in
                 # the display name to make the user understand why
@@ -858,9 +885,27 @@ class EmojiMatcher():
         >>> matcher = EmojiMatcher(languages=['it_IT', 'es_ES', 'es_MX', 'ja_JP'])
         >>> matcher.name('🖥')
         'desktop PC'
+
+        >>> matcher = EmojiMatcher(languages=['fr_FR'])
+        >>> matcher.name('🖥')
+        'ordinateur de bureau'
+
+        fr.xml from CLDR has no name (tts) for this emoji.
+        Therefore, we get the English name as a fallback:
+
+        >>> matcher.name('🤔')
+        'thinking face'
+
+        If we add German as another fallback language, we get a German name
+        because a German name for 🤔 exists in de.xml in CLDR:
+
+        >>> matcher = EmojiMatcher(languages=['fr_FR', 'de_DE'])
+        >>> matcher.name('🤔')
+        'Nachdenkender Smiley'
         '''
         for language in _expand_languages(self._languages):
-            if (emoji_string, language) in self._emoji_dict:
+            if ((emoji_string, language) in self._emoji_dict
+                and 'names' in self._emoji_dict[(emoji_string, language)]):
                 return self._emoji_dict[(emoji_string, language)]['names'][0]
         return ''
 
@@ -916,7 +961,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', "cammello ['animale', 'gobba']", 2), ('🐪', "dromedario ['animale', 'gobba']", 2), ('🐀', "Ratto ['animale']", 1), ('🐁', "Topo ['animale']", 1), ('\U0001f986', "anatra ['animale']", 1)]
+        [('🐫', "camello ['bactriano', 'camello', 'desierto', 'jorobas']", 4), ('🐪', "dromedario ['camello', 'desierto']", 2), ('🏜', "desierto ['desierto']", 1), ('🐫', "cammello ['animale', 'gobba']", 2), ('🐪', "dromedario ['animale', 'gobba']", 2)]
         '''
         candidate_scores = {}
         expanded_languages = _expand_languages(self._languages)
@@ -934,7 +979,10 @@ class EmojiMatcher():
                 if similar_key[1] != language:
                     continue
                 similar_string = similar_key[0]
-                similar_name = self._emoji_dict[similar_key]['names'][0]
+                if 'names' in self._emoji_dict[similar_key]:
+                    similar_name = self._emoji_dict[similar_key]['names'][0]
+                else:
+                    similar_name = self.name(similar_string)
                 for label_key in label_keys:
                     if label_key in self._emoji_dict[similar_key]:
                         for label in self._emoji_dict[similar_key][label_key]:
