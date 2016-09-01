@@ -11,8 +11,7 @@ For  details about the format and other information, see:
 -->
 <ldml>
 	<identity>
-		<version number="$Revision: 12535 $"/>
+		<version number="$Revision: 12856 $"/>
 		<language type="root"/>
 	</identity>
 </ldml>
-
