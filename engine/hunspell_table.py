@@ -1114,6 +1114,14 @@ class tabengine (IBus.Engine):
         GLib.idle_add(self._update_candidates_and_lookup_table_and_aux)
 
     def _lookup_related_candidates(self):
+        # We might end up here by typing a shortcut key like
+        # AltGr+F12.  This should also work when suggestions are only
+        # enabled by Tab and are currently disabled.  Typing such a
+        # shortcut key explicitly requests looking up related
+        # candidates, so it should have the same effect as Tab and
+        # enable the lookup table:
+        if (self._tab_enable and not self.is_lookup_table_enabled_by_tab):
+            self.is_lookup_table_enabled_by_tab = True
         phrase  = ''
         if (self._editor.get_lookup_table().get_number_of_candidates()
             and  self._editor.get_lookup_table().cursor_visible):
