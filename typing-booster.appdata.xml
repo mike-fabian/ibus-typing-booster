@@ -16,6 +16,18 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.3" date="2016-09-03" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Pull translations from Zanata: updates for pl and uk.
+          </li>
+          <li>
+            Fix behaviour of the option “Minimum number of chars for completion”
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.2" date="2016-09-02" urgency="medium">
       <description>
         <ul>

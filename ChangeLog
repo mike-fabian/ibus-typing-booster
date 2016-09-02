@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 03 Sep 2016 Released 1.5.3 version
+* Pull translations from Zanata: updates for pl and uk.
+* Fix behaviour of the option “Minimum number of chars for completion”
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 02 Sep 2016 Released 1.5.2 version
 * get_supported_imes(self) and def get_current_imes(self) should return copies not the lists directly (Resolves: rhbz#1372660)
 * Update emojione.json, version from 2016-07-16
