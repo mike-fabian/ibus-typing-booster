@@ -84,7 +84,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
-                                <property name="tooltip_text" translatable="yes">Toggle whether a list of suggestions pops up with the Tab key.</property>
+                                <property name="tooltip_text" translatable="yes">If this option is on, suggestions are not shown by default. Typing Tab is then necessary to show the list of suggestions. After a commit the suggestions are hidden again until the next Tab key is typed.</property>
                                 <property name="xalign">0</property>
                                 <property name="image_position">right</property>
                                 <property name="draw_indicator">True</property>
