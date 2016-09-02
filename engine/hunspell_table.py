@@ -647,16 +647,22 @@ class editor(object):
         return self._pp_phrase
 
     def get_supported_imes(self):
-        '''Get list of supported input methods'''
-        return self._supported_imes
+        '''Get list of supported input methods
+
+        It is important to return a copy, we do not want to change
+        the private member variable directly.'''
+        return self._supported_imes[:]
 
     def get_current_imes_max(self):
         '''Get maximum allowed number of current imes'''
         return self._current_imes_max
 
     def get_current_imes(self):
-        '''Get current list of input methods'''
-        return self._current_imes
+        '''Get current list of input methods
+
+        It is important to return a copy, we do not want to change
+        the private member variable directly.'''
+        return self._current_imes[:]
 
     def set_current_imes(self, imes):
         '''Set current list of input methods'''
