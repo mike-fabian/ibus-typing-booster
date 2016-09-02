@@ -11,5 +11,6 @@ remove-potcdate.sed
 remove-potcdate.sin
 stamp-po
 .zanata-cache
+*.po~
 
 
