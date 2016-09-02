@@ -5,9 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
-"issues\n"
-"POT-Creation-Date: 2016-08-10 16:31+0200\n"
+"Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
+"POT-Creation-Date: 2016-09-02 08:37+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,38 +17,38 @@ msgstr ""
 "X-Generator: Zanata 3.9.5\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: engine/hunspell_table.py:836
+#: engine/hunspell_table.py:826
 #, python-format
 msgid "Switch preedit input method to %(ime)s"
 msgstr "Changer la méthode de pré-édition pour %(ime)s"
 
-#: engine/hunspell_table.py:844
+#: engine/hunspell_table.py:834
 msgid "Preedit input method"
 msgstr "Méthode de saisie pour la pré-édition."
 
-#: engine/hunspell_table.py:845
+#: engine/hunspell_table.py:835
 msgid "Switch preedit input method"
 msgstr "Changer la méthode de pré-édition"
 
-#: engine/hunspell_table.py:936
+#: engine/hunspell_table.py:926
 msgid "Setup"
 msgstr "Configuration"
 
-#: engine/hunspell_table.py:939
+#: engine/hunspell_table.py:929
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Configurer ibus-typing-booster « %(name)s »"
 
-#: setup/main.py:101
+#: setup/main.py:103
 #, python-format
 msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
 msgstr "Format inconnu du nom du moteur : IBUS_ENGINE_NAME=%(name)s"
 
-#: setup/main.py:107
+#: setup/main.py:109
 msgid "IBUS_ENGINE_NAME environment variable is not set."
 msgstr "La variable IBUS_ENGINE_NAME n'est pas définie."
 
-#: setup/main.py:111
+#: setup/main.py:113
 msgid ""
 "Cannot determine the config file for this engine. Please use the --config-"
 "file option."
@@ -57,40 +56,40 @@ msgstr ""
 "Impossible de déterminer le fichier de configuration pour ce moteur. Merci "
 "d'utiliser l'option --config-file"
 
-#: setup/main.py:121
+#: setup/main.py:123
 #, python-format
 msgid "Config file %(file)s does not exist."
 msgstr "Le fichier de configuration %(file)s n'existe pas."
 
-#: setup/main.py:139
+#: setup/main.py:141
 #, python-format
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Préférences pour ibus-typing-booster « %(symbol)s »"
 
-#: setup/main.py:325
+#: setup/main.py:327
 msgid "Another instance of this app is already running."
 msgstr ""
 "Une autre instance de cette application est déjà en cours d'exécution."
 
-#: setup/main.py:420
+#: setup/main.py:422
 msgid "Open File ..."
 msgstr "Ouvrir le fichier..."
 
-#: setup/main.py:438
+#: setup/main.py:440
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Apprentissage réussi depuis le fichier  %(filename)s."
 
-#: setup/main.py:447
+#: setup/main.py:449
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Échec de l'apprentissage depuis le fichier  %(filename)s."
 
-#: setup/main.py:456
+#: setup/main.py:458
 msgid "Are you sure?"
 msgstr "Le voulez-vous vraiment ?"
 
-#: setup/main.py:463
+#: setup/main.py:465
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -98,7 +97,7 @@ msgstr ""
 "Voulez-vous vraiment supprimer toutes les données\n"
 "linguistiques apprises depuis la saisie ou la lecture de fichiers ?"
 
-#: setup/main.py:660
+#: setup/main.py:662
 msgid "ibus is not running."
 msgstr "Ibus n'est pas lancé."
 
@@ -111,10 +110,11 @@ msgid "Enable suggestions by Tab key"
 msgstr "Activer les suggestions avec la touche tabulation"
 
 #: setup/setup.glade:87
-msgid "Toggle whether a list of suggestions pops up with the Tab key."
+msgid ""
+"If this option is on, suggestions are not shown by default. Typing Tab is "
+"then necessary to show the list of suggestions. After a commit the "
+"suggestions are hidden again until the next Tab key is typed."
 msgstr ""
-"Active/désactive l'apparition d'une liste de suggestion si la touche tab est "
-"pressée."
 
 #: setup/setup.glade:107
 msgid ""
@@ -297,6 +297,6 @@ msgstr ""
 "partir d'une liste de suggestions, et ainsi améliorer sa vitesse d'écriture "
 "et son orthographe."
 
-#: typing-booster.appdata.xml:92
+#: typing-booster.appdata.xml:199
 msgid "Mike FABIAN"
 msgstr "Mike FABIAN"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-09-02 00:25+0200\n"
+"POT-Creation-Date: 2016-09-02 08:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,7 +105,10 @@ msgid "Enable suggestions by Tab key"
 msgstr ""
 
 #: setup/setup.glade:87
-msgid "Toggle whether a list of suggestions pops up with the Tab key."
+msgid ""
+"If this option is on, suggestions are not shown by default. Typing Tab is "
+"then necessary to show the list of suggestions. After a commit the "
+"suggestions are hidden again until the next Tab key is typed."
 msgstr ""
 
 #: setup/setup.glade:107
@@ -255,6 +258,6 @@ msgid ""
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
 
-#: typing-booster.appdata.xml:196
+#: typing-booster.appdata.xml:199
 msgid "Mike FABIAN"
 msgstr ""
