@@ -108,7 +108,7 @@ class KeyEvent:
 class editor(object):
     '''Hold user inputs chars and preedit string'''
 
-    def __init__ (self, config, database, lookup_table):
+    def __init__ (self, config, database, lookup_table, tab_enable = False):
         if debug_level > 1:
             sys.stderr.write("editor __init__(config=%s, database=%s)\n"
                              %(config, database))
@@ -121,6 +121,7 @@ class editor(object):
             'emojipredictions'))
         if self._emoji_predictions == None:
             self._emoji_predictions = True # default
+        self._tab_enable = tab_enable
         self._min_char_complete = variant_to_value(self._config.get_value(
             self._config_section,
             'mincharcomplete'))
@@ -441,8 +442,9 @@ class editor(object):
                 prefix = ''
                 stripped_transliterated_string = (
                     itb_util.lstrip_token(self._transliterated_strings[ime]))
-                if (len(stripped_transliterated_string)
-                    >= self._min_char_complete):
+                if ((len(stripped_transliterated_string)
+                     >= self._min_char_complete)
+                    or self._tab_enable):
                     prefix_length = (
                         len(self._transliterated_strings[ime])
                         - len(stripped_transliterated_string))
@@ -469,7 +471,10 @@ class editor(object):
         if self._emoji_predictions:
             emoji_scores = {}
             for ime in self._current_imes:
-                if self._transliterated_strings[ime]:
+                if (self._transliterated_strings[ime]
+                    and ((len(self._transliterated_strings[ime])
+                          >= self._min_char_complete)
+                         or self._tab_enable)):
                     emoji_candidates = self.emoji_matcher.candidates(
                         self._transliterated_strings[ime])
                     for x in emoji_candidates:
@@ -749,6 +754,13 @@ class tabengine (IBus.Engine):
         self._status = self.db.ime_properties.get(
             'status_prompt').encode('utf8')
 
+        self.is_lookup_table_enabled_by_tab = False
+        self._tab_enable = variant_to_value(self._config.get_value (
+            self._config_section,
+            "tabenable"))
+        if self._tab_enable == None:
+            self._tab_enable = False
+
         self._editor = editor(
             self._config,
             self.db,
@@ -756,14 +768,8 @@ class tabengine (IBus.Engine):
                 page_size = self._page_size,
                 cursor_pos = 0,
                 cursor_visible = False,
-                round = True))
-
-        self.is_lookup_table_enabled_by_tab = False
-        self._tab_enable = variant_to_value(self._config.get_value (
-            self._config_section,
-            "tabenable"))
-        if self._tab_enable == None:
-            self._tab_enable = False
+                round = True),
+            tab_enable = self._tab_enable)
 
         self._remember_last_used_preedit_ime = False
         self._remember_last_used_preedit_ime = variant_to_value(
@@ -1828,8 +1834,10 @@ class tabengine (IBus.Engine):
         if name == "tabenable":
             if value == 1:
                 self._tab_enable = True
+                self._editor._tab_enable = True
             else:
                 self._tab_enable = False
+                self._editor._tab_enable = False
             return
         if name == "rememberlastusedpreeditime":
             if value == 1:
