@@ -10,6 +10,7 @@ layout: default
 
 <ul>
   <li><a href="#key-bindings">Key bindings</a></li>
+  <li><a href="#mouse-bindings">Mouse bindings</a></li>
   <li><a href="#multilingual-input">Multilingual input</a></li>
   <li><a href="#emoji-predictions">Emoji predictions</a></li>
   <li><a href="#related-words-nltk">Using NLTK to find related words</a></li>
@@ -30,29 +31,83 @@ layout: default
 <tbody>
 <tr>
 <td>Space</td>
-<td>Commit the preëdit and send a space to the application,
-i.e. commit the typed string followed by a space.</td>
+<td>
+  Commit the preëdit (or the selected candidate, if any) and send a
+  space to the application, i.e. commit the typed string followed by a
+  space.
+</td>
 </tr>
 <tr>
 <td>Return</td>
-<td>Commit the preëdit and send a Return to the application.</td>
+<td>
+  Commit the preëdit (or the selected candidate, if any) and send a
+  Return to the application.
+</td>
 </tr>
 <tr>
 <td>Enter</td>
-<td>Commit the preëdit and send a Enter to the application.</td>
+<td>
+  Commit the preëdit (or the selected candidate, if any) and send a
+  Enter to the application.
+</td>
 </tr>
 <tr>
 <td>Tab</td>
-<td>If the option “Enable suggestions by Tab key” is <em>not</em> set:
-“Tab” behaves like “Space”, i.e. it commits the typed string followed
-by a space. If the option “Enable suggestions by Tab key” is set:
-“Tab” toggles the display of the candidate list. I.e. it shows the
-candidate list if it was hidden and hides the candidate list if it was
-shown.</td>
+<td>
+  <ul>
+    <li>
+      If the option “☐ Enable suggestions by Tab key” is <em>not</em>
+      set: “Tab” behaves like the other “commit keys”, i.e. it commits
+      the preëdit (or the selected candidate, if any) and sends a Tab
+      to the appplication.
+    </li>
+    <li>
+      If the option “☑ Enable suggestions by Tab key” is set, no
+      candidate list is shown by default:
+      <ul>
+        <li>
+          If Tab has not yet been typed: Request to show the
+          candidate list (nothing might be shown if no candidates can
+          be found).
+        </li>
+        <li>
+          If Tab has been typed already, i.e. the candidate list has
+          already been requested: Commit selected candidate (or
+          preëdit if no candidate is selected), then pass the Tab to
+          the application.  *And* hide the candidate list again after
+          each commit!  That means that when typing continues after
+          each commit, no candidate list is shown until one types Tab
+          to request it.
+        </li>
+      <ul>
+    </li>
+  </ul>
+</td>
 </tr>
 <tr>
 <td>Escape</td>
-<td>Clear preëdit and discard contents.</td>
+<td>
+  <ul>
+    <li>
+      When a candidate is selected (no matter whether this is a normal
+      lookup table or a “related” lookup table): Show the first page
+      of that lookup table again with no candidate selected.
+    </li>
+    <li>
+      When no candidate is selected:
+      <ul>
+        <li>
+          When a lookup table with related candidates is shown: go
+          back to the original lookup table.
+        </li>
+        <li>
+          When a normal lookup table is shown: close it and clear the
+          preëdit.
+        </li>
+      </ul>
+    </li>
+  </ul>
+</td>
 </tr>
 <tr>
 <td>Left  (Arrow left)</td>
@@ -114,11 +169,11 @@ text.</td>
 </tr>
 <tr>
 <td>F1</td>
-<td>Commit the candidate with the label “1”</td>
+<td>Commit the candidate with the label “1” followed by a space</td>
 </tr>
 <tr>
 <td>F2</td>
-<td>Commit the candidate with the label “2”</td>
+<td>Commit the candidate with the label “2” followed by a space</td>
 </tr>
 <tr>
 <td>...</td>
@@ -126,17 +181,23 @@ text.</td>
 </tr>
 <tr>
 <td>F9</td>
-<td>Commit the candidate with the label “9”</td>
+<td>Commit the candidate with the label “9” followed by a space</td>
 </tr>
 <tr>
 <td>Control+F1</td>
-<td>Remove the candidate with the label “1” from the database of
-learned user input</td>
+<td>
+  Remove the candidate with the label “1” from the database of learned
+  user input (If possible, if this candidate is not learned from user
+  input, nothing happens).
+</td>
 </tr>
 <tr>
 <td>Control+F2</td>
-<td>Remove the candidate with the label “2” from the database of
-learned user input</td>
+<td>
+  Remove the candidate with the label “2” from the database of learned
+  user input (If possible, if this candidate is not learned from user
+  input, nothing happens).
+</td>
 </tr>
 <tr>
 <td>…</td>
@@ -144,8 +205,11 @@ learned user input</td>
 </tr>
 <tr>
 <td>Control+F9</td>
-<td>Remove the candidate with the label “9” from the database of
-learned user input</td>
+<td>
+  Remove the candidate with the label “9” from the database of learned
+  user input (If possible, if this candidate is not learned from user
+  input, nothing happens).
+</td>
 </tr>
 <tr>
 <td>1 … 9</td>
@@ -167,7 +231,9 @@ select keys” is enabled.
 </tr>
 <tr>
 <td>Alt+F12</td>
-<td>Show related emoji or related words
+<td>
+  Show related <a href="#emoji-predictions">emoji</a>
+  or <a href="#related-words-nltk">related words</a>
 </td>
 </tr>
 <tr>
@@ -199,6 +265,45 @@ method</td>
 <td>Control+Up</td>
 <td>Switch input method used for the preëdit to the previous input
 method.</td>
+</tr>
+</tbody>
+</table>
+
+<br>
+<a name="mouse-bindings"></a>
+<br>
+<h2>Mouse bindings</h2>
+
+<table border="2" cellspacing="10" cellpadding="10">
+<thead>
+<tr>
+<th>Mouse event</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Button 1 click on a candidate</td>
+  <td>
+    Commit the candidate clicked on followed by a space (Same as
+    F1…F9).
+  </td>
+</tr>
+<tr>
+  <td>Button 2 click on a candidate</td>
+  <td>
+    Remove clicked candidate from database of learned user input (If
+    possible, if this candidate is not learned from user input,
+    nothing happens).
+  </td>
+</tr>
+<tr>
+  <td>Button 3 click on a candidate</td>
+  <td>
+    Show related <a href="#emoji-predictions">emoji</a>
+    or <a href="#related-words-nltk">related words</a> (Same as
+    Alt+F12).
+  </td>
 </tr>
 </tbody>
 </table>
