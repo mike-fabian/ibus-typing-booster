@@ -17,23 +17,29 @@
 #  You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+'''A module used by ibus-typing-booster to suggest words by using the
+hunspell dictonaries.
+
+'''
+
 import os
 import sys
 import unicodedata
 import re
+import traceback
 
-debug_level = int(0)
+DEBUG_LEVEL = int(0)
 
-import_enchant_successful = False
-import_hunspell_successful = False
+IMPORT_ENCHANT_SUCCESSFUL = False
+IMPORT_HUNSPELL_SUCCESSFUL = False
 try:
     import enchant
-    import_enchant_successful = True
-except:
+    IMPORT_ENCHANT_SUCCESSFUL = True
+except (ImportError,):
     try:
         import hunspell # only available for Python2
-        import_hunspell_successful = True
-    except:
+        IMPORT_HUNSPELL_SUCCESSFUL = True
+    except (ImportError,):
         pass
 
 # Maximum words that should be returned.
@@ -42,14 +48,16 @@ except:
 # makes the performance worse. For example when setting
 # it to 1000, I see a noticable delay when typing the first
 # letter of a word until the candidate lookup table pops up.
-max_words = 100
-max_words_row = 50
+MAX_WORDS = 100
+MAX_WORDS_ROW = 50
 
-normalization_form_internal = 'NFD'
+NORMALIZATION_FORM_INTERNAL = 'NFD'
 
 class Dictionary:
+    '''A class to hold a hunspell dictionary
+    '''
     def __init__(self, name = 'en_US'):
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "Dictionary.__init__(name=%s)\n" %name)
         self.loc = '/usr/share/myspell'
@@ -61,6 +69,10 @@ class Dictionary:
         self.load_dictionary()
 
     def load_dictionary(self):
+        '''Load a hunspell dictionary into a buffer and instanticate a
+        enchant.Dict() or a hunspell.Hunspell() object.
+
+        '''
         print("load_dictionary() ...")
         dic_path = os.path.join(self.loc, self.name+'.dic')
         aff_path = os.path.join(self.loc, self.name+'.aff')
@@ -74,8 +86,11 @@ class Dictionary:
                 mode='r',
                 encoding='ISO-8859-1',
                 errors='ignore').read().replace('\r\n', '\n')
+        except (FileNotFoundError, PermissionError):
+            traceback.print_exc()
         except:
-            import traceback
+            sys.stderr.write(
+                'Unexpected error loading .aff File: %s\n' %aff_path)
             traceback.print_exc()
         if aff_buffer:
             encoding_pattern = re.compile(
@@ -89,7 +104,7 @@ class Dictionary:
         try:
             self.buffer = open(
                 dic_path, encoding=self.encoding).read().replace('\r\n', '\n')
-        except:
+        except (UnicodeDecodeError, FileNotFoundError, PermissionError):
             print("load_dictionary(): "
                   + "loading %(dic)s as %(enc)s encoding failed, "
                   %{'dic': dic_path, 'enc': self.encoding}
@@ -99,15 +114,24 @@ class Dictionary:
                 self.buffer = open(
                     dic_path,
                     encoding=self.encoding).read().replace('\r\n', '\n')
-            except:
+            except (UnicodeDecodeError, FileNotFoundError, PermissionError):
                 print("load_dictionary(): "
                       + "loading %(dic)s as %(enc)s encoding failed, "
                       %{'dic': dic_path, 'enc': self.encoding}
                       + "giving up.")
                 self.buffer = None
-                import traceback
                 traceback.print_exc()
                 return
+            except:
+                sys.stderr.write(
+                    'Unexpected error loading .dic File: %s\n' %dic_path)
+                traceback.print_exc()
+                return
+        except:
+            sys.stderr.write(
+                'Unexpected error loading .dic File: %s\n' %dic_path)
+            traceback.print_exc()
+            return
         if self.buffer:
             print("load_dictionary(): "
                   + "Successfully loaded %(dic)s using %(enc)s encoding."
@@ -126,20 +150,23 @@ class Dictionary:
             # dictionary slightly simpler and maybe a tiny bit faster:
             self.buffer = re.sub(r'/.*', '', self.buffer)
             self.buffer = unicodedata.normalize(
-                normalization_form_internal, self.buffer)
-            if import_enchant_successful:
+                NORMALIZATION_FORM_INTERNAL, self.buffer)
+            if IMPORT_ENCHANT_SUCCESSFUL:
                 self.enchant_dict = enchant.Dict(self.name)
-            elif import_hunspell_successful:
+            elif IMPORT_HUNSPELL_SUCCESSFUL:
                 self.pyhunspell_object = hunspell.HunSpell(dic_path, aff_path)
 
 class Hunspell:
+    '''A class to suggest completions or corrections
+    using a list of Hunspell dictionaries
+    '''
     def __init__(self, dictionary_names = ('en_US',)):
-        global debug_level
+        global DEBUG_LEVEL
         try:
-            debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
-        except:
-            debug_level = int(0)
-        if debug_level > 1:
+            DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+        except (TypeError, ValueError):
+            DEBUG_LEVEL = int(0)
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "Hunspell.__init__(dictionary_names=%s)\n"
                 %dictionary_names)
@@ -148,7 +175,9 @@ class Hunspell:
         self.init_dictionaries()
 
     def init_dictionaries(self):
-        if debug_level > 1:
+        '''Initialize the hunspell dictionaries
+        '''
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "Hunspell.init_dictionaries() dictionary_names=%s\n"
                 %self._dictionary_names)
@@ -174,6 +203,8 @@ class Hunspell:
             self.init_dictionaries()
 
     def suggest(self, input_phrase):
+        '''Return completions or corrections for the input phrase
+        '''
         # If the input phrase is very long, don’t try looking
         # something up in the hunspell dictionaries. The regexp match
         # gets very slow if the input phrase is very long. And there
@@ -183,7 +214,7 @@ class Hunspell:
         # to match words longer than that just wastes time.
         if len(input_phrase) > 40:
             return []
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "Hunspell.suggest() input_phrase=%(ip)s\n"
                 %{'ip': input_phrase.encode('UTF-8')})
@@ -204,12 +235,8 @@ class Hunspell:
         # take care of it in the regexp.  Take care to use a
         # non-greedy regexp to match only one line and not
         # accidentally big chunks of the file!
-        try:
-            patt_start = re.compile(r'^' + re.escape(input_phrase) + r'.*?$',
-                                    re.MULTILINE)
-        except:
-            import traceback
-            traceback.print_exc()
+        patt_start = re.compile(r'^' + re.escape(input_phrase) + r'.*?$',
+                                re.MULTILINE)
         suggested_words = []
         for dictionary in self._dictionaries:
             if dictionary.buffer:
@@ -232,7 +259,7 @@ class Hunspell:
                             'NFC', input_phrase)
                         extra_suggestions = [
                             unicodedata.normalize(
-                                normalization_form_internal, x)
+                                NORMALIZATION_FORM_INTERNAL, x)
                             for x in
                             dictionary.enchant_dict.suggest(input_phrase)
                         ]
@@ -249,7 +276,7 @@ class Hunspell:
                             'NFC', input_phrase)
                         extra_suggestions = [
                             unicodedata.normalize(
-                                normalization_form_internal, x.decode(
+                                NORMALIZATION_FORM_INTERNAL, x.decode(
                                     dictionary.encoding))
                             for x in
                             dictionary.pyhunspell_object.suggest(
@@ -266,5 +293,5 @@ class Hunspell:
                     '☹ %(dic_path)s not found. '
                     %{'dic_path': dic_path}
                     + 'Please install hunspell dictionary!')
-        return suggested_words[0:max_words]
+        return suggested_words[0:MAX_WORDS]
 

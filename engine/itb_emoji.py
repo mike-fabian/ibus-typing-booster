@@ -16,6 +16,11 @@
 #  You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+'''A module used by ibus-typing-booster to match emoji and similar
+Unicode characters.
+
+'''
+
 import os
 import sys
 import re
@@ -23,12 +28,12 @@ import gzip
 import json
 from difflib import SequenceMatcher
 
-import_enchant_successful = False
+IMPORT_ENCHANT_SUCCESSFUL = False
 try:
     import enchant
-    import_enchant_successful = True
+    IMPORT_ENCHANT_SUCCESSFUL = True
 except (ImportError,):
-    import_enchant_successful = False
+    IMPORT_ENCHANT_SUCCESSFUL = False
 
 DATADIR = os.path.join(os.path.dirname(__file__), '../data')
 
@@ -82,8 +87,26 @@ VALID_RANGES = (
     (0x1f900, 0x1f9ff), # Supplemental Symbols and Pictographs
 )
 
-def _in_range(code):
-    return any([x <= code <= y for x, y in VALID_RANGES])
+def _in_range(codepoint):
+    '''Checks whether the codepoint is in one of the valid ranges
+
+    Returns True if the codepoint is in one of the valid ranges,
+    else it returns False.
+
+    :param codepoint: The Unicode codepoint to check
+    :type codepoint: Integer
+    :rtype: Boolean
+
+    Examples:
+
+    >>> _in_range(0x1F915)
+    True
+
+    >>> _in_range(0x1F815)
+    False
+
+    '''
+    return any([x <= codepoint <= y for x, y in VALID_RANGES])
 
 SPANISH_419_LOCALES = (
     'es_AR', 'es_MX', 'es_BO', 'es_CL', 'es_CO', 'es_CR',
@@ -117,6 +140,37 @@ def _expand_languages(languages):
         expanded_languages.append('en')
     return expanded_languages
 
+def _find_path_and_open_function(dirnames, basenames):
+    '''Find the first existing file of a list of basenames and dirnames
+
+    For each file in “basenames”, tries whether that file or the
+    file with “.gz” added can be found in the list of directories
+    “dirnames”.
+
+    Returns a tuple (path, open_function) where “path” is the
+    complete path of the first file found and the open function
+    is either “open()” or “gzip.open()”.
+
+    :param dirnames: A list of directories to search in
+    :type dirnames: List of strings
+    :param basenames: A list of file names to search for
+    :type basenames: List of strings
+    :rtype: A tuple (path, open_function)
+
+    '''
+    for basename in basenames:
+        for dirname in dirnames:
+            path = os.path.join(dirname, basename)
+            if os.path.exists(path):
+                if path.endswith('.gz'):
+                    return (path, gzip.open)
+                else:
+                    return (path, open)
+            path = os.path.join(dirname, basename + '.gz')
+            if os.path.exists(path):
+                return (path, gzip.open)
+    return ('', None)
+
 class EmojiMatcher():
     '''A class to find Emoji which best match a query string'''
 
@@ -139,7 +193,7 @@ class EmojiMatcher():
         self._languages = languages
         self._quick = quick
         self._enchant_dicts = []
-        if import_enchant_successful:
+        if IMPORT_ENCHANT_SUCCESSFUL:
             for language in self._languages:
                 if enchant.dict_exists(language):
                     self._enchant_dicts.append(enchant.Dict(language))
@@ -188,42 +242,11 @@ class EmojiMatcher():
                         self._emoji_dict[emoji_dict_key][values_key]):
                         self._emoji_dict[emoji_dict_key][values_key] += [value]
 
-    def _find_path_and_open_function(self, dirnames, basenames):
-        '''Find the first existing file of a list of basenames and dirnames
-
-        For each file in “basenames”, tries whether that file or the
-        file with “.gz” added can be found in the list of directories
-        “dirnames”.
-
-        Returns a tuple (path, open_function) where “path” is the
-        complete path of the first file found and the open function
-        is either “open()” or “gzip.open()”.
-
-        :param dirnames: A list of directories to search in
-        :type dirnames: List of strings
-        :param basenames: A list of file names to search for
-        :type basenames: List of strings
-        :rtype: A tuple (path, open_function)
-
-        '''
-        for basename in basenames:
-            for dirname in dirnames:
-                p = os.path.join(dirname, basename)
-                if os.path.exists(p):
-                    if p.endswith('.gz'):
-                        return (p, gzip.open)
-                    else:
-                        return (p, open)
-                p = os.path.join(dirname, basename + '.gz')
-                if os.path.exists(p):
-                    return (p, gzip.open)
-        return ('', None)
-
     def _load_unicode_data(self):
         '''Loads emoji names from UnicodeData.txt'''
         dirnames = (DATADIR, '/usr/share/unicode/ucd')
         basenames = ('UnicodeData.txt',)
-        (path, open_function) = self._find_path_and_open_function(
+        (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
         if not path:
             sys.stderr.write(
@@ -251,7 +274,7 @@ class EmojiMatcher():
         '''
         dirnames = (DATADIR, '/usr/lib/node_modules/emojione/')
         basenames = ('emojione.json', 'emoji.json')
-        (path, open_function) = self._find_path_and_open_function(
+        (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
         if not path:
             sys.stderr.write(
@@ -283,7 +306,8 @@ class EmojiMatcher():
             display_name = emojione_value['name']
             match_name = re.sub(r' ?[(,)] ?', r' ', display_name).strip(' ')
             names = [display_name]
-            shortname = emojione_value['shortname'].replace('_', ' ').strip(':')
+            shortname = emojione_value[
+                'shortname'].replace('_', ' ').strip(':')
             aliases = [x.replace('_', ' ').strip(':')
                        for x in emojione_value['aliases']]
             ascii_aliases = emojione_value['aliases_ascii']
@@ -322,7 +346,7 @@ class EmojiMatcher():
         dirnames = (DATADIR,
                     '/local/mfabian/src/cldr-svn/trunk/common/annotations')
         basenames = [x + '.xml' for x in _expand_languages([language])]
-        (path, open_function) = self._find_path_and_open_function(
+        (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
         if not path:
             sys.stderr.write(
@@ -332,7 +356,8 @@ class EmojiMatcher():
         # change language to the language of the file which was really
         # found (For example, it could be that 'es_ES' was requested,
         # but only the fallback 'es' was really found):
-        language = os.path.basename(path).replace('.gz', '').replace('.xml', '')
+        language = os.path.basename(
+            path).replace('.gz', '').replace('.xml', '')
         with open_function(path, mode = 'rt') as cldr_annotation_file:
             pattern = re.compile(
                 r'.*<annotation cp="(?P<emojistring>[^"]+)"'
@@ -384,7 +409,7 @@ class EmojiMatcher():
             # in any of the enabled dictionaries, add spell checking
             # suggestions to the list (don’t do that it it is spelled
             # correctly in at least one dictionary):
-            if len(word) > 3 and import_enchant_successful:
+            if len(word) > 3 and IMPORT_ENCHANT_SUCCESSFUL:
                 spelled_correctly = False
                 for dic in self._enchant_dicts:
                     if dic.check(word) or dic.check(word.title()):
@@ -410,6 +435,12 @@ class EmojiMatcher():
             self._match_cache = {}
 
     def _match(self, label, debug = False):
+        '''Matches a label from the emoji data against the query string.
+
+        The query string must have been already set with
+        self._set_seq2(query_string) before calling self._match().
+
+        '''
         self._set_seq1(label)
         total_score = 0
         if debug:
@@ -1032,12 +1063,12 @@ def main():
 
     if BENCHMARK:
         profile.disable()
-        p = pstats.Stats(profile)
-        p.strip_dirs()
-        p.sort_stats('cumulative')
-        p.print_stats('itb_emoji', 25)
-        p.print_stats('difflib', 25)
-        p.print_stats('enchant', 25)
+        stats = pstats.Stats(profile)
+        stats.strip_dirs()
+        stats.sort_stats('cumulative')
+        stats.print_stats('itb_emoji', 25)
+        stats.print_stats('difflib', 25)
+        stats.print_stats('enchant', 25)
 
 if __name__ == "__main__":
     main()

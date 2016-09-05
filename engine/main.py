@@ -29,66 +29,67 @@ from signal import signal, SIGTERM, SIGINT
 import factory
 import tabsqlitedb
 
-debug_level = int(0)
+DEBUG_LEVEL = int(0)
 try:
-    debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+    DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
 except (TypeError, ValueError):
-    debug_level = int(0)
+    DEBUG_LEVEL = int(0)
 
 try:
-    config_file_dir = os.path.join(
+    CONFIG_FILE_DIR = os.path.join(
         os.getenv('IBUS_TYPING_BOOSTER_LOCATION'),
         'hunspell-tables')
-    icon_dir = os.path.join(
+    ICON_DIR = os.path.join(
         os.getenv('IBUS_TYPING_BOOSTER_LOCATION'),
         'icons')
 except:
-    config_file_dir = "/usr/share/ibus-typing-booster/hunspell-tables"
-    icon_dir = "/usr/share/ibus-typing-booster/icons"
+    CONFIG_FILE_DIR = "/usr/share/ibus-typing-booster/hunspell-tables"
+    ICON_DIR = "/usr/share/ibus-typing-booster/icons"
 
 
-opt = optparse.OptionParser()
+OPT = optparse.OptionParser()
 
-opt.set_usage ('%prog')
-opt.add_option('--daemon', '-d',
+OPT.set_usage ('%prog')
+OPT.add_option('--daemon', '-d',
         action = 'store_true',dest = 'daemon',default=False,
         help = 'Run as daemon, default: %default')
-opt.add_option('--ibus', '-i',
+OPT.add_option('--ibus', '-i',
         action = 'store_true',dest = 'ibus',default = False,
         help = 'Set the IME icon file, default: %default')
-opt.add_option('--xml', '-x',
+OPT.add_option('--xml', '-x',
         action = 'store_true',dest = 'xml',default = False,
         help = 'output the engines xml part, default: %default')
-opt.add_option('--no-debug', '-n',
+OPT.add_option('--no-debug', '-n',
         action = 'store_false',dest = 'debug',default = True,
         help = 'redirect stdout and stderr to '
                + '~/.local/share/ibus-typing-booster/debug.log, '
                + 'default: %default')
-opt.add_option('--profile', '-p',
+OPT.add_option('--profile', '-p',
         action = 'store_true', dest = 'profile', default = False,
         help = 'print profiling information into the debug log. '
                + 'Works only together with --debug.')
 
-(options, args) = opt.parse_args()
+(OPTIONS, ARGS) = OPT.parse_args()
 
-if (not options.xml) and options.debug:
+if (not OPTIONS.xml) and OPTIONS.debug:
     if not os.access(
             os.path.expanduser('~/.local/share/ibus-typing-booster'),
             os.F_OK):
         os.system('mkdir -p ~/.local/share/ibus-typing-booster')
-    logfile = os.path.expanduser('~/.local/share/ibus-typing-booster/debug.log')
-    sys.stdout = open(logfile, mode='a', buffering=1)
-    sys.stderr = open(logfile, mode='a', buffering=1)
+    LOGFILE = os.path.expanduser(
+        '~/.local/share/ibus-typing-booster/debug.log')
+    sys.stdout = open(LOGFILE, mode='a', buffering=1)
+    sys.stderr = open(LOGFILE, mode='a', buffering=1)
     from time import strftime
     print('--- %s ---' %strftime('%Y-%m-%d: %H:%M:%S'))
 
-if options.profile:
+if OPTIONS.profile:
     import cProfile, pstats
-    profile = cProfile.Profile()
+    PROFILE = cProfile.Profile()
 
 class IMApp:
     def __init__(self, dbfile, exec_by_ibus):
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "IMApp.__init__(dbfile=%s, exec_by_ibus=%s)\n"
                 % (dbfile, exec_by_ibus))
@@ -98,7 +99,8 @@ class IMApp:
         self.__factory = factory.EngineFactory(self.__bus, dbfile)
         self.destroyed = False
         if exec_by_ibus:
-            self.__bus.request_name("org.freedesktop.IBus.IbusTypingBooster", 0)
+            self.__bus.request_name(
+                "org.freedesktop.IBus.IbusTypingBooster", 0)
         else:
             self.__component = IBus.Component(
                 name="org.freedesktop.IBus.IbusTypingBooster",
@@ -117,7 +119,7 @@ class IMApp:
             author = self.__factory.db.ime_properties.get("author")
             icon = self.__factory.db.ime_properties.get("icon")
             if icon:
-                icon = os.path.join (icon_dir, icon)
+                icon = os.path.join (ICON_DIR, icon)
                 if not os.access( icon, os.F_OK):
                     icon = ''
             layout = self.__factory.db.ime_properties.get("layout")
@@ -137,20 +139,20 @@ class IMApp:
 
 
     def run(self):
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write("IMApp.run()\n")
-        if options.profile:
-            profile.enable()
+        if OPTIONS.profile:
+            PROFILE.enable()
         self.__mainloop.run()
         self.__bus_destroy_cb()
 
     def quit(self):
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write("IMApp.quit()\n")
         self.__bus_destroy_cb()
 
     def __bus_destroy_cb(self, bus=None):
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write("IMApp.__bus_destroy_cb(bus=%s)\n" % bus)
         if self.destroyed:
             return
@@ -158,15 +160,15 @@ class IMApp:
         self.__factory.do_destroy()
         self.destroyed = True
         self.__mainloop.quit()
-        if options.profile:
-            profile.disable()
-            p = pstats.Stats(profile)
-            p.strip_dirs()
-            p.sort_stats('cumulative')
-            p.print_stats('tabsqlite', 25)
-            p.print_stats('hunspell_suggest', 25)
-            p.print_stats('hunspell_table', 25)
-            p.print_stats('itb_emoji', 25)
+        if OPTIONS.profile:
+            PROFILE.disable()
+            stats = pstats.Stats(PROFILE)
+            stats.strip_dirs()
+            stats.sort_stats('cumulative')
+            stats.print_stats('tabsqlite', 25)
+            stats.print_stats('hunspell_suggest', 25)
+            stats.print_stats('hunspell_table', 25)
+            stats.print_stats('itb_emoji', 25)
 
 def cleanup (ima_ins):
     ima_ins.quit()
@@ -189,11 +191,11 @@ def indent(elem, level=0):
             elem.tail = i
 
 def main():
-    if options.xml:
+    if OPTIONS.xml:
         from xml.etree.ElementTree import Element, SubElement, tostring
-        # Find all config files in config_file_dir, extract the ime
+        # Find all config files in CONFIG_FILE_DIR, extract the ime
         # properties and print the xml file for the engines
-        confs = [x for x in os.listdir(config_file_dir) if x.endswith('.conf')]
+        confs = [x for x in os.listdir(CONFIG_FILE_DIR) if x.endswith('.conf')]
         for conf in confs:
             str_dic = conf.replace('conf', 'dic')
 
@@ -201,7 +203,7 @@ def main():
 
         for conf in confs:
             _ime_properties = tabsqlitedb.ImeProperties(
-                os.path.join(config_file_dir,conf))
+                os.path.join(CONFIG_FILE_DIR,conf))
             _engine = SubElement (egs,'engine')
 
             _name = SubElement (_engine, 'name')
@@ -235,7 +237,7 @@ def main():
             _icon = SubElement (_engine, 'icon')
             _icon_basename = _ime_properties.get ('icon')
             if _icon_basename:
-                _icon.text = os.path.join (icon_dir, _icon_basename)
+                _icon.text = os.path.join (ICON_DIR, _icon_basename)
 
             _layout = SubElement (_engine, 'layout')
             _layout.text = _ime_properties.get ('layout')
@@ -257,11 +259,11 @@ def main():
         sys.stdout.buffer.write((egsout+'\n').encode('utf-8'))
         return 0
 
-    if options.daemon :
+    if OPTIONS.daemon :
         if os.fork():
             sys.exit()
 
-    ima = IMApp('', options.ibus)
+    ima = IMApp('', OPTIONS.ibus)
     signal (SIGTERM, lambda signum, stack_frame: cleanup(ima))
     signal (SIGINT, lambda signum, stack_frame: cleanup(ima))
     try:

@@ -34,7 +34,7 @@ from m17n_translit import Transliterator
 import itb_util
 import itb_emoji
 
-debug_level = int(0)
+DEBUG_LEVEL = int(0)
 
 from gettext import dgettext
 _  = lambda a : dgettext ("ibus-typing-booster", a)
@@ -109,7 +109,7 @@ class editor(object):
     '''Hold user inputs chars and preedit string'''
 
     def __init__ (self, config, database, lookup_table, tab_enable = False):
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write("editor __init__(config=%s, database=%s)\n"
                              %(config, database))
         self.db = database
@@ -168,12 +168,12 @@ class editor(object):
                     'dictionary',
                     GLib.Variant.new_string(','.join(self._dictionary_names)))
         if  self._emoji_predictions:
-            if debug_level > 1:
+            if DEBUG_LEVEL > 1:
                 sys.stderr.write('Instantiate EmojiMatcher(languages = %s\n'
                                  %self._dictionary_names)
             self.emoji_matcher = itb_emoji.EmojiMatcher(
                 languages = self._dictionary_names)
-            if debug_level > 1:
+            if DEBUG_LEVEL > 1:
                 sys.stderr.write('EmojiMatcher() instantiated.\n')
         self._supported_imes = []
         imes = self.db.ime_properties.get('imes').split(',')
@@ -218,7 +218,7 @@ class editor(object):
         for ime in self._current_imes:
             # using m17n transliteration
             try:
-                if debug_level > 1:
+                if DEBUG_LEVEL > 1:
                     sys.stderr.write(
                         "instantiating Transliterator(%(ime)s)\n"
                         %{'ime': ime})
@@ -251,7 +251,7 @@ class editor(object):
             if ime in ['ko-romaja', 'ko-han2']:
                 self._transliterated_strings[ime] = unicodedata.normalize(
                     'NFKD', self._transliterated_strings[ime])
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "update_transliterated_strings() self._typed_string=%s\n"
                 %self._typed_string)
@@ -278,7 +278,7 @@ class editor(object):
 
     def insert_string_at_cursor(self, string_to_insert):
         '''Insert typed string at cursor position'''
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write("insert_string_at_cursor() string_to_insert=%s\n"
                              %string_to_insert)
             sys.stderr.write("insert_string_at_cursor() "
@@ -395,7 +395,7 @@ class editor(object):
                 # this is a candidate which does not start exactly as any
                 # of the transliterations of the user input, i.e. it must
                 # be a spelling correction suggestion:
-                if debug_level > 0:
+                if DEBUG_LEVEL > 0:
                     phrase = phrase + ' ✓'
                 attrs.append(IBus.attr_foreground_new(
                     rgb(0xff, 0x00, 0x00), 0, len(phrase)))
@@ -408,7 +408,7 @@ class editor(object):
                 # then 10 times or maybe never:
                 attrs.append(IBus.attr_foreground_new(
                     rgb(0x00, 0x00, 0x00), 0, len(phrase)))
-        if debug_level > 0:
+        if DEBUG_LEVEL > 0:
             phrase += ' ' + str(user_freq)
             attrs.append(IBus.attr_foreground_new(
                 rgb(0x00, 0xff, 0x00),
@@ -428,7 +428,7 @@ class editor(object):
 
     def update_candidates (self):
         '''Update lookuptable'''
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write("update_candidates() self._typed_string=%s\n"
                              %self._typed_string)
         self._lookup_table.clear()
@@ -480,7 +480,7 @@ class editor(object):
                     for x in emoji_candidates:
                         if (x[0] not in emoji_scores
                             or x[2] > emoji_scores[x[0]][0]):
-                                emoji_scores[x[0]] = (x[2], x[1])
+                            emoji_scores[x[0]] = (x[2], x[1])
             phrase_candidates_emoji_name = []
             for x in phrase_candidates:
                 if x[0] in emoji_scores:
@@ -698,12 +698,12 @@ class tabengine (IBus.Engine):
     '''The IM Engine for Tables'''
 
     def __init__ (self, bus, obj_path, db ):
-        global debug_level
+        global DEBUG_LEVEL
         try:
-            debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+            DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
         except (TypeError, ValueError):
-            debug_level = int(0)
-        if debug_level > 1:
+            DEBUG_LEVEL = int(0)
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabengine.__init__(bus=%s, obj_path=%s, db=%s)\n"
                 % (bus, obj_path, db))
@@ -880,14 +880,18 @@ class tabengine (IBus.Engine):
                 sub_props = self.preedit_ime_sub_properties_prop_list)
             self.main_prop_list.append(self._prop_dict[key])
         else:  # update the property
-            self._prop_dict[key].set_label(IBus.Text.new_from_string(label))
-            self._prop_dict[key].set_symbol(IBus.Text.new_from_string(symbol))
-            self._prop_dict[key].set_tooltip(IBus.Text.new_from_string(tooltip))
+            self._prop_dict[key].set_label(
+                IBus.Text.new_from_string(label))
+            self._prop_dict[key].set_symbol(
+                IBus.Text.new_from_string(symbol))
+            self._prop_dict[key].set_tooltip(
+                IBus.Text.new_from_string(tooltip))
             self._prop_dict[key].set_sensitive(visible)
             self._prop_dict[key].set_visible(visible)
             self.update_property(self._prop_dict[key]) # important!
 
-    def _init_or_update_sub_properties_preedit_ime(self, modes, current_mode=0):
+    def _init_or_update_sub_properties_preedit_ime(
+            self, modes, current_mode=0):
         if not self.preedit_ime_sub_properties_prop_list:
             update = False
             self.preedit_ime_sub_properties_prop_list = IBus.PropList()
@@ -950,7 +954,7 @@ class tabengine (IBus.Engine):
         '''
         Handle clicks on properties
         '''
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "do_property_activate() property=%(p)s prop_state=%(ps)s\n"
                 % {'p': property, 'ps': prop_state})
@@ -1043,7 +1047,7 @@ class tabengine (IBus.Engine):
             rgb(0x95, 0x15, 0xb5),
             0,
             len(aux_string)))
-        if debug_level > 0:
+        if DEBUG_LEVEL > 0:
             context = (
                 'Context: ' + self._editor.get_pp_phrase()
                 + ' ' + self._editor.get_p_phrase())
@@ -1165,14 +1169,14 @@ class tabengine (IBus.Engine):
                 related_candidates.append((x, '[hyponym]', 0))
         except (ImportError, LookupError):
             pass
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 '_lookup_related_candidates():'
                 +  ' related_candidates of “%s” = %s\n'
                 %(phrase, related_candidates))
         if not related_candidates:
-            # Nothing related found, show the original lookup table and original
-            # auxiliary text again:
+            # Nothing related found, show the original lookup table
+            # and original auxiliary text again:
             if self._current_auxiliary_text:
                 super(tabengine, self).update_auxiliary_text(
                     self._current_auxiliary_text, True)
@@ -1197,11 +1201,11 @@ class tabengine (IBus.Engine):
         for ime in self.get_current_imes():
             if transliterators[ime].transliterate(
                     msymbol_list) != ''.join(msymbol_list):
-                if debug_level > 1:
+                if DEBUG_LEVEL > 1:
                     sys.stderr.write(
                         "has_transliteration(%s) == True\n" %msymbol_list)
                 return True
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "has_transliteration(%s) == False\n" %msymbol_list)
         return False
@@ -1228,17 +1232,18 @@ class tabengine (IBus.Engine):
         if self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT:
             # If a character ending a sentence is committed (possibly
             # followed by whitespace) remove trailing white space
-            # before the committed string. For example if commit_phrase is “!”,
-            # and the context before is “word ”, make the result “word!”.
-            # And if the commit_phrase is “! ” and the context before is “word ”
-            # make the result “word! ”.
+            # before the committed string. For example if
+            # commit_phrase is “!”, and the context before is “word ”,
+            # make the result “word!”.  And if the commit_phrase is “!
+            # ” and the context before is “word ” make the result
+            # “word! ”.
             pattern_sentence_end = re.compile(r'^[.,;:?!][\s]*$')
             if pattern_sentence_end.search(commit_phrase):
                 surrounding_text = self.get_surrounding_text()
                 text = surrounding_text[0].get_text()
                 cursor_pos = surrounding_text[1]
                 anchor_pos = surrounding_text[2]
-                if debug_level > 1:
+                if DEBUG_LEVEL > 1:
                     sys.stderr.write(
                         'Removing whitespace before sentence end char. '
                         + 'surrounding_text = '
@@ -1258,7 +1263,7 @@ class tabengine (IBus.Engine):
                     # len(commit_phrase)):
                     offset =  -(nchars + len(commit_phrase))
                     self.delete_surrounding_text(offset, nchars)
-                    if debug_level > 1:
+                    if DEBUG_LEVEL > 1:
                         surrounding_text = self.get_surrounding_text()
                         text = surrounding_text[0].get_text()
                         cursor_pos = surrounding_text[1]
@@ -1303,7 +1308,7 @@ class tabengine (IBus.Engine):
             self._editor._pp_phrase = tokens[-2]
 
     def do_candidate_clicked(self, index, button, state):
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 'do_candidate_clicked() index = %s button = %s state = %s\n'
                 %(index, button, state))
@@ -1333,7 +1338,7 @@ class tabengine (IBus.Engine):
             in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN]):
             return False
         key = KeyEvent(keyval, keycode, state)
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "process_key_event() "
                 "KeyEvent object: %s" % key)
@@ -1355,7 +1360,7 @@ class tabengine (IBus.Engine):
             return False
 
         if self._editor.is_empty ():
-            if debug_level > 1:
+            if DEBUG_LEVEL > 1:
                 sys.stderr.write(
                     "_process_key_event() self._editor.is_empty(): "
                     "KeyEvent object: %s\n" % key)
@@ -1414,7 +1419,7 @@ class tabengine (IBus.Engine):
                 # avoid completion and commit something immediately:
                 if (len(key.msymbol) == 1
                     and unicodedata.category(key.msymbol)
-                    in itb_util.categories_to_trigger_immediate_commit):
+                    in itb_util.CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT):
                     if self.get_current_imes()[0] == 'NoIme':
                         # Do not just pass the character through,
                         # commit it properly.  For example if it is a
@@ -1457,7 +1462,8 @@ class tabengine (IBus.Engine):
                         self.get_current_imes()[0]
                     ].transliterate([key.msymbol])
                     self.commit_string(
-                        transliterated_digit, input_phrase=transliterated_digit)
+                        transliterated_digit,
+                        input_phrase=transliterated_digit)
                     return True
 
         if key.val == IBus.KEY_Escape:
@@ -1580,7 +1586,8 @@ class tabengine (IBus.Engine):
                         self.commit_string(phrase + ' ')
                     return True
 
-        if key.val == IBus.KEY_F12 and key.mod1 and not self._editor.is_empty():
+        if (key.val == IBus.KEY_F12 and key.mod1
+            and not self._editor.is_empty()):
             self._lookup_related_candidates()
             return True
 
@@ -1657,7 +1664,7 @@ class tabengine (IBus.Engine):
                 return True
             # This key does not only a cursor movement in the preëdit,
             # it really triggers a commit.
-            if debug_level > 1:
+            if DEBUG_LEVEL > 1:
                 sys.stderr.write('_process_key_event() commit triggered.\n')
             # We need to transliterate
             # the preëdit again here, because adding the commit key to
@@ -1736,7 +1743,7 @@ class tabengine (IBus.Engine):
                 self._editor.insert_string_at_cursor([key.msymbol])
             if (len(key.msymbol) == 1
                 and unicodedata.category(key.msymbol)
-                in itb_util.categories_to_trigger_immediate_commit):
+                in itb_util.CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT):
                 input_phrase = (
                     self._editor.get_transliterated_strings()[
                         self.get_current_imes()[0]])
@@ -1804,16 +1811,10 @@ class tabengine (IBus.Engine):
         # effect of comparing the dconf sections case insentively
         # in some locales, it would fail for example if Turkish
         # locale (tr_TR.UTF-8) is set.
-        if sys.version_info >= (3, 0, 0): # Python3
-            return re.sub(r'[_:]', r'-', section).translate(
-                ''.maketrans(
+        return re.sub(r'[_:]', r'-', section).translate(
+            ''.maketrans(
                 string.ascii_uppercase,
                 string.ascii_lowercase))
-        else: # Python2
-            return re.sub(r'[_:]', r'-', section).translate(
-                string.maketrans(
-                string.ascii_uppercase,
-                string.ascii_lowercase).decode('ISO-8859-1'))
 
     def __config_value_changed_cb(self, config, section, name, value):
         if (self.config_section_normalize(self._config_section)

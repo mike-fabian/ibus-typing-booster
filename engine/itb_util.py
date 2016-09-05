@@ -15,6 +15,9 @@
 # GNU General Public License for more details.
 #  You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
+'''
+Utility functions used in ibus-typing-booster
+'''
 
 import re
 import unicodedata
@@ -33,36 +36,92 @@ import unicodedata
 # prevents learning such words from user input. I.e. the list of
 # categories to trigger immediate commit should contain only categories
 # which are very unlikely to appear as parts of words.
-categories_to_trigger_immediate_commit = [
+CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT = [
     'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Sm', 'Sc']
 
-categories_to_strip_from_tokens = [
+CATEGORIES_TO_STRIP_FROM_TOKENS = [
     'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Pd', 'Sm', 'Sc']
 
 def lstrip_token(token):
+    '''Strips some characters from the left side of a token
+
+    Characters which have a type listed in CATEGORIES_TO_STRIP_FROM_TOKENS
+    are stripped from the left side of a token.
+
+    The stripped token is returned.
+
+    :param token: The token where characters may be stripped from
+    :type token: String
+    :rtype: String
+
+    Examples:
+
+    >>> lstrip_token(".'foo'.")
+    "foo'."
+    '''
     token = token.lstrip()
     while (len(token) > 0
            and
-           unicodedata.category(token[0]) in categories_to_strip_from_tokens):
+           unicodedata.category(token[0]) in CATEGORIES_TO_STRIP_FROM_TOKENS):
         token = token[1:]
     return token
 
 def rstrip_token(token):
+    '''Strips some characters from the right side of a token
+
+    Characters which have a type listed in CATEGORIES_TO_STRIP_FROM_TOKENS
+    are stripped from the right side of a token.
+
+    The stripped token is returned.
+
+    :param token: The token where characters may be stripped from
+    :type token: String
+    :rtype: String
+
+    Examples:
+
+    >>> rstrip_token(".'foo'.")
+    ".'foo"
+    '''
     token = token.rstrip()
     while (len(token) > 0
            and
-           unicodedata.category(token[-1]) in categories_to_strip_from_tokens):
+           unicodedata.category(token[-1]) in CATEGORIES_TO_STRIP_FROM_TOKENS):
         token = token[0:-1]
     return token
 
 def strip_token(token):
+    '''Strips some characters from both sides of a token
+
+    Characters which have a type listed in CATEGORIES_TO_STRIP_FROM_TOKENS
+    are stripped from both sides of a token.
+
+    The stripped token is returned.
+
+    :param token: The token where characters may be stripped from
+    :type token: String
+    :rtype: String
+
+    Examples:
+
+    >>> strip_token(".'foo'.")
+    'foo'
+    '''
     return rstrip_token(lstrip_token(token))
 
 def tokenize(text):
+    '''Splits a text into tokens
+
+    Returns a list tokens
+
+    :param text: The text to tokenize
+    :type text: String
+    :rtype: List of strings
+    '''
     pattern = re.compile(r'[\s]+')
     tokens = []
-    for s in pattern.split(text.strip()):
-        tokens.append(strip_token(s))
+    for word in pattern.split(text.strip()):
+        tokens.append(strip_token(word))
     return tokens
 
 def is_ascii(text):

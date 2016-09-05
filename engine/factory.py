@@ -31,17 +31,17 @@ from gettext import dgettext
 _  = lambda a : dgettext ("ibus-typing-booster", a)
 N_ = lambda a : a
 
-debug_level = int(0)
+DEBUG_LEVEL = int(0)
 
 class EngineFactory (IBus.Factory):
     """Table IM Engine Factory"""
     def __init__(self, bus, db="", icon=""):
-        global debug_level
+        global DEBUG_LEVEL
         try:
-            debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+            DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
         except (TypeError, ValueError):
-            debug_level = int(0)
-        if debug_level > 1:
+            DEBUG_LEVEL = int(0)
+        if DEBUG_LEVEL > 1:
             sys.stderr.write("EngineFactory.__init__(bus=%s, db=%s, icon=%s)\n"
                              % (bus, db, icon))
         if db:
@@ -57,7 +57,7 @@ class EngineFactory (IBus.Factory):
         self.engine_id = 0
 
     def do_create_engine(self, engine_name):
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write("EngineFactory.do_create_engine(engine_name=%s)\n"
                              % engine_name)
         engine_base_path = "/com/redhat/IBus/engines/table/%s/engine/"
@@ -86,7 +86,7 @@ class EngineFactory (IBus.Factory):
 
     def do_destroy (self):
         '''Destructor, which finish some task for IME'''
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write("EngineFactory.do_destroy()\n")
         for _db in self.dbdict:
             self.dbdict[_db].sync_usrdb()

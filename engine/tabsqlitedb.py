@@ -28,7 +28,7 @@ import re
 import itb_util
 import hunspell_suggest
 
-debug_level = int(0)
+DEBUG_LEVEL = int(0)
 
 user_database_version = '0.65'
 
@@ -83,12 +83,12 @@ class tabsqlitedb:
         user_freq >= 1: The number of times the user has used this phrase
     '''
     def __init__(self, config_filename=None):
-        global debug_level
+        global DEBUG_LEVEL
         try:
-            debug_level = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+            DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
         except (TypeError, ValueError):
-            debug_level = int(0)
-        if debug_level > 1:
+            DEBUG_LEVEL = int(0)
+        if DEBUG_LEVEL > 1:
             sys.stderr.write("tabsqlitedb.__init__(config_filename=%s)\n"
                              %config_filename)
         self._phrase_table_column_names = [
@@ -311,7 +311,7 @@ class tabsqlitedb:
                    'p_phrase': p_phrase,
                    'pp_phrase': pp_phrase,
                    'timestamp': time.time()}
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabsqlitedb.update_phrase() sqlstr=%s\n" %sqlstr)
             sys.stderr.write(
@@ -328,13 +328,13 @@ class tabsqlitedb:
         '''
         Trigger a checkpoint operation.
         '''
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabsqlitedb.sync_userdb() "
                 + "commit and execute checkpoint ...\n")
         self.db.commit()
         self.db.execute('PRAGMA wal_checkpoint;')
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabsqlitedb.sync_userdb() "
                 + "commit and execute checkpoint done.\n")
@@ -354,7 +354,7 @@ class tabsqlitedb:
         '''
         Add phrase to database
         '''
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabsqlitedb.add_phrase() "
                 + "input_phrase=%s " % input_phrase.encode('UTF-8')
@@ -398,7 +398,7 @@ class tabsqlitedb:
                           'pp_phrase': pp_phrase,
                           'user_freq': user_freq,
                           'timestamp': time.time()}
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabsqlitedb.add_phrase() insert_sqlstr=%s\n" %insert_sqlstr)
             sys.stderr.write(
@@ -466,7 +466,7 @@ class tabsqlitedb:
             self._normalization_form_internal, p_phrase)
         pp_phrase = unicodedata.normalize(
             self._normalization_form_internal, pp_phrase)
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabsqlitedb.select_words() "
                 + "input_phrase=%s " % input_phrase.encode('UTF-8')
@@ -478,7 +478,7 @@ class tabsqlitedb:
                 phrase_frequencies[x] = 0
             else:
                 phrase_frequencies[x] = -1 # spelling correction suggestion
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabsqlitedb.select_words() hunspell: best_candidates=%s\n"
                 %self.best_candidates(phrase_frequencies))
@@ -552,7 +552,7 @@ class tabsqlitedb:
         # 'communicability': 0, 'cold': 1/11, 'colour': 4/11}
         for x in results_uni:
             phrase_frequencies.update([(x[0], x[1]/float(count))])
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabsqlitedb.select_words() Unigram best_candidates=%s\n"
                 %self.best_candidates(phrase_frequencies))
@@ -588,7 +588,7 @@ class tabsqlitedb:
                 [(x[0],
                   0.5*x[1]/float(count_p_phrase)
                   +0.5*phrase_frequencies[x[0]])])
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabsqlitedb.select_words() Bigram best_candidates=%s\n"
                 %self.best_candidates(phrase_frequencies))
@@ -628,7 +628,7 @@ class tabsqlitedb:
                 [(x[0],
                   0.5*x[1]/float(count_pp_phrase_p_phrase)
                   +0.5*phrase_frequencies[x[0]])])
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabsqlitedb.select_words() Trigram best_candidates=%s\n"
                 %self.best_candidates(phrase_frequencies))
@@ -734,7 +734,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         input_phrase = unicodedata.normalize(
             self._normalization_form_internal, input_phrase)
 
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabsqlitedb.check_phrase_and_update_frequency() "
                 + "phrase=%(p)s, input_phrase=%(t)s, database=%(d)s\n"
@@ -760,7 +760,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                    'phrase': phrase,
                    'p_phrase': p_phrase,
                    'pp_phrase': pp_phrase}
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabsqlitedb.check_phrase_and_update_frequency() sqlstr=%s\n"
                 %sqlstr)
@@ -768,7 +768,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                 "tabsqlitedb.check_phrase_and_update_frequency() sqlargs=%s\n"
                 %sqlargs)
         result = self.db.execute(sqlstr, sqlargs).fetchall()
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "check_phrase_and_update_frequency() result=%s\n" %result)
         if len(result) > 0:
@@ -799,7 +799,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         Or, if “input_phrase” is “None”, remove all rows matching “phrase”
         no matter for what input phrase from the database.
         '''
-        if debug_level > 1:
+        if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabsqlitedb.remove_phrase() phrase=%(p)s\n"
                 %{'p': phrase.encode('UTF-8')})
