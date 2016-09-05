@@ -49,7 +49,6 @@ except (ImportError,):
 # it to 1000, I see a noticable delay when typing the first
 # letter of a word until the candidate lookup table pops up.
 MAX_WORDS = 100
-MAX_WORDS_ROW = 50
 
 NORMALIZATION_FORM_INTERNAL = 'NFD'
 
