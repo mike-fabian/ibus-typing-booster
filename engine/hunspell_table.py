@@ -26,6 +26,7 @@ import sys
 import string
 import unicodedata
 import re
+import time
 from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus
@@ -790,7 +791,10 @@ class tabengine (IBus.Engine):
         self._setup_property = None
         self._init_properties()
 
-        self.reset ()
+        sys.stderr.write(
+            '--- Initialized and ready for input: %s ---\n'
+            %time.strftime('%Y-%m-%d: %H:%M:%S'))
+        self.reset()
 
     def get_current_imes_max(self):
         '''Get maximum allowed number of current imes from editor'''

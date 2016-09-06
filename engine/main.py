@@ -19,6 +19,7 @@
 import os
 import sys
 import optparse
+import time
 from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus
@@ -80,8 +81,7 @@ if (not OPTIONS.xml) and OPTIONS.debug:
         '~/.local/share/ibus-typing-booster/debug.log')
     sys.stdout = open(LOGFILE, mode='a', buffering=1)
     sys.stderr = open(LOGFILE, mode='a', buffering=1)
-    from time import strftime
-    print('--- %s ---' %strftime('%Y-%m-%d: %H:%M:%S'))
+    print('--- Starting: %s ---' %time.strftime('%Y-%m-%d: %H:%M:%S'))
 
 if OPTIONS.profile:
     import cProfile, pstats

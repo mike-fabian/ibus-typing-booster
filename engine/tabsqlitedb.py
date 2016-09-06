@@ -170,8 +170,7 @@ class tabsqlitedb:
                             "Trying to recover the phrases from the old, "
                             + "incompatible database.\n")
                         self.old_phrases = self.extract_user_phrases(user_db)
-                        from time import strftime
-                        timestamp = strftime('-%Y-%m-%d_%H:%M:%S')
+                        timestamp = time.strftime('-%Y-%m-%d_%H:%M:%S')
                         sys.stderr.write(
                             'Renaming the incompatible database to '
                             + '"%(name)s".\n' %{'name': user_db+timestamp})
@@ -217,8 +216,7 @@ class tabsqlitedb:
         except:
             sys.stderr.write(
                 "Could not open the database %(name)s.\n" %{'name': user_db})
-            from time import strftime
-            timestamp = strftime('-%Y-%m-%d_%H:%M:%S')
+            timestamp = time.strftime('-%Y-%m-%d_%H:%M:%S')
             sys.stderr.write(
                 "Renaming the incompatible database to \"%(name)s\".\n"
                 %{'name': user_db+timestamp})
