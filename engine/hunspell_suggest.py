@@ -27,6 +27,7 @@ import sys
 import unicodedata
 import re
 import traceback
+import itb_util
 
 DEBUG_LEVEL = int(0)
 
@@ -62,23 +63,28 @@ class Dictionary:
         self.loc = '/usr/share/myspell'
         self.name = name
         self.encoding = 'UTF-8'
-        self.buffer = None
+        self.words = []
+        self.word_pairs = []
         self.enchant_dict = None
         self.pyhunspell_object = None
         self.load_dictionary()
 
     def load_dictionary(self):
-        '''Load a hunspell dictionary into a buffer and instanticate a
+        '''Load a hunspell dictionary and instantiate a
         enchant.Dict() or a hunspell.Hunspell() object.
 
         '''
-        print("load_dictionary() ...")
+        if DEBUG_LEVEL > 0:
+            sys.stderr.write("load_dictionary() ...\n")
         dic_path = os.path.join(self.loc, self.name+'.dic')
         aff_path = os.path.join(self.loc, self.name+'.aff')
         if not os.path.isfile(dic_path) or not os.path.isfile(aff_path):
-            print("load_dictionary %(n)s: %(d)s %(a)s file missing."
-                  %{'n': self.name, 'd': dic_path, 'a': aff_path})
+            sys.stderr.write(
+                "load_dictionary %(n)s: %(d)s %(a)s file missing.\n"
+                %{'n': self.name, 'd': dic_path, 'a': aff_path})
             return
+        aff_buffer = None
+        dic_buffer = None
         try:
             aff_buffer = open(
                 aff_path,
@@ -98,27 +104,32 @@ class Dictionary:
             match = encoding_pattern.search(aff_buffer)
             if match:
                 self.encoding = match.group('encoding')
-                print("load_dictionary(): encoding=%(enc)s found in %(aff)s" %{
-                    'enc': self.encoding, 'aff': aff_path})
+                if DEBUG_LEVEL > 0:
+                    sys.stderr.write(
+                        "load_dictionary(): encoding=%(enc)s found in %(aff)s"
+                        %{'enc': self.encoding, 'aff': aff_path})
         try:
-            self.buffer = open(
-                dic_path, encoding=self.encoding).read().replace('\r\n', '\n')
+            dic_buffer = open(
+                dic_path, encoding=self.encoding).readlines()
         except (UnicodeDecodeError, FileNotFoundError, PermissionError):
-            print("load_dictionary(): "
-                  + "loading %(dic)s as %(enc)s encoding failed, "
-                  %{'dic': dic_path, 'enc': self.encoding}
-                  + "fall back to ISO-8859-1.")
+            if DEBUG_LEVEL > 0:
+                sys.stderr.write(
+                    "load_dictionary(): "
+                    + "loading %(dic)s as %(enc)s encoding failed, "
+                    %{'dic': dic_path, 'enc': self.encoding}
+                    + "fall back to ISO-8859-1.\n")
             self.encoding = 'ISO-8859-1'
             try:
-                self.buffer = open(
+                dic_buffer = open(
                     dic_path,
-                    encoding=self.encoding).read().replace('\r\n', '\n')
+                    encoding=self.encoding).readlines()
             except (UnicodeDecodeError, FileNotFoundError, PermissionError):
-                print("load_dictionary(): "
-                      + "loading %(dic)s as %(enc)s encoding failed, "
-                      %{'dic': dic_path, 'enc': self.encoding}
-                      + "giving up.")
-                self.buffer = None
+                sys.stderr.write(
+                    "load_dictionary(): "
+                    + "loading %(dic)s as %(enc)s encoding failed, "
+                    %{'dic': dic_path, 'enc': self.encoding}
+                    + "giving up.\n")
+                dic_buffer = None
                 traceback.print_exc()
                 return
             except:
@@ -131,10 +142,12 @@ class Dictionary:
                 'Unexpected error loading .dic File: %s\n' %dic_path)
             traceback.print_exc()
             return
-        if self.buffer:
-            print("load_dictionary(): "
-                  + "Successfully loaded %(dic)s using %(enc)s encoding."
-                  %{'dic': dic_path, 'enc': self.encoding})
+        if dic_buffer:
+            if DEBUG_LEVEL > 0:
+                sys.stderr.write(
+                    "load_dictionary(): "
+                    + "Successfully loaded %(dic)s using %(enc)s encoding.\n"
+                    %{'dic': dic_path, 'enc': self.encoding})
             # http://pwet.fr/man/linux/fichiers_speciaux/hunspell says:
             #
             # > A dictionary file (*.dic) contains a list of words, one per
@@ -147,9 +160,29 @@ class Dictionary:
             # line to make the buffer a bit smaller and the regular
             # expressions we use later to match words in the
             # dictionary slightly simpler and maybe a tiny bit faster:
-            self.buffer = re.sub(r'/.*', '', self.buffer)
-            self.buffer = unicodedata.normalize(
-                NORMALIZATION_FORM_INTERNAL, self.buffer)
+            self.words = [
+                unicodedata.normalize(
+                    NORMALIZATION_FORM_INTERNAL,
+                    re.sub(r'/.*', '', x.replace('\n', '')))
+                for x in dic_buffer
+            ]
+            # List of languages where accent insensitive matching makes sense:
+            accent_languages = (
+                'af', 'ast', 'az', 'be', 'bg', 'br', 'bs', 'ca', 'cs', 'csb',
+                'cv', 'cy', 'da', 'de', 'dsb', 'el', 'en', 'es', 'eu', 'fo',
+                'fr', 'fur', 'fy', 'ga', 'gd', 'gl', 'grc', 'gv', 'haw', 'hr',
+                'hsb', 'ht', 'hu', 'ia', 'is', 'it', 'kk', 'ku', 'ky', 'lb',
+                'ln', 'lv', 'mg', 'mi', 'mk', 'mn', 'mos', 'mt', 'nb', 'nds',
+                'nl', 'nn', 'nr', 'nso', 'ny', 'oc', 'pl', 'plt', 'pt', 'qu',
+                'quh', 'ru', 'sc', 'se', 'sh', 'shs', 'sk', 'sl', 'smj', 'sq',
+                'sr', 'ss', 'st', 'sv', 'tet', 'tk', 'tn', 'ts', 'uk', 'uz',
+                've', 'vi', 'wa', 'xh',
+            )
+            if self.name.split('_')[0] in accent_languages:
+                self.word_pairs = [
+                    (x, itb_util.remove_accents(x))
+                    for x in self.words
+                ]
             if IMPORT_ENCHANT_SUCCESSFUL:
                 self.enchant_dict = enchant.Dict(self.name)
             elif IMPORT_HUNSPELL_SUCCESSFUL:
@@ -203,6 +236,17 @@ class Hunspell:
 
     def suggest(self, input_phrase):
         '''Return completions or corrections for the input phrase
+
+        Examples:
+
+        (Attention, the return values are in NORMALIZATION_FORM_INTERNAL ('NFD'))
+
+        >>> h = Hunspell(['de_DE', 'cs_CZ'])
+        >>> h.suggest('Geschwindigkeitsubertre')
+        ['Geschwindigkeitsübertretungsverfahren', 'Geschwindigkeitsoptimiert', 'Geschwindigkeitsabhängige', 'Geschwindigkeitsabhängig', 'Schreitgeschwindigkeit']
+
+        >>> h.suggest('filosofictejsi')
+        ['filosofičtější', 'filosofičtěji']
         '''
         # If the input phrase is very long, don’t try looking
         # something up in the hunspell dictionaries. The regexp match
@@ -230,16 +274,22 @@ class Hunspell:
         # immediately:
         if '/' in input_phrase:
             return []
+        # make sure input_phrase is in the internal normalization form (NFD):
+        input_phrase = unicodedata.normalize(
+            NORMALIZATION_FORM_INTERNAL, input_phrase)
         # '/' is already removed from the buffer, we do not need to
-        # take care of it in the regexp.  Take care to use a
-        # non-greedy regexp to match only one line and not
-        # accidentally big chunks of the file!
-        patt_start = re.compile(r'^' + re.escape(input_phrase) + r'.*?$',
-                                re.MULTILINE)
+        # take care of it in the regexp.
+        patt_start = re.compile(r'^' + re.escape(input_phrase))
+
         suggested_words = []
         for dictionary in self._dictionaries:
-            if dictionary.buffer:
-                suggested_words += patt_start.findall(dictionary.buffer)
+            if dictionary.words:
+                if dictionary.word_pairs:
+                    suggested_words += [
+                        x[0] for x in dictionary.word_pairs if patt_start.match(x[1])]
+                else:
+                    suggested_words += [
+                        x for x in dictionary.words if patt_start.match(x)]
                 if dictionary.enchant_dict:
                     if len(input_phrase) >= 4:
                         # Always pass NFC to enchant and convert the
@@ -293,3 +343,24 @@ class Hunspell:
                     + 'Please install hunspell dictionary!')
         return suggested_words[0:MAX_WORDS]
 
+BENCHMARK = True
+
+def main():
+    if BENCHMARK:
+        import cProfile, pstats
+        profile = cProfile.Profile()
+        profile.enable()
+
+    import doctest
+    doctest.testmod()
+
+    if BENCHMARK:
+        profile.disable()
+        stats = pstats.Stats(profile)
+        stats.strip_dirs()
+        stats.sort_stats('cumulative')
+        stats.print_stats('hunspell', 25)
+        stats.print_stats('enchant', 25)
+
+if __name__ == "__main__":
+    main()
