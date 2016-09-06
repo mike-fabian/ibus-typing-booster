@@ -386,16 +386,7 @@ class editor(object):
         if comment:
             phrase += ' ' + comment
         else:
-            is_spelling_correction = True
-            for ime in self._current_imes:
-                if phrase.startswith(
-                        unicodedata.normalize(
-                            'NFC', self._transliterated_strings[ime])):
-                    is_spelling_correction = False
-            if is_spelling_correction:
-                # this is a candidate which does not start exactly as any
-                # of the transliterations of the user input, i.e. it must
-                # be a spelling correction suggestion:
+            if user_freq == -1: # spell checking suggestion
                 if DEBUG_LEVEL > 0:
                     phrase = phrase + ' ✓'
                 attrs.append(IBus.attr_foreground_new(

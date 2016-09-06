@@ -237,16 +237,25 @@ class Hunspell:
     def suggest(self, input_phrase):
         '''Return completions or corrections for the input phrase
 
+        :param input_phrase: A string to find completions or corrections for
+        :type input_phrase: String
+        :rtype: A list of tuples of the form (<word>, <score>)
+                <score> can have only two values:
+                    0:  This is a completion, i.e. input_phrase matches
+                        the beginning of <word> (accent insensitive match)
+                    -1: This is a spell checking correction from hunspell
+                        (i.e. either from enchant or pyhunspell)
+
         Examples:
 
         (Attention, the return values are in NORMALIZATION_FORM_INTERNAL ('NFD'))
 
         >>> h = Hunspell(['de_DE', 'cs_CZ'])
         >>> h.suggest('Geschwindigkeitsubertre')
-        ['Geschwindigkeitsübertretungsverfahren', 'Geschwindigkeitsoptimiert', 'Geschwindigkeitsabhängige', 'Geschwindigkeitsabhängig', 'Schreitgeschwindigkeit']
+        [('Geschwindigkeitsübertretungsverfahren', 0), ('Schreitgeschwindigkeit', -1), ('Geschwindigkeitsabhängig', -1), ('Geschwindigkeitsoptimiert', -1), ('Geschwindigkeitsabhängige', -1)]
 
         >>> h.suggest('filosofictejsi')
-        ['filosofičtější', 'filosofičtěji']
+        [('filosofičtější', 0), ('filosofičtěji', -1)]
         '''
         # If the input phrase is very long, don’t try looking
         # something up in the hunspell dictionaries. The regexp match
@@ -281,15 +290,19 @@ class Hunspell:
         # take care of it in the regexp.
         patt_start = re.compile(r'^' + re.escape(input_phrase))
 
-        suggested_words = []
+        suggested_words = {}
         for dictionary in self._dictionaries:
             if dictionary.words:
                 if dictionary.word_pairs:
-                    suggested_words += [
-                        x[0] for x in dictionary.word_pairs if patt_start.match(x[1])]
+                    suggested_words.update([
+                        (x[0], 0)
+                        for x in dictionary.word_pairs
+                        if patt_start.match(x[1])])
                 else:
-                    suggested_words += [
-                        x for x in dictionary.words if patt_start.match(x)]
+                    suggested_words.update([
+                        (x, 0)
+                        for x in dictionary.words
+                        if patt_start.match(x)])
                 if dictionary.enchant_dict:
                     if len(input_phrase) >= 4:
                         # Always pass NFC to enchant and convert the
@@ -311,9 +324,10 @@ class Hunspell:
                             for x in
                             dictionary.enchant_dict.suggest(input_phrase)
                         ]
-                        for suggestion in extra_suggestions:
-                            if suggestion not in suggested_words:
-                                suggested_words.append(suggestion)
+                        suggested_words.update([
+                            (suggestion, -1)
+                            for suggestion in extra_suggestions
+                            if suggestion not in suggested_words])
                 elif dictionary.pyhunspell_object:
                     if len(input_phrase) >= 4:
                         # Always pass NFC to pyhunspell and convert
@@ -331,17 +345,22 @@ class Hunspell:
                                 input_phrase.encode(
                                     dictionary.encoding, 'replace'))
                         ]
-                        for suggestion in extra_suggestions:
-                            if suggestion not in suggested_words:
-                                suggested_words.append(suggestion)
+                        suggested_words.update([
+                            (suggestion, -1)
+                            for suggestion in extra_suggestions
+                            if suggestion not in suggested_words])
             else:
                 dic_path = os.path.join(dictionary.loc, dictionary.name+'.dic')
-                suggested_words.insert(
-                    0,
-                    '☹ %(dic_path)s not found. '
-                    %{'dic_path': dic_path}
-                    + 'Please install hunspell dictionary!')
-        return suggested_words[0:MAX_WORDS]
+                suggested_words.update([
+                    ('☹ %(dic_path)s not found. ' %{'dic_path': dic_path}
+                     + 'Please install hunspell dictionary!',
+                     0)])
+        return sorted(suggested_words.items(),
+                      key = lambda x: (
+                          - x[1],    # 0: in dictionary, -1: hunspell
+                          len(x[0]), # length of word ascending
+                          x[0],      # alphabetical
+                      ))[0:MAX_WORDS]
 
 BENCHMARK = True
 
