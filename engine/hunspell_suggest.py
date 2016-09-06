@@ -37,7 +37,7 @@ try:
     IMPORT_ENCHANT_SUCCESSFUL = True
 except (ImportError,):
     try:
-        import hunspell # only available for Python2
+        import hunspell
         IMPORT_HUNSPELL_SUCCESSFUL = True
     except (ImportError,):
         pass
@@ -250,10 +250,9 @@ class Hunspell:
                         # no encoding and decoding to and from the
                         # hunspell dictionary encoding is necessary
                         # (neither for Python2 nor Python3).
-                        # (pyhunspell (which works only for Python2)
-                        # needs to get its input passed in dictionary
-                        # encoding and also returns it in dictionary
-                        # encoding).
+                        # (pyhunspell needs to get its input passed
+                        # in dictionary encoding and also returns it
+                        # in dictionary encoding).
                         input_phrase = unicodedata.normalize(
                             'NFC', input_phrase)
                         extra_suggestions = [
