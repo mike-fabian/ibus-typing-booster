@@ -1047,6 +1047,13 @@ class EmojiMatcher():
 BENCHMARK = True
 
 def main():
+    '''
+    Used for testing and profiling.
+
+    “python3 itb_emoji.py”
+
+    runs some tests and prints profiling data.
+    '''
     if BENCHMARK:
         import cProfile, pstats
         profile = cProfile.Profile()

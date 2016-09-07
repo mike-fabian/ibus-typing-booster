@@ -16,6 +16,9 @@
 #  You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+'''A module to do transliteration using m17n-lib.
+'''
+
 import ctypes
 
 class libm17n__MSymbolStruct(ctypes.Structure):
@@ -126,7 +129,8 @@ def _init():
     libm17n__minput_create_ic.restype = ctypes.POINTER(libm17n__MInputContext)
     global libm17n__minput_reset_ic
     libm17n__minput_reset_ic = libm17n__lib.minput_reset_ic
-    libm17n__minput_reset_ic.argtypes = [ctypes.POINTER(libm17n__MInputContext)]
+    libm17n__minput_reset_ic.argtypes = [
+        ctypes.POINTER(libm17n__MInputContext)]
     global libm17n__minput_filter
     libm17n__minput_filter = libm17n__lib.minput_filter
     libm17n__minput_filter.argtypes = [

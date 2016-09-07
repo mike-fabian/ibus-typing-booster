@@ -25,6 +25,7 @@ import unicodedata
 import sqlite3
 import time
 import re
+import traceback
 import itb_util
 import hunspell_suggest
 
@@ -194,7 +195,6 @@ class tabsqlitedb:
                             "Compatible database %(db)s found.\n"
                             %{'db': user_db})
                 except:
-                    import traceback
                     traceback.print_exc()
         else:
             user_db = ":memory:"
@@ -258,7 +258,6 @@ class tabsqlitedb:
             try:
                 self.db.executemany(sqlstr, sqlargs)
             except:
-                import traceback
                 traceback.print_exc()
             self.db.commit()
             self.db.execute('PRAGMA wal_checkpoint;')
@@ -274,7 +273,6 @@ class tabsqlitedb:
         #    self.optimize_database()
         #except:
         #    print "exception in optimize_database()"
-        #    import traceback
         #    traceback.print_exc ()
 
         # try create all hunspell-tables in user database
@@ -319,7 +317,6 @@ class tabsqlitedb:
             if commit:
                 self.db.commit()
         except:
-            import traceback
             traceback.print_exc()
 
     def sync_usrdb (self):
@@ -406,7 +403,6 @@ class tabsqlitedb:
             if commit:
                 self.db.commit()
         except Exception:
-            import traceback
             traceback.print_exc()
 
     def optimize_database (self, database='main'):
@@ -525,7 +521,6 @@ class tabsqlitedb:
             # match the user input “LIKE co%”! I.e. this is filtered
             # out by the VIEW created above already)
         except:
-            import traceback
             traceback.print_exc()
         if not results_uni:
             # If no unigrams matched, bigrams and trigrams cannot
@@ -540,7 +535,6 @@ class tabsqlitedb:
         try:
             count = self.db.execute(sqlstr, sqlargs).fetchall()[0][0]
         except:
-            import traceback
             traceback.print_exc()
         # Updating the phrase_frequency dictionary with the normalized
         # results gives: {'conspiracy': 6/11, 'code': 0,
@@ -561,7 +555,6 @@ class tabsqlitedb:
         try:
             results_bi = self.db.execute(sqlstr, sqlargs).fetchall()
         except:
-            import traceback
             traceback.print_exc()
         if not results_bi:
             # If no bigram could be matched, return what we have so far:
@@ -573,7 +566,6 @@ class tabsqlitedb:
         try:
             count_p_phrase = self.db.execute(sqlstr, sqlargs).fetchall()[0][0]
         except:
-            import traceback
             traceback.print_exc()
         # Update the phrase frequency dictionary by using a linear
         # combination of the unigram and the bigram results, giving
@@ -597,7 +589,6 @@ class tabsqlitedb:
         try:
             results_tri = self.db.execute(sqlstr, sqlargs).fetchall()
         except:
-            import traceback
             traceback.print_exc()
         if not results_tri:
             # if no trigram could be matched, return what we have so far:
@@ -611,7 +602,6 @@ class tabsqlitedb:
             count_pp_phrase_p_phrase = self.db.execute(
                 sqlstr, sqlargs).fetchall()[0][0]
         except:
-            import traceback
             traceback.print_exc()
         # Update the phrase frequency dictionary by using a linear
         # combination of the bigram and the trigram results, giving
@@ -642,7 +632,6 @@ class tabsqlitedb:
             self.db.execute (sqlstring, ("create-time", ))
             self.db.commit ()
         except:
-            import traceback
             traceback.print_exc ()
 
     def init_user_db(self, db_file):
@@ -840,7 +829,6 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             ]
             return phrases[:]
         except:
-            import traceback
             traceback.print_exc()
             return []
 
@@ -897,7 +885,6 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             self.db.commit()
             self.db.execute('PRAGMA wal_checkpoint;')
         except:
-            import traceback
             traceback.print_exc()
             return False
         return True
@@ -908,5 +895,4 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             self.db.commit()
             self.db.execute('PRAGMA wal_checkpoint;')
         except:
-            import traceback
             traceback.print_exc()

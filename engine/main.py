@@ -196,8 +196,6 @@ def main():
         # Find all config files in CONFIG_FILE_DIR, extract the ime
         # properties and print the xml file for the engines
         confs = [x for x in os.listdir(CONFIG_FILE_DIR) if x.endswith('.conf')]
-        for conf in confs:
-            str_dic = conf.replace('conf', 'dic')
 
         egs = Element('engines')
 

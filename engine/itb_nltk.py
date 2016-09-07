@@ -181,6 +181,13 @@ __module_init = __ModuleInitializer()
 BENCHMARK = True
 
 def main():
+    '''
+    Used for testing and profiling.
+
+    “python3 itb_nltk.py”
+
+    runs some tests and prints profiling data.
+    '''
     if BENCHMARK:
         import cProfile, pstats
         profile = cProfile.Profile()
@@ -192,11 +199,11 @@ def main():
 
     if BENCHMARK:
         profile.disable()
-        p = pstats.Stats(profile)
-        p.strip_dirs()
-        p.sort_stats('cumulative')
-        p.print_stats('nltk', 25)
-        p.print_stats('wordnet', 25)
+        stats = pstats.Stats(profile)
+        stats.strip_dirs()
+        stats.sort_stats('cumulative')
+        stats.print_stats('nltk', 25)
+        stats.print_stats('wordnet', 25)
 
 if __name__ == "__main__":
     main()

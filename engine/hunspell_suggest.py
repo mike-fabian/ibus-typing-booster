@@ -397,18 +397,26 @@ class Hunspell:
                 # This spell checking correction is actually even
                 # an accent insensitive match, adjust accordingly:
                 suggested_words[word] = 0
-        sorted_suggestions =  sorted(suggested_words.items(),
-                                     key = lambda x: (
-                                         - x[1],    # 0: in dictionary, -1: hunspell
-                                         len(x[0]), # length of word ascending
-                                         x[0],      # alphabetical
-                                     ))[0:MAX_WORDS]
+        sorted_suggestions =  sorted(
+            suggested_words.items(),
+            key = lambda x: (
+                - x[1],    # 0: in dictionary, -1: hunspell
+                len(x[0]), # length of word ascending
+                x[0],      # alphabetical
+            ))[0:MAX_WORDS]
         self._suggest_cache[input_phrase] = sorted_suggestions
         return sorted_suggestions
 
 BENCHMARK = True
 
 def main():
+    '''
+    Used for testing and profiling.
+
+    “python3 hunspell_suggest.py”
+
+    runs some tests and prints profiling data.
+    '''
     if BENCHMARK:
         import cProfile, pstats
         profile = cProfile.Profile()

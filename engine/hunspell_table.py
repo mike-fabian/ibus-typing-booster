@@ -1801,14 +1801,16 @@ class tabengine (IBus.Engine):
         return False
 
     def config_section_normalize(self, section):
-        # This function replaces _: with - in the dconf
-        # section and converts to lower case to make
-        # the comparison of the dconf sections work correctly.
-        # I avoid using .lower() here because it is locale dependent,
-        # when using .lower() this would not achieve the desired
-        # effect of comparing the dconf sections case insentively
-        # in some locales, it would fail for example if Turkish
-        # locale (tr_TR.UTF-8) is set.
+        '''
+        This function replaces _: with - in the dconf
+        section and converts to lower case to make
+        the comparison of the dconf sections work correctly.
+        I avoid using .lower() here because it is locale dependent,
+        when using .lower() this would not achieve the desired
+        effect of comparing the dconf sections case insentively
+        in some locales, it would fail for example if Turkish
+        locale (tr_TR.UTF-8) is set.
+        '''
         return re.sub(r'[_:]', r'-', section).translate(
             ''.maketrans(
                 string.ascii_uppercase,
