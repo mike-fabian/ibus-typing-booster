@@ -385,19 +385,22 @@ class editor(object):
         attrs = IBus.AttrList ()
         if comment:
             phrase += ' ' + comment
-        else:
+        elif DEBUG_LEVEL > 0:
             if user_freq < 0: # spell checking suggestion
-                if DEBUG_LEVEL > 0:
-                    phrase = phrase + ' ✓'
+                phrase = phrase + ' ✓'
                 attrs.append(IBus.attr_foreground_new(
                     rgb(0xff, 0x00, 0x00), 0, len(phrase)))
-            elif user_freq > 10:
-                # this is a frequently used phrase:
+            elif user_freq > 0:
+                # This was found in the user database.  So it is
+                # possible to delete it with a key binding or
+                # mouse-click, if the user desires. Mark it
+                # differently to show that it is deletable:
+                phrase = phrase + ' ⭐'
                 attrs.append(IBus.attr_foreground_new(
                     rgb(0xff, 0x7f, 0x00), 0, len(phrase)))
             else:
-                # this is a system phrase that has been used less
-                # then 10 times or maybe never:
+                # user_freq == 0 means this is a (possibly accent
+                # insensitive) match in a hunspell dictionary.
                 attrs.append(IBus.attr_foreground_new(
                     rgb(0x00, 0x00, 0x00), 0, len(phrase)))
         if DEBUG_LEVEL > 0:
