@@ -242,11 +242,11 @@ class Hunspell:
         :param input_phrase: A string to find completions or corrections for
         :type input_phrase: String
         :rtype: A list of tuples of the form (<word>, <score>)
-                <score> can have only two values:
-                    0:  This is a completion, i.e. input_phrase matches
-                        the beginning of <word> (accent insensitive match)
-                    -1: This is a spell checking correction from hunspell
-                        (i.e. either from enchant or pyhunspell)
+                <score> can have these values:
+                    0: This is a completion, i.e. input_phrase matches
+                       the beginning of <word> (accent insensitive match)
+                   -1: This is a spell checking correction from hunspell
+                       (i.e. either from enchant or pyhunspell)
 
         Examples:
 
@@ -262,6 +262,10 @@ class Hunspell:
         >>> h = Hunspell(['it_IT'])
         >>> h.suggest('principianti')
         [('principianti', 0), ('principiati', -1), ('principiante', -1), ('principiarti', -1), ('principiasti', -1)]
+
+        >>> h = Hunspell(['es_ES'])
+        >>> h.suggest('teneis')
+        [('tenéis', 0), ('tenes', -1), ('tenis', -1), ('teneos', -1), ('tienes', -1), ('te neis', -1), ('te-neis', -1)]
         '''
         if input_phrase in self._suggest_cache:
             return self._suggest_cache[input_phrase]
@@ -385,6 +389,14 @@ class Hunspell:
                     ('☹ %(dic_path)s not found. ' %{'dic_path': dic_path}
                      + 'Please install hunspell dictionary!',
                      0)])
+        for word in suggested_words:
+            if (suggested_words[word] == -1
+                and
+                itb_util.remove_accents(word)
+                == itb_util.remove_accents(input_phrase)):
+                # This spell checking correction is actually even
+                # an accent insensitive match, adjust accordingly:
+                suggested_words[word] = 0
         sorted_suggestions =  sorted(suggested_words.items(),
                                      key = lambda x: (
                                          - x[1],    # 0: in dictionary, -1: hunspell

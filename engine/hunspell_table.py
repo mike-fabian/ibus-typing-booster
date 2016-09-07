@@ -386,7 +386,7 @@ class editor(object):
         if comment:
             phrase += ' ' + comment
         else:
-            if user_freq == -1: # spell checking suggestion
+            if user_freq < 0: # spell checking suggestion
                 if DEBUG_LEVEL > 0:
                     phrase = phrase + ' ✓'
                 attrs.append(IBus.attr_foreground_new(
