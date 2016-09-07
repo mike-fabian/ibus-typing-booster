@@ -202,6 +202,7 @@ class Hunspell:
             sys.stderr.write(
                 "Hunspell.__init__(dictionary_names=%s)\n"
                 %dictionary_names)
+        self._suggest_cache = {}
         self._dictionary_names = dictionary_names
         self._dictionaries = []
         self.init_dictionaries()
@@ -213,6 +214,7 @@ class Hunspell:
             sys.stderr.write(
                 "Hunspell.init_dictionaries() dictionary_names=%s\n"
                 %self._dictionary_names)
+        self._suggest_cache = {}
         self._dictionaries = []
         for dictionary_name in self._dictionary_names:
             self._dictionaries.append(Dictionary(name=dictionary_name))
@@ -257,6 +259,8 @@ class Hunspell:
         >>> h.suggest('filosofictejsi')
         [('filosofičtější', 0), ('filosofičtěji', -1)]
         '''
+        if input_phrase in self._suggest_cache:
+            return self._suggest_cache[input_phrase]
         # If the input phrase is very long, don’t try looking
         # something up in the hunspell dictionaries. The regexp match
         # gets very slow if the input phrase is very long. And there
@@ -265,6 +269,7 @@ class Hunspell:
         # seems to be “Geschwindigkeitsübertretungsverfahren” trying
         # to match words longer than that just wastes time.
         if len(input_phrase) > 40:
+            self._suggest_cache[input_phrase] = []
             return []
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
@@ -282,6 +287,7 @@ class Hunspell:
         # match a word in the dictionary and we return an empty list
         # immediately:
         if '/' in input_phrase:
+            self._suggest_cache[input_phrase] = []
             return []
         # make sure input_phrase is in the internal normalization form (NFD):
         input_phrase = unicodedata.normalize(
@@ -355,12 +361,14 @@ class Hunspell:
                     ('☹ %(dic_path)s not found. ' %{'dic_path': dic_path}
                      + 'Please install hunspell dictionary!',
                      0)])
-        return sorted(suggested_words.items(),
-                      key = lambda x: (
-                          - x[1],    # 0: in dictionary, -1: hunspell
-                          len(x[0]), # length of word ascending
-                          x[0],      # alphabetical
-                      ))[0:MAX_WORDS]
+        sorted_suggestions =  sorted(suggested_words.items(),
+                                     key = lambda x: (
+                                         - x[1],    # 0: in dictionary, -1: hunspell
+                                         len(x[0]), # length of word ascending
+                                         x[0],      # alphabetical
+                                     ))[0:MAX_WORDS]
+        self._suggest_cache[input_phrase] = sorted_suggestions
+        return sorted_suggestions
 
 BENCHMARK = True
 
