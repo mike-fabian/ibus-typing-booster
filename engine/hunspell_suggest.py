@@ -258,6 +258,10 @@ class Hunspell:
 
         >>> h.suggest('filosofictejsi')
         [('filosofičtější', 0), ('filosofičtěji', -1)]
+
+        >>> h = Hunspell(['it_IT'])
+        >>> h.suggest('principianti')
+        [('principianti', 0), ('principiati', -1), ('principiante', -1), ('principiarti', -1), ('principiasti', -1)]
         '''
         if input_phrase in self._suggest_cache:
             return self._suggest_cache[input_phrase]
@@ -324,6 +328,16 @@ class Hunspell:
                         # in dictionary encoding).
                         input_phrase = unicodedata.normalize(
                             'NFC', input_phrase)
+                        if dictionary.enchant_dict.check(input_phrase):
+                            # This is a valid word in this dictionary.
+                            # It might have been missed by the matching
+                            # above because the dictionary might not
+                            # contain all possible word forms (The
+                            # prefix and suffix information has been
+                            # ignored). But hunspell knows about this,
+                            # if hunspell thinks it is a correct word,
+                            # it must be counted as a match of course:
+                            suggested_words[input_phrase] = 0
                         extra_suggestions = [
                             unicodedata.normalize(
                                 NORMALIZATION_FORM_INTERNAL, x)
@@ -342,6 +356,16 @@ class Hunspell:
                         # right thing for Korean if the input is NFC).
                         input_phrase = unicodedata.normalize(
                             'NFC', input_phrase)
+                        if dictionary.pyhunspell_object.spell(input_phrase):
+                            # This is a valid word in this dictionary.
+                            # It might have been missed by the matching
+                            # above because the dictionary might not
+                            # contain all possible word forms (The
+                            # prefix and suffix information has been
+                            # ignored). But hunspell knows about this,
+                            # if hunspell thinks it is a correct word,
+                            # it must be counted as a match of course:
+                            suggested_words[input_phrase] = 0
                         extra_suggestions = [
                             unicodedata.normalize(
                                 NORMALIZATION_FORM_INTERNAL, x.decode(
