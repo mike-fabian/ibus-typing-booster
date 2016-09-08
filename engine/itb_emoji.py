@@ -51,7 +51,6 @@ VALID_RANGES = (
                       # Invisible Operators
     (0x2070, 0x209f), # Superscripts and Subscripts
     (0x20a0, 0x20cf), # Currency Symbols
-    (0x20ac, 0x20ac), # Euro Sign
     (0x20d0, 0x20ff), # Combining Diacritical Marks for Symbols
     (0x2100, 0x214f), # Additional Squared Symbols, Letterlike Symbols
     (0x2150, 0x218f), # Number Forms
@@ -105,6 +104,14 @@ def _in_range(codepoint):
     >>> _in_range(0x1F815)
     False
 
+    >>> _in_range(ord('€'))
+    True
+
+    >>> _in_range(ord('₹'))
+    True
+
+    >>> _in_range(ord('₺'))
+    True
     '''
     return any([x <= codepoint <= y for x, y in VALID_RANGES])
 
