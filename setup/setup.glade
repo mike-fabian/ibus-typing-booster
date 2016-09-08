@@ -296,11 +296,11 @@
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="emoji_predictions_checkbox">
-                                <property name="label" translatable="yes">Emoji predictions</property>
+                                <property name="label" translatable="yes">Unicode symbols and emoji predictions</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
-                                <property name="tooltip_text" translatable="yes">Whether emoji should be included in the predictions.</property>
+                                <property name="tooltip_text" translatable="yes">Whether Unicode symbols and emoji should be included in the predictions. Emoji are pictographs like 😃😧😱…. Unicode symbols are other symbols like mathematical symbols (∀∑∯…), arrows (←↑↔…), currency symbols (€₹₺…), braille patterns (⠥⠩…), and many other symbols. These are technically not emoji but nevertheless useful symbols.</property>
                                 <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
                               </object>
