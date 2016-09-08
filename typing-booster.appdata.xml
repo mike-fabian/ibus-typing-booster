@@ -16,6 +16,34 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.4" date="2016-09-08" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Accent insensitive matching
+          </li>
+          <li>
+            Update pl.po from zanata
+          </li>
+          <li>
+            Add cache for the suggestions from the hunspell
+            dictionaries
+          </li>
+          <li>
+            Make Control+MouseButton1 remove the clicked candidate
+            from the user database (was MouseButton2)
+          </li>
+          <li>
+            Change key binding for looking up related candidates from
+            Alt+F12 to AltGr+F12
+          </li>
+          <li>
+            Change label of the emoji option to “☑ Unicode symbols and
+            emoji predictions”
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.3" date="2016-09-03" urgency="medium">
       <description>
         <ul>

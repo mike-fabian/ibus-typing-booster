@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 08 Sep 2016 Released 1.5.4 version
+* Accent insensitive matching
+* Update pl.po from zanata
+* Add cache for the suggestions from the hunspell dictionaries
+* Make Control+MouseButton1 remove the clicked candidate from the user database (was MouseButton2)
+* Change key binding for looking up related candidates from Alt+F12 to AltGr+F12
+* Change label of the emoji option to “☑ Unicode symbols and emoji predictions”
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 03 Sep 2016 Released 1.5.3 version
 * Pull translations from Zanata: updates for pl and uk.
 * Fix behaviour of the option “Minimum number of chars for completion”
