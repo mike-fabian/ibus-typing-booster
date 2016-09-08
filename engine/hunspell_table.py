@@ -1584,7 +1584,7 @@ class tabengine (IBus.Engine):
                         self.commit_string(phrase + ' ')
                     return True
 
-        if (key.val == IBus.KEY_F12 and key.mod1
+        if (key.val == IBus.KEY_F12 and key.mod5 # AltGr+F12
             and not self._editor.is_empty()):
             self._lookup_related_candidates()
             return True
