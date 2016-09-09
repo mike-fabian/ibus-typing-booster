@@ -69,6 +69,7 @@ AC_CONFIG_FILES([po/Makefile.in
     engine/ibus-engine-typing-booster
     setup/Makefile
     setup/ibus-setup-typing-booster
+    setup/version.py
     data/Makefile
     icons/Makefile
     icons/additional/Makefile

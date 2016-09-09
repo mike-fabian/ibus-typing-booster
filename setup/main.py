@@ -39,6 +39,8 @@ from pkginstall import InstallPkg
 sys.path = [sys.path[0]+'/../engine'] + sys.path
 import tabsqlitedb
 
+import version
+
 opt = optparse.OptionParser()
 opt.set_usage ('%prog [options]')
 opt.add_option(
@@ -141,6 +143,11 @@ class SetupUI:
             _("Preferences for ibus-typing-booster \"%(symbol)s\"")
             %{'symbol': self.symbol})
         maindialog.show()
+
+        name_version = self.builder.get_object("name_version_label")
+        name_version.set_markup(
+            '<span font_size="large"><b>ibus-typing-booster %s</b></span>'
+            %version.get_version())
 
         self.install_dictionary_button = self.builder.get_object(
             "install_dictionary_button")
