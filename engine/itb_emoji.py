@@ -610,6 +610,12 @@ class EmojiMatcher():
         >>> mq.candidates('gatto sorride')[0][:2]
         ('😺', 'gatto che sorride')
 
+        Any white space and '_' can be used to separate keywords in the
+        query string:
+
+        >>> mq.candidates('gatto_	 sorride')[0][:2]
+        ('😺', 'gatto che sorride')
+
         >>> mq.candidates('nerd glasses')[0][:2]
         ('🤓', 'nerd face')
 
@@ -819,6 +825,9 @@ class EmojiMatcher():
         >>> mq.candidates('🤔', match_limit = 3)
         [('🤔', "Nachdenkender Smiley ['réflexion', 'visage']", 2), ('💆\u200d♀', "femme qui se fait masser le visage ['visage']", 1), ('💆\u200d♂', "homme qui se fait masser le visage ['visage']", 1)]
         '''
+        # Replace any sequence of white space characters and '_' in
+        # the query string with a single ' ':
+        query_string = re.sub('[_\s]+', ' ', query_string)
         if ((query_string, match_limit) in self._candidate_cache
             and not debug):
             return self._candidate_cache[(query_string, match_limit)]
