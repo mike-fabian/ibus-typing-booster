@@ -1,9 +1,10 @@
 # Process this file with autoconf to produce a configure script.
 # vim:set et ts=4:
 #
-# ibus-typing-booster - The Tables engine for IBus
+# ibus-typing-booster - A completion input method for IBus
 #
-# Copyright (c) 20011-2012 Anish Patil <apatil@redhat.com>
+# Copyright (c) 2011-2012 Anish Patil <apatil@redhat.com>
+# Copyright (c) 2016 Mike FABIAN <mfabian@redhat.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -17,7 +18,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
 
 # if not 1, append datestamp to the version number.
 m4_define([package_name], [ibus-typing-booster])
