@@ -1591,6 +1591,10 @@ class tabengine (IBus.Engine):
             self._lookup_related_candidates()
             return True
 
+        if (key.val == IBus.KEY_F10 and key.mod5): # AltGr+F10
+            self._start_setup()
+            return True
+
         if (key.val == IBus.KEY_Tab
             and self._tab_enable
             and not self.is_lookup_table_enabled_by_tab
