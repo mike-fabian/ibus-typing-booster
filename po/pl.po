@@ -3,11 +3,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-09-09 08:19+0200\n"
+"POT-Creation-Date: 2016-09-09 17:36+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-09-05 01:54-0400\n"
+"PO-Revision-Date: 2016-09-09 05:33-0400\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -15,39 +15,39 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2)\n"
 
-#: engine/hunspell_table.py:836
+#: engine/hunspell_table.py:838
 #, python-format
 msgid "Switch preedit input method to %(ime)s"
 msgstr ""
 "Przełącz metodę wprowadzania wcześniej wprowadzonego tekstu na %(ime)s"
 
-#: engine/hunspell_table.py:844
+#: engine/hunspell_table.py:846
 msgid "Preedit input method"
 msgstr "Metoda wprowadzania wcześniej wprowadzonego tekstu"
 
-#: engine/hunspell_table.py:845
+#: engine/hunspell_table.py:847
 msgid "Switch preedit input method"
 msgstr "Przełącz metodę wprowadzania wcześniej wprowadzonego tekstu"
 
-#: engine/hunspell_table.py:940
+#: engine/hunspell_table.py:942
 msgid "Setup"
 msgstr "Ustawienia"
 
-#: engine/hunspell_table.py:943
+#: engine/hunspell_table.py:945
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Skonfiguruj ibus-typing-booster „%(name)s”"
 
-#: setup/main.py:103
+#: setup/main.py:107
 #, python-format
 msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
 msgstr "Nieznany format nazwy mechanizmu: IBUS_ENGINE_NAME=%(name)s"
 
-#: setup/main.py:109
+#: setup/main.py:113
 msgid "IBUS_ENGINE_NAME environment variable is not set."
 msgstr "Nie ustawiono zmiennej środowiskowej IBUS_ENGINE_NAME"
 
-#: setup/main.py:113
+#: setup/main.py:117
 msgid ""
 "Cannot determine the config file for this engine. Please use the --config-"
 "file option."
@@ -55,39 +55,39 @@ msgstr ""
 "Nie można ustalić pliku konfiguracji dla tego mechanizmu. Proszę użyć opcji "
 "„--config-file”."
 
-#: setup/main.py:123
+#: setup/main.py:127
 #, python-format
 msgid "Config file %(file)s does not exist."
 msgstr "Plik konfiguracji %(file)s nie istnieje."
 
-#: setup/main.py:141
+#: setup/main.py:145
 #, python-format
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Preferencje dla ibus-typing-booster „%(symbol)s”"
 
-#: setup/main.py:327
+#: setup/main.py:336
 msgid "Another instance of this app is already running."
 msgstr "Inna kopia tej aplikacji jest już uruchomiona."
 
-#: setup/main.py:422
+#: setup/main.py:431
 msgid "Open File ..."
 msgstr "Otwórz plik…"
 
-#: setup/main.py:440
+#: setup/main.py:449
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Pomyślnie nauczono się z pliku %(filename)s."
 
-#: setup/main.py:449
+#: setup/main.py:458
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Nauczenie się z pliku %(filename)s się nie powiodło."
 
-#: setup/main.py:458
+#: setup/main.py:467
 msgid "Are you sure?"
 msgstr "Na pewno?"
 
-#: setup/main.py:465
+#: setup/main.py:474
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -95,7 +95,7 @@ msgstr ""
 "Na pewno usunąć wszystkie dane języków\n"
 "nauczone podczas pisania i odczytywania plików?"
 
-#: setup/main.py:662
+#: setup/main.py:671
 msgid "ibus is not running."
 msgstr "Usługa IBus nie jest uruchomiona."
 
@@ -228,7 +228,7 @@ msgstr ""
 
 #: setup/setup.glade:299
 msgid "Unicode symbols and emoji predictions"
-msgstr ""
+msgstr "Przewidywanie symboli unikodu i emoji"
 
 #: setup/setup.glade:303
 msgid ""
@@ -238,6 +238,11 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
+"Czy przewidywania mają zawierać symbole i emoji unikodu. Emoji to "
+"piktogramy, takie jak ☺♨⛵ itp., a symbole unikodu to inne symbole, na "
+"przykład matematyczne (∀∑∯…), strzałki (←↑↔…), symbole walut (€₹₺…), alfabet "
+"Braille’a (⠥⠩…) i wiele innych. Z technicznego punktu widzenia te symbole "
+"nie są emoji, ale nadal są przydatne."
 
 #: setup/setup.glade:342
 msgid "Options"
@@ -281,6 +286,27 @@ msgstr "Usuwa nauczone dane"
 #: setup/setup.glade:510
 msgid "Dictionaries and personal data"
 msgstr "Słowniki i dane osobiste"
+
+#: setup/setup.glade:555
+msgid "A completion input method to speedup typing."
+msgstr ""
+"Przyspieszająca pisanie metoda wprowadzania, działająca na podstawie "
+"uzupełniania."
+
+#: setup/setup.glade:581
+msgid "<b>Home page:</b>"
+msgstr "<b>Strona domowa:</b>"
+
+#: setup/setup.glade:593
+msgid "<b>Online documentation:</b>"
+msgstr "<b>Dokumentacja online:</b>"
+
+#. This is the “About” tab in the setup tool.
+#. 
+#. That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
+#: setup/setup.glade:624
+msgid "About"
+msgstr "O programie"
 
 #: typing-booster.appdata.xml:5
 msgid "Typing Booster"

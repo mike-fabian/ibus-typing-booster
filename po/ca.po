@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-09-09 08:19+0200\n"
+"POT-Creation-Date: 2016-09-09 17:36+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,39 +14,39 @@ msgstr ""
 "X-Generator: Zanata 3.9.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: engine/hunspell_table.py:836
+#: engine/hunspell_table.py:838
 #, python-format
 msgid "Switch preedit input method to %(ime)s"
 msgstr ""
 
-#: engine/hunspell_table.py:844
+#: engine/hunspell_table.py:846
 #, fuzzy
 msgid "Preedit input method"
 msgstr "Mètode d'entrada:"
 
-#: engine/hunspell_table.py:845
+#: engine/hunspell_table.py:847
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:940
+#: engine/hunspell_table.py:942
 msgid "Setup"
 msgstr "Preferències"
 
-#: engine/hunspell_table.py:943
+#: engine/hunspell_table.py:945
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Preferències per a l'ibus-typing-booster “%(name)s”"
 
-#: setup/main.py:103
+#: setup/main.py:107
 #, python-format
 msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
 msgstr "Format desconegut del nom del motor: IBUS_ENGINE_NAME=%(name)s"
 
-#: setup/main.py:109
+#: setup/main.py:113
 msgid "IBUS_ENGINE_NAME environment variable is not set."
 msgstr "La variable d'entorn IBUS_ENGINE_NAME no està establerta."
 
-#: setup/main.py:113
+#: setup/main.py:117
 msgid ""
 "Cannot determine the config file for this engine. Please use the --config-"
 "file option."
@@ -54,39 +54,39 @@ msgstr ""
 "No es pot determinar cap fitxer de configuració per a aquest motor. Si us "
 "plau, utilitzeu l'opció --config-file."
 
-#: setup/main.py:123
+#: setup/main.py:127
 #, python-format
 msgid "Config file %(file)s does not exist."
 msgstr "El fitxer de configuració %(file)s no existeix."
 
-#: setup/main.py:141
+#: setup/main.py:145
 #, python-format
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Preferències per a l'ibus-typing-booster \"%(symbol)s\""
 
-#: setup/main.py:327
+#: setup/main.py:336
 msgid "Another instance of this app is already running."
 msgstr "Ja s'està executant una altra instància d'aquesta aplicació."
 
-#: setup/main.py:422
+#: setup/main.py:431
 msgid "Open File ..."
 msgstr "Obre el fitxer..."
 
-#: setup/main.py:440
+#: setup/main.py:449
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "S'ha après correctament del fitxer %(filename)s."
 
-#: setup/main.py:449
+#: setup/main.py:458
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Ha fallat l'aprenentatge del fitxer %(filename)s."
 
-#: setup/main.py:458
+#: setup/main.py:467
 msgid "Are you sure?"
 msgstr "Esteu segur?"
 
-#: setup/main.py:465
+#: setup/main.py:474
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -94,7 +94,7 @@ msgstr ""
 "Realment voleu eliminar totes les dades de l'idioma \n"
 "que s'han après de l'escriptura o la lectura de fitxers? "
 
-#: setup/main.py:662
+#: setup/main.py:671
 msgid "ibus is not running."
 msgstr "ibus no s'està executant."
 
@@ -255,6 +255,25 @@ msgstr "Elimina les dades que s'han après"
 #: setup/setup.glade:510
 msgid "Dictionaries and personal data"
 msgstr "Diccionaris i dades personals"
+
+#: setup/setup.glade:555
+msgid "A completion input method to speedup typing."
+msgstr ""
+
+#: setup/setup.glade:581
+msgid "<b>Home page:</b>"
+msgstr ""
+
+#: setup/setup.glade:593
+msgid "<b>Online documentation:</b>"
+msgstr ""
+
+#. This is the “About” tab in the setup tool.
+#. 
+#. That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
+#: setup/setup.glade:624
+msgid "About"
+msgstr ""
 
 #: typing-booster.appdata.xml:5
 msgid "Typing Booster"
