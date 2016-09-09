@@ -10,35 +10,35 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-09-02 08:37+0200\n"
+"POT-Creation-Date: 2016-09-09 08:19+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-09-02 02:46-0400\n"
+"PO-Revision-Date: 2016-09-09 02:35-0400\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <trans-de@lists.fedoraproject.org>\n"
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Zanata 3.9.5\n"
 
-#: engine/hunspell_table.py:826
+#: engine/hunspell_table.py:836
 #, python-format
 msgid "Switch preedit input method to %(ime)s"
 msgstr "Umschalten der Preedit-Eingabemethode auf %(ime)s"
 
-#: engine/hunspell_table.py:834
+#: engine/hunspell_table.py:844
 msgid "Preedit input method"
 msgstr "Preedit-Eingabemethode:"
 
-#: engine/hunspell_table.py:835
+#: engine/hunspell_table.py:845
 msgid "Switch preedit input method"
 msgstr "Umschalten der Preedit-Eingabemethode"
 
-#: engine/hunspell_table.py:926
+#: engine/hunspell_table.py:940
 msgid "Setup"
 msgstr "Einstellungen"
 
-#: engine/hunspell_table.py:929
+#: engine/hunspell_table.py:943
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Ibus Typing Booster \"%(name)s\" Einstellungen"
@@ -231,12 +231,22 @@ msgstr ""
 "benutzte Inputmethdoe für das Preedit benutzt wird."
 
 #: setup/setup.glade:299
-msgid "Emoji predictions"
-msgstr "Emoji Vorschläge"
+msgid "Unicode symbols and emoji predictions"
+msgstr "Vorschläge auch für Unicode Symbole und Emoji"
 
 #: setup/setup.glade:303
-msgid "Whether emoji should be included in the predictions."
-msgstr "Diese Option wählt ob auch Emoji vorgeschlagen werden sollen."
+msgid ""
+"Whether Unicode symbols and emoji should be included in the predictions. "
+"Emoji are pictographs like ☺♨⛵…. Unicode symbols are other symbols like "
+"mathematical symbols (∀∑∯…), arrows (←↑↔…), currency symbols (€₹₺…), braille "
+"patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
+"nevertheless useful symbols."
+msgstr ""
+"Diese Option wählt ob auch Unicode Symbole und Emoji vorgeschlagen werden "
+"sollen. Emoji sind Piktogramme wie ☺♨⛵….  Unicode Symbole sind andere "
+"Symbole wie zum Beispiel mathematische Symbole (∀∑∯…), Pfeile (←↑↔…), "
+"Währungssymbole (€₹₺…), Braillezeichen (⠥⠩…), und viele andere Symbole. "
+"Diese sind strenggenommen keine Emoji, aber trotzdem nützliche Symbole."
 
 #: setup/setup.glade:342
 msgid "Options"
@@ -302,6 +312,6 @@ msgstr ""
 " Man kann einfach das gewünschte Wort aus einer List von Vorschlägen "
 "auswählen und so seine Tippgeschwindigkeit und Rechtschreibung verbessern."
 
-#: typing-booster.appdata.xml:199
+#: typing-booster.appdata.xml:250
 msgid "Mike FABIAN"
 msgstr "Mike FABIAN"

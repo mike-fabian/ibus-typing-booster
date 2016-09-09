@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-09-02 08:37+0200\n"
+"POT-Creation-Date: 2016-09-09 08:19+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15,25 +15,25 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2)\n"
 
-#: engine/hunspell_table.py:826
+#: engine/hunspell_table.py:836
 #, python-format
 msgid "Switch preedit input method to %(ime)s"
 msgstr ""
 "Przełącz metodę wprowadzania wcześniej wprowadzonego tekstu na %(ime)s"
 
-#: engine/hunspell_table.py:834
+#: engine/hunspell_table.py:844
 msgid "Preedit input method"
 msgstr "Metoda wprowadzania wcześniej wprowadzonego tekstu"
 
-#: engine/hunspell_table.py:835
+#: engine/hunspell_table.py:845
 msgid "Switch preedit input method"
 msgstr "Przełącz metodę wprowadzania wcześniej wprowadzonego tekstu"
 
-#: engine/hunspell_table.py:926
+#: engine/hunspell_table.py:940
 msgid "Setup"
 msgstr "Ustawienia"
 
-#: engine/hunspell_table.py:929
+#: engine/hunspell_table.py:943
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Skonfiguruj ibus-typing-booster „%(name)s”"
@@ -227,12 +227,17 @@ msgstr ""
 "zapamiętywana nawet po ponownym uruchomieniu sesji."
 
 #: setup/setup.glade:299
-msgid "Emoji predictions"
-msgstr "Przewidywanie emoji"
+msgid "Unicode symbols and emoji predictions"
+msgstr ""
 
 #: setup/setup.glade:303
-msgid "Whether emoji should be included in the predictions."
-msgstr "Czy uwzględniać emoji w przewidywaniach."
+msgid ""
+"Whether Unicode symbols and emoji should be included in the predictions. "
+"Emoji are pictographs like ☺♨⛵…. Unicode symbols are other symbols like "
+"mathematical symbols (∀∑∯…), arrows (←↑↔…), currency symbols (€₹₺…), braille "
+"patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
+"nevertheless useful symbols."
+msgstr ""
 
 #: setup/setup.glade:342
 msgid "Options"
@@ -296,6 +301,6 @@ msgstr ""
 "prostu wybierać żądane słowa z listy sugestii i dzięki temu zwiększyć swoją "
 "prędkość i dokładność pisania."
 
-#: typing-booster.appdata.xml:199
+#: typing-booster.appdata.xml:250
 msgid "Mike FABIAN"
 msgstr "Mike FABIAN"
