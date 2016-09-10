@@ -1042,6 +1042,8 @@ class tabengine (IBus.Engine):
         preedit_ime = self.get_current_imes()[0]
         if preedit_ime != 'NoIme':
             aux_string += preedit_ime + ' '
+        if self._editor._emoji_predictions:
+            aux_string += '☺ '
         # Colours do not work at the moment in the auxiliary text!
         # Needs fix in ibus.
         attrs = IBus.AttrList()
