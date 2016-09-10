@@ -381,7 +381,8 @@ class editor(object):
         return len(transliterated_string_up_to_cursor)
 
     def append_candidate_to_lookup_table(
-            self, phrase = '', user_freq = 0, comment = ''):
+            self, phrase = '', user_freq = 0, comment = '',
+            from_user_db = False, spell_checking = False):
         '''append candidate to lookup_table'''
         if not phrase:
             return
@@ -389,25 +390,29 @@ class editor(object):
         attrs = IBus.AttrList ()
         if comment:
             phrase += ' ' + comment
-        elif DEBUG_LEVEL > 0:
-            if user_freq < 0: # spell checking suggestion
+        if DEBUG_LEVEL > 0:
+            if spell_checking: # spell checking suggestion
                 phrase = phrase + ' ✓'
-                attrs.append(IBus.attr_foreground_new(
-                    rgb(0xff, 0x00, 0x00), 0, len(phrase)))
-            elif user_freq > 0:
+                if  DEBUG_LEVEL > 1:
+                    attrs.append(IBus.attr_foreground_new(
+                        rgb(0xff, 0x00, 0x00), 0, len(phrase)))
+            elif from_user_db:
                 # This was found in the user database.  So it is
                 # possible to delete it with a key binding or
                 # mouse-click, if the user desires. Mark it
                 # differently to show that it is deletable:
                 phrase = phrase + ' ⭐'
-                attrs.append(IBus.attr_foreground_new(
-                    rgb(0xff, 0x7f, 0x00), 0, len(phrase)))
+                if  DEBUG_LEVEL > 1:
+                    attrs.append(IBus.attr_foreground_new(
+                        rgb(0xff, 0x7f, 0x00), 0, len(phrase)))
             else:
-                # user_freq == 0 means this is a (possibly accent
-                # insensitive) match in a hunspell dictionary.
-                attrs.append(IBus.attr_foreground_new(
-                    rgb(0x00, 0x00, 0x00), 0, len(phrase)))
-        if DEBUG_LEVEL > 0:
+                # This is a (possibly accent insensitive) match in a
+                # hunspell dictionary or an emoji matched by
+                # EmojiMatcher.
+                if  DEBUG_LEVEL > 1:
+                    attrs.append(IBus.attr_foreground_new(
+                        rgb(0x00, 0x00, 0x00), 0, len(phrase)))
+        if DEBUG_LEVEL > 1:
             phrase += ' ' + str(user_freq)
             attrs.append(IBus.attr_foreground_new(
                 rgb(0x00, 0xff, 0x00),
@@ -484,12 +489,14 @@ class editor(object):
             for x in phrase_candidates:
                 if x[0] in emoji_scores:
                     phrase_candidates_emoji_name.append((
-                        x[0], x[1], emoji_scores[x[0]][1]))
+                        x[0], x[1], emoji_scores[x[0]][1],
+                        x[1] > 0, x[1] < 0))
                     # avoid duplicates in the lookup table:
                     del emoji_scores[x[0]]
                 else:
                     phrase_candidates_emoji_name.append((
-                        x[0], x[1], self.emoji_matcher.name(x[0])))
+                        x[0], x[1], self.emoji_matcher.name(x[0]),
+                        x[1] > 0, x[1] < 0))
             emoji_candidates = []
             for (key, value) in sorted(
                     emoji_scores.items(),
@@ -505,19 +512,20 @@ class editor(object):
             emoji_candidates_top = emoji_candidates[:page_size]
             emoji_candidates_rest = emoji_candidates[page_size:]
             for x in phrase_candidates_top:
-                self._candidates.append((x[0], x[1], x[2]))
+                self._candidates.append((x[0], x[1], x[2], x[3], x[4]))
             for x in emoji_candidates_top:
-                self._candidates.append((x[0], x[1], x[2]))
+                self._candidates.append((x[0], x[1], x[2], False, False))
             for x in phrase_candidates_rest:
-                self._candidates.append((x[0], x[1], x[2]))
+                self._candidates.append((x[0], x[1], x[2], x[3], x[4]))
             for x in emoji_candidates_rest:
-                self._candidates.append((x[0], x[1], x[2]))
+                self._candidates.append((x[0], x[1], x[2], False, False))
         else:
             for x in phrase_candidates:
-                self._candidates.append((x[0], x[1], ''))
+                self._candidates.append((x[0], x[1], '', x[1] > 0, x[1] < 0))
         for x in self._candidates:
             self.append_candidate_to_lookup_table(
-                phrase=x[0], user_freq=x[1], comment=x[2])
+                phrase = x[0], user_freq = x[1], comment = x[2],
+                from_user_db = x[3], spell_checking = x[4])
         return True
 
     def arrow_down(self):
