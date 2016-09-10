@@ -1423,7 +1423,9 @@ class tabengine (IBus.Engine):
                 return False
             if key.val == IBus.KEY_space and not key.mod5:
                 # if the first character is a space, just pass it through
-                # it makes not sense trying to complete:
+                # it makes not sense trying to complete (“not key.mod5” is
+                # checked here because AltGr+Space is the key binding to
+                # insert a literal space into the preëdit):
                 return False
             if key.val in (IBus.KEY_BackSpace,):
                 # When the end of a word is reached again by typing backspace,
