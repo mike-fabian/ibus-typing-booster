@@ -178,6 +178,8 @@ class editor(object):
                 languages = self._dictionary_names)
             if DEBUG_LEVEL > 1:
                 sys.stderr.write('EmojiMatcher() instantiated.\n')
+        else:
+            self.emoji_matcher = None
         self._supported_imes = []
         imes = self.db.ime_properties.get('imes').split(',')
         for item in imes:
@@ -1307,6 +1309,26 @@ class tabengine (IBus.Engine):
         if len(tokens) > 1:
             self._editor._pp_phrase = tokens[-2]
 
+    def _toggle_emoji_predictions(self):
+        '''Toggles whether emoji predictions are shown or not
+
+        As this is saved to dconf, this setting is rememembered, i.e.
+        it has the same effect as changing this setting with the setup
+        tool.
+
+        '''
+        emoji_predictions = not variant_to_value(self._config.get_value(
+            self._config_section,
+            'emojipredictions'))
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "_process_key_event() set emoji predictions to %s\n"
+                %emoji_predictions)
+        self._config.set_value(
+            self._config_section,
+            'emojipredictions',
+            GLib.Variant.new_boolean(emoji_predictions))
+
     def do_candidate_clicked(self, index, button, state):
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
@@ -1323,6 +1345,9 @@ class tabengine (IBus.Engine):
             phrase = self._editor.get_string_from_lookup_table_cursor_pos()
             if phrase:
                 self.commit_string(phrase + ' ')
+            return
+        if button == 3 and (state & IBus.ModifierType.CONTROL_MASK):
+            self._toggle_emoji_predictions()
             return
         if button == 3:
             self._lookup_related_candidates()
@@ -1586,6 +1611,10 @@ class tabengine (IBus.Engine):
                         self.commit_string(phrase + ' ')
                     return True
 
+        if (key.val == IBus.KEY_F6 and key.mod5): # AltGr+F6
+            self._toggle_emoji_predictions()
+            return True
+
         if (key.val == IBus.KEY_F12 and key.mod5 # AltGr+F12
             and not self._editor.is_empty()):
             self._lookup_related_candidates()
@@ -1832,8 +1861,12 @@ class tabengine (IBus.Engine):
         if name == "emojipredictions":
             if value == 1:
                 self._editor._emoji_predictions = True
-                self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
-                    languages = self._editor._dictionary_names)
+                if (not self._editor.emoji_matcher
+                    or
+                    self._editor.emoji_matcher.get_languages()
+                    != self._editor._dictionary_names):
+                    self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
+                        languages = self._editor._dictionary_names)
             else:
                 self._editor._emoji_predictions = False
             self._update_ui()
@@ -1892,8 +1925,12 @@ class tabengine (IBus.Engine):
             self.db.hunspell_obj.set_dictionary_names(
                 self._editor._dictionary_names)
             if self._editor._emoji_predictions:
-                self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
-                    languages=self._editor._dictionary_names)
+                if (not self._editor.emoji_matcher
+                    or
+                    self._editor.emoji_matcher.get_languages()
+                    != self._editor._dictionary_names):
+                    self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
+                        languages=self._editor._dictionary_names)
             if not self._editor.is_empty():
                 self._update_ui()
             return

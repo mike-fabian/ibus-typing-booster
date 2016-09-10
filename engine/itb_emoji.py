@@ -238,6 +238,32 @@ class EmojiMatcher():
             for language in self._languages:
                 self._load_cldr_annotation_data(language)
 
+    def get_languages(self):
+        '''Returns a copy of the list of languages of this EmojiMatcher
+
+        Useful to check whether an already available EmojiMatcher instance
+        can be used or whether one needs a new instance because one needs
+        a different list of languages.
+
+        Note that the order of that list is important, a matcher which
+        supports the same languages but in an different order might
+        return different results.
+
+        :rtype: A list of strings
+
+        Examples:
+
+        >>> m = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+        >>> m.get_languages()
+        ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP']
+
+        '''
+        # Use list() to make a copy instead of self._languages[:] because
+        # the latter might return the default tuple ('en_US',) instead
+        # of a list ['en_US'] which makes comparison with another list
+        # more inconvenient:
+        return list(self._languages)
+
     def _add_to_emoji_dict(self, emoji_dict_key, values_key, values):
         '''Adds data to the emoji_dict if not already there'''
         if emoji_dict_key not in self._emoji_dict:
