@@ -16,6 +16,48 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.5" date="2016-09-10" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Pull translations form Zanata (de, pl, and uk updated
+            because of the new “About” tab)
+          </li>
+          <li>
+            If “☑ Enable suggestions by Tab key” option is on, any
+            preëdit change should hide the loo p table
+          </li>
+          <li>
+            Make showing of similar emoji work even if emoji
+            preditions are off
+          </li>
+          <li>
+            Display whether emoji predictions are turned on in the
+            auxiliary string
+          </li>
+          <li>
+            Add key and mouse bindings to toggle the emoji predictions
+            (AltGr+F6 and Control+Mouse3 anywhere in the candidate
+            list)
+          </li>
+          <li>
+            Add AltGr+F10 key binding to open the setup tool
+          </li>
+          <li>
+            Allow any amount of white space and '_' characters to
+            seperate words in an emoji query string
+          </li>
+          <li>
+            Add an “About” tab to the setup tool and put links to home
+            page and online documentation there.
+          </li>
+          <li>
+            Update README with latest key binding and mouse binding
+            documentation
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.4" date="2016-09-08" urgency="medium">
       <description>
         <ul>

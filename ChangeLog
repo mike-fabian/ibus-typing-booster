@@ -1,4 +1,16 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 10 Sep 2016 Released 1.5.5 version
+* Pull translations form Zanata (de, pl, and uk updated because of the new “About” tab)
+* If “☑ Enable suggestions by Tab key” option is on, any preëdit change should hide the lookup table
+* Make showing of similar emoji work even if emoji preditions are off
+* Display whether emoji predictions are turned on in the auxiliary string
+* Add key and mouse bindings to toggle the emoji predictions (AltGr+F6 and Control+Mouse3 anywhere in the candidate list)
+* Add AltGr+F10 key binding to open the setup tool
+* Allow any amount of white space and '_' characters to seperate words in an emoji query string
+* Add an “About” tab to the setup tool and put links to home page and online documentation there.
+* Update README with latest key binding and mouse binding documentation
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 08 Sep 2016 Released 1.5.4 version
 * Accent insensitive matching
 * Update pl.po from zanata
