@@ -1169,8 +1169,23 @@ class tabengine (IBus.Engine):
         super(tabengine, self).update_auxiliary_text(
             IBus.Text.new_from_string('⏳'), True)
         related_candidates = []
-        if self._editor._emoji_predictions:
-            related_candidates = self._editor.emoji_matcher.similar(phrase)
+        # Try to find similar emoji even if emoji predictions are
+        # turned off.  Even when they are turned off, an emoji might
+        # show up in the candidate list because it was found in the
+        # user database. But when emoji predictions are turned off,
+        # it is possible that they never been turned on in this session
+        # and then the emoji matcher has not been initialized. Or,
+        # the languages have been changed while emoji matching was off.
+        # So make sure that the emoji matcher is available for the
+        # correct list of languages before searching for similar
+        # emoji:
+        if (not self._editor.emoji_matcher
+            or
+            self._editor.emoji_matcher.get_languages()
+            != self._editor._dictionary_names):
+            self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
+                languages = self._editor._dictionary_names)
+        related_candidates = self._editor.emoji_matcher.similar(phrase)
         try:
             import itb_nltk
             for x in itb_nltk.synonyms(phrase, keep_original = False):
