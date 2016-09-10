@@ -1113,7 +1113,7 @@ class tabengine (IBus.Engine):
         '''Update User Interface'''
         self._update_preedit()
         if self._editor.is_empty():
-            # Hide lookup table again if prëdit became empty and
+            # Hide lookup table again if preëdit became empty and
             # suggestions are only enabled by Tab key:
             self.is_lookup_table_enabled_by_tab = False
         if (self._editor.is_empty()
@@ -1238,14 +1238,13 @@ class tabengine (IBus.Engine):
         return False
 
     def commit_string (self, commit_phrase, input_phrase = ''):
-        if self._tab_enable:
-            # If the suggestions are only enabled by Tab key, i.e. the
-            # lookup table is not shown until Tab has been typed, hide
-            # the lookup table again after each commit. That means
-            # that after each commit, when typing continues the
-            # lookup table is first hidden again and one has to type
-            # Tab again to show it.
-            self.is_lookup_table_enabled_by_tab = False
+        # If the suggestions are only enabled by Tab key, i.e. the
+        # lookup table is not shown until Tab has been typed, hide
+        # the lookup table again after each commit. That means
+        # that after each commit, when typing continues the
+        # lookup table is first hidden again and one has to type
+        # Tab again to show it.
+        self.is_lookup_table_enabled_by_tab = False
         if not input_phrase:
             input_phrase = self._editor.get_transliterated_strings()[
                 self.get_current_imes()[0]]
@@ -1576,6 +1575,8 @@ class tabengine (IBus.Engine):
         if key.val == IBus.KEY_BackSpace and key.control:
             if self._editor.is_empty():
                 return False
+            if self._editor.get_typed_string_cursor() > 0:
+                self.is_lookup_table_enabled_by_tab = False
             self._editor.remove_string_before_cursor()
             self._update_ui()
             return True
@@ -1583,6 +1584,8 @@ class tabengine (IBus.Engine):
         if key.val == IBus.KEY_BackSpace:
             if self._editor.is_empty():
                 return False
+            if self._editor.get_typed_string_cursor() > 0:
+                self.is_lookup_table_enabled_by_tab = False
             self._editor.remove_character_before_cursor()
             self._update_ui()
             return True
@@ -1590,6 +1593,9 @@ class tabengine (IBus.Engine):
         if key.val == IBus.KEY_Delete and key.control:
             if self._editor.is_empty():
                 return False
+            if (self._editor.get_typed_string_cursor()
+                < len(self._editor.get_typed_string())):
+                self.is_lookup_table_enabled_by_tab = False
             self._editor.remove_string_after_cursor()
             self._update_ui()
             return True
@@ -1597,6 +1603,9 @@ class tabengine (IBus.Engine):
         if key.val == IBus.KEY_Delete:
             if self._editor.is_empty():
                 return False
+            if (self._editor.get_typed_string_cursor()
+                < len(self._editor.get_typed_string())):
+                self.is_lookup_table_enabled_by_tab = False
             self._editor.remove_character_after_cursor()
             self._update_ui()
             return True
@@ -1790,6 +1799,11 @@ class tabengine (IBus.Engine):
             return True
 
         if key.unicode:
+            # If the suggestions are only enabled by Tab key, i.e. the
+            # lookup table is not shown until Tab has been typed, hide
+            # the lookup table again when characters are added to the
+            # preëdit:
+            self.is_lookup_table_enabled_by_tab = False
             if self._editor.is_empty():
                 # first key typed, we will try to complete something now
                 # get the context if possible
