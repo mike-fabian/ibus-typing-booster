@@ -365,7 +365,7 @@
                           <object class="GtkTable" id="table1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="n_rows">4</property>
+                            <property name="n_rows">3</property>
                             <property name="n_columns">2</property>
                             <property name="column_spacing">8</property>
                             <property name="row_spacing">4</property>
@@ -385,22 +385,6 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkButton" id="install_pyhunspell_button">
-                                <property name="label" translatable="yes">Install pyhunspell</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                              </object>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
-                                <property name="x_options">GTK_EXPAND</property>
-                                <property name="y_options">GTK_EXPAND</property>
-                              </packing>
-                            </child>
-                            <child>
                               <object class="GtkButton" id="learn_from_file_button">
                                 <property name="label" translatable="yes">Learn from text file</property>
                                 <property name="visible">True</property>
@@ -410,8 +394,8 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
-                                <property name="top_attach">2</property>
-                                <property name="bottom_attach">3</property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
                                 <property name="x_options">GTK_EXPAND</property>
                                 <property name="y_options">GTK_EXPAND</property>
                               </packing>
@@ -427,20 +411,6 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkLabel" id="install_pyhunspell_label">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">Install pyhunspell package to get spellchecking suggestions</property>
-                                <property name="wrap">True</property>
-                                <property name="width_chars">20</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
-                              </packing>
-                            </child>
-                            <child>
                               <object class="GtkLabel" id="learn_from_file_label">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
@@ -450,8 +420,8 @@
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
-                                <property name="top_attach">2</property>
-                                <property name="bottom_attach">3</property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
                               </packing>
                             </child>
                             <child>
@@ -464,8 +434,8 @@
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
-                                <property name="top_attach">3</property>
-                                <property name="bottom_attach">4</property>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
                               </packing>
                             </child>
                             <child>
@@ -478,8 +448,8 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
-                                <property name="top_attach">3</property>
-                                <property name="bottom_attach">4</property>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
                                 <property name="x_options">GTK_EXPAND</property>
                                 <property name="y_options">GTK_EXPAND</property>
                               </packing>

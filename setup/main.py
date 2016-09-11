@@ -155,10 +155,6 @@ class SetupUI:
             "install_dictionary_button")
         self.install_dictionary_button.connect(
             'clicked', event_handler.onInstallDictionaryClicked)
-        self.install_pyhunspell_button = self.builder.get_object(
-            "install_pyhunspell_button")
-        self.install_pyhunspell_button.connect(
-            'clicked', event_handler.onInstallPyhunspellClicked)
         self.learn_from_file_button = self.builder.get_object(
             "learn_from_file_button")
         self.learn_from_file_button.connect(
@@ -416,13 +412,6 @@ class EventHandler:
             'dictionaryinstalltimestamp',
             GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
         SetupUi.install_dictionary_button.set_sensitive(True)
-
-    def onInstallPyhunspellClicked(self, widget):
-        SetupUi.install_pyhunspell_button.set_sensitive(False)
-        InstallPkg('pyhunspell')
-        import subprocess
-        subprocess.call(['ibus', 'restart'])
-        SetupUi.install_pyhunspell_button.set_sensitive(True)
 
     def onLearnFromFileClicked(self, widget):
         SetupUi.learn_from_file_button.set_sensitive(False)
