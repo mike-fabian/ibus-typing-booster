@@ -88,6 +88,12 @@ VALID_RANGES = (
     (0x1f900, 0x1f9ff), # Supplemental Symbols and Pictographs
 )
 
+VALID_CHARACTERS = {
+    'ﷺ', # ARABIC LIGATURE SALLALLAHOU ALAYHE WASALLAM
+    'ﷻ', # ARABIC LIGATURE JALLAJALALOUHOU
+    '﷽', # ARABIC LIGATURE BISMILLAH AR-RAHMAN AR-RAHEEM
+}
+
 def _in_range(codepoint):
     '''Checks whether the codepoint is in one of the valid ranges
 
@@ -295,9 +301,9 @@ class EmojiMatcher():
                 codepoint_string, name, category = line.split(';')[:3]
                 codepoint_integer = int(codepoint_string, 16)
                 emoji_string = chr(codepoint_integer)
-                if category not in VALID_CATEGORIES:
-                    continue
-                if not _in_range(codepoint_integer):
+                if ((category not in VALID_CATEGORIES
+                     or not _in_range(codepoint_integer))
+                    and emoji_string not in VALID_CHARACTERS):
                     continue
                 self._add_to_emoji_dict(
                     (emoji_string, 'en'), 'names', [name.lower()])
