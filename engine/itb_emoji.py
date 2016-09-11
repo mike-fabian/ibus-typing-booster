@@ -44,6 +44,7 @@ DATADIR = os.path.join(os.path.dirname(__file__), '../data')
 VALID_CATEGORIES = (
     'Sm', # Symbol, math
     'So', # Symbol, other
+    'Sc', # Symbol, Currency
     'Pd', # Punctuation, dash
     'Po', # Punctuation, other
 )
@@ -833,6 +834,9 @@ class EmojiMatcher():
 
         >>> mq.candidates('fery')[0][:2]
         ('⛴', 'ferry')
+
+        >>> mq.candidates('euro sign')[0][:2]
+        ('€', 'euro sign')
 
         >>> mq = EmojiMatcher(languages = ['fr_FR'])
         >>> mq.candidates('chat')[0][:2]
