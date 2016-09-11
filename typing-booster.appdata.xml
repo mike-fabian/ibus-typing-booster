@@ -16,6 +16,60 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.6" date="2016-09-12" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Reduce the number of characters which cause immediate
+            commits a lot (Make typing “Je t'aime” easier)
+          </li>
+          <li>
+            Load CLDR data for *all* languages in the
+            _expand_languages() list
+          </li>
+          <li>
+            Currency symbols should neither be stripped from tokens
+            nor trigger an immediate commit
+          </li>
+          <li>
+            Fix bidi reordering problem in the candidate list for
+            right-to-left candidates followed by comments
+          </li>
+          <li>
+            Update emoji annotations from CLDR (de_CH and sr_Latn new,
+            the others updated)
+          </li>
+          <li>
+            Remove category 'Pc' from categories to commit immediately
+            (allow _ to be typed into the preëdit always)
+          </li>
+          <li>
+            Remove button to install pyhunspell from the setup tool
+            (python3-enchant is preferred and even required by the
+            Fedora rpm)
+          </li>
+          <li>
+            Include more currency symbols and fullwidth symbols
+          </li>
+          <li>
+            Add category from UnicodeData.txt to emoji dictionary (For
+            better results when looking up related characters)
+          </li>
+          <li>
+            Add 'Sc', # Symbol, Currency to VALID_CATEGORIES (to make
+            the currency symbols work)
+          </li>
+          <li>
+            Add list of valid characters (to include special
+            characters manually)
+          </li>
+          <li>
+            Add mouse binding Alt+Mouse3 anywhere in the candidate
+            list to start the setup tool
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.5" date="2016-09-10" urgency="medium">
       <description>
         <ul>

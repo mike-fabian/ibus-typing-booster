@@ -1,4 +1,19 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 12 Sep 2016 Released 1.5.6 version
+* Reduce the number of characters which cause immediate commits a lot (Make typing “Je t'aime” easier)
+* Load CLDR data for *all* languages in the _expand_languages() list
+* Currency symbols should neither be stripped from tokens nor trigger an immediate commit
+* Fix bidi reordering problem in the candidate list for right-to-left candidates followed by comments
+* Update emoji annotations from CLDR (de_CH and sr_Latn new, the others updated)
+* Remove category 'Pc' from categories to commit immediately (allow _ to be typed into the preëdit always)
+* Remove button to install pyhunspell from the setup tool (python3-enchant is preferred and even required by the Fedora rpm)
+* Include more currency symbols and fullwidth symbols
+* Add category from UnicodeData.txt to emoji dictionary (For better results when looking up related characters)
+* Add 'Sc', # Symbol, Currency to VALID_CATEGORIES (to make the currency symbols work)
+* Add list of valid characters (to include special characters manually)
+* Add mouse binding Alt+Mouse3 anywhere in the candidate list to start the setup tool
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 10 Sep 2016 Released 1.5.5 version
 * Pull translations form Zanata (de, pl, and uk updated because of the new “About” tab)
 * If “☑ Enable suggestions by Tab key” option is on, any preëdit change should hide the lookup table
