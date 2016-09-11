@@ -1373,6 +1373,9 @@ class tabengine (IBus.Engine):
         if button == 3 and (state & IBus.ModifierType.CONTROL_MASK):
             self._toggle_emoji_predictions()
             return
+        if button == 3 and (state & IBus.ModifierType.MOD1_MASK):
+            self._start_setup()
+            return
         if button == 3:
             self._lookup_related_candidates()
             return
