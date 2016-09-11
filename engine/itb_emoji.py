@@ -50,6 +50,16 @@ VALID_CATEGORIES = (
 )
 
 VALID_RANGES = (
+    (0x0024, 0x0024), # DOLLAR SIGN
+    (0x00a2, 0x00a5), # CENT SIGN, POUND SIGN, CURRENCY SIGN, YEN SIGN
+    (0x058f, 0x058f), # ARMENIAN DRAM SIGN
+    (0x060b, 0x060b), # AFGHANI SIGN
+    (0x09f2, 0x09f3), # BENGALI RUPEE MARK, BENGALI RUPEE SIGN
+    (0x09fb, 0x09fb), # BENGALI GANDA MARK
+    (0x0af1, 0x0af1), # GUJARATI RUPEE SIGN
+    (0x0bf9, 0x0bf9), # TAMIL RUPEE SIGN
+    (0x0e3f, 0x0e3f), # THAI CURRENCY SYMBOL BAHT
+    (0x17db, 0x17db), # KHMER CURRENCY SYMBOL RIEL
     (0x2000, 0x206f), # General Punctuation, Layout Controls,
                       # Invisible Operators
     (0x2070, 0x209f), # Superscripts and Subscripts
@@ -82,6 +92,10 @@ VALID_RANGES = (
     (0x2980, 0x29ff), # Miscellaneous Mathematical Symbols-B
     (0x2a00, 0x2aff), # Supplemental Mathematical Operators
     (0x2b00, 0x2bff), # Additional Shapes, Miscellaneous Symbols and Arrows
+    (0xa838, 0xa838), # NORTH INDIC RUPEE MARK
+    (0xfdfc, 0xfdfc), # RIAL SIGN
+    (0xfe69, 0xfe69), # SMALL DOLLAR SIGN
+    (0xff01, 0xff60), # Fullwidth symbols and currency signs
     (0x1f300, 0x1f5ff), # Miscellaneous Symbols and Pictographs
     (0x1f600, 0x1f64f), # Emoticons
     (0x1f650, 0x1f67f), # Ornamental Dingbats
@@ -1052,7 +1066,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('€', match_limit = 10)
-        [('₳', "austral sign ['sc']", 1), ('₵', "cedi sign ['sc']", 1), ('₡', "colon sign ['sc']", 1), ('₢', "cruzeiro sign ['sc']", 1), ('₫', "dong sign ['sc']", 1), ('₯', "drachma sign ['sc']", 1), ('€', "euro sign ['sc']", 1), ('₠', "euro-currency sign ['sc']", 1), ('₣', "french franc sign ['sc']", 1), ('₰', "german penny sign ['sc']", 1)]
+        [('؋', "afghani sign ['sc']", 1), ('֏', "armenian dram sign ['sc']", 1), ('₳', "austral sign ['sc']", 1), ('৻', "bengali ganda mark ['sc']", 1), ('৲', "bengali rupee mark ['sc']", 1), ('৳', "bengali rupee sign ['sc']", 1), ('₵', "cedi sign ['sc']", 1), ('¢', "cent sign ['sc']", 1), ('₡', "colon sign ['sc']", 1), ('₢', "cruzeiro sign ['sc']", 1)]
         '''
         candidate_scores = {}
         expanded_languages = _expand_languages(self._languages)
