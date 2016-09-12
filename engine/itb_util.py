@@ -35,11 +35,20 @@ import unicodedata
 # This list is very similar to the list of categories to strip from
 # tokens. But I removed the 'Pd' (Punctuation, Dash) category because
 # of words like “up-to-date”. Triggering a commit at the first “-”
-# prevents learning such words from user input. I.e. the list of
-# categories to trigger immediate commit should contain only categories
-# which are very unlikely to appear as parts of words.
+# prevents learning such words from user input.
+#
+# I also removed the 'Pc' (Punctuation, Connector) category. There
+# are not many characters in that category, the most important one
+# is _ U+005F LOW LINE. If one wants to input more than one keyword
+# to search for emoji, the keywords can be separated by underscore.
+# Therefore, it should always be possible to enter an underscore into
+# the preëdit, not only when transliteration is used.
+#
+# I.e. the list of categories to trigger immediate commit should
+# contain only categories which are very unlikely to appear as parts
+# of words.
 CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT = [
-    'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Sm', 'Sc']
+    'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Sm', 'Sc']
 
 CATEGORIES_TO_STRIP_FROM_TOKENS = [
     'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Pd', 'Sm', 'Sc']
