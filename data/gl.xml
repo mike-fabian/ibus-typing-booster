@@ -11,7 +11,7 @@ For  details about the format and other information, see:
 -->
 <ldml>
 	<identity>
-		<version number="$Revision: 12877 $"/>
+		<version number="$Revision: 12945 $"/>
 		<language type="gl"/>
 	</identity>
 	<annotations>
@@ -651,6 +651,16 @@ For  details about the format and other information, see:
 		<annotation cp="👬" type="tts">dous homes collidos da man</annotation>
 		<annotation cp="👭">parella | mulleres | man</annotation>
 		<annotation cp="👭" type="tts">dúas mulleres collidas da man</annotation>
+		<annotation cp="🏻">ton de pel</annotation>
+		<annotation cp="🏻" type="tts">tipo 1–2</annotation>
+		<annotation cp="🏼">ton de pel</annotation>
+		<annotation cp="🏼" type="tts">tipo 3</annotation>
+		<annotation cp="🏽">ton de pel</annotation>
+		<annotation cp="🏽" type="tts">tipo 4</annotation>
+		<annotation cp="🏾">ton de pel</annotation>
+		<annotation cp="🏾" type="tts">tipo 5</annotation>
+		<annotation cp="🏿">ton de pel</annotation>
+		<annotation cp="🏿" type="tts">tipo 6</annotation>
 		<annotation cp="💪">bíceps | músculo | forte | forza</annotation>
 		<annotation cp="💪" type="tts">bíceps</annotation>
 		<annotation cp="👈">índice | esquerda | dedo | man</annotation>
@@ -1686,6 +1696,7 @@ For  details about the format and other information, see:
 		<annotation cp="🏎">coche | carreiras</annotation>
 		<annotation cp="🏎" type="tts">coche de carreiras</annotation>
 		<annotation cp="🏍">motocicleta | carreiras</annotation>
+		<annotation cp="🏍" type="tts">moto</annotation>
 		<annotation cp="🏅">medalla | podio | deporte</annotation>
 		<annotation cp="🏅" type="tts">medalla deportiva</annotation>
 		<annotation cp="🏆">premio</annotation>
@@ -2437,7 +2448,7 @@ For  details about the format and other information, see:
 		<annotation cp="🛴">patinete | patín | xoguete</annotation>
 		<annotation cp="🛴" type="tts">patinete</annotation>
 		<annotation cp="🛵">moto | motocicleta | motociclismo</annotation>
-		<annotation cp="🛵" type="tts">moto</annotation>
+		<annotation cp="🛵" type="tts">motocicleta</annotation>
 		<annotation cp="🛶">canoa | piragua | piragüismo | remar | barca</annotation>
 		<annotation cp="🛶" type="tts">canoa</annotation>
 	</annotations>

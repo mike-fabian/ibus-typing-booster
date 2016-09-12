@@ -684,19 +684,22 @@ class EmojiMatcher():
         ('👨🏿', 'man tone 5')
 
         >>> mq.candidates('tone')[0][:2]
+        ('👎🏻', 'thumbs down sign tone 1 “thumbdown tone1”')
+
+        >>> mq.candidates('tone1')[0][:2]
         ('🏻', 'emoji modifier Fitzpatrick type-1-2 “tone1”')
 
         >>> mq.candidates('tone5')[0][:2]
         ('🏿', 'emoji modifier Fitzpatrick type-6 “tone5”')
 
         >>> mq.candidates('a')[0][:2]
-        ('🅰', 'negative squared latin capital letter a “a button”')
+        ('🅰', 'negative squared latin capital letter a “A button (blood type)”')
 
         >>> mq.candidates('squared a')[0][:2]
-        ('🅰', 'negative squared latin capital letter a “a button”')
+        ('🅰', 'negative squared latin capital letter a “A button (blood type)”')
 
         >>> mq.candidates('squared capital a')[0][:2]
-        ('🅰', 'negative squared latin capital letter a “a button”')
+        ('🅰', 'negative squared latin capital letter a “A button (blood type)”')
 
         >>> mq.candidates('c')[0][:2]
         ('©', 'Copyright')
@@ -858,24 +861,11 @@ class EmojiMatcher():
         >>> mq.candidates('chat')[0][:2]
         ('🐈', 'chat')
 
-        fr.xml from CLDR has no name (tts) for 🤔.
-        Therefore, we get the English name as a fallback:
-
         >>> mq.candidates('réflexion')[0][:2]
-        ('🤔', 'thinking face [réflexion]')
+        ('🤔', 'visage en pleine réflexion')
 
         >>> mq.candidates('🤔', match_limit = 3)
-        [('🤔', "thinking face ['réflexion', 'visage']", 2), ('💆\u200d♀', "femme qui se fait masser le visage ['visage']", 1), ('💆\u200d♂', "homme qui se fait masser le visage ['visage']", 1)]
-
-        fr.xml from CLDR has no name (tts) for 🤔, but de.xml has a German name for 🤔.
-        Therefore, we get the German name as a fallback here:
-
-        >>> mq = EmojiMatcher(languages = ['fr_FR', 'de_DE'])
-        >>> mq.candidates('réflexion')[0][:2]
-        ('🤔', 'Nachdenkender Smiley [réflexion]')
-
-        >>> mq.candidates('🤔', match_limit = 3)
-        [('🤔', "Nachdenkender Smiley ['réflexion', 'visage']", 2), ('💆\u200d♀', "femme qui se fait masser le visage ['visage']", 1), ('💆\u200d♂', "homme qui se fait masser le visage ['visage']", 1)]
+        [('🤔', "visage en pleine réflexion ['réflexion', 'visage']", 2), ('💆\u200d♀', "femme qui se fait masser le visage ['visage']", 1), ('💆\u200d♂', "homme qui se fait masser le visage ['visage']", 1)]
         '''
         # Replace any sequence of white space characters and '_' in
         # the query string with a single ' ':
@@ -991,18 +981,8 @@ class EmojiMatcher():
         >>> matcher.name('🖥')
         'ordinateur de bureau'
 
-        fr.xml from CLDR has no name (tts) for this emoji.
-        Therefore, we get the English name as a fallback:
-
         >>> matcher.name('🤔')
-        'thinking face'
-
-        If we add German as another fallback language, we get a German name
-        because a German name for 🤔 exists in de.xml in CLDR:
-
-        >>> matcher = EmojiMatcher(languages=['fr_FR', 'de_DE'])
-        >>> matcher.name('🤔')
-        'Nachdenkender Smiley'
+        'visage en pleine réflexion'
         '''
         for language in _expand_languages(self._languages):
             if ((emoji_string, language) in self._emoji_dict

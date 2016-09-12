@@ -11,7 +11,7 @@ For  details about the format and other information, see:
 -->
 <ldml>
 	<identity>
-		<version number="$Revision: 12877 $"/>
+		<version number="$Revision: 12922 $"/>
 		<language type="zu"/>
 	</identity>
 	<annotations>
@@ -643,6 +643,11 @@ For  details about the format and other information, see:
 		<annotation cp="👬" type="tts">amadoda amabili abambene ngesandla</annotation>
 		<annotation cp="👭">izithandani | isandla | ukubamba | abantu besifazane</annotation>
 		<annotation cp="👭" type="tts">abasimame ababambene ngesandla</annotation>
+		<annotation cp="🏻" type="tts">uhlobo-1-2</annotation>
+		<annotation cp="🏼" type="tts">uhlobo-3</annotation>
+		<annotation cp="🏽" type="tts">uhlobo-4</annotation>
+		<annotation cp="🏾" type="tts">uhlobo-5</annotation>
+		<annotation cp="🏿" type="tts">uhlobo-6</annotation>
 		<annotation cp="💪">izinkonyane | umzimba | amamasela</annotation>
 		<annotation cp="💪" type="tts">izinkonyane</annotation>
 		<annotation cp="👈">isandla | umzimba | umunwe | umunwe wokukhomba | ukukhomba</annotation>
@@ -1544,6 +1549,8 @@ For  details about the format and other information, see:
 		<annotation cp="💧" type="tts">iqabazi</annotation>
 		<annotation cp="🌊">ulwandle | amanzi | igagasi | isimo sezulu</annotation>
 		<annotation cp="🌊" type="tts">igagasi lamanzi</annotation>
+		<annotation cp="🎃">umbungazo | i-halloween | ijack | ilambu</annotation>
+		<annotation cp="🎃" type="tts">i-jack-o-lantern</annotation>
 		<annotation cp="🎄">umbungazo | ukhisimusi | isihlahla</annotation>
 		<annotation cp="🎄" type="tts">isihlahla sikhakhisimusi</annotation>
 		<annotation cp="🎆">umbungazo</annotation>

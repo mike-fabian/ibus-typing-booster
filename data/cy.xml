@@ -11,7 +11,7 @@ For  details about the format and other information, see:
 -->
 <ldml>
 	<identity>
-		<version number="$Revision: 12877 $"/>
+		<version number="$Revision: 12945 $"/>
 		<language type="cy"/>
 	</identity>
 	<annotations>
@@ -651,6 +651,16 @@ For  details about the format and other information, see:
 		<annotation cp="👬" type="tts">dau ddyn yn dal dwylo</annotation>
 		<annotation cp="👭">pâr | dal | dwylo | menyw</annotation>
 		<annotation cp="👭" type="tts">dwy fenyw yn dal dwylo</annotation>
+		<annotation cp="🏻">lliw croen</annotation>
+		<annotation cp="🏻" type="tts">math 1–2</annotation>
+		<annotation cp="🏼">lliw croen</annotation>
+		<annotation cp="🏼" type="tts">math 3</annotation>
+		<annotation cp="🏽">lliw croen</annotation>
+		<annotation cp="🏽" type="tts">math 4</annotation>
+		<annotation cp="🏾">lliw croen</annotation>
+		<annotation cp="🏾" type="tts">math 5</annotation>
+		<annotation cp="🏿">lliw croen</annotation>
+		<annotation cp="🏿" type="tts">math 6</annotation>
 		<annotation cp="💪">cyhyrau | corff | ystwytho</annotation>
 		<annotation cp="💪" type="tts">cyhyrau deuben wedi eu hystwytho</annotation>
 		<annotation cp="👈">gwrthlaw | corff | bys | llaw</annotation>
@@ -1648,6 +1658,7 @@ For  details about the format and other information, see:
 		<annotation cp="🏄">syrffio</annotation>
 		<annotation cp="🏄" type="tts">person yn syrffio</annotation>
 		<annotation cp="🏄‍♀">menyw | syrffio</annotation>
+		<annotation cp="🏄‍♀" type="tts">menyw yn syrffio</annotation>
 		<annotation cp="🏄‍♂">dyn | syrffio</annotation>
 		<annotation cp="🏄‍♂" type="tts">dyn yn syrffio</annotation>
 		<annotation cp="🏇">ceffyl | joci | rasio</annotation>
@@ -1655,6 +1666,7 @@ For  details about the format and other information, see:
 		<annotation cp="🏊">nofio</annotation>
 		<annotation cp="🏊" type="tts">person yn nofio</annotation>
 		<annotation cp="🏊‍♀">menyw | nofio</annotation>
+		<annotation cp="🏊‍♀" type="tts">menyw yn nofio</annotation>
 		<annotation cp="🏊‍♂">dyn | nofio</annotation>
 		<annotation cp="🏊‍♂" type="tts">dyn yn nofio</annotation>
 		<annotation cp="⛹">pêl</annotation>

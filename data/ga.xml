@@ -12,7 +12,7 @@ terms of use, see http://www.unicode.org/copyright.html
 -->
 <ldml>
 	<identity>
-		<version number="$Revision: 12877 $"/>
+		<version number="$Revision: 12910 $"/>
 		<language type="ga"/>
 	</identity>
 	<annotations>
@@ -451,9 +451,11 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="👱‍♂">fionn | fearann | fear</annotation>
 		<annotation cp="👱‍♂" type="tts">fear fionn</annotation>
 		<annotation cp="👮" draft="provisional">garda | póilíní | duine</annotation>
-		<annotation cp="👮" type="tts" draft="provisional">garda</annotation>
+		<annotation cp="👮" type="tts" draft="provisional">póilín</annotation>
 		<annotation cp="👮‍♀">garda | baineann | oifigeach | gardaí | bean</annotation>
+		<annotation cp="👮‍♀" type="tts">bangharda</annotation>
 		<annotation cp="👮‍♂">garda | fearann | fear | oifigeach | gardaí</annotation>
+		<annotation cp="👮‍♂" type="tts">garda</annotation>
 		<annotation cp="👲" draft="provisional">fear le gua pi mao air | fear le hata air | hata</annotation>
 		<annotation cp="👲" type="tts" draft="provisional">fear le gua pi mao air</annotation>
 		<annotation cp="👳" draft="provisional">fear le turban air | turban</annotation>
@@ -473,9 +475,11 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="👸" draft="provisional">banphrionsa | síscéal</annotation>
 		<annotation cp="👸" type="tts" draft="provisional">banphrionsa</annotation>
 		<annotation cp="💂" draft="provisional">garda | saighdiúir</annotation>
-		<annotation cp="💂" type="tts" draft="provisional">garda</annotation>
+		<annotation cp="💂" type="tts" draft="provisional">garda oifigeach</annotation>
 		<annotation cp="💂‍♀">garda | baineann | bean</annotation>
+		<annotation cp="💂‍♀" type="tts">bangharda oifigeach</annotation>
 		<annotation cp="💂‍♂">garda | fearann | fear</annotation>
+		<annotation cp="💂‍♂" type="tts">garda oifigeach</annotation>
 		<annotation cp="🕵">bleachtaire | lorgaire | spiaire</annotation>
 		<annotation cp="🕵" type="tts">bleachtaire</annotation>
 		<annotation cp="🕵‍♀">bleachtaire | baineann | lorgaire | spiaire | bean</annotation>
@@ -601,7 +605,7 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="👇" draft="provisional">méar | corrmhéar | lámh | pointeáil síos</annotation>
 		<annotation cp="👇" type="tts" draft="provisional">méar</annotation>
 		<annotation cp="✌" draft="provisional">siosúr | lámh bua | bua | sea</annotation>
-		<annotation cp="✌" type="tts" draft="provisional">siosúr</annotation>
+		<annotation cp="✌" type="tts" draft="provisional">lámh síocháin</annotation>
 		<annotation cp="🖖">corp | méar | lámh | spock | vulcan</annotation>
 		<annotation cp="🖖" type="tts">cúirtéis vulcan</annotation>
 		<annotation cp="🤘">corp | méar | lámh | beanna | lean ort</annotation>
@@ -1151,7 +1155,7 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="🏨" draft="provisional">óstán</annotation>
 		<annotation cp="🏨" type="tts" draft="provisional">óstán</annotation>
 		<annotation cp="🏩" draft="provisional">leaba | óstán | grá</annotation>
-		<annotation cp="🏩" type="tts" draft="provisional">leaba</annotation>
+		<annotation cp="🏩" type="tts" draft="provisional">óstán grá</annotation>
 		<annotation cp="🏪" draft="provisional">siopa áise | siopa | áisiúlacht</annotation>
 		<annotation cp="🏪" type="tts" draft="provisional">siopa áise</annotation>
 		<annotation cp="🏫" draft="provisional">scoil | foirgneamh scoile | foirgneamh</annotation>
@@ -1177,7 +1181,7 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="⛺" draft="provisional">campa | campáil</annotation>
 		<annotation cp="⛺" type="tts" draft="provisional">campa</annotation>
 		<annotation cp="🌁" draft="provisional">ceo | ceomhar</annotation>
-		<annotation cp="🌁" type="tts" draft="provisional">ceo</annotation>
+		<annotation cp="🌁" type="tts" draft="provisional">ceomhar</annotation>
 		<annotation cp="🌃" draft="provisional">réaltaí | réalta | oíche</annotation>
 		<annotation cp="🌃" type="tts" draft="provisional">réaltaí</annotation>
 		<annotation cp="🌄" draft="provisional">éirí na gréine | grian na maidine | éirí na gréine ar shléibhte | sliabh</annotation>
@@ -1335,6 +1339,7 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="🛌">óstán | codladh</annotation>
 		<annotation cp="🛌" type="tts">duine sa leaba</annotation>
 		<annotation cp="🛏">óstán | codladh</annotation>
+		<annotation cp="🛏" type="tts">leaba</annotation>
 		<annotation cp="🛋">tolg | óstán | lampa</annotation>
 		<annotation cp="🛋" type="tts">tolg agus lampa</annotation>
 		<annotation cp="🚽" draft="provisional">leithreas</annotation>
@@ -1466,6 +1471,7 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="🌪">scamall | aimsir | iomghaoth</annotation>
 		<annotation cp="🌪" type="tts">tornádó</annotation>
 		<annotation cp="🌫">scamall | aimsir</annotation>
+		<annotation cp="🌫" type="tts">ceo</annotation>
 		<annotation cp="🌬">séideadh | scamall | aghaidh | gaoth</annotation>
 		<annotation cp="🌬" type="tts">aghaidh gaothach</annotation>
 		<annotation cp="🌀" draft="provisional">cioclón | cuaranfa | iomghaoth</annotation>
@@ -1485,8 +1491,9 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="❄">fuar | sneachta | aimsir</annotation>
 		<annotation cp="❄" type="tts">calóg sneachta</annotation>
 		<annotation cp="☃">fuar | sneachta | aimsir</annotation>
+		<annotation cp="☃" type="tts">fear sneachta</annotation>
 		<annotation cp="⛄" draft="provisional">fear sneachta | fear sneachta gan sneachta | sneachta</annotation>
-		<annotation cp="⛄" type="tts" draft="provisional">fear sneachta</annotation>
+		<annotation cp="⛄" type="tts" draft="provisional">fear sneachta gan sneachta</annotation>
 		<annotation cp="☄">spáis</annotation>
 		<annotation cp="☄" type="tts">cóiméad</annotation>
 		<annotation cp="🔥" draft="provisional">tine | dóiteán</annotation>
@@ -1504,7 +1511,7 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="🎇" draft="provisional">spréachaire | tine ealaíne | spréachaire tine ealaíne | ceiliúradh</annotation>
 		<annotation cp="🎇" type="tts" draft="provisional">spréachaire</annotation>
 		<annotation cp="✨" draft="provisional">gealán | réaltaí glioscarnacha | spréachaire | réaltaí</annotation>
-		<annotation cp="✨" type="tts" draft="provisional">gealán</annotation>
+		<annotation cp="✨" type="tts" draft="provisional">drithlí</annotation>
 		<annotation cp="🎈" draft="provisional">balún | ceiliúradh</annotation>
 		<annotation cp="🎈" type="tts" draft="provisional">balún</annotation>
 		<annotation cp="🎉" draft="provisional">pléiscín cóisire | cóisir | pléiscín | ceiliúradh</annotation>
@@ -1900,6 +1907,7 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="📐" draft="provisional">rialóir triantánach</annotation>
 		<annotation cp="📐" type="tts" draft="provisional">rialóir triantánach</annotation>
 		<annotation cp="✂">uirlis</annotation>
+		<annotation cp="✂" type="tts">siosúr</annotation>
 		<annotation cp="🗃">bosca | cárta | comhad</annotation>
 		<annotation cp="🗃" type="tts">bosca comhaid cárta</annotation>
 		<annotation cp="🗄">caibinéad | comhad</annotation>
@@ -2029,6 +2037,7 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="☣">bithghuais | comhartha</annotation>
 		<annotation cp="☣" type="tts">bithghuais</annotation>
 		<annotation cp="⬆">saighead | bunuimhir | treo | thuaidh</annotation>
+		<annotation cp="⬆" type="tts">saighead suas</annotation>
 		<annotation cp="↗">saighead | treo | idirbunuimhir | thoir thuaidh</annotation>
 		<annotation cp="↗" type="tts">saighead suas ar dheis</annotation>
 		<annotation cp="➡">saighead | bunuimhir | treo | thoir</annotation>
@@ -2036,6 +2045,7 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="↘">saighead | treo | idirbunuimhir | thoir theas</annotation>
 		<annotation cp="↘" type="tts">saighead síos ar dheis</annotation>
 		<annotation cp="⬇">saighead | bunuimhir | treo | síos | theas</annotation>
+		<annotation cp="⬇" type="tts">saighead síos</annotation>
 		<annotation cp="↙">saighead | treo | idirbunuimhir | thiar theas</annotation>
 		<annotation cp="↙" type="tts">saighead síos ar chlé</annotation>
 		<annotation cp="⬅">saighead | bunuimhir | treo | thiar</annotation>
@@ -2133,6 +2143,7 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="✴">réalta</annotation>
 		<annotation cp="✴" type="tts">réalta le hocht pointí</annotation>
 		<annotation cp="❇">gealán</annotation>
+		<annotation cp="❇" type="tts">gealán</annotation>
 		<annotation cp="💱" draft="provisional">malartán airgeadra | airgeadra | airgead | malartú</annotation>
 		<annotation cp="💱" type="tts" draft="provisional">malartán airgeadra</annotation>
 		<annotation cp="💲" draft="provisional">comhartha dollair | dollar | airgead</annotation>
@@ -2146,8 +2157,9 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="❔" draft="provisional">comhartha ceiste | ceist</annotation>
 		<annotation cp="❔" type="tts" draft="provisional">comhartha ceiste</annotation>
 		<annotation cp="❕" draft="provisional">comhartha uaillbhreasa | uaillbhreas</annotation>
-		<annotation cp="❕" type="tts" draft="provisional">comhartha uaillbhreasa</annotation>
+		<annotation cp="❕" type="tts" draft="provisional">comhartha uaillbhreasa bháin</annotation>
 		<annotation cp="❗">uaillbhreas | comhartha | poncaíocht</annotation>
+		<annotation cp="❗" type="tts">comhartha uaillbhreasa</annotation>
 		<annotation cp="〰" draft="provisional">dais chorrach | fuaim-mharc fada | corrach | dais</annotation>
 		<annotation cp="〰" type="tts" draft="provisional">dais chorrach</annotation>
 		<annotation cp="©" draft="provisional">Cóipcheart | Siombail cóipchirt</annotation>
@@ -2205,11 +2217,11 @@ terms of use, see http://www.unicode.org/copyright.html
 		<annotation cp="🔼" draft="provisional">triantán beag dearg suas</annotation>
 		<annotation cp="🔼" type="tts" draft="provisional">triantán beag dearg suas</annotation>
 		<annotation cp="⏫" draft="provisional">saighead suas | saighead dúbailte suas | suas | saighead</annotation>
-		<annotation cp="⏫" type="tts" draft="provisional">saighead suas</annotation>
+		<annotation cp="⏫" type="tts" draft="provisional">saighead suas tapaigh</annotation>
 		<annotation cp="🔽" draft="provisional">triantán beag dearg síos</annotation>
 		<annotation cp="🔽" type="tts" draft="provisional">triantán beag dearg síos</annotation>
 		<annotation cp="⏬" draft="provisional">saighead síos | saighead dúbailte síos | síos | saighead</annotation>
-		<annotation cp="⏬" type="tts" draft="provisional">saighead síos</annotation>
+		<annotation cp="⏬" type="tts" draft="provisional">saighead síos tapaigh</annotation>
 		<annotation cp="⏸">barra | dúbailte | sos | ceartingearach</annotation>
 		<annotation cp="⏸" type="tts">cnaipe sosa</annotation>
 		<annotation cp="⏹">cearnóg | stop</annotation>
