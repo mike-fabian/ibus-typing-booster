@@ -256,7 +256,7 @@ class EmojiMatcher():
             self._load_unicode_data()
         self._load_emojione_data()
         if cldr_data:
-            for language in self._languages:
+            for language in _expand_languages(self._languages):
                 self._load_cldr_annotation_data(language)
 
     def get_languages(self):
@@ -403,13 +403,10 @@ class EmojiMatcher():
         '''
         dirnames = (DATADIR,
                     '/local/mfabian/src/cldr-svn/trunk/common/annotations')
-        basenames = [x + '.xml' for x in _expand_languages([language])]
+        basenames = (language + '.xml',)
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
         if not path:
-            sys.stderr.write(
-                '_load_cldr_annotation_data(): could not find "%s" in "%s"\n'
-                %(basenames, dirnames))
             return
         # change language to the language of the file which was really
         # found (For example, it could be that 'es_ES' was requested,
@@ -983,6 +980,20 @@ class EmojiMatcher():
 
         >>> matcher.name('🤔')
         'visage en pleine réflexion'
+
+        >>> matcher = EmojiMatcher(languages=['de_DE'])
+        >>> matcher.name('🤔')
+        'Nachdenkender Smiley'
+
+        >>> matcher.name('⚽')
+        'Fußball'
+
+        >>> matcher = EmojiMatcher(languages=['de_CH'])
+        >>> matcher.name('🤔')
+        'Nachdenkender Smiley'
+
+        >>> matcher.name('⚽')
+        'Fussball'
         '''
         for language in _expand_languages(self._languages):
             if ((emoji_string, language) in self._emoji_dict
