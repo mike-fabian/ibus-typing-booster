@@ -1498,8 +1498,11 @@ class tabengine (IBus.Engine):
                 # (e.g. punctuation, a symbol, ..), we might want to
                 # avoid completion and commit something immediately:
                 if (len(key.msymbol) == 1
-                    and unicodedata.category(key.msymbol)
-                    in itb_util.CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT):
+                    and
+                    (unicodedata.category(key.msymbol)
+                     in itb_util.CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT
+                     or key.msymbol
+                     in itb_util.CHARACTERS_TO_TRIGGER_IMMEDIATE_COMMIT)):
                     if self.get_current_imes()[0] == 'NoIme':
                         # Do not just pass the character through,
                         # commit it properly.  For example if it is a
@@ -1845,8 +1848,11 @@ class tabengine (IBus.Engine):
             else:
                 self._editor.insert_string_at_cursor([key.msymbol])
             if (len(key.msymbol) == 1
-                and unicodedata.category(key.msymbol)
-                in itb_util.CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT):
+                and
+                (unicodedata.category(key.msymbol)
+                 in itb_util.CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT
+                 or key.msymbol
+                 in itb_util.CHARACTERS_TO_TRIGGER_IMMEDIATE_COMMIT)):
                 input_phrase = (
                     self._editor.get_transliterated_strings()[
                         self.get_current_imes()[0]])

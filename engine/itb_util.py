@@ -44,14 +44,34 @@ import unicodedata
 # Therefore, it should always be possible to enter an underscore into
 # the preëdit, not only when transliteration is used.
 #
+# 'Po' (Punctuation, Other) should not be there either because that
+# causes problems typing “Je t'aime” or “don't”.
+#
+# 'Pf' (Punctuation, Final quote) should not be there because of
+# U+2019 ’ RIGHT SINGLE QUOTATION MARK. Serves as both an apostrophe
+# and closing single quotation mark. This is the preferred character
+# to use for apostrophe according to the Unicode standard. I also use
+# this when typing “don’t”.
+#
+# 'Pi' (Punctuation, Initial quote) should then be removed as well for
+# symmetry.
+#
 # I.e. the list of categories to trigger immediate commit should
 # contain only categories which are very unlikely to appear as parts
 # of words.
-CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT = [
-    'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Sm']
+CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT = (
+    'Ps', 'Pe', 'Sm'
+)
 
-CATEGORIES_TO_STRIP_FROM_TOKENS = [
-    'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Pd', 'Sm']
+# Characters wich should trigger an immediate commit even though they
+# are not in CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT:
+CHARACTERS_TO_TRIGGER_IMMEDIATE_COMMIT = (
+    '.', '?', '!', ':', ',', ';'
+)
+
+CATEGORIES_TO_STRIP_FROM_TOKENS = (
+    'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Pd', 'Sm'
+)
 
 def lstrip_token(token):
     '''Strips some characters from the left side of a token
