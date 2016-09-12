@@ -48,10 +48,10 @@ import unicodedata
 # contain only categories which are very unlikely to appear as parts
 # of words.
 CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT = [
-    'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Sm', 'Sc']
+    'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Sm']
 
 CATEGORIES_TO_STRIP_FROM_TOKENS = [
-    'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Pd', 'Sm', 'Sc']
+    'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Pd', 'Sm']
 
 def lstrip_token(token):
     '''Strips some characters from the left side of a token
