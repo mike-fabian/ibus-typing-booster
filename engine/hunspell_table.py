@@ -387,9 +387,35 @@ class editor(object):
         if not phrase:
             return
         phrase = unicodedata.normalize('NFC', phrase)
+        # Embed “phrase” and “comment” separately with “Explicit
+        # Directional Embeddings” (RLE, LRE, PDF).
+        #
+        # Using “Explicit Directional Isolates” (FSI, PDI) would be
+        # better, but they don’t seem to work yet. Maybe not
+        # implemented yet?
+        #
+        # This embedding can be necessary when “phrase” and “comment”
+        # have different bidi directions.
+        #
+        # For example, the currency symbol ﷼ U+FDFC RIAL SIGN is a
+        # strong right-to-left character. When looking up related
+        # symbols for another currency symbol, U+FDFC RIAL SIGN should
+        # be among the candidates. But the comment is just the name
+        # from UnicodeData.txt. Without adding any directional
+        # formatting characters, the candidate would look like:
+        #
+        #     1. ['rial sign ['sc ﷼
+        #
+        # But it should look like:
+        #
+        #     1.  rial sign ['sc'] ﷼
+        #
+        # Without the embedding, similar problems happen when “comment”
+        # is right-to-left but “phrase” is not.
+        phrase = itb_util.bidi_embed(phrase)
         attrs = IBus.AttrList ()
         if comment:
-            phrase += ' ' + comment
+            phrase += ' ' + itb_util.bidi_embed(comment)
         if DEBUG_LEVEL > 0:
             if spell_checking: # spell checking suggestion
                 phrase = phrase + ' ✓'

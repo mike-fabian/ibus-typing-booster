@@ -202,6 +202,79 @@ def remove_accents(text):
         x for x in unicodedata.normalize('NFKD', text)
         if unicodedata.category(x) != 'Mn']).translate(TRANS_TABLE)
 
+def is_right_to_left(text):
+    '''Check whether a text is right-to-left text or not
+
+    :param text: The text to check
+    :type text: string
+    :rtype: boolean
+
+    See: http://unicode.org/reports/tr9/#P2
+
+    TR9> In each paragraph, find the first character of type L, AL, or R
+    TR9> while skipping over any characters between an isolate initiator
+    TR9> and its matching PDI or, if it has no matching PDI, the end of the
+    TR9> paragraph
+
+    Examples:
+
+    >>> is_right_to_left('Hallo!')
+    False
+
+    >>> is_right_to_left('﷼')
+    True
+
+    >>> is_right_to_left('⁨﷼⁩')
+    False
+
+    >>> is_right_to_left('⁨﷼⁩﷼')
+    True
+
+    >>> is_right_to_left('a⁨﷼⁩﷼')
+    False
+
+    >>> is_right_to_left('⁨a⁩⁨﷼⁩﷼')
+    True
+    '''
+    skip = False
+    for c in text:
+        bidi_cat = unicodedata.bidirectional(c)
+        if skip and bidi_cat != 'PDI':
+            continue
+        skip = False
+        if bidi_cat in ('AL', 'R'):
+            return True
+        if bidi_cat == 'L':
+            return False
+        if bidi_cat in ('LRI', 'RLI', 'FSI'):
+            skip = True
+    return False
+
+def bidi_embed(text):
+    '''Embed the text using explicit directional embedding
+
+    Returns “RLE + text + PDF” if the text is right-to-left,
+    if not it returns “LRE + text + PDF”.
+
+    :param text: The text to embed
+    :type text: string
+    :rtype: string
+
+    See: http://unicode.org/reports/tr9/#Explicit_Directional_Embeddings
+
+    Examples:
+
+    >>> bidi_embed('a')
+    '‪a‬'
+
+    >>> bidi_embed('﷼')
+    '‫﷼‬'
+    '''
+    if is_right_to_left(text):
+        return chr(0x202B) + text + chr(0x202C) # RLE + text + PDF
+    else:
+        return chr(0x202A) + text + chr(0x202C) # LRE + text + PDF
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
