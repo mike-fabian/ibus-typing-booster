@@ -2278,6 +2278,24 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
+    def do_cursor_up(self):
+        '''Called when the mouse wheel is rolled up in the candidate area of
+        the lookup table
+
+        '''
+        res = self._editor.arrow_up()
+        self._update_lookup_table_and_aux()
+        return res
+
+    def do_cursor_down(self):
+        '''Called when the mouse wheel is rolled down in the candidate area of
+        the lookup table
+
+        '''
+        res = self._editor.arrow_down()
+        self._update_lookup_table_and_aux()
+        return res
+
     def __config_value_changed_cb(self, config, section, name, value):
         '''This function is called when a value in the dconf settings changes
         '''
