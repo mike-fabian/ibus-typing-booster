@@ -472,9 +472,10 @@ class editor(object):
                 prefix = ''
                 stripped_transliterated_string = (
                     itb_util.lstrip_token(self._transliterated_strings[ime]))
-                if ((len(stripped_transliterated_string)
-                     >= self._min_char_complete)
-                    or self._tab_enable):
+                if (stripped_transliterated_string
+                    and ((len(stripped_transliterated_string)
+                          >= self._min_char_complete)
+                         or self._tab_enable)):
                     prefix_length = (
                         len(self._transliterated_strings[ime])
                         - len(stripped_transliterated_string))
