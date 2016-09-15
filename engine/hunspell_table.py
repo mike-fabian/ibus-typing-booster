@@ -1494,35 +1494,6 @@ class tabengine (IBus.Engine):
                 self._update_ui()
                 return True
             if key.val >= 32 and not key.control:
-                # If the first character typed is a character which is
-                # very unlikely to be part of a word
-                # (e.g. punctuation, a symbol, ..), we might want to
-                # avoid completion and commit something immediately:
-                if (len(key.msymbol) == 1
-                    and
-                    (unicodedata.category(key.msymbol)
-                     in itb_util.CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT
-                     or key.msymbol
-                     in itb_util.CHARACTERS_TO_TRIGGER_IMMEDIATE_COMMIT)):
-                    if self.get_current_imes()[0] == 'NoIme':
-                        # Do not just pass the character through,
-                        # commit it properly.  For example if it is a
-                        # “.” we might want to remove whitespace
-                        # between the “.” and the previous word and this is
-                        # done in commit_string().
-                        self.commit_string(
-                            key.msymbol, input_phrase = key.msymbol)
-                        return True
-                    # If transliteration is used, we may need to
-                    # handle a punctuation or symbol character. For
-                    # example, “.c” is transliterated to “ċ” in
-                    # the “t-latn-pre” transliteration method,
-                    # therefore we cannot just pass it through. Just
-                    # add it to the input so far and see what comes
-                    # next:
-                    self._editor.insert_string_at_cursor([key.msymbol])
-                    self._update_ui()
-                    return True
                 if (self._use_digits_as_select_keys
                     and key.msymbol
                     in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
