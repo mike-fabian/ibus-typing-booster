@@ -295,6 +295,27 @@ def bidi_embed(text):
     else:
         return chr(0x202A) + text + chr(0x202C) # LRE + text + PDF
 
+def contains_letter(text):
+    '''Returns whether “text” contains a “letter” type character
+
+    :param text: The text to check
+    :type text: string
+    :rtype: boolean
+
+    Examples:
+
+    >>> contains_letter('Hi!')
+    True
+
+    >>> contains_letter(':-)')
+    False
+    '''
+    for char in text:
+        category = unicodedata.category(char)
+        if category in ('Ll', 'Lu', 'Lo',):
+            return True
+    return False
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
