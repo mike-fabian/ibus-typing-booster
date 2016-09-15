@@ -75,7 +75,7 @@ class EngineFactory (IBus.Factory):
             if engine_name in self.enginedict:
                 engine = self.enginedict[engine_name]
             else:
-                engine = hunspell_table.tabengine(
+                engine = hunspell_table.TypingBoosterEngine(
                     self.bus, engine_path + str(self.engine_id), self.db)
                 self.enginedict[engine_name] = engine
                 self.engine_id += 1

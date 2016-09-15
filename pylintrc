@@ -196,7 +196,7 @@ zope=no
 # List of members which are set dynamically and missed by pylint inference
 # system, and so shouldn't trigger E0201 when accessed. Python regular
 # expressions are accepted.
-generated-members=REQUEST,acl_users,aq_parent
+generated-members=client_capabilities,update_property,register_properties,hide_lookup_table,update_lookup_table,forward_key_event,get_surrounding_text,delete_surrounding_text
 
 
 [CLASSES]
@@ -236,7 +236,7 @@ int-import-graph=
 [DESIGN]
 
 # Maximum number of arguments for function / method
-max-args=5
+max-args=10
 
 # Argument names that match this expression will be ignored. Default to name
 # with leading underscore
@@ -250,7 +250,7 @@ max-returns=50
 
 # Maximum number of branch for function / method body
 # https://www.logilab.org/137226 “fix spelling of max-branchs option, now max-branches”
-max-branchs=50
+max-branchs=100
 
 # Maximum number of statements in function / method body
 max-statements=200

@@ -19,13 +19,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+'''
+This file implements the ibus engine for ibus-typing-booster
+'''
+# “Use of super on an old style class”:
+# pylint: disable=E1002
+
 __all__ = (
-    "tabengine",
+    "TypingBoosterEngine",
 )
 
 import os
 import sys
-import string
 import unicodedata
 import re
 import time
@@ -44,6 +49,8 @@ _  = lambda a : dgettext ("ibus-typing-booster", a)
 N_ = lambda a : a
 
 def variant_to_value(variant):
+    '''Returns the value of a GLib.Variant
+    '''
     if type(variant) != GLib.Variant:
         return variant
     type_string = variant.get_type_string()
@@ -65,16 +72,21 @@ def variant_to_value(variant):
         print('error: unknown variant type: %s' %type_string)
     return variant
 
-def argb(a, r, g, b):
-    return (((a & 0xff)<<24)
-            + ((r & 0xff) << 16)
-            + ((g & 0xff) << 8)
-            + (b & 0xff))
+def argb(alpha, red, green, blue):
+    '''Returns a 32bit ARGB value'''
+    return (((alpha & 0xff) << 24)
+            + ((red & 0xff) << 16)
+            + ((green & 0xff) << 8)
+            + (blue & 0xff))
 
-def rgb(r, g, b):
-    return argb(255, r, g, b)
+def rgb(red, green, blue):
+    '''Returns a 32bit ARGB value with the alpha value set to fully opaque'''
+    return argb(255, red, green, blue)
 
 class KeyEvent:
+    '''Key event class used to make the checking of details of the key
+    event easy
+    '''
     def __init__(self, keyval, keycode, state):
         self.val = keyval
         self.code = keycode
@@ -134,7 +146,7 @@ class editor(object):
             self._min_char_complete = 1 # minimum
         if self._min_char_complete > 9:
             self._min_char_complete = 9 # maximum
-        self._typed_string = []
+        self._typed_string = [] # A list of msymbols
         self._typed_string_cursor = 0
         self._p_phrase = ''
         self._pp_phrase = ''
@@ -219,6 +231,7 @@ class editor(object):
         self.init_transliterators()
 
     def init_transliterators(self):
+        '''Initialize the dictionary of m17n-db transliterator objects'''
         self._transliterators = {}
         for ime in self._current_imes:
             # using m17n transliteration
@@ -228,13 +241,20 @@ class editor(object):
                         "instantiating Transliterator(%(ime)s)\n"
                         %{'ime': ime})
                 self._transliterators[ime] = Transliterator(ime)
-            except ValueError as e:
-                sys.stderr.write('Error initializing Transliterator: %s' %e)
+            except ValueError as error:
+                sys.stderr.write('Error initializing Transliterator: %s'
+                                 %error)
                 import traceback
                 traceback.print_exc()
         self.update_transliterated_strings()
 
     def is_empty(self):
+        '''Checks whether the preëdit is empty
+
+        Returns True if the preëdit is empty, False if not.
+
+        :rtype: boolean
+        '''
         return len(self._typed_string) == 0
 
     def clear_input(self):
@@ -248,6 +268,9 @@ class editor(object):
             self._transliterated_strings[ime] = ''
 
     def update_transliterated_strings(self):
+        '''Transliterates the current input (list of msymbols) for all current
+        input methods and stores the results in a dictionary.
+        '''
         self._transliterated_strings = {}
         for ime in self._current_imes:
             self._transliterated_strings[ime] = (
@@ -270,15 +293,19 @@ class editor(object):
         return self._transliterators
 
     def get_transliterated_strings(self):
+        '''Get current dictionary of transliterated strings'''
         return self._transliterated_strings
 
     def get_typed_string(self):
+        '''Get the current list of msymbols typed'''
         return self._typed_string
 
     def get_typed_string_cursor(self):
+        '''Get the current cursor position in the list of msymbols typed'''
         return self._typed_string_cursor
 
     def set_typed_string_cursor(self, cursor):
+        '''Set the current cursor position in the list of msymbols typed'''
         self._typed_string_cursor = cursor
 
     def insert_string_at_cursor(self, string_to_insert):
@@ -457,7 +484,9 @@ class editor(object):
         self._lookup_table.set_cursor_visible(False)
 
     def update_candidates (self):
-        '''Update lookuptable'''
+        '''Update the list of candidates and fill the lookup table with the
+        candidates
+        '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write("update_candidates() self._typed_string=%s\n"
                              %self._typed_string)
@@ -492,12 +521,12 @@ class editor(object):
                         traceback.print_exc()
                 if candidates and prefix:
                     candidates = [(prefix+x[0], x[1]) for x in candidates]
-                for x in candidates:
-                    if x[0] in phrase_frequencies:
-                        phrase_frequencies[x[0]] = max(
-                            phrase_frequencies[x[0]], x[1])
+                for cand in candidates:
+                    if cand[0] in phrase_frequencies:
+                        phrase_frequencies[cand[0]] = max(
+                            phrase_frequencies[cand[0]], cand[1])
                     else:
-                        phrase_frequencies[x[0]] = x[1]
+                        phrase_frequencies[cand[0]] = cand[1]
         phrase_candidates = self.db.best_candidates(phrase_frequencies)
         if self._emoji_predictions:
             emoji_scores = {}
@@ -508,22 +537,22 @@ class editor(object):
                          or self._tab_enable)):
                     emoji_candidates = self.emoji_matcher.candidates(
                         self._transliterated_strings[ime])
-                    for x in emoji_candidates:
-                        if (x[0] not in emoji_scores
-                            or x[2] > emoji_scores[x[0]][0]):
-                            emoji_scores[x[0]] = (x[2], x[1])
+                    for cand in emoji_candidates:
+                        if (cand[0] not in emoji_scores
+                            or cand[2] > emoji_scores[cand[0]][0]):
+                            emoji_scores[cand[0]] = (cand[2], cand[1])
             phrase_candidates_emoji_name = []
-            for x in phrase_candidates:
-                if x[0] in emoji_scores:
+            for cand in phrase_candidates:
+                if cand[0] in emoji_scores:
                     phrase_candidates_emoji_name.append((
-                        x[0], x[1], emoji_scores[x[0]][1],
-                        x[1] > 0, x[1] < 0))
+                        cand[0], cand[1], emoji_scores[cand[0]][1],
+                        cand[1] > 0, cand[1] < 0))
                     # avoid duplicates in the lookup table:
-                    del emoji_scores[x[0]]
+                    del emoji_scores[cand[0]]
                 else:
                     phrase_candidates_emoji_name.append((
-                        x[0], x[1], self.emoji_matcher.name(x[0]),
-                        x[1] > 0, x[1] < 0))
+                        cand[0], cand[1], self.emoji_matcher.name(cand[0]),
+                        cand[1] > 0, cand[1] < 0))
             emoji_candidates = []
             for (key, value) in sorted(
                     emoji_scores.items(),
@@ -538,21 +567,26 @@ class editor(object):
             phrase_candidates_rest = phrase_candidates_emoji_name[page_size-1:]
             emoji_candidates_top = emoji_candidates[:page_size]
             emoji_candidates_rest = emoji_candidates[page_size:]
-            for x in phrase_candidates_top:
-                self._candidates.append((x[0], x[1], x[2], x[3], x[4]))
-            for x in emoji_candidates_top:
-                self._candidates.append((x[0], x[1], x[2], False, False))
-            for x in phrase_candidates_rest:
-                self._candidates.append((x[0], x[1], x[2], x[3], x[4]))
-            for x in emoji_candidates_rest:
-                self._candidates.append((x[0], x[1], x[2], False, False))
+            for cand in phrase_candidates_top:
+                self._candidates.append(
+                    (cand[0], cand[1], cand[2], cand[3], cand[4]))
+            for cand in emoji_candidates_top:
+                self._candidates.append(
+                    (cand[0], cand[1], cand[2], False, False))
+            for cand in phrase_candidates_rest:
+                self._candidates.append(
+                    (cand[0], cand[1], cand[2], cand[3], cand[4]))
+            for cand in emoji_candidates_rest:
+                self._candidates.append(
+                    (cand[0], cand[1], cand[2], False, False))
         else:
-            for x in phrase_candidates:
-                self._candidates.append((x[0], x[1], '', x[1] > 0, x[1] < 0))
-        for x in self._candidates:
+            for cand in phrase_candidates:
+                self._candidates.append(
+                    (cand[0], cand[1], '', cand[1] > 0, cand[1] < 0))
+        for cand in self._candidates:
             self.append_candidate_to_lookup_table(
-                phrase = x[0], user_freq = x[1], comment = x[2],
-                from_user_db = x[3], spell_checking = x[4])
+                phrase = cand[0], user_freq = cand[1], comment = cand[2],
+                from_user_db = cand[3], spell_checking = cand[4])
         return True
 
     def arrow_down(self):
@@ -718,18 +752,23 @@ class editor(object):
             self._current_imes = imes
 
     def push_context(self, phrase):
+        '''Pushes a word on the context stack which remembers the last two
+        words typed.
+        '''
         self._pp_phrase = self._p_phrase
         self._p_phrase = phrase
 
     def clear_context(self):
+        '''Clears the context stack which remembers the last two words typed
+        '''
         self._pp_phrase = ''
         self._p_phrase = ''
 
 ########################
 ### Engine Class #####
 ####################
-class tabengine (IBus.Engine):
-    '''The IM Engine for Tables'''
+class TypingBoosterEngine(IBus.Engine):
+    '''The IBus Engine for ibus-typing-booster'''
 
     def __init__ (self, bus, obj_path, db ):
         global DEBUG_LEVEL
@@ -739,9 +778,9 @@ class tabengine (IBus.Engine):
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabengine.__init__(bus=%s, obj_path=%s, db=%s)\n"
+                "TypingBoosterEngine.__init__(bus=%s, obj_path=%s, db=%s)\n"
                 % (bus, obj_path, db))
-        super(tabengine, self).__init__(
+        super(TypingBoosterEngine, self).__init__(
             connection=bus.get_connection(), object_path=obj_path)
         self._input_purpose = 0
         self._has_input_purpose = False
@@ -749,6 +788,7 @@ class tabengine (IBus.Engine):
             self._has_input_purpose = True
         self._lookup_table_is_invalid = False
         self._lookup_table_shows_related_candidates = False
+        self._current_auxiliary_text = ''
         self._bus = bus
         self.db = db
         self._setup_pid = 0
@@ -1014,6 +1054,7 @@ class tabengine (IBus.Engine):
             return
 
     def _start_setup(self):
+        '''Start the setup tool if it is not running yet'''
         if self._setup_pid != 0:
             pid, dummy_state = os.waitpid(self._setup_pid, os.P_NOWAIT)
             if pid != self._setup_pid:
@@ -1033,14 +1074,18 @@ class tabengine (IBus.Engine):
             'ibus-setup-typing-booster',
             '--config-file %s' %config_file)
 
-    def reset (self):
+    def reset(self):
+        '''Clear the preëdit and close the lookup table
+        '''
         self._editor.clear_input()
-        self._update_ui ()
+        self._update_ui()
 
     def do_destroy(self):
-        self.reset ()
-        self.do_focus_out ()
-        super(tabengine, self).destroy()
+        '''Called when this input engine is destroyed
+        '''
+        self.reset()
+        self.do_focus_out()
+        super(TypingBoosterEngine, self).destroy()
 
     def _update_preedit (self):
         '''Update Preedit String in UI'''
@@ -1049,7 +1094,7 @@ class tabengine (IBus.Engine):
             'NFC', self._editor.get_transliterated_strings()[
                 self.get_current_imes()[0]])
         if _str == '':
-            super(tabengine, self).update_preedit_text(
+            super(TypingBoosterEngine, self).update_preedit_text(
                 IBus.Text.new_from_string(''), 0, False)
         else:
             attrs = IBus.AttrList()
@@ -1064,11 +1109,11 @@ class tabengine (IBus.Engine):
                                       attr.get_start_index(),
                                       attr.get_end_index())
                 i += 1
-            super(tabengine, self).update_preedit_text(
+            super(TypingBoosterEngine, self).update_preedit_text(
                 text, self._editor.get_caret(), True)
 
     def _update_aux (self):
-        '''Update Aux String in UI'''
+        '''Update auxiliary text'''
         aux_string = ''
         if self._show_number_of_candidates:
             aux_string = '(%d / %d) ' % (
@@ -1110,11 +1155,14 @@ class tabengine (IBus.Engine):
                 and not self.is_lookup_table_enabled_by_tab)
             or not aux_string):
             visible = False
-        super(tabengine, self).update_auxiliary_text(text, visible)
+        super(TypingBoosterEngine, self).update_auxiliary_text(text, visible)
         self._current_auxiliary_text = text
 
     def _update_lookup_table (self):
-        '''Update Lookup Table in UI'''
+        '''Update the lookup table
+
+        Show it if it is not empty and not disabled, otherwise hide it.
+        '''
         # Also make sure to hide lookup table if there are
         # no candidates to display. On f17, this makes no
         # difference but gnome-shell in f18 will display
@@ -1128,11 +1176,13 @@ class tabengine (IBus.Engine):
             self.update_lookup_table(self._editor.get_lookup_table(), True)
 
     def _update_lookup_table_and_aux(self):
+        '''Update the lookup table and the auxiliary text'''
         self._update_lookup_table()
         self._update_aux()
         self._lookup_table_is_invalid = False
 
     def _update_candidates_and_lookup_table_and_aux(self):
+        '''Updat the candidates, the lookup table and the auxiliary text'''
         self._editor.update_candidates()
         self._update_lookup_table_and_aux()
 
@@ -1151,7 +1201,7 @@ class tabengine (IBus.Engine):
             # hidden and return immediately:
             self.hide_lookup_table()
             self._current_auxiliary_text = IBus.Text.new_from_string('')
-            super(tabengine, self).update_auxiliary_text(
+            super(TypingBoosterEngine, self).update_auxiliary_text(
                 self._current_auxiliary_text, False)
             return
         self._lookup_table_shows_related_candidates = False
@@ -1164,11 +1214,14 @@ class tabengine (IBus.Engine):
         self.hide_lookup_table()
         # Show an hourglass with moving sand in the auxiliary text to
         # indicate that the lookup table is being updated:
-        super(tabengine, self).update_auxiliary_text(
+        super(TypingBoosterEngine, self).update_auxiliary_text(
             IBus.Text.new_from_string('⏳'), True)
         GLib.idle_add(self._update_candidates_and_lookup_table_and_aux)
 
     def _lookup_related_candidates(self):
+        '''Lookup related (similar) emoji or related words (synonyms,
+        hyponyms, hypernyms).
+        '''
         # We might end up here by typing a shortcut key like
         # AltGr+F12.  This should also work when suggestions are only
         # enabled by Tab and are currently disabled.  Typing such a
@@ -1193,7 +1246,7 @@ class tabengine (IBus.Engine):
         # found:
         if self._editor.get_lookup_table().get_number_of_candidates():
             self.hide_lookup_table()
-        super(tabengine, self).update_auxiliary_text(
+        super(TypingBoosterEngine, self).update_auxiliary_text(
             IBus.Text.new_from_string('⏳'), True)
         related_candidates = []
         # Try to find similar emoji even if emoji predictions are
@@ -1215,12 +1268,12 @@ class tabengine (IBus.Engine):
         related_candidates = self._editor.emoji_matcher.similar(phrase)
         try:
             import itb_nltk
-            for x in itb_nltk.synonyms(phrase, keep_original = False):
-                related_candidates.append((x, '[synonym]', 0))
-            for x in itb_nltk.hypernyms(phrase, keep_original = False):
-                related_candidates.append((x, '[hypernym]', 0))
-            for x in itb_nltk.hyponyms(phrase, keep_original = False):
-                related_candidates.append((x, '[hyponym]', 0))
+            for synonym in itb_nltk.synonyms(phrase, keep_original = False):
+                related_candidates.append((synonym, '[synonym]', 0))
+            for hypernym in itb_nltk.hypernyms(phrase, keep_original = False):
+                related_candidates.append((hypernym, '[hypernym]', 0))
+            for hyponym in itb_nltk.hyponyms(phrase, keep_original = False):
+                related_candidates.append((hyponym, '[hyponym]', 0))
         except (ImportError, LookupError):
             pass
         if DEBUG_LEVEL > 1:
@@ -1232,10 +1285,10 @@ class tabengine (IBus.Engine):
             # Nothing related found, show the original lookup table
             # and original auxiliary text again:
             if self._current_auxiliary_text:
-                super(tabengine, self).update_auxiliary_text(
+                super(TypingBoosterEngine, self).update_auxiliary_text(
                     self._current_auxiliary_text, True)
             else:
-                super(tabengine, self).update_auxiliary_text(
+                super(TypingBoosterEngine, self).update_auxiliary_text(
                     IBus.Text.new_from_string(''), False)
             if self._editor.get_lookup_table().get_number_of_candidates():
                 self.update_lookup_table(self._editor.get_lookup_table(), True)
@@ -1243,14 +1296,18 @@ class tabengine (IBus.Engine):
         self._editor._candidates = []
         self._editor.get_lookup_table().clear()
         self._editor.get_lookup_table().set_cursor_visible(False)
-        for x in related_candidates:
-            self._editor._candidates.append((x[0], x[2], x[1]))
+        for cand in related_candidates:
+            self._editor._candidates.append((cand[0], cand[2], cand[1]))
             self._editor.append_candidate_to_lookup_table(
-                phrase = x[0], user_freq = x[2], comment = x[1])
+                phrase = cand[0], user_freq = cand[2], comment = cand[1])
         self._update_lookup_table_and_aux()
         self._lookup_table_shows_related_candidates = True
 
     def has_transliteration(self, msymbol_list):
+        '''Check whether the current input (list of msymbols) has a
+        (non-trivial, i.e. not transliterating to itself)
+        transliteration in any of the current input methods.
+        '''
         transliterators = self._editor.get_transliterators()
         for ime in self.get_current_imes():
             if transliterators[ime].transliterate(
@@ -1264,7 +1321,15 @@ class tabengine (IBus.Engine):
                 "has_transliteration(%s) == False\n" %msymbol_list)
         return False
 
-    def commit_string (self, commit_phrase, input_phrase = ''):
+    def commit_string(self, commit_phrase, input_phrase = ''):
+        '''Commits a string
+
+        Also updates the context and the user database of learned
+        input.
+
+        May remove whitespace before the committed string if
+        the committed string ended a sentence.
+        '''
         # If the suggestions are only enabled by Tab key, i.e. the
         # lookup table is not shown until Tab has been typed, hide
         # the lookup table again after each commit. That means
@@ -1277,7 +1342,7 @@ class tabengine (IBus.Engine):
                 self.get_current_imes()[0]]
         # commit always in NFC:
         commit_phrase = unicodedata.normalize('NFC', commit_phrase)
-        super(tabengine, self).commit_text(
+        super(TypingBoosterEngine, self).commit_text(
             IBus.Text.new_from_string(commit_phrase))
         self._editor.clear_input()
         self._update_ui ()
@@ -1339,6 +1404,17 @@ class tabengine (IBus.Engine):
         self._editor.push_context(stripped_commit_phrase)
 
     def get_context(self):
+        '''Try to get the context from the application using the “surrounding
+        text” feature, if possible. If this works, it is much better
+        than just using the last two words which were
+        committed. Because the cursor position could have changed
+        since the last two words were committed, one might have moved
+        the cursor with the mouse or the arrow keys.  Unfortunately
+        surrounding text is not supported by many applications.
+        Basically it only seems to work reasonably well in Gnome
+        applications.
+
+        '''
         if not (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT):
             # If getting the surrounding text is not supported, leave
             # the context as it is, i.e. rely on remembering what was
@@ -1356,8 +1432,8 @@ class tabengine (IBus.Engine):
             # focused window (bug!), don’t use it.
             return
         tokens = ([
-            itb_util.strip_token(x)
-            for x in itb_util.tokenize(text[:cursor_pos])])
+            itb_util.strip_token(token)
+            for token in itb_util.tokenize(text[:cursor_pos])])
         if len(tokens):
             self._editor._p_phrase = tokens[-1]
         if len(tokens) > 1:
@@ -1384,6 +1460,9 @@ class tabengine (IBus.Engine):
             GLib.Variant.new_boolean(emoji_predictions))
 
     def do_candidate_clicked(self, index, button, state):
+        '''Called when a candidate in the lookup table
+        is clicked with the mouse
+        '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 'do_candidate_clicked() index = %s button = %s state = %s\n'
@@ -1880,12 +1959,19 @@ class tabengine (IBus.Engine):
         return False
 
     def do_focus_in(self):
+        '''Called when a window gets focus while this input engine is enabled
+
+        '''
         self.register_properties(self.main_prop_list)
         self._editor.clear_context()
         self._commit_happened_after_focus_in = False
         self._update_ui()
 
     def do_focus_out(self):
+        '''Called when a window looses focus while this input engine is
+        enabled
+
+        '''
         if self._has_input_purpose:
             self._input_purpose = 0
         self._editor.clear_context()
@@ -1893,49 +1979,61 @@ class tabengine (IBus.Engine):
         return
 
     def do_set_content_type(self, purpose, dummy_hints):
+        '''Called when the input purpose changes
+
+        The input purpose is one of these
+
+        IBus.InputPurpose.FREE_FORM
+        IBus.InputPurpose.ALPHA
+        IBus.InputPurpose.DIGITS
+        IBus.InputPurpose.NUMBER
+        IBus.InputPurpose.PHONE
+        IBus.InputPurpose.URL
+        IBus.InputPurpose.EMAIL
+        IBus.InputPurpose.NAME
+        IBus.InputPurpose.PASSWORD
+        IBus.InputPurpose.PIN
+
+        '''
         if self._has_input_purpose:
             self._input_purpose = purpose
 
-    def do_enable (self):
+    def do_enable(self):
+        '''Called when this input engine is enabled'''
         # Tell the input-context that the engine will utilize
         # surrounding-text:
         self.get_surrounding_text()
         self.do_focus_in()
 
-    def do_disable (self):
+    def do_disable(self):
+        '''Called when this input engine is disabled'''
         self.reset()
 
-    def do_page_up (self):
+    def do_page_up(self):
+        '''Called when the page up button in the lookup table is clicked with
+        the mouse
+
+        '''
         if self._editor.page_up ():
             self._update_lookup_table_and_aux()
             return True
         return True
 
-    def do_page_down (self):
+    def do_page_down(self):
+        '''Called when the page down button in the lookup table is clicked with
+        the mouse
+
+        '''
         if self._editor.page_down ():
             self._update_lookup_table_and_aux()
             return True
         return False
 
-    def config_section_normalize(self, section):
-        '''
-        This function replaces _: with - in the dconf
-        section and converts to lower case to make
-        the comparison of the dconf sections work correctly.
-        I avoid using .lower() here because it is locale dependent,
-        when using .lower() this would not achieve the desired
-        effect of comparing the dconf sections case insentively
-        in some locales, it would fail for example if Turkish
-        locale (tr_TR.UTF-8) is set.
-        '''
-        return re.sub(r'[_:]', r'-', section).translate(
-            ''.maketrans(
-                string.ascii_uppercase,
-                string.ascii_lowercase))
-
     def __config_value_changed_cb(self, config, section, name, value):
-        if (self.config_section_normalize(self._config_section)
-            != self.config_section_normalize(section)):
+        '''This function is called when a value in the dconf settings changes
+        '''
+        if (itb_util.config_section_normalize(self._config_section)
+            != itb_util.config_section_normalize(section)):
             return
         print("config value %(n)s for engine %(en)s changed"
               %{'n': name, 'en': self._name})
