@@ -1547,9 +1547,17 @@ class tabengine (IBus.Engine):
             if self._lookup_table_shows_related_candidates:
                 # Force an update to the original lookup table:
                 self._update_ui()
-            else:
-                self.reset()
-                self._update_ui()
+                return True
+            if self._tab_enable and self.is_lookup_table_enabled_by_tab:
+                # If lookup table was enabled by typing Tab, close it again
+                # but keep the preëdit:
+                self.is_lookup_table_enabled_by_tab = False
+                self._editor.get_lookup_table().clear()
+                self._editor.get_lookup_table().set_cursor_visible(False)
+                self._update_lookup_table_and_aux()
+                return True
+            self.reset()
+            self._update_ui()
             return True
 
         if key.val in (IBus.KEY_Down, IBus.KEY_KP_Down) and key.control:
