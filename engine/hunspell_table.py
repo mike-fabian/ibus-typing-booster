@@ -1561,38 +1561,38 @@ class tabengine (IBus.Engine):
             return True
 
         if key.val in (IBus.KEY_Down, IBus.KEY_KP_Down) and key.control:
-            # remove the first ime from the list and append it to the end.
             imes = self.get_current_imes()
-            self.set_current_imes(imes[1:] + imes[:1])
-            return True
+            if len(imes) > 1:
+                # remove the first ime from the list and append it to the end.
+                self.set_current_imes(imes[1:] + imes[:1])
+                return True
 
         if key.val in (IBus.KEY_Up, IBus.KEY_KP_Up) and key.control:
-            # remove the last ime in the list and add it in front:
             imes = self.get_current_imes()
-            self.set_current_imes(imes[-1:] + imes[:-1])
-            return True
+            if len(imes) > 1:
+                # remove the last ime in the list and add it in front:
+                self.set_current_imes(imes[-1:] + imes[:-1])
+                return True
 
-        if key.val in (IBus.KEY_Down, IBus.KEY_KP_Down):
-            if self._editor.is_empty():
-                return False
+        if (key.val in (IBus.KEY_Down, IBus.KEY_KP_Down)
+            and self._editor.get_lookup_table().get_number_of_candidates()):
             res = self._editor.arrow_down()
             self._update_lookup_table_and_aux()
             return res
 
-        if key.val in (IBus.KEY_Up, IBus.KEY_KP_Up):
-            if self._editor.is_empty():
-                return False
+        if (key.val in (IBus.KEY_Up, IBus.KEY_KP_Up)
+            and self._editor.get_lookup_table().get_number_of_candidates()):
             res = self._editor.arrow_up()
             self._update_lookup_table_and_aux()
             return res
 
-        if (key.val in [IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down]
+        if (key.val in (IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down)
             and self._editor.get_lookup_table().get_number_of_candidates()):
             res = self._editor.page_down()
             self._update_lookup_table_and_aux()
             return res
 
-        if (key.val in [IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up]
+        if (key.val in (IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up)
             and self._editor.get_lookup_table().get_number_of_candidates()):
             res = self._editor.page_up ()
             self._update_lookup_table_and_aux()
@@ -1699,7 +1699,11 @@ class tabengine (IBus.Engine):
             and (key.val in (IBus.KEY_space, IBus.KEY_Tab,
                              IBus.KEY_Return, IBus.KEY_KP_Enter,
                              IBus.KEY_Right, IBus.KEY_KP_Right,
-                             IBus.KEY_Left, IBus.KEY_KP_Left)
+                             IBus.KEY_Left, IBus.KEY_KP_Left,
+                             IBus.KEY_Down, IBus.KEY_KP_Down,
+                             IBus.KEY_Up, IBus.KEY_KP_Up,
+                             IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down,
+                             IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up)
                  or (len(key.msymbol) == 3
                      and key.msymbol[:2] in ('A-', 'C-', 'G-')
                      and not self.has_transliteration([key.msymbol])))):
@@ -1725,6 +1729,12 @@ class tabengine (IBus.Engine):
                 # preëdit would be quite confusing, C-a usually goes
                 # to the beginning of the current line, leaving the
                 # preëdit open while moving would be strange).
+                #
+                # Up, Down, Page_Up, and Page_Down may trigger a
+                # commit if no lookup table is shown because the
+                # option to show a lookup table only on request by
+                # typing tab is used and no lookup table is shown at
+                # the moment.
                 #
                 # 'G- ' (AltGr-Space) is prevented from triggering
                 # a commit here, because it is used to enter spaces
