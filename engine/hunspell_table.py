@@ -1783,26 +1783,25 @@ class tabengine (IBus.Engine):
             # twice:
             if len(key.msymbol) and input_phrase.endswith(key.msymbol):
                 input_phrase = input_phrase[:-len(key.msymbol)]
-            if not input_phrase:
-                return False
-            if not self._editor.get_lookup_table().get_number_of_candidates():
-                self.commit_string(input_phrase, input_phrase = input_phrase)
-                # See comment below why forward_key_event() and “return True”
-                # is used here instead of “return False” (Does not work in Qt
-                # or X11 applications when using “return False”)
-                self.forward_key_event(key.val, key.code, key.state)
-                return True
-            phrase = self._editor.get_string_from_lookup_table_cursor_pos()
-            if not phrase:
-                return False
-            if self._editor.get_lookup_table().cursor_visible:
+            if (self._editor.get_lookup_table().get_number_of_candidates()
+                and self._editor.get_lookup_table().cursor_visible):
                 # something is selected in the lookup table, commit
                 # the selected phrase
+                phrase = self._editor.get_string_from_lookup_table_cursor_pos()
                 commit_string = phrase
             else:
                 # nothing is selected in the lookup table, commit the
                 # input_phrase
                 commit_string = input_phrase
+            if not commit_string:
+                # This should not happen, we returned already above when
+                # self._editor.is_empty(), if we get here there should
+                # have been something in the preëdit or the lookup table:
+                if DEBUG_LEVEL > 0:
+                    sys.stderr.write(
+                        '_process_key_event() '
+                        + 'commit string unexpectedly empty.\n')
+                return False
             self.commit_string(commit_string, input_phrase = input_phrase)
             if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left):
                 # After committing, the cursor is at the right side of
