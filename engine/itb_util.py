@@ -24,50 +24,16 @@ Utility functions used in ibus-typing-booster
 import re
 import unicodedata
 
-# If a character of one of these categories is typed and no
-# transliteration is used, the preëdit can be committed immediately.
-# However, if transliteration is used, we may need to handle a
-# punctuation or symbol character. For example, “.c” is
-# transliterated to “ċ” in the “t-latn-pre” transliteration
-# method, therefore we cannot just pass it through, we have to add
-# it to the input and see what comes next.
-#
-# This list is very similar to the list of categories to strip from
-# tokens. But I removed the 'Pd' (Punctuation, Dash) category because
-# of words like “up-to-date”. Triggering a commit at the first “-”
-# prevents learning such words from user input.
-#
-# I also removed the 'Pc' (Punctuation, Connector) category. There
-# are not many characters in that category, the most important one
-# is _ U+005F LOW LINE. If one wants to input more than one keyword
-# to search for emoji, the keywords can be separated by underscore.
-# Therefore, it should always be possible to enter an underscore into
-# the preëdit, not only when transliteration is used.
-#
-# 'Po' (Punctuation, Other) should not be there either because that
-# causes problems typing “Je t'aime” or “don't”.
-#
-# 'Pf' (Punctuation, Final quote) should not be there because of
-# U+2019 ’ RIGHT SINGLE QUOTATION MARK. Serves as both an apostrophe
-# and closing single quotation mark. This is the preferred character
-# to use for apostrophe according to the Unicode standard. I also use
-# this when typing “don’t”.
-#
-# 'Pi' (Punctuation, Initial quote) should then be removed as well for
-# symmetry.
-#
-# I.e. the list of categories to trigger immediate commit should
-# contain only categories which are very unlikely to appear as parts
-# of words.
-CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT = (
-    'Ps', 'Pe', 'Sm'
-)
 
-# Characters wich should trigger an immediate commit even though they
-# are not in CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT:
-CHARACTERS_TO_TRIGGER_IMMEDIATE_COMMIT = (
-    '.', '?', '!', ':', ',', ';'
-)
+# Characters wich should trigger an immediate commit.
+#
+# If one of thesee characters is typed and no transliteration is used,
+# the preëdit can be committed immediately.  However, if
+# transliteration is used, we may need to handle a punctuation or
+# symbol character. For example, “.c” is transliterated to “ċ” in the
+# “t-latn-pre” transliteration method, therefore we cannot just pass
+# it through, we have to add it to the input and see what comes next.
+SENTENCE_END_CHARACTERS = '.,;:?!)'
 
 CATEGORIES_TO_STRIP_FROM_TOKENS = (
     'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Pd', 'Sm'

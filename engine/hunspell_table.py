@@ -1290,7 +1290,10 @@ class tabengine (IBus.Engine):
             # make the result “word!”.  And if the commit_phrase is “!
             # ” and the context before is “word ” make the result
             # “word! ”.
-            pattern_sentence_end = re.compile(r'^[.,;:?!][\s]*$')
+            pattern_sentence_end = re.compile(
+                '^['
+                + re.escape(itb_util.SENTENCE_END_CHARACTERS)
+                + ']+[\s]*$')
             if pattern_sentence_end.search(commit_phrase):
                 surrounding_text = self.get_surrounding_text()
                 text = surrounding_text[0].get_text()
@@ -1819,20 +1822,25 @@ class tabengine (IBus.Engine):
                 self._editor.insert_string_at_cursor([' '])
             else:
                 self._editor.insert_string_at_cursor([key.msymbol])
-            if (len(key.msymbol) == 1
-                and
-                (unicodedata.category(key.msymbol)
-                 in itb_util.CATEGORIES_TO_TRIGGER_IMMEDIATE_COMMIT
-                 or key.msymbol
-                 in itb_util.CHARACTERS_TO_TRIGGER_IMMEDIATE_COMMIT)):
-                input_phrase = (
-                    self._editor.get_transliterated_strings()[
-                        self.get_current_imes()[0]])
-                if (input_phrase
-                    and input_phrase[-1] == key.msymbol
-                    and self.get_current_imes()[0] == 'NoIme'):
-                    self.commit_string(
-                        input_phrase + ' ', input_phrase = input_phrase)
+            # If the character typed could end a sentence, we can
+            # *maybe* commit immediately.  However, if transliteration
+            # is used, we may need to handle a punctuation or symbol
+            # character. For example, “.c” is transliterated to “ċ” in
+            # the “t-latn-pre” transliteration method, therefore we
+            # cannot commit when encountering a “.”, we have to wait
+            # what comes next.
+            input_phrase = (
+                self._editor.get_transliterated_strings()[
+                    self.get_current_imes()[0]])
+            if (self.get_current_imes()[0] == 'NoIme'
+                and len(key.msymbol) == 1
+                and key.msymbol in itb_util.SENTENCE_END_CHARACTERS
+                and input_phrase
+                and input_phrase[-1] == key.msymbol
+                and itb_util.contains_letter(input_phrase)
+            ):
+                self.commit_string(
+                    input_phrase + ' ', input_phrase = input_phrase)
             self._update_ui()
             return True
 
