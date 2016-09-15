@@ -1498,6 +1498,7 @@ class tabengine (IBus.Engine):
                 return True
             if key.val >= 32 and not key.control:
                 if (self._use_digits_as_select_keys
+                    and not self._tab_enable
                     and key.msymbol
                     in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
                     # If digits are used as keys to select candidates
@@ -1507,6 +1508,14 @@ class tabengine (IBus.Engine):
                     # type digits here where the preëdit is still empty.
                     # If digits are not used to select candidates, they
                     # can be treated just like any other input keys.
+                    #
+                    # When self._tab_enable is on, the candidate list
+                    # is only shown when explicitely requested by Tab.
+                    # Therefore, in that case digits can be typed
+                    # normally as well until the candidate list is
+                    # opened.  Putting a digit into the candidate list
+                    # is better in that case, one may be able to get a
+                    # reasonable completion that way.
                     if self.get_current_imes()[0] == 'NoIme':
                         # If a digit has been typed and no transliteration
                         # is used, we can pass it through
