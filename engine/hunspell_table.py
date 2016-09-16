@@ -855,7 +855,29 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._commit_happened_after_focus_in = False
 
+        self.emoji_prediction_mode_properties = {
+            'EmojiPredictionMode.Off': {
+                'number': 0,
+                'symbol': '☐ ☺',
+                'label': _('Off'),
+                'tooltip':
+                _('Switch Unicode symbols and emoji predictions off')},
+            'EmojiPredictionMode.On': {
+                'number': 1,
+                'symbol': '☑ ☺',
+                'label': _('On'),
+                'tooltip':
+                _('Switch Unicode symbols and emoji predictions on')}
+        }
+        self.emoji_prediction_mode_menu = {
+            'key': 'EmojiPredictionMode',
+            'label': _('Unicode symbols and emoji predictions'),
+            'tooltip': _('Switch Unicode symbols and emoji prediction mode'),
+            'shortcut_hint': '(AltGr-F6, Control+RightMouse)',
+            'sub_properties': self.emoji_prediction_mode_properties
+        }
         self._prop_dict = {}
+        self._sub_props_dict = {}
         self.main_prop_list = []
         self.preedit_ime_menu = {}
         self.preedit_ime_properties = {}
@@ -1007,9 +1029,86 @@ class TypingBoosterEngine(IBus.Engine):
                 self._prop_dict[mode].set_visible(visible)
                 self.update_property(self._prop_dict[mode]) # important!
 
+    def _init_or_update_property_menu(self, menu, current_mode=0):
+        menu_key = menu['key']
+        sub_properties_dict = menu['sub_properties']
+        for prop in sub_properties_dict:
+            if sub_properties_dict[prop]['number'] == int(current_mode):
+                symbol = sub_properties_dict[prop]['symbol']
+                label = '%(label)s (%(symbol)s) %(shortcut_hint)s' % {
+                    'label': menu['label'],
+                    'symbol': symbol,
+                    'shortcut_hint': menu['shortcut_hint']}
+                tooltip = '%(tooltip)s\n%(shortcut_hint)s' % {
+                    'tooltip': menu['tooltip'],
+                    'shortcut_hint': menu['shortcut_hint']}
+        self._init_or_update_sub_properties(
+            menu_key, sub_properties_dict, current_mode=current_mode)
+        if not menu_key in self._prop_dict: # initialize property
+            self._prop_dict[menu_key] = IBus.Property(
+                key = menu_key,
+                prop_type = IBus.PropType.MENU,
+                label = IBus.Text.new_from_string(label),
+                symbol = IBus.Text.new_from_string(symbol),
+                tooltip = IBus.Text.new_from_string(tooltip),
+                sensitive = True,
+                visible = True,
+                state = IBus.PropState.UNCHECKED,
+                sub_props = self._sub_props_dict[menu_key])
+            self.main_prop_list.append(self._prop_dict[menu_key])
+        else: # update the property
+            self._prop_dict[menu_key].set_label(
+                IBus.Text.new_from_string(label))
+            self._prop_dict[menu_key].set_symbol(
+                IBus.Text.new_from_string(symbol))
+            self._prop_dict[menu_key].set_tooltip(
+                IBus.Text.new_from_string(tooltip))
+            self._prop_dict[menu_key].set_sensitive(True)
+            self._prop_dict[menu_key].set_visible(True)
+            self.update_property(self._prop_dict[menu_key]) # important!
+
+    def _init_or_update_sub_properties(self, menu_key, modes, current_mode=0):
+        if not menu_key in self._sub_props_dict:
+            update = False
+            self._sub_props_dict[menu_key] = IBus.PropList()
+        else:
+            update = True
+        for mode in sorted(modes, key=lambda x: (modes[x]['number'])):
+            if modes[mode]['number'] == int(current_mode):
+                state = IBus.PropState.CHECKED
+            else:
+                state = IBus.PropState.UNCHECKED
+            label = modes[mode]['label']
+            tooltip = modes[mode]['tooltip']
+            if not update: # initialize property
+                self._prop_dict[mode] = IBus.Property(
+                    key=mode,
+                    prop_type=IBus.PropType.RADIO,
+                    label=IBus.Text.new_from_string(label),
+                    tooltip=IBus.Text.new_from_string(tooltip),
+                    sensitive=True,
+                    visible=True,
+                    state = state,
+                    sub_props = None)
+                self._sub_props_dict[menu_key].append(
+                    self._prop_dict[mode])
+            else: # update property
+                self._prop_dict[mode].set_label(
+                    IBus.Text.new_from_string(label))
+                self._prop_dict[mode].set_tooltip(
+                    IBus.Text.new_from_string(tooltip))
+                self._prop_dict[mode].set_sensitive(True)
+                self._prop_dict[mode].set_visible(True)
+                self._prop_dict[mode].set_state(state)
+                self.update_property(self._prop_dict[mode]) # important!
+
     def _init_properties(self):
         self._prop_dict = {}
         self.main_prop_list = IBus.PropList()
+
+        self._init_or_update_property_menu(
+            self.emoji_prediction_mode_menu,
+            self._editor._emoji_predictions)
 
         self._init_or_update_property_menu_preedit_ime(
             self.preedit_ime_menu, current_mode = 0)
@@ -1051,6 +1150,12 @@ class TypingBoosterEngine(IBus.Engine):
                 imes = self.get_current_imes()
                 self.set_current_imes(
                     [imes[number]] + imes[number+1:] + imes[:number] )
+            return
+        if ibus_property.startswith(
+                self.emoji_prediction_mode_menu['key'] + '.'):
+            self._set_emoji_prediction_mode(
+                bool(self.emoji_prediction_mode_properties
+                     [ibus_property]['number']))
             return
 
     def _start_setup(self):
@@ -1439,7 +1544,40 @@ class TypingBoosterEngine(IBus.Engine):
         if len(tokens) > 1:
             self._editor._pp_phrase = tokens[-2]
 
-    def _toggle_emoji_predictions(self):
+    def _set_emoji_prediction_mode(self, mode = False):
+        '''Sets the emoji prediction mode
+
+        :param mode: Whether to switch emoji prediction on or off
+        :type mode: boolean
+
+        As this is saved to dconf, this setting is rememembered, i.e.
+        it has the same effect as changing this setting with the setup
+        tool.
+
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write("_set_emoji_prediction_mode(%s)\n" %mode)
+        if mode == self._editor._emoji_predictions:
+            return
+        self._editor._emoji_predictions = mode
+        self._init_or_update_property_menu(
+            self.emoji_prediction_mode_menu, mode)
+        if (mode != variant_to_value(self._config.get_value(
+                self._config_section,
+                'emojipredictions'))):
+            self._config.set_value(
+                self._config_section,
+                'emojipredictions',
+                GLib.Variant.new_boolean(mode))
+        if (self._editor._emoji_predictions
+            and (not self._editor.emoji_matcher
+                 or
+                 self._editor.emoji_matcher.get_languages()
+                 != self._editor._dictionary_names)):
+            self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
+                languages = self._editor._dictionary_names)
+
+    def _toggle_emoji_prediction_mode(self):
         '''Toggles whether emoji predictions are shown or not
 
         As this is saved to dconf, this setting is rememembered, i.e.
@@ -1447,17 +1585,7 @@ class TypingBoosterEngine(IBus.Engine):
         tool.
 
         '''
-        emoji_predictions = not variant_to_value(self._config.get_value(
-            self._config_section,
-            'emojipredictions'))
-        if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "_process_key_event() set emoji predictions to %s\n"
-                %emoji_predictions)
-        self._config.set_value(
-            self._config_section,
-            'emojipredictions',
-            GLib.Variant.new_boolean(emoji_predictions))
+        self._set_emoji_prediction_mode(not self._editor._emoji_predictions)
 
     def do_candidate_clicked(self, index, button, state):
         '''Called when a candidate in the lookup table
@@ -1480,7 +1608,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self.commit_string(phrase + ' ')
             return
         if button == 3 and (state & IBus.ModifierType.CONTROL_MASK):
-            self._toggle_emoji_predictions()
+            self._toggle_emoji_prediction_mode()
             return
         if button == 3 and (state & IBus.ModifierType.MOD1_MASK):
             self._start_setup()
@@ -1751,7 +1879,7 @@ class TypingBoosterEngine(IBus.Engine):
                     return True
 
         if (key.val == IBus.KEY_F6 and key.mod5): # AltGr+F6
-            self._toggle_emoji_predictions()
+            self._toggle_emoji_prediction_mode()
             return True
 
         if (key.val == IBus.KEY_F12 and key.mod5 # AltGr+F12
@@ -2040,15 +2168,9 @@ class TypingBoosterEngine(IBus.Engine):
         value = variant_to_value(value)
         if name == "emojipredictions":
             if value == 1:
-                self._editor._emoji_predictions = True
-                if (not self._editor.emoji_matcher
-                    or
-                    self._editor.emoji_matcher.get_languages()
-                    != self._editor._dictionary_names):
-                    self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
-                        languages = self._editor._dictionary_names)
+                self._set_emoji_prediction_mode(True)
             else:
-                self._editor._emoji_predictions = False
+                self._set_emoji_prediction_mode(False)
             self._update_ui()
             return
         if name == "tabenable":
