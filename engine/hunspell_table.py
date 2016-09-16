@@ -860,14 +860,12 @@ class TypingBoosterEngine(IBus.Engine):
                 'number': 0,
                 'symbol': '☐ ☺',
                 'label': _('Off'),
-                'tooltip':
-                _('Switch Unicode symbols and emoji predictions off')},
+            },
             'EmojiPredictionMode.On': {
                 'number': 1,
                 'symbol': '☑ ☺',
                 'label': _('On'),
-                'tooltip':
-                _('Switch Unicode symbols and emoji predictions on')}
+            }
         }
         self.emoji_prediction_mode_menu = {
             'key': 'EmojiPredictionMode',
@@ -934,8 +932,8 @@ class TypingBoosterEngine(IBus.Engine):
                 ] = {'number': i,
                      'symbol': current_imes[i],
                      'label': current_imes[i],
-                     'tooltip': _('Switch preedit input method to %(ime)s') %{
-                         'ime': current_imes[i]}}
+                     'tooltip': '', # tooltips do not work in sub-properties
+                }
             else:
                 self.preedit_ime_properties[
                     'PreeditIme.'+str(i)
@@ -1007,7 +1005,10 @@ class TypingBoosterEngine(IBus.Engine):
             else:
                 state = IBus.PropState.UNCHECKED
             label = modes[mode]['label']
-            tooltip = modes[mode]['tooltip']
+            if 'tooltip' in modes[mode]:
+                tooltip = modes[mode]['tooltip']
+            else:
+                tooltip = ''
             if not update: # initialize property
                 self._prop_dict[mode] = IBus.Property(
                     key = mode,
@@ -1079,7 +1080,10 @@ class TypingBoosterEngine(IBus.Engine):
             else:
                 state = IBus.PropState.UNCHECKED
             label = modes[mode]['label']
-            tooltip = modes[mode]['tooltip']
+            if 'tooltip' in modes[mode]:
+                tooltip = modes[mode]['tooltip']
+            else:
+                tooltip = ''
             if not update: # initialize property
                 self._prop_dict[mode] = IBus.Property(
                     key=mode,
