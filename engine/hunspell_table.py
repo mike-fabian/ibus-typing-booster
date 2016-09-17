@@ -1587,27 +1587,28 @@ class TypingBoosterEngine(IBus.Engine):
         if len(tokens) > 1:
             self._editor._pp_phrase = tokens[-2]
 
-    def _set_emoji_prediction_mode(self, mode = False):
+    def _set_emoji_prediction_mode(self, mode, update_dconf = True):
         '''Sets the emoji prediction mode
 
         :param mode: Whether to switch emoji prediction on or off
         :type mode: boolean
-
-        As this is saved to dconf, this setting is rememembered, i.e.
-        it has the same effect as changing this setting with the setup
-        tool.
-
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write("_set_emoji_prediction_mode(%s)\n" %mode)
+            sys.stderr.write(
+                "_set_emoji_prediction_mode(%s, update_dconf = %s)\n"
+                %(mode, update_dconf))
         if mode == self._editor._emoji_predictions:
             return
         self._editor._emoji_predictions = mode
         self._init_or_update_property_menu(
             self.emoji_prediction_mode_menu, mode)
-        if (mode != variant_to_value(self._config.get_value(
-                self._config_section,
-                'emojipredictions'))):
+        if update_dconf:
             self._config.set_value(
                 self._config_section,
                 'emojipredictions',
@@ -1620,51 +1621,58 @@ class TypingBoosterEngine(IBus.Engine):
             self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
                 languages = self._editor._dictionary_names)
 
-    def _toggle_emoji_prediction_mode(self):
+    def _toggle_emoji_prediction_mode(self, update_dconf = True):
         '''Toggles whether emoji predictions are shown or not
 
-        As this is saved to dconf, this setting is rememembered, i.e.
-        it has the same effect as changing this setting with the setup
-        tool.
-
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
         '''
-        self._set_emoji_prediction_mode(not self._editor._emoji_predictions)
+        self._set_emoji_prediction_mode(
+            not self._editor._emoji_predictions, update_dconf)
 
-    def _set_off_the_record_mode(self, mode = False):
+    def _set_off_the_record_mode(self, mode, update_dconf = True):
         '''Sets the “Off the record” mode
 
         :param mode: Whether to prevent saving input to the user database or not
         :type mode: boolean
-
-        As this is saved to dconf, this setting is rememembered, i.e.
-        it has the same effect as changing this setting with the setup
-        tool.
-
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write("_set_off_the_record_mode(%s)\n" %mode)
+            sys.stderr.write(
+                "_set_off_the_record_mode(%s, update_dconf = %s)\n"
+                %(mode, update_dconf))
         if mode == self._off_the_record:
             return
         self._off_the_record = mode
         self._init_or_update_property_menu(
             self.off_the_record_mode_menu, mode)
-        if (mode != variant_to_value(self._config.get_value(
-                self._config_section,
-                'offtherecord'))):
+        if update_dconf:
             self._config.set_value(
                 self._config_section,
                 'offtherecord',
                 GLib.Variant.new_boolean(mode))
 
-    def _toggle_off_the_record_mode(self):
+    def _toggle_off_the_record_mode(self, update_dconf = True):
         '''Toggles whether input is saved to the user database or not
 
-        As this is saved to dconf, this setting is rememembered, i.e.
-        it has the same effect as changing this setting with the setup
-        tool.
-
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
         '''
-        self._set_off_the_record_mode(not self._off_the_record)
+        self._set_off_the_record_mode(
+            not self._off_the_record, update_dconf)
 
     def do_candidate_clicked(self, index, button, state):
         '''Called when a candidate in the lookup table
@@ -2256,16 +2264,16 @@ class TypingBoosterEngine(IBus.Engine):
         value = variant_to_value(value)
         if name == "emojipredictions":
             if value == 1:
-                self._set_emoji_prediction_mode(True)
+                self._set_emoji_prediction_mode(True, update_dconf = False)
             else:
-                self._set_emoji_prediction_mode(False)
+                self._set_emoji_prediction_mode(False, update_dconf = False)
             self._update_ui()
             return
         if name == "offtherecord":
             if value == 1:
-                self._set_off_the_record_mode(True)
+                self._set_off_the_record_mode(True, update_dconf = False)
             else:
-                self._set_off_the_record_mode(False)
+                self._set_off_the_record_mode(False, update_dconf = False)
             self._update_ui() # because of the indicator in the auxiliary text
             return
         if name == "tabenable":
