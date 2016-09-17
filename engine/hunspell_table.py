@@ -835,6 +835,12 @@ class TypingBoosterEngine(IBus.Engine):
         if self._tab_enable == None:
             self._tab_enable = False
 
+        self._off_the_record = variant_to_value(self._config.get_value(
+            self._config_section,
+            'offtherecord'))
+        if self._off_the_record == None:
+            self._off_the_record = False # default
+
         self._editor = editor(
             self._config,
             self.db,
@@ -870,9 +876,29 @@ class TypingBoosterEngine(IBus.Engine):
         self.emoji_prediction_mode_menu = {
             'key': 'EmojiPredictionMode',
             'label': _('Unicode symbols and emoji predictions'),
-            'tooltip': _('Switch Unicode symbols and emoji prediction mode'),
+            'tooltip':
+            _('Switch the “Unicode symbols and emoji prediction” mode'),
             'shortcut_hint': '(AltGr-F6, Control+RightMouse)',
             'sub_properties': self.emoji_prediction_mode_properties
+        }
+        self.off_the_record_mode_properties = {
+            'OffTheRecordMode.Off': {
+                'number': 0,
+                'symbol': '☐ 🕶',
+                'label': _('Off'),
+            },
+            'OffTheRecordMode.On': {
+                'number': 1,
+                'symbol': '☑ 🕶',
+                'label': _('On'),
+            }
+        }
+        self.off_the_record_mode_menu = {
+            'key': 'OffTheRecordMode',
+            'label': _('Off the record mode'),
+            'tooltip': _('Switch the “Off the record” mode'),
+            'shortcut_hint': '(AltGr-F9, Alt+RightMouse)',
+            'sub_properties': self.off_the_record_mode_properties
         }
         self._prop_dict = {}
         self._sub_props_dict = {}
@@ -1114,6 +1140,10 @@ class TypingBoosterEngine(IBus.Engine):
             self.emoji_prediction_mode_menu,
             self._editor._emoji_predictions)
 
+        self._init_or_update_property_menu(
+            self.off_the_record_mode_menu,
+            self._off_the_record)
+
         self._init_or_update_property_menu_preedit_ime(
             self.preedit_ime_menu, current_mode = 0)
 
@@ -1136,8 +1166,8 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "do_property_activate() property=%(p)s prop_state=%(ps)s\n"
-                % {'p': property, 'ps': prop_state})
+                "do_property_activate() ibus_property=%(p)s prop_state=%(ps)s\n"
+                % {'p': ibus_property, 'ps': prop_state})
         if ibus_property == "setup":
             self._start_setup()
             return
@@ -1159,6 +1189,12 @@ class TypingBoosterEngine(IBus.Engine):
                 self.emoji_prediction_mode_menu['key'] + '.'):
             self._set_emoji_prediction_mode(
                 bool(self.emoji_prediction_mode_properties
+                     [ibus_property]['number']))
+            return
+        if ibus_property.startswith(
+                self.off_the_record_mode_menu['key'] + '.'):
+            self._set_off_the_record_mode(
+                bool(self.off_the_record_mode_properties
                      [ibus_property]['number']))
             return
 
@@ -1233,6 +1269,8 @@ class TypingBoosterEngine(IBus.Engine):
             aux_string += preedit_ime + ' '
         if self._editor._emoji_predictions:
             aux_string += '☺ '
+        if self._off_the_record:
+            aux_string += '🕶 '
         # Colours do not work at the moment in the auxiliary text!
         # Needs fix in ibus.
         attrs = IBus.AttrList()
@@ -1505,11 +1543,12 @@ class TypingBoosterEngine(IBus.Engine):
                             %(text, cursor_pos, anchor_pos) + '\n')
         stripped_input_phrase = itb_util.strip_token(input_phrase)
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
-        self.db.check_phrase_and_update_frequency(
-            input_phrase=stripped_input_phrase,
-            phrase=stripped_commit_phrase,
-            p_phrase=self._editor.get_p_phrase(),
-            pp_phrase=self._editor.get_pp_phrase())
+        if not self._off_the_record:
+            self.db.check_phrase_and_update_frequency(
+                input_phrase=stripped_input_phrase,
+                phrase=stripped_commit_phrase,
+                p_phrase=self._editor.get_p_phrase(),
+                pp_phrase=self._editor.get_pp_phrase())
         self._editor.push_context(stripped_commit_phrase)
 
     def get_context(self):
@@ -1591,6 +1630,42 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         self._set_emoji_prediction_mode(not self._editor._emoji_predictions)
 
+    def _set_off_the_record_mode(self, mode = False):
+        '''Sets the “Off the record” mode
+
+        :param mode: Whether to prevent saving input to the user database or not
+        :type mode: boolean
+
+        As this is saved to dconf, this setting is rememembered, i.e.
+        it has the same effect as changing this setting with the setup
+        tool.
+
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write("_set_off_the_record_mode(%s)\n" %mode)
+        if mode == self._off_the_record:
+            return
+        self._off_the_record = mode
+        self._init_or_update_property_menu(
+            self.off_the_record_mode_menu, mode)
+        if (mode != variant_to_value(self._config.get_value(
+                self._config_section,
+                'offtherecord'))):
+            self._config.set_value(
+                self._config_section,
+                'offtherecord',
+                GLib.Variant.new_boolean(mode))
+
+    def _toggle_off_the_record_mode(self):
+        '''Toggles whether input is saved to the user database or not
+
+        As this is saved to dconf, this setting is rememembered, i.e.
+        it has the same effect as changing this setting with the setup
+        tool.
+
+        '''
+        self._set_off_the_record_mode(not self._off_the_record)
+
     def do_candidate_clicked(self, index, button, state):
         '''Called when a candidate in the lookup table
         is clicked with the mouse
@@ -1611,11 +1686,16 @@ class TypingBoosterEngine(IBus.Engine):
             if phrase:
                 self.commit_string(phrase + ' ')
             return
+        if (button == 3
+            and (state & IBus.ModifierType.MOD1_MASK)
+            and (state & IBus.ModifierType.CONTROL_MASK)):
+            self._start_setup()
+            return
         if button == 3 and (state & IBus.ModifierType.CONTROL_MASK):
             self._toggle_emoji_prediction_mode()
             return
         if button == 3 and (state & IBus.ModifierType.MOD1_MASK):
-            self._start_setup()
+            self._toggle_off_the_record_mode()
             return
         if button == 3:
             self._lookup_related_candidates()
@@ -1884,6 +1964,10 @@ class TypingBoosterEngine(IBus.Engine):
 
         if (key.val == IBus.KEY_F6 and key.mod5): # AltGr+F6
             self._toggle_emoji_prediction_mode()
+            return True
+
+        if (key.val == IBus.KEY_F9 and key.mod5): # AltGr+F9
+            self._toggle_off_the_record_mode()
             return True
 
         if (key.val == IBus.KEY_F12 and key.mod5 # AltGr+F12
@@ -2176,6 +2260,13 @@ class TypingBoosterEngine(IBus.Engine):
             else:
                 self._set_emoji_prediction_mode(False)
             self._update_ui()
+            return
+        if name == "offtherecord":
+            if value == 1:
+                self._set_off_the_record_mode(True)
+            else:
+                self._set_off_the_record_mode(False)
+            self._update_ui() # because of the indicator in the auxiliary text
             return
         if name == "tabenable":
             if value == 1:
