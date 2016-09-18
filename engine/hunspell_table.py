@@ -1191,8 +1191,8 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "do_property_activate() ibus_property=%(p)s prop_state=%(ps)s\n"
-                % {'p': ibus_property, 'ps': prop_state})
+                "do_property_activate() ibus_property=%s prop_state=%s\n"
+                %(ibus_property, prop_state))
         if ibus_property == "setup":
             self._start_setup()
             return
