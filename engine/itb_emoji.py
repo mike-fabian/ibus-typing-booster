@@ -417,7 +417,7 @@ class EmojiMatcher():
             pattern = re.compile(
                 r'.*<annotation cp="(?P<emojistring>[^"]+)"'
                 +r'\s*(?P<tts>type="tts"){0,1}'
-                +r'>'
+                +r'[^>]*>'
                 +r'(?P<content>.+)'
                 +r'</annotation>.*'
             )
@@ -684,10 +684,10 @@ class EmojiMatcher():
         ('👎🏻', 'thumbs down sign tone 1 “thumbdown tone1”')
 
         >>> mq.candidates('tone1')[0][:2]
-        ('🏻', 'emoji modifier Fitzpatrick type-1-2 “tone1”')
+        ('🏻', 'emoji modifier Fitzpatrick type-1-2 “light skin tone”')
 
         >>> mq.candidates('tone5')[0][:2]
-        ('🏿', 'emoji modifier Fitzpatrick type-6 “tone5”')
+        ('🏿', 'emoji modifier Fitzpatrick type-6 “dark skin tone”')
 
         >>> mq.candidates('a')[0][:2]
         ('🅰', 'negative squared latin capital letter a “A button (blood type)”')
@@ -798,7 +798,7 @@ class EmojiMatcher():
         ('☮', 'peace symbol')
 
         >>> mq.candidates('animal')[0][:2]
-        ('🐝', 'abeja [animal]')
+        ('🐜', 'ant [animal]')
 
         >>> mq.candidates('dromedary animal')[0][:2]
         ('🐪', 'dromedary camel')
@@ -1049,7 +1049,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['es_MX', 'it_IT', 'de_DE', 'en_US', 'es_ES', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', "camello ['animal', 'joroba']", 2), ('🐪', "dromedario ['animal', 'joroba']", 2), ('🐝', "abeja ['animal']", 1), ('🕷', "araña ['animal']", 1), ('🐿', "ardilla ['animal']", 1)]
+        [('🐫', "camello ['animal', 'joroba']", 2), ('🐪', "dromedario ['animal', 'joroba']", 2), ('🐝', "abeja ['animal']", 1), ('🐋', "ballena ['animal']", 1), ('🐳', "ballena soplando un chorro de agua ['animal']", 1)]
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
