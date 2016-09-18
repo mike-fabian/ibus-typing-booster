@@ -16,6 +16,74 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.7" date="2016-09-19" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Pull translations from Zanata (de, pl, uk updated)
+          </li>
+          <li>
+            Make the list of characters to auto commit configurable
+            (Empty list by default)
+          </li>
+          <li>
+            Fix duplicates in the candidate list caused by overwriting
+            input_phrase with NFC version
+          </li>
+          <li>
+            Don’t show the special candidates for missing dictionaries
+            for Japanese and Chinese
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Implement do_cursor_up() and do_cursor_down() to make
+            scrolling the lookup table with the mouse wheel work
+            (Needs also a patch in ibus)
+          </li>
+          <li>
+            Add an “Off the record mode” (also gets a property menu)
+          </li>
+          <li>
+            Tooltips don’t seem to work on sub-properties, remove the
+            tooltips there
+          </li>
+          <li>
+            Add a property menu for the emoji prediction mode
+          </li>
+          <li>
+            Make triggering a commit with “Left” or “Control+Left”
+            work correctly in “Tab enable mode ” again
+          </li>
+          <li>
+            Down, Up, Page_Down, and Page_Up should trigger a commit
+            and be passed to the application if possible
+          </li>
+          <li>
+            If “☑ Enable suggestions by Tab key” is on make it
+            possible to close the lookup table with Escape but keep
+            the preëdit
+          </li>
+          <li>
+            If “☑ Enable suggestions by Tab key” is on, don’t
+            autocommit digits
+          </li>
+          <li>
+            Make autocommitting much more rare (for characters which
+            are not the first typed character)
+          </li>
+          <li>
+            Don’t autocommit the first typed character unless
+            absolutely necessary
+          </li>
+          <li>
+            Even when “☑ Enable suggestions by Tab key” is used, don’t
+            complete empty strings
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.6" date="2016-09-12" urgency="medium">
       <description>
         <ul>

@@ -1,4 +1,23 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 19 Sep 2016 Released 1.5.7 version
+* Pull translations from Zanata (de, pl, uk updated)
+* Make the list of characters to auto commit configurable (Empty list by default)
+* Fix duplicates in the candidate list caused by overwriting input_phrase with NFC version
+* Don’t show the special candidates for missing dictionaries for Japanese and Chinese
+* Update emoji annotations from CLDR
+* Implement do_cursor_up() and do_cursor_down() to make scrolling the lookup table with the mouse wheel work (Needs also a patch in ibus)
+* Add an “Off the record mode” (also gets a property menu)
+* Tooltips don’t seem to work on sub-properties, remove the tooltips there
+* Add a property menu for the emoji prediction mode
+* Make triggering a commit with “Left” or “Control+Left” work correctly in “Tab enable mode ” again
+* Down, Up, Page_Down, and Page_Up should trigger a commit and be passed to the application if possible
+* If “☑ Enable suggestions by Tab key” is on make it possible to close the lookup table with Escape but keep the preëdit
+* If “☑ Enable suggestions by Tab key” is on, don’t autocommit digits
+* Make autocommitting much more rare (for characters which are not the first typed character)
+* Don’t autocommit the first typed character unless absolutely necessary
+* Even when “☑ Enable suggestions by Tab key” is used, don’t complete empty strings
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 12 Sep 2016 Released 1.5.6 version
 * Reduce the number of characters which cause immediate commits a lot (Make typing “Je t'aime” easier)
 * Load CLDR data for *all* languages in the _expand_languages() list
