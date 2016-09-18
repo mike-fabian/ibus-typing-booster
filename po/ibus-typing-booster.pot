@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-09-09 17:36+0200\n"
+"POT-Creation-Date: 2016-09-20 14:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,24 +17,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: engine/hunspell_table.py:838
-#, python-format
-msgid "Switch preedit input method to %(ime)s"
+#: engine/hunspell_table.py:899 engine/hunspell_table.py:919
+msgid "Off"
 msgstr ""
 
-#: engine/hunspell_table.py:846
+#: engine/hunspell_table.py:904 engine/hunspell_table.py:924
+msgid "On"
+msgstr ""
+
+#: engine/hunspell_table.py:909 engine/hunspell_table.py:911
+#: setup/setup.glade:299
+msgid "Unicode symbols and emoji predictions"
+msgstr ""
+
+#: engine/hunspell_table.py:929 engine/hunspell_table.py:930
+#: setup/setup.glade:317
+msgid "Off the record mode"
+msgstr ""
+
+#: engine/hunspell_table.py:1000
 msgid "Preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:847
+#: engine/hunspell_table.py:1001
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:942
+#: engine/hunspell_table.py:1183
 msgid "Setup"
 msgstr ""
 
-#: engine/hunspell_table.py:945
+#: engine/hunspell_table.py:1186
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr ""
@@ -64,35 +77,35 @@ msgstr ""
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr ""
 
-#: setup/main.py:336
+#: setup/main.py:355
 msgid "Another instance of this app is already running."
 msgstr ""
 
-#: setup/main.py:431
+#: setup/main.py:443
 msgid "Open File ..."
 msgstr ""
 
-#: setup/main.py:449
+#: setup/main.py:461
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr ""
 
-#: setup/main.py:458
+#: setup/main.py:470
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr ""
 
-#: setup/main.py:467
+#: setup/main.py:479
 msgid "Are you sure?"
 msgstr ""
 
-#: setup/main.py:474
+#: setup/main.py:486
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
 msgstr ""
 
-#: setup/main.py:671
+#: setup/main.py:704
 msgid "ibus is not running."
 msgstr ""
 
@@ -194,10 +207,6 @@ msgid ""
 "is remembered even if the session is restarted. "
 msgstr ""
 
-#: setup/setup.glade:299
-msgid "Unicode symbols and emoji predictions"
-msgstr ""
-
 #: setup/setup.glade:303
 msgid ""
 "Whether Unicode symbols and emoji should be included in the predictions. "
@@ -207,63 +216,81 @@ msgid ""
 "nevertheless useful symbols."
 msgstr ""
 
-#: setup/setup.glade:342
+#: setup/setup.glade:321
+msgid ""
+"While “Off the record” mode is on, learning from user input is disabled. If "
+"learned user input is available, predictions are usually much better than "
+"predictions using only dictionaries. Therefore, one should use this option "
+"sparingly. Only if one wants to avoid saving secret user input to disk it "
+"might make sense to use this option temporarily."
+msgstr ""
+
+#: setup/setup.glade:337
+msgid ""
+"The characters in this list cause the preedit to be committed automatically, "
+"followed by a space.  For example, if “.” is an auto commit character, this "
+"saves you typing a space manually after the end of a sentence. You can "
+"freely edit this list, a reasonable value might be “.,;:?!)”. You should not "
+"add characters to that list which are needed by your input method, for "
+"example if you use Latin-Pre (t-latn-pre) it would be a bad idea to add “.” "
+"to that list because it would prevent you from typing “.s” to get “ṡ”. You "
+"can also disable this feature completely by making the list empty (which is "
+"the default).\n"
+msgstr ""
+
+#: setup/setup.glade:339
+msgid "Auto commit characters:"
+msgstr ""
+
+#: setup/setup.glade:386
 msgid "Options"
 msgstr ""
 
-#: setup/setup.glade:375
+#: setup/setup.glade:419
 msgid "Install dictionary"
 msgstr ""
 
-#: setup/setup.glade:389
-msgid "Install pyhunspell"
-msgstr ""
-
-#: setup/setup.glade:405
+#: setup/setup.glade:433
 msgid "Learn from text file"
 msgstr ""
 
-#: setup/setup.glade:423
+#: setup/setup.glade:451
 msgid "Install the dictionary package for this engine"
 msgstr ""
 
-#: setup/setup.glade:433
-msgid "Install pyhunspell package to get spellchecking suggestions"
-msgstr ""
-
-#: setup/setup.glade:447
+#: setup/setup.glade:461
 msgid "Learn your style by reading a text file"
 msgstr ""
 
-#: setup/setup.glade:461
+#: setup/setup.glade:475
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
 
-#: setup/setup.glade:473
+#: setup/setup.glade:487
 msgid "Delete learned data"
 msgstr ""
 
-#: setup/setup.glade:510
+#: setup/setup.glade:524
 msgid "Dictionaries and personal data"
 msgstr ""
 
-#: setup/setup.glade:555
+#: setup/setup.glade:569
 msgid "A completion input method to speedup typing."
 msgstr ""
 
-#: setup/setup.glade:581
+#: setup/setup.glade:595
 msgid "<b>Home page:</b>"
 msgstr ""
 
-#: setup/setup.glade:593
+#: setup/setup.glade:607
 msgid "<b>Online documentation:</b>"
 msgstr ""
 
 #. This is the “About” tab in the setup tool.
 #.
 #. That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
-#: setup/setup.glade:624
+#: setup/setup.glade:638
 msgid "About"
 msgstr ""
 
@@ -282,6 +309,6 @@ msgid ""
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
 
-#: typing-booster.appdata.xml:250
+#: typing-booster.appdata.xml:414
 msgid "Mike FABIAN"
 msgstr ""

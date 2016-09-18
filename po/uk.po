@@ -4,11 +4,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-09-09 17:36+0200\n"
+"POT-Creation-Date: 2016-09-20 14:15+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-09-10 04:31-0400\n"
+"PO-Revision-Date: 2016-09-18 11:15-0400\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -16,24 +16,37 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: engine/hunspell_table.py:838
-#, python-format
-msgid "Switch preedit input method to %(ime)s"
-msgstr "Перемкнути спосіб введення попереднього редагування на %(ime)s"
+#: engine/hunspell_table.py:899 engine/hunspell_table.py:919
+msgid "Off"
+msgstr "Вимкн."
 
-#: engine/hunspell_table.py:846
+#: engine/hunspell_table.py:904 engine/hunspell_table.py:924
+msgid "On"
+msgstr "Увімкн."
+
+#: engine/hunspell_table.py:909 engine/hunspell_table.py:911
+#: setup/setup.glade:299
+msgid "Unicode symbols and emoji predictions"
+msgstr "Пропозиці для символів Unicode та емодзі"
+
+#: engine/hunspell_table.py:929 engine/hunspell_table.py:930
+#: setup/setup.glade:317
+msgid "Off the record mode"
+msgstr "Режим без запису"
+
+#: engine/hunspell_table.py:1000
 msgid "Preedit input method"
 msgstr "Спосіб введення попереднього редагування"
 
-#: engine/hunspell_table.py:847
+#: engine/hunspell_table.py:1001
 msgid "Switch preedit input method"
 msgstr "Перемкнути спосіб введення попереднього редагування"
 
-#: engine/hunspell_table.py:942
+#: engine/hunspell_table.py:1183
 msgid "Setup"
 msgstr "Налаштування"
 
-#: engine/hunspell_table.py:945
+#: engine/hunspell_table.py:1186
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Налаштувати «%(name)s» для ibus-typing-booster"
@@ -66,29 +79,29 @@ msgstr "Файла налаштувань %(file)s не існує."
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Параметри для «%(symbol)s» ibus-typing-booster"
 
-#: setup/main.py:336
+#: setup/main.py:355
 msgid "Another instance of this app is already running."
 msgstr "Вже запущено інший екземпляр цієї програми."
 
-#: setup/main.py:431
+#: setup/main.py:443
 msgid "Open File ..."
 msgstr "Відкрити файл…"
 
-#: setup/main.py:449
+#: setup/main.py:461
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Успішно вивчено з файла %(filename)s."
 
-#: setup/main.py:458
+#: setup/main.py:470
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Спроба навчання з файла %(filename)s зазнала невдачі."
 
-#: setup/main.py:467
+#: setup/main.py:479
 msgid "Are you sure?"
 msgstr "Ви впевнені?"
 
-#: setup/main.py:474
+#: setup/main.py:486
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -96,7 +109,7 @@ msgstr ""
 "Ви справді хочете вилучити усі дані мови, \n"
 "вивчені із введених даних і читання файлів?"
 
-#: setup/main.py:671
+#: setup/main.py:704
 msgid "ibus is not running."
 msgstr "ibus не запущено."
 
@@ -228,10 +241,6 @@ msgstr ""
 "позначено цей пункт, програма запам’ятовуватиме таку зміну і відновлюватиме "
 "спосіб введення навіть після перезапуску сеансу. "
 
-#: setup/setup.glade:299
-msgid "Unicode symbols and emoji predictions"
-msgstr "Пропозиці для символів Unicode та емодзі"
-
 #: setup/setup.glade:303
 msgid ""
 "Whether Unicode symbols and emoji should be included in the predictions. "
@@ -246,67 +255,91 @@ msgstr ""
 "абетки Брайля (⠥⠩…) тощо. З технічної точки зору, це не емодзі, але все ж "
 "корисні символи."
 
-#: setup/setup.glade:342
+#: setup/setup.glade:321
+msgid ""
+"While “Off the record” mode is on, learning from user input is disabled. If "
+"learned user input is available, predictions are usually much better than "
+"predictions using only dictionaries. Therefore, one should use this option "
+"sparingly. Only if one wants to avoid saving secret user input to disk it "
+"might make sense to use this option temporarily."
+msgstr ""
+"Якщо увімкнено «Режим без запису», програма не навчатиметься на основі "
+"введених користувачем даних. Навчаючись на основі введених даних, програма "
+"може пропонувати кращий список варіантів, ніж якщо користуватиметься лише "
+"словниками. Тому не варто зловживати цим режимом. Користуйтеся ним, лише "
+"якщо слід запобігти зберіганню на диску якоїсь конфіденційної інформації; "
+"вмикайте його лише тимчасово."
+
+#: setup/setup.glade:337
+msgid ""
+"The characters in this list cause the preedit to be committed automatically, "
+"followed by a space.  For example, if “.” is an auto commit character, this "
+"saves you typing a space manually after the end of a sentence. You can "
+"freely edit this list, a reasonable value might be “.,;:?!)”. You should not "
+"add characters to that list which are needed by your input method, for "
+"example if you use Latin-Pre (t-latn-pre) it would be a bad idea to add “.” "
+"to that list because it would prevent you from typing “.s” to get “ṡ”. You "
+"can also disable this feature completely by making the list empty (which is "
+"the default).\n"
+msgstr ""
+
+#: setup/setup.glade:339
+msgid "Auto commit characters:"
+msgstr ""
+
+#: setup/setup.glade:386
 msgid "Options"
 msgstr "Параметри"
 
-#: setup/setup.glade:375
+#: setup/setup.glade:419
 msgid "Install dictionary"
 msgstr "Встановити словник"
 
-#: setup/setup.glade:389
-msgid "Install pyhunspell"
-msgstr "Встановити pyhunspell"
-
-#: setup/setup.glade:405
+#: setup/setup.glade:433
 msgid "Learn from text file"
 msgstr "Навчатися за текстовим файлом"
 
-#: setup/setup.glade:423
+#: setup/setup.glade:451
 msgid "Install the dictionary package for this engine"
 msgstr "Встановити пакунок словника для цього рушія обробки"
 
-#: setup/setup.glade:433
-msgid "Install pyhunspell package to get spellchecking suggestions"
-msgstr "Встановити пакунок pyhunspell для отримання пропозицій щодо правопису"
-
-#: setup/setup.glade:447
+#: setup/setup.glade:461
 msgid "Learn your style by reading a text file"
 msgstr "Вивчити ваш стиль шляхом читання текстового файла"
 
-#: setup/setup.glade:461
+#: setup/setup.glade:475
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
 "Вилучити усі особисті дані мови, вивчені на основі введених даних або "
 "читання файлів"
 
-#: setup/setup.glade:473
+#: setup/setup.glade:487
 msgid "Delete learned data"
 msgstr "Вилучити вивчені дані"
 
-#: setup/setup.glade:510
+#: setup/setup.glade:524
 msgid "Dictionaries and personal data"
 msgstr "Словники і особисті дані"
 
-#: setup/setup.glade:555
+#: setup/setup.glade:569
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Спосіб введення із автоматичним доповненням, який пришвидшує введення "
 "текстів."
 
-#: setup/setup.glade:581
+#: setup/setup.glade:595
 msgid "<b>Home page:</b>"
 msgstr "<b>Домашня сторінки:</b>"
 
-#: setup/setup.glade:593
+#: setup/setup.glade:607
 msgid "<b>Online documentation:</b>"
 msgstr "<b>Документація у інтернеті:</b>"
 
 #. This is the “About” tab in the setup tool.
 #. 
 #. That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
-#: setup/setup.glade:624
+#: setup/setup.glade:638
 msgid "About"
 msgstr "Про програму"
 
@@ -329,6 +362,6 @@ msgstr ""
 "вибрати бажане слово зі списку пропозицій, отже пришвидшити введення тексту "
 "та поліпшити його якість."
 
-#: typing-booster.appdata.xml:250
+#: typing-booster.appdata.xml:415
 msgid "Mike FABIAN"
 msgstr "Mike FABIAN"
