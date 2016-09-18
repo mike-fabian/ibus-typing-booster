@@ -386,11 +386,20 @@ class Hunspell:
                             for suggestion in extra_suggestions
                             if suggestion not in suggested_words])
             else:
-                dic_path = os.path.join(dictionary.loc, dictionary.name+'.dic')
-                suggested_words.update([
-                    ('☹ %(dic_path)s not found. ' %{'dic_path': dic_path}
-                     + 'Please install hunspell dictionary!',
-                     0)])
+                if (dictionary.name[:2]
+                    not in ('ja', 'ja_JP',
+                            'zh', 'zh_CN', 'zh_TW', 'zh_MO', 'zh_SG')):
+                    # For some languages, hunspell dictionaries don’t
+                    # exist because hunspell makes no sense for these
+                    # languages.  In these cases, just ignore that the
+                    # hunspell dictionary is missing.  With the
+                    # appropriate input method added, emoji can be
+                    # matched nevertheless.
+                    dic_path = os.path.join(dictionary.loc, dictionary.name+'.dic')
+                    suggested_words.update([
+                        ('☹ %(dic_path)s not found. ' %{'dic_path': dic_path}
+                         + 'Please install hunspell dictionary!',
+                         0)])
         for word in suggested_words:
             if (suggested_words[word] == -1
                 and

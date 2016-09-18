@@ -244,6 +244,18 @@ class Transliterator:
     >>> trans.transliterate(['a', 'b', 'c', 'C-c', 'G-4'])
     'abcC-cG-4'
 
+    >>> trans = Transliterator('ja-anthy')
+    >>> trans.transliterate(['c', 'h', 'o', 'u', 'c', 'h', 'o', 'u'])
+    'ちょうちょう'
+
+    >>> trans = Transliterator('zh-py')
+    >>> trans.transliterate(['n', 'i', 'h', 'a', 'o'])
+    '你好'
+
+    >>> trans = Transliterator('zh-tonepy')
+    >>> trans.transliterate(['n', 'i', '3', 'h', 'a', 'o', '3'])
+    '你好'
+
     If initializing the transliterator fails, for example
     because a non-existing input method was given as the argument,
     a ValueError is raised:
