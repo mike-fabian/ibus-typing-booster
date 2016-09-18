@@ -213,6 +213,18 @@ class SetupUI:
         emoji_predictions_checkbox.connect(
             'clicked', event_handler.onEmojiPredictionsCheckbox)
 
+        off_the_record_checkbox = self.builder.get_object(
+            "off_the_record_checkbox")
+        self.off_the_record = self.variant_to_value(
+            self.config.get_value(
+                self.config_section, 'offtherecord'))
+        if self.off_the_record == None:
+            self.off_the_record = False
+        if self.off_the_record == True:
+            off_the_record_checkbox.set_active(True)
+        off_the_record_checkbox.connect(
+            'clicked', event_handler.onOffTheRecordCheckbox)
+
         add_direct_input_checkbox = self.builder.get_object(
             "add_direct_input_checkbox")
         self.add_direct_input = self.variant_to_value(
@@ -525,6 +537,20 @@ class EventHandler:
             SetupUi.config.set_value(
                 SetupUi.config_section,
                 'emojipredictions',
+                GLib.Variant.new_boolean(False))
+
+    def onOffTheRecordCheckbox(self, widget):
+        if widget.get_active():
+            SetupUi.off_the_record = True
+            SetupUi.config.set_value(
+                SetupUi.config_section,
+                'offtherecord',
+                GLib.Variant.new_boolean(True))
+        else:
+            SetupUi.off_the_record = False
+            SetupUi.config.set_value(
+                SetupUi.config_section,
+                'offtherecord',
                 GLib.Variant.new_boolean(False))
 
     def onAddDirectInputCheckbox(self, widget):
