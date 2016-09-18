@@ -1087,7 +1087,7 @@ class TypingBoosterEngine(IBus.Engine):
         for prop in sub_properties_dict:
             if sub_properties_dict[prop]['number'] == int(current_mode):
                 symbol = sub_properties_dict[prop]['symbol']
-                label = '%(label)s (%(symbol)s) %(shortcut_hint)s' % {
+                label = '%(symbol)s %(label)s %(shortcut_hint)s' % {
                     'label': menu['label'],
                     'symbol': symbol,
                     'shortcut_hint': menu['shortcut_hint']}
