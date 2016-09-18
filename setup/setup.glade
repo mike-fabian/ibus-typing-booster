@@ -314,7 +314,7 @@
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="off_the_record_checkbox">
-                                <property name="label" translatable="yes">Off the record</property>
+                                <property name="label" translatable="yes">Off the record mode</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>

@@ -902,7 +902,7 @@ class TypingBoosterEngine(IBus.Engine):
             'key': 'EmojiPredictionMode',
             'label': _('Unicode symbols and emoji predictions'),
             'tooltip':
-            _('Switch the “Unicode symbols and emoji prediction” mode'),
+            _('Unicode symbols and emoji predictions'),
             'shortcut_hint': '(AltGr-F6, Control+RightMouse)',
             'sub_properties': self.emoji_prediction_mode_properties
         }
@@ -921,7 +921,7 @@ class TypingBoosterEngine(IBus.Engine):
         self.off_the_record_mode_menu = {
             'key': 'OffTheRecordMode',
             'label': _('Off the record mode'),
-            'tooltip': _('Switch the “Off the record” mode'),
+            'tooltip': _('Off the record mode'),
             'shortcut_hint': '(AltGr-F9, Alt+RightMouse)',
             'sub_properties': self.off_the_record_mode_properties
         }
