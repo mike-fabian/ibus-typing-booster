@@ -44,6 +44,31 @@ import itb_emoji
 
 DEBUG_LEVEL = int(0)
 
+# ☐ U+2610 BALLOT BOX
+MODE_OFF_SYMBOL = '☐'
+# ☑ U+2611 BALLOT BOX WITH CHECK
+# 🗹 U+1F5F9 BALLOT_BOX WITH BOLD CHECK
+MODE_ON_SYMBOL = '🗹'
+
+#  ☺ U+263A WHITE SMILING FACE
+# 😃 U+1F603 SMILING FACE WITH OPEN MOUTH
+# 🙂 U+1F642 SLIGHTLY SMILING FACE
+EMOJI_PREDICTION_MODE_SYMBOL = '🙂'
+
+# 🕶 U+1F576 DARK SUNGLASSES
+# 😎 U+1F60E SMILING FACE WITH SUNGLASSES
+# 🕵 U+1F575 SLEUTH OR SPY
+OFF_THE_RECORD_MODE_SYMBOL = '🕵'
+
+# ⏳ U+23F3 HOURGLASS WITH FLOWING SAND
+BUSY_SYMBOL = '⏳'
+
+# ✓ U+2713 CHECK MARK
+SPELL_CHECKING_CANDIDATE_SYMBOL = '✓'
+
+# ⭐ U+2B50 WHITE MEDIUM STAR
+USER_DATABASE_CANDIDATE_SYMBOL = '⭐'
+
 from gettext import dgettext
 _  = lambda a : dgettext ("ibus-typing-booster", a)
 N_ = lambda a : a
@@ -445,7 +470,7 @@ class editor(object):
             phrase += ' ' + itb_util.bidi_embed(comment)
         if DEBUG_LEVEL > 0:
             if spell_checking: # spell checking suggestion
-                phrase = phrase + ' ✓'
+                phrase = phrase + ' ' + SPELL_CHECKING_CANDIDATE_SYMBOL
                 if  DEBUG_LEVEL > 1:
                     attrs.append(IBus.attr_foreground_new(
                         rgb(0xff, 0x00, 0x00), 0, len(phrase)))
@@ -454,7 +479,7 @@ class editor(object):
                 # possible to delete it with a key binding or
                 # mouse-click, if the user desires. Mark it
                 # differently to show that it is deletable:
-                phrase = phrase + ' ⭐'
+                phrase = phrase + ' ' + USER_DATABASE_CANDIDATE_SYMBOL
                 if  DEBUG_LEVEL > 1:
                     attrs.append(IBus.attr_foreground_new(
                         rgb(0xff, 0x7f, 0x00), 0, len(phrase)))
@@ -864,12 +889,12 @@ class TypingBoosterEngine(IBus.Engine):
         self.emoji_prediction_mode_properties = {
             'EmojiPredictionMode.Off': {
                 'number': 0,
-                'symbol': '☐ ☺',
+                'symbol': MODE_OFF_SYMBOL + EMOJI_PREDICTION_MODE_SYMBOL,
                 'label': _('Off'),
             },
             'EmojiPredictionMode.On': {
                 'number': 1,
-                'symbol': '☑ ☺',
+                'symbol': MODE_ON_SYMBOL + EMOJI_PREDICTION_MODE_SYMBOL,
                 'label': _('On'),
             }
         }
@@ -884,12 +909,12 @@ class TypingBoosterEngine(IBus.Engine):
         self.off_the_record_mode_properties = {
             'OffTheRecordMode.Off': {
                 'number': 0,
-                'symbol': '☐ 🕶',
+                'symbol': MODE_OFF_SYMBOL + OFF_THE_RECORD_MODE_SYMBOL,
                 'label': _('Off'),
             },
             'OffTheRecordMode.On': {
                 'number': 1,
-                'symbol': '☑ 🕶',
+                'symbol': MODE_ON_SYMBOL + OFF_THE_RECORD_MODE_SYMBOL,
                 'label': _('On'),
             }
         }
@@ -1268,9 +1293,9 @@ class TypingBoosterEngine(IBus.Engine):
         if preedit_ime != 'NoIme':
             aux_string += preedit_ime + ' '
         if self._editor._emoji_predictions:
-            aux_string += '☺ '
+            aux_string += EMOJI_PREDICTION_MODE_SYMBOL + ' '
         if self._off_the_record:
-            aux_string += '🕶 '
+            aux_string += OFF_THE_RECORD_MODE_SYMBOL + ' '
         # Colours do not work at the moment in the auxiliary text!
         # Needs fix in ibus.
         attrs = IBus.AttrList()
@@ -1362,7 +1387,7 @@ class TypingBoosterEngine(IBus.Engine):
         # Show an hourglass with moving sand in the auxiliary text to
         # indicate that the lookup table is being updated:
         super(TypingBoosterEngine, self).update_auxiliary_text(
-            IBus.Text.new_from_string('⏳'), True)
+            IBus.Text.new_from_string(BUSY_SYMBOL), True)
         GLib.idle_add(self._update_candidates_and_lookup_table_and_aux)
 
     def _lookup_related_candidates(self):
@@ -1394,7 +1419,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._editor.get_lookup_table().get_number_of_candidates():
             self.hide_lookup_table()
         super(TypingBoosterEngine, self).update_auxiliary_text(
-            IBus.Text.new_from_string('⏳'), True)
+            IBus.Text.new_from_string(BUSY_SYMBOL), True)
         related_candidates = []
         # Try to find similar emoji even if emoji predictions are
         # turned off.  Even when they are turned off, an emoji might
