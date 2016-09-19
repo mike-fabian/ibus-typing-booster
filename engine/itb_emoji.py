@@ -164,6 +164,8 @@ def _expand_languages(languages):
         expanded_languages.append(language)
         if language in SPANISH_419_LOCALES:
             expanded_languages.append('es_419')
+        if language[:2] == 'en':
+            expanded_languages.append('en_001')
         if language.split('_')[:1] != [language]:
             expanded_languages += language.split('_')[:1]
     if 'en' not in expanded_languages:
