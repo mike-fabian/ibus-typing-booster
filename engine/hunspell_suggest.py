@@ -302,6 +302,8 @@ class Hunspell:
         # make sure input_phrase is in the internal normalization form (NFD):
         input_phrase = unicodedata.normalize(
             NORMALIZATION_FORM_INTERNAL, input_phrase)
+        # But enchant and pyhunspell want NFC as input, make a copy in NFC:
+        input_phrase_nfc = unicodedata.normalize('NFC', input_phrase)
         # '/' is already removed from the buffer, we do not need to
         # take care of it in the regexp.
         patt_start = re.compile(r'^' + re.escape(input_phrase))
@@ -332,9 +334,7 @@ class Hunspell:
                         # (pyhunspell needs to get its input passed
                         # in dictionary encoding and also returns it
                         # in dictionary encoding).
-                        input_phrase = unicodedata.normalize(
-                            'NFC', input_phrase)
-                        if dictionary.enchant_dict.check(input_phrase):
+                        if dictionary.enchant_dict.check(input_phrase_nfc):
                             # This is a valid word in this dictionary.
                             # It might have been missed by the matching
                             # above because the dictionary might not
@@ -348,7 +348,7 @@ class Hunspell:
                             unicodedata.normalize(
                                 NORMALIZATION_FORM_INTERNAL, x)
                             for x in
-                            dictionary.enchant_dict.suggest(input_phrase)
+                            dictionary.enchant_dict.suggest(input_phrase_nfc)
                         ]
                         suggested_words.update([
                             (suggestion, -1)
@@ -360,9 +360,7 @@ class Hunspell:
                         # the result back to the internal
                         # normalization form (NFD) (hunspell does the
                         # right thing for Korean if the input is NFC).
-                        input_phrase = unicodedata.normalize(
-                            'NFC', input_phrase)
-                        if dictionary.pyhunspell_object.spell(input_phrase):
+                        if dictionary.pyhunspell_object.spell(input_phrase_nfc):
                             # This is a valid word in this dictionary.
                             # It might have been missed by the matching
                             # above because the dictionary might not
@@ -378,7 +376,7 @@ class Hunspell:
                                     dictionary.encoding))
                             for x in
                             dictionary.pyhunspell_object.suggest(
-                                input_phrase.encode(
+                                input_phrase_nfc.encode(
                                     dictionary.encoding, 'replace'))
                         ]
                         suggested_words.update([
