@@ -866,6 +866,12 @@ class TypingBoosterEngine(IBus.Engine):
         if self._off_the_record == None:
             self._off_the_record = False # default
 
+        self._auto_commit_characters = variant_to_value(self._config.get_value(
+            self._config_section,
+            'autocommitcharacters'))
+        if not self._auto_commit_characters:
+            self._auto_commit_characters = '' # default
+
         self._editor = editor(
             self._config,
             self.db,
@@ -2186,13 +2192,17 @@ class TypingBoosterEngine(IBus.Engine):
             input_phrase = (
                 self._editor.get_transliterated_strings()[
                     self.get_current_imes()[0]])
-            if (self.get_current_imes()[0] == 'NoIme'
-                and len(key.msymbol) == 1
-                and key.msymbol in itb_util.SENTENCE_END_CHARACTERS
+            if (len(key.msymbol) == 1
+                and key.msymbol != ' '
+                and key.msymbol in self._auto_commit_characters
                 and input_phrase
                 and input_phrase[-1] == key.msymbol
                 and itb_util.contains_letter(input_phrase)
             ):
+                if DEBUG_LEVEL > 1:
+                    sys.stderr.write(
+                        'auto committing because of key.msymbol = %s'
+                        %key.msymbol)
                 self.commit_string(
                     input_phrase + ' ', input_phrase = input_phrase)
             self._update_ui()
@@ -2318,6 +2328,12 @@ class TypingBoosterEngine(IBus.Engine):
             else:
                 self._set_off_the_record_mode(False, update_dconf = False)
             self._update_ui() # because of the indicator in the auxiliary text
+            return
+        if name == "autocommitcharacters":
+            if value:
+                self._auto_commit_characters = value
+            else:
+                self._auto_commit_characters = ''
             return
         if name == "tabenable":
             if value == 1:

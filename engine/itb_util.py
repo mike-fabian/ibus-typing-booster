@@ -25,15 +25,13 @@ import re
 import string
 import unicodedata
 
-
-# Characters wich should trigger an immediate commit.
-#
-# If one of thesee characters is typed and no transliteration is used,
-# the preëdit can be committed immediately.  However, if
-# transliteration is used, we may need to handle a punctuation or
-# symbol character. For example, “.c” is transliterated to “ċ” in the
-# “t-latn-pre” transliteration method, therefore we cannot just pass
-# it through, we have to add it to the input and see what comes next.
+# If a character ending a sentence is committed (possibly
+# followed by whitespace) remove trailing white space
+# before the committed string. For example if
+# commit_phrase is “!”, and the context before is “word ”,
+# make the result “word!”.  And if the commit_phrase is “!
+# ” and the context before is “word ” make the result
+# “word! ”.
 SENTENCE_END_CHARACTERS = '.,;:?!)'
 
 CATEGORIES_TO_STRIP_FROM_TOKENS = (

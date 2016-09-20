@@ -249,6 +249,17 @@ class SetupUI:
         remember_last_used_preedit_ime_checkbox.connect(
             'clicked', event_handler.onRememberLastUsedPreeditImeCheckbox)
 
+        auto_commit_characters_entry = self.builder.get_object(
+            "auto_commit_characters_entry")
+        self.auto_commit_characters = self.variant_to_value(
+            self.config.get_value(
+                self.config_section, 'autocommitcharacters'))
+        if not self.auto_commit_characters:
+            self.auto_commit_characters = ''
+        auto_commit_characters_entry.set_text(self.auto_commit_characters)
+        auto_commit_characters_entry.connect(
+            'notify::text', event_handler.onAutoCommitCharactersEntry)
+
         self.page_size_adjustment = self.builder.get_object(
             "page_size_adjustment")
         self.page_size = self.variant_to_value(self.config.get_value(
@@ -580,6 +591,13 @@ class EventHandler:
                 SetupUi.config_section,
                 'rememberlastusedpreeditime',
                 GLib.Variant.new_boolean(False))
+
+    def onAutoCommitCharactersEntry(self, widget, property_spec):
+        SetupUi.auto_commit_characters = widget.get_text()
+        SetupUi.config.set_value(
+            SetupUi.config_section,
+            'autocommitcharacters',
+            GLib.Variant.new_string(SetupUi.auto_commit_characters))
 
     def onPageSizeAdjustmentValueChanged(self, widget):
         self.page_size = SetupUi.page_size_adjustment.get_value()
