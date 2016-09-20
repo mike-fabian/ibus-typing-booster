@@ -319,6 +319,7 @@
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="tooltip_text" translatable="yes">While “Off the record” mode is on, learning from user input is disabled. If learned user input is available, predictions are usually much better than predictions using only dictionaries. Therefore, one should use this option sparingly. Only if one wants to avoid saving secret user input to disk it might make sense to use this option temporarily.</property>
+                                <property name="xalign">0</property>
                                 <property name="draw_indicator">True</property>
                               </object>
                               <packing>
