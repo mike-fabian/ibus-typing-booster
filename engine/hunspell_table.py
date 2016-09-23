@@ -267,10 +267,13 @@ class editor(object):
                         %{'ime': ime})
                 self._transliterators[ime] = Transliterator(ime)
             except ValueError as error:
-                sys.stderr.write('Error initializing Transliterator: %s'
-                                 %error)
-                import traceback
-                traceback.print_exc()
+                sys.stderr.write(
+                    'Error initializing Transliterator %s:\n' %ime
+                    + '%s\n' %error
+                    + 'Maybe /usr/share/m17n/%s.mim is not installed?\n'
+                    %ime)
+                # Use dummy transliterator “NoIme” as a fallback:
+                self._transliterators[ime] = Transliterator('NoIme')
         self.update_transliterated_strings()
 
     def is_empty(self):
