@@ -187,6 +187,16 @@ Key bindings
 ┃ AltGr+F6          │ This has the same result as using the setup tool to     ┃
 ┃                   │ change this.                                            ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
+┃                   │ Toggle the “Off the record” mode. This has the same     ┃
+┃                   │ result as using the setup tool to change this.          ┃
+┃                   │ While “Off the record” mode is on, learning from user   ┃
+┃                   │ input is disabled. If learned user input is available,  ┃
+┃ AltGr+F9          │ predictions are usually much better than predictions    ┃
+┃                   │ using only dictionaries. Therefore, one should use this ┃
+┃                   │ option sparingly. Only if one wants to avoid saving     ┃
+┃                   │ secret user input to disk it might make sense to use    ┃
+┃                   │ this option temporarily.                                ┃
+┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ AltGr+F10         │ Open the setup tool                                     ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ AltGr+F12         │ Show related emoji and Unicode symbols or related words ┃
@@ -213,20 +223,32 @@ additional key bindings are available:
 
 Mouse bindings
 
-┏━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃      Mouse event       │                       Effect                       ┃
-┠────────────────────────┼────────────────────────────────────────────────────┨
-┃ Button 1 click on a    │ Commit the candidate clicked on followed by a      ┃
-┃ candidate              │ space (Same as F1…F9).                             ┃
-┠────────────────────────┼────────────────────────────────────────────────────┨
-┃ Control + Button 1     │ Remove clicked candidate from database of learned  ┃
-┃ click on a candidate   │ user input (If possible, if this candidate is not  ┃
-┃                        │ learned from user input, nothing happens).         ┃
-┠────────────────────────┼────────────────────────────────────────────────────┨
-┃ Button 3 click on a    │ Show related emoji and Unicode symbols or related  ┃
-┃ candidate              │ words (Same as Alt+F12).                           ┃
-┠────────────────────────┼────────────────────────────────────────────────────┨
-┃ Control + Button 3     │ Toggle the emoji and Unicode symbol prediction on/ ┃
-┃ click anywhere in the  │ off (Same as Alt+F6). This has the same result as  ┃
-┃ candidate list         │ using the setup tool to change this.               ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃   Mouse event    │                          Effect                          ┃
+┠──────────────────┼──────────────────────────────────────────────────────────┨
+┃ Button 1 click   │ Commit the candidate clicked on followed by a space      ┃
+┃ on a candidate   │ (Same as F1…F9).                                         ┃
+┠──────────────────┼──────────────────────────────────────────────────────────┨
+┃ Control + Button │ Remove clicked candidate from database of learned user   ┃
+┃ 1 click on a     │ input (If possible, if this candidate is not learned     ┃
+┃ candidate        │ from user input, nothing happens).                       ┃
+┠──────────────────┼──────────────────────────────────────────────────────────┨
+┃ Button 3 click   │ Show related emoji and Unicode symbols or related words  ┃
+┃ on a candidate   │ (Same as Alt+F12).                                       ┃
+┠──────────────────┼──────────────────────────────────────────────────────────┨
+┃ Control + Button │ Toggle the emoji and Unicode symbol prediction on/off    ┃
+┃ 3 click anywhere │ (Same as Alt+F6). This has the same result as using the  ┃
+┃ in the candidate │ setup tool to change this.                               ┃
+┃ list             │                                                          ┃
+┠──────────────────┼──────────────────────────────────────────────────────────┨
+┃                  │ Toggle the “Off the record” mode (Same as Alt+F9). This  ┃
+┃                  │ has the same result as using the setup tool to change    ┃
+┃                  │ this.                                                    ┃
+┃ Alt + Button 3   │ While “Off the record” mode is on, learning from user    ┃
+┃ click anywhere   │ input is disabled. If learned user input is available,   ┃
+┃ in the candidate │ predictions are usually much better than predictions     ┃
+┃ list             │ using only dictionaries. Therefore, one should use this  ┃
+┃                  │ option sparingly. Only if one wants to avoid saving      ┃
+┃                  │ secret user input to disk it might make sense to use     ┃
+┃                  │ this option temporarily.                                 ┃
+┗━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
