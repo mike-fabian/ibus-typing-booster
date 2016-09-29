@@ -28,6 +28,7 @@ import sys
 import re
 import gzip
 import json
+import unicodedata
 from difflib import SequenceMatcher
 
 IMPORT_ENCHANT_SUCCESSFUL = False
@@ -865,6 +866,22 @@ class EmojiMatcher():
 
         >>> mq.candidates('🤔', match_limit = 3)
         [('🤔', "visage en pleine réflexion ['réflexion', 'visage']", 2), ('💆\u200d♀', "femme qui se fait masser le visage ['visage']", 1), ('💆\u200d♂', "homme qui se fait masser le visage ['visage']", 1)]
+
+        >>> mq = EmojiMatcher(languages = ['fr_FR'])
+        >>> mq.candidates('2019')
+        [('’', 'U+2019 RIGHT SINGLE QUOTATION MARK', 200)]
+
+        >>> mq.candidates('41')
+        [('A', 'U+41 LATIN CAPITAL LETTER A', 200)]
+
+        >>> mq.candidates('2a')
+        [('*', 'U+2A ASTERISK', 200)]
+
+        This does not work because unicodedata.name(char) fails
+        if for control characters:
+
+        >>> mq.candidates('1b')
+        []
         '''
         # Replace any sequence of white space characters and '_' in
         # the query string with a single ' ':
@@ -928,6 +945,18 @@ class EmojiMatcher():
                 if keyword_good_match not in display_name:
                     display_name += ' [' + keyword_good_match + ']'
                 candidates.append((emoji_key[0], display_name, total_score))
+
+        try:
+            codepoint = int(query_string, 16)
+            if codepoint >= 0x0 and codepoint <= 0x1FFFFF:
+                char = chr(codepoint)
+                candidates.append(
+                    (char,
+                     'U+' + query_string.upper()
+                     + ' ' + unicodedata.name(char),
+                     200))
+        except (ValueError,):
+            pass
 
         sorted_candidates = sorted(candidates,
                                    key = lambda x: (
@@ -996,6 +1025,9 @@ class EmojiMatcher():
 
         >>> matcher.name('⚽')
         'Fussball'
+
+        >>> matcher.name('a')
+        ''
         '''
         for language in _expand_languages(self._languages):
             if ((emoji_string, language) in self._emoji_dict
