@@ -43,11 +43,21 @@ DATADIR = os.path.join(os.path.dirname(__file__), '../data')
 # VALID_CATEGORIES and VALID_RANGES are taken from ibus-uniemoji.
 
 VALID_CATEGORIES = (
+    'Cf', # Other, Format (RIGHT-TO-LEFT MARK ...)
+    'Pc', # Punctuation, Connector
+    'Pd', # Punctuation, dash
+    'Pe', # Punctuation, Close
+    'Pi', # Punctuation, Initial quote
+    'Pf', # Punctuation, Final quote
+    'Ps', # Punctuation, Open
+    'Po', # Punctuation, other
     'Sm', # Symbol, math
     'So', # Symbol, other
     'Sc', # Symbol, Currency
-    'Pd', # Punctuation, dash
-    'Po', # Punctuation, other
+    'Sk', # Symbol, Modifier
+    'Zl', # Separator, Line
+    'Zp', # Separator, Paragraph
+    'Zs', # Separator, Space
 )
 
 VALID_RANGES = (
@@ -319,8 +329,7 @@ class EmojiMatcher():
                 codepoint_string, name, category = line.split(';')[:3]
                 codepoint_integer = int(codepoint_string, 16)
                 emoji_string = chr(codepoint_integer)
-                if ((category not in VALID_CATEGORIES
-                     or not _in_range(codepoint_integer))
+                if (category not in VALID_CATEGORIES
                     and emoji_string not in VALID_CHARACTERS):
                     continue
                 self._add_to_emoji_dict(
@@ -934,6 +943,12 @@ class EmojiMatcher():
                     display_name = emoji_value['names'][0]
                 else:
                     display_name = self.name(emoji_key[0])
+                if (len(emoji_key[0]) == 1
+                    and unicodedata.category(emoji_key[0]) in ('Cc', 'Cf', 'Zs')):
+                    # Add the code point to the display name of
+                    # “invisible” characters:
+                    display_name = ('U+%X' %ord(emoji_key[0])
+                                    + ' ' + display_name)
                 # If the match was good because something else
                 # but the main name had a good match, show it in
                 # the display name to make the user understand why
