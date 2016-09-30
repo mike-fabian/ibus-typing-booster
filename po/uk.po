@@ -4,49 +4,49 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-09-20 14:15+0200\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-09-18 11:15-0400\n"
+"POT-Creation-Date: 2016-10-10 10:11+0200\n"
+"PO-Revision-Date: 2016-09-23 07:20-0400\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Zanata 3.9.5\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: engine/hunspell_table.py:899 engine/hunspell_table.py:919
+#: engine/hunspell_table.py:902 engine/hunspell_table.py:922
 msgid "Off"
 msgstr "Вимкн."
 
-#: engine/hunspell_table.py:904 engine/hunspell_table.py:924
+#: engine/hunspell_table.py:907 engine/hunspell_table.py:927
 msgid "On"
 msgstr "Увімкн."
 
-#: engine/hunspell_table.py:909 engine/hunspell_table.py:911
+#: engine/hunspell_table.py:912 engine/hunspell_table.py:914
 #: setup/setup.glade:299
 msgid "Unicode symbols and emoji predictions"
 msgstr "Пропозиці для символів Unicode та емодзі"
 
-#: engine/hunspell_table.py:929 engine/hunspell_table.py:930
+#: engine/hunspell_table.py:932 engine/hunspell_table.py:933
 #: setup/setup.glade:317
 msgid "Off the record mode"
 msgstr "Режим без запису"
 
-#: engine/hunspell_table.py:1000
+#: engine/hunspell_table.py:1003
 msgid "Preedit input method"
 msgstr "Спосіб введення попереднього редагування"
 
-#: engine/hunspell_table.py:1001
+#: engine/hunspell_table.py:1004
 msgid "Switch preedit input method"
 msgstr "Перемкнути спосіб введення попереднього редагування"
 
-#: engine/hunspell_table.py:1183
+#: engine/hunspell_table.py:1186
 msgid "Setup"
 msgstr "Налаштування"
 
-#: engine/hunspell_table.py:1186
+#: engine/hunspell_table.py:1189
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Налаштувати «%(name)s» для ibus-typing-booster"
@@ -168,7 +168,6 @@ msgstr ""
 #: setup/setup.glade:196
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
-""
 msgstr ""
 "Не показувати пропозицій, якщо кількість введених символів є меншою за "
 "вказану."
@@ -282,10 +281,20 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default).\n"
 msgstr ""
+"Символи з цього списку надаватимуть змогу надсилати варіант автоматично із  "
+"додаванням після них пробілу. Наприклад, якщо символом автоматичного "
+"надсилання є «.», ви зможете не вводити пробіл вручну після кінця речення. "
+"Ви можете вказати у цьому списку довільні символи. Типовим списком символів "
+"може бути «.,;:?!)». Вам не варто включати до цього списку символи, які "
+"використовуються у вашому способі введення. Наприклад, якщо ви "
+"використовуєте Latin-Pre (t-latn-pre), не варто включати до списку «.», "
+"оскільки тоді ви не зможете вводити «.s», щоб отримати «ṡ». Ви також можете "
+"повністю вимкнути цю можливість, якщо спорожните список (тобто повернете "
+"йому типове значення).\n"
 
 #: setup/setup.glade:339
 msgid "Auto commit characters:"
-msgstr ""
+msgstr "Автонадсилання символів:"
 
 #: setup/setup.glade:386
 msgid "Options"
@@ -337,7 +346,7 @@ msgid "<b>Online documentation:</b>"
 msgstr "<b>Документація у інтернеті:</b>"
 
 #. This is the “About” tab in the setup tool.
-#. 
+#.
 #. That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
 #: setup/setup.glade:638
 msgid "About"
@@ -362,6 +371,6 @@ msgstr ""
 "вибрати бажане слово зі списку пропозицій, отже пришвидшити введення тексту "
 "та поліпшити його якість."
 
-#: typing-booster.appdata.xml:415
+#: typing-booster.appdata.xml:437
 msgid "Mike FABIAN"
 msgstr "Mike FABIAN"

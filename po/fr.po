@@ -6,48 +6,48 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-09-20 14:15+0200\n"
+"POT-Creation-Date: 2016-10-10 10:11+0200\n"
+"PO-Revision-Date: 2016-10-07 02:06-0400\n"
+"Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
+"Language-Team: French\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-08-31 02:40-0400\n"
-"Last-Translator: José Fournier <jaaf64@zoraldia.com>\n"
-"Language-Team: French\n"
-"Language: fr\n"
 "X-Generator: Zanata 3.9.5\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: engine/hunspell_table.py:899 engine/hunspell_table.py:919
+#: engine/hunspell_table.py:902 engine/hunspell_table.py:922
 msgid "Off"
-msgstr ""
+msgstr "Désactivé"
 
-#: engine/hunspell_table.py:904 engine/hunspell_table.py:924
+#: engine/hunspell_table.py:907 engine/hunspell_table.py:927
 msgid "On"
-msgstr ""
+msgstr "Activé"
 
-#: engine/hunspell_table.py:909 engine/hunspell_table.py:911
+#: engine/hunspell_table.py:912 engine/hunspell_table.py:914
 #: setup/setup.glade:299
 msgid "Unicode symbols and emoji predictions"
-msgstr ""
+msgstr "Prédictions des émoticônes et symboles unicodes"
 
-#: engine/hunspell_table.py:929 engine/hunspell_table.py:930
+#: engine/hunspell_table.py:932 engine/hunspell_table.py:933
 #: setup/setup.glade:317
 msgid "Off the record mode"
-msgstr ""
+msgstr "Mode sans enregistrement"
 
-#: engine/hunspell_table.py:1000
+#: engine/hunspell_table.py:1003
 msgid "Preedit input method"
 msgstr "Méthode de saisie pour la pré-édition."
 
-#: engine/hunspell_table.py:1001
+#: engine/hunspell_table.py:1004
 msgid "Switch preedit input method"
 msgstr "Changer la méthode de pré-édition"
 
-#: engine/hunspell_table.py:1183
+#: engine/hunspell_table.py:1186
 msgid "Setup"
 msgstr "Configuration"
 
-#: engine/hunspell_table.py:1186
+#: engine/hunspell_table.py:1189
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Configurer ibus-typing-booster « %(name)s »"
@@ -55,7 +55,7 @@ msgstr "Configurer ibus-typing-booster « %(name)s »"
 #: setup/main.py:107
 #, python-format
 msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
-msgstr "Format inconnu du nom du moteur : IBUS_ENGINE_NAME=%(name)s"
+msgstr "Format du nom du moteur inconnu : IBUS_ENGINE_NAME=%(name)s"
 
 #: setup/main.py:113
 msgid "IBUS_ENGINE_NAME environment variable is not set."
@@ -81,8 +81,7 @@ msgstr "Préférences pour ibus-typing-booster « %(symbol)s »"
 
 #: setup/main.py:355
 msgid "Another instance of this app is already running."
-msgstr ""
-"Une autre instance de cette application est déjà en cours d'exécution."
+msgstr "Une autre instance de cette application est déjà en cours d'exécution."
 
 #: setup/main.py:443
 msgid "Open File ..."
@@ -128,6 +127,10 @@ msgid ""
 "then necessary to show the list of suggestions. After a commit the "
 "suggestions are hidden again until the next Tab key is typed."
 msgstr ""
+"Si cette option est activée, les suggestions ne sont pas montrées par "
+"défaut. Appuyer sur Tab est alors nécessaire pour montrer la liste des "
+"suggestions. Après validation, les suggestions sont de nouveau cachées "
+"jusqu'à ce que la touche Tab soit appuyée."
 
 #: setup/setup.glade:107
 msgid ""
@@ -165,7 +168,6 @@ msgstr ""
 #: setup/setup.glade:196
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
-""
 msgstr ""
 "Ne pas afficher de suggestion quand moins que ce nombre de caractères a été "
 "saisi."
@@ -217,8 +219,8 @@ msgid ""
 "This option adds British English as a second language to use in addition to "
 "the main language of this input method."
 msgstr ""
-"Cette option ajoute l'anglais britannique comme seconde langue d'emploi, en "
-"plus de la langue principale pour cette méthode de saisie."
+"Cette option ajoute l'anglais britannique comme seconde langue utilisable, "
+"en plus de la langue principale pour cette méthode de saisie."
 
 #: setup/setup.glade:281
 msgid "Remember last used preedit input method"
@@ -245,6 +247,12 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
+"Si les émoticônes et symboles Unicode doivent être inclus dans les "
+"prédictions. Les émoticônes sont des pictogrammes tels que ☺♨⛵… Les symboles "
+"Unicode sont d'autres symboles tels que ceux pour les mathématiques (∀∑∯…), "
+"les flèches (←↑↔…), les monnaies (€₹₺…), le braille (⠥⠩…), et de nombreux "
+"autres. Ils ne sont techniquement pas des émoticônes mais sont néanmoins des "
+"symboles utiles."
 
 #: setup/setup.glade:321
 msgid ""
@@ -254,6 +262,13 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
+"Quand le mode « Sans enregistrement » est activé, l'apprentissage à partir "
+"de la saisie de l'utilisateur est désactivé. Si les saisies d'apprentissage "
+"sont disponibles pour l'utilisateur, les prédictions sont généralement bien "
+"meilleures que les prédictions utilisant uniquement les dictionnaires. "
+"Cependant, cette option est à utiliser avec précaution. Seul quelqu'un "
+"souhaitant éviter la sauvegarde sur le disque de contenu secret saisi par "
+"l'utilisateur pourrait souhaiter activer cette option temporairement."
 
 #: setup/setup.glade:337
 msgid ""
@@ -267,10 +282,20 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default).\n"
 msgstr ""
+"Les caractères de cette liste provoquent la validation automatique de la pré-"
+"édition, en lui ajoutant une espace. Par exemple, si « . » est un caractère "
+"d'auto validation, cela vous évite de saisie une espace manuellement à la "
+"fin de chaque phrase. Vous pouvez éditer cette liste librement, une valeur "
+"raisonnable pourrait être « .,;:?!) ». Vous ne devriez pas ajouter à cette "
+"liste de caractères nécessaires à votre méthode de saisie, par exemple si "
+"vous utilisez Latin-Pre (t-latn-pre) cela serait une mauvaise idée d'ajouter "
+"« . » car cela vous empêcherait de saisir « .s » pour obtenir « ṡ ». Vous "
+"pouvez aussi désactiver complètement cette fonctionnalité en vidant la liste "
+"(ce qui est le comportement par défaut).\n"
 
 #: setup/setup.glade:339
 msgid "Auto commit characters:"
-msgstr ""
+msgstr "Caractères d'auto-validation :"
 
 #: setup/setup.glade:386
 msgid "Options"
@@ -296,7 +321,7 @@ msgstr "Apprendre votre style en lisant un fichier texte"
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
-"Supprimer toutes les données de langues personnelles apprises depuis la "
+"Supprimer toutes les données linguistiques personnelles apprises depuis la "
 "saisie ou la lecture de fichiers"
 
 #: setup/setup.glade:487
@@ -309,22 +334,22 @@ msgstr "Dictionnaires et données personnelles"
 
 #: setup/setup.glade:569
 msgid "A completion input method to speedup typing."
-msgstr ""
+msgstr "Une méthode d'auto-complètement  pour accélérer la saisie."
 
 #: setup/setup.glade:595
 msgid "<b>Home page:</b>"
-msgstr ""
+msgstr "<b>Site web :</b>"
 
 #: setup/setup.glade:607
 msgid "<b>Online documentation:</b>"
-msgstr ""
+msgstr "<b>Documentation en ligne :</b>"
 
 #. This is the “About” tab in the setup tool.
-#. 
+#.
 #. That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
 #: setup/setup.glade:638
 msgid "About"
-msgstr ""
+msgstr "À propos"
 
 #: typing-booster.appdata.xml:5
 msgid "Typing Booster"
@@ -341,11 +366,10 @@ msgid ""
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
 "L'accélérateur de saisie « Ibus-typing-booster » est une méthode de saisie "
-"prédictive et qui prédit des mots complets à partir du contexte et de la "
-"saisie partielle. Il suffit simplement de sélectionner le mot désiré à "
-"partir d'une liste de suggestions, et ainsi améliorer sa vitesse d'écriture "
-"et son orthographe."
+"qui prédit des mots complets à partir du contexte et de la saisie "
+"partielle.  On peut ainsi améliorer sa vitesse d'écriture et son orthographe "
+"en sélectionnant simplement le mot désiré dans une liste de suggestions."
 
-#: typing-booster.appdata.xml:415
+#: typing-booster.appdata.xml:437
 msgid "Mike FABIAN"
 msgstr "Mike FABIAN"

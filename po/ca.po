@@ -3,49 +3,49 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-09-20 14:15+0200\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2016-10-10 10:11+0200\n"
 "PO-Revision-Date: 2016-08-19 04:06-0400\n"
 "Last-Translator: Copied by Zanata <copied-by-zanata@zanata.org>\n"
 "Language-Team: Catalan\n"
 "Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Zanata 3.9.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: engine/hunspell_table.py:899 engine/hunspell_table.py:919
+#: engine/hunspell_table.py:902 engine/hunspell_table.py:922
 msgid "Off"
 msgstr ""
 
-#: engine/hunspell_table.py:904 engine/hunspell_table.py:924
+#: engine/hunspell_table.py:907 engine/hunspell_table.py:927
 msgid "On"
 msgstr ""
 
-#: engine/hunspell_table.py:909 engine/hunspell_table.py:911
+#: engine/hunspell_table.py:912 engine/hunspell_table.py:914
 #: setup/setup.glade:299
 msgid "Unicode symbols and emoji predictions"
 msgstr ""
 
-#: engine/hunspell_table.py:929 engine/hunspell_table.py:930
+#: engine/hunspell_table.py:932 engine/hunspell_table.py:933
 #: setup/setup.glade:317
 msgid "Off the record mode"
 msgstr ""
 
-#: engine/hunspell_table.py:1000
+#: engine/hunspell_table.py:1003
 #, fuzzy
 msgid "Preedit input method"
 msgstr "Mètode d'entrada:"
 
-#: engine/hunspell_table.py:1001
+#: engine/hunspell_table.py:1004
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1183
+#: engine/hunspell_table.py:1186
 msgid "Setup"
 msgstr "Preferències"
 
-#: engine/hunspell_table.py:1186
+#: engine/hunspell_table.py:1189
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Preferències per a l'ibus-typing-booster “%(name)s”"
@@ -158,7 +158,6 @@ msgstr ""
 #: setup/setup.glade:196
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
-""
 msgstr ""
 
 #: setup/setup.glade:197
@@ -294,7 +293,7 @@ msgid "<b>Online documentation:</b>"
 msgstr ""
 
 #. This is the “About” tab in the setup tool.
-#. 
+#.
 #. That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
 #: setup/setup.glade:638
 msgid "About"
@@ -316,6 +315,6 @@ msgid ""
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
 
-#: typing-booster.appdata.xml:415
+#: typing-booster.appdata.xml:437
 msgid "Mike FABIAN"
 msgstr ""
