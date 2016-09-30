@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 10 Oct 2016 Released 1.5.8 version
+* Pull translations from Zanata (uk and fr updated)
+* Match many more Unicode characters in the emoji matcher
+* Make it possible to match Unicode characters by typing the hexadecimal code point
+* If one tries to set a non-existing input method, don’t crash, only print an error in the debug log
+* Add key and mouse bindings for “Off the record” mode to README
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 19 Sep 2016 Released 1.5.7 version
 * Pull translations from Zanata (de, pl, uk updated)
 * Make the list of characters to auto commit configurable (Empty list by default)

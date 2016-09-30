@@ -16,6 +16,29 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.8" date="2016-10-10" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Pull translations from Zanata (uk and fr updated)
+          </li>
+          <li>
+            Match many more Unicode characters in the emoji matcher
+          </li>
+          <li>
+            Make it possible to match Unicode characters by typing the
+            hexadecimal code point
+          </li>
+          <li>
+            If one tries to set a non-existing input method, don’t
+            crash, only print an error in the debug log
+          </li>
+          <li>
+            Add key and mouse bindings for “Off the record” mode to README
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.7" date="2016-09-19" urgency="medium">
       <description>
         <ul>
