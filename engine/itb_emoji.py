@@ -373,7 +373,7 @@ class EmojiMatcher():
             # they are nicer for display. Therefore, if a name
             # contains such characters keep both the original name
             # (for display) and the name with these characters removed
-            display_name = emojione_value['name']
+            display_name = emojione_value['name'].lower()
             match_name = re.sub(r' ?[(,)] ?', r' ', display_name).strip(' ')
             names = [display_name]
             shortname = emojione_value[
@@ -696,10 +696,10 @@ class EmojiMatcher():
         ('👎🏻', 'thumbs down sign tone 1 “thumbdown tone1”')
 
         >>> mq.candidates('tone1')[0][:2]
-        ('🏻', 'emoji modifier Fitzpatrick type-1-2 “light skin tone”')
+        ('🏻', 'emoji modifier fitzpatrick type-1-2 “light skin tone”')
 
         >>> mq.candidates('tone5')[0][:2]
-        ('🏿', 'emoji modifier Fitzpatrick type-6 “dark skin tone”')
+        ('🏿', 'emoji modifier fitzpatrick type-6 “dark skin tone”')
 
         >>> mq.candidates('a')[0][:2]
         ('🅰', 'negative squared latin capital letter a “A button (blood type)”')
