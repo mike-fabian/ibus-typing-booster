@@ -155,7 +155,8 @@ class editor(object):
         self.db = database
         self._config = config
         self._name = self.db.ime_properties.get('name')
-        self._config_section = "engine/typing-booster/%s" % self._name
+        self._config_section = itb_util.config_section_normalize(
+            "engine/typing-booster/%s" % self._name)
         self._emoji_predictions = variant_to_value(self._config.get_value(
             self._config_section,
             'emojipredictions'))
@@ -797,7 +798,7 @@ class editor(object):
 class TypingBoosterEngine(IBus.Engine):
     '''The IBus Engine for ibus-typing-booster'''
 
-    def __init__ (self, bus, obj_path, db ):
+    def __init__ (self, bus, obj_path, db, unit_test = False):
         global DEBUG_LEVEL
         try:
             DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
@@ -809,6 +810,7 @@ class TypingBoosterEngine(IBus.Engine):
                 % (bus, obj_path, db))
         super(TypingBoosterEngine, self).__init__(
             connection=bus.get_connection(), object_path=obj_path)
+        self._unit_test = unit_test
         self._input_purpose = 0
         self._has_input_purpose = False
         if hasattr(IBus, 'InputPurpose'):
@@ -820,8 +822,13 @@ class TypingBoosterEngine(IBus.Engine):
         self.db = db
         self._setup_pid = 0
         self._name = self.db.ime_properties.get('name')
-        self._config_section = "engine/typing-booster/%s" % self._name
-        self._config = self._bus.get_config ()
+        self._config_section = itb_util.config_section_normalize(
+            "engine/typing-booster/%s" % self._name)
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                'TypingBoosterEngine.__init__() self._config_section = %s\n'
+                % self._config_section)
+        self._config = self._bus.get_config()
         self._config.connect('value-changed', self.__config_value_changed_cb)
 
         self._page_size = variant_to_value(self._config.get_value(
@@ -877,7 +884,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._editor = editor(
             self._config,
             self.db,
-            IBus.LookupTable.new(
+            IBus.LookupTable(
                 page_size = self._page_size,
                 cursor_pos = 0,
                 cursor_visible = False,
@@ -949,15 +956,31 @@ class TypingBoosterEngine(IBus.Engine):
         self.reset()
 
     def get_current_imes_max(self):
-        '''Get maximum allowed number of current imes from editor'''
+        '''Get maximum allowed number of current imes from editor
+
+        :rtype: integer
+        '''
         return self._editor.get_current_imes_max()
 
     def get_current_imes(self):
-        '''Get current list of input methods from editor'''
+        '''Get current list of input methods from editor
+
+        :rtype: boolean
+        '''
         return self._editor.get_current_imes()
 
-    def set_current_imes(self, imes):
-        '''Set current list of input methods in editor'''
+    def set_current_imes(self, imes, update_dconf = True):
+        '''Set current list of input methods in editor
+
+        :param imes: List of input methods
+        :type imes: List of strings
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
         if imes == self.get_current_imes(): # nothing to do
             return
         if len(imes) > self.get_current_imes_max():
@@ -968,17 +991,101 @@ class TypingBoosterEngine(IBus.Engine):
                 + 'Trying to set: %s\n' %imes
                 + 'Really setting: %s\n' %imes[:self.get_current_imes_max()])
             imes = imes[:self.get_current_imes_max()]
-        if self._remember_last_used_preedit_ime:
-            self._config.set_value(
-                self._config_section,
-                'inputmethod',
-                GLib.Variant.new_string(','.join(imes)))
         self._editor.set_current_imes(imes)
         self.update_preedit_ime_menu_dicts()
         self._init_or_update_property_menu_preedit_ime(
             self.preedit_ime_menu, current_mode = 0)
         if not self._editor.is_empty():
             self._update_ui()
+        if self._remember_last_used_preedit_ime and update_dconf:
+            self._config.set_value(
+                self._config_section,
+                'inputmethod',
+                GLib.Variant.new_string(','.join(imes)))
+
+    def set_dictionary_names(self, dictionary_names, update_dconf = True):
+        '''Set current dictionary names
+
+        :param dictionary_names: List of names of dictionaries to use
+        :type dictionary_names: List of strings
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        if dictionary_names == self._editor._dictionary_names: # nothing to do
+            return
+        self._editor._dictionary_names = dictionary_names
+        self.db.hunspell_obj.set_dictionary_names(dictionary_names)
+        if self._editor._emoji_predictions:
+            if (not self._editor.emoji_matcher
+                or
+                self._editor.emoji_matcher.get_languages()
+                != dictionary_names):
+                self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
+                    languages = dictionary_names)
+        if not self._editor.is_empty():
+            self._update_ui()
+        if update_dconf:
+            self._config.set_value(
+                self._config_section,
+                'dictionary',
+                GLib.Variant.new_string(','.join(dictionary_names)))
+
+    def get_dictionary_names(self):
+        '''Get current list of dictionary names
+
+        :rtype: list of strings
+        '''
+        # It is important to return a copy, we do not want to change
+        # the private member variable directly.
+        return self._editor._dictionary_names[:]
+
+    def set_add_direct_input(self, mode, update_dconf = True):
+        '''Set the current value of the “Add direct input” mode
+
+        :param mode: Whether “Add direct input” mode is on or off
+        :type mode: boolean
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        imes = self.get_current_imes()
+        dictionary_names = self.db.hunspell_obj.get_dictionary_names()
+        self._editor._add_direct_input = mode
+        if mode == True:
+            if 'NoIme' not in imes:
+                imes.append('NoIme')
+            if 'en_GB' not in dictionary_names:
+                dictionary_names.append('en_GB')
+        else:
+            imes = [x for x in imes if x != 'NoIme']
+            if not imes:
+                imes = ['NoIme']
+            # always keep the first dictionary, i.e. always keep
+            # the original one from the config file
+            dictionary_names = (
+                [dictionary_names[0]]
+                + [x for x in dictionary_names[1:] if x != 'en_GB'])
+        self.set_dictionary_names(dictionary_names, update_dconf = True)
+        self.set_current_imes(imes, update_dconf = True)
+        if update_dconf:
+            self._config.set_value(
+                self._config_section,
+                'adddirectinput',
+                GLib.Variant.new_boolean(mode))
+
+    def get_add_direct_input(self):
+        '''Get the current value of the “Add direct input” mode
+
+        :rtype: boolean
+        '''
+        return self._editor._add_direct_input
 
     def update_preedit_ime_menu_dicts(self):
         self.preedit_ime_properties = {}
@@ -1220,13 +1327,13 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if ibus_property.startswith(
                 self.emoji_prediction_mode_menu['key'] + '.'):
-            self._set_emoji_prediction_mode(
+            self.set_emoji_prediction_mode(
                 bool(self.emoji_prediction_mode_properties
                      [ibus_property]['number']))
             return
         if ibus_property.startswith(
                 self.off_the_record_mode_menu['key'] + '.'):
-            self._set_off_the_record_mode(
+            self.set_off_the_record_mode(
                 bool(self.off_the_record_mode_properties
                      [ibus_property]['number']))
             return
@@ -1396,7 +1503,10 @@ class TypingBoosterEngine(IBus.Engine):
         # indicate that the lookup table is being updated:
         super(TypingBoosterEngine, self).update_auxiliary_text(
             IBus.Text.new_from_string(BUSY_SYMBOL), True)
-        GLib.idle_add(self._update_candidates_and_lookup_table_and_aux)
+        if self._unit_test:
+            self._update_candidates_and_lookup_table_and_aux()
+        else:
+            GLib.idle_add(self._update_candidates_and_lookup_table_and_aux)
 
     def _lookup_related_candidates(self):
         '''Lookup related (similar) emoji or related words (synonyms,
@@ -1620,7 +1730,7 @@ class TypingBoosterEngine(IBus.Engine):
         if len(tokens) > 1:
             self._editor._pp_phrase = tokens[-2]
 
-    def _set_emoji_prediction_mode(self, mode, update_dconf = True):
+    def set_emoji_prediction_mode(self, mode, update_dconf = True):
         '''Sets the emoji prediction mode
 
         :param mode: Whether to switch emoji prediction on or off
@@ -1634,18 +1744,13 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "_set_emoji_prediction_mode(%s, update_dconf = %s)\n"
+                "set_emoji_prediction_mode(%s, update_dconf = %s)\n"
                 %(mode, update_dconf))
         if mode == self._editor._emoji_predictions:
             return
         self._editor._emoji_predictions = mode
         self._init_or_update_property_menu(
             self.emoji_prediction_mode_menu, mode)
-        if update_dconf:
-            self._config.set_value(
-                self._config_section,
-                'emojipredictions',
-                GLib.Variant.new_boolean(mode))
         if (self._editor._emoji_predictions
             and (not self._editor.emoji_matcher
                  or
@@ -1653,8 +1758,14 @@ class TypingBoosterEngine(IBus.Engine):
                  != self._editor._dictionary_names)):
             self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
                 languages = self._editor._dictionary_names)
+        self._update_ui()
+        if update_dconf:
+            self._config.set_value(
+                self._config_section,
+                'emojipredictions',
+                GLib.Variant.new_boolean(mode))
 
-    def _toggle_emoji_prediction_mode(self, update_dconf = True):
+    def toggle_emoji_prediction_mode(self, update_dconf = True):
         '''Toggles whether emoji predictions are shown or not
 
         :param update_dconf: Whether to write the change to dconf.
@@ -1664,10 +1775,17 @@ class TypingBoosterEngine(IBus.Engine):
                              key is changed twice in a short time.
         :type update_dconf: boolean
         '''
-        self._set_emoji_prediction_mode(
+        self.set_emoji_prediction_mode(
             not self._editor._emoji_predictions, update_dconf)
 
-    def _set_off_the_record_mode(self, mode, update_dconf = True):
+    def get_emoji_prediction_mode(self):
+        '''Returns the current value of the emoji prediction mode
+
+        :rtype: boolean
+        '''
+        return self._editor._emoji_predictions
+
+    def set_off_the_record_mode(self, mode, update_dconf = True):
         '''Sets the “Off the record” mode
 
         :param mode: Whether to prevent saving input to the user database or not
@@ -1681,20 +1799,21 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "_set_off_the_record_mode(%s, update_dconf = %s)\n"
+                "set_off_the_record_mode(%s, update_dconf = %s)\n"
                 %(mode, update_dconf))
         if mode == self._off_the_record:
             return
         self._off_the_record = mode
         self._init_or_update_property_menu(
             self.off_the_record_mode_menu, mode)
+        self._update_ui() # because of the indicator in the auxiliary text
         if update_dconf:
             self._config.set_value(
                 self._config_section,
                 'offtherecord',
                 GLib.Variant.new_boolean(mode))
 
-    def _toggle_off_the_record_mode(self, update_dconf = True):
+    def toggle_off_the_record_mode(self, update_dconf = True):
         '''Toggles whether input is saved to the user database or not
 
         :param update_dconf: Whether to write the change to dconf.
@@ -1704,8 +1823,255 @@ class TypingBoosterEngine(IBus.Engine):
                              key is changed twice in a short time.
         :type update_dconf: boolean
         '''
-        self._set_off_the_record_mode(
+        self.set_off_the_record_mode(
             not self._off_the_record, update_dconf)
+
+    def get_off_the_record_mode(self):
+        '''Returns the current value of the “off the record” mode
+
+        :rtype: boolean
+        '''
+        return self._off_the_record
+
+    def set_auto_commit_characters(self, auto_commit_characters,
+                                   update_dconf = True):
+        '''Sets the auto commit characters
+
+        :param auto_commit_characters: The characters which trigger a commit
+                                       with an extra space
+        :type auto_commit_characters: string
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_auto_commit_characters(%s, update_dconf = %s)\n"
+                %(auto_commit_characters, update_dconf))
+        if auto_commit_characters == self._auto_commit_characters:
+            return
+        self._auto_commit_characters = auto_commit_characters
+        if update_dconf:
+            self._config.set_value(
+                self._config_section,
+                'autocommitcharacters',
+                GLib.Variant.new_string(auto_commit_characters))
+
+    def get_auto_commit_characters(self):
+        '''Returns the current auto commit characters
+
+        :rtype: string
+        '''
+        return self._auto_commit_characters
+
+    def set_tab_enable(self, mode, update_dconf = True):
+        '''Sets the “Tab enable” mode
+
+        :param mode: Whether to show a candidate list only when typing Tab
+        :type mode: boolean
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_tab_enable(%s, update_dconf = %s)\n"
+                %(mode, update_dconf))
+        if mode == self._tab_enable:
+            return
+        self._tab_enable = mode
+        self._editor._tab_enable = mode
+        if update_dconf:
+            self._config.set_value(
+                self._config_section,
+                'tabenable',
+                GLib.Variant.new_boolean(mode))
+
+    def get_tab_enable(self):
+        '''Returns the current value of the “Tab enable” mode
+
+        :rtype: boolean
+        '''
+        return self._tab_enable
+
+    def set_remember_last_used_preedit_ime(self, mode, update_dconf = True):
+        '''Sets the “Remember last used preëdit ime” mode
+
+        :param mode: Whether to remember the input method used last for
+                     the preëdit
+        :type mode: boolean
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_remember_last_used_preedit_ime(%s, update_dconf = %s)\n"
+                %(mode, update_dconf))
+        if mode == self._remember_last_used_preedit_ime:
+            return
+        self._remember_last_used_preedit_ime = mode
+        if update_dconf:
+            self._config.set_value(
+                self._config_section,
+                'rememberlastusedpreeditime',
+                GLib.Variant.new_boolean(mode))
+
+    def get_remember_last_used_preedit_ime(self):
+        '''Returns the current value of the “Remember last used preëdit ime” mode
+
+        :rtype: boolean
+        '''
+        return self._remember_last_used_preedit_ime
+
+    def set_page_size(self, page_size, update_dconf = True):
+        '''Sets the page size of the lookup table
+
+        :param page_size: The page size of the lookup table
+        :type mode: integer >= 1 and <= 9
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_page_size(%s, update_dconf = %s)\n"
+                %(page_size, update_dconf))
+        if page_size == self._page_size:
+            return
+        if page_size >=1 and page_size <= 9:
+            self._page_size = page_size
+            self._editor.set_lookup_table(
+                IBus.LookupTable(
+                    page_size = self._page_size,
+                    cursor_pos = 0,
+                    cursor_visible = False,
+                    round = True))
+            self.reset()
+            if update_dconf:
+                self._config.set_value(
+                    self._config_section,
+                    'pagesize',
+                    GLib.Variant.new_int32(page_size))
+
+    def get_page_size(self):
+        '''Returns the current page size of the lookup table
+
+        :rtype: integer
+        '''
+        return self._page_size
+
+    def set_min_char_complete(self, min_char_complete, update_dconf = True):
+        '''Sets the minimum number of characters to try completion
+
+        :param min_char_complete: The minimum number of characters to try completion
+        :type mode: integer >= 1 and <= 9
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_min_char_complete(%s, update_dconf = %s)\n"
+                %(min_char_complete, update_dconf))
+        if min_char_complete == self._editor._min_char_complete:
+            return
+        if min_char_complete >=1 and min_char_complete <= 9:
+            self._editor._min_char_complete = min_char_complete
+            self.reset()
+            if update_dconf:
+                self._config.set_value(
+                    self._config_section,
+                    'mincharcomplete',
+                    GLib.Variant.new_int32(min_char_complete))
+
+    def get_min_char_complete(self):
+        '''Returns the current minimum number of characters to try completion
+
+        :rtype: integer
+        '''
+        return self._editor._min_char_complete
+
+    def set_show_number_of_candidates(self, mode, update_dconf = True):
+        '''Sets the “Show number of candidates” mode
+
+        :param mode: Whether to show the number of candidates in the auxiliary text
+        :type mode: boolean
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_show_number_of_candidates(%s, update_dconf = %s)\n"
+                %(mode, update_dconf))
+        if mode == self._show_number_of_candidates:
+            return
+        self._show_number_of_candidates = mode
+        self.reset()
+        if update_dconf:
+            self._config.set_value(
+                self._config_section,
+                'shownumberofcandidates',
+                GLib.Variant.new_boolean(mode))
+
+    def get_show_number_of_candidates(self):
+        '''Returns the current value of the “Show number of candidates” mode
+
+        :rtype: boolean
+        '''
+        return self._show_number_of_candidates
+
+    def set_use_digits_as_select_keys(self, mode, update_dconf = True):
+        '''Sets the “Use digits as select keys” mode
+
+        :param mode: Whether to use digits as select keys
+        :type mode: boolean
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_use_digits_as_select_keys(%s, update_dconf = %s)\n"
+                %(mode, update_dconf))
+        if mode == self._use_digits_as_select_keys:
+            return
+        self._use_digits_as_select_keys = mode
+        self.reset()
+        if update_dconf:
+            self._config.set_value(
+                self._config_section,
+                'usedigitsasselectkeys',
+                GLib.Variant.new_boolean(mode))
+
+    def get_use_digits_as_select_keys(self):
+        '''Returns the current value of the “Use digits as select keys” mode
+
+        :rtype: boolean
+        '''
+        return self._use_digits_as_select_keys
 
     def do_candidate_clicked(self, index, button, state):
         '''Called when a candidate in the lookup table
@@ -1733,14 +2099,52 @@ class TypingBoosterEngine(IBus.Engine):
             self._start_setup()
             return
         if button == 3 and (state & IBus.ModifierType.CONTROL_MASK):
-            self._toggle_emoji_prediction_mode()
+            self.toggle_emoji_prediction_mode()
             return
         if button == 3 and (state & IBus.ModifierType.MOD1_MASK):
-            self._toggle_off_the_record_mode()
+            self.toggle_off_the_record_mode()
             return
         if button == 3:
             self._lookup_related_candidates()
             return
+
+    def return_false(self, keyval, keycode, state):
+        '''A replacement for “return False” in do_process_key_event()
+
+        do_process_key_event should return “True” if a key event has
+        been handled completely. It should return “False” if the key
+        event should be passed to the application.
+
+        But just doing “return False” doesn’t work well when trying to
+        do the unit tests. The MockEngine class in the unit tests
+        cannot get that return value. Therefore, it cannot do the
+        necessary updates to the self._mock_committed_text etc. which
+        prevents proper testing of the effects of such keys passed to
+        the application. Instead of “return False”, one can also use
+        self.forward_key_event(keyval, keycode, keystate) to pass the
+        key to the application. And this works fine with the unit
+        tests because a forward_key_event function is implemented in
+        MockEngine as well which then gets the key and can test its
+        effects.
+
+        Unfortunately, “forward_key_event()” does not work in Qt5
+        applications because the ibus module in Qt5 does not implement
+        “forward_key_event()”. Therefore, always using
+        “forward_key_event()” instead of “return False” in
+        “do_process_key_event()” would break ibus-typing-booster
+        completely for all Qt5 applictions.
+
+        To work around this problem and make unit testing possible
+        without breaking Qt5 applications, we use this helper function
+        which uses “forward_key_event()” when unit testing and “return
+        False” during normal usage.
+
+        '''
+        if self._unit_test:
+            self.forward_key_event(keyval, keycode, state)
+            return True
+        else:
+            return False
 
     def do_process_key_event(self, keyval, keycode, state):
         '''Process Key Events
@@ -1750,7 +2154,8 @@ class TypingBoosterEngine(IBus.Engine):
         if (self._has_input_purpose
             and self._input_purpose
             in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN]):
-            return False
+            return self.return_false(key.val, key.code, key.state)
+
         key = KeyEvent(keyval, keycode, state)
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
@@ -1771,7 +2176,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         # Ignore key release events
         if key.state & IBus.ModifierType.RELEASE_MASK:
-            return False
+            return self.return_false(key.val, key.code, key.state)
 
         if self._editor.is_empty ():
             if DEBUG_LEVEL > 1:
@@ -1785,35 +2190,35 @@ class TypingBoosterEngine(IBus.Engine):
                 # character, return False to pass the character through as is,
                 # it makes no sense trying to complete something
                 # starting with a control character:
-                return False
+                return self.return_false(key.val, key.code, key.state)
             if key.val == IBus.KEY_space and not key.mod5:
                 # if the first character is a space, just pass it through
                 # it makes not sense trying to complete (“not key.mod5” is
                 # checked here because AltGr+Space is the key binding to
                 # insert a literal space into the preëdit):
-                return False
+                return self.return_false(key.val, key.code, key.state)
             if key.val in (IBus.KEY_BackSpace,):
                 # When the end of a word is reached again by typing backspace,
                 # try to get that word back into preedit:
                 if not (self.client_capabilities
                         & IBus.Capabilite.SURROUNDING_TEXT):
-                    return False
+                    return self.return_false(key.val, key.code, key.state)
                 surrounding_text = self.get_surrounding_text()
                 text = surrounding_text[0].get_text()
                 cursor_pos = surrounding_text[1]
                 dummy_anchor_pos = surrounding_text[2]
                 if not surrounding_text:
-                    return False
+                    return self.return_false(key.val, key.code, key.state)
                 if not self._commit_happened_after_focus_in:
                     # Before the first commit or cursor movement, the
                     # surrounding text is probably from the previously
                     # focused window (bug!), don’t use it.
-                    return False
+                    return self.return_false(key.val, key.code, key.state)
                 pattern = re.compile(
                     r'(^|.*[\s]+)(?P<token>[\S]+)[\s]$')
                 match = pattern.match(text[:cursor_pos])
                 if not match:
-                    return False
+                    return self.return_false(key.val, key.code, key.state)
                 # The pattern has matched, i.e. left of the cursor is
                 # a single whitespace and left of that a token was
                 # found.  Delete the whitespace and the token from the
@@ -1851,7 +2256,7 @@ class TypingBoosterEngine(IBus.Engine):
                     if self.get_current_imes()[0] == 'NoIme':
                         # If a digit has been typed and no transliteration
                         # is used, we can pass it through
-                        return False
+                        return self.return_false(key.val, key.code, key.state)
                     # If a digit has been typed and we use
                     # transliteration, we may want to convert it to
                     # native digits. For example, with mr-inscript we
@@ -1867,7 +2272,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         if key.val == IBus.KEY_Escape:
             if self._editor.is_empty():
-                return False
+                return self.return_false(key.val, key.code, key.state)
             if self._editor.get_lookup_table().cursor_visible:
                 # A candidate is selected in the lookup table.
                 # Deselect it and show the first page of the candidate
@@ -1933,7 +2338,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         if key.val == IBus.KEY_BackSpace and key.control:
             if self._editor.is_empty():
-                return False
+                return self.return_false(key.val, key.code, key.state)
             if self._editor.get_typed_string_cursor() > 0:
                 self.is_lookup_table_enabled_by_tab = False
             self._editor.remove_string_before_cursor()
@@ -1942,7 +2347,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         if key.val == IBus.KEY_BackSpace:
             if self._editor.is_empty():
-                return False
+                return self.return_false(key.val, key.code, key.state)
             if self._editor.get_typed_string_cursor() > 0:
                 self.is_lookup_table_enabled_by_tab = False
             self._editor.remove_character_before_cursor()
@@ -1951,7 +2356,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         if key.val == IBus.KEY_Delete and key.control:
             if self._editor.is_empty():
-                return False
+                return self.return_false(key.val, key.code, key.state)
             if (self._editor.get_typed_string_cursor()
                 < len(self._editor.get_typed_string())):
                 self.is_lookup_table_enabled_by_tab = False
@@ -1961,7 +2366,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         if key.val == IBus.KEY_Delete:
             if self._editor.is_empty():
-                return False
+                return self.return_false(key.val, key.code, key.state)
             if (self._editor.get_typed_string_cursor()
                 < len(self._editor.get_typed_string())):
                 self.is_lookup_table_enabled_by_tab = False
@@ -2005,11 +2410,11 @@ class TypingBoosterEngine(IBus.Engine):
                     return True
 
         if (key.val == IBus.KEY_F6 and key.mod5): # AltGr+F6
-            self._toggle_emoji_prediction_mode()
+            self.toggle_emoji_prediction_mode()
             return True
 
         if (key.val == IBus.KEY_F9 and key.mod5): # AltGr+F9
-            self._toggle_off_the_record_mode()
+            self.toggle_off_the_record_mode()
             return True
 
         if (key.val == IBus.KEY_F12 and key.mod5 # AltGr+F12
@@ -2077,7 +2482,7 @@ class TypingBoosterEngine(IBus.Engine):
                 # a commit here, because it is used to enter spaces
                 # into the preëdit, if possible.
             if self._editor.is_empty():
-                return False
+                return self.return_false(key.val, key.code, key.state)
             if (key.val in (IBus.KEY_Right, IBus.KEY_KP_Right)
                 and (self._editor.get_typed_string_cursor()
                      < len(self._editor.get_typed_string()))):
@@ -2138,7 +2543,7 @@ class TypingBoosterEngine(IBus.Engine):
                     sys.stderr.write(
                         '_process_key_event() '
                         + 'commit string unexpectedly empty.\n')
-                return False
+                return self.return_false(key.val, key.code, key.state)
             self.commit_string(commit_string, input_phrase = input_phrase)
             if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left):
                 # After committing, the cursor is at the right side of
@@ -2218,7 +2623,7 @@ class TypingBoosterEngine(IBus.Engine):
         # or other special key either.  So whatever this was, we
         # cannot handle it, just pass it through to the application by
         # returning “False”.
-        return False
+        return self.return_false(key.val, key.code, key.state)
 
     def do_focus_in(self):
         '''Called when a window gets focus while this input engine is enabled
@@ -2319,117 +2724,43 @@ class TypingBoosterEngine(IBus.Engine):
               %{'n': name, 'en': self._name})
         value = variant_to_value(value)
         if name == "emojipredictions":
-            if value == 1:
-                self._set_emoji_prediction_mode(True, update_dconf = False)
-            else:
-                self._set_emoji_prediction_mode(False, update_dconf = False)
-            self._update_ui()
+            self.set_emoji_prediction_mode(value, update_dconf = False)
             return
         if name == "offtherecord":
-            if value == 1:
-                self._set_off_the_record_mode(True, update_dconf = False)
-            else:
-                self._set_off_the_record_mode(False, update_dconf = False)
-            self._update_ui() # because of the indicator in the auxiliary text
+            self.set_off_the_record_mode(value, update_dconf = False)
             return
         if name == "autocommitcharacters":
-            if value:
-                self._auto_commit_characters = value
-            else:
-                self._auto_commit_characters = ''
+            self.set_auto_commit_characters(value, update_dconf = False)
             return
         if name == "tabenable":
-            if value == 1:
-                self._tab_enable = True
-                self._editor._tab_enable = True
-            else:
-                self._tab_enable = False
-                self._editor._tab_enable = False
+            self.set_tab_enable(value, update_dconf = False)
             return
         if name == "rememberlastusedpreeditime":
-            if value == 1:
-                self._remember_last_used_preedit_ime = True
-            else:
-                self._remember_last_used_preedit_ime = False
+            self.set_remember_last_used_preedit_ime(
+                value, update_dconf = False)
             return
         if name == "pagesize":
-            if value >= 1 and value <= 9:
-                self._page_size = value
-                self._editor.set_lookup_table(
-                    IBus.LookupTable.new(
-                        page_size = self._page_size,
-                        cursor_pos = 0,
-                        cursor_visible = False,
-                        round = True))
-                self.reset()
+            self.set_page_size(value, update_dconf = False)
             return
         if name == "mincharcomplete":
-            if value >= 1 and value <= 9:
-                self._editor._min_char_complete = value
-                self.reset()
+            self.set_min_char_complete(value, update_dconf = False)
             return
         if name == "shownumberofcandidates":
-            if value == True:
-                self._show_number_of_candidates = True
-            else:
-                self._show_number_of_candidates = False
-            self.reset()
+            self.set_show_number_of_candidates(value, update_dconf = False)
             return
         if name == "usedigitsasselectkeys":
-            if value == True:
-                self._use_digits_as_select_keys = True
-            else:
-                self._use_digits_as_select_keys = False
-            self.reset()
+            self.set_use_digits_as_select_keys(value, update_dconf = False)
             return
         if name == "inputmethod":
-            imes = [x.strip() for x in value.split(',')]
-            self.set_current_imes(imes)
+            self.set_current_imes(
+                [x.strip() for x in value.split(',')], update_dconf = False)
             return
         if name == "dictionary":
-            self._editor._dictionary_names = [
-                x.strip() for x in value.split(',')]
-            self.db.hunspell_obj.set_dictionary_names(
-                self._editor._dictionary_names)
-            if self._editor._emoji_predictions:
-                if (not self._editor.emoji_matcher
-                    or
-                    self._editor.emoji_matcher.get_languages()
-                    != self._editor._dictionary_names):
-                    self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
-                        languages=self._editor._dictionary_names)
-            if not self._editor.is_empty():
-                self._update_ui()
+            self.set_dictionary_names(
+                [x.strip() for x in value.split(',')], update_dconf = False)
             return
         if name == "adddirectinput":
-            imes = self.get_current_imes()
-            dictionary_names = self.db.hunspell_obj.get_dictionary_names()
-            self._editor._add_direct_input = value
-            if value == True:
-                if 'NoIme' not in imes:
-                    imes.append('NoIme')
-                if 'en_GB' not in dictionary_names:
-                    dictionary_names.append('en_GB')
-            else:
-                imes = [x for x in imes if x != 'NoIme']
-                if not imes:
-                    imes = ['NoIme']
-                # always keep the first dictionary, i.e. always keep
-                # the original one from the config file
-                dictionary_names = (
-                    [dictionary_names[0]]
-                    + [x for x in dictionary_names[1:] if x != 'en_GB'])
-            self.db.hunspell_obj.set_dictionary_names(dictionary_names)
-            self._editor._dictionary_names = dictionary_names
-            self._config.set_value(
-                self._config_section,
-                'dictionary',
-                GLib.Variant.new_string(','.join(dictionary_names)))
-            self.set_current_imes(imes)
-            self._config.set_value(
-                self._config_section,
-                'inputmethod',
-                GLib.Variant.new_string(','.join(imes)))
+            self.set_add_direct_input(value, update_dconf = False)
             return
         if name == "dictionaryinstalltimestamp":
             # A dictionary has been updated or installed,

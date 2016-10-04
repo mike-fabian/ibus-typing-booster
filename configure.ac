@@ -70,6 +70,7 @@ AC_CONFIG_FILES([po/Makefile.in
     setup/Makefile
     setup/ibus-setup-typing-booster
     setup/version.py
+    tests/Makefile
     data/Makefile
     icons/Makefile
     icons/additional/Makefile

@@ -1,0 +1,5 @@
+run_tests
+run_tests.log
+run_tests.trs
+test-suite.log
+__pycache__/
