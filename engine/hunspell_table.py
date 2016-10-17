@@ -723,8 +723,7 @@ class editor(object):
         phrase = self.get_string_from_lookup_table_cursor_pos()
         if not phrase:
             return False
-        self.db.remove_phrase(
-            phrase=phrase, database='user_db', commit=True)
+        self.db.remove_phrase(phrase=phrase, commit=True)
         return True
 
     def get_cursor_pos (self):
