@@ -1887,6 +1887,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self._editor.get_lookup_table().clear()
                 self._editor.get_lookup_table().set_cursor_visible(False)
                 self._update_lookup_table_and_aux()
+                self._editor._candidates = []
                 return True
             self.reset()
             self._update_ui()
