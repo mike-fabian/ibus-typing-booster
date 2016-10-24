@@ -90,15 +90,17 @@ if OPTIONS.profile:
     PROFILE = cProfile.Profile()
 
 class IMApp:
-    def __init__(self, dbfile, exec_by_ibus):
+    def __init__(self, exec_by_ibus):
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "IMApp.__init__(dbfile=%s, exec_by_ibus=%s)\n"
-                % (dbfile, exec_by_ibus))
+                "IMApp.__init__(exec_by_ibus=%s)\n"
+                % exec_by_ibus)
         self.__mainloop = GLib.MainLoop()
         self.__bus = IBus.Bus()
         self.__bus.connect("disconnected", self.__bus_destroy_cb)
-        self.__factory = factory.EngineFactory(self.__bus, dbfile)
+        self.__factory = factory.EngineFactory(
+            self.__bus,
+            config_file_dir = CONFIG_FILE_DIR)
         self.destroyed = False
         if exec_by_ibus:
             self.__bus.request_name(
@@ -263,7 +265,7 @@ def main():
         if os.fork():
             sys.exit()
 
-    ima = IMApp('', OPTIONS.ibus)
+    ima = IMApp(OPTIONS.ibus)
     signal (SIGTERM, lambda signum, stack_frame: cleanup(ima))
     signal (SIGINT, lambda signum, stack_frame: cleanup(ima))
     try:

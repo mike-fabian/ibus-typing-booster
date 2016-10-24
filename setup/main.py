@@ -119,19 +119,19 @@ class SetupUI:
                 Gtk.MessageType.ERROR)
             sys.exit(1)
             return
-        config_file_full_path = (
+        self.config_file_full_path = (
             '/usr/share/ibus-typing-booster/hunspell-tables/'
             + self.config_file)
-        if not os.path.isfile(config_file_full_path):
+        if not os.path.isfile(self.config_file_full_path):
             self.__run_message_dialog(
                 _("Config file %(file)s does not exist.")
-                %{'file': config_file_full_path},
+                %{'file': self.config_file_full_path},
                 Gtk.MessageType.ERROR)
             sys.exit(1)
             return
 
         self.tabsqlitedb = tabsqlitedb.tabsqlitedb(
-            config_filename = self.config_file)
+            config_filename = self.config_file_full_path)
         self.name = self.tabsqlitedb.ime_properties.get('name')
         self.config_section = "engine/typing-booster/%s" % self.name
         self.hunspell_dict_package = self.tabsqlitedb.ime_properties.get(

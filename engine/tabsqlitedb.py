@@ -40,9 +40,6 @@ class ImeProperties:
         “/usr/share/ibus-typing-booster/hunspell-tables/en_US.conf”
         '''
         self.ime_property_cache = {}
-        if configfile_path.find('typing-booster:') > 0:
-            configfile_path = configfile_path.replace(
-                'typing-booster:','')
         if os.path.exists(configfile_path) and os.path.isfile(configfile_path):
             comment_patt = re.compile('^#')
             with codecs.open(
@@ -83,7 +80,7 @@ class tabsqlitedb:
     user_db: Database on disk where the phrases learned from the user are stored
         user_freq >= 1: The number of times the user has used this phrase
     '''
-    def __init__(self, config_filename = None, user_db_file = ''):
+    def __init__(self, config_filename = '', user_db_file = ''):
         global DEBUG_LEVEL
         try:
             DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
@@ -111,10 +108,7 @@ class tabsqlitedb:
 
         self.old_phrases = []
 
-        self._conf_file_path = "/usr/share/ibus-typing-booster/hunspell-tables/"
-
-        self.ime_properties = ImeProperties(
-            self._conf_file_path+config_filename)
+        self.ime_properties = ImeProperties(config_filename)
         self._language = self.ime_properties.get('language')
         self._normalization_form_internal = 'NFD'
 

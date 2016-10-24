@@ -37,7 +37,7 @@ class ItbTestCase(unittest.TestCase):
         self.bus = IBus.Bus()
         # it doesn’t really matter which config file for which language is used
         self.db = tabsqlitedb.tabsqlitedb(
-            config_filename ='typing-booster:de_DE.conf',
+            config_filename ='../hunspell-tables/de_DE.conf',
             user_db_file = ':memory:')
         self.engine = TypingBoosterEngine(
             self.bus,

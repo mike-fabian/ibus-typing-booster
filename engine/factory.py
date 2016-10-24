@@ -37,22 +37,20 @@ DEBUG_LEVEL = int(0)
 
 class EngineFactory (IBus.Factory):
     """Table IM Engine Factory"""
-    def __init__(self, bus, db="", icon=""):
+    def __init__(self, bus, config_file_dir = ''):
         global DEBUG_LEVEL
         try:
             DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
         except (TypeError, ValueError):
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
-            sys.stderr.write("EngineFactory.__init__(bus=%s, db=%s, icon=%s)\n"
-                             % (bus, db, icon))
-        if db:
-            self.db = tabsqlitedb.tabsqlitedb(config_filename=db)
-        else:
-            self.db = None
+            sys.stderr.write(
+                "EngineFactory.__init__(bus = %s, config_file_dir = %s)\n"
+                % (bus, config_file_dir))
         self.dbdict = {}
         self.enginedict = {}
         self.bus = bus
+        self._config_file_dir = config_file_dir
         #engine.Engine.CONFIG_RELOADED(bus)
         super(EngineFactory, self).__init__(
             connection=bus.get_connection(), object_path=IBus.PATH_FACTORY)
@@ -70,7 +68,9 @@ class EngineFactory (IBus.Factory):
                 self.db = self.dbdict[engine_name]
             else:
                 self.db = tabsqlitedb.tabsqlitedb(
-                    config_filename=engine_name+'.conf')
+                    config_filename = os.path.join(
+                        self._config_file_dir,
+                        engine_name.replace('typing-booster:', '') + '.conf'))
                 self.dbdict[engine_name] = self.db
             if engine_name in self.enginedict:
                 engine = self.enginedict[engine_name]
