@@ -112,7 +112,7 @@ class IMApp:
                 version="0.1.0",
                 license="GPL",
                 author="Anish Patil <apatill@redhat.com>",
-                homepage="http://code.google.com/p/ibus/",
+                homepage="http://mike-fabian.github.io/ibus-typing-booster",
                 textdomain="ibus-typing-booster")
             # now we get IME info from self.__factory.db
             name = self.__factory.db.ime_properties.get("name")
