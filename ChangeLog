@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 24 Oct 2016 Released 1.5.9 version
+* Make it possible to use a database in different locations than the default
+* Clear candidate list as well when clearing the lookup table
+* Add missing CLDR xml files to tar ball
+* Add unit tests
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 10 Oct 2016 Released 1.5.8 version
 * Pull translations from Zanata (uk and fr updated)
 * Match many more Unicode characters in the emoji matcher
