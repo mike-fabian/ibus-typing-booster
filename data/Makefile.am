@@ -26,12 +26,15 @@ extradata_DATA = \
 	ar.xml \
 	as.xml \
 	az.xml \
+	be.xml \
 	bg.xml \
 	bn.xml \
+	bs.xml \
 	ca.xml \
 	cs.xml \
 	da.xml \
 	de.xml \
+	de_CH.xml \
 	el.xml \
 	en.xml \
 	en_001.xml \
@@ -39,11 +42,13 @@ extradata_DATA = \
 	es.xml \
 	es_419.xml \
 	et.xml \
+	eu.xml \
 	fa.xml \
 	fi.xml \
 	fil.xml \
 	fr.xml \
 	ga.xml \
+	gl.xml \
 	gu.xml \
 	he.xml \
 	hi.xml \
@@ -85,6 +90,7 @@ extradata_DATA = \
 	sl.xml \
 	sq.xml \
 	sr.xml \
+	sr_Latn.xml \
 	sv.xml \
 	sw.xml \
 	ta.xml \
@@ -97,6 +103,7 @@ extradata_DATA = \
 	vi.xml \
 	zh.xml \
 	zh_Hant.xml \
+	zu.xml \
 	$(NULL)
 
 extradatadir = $(pkgdatadir)/data
