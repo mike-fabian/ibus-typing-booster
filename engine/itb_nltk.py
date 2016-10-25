@@ -78,7 +78,7 @@ def hyponyms(word, keep_original = True):
     Examples:
 
     >>> hyponyms('hat')
-    ['Panama', 'Panama hat', 'Stetson', 'bearskin', 'beaver', 'boater', 'bonnet', 'bowler', 'bowler hat', 'busby', 'campaign hat', 'cavalier hat', 'cocked hat', 'cowboy hat', 'deerstalker', 'derby', 'derby hat', 'dress hat', 'dunce cap', "dunce's cap", 'fedora', 'felt hat', "fool's cap", 'fur hat', 'high hat', 'homburg', 'leghorn', 'millinery', 'opera hat', 'plug hat', 'poke bonnet', 'sailor', 'shako', 'shovel hat', 'silk hat', 'skimmer', 'slouch hat', 'snap-brim hat', 'sombrero', "sou'wester", 'stovepipe', 'straw hat', 'sun hat', 'sunhat', 'ten-gallon hat', 'tirolean', 'titfer', 'top hat', 'topper', 'toque', 'trilby', 'tyrolean', "woman's hat"]
+    ['hat', 'Panama', 'Panama hat', 'Stetson', 'bearskin', 'beaver', 'boater', 'bonnet', 'bowler', 'bowler hat', 'busby', 'campaign hat', 'cavalier hat', 'cocked hat', 'cowboy hat', 'deerstalker', 'derby', 'derby hat', 'dress hat', 'dunce cap', "dunce's cap", 'fedora', 'felt hat', "fool's cap", 'fur hat', 'high hat', 'homburg', 'leghorn', 'millinery', 'opera hat', 'plug hat', 'poke bonnet', 'sailor', 'shako', 'shovel hat', 'silk hat', 'skimmer', 'slouch hat', 'snap-brim hat', 'sombrero', "sou'wester", 'stovepipe', 'straw hat', 'sun hat', 'sunhat', 'ten-gallon hat', 'tirolean', 'titfer', 'top hat', 'topper', 'toque', 'trilby', 'tyrolean', "woman's hat"]
 
     >>> hyponyms('hat', keep_original = False)
     ['Panama', 'Panama hat', 'Stetson', 'bearskin', 'beaver', 'boater', 'bonnet', 'bowler', 'bowler hat', 'busby', 'campaign hat', 'cavalier hat', 'cocked hat', 'cowboy hat', 'deerstalker', 'derby', 'derby hat', 'dress hat', 'dunce cap', "dunce's cap", 'fedora', 'felt hat', "fool's cap", 'fur hat', 'high hat', 'homburg', 'leghorn', 'millinery', 'opera hat', 'plug hat', 'poke bonnet', 'sailor', 'shako', 'shovel hat', 'silk hat', 'skimmer', 'slouch hat', 'snap-brim hat', 'sombrero', "sou'wester", 'stovepipe', 'straw hat', 'sun hat', 'sunhat', 'ten-gallon hat', 'tirolean', 'titfer', 'top hat', 'topper', 'toque', 'trilby', 'tyrolean', "woman's hat"]
@@ -107,7 +107,7 @@ def hypernyms(word, keep_original = True):
     Examples:
 
     >>> hypernyms('fedora')
-    ['chapeau', 'hat', 'lid']
+    ['fedora', 'chapeau', 'hat', 'lid']
 
     >>> hypernyms('fedora', keep_original = False)
     ['chapeau', 'hat', 'lid']
