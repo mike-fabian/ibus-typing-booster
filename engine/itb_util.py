@@ -21,6 +21,7 @@
 Utility functions used in ibus-typing-booster
 '''
 
+import sys
 import re
 import string
 import unicodedata
@@ -307,4 +308,8 @@ def config_section_normalize(section):
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod()
+    (failed,  attempted) = doctest.testmod()
+    if failed:
+        sys.exit(1)
+    else:
+        sys.exit(0)

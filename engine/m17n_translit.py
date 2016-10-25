@@ -21,6 +21,7 @@
 '''A module to do transliteration using m17n-lib.
 '''
 
+import sys
 import ctypes
 
 class libm17n__MSymbolStruct(ctypes.Structure):
@@ -338,4 +339,8 @@ class Transliterator:
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod()
+    (failed,  attempted) = doctest.testmod()
+    if failed:
+        sys.exit(1)
+    else:
+        sys.exit(0)

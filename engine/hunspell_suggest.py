@@ -432,7 +432,7 @@ def main():
         profile.enable()
 
     import doctest
-    doctest.testmod()
+    (failed,  attempted) = doctest.testmod()
 
     if BENCHMARK:
         profile.disable()
@@ -441,6 +441,11 @@ def main():
         stats.sort_stats('cumulative')
         stats.print_stats('hunspell', 25)
         stats.print_stats('enchant', 25)
+
+    if failed:
+        sys.exit(1)
+    else:
+        sys.exit(0)
 
 if __name__ == "__main__":
     main()

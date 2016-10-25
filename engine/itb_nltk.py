@@ -33,6 +33,7 @@ it using:
 
 '''
 
+import sys
 import nltk
 from nltk.corpus import wordnet
 
@@ -175,7 +176,7 @@ class __ModuleInitializer:
         return
 
     def __del__(self):
-        _del()
+        # _del()
         return
 
 __module_init = __ModuleInitializer()
@@ -197,7 +198,7 @@ def main():
 
     import doctest
     _init()
-    doctest.testmod()
+    (failed,  attempted) = doctest.testmod()
 
     if BENCHMARK:
         profile.disable()
@@ -206,6 +207,11 @@ def main():
         stats.sort_stats('cumulative')
         stats.print_stats('nltk', 25)
         stats.print_stats('wordnet', 25)
+
+    if failed:
+        sys.exit(1)
+    else:
+        sys.exit(0)
 
 if __name__ == "__main__":
     main()

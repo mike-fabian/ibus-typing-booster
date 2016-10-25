@@ -1180,7 +1180,7 @@ def main():
         matcher.debug_loading_data()
     else:
         import doctest
-        doctest.testmod()
+        (failed,  attempted) = doctest.testmod()
 
     if BENCHMARK:
         profile.disable()
@@ -1190,6 +1190,11 @@ def main():
         stats.print_stats('itb_emoji', 25)
         stats.print_stats('difflib', 25)
         stats.print_stats('enchant', 25)
+
+    if failed:
+        sys.exit(1)
+    else:
+        sys.exit(0)
 
 if __name__ == "__main__":
     main()
