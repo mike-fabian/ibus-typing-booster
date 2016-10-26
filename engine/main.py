@@ -20,7 +20,7 @@
 
 import os
 import sys
-import optparse
+import argparse
 import time
 from gi import require_version
 require_version('IBus', '1.0')
@@ -49,45 +49,49 @@ except:
     CONFIG_FILE_DIR = "/usr/share/ibus-typing-booster/hunspell-tables"
     ICON_DIR = "/usr/share/ibus-typing-booster/icons"
 
-
-OPT = optparse.OptionParser()
-
-OPT.set_usage ('%prog')
-OPT.add_option('--daemon', '-d',
-        action = 'store_true',dest = 'daemon',default=False,
-        help = 'Run as daemon, default: %default')
-OPT.add_option('--ibus', '-i',
-        action = 'store_true',dest = 'ibus',default = False,
-        help = 'Set the IME icon file, default: %default')
-OPT.add_option('--xml', '-x',
-        action = 'store_true',dest = 'xml',default = False,
-        help = 'output the engines xml part, default: %default')
-OPT.add_option('--no-debug', '-n',
-        action = 'store_false',dest = 'debug',default = True,
-        help = 'redirect stdout and stderr to '
-               + '~/.local/share/ibus-typing-booster/debug.log, '
-               + 'default: %default')
-OPT.add_option('--profile', '-p',
-        action = 'store_true', dest = 'profile', default = False,
+def parse_args():
+    '''Parse the command line arguments'''
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--daemon', '-d',
+        action = 'store_true',
+        dest = 'daemon',
+        default = False,
+        help = 'Run as daemon, default: %(default)s')
+    parser.add_argument(
+        '--ibus', '-i',
+        action = 'store_true',
+        dest = 'ibus',
+        default = False,
+        help = 'Set the IME icon file, default: %(default)s')
+    parser.add_argument(
+        '--xml', '-x',
+        action = 'store_true',
+        dest = 'xml',
+        default = False,
+        help = 'output the engines xml part, default: %(default)s')
+    parser.add_argument(
+        '--no-debug', '-n',
+        action = 'store_true',
+        dest = 'no_debug',
+        default = False,
+        help = 'Do not redirect stdout and stderr to '
+        + '~/.local/share/ibus-typing-booster/debug.log, '
+        + 'default: %(default)s')
+    parser.add_argument(
+        '--profile', '-p',
+        action = 'store_true',
+        dest = 'profile',
+        default = False,
         help = 'print profiling information into the debug log. '
-               + 'Works only together with --debug.')
+        + 'Works only when --no-debug is not used.')
+    return parser.parse_args()
 
-(OPTIONS, ARGS) = OPT.parse_args()
+_ARGS = parse_args()
 
-if (not OPTIONS.xml) and OPTIONS.debug:
-    if not os.access(
-            os.path.expanduser('~/.local/share/ibus-typing-booster'),
-            os.F_OK):
-        os.system('mkdir -p ~/.local/share/ibus-typing-booster')
-    LOGFILE = os.path.expanduser(
-        '~/.local/share/ibus-typing-booster/debug.log')
-    sys.stdout = open(LOGFILE, mode='a', buffering=1)
-    sys.stderr = open(LOGFILE, mode='a', buffering=1)
-    print('--- Starting: %s ---' %time.strftime('%Y-%m-%d: %H:%M:%S'))
-
-if OPTIONS.profile:
+if _ARGS.profile:
     import cProfile, pstats
-    PROFILE = cProfile.Profile()
+    _PROFILE = cProfile.Profile()
 
 class IMApp:
     def __init__(self, exec_by_ibus):
@@ -145,8 +149,8 @@ class IMApp:
     def run(self):
         if DEBUG_LEVEL > 1:
             sys.stderr.write("IMApp.run()\n")
-        if OPTIONS.profile:
-            PROFILE.enable()
+        if _ARGS.profile:
+            _PROFILE.enable()
         self.__mainloop.run()
         self.__bus_destroy_cb()
 
@@ -164,9 +168,9 @@ class IMApp:
         self.__factory.do_destroy()
         self.destroyed = True
         self.__mainloop.quit()
-        if OPTIONS.profile:
-            PROFILE.disable()
-            stats = pstats.Stats(PROFILE)
+        if _ARGS.profile:
+            _PROFILE.disable()
+            stats = pstats.Stats(_PROFILE)
             stats.strip_dirs()
             stats.sort_stats('cumulative')
             stats.print_stats('tabsqlite', 25)
@@ -195,7 +199,19 @@ def indent(elem, level=0):
             elem.tail = i
 
 def main():
-    if OPTIONS.xml:
+    '''Main program'''
+    if not _ARGS.xml and not _ARGS.no_debug:
+        if not os.access(
+                os.path.expanduser('~/.local/share/ibus-typing-booster'),
+                os.F_OK):
+            os.system('mkdir -p ~/.local/share/ibus-typing-booster')
+        logfile = os.path.expanduser(
+            '~/.local/share/ibus-typing-booster/debug.log')
+        sys.stdout = open(logfile, mode='a', buffering=1)
+        sys.stderr = open(logfile, mode='a', buffering=1)
+        print('--- Starting: %s ---' %time.strftime('%Y-%m-%d: %H:%M:%S'))
+
+    if _ARGS.xml:
         from xml.etree.ElementTree import Element, SubElement, tostring
         # Find all config files in CONFIG_FILE_DIR, extract the ime
         # properties and print the xml file for the engines
@@ -261,11 +277,11 @@ def main():
         sys.stdout.buffer.write((egsout+'\n').encode('utf-8'))
         return 0
 
-    if OPTIONS.daemon :
+    if _ARGS.daemon :
         if os.fork():
             sys.exit()
 
-    ima = IMApp(OPTIONS.ibus)
+    ima = IMApp(_ARGS.ibus)
     signal (SIGTERM, lambda signum, stack_frame: cleanup(ima))
     signal (SIGINT, lambda signum, stack_frame: cleanup(ima))
     try:

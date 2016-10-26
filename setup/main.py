@@ -25,7 +25,7 @@ import os
 from os import path
 import re
 import signal
-import optparse
+import argparse
 import locale
 from time import strftime
 from i18n import DOMAINNAME, _, N_, init as i18n_init
@@ -43,37 +43,27 @@ import tabsqlitedb
 
 import version
 
-opt = optparse.OptionParser()
-opt.set_usage ('%prog [options]')
-opt.add_option(
-    '-c', '--config-file',
-    action = 'store',
-    type = 'string',
-    dest = 'config_file',
-    default = '',
-    help = ('Set the file name of config file for the ime engine, '
-            + 'default: %default'))
-opt.add_option(
-    '-q', '--no-debug',
-    action = 'store_false',
-    dest = 'debug',
-    default = True,
-    help = ('redirect stdout and stderr to '
-            + '~/.local/share/ibus-typing-booster/setup-debug.log, '
-            + 'default: %default'))
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description = 'ibus-typing-booster setup tool')
+    parser.add_argument(
+        '-c', '--config-file',
+        nargs = '?',
+        type = str,
+        action = 'store',
+        default = '',
+        help = ('Set the file name of config file for the ime engine, '
+                + 'default: %(default)s'))
+    parser.add_argument(
+        '-q', '--no-debug',
+        action = 'store_true',
+        default = False,
+        help = ('Do not redirect stdout and stderr to '
+                + '~/.local/share/ibus-typing-booster/setup-debug.log, '
+                + 'default: %(default)s'))
+    return parser.parse_args()
 
-(options, args) = opt.parse_args()
-
-if options.debug:
-    if (not os.access(
-            os.path.expanduser('~/.local/share/ibus-typing-booster'),
-            os.F_OK)):
-        os.system ('mkdir -p ~/.local/share/ibus-typing-booster')
-    logfile = os.path.expanduser(
-        '~/.local/share/ibus-typing-booster/setup-debug.log')
-    sys.stdout = open(logfile, mode='a', buffering=1)
-    sys.stderr = open(logfile, mode='a', buffering=1)
-    print('--- %s ---' %strftime('%Y-%m-%d: %H:%M:%S'))
+_ARGS = parse_args()
 
 class SetupUI:
     def __init__(self, bus):
@@ -87,9 +77,9 @@ class SetupUI:
             service = SetupService()
         # Try to figure out the config file name:
         self.config_file = None
-        if options.config_file:
+        if _ARGS.config_file:
             # If the config file is specified on the command line, use that:
-            self.config_file = options.config_file
+            self.config_file = _ARGS.config_file
         else:
             # If the config file is not specified on the command line,
             # try to get it from the environment. This is necessary
@@ -686,6 +676,17 @@ class SetupService(dbus.service.Object):
         dbus.service.Object.__init__(self, bus_name, '/org/ibus/typingbooster')
 
 if __name__ == '__main__':
+    if not _ARGS.no_debug:
+        if (not os.access(
+                os.path.expanduser('~/.local/share/ibus-typing-booster'),
+                os.F_OK)):
+            os.system('mkdir -p ~/.local/share/ibus-typing-booster')
+        logfile = os.path.expanduser(
+            '~/.local/share/ibus-typing-booster/setup-debug.log')
+        sys.stdout = open(logfile, mode='a', buffering=1)
+        sys.stderr = open(logfile, mode='a', buffering=1)
+        print('--- %s ---' %strftime('%Y-%m-%d: %H:%M:%S'))
+
     # Workaround for
     # https://bugzilla.gnome.org/show_bug.cgi?id=622084
     # Bug 622084 - Ctrl+C does not exit gtk app
