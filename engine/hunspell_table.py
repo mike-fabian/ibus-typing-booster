@@ -1951,7 +1951,7 @@ class TypingBoosterEngine(IBus.Engine):
                 %(page_size, update_dconf))
         if page_size == self._page_size:
             return
-        if page_size >=1 and page_size <= 9:
+        if page_size >= 1 and page_size <= 9:
             self._page_size = page_size
             self._editor.set_lookup_table(
                 IBus.LookupTable(
@@ -1991,7 +1991,7 @@ class TypingBoosterEngine(IBus.Engine):
                 %(min_char_complete, update_dconf))
         if min_char_complete == self._editor._min_char_complete:
             return
-        if min_char_complete >=1 and min_char_complete <= 9:
+        if min_char_complete >= 1 and min_char_complete <= 9:
             self._editor._min_char_complete = min_char_complete
             self.reset()
             if update_dconf:
