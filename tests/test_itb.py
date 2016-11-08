@@ -374,3 +374,111 @@ class ItbTestCase(unittest.TestCase):
                       for x in self.engine._editor._candidates]
         self.assertEqual(True, '안녕할' in candidates)
         self.assertEqual('안녕할', candidates[0])
+
+    def test_accent_insensitive_matching_german_dictionary(self):
+        self.engine.set_current_imes(['NoIme', 't-latn-post'])
+        self.engine.set_dictionary_names(['de_DE'])
+        self.engine.do_process_key_event(IBus.KEY_A, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_p, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_g, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.assertEqual(
+            unicodedata.normalize('NFC',
+                                  self.engine._editor._candidates[0][0]),
+            'Alpenglühen')
+        self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
+        self.assertEqual(self.engine._mock_committed_text, 'Alpenglühen ')
+
+    def test_accent_insensitive_matching_german_database(self):
+        self.engine.set_current_imes(['t-latn-post', 'NoIme'])
+        self.engine.set_dictionary_names(['de_DE'])
+        # Type “Glühwürmchen”
+        self.engine.do_process_key_event(IBus.KEY_G, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_quotedbl, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_w, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_quotedbl, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        # The German hunspell recognizes this as a correct word
+        # (although it is not in the dictionary as a single word
+        # it is created by rules). Therefore, it must be
+        #  the first candidate here:
+        self.assertEqual(
+            unicodedata.normalize('NFC',
+                                  self.engine._editor._candidates[0][0]),
+            'Glühwürmchen')
+        # user_freq must be 0 because this word has not been found in
+        # the user database, it is only a candidate because it is a
+        # valid word according to hunspell:
+        self.assertEqual(self.engine._editor._candidates[0][1], 0)
+        # Commit with F1:
+        self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
+        # Type “Glühwürmchen” again:
+        self.engine.do_process_key_event(IBus.KEY_G, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_quotedbl, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_w, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_quotedbl, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        # Again it should be the first candidate:
+        self.assertEqual(
+            unicodedata.normalize('NFC',
+                                  self.engine._editor._candidates[0][0]),
+            'Glühwürmchen')
+        # But now user_freq must be > 0 because the last commit
+        # added this word to the user database:
+        self.assertTrue(self.engine._editor._candidates[0][1] > 0)
+        # Commit with F1:
+        self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
+        self.assertEqual(
+            self.engine._mock_committed_text,
+            'Glühwürmchen Glühwürmchen ')
+        # Type “Gluhwurmchen” (without the accents):
+        self.engine.do_process_key_event(IBus.KEY_G, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_w, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        # The first candidate should be “Glühwürmchen” again now
+        # because the input phrases are added without accents into the
+        # user database and before matching against the user database
+        # accents are removed from the input phrase:
+        self.assertEqual(
+            unicodedata.normalize('NFC',
+                                  self.engine._editor._candidates[0][0]),
+            'Glühwürmchen')
+        # Commit with F1:
+        self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
+        self.assertEqual(
+            self.engine._mock_committed_text,
+            'Glühwürmchen Glühwürmchen Glühwürmchen ')
