@@ -44,6 +44,7 @@ DATADIR = os.path.join(os.path.dirname(__file__), '../data')
 
 VALID_CATEGORIES = (
     'Cf', # Other, Format (RIGHT-TO-LEFT MARK ...)
+    'No', # Number, Other (SUPERSCRIPT ONE etc.).
     'Pc', # Punctuation, Connector
     'Pd', # Punctuation, dash
     'Pe', # Punctuation, Close
@@ -865,6 +866,9 @@ class EmojiMatcher():
 
         >>> mq.candidates('euro sign')[0][:2]
         ('€', 'euro sign')
+
+        >>> mq.candidates('superscript one')[0][:2]
+        ('¹', 'superscript one')
 
         >>> mq = EmojiMatcher(languages = ['fr_FR'])
         >>> mq.candidates('chat')[0][:2]
