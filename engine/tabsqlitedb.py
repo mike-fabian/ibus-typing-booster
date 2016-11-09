@@ -279,6 +279,7 @@ class tabsqlitedb:
         '''
         if not input_phrase or not phrase:
             return
+        input_phrase = itb_util.remove_accents(input_phrase)
         input_phrase = unicodedata.normalize(
             self._normalization_form_internal, input_phrase)
         phrase = unicodedata.normalize(
@@ -350,6 +351,7 @@ class tabsqlitedb:
             )
         if not input_phrase or not phrase:
             return
+        input_phrase = itb_util.remove_accents(input_phrase)
         input_phrase = unicodedata.normalize(
             self._normalization_form_internal, input_phrase)
         phrase = unicodedata.normalize(
@@ -464,6 +466,17 @@ class tabsqlitedb:
             sys.stderr.write(
                 "tabsqlitedb.select_words() hunspell: best_candidates=%s\n"
                 %self.best_candidates(phrase_frequencies))
+        # Remove the accents *after* getting the hunspell candidates.
+        # If the accents were removed before getting the hunspell candidates
+        # an input phrase like “Glühwürmchen” would not be added as a
+        # candidate because hunspell would get “Gluhwurmchen” then and would
+        # not validate that as a correct word. And, because “Glühwürmchen”
+        # is not in the German hunspell dictionary as a single word but
+        # created by suffix and prefix rules, the accent insensitive match
+        # in the German hunspell dictionary would not find it either.
+        input_phrase = itb_util.remove_accents(input_phrase)
+        input_phrase = unicodedata.normalize(
+            self._normalization_form_internal, input_phrase)
         # Now phrase_frequencies might contain something like this:
         #
         # {'code': 0, 'communicability': 0, 'cold': 0, 'colour': 0}
@@ -709,6 +722,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             self._normalization_form_internal, p_phrase)
         pp_phrase = unicodedata.normalize(
             self._normalization_form_internal, pp_phrase)
+        input_phrase = itb_util.remove_accents(input_phrase)
         input_phrase = unicodedata.normalize(
             self._normalization_form_internal, input_phrase)
 
