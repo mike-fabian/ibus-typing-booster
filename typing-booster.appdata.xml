@@ -16,6 +16,23 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.10" date="2016-11-09" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Make accent insensitive matching also work in the user
+            database
+          </li>
+          <li>
+            Add test cases for accent insensitive matching
+          </li>
+          <li>
+            Add 'No' (Number, Other) to VALID_CATEGORIES to be able to
+            match ¹ U+00B9 SUPERSCRIPT ONE
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.9" date="2016-10-24" urgency="medium">
       <description>
         <ul>

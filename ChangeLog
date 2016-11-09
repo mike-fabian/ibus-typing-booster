@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 09 Nov 2016 Released 1.5.10 version
+* Make accent insensitive matching also work in the user database
+* Add test cases for accent insensitive matching
+* Add 'No' (Number, Other) to VALID_CATEGORIES to be able to match ¹ U+00B9 SUPERSCRIPT ONE
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 24 Oct 2016 Released 1.5.9 version
 * Make it possible to use a database in different locations than the default
 * Clear candidate list as well when clearing the lookup table
