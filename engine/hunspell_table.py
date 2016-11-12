@@ -145,24 +145,51 @@ class KeyEvent:
                self.mod5,
                self.release))
 
-class editor(object):
-    '''Hold user inputs chars and preedit string'''
+########################
+### Engine Class #####
+####################
+class TypingBoosterEngine(IBus.Engine):
+    '''The IBus Engine for ibus-typing-booster'''
 
-    def __init__ (self, config, database, lookup_table, tab_enable = False):
+    def __init__ (self, bus, obj_path, db, unit_test = False):
+        global DEBUG_LEVEL
+        try:
+            DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+        except (TypeError, ValueError):
+            DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
-            sys.stderr.write("editor __init__(config=%s, database=%s)\n"
-                             %(config, database))
-        self.db = database
-        self._config = config
+            sys.stderr.write(
+                "TypingBoosterEngine.__init__(bus=%s, obj_path=%s, db=%s)\n"
+                % (bus, obj_path, db))
+        super(TypingBoosterEngine, self).__init__(
+            connection=bus.get_connection(), object_path=obj_path)
+        self._unit_test = unit_test
+        self._input_purpose = 0
+        self._has_input_purpose = False
+        if hasattr(IBus, 'InputPurpose'):
+            self._has_input_purpose = True
+        self._lookup_table_is_invalid = False
+        self._lookup_table_shows_related_candidates = False
+        self._current_auxiliary_text = ''
+        self._bus = bus
+        self.db = db
+        self._setup_pid = 0
         self._name = self.db.ime_properties.get('name')
         self._config_section = itb_util.config_section_normalize(
             "engine/typing-booster/%s" % self._name)
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                'TypingBoosterEngine.__init__() self._config_section = %s\n'
+                % self._config_section)
+        self._config = self._bus.get_config()
+        self._config.connect('value-changed', self.__config_value_changed_cb)
+
         self._emoji_predictions = variant_to_value(self._config.get_value(
             self._config_section,
             'emojipredictions'))
         if self._emoji_predictions == None:
             self._emoji_predictions = True # default
-        self._tab_enable = tab_enable
+
         self._min_char_complete = variant_to_value(self._config.get_value(
             self._config_section,
             'mincharcomplete'))
@@ -172,21 +199,65 @@ class editor(object):
             self._min_char_complete = 1 # minimum
         if self._min_char_complete > 9:
             self._min_char_complete = 9 # maximum
-        self._typed_string = [] # A list of msymbols
-        self._typed_string_cursor = 0
-        self._p_phrase = ''
-        self._pp_phrase = ''
-        # self._candidates: hold candidates selected from database and hunspell
-        self._candidates = []
-        self._lookup_table = lookup_table
-        self._lookup_table.clear()
-        self._lookup_table.set_cursor_visible(False)
 
-        self._add_direct_input = variant_to_value(self._config.get_value(
+        self._page_size = variant_to_value(self._config.get_value(
+                self._config_section,
+                'pagesize'))
+        if self._page_size == None:
+            self._page_size = 6 # reasonable default page size
+        if self._page_size < 1:
+            self._page_size = 1 # minimum page size supported
+        if self._page_size > 9:
+            self._page_size = 9 # maximum page size supported
+
+        self._show_number_of_candidates = variant_to_value(
+            self._config.get_value(
+                self._config_section,
+                'shownumberofcandidates'))
+        if self._show_number_of_candidates == None:
+            self._show_number_of_candidates = False
+
+        self._use_digits_as_select_keys = variant_to_value(
+            self._config.get_value(
+                self._config_section,
+                'usedigitsasselectkeys'))
+        if self._use_digits_as_select_keys == None:
+            self._use_digits_as_select_keys = True
+
+        self._icon_dir = '%s%s%s%s' % (
+            os.getenv('IBUS_HUNSPELL_TABLE_LOCATION'),
+            os.path.sep, 'icons', os.path.sep)
+
+        self._status = self.db.ime_properties.get(
+            'status_prompt').encode('utf8')
+
+        self.is_lookup_table_enabled_by_tab = False
+        self._tab_enable = variant_to_value(self._config.get_value (
             self._config_section,
-            'adddirectinput'))
-        if self._add_direct_input == None:
-            self._add_direct_input = False
+            "tabenable"))
+        if self._tab_enable == None:
+            self._tab_enable = False
+
+        self._off_the_record = variant_to_value(self._config.get_value(
+            self._config_section,
+            'offtherecord'))
+        if self._off_the_record == None:
+            self._off_the_record = False # default
+
+        self._auto_commit_characters = variant_to_value(self._config.get_value(
+            self._config_section,
+            'autocommitcharacters'))
+        if not self._auto_commit_characters:
+            self._auto_commit_characters = '' # default
+
+        self._remember_last_used_preedit_ime = False
+        self._remember_last_used_preedit_ime = variant_to_value(
+            self._config.get_value(
+                self._config_section,
+                "rememberlastusedpreeditime"))
+        if self._remember_last_used_preedit_ime == None:
+            self._remember_last_used_preedit_ime = False
+
         dictionary = variant_to_value(self._config.get_value(
             self._config_section,
             'dictionary'))
@@ -196,6 +267,13 @@ class editor(object):
             self.db.hunspell_obj.set_dictionary_names(
                 [x.strip() for x in dictionary.split(',')])
         self._dictionary_names = self.db.hunspell_obj.get_dictionary_names()
+
+        self._add_direct_input = variant_to_value(self._config.get_value(
+            self._config_section,
+            'adddirectinput'))
+        if self._add_direct_input == None:
+            self._add_direct_input = False
+
         if self._add_direct_input == True:
             # if direct input is used as well, add the British English
             # dictionary unless it is already there:
@@ -208,6 +286,7 @@ class editor(object):
                     self._config_section,
                     'dictionary',
                     GLib.Variant.new_string(','.join(self._dictionary_names)))
+
         if  self._emoji_predictions:
             if DEBUG_LEVEL > 1:
                 sys.stderr.write('Instantiate EmojiMatcher(languages = %s\n'
@@ -218,6 +297,7 @@ class editor(object):
                 sys.stderr.write('EmojiMatcher() instantiated.\n')
         else:
             self.emoji_matcher = None
+
         self._supported_imes = []
         imes = self.db.ime_properties.get('imes').split(',')
         for item in imes:
@@ -226,6 +306,7 @@ class editor(object):
                 self._supported_imes.append(mim_name)
         if self._supported_imes == []:
             self._supported_imes = ['NoIme']
+
         # The number of current imes needs to be limited to some fixed
         # maximum number because of the property menu to select the preëdit
         # ime. Unfortunately the number of sub-properties for such a menu
@@ -252,9 +333,79 @@ class editor(object):
                 self._config_section,
                 'inputmethod',
                 GLib.Variant.new_string(','.join(self._current_imes)))
+
+        self._commit_happened_after_focus_in = False
+
+        self._typed_string = [] # A list of msymbols
+        self._typed_string_cursor = 0
+        self._p_phrase = ''
+        self._pp_phrase = ''
         self._transliterated_strings = {}
         self._transliterators = {}
         self.init_transliterators()
+        # self._candidates: hold candidates selected from database and hunspell
+        self._candidates = []
+        self._lookup_table = IBus.LookupTable(
+            page_size = self._page_size,
+            cursor_pos = 0,
+            cursor_visible = False,
+            round = True)
+        self._lookup_table.clear()
+        self._lookup_table.set_cursor_visible(False)
+
+        self.emoji_prediction_mode_properties = {
+            'EmojiPredictionMode.Off': {
+                'number': 0,
+                'symbol': MODE_OFF_SYMBOL + EMOJI_PREDICTION_MODE_SYMBOL,
+                'label': _('Off'),
+            },
+            'EmojiPredictionMode.On': {
+                'number': 1,
+                'symbol': MODE_ON_SYMBOL + EMOJI_PREDICTION_MODE_SYMBOL,
+                'label': _('On'),
+            }
+        }
+        self.emoji_prediction_mode_menu = {
+            'key': 'EmojiPredictionMode',
+            'label': _('Unicode symbols and emoji predictions'),
+            'tooltip':
+            _('Unicode symbols and emoji predictions'),
+            'shortcut_hint': '(AltGr-F6, Control+RightMouse)',
+            'sub_properties': self.emoji_prediction_mode_properties
+        }
+        self.off_the_record_mode_properties = {
+            'OffTheRecordMode.Off': {
+                'number': 0,
+                'symbol': MODE_OFF_SYMBOL + OFF_THE_RECORD_MODE_SYMBOL,
+                'label': _('Off'),
+            },
+            'OffTheRecordMode.On': {
+                'number': 1,
+                'symbol': MODE_ON_SYMBOL + OFF_THE_RECORD_MODE_SYMBOL,
+                'label': _('On'),
+            }
+        }
+        self.off_the_record_mode_menu = {
+            'key': 'OffTheRecordMode',
+            'label': _('Off the record mode'),
+            'tooltip': _('Off the record mode'),
+            'shortcut_hint': '(AltGr-F9, Alt+RightMouse)',
+            'sub_properties': self.off_the_record_mode_properties
+        }
+        self._prop_dict = {}
+        self._sub_props_dict = {}
+        self.main_prop_list = []
+        self.preedit_ime_menu = {}
+        self.preedit_ime_properties = {}
+        self.preedit_ime_sub_properties_prop_list = []
+        self.update_preedit_ime_menu_dicts()
+        self._setup_property = None
+        self._init_properties()
+
+        sys.stderr.write(
+            '--- Initialized and ready for input: %s ---\n'
+            %time.strftime('%Y-%m-%d: %H:%M:%S'))
+        self.reset()
 
     def init_transliterators(self):
         '''Initialize the dictionary of m17n-db transliterator objects'''
@@ -295,47 +446,6 @@ class editor(object):
         self._typed_string_cursor = 0
         for ime in self._current_imes:
             self._transliterated_strings[ime] = ''
-
-    def update_transliterated_strings(self):
-        '''Transliterates the current input (list of msymbols) for all current
-        input methods and stores the results in a dictionary.
-        '''
-        self._transliterated_strings = {}
-        for ime in self._current_imes:
-            self._transliterated_strings[ime] = (
-                self._transliterators[ime].transliterate(
-                    self._typed_string))
-            if ime in ['ko-romaja', 'ko-han2']:
-                self._transliterated_strings[ime] = unicodedata.normalize(
-                    'NFKD', self._transliterated_strings[ime])
-        if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "update_transliterated_strings() self._typed_string=%s\n"
-                %self._typed_string)
-            sys.stderr.write(
-                "update_transliterated_strings() "
-                + "self._transliterated_strings=%s\n"
-                %self._transliterated_strings)
-
-    def get_transliterators(self):
-        '''Get current dictionary of transliterator objects'''
-        return self._transliterators
-
-    def get_transliterated_strings(self):
-        '''Get current dictionary of transliterated strings'''
-        return self._transliterated_strings
-
-    def get_typed_string(self):
-        '''Get the current list of msymbols typed'''
-        return self._typed_string
-
-    def get_typed_string_cursor(self):
-        '''Get the current cursor position in the list of msymbols typed'''
-        return self._typed_string_cursor
-
-    def set_typed_string_cursor(self, cursor):
-        '''Set the current cursor position in the list of msymbols typed'''
-        self._typed_string_cursor = cursor
 
     def insert_string_at_cursor(self, string_to_insert):
         '''Insert typed string at cursor position'''
@@ -727,7 +837,7 @@ class editor(object):
         self.db.remove_phrase(phrase=phrase, commit=True)
         return True
 
-    def get_cursor_pos (self):
+    def get_cursor_pos(self):
         '''get lookup table cursor position'''
         return self._lookup_table.get_cursor_pos()
 
@@ -754,31 +864,6 @@ class editor(object):
         the private member variable directly.'''
         return self._supported_imes[:]
 
-    def get_current_imes_max(self):
-        '''Get maximum allowed number of current imes'''
-        return self._current_imes_max
-
-    def get_current_imes(self):
-        '''Get current list of input methods
-
-        It is important to return a copy, we do not want to change
-        the private member variable directly.'''
-        return self._current_imes[:]
-
-    def set_current_imes(self, imes):
-        '''Set current list of input methods'''
-        if set(imes) != set(self._current_imes):
-            # Input methods have been added or removed from the list
-            # of current input methods. Initialize the
-            # transliterators. If only the order of the input methods
-            # has changed, initialising the transliterators is not
-            # necessary (and neither is updating the transliterated
-            # strings necessary).
-            self._current_imes = imes
-            self.init_transliterators()
-        else:
-            self._current_imes = imes
-
     def push_context(self, phrase):
         '''Pushes a word on the context stack which remembers the last two
         words typed.
@@ -792,182 +877,36 @@ class editor(object):
         self._pp_phrase = ''
         self._p_phrase = ''
 
-########################
-### Engine Class #####
-####################
-class TypingBoosterEngine(IBus.Engine):
-    '''The IBus Engine for ibus-typing-booster'''
-
-    def __init__ (self, bus, obj_path, db, unit_test = False):
-        global DEBUG_LEVEL
-        try:
-            DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
-        except (TypeError, ValueError):
-            DEBUG_LEVEL = int(0)
-        if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TypingBoosterEngine.__init__(bus=%s, obj_path=%s, db=%s)\n"
-                % (bus, obj_path, db))
-        super(TypingBoosterEngine, self).__init__(
-            connection=bus.get_connection(), object_path=obj_path)
-        self._unit_test = unit_test
-        self._input_purpose = 0
-        self._has_input_purpose = False
-        if hasattr(IBus, 'InputPurpose'):
-            self._has_input_purpose = True
-        self._lookup_table_is_invalid = False
-        self._lookup_table_shows_related_candidates = False
-        self._current_auxiliary_text = ''
-        self._bus = bus
-        self.db = db
-        self._setup_pid = 0
-        self._name = self.db.ime_properties.get('name')
-        self._config_section = itb_util.config_section_normalize(
-            "engine/typing-booster/%s" % self._name)
-        if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                'TypingBoosterEngine.__init__() self._config_section = %s\n'
-                % self._config_section)
-        self._config = self._bus.get_config()
-        self._config.connect('value-changed', self.__config_value_changed_cb)
-
-        self._page_size = variant_to_value(self._config.get_value(
-                self._config_section,
-                'pagesize'))
-        if self._page_size == None:
-            self._page_size = 6 # reasonable default page size
-        if self._page_size < 1:
-            self._page_size = 1 # minimum page size supported
-        if self._page_size > 9:
-            self._page_size = 9 # maximum page size supported
-
-        self._show_number_of_candidates = variant_to_value(
-            self._config.get_value(
-                self._config_section,
-                'shownumberofcandidates'))
-        if self._show_number_of_candidates == None:
-            self._show_number_of_candidates = False
-
-        self._use_digits_as_select_keys = variant_to_value(
-            self._config.get_value(
-                self._config_section,
-                'usedigitsasselectkeys'))
-        if self._use_digits_as_select_keys == None:
-            self._use_digits_as_select_keys = True
-
-        self._icon_dir = '%s%s%s%s' % (
-            os.getenv('IBUS_HUNSPELL_TABLE_LOCATION'),
-            os.path.sep, 'icons', os.path.sep)
-
-        self._status = self.db.ime_properties.get(
-            'status_prompt').encode('utf8')
-
-        self.is_lookup_table_enabled_by_tab = False
-        self._tab_enable = variant_to_value(self._config.get_value (
-            self._config_section,
-            "tabenable"))
-        if self._tab_enable == None:
-            self._tab_enable = False
-
-        self._off_the_record = variant_to_value(self._config.get_value(
-            self._config_section,
-            'offtherecord'))
-        if self._off_the_record == None:
-            self._off_the_record = False # default
-
-        self._auto_commit_characters = variant_to_value(self._config.get_value(
-            self._config_section,
-            'autocommitcharacters'))
-        if not self._auto_commit_characters:
-            self._auto_commit_characters = '' # default
-
-        self._editor = editor(
-            self._config,
-            self.db,
-            IBus.LookupTable(
-                page_size = self._page_size,
-                cursor_pos = 0,
-                cursor_visible = False,
-                round = True),
-            tab_enable = self._tab_enable)
-
-        self._remember_last_used_preedit_ime = False
-        self._remember_last_used_preedit_ime = variant_to_value(
-            self._config.get_value(
-                self._config_section,
-                "rememberlastusedpreeditime"))
-        if self._remember_last_used_preedit_ime == None:
-            self._remember_last_used_preedit_ime = False
-
-        self._commit_happened_after_focus_in = False
-
-        self.emoji_prediction_mode_properties = {
-            'EmojiPredictionMode.Off': {
-                'number': 0,
-                'symbol': MODE_OFF_SYMBOL + EMOJI_PREDICTION_MODE_SYMBOL,
-                'label': _('Off'),
-            },
-            'EmojiPredictionMode.On': {
-                'number': 1,
-                'symbol': MODE_ON_SYMBOL + EMOJI_PREDICTION_MODE_SYMBOL,
-                'label': _('On'),
-            }
-        }
-        self.emoji_prediction_mode_menu = {
-            'key': 'EmojiPredictionMode',
-            'label': _('Unicode symbols and emoji predictions'),
-            'tooltip':
-            _('Unicode symbols and emoji predictions'),
-            'shortcut_hint': '(AltGr-F6, Control+RightMouse)',
-            'sub_properties': self.emoji_prediction_mode_properties
-        }
-        self.off_the_record_mode_properties = {
-            'OffTheRecordMode.Off': {
-                'number': 0,
-                'symbol': MODE_OFF_SYMBOL + OFF_THE_RECORD_MODE_SYMBOL,
-                'label': _('Off'),
-            },
-            'OffTheRecordMode.On': {
-                'number': 1,
-                'symbol': MODE_ON_SYMBOL + OFF_THE_RECORD_MODE_SYMBOL,
-                'label': _('On'),
-            }
-        }
-        self.off_the_record_mode_menu = {
-            'key': 'OffTheRecordMode',
-            'label': _('Off the record mode'),
-            'tooltip': _('Off the record mode'),
-            'shortcut_hint': '(AltGr-F9, Alt+RightMouse)',
-            'sub_properties': self.off_the_record_mode_properties
-        }
-        self._prop_dict = {}
-        self._sub_props_dict = {}
-        self.main_prop_list = []
-        self.preedit_ime_menu = {}
-        self.preedit_ime_properties = {}
-        self.preedit_ime_sub_properties_prop_list = []
-        self.update_preedit_ime_menu_dicts()
-        self._setup_property = None
-        self._init_properties()
-
-        sys.stderr.write(
-            '--- Initialized and ready for input: %s ---\n'
-            %time.strftime('%Y-%m-%d: %H:%M:%S'))
-        self.reset()
-
-    def get_current_imes_max(self):
-        '''Get maximum allowed number of current imes from editor
-
-        :rtype: integer
+    def update_transliterated_strings(self):
+        '''Transliterates the current input (list of msymbols) for all current
+        input methods and stores the results in a dictionary.
         '''
-        return self._editor.get_current_imes_max()
+        self._transliterated_strings = {}
+        for ime in self._current_imes:
+            self._transliterated_strings[ime] = (
+                self._transliterators[ime].transliterate(
+                    self._typed_string))
+            if ime in ['ko-romaja', 'ko-han2']:
+                self._transliterated_strings[ime] = unicodedata.normalize(
+                    'NFKD', self._transliterated_strings[ime])
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "update_transliterated_strings() self._typed_string=%s\n"
+                %self._typed_string)
+            sys.stderr.write(
+                "update_transliterated_strings() "
+                + "self._transliterated_strings=%s\n"
+                %self._transliterated_strings)
 
     def get_current_imes(self):
         '''Get current list of input methods from editor
 
-        :rtype: boolean
+        It is important to return a copy, we do not want to change
+        the private member variable directly.
+
+        :rtype: List of strings
         '''
-        return self._editor.get_current_imes()
+        return self._current_imes[:]
 
     def set_current_imes(self, imes, update_dconf = True):
         '''Set current list of input methods in editor
@@ -981,21 +920,31 @@ class TypingBoosterEngine(IBus.Engine):
                              key is changed twice in a short time.
         :type update_dconf: boolean
         '''
-        if imes == self.get_current_imes(): # nothing to do
+        if imes == self._current_imes: # nothing to do
             return
-        if len(imes) > self.get_current_imes_max():
+        if len(imes) > self._current_imes_max:
             sys.stderr.write(
                 'Trying to set more than the allowed maximum of %s '
-                %self.get_current_imes_max()
+                %self._current_imes_max
                 + 'input methods.\n'
                 + 'Trying to set: %s\n' %imes
-                + 'Really setting: %s\n' %imes[:self.get_current_imes_max()])
-            imes = imes[:self.get_current_imes_max()]
-        self._editor.set_current_imes(imes)
+                + 'Really setting: %s\n' %imes[:self._current_imes_max])
+            imes = imes[:self._current_imes_max]
+        if set(imes) != set(self._current_imes):
+            # Input methods have been added or removed from the list
+            # of current input methods. Initialize the
+            # transliterators. If only the order of the input methods
+            # has changed, initialising the transliterators is not
+            # necessary (and neither is updating the transliterated
+            # strings necessary).
+            self._current_imes = imes
+            self.init_transliterators()
+        else:
+            self._current_imes = imes
         self.update_preedit_ime_menu_dicts()
         self._init_or_update_property_menu_preedit_ime(
             self.preedit_ime_menu, current_mode = 0)
-        if not self._editor.is_empty():
+        if not self.is_empty():
             self._update_ui()
         if self._remember_last_used_preedit_ime and update_dconf:
             self._config.set_value(
@@ -1015,18 +964,18 @@ class TypingBoosterEngine(IBus.Engine):
                              key is changed twice in a short time.
         :type update_dconf: boolean
         '''
-        if dictionary_names == self._editor._dictionary_names: # nothing to do
+        if dictionary_names == self._dictionary_names: # nothing to do
             return
-        self._editor._dictionary_names = dictionary_names
+        self._dictionary_names = dictionary_names
         self.db.hunspell_obj.set_dictionary_names(dictionary_names)
-        if self._editor._emoji_predictions:
-            if (not self._editor.emoji_matcher
+        if self._emoji_predictions:
+            if (not self.emoji_matcher
                 or
-                self._editor.emoji_matcher.get_languages()
+                self.emoji_matcher.get_languages()
                 != dictionary_names):
-                self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
+                self.emoji_matcher = itb_emoji.EmojiMatcher(
                     languages = dictionary_names)
-        if not self._editor.is_empty():
+        if not self.is_empty():
             self._update_ui()
         if update_dconf:
             self._config.set_value(
@@ -1041,7 +990,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         # It is important to return a copy, we do not want to change
         # the private member variable directly.
-        return self._editor._dictionary_names[:]
+        return self._dictionary_names[:]
 
     def set_add_direct_input(self, mode, update_dconf = True):
         '''Set the current value of the “Add direct input” mode
@@ -1057,7 +1006,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         imes = self.get_current_imes()
         dictionary_names = self.db.hunspell_obj.get_dictionary_names()
-        self._editor._add_direct_input = mode
+        self._add_direct_input = mode
         if mode == True:
             if 'NoIme' not in imes:
                 imes.append('NoIme')
@@ -1085,12 +1034,12 @@ class TypingBoosterEngine(IBus.Engine):
 
         :rtype: boolean
         '''
-        return self._editor._add_direct_input
+        return self._add_direct_input
 
     def update_preedit_ime_menu_dicts(self):
         self.preedit_ime_properties = {}
         current_imes = self.get_current_imes()
-        current_imes_max = self.get_current_imes_max()
+        current_imes_max = self._current_imes_max
         for i in range(0, current_imes_max):
             if i < len(current_imes):
                 self.preedit_ime_properties[
@@ -1160,7 +1109,7 @@ class TypingBoosterEngine(IBus.Engine):
             self.preedit_ime_sub_properties_prop_list = IBus.PropList()
         else:
             update = True
-        number_of_current_imes = len(self._editor.get_current_imes())
+        number_of_current_imes = len(self.get_current_imes())
         for mode in sorted(modes, key=lambda x: (modes[x]['number'])):
             if modes[mode]['number'] < number_of_current_imes:
                 visible = True
@@ -1278,7 +1227,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._init_or_update_property_menu(
             self.emoji_prediction_mode_menu,
-            self._editor._emoji_predictions)
+            self._emoji_predictions)
 
         self._init_or_update_property_menu(
             self.off_the_record_mode_menu,
@@ -1362,7 +1311,7 @@ class TypingBoosterEngine(IBus.Engine):
     def reset(self):
         '''Clear the preëdit and close the lookup table
         '''
-        self._editor.clear_input()
+        self.clear_input()
         self._update_ui()
 
     def do_destroy(self):
@@ -1376,7 +1325,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''Update Preedit String in UI'''
         # editor.get_caret() should also use NFC!
         _str = unicodedata.normalize(
-            'NFC', self._editor.get_transliterated_strings()[
+            'NFC', self._transliterated_strings[
                 self.get_current_imes()[0]])
         if _str == '':
             super(TypingBoosterEngine, self).update_preedit_text(
@@ -1395,19 +1344,19 @@ class TypingBoosterEngine(IBus.Engine):
                                       attr.get_end_index())
                 i += 1
             super(TypingBoosterEngine, self).update_preedit_text(
-                text, self._editor.get_caret(), True)
+                text, self.get_caret(), True)
 
     def _update_aux (self):
         '''Update auxiliary text'''
         aux_string = ''
         if self._show_number_of_candidates:
             aux_string = '(%d / %d) ' % (
-                self._editor.get_lookup_table().get_cursor_pos() + 1,
-                self._editor.get_lookup_table().get_number_of_candidates())
+                self.get_lookup_table().get_cursor_pos() + 1,
+                self.get_lookup_table().get_number_of_candidates())
         preedit_ime = self.get_current_imes()[0]
         if preedit_ime != 'NoIme':
             aux_string += preedit_ime + ' '
-        if self._editor._emoji_predictions:
+        if self._emoji_predictions:
             aux_string += EMOJI_PREDICTION_MODE_SYMBOL + ' '
         if self._off_the_record:
             aux_string += OFF_THE_RECORD_MODE_SYMBOL + ' '
@@ -1420,8 +1369,8 @@ class TypingBoosterEngine(IBus.Engine):
             len(aux_string)))
         if DEBUG_LEVEL > 0:
             context = (
-                'Context: ' + self._editor.get_pp_phrase()
-                + ' ' + self._editor.get_p_phrase())
+                'Context: ' + self.get_pp_phrase()
+                + ' ' + self.get_p_phrase())
             aux_string += context
             attrs.append(IBus.attr_foreground_new(
                 rgb(0x00, 0xff, 0x00),
@@ -1437,7 +1386,7 @@ class TypingBoosterEngine(IBus.Engine):
                                   attr.get_end_index())
             i += 1
         visible = True
-        if (self._editor.get_lookup_table().get_number_of_candidates() == 0
+        if (self.get_lookup_table().get_number_of_candidates() == 0
             or (self._tab_enable
                 and not self.is_lookup_table_enabled_by_tab)
             or not aux_string):
@@ -1455,12 +1404,12 @@ class TypingBoosterEngine(IBus.Engine):
         # difference but gnome-shell in f18 will display
         # an empty suggestion popup if the number of candidates
         # is zero!
-        if (self._editor.is_empty()
-            or self._editor.get_lookup_table().get_number_of_candidates() == 0
+        if (self.is_empty()
+            or self.get_lookup_table().get_number_of_candidates() == 0
             or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
             self.hide_lookup_table()
         else:
-            self.update_lookup_table(self._editor.get_lookup_table(), True)
+            self.update_lookup_table(self.get_lookup_table(), True)
 
     def _update_lookup_table_and_aux(self):
         '''Update the lookup table and the auxiliary text'''
@@ -1470,17 +1419,17 @@ class TypingBoosterEngine(IBus.Engine):
 
     def _update_candidates_and_lookup_table_and_aux(self):
         '''Updat the candidates, the lookup table and the auxiliary text'''
-        self._editor.update_candidates()
+        self.update_candidates()
         self._update_lookup_table_and_aux()
 
     def _update_ui(self):
         '''Update User Interface'''
         self._update_preedit()
-        if self._editor.is_empty():
+        if self.is_empty():
             # Hide lookup table again if preëdit became empty and
             # suggestions are only enabled by Tab key:
             self.is_lookup_table_enabled_by_tab = False
-        if (self._editor.is_empty()
+        if (self.is_empty()
             or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
             # If the lookup table would be hidden anyway, there is no
             # point in updating the candidates, save some time by making
@@ -1496,8 +1445,8 @@ class TypingBoosterEngine(IBus.Engine):
             return
         self._lookup_table_is_invalid = True
         # Don’t show the lookup table if it is invalid anway
-        self._editor.get_lookup_table().clear()
-        self._editor.get_lookup_table().set_cursor_visible(False)
+        self.get_lookup_table().clear()
+        self.get_lookup_table().set_cursor_visible(False)
         self.hide_lookup_table()
         # Show an hourglass with moving sand in the auxiliary text to
         # indicate that the lookup table is being updated:
@@ -1521,11 +1470,11 @@ class TypingBoosterEngine(IBus.Engine):
         if (self._tab_enable and not self.is_lookup_table_enabled_by_tab):
             self.is_lookup_table_enabled_by_tab = True
         phrase  = ''
-        if (self._editor.get_lookup_table().get_number_of_candidates()
-            and  self._editor.get_lookup_table().cursor_visible):
-            phrase = self._editor.get_string_from_lookup_table_cursor_pos()
+        if (self.get_lookup_table().get_number_of_candidates()
+            and  self.get_lookup_table().cursor_visible):
+            phrase = self.get_string_from_lookup_table_cursor_pos()
         else:
-            phrase  = self._editor.get_transliterated_strings()[
+            phrase  = self._transliterated_strings[
                 self.get_current_imes()[0]]
         if not phrase:
             return
@@ -1534,7 +1483,7 @@ class TypingBoosterEngine(IBus.Engine):
         # being updated. Don’t clear the lookup table here because we
         # might want to show it quickly again if nothing related is
         # found:
-        if self._editor.get_lookup_table().get_number_of_candidates():
+        if self.get_lookup_table().get_number_of_candidates():
             self.hide_lookup_table()
         super(TypingBoosterEngine, self).update_auxiliary_text(
             IBus.Text.new_from_string(BUSY_SYMBOL), True)
@@ -1549,13 +1498,13 @@ class TypingBoosterEngine(IBus.Engine):
         # So make sure that the emoji matcher is available for the
         # correct list of languages before searching for similar
         # emoji:
-        if (not self._editor.emoji_matcher
+        if (not self.emoji_matcher
             or
-            self._editor.emoji_matcher.get_languages()
-            != self._editor._dictionary_names):
-            self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
-                languages = self._editor._dictionary_names)
-        related_candidates = self._editor.emoji_matcher.similar(phrase)
+            self.emoji_matcher.get_languages()
+            != self._dictionary_names):
+            self.emoji_matcher = itb_emoji.EmojiMatcher(
+                languages = self._dictionary_names)
+        related_candidates = self.emoji_matcher.similar(phrase)
         try:
             import itb_nltk
             for synonym in itb_nltk.synonyms(phrase, keep_original = False):
@@ -1580,15 +1529,15 @@ class TypingBoosterEngine(IBus.Engine):
             else:
                 super(TypingBoosterEngine, self).update_auxiliary_text(
                     IBus.Text.new_from_string(''), False)
-            if self._editor.get_lookup_table().get_number_of_candidates():
-                self.update_lookup_table(self._editor.get_lookup_table(), True)
+            if self.get_lookup_table().get_number_of_candidates():
+                self.update_lookup_table(self.get_lookup_table(), True)
             return
-        self._editor._candidates = []
-        self._editor.get_lookup_table().clear()
-        self._editor.get_lookup_table().set_cursor_visible(False)
+        self._candidates = []
+        self.get_lookup_table().clear()
+        self.get_lookup_table().set_cursor_visible(False)
         for cand in related_candidates:
-            self._editor._candidates.append((cand[0], cand[2], cand[1]))
-            self._editor.append_candidate_to_lookup_table(
+            self._candidates.append((cand[0], cand[2], cand[1]))
+            self.append_candidate_to_lookup_table(
                 phrase = cand[0], user_freq = cand[2], comment = cand[1])
         self._update_lookup_table_and_aux()
         self._lookup_table_shows_related_candidates = True
@@ -1598,9 +1547,8 @@ class TypingBoosterEngine(IBus.Engine):
         (non-trivial, i.e. not transliterating to itself)
         transliteration in any of the current input methods.
         '''
-        transliterators = self._editor.get_transliterators()
         for ime in self.get_current_imes():
-            if transliterators[ime].transliterate(
+            if self._transliterators[ime].transliterate(
                     msymbol_list) != ''.join(msymbol_list):
                 if DEBUG_LEVEL > 1:
                     sys.stderr.write(
@@ -1628,13 +1576,13 @@ class TypingBoosterEngine(IBus.Engine):
         # Tab again to show it.
         self.is_lookup_table_enabled_by_tab = False
         if not input_phrase:
-            input_phrase = self._editor.get_transliterated_strings()[
+            input_phrase = self._transliterated_strings[
                 self.get_current_imes()[0]]
         # commit always in NFC:
         commit_phrase = unicodedata.normalize('NFC', commit_phrase)
         super(TypingBoosterEngine, self).commit_text(
             IBus.Text.new_from_string(commit_phrase))
-        self._editor.clear_input()
+        self.clear_input()
         self._update_ui ()
         self._commit_happened_after_focus_in = True
         if self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT:
@@ -1690,9 +1638,9 @@ class TypingBoosterEngine(IBus.Engine):
             self.db.check_phrase_and_update_frequency(
                 input_phrase=stripped_input_phrase,
                 phrase=stripped_commit_phrase,
-                p_phrase=self._editor.get_p_phrase(),
-                pp_phrase=self._editor.get_pp_phrase())
-        self._editor.push_context(stripped_commit_phrase)
+                p_phrase=self.get_p_phrase(),
+                pp_phrase=self.get_pp_phrase())
+        self.push_context(stripped_commit_phrase)
 
     def get_context(self):
         '''Try to get the context from the application using the “surrounding
@@ -1726,9 +1674,9 @@ class TypingBoosterEngine(IBus.Engine):
             itb_util.strip_token(token)
             for token in itb_util.tokenize(text[:cursor_pos])])
         if len(tokens):
-            self._editor._p_phrase = tokens[-1]
+            self._p_phrase = tokens[-1]
         if len(tokens) > 1:
-            self._editor._pp_phrase = tokens[-2]
+            self._pp_phrase = tokens[-2]
 
     def set_emoji_prediction_mode(self, mode, update_dconf = True):
         '''Sets the emoji prediction mode
@@ -1746,18 +1694,18 @@ class TypingBoosterEngine(IBus.Engine):
             sys.stderr.write(
                 "set_emoji_prediction_mode(%s, update_dconf = %s)\n"
                 %(mode, update_dconf))
-        if mode == self._editor._emoji_predictions:
+        if mode == self._emoji_predictions:
             return
-        self._editor._emoji_predictions = mode
+        self._emoji_predictions = mode
         self._init_or_update_property_menu(
             self.emoji_prediction_mode_menu, mode)
-        if (self._editor._emoji_predictions
-            and (not self._editor.emoji_matcher
+        if (self._emoji_predictions
+            and (not self.emoji_matcher
                  or
-                 self._editor.emoji_matcher.get_languages()
-                 != self._editor._dictionary_names)):
-            self._editor.emoji_matcher = itb_emoji.EmojiMatcher(
-                languages = self._editor._dictionary_names)
+                 self.emoji_matcher.get_languages()
+                 != self._dictionary_names)):
+            self.emoji_matcher = itb_emoji.EmojiMatcher(
+                languages = self._dictionary_names)
         self._update_ui()
         if update_dconf:
             self._config.set_value(
@@ -1776,14 +1724,14 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_dconf: boolean
         '''
         self.set_emoji_prediction_mode(
-            not self._editor._emoji_predictions, update_dconf)
+            not self._emoji_predictions, update_dconf)
 
     def get_emoji_prediction_mode(self):
         '''Returns the current value of the emoji prediction mode
 
         :rtype: boolean
         '''
-        return self._editor._emoji_predictions
+        return self._emoji_predictions
 
     def set_off_the_record_mode(self, mode, update_dconf = True):
         '''Sets the “Off the record” mode
@@ -1886,7 +1834,6 @@ class TypingBoosterEngine(IBus.Engine):
         if mode == self._tab_enable:
             return
         self._tab_enable = mode
-        self._editor._tab_enable = mode
         if update_dconf:
             self._config.set_value(
                 self._config_section,
@@ -1953,7 +1900,7 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if page_size >= 1 and page_size <= 9:
             self._page_size = page_size
-            self._editor.set_lookup_table(
+            self.set_lookup_table(
                 IBus.LookupTable(
                     page_size = self._page_size,
                     cursor_pos = 0,
@@ -1989,10 +1936,10 @@ class TypingBoosterEngine(IBus.Engine):
             sys.stderr.write(
                 "set_min_char_complete(%s, update_dconf = %s)\n"
                 %(min_char_complete, update_dconf))
-        if min_char_complete == self._editor._min_char_complete:
+        if min_char_complete == self._min_char_complete:
             return
         if min_char_complete >= 1 and min_char_complete <= 9:
-            self._editor._min_char_complete = min_char_complete
+            self._min_char_complete = min_char_complete
             self.reset()
             if update_dconf:
                 self._config.set_value(
@@ -2005,7 +1952,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         :rtype: integer
         '''
-        return self._editor._min_char_complete
+        return self._min_char_complete
 
     def set_show_number_of_candidates(self, mode, update_dconf = True):
         '''Sets the “Show number of candidates” mode
@@ -2081,15 +2028,15 @@ class TypingBoosterEngine(IBus.Engine):
             sys.stderr.write(
                 'do_candidate_clicked() index = %s button = %s state = %s\n'
                 %(index, button, state))
-        if not self._editor.set_lookup_table_cursor_pos_in_current_page(index):
+        if not self.set_lookup_table_cursor_pos_in_current_page(index):
             return
-        self._editor._lookup_table.set_cursor_visible(True)
+        self._lookup_table.set_cursor_visible(True)
         if button == 1 and (state & IBus.ModifierType.CONTROL_MASK):
-            self._editor.remove_candidate_from_user_database(index)
+            self.remove_candidate_from_user_database(index)
             self._update_ui()
             return
         if button == 1:
-            phrase = self._editor.get_string_from_lookup_table_cursor_pos()
+            phrase = self.get_string_from_lookup_table_cursor_pos()
             if phrase:
                 self.commit_string(phrase + ' ')
             return
@@ -2178,10 +2125,10 @@ class TypingBoosterEngine(IBus.Engine):
         if key.state & IBus.ModifierType.RELEASE_MASK:
             return self.return_false(key.val, key.code, key.state)
 
-        if self._editor.is_empty ():
+        if self.is_empty ():
             if DEBUG_LEVEL > 1:
                 sys.stderr.write(
-                    "_process_key_event() self._editor.is_empty(): "
+                    "_process_key_event() self.is_empty(): "
                     "KeyEvent object: %s\n" % key)
             # This is the first character typed since the last commit
             # there is nothing in the preëdit yet.
@@ -2230,7 +2177,7 @@ class TypingBoosterEngine(IBus.Engine):
                 token = match.group('token')
                 self.delete_surrounding_text(-1-len(token), 1+len(token))
                 self.get_context()
-                self._editor.insert_string_at_cursor(list(token))
+                self.insert_string_at_cursor(list(token))
                 self._update_ui()
                 return True
             if key.val >= 32 and not key.control:
@@ -2262,7 +2209,7 @@ class TypingBoosterEngine(IBus.Engine):
                     # native digits. For example, with mr-inscript we
                     # want “3” to be converted to “३”. So we try
                     # to transliterate and commit the result:
-                    transliterated_digit = self._editor.get_transliterators()[
+                    transliterated_digit = self._transliterators[
                         self.get_current_imes()[0]
                     ].transliterate([key.msymbol])
                     self.commit_string(
@@ -2271,14 +2218,14 @@ class TypingBoosterEngine(IBus.Engine):
                     return True
 
         if key.val == IBus.KEY_Escape:
-            if self._editor.is_empty():
+            if self.is_empty():
                 return self.return_false(key.val, key.code, key.state)
-            if self._editor.get_lookup_table().cursor_visible:
+            if self.get_lookup_table().cursor_visible:
                 # A candidate is selected in the lookup table.
                 # Deselect it and show the first page of the candidate
                 # list:
-                self._editor.get_lookup_table().set_cursor_visible(False)
-                self._editor.get_lookup_table().set_cursor_pos(0)
+                self.get_lookup_table().set_cursor_visible(False)
+                self.get_lookup_table().set_cursor_pos(0)
                 self._update_lookup_table_and_aux()
                 return True
             if self._lookup_table_shows_related_candidates:
@@ -2289,10 +2236,10 @@ class TypingBoosterEngine(IBus.Engine):
                 # If lookup table was enabled by typing Tab, close it again
                 # but keep the preëdit:
                 self.is_lookup_table_enabled_by_tab = False
-                self._editor.get_lookup_table().clear()
-                self._editor.get_lookup_table().set_cursor_visible(False)
+                self.get_lookup_table().clear()
+                self.get_lookup_table().set_cursor_visible(False)
                 self._update_lookup_table_and_aux()
-                self._editor._candidates = []
+                self._candidates = []
                 return True
             self.reset()
             self._update_ui()
@@ -2313,69 +2260,69 @@ class TypingBoosterEngine(IBus.Engine):
                 return True
 
         if (key.val in (IBus.KEY_Down, IBus.KEY_KP_Down)
-            and self._editor.get_lookup_table().get_number_of_candidates()):
-            res = self._editor.arrow_down()
+            and self.get_lookup_table().get_number_of_candidates()):
+            res = self.arrow_down()
             self._update_lookup_table_and_aux()
             return res
 
         if (key.val in (IBus.KEY_Up, IBus.KEY_KP_Up)
-            and self._editor.get_lookup_table().get_number_of_candidates()):
-            res = self._editor.arrow_up()
+            and self.get_lookup_table().get_number_of_candidates()):
+            res = self.arrow_up()
             self._update_lookup_table_and_aux()
             return res
 
         if (key.val in (IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down)
-            and self._editor.get_lookup_table().get_number_of_candidates()):
-            res = self._editor.page_down()
+            and self.get_lookup_table().get_number_of_candidates()):
+            res = self.page_down()
             self._update_lookup_table_and_aux()
             return res
 
         if (key.val in (IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up)
-            and self._editor.get_lookup_table().get_number_of_candidates()):
-            res = self._editor.page_up ()
+            and self.get_lookup_table().get_number_of_candidates()):
+            res = self.page_up ()
             self._update_lookup_table_and_aux()
             return res
 
         if key.val == IBus.KEY_BackSpace and key.control:
-            if self._editor.is_empty():
+            if self.is_empty():
                 return self.return_false(key.val, key.code, key.state)
-            if self._editor.get_typed_string_cursor() > 0:
+            if self._typed_string_cursor > 0:
                 self.is_lookup_table_enabled_by_tab = False
-            self._editor.remove_string_before_cursor()
+            self.remove_string_before_cursor()
             self._update_ui()
             return True
 
         if key.val == IBus.KEY_BackSpace:
-            if self._editor.is_empty():
+            if self.is_empty():
                 return self.return_false(key.val, key.code, key.state)
-            if self._editor.get_typed_string_cursor() > 0:
+            if self._typed_string_cursor > 0:
                 self.is_lookup_table_enabled_by_tab = False
-            self._editor.remove_character_before_cursor()
+            self.remove_character_before_cursor()
             self._update_ui()
             return True
 
         if key.val == IBus.KEY_Delete and key.control:
-            if self._editor.is_empty():
+            if self.is_empty():
                 return self.return_false(key.val, key.code, key.state)
-            if (self._editor.get_typed_string_cursor()
-                < len(self._editor.get_typed_string())):
+            if (self._typed_string_cursor
+                < len(self._typed_string)):
                 self.is_lookup_table_enabled_by_tab = False
-            self._editor.remove_string_after_cursor()
+            self.remove_string_after_cursor()
             self._update_ui()
             return True
 
         if key.val == IBus.KEY_Delete:
-            if self._editor.is_empty():
+            if self.is_empty():
                 return self.return_false(key.val, key.code, key.state)
-            if (self._editor.get_typed_string_cursor()
-                < len(self._editor.get_typed_string())):
+            if (self._typed_string_cursor
+                < len(self._typed_string)):
                 self.is_lookup_table_enabled_by_tab = False
-            self._editor.remove_character_after_cursor()
+            self.remove_character_after_cursor()
             self._update_ui()
             return True
 
         # Select a candidate to commit or remove:
-        if (self._editor.get_lookup_table().get_number_of_candidates()
+        if (self.get_lookup_table().get_number_of_candidates()
             and not key.mod1 and not key.mod5):
             # key.mod1 (= Alt) and key.mod5 (= AltGr) should not be set
             # here because:
@@ -2396,14 +2343,14 @@ class TypingBoosterEngine(IBus.Engine):
             if index >= 0 and index < self._page_size:
                 if key.control:
                     # Remove the candidate from the user database
-                    res = self._editor.remove_candidate_from_user_database(
+                    res = self.remove_candidate_from_user_database(
                         index)
                     self._update_ui()
                     return res
                 else:
                     # Commit a candidate:
                     phrase = (
-                        self._editor.get_string_from_lookup_table_current_page(
+                        self.get_string_from_lookup_table_current_page(
                             index))
                     if phrase:
                         self.commit_string(phrase + ' ')
@@ -2418,7 +2365,7 @@ class TypingBoosterEngine(IBus.Engine):
             return True
 
         if (key.val == IBus.KEY_F12 and key.mod5 # AltGr+F12
-            and not self._editor.is_empty()):
+            and not self.is_empty()):
             self._lookup_related_candidates()
             return True
 
@@ -2429,7 +2376,7 @@ class TypingBoosterEngine(IBus.Engine):
         if (key.val == IBus.KEY_Tab
             and self._tab_enable
             and not self.is_lookup_table_enabled_by_tab
-            and not self._editor.is_empty()):
+            and not self.is_empty()):
             self.is_lookup_table_enabled_by_tab = True
             # update the ui here to see the effect immediately
             # do not wait for the next keypress:
@@ -2481,29 +2428,26 @@ class TypingBoosterEngine(IBus.Engine):
                 # 'G- ' (AltGr-Space) is prevented from triggering
                 # a commit here, because it is used to enter spaces
                 # into the preëdit, if possible.
-            if self._editor.is_empty():
+            if self.is_empty():
                 return self.return_false(key.val, key.code, key.state)
             if (key.val in (IBus.KEY_Right, IBus.KEY_KP_Right)
-                and (self._editor.get_typed_string_cursor()
-                     < len(self._editor.get_typed_string()))):
+                and (self._typed_string_cursor
+                     < len(self._typed_string))):
                 if key.control:
                     # Move cursor to the end of the typed string
-                    self._editor.set_typed_string_cursor(
-                        len(self._editor.get_typed_string()))
+                    self._typed_string_cursor = len(self._typed_string)
                 else:
-                    self._editor.set_typed_string_cursor(
-                        self._editor.get_typed_string_cursor() + 1)
+                    self._typed_string_cursor += 1
                 self._update_preedit()
                 self._update_lookup_table_and_aux()
                 return True
             if (key.val in (IBus.KEY_Left, IBus.KEY_KP_Left)
-                and self._editor.get_typed_string_cursor() > 0):
+                and self._typed_string_cursor > 0):
                 if key.control:
                     # Move cursor to the beginning of the typed string
-                    self._editor.set_typed_string_cursor(0)
+                    self._typed_string_cursor = 0
                 else:
-                    self._editor.set_typed_string_cursor(
-                        self._editor.get_typed_string_cursor() - 1)
+                    self._typed_string_cursor -= 1
                 self._update_preedit()
                 self._update_lookup_table_and_aux()
                 return True
@@ -2516,20 +2460,20 @@ class TypingBoosterEngine(IBus.Engine):
             # the input might influence the transliteration. For example
             # When using hi-itrans, “. ” translates to “। ”
             # (See: https://bugzilla.redhat.com/show_bug.cgi?id=1353672)
-            input_phrase = self._editor.get_transliterators()[
+            input_phrase = self._transliterators[
                 self.get_current_imes()[0]].transliterate(
-                    self._editor.get_typed_string() + [key.msymbol])
+                    self._typed_string + [key.msymbol])
             # If the transliteration now ends with the commit key, cut
             # it off because the commit key is passed to the
             # application later anyway and we do not want to pass it
             # twice:
             if len(key.msymbol) and input_phrase.endswith(key.msymbol):
                 input_phrase = input_phrase[:-len(key.msymbol)]
-            if (self._editor.get_lookup_table().get_number_of_candidates()
-                and self._editor.get_lookup_table().cursor_visible):
+            if (self.get_lookup_table().get_number_of_candidates()
+                and self.get_lookup_table().cursor_visible):
                 # something is selected in the lookup table, commit
                 # the selected phrase
-                phrase = self._editor.get_string_from_lookup_table_cursor_pos()
+                phrase = self.get_string_from_lookup_table_cursor_pos()
                 commit_string = phrase
             else:
                 # nothing is selected in the lookup table, commit the
@@ -2537,7 +2481,7 @@ class TypingBoosterEngine(IBus.Engine):
                 commit_string = input_phrase
             if not commit_string:
                 # This should not happen, we returned already above when
-                # self._editor.is_empty(), if we get here there should
+                # self.is_empty(), if we get here there should
                 # have been something in the preëdit or the lookup table:
                 if DEBUG_LEVEL > 0:
                     sys.stderr.write(
@@ -2581,15 +2525,15 @@ class TypingBoosterEngine(IBus.Engine):
             # the lookup table again when characters are added to the
             # preëdit:
             self.is_lookup_table_enabled_by_tab = False
-            if self._editor.is_empty():
+            if self.is_empty():
                 # first key typed, we will try to complete something now
                 # get the context if possible
                 self.get_context()
             if (key.msymbol in ('G- ',)
                 and not self.has_transliteration([key.msymbol])):
-                self._editor.insert_string_at_cursor([' '])
+                self.insert_string_at_cursor([' '])
             else:
-                self._editor.insert_string_at_cursor([key.msymbol])
+                self.insert_string_at_cursor([key.msymbol])
             # If the character typed could end a sentence, we can
             # *maybe* commit immediately.  However, if transliteration
             # is used, we may need to handle a punctuation or symbol
@@ -2598,7 +2542,7 @@ class TypingBoosterEngine(IBus.Engine):
             # cannot commit when encountering a “.”, we have to wait
             # what comes next.
             input_phrase = (
-                self._editor.get_transliterated_strings()[
+                self._transliterated_strings[
                     self.get_current_imes()[0]])
             if (len(key.msymbol) == 1
                 and key.msymbol != ' '
@@ -2630,7 +2574,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         '''
         self.register_properties(self.main_prop_list)
-        self._editor.clear_context()
+        self.clear_context()
         self._commit_happened_after_focus_in = False
         self._update_ui()
 
@@ -2641,7 +2585,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if self._has_input_purpose:
             self._input_purpose = 0
-        self._editor.clear_context()
+        self.clear_context()
         self.reset()
         return
 
@@ -2681,7 +2625,7 @@ class TypingBoosterEngine(IBus.Engine):
         the mouse
 
         '''
-        if self._editor.page_up ():
+        if self.page_up():
             self._update_lookup_table_and_aux()
             return True
         return True
@@ -2691,7 +2635,7 @@ class TypingBoosterEngine(IBus.Engine):
         the mouse
 
         '''
-        if self._editor.page_down ():
+        if self.page_down():
             self._update_lookup_table_and_aux()
             return True
         return False
@@ -2701,7 +2645,7 @@ class TypingBoosterEngine(IBus.Engine):
         the lookup table
 
         '''
-        res = self._editor.arrow_up()
+        res = self.arrow_up()
         self._update_lookup_table_and_aux()
         return res
 
@@ -2710,7 +2654,7 @@ class TypingBoosterEngine(IBus.Engine):
         the lookup table
 
         '''
-        res = self._editor.arrow_down()
+        res = self.arrow_down()
         self._update_lookup_table_and_aux()
         return res
 

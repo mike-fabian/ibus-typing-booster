@@ -165,11 +165,11 @@ class ItbTestCase(unittest.TestCase):
     def test_set_page_size(self):
         self.engine.set_page_size(3)
         self.assertEqual(
-            self.engine._editor.get_lookup_table()._mock_page_size,
+            self.engine.get_lookup_table()._mock_page_size,
             3)
         self.engine.set_page_size(5)
         self.assertEqual(
-            self.engine._editor.get_lookup_table()._mock_page_size,
+            self.engine.get_lookup_table()._mock_page_size,
             5)
 
     def test_complete_word_from_us_english_dictionary(self):
@@ -181,7 +181,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
-        self.assertEqual(self.engine._editor._candidates[0][0], 'cerulean')
+        self.assertEqual(self.engine._candidates[0][0], 'cerulean')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine._mock_committed_text, 'cerulean ')
 
@@ -243,70 +243,70 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
-        self.assertEqual(self.engine._editor._candidates[0][0], 'camel')
-        self.assertEqual(self.engine._editor._candidates[5][0], '🐫')
-        self.assertEqual(self.engine._editor._candidates[5][2],
+        self.assertEqual(self.engine._candidates[0][0], 'camel')
+        self.assertEqual(self.engine._candidates[5][0], '🐫')
+        self.assertEqual(self.engine._candidates[5][2],
                          'bactrian camel “two-hump camel”')
         self.engine.do_candidate_clicked(5, 3, 0)
-        self.assertEqual(self.engine._editor._candidates[0][0], '🐫')
-        self.assertEqual(self.engine._editor._candidates[1][0], '🐪')
+        self.assertEqual(self.engine._candidates[0][0], '🐫')
+        self.assertEqual(self.engine._candidates[1][0], '🐪')
         self.assertEqual(
-            self.engine._editor.get_lookup_table().cursor_visible,
+            self.engine.get_lookup_table().cursor_visible,
             False)
         self.engine.do_process_key_event(IBus.KEY_Down, 0, 0)
         self.assertEqual(
-            self.engine._editor.get_lookup_table().cursor_visible,
+            self.engine.get_lookup_table().cursor_visible,
             True)
         self.engine.do_process_key_event(IBus.KEY_Down, 0, 0)
         self.assertEqual(
-            self.engine._editor.get_lookup_table().cursor_visible,
+            self.engine.get_lookup_table().cursor_visible,
             True)
         self.assertEqual(
-            self.engine._editor.get_string_from_lookup_table_cursor_pos(),
+            self.engine.get_string_from_lookup_table_cursor_pos(),
             '🐪')
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
         self.assertEqual(
-            self.engine._editor.get_lookup_table().cursor_visible,
+            self.engine.get_lookup_table().cursor_visible,
             False)
         self.assertEqual(
-            self.engine._editor.get_lookup_table().get_cursor_pos(),
+            self.engine.get_lookup_table().get_cursor_pos(),
             0)
         self.assertEqual(
-            self.engine._editor.get_string_from_lookup_table_cursor_pos(),
+            self.engine.get_string_from_lookup_table_cursor_pos(),
             '🐫')
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
         self.assertEqual(
-            self.engine._editor.get_lookup_table().cursor_visible,
+            self.engine.get_lookup_table().cursor_visible,
             False)
         self.assertEqual(
-            self.engine._editor.get_lookup_table().get_cursor_pos(),
+            self.engine.get_lookup_table().get_cursor_pos(),
             0)
-        self.assertEqual(self.engine._editor._candidates[0][0], 'camel')
-        self.assertEqual(self.engine._editor._candidates[5][0], '🐫')
-        self.assertEqual(self.engine._editor._candidates[5][2],
+        self.assertEqual(self.engine._candidates[0][0], 'camel')
+        self.assertEqual(self.engine._candidates[5][0], '🐫')
+        self.assertEqual(self.engine._candidates[5][2],
                          'bactrian camel “two-hump camel”')
         self.engine.do_process_key_event(IBus.KEY_Down, 0, 0)
         self.assertEqual(
-            self.engine._editor.get_lookup_table().cursor_visible,
+            self.engine.get_lookup_table().cursor_visible,
             True)
         self.assertEqual(
-            self.engine._editor.get_string_from_lookup_table_cursor_pos(),
+            self.engine.get_string_from_lookup_table_cursor_pos(),
             'camel')
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
         self.assertEqual(
-            self.engine._editor.get_lookup_table().cursor_visible,
+            self.engine.get_lookup_table().cursor_visible,
             False)
         self.assertEqual(
-            self.engine._editor.get_lookup_table().get_cursor_pos(),
+            self.engine.get_lookup_table().get_cursor_pos(),
             0)
         self.assertEqual(
-            self.engine._editor.get_string_from_lookup_table_cursor_pos(),
+            self.engine.get_string_from_lookup_table_cursor_pos(),
             'camel')
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
         self.assertEqual(
-            self.engine._editor.get_lookup_table().get_number_of_candidates(),
+            self.engine.get_lookup_table().get_number_of_candidates(),
             0)
-        self.assertEqual(self.engine._editor._candidates, [])
+        self.assertEqual(self.engine._candidates, [])
         self.assertEqual(self.engine._mock_preedit_text, 'camel')
         self.assertEqual(self.engine._mock_preedit_text_cursor_pos, 5)
         self.assertEqual(self.engine._mock_preedit_text_visible, True)
@@ -352,7 +352,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(self.engine._mock_preedit_text, '안녕하')
         candidates = [unicodedata.normalize('NFC', x[0])
-                      for x in self.engine._editor._candidates]
+                      for x in self.engine._candidates]
         self.assertEqual(True, '안녕할듯하다' in candidates)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
         self.assertEqual(self.engine._mock_preedit_text, '안녕할')
@@ -371,7 +371,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(self.engine._mock_preedit_text, '안녕하')
         candidates = [unicodedata.normalize('NFC', x[0])
-                      for x in self.engine._editor._candidates]
+                      for x in self.engine._candidates]
         self.assertEqual(True, '안녕할' in candidates)
         self.assertEqual('안녕할', candidates[0])
 
@@ -391,7 +391,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.assertEqual(
             unicodedata.normalize('NFC',
-                                  self.engine._editor._candidates[0][0]),
+                                  self.engine._candidates[0][0]),
             'Alpenglühen')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine._mock_committed_text, 'Alpenglühen ')
@@ -420,12 +420,12 @@ class ItbTestCase(unittest.TestCase):
         #  the first candidate here:
         self.assertEqual(
             unicodedata.normalize('NFC',
-                                  self.engine._editor._candidates[0][0]),
+                                  self.engine._candidates[0][0]),
             'Glühwürmchen')
         # user_freq must be 0 because this word has not been found in
         # the user database, it is only a candidate because it is a
         # valid word according to hunspell:
-        self.assertEqual(self.engine._editor._candidates[0][1], 0)
+        self.assertEqual(self.engine._candidates[0][1], 0)
         # Commit with F1:
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         # Type “Glühwürmchen” again:
@@ -446,11 +446,11 @@ class ItbTestCase(unittest.TestCase):
         # Again it should be the first candidate:
         self.assertEqual(
             unicodedata.normalize('NFC',
-                                  self.engine._editor._candidates[0][0]),
+                                  self.engine._candidates[0][0]),
             'Glühwürmchen')
         # But now user_freq must be > 0 because the last commit
         # added this word to the user database:
-        self.assertTrue(self.engine._editor._candidates[0][1] > 0)
+        self.assertTrue(self.engine._candidates[0][1] > 0)
         # Commit with F1:
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(
@@ -475,7 +475,7 @@ class ItbTestCase(unittest.TestCase):
         # accents are removed from the input phrase:
         self.assertEqual(
             unicodedata.normalize('NFC',
-                                  self.engine._editor._candidates[0][0]),
+                                  self.engine._candidates[0][0]),
             'Glühwürmchen')
         # Commit with F1:
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
