@@ -19,6 +19,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+'''
+The setup tool for ibus typing booster.
+'''
 
 import sys
 import os
@@ -28,8 +31,10 @@ import signal
 import argparse
 import locale
 from time import strftime
-from i18n import DOMAINNAME, _, N_, init as i18n_init
-import dbus, dbus.service, dbus.glib
+import dbus
+import dbus.service
+import dbus.glib
+
 from gi import require_version
 require_version('Gtk', '3.0')
 from gi.repository import Gtk
@@ -37,44 +42,52 @@ require_version('IBus', '1.0')
 from gi.repository import IBus
 from gi.repository import GLib
 from pkginstall import InstallPkg
+from i18n import DOMAINNAME, _, init as i18n_init
 
 sys.path = [sys.path[0]+'/../engine'] + sys.path
 import tabsqlitedb
+import itb_util
 
 import version
 
 def parse_args():
+    '''
+    Parse the command line arguments.
+    '''
     parser = argparse.ArgumentParser(
-        description = 'ibus-typing-booster setup tool')
+        description='ibus-typing-booster setup tool')
     parser.add_argument(
         '-c', '--config-file',
-        nargs = '?',
-        type = str,
-        action = 'store',
-        default = '',
-        help = ('Set the file name of config file for the ime engine, '
-                + 'default: %(default)s'))
+        nargs='?',
+        type=str,
+        action='store',
+        default='',
+        help=('Set the file name of config file for the ime engine, '
+              + 'default: %(default)s'))
     parser.add_argument(
         '-q', '--no-debug',
-        action = 'store_true',
-        default = False,
-        help = ('Do not redirect stdout and stderr to '
-                + '~/.local/share/ibus-typing-booster/setup-debug.log, '
-                + 'default: %(default)s'))
+        action='store_true',
+        default=False,
+        help=('Do not redirect stdout and stderr to '
+              + '~/.local/share/ibus-typing-booster/setup-debug.log, '
+              + 'default: %(default)s'))
     return parser.parse_args()
 
 _ARGS = parse_args()
 
 class SetupUI:
+    '''
+    User interface of the setup tool
+    '''
     def __init__(self, bus):
-        filename = path.join(path.dirname(__file__),"setup.glade")
+        filename = path.join(path.dirname(__file__), "setup.glade")
         self.builder = Gtk.Builder()
         self.builder.set_translation_domain(DOMAINNAME)
         self.builder.add_from_file(filename)
         event_handler = EventHandler()
         self.builder.connect_signals(event_handler)
         if not self.check_instance():
-            service = SetupService()
+            dummy_service = SetupService()
         # Try to figure out the config file name:
         self.config_file = None
         if _ARGS.config_file:
@@ -102,7 +115,7 @@ class SetupUI:
                 self.__run_message_dialog(
                     _("IBUS_ENGINE_NAME environment variable is not set."),
                     Gtk.MessageType.WARNING)
-        if self.config_file == None:
+        if self.config_file is None:
             self.__run_message_dialog(
                 _('Cannot determine the config file for this engine. '
                   + 'Please use the --config-file option.'),
@@ -121,7 +134,7 @@ class SetupUI:
             return
 
         self.tabsqlitedb = tabsqlitedb.tabsqlitedb(
-            config_filename = self.config_file_full_path)
+            config_filename=self.config_file_full_path)
         self.name = self.tabsqlitedb.ime_properties.get('name')
         self.config_section = "engine/typing-booster/%s" % self.name
         self.hunspell_dict_package = self.tabsqlitedb.ime_properties.get(
@@ -144,126 +157,128 @@ class SetupUI:
         self.install_dictionary_button = self.builder.get_object(
             "install_dictionary_button")
         self.install_dictionary_button.connect(
-            'clicked', event_handler.onInstallDictionaryClicked)
+            'clicked', event_handler.on_install_dictionary_clicked)
         self.learn_from_file_button = self.builder.get_object(
             "learn_from_file_button")
         self.learn_from_file_button.connect(
-            'clicked', event_handler.onLearnFromFileClicked)
+            'clicked', event_handler.on_learn_from_file_clicked)
         self.delete_learned_data_button = self.builder.get_object(
             "delete_learned_data_button")
         self.delete_learned_data_button.connect(
-            'clicked', event_handler.onDeleteLearnedDataClicked)
+            'clicked', event_handler.on_delete_learned_data_clicked)
 
         close_button = self.builder.get_object("close_button")
         close_button.connect('clicked', event_handler.onCloseClicked)
 
         tab_enable_checkbox = self.builder.get_object("tab_enable_checkbox")
-        self.tab_enable = self.variant_to_value(
+        self.tab_enable = itb_util.variant_to_value(
             self.config.get_value(self.config_section, 'tabenable'))
-        if self.tab_enable == None:
+        if self.tab_enable is None:
             self.tab_enable = False
-        if  self.tab_enable == True:
+        if  self.tab_enable is True:
             tab_enable_checkbox.set_active(True)
         tab_enable_checkbox.connect(
-            'clicked', event_handler.onTabEnableCheckbox)
+            'clicked', event_handler.on_tab_enable_checkbox)
 
         show_number_of_candidates_checkbox = self.builder.get_object(
             "show_number_of_candidates_checkbox")
-        self.show_number_of_candidates = self.variant_to_value(
+        self.show_number_of_candidates = itb_util.variant_to_value(
             self.config.get_value(
                 self.config_section, 'shownumberofcandidates'))
-        if self.show_number_of_candidates == None:
+        if self.show_number_of_candidates is None:
             self.show_number_of_candidates = False
-        if  self.show_number_of_candidates == True:
+        if  self.show_number_of_candidates is True:
             show_number_of_candidates_checkbox.set_active(True)
         show_number_of_candidates_checkbox.connect(
-            'clicked', event_handler.onShowNumberOfCandidatesCheckbox)
+            'clicked', event_handler.on_show_number_of_candidates_checkbox)
 
         use_digits_as_select_keys_checkbox = self.builder.get_object(
             "use_digits_as_select_keys_checkbox")
-        self.use_digits_as_select_keys = self.variant_to_value(
+        self.use_digits_as_select_keys = itb_util.variant_to_value(
             self.config.get_value(
                 self.config_section, 'usedigitsasselectkeys'))
-        if self.use_digits_as_select_keys == None:
+        if self.use_digits_as_select_keys is None:
             self.use_digits_as_select_keys = True
-        if self.use_digits_as_select_keys == True:
+        if self.use_digits_as_select_keys is True:
             use_digits_as_select_keys_checkbox.set_active(True)
         use_digits_as_select_keys_checkbox.connect(
-            'clicked', event_handler.onUseDigitsAsSelectKeysCheckbox)
+            'clicked', event_handler.on_use_digits_as_select_keys_checkbox)
 
         emoji_predictions_checkbox = self.builder.get_object(
             "emoji_predictions_checkbox")
-        self.emoji_predictions = self.variant_to_value(
+        self.emoji_predictions = itb_util.variant_to_value(
             self.config.get_value(
                 self.config_section, 'emojipredictions'))
-        if self.emoji_predictions == None:
+        if self.emoji_predictions is None:
             self.emoji_predictions = True
-        if self.emoji_predictions == True:
+        if self.emoji_predictions is True:
             emoji_predictions_checkbox.set_active(True)
         emoji_predictions_checkbox.connect(
-            'clicked', event_handler.onEmojiPredictionsCheckbox)
+            'clicked', event_handler.on_emoji_predictions_checkbox)
 
         off_the_record_checkbox = self.builder.get_object(
             "off_the_record_checkbox")
-        self.off_the_record = self.variant_to_value(
+        self.off_the_record = itb_util.variant_to_value(
             self.config.get_value(
                 self.config_section, 'offtherecord'))
-        if self.off_the_record == None:
+        if self.off_the_record is None:
             self.off_the_record = False
-        if self.off_the_record == True:
+        if self.off_the_record is True:
             off_the_record_checkbox.set_active(True)
         off_the_record_checkbox.connect(
-            'clicked', event_handler.onOffTheRecordCheckbox)
+            'clicked', event_handler.on_off_the_record_checkbox)
 
         add_direct_input_checkbox = self.builder.get_object(
             "add_direct_input_checkbox")
-        self.add_direct_input = self.variant_to_value(
+        self.add_direct_input = itb_util.variant_to_value(
             self.config.get_value(
                 self.config_section, 'adddirectinput'))
-        if self.add_direct_input == None:
+        if self.add_direct_input is None:
             self.add_direct_input = False
-        if  self.add_direct_input == True:
+        if  self.add_direct_input is True:
             add_direct_input_checkbox.set_active(True)
         add_direct_input_checkbox.connect(
-            'clicked', event_handler.onAddDirectInputCheckbox)
+            'clicked', event_handler.on_add_direct_input_checkbox)
 
         remember_last_used_preedit_ime_checkbox = self.builder.get_object(
             "remember_last_used_preedit_ime_checkbox")
-        self.remember_last_used_predit_ime = self.variant_to_value(
+        self.remember_last_used_predit_ime = itb_util.variant_to_value(
             self.config.get_value(
                 self.config_section, 'rememberlastusedpreeditime'))
-        if self.remember_last_used_predit_ime == None:
+        if self.remember_last_used_predit_ime is None:
             self.remember_last_used_predit_ime = False
-        if  self.remember_last_used_predit_ime == True:
+        if  self.remember_last_used_predit_ime is True:
             remember_last_used_preedit_ime_checkbox.set_active(True)
         remember_last_used_preedit_ime_checkbox.connect(
-            'clicked', event_handler.onRememberLastUsedPreeditImeCheckbox)
+            'clicked',
+            event_handler.on_remember_last_used_preedit_ime_checkbox)
 
         auto_commit_characters_entry = self.builder.get_object(
             "auto_commit_characters_entry")
-        self.auto_commit_characters = self.variant_to_value(
+        self.auto_commit_characters = itb_util.variant_to_value(
             self.config.get_value(
                 self.config_section, 'autocommitcharacters'))
         if not self.auto_commit_characters:
             self.auto_commit_characters = ''
         auto_commit_characters_entry.set_text(self.auto_commit_characters)
         auto_commit_characters_entry.connect(
-            'notify::text', event_handler.onAutoCommitCharactersEntry)
+            'notify::text', event_handler.on_auto_commit_characters_entry)
 
         self.page_size_adjustment = self.builder.get_object(
             "page_size_adjustment")
-        self.page_size = self.variant_to_value(self.config.get_value(
+        self.page_size = itb_util.variant_to_value(self.config.get_value(
             self.config_section, 'pagesize'))
         if self.page_size:
             self.page_size_adjustment.set_value(int(self.page_size))
         else:
             self.page_size_adjustment.set_value(6)
         self.page_size_adjustment.connect(
-            'value-changed', event_handler.onPageSizeAdjustmentValueChanged)
+            'value-changed',
+            event_handler.on_page_size_adjustment_value_changed)
 
         self.min_char_complete_adjustment = self.builder.get_object(
             "min_char_complete_adjustment")
-        self.min_char_complete = self.variant_to_value(
+        self.min_char_complete = itb_util.variant_to_value(
             self.config.get_value(self.config_section, 'mincharcomplete'))
         if self.min_char_complete:
             self.min_char_complete_adjustment.set_value(
@@ -272,10 +287,9 @@ class SetupUI:
             self.min_char_complete_adjustment.set_value(1)
         self.min_char_complete_adjustment.connect(
             'value-changed',
-            event_handler.onMinCharCompleteAdjustmentValueChanged)
+            event_handler.on_min_char_complete_adjustment_value_changed)
 
         self.ime_combobox = self.builder.get_object("input_method_combobox")
-        ime_label = self.builder.get_object("input_method_label")
         self.input_method_help_button = self.builder.get_object(
             "input_method_help_button")
         ime_store = Gtk.ListStore(str, str)
@@ -291,7 +305,7 @@ class SetupUI:
         self.ime_combobox.pack_start(renderer_text, True)
         self.ime_combobox.add_attribute(renderer_text, "text", 0)
         self.current_imes = []
-        inputmethod = self.variant_to_value(self.config.get_value(
+        inputmethod = itb_util.variant_to_value(self.config.get_value(
             self.config_section, 'inputmethod'))
         if inputmethod:
             inputmethods = [x.strip() for x in inputmethod.split(',')]
@@ -309,38 +323,42 @@ class SetupUI:
             self.main_ime = (
                 [x for x in self.current_imes if x in self.supported_imes][0])
         combobox_has_ime = False
-        for i in range(len(ime_store)):
+        for i, dummy_item in enumerate(ime_store):
             if ime_store[i][1] == self.main_ime:
                 self.ime_combobox.set_active(i)
                 combobox_has_ime = True
-        if combobox_has_ime == False:
+        if combobox_has_ime is False:
             # the combobox did not have the ime from the settings
             # take the ime from the first row of
             # the combobox as the fallback:
             self.main_ime = ime_store[0][1]
             self.ime_combobox.set_active(0)
         self.ime_combobox.connect(
-            "changed", event_handler.onImeComboboxChanged)
+            "changed", event_handler.on_ime_combobox_changed)
         if len(ime_store) < 2:
             self.ime_combobox.set_sensitive(False)
         self.input_method_help_button.connect(
-            'clicked', event_handler.onInputMethodHelpButtonClicked)
+            'clicked', event_handler.on_input_method_help_button_clicked)
         if self.main_ime == 'NoIme':
             self.input_method_help_button.set_sensitive(False)
 
     def __run_message_dialog(self, message, message_type=Gtk.MessageType.INFO):
-        dlg = Gtk.MessageDialog(
-            parent = self.builder.get_object('main_dialog'),
-            flags = Gtk.DialogFlags.MODAL,
-            message_type = message_type,
-            buttons = Gtk.ButtonsType.OK,
-            message_format = message)
-        dlg.run()
-        dlg.destroy()
+        '''Run a dialog to show an error or warning message'''
+        dialog = Gtk.MessageDialog(
+            parent=self.builder.get_object('main_dialog'),
+            flags=Gtk.DialogFlags.MODAL,
+            message_type=message_type,
+            buttons=Gtk.ButtonsType.OK,
+            message_format=message)
+        dialog.run()
+        dialog.destroy()
 
     def check_instance(self):
+        '''
+        Check whether another instance of the setup tool is running already
+        '''
         if (dbus.SessionBus().request_name("org.ibus.typingbooster")
-            != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER):
+                != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER):
             self.__run_message_dialog(
                 _("Another instance of this app is already running."),
                 Gtk.MessageType.ERROR)
@@ -348,21 +366,20 @@ class SetupUI:
         else:
             return False
 
-    def variant_to_value(self, variant):
-        if type(variant) != GLib.Variant:
-            return variant
-        if variant.get_type_string() == 's':
-            return variant.get_string()
-        elif variant.get_type_string() == 'i':
-            return variant.get_int32()
-        elif variant.get_type_string() == 'b':
-            return variant.get_boolean()
-        elif variant.get_type_string() == 'as':
-            return variant.dup_strv()[0]
-        else:
-            return variant
-
 class InputMethodHelpWindow(Gtk.Window):
+    '''
+    A window to show help for an input method
+
+    :param parent: The parent object
+    :type parent: Gtk.Dialog object
+    :param title: Window title of the help window
+    :type title: string
+    :param description: description of the m17n input method
+    :type description: string
+    :param long_description: full contents of the file
+                             implementing the m17n input method
+    :type long_description: string
+    '''
     def __init__(self, parent=None,
                  title='', description='', long_description=''):
         Gtk.Window.__init__(self, title=title)
@@ -401,36 +418,61 @@ class InputMethodHelpWindow(Gtk.Window):
         self.hbox.pack_end(self.close_button, False, False, 0)
         self.vbox.pack_start(self.hbox, False, False, 5)
 
-    def on_close_button_clicked(self, widget):
+    def on_close_button_clicked(self, dummy_widget):
+        '''
+        Close the input method help window when the close buttonis clicked
+        '''
         self.destroy()
 
 class EventHandler:
+    '''
+    Event handler class to pass to Gtk.builder().connect_signals
+
+    Needs to implement at least the two methods
+        onDeleteDialog()
+        onCloseClicked()
+    '''
+    # “Method could be a function”: pylint: disable=no-self-use
     def __init__(self):
         self.lang = 'English'
 
-    def onDeleteDialog(self, *args):
+    def onDeleteDialog(self, *dummy_args): # “Invalid name” pylint: disable=C0103
+        '''
+        The dialog has been deleted, probably by the window manager
+        '''
         Gtk.main_quit()
 
-    def onCloseClicked(self, *args):
+    def onCloseClicked(self, *dummy_args): # “Invalid name” pylint: disable=invalid-name
+        '''
+        The button to close the dialog has been clicked.
+        '''
         Gtk.main_quit()
 
-    def onInstallDictionaryClicked(self, widget):
-        SetupUi.install_dictionary_button.set_sensitive(False)
-        InstallPkg(SetupUi.hunspell_dict_package)
+    def on_install_dictionary_clicked(self, dummy_widget):
+        '''
+        The button to install the main dictionary for this engine
+        has been clicked.
+        '''
+        SETUP_UI.install_dictionary_button.set_sensitive(False)
+        InstallPkg(SETUP_UI.hunspell_dict_package)
         # Write a timestamp to dconf to trigger the callback
         # for changed dconf values in the engine and reload
         # the dictionary:
-        SetupUi.config.set_value(
-            SetupUi.config_section,
+        SETUP_UI.config.set_value(
+            SETUP_UI.config_section,
             'dictionaryinstalltimestamp',
             GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
-        SetupUi.install_dictionary_button.set_sensitive(True)
+        SETUP_UI.install_dictionary_button.set_sensitive(True)
 
-    def onLearnFromFileClicked(self, widget):
-        SetupUi.learn_from_file_button.set_sensitive(False)
+    def on_learn_from_file_clicked(self, dummy_widget):
+        '''
+        The button to learn from a user supplied text file
+        has been clicked.
+        '''
+        SETUP_UI.learn_from_file_button.set_sensitive(False)
         filename = u''
         chooser = Gtk.FileChooserDialog(
-            _('Open File ...'), SetupUi.builder.get_object('main_dialog'),
+            _('Open File ...'), SETUP_UI.builder.get_object('main_dialog'),
             Gtk.FileChooserAction.OPEN,
             (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
              Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
@@ -441,33 +483,37 @@ class EventHandler:
         while Gtk.events_pending():
             Gtk.main_iteration()
         if filename and os.path.isfile(filename):
-            if SetupUi.tabsqlitedb.read_training_data_from_file(filename):
+            if SETUP_UI.tabsqlitedb.read_training_data_from_file(filename):
                 dialog = Gtk.MessageDialog(
-                    parent=SetupUi.builder.get_object('main_dialog'),
+                    parent=SETUP_UI.builder.get_object('main_dialog'),
                     flags=Gtk.DialogFlags.MODAL,
                     message_type=Gtk.MessageType.INFO,
                     buttons=Gtk.ButtonsType.OK,
-                    message_format= (
+                    message_format=(
                         _("Learned successfully from file %(filename)s.")
                         %{'filename': filename}))
             else:
                 dialog = Gtk.MessageDialog(
-                    parent=SetupUi.builder.get_object('main_dialog'),
+                    parent=SETUP_UI.builder.get_object('main_dialog'),
                     flags=Gtk.DialogFlags.MODAL,
                     message_type=Gtk.MessageType.ERROR,
                     buttons=Gtk.ButtonsType.OK,
-                    message_format= (
+                    message_format=(
                         _("Learning from file %(filename)s failed.")
                         %{'filename': filename}))
             dialog.run()
             dialog.destroy()
-        SetupUi.learn_from_file_button.set_sensitive(True)
+        SETUP_UI.learn_from_file_button.set_sensitive(True)
 
-    def onDeleteLearnedDataClicked(self, widget):
-        SetupUi.delete_learned_data_button.set_sensitive(False)
+    def on_delete_learned_data_clicked(self, dummy_widget):
+        '''
+        The button requesting to delete all data learned from
+        user input or text files has been clicked.
+        '''
+        SETUP_UI.delete_learned_data_button.set_sensitive(False)
         confirm_question = Gtk.Dialog(
             title=_('Are you sure?'),
-            parent=SetupUi.builder.get_object('main_dialog'),
+            parent=SETUP_UI.builder.get_object('main_dialog'),
             buttons=(
                 Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                 Gtk.STOCK_OK, Gtk.ResponseType.OK))
@@ -481,130 +527,174 @@ class EventHandler:
         while Gtk.events_pending():
             Gtk.main_iteration()
         if response == Gtk.ResponseType.OK:
-            SetupUi.tabsqlitedb.remove_all_phrases()
-        SetupUi.delete_learned_data_button.set_sensitive(True)
+            SETUP_UI.tabsqlitedb.remove_all_phrases()
+        SETUP_UI.delete_learned_data_button.set_sensitive(True)
 
-    def onTabEnableCheckbox(self, widget):
+    def on_tab_enable_checkbox(self, widget):
+        '''
+        The checkbox whether to show candidates only when
+        requested with the tab key or not has been clicked.
+        '''
         if widget.get_active():
-            SetupUi.tab_enable = True
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.tab_enable = True
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'tabenable',
                 GLib.Variant.new_boolean(True))
         else:
-            SetupUi.tab_enable = False
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.tab_enable = False
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'tabenable',
                 GLib.Variant.new_boolean(False))
 
-    def onShowNumberOfCandidatesCheckbox(self, widget):
+    def on_show_number_of_candidates_checkbox(self, widget):
+        '''
+        The checkbox whether to show the number of candidates
+        on top of the lookup table has been clicked.
+        '''
         if widget.get_active():
-            SetupUi.show_number_of_candidates = True
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.show_number_of_candidates = True
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'shownumberofcandidates',
                 GLib.Variant.new_boolean(True))
         else:
-            SetupUi.show_number_of_candidates = False
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.show_number_of_candidates = False
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'shownumberofcandidates',
                 GLib.Variant.new_boolean(False))
 
-    def onUseDigitsAsSelectKeysCheckbox(self, widget):
+    def on_use_digits_as_select_keys_checkbox(self, widget):
+        '''
+        The checkbox whether to use the digits 1 … 9 as select
+        keys has been clicked.
+        '''
         if widget.get_active():
-            SetupUi.use_digits_as_select_keys = True
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.use_digits_as_select_keys = True
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'usedigitsasselectkeys',
                 GLib.Variant.new_boolean(True))
         else:
-            SetupUi.use_digits_as_select_keys = False
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.use_digits_as_select_keys = False
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'usedigitsasselectkeys',
                 GLib.Variant.new_boolean(False))
 
-    def onEmojiPredictionsCheckbox(self, widget):
+    def on_emoji_predictions_checkbox(self, widget):
+        '''
+        The checkbox whether to predict emoji as well or not
+        has been clicked.
+        '''
         if widget.get_active():
-            SetupUi.emoji_predictions = True
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.emoji_predictions = True
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'emojipredictions',
                 GLib.Variant.new_boolean(True))
         else:
-            SetupUi.emoji_predictions = False
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.emoji_predictions = False
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'emojipredictions',
                 GLib.Variant.new_boolean(False))
 
-    def onOffTheRecordCheckbox(self, widget):
+    def on_off_the_record_checkbox(self, widget):
+        '''
+        The checkbox whether to use “Off the record” mode, i.e. whether to
+        learn from user data by saving user input to the user database
+        or not, has been clicked.
+        '''
         if widget.get_active():
-            SetupUi.off_the_record = True
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.off_the_record = True
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'offtherecord',
                 GLib.Variant.new_boolean(True))
         else:
-            SetupUi.off_the_record = False
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.off_the_record = False
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'offtherecord',
                 GLib.Variant.new_boolean(False))
 
-    def onAddDirectInputCheckbox(self, widget):
+    def on_add_direct_input_checkbox(self, widget):
+        '''
+        The checkbox whether to add direct input, i.e.  whether to add
+        native keyboard input and the British English dictionary, has
+        been clicked.
+        '''
         if widget.get_active():
-            SetupUi.add_direct_input = True
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.add_direct_input = True
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'adddirectinput',
                 GLib.Variant.new_boolean(True))
         else:
-            SetupUi.add_direct_input = False
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.add_direct_input = False
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'adddirectinput',
                 GLib.Variant.new_boolean(False))
 
-    def onRememberLastUsedPreeditImeCheckbox(self, widget):
+    def on_remember_last_used_preedit_ime_checkbox(self, widget):
+        '''
+        The checkbox whether to remember the last used input method
+        for the preëdit has been clicked.
+        '''
         if widget.get_active():
-            SetupUi.remember_last_used_predit_ime = True
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.remember_last_used_predit_ime = True
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'rememberlastusedpreeditime',
                 GLib.Variant.new_boolean(True))
         else:
-            SetupUi.remember_last_used_predit_ime = False
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.remember_last_used_predit_ime = False
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'rememberlastusedpreeditime',
                 GLib.Variant.new_boolean(False))
 
-    def onAutoCommitCharactersEntry(self, widget, property_spec):
-        SetupUi.auto_commit_characters = widget.get_text()
-        SetupUi.config.set_value(
-            SetupUi.config_section,
+    def on_auto_commit_characters_entry(self, widget, dummy_property_spec):
+        '''
+        The list of characters triggering an auto commit has been changed.
+        '''
+        SETUP_UI.auto_commit_characters = widget.get_text()
+        SETUP_UI.config.set_value(
+            SETUP_UI.config_section,
             'autocommitcharacters',
-            GLib.Variant.new_string(SetupUi.auto_commit_characters))
+            GLib.Variant.new_string(SETUP_UI.auto_commit_characters))
 
-    def onPageSizeAdjustmentValueChanged(self, widget):
-        self.page_size = SetupUi.page_size_adjustment.get_value()
-        SetupUi.config.set_value(
-            SetupUi.config_section,
+    def on_page_size_adjustment_value_changed(self, dummy_widget):
+        '''
+        The page size of the lookup table has been changed.
+        '''
+        page_size = SETUP_UI.page_size_adjustment.get_value()
+        SETUP_UI.config.set_value(
+            SETUP_UI.config_section,
             'pagesize',
-            GLib.Variant.new_int32(self.page_size))
+            GLib.Variant.new_int32(page_size))
 
-    def onMinCharCompleteAdjustmentValueChanged(self, widget):
-        self.min_char_complete = (
-            SetupUi.min_char_complete_adjustment.get_value())
-        SetupUi.config.set_value(
-            SetupUi.config_section,
+    def on_min_char_complete_adjustment_value_changed(self, dummy_widget):
+        '''
+        The value for the mininum number of characters before
+        completion is attempted has been changed.
+        '''
+        min_char_complete = (
+            SETUP_UI.min_char_complete_adjustment.get_value())
+        SETUP_UI.config.set_value(
+            SETUP_UI.config_section,
             'mincharcomplete',
-            GLib.Variant.new_int32(self.min_char_complete))
+            GLib.Variant.new_int32(min_char_complete))
 
-    def onImeComboboxChanged(self, widget):
+    def on_ime_combobox_changed(self, widget):
+        '''
+        A change of the active input method has been requested
+        with the combobox.
+        '''
         tree_iter = widget.get_active_iter()
         if tree_iter != None:
             model = widget.get_model()
@@ -612,26 +702,30 @@ class EventHandler:
             # Remove all supported imes and 'NoIme' from the current imes.
             # This is to keep additional imes which might have been added
             # setting the dconf key directly instead of using this setup tool.
-            SetupUi.current_imes = [
-                x for x in SetupUi.current_imes if (
-                    x not in SetupUi.supported_imes and x != 'NoIme')]
-            SetupUi.current_imes = [main_ime] + SetupUi.current_imes
-            if ('NoIme' not in SetupUi.current_imes
-                and SetupUi.add_direct_input == True):
-                SetupUi.current_imes.append('NoIme')
-            SetupUi.config.set_value(
-                SetupUi.config_section,
+            SETUP_UI.current_imes = [
+                x for x in SETUP_UI.current_imes if (
+                    x not in SETUP_UI.supported_imes and x != 'NoIme')]
+            SETUP_UI.current_imes = [main_ime] + SETUP_UI.current_imes
+            if ('NoIme' not in SETUP_UI.current_imes
+                    and SETUP_UI.add_direct_input is True):
+                SETUP_UI.current_imes.append('NoIme')
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
                 'inputmethod',
-                GLib.Variant.new_string(','.join(SetupUi.current_imes)))
+                GLib.Variant.new_string(','.join(SETUP_UI.current_imes)))
             if main_ime == 'NoIme':
-                SetupUi.input_method_help_button.set_sensitive(False)
+                SETUP_UI.input_method_help_button.set_sensitive(False)
             else:
-                SetupUi.input_method_help_button.set_sensitive(True)
+                SETUP_UI.input_method_help_button.set_sensitive(True)
 
-    def onInputMethodHelpButtonClicked(self, widget):
-        tree_iter = SetupUi.ime_combobox.get_active_iter()
+    def on_input_method_help_button_clicked(self, dummy_widget):
+        '''
+        Show a help window for the input method selected in the
+        combobox.
+        '''
+        tree_iter = SETUP_UI.ime_combobox.get_active_iter()
         if tree_iter != None:
-            model = SetupUi.ime_combobox.get_model()
+            model = SETUP_UI.ime_combobox.get_model()
             ime_name = model[tree_iter][1]
         if not ime_name or ime_name == 'NoIme':
             return
@@ -647,9 +741,9 @@ class EventHandler:
         try:
             mim_file_contents = open(
                 '/usr/share/m17n/%(mim)s' %{'mim': mim_file},
-                mode = 'r',
-                encoding = 'UTF-8',
-                errors = 'ignore'
+                mode='r',
+                encoding='UTF-8',
+                errors='ignore'
             ).read()
         except:
             import traceback
@@ -663,16 +757,16 @@ class EventHandler:
             if match:
                 description = match.group('description').replace('\\"', '"')
             win = InputMethodHelpWindow(
-                parent=SetupUi.builder.get_object('main_dialog'),
+                parent=SETUP_UI.builder.get_object('main_dialog'),
                 title=mim_file,
                 description=description,
-                long_description = mim_file_contents)
+                long_description=mim_file_contents)
             win.show_all()
 
 class SetupService(dbus.service.Object):
     def __init__(self):
         bus_name = dbus.service.BusName(
-            'org.ibus.typingbooster', bus = dbus.SessionBus())
+            'org.ibus.typingbooster', bus=dbus.SessionBus())
         dbus.service.Object.__init__(self, bus_name, '/org/ibus/typingbooster')
 
 if __name__ == '__main__':
@@ -681,10 +775,10 @@ if __name__ == '__main__':
                 os.path.expanduser('~/.local/share/ibus-typing-booster'),
                 os.F_OK)):
             os.system('mkdir -p ~/.local/share/ibus-typing-booster')
-        logfile = os.path.expanduser(
+        LOGFILE = os.path.expanduser(
             '~/.local/share/ibus-typing-booster/setup-debug.log')
-        sys.stdout = open(logfile, mode='a', buffering=1)
-        sys.stderr = open(logfile, mode='a', buffering=1)
+        sys.stdout = open(LOGFILE, mode='a', buffering=1)
+        sys.stderr = open(LOGFILE, mode='a', buffering=1)
         print('--- %s ---' %strftime('%Y-%m-%d: %H:%M:%S'))
 
     # Workaround for
@@ -697,14 +791,14 @@ if __name__ == '__main__':
         sys.stderr.write("IBUS-WARNING **: Using the fallback 'C' locale")
         locale.setlocale(locale.LC_ALL, 'C')
     i18n_init()
-    if IBus.get_address() == None:
-        dlg = Gtk.MessageDialog(
-            flags = Gtk.DialogFlags.MODAL,
-            message_type = Gtk.MessageType.ERROR,
-            buttons = Gtk.ButtonsType.OK,
-            message_format = _('ibus is not running.'))
-        dlg.run()
-        dlg.destroy()
+    if IBus.get_address() is None:
+        DIALOG = Gtk.MessageDialog(
+            flags=Gtk.DialogFlags.MODAL,
+            message_type=Gtk.MessageType.ERROR,
+            buttons=Gtk.ButtonsType.OK,
+            message_format=_('ibus is not running.'))
+        DIALOG.run()
+        DIALOG.destroy()
         sys.exit(1)
-    SetupUi = SetupUI(IBus.Bus())
+    SETUP_UI = SetupUI(IBus.Bus())
     Gtk.main()

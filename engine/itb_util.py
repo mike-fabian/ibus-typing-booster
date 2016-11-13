@@ -26,6 +26,8 @@ import re
 import string
 import unicodedata
 
+from gi.repository import GLib
+
 # If a character ending a sentence is committed (possibly
 # followed by whitespace) remove trailing white space
 # before the committed string. For example if
@@ -306,10 +308,36 @@ def config_section_normalize(section):
             bytes(string.ascii_uppercase.encode('ascii')),
             bytes(string.ascii_lowercase.encode('ascii'))))
 
+def variant_to_value(variant):
+    '''
+    Convert a GLib variant to a value
+    '''
+    # pylint: disable=unidiomatic-typecheck
+    if type(variant) != GLib.Variant:
+        return variant
+    type_string = variant.get_type_string()
+    if type_string == 's':
+        return variant.get_string()
+    elif type_string == 'i':
+        return variant.get_int32()
+    elif type_string == 'b':
+        return variant.get_boolean()
+    elif type_string == 'as':
+        # In the latest pygobject3 3.3.4 or later, g_variant_dup_strv
+        # returns the allocated strv but in the previous release,
+        # it returned the tuple of (strv, length)
+        if type(GLib.Variant.new_strv([]).dup_strv()) == tuple:
+            return variant.dup_strv()[0]
+        else:
+            return variant.dup_strv()
+    else:
+        print('error: unknown variant type: %s' %type_string)
+    return variant
+
 if __name__ == "__main__":
     import doctest
-    (failed,  attempted) = doctest.testmod()
-    if failed:
+    (FAILED, ATTEMPTED) = doctest.testmod()
+    if FAILED:
         sys.exit(1)
     else:
         sys.exit(0)

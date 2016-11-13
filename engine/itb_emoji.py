@@ -1184,7 +1184,7 @@ def main():
         matcher.debug_loading_data()
     else:
         import doctest
-        (failed,  attempted) = doctest.testmod()
+        (failed,  dummy_attempted) = doctest.testmod()
 
     if BENCHMARK:
         profile.disable()

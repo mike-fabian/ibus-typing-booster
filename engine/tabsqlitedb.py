@@ -31,7 +31,7 @@ import hunspell_suggest
 
 DEBUG_LEVEL = int(0)
 
-user_database_version = '0.65'
+USER_DATABASE_VERSION = '0.65'
 
 class ImeProperties:
     def __init__(self, configfile_path=None):
@@ -43,7 +43,9 @@ class ImeProperties:
         if os.path.exists(configfile_path) and os.path.isfile(configfile_path):
             comment_patt = re.compile('^#')
             with codecs.open(
-                    configfile_path, mode='r', encoding='UTF-8') as file_handle:
+                    configfile_path,
+                    mode='r',
+                    encoding='UTF-8') as file_handle:
                 for line in file_handle:
                     if not comment_patt.match(line):
                         attr, val = line.strip().split ('=', 1)
@@ -96,7 +98,7 @@ class tabsqlitedb:
                 os.getenv('HOME'), '.local/share/ibus-typing-booster/user.db')
         if (self.user_db_file != ':memory:'
             and not os.path.isdir(os.path.dirname(self.user_db_file))):
-                os.makedirs(os.path.dirname(self.user_db_file))
+            os.makedirs(os.path.dirname(self.user_db_file))
         self._phrase_table_column_names = [
             'id',
             'input_phrase',
@@ -126,23 +128,24 @@ class tabsqlitedb:
                 try:
                     desc = self.get_database_desc(self.user_db_file)
                     if (desc == None
-                        or desc["version"] != user_database_version
+                        or desc["version"] != USER_DATABASE_VERSION
                         or (self.get_number_of_columns_of_phrase_table(self.user_db_file)
                             != len(self._phrase_table_column_names))):
                         sys.stderr.write(
-                            "The user database %(udb)s " %{'udb': self.user_db_file}
+                            "The user database %(udb)s "
+                            %{'udb': self.user_db_file}
                             + "seems to be incompatible.\n")
                         if desc == None:
                             sys.stderr.write(
                                 "There is no version information in "
                                 + "the database.\n")
-                        elif desc["version"] != user_database_version:
+                        elif desc["version"] != USER_DATABASE_VERSION:
                             sys.stderr.write(
                                 "The version of the database does not match "
                                 + "(too old or too new?).\n")
                             sys.stderr.write(
                                 "ibus-typing-booster wants version=%s\n"
-                                %user_database_version)
+                                %USER_DATABASE_VERSION)
                             sys.stderr.write(
                                 "But the  database actually has version=%s\n"
                                 %desc["version"])
@@ -168,13 +171,17 @@ class tabsqlitedb:
                         timestamp = time.strftime('-%Y-%m-%d_%H:%M:%S')
                         sys.stderr.write(
                             'Renaming the incompatible database to '
-                            + '"%(name)s".\n' %{'name': self.user_db_file+timestamp})
+                            + '"%(name)s".\n'
+                            %{'name': self.user_db_file+timestamp})
                         if os.path.exists(self.user_db_file):
-                            os.rename(self.user_db_file, self.user_db_file+timestamp)
+                            os.rename(self.user_db_file,
+                                      self.user_db_file+timestamp)
                         if os.path.exists(self.user_db_file+'-shm'):
-                            os.rename(self.user_db_file+'-shm', self.user_db_file+'-shm'+timestamp)
+                            os.rename(self.user_db_file+'-shm',
+                                      self.user_db_file+'-shm'+timestamp)
                         if os.path.exists(self.user_db_file+'-wal'):
-                            os.rename(self.user_db_file+'-wal', self.user_db_file+'-wal'+timestamp)
+                            os.rename(self.user_db_file+'-wal',
+                                      self.user_db_file+'-wal'+timestamp)
                         sys.stderr.write(
                             "Creating a new, empty database \"%(name)s\".\n"
                             %{'name': self.user_db_file})
@@ -194,7 +201,8 @@ class tabsqlitedb:
         # open user phrase database
         try:
             sys.stderr.write(
-                "Connect to the database %(name)s.\n" %{'name': self.user_db_file})
+                "Connect to the database %(name)s.\n"
+                %{'name': self.user_db_file})
             self.db = sqlite3.connect(self.user_db_file)
             self.db.execute('PRAGMA encoding = "UTF-8";')
             self.db.execute('PRAGMA case_sensitive_like = true;')
@@ -204,10 +212,12 @@ class tabsqlitedb:
             self.db.execute('PRAGMA journal_mode = WAL;')
             self.db.execute('PRAGMA journal_size_limit = 1000000;')
             self.db.execute('PRAGMA synchronous = NORMAL;')
-            self.db.execute('ATTACH DATABASE "%s" AS user_db;' % self.user_db_file)
+            self.db.execute('ATTACH DATABASE "%s" AS user_db;'
+                            % self.user_db_file)
         except:
             sys.stderr.write(
-                "Could not open the database %(name)s.\n" %{'name': self.user_db_file})
+                "Could not open the database %(name)s.\n"
+                %{'name': self.user_db_file})
             timestamp = time.strftime('-%Y-%m-%d_%H:%M:%S')
             sys.stderr.write(
                 "Renaming the incompatible database to \"%(name)s\".\n"
@@ -215,9 +225,11 @@ class tabsqlitedb:
             if os.path.exists(self.user_db_file):
                 os.rename(self.user_db_file, self.user_db_file+timestamp)
             if os.path.exists(self.user_db_file+'-shm'):
-                os.rename(self.user_db_file+'-shm', self.user_db_file+'-shm'+timestamp)
+                os.rename(self.user_db_file+'-shm',
+                          self.user_db_file+'-shm'+timestamp)
             if os.path.exists(self.user_db_file+'-wal'):
-                os.rename(self.user_db_file+'-wal', self.user_db_file+'-wal'+timestamp)
+                os.rename(self.user_db_file+'-wal',
+                          self.user_db_file+'-wal'+timestamp)
             sys.stderr.write(
                 "Creating a new, empty database \"%(name)s\".\n"
                 %{'name': self.user_db_file})
@@ -231,7 +243,8 @@ class tabsqlitedb:
             self.db.execute('PRAGMA journal_mode = WAL;')
             self.db.execute('PRAGMA journal_size_limit = 1000000;')
             self.db.execute('PRAGMA synchronous = NORMAL;')
-            self.db.execute('ATTACH DATABASE "%s" AS user_db;' % self.user_db_file)
+            self.db.execute('ATTACH DATABASE "%s" AS user_db;'
+                            % self.user_db_file)
         self.create_tables()
         if self.old_phrases:
             sqlargs = []
@@ -415,7 +428,7 @@ class tabsqlitedb:
             DROP INDEX IF EXISTS user_db.phrases_index_p;
             DROP INDEX IF EXISTS user_db.phrases_index_i;
             VACUUM;
-            ''' % { 'database':database }
+            '''
 
         self.db.executescript (sqlstr)
         self.db.commit()
@@ -629,7 +642,7 @@ class tabsqlitedb:
                          + '(name PRIMARY KEY, value);')
             self.db.executescript (sqlstring)
             sqlstring = 'INSERT OR IGNORE INTO user_db.desc  VALUES (?, ?);'
-            self.db.execute (sqlstring, ('version', user_database_version))
+            self.db.execute (sqlstring, ('version', USER_DATABASE_VERSION))
             sqlstring = (
                 'INSERT OR IGNORE INTO user_db.desc '
                 + 'VALUES (?, DATETIME("now", "localtime"));')
