@@ -154,6 +154,19 @@ class SetupUI:
             '<span font_size="large"><b>ibus-typing-booster %s</b></span>'
             %version.get_version())
 
+        self.shortcut_entry = self.builder.get_object(
+            "shortcut_entry")
+        self.shortcut_expansion_entry = self.builder.get_object(
+            "shortcut_expansion_entry")
+        shortcut_clear_button = self.builder.get_object(
+            "shortcut_clear_button")
+        shortcut_clear_button.connect(
+            'clicked', event_handler.on_shortcut_clear_clicked)
+        shortcut_add_button = self.builder.get_object(
+            "shortcut_add_button")
+        shortcut_add_button.connect(
+            'clicked', event_handler.on_shortcut_add_clicked)
+
         self.install_dictionary_button = self.builder.get_object(
             "install_dictionary_button")
         self.install_dictionary_button.connect(
@@ -447,6 +460,28 @@ class EventHandler:
         The button to close the dialog has been clicked.
         '''
         Gtk.main_quit()
+
+    def on_shortcut_clear_clicked(self, dummy_widget):
+        '''
+        The button to clear the entry fields for defining
+        a custom shortcut has been clicked.
+        '''
+        SETUP_UI.shortcut_entry.set_text('')
+        SETUP_UI.shortcut_expansion_entry.set_text('')
+
+    def on_shortcut_add_clicked(self, dummy_widget):
+        '''
+        The button to add a custom shortcut has been clicked.
+        '''
+        shortcut = SETUP_UI.shortcut_entry.get_text().strip()
+        shortcut_expansion = SETUP_UI.shortcut_expansion_entry.get_text().strip()
+        if shortcut and shortcut_expansion:
+            sys.stderr.write(
+                'defining shortcut: “%s” -> “%s”\n' %(shortcut, shortcut_expansion))
+            SETUP_UI.tabsqlitedb.check_phrase_and_update_frequency(
+                input_phrase=shortcut,
+                phrase=shortcut_expansion,
+                user_freq_increment=1000000)
 
     def on_install_dictionary_clicked(self, dummy_widget):
         '''

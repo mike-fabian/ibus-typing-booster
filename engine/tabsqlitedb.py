@@ -719,7 +719,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
 
     def check_phrase_and_update_frequency(
             self, input_phrase = '', phrase = '', p_phrase = '',
-            pp_phrase = '', commit=True):
+            pp_phrase = '', user_freq_increment = 1, commit=True):
         '''
         Check whether input_phrase and phrase are already in database. If
         they are in the database, increase the frequency by 1, if not
@@ -776,21 +776,23 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             sys.stderr.write(
                 "check_phrase_and_update_frequency() result=%s\n" %result)
         if len(result) > 0:
-            # A match was found in user_db, increase user frequency by 1
+            # A match was found in user_db, increase user frequency by
+            # user_freq_increment (1 by default)
             self.update_phrase(input_phrase = input_phrase,
                                phrase = phrase,
                                p_phrase = p_phrase,
                                pp_phrase = pp_phrase,
-                               user_freq = result[0][0]+1,
+                               user_freq = result[0][0]+user_freq_increment,
                                commit=commit)
             return
         # The phrase was not found in user_db.
-        # Add it as a new phrase, i.e. with user_freq = 1:
+        # Add it as a new phrase, i.e. with user_freq = user_freq_increment
+        # (1 by default):
         self.add_phrase(input_phrase = input_phrase,
                         phrase = phrase,
                         p_phrase = p_phrase,
                         pp_phrase = pp_phrase,
-                        user_freq = 1,
+                        user_freq = user_freq_increment,
                         commit=commit)
         return
 
