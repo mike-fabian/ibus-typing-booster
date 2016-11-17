@@ -3,65 +3,66 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2016-10-10 10:11+0200\n"
+"Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
+"issues\n"
+"POT-Creation-Date: 2016-11-17 07:33+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2016-09-23 07:20-0400\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Zanata 3.9.5\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"X-Generator: Zanata 3.9.6\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: engine/hunspell_table.py:902 engine/hunspell_table.py:922
+#: engine/hunspell_table.py:362 engine/hunspell_table.py:382
 msgid "Off"
 msgstr "Вимкн."
 
-#: engine/hunspell_table.py:907 engine/hunspell_table.py:927
+#: engine/hunspell_table.py:367 engine/hunspell_table.py:387
 msgid "On"
 msgstr "Увімкн."
 
-#: engine/hunspell_table.py:912 engine/hunspell_table.py:914
-#: setup/setup.glade:299
+#: engine/hunspell_table.py:372 engine/hunspell_table.py:374
+#: setup/setup.glade:301
 msgid "Unicode symbols and emoji predictions"
 msgstr "Пропозиці для символів Unicode та емодзі"
 
-#: engine/hunspell_table.py:932 engine/hunspell_table.py:933
-#: setup/setup.glade:317
+#: engine/hunspell_table.py:392 engine/hunspell_table.py:393
+#: setup/setup.glade:319
 msgid "Off the record mode"
 msgstr "Режим без запису"
 
-#: engine/hunspell_table.py:1003
+#: engine/hunspell_table.py:1063
 msgid "Preedit input method"
 msgstr "Спосіб введення попереднього редагування"
 
-#: engine/hunspell_table.py:1004
+#: engine/hunspell_table.py:1064
 msgid "Switch preedit input method"
 msgstr "Перемкнути спосіб введення попереднього редагування"
 
-#: engine/hunspell_table.py:1186
+#: engine/hunspell_table.py:1257
 msgid "Setup"
 msgstr "Налаштування"
 
-#: engine/hunspell_table.py:1189
+#: engine/hunspell_table.py:1260
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Налаштувати «%(name)s» для ibus-typing-booster"
 
-#: setup/main.py:107
+#: setup/main.py:110
 #, python-format
 msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
 msgstr ""
 "Невідомий програмі формат назви рушія обробки: IBUS_ENGINE_NAME=%(name)s"
 
-#: setup/main.py:113
+#: setup/main.py:116
 msgid "IBUS_ENGINE_NAME environment variable is not set."
 msgstr "Змінну середовища IBUS_ENGINE_NAME не визначено."
 
-#: setup/main.py:117
+#: setup/main.py:120
 msgid ""
 "Cannot determine the config file for this engine. Please use the --config-"
 "file option."
@@ -69,39 +70,39 @@ msgstr ""
 "Не вдалося визначити файл налаштувань для цього рушія обробки. Будь ласка, "
 "скористайтеся параметром --config-file."
 
-#: setup/main.py:127
+#: setup/main.py:130
 #, python-format
 msgid "Config file %(file)s does not exist."
 msgstr "Файла налаштувань %(file)s не існує."
 
-#: setup/main.py:145
+#: setup/main.py:148
 #, python-format
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Параметри для «%(symbol)s» ibus-typing-booster"
 
-#: setup/main.py:355
+#: setup/main.py:376
 msgid "Another instance of this app is already running."
 msgstr "Вже запущено інший екземпляр цієї програми."
 
-#: setup/main.py:443
+#: setup/main.py:510
 msgid "Open File ..."
 msgstr "Відкрити файл…"
 
-#: setup/main.py:461
+#: setup/main.py:528
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Успішно вивчено з файла %(filename)s."
 
-#: setup/main.py:470
+#: setup/main.py:537
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Спроба навчання з файла %(filename)s зазнала невдачі."
 
-#: setup/main.py:479
+#: setup/main.py:550
 msgid "Are you sure?"
 msgstr "Ви впевнені?"
 
-#: setup/main.py:486
+#: setup/main.py:557
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -109,7 +110,7 @@ msgstr ""
 "Ви справді хочете вилучити усі дані мови, \n"
 "вивчені із введених даних і читання файлів?"
 
-#: setup/main.py:704
+#: setup/main.py:834
 msgid "ibus is not running."
 msgstr "ibus не запущено."
 
@@ -142,7 +143,7 @@ msgstr ""
 msgid "Candidate window page size:"
 msgstr "Розмір сторінки вікна варіантів:"
 
-#: setup/setup.glade:144
+#: setup/setup.glade:145
 msgid ""
 "The input method to use. See also the option “Add direct input” to add "
 "British English as a second language."
@@ -150,47 +151,48 @@ msgstr ""
 "Спосіб введення, яким слід скористатися. Див. також параметр «Додати "
 "безпосереднє введення», щоб додати британську англійську як другу мову."
 
-#: setup/setup.glade:145
+#: setup/setup.glade:146
 msgid "Input Method:"
 msgstr "Спосіб введення:"
 
-#: setup/setup.glade:170
+#: setup/setup.glade:171
 msgid "Display total number of candidates"
 msgstr "Показувати загальну кількість варіантів"
 
-#: setup/setup.glade:174
+#: setup/setup.glade:175
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
 msgstr ""
 "Показувати кількість варіантів і вибраний варіант над списком варіантів."
 
-#: setup/setup.glade:196
+#: setup/setup.glade:197
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
+""
 msgstr ""
 "Не показувати пропозицій, якщо кількість введених символів є меншою за "
 "вказану."
 
-#: setup/setup.glade:197
+#: setup/setup.glade:198
 msgid "Minimum number of chars for completion:"
 msgstr "Мінімальна кількість символів для автозавершення:"
 
-#: setup/setup.glade:230
+#: setup/setup.glade:232
 msgid "Input Method Help"
 msgstr "Довідка зі способу введення"
 
-#: setup/setup.glade:234
+#: setup/setup.glade:236
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
 "Показувати довідкову інформацію щодо того, як користуватися способом "
 "введення, вибраним вище."
 
-#: setup/setup.glade:245
+#: setup/setup.glade:247
 msgid "Use digits as select keys"
 msgstr "Використовувати клавіші цифр для вибору"
 
-#: setup/setup.glade:249
+#: setup/setup.glade:251
 msgid ""
 "Use the regular digits 1-9 as select keys. If that option is on, numbers can "
 "only by typed while no suggestions are shown. Therefore, completions for "
@@ -209,11 +211,11 @@ msgstr ""
 "вибору, F1-F9, оскільки ці клавіші розташовано далі від типового "
 "розташування пальців на клавіатурі."
 
-#: setup/setup.glade:263
+#: setup/setup.glade:265
 msgid "Add direct input"
 msgstr "Додати безпосереднє введення"
 
-#: setup/setup.glade:267
+#: setup/setup.glade:269
 msgid ""
 "This option adds British English as a second language to use in addition to "
 "the main language of this input method."
@@ -221,13 +223,13 @@ msgstr ""
 "Позначення цього пункту додає британську англійську як другу мову для "
 "використання на додачу до основної мови цього способу введення."
 
-#: setup/setup.glade:281
+#: setup/setup.glade:283
 msgid "Remember last used preedit input method"
 msgstr ""
 "Запам’ятовувати останній використаний спосіб введення попереднього "
 "редагування"
 
-#: setup/setup.glade:285
+#: setup/setup.glade:287
 msgid ""
 "If more then one input method is used at the same time, one of them is used "
 "for the preedit.  Which input method is used for the preedit can be changed "
@@ -240,7 +242,7 @@ msgstr ""
 "позначено цей пункт, програма запам’ятовуватиме таку зміну і відновлюватиме "
 "спосіб введення навіть після перезапуску сеансу. "
 
-#: setup/setup.glade:303
+#: setup/setup.glade:305
 msgid ""
 "Whether Unicode symbols and emoji should be included in the predictions. "
 "Emoji are pictographs like ☺♨⛵…. Unicode symbols are other symbols like "
@@ -254,7 +256,7 @@ msgstr ""
 "абетки Брайля (⠥⠩…) тощо. З технічної точки зору, це не емодзі, але все ж "
 "корисні символи."
 
-#: setup/setup.glade:321
+#: setup/setup.glade:323
 msgid ""
 "While “Off the record” mode is on, learning from user input is disabled. If "
 "learned user input is available, predictions are usually much better than "
@@ -269,7 +271,7 @@ msgstr ""
 "якщо слід запобігти зберіганню на диску якоїсь конфіденційної інформації; "
 "вмикайте його лише тимчасово."
 
-#: setup/setup.glade:337
+#: setup/setup.glade:339
 msgid ""
 "The characters in this list cause the preedit to be committed automatically, "
 "followed by a space.  For example, if “.” is an auto commit character, this "
@@ -292,63 +294,83 @@ msgstr ""
 "повністю вимкнути цю можливість, якщо спорожните список (тобто повернете "
 "йому типове значення).\n"
 
-#: setup/setup.glade:339
+#: setup/setup.glade:341
 msgid "Auto commit characters:"
 msgstr "Автонадсилання символів:"
 
-#: setup/setup.glade:386
+#: setup/setup.glade:388
 msgid "Options"
 msgstr "Параметри"
 
-#: setup/setup.glade:419
+#: setup/setup.glade:406
+msgid "Clear input"
+msgstr ""
+
+#: setup/setup.glade:420
+msgid "Add shortcut"
+msgstr ""
+
+#: setup/setup.glade:437
+msgid "Enter shortcut here:"
+msgstr ""
+
+#: setup/setup.glade:451
+msgid "Enter shortcut expansion here:"
+msgstr ""
+
+#: setup/setup.glade:491
+msgid "Custom shortcuts"
+msgstr ""
+
+#: setup/setup.glade:525
 msgid "Install dictionary"
 msgstr "Встановити словник"
 
-#: setup/setup.glade:433
+#: setup/setup.glade:539
 msgid "Learn from text file"
 msgstr "Навчатися за текстовим файлом"
 
-#: setup/setup.glade:451
+#: setup/setup.glade:557
 msgid "Install the dictionary package for this engine"
 msgstr "Встановити пакунок словника для цього рушія обробки"
 
-#: setup/setup.glade:461
+#: setup/setup.glade:567
 msgid "Learn your style by reading a text file"
 msgstr "Вивчити ваш стиль шляхом читання текстового файла"
 
-#: setup/setup.glade:475
+#: setup/setup.glade:581
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
 "Вилучити усі особисті дані мови, вивчені на основі введених даних або "
 "читання файлів"
 
-#: setup/setup.glade:487
+#: setup/setup.glade:593
 msgid "Delete learned data"
 msgstr "Вилучити вивчені дані"
 
-#: setup/setup.glade:524
+#: setup/setup.glade:630
 msgid "Dictionaries and personal data"
 msgstr "Словники і особисті дані"
 
-#: setup/setup.glade:569
+#: setup/setup.glade:675
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Спосіб введення із автоматичним доповненням, який пришвидшує введення "
 "текстів."
 
-#: setup/setup.glade:595
+#: setup/setup.glade:701
 msgid "<b>Home page:</b>"
 msgstr "<b>Домашня сторінки:</b>"
 
-#: setup/setup.glade:607
+#: setup/setup.glade:713
 msgid "<b>Online documentation:</b>"
 msgstr "<b>Документація у інтернеті:</b>"
 
 #. This is the “About” tab in the setup tool.
-#.
+#. 
 #. That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
-#: setup/setup.glade:638
+#: setup/setup.glade:744
 msgid "About"
 msgstr "Про програму"
 
@@ -371,6 +393,6 @@ msgstr ""
 "вибрати бажане слово зі списку пропозицій, отже пришвидшити введення тексту "
 "та поліпшити його якість."
 
-#: typing-booster.appdata.xml:437
+#: typing-booster.appdata.xml:484
 msgid "Mike FABIAN"
 msgstr "Mike FABIAN"
