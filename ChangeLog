@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 17 Nov 2016 Released 1.5.11 version
+* Add feature to define custom shortcuts
+* Merge editor and tabengine classes
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 09 Nov 2016 Released 1.5.10 version
 * Make accent insensitive matching also work in the user database
 * Add test cases for accent insensitive matching

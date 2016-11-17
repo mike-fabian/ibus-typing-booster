@@ -16,6 +16,18 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.11" date="2016-11-11" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Add feature to define custom shortcuts
+          </li>
+          <li>
+            Merge editor and tabengine classes
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.10" date="2016-11-09" urgency="medium">
       <description>
         <ul>
