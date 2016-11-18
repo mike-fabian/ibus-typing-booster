@@ -162,10 +162,35 @@ class SetupUI:
             "shortcut_clear_button")
         shortcut_clear_button.connect(
             'clicked', event_handler.on_shortcut_clear_clicked)
+        shortcut_delete_button = self.builder.get_object(
+            "shortcut_delete_button")
+        shortcut_delete_button.connect(
+            'clicked', event_handler.on_shortcut_delete_clicked)
         shortcut_add_button = self.builder.get_object(
             "shortcut_add_button")
         shortcut_add_button.connect(
             'clicked', event_handler.on_shortcut_add_clicked)
+        self.shortcut_treeview = self.builder.get_object(
+            "shortcut_treeview")
+        self.shortcut_treeview_model = Gtk.ListStore(str, str)
+        self.shortcut_treeview.set_model(self.shortcut_treeview_model)
+        current_shortcuts = self.tabsqlitedb.list_user_shortcuts()
+        for i, shortcut in enumerate(current_shortcuts):
+            self.shortcut_treeview_model.append(shortcut)
+        self.shortcut_treeview.append_column(
+            Gtk.TreeViewColumn(
+                # Translators: Column heading of the table listing the existing shortcuts
+                _('Shortcut'),
+                Gtk.CellRendererText(),
+                text=0))
+        self.shortcut_treeview.append_column(
+            Gtk.TreeViewColumn(
+                # Translators: Column heading of the table listing the existing shortcuts
+                _('Shortcut expansion'),
+                Gtk.CellRendererText(),
+                text=1))
+        self.shortcut_treeview.get_selection().connect(
+            'changed', event_handler.on_shortcut_selected)
 
         self.install_dictionary_button = self.builder.get_object(
             "install_dictionary_button")
@@ -468,20 +493,71 @@ class EventHandler:
         '''
         SETUP_UI.shortcut_entry.set_text('')
         SETUP_UI.shortcut_expansion_entry.set_text('')
+        SETUP_UI.shortcut_treeview.get_selection().unselect_all()
+
+    def on_shortcut_delete_clicked(self, dummy_widget):
+        '''
+        The button to delete a custom shortcut has been clicked.
+        '''
+        shortcut = SETUP_UI.shortcut_entry.get_text().strip()
+        shortcut_expansion = (
+            SETUP_UI.shortcut_expansion_entry.get_text().strip())
+        SETUP_UI.shortcut_entry.set_text('')
+        SETUP_UI.shortcut_expansion_entry.set_text('')
+        SETUP_UI.shortcut_treeview.get_selection().unselect_all()
+        if shortcut and shortcut_expansion:
+            model = SETUP_UI.shortcut_treeview_model
+            iterator = model.get_iter_first()
+            while iterator:
+                if (model.get_value(iterator, 0) == shortcut
+                        and
+                        model.get_value(iterator, 1) == shortcut_expansion):
+                    SETUP_UI.tabsqlitedb.remove_phrase(
+                        input_phrase=shortcut,
+                        phrase=shortcut_expansion)
+                    if not model.remove(iterator):
+                        iterator = None
+                else:
+                    iterator = model.iter_next(iterator)
 
     def on_shortcut_add_clicked(self, dummy_widget):
         '''
         The button to add a custom shortcut has been clicked.
         '''
+        SETUP_UI.shortcut_treeview.get_selection().unselect_all()
         shortcut = SETUP_UI.shortcut_entry.get_text().strip()
-        shortcut_expansion = SETUP_UI.shortcut_expansion_entry.get_text().strip()
+        shortcut_expansion = (
+            SETUP_UI.shortcut_expansion_entry.get_text().strip())
         if shortcut and shortcut_expansion:
-            sys.stderr.write(
-                'defining shortcut: “%s” -> “%s”\n' %(shortcut, shortcut_expansion))
-            SETUP_UI.tabsqlitedb.check_phrase_and_update_frequency(
-                input_phrase=shortcut,
-                phrase=shortcut_expansion,
-                user_freq_increment=1000000)
+            model = SETUP_UI.shortcut_treeview_model
+            iterator = model.get_iter_first()
+            shortcut_existing = False
+            while iterator:
+                if (model.get_value(iterator, 0) == shortcut
+                        and
+                        model.get_value(iterator, 1) == shortcut_expansion):
+                    shortcut_existing = True
+                iterator = model.iter_next(iterator)
+            if not shortcut_existing:
+                sys.stderr.write(
+                    'defining shortcut: “%s” -> “%s”\n'
+                    %(shortcut, shortcut_expansion))
+                SETUP_UI.tabsqlitedb.check_phrase_and_update_frequency(
+                    input_phrase=shortcut,
+                    phrase=shortcut_expansion,
+                    user_freq_increment=itb_util.SHORTCUT_USER_FREQ)
+                model.append((shortcut, shortcut_expansion))
+
+    def on_shortcut_selected(self, selection):
+        '''
+        A row in the list of shortcuts has been selected.
+        '''
+        (model, iterator) = selection.get_selected()
+        if iterator:
+            shortcut = model[iterator][0]
+            shortcut_expansion = model[iterator][1]
+            SETUP_UI.shortcut_entry.set_text(shortcut)
+            SETUP_UI.shortcut_expansion_entry.set_text(shortcut_expansion)
 
     def on_install_dictionary_clicked(self, dummy_widget):
         '''

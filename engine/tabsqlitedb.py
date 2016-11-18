@@ -717,6 +717,29 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         except:
             return 0
 
+    def list_user_shortcuts(self):
+        '''Returns a list of user defined shortcuts from the user database.
+
+        :rtype: List of tuples of strings: [(str, str), ...]
+
+        '''
+        sqlstr = '''
+        SELECT input_phrase, phrase FROM user_db.phrases WHERE user_freq >= :freq
+        ;'''
+        sqlargs = {'freq': itb_util.SHORTCUT_USER_FREQ}
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "tabsqlitedb.list_user_shortcuts() sqlstr=%s\n"
+                %sqlstr)
+            sys.stderr.write(
+                "tabsqlitedb.list_user_shortcuts() sqlargs=%s\n"
+                %sqlargs)
+        result = self.db.execute(sqlstr, sqlargs).fetchall()
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "tabsqlite.list_user_shortcuts() result=%s\n" %result)
+        return result
+
     def check_phrase_and_update_frequency(
             self, input_phrase = '', phrase = '', p_phrase = '',
             pp_phrase = '', user_freq_increment = 1, commit=True):

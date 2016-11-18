@@ -28,6 +28,11 @@ import unicodedata
 
 from gi.repository import GLib
 
+# maximum possible value for the INTEGER datatype in SQLite3
+SQLITE_MAXINT = 2**63-1
+# user frequency used for a user defined shortcut
+SHORTCUT_USER_FREQ = 1000000
+
 # If a character ending a sentence is committed (possibly
 # followed by whitespace) remove trailing white space
 # before the committed string. For example if
