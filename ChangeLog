@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 19 Nov 2016 Released 1.5.12 version
+* Display existing shortcuts and make it possible to delete them
+* Update translations from zanata (de, pl, uk)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 17 Nov 2016 Released 1.5.11 version
 * Add feature to define custom shortcuts
 * Merge editor and tabengine classes

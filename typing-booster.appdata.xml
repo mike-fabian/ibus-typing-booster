@@ -16,6 +16,18 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.12" date="2016-11-19" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Display existing shortcuts and make it possible to delete them
+          </li>
+          <li>
+            Update translations from zanata (de, pl, uk)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.11" date="2016-11-11" urgency="medium">
       <description>
         <ul>
