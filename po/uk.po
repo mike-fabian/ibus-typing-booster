@@ -5,11 +5,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2016-11-17 07:33+0100\n"
+"POT-Creation-Date: 2016-11-19 20:21+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-09-23 07:20-0400\n"
+"PO-Revision-Date: 2016-11-19 06:41-0500\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -80,29 +80,39 @@ msgstr "Файла налаштувань %(file)s не існує."
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Параметри для «%(symbol)s» ibus-typing-booster"
 
-#: setup/main.py:376
+#. Translators: Column heading of the table listing the existing shortcuts
+#: setup/main.py:183
+msgid "Shortcut"
+msgstr "Скорочення"
+
+#. Translators: Column heading of the table listing the existing shortcuts
+#: setup/main.py:189
+msgid "Shortcut expansion"
+msgstr "Розгортання скорочення"
+
+#: setup/main.py:401
 msgid "Another instance of this app is already running."
 msgstr "Вже запущено інший екземпляр цієї програми."
 
-#: setup/main.py:510
+#: setup/main.py:586
 msgid "Open File ..."
 msgstr "Відкрити файл…"
 
-#: setup/main.py:528
+#: setup/main.py:604
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Успішно вивчено з файла %(filename)s."
 
-#: setup/main.py:537
+#: setup/main.py:613
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Спроба навчання з файла %(filename)s зазнала невдачі."
 
-#: setup/main.py:550
+#: setup/main.py:626
 msgid "Are you sure?"
 msgstr "Ви впевнені?"
 
-#: setup/main.py:557
+#: setup/main.py:633
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -110,7 +120,7 @@ msgstr ""
 "Ви справді хочете вилучити усі дані мови, \n"
 "вивчені із введених даних і читання файлів?"
 
-#: setup/main.py:834
+#: setup/main.py:910
 msgid "ibus is not running."
 msgstr "ibus не запущено."
 
@@ -298,79 +308,83 @@ msgstr ""
 msgid "Auto commit characters:"
 msgstr "Автонадсилання символів:"
 
-#: setup/setup.glade:388
+#: setup/setup.glade:392
 msgid "Options"
 msgstr "Параметри"
 
-#: setup/setup.glade:406
+#: setup/setup.glade:412
 msgid "Clear input"
-msgstr ""
+msgstr "Вилучити введене"
 
-#: setup/setup.glade:420
+#: setup/setup.glade:426
 msgid "Add shortcut"
-msgstr ""
+msgstr "Додати скорочення"
 
-#: setup/setup.glade:437
+#: setup/setup.glade:443
 msgid "Enter shortcut here:"
-msgstr ""
+msgstr "Вкажіть скорочення:"
 
-#: setup/setup.glade:451
+#: setup/setup.glade:457
 msgid "Enter shortcut expansion here:"
-msgstr ""
+msgstr "Вкажіть розгортання скорочення:"
 
-#: setup/setup.glade:491
+#: setup/setup.glade:514
+msgid "Delete shortcut"
+msgstr "Вилучити скорочення"
+
+#: setup/setup.glade:534
 msgid "Custom shortcuts"
-msgstr ""
+msgstr "Нетипові скорочення"
 
-#: setup/setup.glade:525
+#: setup/setup.glade:568
 msgid "Install dictionary"
 msgstr "Встановити словник"
 
-#: setup/setup.glade:539
+#: setup/setup.glade:582
 msgid "Learn from text file"
 msgstr "Навчатися за текстовим файлом"
 
-#: setup/setup.glade:557
+#: setup/setup.glade:600
 msgid "Install the dictionary package for this engine"
 msgstr "Встановити пакунок словника для цього рушія обробки"
 
-#: setup/setup.glade:567
+#: setup/setup.glade:610
 msgid "Learn your style by reading a text file"
 msgstr "Вивчити ваш стиль шляхом читання текстового файла"
 
-#: setup/setup.glade:581
+#: setup/setup.glade:624
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
 "Вилучити усі особисті дані мови, вивчені на основі введених даних або "
 "читання файлів"
 
-#: setup/setup.glade:593
+#: setup/setup.glade:636
 msgid "Delete learned data"
 msgstr "Вилучити вивчені дані"
 
-#: setup/setup.glade:630
+#: setup/setup.glade:673
 msgid "Dictionaries and personal data"
 msgstr "Словники і особисті дані"
 
-#: setup/setup.glade:675
+#: setup/setup.glade:718
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Спосіб введення із автоматичним доповненням, який пришвидшує введення "
 "текстів."
 
-#: setup/setup.glade:701
+#: setup/setup.glade:744
 msgid "<b>Home page:</b>"
 msgstr "<b>Домашня сторінки:</b>"
 
-#: setup/setup.glade:713
+#: setup/setup.glade:756
 msgid "<b>Online documentation:</b>"
 msgstr "<b>Документація у інтернеті:</b>"
 
 #. This is the “About” tab in the setup tool.
 #. 
 #. That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
-#: setup/setup.glade:744
+#: setup/setup.glade:787
 msgid "About"
 msgstr "Про програму"
 
@@ -393,6 +407,6 @@ msgstr ""
 "вибрати бажане слово зі списку пропозицій, отже пришвидшити введення тексту "
 "та поліпшити його якість."
 
-#: typing-booster.appdata.xml:484
+#: typing-booster.appdata.xml:493
 msgid "Mike FABIAN"
 msgstr "Mike FABIAN"
