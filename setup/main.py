@@ -547,6 +547,9 @@ class EventHandler:
                     phrase=shortcut_expansion,
                     user_freq_increment=itb_util.SHORTCUT_USER_FREQ)
                 model.append((shortcut, shortcut_expansion))
+            SETUP_UI.shortcut_entry.set_text('')
+            SETUP_UI.shortcut_expansion_entry.set_text('')
+            SETUP_UI.shortcut_treeview.get_selection().unselect_all()
 
     def on_shortcut_selected(self, selection):
         '''
