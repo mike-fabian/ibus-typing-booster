@@ -901,7 +901,7 @@ class TypingBoosterEngine(IBus.Engine):
                 %self._transliterated_strings)
 
     def get_current_imes(self):
-        '''Get current list of input methods from editor
+        '''Get current list of input methods
 
         It is important to return a copy, we do not want to change
         the private member variable directly.
@@ -911,7 +911,7 @@ class TypingBoosterEngine(IBus.Engine):
         return self._current_imes[:]
 
     def set_current_imes(self, imes, update_dconf=True):
-        '''Set current list of input methods in editor
+        '''Set current list of input methods
 
         :param imes: List of input methods
         :type imes: List of strings
@@ -1339,7 +1339,7 @@ class TypingBoosterEngine(IBus.Engine):
 
     def _update_preedit(self):
         '''Update Preedit String in UI'''
-        # editor.get_caret() should also use NFC!
+        # get_caret() should also use NFC!
         _str = unicodedata.normalize(
             'NFC', self._transliterated_strings[
                 self.get_current_imes()[0]])
