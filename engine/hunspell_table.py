@@ -1658,6 +1658,87 @@ class TypingBoosterEngine(IBus.Engine):
                 pp_phrase=self.get_pp_phrase())
         self.push_context(stripped_commit_phrase)
 
+    def _reopen_preedit_or_return_false(self, key):
+        '''Backspace or arrow left has been typed.
+
+        If the end of a word has been reached again and if it is
+        possible to get that word back into preëdit, do that and
+        return True.
+
+        If not end of a word has been reached or it is impossible to
+        get the word back into preëdit, use _return_false(key.val,
+        key.code, key.state) to pass the key to the application.
+
+        :rtype: Boolean
+
+        '''
+        if not (self.client_capabilities
+                & IBus.Capabilite.SURROUNDING_TEXT):
+            return self._return_false(key.val, key.code, key.state)
+        surrounding_text = self.get_surrounding_text()
+        text = surrounding_text[0].get_text()
+        cursor_pos = surrounding_text[1]
+        dummy_anchor_pos = surrounding_text[2]
+        if not surrounding_text:
+            return self._return_false(key.val, key.code, key.state)
+        if not self._commit_happened_after_focus_in:
+            # Before the first commit or cursor movement, the
+            # surrounding text is probably from the previously
+            # focused window (bug!), don’t use it.
+            return self._return_false(key.val, key.code, key.state)
+        if key.val in (IBus.KEY_BackSpace, IBus.KEY_Left, IBus.KEY_KP_Left):
+            pattern = re.compile(
+                r'(^|.*[\s]+)(?P<token>[\S]+)[\s]$')
+            match = pattern.match(text[:cursor_pos])
+            if not match:
+                return self._return_false(key.val, key.code, key.state)
+            # The pattern has matched, i.e. left of the cursor is
+            # a single whitespace and left of that a token was
+            # found.
+            token = match.group('token')
+            # Delete the whitespace and the token from the
+            # application.
+            if key.val in (IBus.KEY_BackSpace,):
+                self.delete_surrounding_text(-1-len(token), 1+len(token))
+            else:
+                self.forward_key_event(key.val, key.code, key.state)
+                # The sleep is needed because this is racy, without the
+                # sleep it works unreliably.
+                time.sleep(0.1)
+                self.delete_surrounding_text(-len(token), len(token))
+            # get the context to the left of the token:
+            self.get_context()
+            # put the token into the preedit again
+            self._insert_string_at_cursor(list(token))
+            # update the candidates.
+            self._update_ui()
+            return True
+        elif key.val in (IBus.KEY_Delete, IBus.KEY_Right, IBus.KEY_KP_Right):
+            pattern = re.compile(
+                r'^[\s](?P<token>[\S]+)($|[\s]+.*)')
+            match = pattern.match(text[cursor_pos:])
+            if not match:
+                return self._return_false(key.val, key.code, key.state)
+            token = match.group('token')
+            if key.val in (IBus.KEY_Delete,):
+                self.delete_surrounding_text(0, len(token) + 1)
+            else:
+                self.forward_key_event(key.val, key.code, key.state)
+                # The sleep is needed because this is racy, without the
+                # sleep it works unreliably.
+                time.sleep(0.1)
+                self.delete_surrounding_text(0, len(token))
+            # get the context to the left of the token:
+            self.get_context()
+            # put the token into the preedit again
+            self._insert_string_at_cursor(list(token))
+            self._typed_string_cursor = 0
+            # update the candidates.
+            self._update_ui()
+            return True
+        else:
+            return self._return_false(key.val, key.code, key.state)
+
     def get_context(self):
         '''Try to get the context from the application using the “surrounding
         text” feature, if possible. If this works, it is much better
@@ -2164,42 +2245,11 @@ class TypingBoosterEngine(IBus.Engine):
                 # checked here because AltGr+Space is the key binding to
                 # insert a literal space into the preëdit):
                 return self._return_false(key.val, key.code, key.state)
-            if key.val in (IBus.KEY_BackSpace,):
-                # When the end of a word is reached again by typing backspace,
-                # try to get that word back into preedit:
-                if not (self.client_capabilities
-                        & IBus.Capabilite.SURROUNDING_TEXT):
-                    return self._return_false(key.val, key.code, key.state)
-                surrounding_text = self.get_surrounding_text()
-                text = surrounding_text[0].get_text()
-                cursor_pos = surrounding_text[1]
-                dummy_anchor_pos = surrounding_text[2]
-                if not surrounding_text:
-                    return self._return_false(key.val, key.code, key.state)
-                if not self._commit_happened_after_focus_in:
-                    # Before the first commit or cursor movement, the
-                    # surrounding text is probably from the previously
-                    # focused window (bug!), don’t use it.
-                    return self._return_false(key.val, key.code, key.state)
-                pattern = re.compile(
-                    r'(^|.*[\s]+)(?P<token>[\S]+)[\s]$')
-                match = pattern.match(text[:cursor_pos])
-                if not match:
-                    return self._return_false(key.val, key.code, key.state)
-                # The pattern has matched, i.e. left of the cursor is
-                # a single whitespace and left of that a token was
-                # found.  Delete the whitespace and the token from the
-                # application, get the context to the left of the
-                # token, put the token into the preedit again and
-                # update the candidates. Do not pass the backspace
-                # back to the application because the whitespace has
-                # already been deleted.
-                token = match.group('token')
-                self.delete_surrounding_text(-1-len(token), 1+len(token))
-                self.get_context()
-                self._insert_string_at_cursor(list(token))
-                self._update_ui()
-                return True
+            if key.val in (IBus.KEY_BackSpace,
+                           IBus.KEY_Left, IBus.KEY_KP_Left,
+                           IBus.KEY_Delete,
+                           IBus.KEY_Right, IBus.KEY_KP_Right):
+                return self._reopen_preedit_or_return_false(key)
             if key.val >= 32 and not key.control:
                 if (self._use_digits_as_select_keys
                     and not self._tab_enable
@@ -2525,6 +2575,11 @@ class TypingBoosterEngine(IBus.Engine):
                     self.forward_key_event(
                         key.val, key.code,
                         key.state & ~IBus.ModifierType.CONTROL_MASK)
+                if self._reopen_preedit_or_return_false(key):
+                    return True
+            if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right):
+                if self._reopen_preedit_or_return_false(key):
+                    return True
             # Forward the key event which triggered the commit here
             # and return True instead of trying to pass that key event
             # to the application by returning False. Doing it by
