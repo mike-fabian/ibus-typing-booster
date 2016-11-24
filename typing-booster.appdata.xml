@@ -16,6 +16,32 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.14" date="2016-11-25" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Reopen preëdit not only on Backspace but also on Delete
+            and arrow keys
+          </li>
+          <li>
+            Fix "delete whitespace when committing punctuation"
+            problem in firefox (Resolves rhbz#1399192)
+          </li>
+          <li>
+            Add pt_BR translations from zanata. Update uk, pl, and de
+            translations from zanata.
+          </li>
+          <li>
+            Add an option to show/hide the status information in the
+            auxiliary text
+          </li>
+          <li>
+            Use ballot box characters in front of the mode indicators
+            in the auxiliary text
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.13" date="2016-11-20" urgency="medium">
       <description>
         <ul>

@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 25 Nov 2016 Released 1.5.14 version
+* Reopen preëdit not only on Backspace but also on Delete and arrow keys
+* Fix "delete whitespace when committing punctuation" problem in firefox (Resolves rhbz#1399192)
+* Add pt_BR translations from zanata. Update uk, pl, and de translations from zanata.
+* Add an option to show/hide the status information in the auxiliary text
+* Use ballot box characters in front of the mode indicators in the auxiliary text
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 20 Nov 2016 Released 1.5.13 version
 * Update French translations from zanata
 
