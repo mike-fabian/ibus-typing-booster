@@ -1596,11 +1596,6 @@ class TypingBoosterEngine(IBus.Engine):
                 self.get_current_imes()[0]]
         # commit always in NFC:
         commit_phrase = unicodedata.normalize('NFC', commit_phrase)
-        super(TypingBoosterEngine, self).commit_text(
-            IBus.Text.new_from_string(commit_phrase))
-        self._clear_input()
-        self._update_ui()
-        self._commit_happened_after_focus_in = True
         if self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT:
             # If a character ending a sentence is committed (possibly
             # followed by whitespace) remove trailing white space
@@ -1620,7 +1615,7 @@ class TypingBoosterEngine(IBus.Engine):
                 anchor_pos = surrounding_text[2]
                 if DEBUG_LEVEL > 1:
                     sys.stderr.write(
-                        'Removing whitespace before sentence end char. '
+                        'Checking for whitespace before sentence end char. '
                         + 'surrounding_text = '
                         + '[text = "%s", cursor_pos = %s, anchor_pos = %s]'
                         %(text, cursor_pos, anchor_pos) + '\n')
@@ -1631,13 +1626,7 @@ class TypingBoosterEngine(IBus.Engine):
                 match = pattern.search(text[:cursor_pos])
                 if match:
                     nchars = len(match.group('white_space'))
-                    # when the “delete surrounding text” happens,
-                    # the commit_phrase *is* already in the
-                    # surrounding text. Therefore, the offset is not
-                    # only -nchars but -(nchars +
-                    # len(commit_phrase)):
-                    offset = -(nchars + len(commit_phrase))
-                    self.delete_surrounding_text(offset, nchars)
+                    self.delete_surrounding_text(-nchars, nchars)
                     if DEBUG_LEVEL > 1:
                         surrounding_text = self.get_surrounding_text()
                         text = surrounding_text[0].get_text()
@@ -1648,6 +1637,11 @@ class TypingBoosterEngine(IBus.Engine):
                             + 'surrounding_text = '
                             + '[text = "%s", cursor_pos = %s, anchor_pos = %s]'
                             %(text, cursor_pos, anchor_pos) + '\n')
+        super(TypingBoosterEngine, self).commit_text(
+            IBus.Text.new_from_string(commit_phrase))
+        self._clear_input()
+        self._update_ui()
+        self._commit_happened_after_focus_in = True
         stripped_input_phrase = itb_util.strip_token(input_phrase)
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
         if not self._off_the_record:
