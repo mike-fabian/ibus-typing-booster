@@ -219,6 +219,13 @@ class TypingBoosterEngine(IBus.Engine):
         if self._show_number_of_candidates is None:
             self._show_number_of_candidates = False
 
+        self._show_status_info_in_auxiliary_text = variant_to_value(
+            self._config.get_value(
+                self._config_section,
+                'showstatusinfoinaux'))
+        if self._show_status_info_in_auxiliary_text is None:
+            self._show_status_info_in_auxiliary_text = False
+
         self._use_digits_as_select_keys = variant_to_value(
             self._config.get_value(
                 self._config_section,
@@ -1369,13 +1376,14 @@ class TypingBoosterEngine(IBus.Engine):
             aux_string = '(%d / %d) ' % (
                 self.get_lookup_table().get_cursor_pos() + 1,
                 self.get_lookup_table().get_number_of_candidates())
-        preedit_ime = self.get_current_imes()[0]
-        if preedit_ime != 'NoIme':
-            aux_string += preedit_ime + ' '
-        if self._emoji_predictions:
-            aux_string += EMOJI_PREDICTION_MODE_SYMBOL + ' '
-        if self._off_the_record:
-            aux_string += OFF_THE_RECORD_MODE_SYMBOL + ' '
+        if self._show_status_info_in_auxiliary_text:
+            preedit_ime = self.get_current_imes()[0]
+            if preedit_ime != 'NoIme':
+                aux_string += preedit_ime + ' '
+            if self._emoji_predictions:
+                aux_string += EMOJI_PREDICTION_MODE_SYMBOL + ' '
+            if self._off_the_record:
+                aux_string += OFF_THE_RECORD_MODE_SYMBOL + ' '
         # Colours do not work at the moment in the auxiliary text!
         # Needs fix in ibus.
         attrs = IBus.AttrList()
@@ -2082,6 +2090,46 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._show_number_of_candidates
 
+    def set_show_status_info_in_auxiliary_text(self, mode, update_dconf=True):
+        '''Sets the “Show status info in auxiliary text” mode
+
+        :param mode: Whether to show status information in the
+                     auxiliary text.
+                     Currently the status information which can be
+                     displayed there is whether emoji mode and
+                     off-the-record mode are on or off
+                     and which input method is currently used for
+                     the preëdit text.
+        :type mode: boolean
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_show_status_info_in_auxiliary_text(%s, update_dconf = %s)\n"
+                %(mode, update_dconf))
+        if mode == self._show_status_info_in_auxiliary_text:
+            return
+        self._show_status_info_in_auxiliary_text = mode
+        self.reset()
+        if update_dconf:
+            self._config.set_value(
+                self._config_section,
+                'showstatusinfoinaux',
+                GLib.Variant.new_boolean(mode))
+
+    def get_show_status_info_in_auxiliary_text(self):
+        '''Returns the current value of the
+        “Show status in auxiliary text” mode
+
+        :rtype: boolean
+        '''
+        return self._show_status_info_in_auxiliary_text
+
     def set_use_digits_as_select_keys(self, mode, update_dconf=True):
         '''Sets the “Use digits as select keys” mode
 
@@ -2761,6 +2809,10 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if name == "shownumberofcandidates":
             self.set_show_number_of_candidates(value, update_dconf=False)
+            return
+        if name == "showstatusinfoinaux":
+            self.set_show_status_info_in_auxiliary_text(
+                value, update_dconf=False)
             return
         if name == "usedigitsasselectkeys":
             self.set_use_digits_as_select_keys(value, update_dconf=False)

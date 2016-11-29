@@ -266,6 +266,19 @@ class SetupUI:
         off_the_record_checkbox.connect(
             'clicked', event_handler.on_off_the_record_checkbox)
 
+        show_status_info_in_auxiliary_text_checkbox = self.builder.get_object(
+            "show_status_info_in_auxiliary_text_checkbox")
+        self.show_status_info_in_auxiliary_text = itb_util.variant_to_value(
+            self.config.get_value(
+                self.config_section, 'showstatusinfoinaux'))
+        if self.show_status_info_in_auxiliary_text is None:
+            self.show_status_info_in_auxiliary_text = True
+        if self.show_status_info_in_auxiliary_text is True:
+            show_status_info_in_auxiliary_text_checkbox.set_active(True)
+        show_status_info_in_auxiliary_text_checkbox.connect(
+            'clicked',
+            event_handler.on_show_status_info_in_auxiliary_text_checkbox)
+
         add_direct_input_checkbox = self.builder.get_object(
             "add_direct_input_checkbox")
         self.add_direct_input = itb_util.variant_to_value(
@@ -733,6 +746,24 @@ class EventHandler:
             SETUP_UI.config.set_value(
                 SETUP_UI.config_section,
                 'offtherecord',
+                GLib.Variant.new_boolean(False))
+
+    def on_show_status_info_in_auxiliary_text_checkbox(self, widget):
+        '''
+        The checkbox whether to show status in the auxiliary text,
+        has been clicked.
+        '''
+        if widget.get_active():
+            SETUP_UI.show_status_info_in_auxiliary_text = True
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
+                'showstatusinfoinaux',
+                GLib.Variant.new_boolean(True))
+        else:
+            SETUP_UI.show_status_info_in_auxiliary_text = False
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
+                'showstatusinfoinaux',
                 GLib.Variant.new_boolean(False))
 
     def on_add_direct_input_checkbox(self, widget):

@@ -71,6 +71,8 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_min_char_complete())
         self.orig_show_number_of_candidates = (
             self.engine.get_show_number_of_candidates())
+        self.orig_show_status_info_in_auxiliary_text = (
+            self.engine.get_show_status_info_in_auxiliary_text())
         self.orig_use_digits_as_select_keys = (
             self.engine.get_use_digits_as_select_keys())
         self.orig_current_imes = (
@@ -97,6 +99,8 @@ class ItbTestCase(unittest.TestCase):
             self.orig_min_char_complete)
         self.engine.set_show_number_of_candidates(
             self.orig_show_number_of_candidates)
+        self.engine.set_show_status_info_in_auxiliary_text(
+            self.orig_show_status_info_in_auxiliary_text)
         self.engine.set_use_digits_as_select_keys(
             self.orig_use_digits_as_select_keys)
         self.engine.set_current_imes(
