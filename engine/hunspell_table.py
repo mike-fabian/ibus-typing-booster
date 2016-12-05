@@ -53,7 +53,7 @@ DEBUG_LEVEL = int(0)
 MODE_OFF_SYMBOL = '☐'
 # ☑ U+2611 BALLOT BOX WITH CHECK
 # 🗹 U+1F5F9 BALLOT_BOX WITH BOLD CHECK
-MODE_ON_SYMBOL = '🗹'
+MODE_ON_SYMBOL = '☑'
 
 #  ☺ U+263A WHITE SMILING FACE
 # 😃 U+1F603 SMILING FACE WITH OPEN MOUTH
@@ -1381,9 +1381,17 @@ class TypingBoosterEngine(IBus.Engine):
             if preedit_ime != 'NoIme':
                 aux_string += preedit_ime + ' '
             if self._emoji_predictions:
-                aux_string += EMOJI_PREDICTION_MODE_SYMBOL + ' '
+                aux_string += (
+                    MODE_ON_SYMBOL + EMOJI_PREDICTION_MODE_SYMBOL + ' ')
+            else:
+                aux_string += (
+                    MODE_OFF_SYMBOL + EMOJI_PREDICTION_MODE_SYMBOL + ' ')
             if self._off_the_record:
-                aux_string += OFF_THE_RECORD_MODE_SYMBOL + ' '
+                aux_string += (
+                    MODE_ON_SYMBOL + OFF_THE_RECORD_MODE_SYMBOL + ' ')
+            else:
+                aux_string += (
+                    MODE_OFF_SYMBOL + OFF_THE_RECORD_MODE_SYMBOL + ' ')
         # Colours do not work at the moment in the auxiliary text!
         # Needs fix in ibus.
         attrs = IBus.AttrList()
