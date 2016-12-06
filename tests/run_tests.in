@@ -172,6 +172,9 @@ class MockProperty:
     def set_visible(self, visible):
         pass
 
+    def set_state(self, visible):
+        pass
+
 # -- Monkey patch the environment with the mock classes ----------------------
 sys.modules["gi.repository.IBus"].Engine = MockEngine
 sys.modules["gi.repository.IBus"].LookupTable = MockLookupTable
