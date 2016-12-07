@@ -354,12 +354,10 @@ class TypingBoosterEngine(IBus.Engine):
         self._init_transliterators()
         # self._candidates: hold candidates selected from database and hunspell
         self._candidates = []
-        self._lookup_table = IBus.LookupTable(
-            page_size=self._page_size,
-            cursor_pos=0,
-            cursor_visible=False,
-            round=True)
+        self._lookup_table = IBus.LookupTable()
         self._lookup_table.clear()
+        self._lookup_table.set_page_size(self._page_size)
+        self._lookup_table.set_orientation(IBus.Orientation.VERTICAL)
         self._lookup_table.set_cursor_visible(False)
 
         self.emoji_prediction_mode_properties = {
@@ -2009,12 +2007,7 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if page_size >= 1 and page_size <= 9:
             self._page_size = page_size
-            self.set_lookup_table(
-                IBus.LookupTable(
-                    page_size=self._page_size,
-                    cursor_pos=0,
-                    cursor_visible=False,
-                    round=True))
+            self._lookup_table.set_page_size(self._page_size)
             self.reset()
             if update_dconf:
                 self._config.set_value(
