@@ -8,48 +8,48 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2016-11-30 13:21+0100\n"
+"POT-Creation-Date: 2016-12-08 13:48+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2016-11-21 01:50-0500\n"
 "Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Zanata 3.9.6\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: engine/hunspell_table.py:369 engine/hunspell_table.py:389
+#: engine/hunspell_table.py:374 engine/hunspell_table.py:394
 msgid "Off"
 msgstr "Désactivé"
 
-#: engine/hunspell_table.py:374 engine/hunspell_table.py:394
+#: engine/hunspell_table.py:379 engine/hunspell_table.py:399
 msgid "On"
 msgstr "Activé"
 
-#: engine/hunspell_table.py:379 engine/hunspell_table.py:381
+#: engine/hunspell_table.py:384 engine/hunspell_table.py:386
 #: setup/setup.glade:301
 msgid "Unicode symbols and emoji predictions"
 msgstr "Prédictions des émoticônes et symboles unicodes"
 
-#: engine/hunspell_table.py:399 engine/hunspell_table.py:400
+#: engine/hunspell_table.py:404 engine/hunspell_table.py:405
 #: setup/setup.glade:319
 msgid "Off the record mode"
 msgstr "Mode sans enregistrement"
 
-#: engine/hunspell_table.py:1070
+#: engine/hunspell_table.py:1075
 msgid "Preedit input method"
 msgstr "Méthode de saisie pour la pré-édition."
 
-#: engine/hunspell_table.py:1071
+#: engine/hunspell_table.py:1076
 msgid "Switch preedit input method"
 msgstr "Changer la méthode de pré-édition"
 
-#: engine/hunspell_table.py:1264
+#: engine/hunspell_table.py:1269
 msgid "Setup"
 msgstr "Configuration"
 
-#: engine/hunspell_table.py:1267
+#: engine/hunspell_table.py:1272
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Configurer ibus-typing-booster « %(name)s »"
@@ -91,29 +91,42 @@ msgstr "Raccourci"
 msgid "Shortcut expansion"
 msgstr "Expansion du raccourci"
 
-#: setup/main.py:414
-msgid "Another instance of this app is already running."
-msgstr "Une autre instance de cette application est déjà en cours d'exécution."
+#: setup/main.py:347
+msgid "Horizontal"
+msgstr ""
 
-#: setup/main.py:602
+#: setup/main.py:349
+msgid "Vertical"
+msgstr ""
+
+#: setup/main.py:351
+msgid "System default"
+msgstr ""
+
+#: setup/main.py:441
+msgid "Another instance of this app is already running."
+msgstr ""
+"Une autre instance de cette application est déjà en cours d'exécution."
+
+#: setup/main.py:629
 msgid "Open File ..."
 msgstr "Ouvrir le fichier..."
 
-#: setup/main.py:620
+#: setup/main.py:647
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Apprentissage réussi depuis le fichier  %(filename)s."
 
-#: setup/main.py:629
+#: setup/main.py:656
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Échec de l'apprentissage depuis le fichier  %(filename)s."
 
-#: setup/main.py:642
+#: setup/main.py:669
 msgid "Are you sure?"
 msgstr "Le voulez-vous vraiment ?"
 
-#: setup/main.py:649
+#: setup/main.py:676
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -121,7 +134,7 @@ msgstr ""
 "Voulez-vous vraiment supprimer toutes les données\n"
 "linguistiques apprises depuis la saisie ou la lecture de fichiers ?"
 
-#: setup/main.py:944
+#: setup/main.py:985
 msgid "ibus is not running."
 msgstr "Ibus n'est pas lancé."
 
@@ -139,10 +152,10 @@ msgid ""
 "then necessary to show the list of suggestions. After a commit the "
 "suggestions are hidden again until the next Tab key is typed."
 msgstr ""
-"Si cette option est activée, les suggestions ne sont pas montrées par "
-"défaut. Appuyer sur Tab est alors nécessaire pour montrer la liste des "
-"suggestions. Après validation, les suggestions sont de nouveau cachées "
-"jusqu'à ce que la touche Tab soit appuyée."
+"Si cette option est activée, les suggestions ne sont pas montrées par défaut."
+" Appuyer sur Tab est alors nécessaire pour montrer la liste des suggestions. "
+"Après validation, les suggestions sont de nouveau cachées jusqu'à ce que la "
+"touche Tab soit appuyée."
 
 #: setup/setup.glade:107
 msgid ""
@@ -180,6 +193,7 @@ msgstr ""
 #: setup/setup.glade:197
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
+""
 msgstr ""
 "Ne pas afficher de suggestion quand moins que ce nombre de caractères a été "
 "saisi."
@@ -321,81 +335,90 @@ msgid ""
 "above the candidate list. "
 msgstr ""
 
-#: setup/setup.glade:410
+#: setup/setup.glade:387
+msgid ""
+"Whether the candidate window should be drawn horizontally or vertically."
+msgstr ""
+
+#: setup/setup.glade:389
+msgid "Candidate window orientation"
+msgstr ""
+
+#: setup/setup.glade:439
 msgid "Options"
 msgstr "Options"
 
-#: setup/setup.glade:430
+#: setup/setup.glade:459
 msgid "Clear input"
 msgstr "Vide la sortie"
 
-#: setup/setup.glade:444
+#: setup/setup.glade:473
 msgid "Add shortcut"
 msgstr "Ajouter un raccourci"
 
-#: setup/setup.glade:461
+#: setup/setup.glade:490
 msgid "Enter shortcut here:"
 msgstr "Saisissez votre raccourci ici :"
 
-#: setup/setup.glade:475
+#: setup/setup.glade:504
 msgid "Enter shortcut expansion here:"
 msgstr "Saisissez l'expansion du raccourci ici :"
 
-#: setup/setup.glade:532
+#: setup/setup.glade:561
 msgid "Delete shortcut"
 msgstr "Supprimer le raccourci"
 
-#: setup/setup.glade:552
+#: setup/setup.glade:581
 msgid "Custom shortcuts"
 msgstr "Raccourcis personnalisés"
 
-#: setup/setup.glade:586
+#: setup/setup.glade:615
 msgid "Install dictionary"
 msgstr "Installer un dictionnaire"
 
-#: setup/setup.glade:600
+#: setup/setup.glade:629
 msgid "Learn from text file"
 msgstr "Apprendre depuis un fichier texte"
 
-#: setup/setup.glade:618
+#: setup/setup.glade:647
 msgid "Install the dictionary package for this engine"
 msgstr "Installer le paquet du dictionnaire pour ce moteur"
 
-#: setup/setup.glade:628
+#: setup/setup.glade:657
 msgid "Learn your style by reading a text file"
 msgstr "Apprendre votre style en lisant un fichier texte"
 
-#: setup/setup.glade:642
+#: setup/setup.glade:671
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
 "Supprimer toutes les données linguistiques personnelles apprises depuis la "
 "saisie ou la lecture de fichiers"
 
-#: setup/setup.glade:654
+#: setup/setup.glade:683
 msgid "Delete learned data"
 msgstr "Supprimer les données apprises"
 
-#: setup/setup.glade:691
+#: setup/setup.glade:720
 msgid "Dictionaries and personal data"
 msgstr "Dictionnaires et données personnelles"
 
-#: setup/setup.glade:736
+#: setup/setup.glade:765
 msgid "A completion input method to speedup typing."
 msgstr "Une méthode d'auto-complètement  pour accélérer la saisie."
 
-#: setup/setup.glade:762
+#: setup/setup.glade:791
 msgid "<b>Home page:</b>"
 msgstr "<b>Site web :</b>"
 
-#: setup/setup.glade:774
+#: setup/setup.glade:803
 msgid "<b>Online documentation:</b>"
 msgstr "<b>Documentation en ligne :</b>"
 
 #. This is the “About” tab in the setup tool.
-#.
+#. 
 #. That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
-#: setup/setup.glade:805
+#: setup/setup.glade:834
 msgid "About"
 msgstr "À propos"
 
@@ -414,10 +437,10 @@ msgid ""
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
 "L'accélérateur de saisie « Ibus-typing-booster » est une méthode de saisie "
-"qui prédit des mots complets à partir du contexte et de la saisie "
-"partielle.  On peut ainsi améliorer sa vitesse d'écriture et son orthographe "
-"en sélectionnant simplement le mot désiré dans une liste de suggestions."
+"qui prédit des mots complets à partir du contexte et de la saisie partielle. "
+" On peut ainsi améliorer sa vitesse d'écriture et son orthographe en "
+"sélectionnant simplement le mot désiré dans une liste de suggestions."
 
-#: typing-booster.appdata.xml:527
+#: typing-booster.appdata.xml:548
 msgid "Mike FABIAN"
 msgstr "Mike FABIAN"
