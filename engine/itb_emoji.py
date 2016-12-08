@@ -825,9 +825,6 @@ class EmojiMatcher():
         >>> mq.candidates('nature')[0][:2]
         ('🌼', 'blossom {nature}')
 
-        >>> mq.candidates('thankyou')[0][:2]
-        ('🍻', 'clinking beer mugs [thank you]')
-
         >>> mq.candidates('travel')[0][:2]
         ('🚡', 'aerial tramway {travel}')
 

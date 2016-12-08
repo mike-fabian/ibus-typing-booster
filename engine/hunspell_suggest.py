@@ -255,8 +255,8 @@ class Hunspell:
         (Attention, the return values are in NORMALIZATION_FORM_INTERNAL ('NFD'))
 
         >>> h = Hunspell(['de_DE', 'cs_CZ'])
-        >>> h.suggest('Geschwindigkeitsubertre')
-        [('Geschwindigkeitsübertretungsverfahren', 0), ('Schreitgeschwindigkeit', -1), ('Geschwindigkeitsabhängig', -1), ('Geschwindigkeitsoptimiert', -1), ('Geschwindigkeitsabhängige', -1)]
+        >>> h.suggest('Geschwindigkeitsubertre')[0]
+        ('Geschwindigkeitsübertretungsverfahren', 0)
 
         >>> h.suggest('filosofictejsi')
         [('filosofičtější', 0), ('filosofičtěji', -1)]
