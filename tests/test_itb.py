@@ -67,6 +67,8 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_remember_last_used_preedit_ime())
         self.orig_page_size = (
             self.engine.get_page_size())
+        self.orig_lookup_table_orientation = (
+            self.engine.get_lookup_table_orientation())
         self.orig_min_char_complete = (
             self.engine.get_min_char_complete())
         self.orig_show_number_of_candidates = (
@@ -95,6 +97,8 @@ class ItbTestCase(unittest.TestCase):
             self.orig_remember_last_used_preedit_ime)
         self.engine.set_page_size(
             self.orig_page_size)
+        self.engine.set_lookup_table_orientation(
+            self.orig_lookup_table_orientation)
         self.engine.set_min_char_complete(
             self.orig_min_char_complete)
         self.engine.set_show_number_of_candidates(

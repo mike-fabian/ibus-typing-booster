@@ -340,6 +340,34 @@ class SetupUI:
             'value-changed',
             event_handler.on_min_char_complete_adjustment_value_changed)
 
+        self.lookup_table_orientation_combobox = self.builder.get_object(
+            "lookup_table_orientation_combobox")
+        lookup_table_orientation_store = Gtk.ListStore(str, int)
+        lookup_table_orientation_store.append(
+            [_('Horizontal'), IBus.Orientation.HORIZONTAL])
+        lookup_table_orientation_store.append(
+            [_('Vertical'), IBus.Orientation.VERTICAL])
+        lookup_table_orientation_store.append(
+            [_('System default'), IBus.Orientation.SYSTEM])
+        self.lookup_table_orientation_combobox.set_model(
+            lookup_table_orientation_store)
+        renderer_text = Gtk.CellRendererText()
+        self.lookup_table_orientation_combobox.pack_start(
+            renderer_text, True)
+        self.lookup_table_orientation_combobox.add_attribute(
+            renderer_text, "text", 0)
+        lookup_table_orientation = itb_util.variant_to_value(
+            self.config.get_value(
+                self.config_section, 'lookuptableorientation'))
+        if lookup_table_orientation is None:
+            lookup_table_orientation = IBus.Orientation.VERTICAL
+        for i, item in enumerate(lookup_table_orientation_store):
+            if lookup_table_orientation == item[1]:
+                self.lookup_table_orientation_combobox.set_active(i)
+        self.lookup_table_orientation_combobox.connect(
+            "changed",
+            event_handler.on_lookup_table_orientation_combobox_changed)
+
         self.ime_combobox = self.builder.get_object("input_method_combobox")
         self.input_method_help_button = self.builder.get_object(
             "input_method_help_button")
@@ -352,7 +380,6 @@ class SetupUI:
             ime_store.append([item.split(':')[0], item.split(':')[1]])
             self.supported_imes.append(item.split(':')[1])
         self.ime_combobox.set_model(ime_store)
-        renderer_text = Gtk.CellRendererText()
         self.ime_combobox.pack_start(renderer_text, True)
         self.ime_combobox.add_attribute(renderer_text, "text", 0)
         self.current_imes = []
@@ -834,6 +861,20 @@ class EventHandler:
             SETUP_UI.config_section,
             'mincharcomplete',
             GLib.Variant.new_int32(min_char_complete))
+
+    def on_lookup_table_orientation_combobox_changed(self, widget):
+        '''
+        A change of the lookup table orientation has been requested
+        with the combobox
+        '''
+        tree_iter = widget.get_active_iter()
+        if tree_iter != None:
+            model = widget.get_model()
+            orientation = model[tree_iter][1]
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
+                'lookuptableorientation',
+                GLib.Variant.new_int32(orientation))
 
     def on_ime_combobox_changed(self, widget):
         '''

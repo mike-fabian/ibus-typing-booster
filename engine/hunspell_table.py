@@ -212,6 +212,13 @@ class TypingBoosterEngine(IBus.Engine):
         if self._page_size > 9:
             self._page_size = 9 # maximum page size supported
 
+        self._lookup_table_orientation = variant_to_value(
+            self._config.get_value(
+                self._config_section,
+                'lookuptableorientation'))
+        if self._lookup_table_orientation is None:
+            self._lookup_table_orientation = IBus.Orientation.VERTICAL
+
         self._show_number_of_candidates = variant_to_value(
             self._config.get_value(
                 self._config_section,
@@ -357,7 +364,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._lookup_table = IBus.LookupTable()
         self._lookup_table.clear()
         self._lookup_table.set_page_size(self._page_size)
-        self._lookup_table.set_orientation(IBus.Orientation.VERTICAL)
+        self._lookup_table.set_orientation(self._lookup_table_orientation)
         self._lookup_table.set_cursor_visible(False)
 
         self.emoji_prediction_mode_properties = {
@@ -2022,6 +2029,41 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._page_size
 
+    def set_lookup_table_orientation(self, orientation, update_dconf=True):
+        '''Sets the page size of the lookup table
+
+        :param orientation: The orientation of the lookup table
+        :type mode: integer >= 0 and <= 2
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_lookup_table_orientation(%s, update_dconf = %s)\n"
+                %(orientation, update_dconf))
+        if orientation == self._lookup_table_orientation:
+            return
+        if orientation >= 0 and orientation <= 2:
+            self._lookup_table_orientation = orientation
+            self._lookup_table.set_orientation(self._lookup_table_orientation)
+            self.reset()
+            if update_dconf:
+                self._config.set_value(
+                    self._config_section,
+                    'lookuptableorientation',
+                    GLib.Variant.new_int32(page_size))
+
+    def get_lookup_table_orientation(self):
+        '''Returns the current orientation of the lookup table
+
+        :rtype: integer
+        '''
+        return self._lookup_table_orientation
+
     def set_min_char_complete(self, min_char_complete, update_dconf=True):
         '''Sets the minimum number of characters to try completion
 
@@ -2804,6 +2846,9 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if name == "pagesize":
             self.set_page_size(value, update_dconf=False)
+            return
+        if name == "lookuptableorientation":
+            self.set_lookup_table_orientation(value, update_dconf=False)
             return
         if name == "mincharcomplete":
             self.set_min_char_complete(value, update_dconf=False)
