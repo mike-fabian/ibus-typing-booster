@@ -16,6 +16,29 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.15" date="2016-12-08" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Default value for self._show_status_info_in_auxiliary_text
+            should be True
+          </li>
+          <li>
+            Don’t use keyword arguments when instantiating
+            IBus.LookupTable()
+          </li>
+          <li>
+            Add an option to choose the orientation of the lookup table
+          </li>
+          <li>
+            Update translations from zanata (de, pl, and uk updated)
+          </li>
+          <li>
+            Update emojione.json
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.14" date="2016-11-25" urgency="medium">
       <description>
         <ul>

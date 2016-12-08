@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 08 Dec 2016 Released 1.5.15 version
+* Default value for self._show_status_info_in_auxiliary_text should be True
+* Don’t use keyword arguments when instantiating IBus.LookupTable()
+* Add an option to choose the orientation of the lookup table
+* Update translations from zanata (de, pl, and uk updated)
+* Update emojione.json
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 25 Nov 2016 Released 1.5.14 version
 * Reopen preëdit not only on Backspace but also on Delete and arrow keys
 * Fix "delete whitespace when committing punctuation" problem in firefox (Resolves rhbz#1399192)
