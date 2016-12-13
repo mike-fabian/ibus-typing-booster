@@ -356,10 +356,10 @@ class EmojiMatcher():
             emojione = json.load(emoji_one_file)
         for dummy_emojione_key, emojione_value in emojione.items():
             codepoints = emojione_value['unicode']
-            # ZWJ emojis are in the 'unicode_alternates' field:
-            if ('unicode_alternates' in emojione_value
-                and '200d' in emojione_value['unicode_alternates']):
-                codepoints = emojione_value['unicode_alternates']
+            # ZWJ emojis are in the 'unicode_alt' field:
+            if ('unicode_alt' in emojione_value
+                and '200d' in emojione_value['unicode_alt']):
+                codepoints = emojione_value['unicode_alt']
 
             emoji_string = ''.join([
                 chr(int(codepoint, 16)) for codepoint in codepoints.split('-')
