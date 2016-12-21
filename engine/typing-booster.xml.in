@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<!-- filename: hunspell-table.xml -->
+<!-- filename: typing-booster.xml -->
 <component>
     <name>org.freedesktop.IBus.IbusTypingBooster</name>
     <description>Table Component</description>
