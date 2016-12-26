@@ -23,6 +23,7 @@ This file implements the test cases for the unit tests of ibus-typing-booster
 '''
 
 import sys
+import platform
 import unicodedata
 import unittest
 import subprocess
@@ -352,7 +353,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'गुरु ')
 
     def test_korean(self):
-        if 'openSUSE' in str(subprocess.check_output(["lsb_release","-is"])):
+        if platform.system() == 'Linux' and 'openSUSE' in str(subprocess.check_output(["lsb_release","-is"])):
             # There is no Korean myspell dictionary on openSUSE
             # Therefore, this test cannot work and has to be skipped
             # when running on openSUSE.
