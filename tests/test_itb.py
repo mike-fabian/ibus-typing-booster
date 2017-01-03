@@ -353,11 +353,12 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'गुरु ')
 
     def test_korean(self):
-        if platform.system() == 'Linux' and 'openSUSE' in str(subprocess.check_output(["lsb_release","-is"])):
-            # There is no Korean myspell dictionary on openSUSE
-            # Therefore, this test cannot work and has to be skipped
-            # when running on openSUSE.
-            return
+        if platform.system() == 'Linux':
+            for distribution in ('openSUSE', 'Arch'):
+                if distribution in str(subprocess.check_output(["lsb_release","-is"])):
+                    # There is no Korean myspell dictionary on these distributions.
+                    # Therefore, this test cannot work and has to be skipped.
+                    return
         self.engine.set_current_imes(['ko-romaja'])
         self.engine.set_dictionary_names(['ko_KR'])
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
