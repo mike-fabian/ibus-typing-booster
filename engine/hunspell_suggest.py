@@ -158,14 +158,26 @@ class Dictionary:
             # > optionally be followed by a slash ("/") and one or more
             # > flags, which represents affixes or special attributes.
             #
-            # Therefore, remove '/' and the following flags from each
-            # line to make the buffer a bit smaller and the regular
+            # Some dictionaries, like fr_FR.dic and pt_PT.dic also contain
+            # some lines where words are followed by a tab and some stuff.
+            # For example, pt_PT.dic contains lines like:
+            #
+            # abaixo	[CAT=adv,SUBCAT=lugar]
+            # abalada/p	[CAT=nc,G=f,N=s]
+            #
+            # and fr_FR.dic contains lines like:
+            #
+            # différemment	8
+            # différence/1	2
+            #
+            # Therefore, remove everthing following a '/' or a tab
+            # from a line to make the buffer a bit smaller and the regular
             # expressions we use later to match words in the
             # dictionary slightly simpler and maybe a tiny bit faster:
             self.words = [
                 unicodedata.normalize(
                     NORMALIZATION_FORM_INTERNAL,
-                    re.sub(r'/.*', '', x.replace('\n', '')))
+                    re.sub(r'[/\t].*', '', x.replace('\n', '')))
                 for x in dic_buffer
             ]
             # List of languages where accent insensitive matching makes sense:

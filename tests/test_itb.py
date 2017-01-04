@@ -503,3 +503,24 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(
             self.engine.mock_committed_text,
             'Glühwürmchen Glühwürmchen Glühwürmchen ')
+
+    def test_accent_insensitive_matching_french_dictionary(self):
+        self.engine.set_current_imes(['NoIme', 't-latn-post'])
+        self.engine.set_dictionary_names(['fr_FR'])
+        self.engine.do_process_key_event(IBus.KEY_d, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_f, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_f, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.assertEqual(
+            unicodedata.normalize('NFC',
+                                  self.engine._candidates[0][0]),
+            'différemment')
+        self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, 'différemment ')
