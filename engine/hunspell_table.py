@@ -681,7 +681,19 @@ class TypingBoosterEngine(IBus.Engine):
                     else:
                         phrase_frequencies[cand[0]] = cand[1]
         phrase_candidates = self.db.best_candidates(phrase_frequencies)
-        if self._emoji_predictions:
+        if (self._emoji_predictions
+            or self._typed_string[0] in (' ', '_')
+            or self._typed_string[-1] in (' ', '_')):
+            # If emoji mode is off and the emoji predictions are
+            # triggered here because the typed string starts with a '
+            # ' or a '_', the emoji matcher might not have been
+            # initialized yet.  Make sure it is initialized now:
+            if (not self.emoji_matcher
+                or
+                self.emoji_matcher.get_languages()
+                != self._dictionary_names):
+                self.emoji_matcher = itb_emoji.EmojiMatcher(
+                    languages=self._dictionary_names)
             emoji_scores = {}
             for ime in self._current_imes:
                 if (self._transliterated_strings[ime]

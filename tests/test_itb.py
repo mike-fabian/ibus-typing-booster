@@ -524,3 +524,31 @@ class ItbTestCase(unittest.TestCase):
             'différemment')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'différemment ')
+
+    def test_emoji_triggered_by_underscore_when_emoji_mode_is_off(self):
+        self.engine.set_current_imes(['NoIme'])
+        self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_emoji_prediction_mode(False)
+        # Without a leading underscore, no emoji should match:
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.assertEqual(self.engine._candidates[0][0], 'camel')
+        self.assertEqual(False, self.engine._candidates[5][0] == '🐫')
+        self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, 'camel ')
+        # Now again with a leading underscore an emoji should match.
+        self.engine.do_process_key_event(IBus.KEY_underscore, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.assertEqual(self.engine._candidates[0][0], '_camel')
+        self.assertEqual(self.engine._candidates[5][0], '🐫')
+        self.assertEqual(self.engine._candidates[5][2],
+                         'bactrian camel “two-hump camel”')
+        self.engine.do_process_key_event(IBus.KEY_F6, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, 'camel 🐫 ')
