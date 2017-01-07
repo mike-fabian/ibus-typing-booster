@@ -848,6 +848,29 @@ class TypingBoosterEngine(IBus.Engine):
         phrase = self.get_string_from_lookup_table_cursor_pos()
         if not phrase:
             return False
+        # If the candidate to be removed from the user database starts
+        # with characters which are stripped from tokens, we probably
+        # want to delete the stripped candidate.  I.e. if the
+        # candidate is “_somestuff” we should delete “somestuff” from
+        # the user database. Especially when triggering an emoji
+        # search with the prefix “_” this is the case. For example,
+        # when one types “_ca” one could get the flag of Canada “_🇨🇦”
+        # or the castle emoji “_🏰” as suggestions from the user
+        # database if one has typed these emoji before. But only the
+        # emoji came from the database, not the prefix “_”, because it
+        # is one of the prefixes stripped from tokens.  Trying to
+        # delete the complete candidate from the user database won’t
+        # achieve anything, only the stripped token is in the
+        # database.
+        stripped_phrase = itb_util.lstrip_token(phrase)
+        if stripped_phrase:
+            self.db.remove_phrase(phrase=stripped_phrase, commit=True)
+        # Try to remove the whole candidate as well from the database.
+        # Probably this won’t do anything, just to make sure that it
+        # is really removed even if the prefix also ended up in the
+        # database for whatever reason (It could be because the list
+        # of prefixes to strip from tokens has changed compared to a
+        # an older release of ibus-typing-booster).
         self.db.remove_phrase(phrase=phrase, commit=True)
         return True
 
