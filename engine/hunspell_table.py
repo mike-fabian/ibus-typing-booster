@@ -2473,44 +2473,6 @@ class TypingBoosterEngine(IBus.Engine):
             self._update_lookup_table_and_aux()
             return res
 
-        if key.val == IBus.KEY_BackSpace and key.control:
-            if self.is_empty():
-                return self._return_false(key.val, key.code, key.state)
-            if self._typed_string_cursor > 0:
-                self.is_lookup_table_enabled_by_tab = False
-            self._remove_string_before_cursor()
-            self._update_ui()
-            return True
-
-        if key.val == IBus.KEY_BackSpace:
-            if self.is_empty():
-                return self._return_false(key.val, key.code, key.state)
-            if self._typed_string_cursor > 0:
-                self.is_lookup_table_enabled_by_tab = False
-            self._remove_character_before_cursor()
-            self._update_ui()
-            return True
-
-        if key.val == IBus.KEY_Delete and key.control:
-            if self.is_empty():
-                return self._return_false(key.val, key.code, key.state)
-            if (self._typed_string_cursor
-                < len(self._typed_string)):
-                self.is_lookup_table_enabled_by_tab = False
-            self._remove_string_after_cursor()
-            self._update_ui()
-            return True
-
-        if key.val == IBus.KEY_Delete:
-            if self.is_empty():
-                return self._return_false(key.val, key.code, key.state)
-            if (self._typed_string_cursor
-                < len(self._typed_string)):
-                self.is_lookup_table_enabled_by_tab = False
-            self._remove_character_after_cursor()
-            self._update_ui()
-            return True
-
         # Select a candidate to commit or remove:
         if (self.get_lookup_table().get_number_of_candidates()
             and not key.mod1 and not key.mod5):
@@ -2577,8 +2539,8 @@ class TypingBoosterEngine(IBus.Engine):
         if (key.msymbol not in ('G- ',)
             and (key.val in (IBus.KEY_space, IBus.KEY_Tab,
                              IBus.KEY_Return, IBus.KEY_KP_Enter,
-                             IBus.KEY_Right, IBus.KEY_KP_Right,
-                             IBus.KEY_Left, IBus.KEY_KP_Left,
+                             IBus.KEY_Right, IBus.KEY_KP_Right, IBus.KEY_Delete,
+                             IBus.KEY_Left, IBus.KEY_KP_Left, IBus.KEY_BackSpace,
                              IBus.KEY_Down, IBus.KEY_KP_Down,
                              IBus.KEY_Up, IBus.KEY_KP_Up,
                              IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down,
@@ -2641,6 +2603,24 @@ class TypingBoosterEngine(IBus.Engine):
                 self._update_preedit()
                 self._update_lookup_table_and_aux()
                 return True
+            if (key.val in (IBus.KEY_BackSpace,)
+                and self._typed_string_cursor > 0):
+                self.is_lookup_table_enabled_by_tab = False
+                if key.control:
+                    self._remove_string_before_cursor()
+                else:
+                    self._remove_character_before_cursor()
+                self._update_ui()
+                return  True
+            if (key.val in (IBus.KEY_Delete,)
+                and self._typed_string_cursor < len(self._typed_string)):
+                self.is_lookup_table_enabled_by_tab = False
+                if key.control:
+                    self._remove_string_after_cursor()
+                else:
+                    self._remove_character_after_cursor()
+                self._update_ui()
+                return True
             # This key does not only a cursor movement in the preëdit,
             # it really triggers a commit.
             if DEBUG_LEVEL > 1:
@@ -2679,7 +2659,7 @@ class TypingBoosterEngine(IBus.Engine):
                         + 'commit string unexpectedly empty.\n')
                 return self._return_false(key.val, key.code, key.state)
             self._commit_string(commit_string, input_phrase=input_phrase)
-            if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left):
+            if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left, IBus.KEY_BackSpace):
                 # After committing, the cursor is at the right side of
                 # the committed string. When the string has been
                 # committed because of arrow-left or
@@ -2693,11 +2673,16 @@ class TypingBoosterEngine(IBus.Engine):
                 # CONTROL_MASK:
                 for dummy_char in commit_string:
                     self.forward_key_event(
-                        key.val, key.code,
-                        key.state & ~IBus.ModifierType.CONTROL_MASK)
+                        IBus.KEY_Left,
+                        # why is the keycode for IBus.KEY_Left 105?
+                        105,
+                        0)
+                # The sleep is needed because this is racy, without the
+                # sleep it works unreliably.
+                time.sleep(0.1)
                 if self._reopen_preedit_or_return_false(key):
                     return True
-            if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right):
+            if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right, IBus.KEY_Delete):
                 if self._reopen_preedit_or_return_false(key):
                     return True
             # Forward the key event which triggered the commit here
