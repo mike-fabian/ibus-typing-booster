@@ -22,11 +22,14 @@ Utility functions used in ibus-typing-booster
 '''
 
 import sys
+import os
 import re
 import string
 import unicodedata
 
 from gi.repository import GLib
+
+NORMALIZATION_FORM_INTERNAL = 'NFD'
 
 # maximum possible value for the INTEGER datatype in SQLite3
 SQLITE_MAXINT = 2**63-1
@@ -338,6 +341,148 @@ def variant_to_value(variant):
     else:
         print('error: unknown variant type: %s' %type_string)
     return variant
+
+def get_hunspell_dictionary_wordlist(language):
+    '''
+    Open the hunspell dictionary file for a language and return
+    a list of words found in that file.
+
+    :param language: The language of the dictionary to open
+    :type language: String
+    :rtype: List of strings
+    '''
+    dirnames = [
+        '/usr/share/hunspell',
+        '/usr/share/myspell',
+        '/usr/share/myspell/dicts',
+    ]
+    dic_path = ''
+    aff_path = ''
+    for dirname in dirnames:
+        if os.path.isfile(os.path.join(dirname, language + '.dic')):
+            dic_path = os.path.join(dirname, language + '.dic')
+            aff_path = os.path.join(dirname, language + '.aff')
+            break
+    if not dic_path:
+        sys.stderr.write(
+            'get_hunspell_dictionary_wordlist(): '
+            + 'No file %s.dic found in %s\n'
+            %(language, dirnames))
+        return []
+    sys.stderr.write(
+        'get_hunspell_dictionary_wordlist(): '
+        + '%s file found.\n'
+        %dic_path)
+    dictionary_encoding = 'UTF-8'
+    if os.path.isfile(aff_path):
+        aff_buffer = ''
+        try:
+            aff_buffer = open(
+                aff_path,
+                mode='r',
+                encoding='ISO-8859-1',
+                errors='ignore').read().replace('\r\n', '\n')
+        except (FileNotFoundError, PermissionError):
+            traceback.print_exc()
+        except:
+            sys.stderr.write(
+                'get_hunspell_dictionary_wordlist() '
+                + 'Unexpected error loading .aff File: %s\n'
+                %aff_path)
+            traceback.print_exc()
+        if aff_buffer:
+            encoding_pattern = re.compile(
+                r'^[\s]*SET[\s]+(?P<encoding>[-a-zA-Z0-9_]+)[\s]*$',
+                re.MULTILINE)
+            match = encoding_pattern.search(aff_buffer)
+            if match:
+                dictionary_encoding = match.group('encoding')
+                sys.stderr.write(
+                    'get_hunspell_dictionary_wordlist(): '
+                    + 'dictionary encoding=%s found in %s\n'
+                    %(dictionary_encoding, aff_path))
+            else:
+                sys.stderr.write(
+                    'get_hunspell_dictionary_wordlist(): '
+                    + 'No encoding=%s found in %s\n'
+                    %aff_path)
+    else:
+        sys.stderr.write(
+            'get_hunspell_dictionary_wordlist(): '
+            + '%s file missing. Trying to open %s using %s encoding\n'
+            %(aff_path, dic_path, dictionary_encoding))
+    dic_buffer = ''
+    try:
+        dic_buffer = open(
+            dic_path, encoding=dictionary_encoding).readlines()
+    except (UnicodeDecodeError, FileNotFoundError, PermissionError):
+        sys.stderr.write(
+            'get_hunspell_dictionary_wordlist(): '
+            + 'loading %s as %s encoding failed, '
+            %(dic_path, dictionary_encoding)
+            + 'fall back to ISO-8859-1.\n')
+        dictionary_encoding = 'ISO-8859-1'
+        try:
+            dic_buffer = open(
+                dic_path,
+                encoding=dictionary_encoding).readlines()
+        except (UnicodeDecodeError, FileNotFoundError, PermissionError):
+            sys.stderr.write(
+                'get_hunspell_dictionary_wordlist(): '
+                + 'loading %s as %s encoding failed, '
+                %(dic_path, dictionary_encoding)
+                + 'giving up.\n')
+            traceback.print_exc()
+            return []
+        except:
+            sys.stderr.write(
+                'get_hunspell_dictionary_wordlist(): '
+                + 'Unexpected error loading .dic File: %s\n' %dic_path)
+            traceback.print_exc()
+            return []
+    except:
+        sys.stderr.write(
+            'get_hunspell_dictionary_wordlist(): '
+            + 'Unexpected error loading .dic File: %s\n' %dic_path)
+        traceback.print_exc()
+        return []
+    if not dic_buffer:
+        return []
+    sys.stderr.write(
+        'get_hunspell_dictionary_wordlist(): '
+        + 'Successfully loaded %s using %s encoding.\n'
+        %(dic_path, dictionary_encoding))
+    # http://pwet.fr/man/linux/fichiers_speciaux/hunspell says:
+    #
+    # > A dictionary file (*.dic) contains a list of words, one per
+    # > line. The first line of the dictionaries (except personal
+    # > dictionaries) contains the word count. Each word may
+    # > optionally be followed by a slash ("/") and one or more
+    # > flags, which represents affixes or special attributes.
+    #
+    # Some dictionaries, like fr_FR.dic and pt_PT.dic also contain
+    # some lines where words are followed by a tab and some stuff.
+    # For example, pt_PT.dic contains lines like:
+    #
+    # abaixo	[CAT=adv,SUBCAT=lugar]
+    # abalada/p	[CAT=nc,G=f,N=s]
+    #
+    # and fr_FR.dic contains lines like:
+    #
+    # différemment	8
+    # différence/1	2
+    #
+    # Therefore, remove everthing following a '/' or a tab from a line
+    # to make the memory use of the word list a bit smaller and the
+    # regular expressions we use later to match words in the
+    # dictionary slightly simpler and maybe a tiny bit faster:
+    word_list = [
+        unicodedata.normalize(
+            NORMALIZATION_FORM_INTERNAL,
+            re.sub(r'[/\t].*', '', x.replace('\n', '')))
+        for x in dic_buffer
+    ]
+    return word_list
 
 if __name__ == "__main__":
     import doctest

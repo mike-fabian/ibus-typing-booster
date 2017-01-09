@@ -53,8 +53,6 @@ except (ImportError,):
 # letter of a word until the candidate lookup table pops up.
 MAX_WORDS = 100
 
-NORMALIZATION_FORM_INTERNAL = 'NFD'
-
 class Dictionary:
     '''A class to hold a hunspell dictionary
     '''
@@ -62,7 +60,6 @@ class Dictionary:
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "Dictionary.__init__(name=%s)\n" %name)
-        self.loc = '/usr/share/myspell'
         self.name = name
         self.encoding = 'UTF-8'
         self.words = []
@@ -78,108 +75,8 @@ class Dictionary:
         '''
         if DEBUG_LEVEL > 0:
             sys.stderr.write("load_dictionary() ...\n")
-        dic_path = os.path.join(self.loc, self.name+'.dic')
-        aff_path = os.path.join(self.loc, self.name+'.aff')
-        if not os.path.isfile(dic_path) or not os.path.isfile(aff_path):
-            sys.stderr.write(
-                "load_dictionary %(n)s: %(d)s %(a)s file missing.\n"
-                %{'n': self.name, 'd': dic_path, 'a': aff_path})
-            return
-        aff_buffer = None
-        dic_buffer = None
-        try:
-            aff_buffer = open(
-                aff_path,
-                mode='r',
-                encoding='ISO-8859-1',
-                errors='ignore').read().replace('\r\n', '\n')
-        except (FileNotFoundError, PermissionError):
-            traceback.print_exc()
-        except:
-            sys.stderr.write(
-                'Unexpected error loading .aff File: %s\n' %aff_path)
-            traceback.print_exc()
-        if aff_buffer:
-            encoding_pattern = re.compile(
-                r'^[\s]*SET[\s]+(?P<encoding>[-a-zA-Z0-9_]+)[\s]*$',
-                re.MULTILINE)
-            match = encoding_pattern.search(aff_buffer)
-            if match:
-                self.encoding = match.group('encoding')
-                if DEBUG_LEVEL > 0:
-                    sys.stderr.write(
-                        "load_dictionary(): encoding=%(enc)s found in %(aff)s"
-                        %{'enc': self.encoding, 'aff': aff_path})
-        try:
-            dic_buffer = open(
-                dic_path, encoding=self.encoding).readlines()
-        except (UnicodeDecodeError, FileNotFoundError, PermissionError):
-            if DEBUG_LEVEL > 0:
-                sys.stderr.write(
-                    "load_dictionary(): "
-                    + "loading %(dic)s as %(enc)s encoding failed, "
-                    %{'dic': dic_path, 'enc': self.encoding}
-                    + "fall back to ISO-8859-1.\n")
-            self.encoding = 'ISO-8859-1'
-            try:
-                dic_buffer = open(
-                    dic_path,
-                    encoding=self.encoding).readlines()
-            except (UnicodeDecodeError, FileNotFoundError, PermissionError):
-                sys.stderr.write(
-                    "load_dictionary(): "
-                    + "loading %(dic)s as %(enc)s encoding failed, "
-                    %{'dic': dic_path, 'enc': self.encoding}
-                    + "giving up.\n")
-                dic_buffer = None
-                traceback.print_exc()
-                return
-            except:
-                sys.stderr.write(
-                    'Unexpected error loading .dic File: %s\n' %dic_path)
-                traceback.print_exc()
-                return
-        except:
-            sys.stderr.write(
-                'Unexpected error loading .dic File: %s\n' %dic_path)
-            traceback.print_exc()
-            return
-        if dic_buffer:
-            if DEBUG_LEVEL > 0:
-                sys.stderr.write(
-                    "load_dictionary(): "
-                    + "Successfully loaded %(dic)s using %(enc)s encoding.\n"
-                    %{'dic': dic_path, 'enc': self.encoding})
-            # http://pwet.fr/man/linux/fichiers_speciaux/hunspell says:
-            #
-            # > A dictionary file (*.dic) contains a list of words, one per
-            # > line. The first line of the dictionaries (except personal
-            # > dictionaries) contains the word count. Each word may
-            # > optionally be followed by a slash ("/") and one or more
-            # > flags, which represents affixes or special attributes.
-            #
-            # Some dictionaries, like fr_FR.dic and pt_PT.dic also contain
-            # some lines where words are followed by a tab and some stuff.
-            # For example, pt_PT.dic contains lines like:
-            #
-            # abaixo	[CAT=adv,SUBCAT=lugar]
-            # abalada/p	[CAT=nc,G=f,N=s]
-            #
-            # and fr_FR.dic contains lines like:
-            #
-            # différemment	8
-            # différence/1	2
-            #
-            # Therefore, remove everthing following a '/' or a tab
-            # from a line to make the buffer a bit smaller and the regular
-            # expressions we use later to match words in the
-            # dictionary slightly simpler and maybe a tiny bit faster:
-            self.words = [
-                unicodedata.normalize(
-                    NORMALIZATION_FORM_INTERNAL,
-                    re.sub(r'[/\t].*', '', x.replace('\n', '')))
-                for x in dic_buffer
-            ]
+        self.words = itb_util.get_hunspell_dictionary_wordlist(self.name)
+        if self.words:
             # List of languages where accent insensitive matching makes sense:
             accent_languages = (
                 'af', 'ast', 'az', 'be', 'bg', 'br', 'bs', 'ca', 'cs', 'csb',
@@ -264,7 +161,7 @@ class Hunspell:
 
         Examples:
 
-        (Attention, the return values are in NORMALIZATION_FORM_INTERNAL ('NFD'))
+        (Attention, the return values are in internal normalization form ('NFD'))
 
         >>> h = Hunspell(['de_DE', 'cs_CZ'])
         >>> h.suggest('Geschwindigkeitsubertre')[0]
@@ -313,7 +210,7 @@ class Hunspell:
             return []
         # make sure input_phrase is in the internal normalization form (NFD):
         input_phrase = unicodedata.normalize(
-            NORMALIZATION_FORM_INTERNAL, input_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
         # But enchant and pyhunspell want NFC as input, make a copy in NFC:
         input_phrase_nfc = unicodedata.normalize('NFC', input_phrase)
         # '/' is already removed from the buffer, we do not need to
@@ -358,7 +255,7 @@ class Hunspell:
                             suggested_words[input_phrase] = 0
                         extra_suggestions = [
                             unicodedata.normalize(
-                                NORMALIZATION_FORM_INTERNAL, x)
+                                itb_util.NORMALIZATION_FORM_INTERNAL, x)
                             for x in
                             dictionary.enchant_dict.suggest(input_phrase_nfc)
                         ]
@@ -384,7 +281,7 @@ class Hunspell:
                             suggested_words[input_phrase] = 0
                         extra_suggestions = [
                             unicodedata.normalize(
-                                NORMALIZATION_FORM_INTERNAL, x.decode(
+                                itb_util.NORMALIZATION_FORM_INTERNAL, x.decode(
                                     dictionary.encoding))
                             for x in
                             dictionary.pyhunspell_object.suggest(
