@@ -10,8 +10,8 @@ icondir=/usr/share/ibus-typing-booster/icons
 enginedir=/usr/share/ibus/engine
 
 Name: IBus-Typing-Booster
-Description: Table Based Input Method Framework for Intelligent Input Bus for Linux / Unix OS
-Version: 1.5.15
+Description: A context sensitive completion input method to speed up typing
+Version: 1.5.16
 Requires:
 Libs:
 Cflags:

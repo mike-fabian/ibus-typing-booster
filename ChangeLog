@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 10 Jan 2017 Released 1.5.16 version
+* Skip Korean test case also on Arch
+* Remove everything following a tab (including the tab) from hunspell dictionary lines (Resolves: rhbz#1411659)
+* Delete a candidate correctly from the user database even if it starts with a prefix to be stripped from tokens (Resolves: rhbz#1411676)
+* Trigger emoji lookup when the input starts or ends with '_' or ' '
+* Better handling of BackSpace and Delete when reaching the ends of the preëdit (Resolves: rhbz#1411688)
+* Search for hunspell dictionaries in a list of directories (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/6)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 08 Dec 2016 Released 1.5.15 version
 * Default value for self._show_status_info_in_auxiliary_text should be True
 * Don’t use keyword arguments when instantiating IBus.LookupTable()
