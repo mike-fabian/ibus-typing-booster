@@ -23,7 +23,6 @@ This file implements the test cases for the unit tests of ibus-typing-booster
 '''
 
 import sys
-import platform
 import unicodedata
 import unittest
 import subprocess
@@ -35,6 +34,7 @@ from gi.repository import IBus
 sys.path.insert(0, "../engine")
 from hunspell_table import *
 import tabsqlitedb
+import itb_util
 sys.path.pop(0)
 
 class ItbTestCase(unittest.TestCase):
@@ -353,12 +353,17 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'गुरु ')
 
     def test_korean(self):
-        if platform.system() == 'Linux':
-            for distribution in ('openSUSE', 'Arch'):
-                if distribution in str(subprocess.check_output(["lsb_release","-is"])):
-                    # There is no Korean myspell dictionary on these distributions.
-                    # Therefore, this test cannot work and has to be skipped.
-                    return
+        if not itb_util.get_hunspell_dictionary_wordlist('ko_KR'):
+            # No Korean dictionary file could be found, skip this
+            # test.  On some systems, like 'Arch' or 'FreeBSD', there
+            # is no ko_KR.dic hunspell dictionary available, therefore
+            # there is no way to run this test on these systems.
+            # On systems where a Korean hunspell dictionary is available,
+            # make sure it is installed to make this test case run.
+            # In the ibus-typing-booster.spec file for Fedora,
+            # I have a “BuildRequires:  hunspell-ko” for that purpose
+            # to make sure this test runs when building the rpm package.
+            return
         self.engine.set_current_imes(['ko-romaja'])
         self.engine.set_dictionary_names(['ko_KR'])
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
