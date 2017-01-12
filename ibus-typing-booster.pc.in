@@ -11,7 +11,7 @@ enginedir=/usr/share/ibus/engine
 
 Name: IBus-Typing-Booster
 Description: A context sensitive completion input method to speed up typing
-Version: 1.5.16
+Version: 1.5.17
 Requires:
 Libs:
 Cflags:

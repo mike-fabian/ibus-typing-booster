@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 13 Jan 2017 Released 1.5.17 version
+* Update py-compile to current upstream version
+* Also use ＿ U+FF3F FULLWIDTH LOW LINE as a separator for emoji keywords
+* Unbreak sqlite on Python 3.6 (thanks to Jan Alexander Steffens)
+* Return immediately if _update_candidates() is called with empty input (Resolves: rhbz#1413082)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 10 Jan 2017 Released 1.5.16 version
 * Skip Korean test case also on Arch
 * Remove everything following a tab (including the tab) from hunspell dictionary lines (Resolves: rhbz#1411659)

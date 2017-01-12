@@ -16,6 +16,25 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.17" date="2017-01-13" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update py-compile to current upstream version
+          </li>
+          <li>
+            Also use ＿ U+FF3F FULLWIDTH LOW LINE as a separator for
+            emoji keywords
+          </li>
+          <li>
+            Unbreak sqlite on Python 3.6 (thanks to Jan Alexander Steffens)
+          </li>
+          <li>
+            Return immediately if _update_candidates() is called with
+            empty input (Resolves: rhbz#1413082)
+          </li>
+        </ul>
+      </description>
     <release version="1.5.16" date="2017-01-10" urgency="medium">
       <description>
         <ul>
