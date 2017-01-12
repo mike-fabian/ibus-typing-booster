@@ -205,16 +205,17 @@ class tabsqlitedb:
                 "Connect to the database %(name)s.\n"
                 %{'name': self.user_db_file})
             self.db = sqlite3.connect(self.user_db_file)
-            self.db.execute('PRAGMA encoding = "UTF-8";')
-            self.db.execute('PRAGMA case_sensitive_like = true;')
-            self.db.execute('PRAGMA page_size = 4096; ')
-            self.db.execute('PRAGMA cache_size = 20000;')
-            self.db.execute('PRAGMA temp_store = MEMORY;')
-            self.db.execute('PRAGMA journal_mode = WAL;')
-            self.db.execute('PRAGMA journal_size_limit = 1000000;')
-            self.db.execute('PRAGMA synchronous = NORMAL;')
-            self.db.execute('ATTACH DATABASE "%s" AS user_db;'
-                            % self.user_db_file)
+            self.db.executescript('''
+                PRAGMA encoding = "UTF-8";
+                PRAGMA case_sensitive_like = true;
+                PRAGMA page_size = 4096;
+                PRAGMA cache_size = 20000;
+                PRAGMA temp_store = MEMORY;
+                PRAGMA journal_mode = WAL;
+                PRAGMA journal_size_limit = 1000000;
+                PRAGMA synchronous = NORMAL;
+                ATTACH DATABASE "%s" AS user_db;
+            ''' % self.user_db_file)
         except:
             sys.stderr.write(
                 "Could not open the database %(name)s.\n"
@@ -236,16 +237,17 @@ class tabsqlitedb:
                 %{'name': self.user_db_file})
             self.init_user_db()
             self.db = sqlite3.connect(self.user_db_file)
-            self.db.execute('PRAGMA encoding = "UTF-8";')
-            self.db.execute('PRAGMA case_sensitive_like = true;')
-            self.db.execute('PRAGMA page_size = 4096; ')
-            self.db.execute('PRAGMA cache_size = 20000;')
-            self.db.execute('PRAGMA temp_store = MEMORY;')
-            self.db.execute('PRAGMA journal_mode = WAL;')
-            self.db.execute('PRAGMA journal_size_limit = 1000000;')
-            self.db.execute('PRAGMA synchronous = NORMAL;')
-            self.db.execute('ATTACH DATABASE "%s" AS user_db;'
-                            % self.user_db_file)
+            self.db.executescript('''
+                PRAGMA encoding = "UTF-8";
+                PRAGMA case_sensitive_like = true;
+                PRAGMA page_size = 4096;
+                PRAGMA cache_size = 20000;
+                PRAGMA temp_store = MEMORY;
+                PRAGMA journal_mode = WAL;
+                PRAGMA journal_size_limit = 1000000;
+                PRAGMA synchronous = NORMAL;
+                ATTACH DATABASE "%s" AS user_db;
+            ''' % self.user_db_file)
         self.create_tables()
         if self.old_phrases:
             sqlargs = []
@@ -657,18 +659,20 @@ class tabsqlitedb:
             return
         if not path.exists(self.user_db_file):
             db = sqlite3.connect(self.user_db_file)
-            db.execute('PRAGMA encoding = "UTF-8";')
-            db.execute('PRAGMA case_sensitive_like = true;')
-            db.execute('PRAGMA page_size = 4096;')
             # a database containing the complete German Hunspell
             # dictionary has less then 6000 pages. 20000 pages
             # should be enough to cache the complete database
             # in most cases.
-            db.execute('PRAGMA cache_size = 20000;')
-            db.execute('PRAGMA temp_store = MEMORY; ')
-            db.execute('PRAGMA journal_mode = WAL;')
-            db.execute('PRAGMA journal_size_limit = 1000000;')
-            db.execute('PRAGMA synchronous = NORMAL;')
+            self.db.executescript('''
+                PRAGMA encoding = "UTF-8";
+                PRAGMA case_sensitive_like = true;
+                PRAGMA page_size = 4096;
+                PRAGMA cache_size = 20000;
+                PRAGMA temp_store = MEMORY;
+                PRAGMA journal_mode = WAL;
+                PRAGMA journal_size_limit = 1000000;
+                PRAGMA synchronous = NORMAL;
+            ''')
             db.commit()
 
     def get_database_desc(self, db_file):
