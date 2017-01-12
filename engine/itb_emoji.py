@@ -639,6 +639,9 @@ class EmojiMatcher():
         >>> mq.candidates('😺', match_limit = 3)
         [('😺', "smiling cat face with open mouth ['animal', 'cat', 'face', 'happy', 'mouth', 'open', 'people', 'smile', 'so']", 9), ('😸', "grinning cat face with smiling eyes ['animal', 'cat', 'face', 'happy', 'people', 'smile', 'so']", 7), ('😃', "smiling face with open mouth ['face', 'happy', 'mouth', 'open', 'people', 'smile', 'so']", 7)]
 
+        >>> mq.candidates('ねこ＿')[0][:2]
+        ('🐈', 'ねこ')
+
         >>> mq.candidates('ant')[0][:2]
         ('🐜', 'ant')
 
@@ -893,9 +896,13 @@ class EmojiMatcher():
         >>> mq.candidates('1b')
         []
         '''
-        # Replace any sequence of white space characters and '_' in
-        # the query string with a single ' ':
-        query_string = re.sub('[_\s]+', ' ', query_string)
+        # Replace any sequence of white space characters and '_'
+        # and '＿' in the query string with a single ' '.  '＿'
+        # (U+FF3F FULLWIDTH LOW LINE) is included here because when
+        # Japanese transliteration is used, something like “neko_”
+        # transliterates to “ねこ＿” and that should of course match
+        # the emoji for “ねこ”　(= “cat”):
+        query_string = re.sub('[＿_\s]+', ' ', query_string)
         if ((query_string, match_limit) in self._candidate_cache
             and not debug):
             return self._candidate_cache[(query_string, match_limit)]
