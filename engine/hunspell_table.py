@@ -645,6 +645,13 @@ class TypingBoosterEngine(IBus.Engine):
                              %self._typed_string)
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
+        if self.is_empty():
+            # Nothing to do when there is no input available.
+            # One can accidentally end up here even though the
+            # input is empty because this is called by GLib.idle_add().
+            # Better make sure that calling this function with
+            # empty input does not pointlessly try to find candidates.
+            return
         self._candidates = []
         phrase_frequencies = {}
         for ime in self._current_imes:
