@@ -663,7 +663,7 @@ class tabsqlitedb:
             # dictionary has less then 6000 pages. 20000 pages
             # should be enough to cache the complete database
             # in most cases.
-            self.db.executescript('''
+            db.executescript('''
                 PRAGMA encoding = "UTF-8";
                 PRAGMA case_sensitive_like = true;
                 PRAGMA page_size = 4096;
