@@ -344,12 +344,15 @@ def variant_to_value(variant):
 
 def get_hunspell_dictionary_wordlist(language):
     '''
-    Open the hunspell dictionary file for a language and return
-    a list of words found in that file.
+    Open the hunspell dictionary file for a language
 
     :param language: The language of the dictionary to open
     :type language: String
-    :rtype: List of strings
+    :rtype: tuple of the form (dic_path, wordlist) where
+            dic_path is the full path of the dictionary file found
+            and wordlist is a list of words found in that file.
+            If no dictionary can be found for the requested language,
+            the return value is ('', []).
     '''
     dirnames = [
         '/usr/share/hunspell',
@@ -368,7 +371,7 @@ def get_hunspell_dictionary_wordlist(language):
             'get_hunspell_dictionary_wordlist(): '
             + 'No file %s.dic found in %s\n'
             %(language, dirnames))
-        return []
+        return ('', [])
     sys.stderr.write(
         'get_hunspell_dictionary_wordlist(): '
         + '%s file found.\n'
@@ -433,21 +436,21 @@ def get_hunspell_dictionary_wordlist(language):
                 %(dic_path, dictionary_encoding)
                 + 'giving up.\n')
             traceback.print_exc()
-            return []
+            return ('', [])
         except:
             sys.stderr.write(
                 'get_hunspell_dictionary_wordlist(): '
                 + 'Unexpected error loading .dic File: %s\n' %dic_path)
             traceback.print_exc()
-            return []
+            return ('', [])
     except:
         sys.stderr.write(
             'get_hunspell_dictionary_wordlist(): '
             + 'Unexpected error loading .dic File: %s\n' %dic_path)
         traceback.print_exc()
-        return []
+        return ('', [])
     if not dic_buffer:
-        return []
+        return ('', [])
     sys.stderr.write(
         'get_hunspell_dictionary_wordlist(): '
         + 'Successfully loaded %s using %s encoding.\n'
@@ -482,7 +485,7 @@ def get_hunspell_dictionary_wordlist(language):
             re.sub(r'[/\t].*', '', x.replace('\n', '')))
         for x in dic_buffer
     ]
-    return word_list
+    return (dic_path, word_list)
 
 if __name__ == "__main__":
     import doctest

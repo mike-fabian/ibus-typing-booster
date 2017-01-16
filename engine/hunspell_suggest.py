@@ -75,7 +75,8 @@ class Dictionary:
         '''
         if DEBUG_LEVEL > 0:
             sys.stderr.write("load_dictionary() ...\n")
-        self.words = itb_util.get_hunspell_dictionary_wordlist(self.name)
+        (dic_path, self.words) = itb_util.get_hunspell_dictionary_wordlist(
+            self.name)
         if self.words:
             # List of languages where accent insensitive matching makes sense:
             accent_languages = (
@@ -96,7 +97,8 @@ class Dictionary:
                 ]
             if IMPORT_ENCHANT_SUCCESSFUL:
                 self.enchant_dict = enchant.Dict(self.name)
-            elif IMPORT_HUNSPELL_SUCCESSFUL:
+            elif IMPORT_HUNSPELL_SUCCESSFUL and dic_path:
+                aff_path = dic_path.replace('.dic', '.aff')
                 self.pyhunspell_object = hunspell.HunSpell(dic_path, aff_path)
 
 class Hunspell:
