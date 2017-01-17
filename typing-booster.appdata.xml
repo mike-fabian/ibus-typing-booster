@@ -16,6 +16,22 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.18" date="2017-01-17" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Fix typo in the “Unbreak sqlite on Python 3.6” patch
+          </li>
+          <li>
+            Fix the fallback to use pyhunspell-python3 when
+            python3-enchant is not available
+          </li>
+          <li>
+            Remove useless ibus-typing-booster.pc
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.17" date="2017-01-13" urgency="medium">
       <description>
         <ul>
@@ -35,6 +51,7 @@
           </li>
         </ul>
       </description>
+    </release>
     <release version="1.5.16" date="2017-01-10" urgency="medium">
       <description>
         <ul>

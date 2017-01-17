@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 17 Jan 2017 Released 1.5.18 version
+* Fix typo in the “Unbreak sqlite on Python 3.6” patch
+* Fix the fallback to use pyhunspell-python3 when python3-enchant is not available
+* Remove useless ibus-typing-booster.pc
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 13 Jan 2017 Released 1.5.17 version
 * Update py-compile to current upstream version
 * Also use ＿ U+FF3F FULLWIDTH LOW LINE as a separator for emoji keywords
