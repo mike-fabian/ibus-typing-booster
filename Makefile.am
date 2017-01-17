@@ -31,12 +31,6 @@ SUBDIRS = \
 
 ACLOCAL_AMFLAGS = -I m4
 
-pkgconfig_DATA = \
-	ibus-typing-booster.pc \
-	$(NULL)
-
-pkgconfigdir = $(libdir)/pkgconfig
-
 # To register as an AppStream component to be visible in the software center
 # (See http://www.freedesktop.org/software/appstream/docs/ for more details):
 appdata_DATA = \
