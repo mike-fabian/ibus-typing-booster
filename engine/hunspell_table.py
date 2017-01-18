@@ -121,10 +121,25 @@ class KeyEvent:
         self.name = IBus.keyval_name(self.val)
         self.unicode = IBus.keyval_to_unicode(self.val)
         self.msymbol = self.unicode
+        self.shift = self.state & IBus.ModifierType.SHIFT_MASK != 0
+        self.lock = self.state & IBus.ModifierType.LOCK_MASK != 0
         self.control = self.state & IBus.ModifierType.CONTROL_MASK != 0
         self.mod1 = self.state & IBus.ModifierType.MOD1_MASK != 0
+        self.mod2 = self.state & IBus.ModifierType.MOD2_MASK != 0
+        self.mod3 = self.state & IBus.ModifierType.MOD3_MASK != 0
+        self.mod4 = self.state & IBus.ModifierType.MOD4_MASK != 0
         self.mod5 = self.state & IBus.ModifierType.MOD5_MASK != 0
+        self.button1 = self.state & IBus.ModifierType.BUTTON1_MASK != 0
+        self.button2 = self.state & IBus.ModifierType.BUTTON2_MASK != 0
+        self.button3 = self.state & IBus.ModifierType.BUTTON3_MASK != 0
+        self.button4 = self.state & IBus.ModifierType.BUTTON4_MASK != 0
+        self.button5 = self.state & IBus.ModifierType.BUTTON5_MASK != 0
+        self.super = self.state & IBus.ModifierType.SUPER_MASK != 0
+        self.hyper = self.state & IBus.ModifierType.HYPER_MASK != 0
+        self.meta = self.state & IBus.ModifierType.META_MASK != 0
         self.release = self.state & IBus.ModifierType.RELEASE_MASK != 0
+        # MODIFIER_MASK: Modifier mask for the all the masks above
+        self.modifier = self.state & IBus.ModifierType.MODIFIER_MASK != 0
         if itb_util.is_ascii(self.msymbol):
             if self.control:
                 self.msymbol = 'C-' + self.msymbol
@@ -1742,6 +1757,41 @@ class TypingBoosterEngine(IBus.Engine):
             # Before the first commit or cursor movement, the
             # surrounding text is probably from the previously
             # focused window (bug!), don’t use it.
+            return self._return_false(key.val, key.code, key.state)
+        if (key.shift
+            or key.control
+            or key.mod1
+            or key.mod2
+            or key.mod3
+            or key.mod4
+            or key.mod5
+            or key.button1
+            or key.button2
+            or key.button3
+            or key.button4
+            or key.button5
+            or key.super
+            or key.hyper
+            or key.meta):
+            # “Control+Left” usually positions the cursor one word to
+            # the left in most programs.  I.e. after Control+Left the
+            # cursor usually ends up at the left side of a word.
+            # Therefore, one cannot use the same code for reopening
+            # the preëdit as for just “Left”. There are similar
+            # problems with “Alt+Left”, “Shift+Left”.
+            #
+            # “Left”, “Right”, “Backspace”, “Delete” also have similar
+            # problems together with “Control”, “Alt”, or “Shift” in
+            # many programs.  For example “Shift+Left” marks (selects)
+            # a region in gedit.
+            #
+            # Maybe better don’t try to reopen the preëdit at all if
+            # any modifier key is on.
+            #
+            # *Except* for CapsLock. CapsLock causes no problems at
+            # all for reopening the preëdit, so we don’t want to check
+            # for key.modifier which would include key.lock but check
+            # for the modifiers which cause problems individually.
             return self._return_false(key.val, key.code, key.state)
         if key.val in (IBus.KEY_BackSpace, IBus.KEY_Left, IBus.KEY_KP_Left):
             pattern = re.compile(
