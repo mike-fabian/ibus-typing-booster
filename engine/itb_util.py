@@ -358,6 +358,9 @@ def get_hunspell_dictionary_wordlist(language):
         '/usr/share/hunspell',
         '/usr/share/myspell',
         '/usr/share/myspell/dicts',
+        '/usr/local/share/hunspell', # On FreeBSD the dictionaries are here
+        '/usr/local/share/myspell',
+        '/usr/local/share/myspell/dicts',
     ]
     dic_path = ''
     aff_path = ''
