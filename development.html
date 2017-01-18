@@ -3,56 +3,120 @@ layout: default
 ---
 <div>
 
-  <h2>Development</h2>
+  <h1>Development</h1>
 
   <p>Ibus-typing-booser is open source and licensed under the GPL version 3.</p>
 
-  <h3>Browse git repository</h3>
-
-  <p>You can browse the source code
-  at <a href='https://github.com/mike-fabian/ibus-typing-booster'>https://github.com/mike-fabian/ibus-typing-booster</a>.</p>
-
-  <h3>Anonymous git clone</h3>
-
-  <pre><code>git clone git://github.com/mike-fabian/ibus-typing-booster.git</code></pre>
-
-  <h3>Authorized git clone</h3>
-
-  <pre><code>git clone git@github.com:mike-fabian/ibus-typing-booster.git</code></pre>
-
-  <h3>Building and installing using the source from git checkout</h3>
-
-  <pre><code>cd ibus-typing-booster
-./autogen.sh --prefix=/usr
-make
-make install</code></pre>
-
-  <h3>Release tarballs</h3>
-
-  <p>Release tarballs are available
-  at <a href='https://github.com/mike-fabian/ibus-typing-booster/releases'>https://github.com/mike-fabian/ibus-typing-booster/releases</a>.</p>
-
-  <h3>Building and installing using the source from a <a href="https://github.com/mike-fabian/ibus-typing-booster/releases">release tarball</a></h3>
-
-  <pre><code>tar xvf ibus-typing-booster-1.4.3.tar.gz
-cd ibus-typing-booster-1.4.3
-./configure --prefix=/usr
-make
-make install</code></pre>
-
-  <h3>Required packages</h3>
-
-  <p>To build ibus-typing-booster, you will need at least: autoconf,
-  automake, python >= 3.3, ibus >= 1.5.3</p>
-
-  <h3>Reporting bugs</h3>
+  <h2>Reporting bugs</h2>
 
   <p>You can report bugs and suggest improvements in the github issue
     tracker: <a href="https://github.com/mike-fabian/ibus-typing-booster/issues">https://github.com/mike-fabian/ibus-typing-booster/issues</a>
   </p>
-  
-  <h3>Mailing list</h3>
+
+  <h2>Mailing list</h2>
 
   <p><a href='https://lists.fedorahosted.org/admin/lists/ibus-typing-booster.lists.fedorahosted.org/'>https://lists.fedorahosted.org/admin/lists/ibus-typing-booster.lists.fedorahosted.org/</a></p>
+
+  <h2>Browse git repository</h2>
+
+  <p>You can browse the source code
+  at <a href='https://github.com/mike-fabian/ibus-typing-booster'>https://github.com/mike-fabian/ibus-typing-booster</a>.</p>
+
+  <h2>Anonymous git clone</h2>
+
+  <pre><code>git clone git://github.com/mike-fabian/ibus-typing-booster.git</code></pre>
+
+  <h2>Authorized git clone</h2>
+
+  <pre><code>git clone git@github.com:mike-fabian/ibus-typing-booster.git</code></pre>
+
+  <h2>Release tarballs</h2>
+
+  <p>Release tarballs are available
+  at <a href='https://github.com/mike-fabian/ibus-typing-booster/releases'>https://github.com/mike-fabian/ibus-typing-booster/releases</a>.</p>
+
+  <h2>Building and installing from source</h2>
+
+  <h3>Required packages for building</h3>
+
+  <p>To build ibus-typing-booster, you will need at least:</p>
+
+  <ul>
+    <li>
+      <b>Fedora</b>: autoconf, automake, python3-devel >= 3.3,
+      ibus-devel >= 1.5.3
+    </li>
+    <li>
+      <b>openSUSE</b>: autoconf, automake, python3-devel >= 3.3,
+      ibus-devel >= 1.5.3
+    </li>
+    <li>
+      <b>Ubuntu 16.04</b>: autoconf, automake, python3.5, ibus >=
+      1.5.3, libibus-1.0-dev >= 1.5.3
+    </li>
+  </ul>
+
+  <p>If you also want to run the test-suite with “make check”, you
+  also need the following packages:</p>
+
+  <ul>
+    <li>
+      <b>Fedora</b>: m17n-lib, m17n-db-extras, python3-enchant or
+      pyhunspell-python3, hunspell-cs, hunspell-de, hunspell-en,
+      hunspell-es, hunspell-it, hunspell-ko
+    </li>
+    <li>
+      <b>openSUSE Leap 42.1 and newer</b>: m17n-lib, m17n-db,
+      python3-pyenchant, myspell-cs_CZ, myspell-de, myspell-de_DE,
+      myspell-en, myspell-en_US, myspell-es, myspell-es_ES,
+      myspell-it_IT, python3-gobject, dbus-1-x11
+    </li>
+    <li>
+      <b>Ubuntu 16.04</b>: libm17n-0, m17n-db, python3-enchant,
+      hunspell-de-de, hunspell-cs, hunspell-es, hunspell-it,
+      hunspell-ko
+    </li>
+  </ul>
+
+  <h3>Building and installing using the source</h3>
+
+  <p>When using a git checkout, go to the directory of the checkout and
+  use autogen.sh:</p>
+
+  <pre><code>cd ibus-typing-booster
+./autogen.sh</code></pre>
+
+  <p>When using the source from
+  a <a href="https://github.com/mike-fabian/ibus-typing-booster/releases">release
+  tarball</a>, unpack the tarball and go into the source directory:</p>
+
+  <pre><code>tar xvf ibus-typing-booster-1.5.18.tar.gz
+cd ibus-typing-booster-1.5.18</code></pre>
+
+  <p>Now continue like this:</p>
+
+  <p><b>Fedora</b>:</p>
+
+  <pre><code>
+./configure --prefix=/usr --libexecdir=/usr/libexec/
+make
+make check # optional
+make install</code></pre>
+
+  <p><b>openSUSE Leap 42.1 and newer</b>:</p>
+
+  <pre><code>
+./configure --prefix=/usr --libexecdir=/usr/lib/ibus
+make
+make check # optional
+make install</code></pre>
+
+  <p><b>Ubuntu 16.04</b>:</p>
+
+  <pre><code>
+./configure --prefix=/usr --libexecdir=/usr/lib/ibus
+make
+make check # optional
+make install</code></pre>
 
 </div>
