@@ -2147,7 +2147,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self._config.set_value(
                     self._config_section,
                     'lookuptableorientation',
-                    GLib.Variant.new_int32(page_size))
+                    GLib.Variant.new_int32(orientation))
 
     def get_lookup_table_orientation(self):
         '''Returns the current orientation of the lookup table
