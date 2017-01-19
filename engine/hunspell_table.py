@@ -1683,9 +1683,9 @@ class TypingBoosterEngine(IBus.Engine):
             # ” and the context before is “word ” make the result
             # “word! ”.
             pattern_sentence_end = re.compile(
-                '^['
+                r'^['
                 + re.escape(itb_util.SENTENCE_END_CHARACTERS)
-                + ']+[\s]*$')
+                + r']+[\s]*$')
             if pattern_sentence_end.search(commit_phrase):
                 surrounding_text = self.get_surrounding_text()
                 text = surrounding_text[0].get_text()
@@ -1858,7 +1858,7 @@ class TypingBoosterEngine(IBus.Engine):
         applications.
 
         '''
-        if not (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT):
+        if not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT:
             # If getting the surrounding text is not supported, leave
             # the context as it is, i.e. rely on remembering what was
             # typed last.
@@ -2245,7 +2245,8 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "set_show_status_info_in_auxiliary_text(%s, update_dconf = %s)\n"
+                "set_show_status_info_in_auxiliary_text"
+                + "(%s, update_dconf = %s)\n"
                 %(mode, update_dconf))
         if mode == self._show_status_info_in_auxiliary_text:
             return
@@ -2596,8 +2597,10 @@ class TypingBoosterEngine(IBus.Engine):
         if (key.msymbol not in ('G- ',)
             and (key.val in (IBus.KEY_space, IBus.KEY_Tab,
                              IBus.KEY_Return, IBus.KEY_KP_Enter,
-                             IBus.KEY_Right, IBus.KEY_KP_Right, IBus.KEY_Delete,
-                             IBus.KEY_Left, IBus.KEY_KP_Left, IBus.KEY_BackSpace,
+                             IBus.KEY_Right, IBus.KEY_KP_Right,
+                             IBus.KEY_Delete,
+                             IBus.KEY_Left, IBus.KEY_KP_Left,
+                             IBus.KEY_BackSpace,
                              IBus.KEY_Down, IBus.KEY_KP_Down,
                              IBus.KEY_Up, IBus.KEY_KP_Up,
                              IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down,
@@ -2716,7 +2719,8 @@ class TypingBoosterEngine(IBus.Engine):
                         + 'commit string unexpectedly empty.\n')
                 return self._return_false(key.val, key.code, key.state)
             self._commit_string(commit_string, input_phrase=input_phrase)
-            if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left, IBus.KEY_BackSpace):
+            if (key.val
+                in (IBus.KEY_Left, IBus.KEY_KP_Left, IBus.KEY_BackSpace)):
                 # After committing, the cursor is at the right side of
                 # the committed string. When the string has been
                 # committed because of arrow-left or
