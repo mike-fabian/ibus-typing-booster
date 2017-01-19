@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 19 Jan 2017 Released 1.5.19 version
+* Improve setup layout (thanks to Trinh Anh Ngoc <atw1990@gmail.com>)
+* Add some more directories to search for dictionaries (for FreeBSD)
+* Wrong variable “page_size” was used in set_lookup_table_orientation()
+* Do not try to reopen the preëdit when any modifier except CapsLock is on (Resolves: rhbz#1414642)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 17 Jan 2017 Released 1.5.18 version
 * Fix typo in the “Unbreak sqlite on Python 3.6” patch
 * Fix the fallback to use pyhunspell-python3 when python3-enchant is not available

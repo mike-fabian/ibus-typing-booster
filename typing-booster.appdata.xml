@@ -16,6 +16,25 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.19" date="2017-01-19" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Improve setup layout (thanks to Trinh Anh Ngoc <atw1990@gmail.com>)
+          </li>
+          <li>
+            Add some more directories to search for dictionaries (for FreeBSD)
+          </li>
+          <li>
+            Wrong variable “page_size” was used in set_lookup_table_orientation()
+          </li>
+          <li>
+            Do not try to reopen the preëdit when any modifier except
+            CapsLock is on (Resolves: rhbz#1414642)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.18" date="2017-01-17" urgency="medium">
       <description>
         <ul>
