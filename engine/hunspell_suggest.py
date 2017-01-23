@@ -236,11 +236,6 @@ class Hunspell:
             itb_util.remove_accents(input_phrase))
         # But enchant and pyhunspell want NFC as input, make a copy in NFC:
         input_phrase_nfc = unicodedata.normalize('NFC', input_phrase)
-        # '/' is already removed from the buffer, we do not need to
-        # take care of it in the regexp.
-        patt_start = re.compile(r'^' + re.escape(input_phrase))
-        patt_start_no_accents = re.compile(
-            r'^' + re.escape(input_phrase_no_accents))
 
         suggested_words = {}
         for dictionary in self._dictionaries:
@@ -249,12 +244,12 @@ class Hunspell:
                     suggested_words.update([
                         (x[0], 0)
                         for x in dictionary.word_pairs
-                        if patt_start_no_accents.match(x[1])])
+                        if x[1].startswith(input_phrase_no_accents)])
                 else:
                     suggested_words.update([
                         (x, 0)
                         for x in dictionary.words
-                        if patt_start.match(x)])
+                        if x.startswith(input_phrase)])
                 if dictionary.enchant_dict:
                     if len(input_phrase) >= 4:
                         # Always pass NFC to enchant and convert the
