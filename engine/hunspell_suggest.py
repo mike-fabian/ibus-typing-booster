@@ -64,6 +64,7 @@ class Dictionary:
         self.encoding = 'UTF-8'
         self.words = []
         self.word_pairs = []
+        self.max_word_len = 0 # maximum length of words in this dictionary
         self.enchant_dict = None
         self.pyhunspell_object = None
         self.load_dictionary()
@@ -95,6 +96,13 @@ class Dictionary:
                     (x, itb_util.remove_accents(x))
                     for x in self.words
                 ]
+            for x in self.words:
+                if len(x) > self.max_word_len:
+                    self.max_word_len = len(x)
+            if DEBUG_LEVEL > 1:
+                sys.stderr.write(
+                    'load_dictionary() max_word_len = %s\n'
+                    % self.max_word_len)
             if IMPORT_ENCHANT_SUCCESSFUL:
                 self.enchant_dict = enchant.Dict(self.name)
             elif IMPORT_HUNSPELL_SUCCESSFUL and dic_path:
@@ -200,16 +208,6 @@ class Hunspell:
         '''
         if input_phrase in self._suggest_cache:
             return self._suggest_cache[input_phrase]
-        # If the input phrase is very long, don’t try looking
-        # something up in the hunspell dictionaries. The regexp match
-        # gets very slow if the input phrase is very long. And there
-        # are no very long words in the hunspell dictionaries anyway,
-        # the longest word in the German hunspell dictionary currently
-        # seems to be “Geschwindigkeitsübertretungsverfahren” trying
-        # to match words longer than that just wastes time.
-        if len(input_phrase) > 40:
-            self._suggest_cache[input_phrase] = []
-            return []
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "Hunspell.suggest() input_phrase=%(ip)s\n"
@@ -240,16 +238,20 @@ class Hunspell:
         suggested_words = {}
         for dictionary in self._dictionaries:
             if dictionary.words:
-                if dictionary.word_pairs:
-                    suggested_words.update([
-                        (x[0], 0)
-                        for x in dictionary.word_pairs
-                        if x[1].startswith(input_phrase_no_accents)])
-                else:
-                    suggested_words.update([
-                        (x, 0)
-                        for x in dictionary.words
-                        if x.startswith(input_phrase)])
+                # If the input phrase is longer than than the maximum
+                # word length in a dictionary, don’t try
+                # complete it, it just wastes time then.
+                if len(input_phrase) <= dictionary.max_word_len:
+                    if dictionary.word_pairs:
+                        suggested_words.update([
+                            (x[0], 0)
+                            for x in dictionary.word_pairs
+                            if x[1].startswith(input_phrase_no_accents)])
+                    else:
+                        suggested_words.update([
+                            (x, 0)
+                            for x in dictionary.words
+                            if x.startswith(input_phrase)])
                 if dictionary.enchant_dict:
                     if len(input_phrase) >= 4:
                         # Always pass NFC to enchant and convert the
