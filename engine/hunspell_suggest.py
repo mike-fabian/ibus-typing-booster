@@ -169,8 +169,23 @@ class Hunspell:
         >>> h.suggest('Geschwindigkeitsubertre')[0]
         ('Geschwindigkeitsübertretungsverfahren', 0)
 
+        >>> h.suggest('Geschwindigkeitsübertretungsverfahren')[0]
+        ('Geschwindigkeitsübertretungsverfahren', 0)
+
+        >>> h.suggest('Glühwürmchen')[0]
+        ('Glühwürmchen', 0)
+
         >>> h.suggest('filosofictejsi')
         [('filosofičtější', 0), ('filosofičtěji', -1)]
+
+        >>> h.suggest('filosofictejs')[0]
+        ('filosofičtější', 0)
+
+        >>> h.suggest('filosofičtější')[0]
+        ('filosofičtější', 0)
+
+        >>> h.suggest('filosofičtějš')[0]
+        ('filosofičtější', 0)
 
         >>> h = Hunspell(['it_IT'])
         >>> h.suggest('principianti')
@@ -179,6 +194,9 @@ class Hunspell:
         >>> h = Hunspell(['es_ES'])
         >>> h.suggest('teneis')
         [('tenéis', 0), ('tenes', -1), ('tenis', -1), ('teneos', -1), ('tienes', -1), ('te neis', -1), ('te-neis', -1)]
+
+        >>> h.suggest('tenéis')[0]
+        ('tenéis', 0)
         '''
         if input_phrase in self._suggest_cache:
             return self._suggest_cache[input_phrase]
@@ -213,11 +231,16 @@ class Hunspell:
         # make sure input_phrase is in the internal normalization form (NFD):
         input_phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
+        input_phrase_no_accents = unicodedata.normalize(
+            itb_util.NORMALIZATION_FORM_INTERNAL,
+            itb_util.remove_accents(input_phrase))
         # But enchant and pyhunspell want NFC as input, make a copy in NFC:
         input_phrase_nfc = unicodedata.normalize('NFC', input_phrase)
         # '/' is already removed from the buffer, we do not need to
         # take care of it in the regexp.
         patt_start = re.compile(r'^' + re.escape(input_phrase))
+        patt_start_no_accents = re.compile(
+            r'^' + re.escape(input_phrase_no_accents))
 
         suggested_words = {}
         for dictionary in self._dictionaries:
@@ -226,7 +249,7 @@ class Hunspell:
                     suggested_words.update([
                         (x[0], 0)
                         for x in dictionary.word_pairs
-                        if patt_start.match(x[1])])
+                        if patt_start_no_accents.match(x[1])])
                 else:
                     suggested_words.update([
                         (x, 0)
