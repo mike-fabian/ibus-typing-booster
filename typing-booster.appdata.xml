@@ -16,6 +16,27 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.20" date="2017-01-25" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Calculate the maximum word length for each dictionary
+            individually
+          </li>
+          <li>
+            Use .startswith instead of regexp matching when matching
+            in hunspell dictionaries (speed optimization)
+          </li>
+          <li>
+            Improve accent insensitive matching (“filosofičtějš”
+            should also match “filosofičtější”)
+          </li>
+          <li>
+            Some updates for the emoji annotations in en.xml from CLDR
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.19" date="2017-01-19" urgency="medium">
       <description>
         <ul>

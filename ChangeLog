@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 25 Jan 2017 Released 1.5.20 version
+* Calculate the maximum word length for each dictionary individually
+* Use .startswith instead of regexp matching when matching in hunspell dictionaries (speed optimization)
+* Improve accent insensitive matching (“filosofičtějš” should also match “filosofičtější”)
+* Some updates for the emoji annotations in en.xml from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 19 Jan 2017 Released 1.5.19 version
 * Improve setup layout (thanks to Trinh Anh Ngoc <atw1990@gmail.com>)
 * Add some more directories to search for dictionaries (for FreeBSD)
