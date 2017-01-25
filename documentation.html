@@ -3,7 +3,7 @@ layout: default
 ---
 <h1>Documentation</h1>
 
-<br>
+<br class="clearboth">
 <a name="contents"></a>
 <br>
 <h2>Contents</h2>
@@ -16,11 +16,13 @@ layout: default
   <li><a href="#related-words-nltk">Using NLTK to find related words</a></li>
 </ul>
 
-<br>
+<br class="clearboth">
+
 <a name="key-bindings"></a>
 <br>
 <h2>Key bindings</h2>
 
+<br class="clearboth">
 <table border="2" cellspacing="10" cellpadding="10">
 <thead>
 <tr>
@@ -277,6 +279,7 @@ select keys” is enabled.
 <p>When more than one input method at the same time is used, the
 following additional key bindings are available:</p>
 
+<br class="clearboth">
 <table border="2" cellspacing="10" cellpadding="10">
 <thead>
 <tr>
@@ -298,11 +301,12 @@ method.</td>
 </tbody>
 </table>
 
-<br>
+<br class="clearboth">
 <a name="mouse-bindings"></a>
 <br>
 <h2>Mouse bindings</h2>
 
+<br class="clearboth">
 <table border="2" cellspacing="10" cellpadding="10">
 <thead>
 <tr>
@@ -359,12 +363,22 @@ method.</td>
 </tbody>
 </table>
 
-<br>
+<br class="clearboth">
 <a name="multilingual-input"></a>
 <br>
 <h2>Multilingual input</h2>
 
-<img style="float:left; margin-right:20px; margin-bottom:10px" src="images/hindi-english-example.png" alt="Hindi and English example">
+<br class="clearboth">
+<table class="picture">
+  <caption>Hindi and English example</caption>
+  <tr>
+    <td align="center">
+      <a href="images/hindi-english-example.png">
+        <img style="float:left; margin-right:20px; margin-bottom:10px" src="images/thumbs/hindi-english-example.png" alt="Hindi and English example">
+      </a>
+    </td>
+  </tr>
+</table>
 
 <p>ibus-typing-booster supports using more than one input
 method/transliteration at the same time.</p>
@@ -408,7 +422,7 @@ of input methods and dictionaries, only the setup tool is not yet able
 to set this up. It can be done by setting the appropriate dconf keys
 manually though.</p>
 
-<p>Example:</p>
+<p class="clearboth">Example:</p>
 
 <p>Setting three input/transliteration methods:</p>
 
@@ -416,7 +430,7 @@ manually though.</p>
 
 <p>sets the three transliteration methods, “mr-itrans” (Marathi Itrans),
 “t-latn-post” (A postscript input method to type accented Latin
-characters, e.g. typing “u"” will produce “ü”), and “NoIme” (direct
+characters, e.g. typing “u&quot;” will produce “ü”), and “NoIme” (direct
 keyboard input without any transliteration).</p>
 
 <p>Setting 3 dictionaries:</p>
@@ -425,12 +439,22 @@ keyboard input without any transliteration).</p>
 
 <p>sets the Marathi, the British English,and the German dictionary.</p>
 
-<br>
+<br class="clearboth">
 <a name="emoji-predictions"></a>
 <br>
 <h2>Unicode symbols and emoji predictions</h2>
 
-<img style="float:left; margin-right:20px; margin-bottom:10px" src="images/emoji-castle.png" alt="Emoji example when typing “castle”">
+<br class="clearboth">
+<table class="picture">
+  <caption>Emoji example when typing castle</caption>
+  <tr>
+    <td align="center">
+      <a href="images/emoji-castle.png">
+        <img style="float:left; margin-right:20px; margin-bottom:10px" src="images/thumbs/emoji-castle.png" alt="Emoji example when typing “castle”">
+      </a>
+    </td>
+  </tr>
+</table>
 
 <p>ibus-typing-booster supports prediction of emoji as well.  This can
 be enabled or disabled with the option “Emoji predictions” seen in the
@@ -455,7 +479,17 @@ down the candidate page. If an emoji is selected and committed, it
 will be remembered just like ibus-typing-booster remembers other words
 and will be shown with higher priority next time.</p>
 
-<img style="float:left; margin-right:20px; margin-bottom:10px" src="images/emoji-castle-related.png" alt="Example for looking up related emoji for “castle”">
+<br class="clearboth">
+<table class="picture">
+  <caption>Example for looking up related emoji for “castle”</caption>
+  <tr>
+    <td align="center">
+      <a href="images/emoji-castle-related.png">
+        <img style="float:left; margin-right:20px; margin-bottom:10px" src="images/thumbs/emoji-castle-related.png" alt="Example for looking up related emoji for “castle”">
+      </a>
+    </td>
+  </tr>
+</table>
 
 <p>It is also possible to look up related emoji which may not have
 matched the typed text well but are related to the emoji shown because
@@ -480,26 +514,55 @@ the order of preference of the languages. So German is on top because
 it is the main language, English matches for related emoji are
 further down in the candidate list.</p>
 
-<p>The following screenshot shows another example using Hindi as the
-main language and English as a second language:</p>
+<p class="clearboth">The following screenshot shows another example
+using Hindi as the main language and English as a second language:</p>
 
-<img style="float:left; margin-right:20px; margin-bottom:10px" src="images/emoji-namaste.png" alt="Emoji example when typing “namaste”">
+<table class="picture">
+  <caption>Emoji example when typing “namaste”</caption>
+  <tr>
+    <td align="center">
+      <a href="images/emoji-namaste.png">
+        <img style="float:left; margin-right:20px; margin-bottom:10px" src="images/thumbs/emoji-namaste.png" alt="Emoji example when typing “namaste”">
+      </a>
+    </td>
+  </tr>
+</table>
 
 <p>With Hindi as well, one can highlight the emoji which matched
 the typed string नमस्ते (“namaste”) and show related emoji:</p>
 
-<img style="float:left; margin-right:20px; margin-bottom:10px" src="images/emoji-namaste-related.png" alt="Example for looking up related emoji for “namaste”">
+<br class="clearboth">
+<table class="picture">
+  <caption>Example for looking up related emoji for “namaste”</caption>
+  <tr>
+    <td align="center">
+      <a href="images/emoji-namaste-related.png">
+        <img style="float:left; margin-right:20px; margin-bottom:10px" src="images/thumbs/emoji-namaste-related.png" alt="Example for looking up related emoji for “namaste”">
+      </a>
+    </td>
+  </tr>
+</table>
 
 <p>Two emoji in the candidate list in the screen shot are shown in
 black and white because they are missing in the coloured emoji font
 and a black and white font is used as a fallback.</p>
 
-<br>
+<br class="clearboth">
 <a name="related-words-nltk"></a>
 <br>
 <h2>Using NLTK to find related words</h2>
 
-<img style="float:left; margin-right:20px; margin-bottom:10px" src="images/castle-word-related.png" alt="Example for looking up related words for “castle”">
+<br class="clearboth">
+<table class="picture">
+  <caption>Example for looking up related words for “castle”</caption>
+  <tr>
+    <td align="center">
+      <a href="images/castle-word-related.png">
+        <img style="float:left; margin-right:20px; margin-bottom:10px" src="images/thumbs/castle-word-related.png" alt="Example for looking up related words for “castle”">
+      </a>
+    </td>
+  </tr>
+</table>
 
 <p>ibus-typing-booster can also find words which are related to any of
 the candidates displayed. To show related words for a candidate, move
@@ -520,7 +583,7 @@ nothing will happen.</p>
 for Python3 and the wordnet corpus for NLTK are installed. On Fedora,
 you can install it like this:</p>
 
-<p><pre><code>
+<p class="clearboth"><pre><code>
       sudo dnf install python3-nltk
       python3
       import nltk
@@ -530,5 +593,16 @@ you can install it like this:</p>
 <p>A download tool for NLTK data as seen in the next screen shot
 opens, select the wordnet corpus and click the “Download” button:</p>
 
-<img style="float:left; margin-right:20px; margin-bottom:10px" src="images/nltk-wordnet-corpus-download.png" alt="wordnet corpus download for NLTK">
+<br class="clearboth">
+<table class="picture">
+  <caption>wordnet corpus download for NLTK</caption>
+  <tr>
+    <td align="center">
+      <a href="images/nltk-wordnet-corpus-download.png">
+        <img style="float:left; margin-right:20px; margin-bottom:10px" src="images/thumbs/nltk-wordnet-corpus-download.png" alt="wordnet corpus download for NLTK">
+      </a>
+    </td>
+  </tr>
+</table>
 
+<br class="clearboth">

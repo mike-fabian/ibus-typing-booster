@@ -8,6 +8,10 @@
  * Designed and built with all the love in the world by @mdo and @fat.
  */
 
+.clearboth {
+  clear: both;
+}
+
 table.picture {
   font-style: normal;
   font-size: small;
