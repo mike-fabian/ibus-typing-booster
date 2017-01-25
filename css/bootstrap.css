@@ -8,6 +8,31 @@
  * Designed and built with all the love in the world by @mdo and @fat.
  */
 
+table.picture {
+  font-style: normal;
+  font-size: small;
+  border: 0;
+  margin-top: 0em;
+  margin-bottom: 0em;
+  margin-left: 0em;
+  margin-right: 1em;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  padding-left: 0em;
+  padding-right: 0em;
+  caption-side: bottom;
+  float: left;
+  clear: left;
+}
+
+table.picture td {
+  color: #000000;
+  padding-top: 1.1em;
+  padding-bottom: 0em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
 .clearfix {
   *zoom: 1;
 }
