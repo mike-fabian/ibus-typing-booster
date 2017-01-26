@@ -9,7 +9,17 @@ layout: default
 <h2>Contents</h2>
 
 <ul>
+  <li><a href="#adding-to-desktop">Adding ibus-typing-booster to your desktop</a></li>
+  <ul>
+    <li><a href="#adding-gnome">When using the Gnome3 desktop</a></li>
+    <li><a href="#adding-non-gnome">When using other desktops than Gnome3</a></li>
+    <li><a href="#adding-unity">When using the Unity desktop on Ubuntu</a></li>
+  </ul>
   <li><a href="#key-bindings">Key bindings</a></li>
+  <ul>
+    <li><a href="#key-bindings-altgr">The “AltGr” key</a></li>
+    <li><a href="#key-bindings-table">Table of key bindings</a></li>
+  </ul>
   <li><a href="#mouse-bindings">Mouse bindings</a></li>
   <li><a href="#multilingual-input">Multilingual input</a></li>
   <li><a href="#emoji-predictions">Unicode symbols and emoji predictions</a></li>
@@ -17,10 +27,648 @@ layout: default
 </ul>
 
 <br class="clearboth">
+<a name="adding-to-desktop"></a>
+<br>
+<h2>Adding ibus-typing-booster to your desktop</h2>
 
+<p>
+  This section assumes that you have already installed ibus-typing-booster
+  either using binary packages or from source and now want to add
+  an ibus-typing-booster input method to your desktop.
+</p>
+
+<p>
+  The procedure to add an ibus-typing-booster input method differs
+  slightly depending on which type of desktop you use, the following
+  sections show the procedure for popular desktop choices.
+</p>
+
+<br class="clearboth">
+<a name="adding-gnome"></a>
+<br>
+<h3>When using the Gnome3 desktop</h3>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Open the Gnome3 control center</caption>
+  <tr>
+    <td align="center">
+      <a href="images/open-gnome-control-center.png">
+        <img src="images/thumbs/open-gnome-control-center.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  First click on the panel menu in the top right corner of the desktop
+  and then click on the “screwdriver and wrench” icon to open the
+  Gnome3 control center.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Open the “Region &amp; Language” settings</caption>
+  <tr>
+    <td align="center">
+      <a href="images/open-gnome-region-and-language-settings.png">
+        <img src="images/thumbs/open-gnome-region-and-language-settings.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Now the Gnome3 control center has opened. Click on the
+  icon for the “Region &amp; Language” settings.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>The Gnome3 “Region &amp; Language” settings</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-region-and-language-settings.png">
+        <img src="images/thumbs/gnome-region-and-language-settings.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Now the Gnome3 “Region &amp; Language” settings dialogue has opened.
+</p>
+<p>
+  At the bottom you see a list of input sources which have already
+  been added to the desktop before. In this case there are already:
+  “English (US, with euro on 5)” and “Japanese (Kana Kanji)”.  This is
+  just an example of course, the list of already added input methods
+  could look different for you.  The first entry, “English (US, with
+  euro on 5)”, is not really an input engine, it is just a keyboard
+  layout. One can see that an entry in the list of input sources is a
+  keyboard layout if it does not have the icon showing two
+  tooth-wheels at the right side.
+</p>
+<p>
+  It is recommended to use a keyboard layout with ibus-typing-booster
+  which has a real “AltGr” key and does not just make the “AltGr” or
+  “Alt” key on the right side of the space bar basically a duplicate
+  of the left “Alt” key. For details,
+  see <a href="#key-bindings-altgr">The “AltGr” key</a>.
+</p>
+<p>
+  The second entry, “Japanese (Kana
+  Kanji)” is an input engine, it has the icon showing two tooth wheels
+  at the right side.
+</p>
+<p>
+  Now click on the “+” button at the lower left to add another input
+  source.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>The Gnome3 “Add an Input Source” dialouge</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-add-an-input-source.png">
+        <img src="images/thumbs/gnome-add-an-input-source.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Then click on the three vertical dots “⋮” to open the search entry field.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>The Gnome3 “Add an Input Source” search entry</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-add-an-input-source-search.png">
+        <img src="images/thumbs/gnome-add-an-input-source-search.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Type the word “booster” into the search entry field. All languages
+  which are supported by ibus-typing-booster are listed now.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>The Gnome3 “Add an Input Source” “Add” button</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-add-an-input-source-add-button.png">
+        <img src="images/thumbs/gnome-add-an-input-source-add-button.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Scroll to the main language you want to use and select it.
+  You may see typing booster engines for several variants of that
+  language listed, in this example for three variants of German.
+</p>
+<p>
+  Select the variant of typing booster you want and click the
+  “Add” button at the top right.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>An ibus-typing-booster engine has been added in Gnome3</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-ibus-typing-booster-engine-added.png">
+        <img src="images/thumbs/gnome-ibus-typing-booster-engine-added.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Now you you see an ibus-typing-booster engine listed in the “Region
+  &amp; Language” dialogue of Gnome3.
+</p>
+<p>
+  If you select it, a tooth wheel appears at the bottom right of the dialogue,
+  clicking that opens the setup tool of that ibus-typing-booster engine.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>The ibus-typing-booster setup tool</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-ibus-typing-booster-setup-opened-from-region-and-language-settings.png">
+        <img src="images/thumbs/gnome-ibus-typing-booster-setup-opened-from-region-and-language-settings.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Here you see the setup tool of that ibus-typing-booster engine where
+  you can customize ibus-typing-booster according to your preferences.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Selecting an ibus-typing-booster engine in the Gnome panel</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-select-ibus-typing-booster-in-the-panel.png">
+        <img src="images/thumbs/gnome-select-ibus-typing-booster-in-the-panel.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Now open some programs where you could type something, for example
+  “gedit” or “gnome-terminal”. And activate the ibus-typing-booster
+  engine you want to use in the input source menu of the Gnome panel
+  as shown in this screenshot.
+</p>
+<p>
+  When the input source menu of the Gnome panel is open and an
+  ibus-typing-booster engine is selected, there is a menu entry
+  “Setup” which is an quicker way to open the setup tool than going to
+  the “Region &amp; Language” settings dialogue.
+</p>
+<p>
+  Some options are also directly available in the input source menu of
+  the gnome panel to have quicker access to these often used options
+  than having to open the setup tool. There are also <a href="">key bindings</a>
+  and <a href="">mouse bindings</a> for these frequently used options
+  which are shown in the input source menu of the gnome panel as well
+  as a reminder.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Typing with ibus-typing-booster into gedit</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-typing-with-ibus-typing-booster.png">
+        <img src="images/thumbs/gnome-typing-with-ibus-typing-booster.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Now type something, for example into gedit and you should see
+  some suggestions for completions. 
+</p>
+<p>
+  At the beginning, the suggestions only come from the hunspell dictionaries
+  and are thus not very good yet. But ibus-typing-booster learns from your
+  typing, it remembers which words you use often in which context.
+  Therefore, the suggestions become much better over time.
+</p>
+<p>
+  To switch between ibus-typing-booster and other input methods or a simple
+  keyboard layout, you can use the input sources menu in the Gnome panel
+  or the keyboard shortcut, which is Super+Space by default (can be changed
+  in the gnome-control-center).
+</p>
+
+<br class="clearboth">
+<a name="adding-non-gnome"></a>
+<br>
+<h3>When using other desktops than Gnome3</h3>
+
+<p>
+  This chapter shows how to add an ibus-typing-booster input method on
+  most desktops except Gnome3 and Unity. The screenshots in this
+  chapter are using XFCE, but it is the same procedure on most other
+  desktops and window managers as well, only Gnome3 and Unity are a
+  bit special.
+</p>
+
+<p>
+  First start the <code>ibus-setup</code> program (For example by
+  typing <code>ibus-setup &</code> into a terminal. 
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>ibus-setup asks to start ibus-daemon</caption>
+  <tr>
+    <td align="center">
+      <a href="images/xfce-ibus-setup-asks-to-start-ibus-daemon.png">
+        <img src="images/thumbs/xfce-ibus-setup-asks-to-start-ibus-daemon.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  If <code>ibus-daemon</code> is not yet running, <code>ibus-setup</code>
+  may ask whether you want to start it. In that case click on “Yes”.
+</p>
+<p>
+  If <code>ibus-daemon</code> was not already running, you probably also want
+  to make it run automatically every time when you log into your desktop.
+  If you are using Fedora you can do that for most desktops and window managers
+  using <code>imsettings-switch</code> like this:
+</p>
+<p>
+  <code>imsettings-switch ibus</code>
+</p>
+<p>
+  This will change some settings so that when you log in
+  next time, <code>ibus-daemon</code> will be running and the following
+  environment variables will be set:
+</p>
+<p>
+  <code>export QT_IM_MODULE=ibus</code>
+</p>
+<p>
+  <code>export XMODIFIERS=@im=ibus</code>
+</p>
+<p>
+  <code>export GTK_IM_MODULE=ibus</code>
+</p>
+<p>
+  If you don’t use Fedora and do not have the <code>imsettings-switch</code>,
+  there may be some other way to start <code>ibus-daemon</code> on your
+  system automatically and to set the above environment variables.
+</p>
+<p>
+  Or you can put the above environment variables into
+  your <code>~/.bashrc</code> file and start <code>ibus-daemon</code>
+  from some X11 startup file or make your windowmanager start it. I am
+  using the “i3” windowmanager at the moment and have added the
+  line <code>exec ibus-daemon -drx</code> to
+  my <code>~/.config/i3/config</code> file.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>ibus-setup user interface, “General” tab</caption>
+  <tr>
+    <td align="center">
+      <a href="images/xfce-ibus-setup-general.png">
+        <img src="images/thumbs/xfce-ibus-setup-general.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  In the “General” tab of <code>ibus-setup</code> you see that the
+  default shortcut key to switch between input methods is “Super+Space”
+  and you can change this and some other options if you like.
+</p>
+<p>
+  Personally I like the extra property panel. Therefore, I set the
+  “Show property panel” option to “Always” here.
+</p>
+<p>
+  You probably also want the option “Show icon on system tray” switched on.
+</p>
+<p>
+  And I usually choose a somewhat bigger font to be able to see the
+  details in the emoji better.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>ibus-setup user interface, “Input Method” tab</caption>
+  <tr>
+    <td align="center">
+      <a href="images/xfce-ibus-setup-input-method.png">
+        <img src="images/thumbs/xfce-ibus-setup-input-method.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Now use the “Input Method” tab of <code>ibus-setup</code> to add
+  an ibus-typing-booster engine.
+</p>
+<p>
+  You see a list of input sources which have already been added to the
+  desktop before. In this case there are already: “English - English
+  (international AltGr dead keys)” and “Japanese (Kana Kanji)”.  This
+  is just an example of course, the list of already added input
+  methods could look different for you.  The first entry, “English -
+  English (international AltGr dead keys)”, is not really an input
+  engine, it is just a keyboard layout.
+</p>
+<p>
+  It is recommended to use a keyboard layout with ibus-typing-booster
+  which has a real “AltGr” key and does not just make the “AltGr” or
+  “Alt” key on the right side of the space bar basically a duplicate
+  of the left “Alt” key. For details,
+  see <a href="#key-bindings-altgr">The “AltGr” key</a>.  By the way,
+  in the “Advanced” tab of <code>ibus-setup</code> there is an option
+  “Use system keyboard layout”, if this option is selected,
+  ibus-typing-booster will always use the system keyboard layout,
+  otherwise it will use the keyboard layout from the list of input
+  methods which was used last before switching to ibus-typing-booster.
+</p>
+<p>
+  The second entry which is already there in the list of input
+  methods, “Japanese (Kana Kanji)”, is a real input engine, not a
+  keyboard layout.
+</p>
+<p>
+  Now click on the “Add” button at top right to add another input
+  source.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>ibus-setup user interface, “Select an input method”</caption>
+  <tr>
+    <td align="center">
+      <a href="images/xfce-ibus-setup-select-an-input-method.png">
+        <img src="images/thumbs/xfce-ibus-setup-select-an-input-method.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  If you do not see the main language you want to use listed already,
+  click on the three vertical dots “⋮” to open the search entry field.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>ibus-setup user interface “Select an input method” search entry</caption>
+  <tr>
+    <td align="center">
+      <a href="images/xfce-ibus-setup-select-an-input-method-search.png">
+        <img src="images/thumbs/xfce-ibus-setup-select-an-input-method-search.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Now either scroll through the list or type the name of your language.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>ibus-setup user interface “Select an input method” searched for “german”</caption>
+  <tr>
+    <td align="center">
+      <a href="images/xfce-ibus-setup-select-an-input-method-search-german.png">
+        <img src="images/thumbs/xfce-ibus-setup-select-an-input-method-search-german.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  For example, when searching for “german”, it looks as in this screenshot.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>ibus-setup user interface “Select an input method”, German input methods</caption>
+  <tr>
+    <td align="center">
+      <a href="images/xfce-ibus-setup-select-an-input-method-german-imes.png">
+        <img src="images/thumbs/xfce-ibus-setup-select-an-input-method-german-imes.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Select your langauge, in this case “German” and scroll through the
+  list of German input methods shown until you find one with “Typing
+  Booster” in the name.  There maybe more than one for variants of the
+  language. Select the typing booster engine for your preferred
+  language variant.
+</p>
+<p>
+  Click the “Add” button.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>ibus-setup user interface “Select an input method”, typing booster added</caption>
+  <tr>
+    <td align="center">
+      <a href="images/xfce-ibus-setup-select-an-input-method-typing-booster-added.png">
+        <img src="images/thumbs/xfce-ibus-setup-select-an-input-method-typing-booster-added.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Now an ibus-typing-booster engine has been added to the list of input methods
+  configured and it looks as in this screenshot.
+</p>
+<p>
+  If you select that typing-booster engine, you can click the “Preferences” button
+  to open the setup tool of that typing-booster-engine.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>The ibus-typing-booster setup tool</caption>
+  <tr>
+    <td align="center">
+      <a href="images/xfce-ibus-typing-booster-setup-tool.png">
+        <img src="images/thumbs/xfce-ibus-typing-booster-setup-tool.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Here you see the setup tool of that ibus-typing-booster engine where
+  you can customize ibus-typing-booster according to your preferences.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Selecting an ibus-typing-booster engine in the system tray</caption>
+  <tr>
+    <td align="center">
+      <a href="images/xfce-select-ibus-typing-booster-in-the-system-tray.png">
+        <img src="images/thumbs/xfce-select-ibus-typing-booster-in-the-system-tray.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Now open some programs where you could type something, for example
+  “gedit” or “gnome-terminal”. And activate the ibus-typing-booster
+  engine you want to use by clicking on the icon for the input methods
+  in the system tray and selecting the ibus-typing-booster engine
+  in the menu which opens.
+</p>
+<p>
+  When the input method menu of system tray icon is open and an
+  ibus-typing-booster engine is selected, there is a menu entry
+  “Setup” which is a quicker way to open the setup tool of that
+  ibus-typing-booster engine than doing it with
+  <code>ibus-setup</code>.
+</p>
+<p>
+  Some options are also directly available in the input method menu of
+  the system tray icon to have quicker access to these often used
+  options than having to open the setup tool of the
+  ibus-typing-booster engine. There are also <a href="">key
+  bindings</a> and <a href="">mouse bindings</a> for these frequently
+  used options which are shown in the input method menu of the system tray icon
+  as well as a reminder.
+</p>
+<p>
+  On the top left of this screenshot you see the “property panel”
+  which shows the current status of some frequently used options which
+  can also be changed by clicking on the “property panel”. The
+  “property panel” also offers a button to open the setup tool of the
+  ibus-typing-booster engine. You can move that “property panel” to
+  around on your desktop to a convenient place.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Typing with ibus-typing-booster into gedit</caption>
+  <tr>
+    <td align="center">
+      <a href="images/xfce-typing-with-ibus-typing-booster.png">
+        <img src="images/thumbs/xfce-typing-with-ibus-typing-booster.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Now type something, for example into gedit and you should see
+  some suggestions for completions. 
+</p>
+<p>
+  At the beginning, the suggestions only come from the hunspell
+  dictionaries and are thus not very good yet. But ibus-typing-booster
+  learns from your typing, it remembers which words you use often in
+  which context.  Therefore, the suggestions become much better over
+  time.
+</p>
+<p>
+  To switch between ibus-typing-booster and other input methods or a
+  simple keyboard layout, you can use the input methods menu you get
+  by clicking on the system tray icon or you can use the keyboard
+  shortcut, which is Super+Space by default (can be changed using
+  <code>ibus-setup</code>).
+</p>
+
+<br class="clearboth">
+<a name="adding-unity"></a>
+<br>
+<h3>When using the Unity desktop on Ubuntu</h3>
+
+<p>
+  I’ll write this section soon. Ibus-typing-booster works on the Unity
+  desktop as well, there are only some minor differences in how the
+  setup dialogues look like.
+</p>
+
+
+<br class="clearboth">
 <a name="key-bindings"></a>
 <br>
 <h2>Key bindings</h2>
+
+<br class="clearboth">
+<a name="key-bindings-altgr"></a>
+<br>
+<h3>The “AltGr” key</h3>
+<p>
+  Ibus-typing-booster does not change your keyboard layout, it just
+  uses the keyboard layout which was selected last.
+</p>
+<p>
+  As some of the key bindings in the table below use key combinations
+  starting with “AltGr”, it is recommended to use a keyboard layout
+  where the right “Alt” key is really an “AltGr” key and not just a
+  duplicate of the left “Alt” key. If you do not have a real “AltGr”
+  key, you can still use most of the key bindings in the table below but
+  of course not those which start with “AltGr”.
+</p>
+<p>
+  The standard “English (US)” keyboard layout makes the “AltGr” key on
+  the right side of the space bar basically behave as a duplicate of
+  the left “Alt” key. So if you like the US English layout, better use
+  the keyboard layout “English (US, with euro on 5)” instead of the
+  standard one. “English (US, with euro on 5)” is very similar to the
+  standard “English (US)” layout but has a real “AltGr” key.
+</p>
+<p>
+  Many (but not all) keyboard layouts for other languages different
+  from US English already have a real “AltGr” key.
+</p>
+<p>
+  You can check whether your keyboard layout has a real “AltGr” key
+  with “xev”, “xev” should show you the keysym “ISO_Level3_Shift”
+  when pressing the “AltGr” (right “Alt”) key and <b>not</b>
+  the keysym “Alt_R”.
+</p>
+
+<br class="clearboth">
+<a name="key-bindings-table"></a>
+<br>
+<h3>Table of key bindings</h3>
 
 <br class="clearboth">
 <table border="2" cellspacing="10" cellpadding="10">
