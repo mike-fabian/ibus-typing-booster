@@ -1016,50 +1016,193 @@ method.</td>
 <br>
 <h2>Multilingual input</h2>
 
+<p>
+  Ibus-typing-booster supports using more than one input
+  method/transliteration and more than one dictionary at the same
+  time.
+</p>
+<p>
+  That makes it possible to write text in more than one language
+  without having to switch do a different input method when switching
+  to another language.  For example, if one uses both Hindi and
+  English often, it would be quite annoying having to switch input
+  methods every time one types something in the other language.
+  It is more convenient to setup a single engine of ibus-typing-booster
+  to use both Hindi and English. Then one can just type in either
+  Hindi or English and ibus-typing-booster will show suitable
+  candidates automatically.
+</p>
+
 <br class="clearboth">
 <table class="picture">
-  <caption>Hindi and English example</caption>
+  <caption>Setup tool of Hindi typing booster</caption>
   <tr>
     <td align="center">
-      <a href="images/hindi-english-example.png">
-        <img src="images/thumbs/hindi-english-example.png" alt="Hindi and English example">
+      <a href="images/gnome-setup-tool-hindi-typing-booster-english-added.png">
+        <img src="images/thumbs/gnome-setup-tool-hindi-typing-booster-english-added.png">
       </a>
     </td>
   </tr>
 </table>
 
-<p>ibus-typing-booster supports using more than one input
-method/transliteration at the same time.</p>
+<p>
+  This screenshot shows how to setup ibus-typing-booster to use Hindi
+  and English at the same time. This is the setup tool for the
+  ibus-typing-booster engine “hi-IN”, i.e. the engine for the Indian
+  language Hindi. One can select one of the Hindi input methods
+  “Enhanced Inscript” (= hi-inscript2), “Inscript” (= hi-inscript),
+  “Phonetic” (= hi-phonetic), “Itrans” (= hi-itrans), “Remington” (=
+  hi-remington), “Typewriter” (= hi-typewriter), and “Vedmata” (=
+  hi-vedmata) in this setup tool.
+</p>
+<p>
+  Let’s choose “Itrans” for this example.
+</p>
+<p>
+  To add English as a second language to use at the same time, one can
+  use the check box option “Add direct input” in the setup tool. If
+  that option is selected, direct keyboard input is added as a second
+  input method and the en_GB (British English) dictionary is added as
+  a second dictionary in addition to the hi_IN dictionary.
+</p>
 
-<p>For example, if one uses the ibus-typing-booster engine “mr-IN”,
-i.e. the engine for the Indian language Marathi, one can select one of
-the Marathi input methods mr-itrans, mr-phonetic, mr-inscript, and
-mr-inscript2 in the setup tool. Keys typed will be transliterated
-using the selected transliteration method and looked up in the mr_IN
-hunspell dictionary and the user database of previous input.</p>
+<br class="clearboth">
+<table class="picture">
+  <caption>Hindi and English example, preëdit in English</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-hindi-english-example-preedit-english.png">
+        <img src="images/thumbs/gnome-hindi-english-example-preedit-english.png">
+      </a>
+    </td>
+  </tr>
+</table>
 
-<p>To add English as a second language to use at the same time, one
-can use the check box option “Add direct input” in the setup tool. If
-that option is selected, direct keyboard input is added as a second
-input method and the en_GB (British English) dictionary is added as a
-second dictionary in addition to the mr_IN dictionary.</p>
+<p>
+  If more than one input/transliteration method is enabled, the typed
+  keys will be transliterated with each transliteration method and
+  each transliteration result will be looked up in the enabled
+  dictionaries and in the user database of previous input.
+</p>
+<p>
+  In this screenshot, Hindi with the “hi-itrans” method <b>and</b>
+  English are used at the same time.  One can see that the input
+  “guru” has been typed.  The candidate list shows both “गुरु” (which is
+  the transliteration of the input “guru” using the “hi-itrans”
+  method) <b>and</b> the English candidates “guru” and “gurus”.  This
+  is because both the transliteration “गुरु” and the direct input “guru”
+  are used at the same time to lookup candidates.
+</p>
+<p>
+  Actually it is quite rare to see candidates from both
+  Hindi <b>and</b> English in a candidate list. The English word
+  “guru” is a loanword from Hindi, it is just the transliteration of
+  the original Hindi word into the Latin Alphabet. Therefore, the
+  “Itrans” method transliterates it back to Hindi and one gets a match
+  in Hindi as well. Most English words do not transliterate to
+  anything meaningful in Hindi and most Hindi input does not
+  match anything in English either. The example “guru” is carefully
+  chosen to show how ibus-typing-booster handles multilingual input.
+</p>
+<p>
+  In practice, as soon as one has typed a few characters, one will
+  most of the time see only candidates from either Hindi or English,
+  not both. I.e. the language one is typing in at the moment is
+  automatically detected because one very rarely gets matches in
+  the other language.
+</p>
+<p>
+  This automatic language detection works even better after
+  ibus-typing-booster has learned from user input for a while. Because
+  ibus-typing-booster remembers the context where the user has typed
+  words.
+</p>
 
-<p>If more than one input/transliteration method is enabled, the typed
-keys will will be transliterated with each transliteration method and
-each result will be looked up in the enabled dictionaries and in the
-user database of previous input.</p>
+<br class="clearboth">
+<table class="picture">
+  <caption>Hindi and English example, preëdit in Hindi</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-hindi-english-example-preedit-hindi.png">
+        <img src="images/thumbs/gnome-hindi-english-example-preedit-hindi.png">
+      </a>
+    </td>
+  </tr>
+</table>
 
-<p>That way, to type English, one does not have to switch off the
-Marathi engine of ibus-typing-booster, one can just type and suitable
-English candidates will show up as well in the candidate list. After
-typing a few characters, Marathi input is unlikely to match English
-candidates and English input is unlikely to match Marathi
-candidates. This works even better after ibus-typing-booster has
-learned a while from the user input because ibus-typing-booster tries
-to complete the currently typed word by also using the last few words
-typed before as additional information. Therefore, if the user types a
-combination of words again he has already typed previously, the
-prediction for the currently typed word will be much better.</p>
+<p>
+  This screenshot uses the same setup, Hindi (“hi-itrans”) <b>and</b>
+  English. The same input “guru” has been typed and the matches
+  shown in the candidate list are the same.
+</p>
+<p>
+  The difference is that the “hi-itrans” transliteration “गुरु” is shown
+  in the preëdit this time (preëdit is the current input, i.e. the
+  underlined text next to the candidate list). And in the status line
+  above the first candidate, one can see “hi-itrans”.
+</p>
+<p>
+  The reason for this difference is that for this screenshot, the
+  input method to be used for the preëdit has been switched to
+  “hi-itrans”. 
+</p>
+<p>
+  Switching the input method for the preëdit is sometimes necessary
+  because one may not want to select any of the displayed candidates
+  but commit the preëdit instead by typing a space.  For example, if
+  the preëdit is currently in English mode (direct input mode) and
+  one types a Hindi word, it may happen that one does not get any
+  matches in the candidate list, although the word has been typed
+  correctly. This may happen if this word can neither be found in the
+  dictionary nor in the user database because this word has never been
+  typed before by the user.  Nevertheless it may be a correct Hindi word
+  of course and the user may want to commit it. But if the preëdit
+  is currently in English mode, typing space would commit the Latin
+  characters. So one has to switch the preëdit to “hi-itrans” first
+  and then commit by typing a space.
+</p>
+<p>
+  The key bindings to switch the input method for the preëdit are
+  “Control+Down” and “Control+up”.  With only two input methods as in
+  the current example, both key bindings behave the same. But there
+  can be more than two input methods and then “Control+Down” moves in
+  one direction through the list of input methods and “Control+Up” in
+  the other direction (see <a href="">key bindings</a>).
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Hindi and English example, switching input method in Gnome panel</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-hindi-english-example-switching-preedit-in-panel.png">
+        <img src="images/thumbs/gnome-hindi-english-example-switching-preedit-in-panel.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  This screenshot shows the setup tool again and the options for
+  ibus-typing-booster in the input method menu of the gnome panel.
+</p>
+<p>
+  As an alternative to using the “Control+Down” and “Control+Up”
+  key bindings, the input method for the preëdit can also be switched
+  using the menu in the gnome panel. This menu also shows reminders
+  for the key bindings to switch the preëdit input method.
+</p>
+<p>
+  In the setup tool, there is an option “Remember last used preëdit
+  input method”.  If that option is disabled, ibus-typing-booster will
+  always use Hindi in the preëdit when you log in to your desktop and
+  use ibus-typing-booster for the first time after the login. If this
+  option is enabled, ibus-typing-booster will remember which input
+  method was used last when you logged out of your desktop and start
+  using that the next time you log in.
+</p>
+
+<br class="clearboth">
 
 <p>Using the setup tool it is currently only possible to add British
 English as a second language to the main language of an
