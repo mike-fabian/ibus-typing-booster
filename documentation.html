@@ -22,6 +22,11 @@ layout: default
   </ul>
   <li><a href="#mouse-bindings">Mouse bindings</a></li>
   <li><a href="#multilingual-input">Multilingual input</a></li>
+  <ul>
+    <li><a href="#hindi-english">Example using Hindi and English at the same time</a></li>
+    <li><a href="#spanish-english">Example using Spanish and English at the same time</a></li>
+    <li><a href="#multilingual-setup-dconf">Multilingual setup using dconf</a></li>
+  </ul>
   <li><a href="#emoji-predictions">Unicode symbols and emoji predictions</a></li>
   <li><a href="#related-words-nltk">Using NLTK to find related words</a></li>
 </ul>
@@ -1023,14 +1028,35 @@ method.</td>
 </p>
 <p>
   That makes it possible to write text in more than one language
-  without having to switch do a different input method when switching
-  to another language.  For example, if one uses both Hindi and
-  English often, it would be quite annoying having to switch input
-  methods every time one types something in the other language.
-  It is more convenient to setup a single engine of ibus-typing-booster
-  to use both Hindi and English. Then one can just type in either
-  Hindi or English and ibus-typing-booster will show suitable
-  candidates automatically.
+  without having to switch do a different language version of
+  ibus-typing-booster when switching to another language. If one
+  writes often in different languages this can save a lot of input
+  method switching.
+</p>
+<p>
+  This works not only when the languages use same script (like using
+  English and Spanish at the same time), it works even when the
+  languages use different scripts. For example when using English
+  (Latin script) and Hindi (Devanagari script) at the same time. When
+  using languages with different scripts at the same time, it is
+  sometimes necessary to switch the input method for the preëdit (See
+  the <a href="#hindi-english">Hindi and English example</a>).  But
+  even in such a more complicated case, switching is often not
+  necessary, often one can select a suitable candidate without
+  switching and save a lot of input method switches that way.
+</p>
+
+<br class="clearboth">
+<a name="hindi-english"></a>
+<br>
+<h3>Example using Hindi and English at the same time</h3>
+
+<p>
+  If one uses both Hindi and English often, it is more convenient to
+  setup a single engine of ibus-typing-booster to use both Hindi and
+  English instead of switching between a Hindi and an English
+  engine. Then one can just type in either Hindi or English and
+  ibus-typing-booster will show suitable candidates automatically.
 </p>
 
 <br class="clearboth">
@@ -1203,6 +1229,81 @@ method.</td>
 </p>
 
 <br class="clearboth">
+<a name="spanish-english"></a>
+<br>
+<h3>Example using Spanish and English at the same time</h3>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Spanish and English example, typing Spanish</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-spanish-english-example-spanish.png">
+        <img src="images/thumbs/gnome-spanish-english-example-spanish.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  This example shows using the Spanish engine of ibus-typing-booster
+  with English enabled as an additional language. In the Gnome panel
+  one can see “es-ES” which indicates that the Spanish version of
+  ibus-typing-booster is currently selected. In the setup tool, the
+  option “Add direct input” is enabled which adds support for
+  (British) English.
+</p>
+<p>
+  The input typed is “Yo soy un h” where the last character,
+  the “h” is still in preëdit (marked by the underline) and we
+  see some suggestions how the word starting with “h” might
+  continue. 
+</p>
+<p>
+  The suggestions shown are Spanish words, not English. This is because
+  the ibus-typing-booster has already been trained by similar user input
+  before. Therefore, it already knows which word starting with “h”
+  the user usually types following “soy un”. And these are Spanish words.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Spanish and English example, typing English</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-spanish-english-example-english.png">
+        <img src="images/thumbs/gnome-spanish-english-example-english.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  This screenshot shows how the user continues to type some English
+  after finishing the Spanish sentence. The input engine has not been
+  changed, one can still see the “es-ES” shown in the Gnome panel.
+</p>
+<p>
+  The input typed is now “I am h” and again the last character “h” is still
+  in preëdit and some suggestions for words starting with “h” are shown.
+</p>
+<p>
+  This time, the suggestions for words starting with “h” are English,
+  not Spanish.  This is because the words typed before were “I am” and
+  the user apparently types the suggested English words frequently
+  after “I am”.
+</p>
+<p>
+  This automatic suggestion of candidates from the correct language
+  according to the context makes it more efficient to use a single
+  ibus-typing-booster engine for Spanish <b>and</b> English instead
+  of manually switching between a Spanish and an English engine.
+</p>
+
+<br class="clearboth">
+<a name="multilingual-setup-dconf"></a>
+<br>
+<h3>Multilingual setup using dconf</h3>
 
 <p>Using the setup tool it is currently only possible to add British
 English as a second language to the main language of an
