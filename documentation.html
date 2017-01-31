@@ -28,6 +28,16 @@ layout: default
     <li><a href="#multilingual-setup-dconf">Multilingual setup using dconf</a></li>
   </ul>
   <li><a href="#emoji-predictions">Unicode symbols and emoji predictions</a></li>
+  <ul>
+    <li><a href="#multilingual-emoji">Multilingual emoji input</a></li>
+    <li><a href="#unicode-symbols">Unicode symbol input</a></li>
+    <li><a href="#unicode-code-points">Unicode code point input</a></li>
+    <li><a href="#emoji-mode-quick-toogle">Quickly toggling emoji mode on and off</a></li>
+    <li><a href="#emoji-fonts">Emoji fonts</a></li>
+    <ul>
+      <li><a href="#color-emoji">Showing emoji in colour</a></li>
+    </ul>
+  </ul>
   <li><a href="#related-words-nltk">Using NLTK to find related words</a></li>
 </ul>
 
@@ -1336,107 +1346,300 @@ keyboard input without any transliteration).</p>
 <br>
 <h2>Unicode symbols and emoji predictions</h2>
 
+<p>
+  ibus-typing-booster supports prediction of emoji as well.  This can
+  be enabled or disabled with the option “Emoji predictions” in the
+  setup tool.  This option is on by default.
+</p>
+<p>
+  To make all emoji display correctly, you need good fonts which
+  contain all emoji, see <a href="#emoji-fonts">Emoji fonts</a> for
+  details about available fonts and font setup.
+</p>
+
+<br class="clearboth">
+<a name="multilingual-emoji"></a>
+<br>
+<h3>Multilingual emoji input</h3>
+
 <br class="clearboth">
 <table class="picture">
   <caption>Emoji example when typing castle</caption>
   <tr>
     <td align="center">
-      <a href="images/emoji-castle.png">
-        <img src="images/thumbs/emoji-castle.png" alt="Emoji example when typing “castle”">
+      <a href="images/gnome-emoji-castle.png">
+        <img src="images/thumbs/gnome-emoji-castle.png">
       </a>
     </td>
   </tr>
 </table>
 
-<p>ibus-typing-booster supports prediction of emoji as well.  This can
-be enabled or disabled with the option “Emoji predictions” seen in the
-screen shot (on by default).</p>
-
-<p>The screen shot shows coloured emoji, to make that work
-an <a href="http://www.hadess.net/2016/05/blog-backlog-post-1-emoji.html">experimental
-patch for cairo</a> and a suitable font is needed. If this is not
-installed, the emoji support in ibus-typing-booster will still work
-but the emoji will be displayed in black and white. A good black and
-white font for emoji is
-the <a href="http://users.teilar.gr/~g1951d/">Symbola</a> font by
-George Douros (also available as a package for Fedora). Best use the
-latest version updated for Unicode 9.0.0.</p>
-
-<p>In the screen shot, the emoji 🏰 (U+1F3F0 EUROPEAN CASTLE) is shown
-as the last candidate in the first page when the text “castle” is
-typed. If reasonable matches for emoji are found, the first match is
-shown as the last candidate in the first page. If more than one emoji
-has matched the input, the other matches can be found by scrolling
-down the candidate page. If an emoji is selected and committed, it
-will be remembered just like ibus-typing-booster remembers other words
-and will be shown with higher priority next time.</p>
+<p>
+  The screen shot shows coloured emoji, to make that work
+  see <a href="#color-emoji">Showing emoji in colour</a>.  By default,
+  emoji will be shown in black and white on current linux
+  distributions.
+</p>
+<p>
+  In the screen shot, the emoji 🏰 (U+1F3F0 EUROPEAN CASTLE) is shown
+  as the last candidate in the first page when the text “castle” is
+  typed. If reasonable matches for emoji are found, the first match is
+  shown as the last candidate in the first page. If more than one
+  emoji has matched the input, the other matches can be found by
+  scrolling down the candidate page. If an emoji is selected and
+  committed, it will be remembered just like ibus-typing-booster
+  remembers other words and will be shown with higher priority next
+  time.
+</p>
+<p>
+  In this example, the German typing booster is used with English used
+  as a second language.  Therefore, the English input text “castle”
+  did match emojis.
+</p>
+<p>
+  But as the main language used in this example is German one could
+  just as well type the German word for “castle” which is “Schloss”.
+  This would also match the emoji 🏰 (U+1F3F0 EUROPEAN CASTLE) and
+  also emoji like 🔒 (U+1F512 LOCK) because the German word “Schloss”
+  can also mean “lock”.
+</p>
 
 <br class="clearboth">
 <table class="picture">
   <caption>Example for looking up related emoji for “castle”</caption>
   <tr>
     <td align="center">
-      <a href="images/emoji-castle-related.png">
-        <img src="images/thumbs/emoji-castle-related.png" alt="Example for looking up related emoji for “castle”">
+      <a href="images/gnome-emoji-castle-related.png">
+        <img src="images/thumbs/gnome-emoji-castle-related.png">
       </a>
     </td>
   </tr>
 </table>
 
-<p>It is also possible to look up related emoji which may not have
-matched the typed text well but are related to the emoji shown because
-they share keywords or categories. To show related emoji, select an
-emoji in the candidate list by moving up or down in the candidate list
-using the arrow-up/arrow-down keys or the page-up/page-down keys until
-the desired emoji is highlighted, then press AltGr+F12. As seen in the
-screen shot, emoji for other types of castles or buildings are then
-shown. The lists of words shown in square brackets are the keywords
-the shown emoji have in common with the originally selected emoji. By
-typing the “Escape” key, one can go back to the original list.</p>
+<p>
+  It is also possible to look up related emoji which may not have
+  matched the typed text well but are related to the emoji shown
+  because they share keywords or categories.
+</p>
+<p>
+  To show related emoji, click an emoji shown in the candidate list
+  with the right mouse button (see <a href="#mouse-bindings">Mouse
+  bindings</a>).
+</p>
+<p>
+  Or, if you prefer to use a <a href="#key-bindings">key binding</a>
+  instead of the mouse: select an emoji in the candidate list by
+  moving up or down in the candidate list using the
+  arrow-up/arrow-down keys or the page-up/page-down keys until the
+  desired emoji is highlighted, then press AltGr+F12.
+</p>
+<p>
+  AltGr+F12 is the key binding to “lookup related stuff”. If you press
+  this while no candidate is selected, a lookup of related stuff for
+  the preëdit is tried. In this case, the preëdit contains the text
+  “castle” which is not an emoji. So no related emoji will be
+  found. But if NLTK is used, related words for “castle” may be shown,
+  see <a href="#related-words-nltk">Using NLTK to find related
+  words</a>.
+</p>
+<p>
+  As seen in the screen shot, emoji for other types of castles or
+  buildings are then shown. The lists of words shown in square
+  brackets are the keywords the shown emoji have in common with the
+  originally selected emoji. By typing the “Escape” key, one can go
+  back to the original list.
+</p>
+<p>
+  By the way, the related emoji shown in the screen shot have German
+  names and keywords. That’s because this example uses German as the
+  main language for ibus-typing-booster with English as a second
+  language (See <a href="#multilingual-input">Multilingual input</a>).
+  When looking up related emoji, they are shown in all languages
+  ibus-typing-booster is setup to use, but they are sorted in the
+  order of preference of the languages. So German is on top because it
+  is the main language, English matches for related emoji are further
+  down in the candidate list.
+</p>
 
-<p>By the way, the related emoji shown in the screen shot have German
-names and keywords. That’s because I am using German as the main
-language for ibus-typing-booster here with English as a second
-language (See <a href="#multilingual-input">Multilingual
-input</a>). Because I am using English as a second language, the input
-text “castle” did match (The German equivalent “Schloss” would have
-matched as well). When looking up related emoji, they are shown in all
-languages ibus-typing-booster is setup to use, but they are sorted in
-the order of preference of the languages. So German is on top because
-it is the main language, English matches for related emoji are
-further down in the candidate list.</p>
-
-<p class="clearboth">The following screenshot shows another example
-using Hindi as the main language and English as a second language:</p>
-
+<br class="clearboth">
 <table class="picture">
   <caption>Emoji example when typing “namaste”</caption>
   <tr>
     <td align="center">
-      <a href="images/emoji-namaste.png">
-        <img src="images/thumbs/emoji-namaste.png" alt="Emoji example when typing “namaste”">
+      <a href="images/gnome-emoji-namaste.png">
+        <img src="images/thumbs/gnome-emoji-namaste.png">
       </a>
     </td>
   </tr>
 </table>
 
-<p class="clearboth">With Hindi as well, one can highlight the emoji which matched
-the typed string नमस्ते (“namaste”) and show related emoji:</p>
+<p>
+  This screenshot shows another example using Hindi as the main
+  language and English as a second language.
+</p>
+<p>
+  The input typed is “namaste”, with the transliteration method “hi-itrans”
+  this is transliterated to “नमस्ते” which is currently shown in the preëdit
+  (For details about multilingual input and how to switch the script shown
+  in the preëdit, see <a href="#multilingual-input">Multilingual input</a>).
+</p>
+<p>
+  Both “namaste” and “नमस्ते” are used to search for matching
+  words <b>and</b> emoji.  Only “नमस्ते” matches an emoji which can be
+  seen in the candidate list (🙏 U+1F64F PERSON WITH FOLDED HANDS).
+</p>
 
+<br class="clearboth">
 <table class="picture">
   <caption>Example for looking up related emoji for “namaste”</caption>
   <tr>
     <td align="center">
-      <a href="images/emoji-namaste-related.png">
-        <img src="images/thumbs/emoji-namaste-related.png" alt="Example for looking up related emoji for “namaste”">
+      <a href="images/gnome-emoji-namaste-related.png">
+        <img src="images/thumbs/gnome-emoji-namaste-related.png">
       </a>
     </td>
   </tr>
 </table>
 
-<p>Two emoji in the candidate list in the screen shot are shown in
-black and white because they are missing in the coloured emoji font
-and a black and white font is used as a fallback.</p>
+<p>
+  Of course one can lookup related emoji here as well.
+</p>
+<p>
+  To show related emoji, click an emoji shown in the candidate list
+  with the right mouse button (see <a href="#mouse-bindings">Mouse
+  bindings</a>).
+</p>
+<p>
+  Or, using a <a href="#key-bindings">key binding</a> instead of the
+  mouse: select an emoji in the candidate list by moving up or down in
+  the candidate list using the arrow-up/arrow-down keys or the
+  page-up/page-down keys until the desired emoji is highlighted, then
+  press AltGr+F12.
+</p>
+
+<br class="clearboth">
+<a name="unicode-symbols"></a>
+<br>
+<h3>Unicode symbol input</h3>
+
+<br class="clearboth">
+<a name="unicode-code-points"></a>
+<br>
+<h3>Unicode code point input</h3>
+
+<br class="clearboth">
+<a name="emoji-mode-quick-toogle"></a>
+<br>
+<h3>Quickly toggling emoji mode on and off</h3>
+
+<br class="clearboth">
+<a name="emoji-fonts"></a>
+<br>
+<h3>Emoji fonts</h3>
+
+<p>
+  A good black and white font for emoji is
+  the <a href="http://users.teilar.gr/~g1951d/">Symbola</a> font by
+  George Douros. Best use the latest version, at least the version
+  updated for Unicode 9.0.0.  On Fedora and openSUSE, this font is in
+  the “gdouros-symbola-fonts” package. Fedora 25 already has the
+  Unicode 9.0.0 version. If you are using Fedora 24, better update
+  that font.
+</p>
+<p>
+  To make sure that “Symbola” is your preferred font for emoji, you
+  can use a fontconfig setup
+  file <code>~/.config/fontconfig/fonts.conf</code> as in
+  this <a href="fonts.conf">example fonts.conf file</a>.
+</p>
+<p>
+  If you do not yet have a <code>~/.config/fontconfig/fonts.conf</code>
+  file, create one with the contents as above. If you already have such
+  a file but no “alias” settings exist, add the part defining the aliases.
+  Or if you already have “alias” settings in your
+  <code>~/.config/fontconfig/fonts.conf</code> file, edit them.
+</p>
+<p>
+  “DejaVu Serif”, “DejaVu Sans”, and “DejaVu Sans Mono”, are just
+  examples, put your favorite fonts for Latin and other
+  scripts <b>below</b> the fonts for emoji in
+  the <code>~/.config/fontconfig/fonts.conf</code> setup file.
+</p>
+<p>
+  If you don’t give a good emoji font like “Symbola” the highest
+  priority in the fontconfig setup, the highest priority font may be a
+  font which already has some emoji. For example, “DejaVu Sans”
+  already has many emoji, but not all. I.e. when “DejaVu Sans” has
+  highest priority and is tried first, all emoji which are available
+  in “DejaVu Sans” are shown using that font and only those which are
+  missing in “DejaVu Sans” are shown using the “Symbola” font.  That
+  means you will see the some emoji displayed using the “DejaVu Sans”
+  font and some using the “Symbola” font which will look a bit
+  inconsistent. It looks nicer using “Symbola” for all emoji
+  which can be achieved by giving “Symbola” the highest priority.
+</p>
+<p>
+  The Latin characters in the “Symbola” font are with serifs and not
+  really suitable to be used as a default Latin font. Nevertheless,
+  putting “Symbola” with top priority into
+  the <code>~/.config/fontconfig/fonts.conf</code> setup file does
+  usually not cause any problems.
+</p>
+<p>
+  Your desktop, editor, terminal, … will most likely set some other font
+  anyway.  For example, the Gnome3 desktop usually sets the “Cantarell”
+  font, i.e. Gnome3 will still use “Cantarell” even if you give the
+  “Symbola” font highest priority
+  in <code>~/.config/fontconfig/fonts.conf</code> (You can change the
+  font used for the Gnome3 desktop with <code>gnome-tweak-tool</code>.
+  The same is true for most other desktops and programs.
+</p>
+
+<br class="clearboth">
+<a name="color-emoji"></a>
+<br>
+<h4>Showing emoji in colour</h4>
+
+<p>
+  To show emoji in colour,
+  an <a href="http://www.hadess.net/2016/05/blog-backlog-post-1-emoji.html">experimental
+  patch for cairo</a> and a suitable font is needed.
+</p>
+<p>
+  Cairo packages for Fedora containing that experimental patch are available
+  <a href="https://copr.fedorainfracloud.org/coprs/hadess/emoji/">here</a>.
+</p>
+<p>
+  One font which can be used to show emoji in colour is “Noto Color
+  Emoji” (“NotoColorEmoji.ttf”).  On Fedora, this font is in the
+  “google-noto-emoji-fonts” package.  Or you can get
+  it <a href="https://www.google.com/get/noto/">here</a>.
+</p>
+<p>
+  Another font which has emoji in colour is the “Emoji One” font
+  (“emojione-android.ttf”).  It is available
+  <a href="https://github.com/Ranks/emojione/raw/master/assets/fonts/emojione-android.ttf">here</a>. If you want a Fedora package you can also get this font from
+  <a href="https://copr.fedorainfracloud.org/coprs/hadess/emoji/">here</a>.
+</p>
+<p>
+  To make the colour emoji fonts your default emoji fonts, you can use a
+  fontconfig setup file <code>~/.config/fontconfig/fonts.conf</code> as in
+  this <a href="fonts.conf">example fonts.conf file</a> and edit it a bit.
+</p>
+<p>
+  This <a href="fonts.conf">example fonts.conf file</a> gives
+  “Symbola” the highest priority, which is a good black and white
+  emoji font.  That means if you use
+  a <code>~/.config/fontconfig/fonts.conf</code> file exactly as in
+  this example, the emoji will display in black and white.  If you
+  want coloured emoji, change that setup file to put either “Noto
+  Color Emoji” or “Emoji One” on top, whichever you prefer.
+</p>
+<p>
+  Without the hacks to show emoji in colour, the emoji support in
+  ibus-typing-booster will still work but the emoji will be displayed
+  in black and white.
+</p>
 
 <br class="clearboth">
 <a name="related-words-nltk"></a>
@@ -1448,8 +1651,8 @@ and a black and white font is used as a fallback.</p>
   <caption>Example for looking up related words for “castle”</caption>
   <tr>
     <td align="center">
-      <a href="images/castle-word-related.png">
-        <img src="images/thumbs/castle-word-related.png" alt="Example for looking up related words for “castle”">
+      <a href="images/gnome-castle-word-related.png">
+        <img src="images/thumbs/gnome-castle-word-related.png">
       </a>
     </td>
   </tr>
