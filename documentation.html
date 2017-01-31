@@ -29,7 +29,16 @@ layout: default
   </ul>
   <li><a href="#emoji-predictions">Unicode symbols and emoji predictions</a></li>
   <ul>
-    <li><a href="#multilingual-emoji">Multilingual emoji input</a></li>
+    <li><a href="#emoji-input">Emoji input</a></li>
+    <li><a href="#emoji-input-fuzzy">Emoji input fuzzy matching</a></li>
+    <li><a href="#emoji-input-multiple-keywords">Emoji input using multiple keywords</a></li>
+    <li><a href="#emoji-related">Looking up related emoji</a></li>
+    <li><a href="#emoji-multilingual">Multilingual emoji input</a></li>
+    <ul>
+      <li><a href="#emoji-german-english">Emoji input using German and English</a></li>
+      <li><a href="#emoji-hindi-english">Emoji input using Hindi and English</a></li>
+      <li><a href="#emoji-japanese">Emoji input using Japanese</a></li>
+    </ul>
     <li><a href="#unicode-symbols">Unicode symbol input</a></li>
     <li><a href="#unicode-code-points">Unicode code point input</a></li>
     <li><a href="#emoji-mode-quick-toogle">Quickly toggling emoji mode on and off</a></li>
@@ -1347,9 +1356,10 @@ keyboard input without any transliteration).</p>
 <h2>Unicode symbols and emoji predictions</h2>
 
 <p>
-  ibus-typing-booster supports prediction of emoji as well.  This can
-  be enabled or disabled with the option “Emoji predictions” in the
-  setup tool.  This option is on by default.
+  ibus-typing-booster supports prediction of emoji and Unicode symbols
+  as well (actually almost all Unicode characters except letters can
+  be typed this way).  This can be enabled or disabled with the option
+  “Emoji predictions” in the setup tool which is on by default.
 </p>
 <p>
   To make all emoji display correctly, you need good fonts which
@@ -1358,59 +1368,121 @@ keyboard input without any transliteration).</p>
 </p>
 
 <br class="clearboth">
-<a name="multilingual-emoji"></a>
+<a name="emoji-input"></a>
 <br>
-<h3>Multilingual emoji input</h3>
+<h3>Emoji input</h3>
 
 <br class="clearboth">
 <table class="picture">
-  <caption>Emoji example when typing castle</caption>
+  <caption>Emoji example when typing “castle”</caption>
   <tr>
     <td align="center">
-      <a href="images/gnome-emoji-castle.png">
-        <img src="images/thumbs/gnome-emoji-castle.png">
+      <a href="images/gnome-emoji-english-castle.png">
+        <img src="images/thumbs/gnome-emoji-english-castle.png">
       </a>
     </td>
   </tr>
 </table>
 
 <p>
+  When the emoji option is on (it is by default), you get emoji
+  displayed in the candidate list automatically when typing something
+  which matches an emoji.
+</p>
+<p>
+  For example in this screenshot, the user has typed “castle”
+  and the emoji 🏰 (U+1F3F0 EUROPEAN CASTLE) is shown
+  as the last candidate of the first page of the candidate list.
+</p>
+<p>
+  If reasonable matches for emoji are found, the first match is shown
+  as the last candidate of the first page of the candidate list. If
+  more than one emoji has matched the input, the other matches can be
+  found by scrolling down to the next page of candidates. If an emoji
+  is selected and committed, it will be remembered just like
+  ibus-typing-booster remembers other words and will be shown with
+  higher priority next time.
+</p>
+<p>
   The screen shot shows coloured emoji, to make that work
   see <a href="#color-emoji">Showing emoji in colour</a>.  By default,
   emoji will be shown in black and white on current linux
   distributions.
 </p>
-<p>
-  In the screen shot, the emoji 🏰 (U+1F3F0 EUROPEAN CASTLE) is shown
-  as the last candidate in the first page when the text “castle” is
-  typed. If reasonable matches for emoji are found, the first match is
-  shown as the last candidate in the first page. If more than one
-  emoji has matched the input, the other matches can be found by
-  scrolling down the candidate page. If an emoji is selected and
-  committed, it will be remembered just like ibus-typing-booster
-  remembers other words and will be shown with higher priority next
-  time.
-</p>
-<p>
-  In this example, the German typing booster is used with English used
-  as a second language.  Therefore, the English input text “castle”
-  did match emojis.
-</p>
-<p>
-  But as the main language used in this example is German one could
-  just as well type the German word for “castle” which is “Schloss”.
-  This would also match the emoji 🏰 (U+1F3F0 EUROPEAN CASTLE) and
-  also emoji like 🔒 (U+1F512 LOCK) because the German word “Schloss”
-  can also mean “lock”.
-</p>
+
+<br class="clearboth">
+<a name="emoji-input-fuzzy"></a>
+<br>
+<h3>Emoji input fuzzy matching</h3>
 
 <br class="clearboth">
 <table class="picture">
-  <caption>Example for looking up related emoji for “castle”</caption>
+  <caption>Emoji example when typing “casle”</caption>
   <tr>
     <td align="center">
-      <a href="images/gnome-emoji-castle-related.png">
-        <img src="images/thumbs/gnome-emoji-castle-related.png">
+      <a href="images/gnome-emoji-english-fuzzy-castle.png">
+        <img src="images/thumbs/gnome-emoji-english-fuzzy-castle.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  ibus-typing-booster tries to match the emoji names in a fuzzy way,
+  in many cases you will get a match even if your input contains
+  spelling mistakes.
+</p>
+<p>
+  In this example, the typed input is “casle”, i.e. not spelled
+  correctly. Nevertheless, one gets the match 🏰 (U+1F3F0 EUROPEAN
+  CASTLE).
+</p>
+
+<br class="clearboth">
+<a name="emoji-input-multiple-keywords"></a>
+<br>
+<h3>Emoji input using multiple keywords</h3>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Emoji example when typing “castle_japanese”</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-emoji-english-multiple-keywords-castle-japanese.png">
+        <img src="images/thumbs/gnome-emoji-english-multiple-keywords-castle-japanese.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  If typing a single word does not give you the emoji you are looking
+  for, you can type as many keywords as you like and concatenate them
+  with underscores “_” (Or spaces “ ”. Typing space usually commits
+  the preëdit, but you can insert literal spaces into the preëdit by
+  typing AltGr+Space).
+</p>
+<p>
+  In a previous example, typing “castle” gave us the match 🏰 (U+1F3F0
+  EUROPEAN CASTLE). If this is not what we wanted we can type
+  “castle_japanese” (or “japanese_castle”) to get 🏯 (U+1F3EF JAPANESE
+  CASTLE).  Even “castlejapanese” and “japanesecastle” work in this
+  case, but separating the search words with underscores or spaces
+  makes it easier for the matching algorithm.
+</p>
+
+<br class="clearboth">
+<a name="emoji-related"></a>
+<br>
+<h3>Looking up related Emoji</h3>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Looking up related emoji for the “Japanese castle”</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-emoji-english-related-japanese-castle.png">
+        <img src="images/thumbs/gnome-emoji-english-related-japanese-castle.png">
       </a>
     </td>
   </tr>
@@ -1443,11 +1515,73 @@ keyboard input without any transliteration).</p>
   words</a>.
 </p>
 <p>
-  As seen in the screen shot, emoji for other types of castles or
-  buildings are then shown. The lists of words shown in square
-  brackets are the keywords the shown emoji have in common with the
-  originally selected emoji. By typing the “Escape” key, one can go
-  back to the original list.
+  As seen in the screen shot, looking up related emoji for the
+  “Japanese castle” gives us emoji for other types of castles or
+  buildings. The lists of words shown in square brackets are the
+  keywords the shown emoji have in common with the originally selected
+  emoji. By typing the “Escape” key, one can go back to the original
+  list.
+</p>
+
+<br class="clearboth">
+<a name="emoji-multilingual"></a>
+<br>
+<h3>Multilingual emoji input</h3>
+
+<br class="clearboth">
+<a name="emoji-german-english"></a>
+<br>
+<h4>Emoji input using German and English</h4>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Emoji example when typing “Schloss_europa”</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-emoji-german-english-schloss-europa.png">
+        <img src="images/thumbs/gnome-emoji-german-english-schloss-europa.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  In this example, the German typing booster is used with English
+  as a second language. Therefore, one can use both the English word
+  “castle” or the German word for castle “Schloss” to find castle
+  emoji.
+</p>
+<p>
+  In the screen shot, the input typed is “Schloss_europa” and the
+  emoji matches shown are 🏰 (U+1F3F0 EUROPEAN CASTLE), 🔒 (U+1F512
+  LOCK), and 🏯 (U+1F3EF JAPANESE CASTLE).
+</p>
+<p>
+  The German word “Schloss” can mean “castle” as well as “lock”.
+  Therefore, the padlock emoji 🔒 (U+1F512 LOCK) matches as well.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Example for looking up related emoji for “Geschlossenes Schloss”</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-emoji-german-english-geschlossenes-schloss-related.png">
+        <img src="images/thumbs/gnome-emoji-german-english-geschlossenes-schloss-related.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Let’s look up related emoji by clicking the candidate number 5,
+  “Geschlossenes Schloss” 🔒 (U+1F512 LOCK) with the right mouse button
+  (See <a href="#emoji-related">Looking up related Emoji</a>).
+</p>
+<p>
+  We get several variants of padlock emoji, the European castle
+  and some closed mailboxes because “geschlossen” in German can also
+  mean “closed”.
 </p>
 <p>
   By the way, the related emoji shown in the screen shot have German
@@ -1457,9 +1591,15 @@ keyboard input without any transliteration).</p>
   When looking up related emoji, they are shown in all languages
   ibus-typing-booster is setup to use, but they are sorted in the
   order of preference of the languages. So German is on top because it
-  is the main language, English matches for related emoji are further
-  down in the candidate list.
+  is the main language. To see emoji whose English keywords are
+  related to the emoji 🔒 (U+1F512 LOCK), one can scroll further down
+  in the candidate list. These are of course labelled in English.
 </p>
+
+<br class="clearboth">
+<a name="emoji-hindi-english"></a>
+<br>
+<h4>Emoji input using Hindi and English</h4>
 
 <br class="clearboth">
 <table class="picture">
@@ -1502,19 +1642,150 @@ keyboard input without any transliteration).</p>
 </table>
 
 <p>
-  Of course one can lookup related emoji here as well.
+  Of course one can <a href="#emoji-related">lookup related emoji</a>
+  here as well.
 </p>
 <p>
-  To show related emoji, click an emoji shown in the candidate list
-  with the right mouse button (see <a href="#mouse-bindings">Mouse
-  bindings</a>).
+  Here we have clicked with the right mouse button
+  on the 🙏 U+1F64F PERSON WITH FOLDED HANDS emoji and get
+  emoji which are related because they share keywords in Hindi.
 </p>
 <p>
-  Or, using a <a href="#key-bindings">key binding</a> instead of the
-  mouse: select an emoji in the candidate list by moving up or down in
-  the candidate list using the arrow-up/arrow-down keys or the
-  page-up/page-down keys until the desired emoji is highlighted, then
-  press AltGr+F12.
+  And of course, because of the multilingual Hindi+English setup there
+  will be emoji which are related because they share keywords in
+  English further down in the candidate list.
+</p>
+
+<br class="clearboth">
+<a name="emoji-japanese"></a>
+<br>
+<h4>Emoji input using Japanese</h4>
+
+<p>
+  To be able to input emoji using their Japanese names, one first
+  needs to install the
+  packages <code>m17n-db-extras</code>, <code>m17n-lib-anthy</code>
+  and <code>anthy</code> on Fedora. On Fedora one can do this using
+  the command:
+</p>
+<p>
+<code>sudo dnf install m17n-db-extras m17n-lib-anthy</code>
+</p>
+<p>
+  This should work on other distributions as well, but the package names
+  may be different. You need the package which contains the
+  <code>/usr/share/m17n/ja-anthy.mim</code> file and other packages
+  which are required to make the ja-anthy input method of the m17n
+  library work.
+</p>
+<p>
+  Then one needs to add the ja-anthy input method and the Japanese
+  dictionary to the setup of ibus typing booster.  For details
+  see <a href="#multilingual-setup-dconf">Multilingual setup using
+  dconf</a>.
+</p>
+<p>
+  Which language version version of ibus-typing-booster is used does not
+  matter here. Let’s assume we are using the American English typing booster.
+  You may first want to check which dictionaries and input methods are already
+  setup:
+</p>
+<p>
+  <code>dconf dump /desktop/ibus/engine/typing-booster/typing-booster-en-us/</code>
+</p>
+<p>
+  Look at the contents of the <code>inputmethod</code> and <code>dictionary</code>
+  keys. Then add <code>ja-anthy</code> and <code>ja_JP</code> in addition
+  to what was already there. For example like this:
+</p>
+<p>
+  <code>dconf write /desktop/ibus/engine/typing-booster/typing-booster-en-us/inputmethod '"NoIme,ja-anthy"'</code>
+</p>
+<p>
+  “NoIme” means “no input method”, which means direct keyboard input.
+</p>
+<p>
+  <code>dconf write /desktop/ibus/engine/typing-booster/typing-booster-en-us/dictionary '"ja_JP,en_US"'</code>  
+</p>
+<p>
+  Here I did put the <code>ja-anthy</code> input method at second
+  priority and the <code>ja_JP</code> dictionary at first priority.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Emoji example when typing “katatsumuri”</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-emoji-katatsumuri.png">
+        <img src="images/thumbs/gnome-emoji-katatsumuri.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Now one can type emoji keywords using Japanese. For example when
+  typing “katasumuri” (which means “snail”), one gets the emoji 🐌
+  (U+1F40C SNAIL) listed as a candidate.
+</p>
+<p>
+  It is labelled in the candidate list in Japanese hiragan syllables,
+  i.e. “かたつむり”. The Latin “katatsumuri” was transliterated by the
+  ja-anthy input method to “かたつむり” and this was then looked up in
+  the  dictionaries. The Latin text “katatsumuri” was of course
+  looked up as well but of course produced no match.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Emoji example when typing “katatsumuri”</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-emoji-katatsumuri-preedit-hiragana.png">
+        <img src="images/thumbs/gnome-emoji-katatsumuri-preedit-hiragana.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Here we have switched the input method used in the preëdit to
+  ja-anthy with “Control+Down” or “Control+Up”.
+</p>
+<p>
+  That makes no difference for the matches, still both “katatsumuri”
+  and “かたつむり” are looked up in the dictionaries. Only when
+  committing the preëdit now by typing a space, we would commit the
+  hiragana “かたつむり”.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Example for looking up related emoji for “katatsumuri”</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-emoji-katatsumuri-related.png">
+        <img src="images/thumbs/gnome-emoji-katatsumuri-related.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Of course we can <a href="#emoji-related">lookup related emoji</a>
+  here as well.
+</p>
+<p>
+  Here we have clicked with the right mouse button on the 🐌 (U+1F40C
+  SNAIL) emoji and get emoji which are related because they share
+  keywords in hiragana (They share the keyword “むし” = “mushi” which
+  means insect.
+</p>
+<p>
+  And of course, because of the multilingual Japanese+English setup there
+  will be emoji which are related because they share keywords in
+  English further down in the candidate list.
 </p>
 
 <br class="clearboth">
