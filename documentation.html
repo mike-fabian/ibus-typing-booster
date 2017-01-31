@@ -1793,15 +1793,170 @@ keyboard input without any transliteration).</p>
 <br>
 <h3>Unicode symbol input</h3>
 
+<p>
+  Using the emoji input mode of ibus-typing-booster, one cannot only
+  input emoji but other Unicode symbols as well. Actually almost all
+  Unicode characters can be typed this way (Except most letters,
+  because letters can usually typed much faster directly).
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Using emoji mode to input mathematical symbols</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-emoji-integral.png">
+        <img src="images/thumbs/gnome-emoji-integral.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  This screenshot shows how the emoji mode can be used to input
+  mathematical symbols. You can also combine keywords using “_”,
+  i.e. type something like “volume_integral” to get more specific
+  matches (see <a href="#emoji-input-multiple-keywords">Emoji input
+  using multiple keywords</a>).
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Using emoji mode to input special formatting characters</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-emoji-pop-directional-formatting.png">
+        <img src="images/thumbs/gnome-emoji-pop-directional-formatting.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Here the emoji mode is used to input something like U+202C POP
+  DIRECTIONAL FORMATTING or U+2069 POP DIRECTIONAL ISOLATE.  These are
+  formatting characters used in scripts which use right-to-left
+  direction.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Using emoji mode to input CJK radicals</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-emoji-radical-turtle.png">
+        <img src="images/thumbs/gnome-emoji-radical-turtle.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Here the emoji mode is used to input the CJK radical “turtle”.
+</p>
+<p>
+  Anything in Unicode except letters is possible.
+</p>
+
 <br class="clearboth">
 <a name="unicode-code-points"></a>
 <br>
 <h3>Unicode code point input</h3>
 
 <br class="clearboth">
+<table class="picture">
+  <caption>Using emoji mode to input characters by Unicode code point</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-emoji-code-point-100.png">
+        <img src="images/thumbs/gnome-emoji-code-point-100.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  The emoji mode of ibus-typing-booster can also be used to input
+  any character using hexadezimal Unicode code points.
+</p>
+<p>
+  To be able to input hexadecimal numbers without problems, the option
+  “Use digits as select keys” should be switched off in the setup
+  tool. If this option were switched on, typing a digit like “1” would
+  select the candidate with the number one instead of inserting the
+  digit “1” into the preëdit.
+</p>
+<p>
+  If the option “Use digits as select keys” is switched off, one
+  can still use the F1-F9 keys to select candidates (and of course
+  one can select candidates with the mouse).
+</p>
+<p>
+  In this example, “100” has been typed and one gets the matches 💯
+  U+1F4AF HUNDRED POINTS SYMBOL which is an emoji which has been
+  matched because of its alternative name “100” and Ā U+0100 LATIN
+  CAPITAL LETTER A WITH MACRON which has been matched because it has
+  the Unicode code point 100 (hexadezimal).
+</p>
+<p>
+  It is quite rare that typing a Unicode code point matches an emoji
+  as well.  There will never be many candidates when typing Unicode
+  code points.
+</p>
+
+<br class="clearboth">
 <a name="emoji-mode-quick-toogle"></a>
 <br>
 <h3>Quickly toggling emoji mode on and off</h3>
+
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Triggering emoji mode using a trailing “_”</caption>
+  <tr>
+    <td align="center">
+      <a href="images/open-gnome-emoji-trailing-underscore.png">
+        <img src="images/thumbs/open-gnome-emoji-trailing-underscore.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  When emoji mode is on, finding the matching candidates can be
+  considerably slower compared to when emoji mode is switched off.
+  Especially if the emoji lookup is done in multiple languages at the
+  same time. In this case, there may be a noticeable delay until
+  the candidate list pops up.
+</p>
+<p>
+  Therefore, one may want to switch emoji mode off for maximum speed.
+</p>
+<p>
+  Always opening the setup tool to switch emoji mode on if one
+  occasionally wants to input an emoji would be inconvenient.
+  Therefore, emoji mode can also be toggled with
+  a <a href="mouse-bindings">mouse binding</a> (Control+Button3
+  anywhere in the candidate list toogles emoji mode between on and
+  off) or with a <a href="#key-bindings">key binding</a> (AltGr+F6
+  toggles emoji mode between on and off).
+</p>
+<p>
+  But there is an even faster way to temporarily switch on emoji mode
+  just for the current lookup.
+</p>
+<p>
+  In this screenshot we can see that emoji mode is off because the
+  box to the left of the smiley above the candidate list is not
+  checked (and one can see that “Unicode symbols and emoji
+  predictions” is not checked in the setup tool either).
+</p>
+<p>
+  Nevertheless we get matches for two camel emoji. This is because the
+  input typed is “camel_” which contains a trailing underscore.
+  Trailing and leading underscores temporarily turn on emoji mode
+  just for this one lookup.
+</p>
 
 <br class="clearboth">
 <a name="emoji-fonts"></a>
