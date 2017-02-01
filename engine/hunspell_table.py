@@ -201,6 +201,11 @@ class TypingBoosterEngine(IBus.Engine):
         self._config = self._bus.get_config()
         self._config.connect('value-changed', self.__config_value_changed_cb)
 
+        # Between some events sent to ibus like forward_key_event(),
+        # delete_surrounding_text(), commit_text(), a sleep is necessary.
+        # Without the sleep, these events may be processed out of order.
+        self._ibus_event_sleep_seconds = 0.1
+
         self._emoji_predictions = variant_to_value(self._config.get_value(
             self._config_section,
             'emojipredictions'))
@@ -1811,7 +1816,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self.forward_key_event(key.val, key.code, key.state)
                 # The sleep is needed because this is racy, without the
                 # sleep it works unreliably.
-                time.sleep(0.1)
+                time.sleep(self._ibus_event_sleep_seconds)
                 self.delete_surrounding_text(-len(token), len(token))
             # get the context to the left of the token:
             self.get_context()
@@ -1833,7 +1838,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self.forward_key_event(key.val, key.code, key.state)
                 # The sleep is needed because this is racy, without the
                 # sleep it works unreliably.
-                time.sleep(0.1)
+                time.sleep(self._ibus_event_sleep_seconds)
                 self.delete_surrounding_text(0, len(token))
             # get the context to the left of the token:
             self.get_context()
@@ -2735,7 +2740,7 @@ class TypingBoosterEngine(IBus.Engine):
                         input_phrase_left, input_phrase=input_phrase_left)
                 # The sleep is needed because this is racy, without the
                 # sleep it works unreliably.
-                time.sleep(0.1)
+                time.sleep(self._ibus_event_sleep_seconds)
                 self.forward_key_event(key.val, key.code, key.state)
                 self._commit_string(
                     input_phrase_right, input_phrase=input_phrase_right)
@@ -2771,7 +2776,7 @@ class TypingBoosterEngine(IBus.Engine):
                     self._forward_key_event_left()
                 # The sleep is needed because this is racy, without the
                 # sleep it works unreliably.
-                time.sleep(0.1)
+                time.sleep(self._ibus_event_sleep_seconds)
                 if self._reopen_preedit_or_return_false(key):
                     return True
             if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right, IBus.KEY_Delete):
