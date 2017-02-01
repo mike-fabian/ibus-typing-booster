@@ -643,11 +643,217 @@ layout: default
 <h3>When using the Unity desktop on Ubuntu</h3>
 
 <p>
-  I’ll write this section soon. Ibus-typing-booster works on the Unity
-  desktop as well, there are only some minor differences in how the
-  setup dialogues look like.
+  This section shows the setup of ibus-typing-booster on the “Unity”
+  desktop of ubuntu-16.04.
 </p>
 
+<br class="clearboth">
+<table class="picture">
+  <caption>Open the System Settings Language Support</caption>
+  <tr>
+    <td align="center">
+      <a href="images/unity-system-settings-language-support.png">
+        <img src="images/thumbs/unity-system-settings-language-support.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Open the system settings by clicking on the icon showing a
+  tooth-wheel and a wrench a the left side of the screen. Then click
+  on the “Language Support” icon there. In the dialog which opens,
+  make sure that “Keyboard input method system” is set to “IBus”.
+</p>
+<p>
+  Close that “Language Support” dialogue again and click on the
+  “Text Entry” icon in the system settings.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Text Entry dialog in the System Settings</caption>
+  <tr>
+    <td align="center">
+      <a href="images/unity-system-settings-text-entry.png">
+        <img src="images/thumbs/unity-system-settings-text-entry.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Some input sources may be already be listed at the left side of this
+  dialogue.  In this example we see “English (US, with euro on 5)”
+  which is not really an input engine, it is just a keyboard layout.
+</p>
+<p>
+  It is recommended to use a keyboard layout with ibus-typing-booster
+  which has a real “AltGr” key and does not just make the “AltGr” or
+  “Alt” key on the right side of the space bar basically a duplicate
+  of the left “Alt” key. For details,
+  see <a href="#key-bindings-altgr">The “AltGr” key</a>.
+</p>
+<p>
+  Now click on the “+” button at the lower left to add another input
+  source.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Choose an input source dialogue</caption>
+  <tr>
+    <td align="center">
+      <a href="images/unity-system-settings-choose-an-input-source.png">
+        <img src="images/thumbs/unity-system-settings-choose-an-input-source.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Type the word “booster” into the search entry and you see the
+  currently available language variants of ibus-typing-booster.
+  Select the variant of ibus-typing-booster you want to use and click
+  on “Add”.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Typing booster added</caption>
+  <tr>
+    <td align="center">
+      <a href="images/unity-system-settings-german-typing-booster-added.png">
+        <img src="images/thumbs/unity-system-settings-german-typing-booster-added.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Now you see that an ibus-typing-booster engine has been added to the list
+  of input sources to use.
+</p>
+<p>
+  If you select it, a n icon showing a wrench and a screwdriver
+  appears at the bottom right of the list, to the left of the icon
+  showing a keyboard.  Click the “wrench and screwdriver” icon to open
+  the setup tool of ibus-typing-booster.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Typing booster setup tool</caption>
+  <tr>
+    <td align="center">
+      <a href="images/unity-system-settings-typing-booster-setup-tool.png">
+        <img src="images/thumbs/unity-system-settings-typing-booster-setup-tool.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Here you see the setup tool of that ibus-typing-booster engine where
+  you can customize ibus-typing-booster according to your preferences.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Selecting an ibus-typing-booster engine in the panel menu</caption>
+  <tr>
+    <td align="center">
+      <a href="images/unity-select-typing-booster-in-panel.png">
+        <img src="images/thumbs/unity-select-typing-booster-in-panel.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Now open some programs where you could type something, for example
+  “gedit” or “gnome-terminal”. And activate the ibus-typing-booster
+  engine you want to use in the input source menu of the panel
+  as shown in this screenshot.
+</p>
+<p>
+  When the input source menu of the panel is open and an
+  ibus-typing-booster engine is selected, there is a menu entry
+  “Setup” which is an quicker way to open the setup tool
+  ibus-typing-booster setup tool than going via the system settings.
+</p>
+<p>
+  Some options of ibus-typing-booster are also directly available in
+  the input source menu of the panel to have quicker access to these
+  often used options than having to open the setup tool.  For example
+  the option to switch emoji mode on or off is available in the panel
+  menu. There are also <a href="">key bindings</a>
+  and <a href="">mouse bindings</a> for these frequently used options
+  which are shown in the input source menu of the panel as well
+  as a reminder.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Typing with ibus-typing-booster into gedit</caption>
+  <tr>
+    <td align="center">
+      <a href="images/unity-typing-with-ibus-typing-booster.png">
+        <img src="images/thumbs/unity-typing-with-ibus-typing-booster.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Now type something, for example into gedit and you should see
+  some suggestions for completions.
+</p>
+<p>
+  At the beginning, the suggestions only come from the hunspell dictionaries
+  and are thus not very good yet. But ibus-typing-booster learns from your
+  typing, it remembers which words you use often in which context.
+  Therefore, the suggestions become much better over time.
+</p>
+<p>
+  To switch between ibus-typing-booster and other input methods or a simple
+  keyboard layout, you can use the input sources menu in the panel
+  or the keyboard shortcut, which is Super+Space by default (can be changed
+  in the “Text Entry” dialogue of the system settings).
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Enabling the property panel and changing the font size</caption>
+  <tr>
+    <td align="center">
+      <a href="images/unity-enabling-the-property-panel.png">
+        <img src="images/thumbs/unity-enabling-the-property-panel.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  If you want to enable the ibus property panel or change the font
+  size for the list of candidates, you can do that by starting
+  the ibus-setup program.
+</p>
+<p>
+  To show the property panel set “Show property panel” to “Always”
+  in ibus-setup.
+</p>
+<p>
+  The property panel is seen in this screenshot at the top right, just
+  below the Unity panel. You can move the property panel anywhere you
+  like by dragging its left edge.  The property panel shows the
+  current value of some options of ibus-typing-booster and allows to
+  change them quickly.
+</p>
+<p>
+  The screenshot also shows how a much bigger font was chosen for the
+  candidate list with the “Use custom font” option in ibus-setup.
+</p>
 
 <br class="clearboth">
 <a name="key-bindings"></a>
