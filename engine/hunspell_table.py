@@ -2372,6 +2372,14 @@ class TypingBoosterEngine(IBus.Engine):
         else:
             return False
 
+    def _forward_key_event_left(self):
+        '''Forward an arrow left event to the application.'''
+        # Why is the keycode for IBus.KEY_Left 105?  Without using the
+        # right keycode, this does not work correctly, i.e.
+        # self.forward_key_event(IBus.KEY_Left, 0, 0) does *not* work!
+        self.forward_key_event(IBus.KEY_Left, 105, 0)
+        return
+
     def do_process_key_event(self, keyval, keycode, state):
         '''Process Key Events
         Key Events include Key Press and Key Release,
@@ -2690,8 +2698,9 @@ class TypingBoosterEngine(IBus.Engine):
             # the input might influence the transliteration. For example
             # When using hi-itrans, “. ” translates to “। ”
             # (See: https://bugzilla.redhat.com/show_bug.cgi?id=1353672)
+            preedit_ime = self._current_imes[0]
             input_phrase = self._transliterators[
-                self.get_current_imes()[0]].transliterate(
+                preedit_ime].transliterate(
                     self._typed_string + [key.msymbol])
             # If the transliteration now ends with the commit key, cut
             # it off because the commit key is passed to the
@@ -2705,6 +2714,34 @@ class TypingBoosterEngine(IBus.Engine):
                 # the selected phrase
                 phrase = self.get_string_from_lookup_table_cursor_pos()
                 commit_string = phrase
+            elif (key.val in (IBus.KEY_Return, IBus.KEY_KP_Enter)
+                  and (self._typed_string_cursor
+                       < len(self._typed_string))):
+                # “Return” or “Enter” is used to commit the preëdit
+                # while the cursor is not at the end of the preëdit.
+                # That means the part of the preëdit to the left of
+                # the cursor should be commited first, then the
+                # “Return” or enter should be forwarded to the
+                # application, then the part of the preëdit to the
+                # right of the cursor should be committed.
+                input_phrase_left = (
+                    self._transliterators[preedit_ime].transliterate(
+                        self._typed_string[:self._typed_string_cursor]))
+                input_phrase_right = (
+                    self._transliterators[preedit_ime].transliterate(
+                        self._typed_string[self._typed_string_cursor:]))
+                if input_phrase_left:
+                    self._commit_string(
+                        input_phrase_left, input_phrase=input_phrase_left)
+                # The sleep is needed because this is racy, without the
+                # sleep it works unreliably.
+                time.sleep(0.1)
+                self.forward_key_event(key.val, key.code, key.state)
+                self._commit_string(
+                    input_phrase_right, input_phrase=input_phrase_right)
+                for dummy_char in input_phrase_right:
+                    self._forward_key_event_left()
+                return True
             else:
                 # nothing is selected in the lookup table, commit the
                 # input_phrase
@@ -2729,15 +2766,9 @@ class TypingBoosterEngine(IBus.Engine):
                 # a way which works even when surrounding text is not
                 # supported. We can do it by forwarding as many
                 # arrow-left events to the application as the
-                # committed string has characters. Because it might
-                # have been control-arrow-left, we need to clear the
-                # CONTROL_MASK:
+                # committed string has characters.
                 for dummy_char in commit_string:
-                    self.forward_key_event(
-                        IBus.KEY_Left,
-                        # why is the keycode for IBus.KEY_Left 105?
-                        105,
-                        0)
+                    self._forward_key_event_left()
                 # The sleep is needed because this is racy, without the
                 # sleep it works unreliably.
                 time.sleep(0.1)
