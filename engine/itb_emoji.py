@@ -1181,6 +1181,7 @@ def main():
         profile = cProfile.Profile()
         profile.enable()
 
+    failed = False
     if False:
         matcher = EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
