@@ -216,10 +216,10 @@
                     <property name="visible">1</property>
                     <property name="can-focus">1</property>
                     <property name="invisible-char">●</property>
-                    <property name="text" translatable="yes">2</property>
+                    <property name="text">6</property>
                     <property name="adjustment">page_size_adjustment</property>
                     <property name="climb-rate">1</property>
-                    <property name="value">2</property>
+                    <property name="value">6</property>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
@@ -264,7 +264,7 @@
                     <property name="visible">1</property>
                     <property name="can-focus">1</property>
                     <property name="invisible-char">●</property>
-                    <property name="text" translatable="yes">1</property>
+                    <property name="text">1</property>
                     <property name="adjustment">min_char_complete_adjustment</property>
                     <property name="climb-rate">1</property>
                     <property name="value">1</property>
