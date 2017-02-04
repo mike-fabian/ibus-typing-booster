@@ -31,6 +31,7 @@ import json
 import unicodedata
 from difflib import SequenceMatcher
 import gettext
+import itb_util
 
 DOMAINNAME = 'ibus-typing-booster'
 _ = lambda a: gettext.dgettext(DOMAINNAME, a)
@@ -511,7 +512,7 @@ class EmojiMatcher():
 
     def _set_seq1(self, string):
         '''Sequence 1 is a label from the emoji data'''
-        string = string.lower()
+        string = itb_util.remove_accents(string).lower()
         self._string1 = string
         if not self._quick:
             # only needed when using SequenceMatcher()
@@ -522,7 +523,7 @@ class EmojiMatcher():
 
     def _set_seq2(self, string):
         '''Sequence 2 is the query string, i.e. the user input'''
-        string = string.lower()
+        string = itb_util.remove_accents(string).lower()
         self._string2 = string
         # Split the input string into a list of words:
         word_list = []
