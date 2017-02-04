@@ -30,6 +30,11 @@ import gzip
 import json
 import unicodedata
 from difflib import SequenceMatcher
+import gettext
+
+DOMAINNAME = 'ibus-typing-booster'
+_ = lambda a: gettext.dgettext(DOMAINNAME, a)
+N_ = lambda a: a
 
 IMPORT_ENCHANT_SUCCESSFUL = False
 try:
@@ -235,6 +240,25 @@ class EmojiMatcher():
         :type quick: Boolean
         '''
         self._languages = languages
+        self._gettext_translations = {}
+        for language in _expand_languages(self._languages):
+            mo_file = gettext.find(DOMAINNAME, languages=[language])
+            if (mo_file
+                and
+                '/' + language  + '/LC_MESSAGES/' + DOMAINNAME + '.mo'
+                in mo_file):
+                # Get the gettext translation instance only if a
+                # translation file for this *exact* language was
+                # found.  Ignore it if only a fallback was found. For
+                # example, if “de_DE” was requested and only “de” was
+                # found, ignore it.
+                try:
+                    self._gettext_translations[language] = gettext.translation(
+                        DOMAINNAME, languages=[language])
+                except (OSError, ):
+                    self._gettext_translations[language] = None
+            else:
+                self._gettext_translations[language] = None
         self._quick = quick
         self._enchant_dicts = []
         if IMPORT_ENCHANT_SUCCESSFUL:
@@ -407,6 +431,39 @@ class EmojiMatcher():
                 (emoji_string, 'en'), 'categories', categories)
             self._add_to_emoji_dict(
                 (emoji_string, 'en'), 'keywords', keywords)
+
+            categories_to_translate = [
+                # Translators: This is a name for a category of emoji
+                N_('activity'),
+                # Translators: This is a name for a category of emoji
+                N_('flags'),
+                # Translators: This is a name for a category of emoji
+                N_('food'),
+                # Translators: This is a name for a category of emoji
+                N_('modifier'),
+                # Translators: This is a name for a category of emoji
+                N_('nature'),
+                # Translators: This is a name for a category of emoji
+                N_('objects'),
+                # Translators: This is a name for a category of emoji
+                N_('people'),
+                # Translators: This is a name for a category of emoji
+                N_('regional'),
+                # Translators: This is a name for a category of emoji
+                N_('symbols'),
+                # Translators: This is a name for a category of emoji
+                N_('travel'),
+            ]
+            for language in _expand_languages(self._languages):
+                if self._gettext_translations[language]:
+                    translated_categories = []
+                    for category in categories:
+                        translated_categories.append(
+                            self._gettext_translations[
+                                language].gettext(category))
+                    self._add_to_emoji_dict(
+                        (emoji_string, language),
+                        'categories', translated_categories)
 
     def _load_cldr_annotation_data(self, language):
         '''
@@ -1189,6 +1246,12 @@ def main():
         matcher.debug_loading_data()
     else:
         import doctest
+        # Set the domain name to something invalid to avoid using
+        # the translations for the doctest tests. Translations may
+        # make the tests fail just because some translations are
+        # added, changed, or missing.
+        global DOMAINNAME
+        DOMAINNAME = ''
         (failed,  dummy_attempted) = doctest.testmod()
 
     if BENCHMARK:
