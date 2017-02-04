@@ -1,4 +1,29 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 07 Feb 2017 Released 1.5.21 version
+* Handle Return and Enter correctly when the cursor is not at the end of the preëdit (Resolves: rhbz#1418313)
+* Values of spin buttons should not be translatable
+* Make the categories from emojione translatable
+* Make emoji matching accent insensitive
+* If available use pykakasi to convert Japanese emoji category names to hiragana
+* Add some Japanese translations as a test case for pykakasi
+* If available use the “pinyin” Python module to add pinyin to the Chinese names and keywords
+* Don’t fallback to “zh” from “zh_TW”, “zh_HK”, “zh_MO” and “zh_Hant”
+* Don’t sort the labels when listing similar emoji
+* Don’t change Unicode categories to lowercase when loading, use the original case
+* Also treat categories 'Zl' and 'Zp' as invisible and add Unicode code point
+* When searching for similar emoji, the original emoji should be most similar to itself
+* Fix duplicate listing of labels when looking up similar emoji
+* Make it optionally possible to match emoji in Japanese using romaji
+* itb_emoji.py: Add the code point to the name of invisible characters also when looking up similar characters
+* Better matching of the Unicode categories
+* Small performance optimization in EmojiMatcher.similar()
+* Remove any U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR characters from the lookup table
+* Nicer display of the matching labels when looking up similar emoji
+* Don’t strip mathematical symbols (category 'Sm') from tokens
+* Update of en.xml from CLDR’s emoji annotations
+* Update translations from zanata (de, pl updated)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 25 Jan 2017 Released 1.5.20 version
 * Calculate the maximum word length for each dictionary individually
 * Use .startswith instead of regexp matching when matching in hunspell dictionaries (speed optimization)

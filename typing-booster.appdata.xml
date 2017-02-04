@@ -16,6 +16,90 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.21" date="2017-02-07" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Handle Return and Enter correctly when the cursor is not
+            at the end of the preëdit (Resolves: rhbz#1418313)
+          </li>
+          <li>
+            Values of spin buttons should not be translatable
+          </li>
+          <li>
+            Make the categories from emojione translatable
+          </li>
+          <li>
+            Make emoji matching accent insensitive
+          </li>
+          <li>
+            If available use pykakasi to convert Japanese emoji
+            category names to hiragana
+          </li>
+          <li>
+            Add some Japanese translations as a test case for pykakasi
+          </li>
+          <li>
+            If available use the “pinyin” Python module to add pinyin
+            to the Chinese names and keywords
+          </li>
+          <li>
+            Don’t fallback to “zh” from “zh_TW”, “zh_HK”, “zh_MO” and
+            “zh_Hant”
+          </li>
+          <li>
+            Don’t sort the labels when listing similar emoji
+          </li>
+          <li>
+            Don’t change Unicode categories to lowercase when loading,
+            use the original case
+          </li>
+          <li>
+            Also treat categories 'Zl' and 'Zp' as invisible and add
+            Unicode code point
+          </li>
+          <li>
+            When searching for similar emoji, the original emoji
+            should be most similar to itself
+          </li>
+          <li>
+            Fix duplicate listing of labels when looking up similar
+            emoji
+          </li>
+          <li>
+            Make it optionally possible to match emoji in Japanese using romaji
+          </li>
+          <li>
+            itb_emoji.py: Add the code point to the name of invisible
+            characters also when looking up similar characters
+          </li>
+          <li>
+            Better matching of the Unicode categories
+          </li>
+          <li>
+            Small performance optimization in EmojiMatcher.similar()
+          </li>
+          <li>
+            Remove any U+2028 LINE SEPARATOR and U+2029 PARAGRAPH
+            SEPARATOR characters from the lookup table
+          </li>
+          <li>
+            Nicer display of the matching labels when looking up
+            similar emoji
+          </li>
+          <li>
+            Don’t strip mathematical symbols (category 'Sm') from
+            tokens
+          </li>
+          <li>
+            Update of en.xml from CLDR’s emoji annotations
+          </li>
+          <li>
+            Update translations from zanata (de, pl updated)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.20" date="2017-01-25" urgency="medium">
       <description>
         <ul>
