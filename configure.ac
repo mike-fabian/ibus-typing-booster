@@ -67,6 +67,8 @@ AC_CONFIG_FILES([po/Makefile.in
     engine/Makefile
     engine/typing-booster.xml.in
     engine/ibus-engine-typing-booster
+    engine/emoji-picker
+    engine/version.py
     setup/Makefile
     setup/ibus-setup-typing-booster
     setup/version.py

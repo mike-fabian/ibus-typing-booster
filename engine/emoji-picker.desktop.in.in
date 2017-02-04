@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Emoji Picker
+Comment=An emoji selection tool
+Exec=${PREFIX}/bin/emoji-picker
+Type=Application
+StartupNotify=true

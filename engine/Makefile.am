@@ -18,6 +18,22 @@
 # You should have received a copy of the GNU General Public License 
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+desktop_in_in_files = emoji-picker.desktop.in.in
+
+desktop_in_files = $(desktop_in_in_files:.in.in=.in)
+
+emoji-picker.desktop: emoji-picker.desktop.in.in
+	( \
+		PREFIX=$(prefix); \
+		PKGDATADIR=$(pkgdatadir); \
+		LIBEXECDIR=$(libexecdir); \
+		s=`cat $<`; \
+		eval "echo \"$${s}\""; \
+	) > $@
+
+desktopdir=$(datadir)/applications
+desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+
 engine_table_PYTHON = \
 	factory.py \
 	main.py \
@@ -28,10 +44,14 @@ engine_table_PYTHON = \
 	itb_emoji.py \
 	itb_nltk.py \
 	m17n_translit.py \
+	emoji_picker.py \
+	version.py \
 	$(NULL)
 engine_table_DATA = \
 	$(NULL)
 engine_tabledir = $(datadir)/ibus-typing-booster/engine
+
+bin_SCRIPTS = emoji-picker
 
 libexec_SCRIPTS = ibus-engine-typing-booster
 
@@ -39,8 +59,11 @@ engine_DATA = typing-booster.xml
 enginedir = $(datadir)/ibus/component
 
 EXTRA_DIST = \
+	version.py.in \
 	ibus-engine-typing-booster.in \
 	typing-booster.xml.in \
+	emoji-picker.in \
+	$(desktop_in_in_files) \
 	$(NULL)
 
 CLEANFILES = \
@@ -48,6 +71,9 @@ CLEANFILES = \
 	*.pyo \
 	ibus-engine-typing-booster \
 	typing-booster.xml \
+	emoji-picker \
+	$(desktop_DATA) \
+	$(desktop_in_files) \
 	$(NULL)
 
 MAINTAINERCLEANFILES = \

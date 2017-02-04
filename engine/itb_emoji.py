@@ -514,12 +514,16 @@ class EmojiMatcher():
             # added because of a keyword match).
             keywords = sorted(list(set(emojione_value['keywords'])))
 
+            emoji_order = emojione_value['emoji_order']
+
             self._add_to_emoji_dict(
                 (emoji_string, 'en'), 'names', names)
             self._add_to_emoji_dict(
                 (emoji_string, 'en'), 'categories', categories)
             self._add_to_emoji_dict(
                 (emoji_string, 'en'), 'keywords', keywords)
+            self._add_to_emoji_dict(
+                (emoji_string, 'en'), 'emoji_order', emoji_order)
 
             categories_to_translate = [
                 # Translators: This is a name for a category of emoji
@@ -1259,15 +1263,21 @@ class EmojiMatcher():
         self._candidate_cache[(query_string, match_limit)] = sorted_candidates
         return sorted_candidates
 
-    def name(self, emoji_string):
+    def name(self, emoji_string, language=''):
         '''Find a name of an emoji.
 
-        Returns a name of the emoji in the first language given
-        for which where a name can be found.
+        Returns a name of the emoji in the language requested
+        or and empty string if no name can be found in that language.
+
+        If no language is requested, the name is returned in the first
+        language of this EmojiMatcher for which where a name can be
+        found.
 
         :param emoji_string: The string of Unicode characters which are
                              used to encode the emoji
-        :type emoji_string: A string
+        :type emoji_string: string
+        :param language: The language requested for the name
+        :type language: string
         :rtype: string
 
         Examples:
@@ -1319,7 +1329,14 @@ class EmojiMatcher():
 
         >>> matcher.name('a')
         ''
+
         '''
+        if language:
+            if ((emoji_string, language) in self._emoji_dict
+                and 'names' in self._emoji_dict[(emoji_string, language)]):
+                return self._emoji_dict[(emoji_string, language)]['names'][0]
+            else:
+                return ''
         for language in _expand_languages(self._languages):
             if ((emoji_string, language) in self._emoji_dict
                 and 'names' in self._emoji_dict[(emoji_string, language)]):
@@ -1460,6 +1477,72 @@ class EmojiMatcher():
             score = len(x[1])
             candidates.append((emoji, name, score))
         return candidates
+
+    def emoji_by_label(self):
+        '''
+        :rtype:
+        '''
+        label_keys = ('ucategories', 'categories', 'keywords', 'names')
+        emoji_by_label_dict = {}
+        for label_key in label_keys:
+            for emoji_key, emoji_value in self._emoji_dict.items():
+                emoji = emoji_key[0]
+                language = emoji_key[1]
+                if not language in emoji_by_label_dict:
+                    emoji_by_label_dict[language] = {}
+                if label_key in emoji_value:
+                    if not label_key in emoji_by_label_dict[language]:
+                        emoji_by_label_dict[language][label_key] = {}
+                    if label_key == 'ucategories':
+                        ucategory_label_full = ', '.join(
+                            emoji_value[label_key])
+                        if (not ucategory_label_full
+                            in emoji_by_label_dict[language][label_key]):
+                            emoji_by_label_dict[
+                                language][
+                                    label_key][
+                                        ucategory_label_full] = [emoji]
+                        else:
+                            emoji_by_label_dict[
+                                language][
+                                    label_key][
+                                        ucategory_label_full].append(emoji)
+                    else:
+                        for label in emoji_value[label_key]:
+                            if (not label in
+                                emoji_by_label_dict[language][label_key]):
+                                emoji_by_label_dict[
+                                    language][
+                                        label_key][
+                                            label] = [emoji]
+                            else:
+                                emoji_by_label_dict[
+                                    language][
+                                        label_key][
+                                            label].append(emoji)
+        for language in emoji_by_label_dict:
+            for label_key in emoji_by_label_dict[language]:
+                for label in emoji_by_label_dict[language][label_key]:
+                    emoji_by_label_dict[language][label_key][label] = sorted(
+                        emoji_by_label_dict[language][label_key][label],
+                        key = lambda x:(
+                            self.emoji_order(x)
+                    ))
+        return emoji_by_label_dict
+
+    def emoji_order(self, emoji_string):
+        '''Returns the “emoji_order” number from emojione
+
+        Useful for sorting emoji.
+
+        :param emoji_string: An emoji
+        :type emoji_string: String
+        :rtype: Integer
+        '''
+        if ((emoji_string, 'en') in self._emoji_dict
+            and 'emoji_order' in self._emoji_dict[(emoji_string, 'en')]):
+            return int(self._emoji_dict[(emoji_string, 'en')]['emoji_order'])
+        return 0xFFFFFFFF
 
     def debug_loading_data(self):
         '''To debug whether the data has been loaded correctly'''
