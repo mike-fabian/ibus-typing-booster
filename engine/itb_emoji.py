@@ -44,6 +44,13 @@ try:
 except (ImportError,):
     IMPORT_ENCHANT_SUCCESSFUL = False
 
+IMPORT_PYKAKASI_SUCCESSFUL = False
+try:
+    from pykakasi import kakasi
+    IMPORT_PYKAKASI_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_PYKAKASI_SUCCESSFUL = False
+
 DATADIR = os.path.join(os.path.dirname(__file__), '../data')
 
 # VALID_CATEGORIES and VALID_RANGES are taken from ibus-uniemoji.
@@ -455,13 +462,28 @@ class EmojiMatcher():
                 # Translators: This is a name for a category of emoji
                 N_('travel'),
             ]
+
+            if IMPORT_PYKAKASI_SUCCESSFUL:
+                kakasi_instance = kakasi()
+                kakasi_instance.setMode("J", "H")
+                kanji_hiragana_converter = kakasi_instance.getConverter()
+
             for language in _expand_languages(self._languages):
                 if self._gettext_translations[language]:
                     translated_categories = []
                     for category in categories:
+                        translated_category = self._gettext_translations[
+                                language].gettext(category)
                         translated_categories.append(
-                            self._gettext_translations[
-                                language].gettext(category))
+                            translated_category)
+                        if language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
+                            translated_category_hiragana = (
+                                kanji_hiragana_converter.do(
+                                    translated_category))
+                            if (translated_category_hiragana
+                                != translated_category):
+                                translated_categories.append(
+                                    translated_category_hiragana)
                     self._add_to_emoji_dict(
                         (emoji_string, language),
                         'categories', translated_categories)
