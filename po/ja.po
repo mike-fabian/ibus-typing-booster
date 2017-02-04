@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2017-02-04 18:38+0100\n"
+"POT-Creation-Date: 2017-02-08 09:07+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -15,88 +15,88 @@ msgstr ""
 "X-Generator: Zanata 3.9.6\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 
-#: engine/hunspell_table.py:397 engine/hunspell_table.py:417
+#: engine/hunspell_table.py:394 engine/hunspell_table.py:414
 msgid "Off"
 msgstr ""
 
-#: engine/hunspell_table.py:402 engine/hunspell_table.py:422
+#: engine/hunspell_table.py:399 engine/hunspell_table.py:419
 msgid "On"
 msgstr ""
 
-#: engine/hunspell_table.py:407 engine/hunspell_table.py:409
+#: engine/hunspell_table.py:404 engine/hunspell_table.py:406
 #: setup/setup.glade:151
 msgid "Unicode symbols and emoji predictions"
 msgstr ""
 
-#: engine/hunspell_table.py:427 engine/hunspell_table.py:428
+#: engine/hunspell_table.py:424 engine/hunspell_table.py:425
 #: setup/setup.glade:166
 msgid "Off the record mode"
 msgstr ""
 
-#: engine/hunspell_table.py:1140
+#: engine/hunspell_table.py:1144
 msgid "Preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1141
+#: engine/hunspell_table.py:1145
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1334
+#: engine/hunspell_table.py:1338
 msgid "Setup"
 msgstr ""
 
-#: engine/hunspell_table.py:1337
+#: engine/hunspell_table.py:1341
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:438
+#: engine/itb_emoji.py:526
 msgid "activity"
 msgstr "活動"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:440
+#: engine/itb_emoji.py:528
 msgid "flags"
 msgstr "旗"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:442
+#: engine/itb_emoji.py:530
 msgid "food"
 msgstr "飲食"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:444
+#: engine/itb_emoji.py:532
 msgid "modifier"
 msgstr "修飾"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:446
+#: engine/itb_emoji.py:534
 msgid "nature"
 msgstr "自然"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:448
+#: engine/itb_emoji.py:536
 msgid "objects"
 msgstr "物"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:450
+#: engine/itb_emoji.py:538
 msgid "people"
 msgstr "人間"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:452
+#: engine/itb_emoji.py:540
 msgid "regional"
 msgstr "地方指示子"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:454
+#: engine/itb_emoji.py:542
 msgid "symbols"
 msgstr "符号"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:456
+#: engine/itb_emoji.py:544
 msgid "travel"
 msgstr "旅行"
 
