@@ -1,0 +1,409 @@
+# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
+"issues\n"
+"POT-Creation-Date: 2017-02-04 18:38+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2017-02-04 03:45-0500\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"X-Generator: Zanata 3.9.6\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+
+#: engine/hunspell_table.py:397 engine/hunspell_table.py:417
+msgid "Off"
+msgstr ""
+
+#: engine/hunspell_table.py:402 engine/hunspell_table.py:422
+msgid "On"
+msgstr ""
+
+#: engine/hunspell_table.py:407 engine/hunspell_table.py:409
+#: setup/setup.glade:151
+msgid "Unicode symbols and emoji predictions"
+msgstr ""
+
+#: engine/hunspell_table.py:427 engine/hunspell_table.py:428
+#: setup/setup.glade:166
+msgid "Off the record mode"
+msgstr ""
+
+#: engine/hunspell_table.py:1140
+msgid "Preedit input method"
+msgstr ""
+
+#: engine/hunspell_table.py:1141
+msgid "Switch preedit input method"
+msgstr ""
+
+#: engine/hunspell_table.py:1334
+msgid "Setup"
+msgstr ""
+
+#: engine/hunspell_table.py:1337
+#, python-format
+msgid "Configure ibus-typing-booster “%(name)s”"
+msgstr ""
+
+#. Translators: This is a name for a category of emoji
+#: engine/itb_emoji.py:438
+msgid "activity"
+msgstr "活動"
+
+#. Translators: This is a name for a category of emoji
+#: engine/itb_emoji.py:440
+msgid "flags"
+msgstr "旗"
+
+#. Translators: This is a name for a category of emoji
+#: engine/itb_emoji.py:442
+msgid "food"
+msgstr "飲食"
+
+#. Translators: This is a name for a category of emoji
+#: engine/itb_emoji.py:444
+msgid "modifier"
+msgstr "修飾"
+
+#. Translators: This is a name for a category of emoji
+#: engine/itb_emoji.py:446
+msgid "nature"
+msgstr "自然"
+
+#. Translators: This is a name for a category of emoji
+#: engine/itb_emoji.py:448
+msgid "objects"
+msgstr "物"
+
+#. Translators: This is a name for a category of emoji
+#: engine/itb_emoji.py:450
+msgid "people"
+msgstr "人間"
+
+#. Translators: This is a name for a category of emoji
+#: engine/itb_emoji.py:452
+msgid "regional"
+msgstr "地方指示子"
+
+#. Translators: This is a name for a category of emoji
+#: engine/itb_emoji.py:454
+msgid "symbols"
+msgstr "符号"
+
+#. Translators: This is a name for a category of emoji
+#: engine/itb_emoji.py:456
+msgid "travel"
+msgstr "旅行"
+
+#: setup/main.py:110
+#, python-format
+msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
+msgstr ""
+
+#: setup/main.py:116
+msgid "IBUS_ENGINE_NAME environment variable is not set."
+msgstr ""
+
+#: setup/main.py:120
+msgid ""
+"Cannot determine the config file for this engine. Please use the --config-"
+"file option."
+msgstr ""
+
+#: setup/main.py:130
+#, python-format
+msgid "Config file %(file)s does not exist."
+msgstr ""
+
+#: setup/main.py:148
+#, python-format
+msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
+msgstr ""
+
+#. Translators: Column heading of the table listing the existing shortcuts
+#: setup/main.py:183
+msgid "Shortcut"
+msgstr ""
+
+#. Translators: Column heading of the table listing the existing shortcuts
+#: setup/main.py:189
+msgid "Shortcut expansion"
+msgstr ""
+
+#: setup/main.py:347
+msgid "Horizontal"
+msgstr ""
+
+#: setup/main.py:349
+msgid "Vertical"
+msgstr ""
+
+#: setup/main.py:351
+msgid "System default"
+msgstr ""
+
+#: setup/main.py:441
+msgid "Another instance of this app is already running."
+msgstr ""
+
+#: setup/main.py:629
+msgid "Open File ..."
+msgstr ""
+
+#: setup/main.py:647
+#, python-format
+msgid "Learned successfully from file %(filename)s."
+msgstr ""
+
+#: setup/main.py:656
+#, python-format
+msgid "Learning from file %(filename)s failed."
+msgstr ""
+
+#: setup/main.py:669
+msgid "Are you sure?"
+msgstr ""
+
+#: setup/main.py:676
+msgid ""
+"Do you really want to delete all language \n"
+"data learned from typing or reading files?"
+msgstr ""
+
+#: setup/main.py:985
+msgid "ibus is not running."
+msgstr ""
+
+#: setup/setup.glade:30
+msgid "Close"
+msgstr ""
+
+#: setup/setup.glade:59
+msgid "Enable suggestions by Tab key"
+msgstr ""
+
+#: setup/setup.glade:62
+msgid ""
+"If this option is on, suggestions are not shown by default. Typing Tab is "
+"then necessary to show the list of suggestions. After a commit the "
+"suggestions are hidden again until the next Tab key is typed."
+msgstr ""
+
+#: setup/setup.glade:75
+msgid "Display total number of candidates"
+msgstr ""
+
+#: setup/setup.glade:78
+msgid ""
+"Display how many candidates there are and which one is selected on top of "
+"the list of candidates."
+msgstr ""
+
+#: setup/setup.glade:91
+msgid "Show status info in auxiliary text"
+msgstr ""
+
+#: setup/setup.glade:94
+msgid ""
+"Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
+"record”  mode are on or off and show which input method is currently used "
+"for the preëdit. The auxiliary text is an optional line of text displayed "
+"above the candidate list. "
+msgstr ""
+
+#: setup/setup.glade:106
+msgid "Use digits as select keys"
+msgstr ""
+
+#: setup/setup.glade:109
+msgid ""
+"Use the regular digits 1-9 as select keys. If that option is on, numbers can "
+"only by typed while no suggestions are shown. Therefore, completions for "
+"numbers cannot be suggested. And typing words containing numbers, like “A4” "
+"is more difficult as typing “4” would select the 4th suggestion. On the "
+"other hand, selecting suggestions using 1-9 is easier then using the always "
+"enabled select keys F1-F9 as the latter keys are farther away from the "
+"fingers."
+msgstr ""
+
+#: setup/setup.glade:121
+msgid "Add direct input"
+msgstr ""
+
+#: setup/setup.glade:124
+msgid ""
+"This option adds British English as a second language to use in addition to "
+"the main language of this input method."
+msgstr ""
+
+#: setup/setup.glade:136
+msgid "Remember last used preedit input method"
+msgstr ""
+
+#: setup/setup.glade:139
+msgid ""
+"If more then one input method is used at the same time, one of them is used "
+"for the preedit.  Which input method is used for the preedit can be changed "
+"via the menu or via shortcut keys. If this option is enabled, such a change "
+"is remembered even if the session is restarted. "
+msgstr ""
+
+#: setup/setup.glade:154
+msgid ""
+"Whether Unicode symbols and emoji should be included in the predictions. "
+"Emoji are pictographs like ☺♨⛵…. Unicode symbols are other symbols like "
+"mathematical symbols (∀∑∯…), arrows (←↑↔…), currency symbols (€₹₺…), braille "
+"patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
+"nevertheless useful symbols."
+msgstr ""
+
+#: setup/setup.glade:169
+msgid ""
+"While “Off the record” mode is on, learning from user input is disabled. If "
+"learned user input is available, predictions are usually much better than "
+"predictions using only dictionaries. Therefore, one should use this option "
+"sparingly. Only if one wants to avoid saving secret user input to disk it "
+"might make sense to use this option temporarily."
+msgstr ""
+
+#: setup/setup.glade:182
+msgid ""
+"The characters in this list cause the preedit to be committed automatically, "
+"followed by a space.  For example, if “.” is an auto commit character, this "
+"saves you typing a space manually after the end of a sentence. You can "
+"freely edit this list, a reasonable value might be “.,;:?!)”. You should not "
+"add characters to that list which are needed by your input method, for "
+"example if you use Latin-Pre (t-latn-pre) it would be a bad idea to add “.” "
+"to that list because it would prevent you from typing “.s” to get “ṡ”. You "
+"can also disable this feature completely by making the list empty (which is "
+"the default).\n"
+msgstr ""
+
+#: setup/setup.glade:184
+msgid "Auto commit characters:"
+msgstr ""
+
+#: setup/setup.glade:195
+msgid ""
+"How many suggestion candidates to show in one page of the candidate list."
+msgstr ""
+
+#: setup/setup.glade:196
+msgid "Candidate window page size:"
+msgstr ""
+
+#: setup/setup.glade:232
+msgid ""
+"Whether the candidate window should be drawn horizontally or vertically."
+msgstr ""
+
+#: setup/setup.glade:233
+msgid "Candidate window orientation"
+msgstr ""
+
+#: setup/setup.glade:253
+msgid ""
+"Show no suggestions when less than this number of characters have been typed."
+""
+msgstr ""
+
+#: setup/setup.glade:254
+msgid "Minimum number of chars for completion:"
+msgstr ""
+
+#: setup/setup.glade:280
+msgid ""
+"The input method to use. See also the option “Add direct input” to add "
+"British English as a second language."
+msgstr ""
+
+#: setup/setup.glade:281
+msgid "Input Method:"
+msgstr ""
+
+#: setup/setup.glade:300
+msgid "Input Method Help"
+msgstr ""
+
+#: setup/setup.glade:304
+msgid "Display some help showing how to use the input method selected above."
+msgstr ""
+
+#: setup/setup.glade:317
+msgid "Options"
+msgstr ""
+
+#: setup/setup.glade:333
+msgid "Clear input"
+msgstr ""
+
+#: setup/setup.glade:346
+msgid "Add shortcut"
+msgstr ""
+
+#: setup/setup.glade:361
+msgid "Enter shortcut here:"
+msgstr ""
+
+#: setup/setup.glade:374
+msgid "Enter shortcut expansion here:"
+msgstr ""
+
+#: setup/setup.glade:431
+msgid "Delete shortcut"
+msgstr ""
+
+#: setup/setup.glade:450
+msgid "Custom shortcuts"
+msgstr ""
+
+#: setup/setup.glade:467
+msgid "Install the dictionary package for this engine"
+msgstr ""
+
+#: setup/setup.glade:479
+msgid "Install dictionary"
+msgstr ""
+
+#: setup/setup.glade:493
+msgid "Learn your style by reading a text file"
+msgstr ""
+
+#: setup/setup.glade:505
+msgid "Learn from text file"
+msgstr ""
+
+#: setup/setup.glade:519
+msgid ""
+"Delete all personal language data learned from typing or from reading files"
+msgstr ""
+
+#: setup/setup.glade:531
+msgid "Delete learned data"
+msgstr ""
+
+#: setup/setup.glade:550
+msgid "Dictionaries and personal data"
+msgstr ""
+
+#: setup/setup.glade:591
+msgid "A completion input method to speedup typing."
+msgstr ""
+
+#: setup/setup.glade:616
+msgid "<b>Home page:</b>"
+msgstr ""
+
+#: setup/setup.glade:627
+msgid "<b>Online documentation:</b>"
+msgstr ""
+
+#. This is the “About” tab in the setup tool.  That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
+#: setup/setup.glade:658
+msgid "About"
+msgstr ""
