@@ -51,6 +51,13 @@ try:
 except (ImportError,):
     IMPORT_PYKAKASI_SUCCESSFUL = False
 
+IMPORT_PINYIN_SUCCESSFUL = False
+try:
+    import pinyin
+    IMPORT_PINYIN_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_PINYIN_SUCCESSFUL = False
+
 DATADIR = os.path.join(os.path.dirname(__file__), '../data')
 
 # VALID_CATEGORIES and VALID_RANGES are taken from ibus-uniemoji.
@@ -524,6 +531,13 @@ class EmojiMatcher():
                             'names',
                             [match.group('content')]
                         )
+                        if (language in ('zh', 'zh_Hant')
+                            and IMPORT_PINYIN_SUCCESSFUL):
+                            self._add_to_emoji_dict(
+                                (emoji_string, language),
+                                'names',
+                                [pinyin.get(match.group('content'))]
+                            )
                     else:
                         self._add_to_emoji_dict(
                             (emoji_string, language),
@@ -531,6 +545,14 @@ class EmojiMatcher():
                             [x.strip()
                              for x in match.group('content').split('|')]
                         )
+                        if (language in ('zh', 'zh_Hant')
+                            and IMPORT_PINYIN_SUCCESSFUL):
+                            self._add_to_emoji_dict(
+                                (emoji_string, language),
+                                'keywords',
+                                [pinyin.get(x.strip())
+                                 for x in match.group('content').split('|')]
+                            )
 
     def _set_seq1(self, string):
         '''Sequence 1 is a label from the emoji data'''
@@ -1264,7 +1286,7 @@ def main():
     failed = False
     if False:
         matcher = EmojiMatcher(
-            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP', 'zh_CN'],
             unicode_data = True, cldr_data = True)
         matcher.debug_loading_data()
     else:
