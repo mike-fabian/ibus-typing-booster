@@ -190,15 +190,21 @@ def _expand_languages(languages):
 
     >>> _expand_languages(['es_MX', 'es_ES', 'ja_JP'])
     ['es_MX', 'es_419', 'es', 'es_ES', 'es', 'ja_JP', 'ja', 'en']
+
+    >>> _expand_languages(['zh_Hant', 'zh_CN', 'zh_TW', 'zh_SG', 'zh_HK', 'zh_MO'])
+    ['zh_Hant', 'zh_CN', 'zh', 'zh_TW', 'zh_Hant', 'zh_SG', 'zh', 'zh_HK', 'zh_Hant', 'zh_MO', 'zh_Hant', 'en']
     '''
     expanded_languages = []
     for language in languages:
         expanded_languages.append(language)
         if language in SPANISH_419_LOCALES:
             expanded_languages.append('es_419')
+        if language in ('zh_TW', 'zh_HK', 'zh_MO'):
+            expanded_languages.append('zh_Hant')
         if language[:2] == 'en':
             expanded_languages.append('en_001')
-        if language.split('_')[:1] != [language]:
+        if (language not in ('zh_TW', 'zh_HK', 'zh_MO', 'zh_Hant')
+            and language.split('_')[:1] != [language]):
             expanded_languages += language.split('_')[:1]
     if 'en' not in expanded_languages:
         expanded_languages.append('en')
@@ -1286,7 +1292,8 @@ def main():
     failed = False
     if False:
         matcher = EmojiMatcher(
-            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP', 'zh_CN'],
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE',
+                         'ja_JP', 'zh_TW', 'zh_CN'],
             unicode_data = True, cldr_data = True)
         matcher.debug_loading_data()
     else:
