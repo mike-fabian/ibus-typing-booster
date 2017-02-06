@@ -68,27 +68,42 @@ except (ImportError,):
 
 DATADIR = os.path.join(os.path.dirname(__file__), '../data')
 
-# VALID_CATEGORIES and VALID_RANGES are taken from ibus-uniemoji.
+UNICODE_CATEGORIES = {
+    'Cc': {'valid': False, 'major': 'Other', 'minor': 'Control'},
+    # 'Cf' contains RIGHT-TO-LEFT MARK ...
+    'Cf': {'valid': True, 'major': 'Other', 'minor': 'Format'},
+    'Cn': {'valid': False, 'major': 'Other', 'minor': 'Not assigned'},
+    'Co': {'valid': False, 'major': 'Other', 'minor': 'Private use'},
+    'Cs': {'valid': False, 'major': 'Other', 'minor': 'Surrogate'},
+    'Ll': {'valid': False, 'major': 'Letter', 'minor': 'Lowercase'},
+    'Lm': {'valid': False, 'major': 'Letter', 'minor': 'Modifier'},
+    'Lo': {'valid': False, 'major': 'Letter', 'minor': 'Other'},
+    'Lt': {'valid': False, 'major': 'Letter', 'minor': 'Titlecase'},
+    'Lu': {'valid': False, 'major': 'Letter', 'minor': 'Uppercase'},
+    'Mc': {'valid': False, 'major': 'Mark', 'minor': 'Spacing combining'},
+    'Me': {'valid': False, 'major': 'Mark', 'minor': 'Enclosing'},
+    'Mn': {'valid': False, 'major': 'Mark', 'minor': 'Nonspacing'},
+    'Nd': {'valid': False, 'major': 'Number', 'minor': 'Decimal digit'},
+    'Nl': {'valid': False, 'major': 'Number', 'minor': 'Letter'},
+    # 'No' contains SUPERSCRIPT ONE ...
+    'No': {'valid': True, 'major': 'Number', 'minor': 'Other'},
+    'Pc': {'valid': True, 'major': 'Punctuation', 'minor': 'Connector'},
+    'Pd': {'valid': True, 'major': 'Punctuation', 'minor': 'Dash'},
+    'Pe': {'valid': True, 'major': 'Punctuation', 'minor': 'Close'},
+    'Pf': {'valid': True, 'major': 'Punctuation', 'minor': 'Final quote'},
+    'Pi': {'valid': True, 'major': 'Punctuation', 'minor': 'Initial quote'},
+    'Po': {'valid': True, 'major': 'Punctuation', 'minor': 'Other'},
+    'Ps': {'valid': True, 'major': 'Punctuation', 'minor': 'Open'},
+    'Sc': {'valid': True, 'major': 'Symbol', 'minor': 'Currency'},
+    'Sk': {'valid': True, 'major': 'Symbol', 'minor': 'Modifier'},
+    'Sm': {'valid': True, 'major': 'Symbol', 'minor': 'Math'},
+    'So': {'valid': True, 'major': 'Symbol', 'minor': 'Other'},
+    'Zl': {'valid': True, 'major': 'Separator', 'minor': 'Line'},
+    'Zp': {'valid': True, 'major': 'Separator', 'minor': 'Paragraph'},
+    'Zs': {'valid': True, 'major': 'Separator', 'minor': 'Space'},
+}
 
-VALID_CATEGORIES = (
-    'Cf', # Other, Format (RIGHT-TO-LEFT MARK ...)
-    'No', # Number, Other (SUPERSCRIPT ONE etc.).
-    'Pc', # Punctuation, Connector
-    'Pd', # Punctuation, dash
-    'Pe', # Punctuation, Close
-    'Pi', # Punctuation, Initial quote
-    'Pf', # Punctuation, Final quote
-    'Ps', # Punctuation, Open
-    'Po', # Punctuation, other
-    'Sm', # Symbol, math
-    'So', # Symbol, other
-    'Sc', # Symbol, Currency
-    'Sk', # Symbol, Modifier
-    'Zl', # Separator, Line
-    'Zp', # Separator, Paragraph
-    'Zs', # Separator, Space
-)
-
+# VALID_RANGES are taken from ibus-uniemoji (but not used anymore at the moment)
 VALID_RANGES = (
     (0x0024, 0x0024), # DOLLAR SIGN
     (0x00a2, 0x00a5), # CENT SIGN, POUND SIGN, CURRENCY SIGN, YEN SIGN
@@ -422,13 +437,19 @@ class EmojiMatcher():
                 codepoint_string, name, category = line.split(';')[:3]
                 codepoint_integer = int(codepoint_string, 16)
                 emoji_string = chr(codepoint_integer)
-                if (category not in VALID_CATEGORIES
+                if (not UNICODE_CATEGORIES[category]['valid']
                     and emoji_string not in VALID_CHARACTERS):
                     continue
                 self._add_to_emoji_dict(
                     (emoji_string, 'en'), 'names', [name.lower()])
                 self._add_to_emoji_dict(
-                    (emoji_string, 'en'), 'ucategories', [category])
+                    (emoji_string, 'en'),
+                    'ucategories', [
+                        category,
+                        UNICODE_CATEGORIES[category]['major'],
+                        UNICODE_CATEGORIES[category]['minor'],
+                    ]
+                )
 
     def _load_emojione_data(self):
         '''
@@ -1004,7 +1025,7 @@ class EmojiMatcher():
         ('📷', 'camera')
 
         >>> mq.candidates('symbol')[0][:2]
-        ('🔣', 'input symbol for symbols “input symbols”')
+        ('🔣', 'input symbol for symbols “input symbols” {Symbol}')
 
         >>> mq.candidates('atomsymbol')[0][:2]
         ('⚛', 'atom symbol')
@@ -1013,7 +1034,7 @@ class EmojiMatcher():
         ('☮', 'peace symbol')
 
         >>> mq.candidates('peace symbol')[0][:2]
-        ('☮', 'peace symbol')
+        ('☮', 'peace symbol {Symbol}')
 
         >>> mq.candidates('animal')[0][:2]
         ('🐜', 'ant [animal]')
@@ -1071,6 +1092,42 @@ class EmojiMatcher():
 
         >>> mq.candidates('superscript one')[0][:2]
         ('¹', 'superscript one')
+
+        >>> mq.candidates('currency')[0][:2]
+        ('💱', 'currency exchange')
+
+        >>> mq.candidates('connector')[0][:2]
+        ('﹎', 'centreline low line {Connector}')
+
+        >>> mq.candidates('dash')[0][:2]
+        ('💨', 'dash symbol “dashing away”')
+
+        >>> mq.candidates('close')[0][:2]
+        ('⸥', 'bottom right half bracket {Close}')
+
+        >>> mq.candidates('punctuation')[0][:2]
+        ('‼', 'double exclamation mark {Punctuation} [punctuation]')
+
+        >>> mq.candidates('final quote')[0][:2]
+        ('⸅', 'right dotted substitution bracket {Final quote}')
+
+        >>> mq.candidates('initial quote')[0][:2]
+        ('‟', 'double high-reversed-9 quotation mark {Initial quote}')
+
+        >>> mq.candidates('modifier')[0][:2]
+        ('🏻', 'emoji modifier fitzpatrick type-1-2 {Modifier}')
+
+        >>> mq.candidates('math')[0][:2]
+        ('𝜵', 'mathematical bold italic nabla {Math}')
+
+        >>> mq.candidates('separator line')[0][:2]
+        (' ', 'U+2028 line separator {Line}')
+
+        >>> mq.candidates('separator paragraph')[0][:2]
+        (' ', 'U+2029 paragraph separator {Paragraph}')
+
+        >>> mq.candidates('separator space')[0][:2]
+        (' ', 'U+20 space {Space}')
 
         >>> mq = EmojiMatcher(languages = ['fr_FR'])
         >>> mq.candidates('chat')[0][:2]
@@ -1339,6 +1396,22 @@ class EmojiMatcher():
                 if label_key in self._emoji_dict[emoji_key]:
                     for label in self._emoji_dict[emoji_key][label_key]:
                         original_labels_for_language.add(label)
+                        if (label_key == 'ucategories'
+                            and label in UNICODE_CATEGORIES):
+                            # For example, label could be 'So' in this
+                            # case.  The next two labels will be
+                            # 'Symbol' and 'Other' then. In almost all
+                            # cases, adding these as well to
+                            # original_labels_for_language would not
+                            # change the final result. It would only
+                            # add two more strings to the list of
+                            # matching labels for *every* similar
+                            # emoji. Therefore, it would only make the
+                            # candidate list for similar emoji much
+                            # wider without giving any extra
+                            # information to the user. Better skip
+                            # the rest of labels in this case.
+                            break
             for similar_key in self._emoji_dict:
                 if similar_key[1] != language:
                     continue
