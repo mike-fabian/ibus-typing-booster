@@ -381,7 +381,7 @@ class EmojiMatcher():
                 self._add_to_emoji_dict(
                     (emoji_string, 'en'), 'names', [name.lower()])
                 self._add_to_emoji_dict(
-                    (emoji_string, 'en'), 'categories', [category.lower()])
+                    (emoji_string, 'en'), 'categories', [category])
 
     def _load_emojione_data(self):
         '''
@@ -750,7 +750,7 @@ class EmojiMatcher():
         >>> mq = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
 
         >>> mq.candidates('😺', match_limit = 3)
-        [('😺', "smiling cat face with open mouth ['so', 'people', 'animal', 'cat', 'happy', 'face', 'mouth', 'open', 'smile']", 9), ('😸', "grinning cat face with smiling eyes ['so', 'people', 'animal', 'cat', 'happy', 'face', 'smile']", 7), ('😃', "smiling face with open mouth ['so', 'people', 'happy', 'face', 'mouth', 'open', 'smile']", 7)]
+        [('😺', "smiling cat face with open mouth ['So', 'people', 'animal', 'cat', 'happy', 'face', 'mouth', 'open', 'smile']", 9), ('😸', "grinning cat face with smiling eyes ['So', 'people', 'animal', 'cat', 'happy', 'face', 'smile']", 7), ('😃', "smiling face with open mouth ['So', 'people', 'happy', 'face', 'mouth', 'open', 'smile']", 7)]
 
         >>> mq.candidates('ねこ＿')[0][:2]
         ('🐈', 'ねこ')
@@ -1199,7 +1199,7 @@ class EmojiMatcher():
         []
 
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺', "white smiling face ['so', 'people', 'happy', 'smiley', 'face', 'outlined', 'relaxed', 'smile']", 8), ('😋', "face savouring delicious food ['so', 'people', 'happy', 'smiley', 'face', 'smile']", 6), ('😁', "grinning face with smiling eyes ['so', 'people', 'happy', 'smiley', 'face', 'smile']", 6), ('🙂', "slightly smiling face ['so', 'people', 'happy', 'smiley', 'face', 'smile']", 6), ('😍', "smiling face with heart-shaped eyes ['so', 'people', 'happy', 'smiley', 'face', 'smile']", 6)]
+        [('☺', "white smiling face ['So', 'people', 'happy', 'smiley', 'face', 'outlined', 'relaxed', 'smile']", 8), ('😋', "face savouring delicious food ['So', 'people', 'happy', 'smiley', 'face', 'smile']", 6), ('😁', "grinning face with smiling eyes ['So', 'people', 'happy', 'smiley', 'face', 'smile']", 6), ('🙂', "slightly smiling face ['So', 'people', 'happy', 'smiley', 'face', 'smile']", 6), ('😍', "smiling face with heart-shaped eyes ['So', 'people', 'happy', 'smiley', 'face', 'smile']", 6)]
 
         >>> matcher = EmojiMatcher(languages = ['it_IT', 'en_US', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('☺', match_limit = 5)
@@ -1207,7 +1207,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', "bactrian camel ['so', 'nature', 'animal', 'hump day', 'wildlife', 'bactrian', 'camel', 'hump']", 8), ('🐪', "dromedary camel ['so', 'nature', 'animal', 'wildlife', 'hump']", 5), ('🐻', "bear face ['so', 'nature', 'animal', 'wildlife']", 4), ('🐦', "bird ['so', 'nature', 'animal', 'wildlife']", 4), ('🐡', "blowfish ['so', 'nature', 'animal', 'wildlife']", 4)]
+        [('🐫', "bactrian camel ['So', 'nature', 'animal', 'hump day', 'wildlife', 'bactrian', 'camel', 'hump']", 8), ('🐪', "dromedary camel ['So', 'nature', 'animal', 'wildlife', 'hump']", 5), ('🐻', "bear face ['So', 'nature', 'animal', 'wildlife']", 4), ('🐦', "bird ['So', 'nature', 'animal', 'wildlife']", 4), ('🐡', "blowfish ['So', 'nature', 'animal', 'wildlife']", 4)]
 
         >>> matcher = EmojiMatcher(languages = [ 'it_IT', 'en_US','es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
@@ -1227,7 +1227,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('€', match_limit = 10)
-        [('؋', "afghani sign ['sc']", 1), ('֏', "armenian dram sign ['sc']", 1), ('₳', "austral sign ['sc']", 1), ('৻', "bengali ganda mark ['sc']", 1), ('৲', "bengali rupee mark ['sc']", 1), ('৳', "bengali rupee sign ['sc']", 1), ('₵', "cedi sign ['sc']", 1), ('¢', "cent sign ['sc']", 1), ('₡', "colon sign ['sc']", 1), ('₢', "cruzeiro sign ['sc']", 1)]
+        [('؋', "afghani sign ['Sc']", 1), ('֏', "armenian dram sign ['Sc']", 1), ('₳', "austral sign ['Sc']", 1), ('৻', "bengali ganda mark ['Sc']", 1), ('৲', "bengali rupee mark ['Sc']", 1), ('৳', "bengali rupee sign ['Sc']", 1), ('₵', "cedi sign ['Sc']", 1), ('¢', "cent sign ['Sc']", 1), ('₡', "colon sign ['Sc']", 1), ('₢', "cruzeiro sign ['Sc']", 1)]
         '''
         candidate_scores = {}
         expanded_languages = _expand_languages(self._languages)
