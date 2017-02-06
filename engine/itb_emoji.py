@@ -1101,7 +1101,7 @@ class EmojiMatcher():
                     (char,
                      'U+' + query_string.upper()
                      + ' ' + unicodedata.name(char),
-                     200))
+                     good_match_score))
         except (ValueError,):
             pass
 
