@@ -1072,7 +1072,9 @@ class EmojiMatcher():
                 else:
                     display_name = self.name(emoji_key[0])
                 if (len(emoji_key[0]) == 1
-                    and unicodedata.category(emoji_key[0]) in ('Cc', 'Cf', 'Zs')):
+                    and
+                    unicodedata.category(emoji_key[0])
+                    in ('Cc', 'Cf', 'Zl', 'Zp', 'Zs')):
                     # Add the code point to the display name of
                     # “invisible” characters:
                     display_name = ('U+%X' %ord(emoji_key[0])
