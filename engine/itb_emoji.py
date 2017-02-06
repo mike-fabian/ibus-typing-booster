@@ -532,31 +532,36 @@ class EmojiMatcher():
                 if match:
                     emoji_string = match.group('emojistring')
                     if match.group('tts'):
-                        self._add_to_emoji_dict(
-                            (emoji_string, language),
-                            'names',
-                            [match.group('content')]
-                        )
                         if (language in ('zh', 'zh_Hant')
                             and IMPORT_PINYIN_SUCCESSFUL):
                             self._add_to_emoji_dict(
                                 (emoji_string, language),
                                 'names',
-                                [pinyin.get(match.group('content'))]
+                                [match.group('content'),
+                                 pinyin.get(match.group('content'))]
+                            )
+                        else:
+                            self._add_to_emoji_dict(
+                                (emoji_string, language),
+                                'names',
+                                [match.group('content')]
                             )
                     else:
-                        self._add_to_emoji_dict(
-                            (emoji_string, language),
-                            'keywords',
-                            [x.strip()
-                             for x in match.group('content').split('|')]
-                        )
                         if (language in ('zh', 'zh_Hant')
                             and IMPORT_PINYIN_SUCCESSFUL):
+                            for x in match.group('content').split('|'):
+                                keyword = x.strip()
+                                keyword_pinyin = pinyin.get(keyword)
+                                self._add_to_emoji_dict(
+                                    (emoji_string, language),
+                                    'keywords',
+                                    [keyword, keyword_pinyin]
+                                )
+                        else:
                             self._add_to_emoji_dict(
                                 (emoji_string, language),
                                 'keywords',
-                                [pinyin.get(x.strip())
+                                [x.strip()
                                  for x in match.group('content').split('|')]
                             )
 
@@ -745,7 +750,7 @@ class EmojiMatcher():
         >>> mq = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
 
         >>> mq.candidates('😺', match_limit = 3)
-        [('😺', "smiling cat face with open mouth ['animal', 'cat', 'face', 'happy', 'mouth', 'open', 'people', 'smile', 'so']", 9), ('😸', "grinning cat face with smiling eyes ['animal', 'cat', 'face', 'happy', 'people', 'smile', 'so']", 7), ('😃', "smiling face with open mouth ['face', 'happy', 'mouth', 'open', 'people', 'smile', 'so']", 7)]
+        [('😺', "smiling cat face with open mouth ['so', 'people', 'animal', 'cat', 'happy', 'face', 'mouth', 'open', 'smile']", 9), ('😸', "grinning cat face with smiling eyes ['so', 'people', 'animal', 'cat', 'happy', 'face', 'smile']", 7), ('😃', "smiling face with open mouth ['so', 'people', 'happy', 'face', 'mouth', 'open', 'smile']", 7)]
 
         >>> mq.candidates('ねこ＿')[0][:2]
         ('🐈', 'ねこ')
@@ -986,7 +991,7 @@ class EmojiMatcher():
         ('🤔', 'visage en pleine réflexion')
 
         >>> mq.candidates('🤔', match_limit = 3)
-        [('🤔', "visage en pleine réflexion ['réflexion', 'visage']", 2), ('💆\u200d♀', "femme qui se fait masser le visage ['visage']", 1), ('💆\u200d♂', "homme qui se fait masser le visage ['visage']", 1)]
+        [('🤔', "visage en pleine réflexion ['visage', 'réflexion']", 2), ('💆\u200d♀', "femme qui se fait masser le visage ['visage']", 1), ('💆\u200d♂', "homme qui se fait masser le visage ['visage']", 1)]
 
         >>> mq = EmojiMatcher(languages = ['fr_FR'])
         >>> mq.candidates('2019')
@@ -1194,23 +1199,23 @@ class EmojiMatcher():
         []
 
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺', "white smiling face ['face', 'happy', 'outlined', 'people', 'relaxed', 'smile', 'smiley', 'so']", 8), ('😋', "face savouring delicious food ['face', 'happy', 'people', 'smile', 'smiley', 'so']", 6), ('😁', "grinning face with smiling eyes ['face', 'happy', 'people', 'smile', 'smiley', 'so']", 6), ('🙂', "slightly smiling face ['face', 'happy', 'people', 'smile', 'smiley', 'so']", 6), ('😍', "smiling face with heart-shaped eyes ['face', 'happy', 'people', 'smile', 'smiley', 'so']", 6)]
+        [('☺', "white smiling face ['so', 'people', 'happy', 'smiley', 'face', 'outlined', 'relaxed', 'smile']", 8), ('😋', "face savouring delicious food ['so', 'people', 'happy', 'smiley', 'face', 'smile']", 6), ('😁', "grinning face with smiling eyes ['so', 'people', 'happy', 'smiley', 'face', 'smile']", 6), ('🙂', "slightly smiling face ['so', 'people', 'happy', 'smiley', 'face', 'smile']", 6), ('😍', "smiling face with heart-shaped eyes ['so', 'people', 'happy', 'smiley', 'face', 'smile']", 6)]
 
         >>> matcher = EmojiMatcher(languages = ['it_IT', 'en_US', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺', "faccina sorridente ['contorno faccina sorridente', 'emozionarsi', 'faccina', 'sorridente']", 4), ('😺', "gatto che sorride ['faccina', 'sorridente']", 2), ('👽', "alieno ['faccina']", 1), ('👼', "angioletto ['faccina']", 1), ('🤑', "avidità di denaro ['faccina']", 1)]
+        [('☺', "faccina sorridente ['contorno faccina sorridente', 'sorridente', 'faccina', 'emozionarsi']", 4), ('😺', "gatto che sorride ['sorridente', 'faccina']", 2), ('👽', "alieno ['faccina']", 1), ('👼', "angioletto ['faccina']", 1), ('🤑', "avidità di denaro ['faccina']", 1)]
 
         >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', "bactrian camel ['animal', 'bactrian', 'camel', 'hump', 'hump day', 'nature', 'so', 'wildlife']", 8), ('🐪', "dromedary camel ['animal', 'hump', 'nature', 'so', 'wildlife']", 5), ('🐻', "bear face ['animal', 'nature', 'so', 'wildlife']", 4), ('🐦', "bird ['animal', 'nature', 'so', 'wildlife']", 4), ('🐡', "blowfish ['animal', 'nature', 'so', 'wildlife']", 4)]
+        [('🐫', "bactrian camel ['so', 'nature', 'animal', 'hump day', 'wildlife', 'bactrian', 'camel', 'hump']", 8), ('🐪', "dromedary camel ['so', 'nature', 'animal', 'wildlife', 'hump']", 5), ('🐻', "bear face ['so', 'nature', 'animal', 'wildlife']", 4), ('🐦', "bird ['so', 'nature', 'animal', 'wildlife']", 4), ('🐡', "blowfish ['so', 'nature', 'animal', 'wildlife']", 4)]
 
         >>> matcher = EmojiMatcher(languages = [ 'it_IT', 'en_US','es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', "cammello ['animale', 'gobba']", 2), ('🐪', "dromedario ['animale', 'gobba']", 2), ('🐀', "Ratto ['animale']", 1), ('🐁', "Topo ['animale']", 1), ('\U0001f986', "anatra ['animale']", 1)]
+        [('🐫', "cammello ['gobba', 'animale']", 2), ('🐪', "dromedario ['gobba', 'animale']", 2), ('🐀', "Ratto ['animale']", 1), ('🐁', "Topo ['animale']", 1), ('\U0001f986', "anatra ['animale']", 1)]
 
         >>> matcher = EmojiMatcher(languages = ['de_DE', 'it_IT', 'en_US','es_MX', 'es_ES', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', "Kamel ['Tier', 'zweihöckrig']", 2), ('🐒', "Affe ['Tier']", 1), ('🐵', "Affengesicht ['Tier']", 1), ('🐜', "Ameise ['Tier']", 1), ('🐝', "Biene ['Tier']", 1)]
+        [('🐫', "Kamel ['zweihöckrig', 'Tier']", 2), ('🐒', "Affe ['Tier']", 1), ('🐵', "Affengesicht ['Tier']", 1), ('🐜', "Ameise ['Tier']", 1), ('🐝', "Biene ['Tier']", 1)]
 
         >>> matcher = EmojiMatcher(languages = ['es_MX', 'it_IT', 'de_DE', 'en_US', 'es_ES', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
@@ -1218,7 +1223,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', "camello ['bactriano', 'camello', 'desierto', 'jorobas']", 4), ('🐪', "dromedario ['camello', 'desierto']", 2), ('🏜', "desierto ['desierto']", 1), ('🐫', "cammello ['animale', 'gobba']", 2), ('🐪', "dromedario ['animale', 'gobba']", 2)]
+        [('🐫', "camello ['camello', 'bactriano', 'jorobas', 'desierto', 'camello', 'bactriano', 'jorobas', 'desierto']", 8), ('🐪', "dromedario ['desierto', 'camello', 'desierto', 'camello']", 4), ('🏜', "desierto ['desierto', 'desierto']", 2), ('🐫', "cammello ['gobba', 'animale']", 2), ('🐪', "dromedario ['gobba', 'animale']", 2)]
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('€', match_limit = 10)
@@ -1251,9 +1256,9 @@ class EmojiMatcher():
                                 scores_key = (
                                     similar_string, language, similar_name)
                                 if scores_key in candidate_scores:
-                                    candidate_scores[scores_key].add(label)
+                                    candidate_scores[scores_key].append(label)
                                 else:
-                                    candidate_scores[scores_key] = set([label])
+                                    candidate_scores[scores_key] = [label]
         candidates = []
         for x in sorted(candidate_scores.items(),
                         key = lambda x:(
@@ -1263,7 +1268,7 @@ class EmojiMatcher():
                             x[0][2], # emoji name
                         ))[:match_limit]:
             candidates.append(
-                (x[0][0], x[0][2] + ' ' + repr(sorted(x[1])), len(x[1])))
+                (x[0][0], x[0][2] + ' ' + repr(x[1]), len(x[1])))
         return candidates
 
     def debug_loading_data(self):
