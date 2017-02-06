@@ -381,7 +381,7 @@ class EmojiMatcher():
                 self._add_to_emoji_dict(
                     (emoji_string, 'en'), 'names', [name.lower()])
                 self._add_to_emoji_dict(
-                    (emoji_string, 'en'), 'categories', [category])
+                    (emoji_string, 'en'), 'ucategories', [category])
 
     def _load_emojione_data(self):
         '''
@@ -1038,6 +1038,7 @@ class EmojiMatcher():
             total_score = 0
             good_match_score = 200
             name_good_match = ''
+            ucategory_good_match = ''
             category_good_match = ''
             keyword_good_match = ''
             if 'names' in emoji_value:
@@ -1045,6 +1046,12 @@ class EmojiMatcher():
                     score = 2 * self._match(name, debug = debug_match)
                     if score >= good_match_score:
                         name_good_match = name
+                    total_score += score
+            if 'ucategories' in emoji_value:
+                for ucategory in emoji_value['ucategories']:
+                    score = self._match(ucategory, debug = debug_match)
+                    if score >= good_match_score:
+                        ucategory_good_match = ucategory
                     total_score += score
             if 'categories' in emoji_value:
                 for category in emoji_value['categories']:
@@ -1076,6 +1083,8 @@ class EmojiMatcher():
                 # this emoji matched:
                 if name_good_match not in display_name:
                     display_name += ' “' + name_good_match + '”'
+                if ucategory_good_match not in display_name:
+                    display_name += ' {' + ucategory_good_match + '}'
                 if category_good_match not in display_name:
                     display_name += ' {' + category_good_match + '}'
                 if keyword_good_match not in display_name:
@@ -1236,7 +1245,7 @@ class EmojiMatcher():
             if emoji_key not in self._emoji_dict:
                 continue
             original_labels_for_language = set()
-            label_keys = ('categories', 'keywords')
+            label_keys = ('ucategories', 'categories', 'keywords')
             for label_key in label_keys:
                 if label_key in self._emoji_dict[emoji_key]:
                     for label in self._emoji_dict[emoji_key][label_key]:
