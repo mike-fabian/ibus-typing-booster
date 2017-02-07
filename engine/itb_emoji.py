@@ -1385,17 +1385,18 @@ class EmojiMatcher():
         [('€', "euro sign ['€', 'Sc']", 2), ('؋', "afghani sign ['Sc']", 1), ('֏', "armenian dram sign ['Sc']", 1), ('₳', "austral sign ['Sc']", 1), ('৻', "bengali ganda mark ['Sc']", 1), ('৲', "bengali rupee mark ['Sc']", 1), ('৳', "bengali rupee sign ['Sc']", 1), ('₵', "cedi sign ['Sc']", 1), ('¢', "cent sign ['Sc']", 1), ('₡', "colon sign ['Sc']", 1)]
         '''
         candidate_scores = {}
+        original_labels = {}
         expanded_languages = _expand_languages(self._languages)
+        label_keys = ('ucategories', 'categories', 'keywords')
         for language in expanded_languages:
+            original_labels[language] = set()
             emoji_key = (emoji_string, language)
             if emoji_key not in self._emoji_dict:
                 continue
-            original_labels_for_language = set()
-            label_keys = ('ucategories', 'categories', 'keywords')
             for label_key in label_keys:
                 if label_key in self._emoji_dict[emoji_key]:
                     for label in self._emoji_dict[emoji_key][label_key]:
-                        original_labels_for_language.add(label)
+                        original_labels[language].add(label)
                         if (label_key == 'ucategories'
                             and label in UNICODE_CATEGORIES):
                             # For example, label could be 'So' in this
@@ -1412,43 +1413,37 @@ class EmojiMatcher():
                             # information to the user. Better skip
                             # the rest of labels in this case.
                             break
-            for similar_key in self._emoji_dict:
-                if similar_key[1] != language:
-                    continue
-                similar_string = similar_key[0]
-                if 'names' in self._emoji_dict[similar_key]:
-                    similar_name = self._emoji_dict[similar_key]['names'][0]
-                else:
-                    similar_name = self.name(similar_string)
-                if (len(similar_string) == 1
-                    and _is_invisible(similar_string)):
-                    # Add the code point to the display name of
-                    # “invisible” characters:
-                    similar_name = ('U+%X' %ord(similar_string)
-                                    + ' ' + similar_name)
-                scores_key = (
-                    similar_string, language, similar_name)
-                if scores_key in candidate_scores:
-                    # This language has been scored already
-                    # (apparently it was twice in the expanded
-                    # language list), skip it.
-                    continue
-                if similar_string == emoji_string:
-                    # This is exactly the same emoji, add the emoji
-                    # itself as one extra label.  This way, the
-                    # original emoji gets a higher score then emoji
-                    # which share all categories and all keywords.
-                    # The most similar emoji should always be the
-                    # original emoji itself.
-                    candidate_scores[scores_key] = [emoji_string]
-                for label_key in label_keys:
-                    if label_key in self._emoji_dict[similar_key]:
-                        for label in self._emoji_dict[similar_key][label_key]:
-                            if label in original_labels_for_language:
-                                if scores_key in candidate_scores:
-                                    candidate_scores[scores_key].append(label)
-                                else:
-                                    candidate_scores[scores_key] = [label]
+        for similar_key in self._emoji_dict:
+            similar_string = similar_key[0]
+            language = similar_key[1]
+            if 'names' in self._emoji_dict[similar_key]:
+                similar_name = self._emoji_dict[similar_key]['names'][0]
+            else:
+                similar_name = self.name(similar_string)
+            if (len(similar_string) == 1
+                and _is_invisible(similar_string)):
+                # Add the code point to the display name of
+                # “invisible” characters:
+                similar_name = ('U+%X' %ord(similar_string)
+                                + ' ' + similar_name)
+            scores_key = (
+                similar_string, language, similar_name)
+            if similar_string == emoji_string:
+                # This is exactly the same emoji, add the emoji
+                # itself as one extra label.  This way, the
+                # original emoji gets a higher score then emoji
+                # which share all categories and all keywords.
+                # The most similar emoji should always be the
+                # original emoji itself.
+                candidate_scores[scores_key] = [emoji_string]
+            for label_key in label_keys:
+                if label_key in self._emoji_dict[similar_key]:
+                    for label in self._emoji_dict[similar_key][label_key]:
+                        if label in original_labels[language]:
+                            if scores_key in candidate_scores:
+                                candidate_scores[scores_key].append(label)
+                            else:
+                                candidate_scores[scores_key] = [label]
         candidates = []
         for x in sorted(candidate_scores.items(),
                         key = lambda x:(
