@@ -587,6 +587,13 @@ class TypingBoosterEngine(IBus.Engine):
         if not phrase:
             return
         phrase = unicodedata.normalize('NFC', phrase)
+        # U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR make
+        # the line spacing in the lookup table huge, which looks ugly.
+        # Remove them to make the lookup table look better.
+        # Selecting them does still work because the string which
+        # is committed is not read from the lookup table but
+        # from self._candidates[index][0].
+        phrase = phrase.replace(' ','').replace(' ','')
         # Embed “phrase” and “comment” separately with “Explicit
         # Directional Embeddings” (RLE, LRE, PDF).
         #
