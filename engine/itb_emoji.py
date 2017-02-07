@@ -149,6 +149,39 @@ VALID_CHARACTERS = {
     '﷽', # ARABIC LIGATURE BISMILLAH AR-RAHMAN AR-RAHEEM
 }
 
+def _is_invisible(text):
+    '''Checks whether a text is invisible
+
+    Returns True if the text is invisible, False if not.
+
+    May return True for some texts which are not completely
+    invisible but hard to see in most fonts.
+
+    :param character: The text
+    :type character: String
+    :rtype: Boolean
+
+    Examples:
+
+    >>> _is_invisible('a')
+    False
+
+    >>> _is_invisible(' ')
+    True
+
+    >>> _is_invisible(' a')
+    False
+
+    >>> _is_invisible('  ')
+    True
+    '''
+    invisible = True
+    for character in text:
+        if (unicodedata.category(character)
+            not in ('Cc', 'Cf', 'Zl', 'Zp', 'Zs')):
+            invisible = False
+    return invisible
+
 def _in_range(codepoint):
     '''Checks whether the codepoint is in one of the valid ranges
 
@@ -1128,9 +1161,7 @@ class EmojiMatcher():
                 else:
                     display_name = self.name(emoji_key[0])
                 if (len(emoji_key[0]) == 1
-                    and
-                    unicodedata.category(emoji_key[0])
-                    in ('Cc', 'Cf', 'Zl', 'Zp', 'Zs')):
+                    and _is_invisible(emoji_key[0])):
                     # Add the code point to the display name of
                     # “invisible” characters:
                     display_name = ('U+%X' %ord(emoji_key[0])
@@ -1316,6 +1347,12 @@ class EmojiMatcher():
                     similar_name = self._emoji_dict[similar_key]['names'][0]
                 else:
                     similar_name = self.name(similar_string)
+                if (len(similar_string) == 1
+                    and _is_invisible(similar_string)):
+                    # Add the code point to the display name of
+                    # “invisible” characters:
+                    similar_name = ('U+%X' %ord(similar_string)
+                                    + ' ' + similar_name)
                 scores_key = (
                     similar_string, language, similar_name)
                 if scores_key in candidate_scores:
