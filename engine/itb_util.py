@@ -46,7 +46,7 @@ SHORTCUT_USER_FREQ = 1000000
 SENTENCE_END_CHARACTERS = '.,;:?!)'
 
 CATEGORIES_TO_STRIP_FROM_TOKENS = (
-    'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Pd', 'Sm'
+    'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Pd'
 )
 
 def lstrip_token(token):

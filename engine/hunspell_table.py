@@ -1674,6 +1674,9 @@ class TypingBoosterEngine(IBus.Engine):
         May remove whitespace before the committed string if
         the committed string ended a sentence.
         '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                '_commit_string(%s, %s)\n' %(commit_phrase, input_phrase))
         # If the suggestions are only enabled by Tab key, i.e. the
         # lookup table is not shown until Tab has been typed, hide
         # the lookup table again after each commit. That means
