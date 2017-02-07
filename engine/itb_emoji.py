@@ -1234,7 +1234,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', "camello ['🐫', 'camello', 'bactriano', 'jorobas', 'desierto', '🐫', 'camello', 'bactriano', 'jorobas', 'desierto']", 10), ('🐪', "dromedario ['desierto', 'camello', 'desierto', 'camello']", 4), ('🏜', "desierto ['desierto', 'desierto']", 2), ('🐫', "cammello ['🐫', 'gobba', 'animale']", 3), ('🐪', "dromedario ['gobba', 'animale']", 2)]
+        [('🐫', "camello ['🐫', 'camello', 'bactriano', 'jorobas', 'desierto']", 5), ('🐪', "dromedario ['desierto', 'camello']", 2), ('🏜', "desierto ['desierto']", 1), ('🐫', "cammello ['🐫', 'gobba', 'animale']", 3), ('🐪', "dromedario ['gobba', 'animale']", 2)]
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('€', match_limit = 10)
@@ -1262,6 +1262,11 @@ class EmojiMatcher():
                     similar_name = self.name(similar_string)
                 scores_key = (
                     similar_string, language, similar_name)
+                if scores_key in candidate_scores:
+                    # This language has been scored already
+                    # (apparently it was twice in the expanded
+                    # language list), skip it.
+                    continue
                 if similar_string == emoji_string:
                     # This is exactly the same emoji, add the emoji
                     # itself as one extra label.  This way, the
@@ -1269,11 +1274,7 @@ class EmojiMatcher():
                     # which share all categories and all keywords.
                     # The most similar emoji should always be the
                     # original emoji itself.
-                    if scores_key in candidate_scores:
-                        # should not happen, just to be safe:
-                        candidate_scores[scores_key].append(emoji_string)
-                    else:
-                        candidate_scores[scores_key] = [emoji_string]
+                    candidate_scores[scores_key] = [emoji_string]
                 for label_key in label_keys:
                     if label_key in self._emoji_dict[similar_key]:
                         for label in self._emoji_dict[similar_key][label_key]:
