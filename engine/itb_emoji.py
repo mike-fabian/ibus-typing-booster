@@ -860,7 +860,7 @@ class EmojiMatcher():
         >>> mq = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
 
         >>> mq.candidates('😺', match_limit = 3)
-        [('😺', "smiling cat face with open mouth ['😺', 'So', 'people', 'animal', 'cat', 'happy', 'face', 'mouth', 'open', 'smile']", 10), ('😸', "grinning cat face with smiling eyes ['So', 'people', 'animal', 'cat', 'happy', 'face', 'smile']", 7), ('😃', "smiling face with open mouth ['So', 'people', 'happy', 'face', 'mouth', 'open', 'smile']", 7)]
+        [('😺', 'smiling cat face with open mouth [😺, So, people, animal, cat, happy, face, mouth, open, smile]', 10), ('😸', 'grinning cat face with smiling eyes [So, people, animal, cat, happy, face, smile]', 7), ('😃', 'smiling face with open mouth [So, people, happy, face, mouth, open, smile]', 7)]
 
         >>> mq.candidates('ねこ＿')[0][:2]
         ('🐈', 'ねこ')
@@ -1137,7 +1137,7 @@ class EmojiMatcher():
         ('🤔', 'visage en pleine réflexion')
 
         >>> mq.candidates('🤔', match_limit = 3)
-        [('🤔', "visage en pleine réflexion ['🤔', 'visage', 'réflexion']", 3), ('💆\u200d♀', "femme qui se fait masser le visage ['visage']", 1), ('💆\u200d♂', "homme qui se fait masser le visage ['visage']", 1)]
+        [('🤔', 'visage en pleine réflexion [🤔, visage, réflexion]', 3), ('💆\u200d♀', 'femme qui se fait masser le visage [visage]', 1), ('💆\u200d♂', 'homme qui se fait masser le visage [visage]', 1)]
 
         >>> mq = EmojiMatcher(languages = ['fr_FR'])
         >>> mq.candidates('2019')
@@ -1354,35 +1354,38 @@ class EmojiMatcher():
         []
 
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺', "white smiling face ['☺', 'So', 'people', 'happy', 'smiley', 'face', 'outlined', 'relaxed', 'smile']", 9), ('😋', "face savouring delicious food ['So', 'people', 'happy', 'smiley', 'face', 'smile']", 6), ('😁', "grinning face with smiling eyes ['So', 'people', 'happy', 'smiley', 'face', 'smile']", 6), ('🙂', "slightly smiling face ['So', 'people', 'happy', 'smiley', 'face', 'smile']", 6), ('😍', "smiling face with heart-shaped eyes ['So', 'people', 'happy', 'smiley', 'face', 'smile']", 6)]
+        [('☺', 'white smiling face [☺, So, people, happy, smiley, face, outlined, relaxed, smile]', 9), ('😋', 'face savouring delicious food [So, people, happy, smiley, face, smile]', 6), ('😁', 'grinning face with smiling eyes [So, people, happy, smiley, face, smile]', 6), ('🙂', 'slightly smiling face [So, people, happy, smiley, face, smile]', 6), ('😍', 'smiling face with heart-shaped eyes [So, people, happy, smiley, face, smile]', 6)]
 
         >>> matcher = EmojiMatcher(languages = ['it_IT', 'en_US', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺', "faccina sorridente ['☺', 'contorno faccina sorridente', 'sorridente', 'faccina', 'emozionarsi']", 5), ('😺', "gatto che sorride ['sorridente', 'faccina']", 2), ('👽', "alieno ['faccina']", 1), ('👼', "angioletto ['faccina']", 1), ('🤑', "avidità di denaro ['faccina']", 1)]
+        [('☺', 'faccina sorridente [☺, contorno faccina sorridente, sorridente, faccina, emozionarsi]', 5), ('😺', 'gatto che sorride [sorridente, faccina]', 2), ('👽', 'alieno [faccina]', 1), ('👼', 'angioletto [faccina]', 1), ('🤑', 'avidità di denaro [faccina]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', "bactrian camel ['🐫', 'So', 'nature', 'animal', 'hump day', 'wildlife', 'bactrian', 'camel', 'hump']", 9), ('🐪', "dromedary camel ['So', 'nature', 'animal', 'wildlife', 'hump']", 5), ('🐻', "bear face ['So', 'nature', 'animal', 'wildlife']", 4), ('🐦', "bird ['So', 'nature', 'animal', 'wildlife']", 4), ('🐡', "blowfish ['So', 'nature', 'animal', 'wildlife']", 4)]
+        [('🐫', 'bactrian camel [🐫, So, nature, animal, hump day, wildlife, bactrian, camel, hump]', 9), ('🐪', 'dromedary camel [So, nature, animal, wildlife, hump]', 5), ('🐻', 'bear face [So, nature, animal, wildlife]', 4), ('🐦', 'bird [So, nature, animal, wildlife]', 4), ('🐡', 'blowfish [So, nature, animal, wildlife]', 4)]
 
         >>> matcher = EmojiMatcher(languages = [ 'it_IT', 'en_US','es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', "cammello ['🐫', 'gobba', 'animale']", 3), ('🐪', "dromedario ['gobba', 'animale']", 2), ('🐀', "Ratto ['animale']", 1), ('🐁', "Topo ['animale']", 1), ('\U0001f986', "anatra ['animale']", 1)]
+        [('🐫', 'cammello [🐫, gobba, animale]', 3), ('🐪', 'dromedario [gobba, animale]', 2), ('🐀', 'Ratto [animale]', 1), ('🐁', 'Topo [animale]', 1), ('\U0001f986', 'anatra [animale]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['de_DE', 'it_IT', 'en_US','es_MX', 'es_ES', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', "Kamel ['🐫', 'zweihöckrig', 'Tier']", 3), ('🐒', "Affe ['Tier']", 1), ('🐵', "Affengesicht ['Tier']", 1), ('🐜', "Ameise ['Tier']", 1), ('🐝', "Biene ['Tier']", 1)]
+        [('🐫', 'Kamel [🐫, zweihöckrig, Tier]', 3), ('🐒', 'Affe [Tier]', 1), ('🐵', 'Affengesicht [Tier]', 1), ('🐜', 'Ameise [Tier]', 1), ('🐝', 'Biene [Tier]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['es_MX', 'it_IT', 'de_DE', 'en_US', 'es_ES', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', "camello ['🐫', 'animal', 'joroba']", 3), ('🐪', "dromedario ['animal', 'joroba']", 2), ('🐝', "abeja ['animal']", 1), ('🐋', "ballena ['animal']", 1), ('🐳', "ballena soplando un chorro de agua ['animal']", 1)]
+        [('🐫', 'camello [🐫, animal, joroba]', 3), ('🐪', 'dromedario [animal, joroba]', 2), ('🐝', 'abeja [animal]', 1), ('🐋', 'ballena [animal]', 1), ('🐳', 'ballena soplando un chorro de agua [animal]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', "camello ['🐫', 'camello', 'bactriano', 'jorobas', 'desierto']", 5), ('🐪', "dromedario ['desierto', 'camello']", 2), ('🏜', "desierto ['desierto']", 1), ('🐫', "cammello ['🐫', 'gobba', 'animale']", 3), ('🐪', "dromedario ['gobba', 'animale']", 2)]
+        [('🐫', 'camello [🐫, camello, bactriano, jorobas, desierto]', 5), ('🐪', 'dromedario [desierto, camello]', 2), ('🏜', 'desierto [desierto]', 1), ('🐫', 'cammello [🐫, gobba, animale]', 3), ('🐪', 'dromedario [gobba, animale]', 2)]
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('€', match_limit = 10)
-        [('€', "euro sign ['€', 'Sc']", 2), ('؋', "afghani sign ['Sc']", 1), ('֏', "armenian dram sign ['Sc']", 1), ('₳', "austral sign ['Sc']", 1), ('৻', "bengali ganda mark ['Sc']", 1), ('৲', "bengali rupee mark ['Sc']", 1), ('৳', "bengali rupee sign ['Sc']", 1), ('₵', "cedi sign ['Sc']", 1), ('¢', "cent sign ['Sc']", 1), ('₡', "colon sign ['Sc']", 1)]
+        [('€', 'euro sign [€, Sc]', 2), ('؋', 'afghani sign [Sc]', 1), ('֏', 'armenian dram sign [Sc]', 1), ('₳', 'austral sign [Sc]', 1), ('৻', 'bengali ganda mark [Sc]', 1), ('৲', 'bengali rupee mark [Sc]', 1), ('৳', 'bengali rupee sign [Sc]', 1), ('₵', 'cedi sign [Sc]', 1), ('¢', 'cent sign [Sc]', 1), ('₡', 'colon sign [Sc]', 1)]
+
+        >>> matcher.similar('🏄‍♂', match_limit = 2)
+        [('🏄‍♂', 'hombre haciendo surf [🏄‍♂, hombre, surf, surfista]', 4), ('🏄‍♀', 'mujer haciendo surf [surf, surfista]', 2)]
         '''
         candidate_scores = {}
         original_labels = {}
@@ -1452,8 +1455,10 @@ class EmojiMatcher():
                             - len(x[0][0]), # length of emoji string
                             x[0][2], # emoji name
                         ))[:match_limit]:
-            candidates.append(
-                (x[0][0], x[0][2] + ' ' + repr(x[1]), len(x[1])))
+            emoji = x[0][0]
+            name = x[0][2] + ' [' + ', '.join(x[1]) + ']'
+            score = len(x[1])
+            candidates.append((emoji, name, score))
         return candidates
 
     def debug_loading_data(self):
@@ -1472,7 +1477,7 @@ class EmojiMatcher():
             ('🏇', '赛马 “sàimǎ”')
 
             >>> matcher.similar('🏇', match_limit=5)
-            [('🏇', "赛马 ['🏇', '赛马', 'sàimǎ', '马', 'mǎ']", 5), ('🐎', "马 ['赛马', 'sàimǎ']", 2), ('🐴', "马头 ['马', 'mǎ']", 2), ('🏇', "horse racing ['🏇', 'So', 'activity', 'horse racing', 'men', 'sport', 'horse', 'jockey', 'racehorse', 'racing']", 10), ('🚴', "bicyclist ['So', 'activity', 'men', 'sport']", 4)]
+            [('🏇', '赛马 [🏇, 赛马, sàimǎ, 马, mǎ]', 5), ('🐎', '马 [赛马, sàimǎ]', 2), ('🐴', '马头 [马, mǎ]', 2), ('🏇', 'horse racing [🏇, So, activity, horse racing, men, sport, horse, jockey, racehorse, racing]', 10), ('🚴', 'bicyclist [So, activity, men, sport]', 4)]
 
             >>> matcher = EmojiMatcher(languages = ['zh_TW'])
 
@@ -1480,7 +1485,7 @@ class EmojiMatcher():
             ('🏇', '賽馬 “sàimǎ”')
 
             >>> matcher.similar('🏇', match_limit=5)
-            [('🏇', "賽馬 ['🏇', '騎馬', 'qímǎ']", 3), ('🏇', "horse racing ['🏇', 'So', 'activity', 'horse racing', 'men', 'sport', 'horse', 'jockey', 'racehorse', 'racing']", 10), ('🚴', "bicyclist ['So', 'activity', 'men', 'sport']", 4), ('🏌', "golfer ['So', 'activity', 'men', 'sport']", 4), ('🚵', "mountain bicyclist ['So', 'activity', 'men', 'sport']", 4)]
+            [('🏇', '賽馬 [🏇, 騎馬, qímǎ]', 3), ('🏇', 'horse racing [🏇, So, activity, horse racing, men, sport, horse, jockey, racehorse, racing]', 10), ('🚴', 'bicyclist [So, activity, men, sport]', 4), ('🏌', 'golfer [So, activity, men, sport]', 4), ('🚵', 'mountain bicyclist [So, activity, men, sport]', 4)]
             '''
 
     if IMPORT_PYKAKASI_SUCCESSFUL:
@@ -1491,7 +1496,7 @@ class EmojiMatcher():
             ('🐌', 'かたつむり “katatsumuri”')
 
             >>> matcher.similar('😱', match_limit=5)
-            [('😱', "きょうふ ['😱', 'さけび', 'sakebi', 'かお', 'kao', 'がーん', 'ga-n', 'しょっく', 'shokku']", 9), ('😨', "あおざめ ['がーん', 'ga-n', 'かお', 'kao']", 4), ('😮', "あいたくち ['かお', 'kao']", 2), ('👶', "あかんぼう ['かお', 'kao']", 2), ('😩', "あきらめ ['かお', 'kao']", 2)]
+            [('😱', 'きょうふ [😱, さけび, sakebi, かお, kao, がーん, ga-n, しょっく, shokku]', 9), ('😨', 'あおざめ [がーん, ga-n, かお, kao]', 4), ('😮', 'あいたくち [かお, kao]', 2), ('👶', 'あかんぼう [かお, kao]', 2), ('😩', 'あきらめ [かお, kao]', 2)]
             '''
 
 BENCHMARK = True
