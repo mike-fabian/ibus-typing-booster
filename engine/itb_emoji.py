@@ -1303,6 +1303,25 @@ class EmojiMatcher():
             count += 1
         print('count=%s' %count)
 
+    if IMPORT_PINYIN_SUCCESSFUL:
+        def _doctest_pinyin(self):
+            '''
+            >>> matcher = EmojiMatcher(languages = ['zh_CN'])
+            >>> matcher.candidates('saima')[0][:2]
+            ('🏇', '赛马 “sàimǎ”')
+
+            >>> matcher.similar('🏇', match_limit=5)
+            [('🏇', "赛马 ['🏇', '赛马', 'sàimǎ', '马', 'mǎ']", 5), ('🐎', "马 ['赛马', 'sàimǎ']", 2), ('🐴', "马头 ['马', 'mǎ']", 2), ('🏇', "horse racing ['🏇', 'So', 'activity', 'horse racing', 'men', 'sport', 'horse', 'jockey', 'racehorse', 'racing']", 10), ('🚴', "bicyclist ['So', 'activity', 'men', 'sport']", 4)]
+
+            >>> matcher = EmojiMatcher(languages = ['zh_TW'])
+
+            >>> matcher.candidates('saima')[0][:2]
+            ('🏇', '賽馬 “sàimǎ”')
+
+            >>> matcher.similar('🏇', match_limit=5)
+            [('🏇', "賽馬 ['🏇', '騎馬', 'qímǎ']", 3), ('🏇', "horse racing ['🏇', 'So', 'activity', 'horse racing', 'men', 'sport', 'horse', 'jockey', 'racehorse', 'racing']", 10), ('🚴', "bicyclist ['So', 'activity', 'men', 'sport']", 4), ('🏌', "golfer ['So', 'activity', 'men', 'sport']", 4), ('🚵', "mountain bicyclist ['So', 'activity', 'men', 'sport']", 4)]
+            '''
+
 BENCHMARK = True
 
 def main():
