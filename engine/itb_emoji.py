@@ -48,8 +48,16 @@ IMPORT_PYKAKASI_SUCCESSFUL = False
 try:
     from pykakasi import kakasi
     IMPORT_PYKAKASI_SUCCESSFUL = True
+    KAKASI_INSTANCE = kakasi()
+    KAKASI_INSTANCE.setMode("H","a") # default: Hiragana no conversion
+    KAKASI_INSTANCE.setMode("K","a") # default: Katakana no conversion
+    KAKASI_INSTANCE.setMode("J","a") # default: Japanese no conversion
+    KAKASI_INSTANCE.setMode("r","Hepburn") # default: use Hepburn Roman table
+    KAKASI_INSTANCE.setMode("C", True) # add space default: no Separator
+    KAKASI_INSTANCE.setMode("c", False) # capitalize default: no Capitalize
 except (ImportError,):
     IMPORT_PYKAKASI_SUCCESSFUL = False
+    KAKASI_INSTANCE = None
 
 IMPORT_PINYIN_SUCCESSFUL = False
 try:
@@ -245,7 +253,8 @@ class EmojiMatcher():
     '''A class to find Emoji which best match a query string'''
 
     def __init__(self, languages = ('en_US',),
-                 unicode_data = True, cldr_data = True, quick = True):
+                 unicode_data = True, cldr_data = True, quick = True,
+                 romaji = False):
         '''
         Initialize the emoji matcher
 
@@ -259,6 +268,10 @@ class EmojiMatcher():
                       Quick matching is about 4 times faster and usually
                       good enough.
         :type quick: Boolean
+        :param romaji: Whether to add Latin transliteration for Japanese.
+                       Works only when pykakasi is available, if this is not
+                       the case, this option is ignored.
+        :type romaji: Boolean
         '''
         self._languages = languages
         self._gettext_translations = {}
@@ -281,6 +294,7 @@ class EmojiMatcher():
             else:
                 self._gettext_translations[language] = None
         self._quick = quick
+        self._romaji = romaji
         self._enchant_dicts = []
         if IMPORT_ENCHANT_SUCCESSFUL:
             for language in self._languages:
@@ -476,10 +490,12 @@ class EmojiMatcher():
                 N_('travel'),
             ]
 
-            if IMPORT_PYKAKASI_SUCCESSFUL:
-                kakasi_instance = kakasi()
-                kakasi_instance.setMode("J", "H")
-                kanji_hiragana_converter = kakasi_instance.getConverter()
+            if (IMPORT_PYKAKASI_SUCCESSFUL
+                and 'ja' in _expand_languages(self._languages)):
+                KAKASI_INSTANCE.setMode('H', 'H')
+                KAKASI_INSTANCE.setMode('K', 'H')
+                KAKASI_INSTANCE.setMode('J', 'H')
+                kakasi_converter = KAKASI_INSTANCE.getConverter()
 
             for language in _expand_languages(self._languages):
                 if self._gettext_translations[language]:
@@ -491,12 +507,28 @@ class EmojiMatcher():
                             translated_category)
                         if language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
                             translated_category_hiragana = (
-                                kanji_hiragana_converter.do(
+                                kakasi_converter.do(
                                     translated_category))
                             if (translated_category_hiragana
                                 != translated_category):
                                 translated_categories.append(
                                     translated_category_hiragana)
+                            if self._romaji:
+                                KAKASI_INSTANCE.setMode('H', 'a')
+                                KAKASI_INSTANCE.setMode('K', 'a')
+                                KAKASI_INSTANCE.setMode('J', 'a')
+                                kakasi_converter = KAKASI_INSTANCE.getConverter()
+                                translated_category_romaji = (
+                                    kakasi_converter.do(
+                                        translated_category))
+                                KAKASI_INSTANCE.setMode('H', 'H')
+                                KAKASI_INSTANCE.setMode('K', 'H')
+                                KAKASI_INSTANCE.setMode('J', 'H')
+                                kakasi_converter = KAKASI_INSTANCE.getConverter()
+                                if (translated_category_romaji
+                                    != translated_category):
+                                    translated_categories.append(
+                                        translated_category_romaji)
                     self._add_to_emoji_dict(
                         (emoji_string, language),
                         'categories', translated_categories)
@@ -520,6 +552,12 @@ class EmojiMatcher():
         language = os.path.basename(
             path).replace('.gz', '').replace('.xml', '')
         with open_function(path, mode = 'rt') as cldr_annotation_file:
+            if (language  == 'ja'
+                and self._romaji and IMPORT_PYKAKASI_SUCCESSFUL):
+                KAKASI_INSTANCE.setMode('H', 'a')
+                KAKASI_INSTANCE.setMode('K', 'a')
+                KAKASI_INSTANCE.setMode('J', 'a')
+                kakasi_converter = KAKASI_INSTANCE.getConverter()
             pattern = re.compile(
                 r'.*<annotation cp="(?P<emojistring>[^"]+)"'
                 +r'\s*(?P<tts>type="tts"){0,1}'
@@ -540,6 +578,14 @@ class EmojiMatcher():
                                 [match.group('content'),
                                  pinyin.get(match.group('content'))]
                             )
+                        elif (language == 'ja'
+                              and self._romaji and IMPORT_PYKAKASI_SUCCESSFUL):
+                            self._add_to_emoji_dict(
+                                (emoji_string, language),
+                                'names',
+                                [match.group('content'),
+                                 kakasi_converter.do(match.group('content'))]
+                            )
                         else:
                             self._add_to_emoji_dict(
                                 (emoji_string, language),
@@ -556,6 +602,16 @@ class EmojiMatcher():
                                     (emoji_string, language),
                                     'keywords',
                                     [keyword, keyword_pinyin]
+                                )
+                        elif (language == 'ja'
+                              and self._romaji and IMPORT_PYKAKASI_SUCCESSFUL):
+                            for x in match.group('content').split('|'):
+                                keyword = x.strip()
+                                keyword_romaji = kakasi_converter.do(keyword)
+                                self._add_to_emoji_dict(
+                                    (emoji_string, language),
+                                    'keywords',
+                                    [keyword, keyword_romaji]
                                 )
                         else:
                             self._add_to_emoji_dict(
@@ -1320,6 +1376,17 @@ class EmojiMatcher():
 
             >>> matcher.similar('🏇', match_limit=5)
             [('🏇', "賽馬 ['🏇', '騎馬', 'qímǎ']", 3), ('🏇', "horse racing ['🏇', 'So', 'activity', 'horse racing', 'men', 'sport', 'horse', 'jockey', 'racehorse', 'racing']", 10), ('🚴', "bicyclist ['So', 'activity', 'men', 'sport']", 4), ('🏌', "golfer ['So', 'activity', 'men', 'sport']", 4), ('🚵', "mountain bicyclist ['So', 'activity', 'men', 'sport']", 4)]
+            '''
+
+    if IMPORT_PYKAKASI_SUCCESSFUL:
+        def _doctest_pykakasi(self):
+            '''
+            >>> matcher = EmojiMatcher(languages = ['ja_JP'], romaji=True)
+            >>> matcher.candidates('katatsumuri')[0][:2]
+            ('🐌', 'かたつむり “katatsumuri”')
+
+            >>> matcher.similar('😱', match_limit=5)
+            [('😱', "きょうふ ['😱', 'さけび', 'sakebi', 'かお', 'kao', 'がーん', 'ga-n', 'しょっく', 'shokku']", 9), ('😨', "あおざめ ['がーん', 'ga-n', 'かお', 'kao']", 4), ('😮', "あいたくち ['かお', 'kao']", 2), ('👶', "あかんぼう ['かお', 'kao']", 2), ('😩', "あきらめ ['かお', 'kao']", 2)]
             '''
 
 BENCHMARK = True
