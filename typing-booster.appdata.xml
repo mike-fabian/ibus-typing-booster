@@ -125,7 +125,7 @@
       <description>
         <ul>
           <li>
-            Improve setup layout (thanks to Trinh Anh Ngoc <atw1990@gmail.com>)
+            Improve setup layout (thanks to Trinh Anh Ngoc &lt;atw1990@gmail.com&gt;)
           </li>
           <li>
             Add some more directories to search for dictionaries (for FreeBSD)
