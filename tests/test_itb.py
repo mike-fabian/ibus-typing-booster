@@ -353,7 +353,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'गुरु ')
 
     def test_korean(self):
-        if not itb_util.get_hunspell_dictionary_wordlist('ko_KR'):
+        if not itb_util.get_hunspell_dictionary_wordlist('ko_KR')[0]:
             # No Korean dictionary file could be found, skip this
             # test.  On some systems, like 'Arch' or 'FreeBSD', there
             # is no ko_KR.dic hunspell dictionary available, therefore
