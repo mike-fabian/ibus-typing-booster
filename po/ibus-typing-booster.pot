@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2017-02-08 09:07+0100\n"
+"POT-Creation-Date: 2017-02-22 09:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,60 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: engine/emoji_picker.py:103
+msgid "Emoji Picker"
+msgstr ""
+
+#: engine/emoji_picker.py:165
+msgid "Browse"
+msgstr ""
+
+#: engine/emoji_picker.py:171
+msgid "Search"
+msgstr ""
+
+#: engine/emoji_picker.py:223 setup/setup.glade:591
+msgid "A completion input method to speedup typing."
+msgstr ""
+
+#: engine/emoji_picker.py:228 setup/setup.glade:616
+msgid "<b>Home page:</b>"
+msgstr ""
+
+#: engine/emoji_picker.py:242 setup/setup.glade:627
+msgid "<b>Online documentation:</b>"
+msgstr ""
+
+#. This is the “About” tab in the setup tool.  That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
+#: engine/emoji_picker.py:258 setup/setup.glade:658
+msgid "About"
+msgstr ""
+
+#: engine/emoji_picker.py:297
+msgid "Recently used"
+msgstr ""
+
+#: engine/emoji_picker.py:309
+msgid "Categories"
+msgstr ""
+
+#: engine/emoji_picker.py:310
+msgid "Unicode categories"
+msgstr ""
+
+#: engine/emoji_picker.py:311
+msgid "Keywords"
+msgstr ""
+
+#: engine/emoji_picker.py:483 engine/emoji_picker.py:490
+#: engine/emoji_picker.py:582 engine/emoji_picker.py:589
+msgid "Click to copy"
+msgstr ""
+
+#: engine/emoji_picker.py:780 setup/main.py:985
+msgid "ibus is not running."
+msgstr ""
 
 #: engine/hunspell_table.py:394 engine/hunspell_table.py:414
 msgid "Off"
@@ -54,52 +108,52 @@ msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:526
+#: engine/itb_emoji.py:531
 msgid "activity"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:528
+#: engine/itb_emoji.py:533
 msgid "flags"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:530
+#: engine/itb_emoji.py:535
 msgid "food"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:532
+#: engine/itb_emoji.py:537
 msgid "modifier"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:534
+#: engine/itb_emoji.py:539
 msgid "nature"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:536
+#: engine/itb_emoji.py:541
 msgid "objects"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:538
+#: engine/itb_emoji.py:543
 msgid "people"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:540
+#: engine/itb_emoji.py:545
 msgid "regional"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:542
+#: engine/itb_emoji.py:547
 msgid "symbols"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:544
+#: engine/itb_emoji.py:549
 msgid "travel"
 msgstr ""
 
@@ -176,10 +230,6 @@ msgstr ""
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
-msgstr ""
-
-#: setup/main.py:985
-msgid "ibus is not running."
 msgstr ""
 
 #: setup/setup.glade:30
@@ -393,19 +443,21 @@ msgstr ""
 msgid "Dictionaries and personal data"
 msgstr ""
 
-#: setup/setup.glade:591
-msgid "A completion input method to speedup typing."
+#: typing-booster.appdata.xml:5
+msgid "Typing Booster"
 msgstr ""
 
-#: setup/setup.glade:616
-msgid "<b>Home page:</b>"
+#: typing-booster.appdata.xml:6
+msgid "Predictive input method"
 msgstr ""
 
-#: setup/setup.glade:627
-msgid "<b>Online documentation:</b>"
+#: typing-booster.appdata.xml:8
+msgid ""
+"Ibus-typing-booster is a predictive input method and predicts complete words "
+"based on context and partial input. One can then simply select the desired "
+"word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
 
-#. This is the “About” tab in the setup tool.  That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
-#: setup/setup.glade:658
-msgid "About"
+#: typing-booster.appdata.xml:766
+msgid "Mike FABIAN"
 msgstr ""

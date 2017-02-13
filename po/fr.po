@@ -2,22 +2,77 @@
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2016. #zanata
 # José Fournier <jaaf64@zoraldia.com>, 2016. #zanata
 # Jérôme Fenal <jfenal@gmail.com>, 2016. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2016. #zanata
+# José Fournier <jaaf64@zoraldia.com>, 2017. #zanata
+# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2017-02-08 09:07+0100\n"
+"POT-Creation-Date: 2017-02-22 09:40+0100\n"
+"PO-Revision-Date: 2017-02-21 10:18-0500\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Language-Team: French\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-11-21 01:50-0500\n"
-"Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
-"Language-Team: French\n"
-"Language: fr\n"
 "X-Generator: Zanata 3.9.6\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: engine/emoji_picker.py:103
+msgid "Emoji Picker"
+msgstr "Présentoir à émoticônes"
+
+#: engine/emoji_picker.py:165
+msgid "Browse"
+msgstr "Parcourir"
+
+#: engine/emoji_picker.py:171
+msgid "Search"
+msgstr "Chercher"
+
+#: engine/emoji_picker.py:223 setup/setup.glade:591
+msgid "A completion input method to speedup typing."
+msgstr "Une méthode d'auto-complètement  pour accélérer la saisie."
+
+#: engine/emoji_picker.py:228 setup/setup.glade:616
+msgid "<b>Home page:</b>"
+msgstr "<b>Site web :</b>"
+
+#: engine/emoji_picker.py:242 setup/setup.glade:627
+msgid "<b>Online documentation:</b>"
+msgstr "<b>Documentation en ligne :</b>"
+
+#. This is the “About” tab in the setup tool.  That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
+#: engine/emoji_picker.py:258 setup/setup.glade:658
+msgid "About"
+msgstr "À propos"
+
+#: engine/emoji_picker.py:297
+msgid "Recently used"
+msgstr "Récemment utilisé"
+
+#: engine/emoji_picker.py:309
+msgid "Categories"
+msgstr "Catégories"
+
+#: engine/emoji_picker.py:310
+msgid "Unicode categories"
+msgstr "Catégories Unicode"
+
+#: engine/emoji_picker.py:311
+msgid "Keywords"
+msgstr "Mots clés"
+
+#: engine/emoji_picker.py:483 engine/emoji_picker.py:490
+#: engine/emoji_picker.py:582 engine/emoji_picker.py:589
+msgid "Click to copy"
+msgstr "Cliquez pour copier"
+
+#: engine/emoji_picker.py:780 setup/main.py:985
+msgid "ibus is not running."
+msgstr "Ibus n'est pas lancé."
 
 #: engine/hunspell_table.py:394 engine/hunspell_table.py:414
 msgid "Off"
@@ -55,54 +110,54 @@ msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Configurer ibus-typing-booster « %(name)s »"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:526
+#: engine/itb_emoji.py:531
 msgid "activity"
-msgstr ""
+msgstr "activité"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:528
+#: engine/itb_emoji.py:533
 msgid "flags"
-msgstr ""
+msgstr "drapeaux"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:530
+#: engine/itb_emoji.py:535
 msgid "food"
-msgstr ""
+msgstr "nourriture"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:532
+#: engine/itb_emoji.py:537
 msgid "modifier"
-msgstr ""
+msgstr "modificateurs"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:534
+#: engine/itb_emoji.py:539
 msgid "nature"
-msgstr ""
+msgstr "nature"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:536
+#: engine/itb_emoji.py:541
 msgid "objects"
-msgstr ""
+msgstr "objets"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:538
+#: engine/itb_emoji.py:543
 msgid "people"
-msgstr ""
+msgstr "personnes"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:540
+#: engine/itb_emoji.py:545
 msgid "regional"
-msgstr ""
+msgstr "régions"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:542
+#: engine/itb_emoji.py:547
 msgid "symbols"
-msgstr ""
+msgstr "symboles"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:544
+#: engine/itb_emoji.py:549
 msgid "travel"
-msgstr ""
+msgstr "voyage"
 
 #: setup/main.py:110
 #, python-format
@@ -143,20 +198,19 @@ msgstr "Expansion du raccourci"
 
 #: setup/main.py:347
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontale"
 
 #: setup/main.py:349
 msgid "Vertical"
-msgstr ""
+msgstr "Verticale"
 
 #: setup/main.py:351
 msgid "System default"
-msgstr ""
+msgstr "Par défaut pour le système"
 
 #: setup/main.py:441
 msgid "Another instance of this app is already running."
-msgstr ""
-"Une autre instance de cette application est déjà en cours d'exécution."
+msgstr "Une autre instance de cette application est déjà en cours d'exécution."
 
 #: setup/main.py:629
 msgid "Open File ..."
@@ -174,7 +228,7 @@ msgstr "Échec de l'apprentissage depuis le fichier  %(filename)s."
 
 #: setup/main.py:669
 msgid "Are you sure?"
-msgstr "Le voulez-vous vraiment ?"
+msgstr "Confirmez-vous ?"
 
 #: setup/main.py:676
 msgid ""
@@ -182,11 +236,7 @@ msgid ""
 "data learned from typing or reading files?"
 msgstr ""
 "Voulez-vous vraiment supprimer toutes les données\n"
-"linguistiques apprises depuis la saisie ou la lecture de fichiers ?"
-
-#: setup/main.py:985
-msgid "ibus is not running."
-msgstr "Ibus n'est pas lancé."
+"linguistiques apprises par saisie au clavier ou lecture de fichiers ?"
 
 #: setup/setup.glade:30
 msgid "Close"
@@ -202,10 +252,10 @@ msgid ""
 "then necessary to show the list of suggestions. After a commit the "
 "suggestions are hidden again until the next Tab key is typed."
 msgstr ""
-"Si cette option est activée, les suggestions ne sont pas montrées par défaut."
-" Appuyer sur Tab est alors nécessaire pour montrer la liste des suggestions. "
-"Après validation, les suggestions sont de nouveau cachées jusqu'à ce que la "
-"touche Tab soit appuyée."
+"Si cette option est activée, les suggestions ne sont pas montrées par "
+"défaut. Appuyer sur Tab est alors nécessaire pour montrer la liste des "
+"suggestions. Après validation, les suggestions sont de nouveau cachées "
+"jusqu'à ce que la touche Tab soit appuyée."
 
 #: setup/setup.glade:75
 msgid "Display total number of candidates"
@@ -221,7 +271,7 @@ msgstr ""
 
 #: setup/setup.glade:91
 msgid "Show status info in auxiliary text"
-msgstr ""
+msgstr "Informations d'état dans le texte auxiliaire"
 
 #: setup/setup.glade:94
 msgid ""
@@ -230,6 +280,11 @@ msgid ""
 "for the preëdit. The auxiliary text is an optional line of text displayed "
 "above the candidate list. "
 msgstr ""
+"Affiche dans le texte auxiliaire si les modes « Prédictions des émoticônes » "
+"et « Sans enregistrement » sont actifs ou inactifs et montre quelle méthode "
+"de saisie est en cours d'utilisation  pour la pré-édition. Le texte "
+"auxiliaire est une ligne optionnelle de texte précédant la liste des "
+"candidats."
 
 #: setup/setup.glade:106
 msgid "Use digits as select keys"
@@ -355,15 +410,16 @@ msgstr "Taille de la fenêtre des candidats :"
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
 msgstr ""
+"Si la fenêtre de candidats doit être dessinée horizontalement ou "
+"verticalement."
 
 #: setup/setup.glade:233
 msgid "Candidate window orientation"
-msgstr ""
+msgstr "Taille de la fenêtre des candidats"
 
 #: setup/setup.glade:253
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
-""
 msgstr ""
 "Ne pas afficher de suggestion quand moins que ce nombre de caractères a été "
 "saisi."
@@ -391,8 +447,8 @@ msgstr "Aide pour la méthode de saisie"
 #: setup/setup.glade:304
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
-"Affiche de l'aide montrant comment utiliser la méthode saisie séléctionnée "
-"ci-dessus"
+"Affiche de l'aide montrant comment utiliser la méthode saisie sélectionnée "
+"ci-dessus."
 
 #: setup/setup.glade:317
 msgid "Options"
@@ -453,19 +509,25 @@ msgstr "Supprimer les données apprises"
 msgid "Dictionaries and personal data"
 msgstr "Dictionnaires et données personnelles"
 
-#: setup/setup.glade:591
-msgid "A completion input method to speedup typing."
-msgstr "Une méthode d'auto-complètement  pour accélérer la saisie."
+#: typing-booster.appdata.xml:5
+msgid "Typing Booster"
+msgstr "L'accélérateur de saisie"
 
-#: setup/setup.glade:616
-msgid "<b>Home page:</b>"
-msgstr "<b>Site web :</b>"
+#: typing-booster.appdata.xml:6
+msgid "Predictive input method"
+msgstr "Méthode de saisie prédictive"
 
-#: setup/setup.glade:627
-msgid "<b>Online documentation:</b>"
-msgstr "<b>Documentation en ligne :</b>"
+#: typing-booster.appdata.xml:8
+msgid ""
+"Ibus-typing-booster is a predictive input method and predicts complete words "
+"based on context and partial input. One can then simply select the desired "
+"word from a list of suggestions and improve one’s typing speed and spelling."
+msgstr ""
+"L'accélérateur de saisie « Ibus-typing-booster » est une méthode de saisie "
+"qui prédit des mots complets à partir du contexte et de la saisie "
+"partielle.  On peut ainsi améliorer sa vitesse d'écriture et son orthographe "
+"en sélectionnant simplement le mot désiré dans une liste de suggestions."
 
-#. This is the “About” tab in the setup tool.  That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
-#: setup/setup.glade:658
-msgid "About"
-msgstr "À propos"
+#: typing-booster.appdata.xml:766
+msgid "Mike FABIAN"
+msgstr "Mike FABIAN"
