@@ -49,12 +49,12 @@ try:
     from pykakasi import kakasi
     IMPORT_PYKAKASI_SUCCESSFUL = True
     KAKASI_INSTANCE = kakasi()
-    KAKASI_INSTANCE.setMode("H","a") # default: Hiragana no conversion
-    KAKASI_INSTANCE.setMode("K","a") # default: Katakana no conversion
-    KAKASI_INSTANCE.setMode("J","a") # default: Japanese no conversion
-    KAKASI_INSTANCE.setMode("r","Hepburn") # default: use Hepburn Roman table
-    KAKASI_INSTANCE.setMode("C", True) # add space default: no Separator
-    KAKASI_INSTANCE.setMode("c", False) # capitalize default: no Capitalize
+    KAKASI_INSTANCE.setMode('H', 'a') # default: Hiragana no conversion
+    KAKASI_INSTANCE.setMode('K', 'a') # default: Katakana no conversion
+    KAKASI_INSTANCE.setMode('J', 'a') # default: Japanese no conversion
+    KAKASI_INSTANCE.setMode('r', 'Hepburn') # default: use Hepburn Roman table
+    KAKASI_INSTANCE.setMode('C', True) # add space default: no Separator
+    KAKASI_INSTANCE.setMode('c', False) # capitalize default: no Capitalize
 except (ImportError,):
     IMPORT_PYKAKASI_SUCCESSFUL = False
     KAKASI_INSTANCE = None
@@ -103,7 +103,8 @@ UNICODE_CATEGORIES = {
     'Zs': {'valid': True, 'major': 'Separator', 'minor': 'Space'},
 }
 
-# VALID_RANGES are taken from ibus-uniemoji (but not used anymore at the moment)
+# VALID_RANGES are taken from ibus-uniemoji
+# (but not used anymore at the moment)
 VALID_RANGES = (
     (0x0024, 0x0024), # DOLLAR SIGN
     (0x00a2, 0x00a5), # CENT SIGN, POUND SIGN, CURRENCY SIGN, YEN SIGN
@@ -193,7 +194,7 @@ def _is_invisible(text):
     invisible = True
     for character in text:
         if (unicodedata.category(character)
-            not in ('Cc', 'Cf', 'Zl', 'Zp', 'Zs')):
+                not in ('Cc', 'Cf', 'Zl', 'Zp', 'Zs')):
             invisible = False
     return invisible
 
@@ -260,7 +261,7 @@ def _expand_languages(languages):
         if language[:2] == 'en':
             expanded_languages.append('en_001')
         if (language not in ('zh_TW', 'zh_HK', 'zh_MO', 'zh_Hant')
-            and language.split('_')[:1] != [language]):
+                and language.split('_')[:1] != [language]):
             expanded_languages += language.split('_')[:1]
     if 'en' not in expanded_languages:
         expanded_languages.append('en')
@@ -300,9 +301,9 @@ def _find_path_and_open_function(dirnames, basenames):
 class EmojiMatcher():
     '''A class to find Emoji which best match a query string'''
 
-    def __init__(self, languages = ('en_US',),
-                 unicode_data = True, cldr_data = True, quick = True,
-                 romaji = False):
+    def __init__(self, languages=('en_US',),
+                 unicode_data=True, cldr_data=True, quick=True,
+                 romaji=False):
         '''
         Initialize the emoji matcher
 
@@ -326,9 +327,9 @@ class EmojiMatcher():
         for language in _expand_languages(self._languages):
             mo_file = gettext.find(DOMAINNAME, languages=[language])
             if (mo_file
-                and
-                '/' + language  + '/LC_MESSAGES/' + DOMAINNAME + '.mo'
-                in mo_file):
+                    and
+                    '/' + language  + '/LC_MESSAGES/' + DOMAINNAME + '.mo'
+                    in mo_file):
                 # Get the gettext translation instance only if a
                 # translation file for this *exact* language was
                 # found.  Ignore it if only a fallback was found. For
@@ -356,7 +357,7 @@ class EmojiMatcher():
         # commonly used sequence once and call set_seq1() repeatedly,
         # once for each of the other sequences.”
         self._matcher = SequenceMatcher(
-            isjunk = None, a = '', b = '', autojunk = False)
+            isjunk=None, a='', b='', autojunk=False)
         self._match_cache = {}
         self._string1 = ''
         self._seq1 = ''
@@ -416,7 +417,7 @@ class EmojiMatcher():
             else:
                 for value in values:
                     if (value not in
-                        self._emoji_dict[emoji_dict_key][values_key]):
+                            self._emoji_dict[emoji_dict_key][values_key]):
                         self._emoji_dict[emoji_dict_key][values_key] += [value]
 
     def _load_unicode_data(self):
@@ -430,7 +431,7 @@ class EmojiMatcher():
                 '_load_unicode_data(): could not find "%s" in "%s"\n'
                 %(basenames, dirnames))
             return
-        with open_function(path, mode = 'rt') as unicode_data_file:
+        with open_function(path, mode='rt') as unicode_data_file:
             for line in unicode_data_file.readlines():
                 if not line.strip():
                     continue
@@ -438,7 +439,7 @@ class EmojiMatcher():
                 codepoint_integer = int(codepoint_string, 16)
                 emoji_string = chr(codepoint_integer)
                 if (not UNICODE_CATEGORIES[category]['valid']
-                    and emoji_string not in VALID_CHARACTERS):
+                        and emoji_string not in VALID_CHARACTERS):
                     continue
                 self._add_to_emoji_dict(
                     (emoji_string, 'en'), 'names', [name.lower()])
@@ -465,13 +466,13 @@ class EmojiMatcher():
                 '_load_emojione_data(): could not find "%s" in "%s"\n'
                 %(basenames, dirnames))
             return
-        with open_function(path, mode = 'rt') as emoji_one_file:
+        with open_function(path, mode='rt') as emoji_one_file:
             emojione = json.load(emoji_one_file)
         for dummy_emojione_key, emojione_value in emojione.items():
             codepoints = emojione_value['unicode']
             # ZWJ emojis are in the 'unicode_alt' field:
             if ('unicode_alt' in emojione_value
-                and '200d' in emojione_value['unicode_alt']):
+                    and '200d' in emojione_value['unicode_alt']):
                 codepoints = emojione_value['unicode_alt']
 
             emoji_string = ''.join([
@@ -525,7 +526,7 @@ class EmojiMatcher():
             self._add_to_emoji_dict(
                 (emoji_string, 'en'), 'emoji_order', emoji_order)
 
-            categories_to_translate = [
+            dummy_categories_to_translate = [
                 # Translators: This is a name for a category of emoji
                 N_('activity'),
                 # Translators: This is a name for a category of emoji
@@ -549,7 +550,7 @@ class EmojiMatcher():
             ]
 
             if (IMPORT_PYKAKASI_SUCCESSFUL
-                and 'ja' in _expand_languages(self._languages)):
+                    and 'ja' in _expand_languages(self._languages)):
                 KAKASI_INSTANCE.setMode('H', 'H')
                 KAKASI_INSTANCE.setMode('K', 'H')
                 KAKASI_INSTANCE.setMode('J', 'H')
@@ -560,7 +561,7 @@ class EmojiMatcher():
                     translated_categories = []
                     for category in categories:
                         translated_category = self._gettext_translations[
-                                language].gettext(category)
+                            language].gettext(category)
                         translated_categories.append(
                             translated_category)
                         if language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
@@ -568,7 +569,7 @@ class EmojiMatcher():
                                 kakasi_converter.do(
                                     translated_category))
                             if (translated_category_hiragana
-                                != translated_category):
+                                    != translated_category):
                                 translated_categories.append(
                                     translated_category_hiragana)
                             if self._romaji:
@@ -584,7 +585,7 @@ class EmojiMatcher():
                                 KAKASI_INSTANCE.setMode('J', 'H')
                                 kakasi_converter = KAKASI_INSTANCE.getConverter()
                                 if (translated_category_romaji
-                                    != translated_category):
+                                        != translated_category):
                                     translated_categories.append(
                                         translated_category_romaji)
                     self._add_to_emoji_dict(
@@ -609,9 +610,9 @@ class EmojiMatcher():
         # but only the fallback 'es' was really found):
         language = os.path.basename(
             path).replace('.gz', '').replace('.xml', '')
-        with open_function(path, mode = 'rt') as cldr_annotation_file:
-            if (language  == 'ja'
-                and self._romaji and IMPORT_PYKAKASI_SUCCESSFUL):
+        with open_function(path, mode='rt') as cldr_annotation_file:
+            if (language == 'ja'
+                    and self._romaji and IMPORT_PYKAKASI_SUCCESSFUL):
                 KAKASI_INSTANCE.setMode('H', 'a')
                 KAKASI_INSTANCE.setMode('K', 'a')
                 KAKASI_INSTANCE.setMode('J', 'a')
@@ -629,7 +630,7 @@ class EmojiMatcher():
                     emoji_string = match.group('emojistring')
                     if match.group('tts'):
                         if (language in ('zh', 'zh_Hant')
-                            and IMPORT_PINYIN_SUCCESSFUL):
+                                and IMPORT_PINYIN_SUCCESSFUL):
                             self._add_to_emoji_dict(
                                 (emoji_string, language),
                                 'names',
@@ -652,7 +653,7 @@ class EmojiMatcher():
                             )
                     else:
                         if (language in ('zh', 'zh_Hant')
-                            and IMPORT_PINYIN_SUCCESSFUL):
+                                and IMPORT_PINYIN_SUCCESSFUL):
                             for x in match.group('content').split('|'):
                                 keyword = x.strip()
                                 keyword_pinyin = pinyin.get(keyword)
@@ -720,7 +721,7 @@ class EmojiMatcher():
                     word_list += set(wlist)
         # Keep duplicates coming from the query string.
         # Sort longest words first.
-        self._string2_word_list = sorted(word_list, key = lambda x: -len(x))
+        self._string2_word_list = sorted(word_list, key=lambda x: -len(x))
         if not self._quick:
             # only needed when using SequenceMatcher()
             string = ' ' + string + ' '
@@ -729,7 +730,7 @@ class EmojiMatcher():
             self._matcher.set_seq2(string)
             self._match_cache = {}
 
-    def _match(self, label, debug = False):
+    def _match(self, label, debug=False):
         '''Matches a label from the emoji data against the query string.
 
         The query string must have been already set with
@@ -787,7 +788,7 @@ class EmojiMatcher():
                           + 'total_score += %s' %match_value)
         # Does a word in the query string match the label if spaces in
         # the label are ignored?
-        tmp = self._string1.replace(' ','')
+        tmp = self._string1.replace(' ', '')
         for word in self._string2_word_list:
             match = re.search(re.escape(word), tmp)
             if match:
@@ -812,7 +813,7 @@ class EmojiMatcher():
             score = 0
             if tag in ('replace', 'delete', 'insert'):
                 pass
-            if tag  == 'equal':
+            if tag == 'equal':
                 match_length = i2 - i1
                 if match_length > 1:
                     score += match_length
@@ -844,7 +845,7 @@ class EmojiMatcher():
         self._match_cache[(self._string1, self._string2)] = total_score
         return total_score
 
-    def candidates(self, query_string, match_limit = 20, debug = tuple()):
+    def candidates(self, query_string, match_limit=20, debug=tuple()):
         '''
         Find a list of emoji which best match a query string.
 
@@ -1165,13 +1166,13 @@ class EmojiMatcher():
         # Japanese transliteration is used, something like “neko_”
         # transliterates to “ねこ＿” and that should of course match
         # the emoji for “ねこ”　(= “cat”):
-        query_string = re.sub('[＿_\s]+', ' ', query_string)
+        query_string = re.sub(r'[＿_\s]+', ' ', query_string)
         if ((query_string, match_limit) in self._candidate_cache
-            and not debug):
+                and not debug):
             return self._candidate_cache[(query_string, match_limit)]
         if (query_string, 'en') in self._emoji_dict:
             # the query_string is itself an emoji, match similar ones:
-            candidates = self.similar(query_string, match_limit = match_limit)
+            candidates = self.similar(query_string, match_limit=match_limit)
             self._candidate_cache[(query_string, match_limit)] = candidates
             return candidates
         self._set_seq2(query_string)
@@ -1193,25 +1194,25 @@ class EmojiMatcher():
             keyword_good_match = ''
             if 'names' in emoji_value:
                 for name in emoji_value['names']:
-                    score = 2 * self._match(name, debug = debug_match)
+                    score = 2 * self._match(name, debug=debug_match)
                     if score >= good_match_score:
                         name_good_match = name
                     total_score += score
             if 'ucategories' in emoji_value:
                 for ucategory in emoji_value['ucategories']:
-                    score = self._match(ucategory, debug = debug_match)
+                    score = self._match(ucategory, debug=debug_match)
                     if score >= good_match_score:
                         ucategory_good_match = ucategory
                     total_score += score
             if 'categories' in emoji_value:
                 for category in emoji_value['categories']:
-                    score = self._match(category, debug = debug_match)
+                    score = self._match(category, debug=debug_match)
                     if score >= good_match_score:
                         category_good_match = category
                     total_score += score
             if 'keywords' in emoji_value:
                 for keyword in emoji_value['keywords']:
-                    score = self._match(keyword, debug = debug_match)
+                    score = self._match(keyword, debug=debug_match)
                     if score >= good_match_score:
                         keyword_good_match = keyword
                     total_score += score
@@ -1222,7 +1223,7 @@ class EmojiMatcher():
                 else:
                     display_name = self.name(emoji_key[0])
                 if (len(emoji_key[0]) == 1
-                    and _is_invisible(emoji_key[0])):
+                        and _is_invisible(emoji_key[0])):
                     # Add the code point to the display name of
                     # “invisible” characters:
                     display_name = ('U+%X' %ord(emoji_key[0])
@@ -1254,7 +1255,7 @@ class EmojiMatcher():
             pass
 
         sorted_candidates = sorted(candidates,
-                                   key = lambda x: (
+                                   key=lambda x: (
                                        - x[2],
                                        - len(x[0]),
                                        x[1]
@@ -1333,17 +1334,17 @@ class EmojiMatcher():
         '''
         if language:
             if ((emoji_string, language) in self._emoji_dict
-                and 'names' in self._emoji_dict[(emoji_string, language)]):
+                    and 'names' in self._emoji_dict[(emoji_string, language)]):
                 return self._emoji_dict[(emoji_string, language)]['names'][0]
             else:
                 return ''
         for language in _expand_languages(self._languages):
             if ((emoji_string, language) in self._emoji_dict
-                and 'names' in self._emoji_dict[(emoji_string, language)]):
+                    and 'names' in self._emoji_dict[(emoji_string, language)]):
                 return self._emoji_dict[(emoji_string, language)]['names'][0]
         return ''
 
-    def similar(self, emoji_string, match_limit = 1000):
+    def similar(self, emoji_string, match_limit=1000):
         '''Find similar emojis
 
         “Similar” means they share categories or keywords.
@@ -1418,7 +1419,7 @@ class EmojiMatcher():
                     for label in self._emoji_dict[emoji_key][label_key]:
                         original_labels[language].add(label)
                         if (label_key == 'ucategories'
-                            and label in UNICODE_CATEGORIES):
+                                and label in UNICODE_CATEGORIES):
                             # For example, label could be 'So' in this
                             # case.  The next two labels will be
                             # 'Symbol' and 'Other' then. In almost all
@@ -1441,7 +1442,7 @@ class EmojiMatcher():
             else:
                 similar_name = self.name(similar_string)
             if (len(similar_string) == 1
-                and _is_invisible(similar_string)):
+                    and _is_invisible(similar_string)):
                 # Add the code point to the display name of
                 # “invisible” characters:
                 similar_name = ('U+%X' %ord(similar_string)
@@ -1466,7 +1467,7 @@ class EmojiMatcher():
                                 candidate_scores[scores_key] = [label]
         candidates = []
         for x in sorted(candidate_scores.items(),
-                        key = lambda x:(
+                        key=lambda x: (
                             expanded_languages.index(x[0][1]), # language index
                             - len(x[1]), # number of matching labels
                             - len(x[0][0]), # length of emoji string
@@ -1497,7 +1498,7 @@ class EmojiMatcher():
                         ucategory_label_full = ', '.join(
                             emoji_value[label_key])
                         if (not ucategory_label_full
-                            in emoji_by_label_dict[language][label_key]):
+                                in emoji_by_label_dict[language][label_key]):
                             emoji_by_label_dict[
                                 language][
                                     label_key][
@@ -1510,7 +1511,7 @@ class EmojiMatcher():
                     else:
                         for label in emoji_value[label_key]:
                             if (not label in
-                                emoji_by_label_dict[language][label_key]):
+                                    emoji_by_label_dict[language][label_key]):
                                 emoji_by_label_dict[
                                     language][
                                         label_key][
@@ -1525,9 +1526,9 @@ class EmojiMatcher():
                 for label in emoji_by_label_dict[language][label_key]:
                     emoji_by_label_dict[language][label_key][label] = sorted(
                         emoji_by_label_dict[language][label_key][label],
-                        key = lambda x:(
+                        key=lambda x: (
                             self.emoji_order(x)
-                    ))
+                        ))
         return emoji_by_label_dict
 
     def emoji_order(self, emoji_string):
@@ -1540,7 +1541,7 @@ class EmojiMatcher():
         :rtype: Integer
         '''
         if ((emoji_string, 'en') in self._emoji_dict
-            and 'emoji_order' in self._emoji_dict[(emoji_string, 'en')]):
+                and 'emoji_order' in self._emoji_dict[(emoji_string, 'en')]):
             return int(self._emoji_dict[(emoji_string, 'en')]['emoji_order'])
         return 0xFFFFFFFF
 
@@ -1593,16 +1594,17 @@ def main():
     runs some tests and prints profiling data.
     '''
     if BENCHMARK:
-        import cProfile, pstats
+        import cProfile
+        import pstats
         profile = cProfile.Profile()
         profile.enable()
 
     failed = False
     if False:
         matcher = EmojiMatcher(
-            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE',
-                         'ja_JP', 'zh_TW', 'zh_CN'],
-            unicode_data = True, cldr_data = True)
+            languages=['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE',
+                       'ja_JP', 'zh_TW', 'zh_CN'],
+            unicode_data=True, cldr_data=True)
         matcher.debug_loading_data()
     else:
         import doctest
@@ -1612,7 +1614,7 @@ def main():
         # added, changed, or missing.
         global DOMAINNAME
         DOMAINNAME = ''
-        (failed,  dummy_attempted) = doctest.testmod()
+        (failed, dummy_attempted) = doctest.testmod()
 
     if BENCHMARK:
         profile.disable()
