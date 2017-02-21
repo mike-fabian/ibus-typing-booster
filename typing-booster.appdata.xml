@@ -16,6 +16,27 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.22" date="2017-02-21" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (de, fr, pl, uk updated)
+          </li>
+          <li>
+            Add an emoji-picker
+          </li>
+          <li>
+            Update of en.xml from CLDR’s emoji annotations
+          </li>
+          <li>
+            Fix skipping of the Korean test case when no Korean dictionary can be found
+          </li>
+          <li>
+            Fix invalid xml in typing-booster.appdata.xml
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.21" date="2017-02-07" urgency="medium">
       <description>
         <ul>

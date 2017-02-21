@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 21 Feb 2017 Released 1.5.22 version
+* Update translations from zanata (de, fr, pl, uk updated)
+* Add an emoji-picker
+* Update of en.xml from CLDR’s emoji annotations
+* Fix skipping of the Korean test case when no Korean dictionary can be found
+* Fix invalid xml in typing-booster.appdata.xml
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 07 Feb 2017 Released 1.5.21 version
 * Handle Return and Enter correctly when the cursor is not at the end of the preëdit (Resolves: rhbz#1418313)
 * Values of spin buttons should not be translatable
