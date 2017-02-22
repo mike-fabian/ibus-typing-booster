@@ -533,6 +533,9 @@ class EmojiPickerUI(Gtk.Window):
             self._recently_used_emoji[emoji] = {
                 'count': 1, 'time': time.time()}
         self._cleanup_recently_used()
+        # Better save always, on_delete_event() is not called
+        # when the program is stopped using Control+C
+        self._save_recently_used_emoji()
 
     def _save_recently_used_emoji(self):
         '''
