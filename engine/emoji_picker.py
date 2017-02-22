@@ -80,7 +80,7 @@ def parse_args():
         nargs='?',
         type=int,
         action='store',
-        default=16,
+        default=24,
         help=('Set a fontsize to display emoji. '
               + 'default: "%(default)s"'))
     parser.add_argument(
@@ -101,7 +101,7 @@ class EmojiPickerUI(Gtk.Window):
                  languages=('en_US',),
                  modal=False,
                  font='',
-                 fontsize=16):
+                 fontsize=24):
         Gtk.Window.__init__(self, title='🚀 ' + _('Emoji Picker'))
         self.set_name('Emoji Picker')
         # https://tronche.com/gui/x/icccm/sec-4.html#WM_CLASS
