@@ -665,7 +665,11 @@ class EmojiPickerUI(Gtk.Window):
             self._search_treeview_model.append(
                 ('<span font="%s %s">'
                  %(self._font, self._fontsize)
-                 + html.escape(candidate[0] + ' ' + candidate[1])
+                 + html.escape(candidate[0])
+                 + '</span>'
+                 + '<span font="%s">'
+                 %self._fontsize
+                 + ' ' + html.escape(candidate[1])
                  + '</span>',
                  candidate[0]))
 
