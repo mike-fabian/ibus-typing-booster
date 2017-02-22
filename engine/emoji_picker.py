@@ -61,7 +61,9 @@ def parse_args():
         action='store',
         default='',
         help=('Set a list of languages to be used when browsing '
-              + 'or searching for emoji. '
+              + 'or searching for emoji. For example: '
+              + '"emoji-picker -l de:fr:ja" '
+              + 'would use German, French, and Japanese. '
               + 'If empty, the locale settings are used to '
               + 'determine the languages.'))
     parser.add_argument(
