@@ -42,6 +42,7 @@ layout: default
     <li><a href="#unicode-symbols">Unicode symbol input</a></li>
     <li><a href="#unicode-code-points">Unicode code point input</a></li>
     <li><a href="#emoji-mode-quick-toogle">Quickly toggling emoji mode on and off</a></li>
+    <li><a href="#emoji-picker">Emoji picker</a></li>
     <li><a href="#emoji-fonts">Emoji fonts</a></li>
     <ul>
       <li><a href="#color-emoji">Showing emoji in colour</a></li>
@@ -2162,6 +2163,91 @@ keyboard input without any transliteration).</p>
   input typed is “camel_” which contains a trailing underscore.
   Trailing and leading underscores temporarily turn on emoji mode
   just for this one lookup.
+</p>
+
+<br class="clearboth">
+<a name="emoji-picker"></a>
+<br>
+<h3>Emoji picker</h3>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Browsing emoji with the emoji picker</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-emoji-picker-browse.png">
+        <img src="images/thumbs/gnome-emoji-picker-browse.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  ibus-typing-booster contains an “emoji-picker” tool which can be used
+  independently from ibus-typing-booster, i.e. even when ibus-typing-booster
+  is not running.
+</p>
+<p>
+  Clicking on an emoji shown in “emoji-picker” puts it into the
+  clipboard and you can then paste it somewhere using Control+V or the
+  middle mouse button.
+</p>
+<p>
+  Hovering with the mouse over an emoji shown in “emoji-picker” shows
+  a tooltip which shows the emoji much bigger and some extra
+  information about that emoji, like the Unicode code point and the
+  name of the emoji in different languages.
+</p>
+<p>
+  “emoji-picker” has some command line options to choose the languages, the font
+  and the fontsize. For example, <code>emoji-picker --languages
+  de:en:fr</code> would enable you to use German, English, and French
+  to browse and search for emoji and display the names of the emoji in
+  all of these languages. If the command line option is not used, the
+  languages are taken from the environment
+  variables. The <code>LANGUAGE</code> variable works as well. For
+  example, <code>LANGUAGE=de:en:fr emoji-picker</code> also chooses
+  German, English, and French. And, <code>LANG=de_DE.UTF-8 emoji-picker</code>
+  would choose only German (English is always implicitly added though.)
+</p>
+<p>
+  To choose a different font or font size than the  default one  can use
+  something like:
+  <code>emoji-picker --font "Symbola" --fontsize 32</code>
+</p>
+<p>
+  “Symbola”
+  is a good black and white font for emoji. If you want the emoji in
+  colour, see <a href="#color-emoji">Showing emoji in colour</a>.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Searching emoji with the emoji picker</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-emoji-picker-search.png">
+        <img src="images/thumbs/gnome-emoji-picker-search.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  “emoji-picker” also has a “Search” feature where you can type
+  a search string and get matching emoji listed.
+</p>
+<p>
+  Again you can click on one of the matches to put it into the clipboard
+  and paste it elsewhere.
+</p>
+<p>
+  And hovering with the mouse over a match shows the emoji bigger and
+  some extra information.
+</p>
+<p>
+  The search string can be in any of the languages specified by the
+  environment variables or on the command line.
 </p>
 
 <br class="clearboth">
