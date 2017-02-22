@@ -147,6 +147,15 @@ class SetupUI:
         maindialog.set_title(
             _("Preferences for ibus-typing-booster \"%(symbol)s\"")
             %{'symbol': self.symbol})
+        # https://tronche.com/gui/x/icccm/sec-4.html#WM_CLASS
+        # gnome-shell seems to use the first argument of set_wmclass()
+        # to find the .desktop file.  If the .desktop file can be
+        # found, the name shown by gnome-shell in the top bar comes
+        # from that .desktop file and the icon to show is also read
+        # from that .desktop file. If the .desktop file cannot be
+        # found, the second argument of set_wmclass() is shown by
+        # gnome-shell in the top bar.
+        maindialog.set_wmclass('ibus-setup-typing-booster', 'Typing Booster Preferences')
         maindialog.show()
 
         name_version = self.builder.get_object("name_version_label")
