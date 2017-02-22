@@ -141,6 +141,8 @@ class EmojiPickerUI(Gtk.Window):
             else:
                 self._gettext_translations[language] = None
 
+        self._currently_selected_label = ('', '', '')
+
         self._notebook = Gtk.Notebook()
         self.add(self._notebook)
 
@@ -618,6 +620,14 @@ class EmojiPickerUI(Gtk.Window):
         if _ARGS.debug:
             sys.stdout.write('on_switch_page() page_number = %s\n'
                              %page_number)
+        if page_number == 0:
+            # This is the “Browse” page
+            # The recently used emoji might have changed if we selected
+            # an emoji in the search page. Therefore, if we return to
+            # the “Browse” page and the “Recently used” label is selected,
+            # we need to update the flowbox for the recently used emoji:
+            if self._currently_selected_label == ('dummy_language', '', ''):
+                self._fill_flowbox('dummy_language', '', '')
         if page_number == 1:
             # This is the “Search” page
             self._search_entry.connect('draw', self.on_search_entry_draw)
@@ -693,7 +703,9 @@ class EmojiPickerUI(Gtk.Window):
         language = model[iterator][1]
         label_key = model[iterator][2]
         label = model[iterator][3]
-        self._fill_flowbox(language, label_key, label)
+        if self._currently_selected_label != (language, label_key, label):
+            self._currently_selected_label = (language, label_key, label)
+            self._fill_flowbox(language, label_key, label)
 
     def on_row_activated( # pylint: disable=no-self-use
             self, treeview, treepath, column):
