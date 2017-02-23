@@ -267,7 +267,7 @@ class EmojiPickerUI(Gtk.Window):
             + 'documentation.html')
         self.about_documentation_link_button = Gtk.LinkButton(
             label=documentation_uri)
-        self.about_documentation_link_button.set_uri(home_page_uri)
+        self.about_documentation_link_button.set_uri(documentation_uri)
         self.about_documentation_link_button.set_hexpand(True)
         self.about_documentation_link_button.set_vexpand(True)
         self._page_about.add(self.about_documentation_link_button)
