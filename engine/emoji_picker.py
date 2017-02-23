@@ -79,7 +79,7 @@ def parse_args():
     parser.add_argument(
         '-s', '--fontsize',
         nargs='?',
-        type=int,
+        type=float,
         action='store',
         default=24,
         help=('Set a fontsize to display emoji. '
@@ -668,7 +668,7 @@ class EmojiPickerUI(Gtk.Window):
                  + html.escape(candidate[0])
                  + '</span>'
                  + '<span font="%s">'
-                 %self._fontsize
+                 %(self._fontsize / 2)
                  + ' ' + html.escape(candidate[1])
                  + '</span>',
                  candidate[0]))
