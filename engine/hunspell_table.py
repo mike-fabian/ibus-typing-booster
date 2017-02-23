@@ -1524,7 +1524,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._lookup_table_is_invalid = False
 
     def _update_candidates_and_lookup_table_and_aux(self):
-        '''Updat the candidates, the lookup table and the auxiliary text'''
+        '''Update the candidates, the lookup table and the auxiliary text'''
         self._update_candidates()
         self._update_lookup_table_and_aux()
 
