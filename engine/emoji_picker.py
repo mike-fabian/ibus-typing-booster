@@ -41,6 +41,7 @@ require_version('Gtk', '3.0')
 from gi.repository import Gtk
 require_version('IBus', '1.0')
 from gi.repository import IBus
+from gi.repository import GLib
 import itb_emoji
 import version
 
@@ -142,6 +143,8 @@ class EmojiPickerUI(Gtk.Window):
                 self._gettext_translations[language] = None
 
         self._currently_selected_label = ('', '', '')
+        self._candidates_invalid = False
+        self._query_string = ''
 
         self._notebook = Gtk.Notebook()
         self.add(self._notebook)
@@ -657,24 +660,8 @@ class EmojiPickerUI(Gtk.Window):
             sys.stdout.write('on_search_entry_draw()\n')
         entry.grab_focus_without_selecting()
 
-    def on_search_entry_text_changed(self, widget, dummy_property_spec):
-        '''
-        Signal handler for changed text in the search entry
-
-        :param widget: The search entry
-        :type widget: Gtk.Entry object
-        :param dummy_property_spec: not used
-        '''
-        query_string = widget.get_text()
-        self._search_treeview_model = Gtk.ListStore(str, str)
-        self._search_treeview.set_model(self._search_treeview_model)
-        if not query_string:
-            return
-        if _ARGS.debug:
-            sys.stdout.write(
-                'on_search_entry_text_changed() query_string = %s\n'
-                %query_string)
-        for candidate in self._emoji_matcher.candidates(query_string):
+    def _update_candidates(self):
+        for candidate in self._emoji_matcher.candidates(self._query_string):
             self._search_treeview_model.append(
                 ('<span font="%s %s">'
                  %(self._font, self._fontsize)
@@ -685,6 +672,30 @@ class EmojiPickerUI(Gtk.Window):
                  + ' ' + html.escape(candidate[1])
                  + '</span>',
                  candidate[0]))
+        self._candidates_invalid = False
+
+    def on_search_entry_text_changed(self, widget, dummy_property_spec):
+        '''
+        Signal handler for changed text in the search entry
+
+        :param widget: The search entry
+        :type widget: Gtk.Entry object
+        :param dummy_property_spec: not used
+        '''
+        query_string = widget.get_text()
+        if _ARGS.debug:
+            sys.stdout.write(
+                'on_search_entry_text_changed() query_string = %s\n'
+                %query_string)
+        self._search_treeview_model = Gtk.ListStore(str, str)
+        self._search_treeview.set_model(self._search_treeview_model)
+        if not query_string:
+            return
+        self._query_string = query_string
+        if self._candidates_invalid:
+            return
+        self._candidates_invalid = True
+        GLib.idle_add(self._update_candidates)
 
     def on_label_selected(self, selection):
         '''
