@@ -85,6 +85,12 @@ def parse_args():
         help=('Set a fontsize to display emoji. '
               + 'default: "%(default)s"'))
     parser.add_argument(
+        '-m', '--modal',
+        action='store_true',
+        default=False,
+        help=('Make the window of emoji-picker modal. '
+              + 'default: %(default)s'))
+    parser.add_argument(
         '-d', '--debug',
         action='store_true',
         default=False,
@@ -827,6 +833,7 @@ if __name__ == '__main__':
     EMOJI_PICKER_UI = EmojiPickerUI(
         languages=get_languages(),
         font=_ARGS.font,
-        fontsize=_ARGS.fontsize)
+        fontsize=_ARGS.fontsize,
+        modal=_ARGS.modal)
     EMOJI_PICKER_UI.show_all()
     Gtk.main()
