@@ -1159,7 +1159,12 @@ class EmojiMatcher():
 
         >>> mq.candidates('1b')
         []
+
+        >>> mq.candidates('')
+        []
         '''
+        if not query_string:
+            return []
         # Replace any sequence of white space characters and '_'
         # and '＿' in the query string with a single ' '.  '＿'
         # (U+FF3F FULLWIDTH LOW LINE) is included here because when
