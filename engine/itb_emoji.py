@@ -302,7 +302,8 @@ class EmojiMatcher():
     '''A class to find Emoji which best match a query string'''
 
     def __init__(self, languages=('en_US',),
-                 unicode_data=True, cldr_data=True, quick=True,
+                 unicode_data=True, unicode_data_all=False,
+                 cldr_data=True, quick=True,
                  romaji=False):
         '''
         Initialize the emoji matcher
@@ -311,6 +312,10 @@ class EmojiMatcher():
         :type languages: List or tuple of strings
         :param unicode_data: Whether to load the UnicodeData.txt file as well
         :type unicode_data: Boolean
+        :param unicode_data_all: Whether to load *all* of the Unicode characters
+                                  from UnicodeData.txt. If False, most regular
+                                  letters are omitted.
+        :type unicode_data_all: Boolean
         :param cldr_data: Whether to load data from CLDR as well
         :type cldr_data: Boolean
         :param quick: Whether to do a quicker but slighly less precise match.
@@ -342,6 +347,7 @@ class EmojiMatcher():
                     self._gettext_translations[language] = None
             else:
                 self._gettext_translations[language] = None
+        self._unicode_data_all = unicode_data_all
         self._quick = quick
         self._romaji = romaji
         self._enchant_dicts = []
@@ -438,7 +444,8 @@ class EmojiMatcher():
                 codepoint_string, name, category = line.split(';')[:3]
                 codepoint_integer = int(codepoint_string, 16)
                 emoji_string = chr(codepoint_integer)
-                if (not UNICODE_CATEGORIES[category]['valid']
+                if (not self._unicode_data_all
+                        and not UNICODE_CATEGORIES[category]['valid']
                         and emoji_string not in VALID_CHARACTERS):
                     continue
                 self._add_to_emoji_dict(

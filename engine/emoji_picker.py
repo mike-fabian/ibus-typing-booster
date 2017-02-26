@@ -95,6 +95,14 @@ def parse_args():
         help=('Make the window of emoji-picker modal. '
               + 'default: %(default)s'))
     parser.add_argument(
+        '-a', '--all',
+        action='store_true',
+        default=False,
+        help=('Load all Unicode characters. '
+              + 'Makes all Unicode characters accessible, even normal letters. '
+              + 'Slows the search down and is usually not needed. '
+              + 'default: %(default)s'))
+    parser.add_argument(
         '-d', '--debug',
         action='store_true',
         default=False,
@@ -111,6 +119,7 @@ class EmojiPickerUI(Gtk.Window):
     def __init__(self,
                  languages=('en_US',),
                  modal=False,
+                 unicode_data_all=False,
                  font='',
                  fontsize=24):
         Gtk.Window.__init__(self, title='🚀 ' + _('Emoji Picker'))
@@ -133,7 +142,9 @@ class EmojiPickerUI(Gtk.Window):
         self.connect('delete-event', self.on_delete_event)
         self.connect('key-press-event', self.on_main_window_key_press_event)
         self._languages = languages
-        self._emoji_matcher = itb_emoji.EmojiMatcher(languages=self._languages)
+        self._emoji_matcher = itb_emoji.EmojiMatcher(
+            languages=self._languages,
+            unicode_data_all=unicode_data_all)
         self._gettext_translations = {}
         for language in itb_emoji._expand_languages(self._languages):
             mo_file = gettext.find(DOMAINNAME, languages=[language])
@@ -974,5 +985,6 @@ if __name__ == '__main__':
         languages=get_languages(),
         font=_ARGS.font,
         fontsize=_ARGS.fontsize,
-        modal=_ARGS.modal)
+        modal=_ARGS.modal,
+        unicode_data_all=_ARGS.all)
     Gtk.main()
