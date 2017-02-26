@@ -9,102 +9,103 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2017-02-22 09:40+0100\n"
+"POT-Creation-Date: 2017-02-26 02:50+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2017-02-21 10:18-0500\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: French\n"
 "Language: fr\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Zanata 3.9.6\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: engine/emoji_picker.py:103
+#: engine/emoji_picker.py:116
 msgid "Emoji Picker"
 msgstr "Présentoir à émoticônes"
 
-#: engine/emoji_picker.py:165
-msgid "Browse"
-msgstr "Parcourir"
-
-#: engine/emoji_picker.py:171
-msgid "Search"
-msgstr "Chercher"
-
-#: engine/emoji_picker.py:223 setup/setup.glade:591
-msgid "A completion input method to speedup typing."
-msgstr "Une méthode d'auto-complètement  pour accélérer la saisie."
-
-#: engine/emoji_picker.py:228 setup/setup.glade:616
-msgid "<b>Home page:</b>"
-msgstr "<b>Site web :</b>"
-
-#: engine/emoji_picker.py:242 setup/setup.glade:627
-msgid "<b>Online documentation:</b>"
-msgstr "<b>Documentation en ligne :</b>"
+#: engine/emoji_picker.py:176
+msgid "Clear recently used"
+msgstr ""
 
 #. This is the “About” tab in the setup tool.  That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
-#: engine/emoji_picker.py:258 setup/setup.glade:658
+#: engine/emoji_picker.py:182 setup/setup.glade:658
 msgid "About"
 msgstr "À propos"
 
-#: engine/emoji_picker.py:297
+#: engine/emoji_picker.py:187
+msgid "Quit"
+msgstr ""
+
+#: engine/emoji_picker.py:255
 msgid "Recently used"
 msgstr "Récemment utilisé"
 
-#: engine/emoji_picker.py:309
+#: engine/emoji_picker.py:303
 msgid "Categories"
 msgstr "Catégories"
 
-#: engine/emoji_picker.py:310
+#: engine/emoji_picker.py:304
 msgid "Unicode categories"
 msgstr "Catégories Unicode"
 
-#: engine/emoji_picker.py:311
+#: engine/emoji_picker.py:305
 msgid "Keywords"
 msgstr "Mots clés"
 
-#: engine/emoji_picker.py:483 engine/emoji_picker.py:490
-#: engine/emoji_picker.py:582 engine/emoji_picker.py:589
+#: engine/emoji_picker.py:516 engine/emoji_picker.py:523
+#: engine/emoji_picker.py:736 engine/emoji_picker.py:743
 msgid "Click to copy"
 msgstr "Cliquez pour copier"
 
-#: engine/emoji_picker.py:780 setup/main.py:985
+#. Translators: put your names here, one name per line.
+#: engine/emoji_picker.py:657
+msgid "translator-credits"
+msgstr ""
+
+#: engine/emoji_picker.py:694
+msgid "Search Results"
+msgstr ""
+
+#: engine/emoji_picker.py:862
+msgid "Copied to clipboard!"
+msgstr ""
+
+#: engine/emoji_picker.py:928 setup/main.py:994
 msgid "ibus is not running."
 msgstr "Ibus n'est pas lancé."
 
-#: engine/hunspell_table.py:394 engine/hunspell_table.py:414
+#: engine/hunspell_table.py:397 engine/hunspell_table.py:417
 msgid "Off"
 msgstr "Désactivé"
 
-#: engine/hunspell_table.py:399 engine/hunspell_table.py:419
+#: engine/hunspell_table.py:402 engine/hunspell_table.py:422
 msgid "On"
 msgstr "Activé"
 
-#: engine/hunspell_table.py:404 engine/hunspell_table.py:406
+#: engine/hunspell_table.py:407 engine/hunspell_table.py:409
 #: setup/setup.glade:151
 msgid "Unicode symbols and emoji predictions"
 msgstr "Prédictions des émoticônes et symboles unicodes"
 
-#: engine/hunspell_table.py:424 engine/hunspell_table.py:425
+#: engine/hunspell_table.py:427 engine/hunspell_table.py:428
 #: setup/setup.glade:166
 msgid "Off the record mode"
 msgstr "Mode sans enregistrement"
 
-#: engine/hunspell_table.py:1144
+#: engine/hunspell_table.py:1147
 msgid "Preedit input method"
 msgstr "Méthode de saisie pour la pré-édition."
 
-#: engine/hunspell_table.py:1145
+#: engine/hunspell_table.py:1148
 msgid "Switch preedit input method"
 msgstr "Changer la méthode de pré-édition"
 
-#: engine/hunspell_table.py:1338
+#: engine/hunspell_table.py:1341
 msgid "Setup"
 msgstr "Configuration"
 
-#: engine/hunspell_table.py:1341
+#: engine/hunspell_table.py:1344
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Configurer ibus-typing-booster « %(name)s »"
@@ -187,50 +188,51 @@ msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Préférences pour ibus-typing-booster « %(symbol)s »"
 
 #. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:183
+#: setup/main.py:192
 msgid "Shortcut"
 msgstr "Raccourci"
 
 #. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:189
+#: setup/main.py:198
 msgid "Shortcut expansion"
 msgstr "Expansion du raccourci"
 
-#: setup/main.py:347
+#: setup/main.py:356
 msgid "Horizontal"
 msgstr "Horizontale"
 
-#: setup/main.py:349
+#: setup/main.py:358
 msgid "Vertical"
 msgstr "Verticale"
 
-#: setup/main.py:351
+#: setup/main.py:360
 msgid "System default"
 msgstr "Par défaut pour le système"
 
-#: setup/main.py:441
+#: setup/main.py:450
 msgid "Another instance of this app is already running."
-msgstr "Une autre instance de cette application est déjà en cours d'exécution."
+msgstr ""
+"Une autre instance de cette application est déjà en cours d'exécution."
 
-#: setup/main.py:629
+#: setup/main.py:638
 msgid "Open File ..."
 msgstr "Ouvrir le fichier..."
 
-#: setup/main.py:647
+#: setup/main.py:656
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Apprentissage réussi depuis le fichier  %(filename)s."
 
-#: setup/main.py:656
+#: setup/main.py:665
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Échec de l'apprentissage depuis le fichier  %(filename)s."
 
-#: setup/main.py:669
+#: setup/main.py:678
 msgid "Are you sure?"
 msgstr "Confirmez-vous ?"
 
-#: setup/main.py:676
+#: setup/main.py:685
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -252,10 +254,10 @@ msgid ""
 "then necessary to show the list of suggestions. After a commit the "
 "suggestions are hidden again until the next Tab key is typed."
 msgstr ""
-"Si cette option est activée, les suggestions ne sont pas montrées par "
-"défaut. Appuyer sur Tab est alors nécessaire pour montrer la liste des "
-"suggestions. Après validation, les suggestions sont de nouveau cachées "
-"jusqu'à ce que la touche Tab soit appuyée."
+"Si cette option est activée, les suggestions ne sont pas montrées par défaut."
+" Appuyer sur Tab est alors nécessaire pour montrer la liste des suggestions. "
+"Après validation, les suggestions sont de nouveau cachées jusqu'à ce que la "
+"touche Tab soit appuyée."
 
 #: setup/setup.glade:75
 msgid "Display total number of candidates"
@@ -420,6 +422,7 @@ msgstr "Taille de la fenêtre des candidats"
 #: setup/setup.glade:253
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
+""
 msgstr ""
 "Ne pas afficher de suggestion quand moins que ce nombre de caractères a été "
 "saisi."
@@ -509,6 +512,18 @@ msgstr "Supprimer les données apprises"
 msgid "Dictionaries and personal data"
 msgstr "Dictionnaires et données personnelles"
 
+#: setup/setup.glade:591
+msgid "A completion input method to speedup typing."
+msgstr "Une méthode d'auto-complètement  pour accélérer la saisie."
+
+#: setup/setup.glade:616
+msgid "<b>Home page:</b>"
+msgstr "<b>Site web :</b>"
+
+#: setup/setup.glade:627
+msgid "<b>Online documentation:</b>"
+msgstr "<b>Documentation en ligne :</b>"
+
 #: typing-booster.appdata.xml:5
 msgid "Typing Booster"
 msgstr "L'accélérateur de saisie"
@@ -524,9 +539,9 @@ msgid ""
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
 "L'accélérateur de saisie « Ibus-typing-booster » est une méthode de saisie "
-"qui prédit des mots complets à partir du contexte et de la saisie "
-"partielle.  On peut ainsi améliorer sa vitesse d'écriture et son orthographe "
-"en sélectionnant simplement le mot désiré dans une liste de suggestions."
+"qui prédit des mots complets à partir du contexte et de la saisie partielle. "
+" On peut ainsi améliorer sa vitesse d'écriture et son orthographe en "
+"sélectionnant simplement le mot désiré dans une liste de suggestions."
 
 #: typing-booster.appdata.xml:766
 msgid "Mike FABIAN"
