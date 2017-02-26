@@ -139,7 +139,7 @@ class EmojiPickerUI(Gtk.Window):
         self.set_default_size(700, 400)
         self._modal = modal
         self.set_modal(self._modal)
-        self._font = ''
+        self._font = 'Symbola'
         self._fontsize = 24
         self._options_file = os.path.join(
             xdg.BaseDirectory.save_data_path('emoji-picker'),
