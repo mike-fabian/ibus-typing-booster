@@ -207,6 +207,18 @@ class EmojiPickerUI(Gtk.Window):
         self._toggle_search_button.connect(
             'clicked', self.on_toggle_search_button_clicked)
         self._header_bar.pack_start(self._toggle_search_button)
+        self._fontsize_spin_button = Gtk.SpinButton()
+        self._fontsize_spin_button.set_numeric(True)
+        self._fontsize_spin_button.set_can_focus(True)
+        self._fontsize_adjustment = Gtk.Adjustment()
+        self._fontsize_adjustment.set_lower(1)
+        self._fontsize_adjustment.set_upper(10000)
+        self._fontsize_adjustment.set_value(self._fontsize)
+        self._fontsize_adjustment.set_step_increment(1)
+        self._fontsize_spin_button.set_adjustment(self._fontsize_adjustment)
+        self._fontsize_adjustment.connect(
+            'value-changed', self.on_fontsize_adjustment_value_changed)
+        self._header_bar.pack_start(self._fontsize_spin_button)
         self._spinner = Gtk.Spinner()
         self._header_bar.pack_end(self._spinner)
         self._main_container.pack_start(self._header_bar, False, False, 0)
@@ -448,6 +460,19 @@ class EmojiPickerUI(Gtk.Window):
                 'emoji_order = %s' %self._emoji_matcher.emoji_order(emoji))
         return description
 
+    def _emoji_label_set_tooltip(self, emoji, label):
+        description = self._emoji_description(emoji)
+        if itb_emoji._is_invisible(emoji):
+            label.set_tooltip_text(
+                description + '\n\n' + _('Click to copy'))
+        else:
+            label.set_tooltip_markup(
+                '<span font_desc="%s %s">'
+                %(self._font, self._fontsize * 4)
+                + html.escape(emoji)
+                + '</span>\n\n'
+                + html.escape(description + '\n\n' + _('Click to copy')))
+
     def _clear_flowbox(self):
         for child in self._flowbox_scroll.get_children():
             self._flowbox_scroll.remove(child)
@@ -497,9 +522,9 @@ class EmojiPickerUI(Gtk.Window):
         for emoji in emoji_list:
             while Gtk.events_pending():
                 Gtk.main_iteration()
-            description = self._emoji_description(emoji)
             label = Gtk.Label()
             if itb_emoji._is_invisible(emoji):
+                description = self._emoji_description(emoji)
                 label.set_text('<span>%s</span>' %emoji + description)
             else:
                 # Make font for emoji large using pango markup
@@ -522,16 +547,7 @@ class EmojiPickerUI(Gtk.Window):
             label.set_margin_end(margin)
             label.set_margin_top(margin)
             label.set_margin_bottom(margin)
-            if itb_emoji._is_invisible(emoji):
-                label.set_tooltip_text(
-                    description + '\n\n' + _('Click to copy'))
-            else:
-                label.set_tooltip_markup(
-                    '<span font_desc="%s %s">'
-                    %(self._font, self._fontsize * 4)
-                    + html.escape(emoji)
-                    + '</span>\n\n'
-                    + html.escape(description + '\n\n' + _('Click to copy')))
+            self._emoji_label_set_tooltip(emoji, label)
             self._flowbox.insert(label, -1)
 
         self.show_all()
@@ -617,6 +633,14 @@ class EmojiPickerUI(Gtk.Window):
                 'on_main_window_key_press_event() '
                 + 'keyval = %s\n'
                 %event_key.keyval)
+        if self._fontsize_spin_button.has_focus():
+            if _ARGS.debug:
+                sys.stdout.write(
+                    'on_main_window_key_press_event(): '
+                    + 'self._fontsize_spin_button has focus\n')
+            # if the fontsize spin button has focus, we do not want
+            # to take it away from there by popping up the search bar.
+            return
         # https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html#GdkEventKey
         # See /usr/include/gtk-3.0/gdk/gdkkeysyms.h for a list
         # of Gdk keycodes
@@ -751,7 +775,6 @@ class EmojiPickerUI(Gtk.Window):
             emoji = candidate[0]
             name = candidate[1]
             score = candidate[2]
-            description = self._emoji_description(emoji)
             label = Gtk.Label()
             # Make font for emoji large using pango markup
             label.set_text(
@@ -777,16 +800,7 @@ class EmojiPickerUI(Gtk.Window):
             label.set_margin_end(margin)
             label.set_margin_top(margin)
             label.set_margin_bottom(margin)
-            if itb_emoji._is_invisible(emoji):
-                label.set_tooltip_text(
-                    description + '\n\n' + _('Click to copy'))
-            else:
-                label.set_tooltip_markup(
-                    '<span font_desc="%s %s">'
-                    %(self._font, self._fontsize * 4)
-                    + html.escape(emoji)
-                    + '</span>\n\n'
-                    + html.escape(description + '\n\n' + _('Click to copy')))
+            self._emoji_label_set_tooltip(emoji, label)
             self._flowbox.insert(label, -1)
 
         self.show_all()
@@ -929,6 +943,44 @@ class EmojiPickerUI(Gtk.Window):
             sys.stdout.write('on_toggle_search_button_clicked()\n')
         self._search_bar.set_search_mode(
             not self._search_bar.get_search_mode())
+
+    def _change_flowbox_font(self):
+        for flowbox_child in self._flowbox.get_children():
+            label = flowbox_child.get_child()
+            text = label.get_label()
+            pattern = re.compile(
+                r'<span[^<]*?>(?P<emoji>[^<]+?)</span>'
+                + r'(<span[^<]*?>(?P<name>[^<]+?)</span>)?')
+            match = pattern.match(text)
+            if match:
+                emoji = html.unescape(match.group('emoji'))
+                new_text = (
+                    '<span font="%s %s">'
+                    %(self._font, self._fontsize)
+                    + html.escape(emoji)
+                    + '</span>')
+                if match.group('name'):
+                    name = html.unescape(match.group('name'))
+                    new_text += (
+                        '<span font="%s">'
+                        %(self._fontsize / 2)
+                        + html.escape(name)
+                        + '</span>')
+                label.set_text(new_text)
+                label.set_use_markup(True)
+                self._emoji_label_set_tooltip(emoji, label)
+        self.show_all()
+        self._busy_stop()
+
+    def on_fontsize_adjustment_value_changed(self, dummy_widget):
+        value = self._fontsize_adjustment.get_value()
+        if _ARGS.debug:
+            sys.stdout.write(
+                'on_fontsize_adjustment_value_changed() value = %s\n'
+                %value)
+        self._fontsize = value
+        self._busy_start()
+        GLib.idle_add(self._change_flowbox_font)
 
 def get_languages():
     '''
