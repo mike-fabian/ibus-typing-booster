@@ -76,17 +76,20 @@ def parse_args():
         nargs='?',
         type=str,
         action='store',
-        default='',
+        default=None,
         help=('Set a font to display emoji. '
-              + 'If empty, the system settings are  used. '
+              + 'If not specified, the font is read from the config file. '
+              + 'To use the system default font specify "". '
               + 'default: "%(default)s"'))
     parser.add_argument(
         '-s', '--fontsize',
         nargs='?',
         type=float,
         action='store',
-        default=24,
+        default=None,
         help=('Set a fontsize to display emoji. '
+              + 'If not specified, the fontsize is read from the config file. '
+              + 'If that fails 24 is used as a fall back fontsize. '
               + 'default: "%(default)s"'))
     parser.add_argument(
         '-m', '--modal',
@@ -120,8 +123,8 @@ class EmojiPickerUI(Gtk.Window):
                  languages=('en_US',),
                  modal=False,
                  unicode_data_all=False,
-                 font='',
-                 fontsize=24):
+                 font=None,
+                 fontsize=None):
         Gtk.Window.__init__(self, title='🚀 ' + _('Emoji Picker'))
         self.set_name('Emoji Picker')
         # https://tronche.com/gui/x/icccm/sec-4.html#WM_CLASS
@@ -136,8 +139,17 @@ class EmojiPickerUI(Gtk.Window):
         self.set_default_size(700, 400)
         self._modal = modal
         self.set_modal(self._modal)
-        self._font = font
-        self._fontsize = fontsize
+        self._font = ''
+        self._fontsize = 24
+        self._options_file = os.path.join(
+            xdg.BaseDirectory.save_data_path('emoji-picker'),
+            'options')
+        self._read_options()
+        if not font is None:
+            self._font = font
+        if not fontsize is None:
+            self._fontsize = fontsize
+        self._save_options()
         self.connect('destroy-event', self.on_destroy_event)
         self.connect('delete-event', self.on_delete_event)
         self.connect('key-press-event', self.on_main_window_key_press_event)
@@ -280,38 +292,12 @@ class EmojiPickerUI(Gtk.Window):
             None,
             [self._recently_used_label, '', '', self._recently_used_label])
 
+        self._recently_used_emoji = {}
         self._recently_used_emoji_file = os.path.join(
             xdg.BaseDirectory.save_data_path('emoji-picker'),
             'recently-used')
         self._recently_used_emoji_maximum = 100
-        self._recently_used_emoji = {}
-        if os.path.isfile(self._recently_used_emoji_file):
-            try:
-                self._recently_used_emoji = eval(open(
-                    self._recently_used_emoji_file,
-                    mode='r',
-                    encoding='UTF-8').read())
-            except (PermissionError, SyntaxError, IndentationError):
-                import traceback
-                traceback.print_exc()
-            except Exception as exception:
-                import traceback
-                traceback.print_exc()
-            else: # no exception occured
-                if _ARGS.debug:
-                    sys.stdout.write(
-                        'File %s has been read and evaluated.\n'
-                        %self._recently_used_emoji_file)
-            finally: # executes always
-                if not isinstance(self._recently_used_emoji, dict):
-                    if _ARGS.debug:
-                        sys.stdout.write(
-                            'Not a dict: repr(self._recently_used_emoji) = %s\n'
-                            %self._recently_used_emoji)
-                    self._recently_used_emoji = {}
-        if not self._recently_used_emoji:
-            self._init_recently_used()
-        self._cleanup_recently_used()
+        self._read_recently_used()
 
         self._emoji_by_label = self._emoji_matcher.emoji_by_label()
         expanded_languages = itb_emoji._expand_languages(self._languages)
@@ -552,6 +538,89 @@ class EmojiPickerUI(Gtk.Window):
 
         self.show_all()
         self._busy_stop()
+
+    def _read_options(self):
+        '''
+        Read the options for 'font' and 'fontsize' from  a file
+        '''
+        options_dict = {}
+        if os.path.isfile(self._options_file):
+            try:
+                options_dict = eval(open(
+                    self._options_file,
+                    mode='r',
+                    encoding='UTF-8').read())
+            except (PermissionError, SyntaxError, IndentationError):
+                import traceback
+                traceback.print_exc()
+            except Exception as exception:
+                import traceback
+                traceback.print_exc()
+            else: # no exception occured
+                if _ARGS.debug:
+                    sys.stdout.write(
+                        'File %s has been read and evaluated.\n'
+                        %self._options_file)
+            finally: # executes always
+                if not isinstance(options_dict, dict):
+                    if _ARGS.debug:
+                        sys.stdout.write(
+                            'Not a dict: repr(options_dict) = %s\n'
+                            %options_dict)
+                    options_dict = {}
+        if ('font' in options_dict
+            and isinstance(options_dict['font'], str)):
+            self._font = options_dict['font']
+        if ('fontsize' in options_dict
+            and (isinstance(options_dict['fontsize'], int)
+                 or isinstance(options_dict['fontsize'], float))):
+            self._fontsize = options_dict['fontsize']
+
+    def _save_options(self):
+        '''
+        Save the options for 'font' and 'fontsize' to a file
+        '''
+        options_dict = {
+            'font': self._font,
+            'fontsize': self._fontsize,
+            }
+        with open(self._options_file,
+                  mode='w',
+                  encoding='UTF-8') as options_file:
+            options_file.write(repr(options_dict))
+            options_file.write('\n')
+
+    def _read_recently_used(self):
+        '''
+        Read the recently use emoji from a file
+        '''
+        if os.path.isfile(self._recently_used_emoji_file):
+            try:
+                self._recently_used_emoji = eval(open(
+                    self._recently_used_emoji_file,
+                    mode='r',
+                    encoding='UTF-8').read())
+            except (PermissionError, SyntaxError, IndentationError):
+                import traceback
+                traceback.print_exc()
+            except Exception as exception:
+                import traceback
+                traceback.print_exc()
+            else: # no exception occured
+                if _ARGS.debug:
+                    sys.stdout.write(
+                        'File %s has been read and evaluated.\n'
+                        %self._recently_used_emoji_file)
+            finally: # executes always
+                if not isinstance(self._recently_used_emoji, dict):
+                    if _ARGS.debug:
+                        sys.stdout.write(
+                            'Not a dict: repr(self._recently_used_emoji) = %s\n'
+                            %self._recently_used_emoji)
+                    self._recently_used_emoji = {}
+        if not self._recently_used_emoji:
+            self._init_recently_used()
+        self._cleanup_recently_used()
 
     def _cleanup_recently_used(self):
         '''
@@ -979,6 +1048,7 @@ class EmojiPickerUI(Gtk.Window):
                 'on_fontsize_adjustment_value_changed() value = %s\n'
                 %value)
         self._fontsize = value
+        self._save_options()
         self._busy_start()
         GLib.idle_add(self._change_flowbox_font)
 
