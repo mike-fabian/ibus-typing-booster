@@ -168,7 +168,7 @@ class EmojiPickerUI(Gtk.Window):
             languages=self._languages,
             unicode_data_all=unicode_data_all)
         self._gettext_translations = {}
-        for language in itb_emoji._expand_languages(self._languages):
+        for language in itb_emoji.expand_languages(self._languages):
             mo_file = gettext.find(DOMAINNAME, languages=[language])
             if (mo_file
                     and
@@ -311,7 +311,7 @@ class EmojiPickerUI(Gtk.Window):
         self._read_recently_used()
 
         self._emoji_by_label = self._emoji_matcher.emoji_by_label()
-        expanded_languages = itb_emoji._expand_languages(self._languages)
+        expanded_languages = itb_emoji.expand_languages(self._languages)
         first_language_with_categories = -1
         number_of_empty_languages = 0
         for language_index, language in enumerate(expanded_languages):
@@ -355,7 +355,7 @@ class EmojiPickerUI(Gtk.Window):
         if _ARGS.debug:
             sys.stdout.write(
                 'expanded_languages  = %s\n'
-                %itb_emoji._expand_languages(self._languages)
+                %itb_emoji.expand_languages(self._languages)
                 + 'first_language_with_categories = %s\n'
                 %first_language_with_categories
                 + 'number_of_empty_languages = %s\n'
@@ -467,7 +467,7 @@ class EmojiPickerUI(Gtk.Window):
         '''
         description = ' '.join(['U+%X' %ord(character) for character in emoji])
         description += '\n'
-        for language in itb_emoji._expand_languages(self._languages):
+        for language in itb_emoji.expand_languages(self._languages):
             name = self._emoji_matcher.name(emoji, language=language)
             if name:
                 description += '%s   (%s)\n' %(name, language)
@@ -486,7 +486,7 @@ class EmojiPickerUI(Gtk.Window):
         :type label: Gtk.Label object
         '''
         description = self._emoji_description(emoji)
-        if itb_emoji._is_invisible(emoji):
+        if itb_emoji.is_invisible(emoji):
             label.set_tooltip_text(
                 description + '\n\n' + _('Click to copy'))
         else:
@@ -555,7 +555,7 @@ class EmojiPickerUI(Gtk.Window):
             while Gtk.events_pending():
                 Gtk.main_iteration()
             label = Gtk.Label()
-            if itb_emoji._is_invisible(emoji):
+            if itb_emoji.is_invisible(emoji):
                 description = self._emoji_description(emoji)
                 label.set_text('<span>%s</span>' %emoji + description)
             else:

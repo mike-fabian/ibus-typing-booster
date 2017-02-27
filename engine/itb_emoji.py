@@ -165,7 +165,7 @@ VALID_CHARACTERS = {
     '﷽', # ARABIC LIGATURE BISMILLAH AR-RAHMAN AR-RAHEEM
 }
 
-def _is_invisible(text):
+def is_invisible(text):
     '''Checks whether a text is invisible
 
     Returns True if the text is invisible, False if not.
@@ -179,16 +179,16 @@ def _is_invisible(text):
 
     Examples:
 
-    >>> _is_invisible('a')
+    >>> is_invisible('a')
     False
 
-    >>> _is_invisible(' ')
+    >>> is_invisible(' ')
     True
 
-    >>> _is_invisible(' a')
+    >>> is_invisible(' a')
     False
 
-    >>> _is_invisible('  ')
+    >>> is_invisible('  ')
     True
     '''
     invisible = True
@@ -233,7 +233,7 @@ SPANISH_419_LOCALES = (
     'es_PA', 'es_PE', 'es_PR', 'es_PY', 'es_SV', 'es_US',
     'es_UY', 'es_VE',)
 
-def _expand_languages(languages):
+def expand_languages(languages):
     '''Expands the given list of languages by including fallbacks.
 
     Returns a possibly longer list of languages by adding
@@ -245,10 +245,10 @@ def _expand_languages(languages):
 
     Examples:
 
-    >>> _expand_languages(['es_MX', 'es_ES', 'ja_JP'])
+    >>> expand_languages(['es_MX', 'es_ES', 'ja_JP'])
     ['es_MX', 'es_419', 'es', 'es_ES', 'es', 'ja_JP', 'ja', 'en']
 
-    >>> _expand_languages(['zh_Hant', 'zh_CN', 'zh_TW', 'zh_SG', 'zh_HK', 'zh_MO'])
+    >>> expand_languages(['zh_Hant', 'zh_CN', 'zh_TW', 'zh_SG', 'zh_HK', 'zh_MO'])
     ['zh_Hant', 'zh_CN', 'zh', 'zh_TW', 'zh_Hant', 'zh_SG', 'zh', 'zh_HK', 'zh_Hant', 'zh_MO', 'zh_Hant', 'en']
     '''
     expanded_languages = []
@@ -329,7 +329,7 @@ class EmojiMatcher():
         '''
         self._languages = languages
         self._gettext_translations = {}
-        for language in _expand_languages(self._languages):
+        for language in expand_languages(self._languages):
             mo_file = gettext.find(DOMAINNAME, languages=[language])
             if (mo_file
                     and
@@ -384,7 +384,7 @@ class EmojiMatcher():
             self._load_unicode_data()
         self._load_emojione_data()
         if cldr_data:
-            for language in _expand_languages(self._languages):
+            for language in expand_languages(self._languages):
                 self._load_cldr_annotation_data(language)
 
     def get_languages(self):
@@ -557,13 +557,13 @@ class EmojiMatcher():
             ]
 
             if (IMPORT_PYKAKASI_SUCCESSFUL
-                    and 'ja' in _expand_languages(self._languages)):
+                    and 'ja' in expand_languages(self._languages)):
                 KAKASI_INSTANCE.setMode('H', 'H')
                 KAKASI_INSTANCE.setMode('K', 'H')
                 KAKASI_INSTANCE.setMode('J', 'H')
                 kakasi_converter = KAKASI_INSTANCE.getConverter()
 
-            for language in _expand_languages(self._languages):
+            for language in expand_languages(self._languages):
                 if self._gettext_translations[language]:
                     translated_categories = []
                     for category in categories:
@@ -1235,7 +1235,7 @@ class EmojiMatcher():
                 else:
                     display_name = self.name(emoji_key[0])
                 if (len(emoji_key[0]) == 1
-                        and _is_invisible(emoji_key[0])):
+                        and is_invisible(emoji_key[0])):
                     # Add the code point to the display name of
                     # “invisible” characters:
                     display_name = ('U+%X' %ord(emoji_key[0])
@@ -1350,7 +1350,7 @@ class EmojiMatcher():
                 return self._emoji_dict[(emoji_string, language)]['names'][0]
             else:
                 return ''
-        for language in _expand_languages(self._languages):
+        for language in expand_languages(self._languages):
             if ((emoji_string, language) in self._emoji_dict
                     and 'names' in self._emoji_dict[(emoji_string, language)]):
                 return self._emoji_dict[(emoji_string, language)]['names'][0]
@@ -1419,7 +1419,7 @@ class EmojiMatcher():
         '''
         candidate_scores = {}
         original_labels = {}
-        expanded_languages = _expand_languages(self._languages)
+        expanded_languages = expand_languages(self._languages)
         label_keys = ('ucategories', 'categories', 'keywords')
         for language in expanded_languages:
             original_labels[language] = set()
@@ -1454,7 +1454,7 @@ class EmojiMatcher():
             else:
                 similar_name = self.name(similar_string)
             if (len(similar_string) == 1
-                    and _is_invisible(similar_string)):
+                    and is_invisible(similar_string)):
                 # Add the code point to the display name of
                 # “invisible” characters:
                 similar_name = ('U+%X' %ord(similar_string)
