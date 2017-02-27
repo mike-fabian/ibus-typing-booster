@@ -126,7 +126,15 @@ class EmojiPickerUI(Gtk.Window):
                  font=None,
                  fontsize=None):
         Gtk.Window.__init__(self, title='🚀 ' + _('Emoji Picker'))
-        self.set_name('Emoji Picker')
+
+        self.set_name('EmojiPicker')
+        style_provider = Gtk.CssProvider()
+        style_provider.load_from_data(b'#EmojiPicker { background-color: #FFFFFF; }')
+        Gtk.StyleContext.add_provider_for_screen(
+            Gdk.Screen.get_default(),
+            style_provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+
         # https://tronche.com/gui/x/icccm/sec-4.html#WM_CLASS
         # gnome-shell seems to use the first argument of set_wmclass()
         # to find the .desktop file.  If the .desktop file can be
