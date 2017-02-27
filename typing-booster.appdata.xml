@@ -16,6 +16,70 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.23" date="2017-02-27" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (de, ja, pl, uk updated)
+          </li>
+          <li>
+            emoji_picker.py: Add a menu button to change the font for
+            the emoji
+          </li>
+          <li>
+            emoji-picker: Make background colour of the flowbox
+            listing the emoji white
+          </li>
+          <li>
+            emoji-picker: Use “Symbola” as the default font
+          </li>
+          <li>
+            Remember the font and the fontsize in a config file
+          </li>
+          <li>
+            emoji_picker.py: Add a spin button to change the font size
+            of the emoji
+          </li>
+          <li>
+            Add option to the emoji-picker to load *all* Unicode
+            characters
+          </li>
+          <li>
+            UI redesign of the emoji-picker
+          </li>
+          <li>
+            Return an empty list immediately if candidates() is called
+            with an empty search string
+          </li>
+          <li>
+            Make the fontsize for the names of the emoji in the search
+            results smaller
+          </li>
+          <li>
+            Make the search in emoji-picker a bit more responsive by
+            using GLib.idle_add()
+          </li>
+          <li>
+            Save the recently used emoji immediately, not only when
+            the program quits
+          </li>
+          <li>
+            Set default font size of emoji-picker to 24 instead of 16
+          </li>
+          <li>
+            Set the emoji font only for the emoji, not for its name in
+            the search results
+          </li>
+          <li>
+            Set WM_CLASS of emoji-picker and ibus-setup-typing-booster
+            correctly
+          </li>
+          <li>
+            Add “Icon” and “Categories” to emoji-picker.desktop
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.22" date="2017-02-21" urgency="medium">
       <description>
         <ul>

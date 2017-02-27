@@ -1,4 +1,23 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 27 Feb 2017 Released 1.5.23 version
+* Update translations from zanata (de, ja, pl, uk updated)
+* emoji_picker.py: Add a menu button to change the font for the emoji
+* emoji-picker: Make background colour of the flowbox listing the emoji white
+* emoji-picker: Use “Symbola” as the default font
+* Remember the font and the fontsize in a config file
+* emoji_picker.py: Add a spin button to change the font size of the emoji
+* Add option to the emoji-picker to load *all* Unicode characters
+* UI redesign of the emoji-picker
+* Return an empty list immediately if candidates() is called with an empty search string
+* Make the fontsize for the names of the emoji in the search results smaller
+* Make the search in emoji-picker a bit more responsive by using GLib.idle_add()
+* Save the recently used emoji immediately, not only when the program quits
+* Set default font size of emoji-picker to 24 instead of 16
+* Set the emoji font only for the emoji, not for its name in the search results
+* Set WM_CLASS of emoji-picker and ibus-setup-typing-booster correctly
+* Add “Icon” and “Categories” to emoji-picker.desktop
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 21 Feb 2017 Released 1.5.22 version
 * Update translations from zanata (de, fr, pl, uk updated)
 * Add an emoji-picker
