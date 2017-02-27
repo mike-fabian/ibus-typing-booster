@@ -230,6 +230,16 @@ class EmojiPickerUI(Gtk.Window):
         self._toggle_search_button.connect(
             'clicked', self.on_toggle_search_button_clicked)
         self._header_bar.pack_start(self._toggle_search_button)
+        self._font_button = Gtk.Button()
+        self._font_button.set_always_show_image(True)
+        self._font_button.set_image_position(Gtk.PositionType.LEFT)
+        self._font_button.set_image(
+            Gtk.Image.new_from_icon_name(
+                'preferences-desktop-font', Gtk.IconSize.BUTTON))
+        self._font_button.set_label(self._font)
+        self._font_button.connect(
+            'clicked', self.on_font_button_clicked)
+        self._header_bar.pack_start(self._font_button)
         self._fontsize_spin_button = Gtk.SpinButton()
         self._fontsize_spin_button.set_numeric(True)
         self._fontsize_spin_button.set_can_focus(True)
@@ -1145,6 +1155,8 @@ class EmojiPickerUI(Gtk.Window):
 
     def on_fontsize_adjustment_value_changed(self, adjustment):
         '''
+        The fontsize adjustment in the header bar has been changed
+
         :param adjustment: The adjustment used to change the fontsize
         :type adjustment: Gtk.Adjustment object
         '''
@@ -1157,6 +1169,127 @@ class EmojiPickerUI(Gtk.Window):
         self._save_options()
         self._busy_start()
         GLib.idle_add(self._change_flowbox_font)
+
+    def _list_font_names(self):
+        '''
+        Returns a list of font names available on the system
+
+        :rtype: List of strings
+        '''
+        pango_context = self.get_pango_context()
+        families = pango_context.list_families()
+        names = [family.get_name() for family in families]
+        return names
+
+    def _fill_listbox_font(self, filter_text):
+        if _ARGS.debug:
+            sys.stdout.write(
+                '_fill_listbox_font() filter_text = %s\n'
+                %filter_text)
+        for child in self._font_popover_scroll.get_children():
+            self._font_popover_scroll.remove(child)
+        self._font_popover_listbox = Gtk.ListBox()
+        self._font_popover_scroll.add(self._font_popover_listbox)
+        self._font_popover_listbox.set_visible(True)
+        self._font_popover_listbox.set_vexpand(True)
+        self._font_popover_listbox.set_selection_mode(Gtk.SelectionMode.SINGLE)
+        self._font_popover_listbox.set_activate_on_single_click(True)
+        self._font_popover_listbox.connect(
+            'row-selected', self.on_font_selected)
+        fonts = [''] + [
+            font
+            for font in self._list_font_names()
+            if filter_text.replace(' ','').lower()
+            in font.replace(' ', '').lower()]
+        for font in fonts:
+            label = Gtk.Label(font)
+            label.set_xalign(0)
+            margin = 1
+            label.set_margin_start(margin)
+            label.set_margin_end(margin)
+            label.set_margin_top(margin)
+            label.set_margin_bottom(margin)
+            self._font_popover_listbox.insert(label,-1)
+        self._font_popover.show_all()
+
+    def on_font_search_entry_search_changed(self, search_entry):
+        '''
+        Signal handler for changed text in the font search entry
+
+        :param widget: The search entry
+        :type widget: Gtk.SearchEntry object
+        '''
+        filter_text = search_entry.get_text()
+        if _ARGS.debug:
+            sys.stdout.write(
+                'on_font_search_entry_search_changed() filter_text = %s\n'
+                %filter_text)
+        self._fill_listbox_font(filter_text)
+
+    def on_font_selected(self, dummy_listbox, listbox_row):
+        '''
+        Signal handler for selecting a font
+
+        :param dummy_listbox: The list box used to select a font
+        :type dummy_listbox: Gtk.ListBox object
+        :param listbox_row: A row containing a font name
+        :type listbox_row: Gtk.ListBoxRow object
+        '''
+        font = listbox_row.get_child().get_text()
+        if _ARGS.debug:
+            sys.stdout.write(
+                'on_font_selected() font = %s\n' %repr(font))
+        if GTK_VERSION >= (3, 22, 0):
+            self._font_popover.popdown()
+        self._font_popover.hide()
+        self._font = font
+        self._font_button.set_label(self._font)
+        self._save_options()
+        self._busy_start()
+        GLib.idle_add(self._change_flowbox_font)
+
+    def on_font_button_clicked(self, button):
+        '''
+        The font button in the header bar has been clicked
+
+        :param button: The font button
+        :type button: Gtk.Button object
+        '''
+        if _ARGS.debug:
+            sys.stdout.write(
+                'on_font_button_clicked()\n')
+        self._font_popover = Gtk.Popover()
+        self._font_popover.set_relative_to(self._font_button)
+        self._font_popover.set_position(Gtk.PositionType.BOTTOM)
+        self._font_popover.set_vexpand(True)
+        font_popover_vbox = Gtk.VBox()
+        margin = 12
+        font_popover_vbox.set_margin_start(margin)
+        font_popover_vbox.set_margin_end(margin)
+        font_popover_vbox.set_margin_top(margin)
+        font_popover_vbox.set_margin_bottom(margin)
+        font_popover_vbox.set_spacing(margin)
+        font_popover_label = Gtk.Label()
+        font_popover_label.set_text(_('Set Font'))
+        font_popover_label.set_visible(True)
+        font_popover_label.set_halign(Gtk.Align.FILL)
+        font_popover_vbox.pack_start(font_popover_label, False, False, 0)
+        font_popover_search_entry = Gtk.SearchEntry()
+        font_popover_search_entry.set_can_focus(True)
+        font_popover_search_entry.set_visible(True)
+        font_popover_search_entry.set_halign(Gtk.Align.FILL)
+        font_popover_search_entry.set_hexpand(False)
+        font_popover_search_entry.set_vexpand(False)
+        font_popover_search_entry.connect(
+            'search_changed', self.on_font_search_entry_search_changed)
+        font_popover_vbox.pack_start(font_popover_search_entry, False, False, 0)
+        self._font_popover_scroll = Gtk.ScrolledWindow()
+        self._fill_listbox_font('')
+        font_popover_vbox.pack_start(self._font_popover_scroll, True, True, 0)
+        self._font_popover.add(font_popover_vbox)
+        if GTK_VERSION >= (3, 22, 0):
+            self._font_popover.popup()
+        self._font_popover.show_all()
 
 def get_languages():
     '''
