@@ -131,7 +131,24 @@ class EmojiPickerUI(Gtk.Window):
         self.set_name('EmojiPicker')
         style_provider = Gtk.CssProvider()
         style_provider.load_from_data(
-            b'#EmojiPicker { background-color: #FFFFFF; }')
+            b'''
+            #EmojiPicker {
+                background-color: #FFFFFF;
+            }
+            flowbox {
+                background-color: #FFFFFF;
+            }
+            flowboxchild {
+                border-style: solid;
+                border-width: 1px;
+                border-color: #F8F8F8;
+            }
+            row {
+                border-style: solid;
+                border-width: 1px;
+                border-color: #F8F8F8;
+            }
+            ''')
         Gtk.StyleContext.add_provider_for_screen(
             Gdk.Screen.get_default(),
             style_provider,
