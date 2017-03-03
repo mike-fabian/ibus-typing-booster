@@ -254,7 +254,7 @@ class EmojiPickerUI(Gtk.Window):
         self._header_bar.pack_start(self._fontsize_spin_button)
         self._spinner = Gtk.Spinner()
         self._header_bar.pack_end(self._spinner)
-        self._main_container.pack_start(self._header_bar, False, False, 0)
+        self.set_titlebar(self._header_bar)
 
         self._search_entry = Gtk.SearchEntry()
         self._search_entry.set_hexpand(False)
