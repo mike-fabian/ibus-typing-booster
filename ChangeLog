@@ -1,4 +1,15 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 06 Mar 2017 Released 1.5.24 version
+* Update translations from zanata (de updated)
+* The spin button to change the fontsize should grab focus without selecting
+* emoji-picker: Don’t check if ibus is running, ibus does not need to run for emoji-picker
+* Load .desktop files for emoji-picker and ibus-setup-typing-booster correctly under Gnome Wayland
+* Show the most recently used skin tone by default
+* Use Popovers for skin tones
+* Don’t use HeaderBar with the default widget titlebar
+* Display the detailed information of an emoji as a popover, not as a tooltip
+* Use CSS to show light gray borders around flowbox and listbox children
+
 * 27 Feb 2017 Released 1.5.23 version
 * Update translations from zanata (de, ja, pl, uk updated)
 * emoji_picker.py: Add a menu button to change the font for the emoji

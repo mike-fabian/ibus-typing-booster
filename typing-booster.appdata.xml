@@ -16,6 +16,44 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.24" date="2017-03-06" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (de updated)
+          </li>
+          <li>
+            The spin button to change the fontsize should grab focus
+            without selecting
+          </li>
+          <li>
+            emoji-picker: Don’t check if ibus is running, ibus does
+            not need to run for emoji-picker
+          </li>
+          <li>
+            Load .desktop files for emoji-picker and
+            ibus-setup-typing-booster correctly under Gnome Wayland
+          </li>
+          <li>
+            Show the most recently used skin tone by default
+          </li>
+          <li>
+            Use Popovers for skin tones
+          </li>
+          <li>
+            Don’t use HeaderBar with the default widget titlebar
+          </li>
+          <li>
+            Display the detailed information of an emoji as a popover,
+            not as a tooltip
+          </li>
+          <li>
+            Use CSS to show light gray borders around flowbox and
+            listbox children
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.23" date="2017-02-27" urgency="medium">
       <description>
         <ul>
