@@ -42,6 +42,7 @@ from gi.repository import Gtk
 require_version('IBus', '1.0')
 from gi.repository import IBus
 from gi.repository import GLib
+from gi.repository import GObject
 import itb_emoji
 import version
 
@@ -168,6 +169,9 @@ class EmojiPickerUI(Gtk.Window):
         self.set_modal(self._modal)
         self._font = 'Symbola'
         self._fontsize = 24
+        self._font_popover = None
+        self._font_popover_scroll = None
+        self._font_popover_listbox = None
         self._options_file = os.path.join(
             xdg.BaseDirectory.save_data_path('emoji-picker'),
             'options')
@@ -208,6 +212,7 @@ class EmojiPickerUI(Gtk.Window):
         self._candidates_invalid = False
         self._query_string = ''
         self._emoji_selected_popover = None
+        self._emoji_info_popover = None
 
         self._main_container = Gtk.VBox()
         self.add(self._main_container)
@@ -277,6 +282,7 @@ class EmojiPickerUI(Gtk.Window):
         self._search_entry.set_hexpand(False)
         self._search_entry.set_vexpand(False)
         self._search_entry.set_can_focus(True)
+        self._search_entry.grab_focus_without_selecting()
         self._search_bar = Gtk.SearchBar()
         self._search_bar.set_hexpand(False)
         self._search_bar.set_vexpand(False)
@@ -286,6 +292,8 @@ class EmojiPickerUI(Gtk.Window):
         self._search_bar.connect_entry(self._search_entry)
         self._search_entry.connect(
             'search-changed', self.on_search_entry_search_changed)
+        self._search_entry.connect(
+            'grab-focus', self.on_search_entry_grab_focus)
 
         self._browse_paned = Gtk.HPaned()
         self._main_container.pack_start(self._browse_paned, True, True, 0)
@@ -503,26 +511,15 @@ class EmojiPickerUI(Gtk.Window):
                 'emoji_order = %s' %self._emoji_matcher.emoji_order(emoji))
         return description
 
-    def _emoji_label_set_tooltip(self, emoji, label):
+    def _emoji_label_set_tooltip(self, label): # pylint: disable=no-self-use
         '''
         Set the tooltip for a label in the flowbox which shows an emoji
 
-        :param emoji: The emoji
-        :type emoji: String
         :param label: The label used to show the emoji
         :type label: Gtk.Label object
         '''
-        description = self._emoji_description(emoji)
-        if itb_emoji.is_invisible(emoji):
-            label.set_tooltip_text(
-                description + '\n\n' + _('Click to copy'))
-        else:
-            label.set_tooltip_markup(
-                '<span font_desc="%s %s">'
-                %(self._font, self._fontsize * 4)
-                + html.escape(emoji)
-                + '</span>\n\n'
-                + html.escape(description + '\n\n' + _('Click to copy')))
+        label.set_tooltip_text(
+            _('Click left to copy') + '\n' + _('Click right for info'))
 
     def _clear_flowbox(self):
         '''
@@ -538,7 +535,8 @@ class EmojiPickerUI(Gtk.Window):
         self._flowbox.set_row_spacing(0)
         self._flowbox.set_column_spacing(0)
         self._flowbox.set_activate_on_single_click(True)
-        self._flowbox.set_can_focus(True)
+        self._flowbox.set_selection_mode(Gtk.SelectionMode.NONE)
+        self._flowbox.set_can_focus(False)
         self._flowbox.set_homogeneous(False)
         self._flowbox.set_hexpand(False)
         self._flowbox.set_vexpand(False)
@@ -593,6 +591,8 @@ class EmojiPickerUI(Gtk.Window):
                     + html.escape(emoji)
                     + '</span>')
             label.set_use_markup(True)
+            label.set_can_focus(False)
+            label.set_selectable(False)
             label.set_hexpand(False)
             label.set_vexpand(False)
             label.set_xalign(0.5)
@@ -606,8 +606,21 @@ class EmojiPickerUI(Gtk.Window):
             label.set_margin_end(margin)
             label.set_margin_top(margin)
             label.set_margin_bottom(margin)
-            self._emoji_label_set_tooltip(emoji, label)
-            self._flowbox.insert(label, -1)
+            self._emoji_label_set_tooltip(label)
+            event_box = Gtk.EventBox()
+            event_box.set_can_focus(False)
+            event_box.add(label)
+            event_box.add_events(Gdk.EventType.BUTTON_PRESS)
+            event_box.add_events(Gdk.EventType.BUTTON_RELEASE)
+            event_box.connect(
+                'button-press-event',
+                self.on_flowbox_event_box_button_press)
+            event_box.connect(
+                'button-release-event',
+                self.on_flowbox_event_box_button_release)
+            self._flowbox.insert(event_box, -1)
+            for child in self._flowbox.get_children():
+                child.set_can_focus(False)
 
         self.show_all()
         self._busy_stop()
@@ -965,6 +978,8 @@ class EmojiPickerUI(Gtk.Window):
                 + ' ' + html.escape(name)
                 + '</span>')
             label.set_use_markup(True)
+            label.set_can_focus(False)
+            label.set_selectable(False)
             label.set_hexpand(False)
             label.set_vexpand(False)
             label.set_xalign(0)
@@ -978,12 +993,40 @@ class EmojiPickerUI(Gtk.Window):
             label.set_margin_end(margin)
             label.set_margin_top(margin)
             label.set_margin_bottom(margin)
-            self._emoji_label_set_tooltip(emoji, label)
-            self._flowbox.insert(label, -1)
+            self._emoji_label_set_tooltip(label)
+            event_box = Gtk.EventBox()
+            event_box.set_can_focus(False)
+            event_box.add(label)
+            event_box.add_events(Gdk.EventType.BUTTON_PRESS)
+            event_box.add_events(Gdk.EventType.BUTTON_RELEASE)
+            event_box.connect(
+                'button-press-event', self.on_flowbox_event_box_button_press)
+            self._flowbox.insert(event_box, -1)
+            for child in self._flowbox.get_children():
+                child.set_can_focus(False)
 
         self.show_all()
         self._candidates_invalid = False
         self._busy_stop()
+
+    def on_search_entry_grab_focus( # pylint: disable=no-self-use
+            self, search_entry):
+        '''
+        Signal handler called when the search entry grabs focus
+
+        :param search_entry: The search entry
+        :type search_entry: Gtk.SearchEntry object
+        '''
+        if _ARGS.debug:
+            sys.stdout.write(
+                'on_search_entry_grab_focus() search_entry = %s\n'
+                %repr(search_entry))
+        search_entry.grab_focus_without_selecting()
+        # The default signal handler would again select the contents
+        # of the search entry. Therefore, we must prevent the default
+        # signal handler from running:
+        GObject.signal_stop_emission_by_name(search_entry, 'grab-focus')
+        return True
 
     def on_search_entry_search_changed(self, search_entry):
         '''
@@ -1070,7 +1113,7 @@ class EmojiPickerUI(Gtk.Window):
 
     def on_emoji_selected(self, dummy_flowbox, flowbox_child):
         '''
-        Signal handler for selecting an emoji in the browser
+        Signal handler for selecting an emoji in the flowbox
 
         :param dummy_flowbox: The flowbox displaying the Emoji
         :type dummy_flowbox: Gtk.FlowBox object
@@ -1082,10 +1125,12 @@ class EmojiPickerUI(Gtk.Window):
         # indicating mnemonics and Pango markup. The emoji is in
         # first <span>...</span>, and we want fetch only the emoji
         # here:
-        text = flowbox_child.get_child().get_label()
+        text = flowbox_child.get_child().get_child().get_label()
         if _ARGS.debug:
             sys.stdout.write("on_emoji_selected() text = %s\n" %text)
-        pattern = re.compile(r'<span[^<]*?>(?P<emoji>[^<]+?)</span>')
+        pattern = re.compile(
+            r'<span[^<]*?>(?P<emoji>[^<]+?)</span>'
+            + r'(<span[^<]*?>(?P<name>[^<]+?)</span>)?')
         match = pattern.match(text)
         if match:
             emoji = html.unescape(match.group('emoji'))
@@ -1100,12 +1145,13 @@ class EmojiPickerUI(Gtk.Window):
         self._emoji_selected_popover = Gtk.Popover()
         self._emoji_selected_popover.set_relative_to(flowbox_child.get_child())
         self._emoji_selected_popover.set_position(Gtk.PositionType.TOP)
-        rectangle = Gdk.Rectangle()
-        rectangle.x = 0
-        rectangle.y = 0
-        rectangle.width = self._fontsize * 1.5
-        rectangle.height = self._fontsize * 1.5
-        self._emoji_selected_popover.set_pointing_to(rectangle)
+        if match.group('name'):
+            rectangle = Gdk.Rectangle()
+            rectangle.x = 0
+            rectangle.y = 0
+            rectangle.width = self._fontsize * 1.5
+            rectangle.height = self._fontsize * 1.5
+            self._emoji_selected_popover.set_pointing_to(rectangle)
         label = Gtk.Label(_('Copied to clipboard!'))
         self._emoji_selected_popover.add(label)
         if GTK_VERSION >= (3, 22, 0):
@@ -1144,7 +1190,7 @@ class EmojiPickerUI(Gtk.Window):
         of the flowbox.
         '''
         for flowbox_child in self._flowbox.get_children():
-            label = flowbox_child.get_child()
+            label = flowbox_child.get_child().get_child()
             text = label.get_label()
             pattern = re.compile(
                 r'<span[^<]*?>(?P<emoji>[^<]+?)</span>'
@@ -1166,9 +1212,155 @@ class EmojiPickerUI(Gtk.Window):
                         + '</span>')
                 label.set_text(new_text)
                 label.set_use_markup(True)
-                self._emoji_label_set_tooltip(emoji, label)
         self.show_all()
         self._busy_stop()
+
+    def on_flowbox_event_box_button_release(
+            self, dummy_event_box, event_button):
+        '''
+        Signal handler for button release events on labels in the flowbox
+
+        :param dummy_event_box:
+        :type dummy_event_box: GtkEventBox object
+        :param event_button:
+        :type event_button: Gdk.EventButton object
+        '''
+        if _ARGS.debug:
+            sys.stdout.write(
+                'on_flowbox_label_button_release() '
+                + 'event_button.type=%s ' %event_button.type
+                + 'event_button.window=%s ' %event_button.window
+                + 'event_button.button=%s\n' %event_button.button)
+        if event_button.button == 3 and self._emoji_info_popover:
+            # not used if the popover is modal, in that case this
+            # handler for the button release event will not be called.
+            if GTK_VERSION >= (3, 22, 0):
+                self._emoji_info_popover.popdown()
+            self._emoji_info_popover.hide()
+
+    def on_flowbox_event_box_button_press(self, event_box, event_button):
+        '''
+        Signal handler for button presses in flowbox children
+
+        :param event_box:
+        :type event_box: GtkEventBox object
+        :param event_button:
+        :type event_button: Gdk.EventButton object
+        '''
+        if _ARGS.debug:
+            sys.stdout.write(
+                'on_flowbox_label_button_press() '
+                + 'event_button.type=%s ' %event_button.type
+                + 'event_button.window=%s ' %event_button.window
+                + 'event_button.button=%s\n' %event_button.button)
+        if event_button.type != Gdk.EventType.BUTTON_PRESS:
+            # ignore double and triple clicks i.e. ignore
+            # Gdk.EventType.2BUTTON_PRESS and
+            # Gdk.EventType.3BUTTON_PRESS.
+            return
+        if event_button.button == 3:
+            text = event_box.get_child().get_label()
+            pattern = re.compile(
+                r'<span[^<]*?>(?P<emoji>[^<]+?)</span>'
+                + r'(<span[^<]*?>(?P<name>[^<]+?)</span>)?')
+            match = pattern.match(text)
+            if match:
+                emoji = html.unescape(match.group('emoji'))
+                if _ARGS.debug:
+                    sys.stdout.write(
+                        'on_flowbox_event_box_button_press() '
+                        + 'repr(emoji) = %s\n'
+                        %repr(emoji))
+            else:
+                return
+            self._emoji_info_popover = Gtk.Popover()
+            self._emoji_info_popover.set_modal(True)
+            # Gtk.PopoverConstraint.NONE has an effect only under
+            # Wayland, under X11 popovers are always constrained to
+            # the toplevel window
+            # Gtk.PopoverConstraint.NONE behaves a bit weird under
+            # Wayland though, the popover can be outside of the
+            # root window of the desktop. Better constrain it to
+            # the toplevel window under Wayland as well.
+            self._emoji_info_popover.set_constrain_to(
+                Gtk.PopoverConstraint.WINDOW)
+            self._emoji_info_popover.set_relative_to(event_box)
+            self._emoji_info_popover.set_position(Gtk.PositionType.RIGHT)
+            self._emoji_info_popover.set_vexpand(False)
+            self._emoji_info_popover.set_hexpand(False)
+            if match.group('name'):
+                rectangle = Gdk.Rectangle()
+                rectangle.x = 0
+                rectangle.y = 0
+                rectangle.width = self._fontsize * 1.5
+                rectangle.height = self._fontsize * 1.5
+                self._emoji_info_popover.set_pointing_to(rectangle)
+            emoji_info_popover_vbox = Gtk.VBox()
+            emoji_info_popover_vbox.set_vexpand(False)
+            emoji_info_popover_vbox.set_hexpand(False)
+            margin = 0
+            emoji_info_popover_vbox.set_margin_start(margin)
+            emoji_info_popover_vbox.set_margin_end(margin)
+            emoji_info_popover_vbox.set_margin_top(margin)
+            emoji_info_popover_vbox.set_margin_bottom(margin)
+            emoji_info_popover_vbox.set_spacing(margin)
+            emoji_info_popover_scroll = Gtk.ScrolledWindow()
+            emoji_info_popover_vbox.pack_start(
+                emoji_info_popover_scroll, True, True, 0)
+            emoji_info_popover_listbox = Gtk.ListBox()
+            emoji_info_popover_listbox.set_visible(True)
+            emoji_info_popover_listbox.set_can_focus(False)
+            emoji_info_popover_listbox.set_vexpand(False)
+            emoji_info_popover_listbox.set_hexpand(False)
+            emoji_info_popover_listbox.set_selection_mode(
+                Gtk.SelectionMode.NONE)
+            emoji_info_popover_listbox.set_activate_on_single_click(True)
+            emoji_info_popover_scroll.add(emoji_info_popover_listbox)
+            label = Gtk.Label()
+            label.set_hexpand(False)
+            label.set_vexpand(False)
+            label.set_halign(Gtk.Align.FILL)
+            description = self._emoji_description(emoji)
+            if itb_emoji.is_invisible(emoji):
+                label.set_markup(
+                    description)
+            else:
+                label.set_markup(
+                    '<span font_desc="%s %s">'
+                    %(self._font, self._fontsize * 3)
+                    + html.escape(emoji)
+                    + '</span>\n\n'
+                    + html.escape(description))
+            emoji_info_popover_listbox.insert(label, -1)
+            if self._emoji_matcher.emoji_order(emoji) < 0xFFFFFFFF:
+                linkbutton = Gtk.LinkButton.new_with_label(
+                    _('Lookup on emojipedia'))
+                linkbutton.set_uri(
+                    'http://emojipedia.org/emoji/' + emoji + '/')
+                emoji_info_popover_listbox.insert(linkbutton, -1)
+            for row in emoji_info_popover_listbox.get_children():
+                row.set_activatable(False)
+                row.set_selectable(False)
+                row.set_can_focus(False)
+            self._emoji_info_popover.add(emoji_info_popover_vbox)
+            emoji_info_popover_vbox.show_all()
+            (dummy_minimum_width_vbox, natural_width_vbox) = (
+                emoji_info_popover_vbox.get_preferred_width())
+            (dummy_minimum_height_vbox, natural_height_vbox) = (
+                emoji_info_popover_vbox.get_preferred_height())
+            (dummy_minimum_width_listbox, natural_width_listbox) = (
+                emoji_info_popover_listbox.get_preferred_width())
+            (dummy_minimim_height_listbox, natural_height_listbox) = (
+                emoji_info_popover_listbox.get_preferred_height())
+            (window_width, window_height) = self.get_size()
+            self._emoji_info_popover.set_size_request(
+                min(0.6 * window_width,
+                    natural_width_vbox + natural_width_listbox),
+                min(0.6 * window_height,
+                    natural_height_vbox + natural_height_listbox))
+            if GTK_VERSION >= (3, 22, 0):
+                self._emoji_info_popover.popup()
+            self._emoji_info_popover.show_all()
 
     def on_fontsize_adjustment_value_changed(self, adjustment):
         '''
@@ -1199,6 +1391,16 @@ class EmojiPickerUI(Gtk.Window):
         return names
 
     def _fill_listbox_font(self, filter_text):
+        '''
+        Fill the listbox of fonts to choose from
+
+        :param filter_text: The filter text to limit the
+                            fonts listed. Only fonts which
+                            contain the the filter text as
+                            a substring (ignoring case and spaces)
+                            are listed.
+        :type filter_text: String
+        '''
         if _ARGS.debug:
             sys.stdout.write(
                 '_fill_listbox_font() filter_text = %s\n'
@@ -1216,7 +1418,7 @@ class EmojiPickerUI(Gtk.Window):
         fonts = [''] + [
             font
             for font in self._list_font_names()
-            if filter_text.replace(' ','').lower()
+            if filter_text.replace(' ', '').lower()
             in font.replace(' ', '').lower()]
         for font in fonts:
             label = Gtk.Label(font)
@@ -1226,7 +1428,7 @@ class EmojiPickerUI(Gtk.Window):
             label.set_margin_end(margin)
             label.set_margin_top(margin)
             label.set_margin_bottom(margin)
-            self._font_popover_listbox.insert(label,-1)
+            self._font_popover_listbox.insert(label, -1)
         self._font_popover.show_all()
 
     def on_font_search_entry_search_changed(self, search_entry):
@@ -1265,12 +1467,12 @@ class EmojiPickerUI(Gtk.Window):
         self._busy_start()
         GLib.idle_add(self._change_flowbox_font)
 
-    def on_font_button_clicked(self, button):
+    def on_font_button_clicked(self, dummy_button):
         '''
         The font button in the header bar has been clicked
 
-        :param button: The font button
-        :type button: Gtk.Button object
+        :param dummy_button: The font button
+        :type dummy_button: Gtk.Button object
         '''
         if _ARGS.debug:
             sys.stdout.write(
@@ -1290,7 +1492,8 @@ class EmojiPickerUI(Gtk.Window):
         font_popover_label.set_text(_('Set Font'))
         font_popover_label.set_visible(True)
         font_popover_label.set_halign(Gtk.Align.FILL)
-        font_popover_vbox.pack_start(font_popover_label, False, False, 0)
+        font_popover_vbox.pack_start(
+            font_popover_label, False, False, 0)
         font_popover_search_entry = Gtk.SearchEntry()
         font_popover_search_entry.set_can_focus(True)
         font_popover_search_entry.set_visible(True)
@@ -1299,10 +1502,12 @@ class EmojiPickerUI(Gtk.Window):
         font_popover_search_entry.set_vexpand(False)
         font_popover_search_entry.connect(
             'search_changed', self.on_font_search_entry_search_changed)
-        font_popover_vbox.pack_start(font_popover_search_entry, False, False, 0)
+        font_popover_vbox.pack_start(
+            font_popover_search_entry, False, False, 0)
         self._font_popover_scroll = Gtk.ScrolledWindow()
         self._fill_listbox_font('')
-        font_popover_vbox.pack_start(self._font_popover_scroll, True, True, 0)
+        font_popover_vbox.pack_start(
+            self._font_popover_scroll, True, True, 0)
         self._font_popover.add(font_popover_vbox)
         if GTK_VERSION >= (3, 22, 0):
             self._font_popover.popup()
