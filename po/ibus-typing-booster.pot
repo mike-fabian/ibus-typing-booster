@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2017-02-26 02:50+0100\n"
+"POT-Creation-Date: 2017-03-06 13:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,219 +18,234 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: engine/emoji_picker.py:116
+#: engine/emoji_picker.py:138
 msgid "Emoji Picker"
 msgstr ""
 
-#: engine/emoji_picker.py:176
+#: engine/emoji_picker.py:245
 msgid "Clear recently used"
 msgstr ""
 
 #. This is the “About” tab in the setup tool.  That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
-#: engine/emoji_picker.py:182 setup/setup.glade:658
+#: engine/emoji_picker.py:251 setup/setup.glade:658
 msgid "About"
 msgstr ""
 
-#: engine/emoji_picker.py:187
+#: engine/emoji_picker.py:256
 msgid "Quit"
 msgstr ""
 
-#: engine/emoji_picker.py:255
+#: engine/emoji_picker.py:351
 msgid "Recently used"
 msgstr ""
 
-#: engine/emoji_picker.py:303
+#: engine/emoji_picker.py:373
 msgid "Categories"
 msgstr ""
 
-#: engine/emoji_picker.py:304
+#: engine/emoji_picker.py:374
 msgid "Unicode categories"
 msgstr ""
 
-#: engine/emoji_picker.py:305
+#: engine/emoji_picker.py:375
 msgid "Keywords"
 msgstr ""
 
-#: engine/emoji_picker.py:516 engine/emoji_picker.py:523
-#: engine/emoji_picker.py:736 engine/emoji_picker.py:743
-msgid "Click to copy"
+#: engine/emoji_picker.py:539 engine/emoji_picker.py:1478
+msgid "Left click to copy"
+msgstr ""
+
+#: engine/emoji_picker.py:541
+msgid "Middle click for skin tones"
+msgstr ""
+
+#: engine/emoji_picker.py:542
+msgid "Right click for info"
 msgstr ""
 
 #. Translators: put your names here, one name per line.
-#: engine/emoji_picker.py:657
+#: engine/emoji_picker.py:949
 msgid "translator-credits"
 msgstr ""
 
-#: engine/emoji_picker.py:694
+#: engine/emoji_picker.py:993
 msgid "Search Results"
 msgstr ""
 
-#: engine/emoji_picker.py:862
+#: engine/emoji_picker.py:1222 engine/emoji_picker.py:1336
 msgid "Copied to clipboard!"
 msgstr ""
 
-#: engine/emoji_picker.py:928 setup/main.py:994
-msgid "ibus is not running."
+#: engine/emoji_picker.py:1550
+msgid "Lookup on emojipedia"
 msgstr ""
 
-#: engine/hunspell_table.py:397 engine/hunspell_table.py:417
+#: engine/emoji_picker.py:1705
+msgid "Set Font"
+msgstr ""
+
+#: engine/hunspell_table.py:394 engine/hunspell_table.py:414
 msgid "Off"
 msgstr ""
 
-#: engine/hunspell_table.py:402 engine/hunspell_table.py:422
+#: engine/hunspell_table.py:399 engine/hunspell_table.py:419
 msgid "On"
 msgstr ""
 
-#: engine/hunspell_table.py:407 engine/hunspell_table.py:409
+#: engine/hunspell_table.py:404 engine/hunspell_table.py:406
 #: setup/setup.glade:151
 msgid "Unicode symbols and emoji predictions"
 msgstr ""
 
-#: engine/hunspell_table.py:427 engine/hunspell_table.py:428
+#: engine/hunspell_table.py:424 engine/hunspell_table.py:425
 #: setup/setup.glade:166
 msgid "Off the record mode"
 msgstr ""
 
-#: engine/hunspell_table.py:1147
+#: engine/hunspell_table.py:1144
 msgid "Preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1148
+#: engine/hunspell_table.py:1145
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1341
+#: engine/hunspell_table.py:1338
 msgid "Setup"
 msgstr ""
 
-#: engine/hunspell_table.py:1344
+#: engine/hunspell_table.py:1341
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:531
+#: engine/itb_emoji.py:540
 msgid "activity"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:533
+#: engine/itb_emoji.py:542
 msgid "flags"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:535
+#: engine/itb_emoji.py:544
 msgid "food"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:537
+#: engine/itb_emoji.py:546
 msgid "modifier"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:539
+#: engine/itb_emoji.py:548
 msgid "nature"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:541
+#: engine/itb_emoji.py:550
 msgid "objects"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:543
+#: engine/itb_emoji.py:552
 msgid "people"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:545
+#: engine/itb_emoji.py:554
 msgid "regional"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:547
+#: engine/itb_emoji.py:556
 msgid "symbols"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:549
+#: engine/itb_emoji.py:558
 msgid "travel"
 msgstr ""
 
-#: setup/main.py:110
+#: setup/main.py:118
 #, python-format
 msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
 msgstr ""
 
-#: setup/main.py:116
+#: setup/main.py:124
 msgid "IBUS_ENGINE_NAME environment variable is not set."
 msgstr ""
 
-#: setup/main.py:120
+#: setup/main.py:128
 msgid ""
 "Cannot determine the config file for this engine. Please use the --config-"
 "file option."
 msgstr ""
 
-#: setup/main.py:130
+#: setup/main.py:138
 #, python-format
 msgid "Config file %(file)s does not exist."
 msgstr ""
 
-#: setup/main.py:148
+#: setup/main.py:156
 #, python-format
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr ""
 
 #. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:192
+#: setup/main.py:203
 msgid "Shortcut"
 msgstr ""
 
 #. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:198
+#: setup/main.py:209
 msgid "Shortcut expansion"
 msgstr ""
 
-#: setup/main.py:356
+#: setup/main.py:367
 msgid "Horizontal"
 msgstr ""
 
-#: setup/main.py:358
+#: setup/main.py:369
 msgid "Vertical"
 msgstr ""
 
-#: setup/main.py:360
+#: setup/main.py:371
 msgid "System default"
 msgstr ""
 
-#: setup/main.py:450
+#: setup/main.py:461
 msgid "Another instance of this app is already running."
 msgstr ""
 
-#: setup/main.py:638
+#: setup/main.py:649
 msgid "Open File ..."
 msgstr ""
 
-#: setup/main.py:656
+#: setup/main.py:667
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr ""
 
-#: setup/main.py:665
+#: setup/main.py:676
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr ""
 
-#: setup/main.py:678
+#: setup/main.py:689
 msgid "Are you sure?"
 msgstr ""
 
-#: setup/main.py:685
+#: setup/main.py:696
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
+msgstr ""
+
+#: setup/main.py:1005
+msgid "ibus is not running."
 msgstr ""
 
 #: setup/setup.glade:30
@@ -471,6 +486,6 @@ msgid ""
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
 
-#: typing-booster.appdata.xml:766
+#: typing-booster.appdata.xml:868
 msgid "Mike FABIAN"
 msgstr ""
