@@ -165,6 +165,8 @@ VALID_CHARACTERS = {
     '﷽', # ARABIC LIGATURE BISMILLAH AR-RAHMAN AR-RAHEEM
 }
 
+SKIN_TONE_MODIFIERS  = ('🏻', '🏼', '🏽', '🏾', '🏿')
+
 def is_invisible(text):
     '''Checks whether a text is invisible
 
@@ -1546,16 +1548,70 @@ class EmojiMatcher():
     def emoji_order(self, emoji_string):
         '''Returns the “emoji_order” number from emojione
 
-        Useful for sorting emoji.
+        Useful for sorting emoji. For characters which do not
+        have an emoji order, 0xffffffff is returned.
 
         :param emoji_string: An emoji
         :type emoji_string: String
         :rtype: Integer
+
+        Examples:
+
+        >>> matcher = EmojiMatcher(languages = ['en'])
+        >>> matcher.emoji_order('😀')
+        1
+
+        >>> hex(matcher.emoji_order('∬'))
+        '0xffffffff'
         '''
         if ((emoji_string, 'en') in self._emoji_dict
                 and 'emoji_order' in self._emoji_dict[(emoji_string, 'en')]):
             return int(self._emoji_dict[(emoji_string, 'en')]['emoji_order'])
         return 0xFFFFFFFF
+
+    def skin_tone_modifier_supported(self, emoji_string):
+        '''Checks whether skin tone modifiers are possible for this emoji
+
+        Returns True if the emoji_string is something followed by a
+        skin tone modifier or if it is possible to add one.
+
+        Returns False if adding a skin tone modifier for this emoji is
+        not allowed.
+
+        :param emoji_string: The emoji to check
+        :type emoji_string: String
+        :rtype: Boolean
+
+        Examples:
+
+        >>> matcher = EmojiMatcher(languages = ['en'])
+        >>> matcher.skin_tone_modifier_supported('👩')
+        True
+
+        >>> matcher.skin_tone_modifier_supported('👩🏻')
+        True
+
+        >>> matcher.skin_tone_modifier_supported('😀')
+        False
+
+        # actually this is not allowed, this test is too simple:
+        >>> matcher.skin_tone_modifier_supported('😀🏻')
+        True
+
+        >>> matcher.skin_tone_modifier_supported('')
+        False
+
+        >>> matcher.skin_tone_modifier_supported('🏻')
+        False
+        '''
+        if not emoji_string or emoji_string in SKIN_TONE_MODIFIERS:
+            return False
+        if (emoji_string[-1] in SKIN_TONE_MODIFIERS
+                or
+                (emoji_string + SKIN_TONE_MODIFIERS[0], 'en')
+                in self._emoji_dict):
+            return True
+        return False
 
     def debug_loading_data(self):
         '''To debug whether the data has been loaded correctly'''
