@@ -163,6 +163,9 @@ class EmojiPickerUI(Gtk.Window):
         # from that .desktop file. If the .desktop file cannot be
         # found, the second argument of set_wmclass() is shown by
         # gnome-shell in the top bar.
+        #
+        # It only works like this when gnome-shell runs under Xorg
+        # though, under Wayland things are different.
         self.set_wmclass('emoji-picker', 'Emoji Picker')
         self.set_default_size(700, 400)
         self._modal = modal
