@@ -278,6 +278,8 @@ class EmojiPickerUI(Gtk.Window):
         self._fontsize_spin_button = Gtk.SpinButton()
         self._fontsize_spin_button.set_numeric(True)
         self._fontsize_spin_button.set_can_focus(True)
+        self._fontsize_spin_button.connect(
+            'grab-focus', self.on_fontsize_spin_button_grab_focus)
         self._fontsize_adjustment = Gtk.Adjustment()
         self._fontsize_adjustment.set_lower(1)
         self._fontsize_adjustment.set_upper(10000)
@@ -1053,6 +1055,26 @@ class EmojiPickerUI(Gtk.Window):
         self.show_all()
         self._candidates_invalid = False
         self._busy_stop()
+
+    def on_fontsize_spin_button_grab_focus( # pylint: disable=no-self-use
+            self, spin_button):
+        '''
+        Signal handler called when the spin button to change
+        the font size grabs focus
+
+        :param spin_button: The spin button to change the font size
+        :type spin_button: Gtk.SpinButton object
+        '''
+        if _ARGS.debug:
+            sys.stdout.write(
+                'on_fontsize_spin_button_grab_focus() spin_button = %s\n'
+                %repr(spin_button))
+        spin_button.grab_focus_without_selecting()
+        # The default signal handler would again select the contents
+        # of the search entry. Therefore, we must prevent the default
+        # signal handler from running:
+        GObject.signal_stop_emission_by_name(spin_button, 'grab-focus')
+        return True
 
     def on_search_entry_grab_focus( # pylint: disable=no-self-use
             self, search_entry):
