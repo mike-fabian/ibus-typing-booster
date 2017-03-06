@@ -1745,16 +1745,6 @@ if __name__ == '__main__':
     gettext.bindtextdomain(DOMAINNAME, LOCALEDIR)
     gettext.bind_textdomain_codeset(DOMAINNAME, "UTF-8")
 
-    if IBus.get_address() is None:
-        DIALOG = Gtk.MessageDialog(
-            flags=Gtk.DialogFlags.MODAL,
-            message_type=Gtk.MessageType.ERROR,
-            buttons=Gtk.ButtonsType.OK,
-            message_format=_('ibus is not running.'))
-        DIALOG.run()
-        DIALOG.destroy()
-        sys.exit(1)
-
     EMOJI_PICKER_UI = EmojiPickerUI(
         languages=get_languages(),
         font=_ARGS.font,
