@@ -563,14 +563,10 @@ class EmojiPickerUI(Gtk.Window):
                 %(language, label_key, label))
         emoji_list = []
         is_recently_used = False
+        sorted_recently_used = self._sorted_recently_used()
         if label == self._recently_used_label:
             is_recently_used = True
-            emoji_list = sorted(
-                self._recently_used_emoji,
-                key=lambda x: (
-                    - self._recently_used_emoji[x]['time'],
-                    - self._recently_used_emoji[x]['count'],
-                ))
+            emoji_list = sorted_recently_used
         if (language in self._emoji_by_label
                 and label_key in self._emoji_by_label[language]
                 and label in  self._emoji_by_label[language][label_key]):
@@ -592,7 +588,22 @@ class EmojiPickerUI(Gtk.Window):
             if not is_recently_used:
                 if (len(emoji) > 1
                         and emoji[-1] in itb_emoji.SKIN_TONE_MODIFIERS):
+                    # Skip all emoji which already have the skin tone
+                    # modifier attached.
                     continue
+                if self._emoji_matcher.skin_tone_modifier_supported(emoji):
+                    # For an emoji which can take a skin tone modifier,
+                    # replace it by the most recently used variant.
+                    # If no variant has been recently used, leave
+                    # the base emoji as it is:
+                    recently_used_index = len(sorted_recently_used)
+                    for tone in ('',) + itb_emoji.SKIN_TONE_MODIFIERS:
+                        if emoji + tone in sorted_recently_used:
+                            recently_used_index = min(
+                                recently_used_index,
+                                sorted_recently_used.index(emoji + tone))
+                    if recently_used_index < len(sorted_recently_used):
+                        emoji = sorted_recently_used[recently_used_index]
             label = Gtk.Label()
             if itb_emoji.is_invisible(emoji):
                 description = self._emoji_description(emoji)
@@ -689,6 +700,15 @@ class EmojiPickerUI(Gtk.Window):
                   encoding='UTF-8') as options_file:
             options_file.write(repr(options_dict))
             options_file.write('\n')
+
+    def _sorted_recently_used(self):
+        '''
+        Return a sorted list of recently used emoji
+        '''
+        return sorted(self._recently_used_emoji,
+                      key=lambda x: (
+                          - self._recently_used_emoji[x]['time'],
+                          - self._recently_used_emoji[x]['count']))
 
     def _read_recently_used(self):
         '''
