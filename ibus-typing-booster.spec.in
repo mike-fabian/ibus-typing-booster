@@ -1,5 +1,5 @@
 Name:       ibus-typing-booster
-Version:    1.5.14
+Version:    1.5.24
 Release:    1%{?dist}
 Summary:    A completion input method
 License:    GPLv3+
@@ -11,10 +11,17 @@ Requires:   m17n-lib
 Requires:   python3 >= 3.3
 Requires:   python3-dbus
 Requires:   python3-enchant
+Requires:   python3-pyxdg
+%if 0%{?fedora} >= 24
 # Recommend a reasonably good font which has most of the emoji:
 Recommends: gdouros-symbola-fonts
+%endif
 BuildRequires:  ibus-devel
+%if 0%{?fedora} >= 24
 BuildRequires:  python3-devel
+%else
+BuildRequires:  python34-devel
+%endif
 # for the unit tests
 BuildRequires:  m17n-lib
 BuildRequires:  m17n-db-extras
@@ -23,6 +30,7 @@ BuildRequires:  hunspell-cs
 BuildRequires:  hunspell-de
 BuildRequires:  hunspell-en
 BuildRequires:  hunspell-es
+BuildRequires:  hunspell-fr
 BuildRequires:  hunspell-it
 BuildRequires:  hunspell-ko
 BuildArch:  noarch
@@ -30,6 +38,14 @@ BuildArch:  noarch
 %description
 Ibus-typing-booster is a context sensitive completion
 input method to speedup typing.
+
+%package -n emoji-picker
+Summary: An emoji selection tool
+Requires: ibus-typing-booster = %{version}-%{release}
+
+%description -n emoji-picker
+A simple application to find and insert emoji and other
+Unicode symbols.
 
 %prep
 %setup -q
@@ -86,16 +102,146 @@ make check || cat ./tests/test-suite.log
   %{_bindir}/ibus write-cache --system &>/dev/null || :
 
 %files -f %{name}.lang
-%doc AUTHORS COPYING README 
+%doc AUTHORS COPYING README
 %{_datadir}/%{name}
-%{_datadir}/appdata/*.appdata.xml
+%{_datadir}/appdata/typing-booster.appdata.xml
 %{_datadir}/ibus/component/typing-booster.xml
 %{_libexecdir}/ibus-engine-typing-booster
 %{_libexecdir}/ibus-setup-typing-booster
-%{_datadir}/pkgconfig/%{name}.pc
 %{_datadir}/applications/ibus-setup-typing-booster.desktop
 
+%files -n emoji-picker
+%{_bindir}/emoji-picker
+%{_datadir}/applications/emoji-picker.desktop
+
+
 %changelog
+* Mon Mar 06 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.24-1
+- update to 1.5.24
+- Update translations from zanata (de updated)
+- emoji-picker: Don’t check if ibus is running,
+  ibus does not need to run for emoji-picker
+- Load .desktop files for emoji-picker and ibus-setup-typing-booster
+  correctly under Gnome Wayland
+- Show the most recently used skin tone by default
+- Use Popovers for skin tones
+- Don’t use HeaderBar with the default widget titlebar
+- Display the detailed information of an emoji as a popover, not as a tooltip
+- Use CSS to show light gray borders around flowbox and listbox children
+
+* Mon Feb 27 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.23-1
+- update to 1.5.23
+- Update translations from zanata (de, ja, pl, uk updated)
+- emoji_picker.py: Add a menu button to change the font for the emoji
+- emoji-picker: Make background colour of the flowbox listing the emoji white
+- emoji-picker: Use “Symbola” as the default font
+- Remember the font and the fontsize in a config file
+- emoji_picker.py: Add a spin button to change the font size of the emoji
+- Add option to the emoji-picker to load *all* Unicode characters
+- UI redesign of the emoji-picker
+- Return an empty list immediately if candidates() is called with an empty search string
+- Make the fontsize for the names of the emoji in the search results smaller
+- Make the search in emoji-picker a bit more responsive by using GLib.idle_add()
+- Save the recently used emoji immediately, not only when the program quits
+- Set default font size of emoji-picker to 24 instead of 16
+- Set the emoji font only for the emoji, not for its name in the search results
+- Set WM_CLASS of emoji-picker and ibus-setup-typing-booster correctly
+- Add “Icon” and “Categories” to emoji-picker.desktop
+
+* Wed Feb 22 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.22-1
+- update to 1.5.22
+- Update translations from zanata (de, fr, pl, uk updated)
+- Add an emoji-picker
+- Update of en.xml from CLDR’s emoji annotations
+- Fix skipping of the Korean test case when no Korean dictionary can be found
+- Fix invalid xml in typing-booster.appdata.xml
+- add Requires: python3-pyxdg (for the emoji-picker)
+
+* Tue Feb 07 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.21-1
+- update to 1.5.21
+- add BuildRequires:  hunspell-fr (for make check)
+- Handle Return and Enter correctly when the cursor is not at
+  the end of the preëdit (Resolves: rhbz#1418313)
+- Values of spin buttons should not be translatable
+- Make the categories from emojione translatable
+- Make emoji matching accent insensitive
+- If available use pykakasi to convert Japanese emoji category
+  names to hiragana
+- If available use the “pinyin” Python module to add pinyin
+  to the Chinese names and keywords
+- Don’t fallback to “zh” from “zh_TW”, “zh_HK”, “zh_MO” and “zh_Hant”
+- Don’t sort the labels when listing similar emoji
+- Don’t change Unicode categories to lowercase when loading,
+  use the original case
+- Also treat categories 'Zl' and 'Zp' as invisible and add
+  Unicode code point
+- When searching for similar emoji, the original emoji should be
+  most similar to itself
+- Fix duplicate listing of labels when looking up similar emoji
+- Make it optionally possible to match emoji in Japanese using romaji
+- itb_emoji.py: Add the code point to the name of invisible
+  characters also when looking up similar characters
+- Better matching of the Unicode categories
+- Small performance optimization in EmojiMatcher.similar()
+- Remove any U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR characters
+  from the lookup table
+- Nicer display of the matching labels when looking up similar emoji
+- Don’t strip mathematical symbols (category 'Sm') from tokens
+- Update of en.xml from CLDR’s emoji annotations
+- Update translations from zanata (de, pl updated)
+
+* Thu Jan 26 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.20-1
+- update to 1.5.20
+- Calculate the maximum word length for each dictionary individually
+- Use .startswith instead of regexp matching when matching in hunspell
+  dictionaries (speed optimization)
+- Improve accent insensitive matching (“filosofičtějš” should also
+  match “filosofičtější”)
+- Some updates for the emoji annotations in en.xml from CLDR
+
+* Thu Jan 19 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.19-2
+- update to 1.5.19
+- Improve setup layout (thanks to Trinh Anh Ngoc <atw1990@gmail.com>)
+- Add some more directories to search for dictionaries (for FreeBSD)
+- Wrong variable “page_size” was used in set_lookup_table_orientation()
+- Do not try to reopen the preëdit when any modifier except
+  CapsLock is on (Resolves: rhbz#1414642)
+
+* Tue Jan 17 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.18-1
+- update to 1.5.18
+- Fix typo in the “Unbreak sqlite on Python 3.6” patch
+- Fix the fallback to use pyhunspell-python3 when python3-enchant
+  is not available
+- Remove useless ibus-typing-booster.pc
+
+* Fri Jan 13 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.17-1
+- update to 1.5.17
+- Update py-compile to current upstream version
+- Also use ＿ U+FF3F FULLWIDTH LOW LINE as a separator for emoji keywords
+- Unbreak sqlite on Python 3.6 (thanks to Jan Alexander Steffens)
+- Return immediately if _update_candidates() is called with
+  empty input (Resolves: rhbz#1413082)
+
+* Tue Jan 10 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.16-1
+- update to 1.5.16
+- Remove everything following a tab (including the tab) from
+  hunspell dictionary lines (Resolves: rhbz#1411659)
+- Delete a candidate correctly from the user database even if
+  it starts with a prefix to be stripped from tokens (Resolves: rhbz#1411676)
+- Trigger emoji lookup when the input starts or ends with '_' or ' '
+- Better handling of BackSpace and Delete when reaching the
+  ends of the preëdit (Resolves: rhbz#1411688)
+- Search for hunspell dictionaries in a list of directories
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/6)
+
+* Fri Dec 09 2016 Mike FABIAN <mfabian@redhat.com> - 1.5.15-1
+- update to 1.5.15
+- Default value for self._show_status_info_in_auxiliary_text should be True
+- Don’t use keyword arguments when instantiating IBus.LookupTable()
+- Add an option to choose the orientation of the lookup table
+- Update translations from zanata (de, pl, and uk updated)
+- Update emojione.json
+
 * Fri Nov 25 2016 Mike FABIAN <mfabian@redhat.com> - 1.5.14-1
 - update to 1.5.14
 - Reopen preëdit not only on Backspace but also on Delete and arrow keys
