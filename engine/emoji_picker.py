@@ -1338,6 +1338,27 @@ class EmojiPickerUI(Gtk.Window):
         if GTK_VERSION >= (3, 22, 0):
             self._skin_tone_selected_popover.popup()
         self._skin_tone_selected_popover.show_all()
+        # When an emoji with a different skin tone is selected in a
+        # skin tone popover opened in a browse flowbox (not a search
+        # results flowbox), replace the original emoji which was used
+        # to open the popover immediately.
+        label = self._skin_tone_popover.get_relative_to().get_child()
+        text = label.get_label()
+        pattern = re.compile(
+            r'<span[^<]*?>(?P<emoji>[^<]+?)</span>'
+            + r'(<span[^<]*?>(?P<name>[^<]+?)</span>)?')
+        match = pattern.match(text)
+        if match and not match.group('name'):
+            # If match.group('name') is true, this is a line
+            # in a search results flowbox and we do *not* want
+            # to replace the emoji.
+            new_text = (
+                '<span font="%s %s">'
+                %(self._font, self._fontsize)
+                + html.escape(emoji)
+                + '</span>')
+            label.set_text(new_text)
+            label.set_use_markup(True)
         GLib.timeout_add(500, self._skin_tone_selected_popover_popdown)
 
     def on_flowbox_event_box_button_release(
