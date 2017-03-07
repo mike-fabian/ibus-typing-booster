@@ -1,189 +1,185 @@
 # Yuri Chornoivan <yurchor@ukr.net>, 2016.
 # Yuri Chornoivan <yurchor@ukr.net>, 2016. #zanata
+# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata
 # Yuri Chornoivan <yurchor@ukr.net>, 2017. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2017-03-06 01:28+0100\n"
+"POT-Creation-Date: 2017-03-10 22:55+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-02-26 06:30-0500\n"
-"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"PO-Revision-Date: 2017-03-10 05:08-0500\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
 "X-Generator: Zanata 3.9.6\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: engine/emoji_picker.py:131
+#: engine/emoji_picker.py:138
 msgid "Emoji Picker"
 msgstr "Вибір емодзі"
 
-#: engine/emoji_picker.py:238
+#: engine/emoji_picker.py:243
 msgid "Clear recently used"
 msgstr "Вилучити нещодавно використані"
 
-#. This is the “About” tab in the setup tool.  That tab shows the version of ibus-typing-booster and shows links to the ibus-typing-booster home page and the online documentation.
-#: engine/emoji_picker.py:244 setup/setup.glade:658
+#: engine/emoji_picker.py:249 setup/setup.glade:727
 msgid "About"
 msgstr "Про програму"
 
-#: engine/emoji_picker.py:249
+#: engine/emoji_picker.py:254
 msgid "Quit"
 msgstr "Вийти"
 
-#: engine/emoji_picker.py:342
+#: engine/emoji_picker.py:349
 msgid "Recently used"
 msgstr "Нещодавно використані"
 
-#: engine/emoji_picker.py:364
+#: engine/emoji_picker.py:371
 msgid "Categories"
 msgstr "Категорії"
 
-#: engine/emoji_picker.py:365
+#: engine/emoji_picker.py:372
 msgid "Unicode categories"
 msgstr "Категорії Unicode"
 
-#: engine/emoji_picker.py:366
+#: engine/emoji_picker.py:373
 msgid "Keywords"
 msgstr "Ключові слова"
 
-#: engine/emoji_picker.py:530 engine/emoji_picker.py:1426
+#: engine/emoji_picker.py:537 engine/emoji_picker.py:1527
 msgid "Left click to copy"
-msgstr ""
+msgstr "Клацання лівою — копіювання"
 
-#: engine/emoji_picker.py:532
+#: engine/emoji_picker.py:539
 msgid "Middle click for skin tones"
-msgstr ""
+msgstr "Клацання середньою — тони кольору"
 
-#: engine/emoji_picker.py:533
+#: engine/emoji_picker.py:540
 msgid "Right click for info"
-msgstr ""
+msgstr "Клацання правою — інформація"
 
 #. Translators: put your names here, one name per line.
-#: engine/emoji_picker.py:919
+#: engine/emoji_picker.py:978
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>"
 
-#: engine/emoji_picker.py:963
+#: engine/emoji_picker.py:1022
 msgid "Search Results"
 msgstr "Результати пошуку"
 
-#: engine/emoji_picker.py:1172 engine/emoji_picker.py:1286
+#: engine/emoji_picker.py:1250 engine/emoji_picker.py:1363
 msgid "Copied to clipboard!"
 msgstr "Скопійовано до буфера обміну даними!"
 
-#: engine/emoji_picker.py:1498
+#: engine/emoji_picker.py:1599
 msgid "Lookup on emojipedia"
-msgstr ""
+msgstr "Шукати у емодзіпедії"
 
-#: engine/emoji_picker.py:1653
+#: engine/emoji_picker.py:1756
 msgid "Set Font"
-msgstr ""
+msgstr "Встановити шрифт"
 
-#: engine/emoji_picker.py:1751 setup/main.py:994
-msgid "ibus is not running."
-msgstr "ibus не запущено."
-
-#: engine/hunspell_table.py:397 engine/hunspell_table.py:417
+#: engine/hunspell_table.py:406 engine/hunspell_table.py:426
 msgid "Off"
 msgstr "Вимкн."
 
-#: engine/hunspell_table.py:402 engine/hunspell_table.py:422
+#: engine/hunspell_table.py:411 engine/hunspell_table.py:431
 msgid "On"
 msgstr "Увімкн."
 
-#: engine/hunspell_table.py:407 engine/hunspell_table.py:409
-#: setup/setup.glade:151
+#: engine/hunspell_table.py:416 engine/hunspell_table.py:418
+#: setup/setup.glade:163
 msgid "Unicode symbols and emoji predictions"
 msgstr "Пропозиці для символів Unicode та емодзі"
 
-#: engine/hunspell_table.py:427 engine/hunspell_table.py:428
-#: setup/setup.glade:166
+#: engine/hunspell_table.py:436 engine/hunspell_table.py:437
+#: setup/setup.glade:179
 msgid "Off the record mode"
 msgstr "Режим без запису"
 
-#: engine/hunspell_table.py:1147
+#: engine/hunspell_table.py:1156
 msgid "Preedit input method"
 msgstr "Спосіб введення попереднього редагування"
 
-#: engine/hunspell_table.py:1148
+#: engine/hunspell_table.py:1157
 msgid "Switch preedit input method"
 msgstr "Перемкнути спосіб введення попереднього редагування"
 
-#: engine/hunspell_table.py:1341
+#: engine/hunspell_table.py:1350
 msgid "Setup"
 msgstr "Налаштування"
 
-#: engine/hunspell_table.py:1344
+#: engine/hunspell_table.py:1353
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Налаштувати «%(name)s» для ibus-typing-booster"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:540
+#: engine/itb_emoji.py:549
 msgid "activity"
 msgstr "діяльність"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:542
+#: engine/itb_emoji.py:551
 msgid "flags"
 msgstr "прапорці"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:544
+#: engine/itb_emoji.py:553
 msgid "food"
 msgstr "їжа"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:546
+#: engine/itb_emoji.py:555
 msgid "modifier"
 msgstr "модифікатор"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:548
+#: engine/itb_emoji.py:557
 msgid "nature"
 msgstr "природа"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:550
+#: engine/itb_emoji.py:559
 msgid "objects"
 msgstr "об’єкти"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:552
+#: engine/itb_emoji.py:561
 msgid "people"
 msgstr "люди"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:554
+#: engine/itb_emoji.py:563
 msgid "regional"
 msgstr "регіональні"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:556
+#: engine/itb_emoji.py:565
 msgid "symbols"
 msgstr "символи"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:558
+#: engine/itb_emoji.py:567
 msgid "travel"
 msgstr "подорожі"
 
-#: setup/main.py:110
+#: setup/main.py:118
 #, python-format
 msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
 msgstr ""
 "Невідомий програмі формат назви рушія обробки: IBUS_ENGINE_NAME=%(name)s"
 
-#: setup/main.py:116
+#: setup/main.py:124
 msgid "IBUS_ENGINE_NAME environment variable is not set."
 msgstr "Змінну середовища IBUS_ENGINE_NAME не визначено."
 
-#: setup/main.py:120
+#: setup/main.py:128
 msgid ""
 "Cannot determine the config file for this engine. Please use the --config-"
 "file option."
@@ -191,61 +187,61 @@ msgstr ""
 "Не вдалося визначити файл налаштувань для цього рушія обробки. Будь ласка, "
 "скористайтеся параметром --config-file."
 
-#: setup/main.py:130
+#: setup/main.py:138
 #, python-format
 msgid "Config file %(file)s does not exist."
 msgstr "Файла налаштувань %(file)s не існує."
 
-#: setup/main.py:148
+#: setup/main.py:156
 #, python-format
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Параметри для «%(symbol)s» ibus-typing-booster"
 
 #. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:192
+#: setup/main.py:203
 msgid "Shortcut"
 msgstr "Скорочення"
 
 #. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:198
+#: setup/main.py:209
 msgid "Shortcut expansion"
 msgstr "Розгортання скорочення"
 
-#: setup/main.py:356
+#: setup/main.py:391
 msgid "Horizontal"
 msgstr "Горизонтально"
 
-#: setup/main.py:358
+#: setup/main.py:393
 msgid "Vertical"
 msgstr "Вертикально"
 
-#: setup/main.py:360
+#: setup/main.py:395
 msgid "System default"
 msgstr "Типова системна"
 
-#: setup/main.py:450
+#: setup/main.py:485
 msgid "Another instance of this app is already running."
 msgstr "Вже запущено інший екземпляр цієї програми."
 
-#: setup/main.py:638
+#: setup/main.py:673
 msgid "Open File ..."
 msgstr "Відкрити файл…"
 
-#: setup/main.py:656
+#: setup/main.py:691
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Успішно вивчено з файла %(filename)s."
 
-#: setup/main.py:665
+#: setup/main.py:700
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Спроба навчання з файла %(filename)s зазнала невдачі."
 
-#: setup/main.py:678
+#: setup/main.py:713
 msgid "Are you sure?"
 msgstr "Ви впевнені?"
 
-#: setup/main.py:685
+#: setup/main.py:720
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -253,15 +249,19 @@ msgstr ""
 "Ви справді хочете вилучити усі дані мови, \n"
 "вивчені із введених даних і читання файлів?"
 
-#: setup/setup.glade:30
+#: setup/main.py:1066
+msgid "ibus is not running."
+msgstr "ibus не запущено."
+
+#: setup/setup.glade:31
 msgid "Close"
 msgstr "Закрити"
 
-#: setup/setup.glade:59
+#: setup/setup.glade:65
 msgid "Enable suggestions by Tab key"
 msgstr "Увімкнути пропозиції за клавішею Tab"
 
-#: setup/setup.glade:62
+#: setup/setup.glade:69
 msgid ""
 "If this option is on, suggestions are not shown by default. Typing Tab is "
 "then necessary to show the list of suggestions. After a commit the "
@@ -272,22 +272,22 @@ msgstr ""
 "варіанта список пропозицій знову буде приховано, аж доки ви не натиснете Tab "
 "знову."
 
-#: setup/setup.glade:75
+#: setup/setup.glade:82
 msgid "Display total number of candidates"
 msgstr "Показувати загальну кількість варіантів"
 
-#: setup/setup.glade:78
+#: setup/setup.glade:86
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
 msgstr ""
 "Показувати кількість варіантів і вибраний варіант над списком варіантів."
 
-#: setup/setup.glade:91
+#: setup/setup.glade:99
 msgid "Show status info in auxiliary text"
 msgstr "Показувати дані щодо стану у допоміжному тексті"
 
-#: setup/setup.glade:94
+#: setup/setup.glade:103
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "
@@ -299,11 +299,11 @@ msgstr ""
 "preëdit. Допоміжний текст — додатковий рядок, показаний над списком "
 "варіантів. "
 
-#: setup/setup.glade:106
+#: setup/setup.glade:115
 msgid "Use digits as select keys"
 msgstr "Використовувати клавіші цифр для вибору"
 
-#: setup/setup.glade:109
+#: setup/setup.glade:119
 msgid ""
 "Use the regular digits 1-9 as select keys. If that option is on, numbers can "
 "only by typed while no suggestions are shown. Therefore, completions for "
@@ -322,11 +322,11 @@ msgstr ""
 "вибору, F1-F9, оскільки ці клавіші розташовано далі від типового "
 "розташування пальців на клавіатурі."
 
-#: setup/setup.glade:121
+#: setup/setup.glade:131
 msgid "Add direct input"
 msgstr "Додати безпосереднє введення"
 
-#: setup/setup.glade:124
+#: setup/setup.glade:135
 msgid ""
 "This option adds British English as a second language to use in addition to "
 "the main language of this input method."
@@ -334,13 +334,13 @@ msgstr ""
 "Позначення цього пункту додає британську англійську як другу мову для "
 "використання на додачу до основної мови цього способу введення."
 
-#: setup/setup.glade:136
+#: setup/setup.glade:147
 msgid "Remember last used preedit input method"
 msgstr ""
 "Запам’ятовувати останній використаний спосіб введення попереднього "
 "редагування"
 
-#: setup/setup.glade:139
+#: setup/setup.glade:151
 msgid ""
 "If more then one input method is used at the same time, one of them is used "
 "for the preedit.  Which input method is used for the preedit can be changed "
@@ -353,7 +353,7 @@ msgstr ""
 "позначено цей пункт, програма запам’ятовуватиме таку зміну і відновлюватиме "
 "спосіб введення навіть після перезапуску сеансу. "
 
-#: setup/setup.glade:154
+#: setup/setup.glade:167
 msgid ""
 "Whether Unicode symbols and emoji should be included in the predictions. "
 "Emoji are pictographs like ☺♨⛵…. Unicode symbols are other symbols like "
@@ -367,7 +367,7 @@ msgstr ""
 "абетки Брайля (⠥⠩…) тощо. З технічної точки зору, це не емодзі, але все ж "
 "корисні символи."
 
-#: setup/setup.glade:169
+#: setup/setup.glade:183
 msgid ""
 "While “Off the record” mode is on, learning from user input is disabled. If "
 "learned user input is available, predictions are usually much better than "
@@ -382,7 +382,7 @@ msgstr ""
 "якщо слід запобігти зберіганню на диску якоїсь конфіденційної інформації; "
 "вмикайте його лише тимчасово."
 
-#: setup/setup.glade:182
+#: setup/setup.glade:197
 msgid ""
 "The characters in this list cause the preedit to be committed automatically, "
 "followed by a space.  For example, if “.” is an auto commit character, this "
@@ -405,30 +405,30 @@ msgstr ""
 "повністю вимкнути цю можливість, якщо спорожните список (тобто повернете "
 "йому типове значення).\n"
 
-#: setup/setup.glade:184
+#: setup/setup.glade:199
 msgid "Auto commit characters:"
 msgstr "Автонадсилання символів:"
 
-#: setup/setup.glade:195
+#: setup/setup.glade:211
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr ""
 "Кількість варіантів, які слід показувати на одній сторінці списку варіантів."
 
-#: setup/setup.glade:196
+#: setup/setup.glade:212
 msgid "Candidate window page size:"
 msgstr "Розмір сторінки вікна варіантів:"
 
-#: setup/setup.glade:232
+#: setup/setup.glade:249
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
 msgstr "Визначає орієнтацію вікна варіантів, вертикальну чи горизонтальну."
 
-#: setup/setup.glade:233
+#: setup/setup.glade:250
 msgid "Candidate window orientation"
 msgstr "Орієнтація вікна варіантів"
 
-#: setup/setup.glade:253
+#: setup/setup.glade:272
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
 ""
@@ -436,11 +436,11 @@ msgstr ""
 "Не показувати пропозицій, якщо кількість введених символів є меншою за "
 "вказану."
 
-#: setup/setup.glade:254
+#: setup/setup.glade:273
 msgid "Minimum number of chars for completion:"
 msgstr "Мінімальна кількість символів для автозавершення:"
 
-#: setup/setup.glade:280
+#: setup/setup.glade:300
 msgid ""
 "The input method to use. See also the option “Add direct input” to add "
 "British English as a second language."
@@ -448,90 +448,128 @@ msgstr ""
 "Спосіб введення, яким слід скористатися. Див. також параметр «Додати "
 "безпосереднє введення», щоб додати британську англійську як другу мову."
 
-#: setup/setup.glade:281
+#: setup/setup.glade:301
 msgid "Input Method:"
 msgstr "Спосіб введення:"
 
-#: setup/setup.glade:300
+#: setup/setup.glade:321
 msgid "Input Method Help"
 msgstr "Довідка зі способу введення"
 
-#: setup/setup.glade:304
+#: setup/setup.glade:325
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
 "Показувати довідкову інформацію щодо того, як користуватися способом "
 "введення, вибраним вище."
 
-#: setup/setup.glade:317
+#: setup/setup.glade:335
+msgid "Use a workaround for a bug in Qt im module"
+msgstr "Використовувати обхідний шлях щодо вади у модулі im Qt"
+
+#: setup/setup.glade:339
+msgid ""
+"Use a workaround for bugs in the input method modules of Qt4 and Qt5. "
+"Attention, although this workaround makes it work better when the Qt input "
+"modules are used, it causes problems when XIM is used. I.e. the XIM module "
+"of Qt4 will not work well when this workaround is enabled and input via XIM "
+"into X11 programs like xterm will not work well either."
+msgstr ""
+"Використовувати обхідні шляхи щодо вад у модулях способів введення Qt4 і Qt5."
+" Увага! Хоча цей обхідний шлях поліпшує роботу з використаними модулями "
+"способів введення Qt, він спричиняє проблеми із використанням XIM. Тобто "
+"модуль XIM  Qt4 із цим обхідним шляхом не працюватиме як слід, а введення за "
+"допомого XIM у програмах X11, зокрема xterm, також працюватиме не так, як ви "
+"б сподівалися."
+
+#: setup/setup.glade:351
+msgid "Arrow keys can reopen a preedit"
+msgstr "Клавіші зі стрілками можуть повторно відкривати попереднє редагування"
+
+#: setup/setup.glade:355
+msgid ""
+"Whether it is allowed to reopen a preedit when the cursor reaches a word "
+"boundary after moving it with the arrow keys. Enabling this option is useful "
+"to correct already committed words. But it is quite buggy at the moment and "
+"how well it works depends on repetition speed of the arrow keys and system "
+"load. Because it is buggy, this option is off by default."
+msgstr ""
+"Визначає, чи можна повторно відкривати панель попереднього редагування, якщо "
+"курсор досягає межі слова, за допомогою клавіш зі стрілками. Позначення "
+"цього пункту корисне для виправлення вже надісланих слів. Втім, тут є доволі "
+"багато вад у поточній реалізації. Те, наскільки все працюватиме, залежить "
+"від швидкості повторення сигналів при затисканні клавіші та навантаження на "
+"систему. Оскільки є вади, типово цей пункт не позначено."
+
+#: setup/setup.glade:371
 msgid "Options"
 msgstr "Параметри"
 
-#: setup/setup.glade:333
+#: setup/setup.glade:389
 msgid "Clear input"
 msgstr "Вилучити введене"
 
-#: setup/setup.glade:346
+#: setup/setup.glade:402
 msgid "Add shortcut"
 msgstr "Додати скорочення"
 
-#: setup/setup.glade:361
+#: setup/setup.glade:417
 msgid "Enter shortcut here:"
 msgstr "Вкажіть скорочення:"
 
-#: setup/setup.glade:374
+#: setup/setup.glade:430
 msgid "Enter shortcut expansion here:"
 msgstr "Вкажіть розгортання скорочення:"
 
-#: setup/setup.glade:431
+#: setup/setup.glade:486
 msgid "Delete shortcut"
 msgstr "Вилучити скорочення"
 
-#: setup/setup.glade:450
+#: setup/setup.glade:506
 msgid "Custom shortcuts"
 msgstr "Нетипові скорочення"
 
-#: setup/setup.glade:467
+#: setup/setup.glade:523
 msgid "Install the dictionary package for this engine"
 msgstr "Встановити пакунок словника для цього рушія обробки"
 
-#: setup/setup.glade:479
+#: setup/setup.glade:535
 msgid "Install dictionary"
 msgstr "Встановити словник"
 
-#: setup/setup.glade:493
+#: setup/setup.glade:548
 msgid "Learn your style by reading a text file"
 msgstr "Вивчити ваш стиль шляхом читання текстового файла"
 
-#: setup/setup.glade:505
+#: setup/setup.glade:560
 msgid "Learn from text file"
 msgstr "Навчатися за текстовим файлом"
 
-#: setup/setup.glade:519
+#: setup/setup.glade:573
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
 "Вилучити усі особисті дані мови, вивчені на основі введених даних або "
 "читання файлів"
 
-#: setup/setup.glade:531
+#: setup/setup.glade:585
 msgid "Delete learned data"
 msgstr "Вилучити вивчені дані"
 
-#: setup/setup.glade:550
+#: setup/setup.glade:604
 msgid "Dictionaries and personal data"
 msgstr "Словники і особисті дані"
 
-#: setup/setup.glade:591
+#: setup/setup.glade:654
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Спосіб введення із автоматичним доповненням, який пришвидшує введення "
 "текстів."
 
-#: setup/setup.glade:616
+#: setup/setup.glade:682
 msgid "<b>Home page:</b>"
 msgstr "<b>Домашня сторінки:</b>"
 
-#: setup/setup.glade:627
+#: setup/setup.glade:695
 msgid "<b>Online documentation:</b>"
 msgstr "<b>Документація у інтернеті:</b>"
 
@@ -554,6 +592,6 @@ msgstr ""
 "вибрати бажане слово зі списку пропозицій, отже пришвидшити введення тексту "
 "та поліпшити його якість."
 
-#: typing-booster.appdata.xml:853
+#: typing-booster.appdata.xml:904
 msgid "Mike FABIAN"
 msgstr "Mike FABIAN"
