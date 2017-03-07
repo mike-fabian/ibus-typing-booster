@@ -142,20 +142,19 @@ class EmojiPickerUI(Gtk.Window):
         style_provider.load_from_data(
             b'''
             #EmojiPicker {
-                background-color: #FFFFFF;
             }
             flowbox {
-                background-color: #FFFFFF;
             }
             flowboxchild {
-                border-style: solid;
-                border-width: 1px;
-                border-color: #F8F8F8;
+                border-style: groove;
+                border-width: 0.05px;
             }
-            row {
-                border-style: solid;
-                border-width: 1px;
-                border-color: #F8F8F8;
+            row { /* This is for listbox rows */
+                border-style: groove;
+                border-width: 0.05px;
+            }
+            .font {
+                padding: 2px 2px;
             }
             ''')
         Gtk.StyleContext.add_provider_for_screen(
@@ -549,6 +548,7 @@ class EmojiPickerUI(Gtk.Window):
         for child in self._flowbox_scroll.get_children():
             self._flowbox_scroll.remove(child)
         self._flowbox = Gtk.FlowBox()
+        self._flowbox.get_style_context().add_class('view')
         self._flowbox_scroll.add(self._flowbox)
         self._flowbox.set_valign(Gtk.Align.START)
         self._flowbox.set_min_children_per_line(1)
@@ -1438,6 +1438,7 @@ class EmojiPickerUI(Gtk.Window):
             skin_tone_popover_grid.set_margin_top(margin)
             skin_tone_popover_grid.set_margin_bottom(margin)
             skin_tone_popover_flowbox = Gtk.FlowBox()
+            skin_tone_popover_flowbox.get_style_context().add_class('view')
             skin_tone_popover_flowbox.set_valign(Gtk.Align.START)
             skin_tone_popover_flowbox.set_min_children_per_line(3)
             skin_tone_popover_flowbox.set_max_children_per_line(3)
@@ -1642,6 +1643,8 @@ class EmojiPickerUI(Gtk.Window):
             label.set_margin_top(margin)
             label.set_margin_bottom(margin)
             self._font_popover_listbox.insert(label, -1)
+        for row in self._font_popover_listbox.get_children():
+            row.get_style_context().add_class('font')
         self._font_popover.show_all()
 
     def on_font_search_entry_search_changed(self, search_entry):
