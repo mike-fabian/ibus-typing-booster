@@ -656,8 +656,9 @@ class EmojiPickerUI(Gtk.Window):
                 'button-release-event',
                 self.on_flowbox_event_box_button_release)
             self._flowbox.insert(event_box, -1)
-            for child in self._flowbox.get_children():
-                child.set_can_focus(False)
+
+        for child in self._flowbox.get_children():
+            child.set_can_focus(False)
 
         self.show_all()
         self._busy_stop()
