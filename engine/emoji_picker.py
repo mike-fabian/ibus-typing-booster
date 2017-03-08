@@ -232,7 +232,6 @@ class EmojiPickerUI(Gtk.Window):
         self._header_bar.set_hexpand(True)
         self._header_bar.set_vexpand(False)
         self._header_bar.set_show_close_button(True)
-        self._header_bar.set_decoration_layout("menu:minimize,maximize,close")
         self._main_menu_button = Gtk.Button.new_from_icon_name(
             'open-menu-symbolic', Gtk.IconSize.BUTTON)
         self._header_bar.pack_start(self._main_menu_button)
