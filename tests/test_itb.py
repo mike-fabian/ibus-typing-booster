@@ -85,6 +85,8 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_dictionary_names())
         self.orig_add_direct_input = (
             self.engine.get_add_direct_input())
+        self.orig_qt_im_module_workaround = (
+            self.engine.get_qt_im_module_workaround())
 
     def restore_original_settings(self):
         self.engine.set_emoji_prediction_mode(
@@ -115,6 +117,8 @@ class ItbTestCase(unittest.TestCase):
             self.orig_dictionary_names)
         self.engine.set_add_direct_input(
             self.orig_add_direct_input)
+        self.engine.set_qt_im_module_workaround(
+            self.orig_qt_im_module_workaround)
 
     def set_default_settings(self):
         self.engine.set_emoji_prediction_mode(True)
@@ -129,6 +133,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_current_imes(['NoIme'])
         self.engine.set_dictionary_names(['en_US'])
         self.engine.set_add_direct_input(False)
+        self.engine.set_qt_im_module_workaround(False)
 
     def test_dummy(self):
         self.assertEqual(True, True)

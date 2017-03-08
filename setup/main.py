@@ -286,6 +286,18 @@ class SetupUI:
         off_the_record_checkbox.connect(
             'clicked', event_handler.on_off_the_record_checkbox)
 
+        qt_im_module_workaround_checkbox = self.builder.get_object(
+            "qt_im_module_workaround_checkbox")
+        self.qt_im_module_workaround = itb_util.variant_to_value(
+            self.config.get_value(
+                self.config_section, 'qtimmoduleworkaround'))
+        if self.qt_im_module_workaround is None:
+            self.qt_im_module_workaround = False
+        if self.qt_im_module_workaround is True:
+            qt_im_module_workaround_checkbox.set_active(True)
+        qt_im_module_workaround_checkbox.connect(
+            'clicked', event_handler.on_qt_im_module_workaround_checkbox)
+
         show_status_info_in_auxiliary_text_checkbox = self.builder.get_object(
             "show_status_info_in_auxiliary_text_checkbox")
         self.show_status_info_in_auxiliary_text = itb_util.variant_to_value(
@@ -793,6 +805,25 @@ class EventHandler:
             SETUP_UI.config.set_value(
                 SETUP_UI.config_section,
                 'offtherecord',
+                GLib.Variant.new_boolean(False))
+
+    def on_qt_im_module_workaround_checkbox(self, widget):
+        '''
+        The checkbox whether to use the workaround for the broken
+        implementation of forward_key_event() in the Qt 4/5 input
+        module, has been clicked.
+        '''
+        if widget.get_active():
+            SETUP_UI.qt_im_module_workaround = True
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
+                'qtimmoduleworkaround',
+                GLib.Variant.new_boolean(True))
+        else:
+            SETUP_UI.qt_im_module_workaround = False
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
+                'qtimmoduleworkaround',
                 GLib.Variant.new_boolean(False))
 
     def on_show_status_info_in_auxiliary_text_checkbox(self, widget):

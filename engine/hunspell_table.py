@@ -280,6 +280,12 @@ class TypingBoosterEngine(IBus.Engine):
         if self._off_the_record is None:
             self._off_the_record = False # default
 
+        self._qt_im_module_workaround = variant_to_value(self._config.get_value(
+            self._config_section,
+            'qtimmoduleworkaround'))
+        if self._qt_im_module_workaround is None:
+            self._qt_im_module_workaround = False # default
+
         self._auto_commit_characters = variant_to_value(self._config.get_value(
             self._config_section,
             'autocommitcharacters'))
@@ -1897,6 +1903,52 @@ class TypingBoosterEngine(IBus.Engine):
         if len(tokens) > 1:
             self._pp_phrase = tokens[-2]
 
+    def set_qt_im_module_workaround(self, mode, update_dconf=True):
+        '''Sets whether the workaround for the qt im module is used or not
+
+        :param mode: Whether to use the workaround for the qt im module or not
+        :type mode: boolean
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_qt_im_module_workaround(%s, update_dconf = %s)\n"
+                %(mode, update_dconf))
+        if mode == self._qt_im_module_workaround:
+            return
+        self._qt_im_module_workaround = mode
+        if update_dconf:
+            self._config.set_value(
+                self._config_section,
+                'qtimmoduleworkaround',
+                GLib.Variant.new_boolean(mode))
+
+    def toggle_qt_im_module_workaround(self, update_dconf=True):
+        '''Toggles whether the workaround for the qt im module is used or not
+
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        self.set_qt_im_module_workaround(
+            not self._qt_im_module_workaround, update_dconf)
+
+    def get_qt_im_module_workaround(self):
+        '''Returns the current value of the flag to enable
+        a workaround for the qt im module
+
+        :rtype: boolean
+        '''
+        return self._qt_im_module_workaround
+
     def set_emoji_prediction_mode(self, mode, update_dconf=True):
         '''Sets the emoji prediction mode
 
@@ -2795,16 +2847,23 @@ class TypingBoosterEngine(IBus.Engine):
             # Forward the key event which triggered the commit here
             # and return True instead of trying to pass that key event
             # to the application by returning False. Doing it by
-            # returning false works correctly in GTK applications but
-            # not in Qt or X11 applications. When “return False” is
-            # used, the key event which triggered the commit here
-            # arrives in Qt or X11 *before* the committed
-            # string. I.e. when typing “word ” the space which
-            # triggered the commit gets to application first and the
-            # applications receives “ word”.
-            # See: https://bugzilla.redhat.com/show_bug.cgi?id=1291238
-            self.forward_key_event(key.val, key.code, key.state)
-            return True
+            # returning false works correctly in GTK applications
+            # and Qt applications when using the ibus module of Qt.
+            # But not when using XIM, i.e. not when using Qt with the XIM
+            # module and not in X11 applications like xterm.
+            #
+            # When “return False” is used, the key event which
+            # triggered the commit here arrives *before* the committed
+            # string when XIM is used. I.e. when typing “word ” the
+            # space which triggered the commit gets to application
+            # first and the applications receives “ word”. No amount
+            # of sleep before the “return False” can fix this. See:
+            # https://bugzilla.redhat.com/show_bug.cgi?id=1291238
+            if self._qt_im_module_workaround:
+                return self._return_false(key.val, key.code, key.state)
+            else:
+                self.forward_key_event(key.val, key.code, key.state)
+                return True
 
         if key.unicode:
             # If the suggestions are only enabled by Tab key, i.e. the
@@ -2955,6 +3014,9 @@ class TypingBoosterEngine(IBus.Engine):
         print("config value %(n)s for engine %(en)s changed"
               %{'n': name, 'en': self._name})
         value = variant_to_value(value)
+        if name == "qtimmoduleworkaround":
+            self.set_qt_im_module_workaround(value, update_dconf=False)
+            return
         if name == "emojipredictions":
             self.set_emoji_prediction_mode(value, update_dconf=False)
             return
