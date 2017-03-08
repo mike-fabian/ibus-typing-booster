@@ -823,6 +823,20 @@ class EmojiPickerUI(Gtk.Window):
             recents_file.write(repr(self._recently_used_emoji))
             recents_file.write('\n')
 
+    def _set_clipboards(self, text):
+        '''
+        Set the clipboard and the primary selection to “text”
+
+        :param text: The text to set the clipboards to
+        :type text: String
+        '''
+        self._selection_clipboard.set_text(text, -1)
+        self._selection_primary.set_text(text, -1)
+        # Store the current clipboard data somewhere so that
+        # it will stay around after the application has quit:
+        self._selection_clipboard.store()
+        self._selection_primary.store() # Does not work.
+
     def on_delete_event(self, *dummy_args):
         '''
         The window has been deleted, probably by the window manager.
@@ -1205,8 +1219,7 @@ class EmojiPickerUI(Gtk.Window):
                     'on_emoji_selected() repr(emoji) = %s\n' %repr(emoji))
         else:
             return
-        self._selection_clipboard.set_text(emoji, -1)
-        self._selection_primary.set_text(emoji, -1)
+        self._set_clipboards(emoji)
         self._add_to_recently_used(emoji)
         self._emoji_selected_popover = Gtk.Popover()
         self._emoji_selected_popover.set_relative_to(flowbox_child.get_child())
@@ -1325,8 +1338,7 @@ class EmojiPickerUI(Gtk.Window):
                     'on_skin_tone_selected() repr(emoji) = %s\n' %repr(emoji))
         else:
             return
-        self._selection_clipboard.set_text(emoji, -1)
-        self._selection_primary.set_text(emoji, -1)
+        self._set_clipboards(emoji)
         self._add_to_recently_used(emoji)
         self._skin_tone_selected_popover = Gtk.Popover()
         self._skin_tone_selected_popover.set_relative_to(
