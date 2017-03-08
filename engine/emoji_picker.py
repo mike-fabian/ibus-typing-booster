@@ -837,11 +837,24 @@ class EmojiPickerUI(Gtk.Window):
         self._selection_clipboard.store()
         self._selection_primary.store() # Does not work.
 
+    def _print_profiling_information(self):
+        '''
+        Print some profiling information to stdout.
+        '''
+        profile.disable()
+        stats = pstats.Stats(profile)
+        stats.strip_dirs()
+        stats.sort_stats('cumulative')
+        stats.print_stats('emoji_picker', 25)
+        stats.print_stats('itb_emoji', 25)
+
     def on_delete_event(self, *dummy_args):
         '''
         The window has been deleted, probably by the window manager.
         '''
         self._save_recently_used_emoji()
+        if _ARGS.debug:
+            self._print_profiling_information()
         Gtk.main_quit()
 
     def on_destroy_event(self, *dummy_args):
@@ -849,6 +862,8 @@ class EmojiPickerUI(Gtk.Window):
         The window has been destroyed.
         '''
         self._save_recently_used_emoji()
+        if _ARGS.debug:
+            self._print_profiling_information()
         Gtk.main_quit()
 
     def on_main_window_key_press_event(self, dummy_window, event_key):
@@ -1787,6 +1802,10 @@ def get_languages():
 if __name__ == '__main__':
     if _ARGS.debug:
         sys.stdout.write('--- %s ---\n' %time.strftime('%Y-%m-%d: %H:%M:%S'))
+        import cProfile
+        import pstats
+        profile = cProfile.Profile()
+        profile.enable()
 
     # Workaround for
     # https://bugzilla.gnome.org/show_bug.cgi?id=622084
