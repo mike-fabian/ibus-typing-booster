@@ -31,6 +31,7 @@ import json
 import unicodedata
 from difflib import SequenceMatcher
 import gettext
+import xdg.BaseDirectory
 import itb_util
 
 DOMAINNAME = 'ibus-typing-booster'
@@ -67,6 +68,8 @@ except (ImportError,):
     IMPORT_PINYIN_SUCCESSFUL = False
 
 DATADIR = os.path.join(os.path.dirname(__file__), '../data')
+# USER_DATADIR will be “~/.local/share/ibus-typing-booster/data” by default
+USER_DATADIR = xdg.BaseDirectory.save_data_path('ibus-typing-booster/data')
 
 UNICODE_CATEGORIES = {
     'Cc': {'valid': False, 'major': 'Other', 'minor': 'Control'},
@@ -430,7 +433,10 @@ class EmojiMatcher():
 
     def _load_unicode_data(self):
         '''Loads emoji names from UnicodeData.txt'''
-        dirnames = (DATADIR, '/usr/share/unicode/ucd')
+        dirnames = (USER_DATADIR, DATADIR,
+                    # On Fedora, the “unicode-ucd” package has the
+                    # UnicodeData.txt file here:
+                    '/usr/share/unicode/ucd')
         basenames = ('UnicodeData.txt',)
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
@@ -466,7 +472,10 @@ class EmojiMatcher():
         Loads emoji names, aliases, keywords, and categories from
         the emojione.json file.
         '''
-        dirnames = (DATADIR, '/usr/lib/node_modules/emojione/')
+        dirnames = (USER_DATADIR, DATADIR,
+                    # On Fedora >= 25 there is a “nodejs-emojione-json“
+                    # package which has the “emoji.json” file here:
+                    '/usr/lib/node_modules/emojione/')
         basenames = ('emojione.json', 'emoji.json')
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
@@ -607,7 +616,11 @@ class EmojiMatcher():
 
         Translations are loaded from the annotation data from CLDR.
         '''
-        dirnames = (DATADIR,
+        dirnames = (USER_DATADIR, DATADIR,
+                    # On Fedora >= 25 there is a
+                    # “cldr-emoji-annotation” package which has the
+                    # .xml files here:
+                    '/usr/share/unicode/cldr/common/annotations/',
                     '/local/mfabian/src/cldr-svn/trunk/common/annotations')
         basenames = (language + '.xml',)
         (path, open_function) = _find_path_and_open_function(
