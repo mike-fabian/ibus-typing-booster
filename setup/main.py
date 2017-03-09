@@ -298,6 +298,18 @@ class SetupUI:
         qt_im_module_workaround_checkbox.connect(
             'clicked', event_handler.on_qt_im_module_workaround_checkbox)
 
+        arrow_keys_reopen_preedit_checkbox = self.builder.get_object(
+            "arrow_keys_reopen_preedit_checkbox")
+        self.arrow_keys_reopen_preedit = itb_util.variant_to_value(
+            self.config.get_value(
+                self.config_section, 'arrowkeysreopenpreedit'))
+        if self.arrow_keys_reopen_preedit is None:
+            self.arrow_keys_reopen_preedit = False
+        if self.arrow_keys_reopen_preedit is True:
+            arrow_keys_reopen_preedit_checkbox.set_active(True)
+        arrow_keys_reopen_preedit_checkbox.connect(
+            'clicked', event_handler.on_arrow_keys_reopen_preedit_checkbox)
+
         show_status_info_in_auxiliary_text_checkbox = self.builder.get_object(
             "show_status_info_in_auxiliary_text_checkbox")
         self.show_status_info_in_auxiliary_text = itb_util.variant_to_value(
@@ -824,6 +836,24 @@ class EventHandler:
             SETUP_UI.config.set_value(
                 SETUP_UI.config_section,
                 'qtimmoduleworkaround',
+                GLib.Variant.new_boolean(False))
+
+    def on_arrow_keys_reopen_preedit_checkbox(self, widget):
+        '''
+        The checkbox whether arrow keys are allowed to reopen
+        a preëdit, has been clicked.
+        '''
+        if widget.get_active():
+            SETUP_UI.arrow_keys_reopen_preedit = True
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
+                'arrowkeysreopenpreedit',
+                GLib.Variant.new_boolean(True))
+        else:
+            SETUP_UI.arrow_keys_reopen_preedit = False
+            SETUP_UI.config.set_value(
+                SETUP_UI.config_section,
+                'arrowkeysreopenpreedit',
                 GLib.Variant.new_boolean(False))
 
     def on_show_status_info_in_auxiliary_text_checkbox(self, widget):

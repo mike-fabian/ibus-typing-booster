@@ -201,7 +201,7 @@
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
-                    <property name="top_attach">9</property>
+                    <property name="top_attach">10</property>
                   </packing>
                 </child>
                 <child>
@@ -214,7 +214,7 @@
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
-                    <property name="top_attach">10</property>
+                    <property name="top_attach">11</property>
                   </packing>
                 </child>
                 <child>
@@ -224,7 +224,7 @@
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
-                    <property name="top_attach">9</property>
+                    <property name="top_attach">10</property>
                   </packing>
                 </child>
                 <child>
@@ -239,7 +239,7 @@
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
-                    <property name="top_attach">10</property>
+                    <property name="top_attach">11</property>
                   </packing>
                 </child>
                 <child>
@@ -252,7 +252,7 @@
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
-                    <property name="top_attach">11</property>
+                    <property name="top_attach">12</property>
                   </packing>
                 </child>
                 <child>
@@ -262,7 +262,7 @@
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
-                    <property name="top_attach">11</property>
+                    <property name="top_attach">12</property>
                   </packing>
                 </child>
                 <child>
@@ -275,7 +275,7 @@
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
-                    <property name="top_attach">12</property>
+                    <property name="top_attach">13</property>
                   </packing>
                 </child>
                 <child>
@@ -290,7 +290,7 @@
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
-                    <property name="top_attach">12</property>
+                    <property name="top_attach">13</property>
                   </packing>
                 </child>
                 <child>
@@ -303,7 +303,7 @@
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
-                    <property name="top_attach">13</property>
+                    <property name="top_attach">14</property>
                   </packing>
                 </child>
                 <child>
@@ -313,7 +313,7 @@
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
-                    <property name="top_attach">13</property>
+                    <property name="top_attach">14</property>
                   </packing>
                 </child>
                 <child>
@@ -326,7 +326,7 @@
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
-                    <property name="top_attach">14</property>
+                    <property name="top_attach">15</property>
                     <property name="width">2</property>
                   </packing>
                 </child>
@@ -343,6 +343,22 @@
                   <packing>
                     <property name="left_attach">0</property>
                     <property name="top_attach">8</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="arrow_keys_reopen_preedit_checkbox">
+                    <property name="label" translatable="yes">Arrow keys can reopen a preedit</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="receives_default">False</property>
+                    <property name="tooltip_text" translatable="yes">Whether it is allowed to reopen a preedit when the cursor reaches a word boundary after moving it with the arrow keys. Enabling this option is useful to correct already committed words. But it is quite buggy at the moment and how well it works depends on repetition speed of the arrow keys and system load. Because it is buggy, this option is off by default.</property>
+                    <property name="xalign">0</property>
+                    <property name="draw_indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">9</property>
                     <property name="width">2</property>
                   </packing>
                 </child>

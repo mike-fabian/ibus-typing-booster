@@ -286,6 +286,12 @@ class TypingBoosterEngine(IBus.Engine):
         if self._qt_im_module_workaround is None:
             self._qt_im_module_workaround = False # default
 
+        self._arrow_keys_reopen_preedit = variant_to_value(self._config.get_value(
+            self._config_section,
+            'arrowkeysreopenpreedit'))
+        if self._arrow_keys_reopen_preedit is None:
+            self._arrow_keys_reopen_preedit = False # default
+
         self._auto_commit_characters = variant_to_value(self._config.get_value(
             self._config_section,
             'autocommitcharacters'))
@@ -1779,6 +1785,11 @@ class TypingBoosterEngine(IBus.Engine):
             # surrounding text is probably from the previously
             # focused window (bug!), don’t use it.
             return self._return_false(key.val, key.code, key.state)
+        if (not self._arrow_keys_reopen_preedit
+                and key.val in (IBus.KEY_Left, IBus.KEY_KP_Left,
+                                IBus.KEY_Right, IBus.KEY_KP_Right)):
+            # using arrows key to reopen the preëdit is disabled
+            return self._return_false(key.val, key.code, key.state)
         if (key.shift
             or key.control
             or key.mod1
@@ -1948,6 +1959,52 @@ class TypingBoosterEngine(IBus.Engine):
         :rtype: boolean
         '''
         return self._qt_im_module_workaround
+
+    def set_arrow_keys_reopen_preedit(self, mode, update_dconf=True):
+        '''Sets whether the arrow keys are allowed to reopen a preëdit
+
+        :param mode: Whether arrow keys can reopen a preëdit
+        :type mode: boolean
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_arrow_keys_reopen_preedit(%s, update_dconf = %s)\n"
+                %(mode, update_dconf))
+        if mode == self._arrow_keys_reopen_preedit:
+            return
+        self._arrow_keys_reopen_preedit = mode
+        if update_dconf:
+            self._config.set_value(
+                self._config_section,
+                'arrowkeysreopenpreedit',
+                GLib.Variant.new_boolean(mode))
+
+    def toggle_arrow_keys_reopen_preedit(self, update_dconf=True):
+        '''Toggles whether arrow keys are allowed to reopen a preëdit
+
+        :param update_dconf: Whether to write the change to dconf.
+                             Set this to False if this method is
+                             called because the dconf key changed
+                             to avoid endless loops when the dconf
+                             key is changed twice in a short time.
+        :type update_dconf: boolean
+        '''
+        self.set_arrow_keys_reopen_preedit(
+            not self._arrow_keys_reopen_preedit, update_dconf)
+
+    def get_arrow_keys_reopen_preedit(self):
+        '''Returns the current value of the flag whether to
+        allow arrow keys to reopen the preëdit
+
+        :rtype: boolean
+        '''
+        return self._arrow_keys_reopen_preedit
 
     def set_emoji_prediction_mode(self, mode, update_dconf=True):
         '''Sets the emoji prediction mode
@@ -3016,6 +3073,9 @@ class TypingBoosterEngine(IBus.Engine):
         value = variant_to_value(value)
         if name == "qtimmoduleworkaround":
             self.set_qt_im_module_workaround(value, update_dconf=False)
+            return
+        if name == "arrowkeysreopenpreedit":
+            self.set_arrow_keys_reopen_preedit(value, update_dconf=False)
             return
         if name == "emojipredictions":
             self.set_emoji_prediction_mode(value, update_dconf=False)
