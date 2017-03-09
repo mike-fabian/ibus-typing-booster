@@ -167,7 +167,7 @@ class SetupUI:
         # It only works like this when gnome-shell runs under Xorg
         # though, under Wayland things are different.
         maindialog.set_wmclass('ibus-setup-typing-booster', 'Typing Booster Preferences')
-        maindialog.show()
+        maindialog.show_all()
 
         name_version = self.builder.get_object("name_version_label")
         name_version.set_markup(
