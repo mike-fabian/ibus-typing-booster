@@ -1,4 +1,21 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 13 Mar 2017 Released 1.5.25 version
+* Update translations from zanata (de, pl, uk updated, zh_CN new)
+* Show the categories as well on right mouse click in emoji-picker
+* Improve information displayed on right mouse click in emoji-picker
+* html.unescape() the strings parsed from the cldr annotations
+* Fix fontsize change for invisible emoji in browse flowbox
+* Add an option whether the arrow keys are allowed to reopen a preëdit
+* Add an option to work around the broken forward_key_event() in the Qt 4/5 im module
+* Use xdg.BaseDirectory to add a USER_DATADIR to the search path for data for itb_emoji.py
+* emoji_picker.py: Speedup: Fix wrong indentation of block in _fill_flowbox_browse()
+* emoji_picker.py: Print some profiling information when debugging is enabled
+* Store the clipboard with gtk_clipboard_store() to keep it around after emoji-picker quits
+* emoji-picker: Do not override the decoration layout of the header bar
+* When an emoji with a different skin tone is selected, replace the original emoji immediately
+* Make emoji-picker work on dark themes like Adwaita-dark as well
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 06 Mar 2017 Released 1.5.24 version
 * Update translations from zanata (de updated)
 * The spin button to change the fontsize should grab focus without selecting

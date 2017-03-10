@@ -16,6 +16,56 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.25" date="2017-03-13" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (de, pl, uk updated, zh_CN new)
+          </li>
+          <li>
+            Show the categories as well on right mouse click in
+            emoji-picker
+          </li>
+          <li>
+            Improve information displayed on right mouse click in
+            emoji-picker
+          </li>
+          <li>
+            html.unescape() the strings parsed from the cldr annotations
+          </li>
+          <li>
+            Fix fontsize change for invisible emoji in browse flowbox
+          </li>
+          <li>
+            Add an option whether the arrow keys are allowed to reopen
+            a preëdit
+          </li>
+          <li>
+            Add an option to work around the broken
+            forward_key_event() in the Qt 4/5 im module
+          </li>
+          <li>
+            Use xdg.BaseDirectory to add a USER_DATADIR to the search
+            path for data for itb_emoji.py
+          </li>
+          <li>
+            emoji_picker.py: Speedup: Fix wrong indentation of block
+            in _fill_flowbox_browse()
+          </li>
+          <li>
+            emoji-picker: Do not override the decoration layout of the
+            header bar
+          </li>
+          <li>
+            When an emoji with a different skin tone is selected,
+            replace the original emoji immediately
+          </li>
+          <li>
+            Make emoji-picker work on dark themes like Adwaita-dark as well
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.24" date="2017-03-06" urgency="medium">
       <description>
         <ul>
