@@ -2,7 +2,7 @@
 Name=Emoji Picker
 Comment=An emoji selection tool
 Exec=${PREFIX}/bin/emoji-picker
-Icon=${PKGDATADIR}/icons/ibus-hunspell-table.svg
+Icon=ibus-hunspell-table
 Terminal=false
 Type=Application
 StartupNotify=true

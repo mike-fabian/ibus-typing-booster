@@ -16,8 +16,8 @@
 #  You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-PYTHON=/usr/bin/python3
-prefix=/usr
+PYTHON=/usr/bin/python
+prefix=/usr/local
 datarootdir=${prefix}/share
 datadir=${datarootdir}
 export PYTHONIOENCODING=UTF-8
