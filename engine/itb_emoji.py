@@ -1358,6 +1358,8 @@ class EmojiMatcher():
         >>> matcher.name('a')
         ''
 
+        >>> matcher.name(' ')
+        'space'
         '''
         if language:
             if ((emoji_string, language) in self._emoji_dict
