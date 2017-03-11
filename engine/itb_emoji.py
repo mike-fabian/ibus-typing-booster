@@ -29,6 +29,7 @@ import re
 import gzip
 import json
 import unicodedata
+import html
 from difflib import SequenceMatcher
 import gettext
 import xdg.BaseDirectory
@@ -650,33 +651,34 @@ class EmojiMatcher():
                 match = pattern.match(line)
                 if match:
                     emoji_string = match.group('emojistring')
+                    content = html.unescape(match.group('content'))
                     if match.group('tts'):
                         if (language in ('zh', 'zh_Hant')
                                 and IMPORT_PINYIN_SUCCESSFUL):
                             self._add_to_emoji_dict(
                                 (emoji_string, language),
                                 'names',
-                                [match.group('content'),
-                                 pinyin.get(match.group('content'))]
+                                [content,
+                                 pinyin.get(content)]
                             )
                         elif (language == 'ja'
                               and self._romaji and IMPORT_PYKAKASI_SUCCESSFUL):
                             self._add_to_emoji_dict(
                                 (emoji_string, language),
                                 'names',
-                                [match.group('content'),
-                                 kakasi_converter.do(match.group('content'))]
+                                [content,
+                                 kakasi_converter.do(content)]
                             )
                         else:
                             self._add_to_emoji_dict(
                                 (emoji_string, language),
                                 'names',
-                                [match.group('content')]
+                                [content]
                             )
                     else:
                         if (language in ('zh', 'zh_Hant')
                                 and IMPORT_PINYIN_SUCCESSFUL):
-                            for x in match.group('content').split('|'):
+                            for x in content.split('|'):
                                 keyword = x.strip()
                                 keyword_pinyin = pinyin.get(keyword)
                                 self._add_to_emoji_dict(
@@ -686,7 +688,7 @@ class EmojiMatcher():
                                 )
                         elif (language == 'ja'
                               and self._romaji and IMPORT_PYKAKASI_SUCCESSFUL):
-                            for x in match.group('content').split('|'):
+                            for x in content.split('|'):
                                 keyword = x.strip()
                                 keyword_romaji = kakasi_converter.do(keyword)
                                 self._add_to_emoji_dict(
@@ -699,7 +701,7 @@ class EmojiMatcher():
                                 (emoji_string, language),
                                 'keywords',
                                 [x.strip()
-                                 for x in match.group('content').split('|')]
+                                 for x in content.split('|')]
                             )
 
     def _set_seq1(self, string):
