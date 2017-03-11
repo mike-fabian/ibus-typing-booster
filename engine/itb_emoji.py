@@ -1293,14 +1293,49 @@ class EmojiMatcher():
         self._candidate_cache[(query_string, match_limit)] = sorted_candidates
         return sorted_candidates
 
+    def names(self,emoji_string, language=''):
+        '''Find the names of an emoji
+
+        Returns a list of names of the emoji in the language requested
+        or and empty list if no name can be found in that language.
+
+        If no language is requested, the list of names is returned in
+        the first language of this EmojiMatcher for which a list of
+        names can be found.
+
+        :param emoji_string: The string of Unicode characters which are
+                             used to encode the emoji
+        :type emoji_string: string
+        :param language: The language requested for the name
+        :type language: string
+        :rtype: List of strings
+
+        Examples:
+
+        >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+        >>> matcher.names('🙂')
+        ['slightly smiling face', 'slight smile', ':)', ':-)', '=]', '=)', ':]']
+        '''
+        if language:
+            if ((emoji_string, language) in self._emoji_dict
+                    and 'names' in self._emoji_dict[(emoji_string, language)]):
+                return self._emoji_dict[(emoji_string, language)]['names']
+            else:
+                return []
+        for language in expand_languages(self._languages):
+            if ((emoji_string, language) in self._emoji_dict
+                    and 'names' in self._emoji_dict[(emoji_string, language)]):
+                return self._emoji_dict[(emoji_string, language)]['names']
+        return []
+
     def name(self, emoji_string, language=''):
-        '''Find a name of an emoji.
+        '''Find the main name of an emoji.
 
         Returns a name of the emoji in the language requested
         or and empty string if no name can be found in that language.
 
         If no language is requested, the name is returned in the first
-        language of this EmojiMatcher for which where a name can be
+        language of this EmojiMatcher for which a name can be
         found.
 
         :param emoji_string: The string of Unicode characters which are
@@ -1363,17 +1398,11 @@ class EmojiMatcher():
         >>> matcher.name(' ')
         'space'
         '''
-        if language:
-            if ((emoji_string, language) in self._emoji_dict
-                    and 'names' in self._emoji_dict[(emoji_string, language)]):
-                return self._emoji_dict[(emoji_string, language)]['names'][0]
-            else:
-                return ''
-        for language in expand_languages(self._languages):
-            if ((emoji_string, language) in self._emoji_dict
-                    and 'names' in self._emoji_dict[(emoji_string, language)]):
-                return self._emoji_dict[(emoji_string, language)]['names'][0]
-        return ''
+        names = self.names(emoji_string, language=language)
+        if names:
+            return names[0]
+        else:
+            return ''
 
     def similar(self, emoji_string, match_limit=1000):
         '''Find similar emojis
