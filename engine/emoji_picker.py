@@ -617,16 +617,20 @@ class EmojiPickerUI(Gtk.Window):
                     if recently_used_index < len(sorted_recently_used):
                         emoji = sorted_recently_used[recently_used_index]
             label = Gtk.Label()
+            # Make font for emoji large using pango markup
+            text = (
+                '<span font="%s %s">'
+                %(self._font, self._fontsize)
+                + html.escape(emoji)
+                + '</span>')
             if itb_emoji.is_invisible(emoji):
-                description = self._emoji_description(emoji)
-                label.set_text('<span>%s</span>' %emoji + description)
-            else:
-                # Make font for emoji large using pango markup
-                label.set_text(
-                    '<span font="%s %s">'
-                    %(self._font, self._fontsize)
-                    + html.escape(emoji)
+                text += (
+                    '<span font="%s">'
+                    %(self._fontsize / 2)
+                    + ' U+%X ' %ord(emoji)
+                    + self._emoji_matcher.name(emoji)
                     + '</span>')
+            label.set_text(text)
             label.set_use_markup(True)
             label.set_can_focus(False)
             label.set_selectable(False)
