@@ -367,19 +367,9 @@ class EmojiPickerUI(Gtk.Window):
             if language in self._emoji_by_label:
                 language_iter = self._browse_treeview_model.append(
                     None, [language, '', '', ''])
-                translated_label_keys = {
-                    'Categories': _('Categories'),
-                    'Unicode categories': _('Unicode categories'),
-                    'Keywords': _('Keywords'),
-                    }
-                if self._gettext_translations[language]:
-                    for label_key in translated_label_keys:
-                        translated_label_keys[label_key] = (
-                            self._gettext_translations[
-                                language].gettext(label_key))
                 if self._add_label_key_to_model(
                         'categories',
-                        translated_label_keys['Categories'],
+                        self._translate_key('Categories', language),
                         language, language_iter):
                     language_empty = False
                     if first_language_with_categories < 0:
@@ -387,12 +377,12 @@ class EmojiPickerUI(Gtk.Window):
                             language_index - number_of_empty_languages)
                 if self._add_label_key_to_model(
                         'ucategories',
-                        translated_label_keys['Unicode categories'],
+                        self._translate_key('Unicode categories', language),
                         language, language_iter):
                     language_empty = False
                 if self._add_label_key_to_model(
                         'keywords',
-                        translated_label_keys['Keywords'],
+                        self._translate_key('Keywords', language),
                         language, language_iter):
                     language_empty = False
                 if language_empty:
