@@ -1404,6 +1404,44 @@ class EmojiMatcher():
         else:
             return ''
 
+    def keywords(self,emoji_string, language=''):
+        '''Return the keywords of an emoji
+
+        Returns a list of keywords of the emoji in the language requested
+        or and empty list if no name can be found in that language.
+
+        If no language is requested, the list of keywords is returned in
+        the first language of this EmojiMatcher for which a list of
+        keywords can be found.
+
+        :param emoji_string: The string of Unicode characters which are
+                             used to encode the emoji
+        :type emoji_string: string
+        :param language: The language requested for the name
+        :type language: string
+        :rtype: List of strings
+
+        Examples:
+
+        >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+        >>> matcher.keywords('🙂')
+        ['happy', 'smiley', 'face', 'smile']
+
+        >>> matcher.keywords('🙂', language='it')
+        ['sorriso', 'sorriso a bocca chiusa', 'mezzo sorriso']
+        '''
+        if language:
+            if ((emoji_string, language) in self._emoji_dict
+                    and 'keywords' in self._emoji_dict[(emoji_string, language)]):
+                return self._emoji_dict[(emoji_string, language)]['keywords']
+            else:
+                return []
+        for language in expand_languages(self._languages):
+            if ((emoji_string, language) in self._emoji_dict
+                    and 'keywords' in self._emoji_dict[(emoji_string, language)]):
+                return self._emoji_dict[(emoji_string, language)]['keywords']
+        return []
+
     def similar(self, emoji_string, match_limit=1000):
         '''Find similar emojis
 
