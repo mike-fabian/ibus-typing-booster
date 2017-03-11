@@ -522,17 +522,24 @@ class EmojiPickerUI(Gtk.Window):
                 'emoji_order = %s' %self._emoji_matcher.emoji_order(emoji))
         for language in itb_emoji.expand_languages(self._languages):
             names = self._emoji_matcher.names(emoji, language=language)
-            description = ''
+            description = '<b>%s</b>' %language
+            description_empty = True
             if names:
-                description += (
-                    '<b>%s</b>\n%s'
-                    %(language, html.escape(', '.join(names))))
+                description += '\n' + html.escape(', '.join(names))
+                description_empty = False
             keywords = self._emoji_matcher.keywords(emoji, language=language)
             if keywords:
                 description += (
                     '\n' + self._translate_key('Keywords', language) + ': '
                     + html.escape(', '.join(keywords)))
-            if description:
+                description_empty = False
+            categories = self._emoji_matcher.categories(emoji, language=language)
+            if categories:
+                description += (
+                    '\n' + self._translate_key('Categories', language) + ': '
+                    + html.escape(', '.join(categories)))
+                description_empty = False
+            if not description_empty:
                 descriptions.append(description)
         return descriptions
 
