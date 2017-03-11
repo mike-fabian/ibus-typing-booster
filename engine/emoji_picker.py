@@ -506,7 +506,7 @@ class EmojiPickerUI(Gtk.Window):
         '''
         Return a description of the emoji
 
-        The description shows the Unicode codpoint(s) of the emoji
+        The description shows the Unicode codepoint(s) of the emoji
         and the names of the emoji in all languages used.
 
         :param emoji: The emoji
