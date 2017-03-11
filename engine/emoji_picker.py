@@ -502,7 +502,18 @@ class EmojiPickerUI(Gtk.Window):
                 unicodedata.name(x[0]).startswith('DIGIT'),
                 x.lower()))
 
-    def _emoji_description(self, emoji):
+    def _translate_key(self, key, language='en'):
+        dummy_keys_to_translate = [
+            N_('Categories'),
+            N_('Unicode categories'),
+            N_('Keywords'),
+        ]
+        if self._gettext_translations[language]:
+            return self._gettext_translations[language].gettext(key)
+        else:
+            return key
+
+    def _emoji_descriptions(self, emoji):
         '''
         Return a description of the emoji
 
@@ -511,18 +522,29 @@ class EmojiPickerUI(Gtk.Window):
 
         :param emoji: The emoji
         :type emoji: String
-        :rtype: String
+        :rtype: List of strings
         '''
-        description = ' '.join(['U+%X' %ord(character) for character in emoji])
-        description += '\n'
-        for language in itb_emoji.expand_languages(self._languages):
-            name = self._emoji_matcher.name(emoji, language=language)
-            if name:
-                description += '%s   (%s)\n' %(name, language)
+        descriptions = []
+        descriptions.append(
+            ' '.join(['U+%X' %ord(character) for character in emoji]))
         if _ARGS.debug:
-            description += (
+            descriptions.append(
                 'emoji_order = %s' %self._emoji_matcher.emoji_order(emoji))
-        return description
+        for language in itb_emoji.expand_languages(self._languages):
+            names = self._emoji_matcher.names(emoji, language=language)
+            description = ''
+            if names:
+                description += (
+                    '<b>%s</b>\n%s'
+                    %(language, html.escape(', '.join(names))))
+            keywords = self._emoji_matcher.keywords(emoji, language=language)
+            if keywords:
+                description += (
+                    '\n' + self._translate_key('Keywords', language) + ': '
+                    + html.escape(', '.join(keywords)))
+            if description:
+                descriptions.append(description)
+        return descriptions
 
     def _emoji_label_set_tooltip( # pylint: disable=no-self-use
             self, emoji, label):
@@ -1585,24 +1607,32 @@ class EmojiPickerUI(Gtk.Window):
             label = Gtk.Label()
             label.set_hexpand(False)
             label.set_vexpand(False)
-            label.set_halign(Gtk.Align.FILL)
-            description = self._emoji_description(emoji)
-            if itb_emoji.is_invisible(emoji):
-                label.set_markup(
-                    description)
-            else:
-                label.set_markup(
-                    '<span font_desc="%s %s">'
-                    %(self._font, self._fontsize * 3)
-                    + html.escape(emoji)
-                    + '</span>\n\n'
-                    + html.escape(description))
+            label.set_halign(Gtk.Align.START)
+            label.set_markup(
+                '<span font_desc="%s %s">'
+                %(self._font, self._fontsize * 3)
+                + html.escape(emoji)
+                + '</span>')
             emoji_info_popover_listbox.insert(label, -1)
+            for description in self._emoji_descriptions(emoji):
+                label_description = Gtk.Label()
+                margin = 0
+                label_description.set_margin_start(margin)
+                label_description.set_margin_end(margin)
+                label_description.set_margin_top(margin)
+                label_description.set_margin_bottom(margin)
+                label_description.set_hexpand(False)
+                label_description.set_vexpand(False)
+                label_description.set_halign(Gtk.Align.START)
+                label_description.set_line_wrap(True)
+                label_description.set_markup(description)
+                emoji_info_popover_listbox.insert(label_description, -1)
             if self._emoji_matcher.emoji_order(emoji) < 0xFFFFFFFF:
                 linkbutton = Gtk.LinkButton.new_with_label(
                     _('Lookup on emojipedia'))
                 linkbutton.set_uri(
                     'http://emojipedia.org/emoji/' + emoji + '/')
+                linkbutton.set_halign(Gtk.Align.START)
                 emoji_info_popover_listbox.insert(linkbutton, -1)
             for row in emoji_info_popover_listbox.get_children():
                 row.set_activatable(False)
