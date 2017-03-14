@@ -1423,7 +1423,7 @@ class EmojiPickerUI(Gtk.Window):
         '''
         if _ARGS.debug:
             sys.stdout.write(
-                'on_flowbox_label_button_release() '
+                'on_flowbox_event_box_button_release() '
                 + 'event_button.type=%s ' %event_button.type
                 + 'event_button.window=%s ' %event_button.window
                 + 'event_button.button=%s\n' %event_button.button)
@@ -1451,7 +1451,7 @@ class EmojiPickerUI(Gtk.Window):
         '''
         if _ARGS.debug:
             sys.stdout.write(
-                'on_flowbox_label_button_press() '
+                'on_flowbox_event_box_button_press() '
                 + 'event_button.type=%s ' %event_button.type
                 + 'event_button.window=%s ' %event_button.window
                 + 'event_button.button=%s\n' %event_button.button)
