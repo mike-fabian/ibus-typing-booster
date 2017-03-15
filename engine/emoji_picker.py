@@ -32,7 +32,7 @@ import time
 import gettext
 import unicodedata
 import html
-import xdg.BaseDirectory
+import itb_util
 
 from gi import require_version
 require_version('GLib', '2.0')
@@ -183,7 +183,7 @@ class EmojiPickerUI(Gtk.Window):
         self._font_popover_scroll = None
         self._font_popover_listbox = None
         self._options_file = os.path.join(
-            xdg.BaseDirectory.save_data_path('emoji-picker'),
+            itb_util.xdg_save_data_path('emoji-picker'),
             'options')
         self._read_options()
         if not font is None:
@@ -357,7 +357,7 @@ class EmojiPickerUI(Gtk.Window):
 
         self._recently_used_emoji = {}
         self._recently_used_emoji_file = os.path.join(
-            xdg.BaseDirectory.save_data_path('emoji-picker'),
+            itb_util.xdg_save_data_path('emoji-picker'),
             'recently-used')
         self._recently_used_emoji_maximum = 100
         self._read_recently_used()

@@ -32,7 +32,6 @@ import unicodedata
 import html
 from difflib import SequenceMatcher
 import gettext
-import xdg.BaseDirectory
 import itb_util
 
 DOMAINNAME = 'ibus-typing-booster'
@@ -70,7 +69,7 @@ except (ImportError,):
 
 DATADIR = os.path.join(os.path.dirname(__file__), '../data')
 # USER_DATADIR will be “~/.local/share/ibus-typing-booster/data” by default
-USER_DATADIR = xdg.BaseDirectory.save_data_path('ibus-typing-booster/data')
+USER_DATADIR = itb_util.xdg_save_data_path('ibus-typing-booster/data')
 
 UNICODE_CATEGORIES = {
     'Cc': {'valid': False, 'major': 'Other', 'minor': 'Control'},

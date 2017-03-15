@@ -26,8 +26,13 @@ import os
 import re
 import string
 import unicodedata
-
 from gi.repository import GLib
+IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = False
+try:
+    import xdg.BaseDirectory
+    IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = False
 
 NORMALIZATION_FORM_INTERNAL = 'NFD'
 
@@ -490,6 +495,25 @@ def get_hunspell_dictionary_wordlist(language):
         for x in dic_buffer
     ]
     return (dic_path, dictionary_encoding, word_list)
+
+def xdg_save_data_path(*resource):
+    '''
+    Compatibility function for systems which do not have pyxdg.
+    (For example openSUSE Leap 42.1)
+    '''
+    if IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL:
+        return xdg.BaseDirectory.save_data_path(*resource)
+    else:
+        # Replicate implementation of xdg.BaseDirectory.save_data_path
+        # here:
+        xdg_data_home = os.environ.get('XDG_DATA_HOME') or os.path.join(
+            os.path.expanduser('~'), '.local', 'share')
+        resource = os.path.join(*resource)
+        assert not resource.startswith('/')
+        path = os.path.join(xdg_data_home, resource)
+        if not os.path.isdir(path):
+            os.makedirs(path)
+        return path
 
 if __name__ == "__main__":
     import doctest
