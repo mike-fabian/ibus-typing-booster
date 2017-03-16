@@ -558,7 +558,7 @@ class EmojiPickerUI(Gtk.Window):
         :type label: Gtk.Label object
         '''
         tooltip_text = _('Left click to copy') + '\n'
-        if self._emoji_matcher.skin_tone_modifier_supported(emoji):
+        if len(self._emoji_matcher.skin_tone_variants(emoji)) > 1:
             tooltip_text += _('Long press or middle click for skin tones')  + '\n'
         tooltip_text += _('Right click for info')
         label.set_tooltip_text(tooltip_text)
@@ -626,22 +626,28 @@ class EmojiPickerUI(Gtk.Window):
             while Gtk.events_pending():
                 Gtk.main_iteration()
             if not is_recently_used:
-                if (len(emoji) > 1
-                        and emoji[-1] in itb_emoji.SKIN_TONE_MODIFIERS):
-                    # Skip all emoji which already have the skin tone
-                    # modifier attached.
-                    continue
-                if self._emoji_matcher.skin_tone_modifier_supported(emoji):
+                if len(emoji) > 1:
+                    has_skin_tone_modifier = False
+                    for modifier in itb_emoji.SKIN_TONE_MODIFIERS:
+                        if modifier in emoji:
+                            has_skin_tone_modifier = True
+                    if has_skin_tone_modifier:
+                        # Skip all emoji which already contain a
+                        # skin tone modifier:.
+                        continue
+                skin_tone_variants = self._emoji_matcher.skin_tone_variants(
+                    emoji)
+                if len(skin_tone_variants) > 1:
                     # For an emoji which can take a skin tone modifier,
                     # replace it by the most recently used variant.
                     # If no variant has been recently used, leave
                     # the base emoji as it is:
                     recently_used_index = len(sorted_recently_used)
-                    for tone in ('',) + itb_emoji.SKIN_TONE_MODIFIERS:
-                        if emoji + tone in sorted_recently_used:
+                    for skin_tone_variant in skin_tone_variants:
+                        if skin_tone_variant in sorted_recently_used:
                             recently_used_index = min(
                                 recently_used_index,
-                                sorted_recently_used.index(emoji + tone))
+                                sorted_recently_used.index(skin_tone_variant))
                     if recently_used_index < len(sorted_recently_used):
                         emoji = sorted_recently_used[recently_used_index]
             label = Gtk.Label()
@@ -1586,9 +1592,8 @@ class EmojiPickerUI(Gtk.Window):
         (emoji, name) = self._parse_emoji_and_name_from_text(text)
         if not emoji:
             return
-        if emoji[-1] in itb_emoji.SKIN_TONE_MODIFIERS:
-            emoji = emoji[:-1]
-        if not self._emoji_matcher.skin_tone_modifier_supported(emoji):
+        skin_tone_variants = self._emoji_matcher.skin_tone_variants(emoji)
+        if len(skin_tone_variants) == 1:
             return
         self._skin_tone_popover = Gtk.Popover()
         self._skin_tone_popover.set_modal(True)
@@ -1634,12 +1639,12 @@ class EmojiPickerUI(Gtk.Window):
         skin_tone_popover_flowbox.set_vexpand(False)
         skin_tone_popover_flowbox.connect(
             'child-activated', self.on_skin_tone_selected)
-        for skin_tone in ('',) + itb_emoji.SKIN_TONE_MODIFIERS:
+        for skin_tone_variant in skin_tone_variants:
             label = Gtk.Label()
             label.set_text(
                 '<span font="%s %s">'
                 %(self._font, self._fontsize)
-                + html.escape(emoji + skin_tone)
+                + html.escape(skin_tone_variant)
                 + '</span>')
             label.set_use_markup(True)
             label.set_can_focus(False)
