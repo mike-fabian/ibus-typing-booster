@@ -61,6 +61,7 @@ class Dictionary:
             sys.stderr.write(
                 "Dictionary.__init__(name=%s)\n" %name)
         self.name = name
+        self.dic_path = ''
         self.encoding = 'UTF-8'
         self.words = []
         self.word_pairs = []
@@ -76,7 +77,7 @@ class Dictionary:
         '''
         if DEBUG_LEVEL > 0:
             sys.stderr.write("load_dictionary() ...\n")
-        (dic_path,
+        (self.dic_path,
          self.encoding,
          self.words) = itb_util.get_hunspell_dictionary_wordlist(self.name)
         if self.words:
@@ -106,9 +107,9 @@ class Dictionary:
                     % self.max_word_len)
             if IMPORT_ENCHANT_SUCCESSFUL:
                 self.enchant_dict = enchant.Dict(self.name)
-            elif IMPORT_HUNSPELL_SUCCESSFUL and dic_path:
-                aff_path = dic_path.replace('.dic', '.aff')
-                self.pyhunspell_object = hunspell.HunSpell(dic_path, aff_path)
+            elif IMPORT_HUNSPELL_SUCCESSFUL and self.dic_path:
+                aff_path = self.dic_path.replace('.dic', '.aff')
+                self.pyhunspell_object = hunspell.HunSpell(self.dic_path, aff_path)
 
 class Hunspell:
     '''A class to suggest completions or corrections
@@ -330,9 +331,9 @@ class Hunspell:
                     # hunspell dictionary is missing.  With the
                     # appropriate input method added, emoji can be
                     # matched nevertheless.
-                    dic_path = os.path.join(dictionary.loc, dictionary.name+'.dic')
                     suggested_words.update([
-                        ('☹ %(dic_path)s not found. ' %{'dic_path': dic_path}
+                        ('☹ %(name)s dictionary not found. '
+                         %{'name': dictionary.name}
                          + 'Please install hunspell dictionary!',
                          0)])
         for word in suggested_words:
