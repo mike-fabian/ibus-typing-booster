@@ -168,7 +168,7 @@ VALID_CHARACTERS = {
     '﷽', # ARABIC LIGATURE BISMILLAH AR-RAHMAN AR-RAHEEM
 }
 
-SKIN_TONE_MODIFIERS  = ('🏻', '🏼', '🏽', '🏾', '🏿')
+SKIN_TONE_MODIFIERS = ('🏻', '🏼', '🏽', '🏾', '🏿')
 
 def is_invisible(text):
     '''Checks whether a text is invisible
@@ -1292,7 +1292,7 @@ class EmojiMatcher():
         self._candidate_cache[(query_string, match_limit)] = sorted_candidates
         return sorted_candidates
 
-    def names(self,emoji_string, language=''):
+    def names(self, emoji_string, language=''):
         '''Find the names of an emoji
 
         Returns a list of names of the emoji in the language requested
@@ -1403,7 +1403,7 @@ class EmojiMatcher():
         else:
             return ''
 
-    def keywords(self,emoji_string, language=''):
+    def keywords(self, emoji_string, language=''):
         '''Return the keywords of an emoji
 
         Returns a list of keywords of the emoji in the language requested
@@ -1441,7 +1441,7 @@ class EmojiMatcher():
                 return self._emoji_dict[(emoji_string, language)]['keywords']
         return []
 
-    def categories(self,emoji_string, language=''):
+    def categories(self, emoji_string, language=''):
         '''Return the categories of an emoji
 
         Returns a list of categories of the emoji in the language requested
