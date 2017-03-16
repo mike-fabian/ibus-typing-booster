@@ -1709,12 +1709,14 @@ class EmojiMatcher():
         >>> matcher.skin_tone_modifier_supported('👩🏻')
         True
 
+        >>> matcher.skin_tone_modifier_supported('👮‍♀')
+        True
+
         >>> matcher.skin_tone_modifier_supported('😀')
         False
 
-        # actually this is not allowed, this test is too simple:
         >>> matcher.skin_tone_modifier_supported('😀🏻')
-        True
+        False
 
         >>> matcher.skin_tone_modifier_supported('')
         False
@@ -1724,10 +1726,16 @@ class EmojiMatcher():
         '''
         if not emoji_string or emoji_string in SKIN_TONE_MODIFIERS:
             return False
-        if (emoji_string[-1] in SKIN_TONE_MODIFIERS
+        if ((emoji_string[-1] in SKIN_TONE_MODIFIERS
+             and (emoji_string, 'en') in self._emoji_dict)
                 or
-                (emoji_string + SKIN_TONE_MODIFIERS[0], 'en')
-                in self._emoji_dict):
+                ((emoji_string + SKIN_TONE_MODIFIERS[0], 'en')
+                 in self._emoji_dict)):
+            return True
+        if (len(emoji_string) >= 3
+                and emoji_string[-2] == chr(0x200d)
+                and emoji_string[-1] in ('♀', '♂')
+                and self.skin_tone_modifier_supported(emoji_string[:-2])):
             return True
         return False
 
