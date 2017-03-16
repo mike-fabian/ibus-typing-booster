@@ -16,6 +16,18 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.27" date="2017-03-17" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (pl, uk updated)
+          </li>
+          <li>
+            emoji-picker: make skin tone selection work for gendered emoji
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.26" date="2017-03-16" urgency="medium">
       <description>
         <ul>
