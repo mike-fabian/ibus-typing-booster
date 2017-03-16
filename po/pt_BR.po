@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2017-03-10 22:55+0100\n"
+"POT-Creation-Date: 2017-03-16 11:49+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -31,52 +31,52 @@ msgstr "Sobre"
 msgid "Quit"
 msgstr ""
 
-#: engine/emoji_picker.py:349
+#: engine/emoji_picker.py:353
 msgid "Recently used"
 msgstr ""
 
-#: engine/emoji_picker.py:371
+#: engine/emoji_picker.py:501
 msgid "Categories"
 msgstr ""
 
-#: engine/emoji_picker.py:372
+#: engine/emoji_picker.py:502
 msgid "Unicode categories"
 msgstr ""
 
-#: engine/emoji_picker.py:373
+#: engine/emoji_picker.py:503
 msgid "Keywords"
 msgstr ""
 
-#: engine/emoji_picker.py:537 engine/emoji_picker.py:1527
+#: engine/emoji_picker.py:560 engine/emoji_picker.py:1660
 msgid "Left click to copy"
 msgstr ""
 
-#: engine/emoji_picker.py:539
-msgid "Middle click for skin tones"
+#: engine/emoji_picker.py:562
+msgid "Long press or middle click for skin tones"
 msgstr ""
 
-#: engine/emoji_picker.py:540
+#: engine/emoji_picker.py:563
 msgid "Right click for info"
 msgstr ""
 
 #. Translators: put your names here, one name per line.
-#: engine/emoji_picker.py:978
+#: engine/emoji_picker.py:1029
 msgid "translator-credits"
 msgstr ""
 
-#: engine/emoji_picker.py:1022
+#: engine/emoji_picker.py:1073
 msgid "Search Results"
 msgstr ""
 
-#: engine/emoji_picker.py:1250 engine/emoji_picker.py:1363
+#: engine/emoji_picker.py:1335 engine/emoji_picker.py:1456
 msgid "Copied to clipboard!"
 msgstr ""
 
-#: engine/emoji_picker.py:1599
+#: engine/emoji_picker.py:1752
 msgid "Lookup on emojipedia"
 msgstr ""
 
-#: engine/emoji_picker.py:1756
+#: engine/emoji_picker.py:1953
 msgid "Set Font"
 msgstr ""
 
@@ -509,6 +509,6 @@ msgid ""
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
 
-#: typing-booster.appdata.xml:904
+#: typing-booster.appdata.xml:938
 msgid "Mike FABIAN"
 msgstr ""
