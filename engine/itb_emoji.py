@@ -1709,7 +1709,7 @@ class EmojiMatcher():
         >>> matcher.skin_tone_modifier_supported('👩🏻')
         True
 
-        >>> matcher.skin_tone_modifier_supported('👮‍♀')
+        >>> matcher.skin_tone_modifier_supported('👮\u200d♀')
         True
 
         >>> matcher.skin_tone_modifier_supported('😀')
@@ -1724,20 +1724,70 @@ class EmojiMatcher():
         >>> matcher.skin_tone_modifier_supported('🏻')
         False
         '''
-        if not emoji_string or emoji_string in SKIN_TONE_MODIFIERS:
-            return False
-        if ((emoji_string[-1] in SKIN_TONE_MODIFIERS
-             and (emoji_string, 'en') in self._emoji_dict)
-                or
-                ((emoji_string + SKIN_TONE_MODIFIERS[0], 'en')
-                 in self._emoji_dict)):
+        if len(self.skin_tone_variants(emoji_string)) > 1:
             return True
+        else:
+            return False
+
+    def skin_tone_variants(self, emoji_string):
+        '''
+        Returns a list of skin tone variants for the given emoji
+
+        If the given emoji does not support skin tones, a list
+        containing only the original emoji is returned.
+
+        :param emoji_string: The emoji to check
+        :type emoji_string: String
+        :rtype: List of strings
+
+        Examples:
+
+        >>> matcher = EmojiMatcher(languages = ['en'])
+        >>> matcher.skin_tone_variants('👩')
+        ['👩', '👩🏻', '👩🏼', '👩🏽', '👩🏾', '👩🏿']
+
+        >>> matcher.skin_tone_variants('👩🏻')
+        ['👩', '👩🏻', '👩🏼', '👩🏽', '👩🏾', '👩🏿']
+
+        >>> matcher.skin_tone_variants('👮\u200d♀')
+        ['👮\u200d♀', '👮🏻\u200d♀', '👮🏼\u200d♀', '👮🏽\u200d♀', '👮🏾\u200d♀', '👮🏿\u200d♀']
+
+        >>> matcher.skin_tone_variants('😀')
+        ['😀']
+
+        >>> matcher.skin_tone_variants('😀🏿')
+        ['😀🏿']
+
+        >>> matcher.skin_tone_variants('')
+        ['']
+
+        >>> matcher.skin_tone_variants('🏿')
+        ['🏿']
+        '''
+        if not emoji_string or emoji_string in SKIN_TONE_MODIFIERS:
+            return [emoji_string]
+        if (emoji_string + SKIN_TONE_MODIFIERS[0], 'en') in self._emoji_dict:
+            return [
+                emoji_string + tone
+                for tone in ('',) + SKIN_TONE_MODIFIERS]
+        if ((emoji_string[-1] in SKIN_TONE_MODIFIERS)
+            and ((emoji_string, 'en') in self._emoji_dict)):
+            return [
+                emoji_string[:-1] + tone
+                for tone in ('',) + SKIN_TONE_MODIFIERS]
         if (len(emoji_string) >= 3
                 and emoji_string[-2] == chr(0x200d)
-                and emoji_string[-1] in ('♀', '♂')
-                and self.skin_tone_modifier_supported(emoji_string[:-2])):
-            return True
-        return False
+                and emoji_string[-1] in ('♀', '♂')):
+            base_emoji_string = emoji_string[:-2]
+            for modifier in SKIN_TONE_MODIFIERS:
+                base_emoji_string = base_emoji_string.replace(modifier, '')
+            if ((base_emoji_string + SKIN_TONE_MODIFIERS[0], 'en')
+                in self._emoji_dict):
+                return [
+                    base_emoji_string + tone + emoji_string[-2:]
+                    for tone in ('',) + SKIN_TONE_MODIFIERS]
+        return [emoji_string]
+
 
     def debug_loading_data(self):
         '''To debug whether the data has been loaded correctly'''
