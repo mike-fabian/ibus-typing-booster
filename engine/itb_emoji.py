@@ -1840,11 +1840,14 @@ class EmojiMatcher():
         #
         # “1F9D1..1F9DD  ; Emoji_Modifier_Base  #10.0 [13] (🧑..🧝)    adult..elf”
         >>> matcher.skin_tone_variants('🧘\u200d♀\ufe0f')
-        ['\U0001f9d8\u200d♀']
+        ['\U0001f9d8\u200d♀', '\U0001f9d8🏻\u200d♀', '\U0001f9d8🏼\u200d♀', '\U0001f9d8🏽\u200d♀', '\U0001f9d8🏾\u200d♀', '\U0001f9d8🏿\u200d♀']
         '''
         if not emoji_string or emoji_string in SKIN_TONE_MODIFIERS:
             return [emoji_string]
-        if (emoji_string + SKIN_TONE_MODIFIERS[0], 'en') in self._emoji_dict:
+        if (((emoji_string, 'en') in self._emoji_dict)
+            and ('properties' in self._emoji_dict[(emoji_string, 'en')])
+            and ('Emoji_Modifier_Base'
+                 in self._emoji_dict[(emoji_string, 'en')]['properties'])):
             return [
                 emoji_string + tone
                 for tone in ('',) + SKIN_TONE_MODIFIERS]
