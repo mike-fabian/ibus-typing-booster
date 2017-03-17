@@ -1531,8 +1531,8 @@ class EmojiMatcher():
         [('🐫', 'camello [🐫, camello, bactriano, jorobas, desierto]', 5), ('🐪', 'dromedario [desierto, camello]', 2), ('🏜', 'desierto [desierto]', 1), ('🐫', 'cammello [🐫, gobba, animale]', 3), ('🐪', 'dromedario [gobba, animale]', 2)]
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
-        >>> matcher.similar('€', match_limit = 10)
-        [('€', 'euro sign [€, Sc]', 2), ('؋', 'afghani sign [Sc]', 1), ('֏', 'armenian dram sign [Sc]', 1), ('₳', 'austral sign [Sc]', 1), ('৻', 'bengali ganda mark [Sc]', 1), ('৲', 'bengali rupee mark [Sc]', 1), ('৳', 'bengali rupee sign [Sc]', 1), ('₵', 'cedi sign [Sc]', 1), ('¢', 'cent sign [Sc]', 1), ('₡', 'colon sign [Sc]', 1)]
+        >>> matcher.similar('€', match_limit = 5)
+        [('€', 'euro sign [€, Sc]', 2), ('؋', 'afghani sign [Sc]', 1), ('֏', 'armenian dram sign [Sc]', 1), ('₳', 'austral sign [Sc]', 1), ('৻', 'bengali ganda mark [Sc]', 1)]
 
         >>> matcher.similar('🏄‍♂', match_limit = 2)
         [('🏄‍♂', 'hombre haciendo surf [🏄‍♂, hombre, surf, surfista]', 4), ('🏄‍♀', 'mujer haciendo surf [surf, surfista]', 2)]
