@@ -21,6 +21,7 @@
 extradata_DATA = \
 	emojione.json \
 	UnicodeData.txt \
+	emoji-data.txt \
 	af.xml \
 	am.xml \
 	ar.xml \

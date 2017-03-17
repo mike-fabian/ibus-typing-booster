@@ -387,6 +387,7 @@ class EmojiMatcher():
         # are the long names of emojione.
         if unicode_data:
             self._load_unicode_data()
+        self._load_unicode_emoji_data()
         self._load_emojione_data()
         if cldr_data:
             for language in expand_languages(self._languages):
@@ -466,6 +467,39 @@ class EmojiMatcher():
                         UNICODE_CATEGORIES[category]['minor'],
                     ]
                 )
+
+    def _load_unicode_emoji_data(self):
+        '''
+        Loads emoji property data from emoji-data.txt
+
+        http://unicode.org/Public/emoji/5.0/emoji-data.txt
+        '''
+        dirnames = (USER_DATADIR, DATADIR)
+        basenames = ('emoji-data.txt',)
+        (path, open_function) = _find_path_and_open_function(
+            dirnames, basenames)
+        if not path:
+            sys.stderr.write(
+                '_load_unicode_emoji_data(): could not find "%s" in "%s"\n'
+                %(basenames, dirnames))
+            return
+        with open_function(path, mode='rt') as unicode_emoji_data_file:
+            for line in unicode_emoji_data_file.readlines():
+                line = re.sub(r'#.*$', '', line).strip()
+                if not line:
+                    continue
+                codepoint_string, property = [
+                    x.strip() for x in line.split(';')[:2]]
+                codepoint_range = [
+                    int(x, 16) for x in codepoint_string.split('..')]
+                if len(codepoint_range) == 1:
+                    codepoint_range.append(codepoint_range[0])
+                assert len(codepoint_range) == 2
+                for codepoint in range(
+                        codepoint_range[0], codepoint_range[1] + 1):
+                    emoji_string = chr(codepoint)
+                    self._add_to_emoji_dict(
+                        (emoji_string, 'en'), 'properties', [property])
 
     def _load_emojione_data(self):
         '''
