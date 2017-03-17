@@ -1752,6 +1752,9 @@ class EmojiMatcher():
         >>> matcher.skin_tone_variants('👮\u200d♀')
         ['👮\u200d♀', '👮🏻\u200d♀', '👮🏼\u200d♀', '👮🏽\u200d♀', '👮🏾\u200d♀', '👮🏿\u200d♀']
 
+        >>> matcher.skin_tone_variants('👩\u200d🎓')
+        ['👩\u200d🎓', '👩🏻\u200d🎓', '👩🏼\u200d🎓', '👩🏽\u200d🎓', '👩🏾\u200d🎓', '👩🏿\u200d🎓']
+
         >>> matcher.skin_tone_variants('😀')
         ['😀']
 
@@ -1775,17 +1778,26 @@ class EmojiMatcher():
             return [
                 emoji_string[:-1] + tone
                 for tone in ('',) + SKIN_TONE_MODIFIERS]
-        if (len(emoji_string) >= 3
-                and emoji_string[-2] == chr(0x200d)
-                and emoji_string[-1] in ('♀', '♂')):
-            base_emoji_string = emoji_string[:-2]
+        emoji_parts = emoji_string.split('\u200d')
+        if len(emoji_parts) == 2:
+            emoji_parts[0] = emoji_parts[0].replace('\ufe0f', '')
+            emoji_parts[1] = emoji_parts[1].replace('\ufe0f', '')
             for modifier in SKIN_TONE_MODIFIERS:
-                base_emoji_string = base_emoji_string.replace(modifier, '')
-            if ((base_emoji_string + SKIN_TONE_MODIFIERS[0], 'en')
+                emoji_parts[0] = emoji_parts[0].replace(modifier, '')
+                emoji_parts[1] = emoji_parts[1].replace(modifier, '')
+            if ((emoji_parts[0] + SKIN_TONE_MODIFIERS[0], 'en')
                 in self._emoji_dict):
-                return [
-                    base_emoji_string + tone + emoji_string[-2:]
-                    for tone in ('',) + SKIN_TONE_MODIFIERS]
+                if ((emoji_parts[1] + SKIN_TONE_MODIFIERS[0], 'en')
+                    not in self._emoji_dict):
+                    return [
+                        emoji_parts[0] + tone + '\u200d' + emoji_parts[1]
+                        for tone in ('',) + SKIN_TONE_MODIFIERS]
+                else:
+                    return [
+                        emoji_parts[0] + tone0
+                        + '\u200d' + emoji_parts[1] + tone1
+                        for tone0 in ('',) + SKIN_TONE_MODIFIERS
+                        for tone1 in ('',) + SKIN_TONE_MODIFIERS]
         return [emoji_string]
 
 
