@@ -1666,8 +1666,24 @@ class EmojiPickerUI(Gtk.Window):
             skin_tone_popover_flowbox.insert(label, -1)
             for child in skin_tone_popover_flowbox.get_children():
                 child.set_can_focus(False)
-        skin_tone_popover_grid.add(skin_tone_popover_flowbox)
+        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window.set_hexpand(True)
+        scrolled_window.set_vexpand(True)
+        scrolled_window.set_capture_button_press(False)
+        scrolled_window.set_kinetic_scrolling(False)
+        scrolled_window.set_overlay_scrolling(True)
+        scrolled_window.add(skin_tone_popover_flowbox)
+        skin_tone_popover_grid.add(scrolled_window)
         self._skin_tone_popover.add(skin_tone_popover_grid)
+        skin_tone_popover_grid.show_all()
+        (dummy_minimum_width_flowbox, natural_width_flowbox) = (
+            skin_tone_popover_flowbox.get_preferred_width())
+        (dummy_minimim_height_flowbox, natural_height_flowbox) = (
+            skin_tone_popover_flowbox.get_preferred_height())
+        (window_width, window_height) = self.get_size()
+        scrolled_window.set_size_request(
+            min(0.6 * window_width, natural_width_flowbox),
+            min(0.6 * window_height, natural_height_flowbox))
         if GTK_VERSION >= (3, 22, 0):
             self._skin_tone_popover.popup()
         self._skin_tone_popover.show_all()
