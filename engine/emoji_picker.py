@@ -1768,7 +1768,8 @@ class EmojiPickerUI(Gtk.Window):
             label_description.set_line_wrap(True)
             label_description.set_markup(description)
             emoji_info_popover_listbox.insert(label_description, -1)
-        if self._emoji_matcher.emoji_order(emoji) < 0xFFFFFFFF:
+        if (self._emoji_matcher.emoji_order(emoji) < 0xFFFFFFFF
+            or self._emoji_matcher.properties(emoji)):
             linkbutton = Gtk.LinkButton.new_with_label(
                 _('Lookup on emojipedia'))
             linkbutton.set_uri(

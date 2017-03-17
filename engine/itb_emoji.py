@@ -1734,6 +1734,20 @@ class EmojiMatcher():
             return int(self._emoji_dict[(emoji_string, 'en')]['emoji_order'])
         return 0xFFFFFFFF
 
+    def properties(self, emoji_string):
+        '''
+        Returns the emoji properties of this emoji from the unicode.org data
+
+        :param emoji_string: An emoji
+        :type emoji_string: String
+        :rtype: List of strings
+        '''
+        if (((emoji_string, 'en') in self._emoji_dict)
+            and ('properties' in self._emoji_dict[(emoji_string, 'en')])):
+            return self._emoji_dict[(emoji_string, 'en')]['properties']
+        else:
+            return []
+
     def skin_tone_modifier_supported(self, emoji_string):
         '''Checks whether skin tone modifiers are possible for this emoji
 
