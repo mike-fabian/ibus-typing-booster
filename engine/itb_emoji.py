@@ -486,6 +486,19 @@ class EmojiMatcher():
             return
         with open_function(path, mode='rt') as emoji_one_file:
             emojione = json.load(emoji_one_file)
+        # Hack for testing, family_wg is not yet in emojione, add it here:
+        if 'family_wg' not in emojione:
+            emojione['family_wg'] = {
+                'unicode': '1f469-1f467',
+                'unicode_alt': '1f469-200d-1f467',
+                'name': 'family (woman,girl)',
+                'shortname': 'family_wg',
+                'category': 'people',
+                'emoji_order': '1050',
+                'aliases': [],
+                'aliases_ascii': [],
+                'keywords': ['people', 'family', 'baby'],
+                }
         for dummy_emojione_key, emojione_value in emojione.items():
             codepoints = emojione_value['unicode']
             # ZWJ emojis are in the 'unicode_alt' field:
@@ -1766,6 +1779,34 @@ class EmojiMatcher():
 
         >>> matcher.skin_tone_variants('🏿')
         ['🏿']
+
+        # Family: woman, girl
+        # See: http://unicode.org/Public/emoji/5.0/emoji-zwj-sequences.txt
+        # which contains the line:
+        #
+        # 1F469 200D 1F467; Emoji_ZWJ_Sequence; family: woman, girl # 6.0  [1] (👩‍👧)
+        >>> len(matcher.skin_tone_variants('👩\u200d👧'))
+        36
+
+        >>> len(matcher.skin_tone_variants('👩🏼\u200d👧🏿'))
+        36
+
+        >>> matcher.skin_tone_variants('👩🏼\u200d👧🏿') == matcher.skin_tone_variants('👩\u200d👧')
+        True
+
+        >>> matcher.skin_tone_variants('👩\u200d👧')
+        ['👩\u200d👧', '👩\u200d👧🏻', '👩\u200d👧🏼', '👩\u200d👧🏽', '👩\u200d👧🏾', '👩\u200d👧🏿', '👩🏻\u200d👧', '👩🏻\u200d👧🏻', '👩🏻\u200d👧🏼', '👩🏻\u200d👧🏽', '👩🏻\u200d👧🏾', '👩🏻\u200d👧🏿', '👩🏼\u200d👧', '👩🏼\u200d👧🏻', '👩🏼\u200d👧🏼', '👩🏼\u200d👧🏽', '👩🏼\u200d👧🏾', '👩🏼\u200d👧🏿', '👩🏽\u200d👧', '👩🏽\u200d👧🏻', '👩🏽\u200d👧🏼', '👩🏽\u200d👧🏽', '👩🏽\u200d👧🏾', '👩🏽\u200d👧🏿', '👩🏾\u200d👧', '👩🏾\u200d👧🏻', '👩🏾\u200d👧🏼', '👩🏾\u200d👧🏽', '👩🏾\u200d👧🏾', '👩🏾\u200d👧🏿', '👩🏿\u200d👧', '👩🏿\u200d👧🏻', '👩🏿\u200d👧🏼', '👩🏿\u200d👧🏽', '👩🏿\u200d👧🏾', '👩🏿\u200d👧🏿']
+
+        >>> len(matcher.skin_tone_variants('👨\u200d👩\u200d👧\u200d👦'))
+        1296
+
+        # Woman in lotus position
+        # Does support skin tone in http://unicode.org/Public/emoji/5.0/emoji-data.txt
+        # which contains the line:
+        #
+        # “1F9D1..1F9DD  ; Emoji_Modifier_Base  #10.0 [13] (🧑..🧝)    adult..elf”
+        >>> matcher.skin_tone_variants('🧘\u200d♀\ufe0f')
+        ['\U0001f9d8\u200d♀']
         '''
         if not emoji_string or emoji_string in SKIN_TONE_MODIFIERS:
             return [emoji_string]
@@ -1779,25 +1820,45 @@ class EmojiMatcher():
                 emoji_string[:-1] + tone
                 for tone in ('',) + SKIN_TONE_MODIFIERS]
         emoji_parts = emoji_string.split('\u200d')
-        if len(emoji_parts) == 2:
-            emoji_parts[0] = emoji_parts[0].replace('\ufe0f', '')
-            emoji_parts[1] = emoji_parts[1].replace('\ufe0f', '')
+        if len(emoji_parts) >= 2 and len(emoji_parts) <= 4:
+            for i, emoji_part in enumerate(emoji_parts):
+                emoji_parts[i] = emoji_part.replace('\ufe0f', '')
             for modifier in SKIN_TONE_MODIFIERS:
-                emoji_parts[0] = emoji_parts[0].replace(modifier, '')
-                emoji_parts[1] = emoji_parts[1].replace(modifier, '')
-            if ((emoji_parts[0] + SKIN_TONE_MODIFIERS[0], 'en')
-                in self._emoji_dict):
-                if ((emoji_parts[1] + SKIN_TONE_MODIFIERS[0], 'en')
-                    not in self._emoji_dict):
-                    return [
-                        emoji_parts[0] + tone + '\u200d' + emoji_parts[1]
-                        for tone in ('',) + SKIN_TONE_MODIFIERS]
-                else:
-                    return [
-                        emoji_parts[0] + tone0
-                        + '\u200d' + emoji_parts[1] + tone1
-                        for tone0 in ('',) + SKIN_TONE_MODIFIERS
-                        for tone1 in ('',) + SKIN_TONE_MODIFIERS]
+                for i, emoji_part in enumerate(emoji_parts):
+                    emoji_parts[i] = emoji_part.replace(modifier, '')
+            skin_tone_variants = []
+            if len(emoji_parts) == 2:
+                for variant0 in self.skin_tone_variants(emoji_parts[0]):
+                    for variant1 in self.skin_tone_variants(emoji_parts[1]):
+                        skin_tone_variants.append(
+                            variant0
+                            + '\u200d'
+                            + variant1)
+            if len(emoji_parts) == 3:
+                for variant0 in self.skin_tone_variants(emoji_parts[0]):
+                    for variant1 in self.skin_tone_variants(emoji_parts[1]):
+                        for variant2 in self.skin_tone_variants(emoji_parts[2]):
+                            skin_tone_variants.append(
+                                variant0
+                                + '\u200d'
+                                + variant1
+                                + '\u200d'
+                                + variant2)
+            if len(emoji_parts) == 4:
+                for variant0 in self.skin_tone_variants(emoji_parts[0]):
+                    for variant1 in self.skin_tone_variants(emoji_parts[1]):
+                        for variant2 in self.skin_tone_variants(emoji_parts[2]):
+                            for variant3 in self.skin_tone_variants(emoji_parts[3]):
+                                skin_tone_variants.append(
+                                    variant0
+                                    + '\u200d'
+                                    + variant1
+                                    + '\u200d'
+                                    + variant2
+                                    + '\u200d'
+                                    + variant3)
+            if skin_tone_variants:
+                return skin_tone_variants
         return [emoji_string]
 
 

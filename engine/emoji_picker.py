@@ -1664,8 +1664,8 @@ class EmojiPickerUI(Gtk.Window):
             label.set_margin_bottom(margin)
             label.set_tooltip_text(_('Left click to copy'))
             skin_tone_popover_flowbox.insert(label, -1)
-            for child in skin_tone_popover_flowbox.get_children():
-                child.set_can_focus(False)
+        for child in skin_tone_popover_flowbox.get_children():
+            child.set_can_focus(False)
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_hexpand(True)
         scrolled_window.set_vexpand(True)
