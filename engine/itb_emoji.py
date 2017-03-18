@@ -1280,19 +1280,16 @@ class EmojiMatcher():
 
         >>> mq = EmojiMatcher(languages = ['fr_FR'])
         >>> mq.candidates('2019')
-        [('’', 'U+2019 RIGHT SINGLE QUOTATION MARK', 200)]
+        [('’', 'U+2019 right single quotation mark', 200)]
 
         >>> mq.candidates('41')
-        [('A', 'U+41 LATIN CAPITAL LETTER A', 200)]
+        [('A', 'U+41 latin capital letter a', 200)]
 
         >>> mq.candidates('2a')
-        [('*', 'U+2A ASTERISK', 200)]
-
-        This does not work because unicodedata.name(char) fails
-        if for control characters:
+        [('*', 'U+2A asterisk', 200)]
 
         >>> mq.candidates('1b')
-        []
+        [('\\x1b', 'U+1B', 200)]
 
         >>> mq.candidates('')
         []
@@ -1385,10 +1382,18 @@ class EmojiMatcher():
             codepoint = int(query_string, 16)
             if codepoint >= 0x0 and codepoint <= 0x1FFFFF:
                 char = chr(codepoint)
+                name = self.name(char)
+                if not name:
+                    try:
+                        name = unicodedata.name(char).lower()
+                    except (ValueError,):
+                        pass
+                if name:
+                    name = ' ' + name
                 candidates.append(
                     (char,
                      'U+' + query_string.upper()
-                     + ' ' + unicodedata.name(char),
+                     + name,
                      good_match_score))
         except (ValueError,):
             pass
