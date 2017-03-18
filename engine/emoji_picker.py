@@ -545,6 +545,10 @@ class EmojiPickerUI(Gtk.Window):
                 description_empty = False
             if not description_empty:
                 descriptions.append(description)
+        if _ARGS.debug:
+            descriptions.append(
+                'Emoji properties from unicode.org:' + '\n'
+                + ', '.join(self._emoji_matcher.properties(emoji)))
         return descriptions
 
     def _emoji_label_set_tooltip( # pylint: disable=no-self-use
