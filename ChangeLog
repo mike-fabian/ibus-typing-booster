@@ -1,4 +1,19 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 18 Mar 2017 Released 1.5.28 version
+* Allow query by code point even if Python’s unicodedata.name() does not know the character
+* Also read names from emoji-sequences.txt and emoji-zwj-sequences.txt
+* itb_emoji.py: Also read emoji-sequences.txt (from unicode.org)
+* Fix positioning of info popover (fix a typo in an “if” statement)
+* Show emoji properties from unicode.org when debugging is on
+* itb_emoji.py: Also read emoji-zwj-sequences.txt (from unicode.org)
+* Also use the emoji properties from unicode.org to decide whether to offer a lookup on emojipedia
+* Use property “Emoji_Modifier_Base” from emoji-data.txt to check whether an emoji supports skin tones
+* itb_emoji.py: Also read emoji-data.txt (from unicode.org)
+* Tentative skin tone support for families
+* Improve skin tone support: make it work for professions (roles) as well
+* Make skin tone popover scrollable and limit its maximum size
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 17 Mar 2017 Released 1.5.27 version
 * Update translations from zanata (pl, uk updated)
 * emoji-picker: make skin tone selection work for gendered emoji

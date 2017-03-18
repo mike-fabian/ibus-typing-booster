@@ -16,6 +16,56 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.28" date="2017-03-18" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Allow query by code point even if Python’s
+            unicodedata.name() does not know the character
+          </li>
+          <li>
+            Also read names from emoji-sequences.txt and
+            emoji-zwj-sequences.txt
+          </li>
+          <li>
+            itb_emoji.py: Also read emoji-sequences.txt (from unicode.org)
+          </li>
+          <li>
+            Fix positioning of info popover (fix a typo in an “if”
+            statement)
+          </li>
+          <li>
+            Show emoji properties from unicode.org when debugging is on
+          </li>
+          <li>
+            itb_emoji.py: Also read emoji-zwj-sequences.txt (from
+            unicode.org)
+          </li>
+          <li>
+            Also use the emoji properties from unicode.org to decide
+            whether to offer a lookup on emojipedia
+          </li>
+          <li>
+            Use property “Emoji_Modifier_Base” from emoji-data.txt to
+            check whether an emoji supports skin tones
+          </li>
+          <li>
+            itb_emoji.py: Also read emoji-data.txt (from unicode.org)
+          </li>
+          <li>
+            Tentative skin tone support for families
+          </li>
+          <li>
+            Improve skin tone support: make it work for professions
+            (roles) as well
+          </li>
+          <li>
+            Make skin tone popover scrollable and limit its maximum
+            size
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.27" date="2017-03-17" urgency="medium">
       <description>
         <ul>
