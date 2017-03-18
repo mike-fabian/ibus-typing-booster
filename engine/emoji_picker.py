@@ -116,6 +116,19 @@ def parse_args():
               + 'Slows the search down and is usually not needed. '
               + 'default: %(default)s'))
     parser.add_argument(
+        '--use_vs16',
+        action='store_true',
+        default=False,
+        help=('Use the emoji variation selector '
+              + '(U+FE0F VARIATION SELECTOR-16) '
+              + 'in emoji sequences following the recommendations '
+              + 'of unicode.org. Although doing this is '
+              + '“strongly recommended for keyboards” by unicode.org '
+              + 'for “good fallback behavior on older systems” '
+              + 'it seems to have only disadvantages with the currently '
+              + 'available fonts. '
+              + 'default: %(default)s'))
+    parser.add_argument(
         '-d', '--debug',
         action='store_true',
         default=False,
@@ -133,6 +146,7 @@ class EmojiPickerUI(Gtk.Window):
                  languages=('en_US',),
                  modal=False,
                  unicode_data_all=False,
+                 use_variation_selector_16=False,
                  font=None,
                  fontsize=None):
         Gtk.Window.__init__(self, title='🚀 ' + _('Emoji Picker'))
@@ -197,7 +211,8 @@ class EmojiPickerUI(Gtk.Window):
         self._languages = languages
         self._emoji_matcher = itb_emoji.EmojiMatcher(
             languages=self._languages,
-            unicode_data_all=unicode_data_all)
+            unicode_data_all=unicode_data_all,
+            use_variation_selector_16=use_variation_selector_16)
         self._gettext_translations = {}
         for language in itb_emoji.expand_languages(self._languages):
             mo_file = gettext.find(DOMAINNAME, languages=[language])
@@ -2048,5 +2063,6 @@ if __name__ == '__main__':
         font=_ARGS.font,
         fontsize=_ARGS.fontsize,
         modal=_ARGS.modal,
-        unicode_data_all=_ARGS.all)
+        unicode_data_all=_ARGS.all,
+        use_variation_selector_16=_ARGS.use_vs16)
     Gtk.main()

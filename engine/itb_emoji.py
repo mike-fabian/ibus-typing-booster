@@ -309,6 +309,7 @@ class EmojiMatcher():
     def __init__(self, languages=('en_US',),
                  unicode_data=True, unicode_data_all=False,
                  cldr_data=True, quick=True,
+                 use_variation_selector_16=False,
                  romaji=False):
         '''
         Initialize the emoji matcher
@@ -354,6 +355,7 @@ class EmojiMatcher():
                 self._gettext_translations[language] = None
         self._unicode_data_all = unicode_data_all
         self._quick = quick
+        self._use_variation_selector_16 = use_variation_selector_16
         self._romaji = romaji
         self._enchant_dicts = []
         if IMPORT_ENCHANT_SUCCESSFUL:
@@ -421,8 +423,101 @@ class EmojiMatcher():
         # more inconvenient:
         return list(self._languages)
 
+    def _variation_selector_16_normalize(
+            self, emoji_string, use_variation_selector_16=False):
+        '''Removes or adds emoji presentation selectors (U+FE0F VARIATION
+        SELECTOR-16)
+
+        Returns the possibly changed sequence.
+
+        Single characters are always returned unchanged, only
+        sequences are affected.
+
+        See:
+
+        http://unicode.org/reports/tr51/#def_fully_qualified_emoji_zwj_sequence
+        http://unicode.org/reports/tr51/#def_non_fully_qualified_emoji_zwj_sequence
+
+        :param emoji_string: The emoji sequence to change.
+        :type emoji_string: String
+        :param use_variation_selector_16: If False, remove all VS16 characters
+                                          If True, make it a fully qualified
+                                          sequene using VS16 characters a needed.
+        :type use_variation_selector_16: Boolean
+        :rtype: String
+
+        Examples:
+
+        >>> matcher = EmojiMatcher()
+
+        If use_variation_selector_16=False, all variation selectors
+        are removed from a sequence, no matter whether the sequence
+        was correct or not:
+
+        >>> matcher._variation_selector_16_normalize('⛹\ufe0f\u200d♀\ufe0f', use_variation_selector_16=False)
+        '⛹\u200d♀'
+
+        >>> matcher._variation_selector_16_normalize('⛹🏿\u200d♀\ufe0f', use_variation_selector_16=False)
+        '⛹🏿\u200d♀'
+
+        >>> matcher._variation_selector_16_normalize('#\ufe0f⃣', use_variation_selector_16=False)
+        '#⃣'
+
+        >>> matcher._variation_selector_16_normalize('#⃣\ufe0f', use_variation_selector_16=False)
+        '#⃣'
+
+        If use_variation_selector_16=True, variation selectors are added to
+        sequences as needed and incorrect sequences are repaired:
+
+        >>> matcher._variation_selector_16_normalize('⛹🏿\ufe0f\u200d♀\ufe0f', use_variation_selector_16=True)
+        '⛹🏿\u200d♀\ufe0f'
+
+        >>> matcher._variation_selector_16_normalize('⛹\ufe0f🏿\u200d♀\ufe0f', use_variation_selector_16=True)
+        '⛹🏿\u200d♀\ufe0f'
+
+        >>> matcher._variation_selector_16_normalize('⛹\u200d\ufe0f♀', use_variation_selector_16=True)
+        '⛹\ufe0f\u200d♀\ufe0f'
+
+        >>> matcher._variation_selector_16_normalize('#⃣\ufe0f', use_variation_selector_16=True)
+        '#\ufe0f⃣'
+
+        >>> matcher._variation_selector_16_normalize('⛹\ufe0f♀', use_variation_selector_16=True)
+        '⛹\ufe0f♀\ufe0f'
+
+        Single characters are returned unchanged:
+
+        >>> matcher._variation_selector_16_normalize('⛹', use_variation_selector_16=False)
+        '⛹'
+
+        '''
+        if len(emoji_string) <= 1:
+            # Not a sequence at all, do not touch it:
+            return emoji_string
+        emoji_string = emoji_string.replace('\ufe0f', '')
+        if not use_variation_selector_16:
+            return emoji_string
+        else:
+            retval = ''
+            length = len(emoji_string)
+            for index, character in enumerate(emoji_string):
+                retval += character
+                if ((character not in SKIN_TONE_MODIFIERS)
+                    and ('Emoji' in self.properties(character))
+                    and ('Emoji_Presentation'
+                         not in self.properties(character))
+                    and not (index < length - 1
+                             and
+                             emoji_string[index + 1]
+                             in SKIN_TONE_MODIFIERS)):
+                    retval += '\ufe0f'
+            return retval
+
     def _add_to_emoji_dict(self, emoji_dict_key, values_key, values):
         '''Adds data to the emoji_dict if not already there'''
+        emoji_dict_key = (
+            self._variation_selector_16_normalize(
+                emoji_dict_key[0], self._use_variation_selector_16),
+            emoji_dict_key[1])
         if emoji_dict_key not in self._emoji_dict:
             self._emoji_dict[emoji_dict_key] = {values_key : values}
         else:
