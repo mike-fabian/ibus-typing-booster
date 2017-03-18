@@ -523,14 +523,16 @@ class EmojiMatcher():
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
-                codepoints, property = [
-                    x.strip() for x in line.split(';')[:2]]
+                codepoints, property, name = [
+                    x.strip() for x in line.split(';')[:3]]
                 emoji_string = ''
                 for codepoint in codepoints.split(' '):
                     emoji_string += chr(int(codepoint, 16))
                 if emoji_string:
                     self._add_to_emoji_dict(
                         (emoji_string, 'en'), 'properties', [property])
+                    self._add_to_emoji_dict(
+                        (emoji_string, 'en'), 'names', [name.lower()])
 
     def _load_unicode_emoji_zwj_sequences(self):
         '''
@@ -552,14 +554,16 @@ class EmojiMatcher():
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
-                codepoints, property = [
-                    x.strip() for x in line.split(';')[:2]]
+                codepoints, property, name = [
+                    x.strip() for x in line.split(';')[:3]]
                 emoji_string = ''
                 for codepoint in codepoints.split(' '):
                     emoji_string += chr(int(codepoint, 16))
                 if emoji_string:
                     self._add_to_emoji_dict(
                         (emoji_string, 'en'), 'properties', [property])
+                    self._add_to_emoji_dict(
+                        (emoji_string, 'en'), 'names', [name.lower()])
 
     def _load_emojione_data(self):
         '''
@@ -1049,13 +1053,13 @@ class EmojiMatcher():
         ('🏭', 'factory')
 
         >>> mq.candidates('man tone5')[0][:2]
-        ('👨🏿', 'man tone 5 “man tone5”')
+        ('👨🏿', 'man: dark skin tone “man tone5”')
 
         >>> mq.candidates('mantone5')[0][:2]
-        ('👨🏿', 'man tone 5')
+        ('👨🏿', 'man: dark skin tone')
 
         >>> mq.candidates('tone')[0][:2]
-        ('👎🏻', 'thumbs down sign tone 1 “thumbdown tone1”')
+        ('👎🏿', 'thumbs down: dark skin tone “thumbdown tone5”')
 
         >>> mq.candidates('tone1')[0][:2]
         ('🏻', 'emoji modifier fitzpatrick type-1-2 “light skin tone”')
@@ -1085,37 +1089,37 @@ class EmojiMatcher():
         ('🇺🇸', 'united states')
 
         >>> mq.candidates('united')[0][:2]
-        ('🇺🇸', 'united states')
+        ('🇦🇪', 'united arab emirates “the united arab emirates”')
 
-        >>> mq.candidates('united minor')[0][:2]
-        ('🇺🇲', 'united states minor outlying islands')
+        >>> mq.candidates('united minor islands')[0][:2]
+        ('🇺🇲', 'u.s. outlying islands “united states minor outlying islands”')
 
         >>> mq.candidates('united arab')[0][:2]
-        ('🇦🇪', 'the united arab emirates')
+        ('🇦🇪', 'united arab emirates “the united arab emirates”')
 
         >>> mq.candidates('mm')[0][:2]
-        ('🇲🇲', 'myanmar “mm”')
+        ('🇲🇲', 'myanmar (burma) “mm”')
 
         >>> mq.candidates('flag mm')[0][:2]
-        ('🇲🇲', 'myanmar “mm” [flag]')
+        ('🇲🇲', 'myanmar (burma) “mm” [flag]')
 
         >>> mq.candidates('myanmar')[0][:2]
-        ('🇲🇲', 'myanmar')
+        ('🇲🇲', 'myanmar (burma)')
 
         >>> mq.candidates('sj')[0][:2]
-        ('🇸🇯', 'svalbard and jan mayen “sj”')
+        ('🇸🇯', 'svalbard & jan mayen “sj”')
 
         >>> mq.candidates('flag sj')[0][:2]
-        ('🇸🇯', 'svalbard and jan mayen “sj” [flag]')
+        ('🇸🇯', 'svalbard & jan mayen “sj” [flag]')
 
         >>> mq.candidates('svalbard')[0][:2]
-        ('🇸🇯', 'svalbard and jan mayen')
+        ('🇸🇯', 'svalbard & jan mayen “svalbard and jan mayen”')
 
         >>> mq.candidates('jan mayen')[0][:2]
-        ('🇸🇯', 'svalbard and jan mayen')
+        ('🇸🇯', 'svalbard & jan mayen “svalbard and jan mayen”')
 
         >>> mq.candidates('mayen')[0][:2]
-        ('🇸🇯', 'svalbard and jan mayen')
+        ('🇸🇯', 'svalbard & jan mayen “svalbard and jan mayen”')
 
         >>> mq.candidates(':-)')[0][:2]
         ('🙂', 'slightly smiling face “:-)”')
@@ -1136,16 +1140,16 @@ class EmojiMatcher():
         ('👦', 'boy')
 
         >>> mq.candidates('family man')[0][:2]
-        ('👨\u200d👨\u200d👦\u200d👦', 'family (man,man,boy,boy) “family mmbb”')
+        ('👨\u200d👨\u200d👦\u200d👦', 'family: man, man, boy, boy “family mmbb”')
 
         >>> mq.candidates('man man girl boy')[0][:2]
-        ('👨\u200d👨\u200d👧\u200d👦', 'family (man,man,girl,boy) “family man man girl boy”')
+        ('👨\u200d👨\u200d👧\u200d👦', 'family: man, man, girl, boy “family man man girl boy”')
 
         >>> mq.candidates('mmgb')[0][:2]
-        ('👨\u200d👨\u200d👧\u200d👦', 'family (man,man,girl,boy) “family mmgb”')
+        ('👨\u200d👨\u200d👧\u200d👦', 'family: man, man, girl, boy “family mmgb”')
 
         >>> mq.candidates('manmangirlboy')[0][:2]
-        ('👨\u200d👨\u200d👧\u200d👦', 'family (man,man,girl,boy)')
+        ('👨\u200d👨\u200d👧\u200d👦', 'family: man, man, girl, boy')
 
         >>> mq.candidates('bird')[0][:2]
         ('🐦', 'bird')
