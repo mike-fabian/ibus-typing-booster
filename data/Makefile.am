@@ -23,6 +23,7 @@ extradata_DATA = \
 	UnicodeData.txt \
 	emoji-data.txt \
 	emoji-zwj-sequences.txt \
+	emoji-sequences.txt \
 	af.xml \
 	am.xml \
 	ar.xml \

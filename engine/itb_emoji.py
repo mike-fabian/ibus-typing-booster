@@ -388,6 +388,7 @@ class EmojiMatcher():
         if unicode_data:
             self._load_unicode_data()
         self._load_unicode_emoji_data()
+        self._load_unicode_emoji_sequences()
         self._load_unicode_emoji_zwj_sequences()
         self._load_emojione_data()
         if cldr_data:
@@ -499,6 +500,35 @@ class EmojiMatcher():
                 for codepoint in range(
                         codepoint_range[0], codepoint_range[1] + 1):
                     emoji_string = chr(codepoint)
+                    self._add_to_emoji_dict(
+                        (emoji_string, 'en'), 'properties', [property])
+
+    def _load_unicode_emoji_sequences(self):
+        '''
+        Loads emoji property data from emoji-data.txt
+
+        http://unicode.org/Public/emoji/5.0/emoji-sequences.txt
+        '''
+        dirnames = (USER_DATADIR, DATADIR)
+        basenames = ('emoji-sequences.txt',)
+        (path, open_function) = _find_path_and_open_function(
+            dirnames, basenames)
+        if not path:
+            sys.stderr.write(
+                '_load_unicode_emoji_sequences(): could not find "%s" in "%s"\n'
+                %(basenames, dirnames))
+            return
+        with open_function(path, mode='rt') as unicode_emoji_sequences_file:
+            for line in unicode_emoji_sequences_file.readlines():
+                line = re.sub(r'#.*$', '', line).strip()
+                if not line:
+                    continue
+                codepoints, property = [
+                    x.strip() for x in line.split(';')[:2]]
+                emoji_string = ''
+                for codepoint in codepoints.split(' '):
+                    emoji_string += chr(int(codepoint, 16))
+                if emoji_string:
                     self._add_to_emoji_dict(
                         (emoji_string, 'en'), 'properties', [property])
 
