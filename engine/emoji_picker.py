@@ -1084,9 +1084,7 @@ class EmojiPickerUI(Gtk.Window):
         self._header_bar.set_subtitle(str(len(candidates)))
 
         if not candidates:
-            self._candidates_invalid = False
-            self._busy_stop()
-            return
+            candidates = [('∅', _('Search produced empty result.'), 1)]
 
         for candidate in candidates:
             # Do *not* do
