@@ -1858,10 +1858,7 @@ class EmojiMatcher():
         '''
         if not emoji_string or emoji_string in SKIN_TONE_MODIFIERS:
             return [emoji_string]
-        if (((emoji_string, 'en') in self._emoji_dict)
-            and ('properties' in self._emoji_dict[(emoji_string, 'en')])
-            and ('Emoji_Modifier_Base'
-                 in self._emoji_dict[(emoji_string, 'en')]['properties'])):
+        if 'Emoji_Modifier_Base' in self.properties(emoji_string):
             return [
                 emoji_string + tone
                 for tone in ('',) + SKIN_TONE_MODIFIERS]
