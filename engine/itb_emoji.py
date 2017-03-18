@@ -2119,14 +2119,38 @@ class EmojiMatcher():
         print('Possible bugs in emojione.json:')
         print('--------------------------------------------------')
         print('\n')
-        for emoji_key, emoji_value in self._emoji_dict.items():
+        for emoji_key, emoji_value in sorted(self._emoji_dict.items()):
             if emoji_key[1] == 'en':
-                if (emoji_key[0] + SKIN_TONE_MODIFIERS[0], 'en') in self._emoji_dict:
-                    if not 'Emoji_Modifier_Base' in self.properties(emoji_key[0]):
+                if ((emoji_key[0] + SKIN_TONE_MODIFIERS[0], 'en')
+                    in self._emoji_dict):
+                    if (not 'Emoji_Modifier_Base'
+                        in self.properties(emoji_key[0])):
                         print('emoji “%s” (U+%X) has skintones in emojione '
                               %(emoji_key[0], ord(emoji_key[0]))
                               + 'but not the Emoji_Modifier_Base '
                               + 'property in emoji-data.txt.')
+                if 'Emoji_Modifier_Base' in self.properties(emoji_key[0]):
+                    if (not 'emoji_order'
+                        in self._emoji_dict[
+                            (emoji_key[0] + SKIN_TONE_MODIFIERS[0], 'en')]):
+                        print('emoji “%s” (U+%X) '
+                              %(emoji_key[0], ord(emoji_key[0]))
+                              + 'has the property Emoji_Modifier_Base '
+                              + 'in emoji-data.txt but no skin tones '
+                              + 'in emojione.')
+                if 'Emoji_ZWJ_Sequence' in self.properties(emoji_key[0]):
+                    if ('emoji_order'
+                        not in self._emoji_dict[(emoji_key[0], 'en')]):
+                        print('ZWJ sequence “%s” '
+                              %emoji_key[0]
+                              + 'from unicode.org missing in emojione')
+                else:
+                    if (('emoji_order'
+                        in self._emoji_dict[(emoji_key[0], 'en')])
+                        and '\u200d' in emoji_key[0]):
+                        print('ZWJ sequence “%s” '
+                              %emoji_key[0]
+                              + 'in emojione but not in unicode.org')
 
 BENCHMARK = True
 
