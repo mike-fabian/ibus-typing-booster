@@ -2017,6 +2017,22 @@ class EmojiMatcher():
             [('😱', 'きょうふ [😱, さけび, sakebi, かお, kao, がーん, ga-n, しょっく, shokku]', 9), ('😨', 'あおざめ [がーん, ga-n, かお, kao]', 4), ('😮', 'あいたくち [かお, kao]', 2), ('👶', 'あかんぼう [かお, kao]', 2), ('😩', 'あきらめ [かお, kao]', 2)]
             '''
 
+    def list_emoji_one_bugs(self):
+        '''
+        '''
+        print('--------------------------------------------------')
+        print('Possible bugs in emojione.json:')
+        print('--------------------------------------------------')
+        print('\n')
+        for emoji_key, emoji_value in self._emoji_dict.items():
+            if emoji_key[1] == 'en':
+                if (emoji_key[0] + SKIN_TONE_MODIFIERS[0], 'en') in self._emoji_dict:
+                    if not 'Emoji_Modifier_Base' in self.properties(emoji_key[0]):
+                        print('emoji “%s” (U+%X) has skintones in emojione '
+                              %(emoji_key[0], ord(emoji_key[0]))
+                              + 'but not the Emoji_Modifier_Base '
+                              + 'property in emoji-data.txt.')
+
 BENCHMARK = True
 
 def main():
@@ -2040,6 +2056,7 @@ def main():
                        'ja_JP', 'zh_TW', 'zh_CN'],
             unicode_data=True, cldr_data=True)
         matcher.debug_loading_data()
+        matcher.list_emoji_one_bugs()
     else:
         import doctest
         # Set the domain name to something invalid to avoid using
