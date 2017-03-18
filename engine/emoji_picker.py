@@ -1721,7 +1721,7 @@ class EmojiPickerUI(Gtk.Window):
         self._emoji_info_popover.set_position(Gtk.PositionType.RIGHT)
         self._emoji_info_popover.set_vexpand(False)
         self._emoji_info_popover.set_hexpand(False)
-        if 'name':
+        if name:
             rectangle = Gdk.Rectangle()
             rectangle.x = 0
             rectangle.y = 0
