@@ -546,9 +546,6 @@ class EmojiPickerUI(Gtk.Window):
         descriptions = []
         descriptions.append(
             ' '.join(['U+%X' %ord(character) for character in emoji]))
-        if _ARGS.debug:
-            descriptions.append(
-                'emoji_order = %s' %self._emoji_matcher.emoji_order(emoji))
         for language in itb_emoji.expand_languages(self._languages):
             names = self._emoji_matcher.names(emoji, language=language)
             description = '<b>%s</b>' %language
@@ -571,6 +568,10 @@ class EmojiPickerUI(Gtk.Window):
             if not description_empty:
                 descriptions.append(description)
         if _ARGS.debug:
+            descriptions.append(
+                'emoji_order = %s' %self._emoji_matcher.emoji_order(emoji))
+            descriptions.append(
+                'cldr_order = %s' %self._emoji_matcher.cldr_order(emoji))
             descriptions.append(
                 'Emoji properties from unicode.org:' + '\n'
                 + ', '.join(self._emoji_matcher.properties(emoji)))
@@ -1795,7 +1796,7 @@ class EmojiPickerUI(Gtk.Window):
             label_description.set_line_wrap(True)
             label_description.set_markup(description)
             emoji_info_popover_listbox.insert(label_description, -1)
-        if (self._emoji_matcher.emoji_order(emoji) < 0xFFFFFFFF
+        if (self._emoji_matcher.cldr_order(emoji) < 0xFFFFFFFF
             or self._emoji_matcher.properties(emoji)):
             linkbutton = Gtk.LinkButton.new_with_label(
                 _('Lookup on emojipedia'))

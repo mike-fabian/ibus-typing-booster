@@ -24,6 +24,7 @@ extradata_DATA = \
 	emoji-data.txt \
 	emoji-zwj-sequences.txt \
 	emoji-sequences.txt \
+	emoji-test.txt \
 	af.xml \
 	am.xml \
 	ar.xml \

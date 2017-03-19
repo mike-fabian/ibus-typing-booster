@@ -392,6 +392,7 @@ class EmojiMatcher():
         self._load_unicode_emoji_data()
         self._load_unicode_emoji_sequences()
         self._load_unicode_emoji_zwj_sequences()
+        self._load_unicode_emoji_test()
         self._load_emojione_data()
         if cldr_data:
             for language in expand_languages(self._languages):
@@ -521,7 +522,8 @@ class EmojiMatcher():
         if emoji_dict_key not in self._emoji_dict:
             self._emoji_dict[emoji_dict_key] = {values_key : values}
         else:
-            if values_key not in self._emoji_dict[emoji_dict_key]:
+            if (values_key not in self._emoji_dict[emoji_dict_key]
+                    or type(values) is str):
                 self._emoji_dict[emoji_dict_key][values_key] = values
             else:
                 for value in values:
@@ -662,6 +664,79 @@ class EmojiMatcher():
                     self._add_to_emoji_dict(
                         (emoji_string, 'en'), 'names', [name.lower()])
 
+    def _load_unicode_emoji_test(self):
+        '''Loads emoji property data from emoji-test.txt
+
+        http://unicode.org/Public/emoji/4.0/emoji-test.txt
+
+        This is mostly for emoji sorting and for some categorization
+
+        Don’t use the 5.0 file until Emoji 5.0 is released and some
+        fonts support it, using the 5.0 file now results in lots of
+        ugly replacement characters when browsing the categories.
+
+        For the other files emoji-data.txt, emoji-zwj-sequences.txt,
+        and emoji-sequences.txt it is OK to use the draft 5.0 versions
+        as they don’t cause proposed characters to show up when
+        browsing the categories. The proposed characters only show up
+        when searching and in that case it is OK I think, it is not so
+        obviously ugly. And I think it is useful for the proposed
+        characters to be searchable.
+
+        '''
+        dirnames = (USER_DATADIR, DATADIR)
+        basenames = ('emoji-test.txt',)
+        (path, open_function) = _find_path_and_open_function(
+            dirnames, basenames)
+        if not path:
+            sys.stderr.write(
+                '_load_unicode_emoji_test(): could not find "%s" in "%s"\n'
+                %(basenames, dirnames))
+            return
+        with open_function(path, mode='rt') as unicode_emoji_test_file:
+            group = ''
+            cldr_order = 0
+            cldr_group_to_emojione_category = {
+                'Smileys & People': N_('people'),
+                'Animals & Nature': N_('nature'),
+                'Food & Drink': N_('food'),
+                'Travel & Places': N_('travel'),
+                'Activities': N_('activity'),
+                'Objects': N_('objects'),
+                'Symbols': N_('symbols'),
+                'Flags': N_('flags'),
+                'Modifiers': N_('modifiers'), # not  in emoji-test.txt
+                'Regional': N_('regional'), # not  in emoji-test.txt
+            }
+            for line in unicode_emoji_test_file.readlines():
+                pattern = re.compile(r'# group:(?P<group>.+)$')
+                match = pattern.match(line)
+                if match and match.group('group'):
+                    group = match.group('group').strip()
+                    continue
+                line = re.sub(r'#.*$', '', line).strip()
+                if not line:
+                    continue
+                codepoints, property = [
+                    x.strip() for x in line.split(';')[:2]]
+                if property == 'non-fully-qualified':
+                    # The non-fully-qualified sequences are
+                    # all duplicates of the fully-qualified
+                    # sequences.
+                    continue
+                cldr_order += 1
+                emoji_string = ''
+                for codepoint in codepoints.split(' '):
+                    emoji_string += chr(int(codepoint, 16))
+                if emoji_string:
+                    categories = [cldr_group_to_emojione_category[group]]
+                    self._add_to_emoji_dict(
+                        (emoji_string, 'en'), 'cldr_order', str(cldr_order))
+                    self._add_to_emoji_dict(
+                        (emoji_string, 'en'), 'categories', categories)
+                    self._add_translated_categories_to_emoji_dict(
+                        emoji_string, categories)
+
     def _load_emojione_data(self):
         '''
         Loads emoji names, aliases, keywords, and categories from
@@ -681,19 +756,6 @@ class EmojiMatcher():
             return
         with open_function(path, mode='rt') as emoji_one_file:
             emojione = json.load(emoji_one_file)
-        # Hack for testing, family_wg is not yet in emojione, add it here:
-        if 'family_wg' not in emojione:
-            emojione['family_wg'] = {
-                'unicode': '1f469-1f467',
-                'unicode_alt': '1f469-200d-1f467',
-                'name': 'family (woman,girl)',
-                'shortname': 'family_wg',
-                'category': 'people',
-                'emoji_order': '1050',
-                'aliases': [],
-                'aliases_ascii': [],
-                'keywords': ['people', 'family', 'baby'],
-                }
         for dummy_emojione_key, emojione_value in emojione.items():
             codepoints = emojione_value['unicode']
             # ZWJ emojis are in the 'unicode_alt' field:
@@ -752,71 +814,85 @@ class EmojiMatcher():
             self._add_to_emoji_dict(
                 (emoji_string, 'en'), 'emoji_order', emoji_order)
 
-            dummy_categories_to_translate = [
-                # Translators: This is a name for a category of emoji
-                N_('activity'),
-                # Translators: This is a name for a category of emoji
-                N_('flags'),
-                # Translators: This is a name for a category of emoji
-                N_('food'),
-                # Translators: This is a name for a category of emoji
-                N_('modifier'),
-                # Translators: This is a name for a category of emoji
-                N_('nature'),
-                # Translators: This is a name for a category of emoji
-                N_('objects'),
-                # Translators: This is a name for a category of emoji
-                N_('people'),
-                # Translators: This is a name for a category of emoji
-                N_('regional'),
-                # Translators: This is a name for a category of emoji
-                N_('symbols'),
-                # Translators: This is a name for a category of emoji
-                N_('travel'),
-            ]
+            self._add_translated_categories_to_emoji_dict(
+                emoji_string, categories)
 
-            if (IMPORT_PYKAKASI_SUCCESSFUL
-                    and 'ja' in expand_languages(self._languages)):
-                KAKASI_INSTANCE.setMode('H', 'H')
-                KAKASI_INSTANCE.setMode('K', 'H')
-                KAKASI_INSTANCE.setMode('J', 'H')
-                kakasi_converter = KAKASI_INSTANCE.getConverter()
+    def _add_translated_categories_to_emoji_dict(
+            self, emoji_string, categories):
+        '''
+        Add translated versions of categories for an emoji
+        to self._emoji_dict
 
-            for language in expand_languages(self._languages):
-                if self._gettext_translations[language]:
-                    translated_categories = []
-                    for category in categories:
-                        translated_category = self._gettext_translations[
-                            language].gettext(category)
-                        translated_categories.append(
-                            translated_category)
-                        if language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
-                            translated_category_hiragana = (
+        :param emoji_string: An emoji
+        :type emoji_string: String
+        :param categories: The categories of the emoji
+        :type categories: List of strings
+        '''
+        dummy_categories_to_translate = [
+            # Translators: This is a name for a category of emoji
+            N_('activity'),
+            # Translators: This is a name for a category of emoji
+            N_('flags'),
+            # Translators: This is a name for a category of emoji
+            N_('food'),
+            # Translators: This is a name for a category of emoji
+            N_('modifier'),
+            # Translators: This is a name for a category of emoji
+            N_('nature'),
+            # Translators: This is a name for a category of emoji
+            N_('objects'),
+            # Translators: This is a name for a category of emoji
+            N_('people'),
+            # Translators: This is a name for a category of emoji
+            N_('regional'),
+            # Translators: This is a name for a category of emoji
+            N_('symbols'),
+            # Translators: This is a name for a category of emoji
+            N_('travel'),
+        ]
+
+        if (IMPORT_PYKAKASI_SUCCESSFUL
+                and 'ja' in expand_languages(self._languages)):
+            KAKASI_INSTANCE.setMode('H', 'H')
+            KAKASI_INSTANCE.setMode('K', 'H')
+            KAKASI_INSTANCE.setMode('J', 'H')
+            kakasi_converter = KAKASI_INSTANCE.getConverter()
+
+        for language in expand_languages(self._languages):
+            if self._gettext_translations[language]:
+                translated_categories = []
+                for category in categories:
+                    translated_category = self._gettext_translations[
+                        language].gettext(category)
+                    translated_categories.append(
+                        translated_category)
+                    if language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
+                        translated_category_hiragana = (
+                            kakasi_converter.do(
+                                translated_category))
+                        if (translated_category_hiragana
+                                != translated_category):
+                            translated_categories.append(
+                                translated_category_hiragana)
+                        if self._romaji:
+                            KAKASI_INSTANCE.setMode('H', 'a')
+                            KAKASI_INSTANCE.setMode('K', 'a')
+                            KAKASI_INSTANCE.setMode('J', 'a')
+                            kakasi_converter = KAKASI_INSTANCE.getConverter()
+                            translated_category_romaji = (
                                 kakasi_converter.do(
                                     translated_category))
-                            if (translated_category_hiragana
+                            KAKASI_INSTANCE.setMode('H', 'H')
+                            KAKASI_INSTANCE.setMode('K', 'H')
+                            KAKASI_INSTANCE.setMode('J', 'H')
+                            kakasi_converter = KAKASI_INSTANCE.getConverter()
+                            if (translated_category_romaji
                                     != translated_category):
                                 translated_categories.append(
-                                    translated_category_hiragana)
-                            if self._romaji:
-                                KAKASI_INSTANCE.setMode('H', 'a')
-                                KAKASI_INSTANCE.setMode('K', 'a')
-                                KAKASI_INSTANCE.setMode('J', 'a')
-                                kakasi_converter = KAKASI_INSTANCE.getConverter()
-                                translated_category_romaji = (
-                                    kakasi_converter.do(
-                                        translated_category))
-                                KAKASI_INSTANCE.setMode('H', 'H')
-                                KAKASI_INSTANCE.setMode('K', 'H')
-                                KAKASI_INSTANCE.setMode('J', 'H')
-                                kakasi_converter = KAKASI_INSTANCE.getConverter()
-                                if (translated_category_romaji
-                                        != translated_category):
-                                    translated_categories.append(
-                                        translated_category_romaji)
-                    self._add_to_emoji_dict(
-                        (emoji_string, language),
-                        'categories', translated_categories)
+                                    translated_category_romaji)
+                self._add_to_emoji_dict(
+                    (emoji_string, language),
+                    'categories', translated_categories)
 
     def _load_cldr_annotation_data(self, language):
         '''
@@ -1872,7 +1948,7 @@ class EmojiMatcher():
                     emoji_by_label_dict[language][label_key][label] = sorted(
                         emoji_by_label_dict[language][label_key][label],
                         key=lambda x: (
-                            self.emoji_order(x)
+                            self.cldr_order(x)
                         ))
         return emoji_by_label_dict
 
@@ -1898,6 +1974,33 @@ class EmojiMatcher():
         if ((emoji_string, 'en') in self._emoji_dict
                 and 'emoji_order' in self._emoji_dict[(emoji_string, 'en')]):
             return int(self._emoji_dict[(emoji_string, 'en')]['emoji_order'])
+        return 0xFFFFFFFF
+
+    def cldr_order(self, emoji_string):
+        '''Returns a “cldr_order” number from CLDR
+
+        Useful for sorting emoji. For characters which do not
+        have a “cldr_order” number, 0xffffffff is returned.
+
+        The “cldr_order” number is generated  by parsing
+        emoji-test.txt.
+
+        :param emoji_string: An emoji
+        :type emoji_string: String
+        :rtype: Integer
+
+        Examples:
+
+        >>> matcher = EmojiMatcher(languages = ['en'])
+        >>> matcher.cldr_order('😀')
+        1
+
+        >>> hex(matcher.cldr_order('∬'))
+        '0xffffffff'
+        '''
+        if ((emoji_string, 'en') in self._emoji_dict
+                and 'cldr_order' in self._emoji_dict[(emoji_string, 'en')]):
+            return int(self._emoji_dict[(emoji_string, 'en')]['cldr_order'])
         return 0xFFFFFFFF
 
     def properties(self, emoji_string):
@@ -2091,16 +2194,16 @@ class EmojiMatcher():
             >>> matcher.candidates('saima')[0][:2]
             ('🏇', '赛马 “sàimǎ”')
 
-            >>> matcher.similar('🏇', match_limit=5)
-            [('🏇', '赛马 [🏇, 赛马, sàimǎ, 马, mǎ]', 5), ('🐎', '马 [赛马, sàimǎ]', 2), ('🐴', '马头 [马, mǎ]', 2), ('🏇', 'horse racing [🏇, So, activity, horse racing, men, sport, horse, jockey, racehorse, racing]', 10), ('🚴', 'bicyclist [So, activity, men, sport]', 4)]
+            >>> matcher.similar('🏇', match_limit=3)
+            [('🏇', '赛马 [🏇, 赛马, sàimǎ, 马, mǎ]', 5), ('🐎', '马 [赛马, sàimǎ]', 2), ('🐴', '马头 [马, mǎ]', 2)]
 
             >>> matcher = EmojiMatcher(languages = ['zh_TW'])
 
             >>> matcher.candidates('saima')[0][:2]
             ('🏇', '賽馬 “sàimǎ”')
 
-            >>> matcher.similar('🏇', match_limit=5)
-            [('🏇', '賽馬 [🏇, 騎馬, qímǎ]', 3), ('🏇', 'horse racing [🏇, So, activity, horse racing, men, sport, horse, jockey, racehorse, racing]', 10), ('🚴', 'bicyclist [So, activity, men, sport]', 4), ('🏌', 'golfer [So, activity, men, sport]', 4), ('🚵', 'mountain bicyclist [So, activity, men, sport]', 4)]
+            >>> matcher.similar('🏇', match_limit=1)
+            [('🏇', '賽馬 [🏇, 騎馬, qímǎ]', 3)]
             '''
 
     if IMPORT_PYKAKASI_SUCCESSFUL:
