@@ -16,6 +16,35 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.29" date="2017-03-21" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (de, pl updated)
+          </li>
+          <li>
+            Add a “--version” command line option to emoji-picker
+          </li>
+          <li>
+             itb_emoji.py: Also read emoji-test.txt (from unicode.org)
+          </li>
+          <li>
+            emoji-picker: Set default font to first available in ['Noto Color Emoji', 'Emoji One', 'Symbola']
+          </li>
+          <li>
+            Small parsing improvement of emoji-sequences.txt
+          </li>
+          <li>
+            Add support to either use U+FE0F VARIATION SELECTOR-16 in
+            emoji sequences or not
+          </li>
+          <li>
+            emoji-picker: Show “∅ Search produced empty result.” when
+            nothing matches in a search
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.28" date="2017-03-18" urgency="medium">
       <description>
         <ul>

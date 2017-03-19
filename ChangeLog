@@ -1,4 +1,14 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 21 Mar 2017 Released 1.5.29 version
+* Update translations from zanata (de, pl updated)
+* Add a “--version” command line option to emoji-picker
+* itb_emoji.py: Also read emoji-test.txt (from unicode.org)
+* emoji-picker: Set default font to first available in ['Noto Color Emoji', 'Emoji One', 'Symbola']
+* Small parsing improvement of emoji-sequences.txt
+* Add support to either use U+FE0F VARIATION SELECTOR-16 in emoji sequences or not
+* emoji-picker: Show “∅ Search produced empty result.” when nothing matches in a search
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 18 Mar 2017 Released 1.5.28 version
 * Allow query by code point even if Python’s unicodedata.name() does not know the character
 * Also read names from emoji-sequences.txt and emoji-zwj-sequences.txt
