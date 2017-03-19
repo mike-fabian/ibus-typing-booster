@@ -620,6 +620,8 @@ class EmojiMatcher():
                     continue
                 codepoints, property, name = [
                     x.strip() for x in line.split(';')[:3]]
+                if codepoints == '0023 FE0F 20E3' and name == 'keycap:':
+                    name = 'keycap: #'
                 emoji_string = ''
                 for codepoint in codepoints.split(' '):
                     emoji_string += chr(int(codepoint, 16))
