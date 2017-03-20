@@ -191,7 +191,17 @@ class EmojiPickerUI(Gtk.Window):
         self.set_default_size(700, 400)
         self._modal = modal
         self.set_modal(self._modal)
+        available_fonts = self._list_font_names()
+        default_fonts = [
+            'Noto Color Emoji',
+            'Emoji One',
+            'Symbola',
+        ]
         self._font = 'Symbola'
+        for default_font in default_fonts:
+            if default_font in available_fonts:
+                self._font = default_font
+                break
         self._fontsize = 24
         self._font_popover = None
         self._font_popover_scroll = None
