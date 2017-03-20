@@ -633,7 +633,7 @@ class EmojiMatcher():
 
     def _load_unicode_emoji_zwj_sequences(self):
         '''
-        Loads emoji property data from emoji-data.txt
+        Loads emoji property data from emoji-zwj-sequences.txt
 
         http://unicode.org/Public/emoji/5.0/emoji-zwj-sequences.txt
         '''
