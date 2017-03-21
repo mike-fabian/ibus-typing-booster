@@ -134,6 +134,12 @@ def parse_args():
         default=False,
         help=('Print some debug output to stdout. '
               + 'default: %(default)s'))
+    parser.add_argument(
+        '--version',
+        action='store_true',
+        default=False,
+        help=('Output version information and exit. '
+              + 'default: %(default)s'))
     return parser.parse_args()
 
 _ARGS = parse_args()
@@ -2068,6 +2074,10 @@ if __name__ == '__main__':
     LOCALEDIR = os.getenv("IBUS_LOCALEDIR")
     gettext.bindtextdomain(DOMAINNAME, LOCALEDIR)
     gettext.bind_textdomain_codeset(DOMAINNAME, "UTF-8")
+
+    if _ARGS.version:
+        print(version.get_version())
+        sys.exit(0)
 
     EMOJI_PICKER_UI = EmojiPickerUI(
         languages=get_languages(),
