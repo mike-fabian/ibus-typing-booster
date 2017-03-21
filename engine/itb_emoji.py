@@ -705,7 +705,7 @@ class EmojiMatcher():
                 'Objects': N_('objects'),
                 'Symbols': N_('symbols'),
                 'Flags': N_('flags'),
-                'Modifiers': N_('modifiers'), # not  in emoji-test.txt
+                'Modifiers': N_('modifier'), # not  in emoji-test.txt
                 'Regional': N_('regional'), # not  in emoji-test.txt
             }
             for line in unicode_emoji_test_file.readlines():
