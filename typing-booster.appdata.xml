@@ -16,6 +16,39 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.30" date="2017-03-29" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (de, pl, uk updated)
+          </li>
+          <li>
+            Use string order as a fallback to cldr_order in category listings
+          </li>
+          <li>
+            The rainbow flag should be a zwj sequence
+          </li>
+          <li>
+            Also display the Unicode version in the emoji info popover
+          </li>
+          <li>
+            When looking up emoji or other characters via Unicode
+            codepoint, ignore surrogates and private use characters
+          </li>
+          <li>
+            Show the fonts really used to render an emoji in the info
+            popover for the emoji
+          </li>
+          <li>
+            Fix typo in translatable string
+          </li>
+          <li>
+            itb_emoji.py: Use CLDR order to sort the candidates and
+            the similar emoji if score is the same
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.29" date="2017-03-21" urgency="medium">
       <description>
         <ul>

@@ -1,4 +1,15 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 29 Mar 2017 Released 1.5.30 version
+* Update translations from zanata (de, pl, uk updated)
+* Use string order as a fallback to cldr_order in category listings
+* The rainbow flag should be a zwj sequence
+* Also display the Unicode version in the emoji info popover
+* When looking up emoji or other characters via Unicode codepoint, ignore surrogates and private use characters
+* Show the fonts really used to render an emoji in the info popover for the emoji
+* Fix typo in translatable string
+* itb_emoji.py: Use CLDR order to sort the candidates and the similar emoji if score is the same
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 21 Mar 2017 Released 1.5.29 version
 * Update translations from zanata (de, pl updated)
 * Add a “--version” command line option to emoji-picker
