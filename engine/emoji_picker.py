@@ -33,6 +33,7 @@ import gettext
 import unicodedata
 import html
 import itb_util
+import itb_pango
 
 from gi import require_version
 require_version('GLib', '2.0')
@@ -573,6 +574,16 @@ class EmojiPickerUI(Gtk.Window):
                 description_empty = False
             if not description_empty:
                 descriptions.append(description)
+        fonts_description = _('Fonts used to render this emoji:')
+        for text, font_family in itb_pango.get_fonts_used_for_text(
+            self._font + ' ' + str(self._fontsize), emoji):
+            fonts_description += '\n'
+            for char in text:
+                fonts_description += (
+                    '<span font_desc="%s">' %self._font + char + '</span>'
+                    + ' U+%X' %ord(char))
+            fonts_description += ': ' + font_family
+        descriptions.append(fonts_description)
         if _ARGS.debug:
             descriptions.append(
                 'emoji_order = %s' %self._emoji_matcher.emoji_order(emoji))

@@ -43,6 +43,7 @@ engine_table_PYTHON = \
 	itb_util.py \
 	itb_emoji.py \
 	itb_nltk.py \
+	itb_pango.py \
 	m17n_translit.py \
 	emoji_picker.py \
 	version.py \
