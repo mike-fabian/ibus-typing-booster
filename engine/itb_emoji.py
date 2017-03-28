@@ -1553,7 +1553,11 @@ class EmojiMatcher():
 
         try:
             codepoint = int(query_string, 16)
-            if codepoint >= 0x0 and codepoint <= 0x1FFFFF:
+            if (codepoint >= 0x0 and codepoint <= 0x1FFFFF
+                # exclude surrogates and private use characters:
+                and not (codepoint >= 0xd800 and codepoint <= 0xf8ff)
+                and not (codepoint >= 0xf0000 and codepoint <= 0xffffd)
+                and not (codepoint >= 0x100000 and codepoint <= 0x10fffd)):
                 char = chr(codepoint)
                 name = self.name(char)
                 if not name:
