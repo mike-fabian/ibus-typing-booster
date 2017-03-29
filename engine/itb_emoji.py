@@ -584,6 +584,13 @@ class EmojiMatcher():
             return
         with open_function(path, mode='rt') as unicode_emoji_data_file:
             for line in unicode_emoji_data_file.readlines():
+                unicode_version = ''
+                pattern = re.compile(
+                    r'[^;]*;[^;]*#\s*(?P<uversion>[0-9]+\.[0-9]+)\s*'
+                    + r'\[[0-9]+\]')
+                match  = pattern.match(line)
+                if match and match.group('uversion'):
+                    unicode_version = match.group('uversion')
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
@@ -599,6 +606,9 @@ class EmojiMatcher():
                     emoji_string = chr(codepoint)
                     self._add_to_emoji_dict(
                         (emoji_string, 'en'), 'properties', [property])
+                    if unicode_version:
+                        self._add_to_emoji_dict(
+                            (emoji_string, 'en'), 'uversion', unicode_version)
 
     def _load_unicode_emoji_sequences(self):
         '''
@@ -617,6 +627,13 @@ class EmojiMatcher():
             return
         with open_function(path, mode='rt') as unicode_emoji_sequences_file:
             for line in unicode_emoji_sequences_file.readlines():
+                unicode_version = ''
+                pattern = re.compile(
+                    r'[^;]*;[^;]*;[^;]*#\s*(?P<uversion>[0-9]+\.[0-9]+)\s*'
+                    + r'\[[0-9]+\]')
+                match  = pattern.match(line)
+                if match and match.group('uversion'):
+                    unicode_version = match.group('uversion')
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
@@ -632,6 +649,9 @@ class EmojiMatcher():
                         (emoji_string, 'en'), 'properties', [property])
                     self._add_to_emoji_dict(
                         (emoji_string, 'en'), 'names', [name.lower()])
+                    if unicode_version:
+                        self._add_to_emoji_dict(
+                            (emoji_string, 'en'), 'uversion', unicode_version)
 
     def _load_unicode_emoji_zwj_sequences(self):
         '''
@@ -650,6 +670,13 @@ class EmojiMatcher():
             return
         with open_function(path, mode='rt') as unicode_emoji_zwj_sequences_file:
             for line in unicode_emoji_zwj_sequences_file.readlines():
+                unicode_version = ''
+                pattern = re.compile(
+                    r'[^;]*;[^;]*;[^;]*#\s*(?P<uversion>[0-9]+\.[0-9]+)\s*'
+                    + r'\[[0-9]+\]')
+                match  = pattern.match(line)
+                if match and match.group('uversion'):
+                    unicode_version = match.group('uversion')
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
@@ -663,6 +690,9 @@ class EmojiMatcher():
                         (emoji_string, 'en'), 'properties', [property])
                     self._add_to_emoji_dict(
                         (emoji_string, 'en'), 'names', [name.lower()])
+                    if unicode_version:
+                        self._add_to_emoji_dict(
+                            (emoji_string, 'en'), 'uversion', unicode_version)
 
     def _load_unicode_emoji_test(self):
         '''Loads emoji property data from emoji-test.txt
@@ -2023,6 +2053,20 @@ class EmojiMatcher():
             return self._emoji_dict[(emoji_string, 'en')]['properties']
         else:
             return []
+
+    def unicode_version(self, emoji_string):
+        '''
+        Returns the Unicode version when this emoji/character was added
+
+        :param emoji_string: An emoji
+        :type emoji_string: String
+        :rtype: String
+        '''
+        if (((emoji_string, 'en') in self._emoji_dict)
+            and ('uversion' in self._emoji_dict[(emoji_string, 'en')])):
+            return self._emoji_dict[(emoji_string, 'en')]['uversion']
+        else:
+            return ''
 
     def skin_tone_modifier_supported(self, emoji_string):
         '''Checks whether skin tone modifiers are possible for this emoji

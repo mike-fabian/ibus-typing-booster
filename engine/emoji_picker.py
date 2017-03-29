@@ -584,6 +584,10 @@ class EmojiPickerUI(Gtk.Window):
                     + ' U+%X' %ord(char))
             fonts_description += ': ' + font_family
         descriptions.append(fonts_description)
+        if self._emoji_matcher.unicode_version(emoji):
+            descriptions.append(
+                _('Unicode Version:') + ' '
+                + self._emoji_matcher.unicode_version(emoji))
         if _ARGS.debug:
             descriptions.append(
                 'emoji_order = %s' %self._emoji_matcher.emoji_order(emoji))
