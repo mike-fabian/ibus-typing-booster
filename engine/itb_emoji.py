@@ -835,6 +835,13 @@ class EmojiMatcher():
 
             emoji_order = emojione_value['emoji_order']
 
+            if emoji_string == '🏳🌈':
+                # The rainbow flag should be a zwj sequence.
+                # This is a bug in emojione:
+                # https://github.com/Ranks/emojione/issues/455
+                # Fix it here:
+                emoji_string = '🏳\u200d🌈'
+
             self._add_to_emoji_dict(
                 (emoji_string, 'en'), 'names', names)
             self._add_to_emoji_dict(
