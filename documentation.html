@@ -2200,32 +2200,60 @@ keyboard input without any transliteration).</p>
   middle mouse button.
 </p>
 <p>
-  Hovering with the mouse over an emoji shown in “emoji-picker” shows
-  a tooltip which shows the emoji much bigger and some extra
-  information about that emoji, like the Unicode code point and the
-  name of the emoji in different languages.
+  Clicking the right mouse button on an emoji shown in “emoji-picker”
+  shows the emoji much bigger and some extra information about that
+  emoji, like the Unicode code point(s), the name and search keywords
+  of the emoji in all chosen languages, the fonts really used to
+  render this emoji, the Unicode version this emoji first appeared in,
+  and a link to lookup this emoji in emojipedia.
 </p>
 <p>
-  “emoji-picker” has some command line options to choose the languages, the font
-  and the fontsize. For example, <code>emoji-picker --languages
-  de:en:fr</code> would enable you to use German, English, and French
-  to browse and search for emoji and display the names of the emoji in
-  all of these languages. If the command line option is not used, the
-  languages are taken from the environment
-  variables. The <code>LANGUAGE</code> variable works as well. For
-  example, <code>LANGUAGE=de:en:fr emoji-picker</code> also chooses
-  German, English, and French. And, <code>LANG=de_DE.UTF-8 emoji-picker</code>
-  would choose only German (English is always implicitly added though.)
+  The fonts really used to render an emoji may differ from the font
+  chosen in the user interface of emoji picker because:
+</p>
+<ul>
+  <li>
+    The chosen font may have no glyph for a certain emoji. In that
+    case, if there is any other font installed on the system which
+    has that emoji, a fallback font will be used to render the
+    emoji. The info popover shown on right mouse click will show
+    which font was really used, i.e.  it enables one to see which
+    font was used as a fallback.
+  </li>
+  <li>
+    Some emoji are sequences of several code points and with some
+    fonts (or when there are bugs in the rendering system), it may not
+    be possible to render the sequence correctly and one may see
+    individual parts of the sequence rendered seperately, possibly
+    even different parts of the sequence in different fonts. The info
+    popover shown on right mouse click shows which font was used for
+    which part of the sequence which is helpful to debug such
+    problems.
+  </li>
+</ul>
+<p>
+  “emoji-picker” has some command line options to choose the
+  languages, the font and the fontsize. For
+  example, <code>emoji-picker --languages de:en:fr</code> would enable
+  you to use German, English, and French to browse and search for
+  emoji and display the names of the emoji in all of these
+  languages. If the command line option is not used, the languages are
+  taken from the environment variables. The <code>LANGUAGE</code>
+  variable works as well. For example, <code>LANGUAGE=de:en:fr
+  emoji-picker</code> also chooses German, English, and
+  French. And, <code>LANG=de_DE.UTF-8 emoji-picker</code> would choose
+  only German (English is always implicitly added though.)
 </p>
 <p>
-  To choose a different font or font size than the  default one  can use
-  something like:
-  <code>emoji-picker --font "Symbola" --fontsize 32</code>
+  The command line options to choose a different font or font size
+  can be used like this:
+  <code>emoji-picker --font "Noto Color Emoji" --fontsize 32</code>
+  The command line font optionis override the font options in the
+  graphical user interface.
 </p>
 <p>
-  “Symbola”
-  is a good black and white font for emoji. If you want the emoji in
-  colour, see <a href="#color-emoji">Showing emoji in colour</a>.
+  For more about emoji fonts and colour,
+  see <a href="#emoji-fonts">Emoji fonts</a>.
 </p>
 
 <br class="clearboth">
@@ -2272,7 +2300,8 @@ keyboard input without any transliteration).</p>
 <p>
   Emoji can also be selected with different skin tones.  If the mouse
   hovers over an emoji for which different skin tones are available, a
-  tooltip says “Middle click for skin tones”. Clicking such an emoji
+  tooltip says “Long press or middle click for skin tones”. Long
+  pressing such an emoji with the left mouse button or clicking it
   with the middle mouse button pops up a menu showing all the skin
   tone variants. One can then click on any variant with the left mouse
   button to put it into the clipboard and paste it elsewhere.
