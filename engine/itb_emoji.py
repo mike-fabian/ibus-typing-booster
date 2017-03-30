@@ -1992,7 +1992,8 @@ class EmojiMatcher():
                     emoji_by_label_dict[language][label_key][label] = sorted(
                         emoji_by_label_dict[language][label_key][label],
                         key=lambda x: (
-                            self.cldr_order(x)
+                            self.cldr_order(x),
+                            x,
                         ))
         return emoji_by_label_dict
 
