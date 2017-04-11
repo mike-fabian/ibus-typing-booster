@@ -517,7 +517,7 @@ class EmojiMatcher():
         '''Adds data to the emoji_dict if not already there'''
         emoji_dict_key = (
             self._variation_selector_16_normalize(
-                emoji_dict_key[0], self._use_variation_selector_16),
+                emoji_dict_key[0], False),
             emoji_dict_key[1])
         if emoji_dict_key not in self._emoji_dict:
             self._emoji_dict[emoji_dict_key] = {values_key : values}
