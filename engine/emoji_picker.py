@@ -226,10 +226,11 @@ class EmojiPickerUI(Gtk.Window):
         self.connect('delete-event', self.on_delete_event)
         self.connect('key-press-event', self.on_main_window_key_press_event)
         self._languages = languages
+        self._use_variation_selector_16 = use_variation_selector_16
         self._emoji_matcher = itb_emoji.EmojiMatcher(
             languages=self._languages,
             unicode_data_all=unicode_data_all,
-            use_variation_selector_16=use_variation_selector_16)
+            use_variation_selector_16=self._use_variation_selector_16)
         self._gettext_translations = {}
         for language in itb_emoji.expand_languages(self._languages):
             mo_file = gettext.find(DOMAINNAME, languages=[language])
@@ -837,7 +838,7 @@ class EmojiPickerUI(Gtk.Window):
         '''
         if os.path.isfile(self._recently_used_emoji_file):
             try:
-                self._recently_used_emoji = eval(open(
+                recently_used_emoji = eval(open(
                     self._recently_used_emoji_file,
                     mode='r',
                     encoding='UTF-8').read())
@@ -853,13 +854,20 @@ class EmojiPickerUI(Gtk.Window):
                         'File %s has been read and evaluated.\n'
                         %self._recently_used_emoji_file)
             finally: # executes always
-                if not isinstance(self._recently_used_emoji, dict):
+                if not isinstance(recently_used_emoji, dict):
                     if _ARGS.debug:
                         sys.stdout.write(
                             'Not a dict: '
-                            + 'repr(self._recently_used_emoji) = %s\n'
-                            %self._recently_used_emoji)
-                    self._recently_used_emoji = {}
+                            + 'repr(recently_used_emoji) = %s\n'
+                            %recently_used_emoji)
+                    recently_used_emoji = {}
+        self._recently_used_emoji = {}
+        for emoji, value in  recently_used_emoji.items():
+            # add or remove vs16 according to the current setting:
+            if emoji:
+                self._recently_used_emoji[
+                    self._emoji_matcher._variation_selector_16_normalize(
+                        emoji, self._use_variation_selector_16)] = value
         if not self._recently_used_emoji:
             self._init_recently_used()
         self._cleanup_recently_used()
