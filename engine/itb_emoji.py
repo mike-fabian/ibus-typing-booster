@@ -722,6 +722,7 @@ class EmojiMatcher():
             return
         with open_function(path, mode='rt') as unicode_emoji_test_file:
             group = ''
+            subgroup = ''
             cldr_order = 0
             cldr_group_to_emojione_category = {
                 'Smileys & People': N_('people'),
@@ -735,11 +736,19 @@ class EmojiMatcher():
                 'Modifiers': N_('modifier'), # not  in emoji-test.txt
                 'Regional': N_('regional'), # not  in emoji-test.txt
             }
+            cldr_subgroup_to_emojione_category = {
+                'person-sport':  N_('activity'),
+            }
             for line in unicode_emoji_test_file.readlines():
                 pattern = re.compile(r'# group:(?P<group>.+)$')
                 match = pattern.match(line)
                 if match and match.group('group'):
                     group = match.group('group').strip()
+                    continue
+                pattern = re.compile(r'# subgroup:(?P<subgroup>.+)$')
+                match = pattern.match(line)
+                if match and match.group('subgroup'):
+                    subgroup = match.group('subgroup').strip()
                     continue
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
@@ -757,6 +766,9 @@ class EmojiMatcher():
                     emoji_string += chr(int(codepoint, 16))
                 if emoji_string:
                     categories = [cldr_group_to_emojione_category[group]]
+                    if subgroup in cldr_subgroup_to_emojione_category:
+                        categories.append(
+                            cldr_subgroup_to_emojione_category[subgroup])
                     self._add_to_emoji_dict(
                         (emoji_string, 'en'), 'cldr_order', str(cldr_order))
                     self._add_to_emoji_dict(
