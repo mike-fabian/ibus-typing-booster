@@ -1,4 +1,14 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 18 Apr 2017 Released 1.5.31 version
+* Rename option --use_vs16 to --non_fully_qualified (effectivly reversing the default)
+* Make description labels in info popover selectable to be able to copy and paste their contents
+* Sort similar emoji with the same number of matching labels by cldr_order distance
+* Map cldr subgroup 'person-sport' to emojione category 'activity'
+* Make the categorie listings and the search work right when using --use_vs16
+* Always store only non-fully-qualified emoji or emoji-sequences in the internal dictionary
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 29 Mar 2017 Released 1.5.30 version
 * Update translations from zanata (de, pl, uk updated)
 * Use string order as a fallback to cldr_order in category listings
