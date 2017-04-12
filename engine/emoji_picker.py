@@ -1819,6 +1819,7 @@ class EmojiPickerUI(Gtk.Window):
             label_description.set_margin_end(margin)
             label_description.set_margin_top(margin)
             label_description.set_margin_bottom(margin)
+            label_description.set_selectable(True)
             label_description.set_hexpand(False)
             label_description.set_vexpand(False)
             label_description.set_halign(Gtk.Align.START)
