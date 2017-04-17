@@ -117,17 +117,18 @@ def parse_args():
               + 'Slows the search down and is usually not needed. '
               + 'default: %(default)s'))
     parser.add_argument(
-        '--use_vs16',
+        '--non_fully_qualified',
         action='store_true',
         default=False,
-        help=('Use the emoji variation selector '
+        help=('Do not use the emoji variation selector '
               + '(U+FE0F VARIATION SELECTOR-16) '
-              + 'in emoji sequences following the recommendations '
-              + 'of unicode.org. Although doing this is '
-              + '“strongly recommended for keyboards” by unicode.org '
-              + 'for “good fallback behavior on older systems” '
-              + 'it seems to have only disadvantages with the currently '
-              + 'available fonts. '
+              + 'in emoji sequences. Without this option, U+FE0F is used '
+              + 'according to the recommendation of unicode.org. '
+              + 'On some systems, and with some fonts this might make '
+              + 'some emoji sequences render incorrectly though. '
+              + 'If you see some emoji sequences rendered as several glyphs '
+              + 'instead of being rendered as a single glyph, you can try '
+              + 'whether this option improves the rendering for you. '
               + 'default: %(default)s'))
     parser.add_argument(
         '-d', '--debug',
@@ -153,7 +154,7 @@ class EmojiPickerUI(Gtk.Window):
                  languages=('en_US',),
                  modal=False,
                  unicode_data_all=False,
-                 use_variation_selector_16=False,
+                 non_fully_qualified=False,
                  font=None,
                  fontsize=None):
         Gtk.Window.__init__(self, title='🚀 ' + _('Emoji Picker'))
@@ -226,11 +227,11 @@ class EmojiPickerUI(Gtk.Window):
         self.connect('delete-event', self.on_delete_event)
         self.connect('key-press-event', self.on_main_window_key_press_event)
         self._languages = languages
-        self._use_variation_selector_16 = use_variation_selector_16
+        self._non_fully_qualified = non_fully_qualified
         self._emoji_matcher = itb_emoji.EmojiMatcher(
             languages=self._languages,
             unicode_data_all=unicode_data_all,
-            use_variation_selector_16=self._use_variation_selector_16)
+            non_fully_qualified=self._non_fully_qualified)
         self._gettext_translations = {}
         for language in itb_emoji.expand_languages(self._languages):
             mo_file = gettext.find(DOMAINNAME, languages=[language])
@@ -862,12 +863,13 @@ class EmojiPickerUI(Gtk.Window):
                             %recently_used_emoji)
                     recently_used_emoji = {}
         self._recently_used_emoji = {}
-        for emoji, value in  recently_used_emoji.items():
+        for emoji, value in recently_used_emoji.items():
             # add or remove vs16 according to the current setting:
             if emoji:
                 self._recently_used_emoji[
                     self._emoji_matcher._variation_selector_16_normalize(
-                        emoji, self._use_variation_selector_16)] = value
+                        emoji,
+                        non_fully_qualified=self._non_fully_qualified)] = value
         if not self._recently_used_emoji:
             self._init_recently_used()
         self._cleanup_recently_used()
@@ -2109,5 +2111,5 @@ if __name__ == '__main__':
         fontsize=_ARGS.fontsize,
         modal=_ARGS.modal,
         unicode_data_all=_ARGS.all,
-        use_variation_selector_16=_ARGS.use_vs16)
+        non_fully_qualified=_ARGS.non_fully_qualified)
     Gtk.main()
