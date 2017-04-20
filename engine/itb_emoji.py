@@ -512,6 +512,8 @@ class EmojiMatcher():
 
     def _add_to_emoji_dict(self, emoji_dict_key, values_key, values):
         '''Adds data to the emoji_dict if not already there'''
+        if not emoji_dict_key or not values_key or not values:
+            return
         emoji_dict_key = (
             self._variation_selector_16_normalize(
                 emoji_dict_key[0], non_fully_qualified=True),
@@ -795,12 +797,19 @@ class EmojiMatcher():
             return
         with open_function(path, mode='rt') as emoji_one_file:
             emojione = json.load(emoji_one_file)
+        if '1f600' not in emojione:
+            emojione_version = 2
+        else:
+            emojione_version = 3
         for dummy_emojione_key, emojione_value in emojione.items():
-            codepoints = emojione_value['unicode']
-            # ZWJ emojis are in the 'unicode_alt' field:
-            if ('unicode_alt' in emojione_value
-                    and '200d' in emojione_value['unicode_alt']):
-                codepoints = emojione_value['unicode_alt']
+            if emojione_version >= 3:
+                codepoints = emojione_value['code_points']['output']
+            else:
+                codepoints = emojione_value['unicode']
+                # ZWJ emojis are in the 'unicode_alt' field:
+                if ('unicode_alt' in emojione_value
+                        and '200d' in emojione_value['unicode_alt']):
+                    codepoints = emojione_value['unicode_alt']
 
             emoji_string = ''.join([
                 chr(int(codepoint, 16)) for codepoint in codepoints.split('-')
@@ -820,9 +829,14 @@ class EmojiMatcher():
             names = [display_name]
             shortname = emojione_value[
                 'shortname'].replace('_', ' ').strip(':')
-            aliases = [x.replace('_', ' ').strip(':')
-                       for x in emojione_value['aliases']]
-            ascii_aliases = emojione_value['aliases_ascii']
+            if emojione_version >= 3:
+                aliases = [x.replace('_', ' ').strip(':')
+                           for x in emojione_value['shortname_alternates']]
+                ascii_aliases = emojione_value['ascii']
+            else:
+                aliases = [x.replace('_', ' ').strip(':')
+                           for x in emojione_value['aliases']]
+                ascii_aliases = emojione_value['aliases_ascii']
             if match_name not in names:
                 names += [match_name]
             if shortname not in names:
@@ -841,15 +855,42 @@ class EmojiMatcher():
             # the additional information added to the display string
             # added because of a keyword match).
             keywords = sorted(list(set(emojione_value['keywords'])))
+            if '' in keywords:
+                # EmojiOne 3 has some empty strings in the keyword lists
+                # remove them:
+                keywords.remove('')
 
-            emoji_order = emojione_value['emoji_order']
+            if emojione_version >= 3:
+                emoji_order = emojione_value['order']
+            else:
+                emoji_order = emojione_value['emoji_order']
 
             if emoji_string == '🏳🌈':
                 # The rainbow flag should be a zwj sequence.
-                # This is a bug in emojione:
+                # This is a bug in emojione version 2:
                 # https://github.com/Ranks/emojione/issues/455
                 # Fix it here:
                 emoji_string = '🏳\u200d🌈'
+
+            if (len(emoji_string) == 1
+                    and emoji_string in '🇦🇧🇨🇩🇪🇫🇬🇭🇮🇯🇰🇱🇲🇳🇴🇵🇶🇷🇸🇹🇺🇻🇼🇽🇾🇿'):
+                # Work around bug in emojione version 3.0
+                # https://github.com/Ranks/emojione/issues/476
+                # The category should *not* be 'people':
+                categories = ['regional']
+
+            if emoji_string in SKIN_TONE_MODIFIERS:
+                # Work around bug in emojione version 3.0
+                # https://github.com/Ranks/emojione/issues/476
+                # The category should *not* be 'people':
+                categories = ['modifier']
+
+            if (len(emoji_string) == 2 and emoji_string[1] == '\ufe0f'
+                    and emoji_string[0] in '#*0123456789'):
+                # Work around bug in emojione version 3.0
+                # https://github.com/Ranks/emojione/issues/476
+                # The category should *not* be 'people':
+                categories = []
 
             self._add_to_emoji_dict(
                 (emoji_string, 'en'), 'names', names)
@@ -1218,7 +1259,7 @@ class EmojiMatcher():
         >>> mq = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
 
         >>> mq.candidates('😺', match_limit=3)
-        [('😺', 'smiling cat face with open mouth [😺, So, people, animal, cat, happy, face, mouth, open, smile]', 10), ('😸', 'grinning cat face with smiling eyes [So, people, animal, cat, happy, face, smile]', 7), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, happy, face, mouth, open, smile]', 7)]
+        [('😺', 'smiling cat face with open mouth [😺, So, people, animal, cat, happy, face, mouth, open, smile]', 10), ('😸', 'grinning cat face with smiling eyes [So, people, animal, cat, happy, face, smile]', 7), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, happy, smile, face, mouth, open]', 7)]
 
         >>> mq.candidates('ねこ＿')[0][:2]
         ('🐈', 'ねこ')
@@ -1278,7 +1319,7 @@ class EmojiMatcher():
         ('👨🏿', 'man: dark skin tone')
 
         >>> mq.candidates('tone')[0][:2]
-        ('👍🏻', 'thumbs up: light skin tone “thumbup tone1”')
+        ('🕵🏻', 'detective: light skin tone “sleuth or spy tone1”')
 
         >>> mq.candidates('tone1')[0][:2]
         ('🏻', 'emoji modifier fitzpatrick type-1-2 “light skin tone”')
@@ -1776,7 +1817,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.keywords('🙂')
-        ['happy', 'smiley', 'face', 'smile']
+        ['happy', 'pleased', 'smile', 'smiley', 'face']
 
         >>> matcher.keywords('🙂', language='it')
         ['sorriso', 'sorriso a bocca chiusa', 'mezzo sorriso']
@@ -1862,7 +1903,7 @@ class EmojiMatcher():
         []
 
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'white smiling face [☺️, So, people, happy, smiley, face, outlined, relaxed, smile]', 9), ('🙂', 'slightly smiling face [So, people, happy, smiley, face, smile]', 6), ('😍', 'smiling face with heart-shaped eyes [So, people, happy, smiley, face, smile]', 6), ('😋', 'face savouring delicious food [So, people, happy, smiley, face, smile]', 6), ('😊', 'smiling face with smiling eyes [So, people, happy, smiley, face, smile]', 6)]
+        [('☺️', 'white smiling face [☺️, So, people, happy, smile, smiley, face, outlined, relaxed]', 9), ('🙂', 'slightly smiling face [So, people, happy, smile, smiley, face]', 6), ('😍', 'smiling face with heart-shaped eyes [So, people, happy, smile, smiley, face]', 6), ('😋', 'face savouring delicious food [So, people, happy, smile, smiley, face]', 6), ('😊', 'smiling face with smiling eyes [So, people, happy, smile, smiley, face]', 6)]
 
         >>> matcher = EmojiMatcher(languages = ['it_IT', 'en_US', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('☺', match_limit = 5)
