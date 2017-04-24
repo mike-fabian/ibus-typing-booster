@@ -16,6 +16,25 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.32" date="2017-04-24" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Fix error when starting emoji-picker when the
+            “recently-used” does not yet exist
+          </li>
+          <li>
+            Update emojione.json to version 3.0
+          </li>
+          <li>
+            Add the data from CLDR common/annotationsDerived
+          </li>
+          <li>
+            Load also the CLDR annotations from “annotationsDerived”
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.31" date="2017-04-18" urgency="medium">
       <description>
         <ul>

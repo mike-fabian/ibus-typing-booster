@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 24 Apr 2017 Released 1.5.32 version
+* Fix error when starting emoji-picker when the “recently-used” does not yet exist
+* Update emojione.json to version 3.0
+* Add the data from CLDR common/annotationsDerived
+* Load also the CLDR annotations from “annotationsDerived”
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 18 Apr 2017 Released 1.5.31 version
 * Rename option --use_vs16 to --non_fully_qualified (effectivly reversing the default)
 * Make description labels in info popover selectable to be able to copy and paste their contents
