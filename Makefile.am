@@ -24,6 +24,8 @@ SUBDIRS = \
 	m4 \
 	hunspell-tables \
 	data \
+	data/annotations \
+	data/annotationsDerived \
 	po \
 	setup \
 	tests \
