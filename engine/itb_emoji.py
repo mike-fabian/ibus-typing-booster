@@ -275,12 +275,12 @@ def expand_languages(languages):
         expanded_languages.append('en')
     return expanded_languages
 
-def _find_path_and_open_function(dirnames, basenames):
+def _find_path_and_open_function(dirnames, basenames, subdir=''):
     '''Find the first existing file of a list of basenames and dirnames
 
     For each file in “basenames”, tries whether that file or the
     file with “.gz” added can be found in the list of directories
-    “dirnames”.
+    “dirnames” where “subdir” is added to each directory in the list.
 
     Returns a tuple (path, open_function) where “path” is the
     complete path of the first file found and the open function
@@ -291,11 +291,13 @@ def _find_path_and_open_function(dirnames, basenames):
     :param basenames: A list of file names to search for
     :type basenames: List of strings
     :rtype: A tuple (path, open_function)
+    :param subdir: A subdirectory to be added to each directory in the list
+    :type subdir: String
 
     '''
     for basename in basenames:
         for dirname in dirnames:
-            path = os.path.join(dirname, basename)
+            path = os.path.join(dirname, subdir, basename)
             if os.path.exists(path):
                 if path.endswith('.gz'):
                     return (path, gzip.open)
@@ -399,7 +401,8 @@ class EmojiMatcher():
         self._load_emojione_data()
         if cldr_data:
             for language in expand_languages(self._languages):
-                self._load_cldr_annotation_data(language)
+                self._load_cldr_annotation_data(language, 'annotations')
+                self._load_cldr_annotation_data(language, 'annotationsDerived')
 
     def get_languages(self):
         '''Returns a copy of the list of languages of this EmojiMatcher
@@ -981,7 +984,7 @@ class EmojiMatcher():
                     (emoji_string, language),
                     'categories', translated_categories)
 
-    def _load_cldr_annotation_data(self, language):
+    def _load_cldr_annotation_data(self, language, subdir):
         '''
         Loads translations of emoji names and keywords.
 
@@ -990,12 +993,13 @@ class EmojiMatcher():
         dirnames = (USER_DATADIR, DATADIR,
                     # On Fedora >= 25 there is a
                     # “cldr-emoji-annotation” package which has the
-                    # .xml files here:
-                    '/usr/share/unicode/cldr/common/annotations/',
-                    '/local/mfabian/src/cldr-svn/trunk/common/annotations')
+                    # .xml files here in the subdirs “annotations”
+                    # and “annotationsDerived”:
+                    '/usr/share/unicode/cldr/common/',
+                    '/local/mfabian/src/cldr-svn/trunk/common/')
         basenames = (language + '.xml',)
         (path, open_function) = _find_path_and_open_function(
-            dirnames, basenames)
+            dirnames, basenames, subdir=subdir)
         if not path:
             return
         # change language to the language of the file which was really
@@ -1022,6 +1026,8 @@ class EmojiMatcher():
                 if match:
                     emoji_string = match.group('emojistring')
                     content = html.unescape(match.group('content'))
+                    if language.startswith('en'):
+                        content = content.lower()
                     if match.group('tts'):
                         if (language in ('zh', 'zh_Hant')
                                 and IMPORT_PINYIN_SUCCESSFUL):
@@ -1328,13 +1334,13 @@ class EmojiMatcher():
         ('🏿', 'emoji modifier fitzpatrick type-6 “dark skin tone”')
 
         >>> mq.candidates('a')[0][:2]
-        ('🅰\ufe0f', 'negative squared latin capital letter a “A button (blood type)”')
+        ('🅰\ufe0f', 'negative squared latin capital letter a “a button (blood type)”')
 
         >>> mq.candidates('squared a')[0][:2]
-        ('🅰\ufe0f', 'negative squared latin capital letter a “A button (blood type)”')
+        ('🅰\ufe0f', 'negative squared latin capital letter a “a button (blood type)”')
 
         >>> mq.candidates('squared capital a')[0][:2]
-        ('🅰\ufe0f', 'negative squared latin capital letter a “A button (blood type)”')
+        ('🅰\ufe0f', 'negative squared latin capital letter a “a button (blood type)”')
 
         >>> mq.candidates('c')[0][:2]
         ('©\ufe0f', 'Copyright')
@@ -1463,13 +1469,13 @@ class EmojiMatcher():
         ('⛴\ufe0f', 'ferry {travel}')
 
         >>> mq.candidates('boat')[0][:2]
-        ('🚣', 'rowboat “person rowing boat”')
+        ('🚣🏻\u200d♂️', 'man rowing boat: light skin tone “man rowing boat light skin tone”')
 
         >>> mq.candidates('anchor')[0][:2]
         ('⚓', 'anchor')
 
         >>> mq.candidates('anchor boat')[0][:2]
-        ('⚓', 'anchor [boat]')
+        ('🚣🏻\u200d♂️', 'man rowing boat: light skin tone “man rowing boat light skin tone”')
 
         >>> mq.candidates('buterfly')[0][:2]
         ('\U0001f98b', 'butterfly')
@@ -1934,7 +1940,7 @@ class EmojiMatcher():
         [('€', 'euro sign [€, Sc]', 2), ('؋', 'afghani sign [Sc]', 1), ('֏', 'armenian dram sign [Sc]', 1), ('₳', 'austral sign [Sc]', 1), ('৻', 'bengali ganda mark [Sc]', 1)]
 
         >>> matcher.similar('🏄‍♂', match_limit = 2)
-        [('🏄\u200d♂️', 'hombre haciendo surf [🏄\u200d♂️, hombre, surf, surfista]', 4), ('🏄\u200d♀️', 'mujer haciendo surf [surf, surfista]', 2)]
+        [('🏄\u200d♂️', 'hombre haciendo surf [🏄\u200d♂️, hombre, surf, surfista]', 4), ('🏄🏻\u200d♂️', 'hombre haciendo surf: color de piel 1–2 [hombre, surf, surfista]', 3)]
         '''
         # self._emoji_dict contains only non-fully-qualified sequences:
         emoji_string = self._variation_selector_16_normalize(
@@ -2362,7 +2368,7 @@ class EmojiMatcher():
             ('🏇', '赛马 “sàimǎ”')
 
             >>> matcher.similar('🏇', match_limit=3)
-            [('🏇', '赛马 [🏇, 赛马, sàimǎ, 马, mǎ]', 5), ('🐴', '马头 [马, mǎ]', 2), ('🐎', '马 [赛马, sàimǎ]', 2)]
+            [('🏇', '赛马 [🏇, 赛马, sàimǎ, 马, mǎ]', 5), ('🏇🏻', '赛马: 种类-1-2 [赛马, sàimǎ, 马, mǎ]', 4), ('🏇🏼', '赛马: 种类-3 [赛马, sàimǎ, 马, mǎ]', 4)]
 
             >>> matcher = EmojiMatcher(languages = ['zh_TW'])
 
