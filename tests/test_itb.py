@@ -264,7 +264,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine._candidates[0][0], 'camel')
         self.assertEqual(self.engine._candidates[5][0], '🐫')
         self.assertEqual(self.engine._candidates[5][2],
-                         'bactrian camel “two-hump camel”')
+                         'bactrian camel')
         self.engine.do_candidate_clicked(5, 3, 0)
         self.assertEqual(self.engine._candidates[0][0], '🐫')
         self.assertEqual(self.engine._candidates[1][0], '🐪')
@@ -302,7 +302,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine._candidates[0][0], 'camel')
         self.assertEqual(self.engine._candidates[5][0], '🐫')
         self.assertEqual(self.engine._candidates[5][2],
-                         'bactrian camel “two-hump camel”')
+                         'bactrian camel')
         self.engine.do_process_key_event(IBus.KEY_Down, 0, 0)
         self.assertEqual(
             self.engine.get_lookup_table().cursor_visible,
@@ -559,6 +559,6 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine._candidates[0][0], '_camel')
         self.assertEqual(self.engine._candidates[5][0], '🐫')
         self.assertEqual(self.engine._candidates[5][2],
-                         'bactrian camel “two-hump camel”')
+                         'bactrian camel')
         self.engine.do_process_key_event(IBus.KEY_F6, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'camel 🐫 ')

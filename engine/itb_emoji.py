@@ -1265,7 +1265,7 @@ class EmojiMatcher():
         >>> mq = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
 
         >>> mq.candidates('😺', match_limit=3)
-        [('😺', 'smiling cat face with open mouth [😺, So, people, animal, cat, happy, face, mouth, open, smile]', 10), ('😸', 'grinning cat face with smiling eyes [So, people, animal, cat, happy, face, smile]', 7), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, happy, smile, face, mouth, open]', 7)]
+        [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile]', 8), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, mouth, open, smile]', 6), ('😄', 'smiling face with open mouth and smiling eyes [So, people, face, mouth, open, smile]', 6)]
 
         >>> mq.candidates('ねこ＿')[0][:2]
         ('🐈', 'ねこ')
@@ -1321,26 +1321,23 @@ class EmojiMatcher():
         >>> mq.candidates('man tone5')[0][:2]
         ('👨🏿', 'man: dark skin tone “man tone5”')
 
-        >>> mq.candidates('mantone5')[0][:2]
-        ('👨🏿', 'man: dark skin tone')
-
         >>> mq.candidates('tone')[0][:2]
         ('🕵🏻', 'detective: light skin tone “sleuth or spy tone1”')
 
         >>> mq.candidates('tone1')[0][:2]
-        ('🏻', 'emoji modifier fitzpatrick type-1-2 “light skin tone”')
+        ('🏻', 'emoji modifier fitzpatrick type-1-2 “tone1”')
 
         >>> mq.candidates('tone5')[0][:2]
-        ('🏿', 'emoji modifier fitzpatrick type-6 “dark skin tone”')
+        ('🏿', 'emoji modifier fitzpatrick type-6 “tone5”')
 
         >>> mq.candidates('a')[0][:2]
-        ('🅰\ufe0f', 'negative squared latin capital letter a “a button (blood type)”')
+        ('🅰\ufe0f', 'negative squared latin capital letter a')
 
         >>> mq.candidates('squared a')[0][:2]
-        ('🅰\ufe0f', 'negative squared latin capital letter a “a button (blood type)”')
+        ('🅰\ufe0f', 'negative squared latin capital letter a')
 
         >>> mq.candidates('squared capital a')[0][:2]
-        ('🅰\ufe0f', 'negative squared latin capital letter a “a button (blood type)”')
+        ('🅰\ufe0f', 'negative squared latin capital letter a')
 
         >>> mq.candidates('c')[0][:2]
         ('©\ufe0f', 'Copyright')
@@ -1355,13 +1352,13 @@ class EmojiMatcher():
         ('🇺🇸', 'united states')
 
         >>> mq.candidates('united')[0][:2]
-        ('🇦🇪', 'united arab emirates “the united arab emirates”')
+        ('🇦🇪', 'united arab emirates')
 
-        >>> mq.candidates('united minor islands')[0][:2]
-        ('🇺🇲', 'u.s. outlying islands “united states minor outlying islands”')
+        >>> mq.candidates('united minor outlying islands')[0][:2]
+        ('🇺🇲', 'u.s. outlying islands')
 
         >>> mq.candidates('united arab')[0][:2]
-        ('🇦🇪', 'united arab emirates “the united arab emirates”')
+        ('🇦🇪', 'united arab emirates')
 
         >>> mq.candidates('mm')[0][:2]
         ('🇲🇲', 'myanmar (burma) “mm”')
@@ -1370,7 +1367,7 @@ class EmojiMatcher():
         ('🇲🇲', 'myanmar (burma) “mm” [flag]')
 
         >>> mq.candidates('myanmar')[0][:2]
-        ('🇲🇲', 'myanmar (burma)')
+        ('🇲🇲', 'Myanmar')
 
         >>> mq.candidates('sj')[0][:2]
         ('🇸🇯', 'svalbard & jan mayen “sj”')
@@ -1379,13 +1376,13 @@ class EmojiMatcher():
         ('🇸🇯', 'svalbard & jan mayen “sj” [flag]')
 
         >>> mq.candidates('svalbard')[0][:2]
-        ('🇸🇯', 'svalbard & jan mayen “svalbard and jan mayen”')
+        ('🇸🇯', 'Svalbard e Jan Mayen')
 
         >>> mq.candidates('jan mayen')[0][:2]
-        ('🇸🇯', 'svalbard & jan mayen “svalbard and jan mayen”')
+        ('🇸🇯', 'Svalbard e Jan Mayen')
 
         >>> mq.candidates('mayen')[0][:2]
-        ('🇸🇯', 'svalbard & jan mayen “svalbard and jan mayen”')
+        ('🇸🇯', 'Svalbard e Jan Mayen')
 
         >>> mq.candidates(':-)')[0][:2]
         ('🙂', 'slightly smiling face “:-)”')
@@ -1406,10 +1403,10 @@ class EmojiMatcher():
         ('👦', 'boy')
 
         >>> mq.candidates('family man')[0][:2]
-        ('👨\u200d👩\u200d👧', 'family: man, woman, girl “family mwg”')
+        ('👨\u200d👩\u200d👦', 'family: man, woman, boy “family man woman boy”')
 
         >>> mq.candidates('man man girl boy')[0][:2]
-        ('👨\u200d👨\u200d👧\u200d👦', 'family: man, man, girl, boy “family man man girl boy”')
+        ('👨\u200d👧\u200d👦', 'family: man, girl, boy “family man girl boy”')
 
         >>> mq.candidates('mmgb')[0][:2]
         ('👨\u200d👨\u200d👧\u200d👦', 'family: man, man, girl, boy “family mmgb”')
@@ -1430,7 +1427,7 @@ class EmojiMatcher():
         ('📷', 'camera')
 
         >>> mq.candidates('symbol')[0][:2]
-        ('🔣', 'input symbol for symbols “input symbols” {Symbol}')
+        ('🔣', 'input symbol for symbols {Symbol}')
 
         >>> mq.candidates('atomsymbol')[0][:2]
         ('⚛\ufe0f', 'atom symbol')
@@ -1442,22 +1439,22 @@ class EmojiMatcher():
         ('☮\ufe0f', 'peace symbol {Symbol}')
 
         >>> mq.candidates('animal')[0][:2]
-        ('😺', 'smiling cat face with open mouth [animal]')
+        ('🐵', 'cara de mono [animal]')
 
         >>> mq.candidates('dromedary animal')[0][:2]
         ('🐪', 'dromedary camel')
 
         >>> mq.candidates('camel')[0][:2]
-        ('🐫', 'bactrian camel “two-hump camel”')
+        ('🐫', 'bactrian camel')
 
         >>> mq.candidates('people')[0][:2]
         ('👯', 'woman with bunny ears “people with bunny ears partying”')
 
         >>> mq.candidates('nature')[0][:2]
-        ('💐', 'bouquet {nature}')
+        ('🙈', 'see-no-evil monkey {nature}')
 
         >>> mq.candidates('travel')[0][:2]
-        ('🏍\ufe0f', 'racing motorcycle {travel}')
+        ('🏎️', 'racing car {travel}')
 
         >>> mq.candidates('ferry')[0][:2]
         ('⛴\ufe0f', 'ferry')
@@ -1466,7 +1463,7 @@ class EmojiMatcher():
         ('⛴\ufe0f', 'ferry {travel}')
 
         >>> mq.candidates('ferry travel boat')[0][:2]
-        ('⛴\ufe0f', 'ferry {travel}')
+        ('⛴\ufe0f', 'ferry {travel} [boat]')
 
         >>> mq.candidates('boat')[0][:2]
         ('🚣🏻\u200d♂️', 'man rowing boat: light skin tone “man rowing boat light skin tone”')
@@ -1505,7 +1502,7 @@ class EmojiMatcher():
         ('﹎', 'centreline low line {Connector}')
 
         >>> mq.candidates('dash')[0][:2]
-        ('💨', 'dash symbol “dashing away”')
+        ('💨', 'dash symbol')
 
         >>> mq.candidates('close')[0][:2]
         ('⸥', 'bottom right half bracket {Close}')
@@ -1823,7 +1820,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.keywords('🙂')
-        ['happy', 'pleased', 'smile', 'smiley', 'face']
+        ['face', 'smile']
 
         >>> matcher.keywords('🙂', language='it')
         ['sorriso', 'sorriso a bocca chiusa', 'mezzo sorriso']
@@ -1909,7 +1906,7 @@ class EmojiMatcher():
         []
 
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'white smiling face [☺️, So, people, happy, smile, smiley, face, outlined, relaxed]', 9), ('🙂', 'slightly smiling face [So, people, happy, smile, smiley, face]', 6), ('😍', 'smiling face with heart-shaped eyes [So, people, happy, smile, smiley, face]', 6), ('😋', 'face savouring delicious food [So, people, happy, smile, smiley, face]', 6), ('😊', 'smiling face with smiling eyes [So, people, happy, smile, smiley, face]', 6)]
+        [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile]', 7), ('🙂', 'slightly smiling face [So, people, face, smile]', 4), ('😙', 'kissing face with smiling eyes [So, people, face, smile]', 4), ('😍', 'smiling face with heart-shaped eyes [So, people, face, smile]', 4), ('😎', 'smiling face with sunglasses [So, people, face, smile]', 4)]
 
         >>> matcher = EmojiMatcher(languages = ['it_IT', 'en_US', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('☺', match_limit = 5)
@@ -1917,7 +1914,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', 'bactrian camel [🐫, So, nature, animal, hump day, wildlife, bactrian, camel, hump]', 9), ('🐪', 'dromedary camel [So, nature, animal, wildlife, hump]', 5), ('🐘', 'elephant [So, nature, animal, wildlife]', 4), ('🐏', 'ram [So, nature, animal, wildlife]', 4), ('🐗', 'boar [So, nature, animal, wildlife]', 4)]
+        [('🐫', 'bactrian camel [🐫, So, nature, bactrian, camel, hump]', 6), ('🐪', 'dromedary camel [So, nature, hump]', 3), ('🐘', 'elephant [So, nature]', 2), ('🐐', 'goat [So, nature]', 2), ('\U0001f98f', 'rhinoceros [So, nature]', 2)]
 
         >>> matcher = EmojiMatcher(languages = [ 'it_IT', 'en_US','es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
