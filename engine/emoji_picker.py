@@ -837,6 +837,7 @@ class EmojiPickerUI(Gtk.Window):
         '''
         Read the recently use emoji from a file
         '''
+        recently_used_emoji = {}
         if os.path.isfile(self._recently_used_emoji_file):
             try:
                 recently_used_emoji = eval(open(
