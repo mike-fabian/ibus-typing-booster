@@ -1914,19 +1914,19 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', 'bactrian camel [🐫, So, nature, bactrian, camel, hump]', 6), ('🐪', 'dromedary camel [So, nature, hump]', 3), ('🐘', 'elephant [So, nature]', 2), ('🐐', 'goat [So, nature]', 2), ('\U0001f98f', 'rhinoceros [So, nature]', 2)]
+        [('🐫', 'bactrian camel [🐫, So, nature, bactrian, camel, hump]', 6), ('🐪', 'dromedary camel [So, nature, hump]', 3), ('\U0001f992', 'giraffe face [So, nature]', 2), ('🐐', 'goat [So, nature]', 2), ('🐘', 'elephant [So, nature]', 2)]
 
         >>> matcher = EmojiMatcher(languages = [ 'it_IT', 'en_US','es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', 'cammello [🐫, gobba, animale]', 3), ('🐪', 'dromedario [gobba, animale]', 2), ('🐘', 'elefante [animale]', 1), ('🐐', 'capra [animale]', 1), ('\U0001f98f', 'rinoceronte [animale]', 1)]
+        [('🐫', 'cammello [🐫, gobba, animale]', 3), ('🐪', 'dromedario [gobba, animale]', 2), ('🐐', 'capra [animale]', 1), ('🐘', 'elefante [animale]', 1), ('🐑', 'pecora [animale]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['de_DE', 'it_IT', 'en_US','es_MX', 'es_ES', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', 'Kamel [🐫, zweihöckrig, Tier]', 3), ('🐪', 'Dromedar [Tier]', 1), ('🐘', 'Elefant [Tier]', 1), ('🐐', 'Ziege [Tier]', 1), ('\U0001f98f', 'Nashorn [Tier]', 1)]
+        [('🐫', 'Kamel [🐫, zweihöckrig, Tier]', 3), ('🐪', 'Dromedar [Tier]', 1), ('🐐', 'Ziege [Tier]', 1), ('🐘', 'Elefant [Tier]', 1), ('🐑', 'Schaf [Tier]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['es_MX', 'it_IT', 'de_DE', 'en_US', 'es_ES', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', 'camello [🐫, animal, joroba]', 3), ('🐪', 'dromedario [animal, joroba]', 2), ('🐘', 'elefante [animal]', 1), ('🐐', 'cabra [animal]', 1), ('\U0001f98f', 'rinoceronte [animal]', 1)]
+        [('🐫', 'camello [🐫, animal, joroba]', 3), ('🐪', 'dromedario [animal, joroba]', 2), ('🐐', 'cabra [animal]', 1), ('🐘', 'elefante [animal]', 1), ('🐑', 'oveja [animal]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
