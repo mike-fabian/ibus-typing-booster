@@ -2056,6 +2056,17 @@ class EmojiMatcher():
                              or LooseVersion(unicode_version)
                              > LooseVersion(self._emoji_unicode_max))):
                     continue
+                if len(emoji) > 1:
+                    has_skin_tone_modifier = False
+                    for modifier in SKIN_TONE_MODIFIERS:
+                        if modifier in emoji:
+                            has_skin_tone_modifier = True
+                    if has_skin_tone_modifier:
+                        # Skip all emoji which already contain a
+                        # skin tone modifier, the skin tone variants
+                        # will be created when needed when browsing
+                        # the categories in emoji-picker:
+                        continue
                 language = emoji_key[1]
                 if not language in emoji_by_label_dict:
                     emoji_by_label_dict[language] = {}

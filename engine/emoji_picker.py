@@ -704,15 +704,6 @@ class EmojiPickerUI(Gtk.Window):
             while Gtk.events_pending():
                 Gtk.main_iteration()
             if not is_recently_used:
-                if len(emoji) > 1:
-                    has_skin_tone_modifier = False
-                    for modifier in itb_emoji.SKIN_TONE_MODIFIERS:
-                        if modifier in emoji:
-                            has_skin_tone_modifier = True
-                    if has_skin_tone_modifier:
-                        # Skip all emoji which already contain a
-                        # skin tone modifier:.
-                        continue
                 skin_tone_variants = self._emoji_matcher.skin_tone_variants(
                     emoji)
                 if len(skin_tone_variants) > 1:
