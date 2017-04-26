@@ -115,6 +115,24 @@ def parse_args():
               + 'Slows the search down and is usually not needed. '
               + 'default: %(default)s'))
     parser.add_argument(
+        '--emoji_unicode_min',
+        nargs='?',
+        type=str,
+        action='store',
+        default='1.0',
+        help=('Load only emoji which were added to Unicode '
+              + 'not earlier than this Unicode version. '
+              + 'default: %(default)s'))
+    parser.add_argument(
+        '--emoji_unicode_max',
+        nargs='?',
+        type=str,
+        action='store',
+        default='100.0',
+        help=('Load only emoji which were added to Unicode '
+              + 'not later than this Unicode version. '
+              + 'default: %(default)s'))
+    parser.add_argument(
         '--non_fully_qualified',
         action='store_true',
         default=False,
@@ -152,6 +170,8 @@ class EmojiPickerUI(Gtk.Window):
                  languages=('en_US',),
                  modal=False,
                  unicode_data_all=False,
+                 emoji_unicode_min=1.0,
+                 emoji_unicode_max=100.0,
                  non_fully_qualified=False,
                  font=None,
                  fontsize=None):
@@ -225,10 +245,15 @@ class EmojiPickerUI(Gtk.Window):
         self.connect('delete-event', self.on_delete_event)
         self.connect('key-press-event', self.on_main_window_key_press_event)
         self._languages = languages
+        self._emoji_unicode_min = emoji_unicode_min
+        self._emoji_unicode_max = emoji_unicode_max
+        self._unicode_data_all = unicode_data_all
         self._non_fully_qualified = non_fully_qualified
         self._emoji_matcher = itb_emoji.EmojiMatcher(
             languages=self._languages,
-            unicode_data_all=unicode_data_all,
+            unicode_data_all=self._unicode_data_all,
+            emoji_unicode_min=self._emoji_unicode_min,
+            emoji_unicode_max=self._emoji_unicode_max,
             non_fully_qualified=self._non_fully_qualified)
         self._gettext_translations = {}
         for language in itb_emoji.expand_languages(self._languages):
@@ -2132,5 +2157,7 @@ if __name__ == '__main__':
         fontsize=_ARGS.fontsize,
         modal=_ARGS.modal,
         unicode_data_all=_ARGS.all,
+        emoji_unicode_min=_ARGS.emoji_unicode_min,
+        emoji_unicode_max=_ARGS.emoji_unicode_max,
         non_fully_qualified=_ARGS.non_fully_qualified)
     Gtk.main()

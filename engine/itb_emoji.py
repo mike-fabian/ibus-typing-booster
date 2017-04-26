@@ -30,6 +30,7 @@ import gzip
 import json
 import unicodedata
 import html
+from distutils.version import LooseVersion
 from difflib import SequenceMatcher
 import gettext
 import itb_util
@@ -313,6 +314,8 @@ class EmojiMatcher():
 
     def __init__(self, languages=('en_US',),
                  unicode_data=True, unicode_data_all=False,
+                 emoji_unicode_min='1.0',
+                 emoji_unicode_max='100.0',
                  cldr_data=True, quick=True,
                  non_fully_qualified=False,
                  romaji=False):
@@ -359,6 +362,8 @@ class EmojiMatcher():
             else:
                 self._gettext_translations[language] = None
         self._unicode_data_all = unicode_data_all
+        self._emoji_unicode_min = emoji_unicode_min
+        self._emoji_unicode_max = emoji_unicode_max
         self._quick = quick
         self._non_fully_qualified = non_fully_qualified
         self._romaji = romaji
@@ -2044,6 +2049,13 @@ class EmojiMatcher():
                 emoji = self.variation_selector_16_normalize(
                     emoji_key[0],
                     non_fully_qualified=self._non_fully_qualified)
+                unicode_version  = self.unicode_version(emoji)
+                if (unicode_version
+                        and (LooseVersion(unicode_version)
+                             < LooseVersion(self._emoji_unicode_min)
+                             or LooseVersion(unicode_version)
+                             > LooseVersion(self._emoji_unicode_max))):
+                    continue
                 language = emoji_key[1]
                 if not language in emoji_by_label_dict:
                     emoji_by_label_dict[language] = {}
