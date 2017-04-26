@@ -430,7 +430,7 @@ class EmojiMatcher():
         # more inconvenient:
         return list(self._languages)
 
-    def _variation_selector_16_normalize(
+    def variation_selector_16_normalize(
             self, emoji_string, non_fully_qualified=False):
         '''Removes or adds emoji presentation selectors (U+FE0F VARIATION
         SELECTOR-16)
@@ -460,37 +460,37 @@ class EmojiMatcher():
         are removed from a sequence, no matter whether the sequence
         was correct or not:
 
-        >>> matcher._variation_selector_16_normalize('⛹\ufe0f\u200d♀\ufe0f', non_fully_qualified=True)
+        >>> matcher.variation_selector_16_normalize('⛹\ufe0f\u200d♀\ufe0f', non_fully_qualified=True)
         '⛹\u200d♀'
 
-        >>> matcher._variation_selector_16_normalize('⛹🏿\u200d♀\ufe0f', non_fully_qualified=True)
+        >>> matcher.variation_selector_16_normalize('⛹🏿\u200d♀\ufe0f', non_fully_qualified=True)
         '⛹🏿\u200d♀'
 
-        >>> matcher._variation_selector_16_normalize('#\ufe0f⃣', non_fully_qualified=True)
+        >>> matcher.variation_selector_16_normalize('#\ufe0f⃣', non_fully_qualified=True)
         '#⃣'
 
-        >>> matcher._variation_selector_16_normalize('#⃣\ufe0f', non_fully_qualified=True)
+        >>> matcher.variation_selector_16_normalize('#⃣\ufe0f', non_fully_qualified=True)
         '#⃣'
 
         If non_fully_qualified=False, variation selectors are added to
         sequences as needed and incorrect sequences are repaired:
 
-        >>> matcher._variation_selector_16_normalize('⛹🏿\ufe0f\u200d♀\ufe0f', non_fully_qualified=False)
+        >>> matcher.variation_selector_16_normalize('⛹🏿\ufe0f\u200d♀\ufe0f', non_fully_qualified=False)
         '⛹🏿\u200d♀\ufe0f'
 
-        >>> matcher._variation_selector_16_normalize('⛹\ufe0f🏿\u200d♀\ufe0f', non_fully_qualified=False)
+        >>> matcher.variation_selector_16_normalize('⛹\ufe0f🏿\u200d♀\ufe0f', non_fully_qualified=False)
         '⛹🏿\u200d♀\ufe0f'
 
-        >>> matcher._variation_selector_16_normalize('⛹\u200d\ufe0f♀', non_fully_qualified=False)
+        >>> matcher.variation_selector_16_normalize('⛹\u200d\ufe0f♀', non_fully_qualified=False)
         '⛹\ufe0f\u200d♀\ufe0f'
 
-        >>> matcher._variation_selector_16_normalize('#⃣\ufe0f', non_fully_qualified=False)
+        >>> matcher.variation_selector_16_normalize('#⃣\ufe0f', non_fully_qualified=False)
         '#\ufe0f⃣'
 
-        >>> matcher._variation_selector_16_normalize('⛹\ufe0f♀', non_fully_qualified=False)
+        >>> matcher.variation_selector_16_normalize('⛹\ufe0f♀', non_fully_qualified=False)
         '⛹\ufe0f♀\ufe0f'
 
-        >>> matcher._variation_selector_16_normalize('⛹', non_fully_qualified=False)
+        >>> matcher.variation_selector_16_normalize('⛹', non_fully_qualified=False)
         '⛹\ufe0f'
         '''
         if emoji_string != '\ufe0f':
@@ -518,7 +518,7 @@ class EmojiMatcher():
         if not emoji_dict_key or not values_key or not values:
             return
         emoji_dict_key = (
-            self._variation_selector_16_normalize(
+            self.variation_selector_16_normalize(
                 emoji_dict_key[0], non_fully_qualified=True),
             emoji_dict_key[1])
         if emoji_dict_key not in self._emoji_dict:
@@ -1568,7 +1568,7 @@ class EmojiMatcher():
         if not query_string:
             return []
         # self._emoji_dict contains only non-fully-qualified sequences:
-        query_string = self._variation_selector_16_normalize(
+        query_string = self.variation_selector_16_normalize(
             query_string, non_fully_qualified=True)
         # Replace any sequence of white space characters and '_'
         # and '＿' in the query string with a single ' '.  '＿'
@@ -1651,7 +1651,7 @@ class EmojiMatcher():
                 if keyword_good_match not in display_name:
                     display_name += ' [' + keyword_good_match + ']'
                 candidates.append((
-                    self._variation_selector_16_normalize(
+                    self.variation_selector_16_normalize(
                         emoji_key[0],
                         self._non_fully_qualified),
                     display_name,
@@ -1717,7 +1717,7 @@ class EmojiMatcher():
         ['slightly smiling face', 'slight smile', ':)', ':-)', '=]', '=)', ':]']
         '''
         # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self._variation_selector_16_normalize(
+        emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
         if language:
             if ((emoji_string, language) in self._emoji_dict
@@ -1834,7 +1834,7 @@ class EmojiMatcher():
         ['sorriso', 'sorriso a bocca chiusa', 'mezzo sorriso']
         '''
         # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self._variation_selector_16_normalize(
+        emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
         if language:
             if ((emoji_string, language) in self._emoji_dict
@@ -1872,7 +1872,7 @@ class EmojiMatcher():
         ['people']
         '''
         # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self._variation_selector_16_normalize(
+        emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
         if language:
             if ((emoji_string, language) in self._emoji_dict
@@ -1948,7 +1948,7 @@ class EmojiMatcher():
         [('🏄\u200d♂️', 'hombre haciendo surf [🏄\u200d♂️, hombre, surf, surfista]', 4), ('🏄🏻\u200d♂️', 'hombre haciendo surf: color de piel 1–2 [hombre, surf, surfista]', 3)]
         '''
         # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self._variation_selector_16_normalize(
+        emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
         candidate_scores = {}
         original_labels = {}
@@ -2002,7 +2002,7 @@ class EmojiMatcher():
                 # The most similar emoji should always be the
                 # original emoji itself.
                 candidate_scores[scores_key] = [
-                    self._variation_selector_16_normalize(
+                    self.variation_selector_16_normalize(
                         emoji_string,
                         non_fully_qualified=self._non_fully_qualified)]
             for label_key in label_keys:
@@ -2025,7 +2025,7 @@ class EmojiMatcher():
                             - len(x[0][0]), # length of emoji string
                             x[0][2], # emoji name
                         ))[:match_limit]:
-            emoji = self._variation_selector_16_normalize(
+            emoji = self.variation_selector_16_normalize(
                 x[0][0],
                 non_fully_qualified=self._non_fully_qualified)
             name = x[0][2] + ' [' + ', '.join(x[1]) + ']'
@@ -2041,7 +2041,7 @@ class EmojiMatcher():
         emoji_by_label_dict = {}
         for label_key in label_keys:
             for emoji_key, emoji_value in self._emoji_dict.items():
-                emoji = self._variation_selector_16_normalize(
+                emoji = self.variation_selector_16_normalize(
                     emoji_key[0],
                     non_fully_qualified=self._non_fully_qualified)
                 language = emoji_key[1]
@@ -2108,7 +2108,7 @@ class EmojiMatcher():
         '0xffffffff'
         '''
         # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self._variation_selector_16_normalize(
+        emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
         if ((emoji_string, 'en') in self._emoji_dict
                 and 'emoji_order' in self._emoji_dict[(emoji_string, 'en')]):
@@ -2138,7 +2138,7 @@ class EmojiMatcher():
         '0xffffffff'
         '''
         # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self._variation_selector_16_normalize(
+        emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
         if ((emoji_string, 'en') in self._emoji_dict
                 and 'cldr_order' in self._emoji_dict[(emoji_string, 'en')]):
@@ -2154,7 +2154,7 @@ class EmojiMatcher():
         :rtype: List of strings
         '''
         # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self._variation_selector_16_normalize(
+        emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
         if (((emoji_string, 'en') in self._emoji_dict)
             and ('properties' in self._emoji_dict[(emoji_string, 'en')])):
@@ -2171,7 +2171,7 @@ class EmojiMatcher():
         :rtype: String
         '''
         # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self._variation_selector_16_normalize(
+        emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
         if (((emoji_string, 'en') in self._emoji_dict)
             and ('uversion' in self._emoji_dict[(emoji_string, 'en')])):
@@ -2299,18 +2299,18 @@ class EmojiMatcher():
         '''
         if not emoji_string or emoji_string in SKIN_TONE_MODIFIERS:
             return [emoji_string]
-        emoji_string = self._variation_selector_16_normalize(
+        emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
         if 'Emoji_Modifier_Base' in self.properties(emoji_string):
             return [
-                self._variation_selector_16_normalize(
+                self.variation_selector_16_normalize(
                     emoji_string + tone,
                     non_fully_qualified=self._non_fully_qualified)
                 for tone in ('',) + SKIN_TONE_MODIFIERS]
         if ((emoji_string[-1] in SKIN_TONE_MODIFIERS)
             and ((emoji_string, 'en') in self._emoji_dict)):
             return [
-                self._variation_selector_16_normalize(
+                self.variation_selector_16_normalize(
                     emoji_string[:-1] + tone,
                     non_fully_qualified=self._non_fully_qualified)
                 for tone in ('',) + SKIN_TONE_MODIFIERS]
@@ -2352,7 +2352,7 @@ class EmojiMatcher():
                                     + variant3)
             if skin_tone_variants:
                 return skin_tone_variants
-        return [self._variation_selector_16_normalize(
+        return [self.variation_selector_16_normalize(
             emoji_string,
             non_fully_qualified=self._non_fully_qualified)]
 

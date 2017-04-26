@@ -49,8 +49,6 @@ require_version('Gdk', '3.0')
 from gi.repository import Gdk
 require_version('Gtk', '3.0')
 from gi.repository import Gtk
-require_version('IBus', '1.0')
-from gi.repository import IBus
 from gi.repository import GObject
 import itb_emoji
 import version
@@ -568,7 +566,8 @@ class EmojiPickerUI(Gtk.Window):
                     '\n' + self._translate_key('Keywords', language) + ': '
                     + html.escape(', '.join(keywords)))
                 description_empty = False
-            categories = self._emoji_matcher.categories(emoji, language=language)
+            categories = self._emoji_matcher.categories(
+                emoji, language=language)
             if categories:
                 description += (
                     '\n' + self._translate_key('Categories', language) + ': '
@@ -578,7 +577,7 @@ class EmojiPickerUI(Gtk.Window):
                 descriptions.append(description)
         fonts_description = _('Fonts used to render this emoji:')
         for text, font_family in itb_pango.get_fonts_used_for_text(
-            self._font + ' ' + str(self._fontsize), emoji):
+                self._font + ' ' + str(self._fontsize), emoji):
             fonts_description += '\n'
             for char in text:
                 fonts_description += (
@@ -612,7 +611,8 @@ class EmojiPickerUI(Gtk.Window):
         '''
         tooltip_text = _('Left click to copy') + '\n'
         if len(self._emoji_matcher.skin_tone_variants(emoji)) > 1:
-            tooltip_text += _('Long press or middle click for skin tones')  + '\n'
+            tooltip_text += (
+                _('Long press or middle click for skin tones')  + '\n')
         tooltip_text += _('Right click for info')
         label.set_tooltip_text(tooltip_text)
 
@@ -639,8 +639,8 @@ class EmojiPickerUI(Gtk.Window):
         self._flowbox.connect('child-activated', self.on_emoji_selected)
         for long_press_gesture in self._long_press_gestures:
             # disconnecting is necessary to avoid warnings to stdout:
-            for id in long_press_gesture[1]:
-                long_press_gesture[0].disconnect(id)
+            for ids in long_press_gesture[1]:
+                long_press_gesture[0].disconnect(ids)
         self._long_press_gestures = []
 
     def _fill_flowbox_browse(self):
@@ -752,13 +752,17 @@ class EmojiPickerUI(Gtk.Window):
             long_press_gesture.set_propagation_phase(
                 Gtk.PropagationPhase.CAPTURE)
             id_pressed = long_press_gesture.connect(
-                'pressed', self.on_flowbox_event_box_long_press_pressed, event_box)
+                'pressed',
+                self.on_flowbox_event_box_long_press_pressed, event_box)
             id_begin = long_press_gesture.connect(
-                'begin', self.on_flowbox_event_box_long_press_begin)
+                'begin',
+                self.on_flowbox_event_box_long_press_begin)
             id_cancel = long_press_gesture.connect(
-                'cancel', self.on_flowbox_event_box_long_press_cancel)
+                'cancel',
+                self.on_flowbox_event_box_long_press_cancel)
             id_cancelled = long_press_gesture.connect(
-                'cancelled', self.on_flowbox_event_box_long_press_cancelled)
+                'cancelled',
+                self.on_flowbox_event_box_long_press_cancelled)
             self._long_press_gestures.append(
                 (long_press_gesture,
                  (id_pressed,
@@ -868,7 +872,7 @@ class EmojiPickerUI(Gtk.Window):
             # add or remove vs16 according to the current setting:
             if emoji:
                 self._recently_used_emoji[
-                    self._emoji_matcher._variation_selector_16_normalize(
+                    self._emoji_matcher.variation_selector_16_normalize(
                         emoji,
                         non_fully_qualified=self._non_fully_qualified)] = value
         if not self._recently_used_emoji:
@@ -961,8 +965,8 @@ class EmojiPickerUI(Gtk.Window):
         '''
         Print some profiling information to stdout.
         '''
-        profile.disable()
-        stats = pstats.Stats(profile)
+        PROFILE.disable()
+        stats = pstats.Stats(PROFILE)
         stats.strip_dirs()
         stats.sort_stats('cumulative')
         stats.print_stats('emoji_picker', 25)
@@ -1203,13 +1207,17 @@ class EmojiPickerUI(Gtk.Window):
             long_press_gesture.set_propagation_phase(
                 Gtk.PropagationPhase.CAPTURE)
             id_pressed = long_press_gesture.connect(
-                'pressed', self.on_flowbox_event_box_long_press_pressed, event_box)
+                'pressed',
+                self.on_flowbox_event_box_long_press_pressed, event_box)
             id_begin = long_press_gesture.connect(
-                'begin', self.on_flowbox_event_box_long_press_begin)
+                'begin',
+                self.on_flowbox_event_box_long_press_begin)
             id_cancel = long_press_gesture.connect(
-                'cancel', self.on_flowbox_event_box_long_press_cancel)
+                'cancel',
+                self.on_flowbox_event_box_long_press_cancel)
             id_cancelled = long_press_gesture.connect(
-                'cancelled', self.on_flowbox_event_box_long_press_cancelled)
+                'cancelled',
+                self.on_flowbox_event_box_long_press_cancelled)
             self._long_press_gestures.append(
                 (long_press_gesture,
                  (id_pressed,
@@ -1353,7 +1361,7 @@ class EmojiPickerUI(Gtk.Window):
             + r'(<span[^<]*?>(?P<name>[^<]+?)</span>)?')
         match = pattern.match(text)
         if match:
-            emoji  = html.unescape(match.group('emoji'))
+            emoji = html.unescape(match.group('emoji'))
         if match.group('name'):
             name = html.unescape(match.group('name'))
         if _ARGS.debug:
@@ -1375,6 +1383,17 @@ class EmojiPickerUI(Gtk.Window):
         return False
 
     def _emoji_event_box_selected(self, event_box):
+        '''
+        Called when an event box containing an emoji
+        was selected in the flowbox.
+
+        The emoji is then copied to the clipboard and a popover
+        pops up for a short time to notify the user that the emoji
+        has been copied to the clipboard.
+
+        :param event_box: The event box which contains the emoji
+        :type event_box: Gtk.EventBox object
+        '''
         # Use .get_label() instead of .get_text() to fetch the text
         # from the label widget including any embedded underlines
         # indicating mnemonics and Pango markup. The emoji is in
@@ -1510,7 +1529,7 @@ class EmojiPickerUI(Gtk.Window):
         text = flowbox_child.get_child().get_label()
         if _ARGS.debug:
             sys.stdout.write('on_skin_tone_selected() text = %s\n' %text)
-        (emoji, name) = self._parse_emoji_and_name_from_text(text)
+        (emoji, dummy_name) = self._parse_emoji_and_name_from_text(text)
         if not emoji:
             return
         self._set_clipboards(emoji)
@@ -1585,7 +1604,8 @@ class EmojiPickerUI(Gtk.Window):
                 'on_flowbox_event_box_long_press_cancelled() %s\n'
                 %repr(gesture))
 
-    def on_flowbox_event_box_long_press_pressed(self, gesture, x, y, event_box):
+    def on_flowbox_event_box_long_press_pressed(
+            self, gesture, x, y, event_box):
         '''
         :param gesture: The object which received the signal
         :type gesture: Gtk.GestureLongPress object
@@ -1830,7 +1850,7 @@ class EmojiPickerUI(Gtk.Window):
             label_description.set_markup(description)
             emoji_info_popover_listbox.insert(label_description, -1)
         if (self._emoji_matcher.cldr_order(emoji) < 0xFFFFFFFF
-            or self._emoji_matcher.properties(emoji)):
+                or self._emoji_matcher.properties(emoji)):
             linkbutton = Gtk.LinkButton.new_with_label(
                 _('Lookup on emojipedia'))
             linkbutton.set_uri(
@@ -2085,8 +2105,8 @@ if __name__ == '__main__':
         sys.stdout.write('--- %s ---\n' %time.strftime('%Y-%m-%d: %H:%M:%S'))
         import cProfile
         import pstats
-        profile = cProfile.Profile()
-        profile.enable()
+        PROFILE = cProfile.Profile()
+        PROFILE.enable()
 
     # Workaround for
     # https://bugzilla.gnome.org/show_bug.cgi?id=622084
