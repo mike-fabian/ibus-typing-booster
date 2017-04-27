@@ -554,6 +554,14 @@ class EmojiMatcher():
                 codepoint_string, name, category = line.split(';')[:3]
                 codepoint_integer = int(codepoint_string, 16)
                 emoji_string = chr(codepoint_integer)
+                if category in ('Cc', 'Co', 'Cs'):
+                    # Never load control characters (“Cc”), they cause
+                    # too much problems when trying to display
+                    # them. Never load the “First” and “Last”
+                    # characters of private use characters “Co” and
+                    # surrogates (“Cs”) either as these are completely
+                    # useless.
+                    continue
                 if (not self._unicode_data_all
                         and not UNICODE_CATEGORIES[category]['valid']
                         and emoji_string not in VALID_CHARACTERS):
