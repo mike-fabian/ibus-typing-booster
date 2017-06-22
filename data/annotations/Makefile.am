@@ -23,28 +23,39 @@ extradata_DATA = \
 	am.xml \
 	ar.xml \
 	as.xml \
+	ast.xml \
 	az.xml \
 	be.xml \
 	bg.xml \
 	bn.xml \
 	bs.xml \
 	ca.xml \
+	chr.xml \
 	cs.xml \
+	cy.xml \
 	da.xml \
 	de.xml \
 	de_CH.xml \
 	el.xml \
 	en.xml \
 	en_001.xml \
+	en_AU.xml \
+	en_CA.xml \
+	en_GB.xml \
 	es.xml \
 	es_419.xml \
+	es_MX.xml \
+	es_US.xml \
 	et.xml \
 	eu.xml \
 	fa.xml \
 	fi.xml \
 	fil.xml \
+	fo.xml \
 	fr.xml \
+	fr_CA.xml \
 	ga.xml \
+	gd.xml \
 	gl.xml \
 	gu.xml \
 	he.xml \
@@ -57,6 +68,7 @@ extradata_DATA = \
 	it.xml \
 	ja.xml \
 	ka.xml \
+	kab.xml \
 	kk.xml \
 	km.xml \
 	kn.xml \
@@ -74,14 +86,17 @@ extradata_DATA = \
 	nb.xml \
 	ne.xml \
 	nl.xml \
+	nn.xml \
 	or.xml \
 	pa.xml \
 	pl.xml \
+	ps.xml \
 	pt.xml \
 	pt_PT.xml \
 	ro.xml \
 	root.xml \
 	ru.xml \
+	sd.xml \
 	si.xml \
 	sk.xml \
 	sl.xml \
@@ -93,13 +108,17 @@ extradata_DATA = \
 	ta.xml \
 	te.xml \
 	th.xml \
+	tk.xml \
+	to.xml \
 	tr.xml \
 	uk.xml \
 	ur.xml \
 	uz.xml \
 	vi.xml \
+	yue.xml \
 	zh.xml \
 	zh_Hant.xml \
+	zh_Hant_HK.xml \
 	zu.xml \
 	$(NULL)
 
