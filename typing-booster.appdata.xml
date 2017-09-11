@@ -16,6 +16,39 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.33" date="2017-09-11" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (es new)
+          </li>
+          <li>
+            Install appstream metadata to /usr/share/metainfo/ 
+          </li>
+          <li>
+            Update UnicodeData.txt to Unicode 10.0.0
+          </li>
+          <li>
+            Fix test cases and kakasi support for the update of the
+            emoji annotations from CLDR
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Skip the emoji which already have skin tone modifiers in
+            itb_emoji.emoji_by_label()
+          </li>
+          <li>
+            Never load characters of Unicode categories “Cc”, “Co”,
+            and “Cs” into the emoji dictionary
+          </li>
+          <li>
+            Update emoji-data.txt to 5.0
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.32" date="2017-04-24" urgency="medium">
       <description>
         <ul>

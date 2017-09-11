@@ -1,4 +1,14 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 11 Sep 2017 Released 1.5.33 version
+* Update translations from zanata (es new)
+* Install appstream metadata to /usr/share/metainfo/
+* Update UnicodeData.txt to Unicode 10.0.0
+* Update emoji annotations from CLDR
+* Skip the emoji which already have skin tone modifiers in itb_emoji.emoji_by_label()
+* Never load characters of Unicode categories “Cc”, “Co”, and “Cs” into the emoji dictionary
+* Update emoji-data.txt to 5.0
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 24 Apr 2017 Released 1.5.32 version
 * Fix error when starting emoji-picker when the “recently-used” does not yet exist
 * Update emojione.json to version 3.0
