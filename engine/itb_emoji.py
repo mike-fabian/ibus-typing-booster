@@ -527,16 +527,16 @@ class EmojiMatcher():
                 emoji_dict_key[0], non_fully_qualified=True),
             emoji_dict_key[1])
         if emoji_dict_key not in self._emoji_dict:
-            self._emoji_dict[emoji_dict_key] = {values_key : values}
+            self._emoji_dict[emoji_dict_key] = {}
+        if type(values) is list:
+            if (values_key not in self._emoji_dict[emoji_dict_key]):
+                self._emoji_dict[emoji_dict_key][values_key] = []
+            for value in values:
+                if (value not in
+                        self._emoji_dict[emoji_dict_key][values_key]):
+                    self._emoji_dict[emoji_dict_key][values_key] += [value]
         else:
-            if (values_key not in self._emoji_dict[emoji_dict_key]
-                    or type(values) is str):
-                self._emoji_dict[emoji_dict_key][values_key] = values
-            else:
-                for value in values:
-                    if (value not in
-                            self._emoji_dict[emoji_dict_key][values_key]):
-                        self._emoji_dict[emoji_dict_key][values_key] += [value]
+            self._emoji_dict[emoji_dict_key][values_key] = values
 
     def _load_unicode_data(self):
         '''Loads emoji names from UnicodeData.txt'''
@@ -981,10 +981,16 @@ class EmojiMatcher():
                             KAKASI_INSTANCE.setMode('H', 'a')
                             KAKASI_INSTANCE.setMode('K', 'a')
                             KAKASI_INSTANCE.setMode('J', 'a')
+                            # default: use Hepburn Roman table
+                            KAKASI_INSTANCE.setMode('r', 'Hepburn')
+                            # add space default: no Separator
+                            KAKASI_INSTANCE.setMode('C', True)
+                            # capitalize default: no Capitalize
+                            KAKASI_INSTANCE.setMode('c', False)
                             kakasi_converter = KAKASI_INSTANCE.getConverter()
                             translated_category_romaji = (
                                 kakasi_converter.do(
-                                    translated_category))
+                                    translated_category)).lower()
                             KAKASI_INSTANCE.setMode('H', 'H')
                             KAKASI_INSTANCE.setMode('K', 'H')
                             KAKASI_INSTANCE.setMode('J', 'H')
@@ -1021,12 +1027,6 @@ class EmojiMatcher():
         language = os.path.basename(
             path).replace('.gz', '').replace('.xml', '')
         with open_function(path, mode='rt') as cldr_annotation_file:
-            if (language == 'ja'
-                    and self._romaji and IMPORT_PYKAKASI_SUCCESSFUL):
-                KAKASI_INSTANCE.setMode('H', 'a')
-                KAKASI_INSTANCE.setMode('K', 'a')
-                KAKASI_INSTANCE.setMode('J', 'a')
-                kakasi_converter = KAKASI_INSTANCE.getConverter()
             pattern = re.compile(
                 r'.*<annotation cp="(?P<emojistring>[^"]+)"'
                 +r'\s*(?P<tts>type="tts"){0,1}'
@@ -1050,14 +1050,34 @@ class EmojiMatcher():
                                 [content,
                                  pinyin.get(content)]
                             )
-                        elif (language == 'ja'
-                              and self._romaji and IMPORT_PYKAKASI_SUCCESSFUL):
+                        elif (language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL):
+                            KAKASI_INSTANCE.setMode('H', 'H')
+                            KAKASI_INSTANCE.setMode('K', 'H')
+                            KAKASI_INSTANCE.setMode('J', 'H')
+                            kakasi_converter = KAKASI_INSTANCE.getConverter()
                             self._add_to_emoji_dict(
                                 (emoji_string, language),
                                 'names',
                                 [content,
                                  kakasi_converter.do(content)]
                             )
+                            if self._romaji:
+                                KAKASI_INSTANCE.setMode('H', 'a')
+                                KAKASI_INSTANCE.setMode('K', 'a')
+                                KAKASI_INSTANCE.setMode('J', 'a')
+                                # default: use Hepburn Roman table
+                                KAKASI_INSTANCE.setMode('r', 'Hepburn')
+                                # add space default: no Separator
+                                KAKASI_INSTANCE.setMode('C', True)
+                                # capitalize default: no Capitalize
+                                KAKASI_INSTANCE.setMode('c', False)
+                                kakasi_converter = KAKASI_INSTANCE.getConverter()
+                                self._add_to_emoji_dict(
+                                    (emoji_string, language),
+                                    'names',
+                                    [content,
+                                     kakasi_converter.do(content).lower()]
+                                )
                         else:
                             self._add_to_emoji_dict(
                                 (emoji_string, language),
@@ -1075,16 +1095,40 @@ class EmojiMatcher():
                                     'keywords',
                                     [keyword, keyword_pinyin]
                                 )
-                        elif (language == 'ja'
-                              and self._romaji and IMPORT_PYKAKASI_SUCCESSFUL):
+                        elif (language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL):
+                            KAKASI_INSTANCE.setMode('H', 'H')
+                            KAKASI_INSTANCE.setMode('K', 'H')
+                            KAKASI_INSTANCE.setMode('J', 'H')
+                            kakasi_converter = KAKASI_INSTANCE.getConverter()
                             for x in content.split('|'):
                                 keyword = x.strip()
-                                keyword_romaji = kakasi_converter.do(keyword)
+                                keyword_hiragana = kakasi_converter.do(keyword)
                                 self._add_to_emoji_dict(
                                     (emoji_string, language),
                                     'keywords',
-                                    [keyword, keyword_romaji]
+                                    [keyword, keyword_hiragana]
                                 )
+                            if self._romaji:
+                                KAKASI_INSTANCE.setMode('H', 'a')
+                                KAKASI_INSTANCE.setMode('K', 'a')
+                                KAKASI_INSTANCE.setMode('J', 'a')
+                                # default: use Hepburn Roman table
+                                KAKASI_INSTANCE.setMode('r', 'Hepburn')
+                                # add space default: no Separator
+                                KAKASI_INSTANCE.setMode('C', True)
+                                # capitalize default: no Capitalize
+                                KAKASI_INSTANCE.setMode('c', False)
+                                kakasi_converter = (
+                                    KAKASI_INSTANCE.getConverter())
+                                for x in content.split('|'):
+                                    keyword = x.strip()
+                                    keyword_romaji = kakasi_converter.do(
+                                        keyword).lower()
+                                    self._add_to_emoji_dict(
+                                        (emoji_string, language),
+                                        'keywords',
+                                        [keyword, keyword_romaji]
+                                    )
                         else:
                             self._add_to_emoji_dict(
                                 (emoji_string, language),
@@ -1280,8 +1324,8 @@ class EmojiMatcher():
         >>> mq.candidates('😺', match_limit=3)
         [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile]', 8), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, mouth, open, smile]', 6), ('😄', 'smiling face with open mouth and smiling eyes [So, people, face, mouth, open, smile]', 6)]
 
-        >>> mq.candidates('ねこ＿')[0][:2]
-        ('🐈', 'ねこ')
+        >>> mq.candidates('ネコ＿')[0][:2]
+        ('🐈', 'ネコ')
 
         >>> mq.candidates('ant')[0][:2]
         ('🐜', 'ant')
@@ -1322,7 +1366,7 @@ class EmojiMatcher():
         >>> mq.candidates('nerd glasses')[0][:2]
         ('🤓', 'nerd face')
 
-        >>> mq.candidates('smiling face eye sun glasses')[0][:2]
+        >>> mq.candidates('smiling face sun glasses')[0][:2]
         ('😎', 'smiling face with sunglasses')
 
         >>> mq.candidates('halo')[0][:2]
@@ -1461,7 +1505,7 @@ class EmojiMatcher():
         ('🐫', 'bactrian camel')
 
         >>> mq.candidates('people')[0][:2]
-        ('👯', 'woman with bunny ears “people with bunny ears partying”')
+        ('👯', 'woman with bunny ears “people with bunny ears”')
 
         >>> mq.candidates('nature')[0][:2]
         ('🙈', 'see-no-evil monkey {nature}')
@@ -1552,7 +1596,7 @@ class EmojiMatcher():
         ('🤔', 'visage en pleine réflexion')
 
         >>> mq.candidates('🤔', match_limit = 3)
-        [('🤔', 'visage en pleine réflexion [🤔, visage, réflexion]', 3), ('🤗', 'visage qui fait un câlin [visage]', 1), ('😑', 'visage sans expression [visage]', 1)]
+        [('🤔', 'visage en pleine réflexion [🤔, réflexion, visage]', 3), ('🤩', 'visage avec des étoiles à la place des yeux [visage]', 1), ('🤗', 'visage qui fait un câlin [visage]', 1)]
 
         >>> mq = EmojiMatcher(languages = ['fr_FR'])
         >>> mq.candidates('2019')
@@ -1773,7 +1817,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages=['de_DE', 'es_ES', 'es_MX', 'it_IT', 'ja_JP'])
         >>> matcher.name('🖥')
-        'Computer'
+        'Desktopcomputer'
 
         >>> matcher = EmojiMatcher(languages=['it_IT', 'es_ES', 'es_MX', 'ja_JP'])
         >>> matcher.name('🖥')
@@ -1788,14 +1832,14 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages=['de_DE'])
         >>> matcher.name('🤔')
-        'Nachdenkender Smiley'
+        'nachdenkendes Gesicht'
 
         >>> matcher.name('⚽')
         'Fußball'
 
         >>> matcher = EmojiMatcher(languages=['de_CH'])
         >>> matcher.name('🤔')
-        'Nachdenkender Smiley'
+        'nachdenkendes Gesicht'
 
         >>> matcher.name('⚽')
         'Fussball'
@@ -1836,7 +1880,7 @@ class EmojiMatcher():
         ['face', 'smile']
 
         >>> matcher.keywords('🙂', language='it')
-        ['sorriso', 'sorriso a bocca chiusa', 'mezzo sorriso']
+        ['mezzo sorriso', 'sorriso', 'sorriso a bocca chiusa']
         '''
         # self._emoji_dict contains only non-fully-qualified sequences:
         emoji_string = self.variation_selector_16_normalize(
@@ -1923,7 +1967,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['it_IT', 'en_US', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, sorridente, faccina, emozionarsi]', 5), ('😺', 'gatto che sorride [sorridente, faccina]', 2), ('😚', 'bacio a occhi chiusi [faccina]', 1), ('😙', 'bacio e sorriso [faccina]', 1), ('🤗', 'faccina che abbraccia [faccina]', 1)]
+        [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, emozionarsi, faccina, sorridente]', 5), ('😺', 'gatto che sorride [faccina, sorridente]', 2), ('😚', 'faccina che bacia con occhi chiusi [faccina]', 1), ('😙', 'faccina che bacia con occhi sorridenti [faccina]', 1), ('🤗', 'faccina che abbraccia [faccina]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
@@ -1931,11 +1975,11 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = [ 'it_IT', 'en_US','es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', 'cammello [🐫, gobba, animale]', 3), ('🐪', 'dromedario [gobba, animale]', 2), ('🐐', 'capra [animale]', 1), ('🐘', 'elefante [animale]', 1), ('🐑', 'pecora [animale]', 1)]
+        [('🐫', 'cammello [🐫, animale, gobba]', 3), ('🐪', 'dromedario [animale, gobba]', 2), ('🐐', 'capra [animale]', 1), ('🐘', 'elefante [animale]', 1), ('🐑', 'pecora [animale]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['de_DE', 'it_IT', 'en_US','es_MX', 'es_ES', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', 'Kamel [🐫, zweihöckrig, Tier]', 3), ('🐪', 'Dromedar [Tier]', 1), ('🐐', 'Ziege [Tier]', 1), ('🐘', 'Elefant [Tier]', 1), ('🐑', 'Schaf [Tier]', 1)]
+        [('🐫', 'Kamel [🐫, Tier, zweihöckrig]', 3), ('🐪', 'Dromedar [Tier]', 1), ('🐐', 'Ziege [Tier]', 1), ('🐘', 'Elefant [Tier]', 1), ('🐑', 'Schaf [Tier]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['es_MX', 'it_IT', 'de_DE', 'en_US', 'es_ES', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
@@ -1943,14 +1987,14 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', 'camello [🐫, camello, bactriano, jorobas, desierto]', 5), ('🐪', 'dromedario [desierto, camello]', 2), ('🏜\ufe0f', 'desierto [desierto]', 1), ('🐫', 'cammello [🐫, gobba, animale]', 3), ('🐪', 'dromedario [gobba, animale]', 2)]
+        [('🐫', 'camello [🐫, bactriano, camello, desierto, dromedario, jorobas]', 6), ('🐪', 'dromedario [camello, desierto, dromedario]', 3), ('🏜️', 'desierto [desierto]', 1), ('🐫', 'cammello [🐫, animale, gobba]', 3), ('🐪', 'dromedario [animale, gobba]', 2)]
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('€', match_limit = 5)
         [('€', 'euro sign [€, Sc]', 2), ('؋', 'afghani sign [Sc]', 1), ('֏', 'armenian dram sign [Sc]', 1), ('₳', 'austral sign [Sc]', 1), ('৻', 'bengali ganda mark [Sc]', 1)]
 
         >>> matcher.similar('🏄‍♂', match_limit = 2)
-        [('🏄\u200d♂️', 'hombre haciendo surf [🏄\u200d♂️, hombre, surf, surfista]', 4), ('🏄🏻\u200d♂️', 'hombre haciendo surf: color de piel 1–2 [hombre, surf, surfista]', 3)]
+        [('🏄\u200d♂️', 'hombre haciendo surf [🏄\u200d♂️, hombre, surf, surfero, surfista]', 5), ('🏄🏻\u200d♂️', 'hombre haciendo surf: color de piel 1–2 [hombre, surf, surfista]', 3)]
         '''
         # self._emoji_dict contains only non-fully-qualified sequences:
         emoji_string = self.variation_selector_16_normalize(
@@ -2414,8 +2458,18 @@ class EmojiMatcher():
             >>> matcher.candidates('katatsumuri')[0][:2]
             ('🐌', 'かたつむり “katatsumuri”')
 
+            >>> matcher.candidates('ねこ＿')[0][:2]
+            ('🐈', 'ネコ “ねこ”')
+
+            >>> matcher.similar('🐤', match_limit=5)
+            [('🐤', '横を向いているひよこ [🐤, ひな, ひよこ, 動物, どうぶつ, 顔, かお, 鳥, とり, hina, hiyoko, doubutsu, kao, tori]', 14), ('🐣', 'ひな鳥 [ひな, ひよこ, 動物, どうぶつ, 鳥, とり, hina, hiyoko, doubutsu, tori]', 10), ('🐦', '鳥 [動物, どうぶつ, 顔, かお, 鳥, とり, doubutsu, kao, tori]', 9), ('🐔', 'にわとり [動物, どうぶつ, 顔, かお, 鳥, とり, doubutsu, kao, tori]', 9), ('🐓', 'おんどり [動物, どうぶつ, 鳥, とり, doubutsu, tori]', 6)]
+
+            >>> matcher.similar('🐌', match_limit=5)
+            [('🐌', 'かたつむり [🐌, かたつむり, でんでん虫, でんでんむし, 虫, むし, katatsumuri, dendenmushi, mushi]', 9), ('🦋', 'チョウ [虫, むし, mushi]', 3), ('🐛', '毛虫 [虫, むし, mushi]', 3), ('🐜', 'アリ [虫, むし, mushi]', 3), ('🐝', 'ミツバチ [虫, むし, mushi]', 3)]
+
             >>> matcher.similar('😱', match_limit=5)
-            [('😱', 'きょうふ [😱, さけび, sakebi, かお, kao, がーん, ga-n, しょっく, shokku]', 9), ('😨', 'あおざめ [がーん, ga-n, かお, kao]', 4), ('😰', 'ひやあせあおざめ [かお, kao]', 2), ('😳', 'せきめん [かお, kao]', 2), ('😬', 'しかめっつら [かお, kao]', 2)]
+            [('😱', '恐怖 [😱, がーん, ショック, しょっく, 叫び, さけび, 恐怖, きょうふ, 顔, かお, ga-n, shokku, sakebi, kyoufu, kao]', 15), ('🙀', '絶望する猫 [がーん, ショック, しょっく, 顔, かお, ga-n, shokku, kao]', 8), ('🤯', '頭爆発 [ショック, しょっく, 顔, かお, shokku, kao]', 6), ('😨', '青ざめ [がーん, 顔, かお, ga-n, kao]', 5), ('😰', '冷や汗青ざめ [顔, かお, kao]', 3)]
+
             '''
 
     def list_emoji_one_bugs(self):
