@@ -39,7 +39,7 @@ appdata_DATA = \
 	typing-booster.appdata.xml \
 	$(NULL)
 
-appdatadir = $(datadir)/appdata
+appdatadir = $(datadir)/metainfo
 
 AUX_DIST = \
 	config.guess \
