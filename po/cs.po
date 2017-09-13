@@ -1,4 +1,4 @@
-# Mike FABIAN <mfabian@redhat.com>, 2016. #zanata
+# Zdenek <chmelarz@gmail.com>, 2017. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -8,12 +8,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-08-19 04:06-0400\n"
-"Last-Translator: Copied by Zanata <copied-by-zanata@zanata.org>\n"
-"Language-Team: Catalan\n"
-"Language: ca\n"
+"PO-Revision-Date: 2017-09-11 08:35-0400\n"
+"Last-Translator: Zdenek <chmelarz@gmail.com>\n"
+"Language-Team: Czech\n"
+"Language: cs\n"
 "X-Generator: Zanata 3.9.6\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
 
 #: engine/emoji_picker.py:193
 msgid "Emoji Picker"
@@ -27,9 +27,10 @@ msgstr ""
 msgid "About"
 msgstr ""
 
+# auto translated by TM merge from project: virt-top, version: master, DocId: virt-top
 #: engine/emoji_picker.py:322
 msgid "Quit"
-msgstr ""
+msgstr "Ukončit"
 
 #: engine/emoji_picker.py:332
 msgid "Search for emoji"
@@ -65,9 +66,10 @@ msgstr ""
 msgid "Recently used"
 msgstr ""
 
+# auto translated by TM merge from project: fedora-software, version: master, DocId: template/django
 #: engine/emoji_picker.py:593
 msgid "Categories"
-msgstr ""
+msgstr "Kategorie"
 
 #: engine/emoji_picker.py:594
 msgid "Unicode categories"
@@ -97,14 +99,16 @@ msgstr ""
 msgid "Right click for info"
 msgstr ""
 
+# auto translated by TM merge from project: ibus, version: head, DocId: ibus10
 #. Translators: put your names here, one name per line.
 #: engine/emoji_picker.py:1161
 msgid "translator-credits"
-msgstr ""
+msgstr "Kredit-překladatelům"
 
+# auto translated by TM merge from project: anaconda, version: f25, DocId: main
 #: engine/emoji_picker.py:1205
 msgid "Search Results"
-msgstr ""
+msgstr "Výsledky hledání"
 
 #: engine/emoji_picker.py:1209
 msgid "Search produced empty result."
@@ -145,22 +149,22 @@ msgid "Off the record mode"
 msgstr ""
 
 #: engine/hunspell_table.py:1156
-#, fuzzy
 msgid "Preedit input method"
-msgstr "Mètode d'entrada:"
+msgstr ""
 
 #: engine/hunspell_table.py:1157
 msgid "Switch preedit input method"
 msgstr ""
 
+# auto translated by TM merge from project: ibus-table, version: master, DocId: ibus-table
 #: engine/hunspell_table.py:1350
 msgid "Setup"
-msgstr "Preferències"
+msgstr "Nastavení"
 
 #: engine/hunspell_table.py:1353
 #, python-format
 msgid "Configure ibus-typing-booster “%(name)s”"
-msgstr "Preferències per a l'ibus-typing-booster “%(name)s”"
+msgstr ""
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:746 engine/itb_emoji.py:948
@@ -216,89 +220,89 @@ msgstr ""
 #: setup/main.py:118
 #, python-format
 msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
-msgstr "Format desconegut del nom del motor: IBUS_ENGINE_NAME=%(name)s"
+msgstr ""
 
 #: setup/main.py:124
 msgid "IBUS_ENGINE_NAME environment variable is not set."
-msgstr "La variable d'entorn IBUS_ENGINE_NAME no està establerta."
+msgstr ""
 
 #: setup/main.py:128
 msgid ""
 "Cannot determine the config file for this engine. Please use the --config-"
 "file option."
 msgstr ""
-"No es pot determinar cap fitxer de configuració per a aquest motor. Si us "
-"plau, utilitzeu l'opció --config-file."
 
 #: setup/main.py:138
 #, python-format
 msgid "Config file %(file)s does not exist."
-msgstr "El fitxer de configuració %(file)s no existeix."
+msgstr ""
 
 #: setup/main.py:156
 #, python-format
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
-msgstr "Preferències per a l'ibus-typing-booster \"%(symbol)s\""
+msgstr ""
 
+# auto translated by TM merge from project: ibus-anthy, version: head, DocId: ibus-anthy
 #. Translators: Column heading of the table listing the existing shortcuts
 #: setup/main.py:203
 msgid "Shortcut"
-msgstr ""
+msgstr "Zkratka"
 
 #. Translators: Column heading of the table listing the existing shortcuts
 #: setup/main.py:209
 msgid "Shortcut expansion"
 msgstr ""
 
+# auto translated by TM merge from project: ibus-table, version: master, DocId: ibus-table
 #: setup/main.py:391
 msgid "Horizontal"
-msgstr ""
+msgstr "Vodorovně"
 
+# auto translated by TM merge from project: ibus-table, version: master, DocId: ibus-table
 #: setup/main.py:393
 msgid "Vertical"
-msgstr ""
+msgstr "Svisle"
 
 #: setup/main.py:485
 msgid "Another instance of this app is already running."
-msgstr "Ja s'està executant una altra instància d'aquesta aplicació."
+msgstr ""
 
 #: setup/main.py:673
 msgid "Open File ..."
-msgstr "Obre el fitxer..."
+msgstr ""
 
 #: setup/main.py:691
 #, python-format
 msgid "Learned successfully from file %(filename)s."
-msgstr "S'ha après correctament del fitxer %(filename)s."
+msgstr ""
 
 #: setup/main.py:700
 #, python-format
 msgid "Learning from file %(filename)s failed."
-msgstr "Ha fallat l'aprenentatge del fitxer %(filename)s."
+msgstr ""
 
 #: setup/main.py:713
 msgid "Are you sure?"
-msgstr "Esteu segur?"
+msgstr ""
 
 #: setup/main.py:720
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
 msgstr ""
-"Realment voleu eliminar totes les dades de l'idioma \n"
-"que s'han après de l'escriptura o la lectura de fitxers? "
 
 #: setup/main.py:1066
 msgid "ibus is not running."
-msgstr "ibus no s'està executant."
+msgstr ""
 
+# auto translated by TM merge from project: Cockpit, version: rhel-7.4, DocId: cockpit
 #: setup/setup.glade:31
 msgid "Close"
-msgstr "Tanca"
+msgstr "Zavřít"
 
 #: setup/setup.glade:65
 msgid "Enable suggestions by Tab key"
-msgstr "Habilita els suggeriments amb la tecla Tab"
+msgstr ""
 
 #: setup/setup.glade:69
 msgid ""
@@ -309,7 +313,7 @@ msgstr ""
 
 #: setup/setup.glade:82
 msgid "Display total number of candidates"
-msgstr "Mostra el nombre total de candidats"
+msgstr ""
 
 #: setup/setup.glade:86
 msgid ""
@@ -355,9 +359,8 @@ msgid ""
 msgstr ""
 
 #: setup/setup.glade:147
-#, fuzzy
 msgid "Remember last used preedit input method"
-msgstr "Mètode d'entrada:"
+msgstr ""
 
 #: setup/setup.glade:151
 msgid ""
@@ -409,7 +412,7 @@ msgstr ""
 
 #: setup/setup.glade:212
 msgid "Candidate window page size:"
-msgstr "Mida de la pàgina de la finestra dels candidats:"
+msgstr ""
 
 #: setup/setup.glade:249
 msgid ""
@@ -428,7 +431,7 @@ msgstr ""
 
 #: setup/setup.glade:273
 msgid "Minimum number of chars for completion:"
-msgstr "Nombre màxim de caràcter per a la conclusió:"
+msgstr ""
 
 #: setup/setup.glade:300
 msgid ""
@@ -438,11 +441,11 @@ msgstr ""
 
 #: setup/setup.glade:301
 msgid "Input Method:"
-msgstr "Mètode d'entrada:"
+msgstr ""
 
 #: setup/setup.glade:321
 msgid "Input Method Help"
-msgstr "Ajuda del mètode d'entrada"
+msgstr ""
 
 #: setup/setup.glade:325
 msgid "Display some help showing how to use the input method selected above."
@@ -474,9 +477,10 @@ msgid ""
 "load. Because it is buggy, this option is off by default."
 msgstr ""
 
+# auto translated by TM merge from project: Cockpit, version: rhel-7.4, DocId: cockpit
 #: setup/setup.glade:371
 msgid "Options"
-msgstr "Opcions"
+msgstr "Přepínače"
 
 #: setup/setup.glade:389
 msgid "Clear input"
@@ -504,34 +508,32 @@ msgstr ""
 
 #: setup/setup.glade:523
 msgid "Install the dictionary package for this engine"
-msgstr "Instal·la el paquet del diccionari per a aquest motor"
+msgstr ""
 
 #: setup/setup.glade:535
 msgid "Install dictionary"
-msgstr "Instal·la el diccionari"
+msgstr ""
 
 #: setup/setup.glade:548
 msgid "Learn your style by reading a text file"
-msgstr "Aprèn el vostre estil amb la lectura d'un fitxer de text"
+msgstr ""
 
 #: setup/setup.glade:560
 msgid "Learn from text file"
-msgstr "Aprèn del fitxer de text"
+msgstr ""
 
 #: setup/setup.glade:573
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
-"Elimina totes les dades de l'idioma personal que s'han après de l'escriptura "
-"o de la lectura de fitxers"
 
 #: setup/setup.glade:585
 msgid "Delete learned data"
-msgstr "Elimina les dades que s'han après"
+msgstr ""
 
 #: setup/setup.glade:604
 msgid "Dictionaries and personal data"
-msgstr "Diccionaris i dades personals"
+msgstr ""
 
 #: setup/setup.glade:654
 msgid "A completion input method to speedup typing."
@@ -550,9 +552,8 @@ msgid "Typing Booster"
 msgstr ""
 
 #: typing-booster.appdata.xml:6
-#, fuzzy
 msgid "Predictive input method"
-msgstr "Mètode d'entrada:"
+msgstr ""
 
 #: typing-booster.appdata.xml:8
 msgid ""

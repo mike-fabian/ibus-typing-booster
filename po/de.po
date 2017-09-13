@@ -12,91 +12,127 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2017-03-29 08:38+0200\n"
+"POT-Creation-Date: 2017-10-05 13:12+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-03-29 03:00-0400\n"
+"PO-Revision-Date: 2017-10-05 07:00-0400\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <trans-de@lists.fedoraproject.org>\n"
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Zanata 3.9.6\n"
 
-#: engine/emoji_picker.py:159
+#: engine/emoji_picker.py:193
 msgid "Emoji Picker"
 msgstr "Emoji Auswahl"
 
-#: engine/emoji_picker.py:275
+#: engine/emoji_picker.py:311
 msgid "Clear recently used"
 msgstr "„Zuletzt verwendet“ löschen"
 
-#: engine/emoji_picker.py:281 setup/setup.glade:727
+#: engine/emoji_picker.py:317 setup/setup.glade:727
 msgid "About"
 msgstr "Info"
 
-#: engine/emoji_picker.py:286
+#: engine/emoji_picker.py:322
 msgid "Quit"
 msgstr "Beenden"
 
-#: engine/emoji_picker.py:385
+#: engine/emoji_picker.py:332
+msgid "Search for emoji"
+msgstr "Nach Emoji suchen"
+
+#: engine/emoji_picker.py:344
+msgid "Set the font to display emoji"
+msgstr "Font für Emoji wählen"
+
+#: engine/emoji_picker.py:352
+msgid "Set font size"
+msgstr "Fontgröße wählen"
+
+#. Translators: This is a checkbox which enables or disables
+#. the pango font fallback. If font fallback is off, only the
+#. font selected in the font menu is used to display emoji
+#. (if possible, this may not always work, sometimes other fonts
+#. may be used even if font fallback is off).
+#. If font fallback is on, other fonts will be tried for emoji
+#. or parts of emoji sequences which cannot be displayed in the
+#. selected font.
+#: engine/emoji_picker.py:373
+msgid "Fallback"
+msgstr "Ausweichfonts"
+
+#: engine/emoji_picker.py:375
+msgid ""
+"Whether to use font fallback for emoji or parts of emoji sequences which "
+"cannot be displayed using the selected font."
+msgstr ""
+"Ob alternative Fonts benutzt werden sollen für Emoji oder Teile von "
+"Emojisequenzen, die mit dem gewählten Font nicht angezeigt werden können."
+
+#: engine/emoji_picker.py:445
 msgid "Recently used"
 msgstr "Zuletzt verwendet"
 
-#: engine/emoji_picker.py:533
+#: engine/emoji_picker.py:593
 msgid "Categories"
 msgstr "Kategorien"
 
-#: engine/emoji_picker.py:534
+#: engine/emoji_picker.py:594
 msgid "Unicode categories"
 msgstr "Unicode Kategorien"
 
-#: engine/emoji_picker.py:535
+#: engine/emoji_picker.py:595
 msgid "Keywords"
 msgstr "Stichworte"
 
-#: engine/emoji_picker.py:577
+#: engine/emoji_picker.py:638
 msgid "Fonts used to render this emoji:"
 msgstr "Fonts, die benutzt wurden um dieses Emoji zu rendern:"
 
-#: engine/emoji_picker.py:589
+#: engine/emoji_picker.py:653
 msgid "Unicode Version:"
 msgstr "Unicode-Version:"
 
-#: engine/emoji_picker.py:611 engine/emoji_picker.py:1714
+#: engine/emoji_picker.py:675 engine/emoji_picker.py:1805
 msgid "Left click to copy"
 msgstr "Links klicken zum Kopieren"
 
-#: engine/emoji_picker.py:613
+#: engine/emoji_picker.py:678
 msgid "Long press or middle click for skin tones"
 msgstr "Lange drücken oder mittler Mausclick für Hautfarben"
 
-#: engine/emoji_picker.py:614
+#: engine/emoji_picker.py:679
 msgid "Right click for info"
 msgstr "Rechts klicken für Informationen"
 
 #. Translators: put your names here, one name per line.
-#: engine/emoji_picker.py:1086
+#: engine/emoji_picker.py:1161
 msgid "translator-credits"
 msgstr "Mike FABIAN <mfabian@redhat.com>, 2017"
 
-#: engine/emoji_picker.py:1130
+#: engine/emoji_picker.py:1205
 msgid "Search Results"
 msgstr "Suchergebnisse"
 
-#: engine/emoji_picker.py:1134
+#: engine/emoji_picker.py:1209
 msgid "Search produced empty result."
 msgstr "Suche ergab keine Treffer."
 
-#: engine/emoji_picker.py:1390 engine/emoji_picker.py:1511
+#: engine/emoji_picker.py:1480 engine/emoji_picker.py:1601
 msgid "Copied to clipboard!"
 msgstr "In die Zwischenablage kopiert!"
 
-#: engine/emoji_picker.py:1823
+#: engine/emoji_picker.py:1915
 msgid "Lookup on emojipedia"
 msgstr "Nachschlagen in Emojipedia"
 
-#: engine/emoji_picker.py:2024
+#: engine/emoji_picker.py:2038 setup/main.py:395
+msgid "System default"
+msgstr "Systemvorgabe"
+
+#: engine/emoji_picker.py:2160
 msgid "Set Font"
 msgstr "Font einstellen"
 
@@ -136,53 +172,53 @@ msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Ibus Typing Booster \"%(name)s\" Einstellungen"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:730 engine/itb_emoji.py:875
+#: engine/itb_emoji.py:746 engine/itb_emoji.py:948
 msgid "people"
 msgstr "Menschen"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:731 engine/itb_emoji.py:871
+#: engine/itb_emoji.py:747 engine/itb_emoji.py:944
 msgid "nature"
 msgstr "Natur"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:732 engine/itb_emoji.py:867
+#: engine/itb_emoji.py:748 engine/itb_emoji.py:940
 msgid "food"
 msgstr "Lebensmittel"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:733 engine/itb_emoji.py:881
+#: engine/itb_emoji.py:749 engine/itb_emoji.py:954
 msgid "travel"
 msgstr "Reise"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:734 engine/itb_emoji.py:863
+#: engine/itb_emoji.py:750 engine/itb_emoji.py:758 engine/itb_emoji.py:936
 msgid "activity"
 msgstr "Aktivität"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:735 engine/itb_emoji.py:873
+#: engine/itb_emoji.py:751 engine/itb_emoji.py:946
 msgid "objects"
 msgstr "Objekte"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:736 engine/itb_emoji.py:879
+#: engine/itb_emoji.py:752 engine/itb_emoji.py:952
 msgid "symbols"
 msgstr "Symbole"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:737 engine/itb_emoji.py:865
+#: engine/itb_emoji.py:753 engine/itb_emoji.py:938
 msgid "flags"
 msgstr "Flaggen"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:738 engine/itb_emoji.py:869
+#: engine/itb_emoji.py:754 engine/itb_emoji.py:942
 msgid "modifier"
 msgstr "Modifikator"
 
 #. not  in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:739 engine/itb_emoji.py:877
+#: engine/itb_emoji.py:755 engine/itb_emoji.py:950
 msgid "regional"
 msgstr "Regional"
 
@@ -230,10 +266,6 @@ msgstr "Horizontal"
 #: setup/main.py:393
 msgid "Vertical"
 msgstr "Vertikal"
-
-#: setup/main.py:395
-msgid "System default"
-msgstr "Systemvorgabe"
 
 #: setup/main.py:485
 msgid "Another instance of this app is already running."
@@ -608,6 +640,6 @@ msgstr ""
 " Man kann einfach das gewünschte Wort aus einer List von Vorschlägen "
 "auswählen und so seine Tippgeschwindigkeit und Rechtschreibung verbessern."
 
-#: typing-booster.appdata.xml:1052
+#: typing-booster.appdata.xml:1166
 msgid "Mike FABIAN"
 msgstr "Mike FABIAN"
