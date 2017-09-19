@@ -116,6 +116,7 @@ extradata_DATA = \
 	uz.xml \
 	vi.xml \
 	yue.xml \
+	yue_Hans.xml \
 	zh.xml \
 	zh_Hant.xml \
 	zh_Hant_HK.xml \

@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
+<!-- Copyright © 1991-2017 Unicode, Inc.
+For terms of use, see http://www.unicode.org/copyright.html
+Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
+CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
+
+Derived short names and annotations, using GenerateDerivedAnnotations.java. See warnings in /annotations/ file.
+-->
+<ldml>
+	<identity>
+		<version number="$Revision: 13710 $"/>
+		<language type="ps"/>
+	</identity>
+	<annotations>
+		<annotation cp="0⃣">کیکاپ</annotation>
+		<annotation cp="0⃣" type="tts">کیکاپ: 0</annotation>
+		<annotation cp="1⃣">کیکاپ</annotation>
+		<annotation cp="1⃣" type="tts">کیکاپ: 1</annotation>
+		<annotation cp="2⃣">کیکاپ</annotation>
+		<annotation cp="2⃣" type="tts">کیکاپ: 2</annotation>
+		<annotation cp="3⃣">کیکاپ</annotation>
+		<annotation cp="3⃣" type="tts">کیکاپ: 3</annotation>
+		<annotation cp="4⃣">کیکاپ</annotation>
+		<annotation cp="4⃣" type="tts">کیکاپ: 4</annotation>
+		<annotation cp="5⃣">کیکاپ</annotation>
+		<annotation cp="5⃣" type="tts">کیکاپ: 5</annotation>
+		<annotation cp="6⃣">کیکاپ</annotation>
+		<annotation cp="6⃣" type="tts">کیکاپ: 6</annotation>
+		<annotation cp="7⃣">کیکاپ</annotation>
+		<annotation cp="7⃣" type="tts">کیکاپ: 7</annotation>
+		<annotation cp="8⃣">کیکاپ</annotation>
+		<annotation cp="8⃣" type="tts">کیکاپ: 8</annotation>
+		<annotation cp="9⃣">کیکاپ</annotation>
+		<annotation cp="9⃣" type="tts">کیکاپ: 9</annotation>
+		<annotation cp="👩‍❤‍💋‍👨">مچې | ښځه | سړی</annotation>
+		<annotation cp="👩‍❤‍💋‍👨" type="tts">مچې: ښځه او سړی</annotation>
+		<annotation cp="👨‍❤‍💋‍👨">مچې | سړی</annotation>
+		<annotation cp="👨‍❤‍💋‍👨" type="tts">مچې: سړی او سړی</annotation>
+		<annotation cp="👩‍❤‍💋‍👩">مچې | ښځه</annotation>
+		<annotation cp="👩‍❤‍💋‍👩" type="tts">مچې: ښځه او ښځه</annotation>
+		<annotation cp="👩‍❤‍👨">د زړه سره جوړه | ښځه | سړی</annotation>
+		<annotation cp="👩‍❤‍👨" type="tts">د زړه سره جوړه: ښځه او سړی</annotation>
+		<annotation cp="👨‍❤‍👨">د زړه سره جوړه | سړی</annotation>
+		<annotation cp="👨‍❤‍👨" type="tts">د زړه سره جوړه: سړی او سړی</annotation>
+		<annotation cp="👩‍❤‍👩">د زړه سره جوړه | ښځه</annotation>
+		<annotation cp="👩‍❤‍👩" type="tts">د زړه سره جوړه: ښځه او ښځه</annotation>
+		<annotation cp="👨‍👩‍👦">کورنۍ | سړی | ښځه | هلک</annotation>
+		<annotation cp="👨‍👩‍👦" type="tts">کورنۍ: سړی او ښځه او هلک</annotation>
+		<annotation cp="👨‍👩‍👧">کورنۍ | سړی | ښځه | نجلۍ</annotation>
+		<annotation cp="👨‍👩‍👧" type="tts">کورنۍ: سړی او ښځه او نجلۍ</annotation>
+		<annotation cp="👨‍👩‍👧‍👦">کورنۍ | سړی | ښځه | نجلۍ | هلک</annotation>
+		<annotation cp="👨‍👩‍👧‍👦" type="tts">کورنۍ: سړی او ښځه او نجلۍ او هلک</annotation>
+		<annotation cp="👨‍👩‍👦‍👦">کورنۍ | سړی | ښځه | هلک</annotation>
+		<annotation cp="👨‍👩‍👦‍👦" type="tts">کورنۍ: سړی او ښځه او هلک او هلک</annotation>
+		<annotation cp="👨‍👩‍👧‍👧">کورنۍ | سړی | ښځه | نجلۍ</annotation>
+		<annotation cp="👨‍👩‍👧‍👧" type="tts">کورنۍ: سړی او ښځه او نجلۍ او نجلۍ</annotation>
+		<annotation cp="👨‍👨‍👦">کورنۍ | سړی | هلک</annotation>
+		<annotation cp="👨‍👨‍👦" type="tts">کورنۍ: سړی او سړی او هلک</annotation>
+		<annotation cp="👨‍👨‍👧">کورنۍ | سړی | نجلۍ</annotation>
+		<annotation cp="👨‍👨‍👧" type="tts">کورنۍ: سړی او سړی او نجلۍ</annotation>
+		<annotation cp="👨‍👨‍👧‍👦">کورنۍ | سړی | نجلۍ | هلک</annotation>
+		<annotation cp="👨‍👨‍👧‍👦" type="tts">کورنۍ: سړی او سړی او نجلۍ او هلک</annotation>
+		<annotation cp="👨‍👨‍👦‍👦">کورنۍ | سړی | هلک</annotation>
+		<annotation cp="👨‍👨‍👦‍👦" type="tts">کورنۍ: سړی او سړی او هلک او هلک</annotation>
+		<annotation cp="👨‍👨‍👧‍👧">کورنۍ | سړی | نجلۍ</annotation>
+		<annotation cp="👨‍👨‍👧‍👧" type="tts">کورنۍ: سړی او سړی او نجلۍ او نجلۍ</annotation>
+		<annotation cp="👩‍👩‍👦">کورنۍ | ښځه | هلک</annotation>
+		<annotation cp="👩‍👩‍👦" type="tts">کورنۍ: ښځه او ښځه او هلک</annotation>
+		<annotation cp="👩‍👩‍👧">کورنۍ | ښځه | نجلۍ</annotation>
+		<annotation cp="👩‍👩‍👧" type="tts">کورنۍ: ښځه او ښځه او نجلۍ</annotation>
+		<annotation cp="👩‍👩‍👧‍👦">کورنۍ | ښځه | نجلۍ | هلک</annotation>
+		<annotation cp="👩‍👩‍👧‍👦" type="tts">کورنۍ: ښځه او ښځه او نجلۍ او هلک</annotation>
+		<annotation cp="👩‍👩‍👦‍👦">کورنۍ | ښځه | هلک</annotation>
+		<annotation cp="👩‍👩‍👦‍👦" type="tts">کورنۍ: ښځه او ښځه او هلک او هلک</annotation>
+		<annotation cp="👩‍👩‍👧‍👧">کورنۍ | ښځه | نجلۍ</annotation>
+		<annotation cp="👩‍👩‍👧‍👧" type="tts">کورنۍ: ښځه او ښځه او نجلۍ او نجلۍ</annotation>
+		<annotation cp="👨‍👦">کورنۍ | سړی | هلک</annotation>
+		<annotation cp="👨‍👦" type="tts">کورنۍ: سړی او هلک</annotation>
+		<annotation cp="👨‍👦‍👦">کورنۍ | سړی | هلک</annotation>
+		<annotation cp="👨‍👦‍👦" type="tts">کورنۍ: سړی او هلک او هلک</annotation>
+		<annotation cp="👨‍👧">کورنۍ | سړی | نجلۍ</annotation>
+		<annotation cp="👨‍👧" type="tts">کورنۍ: سړی او نجلۍ</annotation>
+		<annotation cp="👨‍👧‍👦">کورنۍ | سړی | نجلۍ | هلک</annotation>
+		<annotation cp="👨‍👧‍👦" type="tts">کورنۍ: سړی او نجلۍ او هلک</annotation>
+		<annotation cp="👨‍👧‍👧">کورنۍ | سړی | نجلۍ</annotation>
+		<annotation cp="👨‍👧‍👧" type="tts">کورنۍ: سړی او نجلۍ او نجلۍ</annotation>
+		<annotation cp="👩‍👦">کورنۍ | ښځه | هلک</annotation>
+		<annotation cp="👩‍👦" type="tts">کورنۍ: ښځه او هلک</annotation>
+		<annotation cp="👩‍👦‍👦">کورنۍ | ښځه | هلک</annotation>
+		<annotation cp="👩‍👦‍👦" type="tts">کورنۍ: ښځه او هلک او هلک</annotation>
+		<annotation cp="👩‍👧">کورنۍ | ښځه | نجلۍ</annotation>
+		<annotation cp="👩‍👧" type="tts">کورنۍ: ښځه او نجلۍ</annotation>
+		<annotation cp="👩‍👧‍👦">کورنۍ | ښځه | نجلۍ | هلک</annotation>
+		<annotation cp="👩‍👧‍👦" type="tts">کورنۍ: ښځه او نجلۍ او هلک</annotation>
+		<annotation cp="👩‍👧‍👧">کورنۍ | ښځه | نجلۍ</annotation>
+		<annotation cp="👩‍👧‍👧" type="tts">کورنۍ: ښځه او نجلۍ او نجلۍ</annotation>
+		<annotation cp="#⃣">کیکاپ</annotation>
+		<annotation cp="#⃣" type="tts">کیکاپ: #</annotation>
+		<annotation cp="*⃣">کیکاپ</annotation>
+		<annotation cp="*⃣" type="tts">کیکاپ: *</annotation>
+		<annotation cp="🔟">کیکاپ</annotation>
+		<annotation cp="🔟" type="tts">کیکاپ: 10</annotation>
+		<annotation cp="🇦🇨">بيرغ</annotation>
+		<annotation cp="🇦🇨" type="tts">د توغندیو ټاپو</annotation>
+		<annotation cp="🇦🇩">بيرغ</annotation>
+		<annotation cp="🇦🇩" type="tts">اندورا</annotation>
+		<annotation cp="🇦🇪">بيرغ</annotation>
+		<annotation cp="🇦🇪" type="tts">متحده عرب امارات</annotation>
+		<annotation cp="🇦🇫">بيرغ</annotation>
+		<annotation cp="🇦🇫" type="tts">افغانستان</annotation>
+		<annotation cp="🇦🇬">بيرغ</annotation>
+		<annotation cp="🇦🇬" type="tts">انټيګوا او باربودا</annotation>
+		<annotation cp="🇦🇮">بيرغ</annotation>
+		<annotation cp="🇦🇮" type="tts">انګیلا</annotation>
+		<annotation cp="🇦🇱">بيرغ</annotation>
+		<annotation cp="🇦🇱" type="tts">البانیه</annotation>
+		<annotation cp="🇦🇲">بيرغ</annotation>
+		<annotation cp="🇦🇲" type="tts">ارمنستان</annotation>
+		<annotation cp="🇦🇴">بيرغ</annotation>
+		<annotation cp="🇦🇴" type="tts">انګولا</annotation>
+		<annotation cp="🇦🇶">بيرغ</annotation>
+		<annotation cp="🇦🇶" type="tts">انتارکتیکا</annotation>
+		<annotation cp="🇦🇷">بيرغ</annotation>
+		<annotation cp="🇦🇷" type="tts">ارژنټاین</annotation>
+		<annotation cp="🇦🇸">بيرغ</annotation>
+		<annotation cp="🇦🇸" type="tts">امریکایی سمو</annotation>
+		<annotation cp="🇦🇹">بيرغ</annotation>
+		<annotation cp="🇦🇹" type="tts">اتریش</annotation>
+		<annotation cp="🇦🇺">بيرغ</annotation>
+		<annotation cp="🇦🇺" type="tts">آسټرالیا</annotation>
+		<annotation cp="🇦🇼">بيرغ</annotation>
+		<annotation cp="🇦🇼" type="tts">آروبا</annotation>
+		<annotation cp="🇦🇽">بيرغ</annotation>
+		<annotation cp="🇦🇽" type="tts">الاند ټاپوان</annotation>
+		<annotation cp="🇦🇿">بيرغ</annotation>
+		<annotation cp="🇦🇿" type="tts">اذربايجان</annotation>
+		<annotation cp="🇧🇦">بيرغ</annotation>
+		<annotation cp="🇧🇦" type="tts">بوسنيا او هېرزګوينا</annotation>
+		<annotation cp="🇧🇧">بيرغ</annotation>
+		<annotation cp="🇧🇧" type="tts">باربادوس</annotation>
+		<annotation cp="🇧🇩">بيرغ</annotation>
+		<annotation cp="🇧🇩" type="tts">بنگله دېش</annotation>
+		<annotation cp="🇧🇪">بيرغ</annotation>
+		<annotation cp="🇧🇪" type="tts">بیلجیم</annotation>
+		<annotation cp="🇧🇫">بيرغ</annotation>
+		<annotation cp="🇧🇫" type="tts">بورکینا فاسو</annotation>
+		<annotation cp="🇧🇬">بيرغ</annotation>
+		<annotation cp="🇧🇬" type="tts">بلغاریه</annotation>
+		<annotation cp="🇧🇭">بيرغ</annotation>
+		<annotation cp="🇧🇭" type="tts">بحرين</annotation>
+		<annotation cp="🇧🇮">بيرغ</annotation>
+		<annotation cp="🇧🇮" type="tts">بروندي</annotation>
+		<annotation cp="🇧🇯">بيرغ</annotation>
+		<annotation cp="🇧🇯" type="tts">بینن</annotation>
+		<annotation cp="🇧🇱">بيرغ</annotation>
+		<annotation cp="🇧🇱" type="tts">سینټ بارټیلیټی</annotation>
+		<annotation cp="🇧🇲">بيرغ</annotation>
+		<annotation cp="🇧🇲" type="tts">برمودا</annotation>
+		<annotation cp="🇧🇳">بيرغ</annotation>
+		<annotation cp="🇧🇳" type="tts">بروني</annotation>
+		<annotation cp="🇧🇴">بيرغ</annotation>
+		<annotation cp="🇧🇴" type="tts">بولیویا</annotation>
+		<annotation cp="🇧🇶">بيرغ</annotation>
+		<annotation cp="🇧🇶" type="tts">کیریبین هالینډ</annotation>
+		<annotation cp="🇧🇷">بيرغ</annotation>
+		<annotation cp="🇧🇷" type="tts">برازیل</annotation>
+		<annotation cp="🇧🇸">بيرغ</annotation>
+		<annotation cp="🇧🇸" type="tts">باهاما</annotation>
+		<annotation cp="🇧🇹">بيرغ</annotation>
+		<annotation cp="🇧🇹" type="tts">بهوټان</annotation>
+		<annotation cp="🇧🇻">بيرغ</annotation>
+		<annotation cp="🇧🇻" type="tts">بوویټ ټاپو</annotation>
+		<annotation cp="🇧🇼">بيرغ</annotation>
+		<annotation cp="🇧🇼" type="tts">بوتسوانه</annotation>
+		<annotation cp="🇧🇾">بيرغ</annotation>
+		<annotation cp="🇧🇾" type="tts">بیلاروس</annotation>
+		<annotation cp="🇧🇿">بيرغ</annotation>
+		<annotation cp="🇧🇿" type="tts">بلیز</annotation>
+		<annotation cp="🇨🇦">بيرغ</annotation>
+		<annotation cp="🇨🇦" type="tts">کاناډا</annotation>
+		<annotation cp="🇨🇨">بيرغ</annotation>
+		<annotation cp="🇨🇨" type="tts">کوکوز (کیبل) ټاپوګانې</annotation>
+		<annotation cp="🇨🇩">بيرغ</annotation>
+		<annotation cp="🇨🇩" type="tts">کانګو - کینشاسا</annotation>
+		<annotation cp="🇨🇫">بيرغ</annotation>
+		<annotation cp="🇨🇫" type="tts">د مرکزي افریقا جمهوریت</annotation>
+		<annotation cp="🇨🇬">بيرغ</annotation>
+		<annotation cp="🇨🇬" type="tts">کانګو - بروزوییل</annotation>
+		<annotation cp="🇨🇭">بيرغ</annotation>
+		<annotation cp="🇨🇭" type="tts">سویس</annotation>
+		<annotation cp="🇨🇮">بيرغ</annotation>
+		<annotation cp="🇨🇮" type="tts">د عاج ساحل</annotation>
+		<annotation cp="🇨🇰">بيرغ</annotation>
+		<annotation cp="🇨🇰" type="tts">کوک ټاپوګان</annotation>
+		<annotation cp="🇨🇱">بيرغ</annotation>
+		<annotation cp="🇨🇱" type="tts">چیلي</annotation>
+		<annotation cp="🇨🇲">بيرغ</annotation>
+		<annotation cp="🇨🇲" type="tts">کامرون</annotation>
+		<annotation cp="🇨🇳">بيرغ</annotation>
+		<annotation cp="🇨🇳" type="tts">چین</annotation>
+		<annotation cp="🇨🇴">بيرغ</annotation>
+		<annotation cp="🇨🇴" type="tts">کولمبیا</annotation>
+		<annotation cp="🇨🇵">بيرغ</annotation>
+		<annotation cp="🇨🇵" type="tts">د کلپرټون ټاپو</annotation>
+		<annotation cp="🇨🇷">بيرغ</annotation>
+		<annotation cp="🇨🇷" type="tts">کوستاریکا</annotation>
+		<annotation cp="🇨🇺">بيرغ</annotation>
+		<annotation cp="🇨🇺" type="tts">کیوبا</annotation>
+		<annotation cp="🇨🇻">بيرغ</annotation>
+		<annotation cp="🇨🇻" type="tts">کیپ ورد</annotation>
+		<annotation cp="🇨🇼">بيرغ</annotation>
+		<annotation cp="🇨🇼" type="tts">کوکوکا</annotation>
+		<annotation cp="🇨🇽">بيرغ</annotation>
+		<annotation cp="🇨🇽" type="tts">د کریساس ټاپو</annotation>
+		<annotation cp="🇨🇾">بيرغ</annotation>
+		<annotation cp="🇨🇾" type="tts">قبرس</annotation>
+		<annotation cp="🇨🇿">بيرغ</annotation>
+		<annotation cp="🇨🇿" type="tts">چکیا</annotation>
+		<annotation cp="🇩🇪">بيرغ</annotation>
+		<annotation cp="🇩🇪" type="tts">المان</annotation>
+		<annotation cp="🇩🇬">بيرغ</annotation>
+		<annotation cp="🇩🇬" type="tts">ډایګو ګارسیا</annotation>
+		<annotation cp="🇩🇯">بيرغ</annotation>
+		<annotation cp="🇩🇯" type="tts">جی بوتي</annotation>
+		<annotation cp="🇩🇰">بيرغ</annotation>
+		<annotation cp="🇩🇰" type="tts">ډنمارک</annotation>
+		<annotation cp="🇩🇲">بيرغ</annotation>
+		<annotation cp="🇩🇲" type="tts">دومینیکا</annotation>
+		<annotation cp="🇩🇴">بيرغ</annotation>
+		<annotation cp="🇩🇴" type="tts">دومینیکن جمهوريت</annotation>
+		<annotation cp="🇩🇿">بيرغ</annotation>
+		<annotation cp="🇩🇿" type="tts">الجزایر</annotation>
+		<annotation cp="🇪🇦">بيرغ</annotation>
+		<annotation cp="🇪🇦" type="tts">سئوتا او مالایا</annotation>
+		<annotation cp="🇪🇨">بيرغ</annotation>
+		<annotation cp="🇪🇨" type="tts">اکوادور</annotation>
+		<annotation cp="🇪🇪">بيرغ</annotation>
+		<annotation cp="🇪🇪" type="tts">استونیا</annotation>
+		<annotation cp="🇪🇬">بيرغ</annotation>
+		<annotation cp="🇪🇬" type="tts">مصر</annotation>
+		<annotation cp="🇪🇭">بيرغ</annotation>
+		<annotation cp="🇪🇭" type="tts">لویدیځ صحرا</annotation>
+		<annotation cp="🇪🇷">بيرغ</annotation>
+		<annotation cp="🇪🇷" type="tts">اریتره</annotation>
+		<annotation cp="🇪🇸">بيرغ</annotation>
+		<annotation cp="🇪🇸" type="tts">هسپانیه</annotation>
+		<annotation cp="🇪🇹">بيرغ</annotation>
+		<annotation cp="🇪🇹" type="tts">حبشه</annotation>
+		<annotation cp="🇪🇺">بيرغ</annotation>
+		<annotation cp="🇪🇺" type="tts">اروپايي اتحاديه</annotation>
+		<annotation cp="🇫🇮">بيرغ</annotation>
+		<annotation cp="🇫🇮" type="tts">فنلینډ</annotation>
+		<annotation cp="🇫🇯">بيرغ</annotation>
+		<annotation cp="🇫🇯" type="tts">في جي</annotation>
+		<annotation cp="🇫🇰">بيرغ</annotation>
+		<annotation cp="🇫🇰" type="tts">فوکلنډ ټاپو</annotation>
+		<annotation cp="🇫🇲">بيرغ</annotation>
+		<annotation cp="🇫🇲" type="tts">میکرونیزیا</annotation>
+		<annotation cp="🇫🇴">بيرغ</annotation>
+		<annotation cp="🇫🇴" type="tts">فارو ټاپو</annotation>
+		<annotation cp="🇫🇷">بيرغ</annotation>
+		<annotation cp="🇫🇷" type="tts">فرانسه</annotation>
+		<annotation cp="🇬🇦">بيرغ</annotation>
+		<annotation cp="🇬🇦" type="tts">ګابن</annotation>
+		<annotation cp="🇬🇧">بيرغ</annotation>
+		<annotation cp="🇬🇧" type="tts">برتانیه</annotation>
+		<annotation cp="🇬🇩">بيرغ</annotation>
+		<annotation cp="🇬🇩" type="tts">ګرنادا</annotation>
+		<annotation cp="🇬🇪">بيرغ</annotation>
+		<annotation cp="🇬🇪" type="tts">گورجستان</annotation>
+		<annotation cp="🇬🇫">بيرغ</annotation>
+		<annotation cp="🇬🇫" type="tts">فرانسوي ګانا</annotation>
+		<annotation cp="🇬🇬">بيرغ</annotation>
+		<annotation cp="🇬🇬" type="tts">ګرنسي</annotation>
+		<annotation cp="🇬🇭">بيرغ</annotation>
+		<annotation cp="🇬🇭" type="tts">ګانا</annotation>
+		<annotation cp="🇬🇮">بيرغ</annotation>
+		<annotation cp="🇬🇮" type="tts">جبل الطارق</annotation>
+		<annotation cp="🇬🇱">بيرغ</annotation>
+		<annotation cp="🇬🇱" type="tts">ګرینلینډ</annotation>
+		<annotation cp="🇬🇲">بيرغ</annotation>
+		<annotation cp="🇬🇲" type="tts">ګامبیا</annotation>
+		<annotation cp="🇬🇳">بيرغ</annotation>
+		<annotation cp="🇬🇳" type="tts">ګینه</annotation>
+		<annotation cp="🇬🇵">بيرغ</annotation>
+		<annotation cp="🇬🇵" type="tts">ګالډیپ</annotation>
+		<annotation cp="🇬🇶">بيرغ</annotation>
+		<annotation cp="🇬🇶" type="tts">استوایی ګینه</annotation>
+		<annotation cp="🇬🇷">بيرغ</annotation>
+		<annotation cp="🇬🇷" type="tts">یونان</annotation>
+		<annotation cp="🇬🇸">بيرغ</annotation>
+		<annotation cp="🇬🇸" type="tts">سویل جورجیا او جنوبي سینڈوچ ټاپو</annotation>
+		<annotation cp="🇬🇹">بيرغ</annotation>
+		<annotation cp="🇬🇹" type="tts">ګواتیمالا</annotation>
+		<annotation cp="🇬🇺">بيرغ</annotation>
+		<annotation cp="🇬🇺" type="tts">ګوام</annotation>
+		<annotation cp="🇬🇼">بيرغ</annotation>
+		<annotation cp="🇬🇼" type="tts">ګینه بیسو</annotation>
+		<annotation cp="🇬🇾">بيرغ</annotation>
+		<annotation cp="🇬🇾" type="tts">ګیانا</annotation>
+		<annotation cp="🇭🇰">بيرغ</annotation>
+		<annotation cp="🇭🇰" type="tts">هانګ کانګ SAR چین</annotation>
+		<annotation cp="🇭🇲">بيرغ</annotation>
+		<annotation cp="🇭🇲" type="tts">HM</annotation>
+		<annotation cp="🇭🇳">بيرغ</annotation>
+		<annotation cp="🇭🇳" type="tts">هانډوراس</annotation>
+		<annotation cp="🇭🇷">بيرغ</annotation>
+		<annotation cp="🇭🇷" type="tts">کرواثیا</annotation>
+		<annotation cp="🇭🇹">بيرغ</annotation>
+		<annotation cp="🇭🇹" type="tts">هایټي</annotation>
+		<annotation cp="🇭🇺">بيرغ</annotation>
+		<annotation cp="🇭🇺" type="tts">مجارستان</annotation>
+		<annotation cp="🇮🇨">بيرغ</annotation>
+		<annotation cp="🇮🇨" type="tts">د کانري ټاپو</annotation>
+		<annotation cp="🇮🇩">بيرغ</annotation>
+		<annotation cp="🇮🇩" type="tts">اندونیزیا</annotation>
+		<annotation cp="🇮🇪">بيرغ</annotation>
+		<annotation cp="🇮🇪" type="tts">ایرلینډ</annotation>
+		<annotation cp="🇮🇱">بيرغ</annotation>
+		<annotation cp="🇮🇱" type="tts">اسراييل</annotation>
+		<annotation cp="🇮🇲">بيرغ</annotation>
+		<annotation cp="🇮🇲" type="tts">د آئل آف مین</annotation>
+		<annotation cp="🇮🇳">بيرغ</annotation>
+		<annotation cp="🇮🇳" type="tts">هند</annotation>
+		<annotation cp="🇮🇴">بيرغ</annotation>
+		<annotation cp="🇮🇴" type="tts">د هند سمندر سمندر سیمه</annotation>
+		<annotation cp="🇮🇶">بيرغ</annotation>
+		<annotation cp="🇮🇶" type="tts">عراق</annotation>
+		<annotation cp="🇮🇷">بيرغ</annotation>
+		<annotation cp="🇮🇷" type="tts">ايران</annotation>
+		<annotation cp="🇮🇸">بيرغ</annotation>
+		<annotation cp="🇮🇸" type="tts">آیسلینډ</annotation>
+		<annotation cp="🇮🇹">بيرغ</annotation>
+		<annotation cp="🇮🇹" type="tts">ایټالیه</annotation>
+		<annotation cp="🇯🇪">بيرغ</annotation>
+		<annotation cp="🇯🇪" type="tts">جرسی</annotation>
+		<annotation cp="🇯🇲">بيرغ</annotation>
+		<annotation cp="🇯🇲" type="tts">جمیکا</annotation>
+		<annotation cp="🇯🇴">بيرغ</annotation>
+		<annotation cp="🇯🇴" type="tts">اردن</annotation>
+		<annotation cp="🇯🇵">بيرغ</annotation>
+		<annotation cp="🇯🇵" type="tts">جاپان</annotation>
+		<annotation cp="🇰🇪">بيرغ</annotation>
+		<annotation cp="🇰🇪" type="tts">کینیا</annotation>
+		<annotation cp="🇰🇬">بيرغ</annotation>
+		<annotation cp="🇰🇬" type="tts">قرغزستان</annotation>
+		<annotation cp="🇰🇭">بيرغ</annotation>
+		<annotation cp="🇰🇭" type="tts">کمبودیا</annotation>
+		<annotation cp="🇰🇮">بيرغ</annotation>
+		<annotation cp="🇰🇮" type="tts">کیري باتي</annotation>
+		<annotation cp="🇰🇲">بيرغ</annotation>
+		<annotation cp="🇰🇲" type="tts">کوموروس</annotation>
+		<annotation cp="🇰🇳">بيرغ</annotation>
+		<annotation cp="🇰🇳" type="tts">سینټ کټس او نیویس</annotation>
+		<annotation cp="🇰🇵">بيرغ</annotation>
+		<annotation cp="🇰🇵" type="tts">شمالی کوریا</annotation>
+		<annotation cp="🇰🇷">بيرغ</annotation>
+		<annotation cp="🇰🇷" type="tts">سویلي کوریا</annotation>
+		<annotation cp="🇰🇼">بيرغ</annotation>
+		<annotation cp="🇰🇼" type="tts">کویټ</annotation>
+		<annotation cp="🇰🇾">بيرغ</annotation>
+		<annotation cp="🇰🇾" type="tts">کیمان ټاپوګان</annotation>
+		<annotation cp="🇰🇿">بيرغ</annotation>
+		<annotation cp="🇰🇿" type="tts">قزاقستان</annotation>
+		<annotation cp="🇱🇦">بيرغ</annotation>
+		<annotation cp="🇱🇦" type="tts">لاووس</annotation>
+		<annotation cp="🇱🇧">بيرغ</annotation>
+		<annotation cp="🇱🇧" type="tts">لېبنان</annotation>
+		<annotation cp="🇱🇨">بيرغ</annotation>
+		<annotation cp="🇱🇨" type="tts">سینټ لوسیا</annotation>
+		<annotation cp="🇱🇮">بيرغ</annotation>
+		<annotation cp="🇱🇮" type="tts">لیختن اشتاین</annotation>
+		<annotation cp="🇱🇰">بيرغ</annotation>
+		<annotation cp="🇱🇰" type="tts">سريلانکا</annotation>
+		<annotation cp="🇱🇷">بيرغ</annotation>
+		<annotation cp="🇱🇷" type="tts">لایبریا</annotation>
+		<annotation cp="🇱🇸">بيرغ</annotation>
+		<annotation cp="🇱🇸" type="tts">لسوتو</annotation>
+		<annotation cp="🇱🇹">بيرغ</annotation>
+		<annotation cp="🇱🇹" type="tts">لیتوانیا</annotation>
+		<annotation cp="🇱🇺">بيرغ</annotation>
+		<annotation cp="🇱🇺" type="tts">لوګزامبورګ</annotation>
+		<annotation cp="🇱🇻">بيرغ</annotation>
+		<annotation cp="🇱🇻" type="tts">لتوني</annotation>
+		<annotation cp="🇱🇾">بيرغ</annotation>
+		<annotation cp="🇱🇾" type="tts">لیبیا</annotation>
+		<annotation cp="🇲🇦">بيرغ</annotation>
+		<annotation cp="🇲🇦" type="tts">مراکش</annotation>
+		<annotation cp="🇲🇨">بيرغ</annotation>
+		<annotation cp="🇲🇨" type="tts">موناکو</annotation>
+		<annotation cp="🇲🇩">بيرغ</annotation>
+		<annotation cp="🇲🇩" type="tts">مولدوا</annotation>
+		<annotation cp="🇲🇪">بيرغ</annotation>
+		<annotation cp="🇲🇪" type="tts">مونټینیګرو</annotation>
+		<annotation cp="🇲🇫">بيرغ</annotation>
+		<annotation cp="🇲🇫" type="tts">سینټ مارټن</annotation>
+		<annotation cp="🇲🇬">بيرغ</annotation>
+		<annotation cp="🇲🇬" type="tts">مدګاسکار</annotation>
+		<annotation cp="🇲🇭">بيرغ</annotation>
+		<annotation cp="🇲🇭" type="tts">مارشال ټاپو</annotation>
+		<annotation cp="🇲🇰">بيرغ</annotation>
+		<annotation cp="🇲🇰" type="tts">مقدونیه</annotation>
+		<annotation cp="🇲🇱">بيرغ</annotation>
+		<annotation cp="🇲🇱" type="tts">مالي</annotation>
+		<annotation cp="🇲🇲">بيرغ</annotation>
+		<annotation cp="🇲🇲" type="tts">ميانامار (برما)</annotation>
+		<annotation cp="🇲🇳">بيرغ</annotation>
+		<annotation cp="🇲🇳" type="tts">مغولستان</annotation>
+		<annotation cp="🇲🇴">بيرغ</annotation>
+		<annotation cp="🇲🇴" type="tts">مکا سار چین</annotation>
+		<annotation cp="🇲🇵">بيرغ</annotation>
+		<annotation cp="🇲🇵" type="tts">شمالي ماریانا ټاپو</annotation>
+		<annotation cp="🇲🇶">بيرغ</annotation>
+		<annotation cp="🇲🇶" type="tts">مارټینیک</annotation>
+		<annotation cp="🇲🇷">بيرغ</annotation>
+		<annotation cp="🇲🇷" type="tts">موریتانیا</annotation>
+		<annotation cp="🇲🇸">بيرغ</annotation>
+		<annotation cp="🇲🇸" type="tts">مانټیسیرت</annotation>
+		<annotation cp="🇲🇹">بيرغ</annotation>
+		<annotation cp="🇲🇹" type="tts">مالتا</annotation>
+		<annotation cp="🇲🇺">بيرغ</annotation>
+		<annotation cp="🇲🇺" type="tts">موریشیس</annotation>
+		<annotation cp="🇲🇻">بيرغ</annotation>
+		<annotation cp="🇲🇻" type="tts">مالديپ</annotation>
+		<annotation cp="🇲🇼">بيرغ</annotation>
+		<annotation cp="🇲🇼" type="tts">مالاوي</annotation>
+		<annotation cp="🇲🇽">بيرغ</annotation>
+		<annotation cp="🇲🇽" type="tts">میکسیکو</annotation>
+		<annotation cp="🇲🇾">بيرغ</annotation>
+		<annotation cp="🇲🇾" type="tts">مالیزیا</annotation>
+		<annotation cp="🇲🇿">بيرغ</annotation>
+		<annotation cp="🇲🇿" type="tts">موزمبیک</annotation>
+		<annotation cp="🇳🇦">بيرغ</annotation>
+		<annotation cp="🇳🇦" type="tts">نیمبیا</annotation>
+		<annotation cp="🇳🇨">بيرغ</annotation>
+		<annotation cp="🇳🇨" type="tts">نوی کالیډونیا</annotation>
+		<annotation cp="🇳🇪">بيرغ</annotation>
+		<annotation cp="🇳🇪" type="tts">نیجر</annotation>
+		<annotation cp="🇳🇫">بيرغ</annotation>
+		<annotation cp="🇳🇫" type="tts">نارفولک ټاپوګان</annotation>
+		<annotation cp="🇳🇬">بيرغ</annotation>
+		<annotation cp="🇳🇬" type="tts">نایجیریا</annotation>
+		<annotation cp="🇳🇮">بيرغ</annotation>
+		<annotation cp="🇳🇮" type="tts">نکاراګوا</annotation>
+		<annotation cp="🇳🇱">بيرغ</annotation>
+		<annotation cp="🇳🇱" type="tts">هالېنډ</annotation>
+		<annotation cp="🇳🇴">بيرغ</annotation>
+		<annotation cp="🇳🇴" type="tts">ناروۍ</annotation>
+		<annotation cp="🇳🇵">بيرغ</annotation>
+		<annotation cp="🇳🇵" type="tts">نیپال</annotation>
+		<annotation cp="🇳🇷">بيرغ</annotation>
+		<annotation cp="🇳🇷" type="tts">نایرو</annotation>
+		<annotation cp="🇳🇺">بيرغ</annotation>
+		<annotation cp="🇳🇺" type="tts">نیوو</annotation>
+		<annotation cp="🇳🇿">بيرغ</annotation>
+		<annotation cp="🇳🇿" type="tts">نیوزیلنډ</annotation>
+		<annotation cp="🇴🇲">بيرغ</annotation>
+		<annotation cp="🇴🇲" type="tts">عمان</annotation>
+		<annotation cp="🇵🇦">بيرغ</annotation>
+		<annotation cp="🇵🇦" type="tts">پاناما</annotation>
+		<annotation cp="🇵🇪">بيرغ</annotation>
+		<annotation cp="🇵🇪" type="tts">پیرو</annotation>
+		<annotation cp="🇵🇫">بيرغ</annotation>
+		<annotation cp="🇵🇫" type="tts">فرانسوي پولینیا</annotation>
+		<annotation cp="🇵🇬">بيرغ</annotation>
+		<annotation cp="🇵🇬" type="tts">پاپ نيو ګيني، د يو هېواد نوم دې</annotation>
+		<annotation cp="🇵🇭">بيرغ</annotation>
+		<annotation cp="🇵🇭" type="tts">فلپين</annotation>
+		<annotation cp="🇵🇰">بيرغ</annotation>
+		<annotation cp="🇵🇰" type="tts">پاکستان</annotation>
+		<annotation cp="🇵🇱">بيرغ</annotation>
+		<annotation cp="🇵🇱" type="tts">پولنډ</annotation>
+		<annotation cp="🇵🇲">بيرغ</annotation>
+		<annotation cp="🇵🇲" type="tts">سینټ پییر او میکولون</annotation>
+		<annotation cp="🇵🇳">بيرغ</annotation>
+		<annotation cp="🇵🇳" type="tts">پیټکیرن ټاپو</annotation>
+		<annotation cp="🇵🇷">بيرغ</annotation>
+		<annotation cp="🇵🇷" type="tts">پورتو ریکو</annotation>
+		<annotation cp="🇵🇸">بيرغ</annotation>
+		<annotation cp="🇵🇸" type="tts">فلسطين سيمې</annotation>
+		<annotation cp="🇵🇹">بيرغ</annotation>
+		<annotation cp="🇵🇹" type="tts">پورتګال</annotation>
+		<annotation cp="🇵🇼">بيرغ</annotation>
+		<annotation cp="🇵🇼" type="tts">پلو</annotation>
+		<annotation cp="🇵🇾">بيرغ</annotation>
+		<annotation cp="🇵🇾" type="tts">پاراګوی</annotation>
+		<annotation cp="🇶🇦">بيرغ</annotation>
+		<annotation cp="🇶🇦" type="tts">قطر</annotation>
+		<annotation cp="🇷🇪">بيرغ</annotation>
+		<annotation cp="🇷🇪" type="tts">ریونین</annotation>
+		<annotation cp="🇷🇴">بيرغ</annotation>
+		<annotation cp="🇷🇴" type="tts">رومانیا</annotation>
+		<annotation cp="🇷🇸">بيرغ</annotation>
+		<annotation cp="🇷🇸" type="tts">صربیا</annotation>
+		<annotation cp="🇷🇺">بيرغ</annotation>
+		<annotation cp="🇷🇺" type="tts">روسیه</annotation>
+		<annotation cp="🇷🇼">بيرغ</annotation>
+		<annotation cp="🇷🇼" type="tts">روندا</annotation>
+		<annotation cp="🇸🇦">بيرغ</annotation>
+		<annotation cp="🇸🇦" type="tts">سعودي عربستان</annotation>
+		<annotation cp="🇸🇧">بيرغ</annotation>
+		<annotation cp="🇸🇧" type="tts">سلیمان ټاپو</annotation>
+		<annotation cp="🇸🇨">بيرغ</annotation>
+		<annotation cp="🇸🇨" type="tts">سیچیلیس</annotation>
+		<annotation cp="🇸🇩">بيرغ</annotation>
+		<annotation cp="🇸🇩" type="tts">سوډان</annotation>
+		<annotation cp="🇸🇪">بيرغ</annotation>
+		<annotation cp="🇸🇪" type="tts">سویډن</annotation>
+		<annotation cp="🇸🇬">بيرغ</annotation>
+		<annotation cp="🇸🇬" type="tts">سينگاپور</annotation>
+		<annotation cp="🇸🇭">بيرغ</annotation>
+		<annotation cp="🇸🇭" type="tts">سینټ هیلینا</annotation>
+		<annotation cp="🇸🇮">بيرغ</annotation>
+		<annotation cp="🇸🇮" type="tts">سلوانیا</annotation>
+		<annotation cp="🇸🇯">بيرغ</annotation>
+		<annotation cp="🇸🇯" type="tts">سلواډر او جان میین</annotation>
+		<annotation cp="🇸🇰">بيرغ</annotation>
+		<annotation cp="🇸🇰" type="tts">سلواکیا</annotation>
+		<annotation cp="🇸🇱">بيرغ</annotation>
+		<annotation cp="🇸🇱" type="tts">سییرا لیون</annotation>
+		<annotation cp="🇸🇲">بيرغ</annotation>
+		<annotation cp="🇸🇲" type="tts">سان مارینو</annotation>
+		<annotation cp="🇸🇳">بيرغ</annotation>
+		<annotation cp="🇸🇳" type="tts">سنګال</annotation>
+		<annotation cp="🇸🇴">بيرغ</annotation>
+		<annotation cp="🇸🇴" type="tts">سومالیا</annotation>
+		<annotation cp="🇸🇷">بيرغ</annotation>
+		<annotation cp="🇸🇷" type="tts">سورینام</annotation>
+		<annotation cp="🇸🇸">بيرغ</annotation>
+		<annotation cp="🇸🇸" type="tts">جنوبي سوډان</annotation>
+		<annotation cp="🇸🇹">بيرغ</annotation>
+		<annotation cp="🇸🇹" type="tts">ساو ټیم او پرنسیپ</annotation>
+		<annotation cp="🇸🇻">بيرغ</annotation>
+		<annotation cp="🇸🇻" type="tts">سالوېډور</annotation>
+		<annotation cp="🇸🇽">بيرغ</annotation>
+		<annotation cp="🇸🇽" type="tts">سینټ مارټین</annotation>
+		<annotation cp="🇸🇾">بيرغ</annotation>
+		<annotation cp="🇸🇾" type="tts">سوریه</annotation>
+		<annotation cp="🇸🇿">بيرغ</annotation>
+		<annotation cp="🇸🇿" type="tts">سوازیلینډ</annotation>
+		<annotation cp="🇹🇦">بيرغ</annotation>
+		<annotation cp="🇹🇦" type="tts">تریستان دا کنها</annotation>
+		<annotation cp="🇹🇨">بيرغ</annotation>
+		<annotation cp="🇹🇨" type="tts">د ترکیې او کیکاسو ټاپو</annotation>
+		<annotation cp="🇹🇩">بيرغ</annotation>
+		<annotation cp="🇹🇩" type="tts">چاډ</annotation>
+		<annotation cp="🇹🇫">بيرغ</annotation>
+		<annotation cp="🇹🇫" type="tts">د فرانسې جنوبي سیمې</annotation>
+		<annotation cp="🇹🇬">بيرغ</annotation>
+		<annotation cp="🇹🇬" type="tts">تلل</annotation>
+		<annotation cp="🇹🇭">بيرغ</annotation>
+		<annotation cp="🇹🇭" type="tts">تهايلنډ</annotation>
+		<annotation cp="🇹🇯">بيرغ</annotation>
+		<annotation cp="🇹🇯" type="tts">تاجيکستان</annotation>
+		<annotation cp="🇹🇰">بيرغ</annotation>
+		<annotation cp="🇹🇰" type="tts">توکیلو</annotation>
+		<annotation cp="🇹🇱">بيرغ</annotation>
+		<annotation cp="🇹🇱" type="tts">تيمور-ليسټ</annotation>
+		<annotation cp="🇹🇲">بيرغ</annotation>
+		<annotation cp="🇹🇲" type="tts">تورکمنستان</annotation>
+		<annotation cp="🇹🇳">بيرغ</annotation>
+		<annotation cp="🇹🇳" type="tts">تونس</annotation>
+		<annotation cp="🇹🇴">بيرغ</annotation>
+		<annotation cp="🇹🇴" type="tts">تونګا</annotation>
+		<annotation cp="🇹🇷">بيرغ</annotation>
+		<annotation cp="🇹🇷" type="tts">تورکيه</annotation>
+		<annotation cp="🇹🇹">بيرغ</annotation>
+		<annotation cp="🇹🇹" type="tts">ټرینیاډډ او ټوبوګ</annotation>
+		<annotation cp="🇹🇻">بيرغ</annotation>
+		<annotation cp="🇹🇻" type="tts">توالیو</annotation>
+		<annotation cp="🇹🇼">بيرغ</annotation>
+		<annotation cp="🇹🇼" type="tts">تیوان</annotation>
+		<annotation cp="🇹🇿">بيرغ</annotation>
+		<annotation cp="🇹🇿" type="tts">تنزانیا</annotation>
+		<annotation cp="🇺🇦">بيرغ</annotation>
+		<annotation cp="🇺🇦" type="tts">اوکراین</annotation>
+		<annotation cp="🇺🇬">بيرغ</annotation>
+		<annotation cp="🇺🇬" type="tts">یوګانډا</annotation>
+		<annotation cp="🇺🇲">بيرغ</annotation>
+		<annotation cp="🇺🇲" type="tts">د متحده ایالاتو ټاپو ټاپوګانې</annotation>
+		<annotation cp="🇺🇳">بيرغ</annotation>
+		<annotation cp="🇺🇳" type="tts">ملگري ملتونه</annotation>
+		<annotation cp="🇺🇸">بيرغ</annotation>
+		<annotation cp="🇺🇸" type="tts">متحده ایالات</annotation>
+		<annotation cp="🇺🇾">بيرغ</annotation>
+		<annotation cp="🇺🇾" type="tts">یوروګوی</annotation>
+		<annotation cp="🇺🇿">بيرغ</annotation>
+		<annotation cp="🇺🇿" type="tts">اوزبکستان</annotation>
+		<annotation cp="🇻🇦">بيرغ</annotation>
+		<annotation cp="🇻🇦" type="tts">واتیکان ښار</annotation>
+		<annotation cp="🇻🇨">بيرغ</annotation>
+		<annotation cp="🇻🇨" type="tts">سینټ ویسنټینټ او ګرینډینز</annotation>
+		<annotation cp="🇻🇪">بيرغ</annotation>
+		<annotation cp="🇻🇪" type="tts">وینزویلا</annotation>
+		<annotation cp="🇻🇬">بيرغ</annotation>
+		<annotation cp="🇻🇬" type="tts">بریتانوی ویګور ټاپو</annotation>
+		<annotation cp="🇻🇮">بيرغ</annotation>
+		<annotation cp="🇻🇮" type="tts">د متحده ایالاتو ویګور ټاپو</annotation>
+		<annotation cp="🇻🇳">بيرغ</annotation>
+		<annotation cp="🇻🇳" type="tts">وېتنام</annotation>
+		<annotation cp="🇻🇺">بيرغ</annotation>
+		<annotation cp="🇻🇺" type="tts">واناتو</annotation>
+		<annotation cp="🇼🇫">بيرغ</annotation>
+		<annotation cp="🇼🇫" type="tts">والیس او فوتونا</annotation>
+		<annotation cp="🇼🇸">بيرغ</annotation>
+		<annotation cp="🇼🇸" type="tts">ساموا</annotation>
+		<annotation cp="🇽🇰">بيرغ</annotation>
+		<annotation cp="🇽🇰" type="tts">کوسوو</annotation>
+		<annotation cp="🇾🇪">بيرغ</annotation>
+		<annotation cp="🇾🇪" type="tts">یمن</annotation>
+		<annotation cp="🇾🇹">بيرغ</annotation>
+		<annotation cp="🇾🇹" type="tts">میټوت</annotation>
+		<annotation cp="🇿🇦">بيرغ</annotation>
+		<annotation cp="🇿🇦" type="tts">سویلي افریقا</annotation>
+		<annotation cp="🇿🇲">بيرغ</annotation>
+		<annotation cp="🇿🇲" type="tts">زیمبیا</annotation>
+		<annotation cp="🇿🇼">بيرغ</annotation>
+		<annotation cp="🇿🇼" type="tts">زیمبابوی</annotation>
+		<annotation cp="🏴󠁧󠁢󠁥󠁮󠁧󠁿">بيرغ</annotation>
+		<annotation cp="🏴󠁧󠁢󠁥󠁮󠁧󠁿" type="tts">انګلېنډ</annotation>
+	</annotations>
+</ldml>
