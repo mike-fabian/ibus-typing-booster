@@ -87,7 +87,7 @@ def parse_args():
         default=None,
         help=('Set a font to display emoji. '
               + 'If not specified, the font is read from the config file. '
-              + 'To use the system default font specify "". '
+              + 'To use the system default font specify "emoji". '
               + 'default: "%(default)s"'))
     parser.add_argument(
         '-s', '--fontsize',
@@ -114,6 +114,20 @@ def parse_args():
               + 'even normal letters. '
               + 'Slows the search down and is usually not needed. '
               + 'default: %(default)s'))
+    parser.add_argument(
+        '--fallback',
+        nargs='?',
+        type=int,
+        action='store',
+        default=None,
+        help=('Whether to use fallback fonts when rendering emoji. '
+              + 'If not 0, pango will use fallback fonts as necessary. '
+              + 'If 0, pango will use only glyphs from '
+              + 'the closest matching font on the system. No fallback '
+              + 'will be done to other fonts on the system that '
+              + 'might contain the glyhps needed to render an emoji. '
+              + 'default: "%(default)s"')
+        )
     parser.add_argument(
         '--emoji_unicode_min',
         nargs='?',
@@ -174,7 +188,8 @@ class EmojiPickerUI(Gtk.Window):
                  emoji_unicode_max=100.0,
                  non_fully_qualified=False,
                  font=None,
-                 fontsize=None):
+                 fontsize=None,
+                 fallback=None):
         Gtk.Window.__init__(self, title='🚀 ' + _('Emoji Picker'))
 
         self.set_name('EmojiPicker')
@@ -218,17 +233,11 @@ class EmojiPickerUI(Gtk.Window):
         self._modal = modal
         self.set_modal(self._modal)
         available_fonts = self._list_font_names()
-        default_fonts = [
-            'Noto Color Emoji',
-            'Emoji One',
-            'Symbola',
-        ]
-        self._font = 'Symbola'
-        for default_font in default_fonts:
-            if default_font in available_fonts:
-                self._font = default_font
-                break
+        self._font = 'emoji'
+        if available_fonts:
+            self._font = available_fonts[0]
         self._fontsize = 24
+        self._fallback = True
         self._font_popover = None
         self._font_popover_scroll = None
         self._font_popover_listbox = None
@@ -240,6 +249,8 @@ class EmojiPickerUI(Gtk.Window):
             self._font = font
         if not fontsize is None:
             self._fontsize = fontsize
+        if not fallback is None:
+            self._fallback = bool(fallback)
         self._save_options()
         self.connect('destroy-event', self.on_destroy_event)
         self.connect('delete-event', self.on_delete_event)
@@ -344,6 +355,12 @@ class EmojiPickerUI(Gtk.Window):
         self._fontsize_adjustment.connect(
             'value-changed', self.on_fontsize_adjustment_value_changed)
         self._header_bar.pack_start(self._fontsize_spin_button)
+        self._fallback_check_button = Gtk.CheckButton()
+        self._fallback_check_button.set_label(_('Fallback'))
+        self._fallback_check_button.set_active(self._fallback)
+        self._fallback_check_button.connect(
+            'toggled', self.on_fallback_check_button_toggled)
+        self._header_bar.pack_start(self._fallback_check_button)
         self._spinner = Gtk.Spinner()
         self._header_bar.pack_end(self._spinner)
         self.set_titlebar(self._header_bar)
@@ -602,12 +619,15 @@ class EmojiPickerUI(Gtk.Window):
                 descriptions.append(description)
         fonts_description = _('Fonts used to render this emoji:')
         for text, font_family in itb_pango.get_fonts_used_for_text(
-                self._font + ' ' + str(self._fontsize), emoji):
+                self._font + ' ' + str(self._fontsize), emoji,
+                fallback=self._fallback):
             fonts_description += '\n'
             for char in text:
                 fonts_description += (
-                    '<span font_desc="%s">' %self._font + char + '</span>'
-                    + ' U+%X' %ord(char))
+                    '<span font="%s" fallback="%s" >'
+                    %(self._font, str(self._fallback).lower())
+                    + char + '</span>'
+                    + ' <span fallback="false">U+%X</span>' %ord(char))
             fonts_description += ': ' + font_family
         descriptions.append(fonts_description)
         if self._emoji_matcher.unicode_version(emoji):
@@ -722,13 +742,13 @@ class EmojiPickerUI(Gtk.Window):
             label = Gtk.Label()
             # Make font for emoji large using pango markup
             text = (
-                '<span font="%s %s">'
-                %(self._font, self._fontsize)
+                '<span font="%s %s" fallback="%s">'
+                %(self._font, self._fontsize, str(self._fallback).lower())
                 + html.escape(emoji)
                 + '</span>')
             if itb_emoji.is_invisible(emoji):
                 text += (
-                    '<span font="%s">'
+                    '<span fallback="false" font="%s">'
                     %(self._fontsize / 2)
                     + ' U+%X ' %ord(emoji)
                     + self._emoji_matcher.name(emoji)
@@ -825,10 +845,15 @@ class EmojiPickerUI(Gtk.Window):
         if ('font' in options_dict
                 and isinstance(options_dict['font'], str)):
             self._font = options_dict['font']
+            if self._font == '':
+                self._font = 'emoji'
         if ('fontsize' in options_dict
                 and (isinstance(options_dict['fontsize'], int)
                      or isinstance(options_dict['fontsize'], float))):
             self._fontsize = options_dict['fontsize']
+        if ('fallback' in options_dict
+                and (isinstance(options_dict['fallback'], bool))):
+            self._fallback = options_dict['fallback']
 
     def _save_options(self):
         '''
@@ -837,6 +862,7 @@ class EmojiPickerUI(Gtk.Window):
         options_dict = {
             'font': self._font,
             'fontsize': self._fontsize,
+            'fallback': self._fallback,
             }
         with open(self._options_file,
                   mode='w',
@@ -1182,8 +1208,8 @@ class EmojiPickerUI(Gtk.Window):
             label = Gtk.Label()
             # Make font for emoji large using pango markup
             label.set_text(
-                '<span font="%s %s">'
-                %(self._font, self._fontsize)
+                '<span font="%s %s" fallback="%s">'
+                %(self._font, self._fontsize, str(self._fallback).lower())
                 + html.escape(emoji)
                 + '</span>'
                 + '<span font="%s">'
@@ -1496,13 +1522,13 @@ class EmojiPickerUI(Gtk.Window):
             (emoji, name) = self._parse_emoji_and_name_from_text(text)
             if emoji:
                 new_text = (
-                    '<span font="%s %s">'
-                    %(self._font, self._fontsize)
+                    '<span font="%s %s" fallback="%s">'
+                    %(self._font, self._fontsize, str(self._fallback).lower())
                     + html.escape(emoji)
                     + '</span>')
                 if name:
                     new_text += (
-                        '<span font="%s">'
+                        '<span fallback="false" font="%s">'
                         %(self._fontsize / 2)
                         + html.escape(name)
                         + '</span>')
@@ -1571,8 +1597,8 @@ class EmojiPickerUI(Gtk.Window):
             # in a search results flowbox and we do *not* want
             # to replace the emoji.
             new_text = (
-                '<span font="%s %s">'
-                %(self._font, self._fontsize)
+                '<span font="%s %s" fallback="%s">'
+                %(self._font, self._fontsize, str(self._fallback).lower())
                 + html.escape(emoji)
                 + '</span>')
             label.set_text(new_text)
@@ -1738,8 +1764,8 @@ class EmojiPickerUI(Gtk.Window):
         for skin_tone_variant in skin_tone_variants:
             label = Gtk.Label()
             label.set_text(
-                '<span font="%s %s">'
-                %(self._font, self._fontsize)
+                '<span font="%s %s" fallback="%s">'
+                %(self._font, self._fontsize, str(self._fallback).lower())
                 + html.escape(skin_tone_variant)
                 + '</span>')
             label.set_use_markup(True)
@@ -1846,8 +1872,8 @@ class EmojiPickerUI(Gtk.Window):
         label.set_vexpand(False)
         label.set_halign(Gtk.Align.START)
         label.set_markup(
-            '<span font_desc="%s %s">'
-            %(self._font, self._fontsize * 3)
+            '<span font="%s %s" fallback="%s">'
+            %(self._font, self._fontsize * 3, str(self._fallback).lower())
             + html.escape(emoji)
             + '</span>')
         emoji_info_popover_listbox.insert(label, -1)
@@ -1957,15 +1983,51 @@ class EmojiPickerUI(Gtk.Window):
         self._busy_start()
         GLib.idle_add(self._change_flowbox_font)
 
+    def on_fallback_check_button_toggled(self, check_button):
+        '''
+        The fallback check button in the header bar has been toggled
+
+        :param toggle_button: The check button used to select whether
+                              fallback fonts should be used.
+        :type adjustment: Gtk.CheckButton object
+        '''
+        self._fallback = check_button.get_active()
+        if _ARGS.debug:
+            sys.stdout.write(
+                'on_fallback_check_button_toggled() self._fallback = %s\n'
+                %self._fallback)
+        self._save_options()
+        self._busy_start()
+        GLib.idle_add(self._change_flowbox_font)
+
     def _list_font_names(self):
         '''
         Returns a list of font names available on the system
 
         :rtype: List of strings
         '''
+        good_emoji_fonts = [
+            'Noto Color Emoji 🎨',
+            'Apple Color Emoji 🎨',
+            'Emoji Two 🎨', # color
+            'Emoji One 🎨', # color
+            'Symbola 🙾', # black and white
+            'Noto Emoji 🙾', # black and white
+            'Android Emoji 🙾', # black and white
+            'Segoe UI Emoji 🙾', # seems to be black and white
+            'Twitter Color Emoji 🙾', # seems to be black and white
+        ]
+        available_good_emoji_fonts = ['emoji (' + _('System default') + ')']
         pango_context = self.get_pango_context()
         families = pango_context.list_families()
-        names = [family.get_name() for family in families]
+        names = sorted([family.get_name() for family in families])
+        for font in good_emoji_fonts:
+            name = font.split(' ')[0]
+            if name in names:
+                names.remove(name)
+                available_good_emoji_fonts.append(font)
+        available_good_emoji_fonts.append('')
+        names = available_good_emoji_fonts + names
         return names
 
     def _fill_listbox_font(self, filter_text):
@@ -1993,7 +2055,7 @@ class EmojiPickerUI(Gtk.Window):
         self._font_popover_listbox.set_activate_on_single_click(True)
         self._font_popover_listbox.connect(
             'row-selected', self.on_font_selected)
-        fonts = [''] + [
+        fonts = [
             font
             for font in self._list_font_names()
             if filter_text.replace(' ', '').lower()
@@ -2034,10 +2096,18 @@ class EmojiPickerUI(Gtk.Window):
         :param listbox_row: A row containing a font name
         :type listbox_row: Gtk.ListBoxRow object
         '''
-        font = listbox_row.get_child().get_text()
+        font = listbox_row.get_child().get_text().split(' ')[0]
         if _ARGS.debug:
             sys.stdout.write(
                 'on_font_selected() font = %s\n' %repr(font))
+        if font == '':
+            font = 'emoji'
+        if font != self._font and font == 'emoji':
+            self._fallback = True
+            self._fallback_check_button.set_active(True)
+        else:
+            self._fallback = False
+            self._fallback_check_button.set_active(False)
         if GTK_VERSION >= (3, 22, 0):
             self._font_popover.popdown()
         self._font_popover.hide()
@@ -2146,6 +2216,7 @@ if __name__ == '__main__':
         languages=get_languages(),
         font=_ARGS.font,
         fontsize=_ARGS.fontsize,
+        fallback=_ARGS.fallback,
         modal=_ARGS.modal,
         unicode_data_all=_ARGS.all,
         emoji_unicode_min=_ARGS.emoji_unicode_min,

@@ -32,6 +32,10 @@ glib__GSList._fields_ = [
 ]
 class libgtk3__GtkWidget(ctypes.Structure):
     pass
+class libpango__PangoAttribute(ctypes.Structure):
+    pass
+class libpango__PangoAttrList(ctypes.Structure):
+    pass
 class libpango__PangoContext(ctypes.Structure):
     pass
 class libpango__PangoLayout(ctypes.Structure):
@@ -97,31 +101,41 @@ libpango__pango_layout_new = None
 libpango__pango_font_description_from_string = None
 libpango__pango_layout_set_font_description = None
 libpango__pango_layout_set_text = None
-libpango__pango_layout_set_font_description = None
-libpango__pango_layout_set_text = None
+libpango__pango_attr_list_new = None
+libpango__pango_attr_list_unref = None
+libpango__pango_attr_fallback_new = None
+libpango__pango_attribute_destroy = None
+libpango__pango_attr_list_insert = None
+libpango__pango_layout_set_attributes = None
 libpango__pango_layout_get_line_readonly = None
 libpango__pango_font_describe = None
 libpango__pango_font_description_get_family = None
 
-def get_fonts_used_for_text(font, text):
+def get_fonts_used_for_text(font, text, fallback=True):
     '''Return a list of fonts which were really used to render a text
 
     :param font: The font requested to render the text in
     :type font: String
     :param text: The text to render
     :type text: String
+    :param fallback: Whether to enable font fallback. If disabled, then
+                     glyphs will only be used from the closest matching
+                     font on the system. No fallback will be done to other
+                     fonts on the system that might contain the glyphs needed
+                     for the text.
+    :type fallback: Boolean
     :rtype: List of strings
 
     Examples:
 
     >>> get_fonts_used_for_text('DejaVu Sans Mono', '😀 ')
-    ['Noto Color Emoji', 'DejaVu Sans Mono']
+    [('😀', 'Noto Color Emoji'), (' ', 'DejaVu Sans Mono')]
 
     >>> get_fonts_used_for_text('DejaVu Sans', '日本語 नमस्ते')
-    ['IPAPGothic', 'DejaVu Sans', 'Lohit Hindi']
+    [('日本語', 'IPAPGothic'), (' ', 'DejaVu Sans'), ('नमस्ते', 'Lohit Hindi')]
 
-    >>> get_fonts_used_for_text('DejaVu Sans', '日本語 🕉')
-    ['IPAPGothic', 'Noto Color Emoji']
+    >>> get_fonts_used_for_text('DejaVu Sans', '日本語 🕉️')
+    [('日本語', 'IPAPGothic'), (' ', 'DejaVu Sans'), ('🕉️', 'Noto Color Emoji')]
     '''
     fonts_used = []
     label = libgtk3__gtk_label_new(ctypes.c_char_p(b''))
@@ -131,6 +145,13 @@ def get_fonts_used_for_text(font, text):
         ctypes.c_char_p(font.encode('UTF-8', errors='replace')))
     libpango__pango_layout_set_font_description(
         pango_layout_p, pango_font_description_p)
+    pango_attr_list_p = libpango__pango_attr_list_new()
+    pango_attr_p = libpango__pango_attr_fallback_new(
+        ctypes.c_bool(fallback))
+    libpango__pango_attr_list_insert(
+        pango_attr_list_p, pango_attr_p)
+    libpango__pango_layout_set_attributes(
+        pango_layout_p, pango_attr_list_p)
     text_utf8 = text.encode('UTF-8', errors='replace')
     libpango__pango_layout_set_text(
         pango_layout_p,
@@ -156,6 +177,8 @@ def get_fonts_used_for_text(font, text):
         run_family = libpango__pango_font_description_get_family(
             font_description_used).decode('UTF-8', errors='replace')
         fonts_used.append((run_text, run_family))
+    libpango__pango_attr_list_unref(pango_attr_list_p)
+    libpango__pango_attribute_destroy(pango_attr_p)
     return fonts_used
 
 def _init():
@@ -208,6 +231,35 @@ def _init():
     libpango__pango_layout_set_text = libpango__lib.pango_layout_set_text
     libpango__pango_layout_set_text.argtypes = [
         ctypes.POINTER(libpango__PangoLayout), ctypes.c_char_p, ctypes.c_int]
+    global libpango__pango_attr_list_new
+    libpango__pango_attr_list_new = libpango__lib.pango_attr_list_new
+    libpango__pango_attr_list_new.argtypes = []
+    libpango__pango_attr_list_new.restype = ctypes.POINTER(
+        libpango__PangoAttrList)
+    global libpango__pango_attr_list_unref
+    libpango__pango_attr_list_unref = libpango__lib.pango_attr_list_unref
+    libpango__pango_attr_list_unref.argtypes = [
+        ctypes.POINTER(libpango__PangoAttrList)]
+    global libpango__pango_attr_fallback_new
+    libpango__pango_attr_fallback_new = libpango__lib.pango_attr_fallback_new
+    libpango__pango_attr_fallback_new.argtypes = [
+        ctypes.c_bool]
+    libpango__pango_attr_fallback_new.restype = ctypes.POINTER(
+        libpango__PangoAttribute)
+    global libpango__pango_attribute_destroy
+    libpango__pango_attribute_destroy = libpango__lib.pango_attribute_destroy
+    libpango__pango_attribute_destroy.argtypes = [
+        ctypes.POINTER(libpango__PangoAttribute)]
+    global libpango__pango_attr_list_insert
+    libpango__pango_attr_list_insert = libpango__lib.pango_attr_list_insert
+    libpango__pango_attr_list_insert.argtypes = [
+        ctypes.POINTER(libpango__PangoAttrList),
+        ctypes.POINTER(libpango__PangoAttribute)]
+    global libpango__pango_layout_set_attributes
+    libpango__pango_layout_set_attributes = libpango__lib.pango_layout_set_attributes
+    libpango__pango_layout_set_attributes.argtypes = [
+        ctypes.POINTER(libpango__PangoLayout),
+        ctypes.POINTER(libpango__PangoAttrList)]
     global libpango__pango_layout_get_line_readonly
     libpango__pango_layout_get_line_readonly = libpango__lib.pango_layout_get_line_readonly
     libpango__pango_layout_get_line_readonly.argtypes = [
