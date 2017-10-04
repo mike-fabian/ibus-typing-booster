@@ -16,6 +16,25 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.34" date="2017-10-04" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (cs new, de updated)
+          </li>
+          <li>
+            Add some tooltips
+          </li>
+          <li>
+            Add an option whether to use pango font fallback to
+            emoji-picker
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.33" date="2017-09-11" urgency="medium">
       <description>
         <ul>

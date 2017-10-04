@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 04 Oct 2017 Released 1.5.34 version
+* Update translations from zanata (cs new, de updated)
+* Add some tooltips
+* Add an option whether to use pango font fallback to emoji-picker
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 11 Sep 2017 Released 1.5.33 version
 * Update translations from zanata (es new)
 * Install appstream metadata to /usr/share/metainfo/
