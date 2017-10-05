@@ -328,6 +328,8 @@ class EmojiPickerUI(Gtk.Window):
             'clicked', self.on_main_menu_button_clicked)
         self._toggle_search_button = Gtk.Button.new_from_icon_name(
             'edit-find-symbolic', Gtk.IconSize.BUTTON)
+        self._toggle_search_button.set_tooltip_text(
+            _('Search for emoji'))
         self._toggle_search_button.connect(
             'clicked', self.on_toggle_search_button_clicked)
         self._header_bar.pack_start(self._toggle_search_button)
@@ -338,12 +340,16 @@ class EmojiPickerUI(Gtk.Window):
             Gtk.Image.new_from_icon_name(
                 'preferences-desktop-font', Gtk.IconSize.BUTTON))
         self._font_button.set_label(self._font)
+        self._font_button.set_tooltip_text(
+            _('Set the font to display emoji'))
         self._font_button.connect(
             'clicked', self.on_font_button_clicked)
         self._header_bar.pack_start(self._font_button)
         self._fontsize_spin_button = Gtk.SpinButton()
         self._fontsize_spin_button.set_numeric(True)
         self._fontsize_spin_button.set_can_focus(True)
+        self._fontsize_spin_button.set_tooltip_text(
+            _('Set font size'))
         self._fontsize_spin_button.connect(
             'grab-focus', self.on_fontsize_spin_button_grab_focus)
         self._fontsize_adjustment = Gtk.Adjustment()
@@ -356,7 +362,19 @@ class EmojiPickerUI(Gtk.Window):
             'value-changed', self.on_fontsize_adjustment_value_changed)
         self._header_bar.pack_start(self._fontsize_spin_button)
         self._fallback_check_button = Gtk.CheckButton()
+        # Translators: This is a checkbox which enables or disables
+        # the pango font fallback. If font fallback is off, only the
+        # font selected in the font menu is used to display emoji
+        # (if possible, this may not always work, sometimes other fonts
+        # may be used even if font fallback is off).
+        # If font fallback is on, other fonts will be tried for emoji
+        # or parts of emoji sequences which cannot be displayed in the
+        # selected font.
         self._fallback_check_button.set_label(_('Fallback'))
+        self._fallback_check_button.set_tooltip_text(
+            _('Whether to use font fallback for emoji or parts of emoji '
+              + 'sequences which cannot be displayed using the '
+              + 'selected font.'))
         self._fallback_check_button.set_active(self._fallback)
         self._fallback_check_button.connect(
             'toggled', self.on_fallback_check_button_toggled)
