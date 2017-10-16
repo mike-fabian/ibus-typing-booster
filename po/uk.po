@@ -11,7 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-03-29 12:24-0400\n"
+"PO-Revision-Date: 2017-10-06 03:21-0400\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -37,15 +37,15 @@ msgstr "Вийти"
 
 #: engine/emoji_picker.py:332
 msgid "Search for emoji"
-msgstr ""
+msgstr "Шукати емодзі"
 
 #: engine/emoji_picker.py:344
 msgid "Set the font to display emoji"
-msgstr ""
+msgstr "Встановити шрифт для показу емодзі"
 
 #: engine/emoji_picker.py:352
 msgid "Set font size"
-msgstr ""
+msgstr "Встановити розмір шрифту"
 
 #. Translators: This is a checkbox which enables or disables
 #. the pango font fallback. If font fallback is off, only the
@@ -57,13 +57,15 @@ msgstr ""
 #. selected font.
 #: engine/emoji_picker.py:373
 msgid "Fallback"
-msgstr ""
+msgstr "Резервний"
 
 #: engine/emoji_picker.py:375
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
+"Чи слід використовувати резервний шрифт для емодзі або частин послідовностей "
+"емодзі, які не може бути показано вибраним шрифтом."
 
 #: engine/emoji_picker.py:445
 msgid "Recently used"

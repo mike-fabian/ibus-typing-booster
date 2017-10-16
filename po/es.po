@@ -1,4 +1,5 @@
 # Emilio Herrera <ehespinosa57@gmail.com>, 2017. #zanata
+# Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2017. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -8,8 +9,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-08-30 05:32-0400\n"
-"Last-Translator: Emilio Herrera <ehespinosa57@gmail.com>\n"
+"PO-Revision-Date: 2017-11-02 08:36-0400\n"
+"Last-Translator: Máximo Castañeda Riloba <mcrcctm@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
 "X-Generator: Zanata 3.9.6\n"
@@ -17,7 +18,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:193
 msgid "Emoji Picker"
-msgstr "Recogedor Emoji"
+msgstr "Selector de Emoji"
 
 #: engine/emoji_picker.py:311
 msgid "Clear recently used"
@@ -33,15 +34,15 @@ msgstr "Dejar"
 
 #: engine/emoji_picker.py:332
 msgid "Search for emoji"
-msgstr ""
+msgstr "Buscar emoji"
 
 #: engine/emoji_picker.py:344
 msgid "Set the font to display emoji"
-msgstr ""
+msgstr "Seleccionar la fuente para los emoji"
 
 #: engine/emoji_picker.py:352
 msgid "Set font size"
-msgstr ""
+msgstr "Ajustar tamaño de fuente"
 
 #. Translators: This is a checkbox which enables or disables
 #. the pango font fallback. If font fallback is off, only the
@@ -53,13 +54,15 @@ msgstr ""
 #. selected font.
 #: engine/emoji_picker.py:373
 msgid "Fallback"
-msgstr ""
+msgstr "Fuentes alternativas"
 
 #: engine/emoji_picker.py:375
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
+"Si usar o no fuentes alternativas para las secuencias emoji que no se puedan "
+"mostrar con la fuente seleccionada."
 
 #: engine/emoji_picker.py:445
 msgid "Recently used"

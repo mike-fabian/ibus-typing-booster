@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-03-30 01:07-0400\n"
+"PO-Revision-Date: 2017-10-05 08:49-0400\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -36,15 +36,15 @@ msgstr "Zakończ"
 
 #: engine/emoji_picker.py:332
 msgid "Search for emoji"
-msgstr ""
+msgstr "Wyszukaj emoji"
 
 #: engine/emoji_picker.py:344
 msgid "Set the font to display emoji"
-msgstr ""
+msgstr "Ustaw czcionkę do wyświetlania emoji"
 
 #: engine/emoji_picker.py:352
 msgid "Set font size"
-msgstr ""
+msgstr "Ustaw rozmiar czcionki"
 
 #. Translators: This is a checkbox which enables or disables
 #. the pango font fallback. If font fallback is off, only the
@@ -56,13 +56,15 @@ msgstr ""
 #. selected font.
 #: engine/emoji_picker.py:373
 msgid "Fallback"
-msgstr ""
+msgstr "Używanie czcionek zapasowych"
 
 #: engine/emoji_picker.py:375
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
+"Czy używać czcionek zapasowych dla emoji lub części sekwencji emoji, których "
+"nie można wyświetlić za pomocą wybranej czcionki."
 
 #: engine/emoji_picker.py:445
 msgid "Recently used"
