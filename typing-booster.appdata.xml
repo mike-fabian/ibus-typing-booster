@@ -16,6 +16,40 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.35" date="2018-03-07" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (es, pl, and uk updated)
+          </li>
+          <li>
+            Update UnicodeData.txt to UnicodeData-11.0.0d13.txt
+          </li>
+          <li>
+            Read also the emoji names from the emoji-test.txt file
+          </li>
+          <li>
+            Update Unicode emoji data to a prerelease of Unicode Emoji Data 11.
+          </li>
+          <li>
+            Fix PyGTKDeprecationWarning: Using positional arguments
+            with the GObject constructor has been deprecated.
+          </li>
+          <li>
+            Add “Twemoji” as a good colour emoji font to the emoji-picker font list
+          </li>
+          <li>
+            Don’t show the languages en_001 and  es_419 in the browsing treeview
+          </li>
+          <li>
+            Use romaji=True by default in EmojiMatcher
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.34" date="2017-10-04" urgency="medium">
       <description>
         <ul>

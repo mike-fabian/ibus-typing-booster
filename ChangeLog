@@ -1,4 +1,16 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 07 Mar 2018 Released 1.5.35 version
+* Update translations from zanata (es, pl and uk updated)
+* Update UnicodeData.txt to UnicodeData-11.0.0d13.txt
+* Read also the emoji names from the emoji-test.txt file
+* Update Unicode emoji data to a prerelease of Unicode Emoji Data 11.0
+* Fix PyGTKDeprecationWarning: Using positional arguments with the GObject constructor has been deprecated.
+* Add “Twemoji” as a good colour emoji font to the emoji-picker font list
+* Don’t show the languages en_001 and  es_419 in the browsing treeview
+* Use romaji=True by default in EmojiMatcher
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 04 Oct 2017 Released 1.5.34 version
 * Update translations from zanata (cs new, de updated)
 * Add some tooltips
