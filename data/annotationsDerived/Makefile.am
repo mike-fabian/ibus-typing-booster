@@ -28,8 +28,10 @@ extradata_DATA = \
 	be.xml \
 	bg.xml \
 	bn.xml \
+	br.xml \
 	bs.xml \
 	ca.xml \
+	ccp.xml \
 	chr.xml \
 	cs.xml \
 	cy.xml \

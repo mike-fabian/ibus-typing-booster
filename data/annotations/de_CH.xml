@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
-<!-- Copyright © 1991-2017 Unicode, Inc.
+<!-- Copyright © 1991-2018 Unicode, Inc.
 For terms of use, see http://www.unicode.org/copyright.html
 Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
 -->
 <ldml>
 	<identity>
-		<version number="$Revision: 13708 $"/>
+		<version number="$Revision: 13933 $"/>
 		<language type="de"/>
 		<territory type="CH"/>
 	</identity>
@@ -102,9 +102,9 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="⭕" type="tts">Grosser Kreis</annotation>
 		<annotation cp="✅">abgehakt | erledigt | Weisses Häkchen</annotation>
 		<annotation cp="✅" type="tts">Weisses Häkchen</annotation>
-		<annotation cp="❔">Satzzeichen | weiss</annotation>
+		<annotation cp="❔">Satzzeichen | weiss | weisses Fragezeichen</annotation>
 		<annotation cp="❔" type="tts">weisses Fragezeichen</annotation>
-		<annotation cp="❕">Satzzeichen | weiss</annotation>
+		<annotation cp="❕">Satzzeichen | weiss | weisses Ausrufezeichen</annotation>
 		<annotation cp="❕" type="tts">weisses Ausrufezeichen</annotation>
 		<annotation cp="🔠">Eingabesymbol lateinische Grossbuchstaben | Grossbuchstaben | lateinische Grossbuchstaben</annotation>
 		<annotation cp="🔠" type="tts">Eingabesymbol lateinische Grossbuchstaben</annotation>

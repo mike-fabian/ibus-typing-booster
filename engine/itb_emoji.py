@@ -1967,23 +1967,23 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['it_IT', 'en_US', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, emozionarsi, faccina, faccina sorridente, sorridente]', 6), ('😙', 'faccina che bacia con occhi sorridenti [faccina, faccina sorridente]', 2), ('😃', 'faccina con un gran sorriso e occhi spalancati [faccina, faccina sorridente]', 2), ('😺', 'gatto che sorride [faccina, sorridente]', 2), ('😚', 'faccina che bacia con occhi chiusi [faccina]', 1)]
+        [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, emozionarsi, faccina, sorridente]', 5), ('😺', 'gatto che sorride [faccina, sorridente]', 2), ('😚', 'faccina che bacia con occhi chiusi [faccina]', 1), ('😙', 'faccina che bacia con occhi sorridenti [faccina]', 1), ('🤗', 'faccina che abbraccia [faccina]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', 'bactrian camel [🐫, So, nature, bactrian, camel, hump, two-hump camel]', 7), ('🐪', 'dromedary camel [So, nature, hump, camel]', 4), ('\U0001f992', 'giraffe face [So, nature]', 2), ('🐐', 'goat [So, nature]', 2), ('🐘', 'elephant [So, nature]', 2)]
+        [('🐫', 'bactrian camel [🐫, bactrian, camel, hump, two humps, two-hump camel]', 6), ('🐪', 'dromedary camel [camel, hump]', 2), ('🐫', 'bactrian camel [🐫, So, nature, bactrian, camel, hump, two-hump camel]', 7), ('🐪', 'dromedary camel [So, nature, hump, camel]', 4), ('\U0001f999', 'llama [So, nature]', 2)]
 
         >>> matcher = EmojiMatcher(languages = [ 'it_IT', 'en_US','es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', 'cammello [🐫, animale, cammello, gobba]', 4), ('🐪', 'dromedario [animale, cammello, gobba]', 3), ('🐐', 'capra [animale]', 1), ('🐘', 'elefante [animale]', 1), ('🐑', 'pecora [animale]', 1)]
+        [('🐫', 'cammello [🐫, animale, cammello, gobba]', 4), ('🐪', 'dromedario [animale, cammello, gobba]', 3), ('🐐', 'capra [animale]', 1), ('🐑', 'pecora [animale]', 1), ('🐘', 'elefante [animale]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['de_DE', 'it_IT', 'en_US','es_MX', 'es_ES', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', 'Kamel [🐫, Kamel, Tier, zweihöckrig]', 4), ('🐪', 'Dromedar [Kamel, Tier]', 2), ('🐐', 'Ziege [Tier]', 1), ('🐘', 'Elefant [Tier]', 1), ('🐑', 'Schaf [Tier]', 1)]
+        [('🐫', 'Kamel [🐫, Kamel, Tier, zweihöckrig]', 4), ('🐪', 'Dromedar [Kamel, Tier]', 2), ('🐐', 'Ziege [Tier]', 1), ('🐑', 'Schaf [Tier]', 1), ('🐘', 'Elefant [Tier]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['es_MX', 'it_IT', 'de_DE', 'en_US', 'es_ES', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', 'camello [🐫, animal, joroba]', 3), ('🐪', 'dromedario [animal, joroba]', 2), ('🐐', 'cabra [animal]', 1), ('🐘', 'elefante [animal]', 1), ('🐑', 'oveja [animal]', 1)]
+        [('🐫', 'camello [🐫, animal, joroba]', 3), ('🐪', 'dromedario [animal, joroba]', 2), ('🐐', 'cabra [animal]', 1), ('🐑', 'oveja [animal]', 1), ('🐘', 'elefante [animal]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
@@ -2462,7 +2462,7 @@ class EmojiMatcher():
             ('🐈', 'ネコ “ねこ”')
 
             >>> matcher.similar('🐤', match_limit=5)
-            [('🐤', '横を向いているひよこ [🐤, ひな, ひよこ, 動物, どうぶつ, 横を向いているひよこ, よこをむいているひよこ, 顔, かお, 鳥, とり, hina, hiyoko, doubutsu, yokowomuiteiruhiyoko, kao, tori]', 17), ('🐣', 'ひな鳥 [ひな, ひよこ, 動物, どうぶつ, 鳥, とり, hina, hiyoko, doubutsu, tori]', 10), ('🐦', '鳥 [動物, どうぶつ, 顔, かお, 鳥, とり, doubutsu, kao, tori]', 9), ('🐔', 'にわとり [動物, どうぶつ, 顔, かお, 鳥, とり, doubutsu, kao, tori]', 9), ('🐓', 'おんどり [動物, どうぶつ, 鳥, とり, doubutsu, tori]', 6)]
+            [('🐤', 'ひよこ [🐤, ひな, ひよこ, 動物, どうぶつ, 横を向いているひよこ, よこをむいているひよこ, 顔, かお, 鳥, とり, hina, hiyoko, doubutsu, yokowomuiteiruhiyoko, kao, tori]', 17), ('🐣', '卵からかえったひよこ [ひな, ひよこ, 動物, どうぶつ, 鳥, とり, hina, hiyoko, doubutsu, tori]', 10), ('🐥', '前を向いているひよこ [ひな, ひよこ, 動物, どうぶつ, 鳥, とり, hina, hiyoko, doubutsu, tori]', 10), ('🐦', '鳥 [動物, どうぶつ, 顔, かお, 鳥, とり, doubutsu, kao, tori]', 9), ('🐔', 'にわとり [動物, どうぶつ, 顔, かお, 鳥, とり, doubutsu, kao, tori]', 9)]
 
             >>> matcher.similar('🐌', match_limit=5)
             [('🐌', 'かたつむり [🐌, かたつむり, でんでん虫, でんでんむし, 虫, むし, katatsumuri, dendenmushi, mushi]', 9), ('🦋', 'チョウ [虫, むし, mushi]', 3), ('🐛', '毛虫 [虫, むし, mushi]', 3), ('🐜', 'アリ [虫, むし, mushi]', 3), ('🐝', 'ミツバチ [虫, むし, mushi]', 3)]

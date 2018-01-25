@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
-<!-- Copyright © 1991-2017 Unicode, Inc.
+<!-- Copyright © 1991-2018 Unicode, Inc.
 For terms of use, see http://www.unicode.org/copyright.html
 Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
 -->
 <ldml>
 	<identity>
-		<version number="$Revision: 13702 $"/>
+		<version number="$Revision: 13933 $"/>
 		<language type="tk"/>
 	</identity>
 	<annotations>
@@ -21,7 +21,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🏾" type="tts">orta goýy deri reňki</annotation>
 		<annotation cp="🏿">deri reňki | görnüş 6 | goýy deri reňki</annotation>
 		<annotation cp="🏿" type="tts">goýy deri reňki</annotation>
-		<annotation cp="😀">syrtarýan | syrtarýan ýüz | ýüz</annotation>
+		<annotation cp="😀">syrtarýan | ýüz</annotation>
 		<annotation cp="😀" type="tts">syrtarýan ýüz</annotation>
 		<annotation cp="😁">göz | gülýän gözli ýyrşarýan ýüz | syrtarmak | ýüz | ýylgyrmak</annotation>
 		<annotation cp="😁" type="tts">gülýän gözli ýyrşarýan ýüz</annotation>
@@ -69,7 +69,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🤨" type="tts">gaşyny galdyran ýüz</annotation>
 		<annotation cp="😐">biparh | syr bermeýän | syr bildirmeýän ýüz | ýüz</annotation>
 		<annotation cp="😐" type="tts">syr bildirmeýän ýüz</annotation>
-		<annotation cp="😑">duýgusyny bildirmeýän | duýgusyz | duýgusyz ýüz | sep bildirmeýän | ýüz</annotation>
+		<annotation cp="😑">duýgusyny bildirmeýän | duýgusyz | sep bildirmeýän | ýüz</annotation>
 		<annotation cp="😑" type="tts">duýgusyz ýüz</annotation>
 		<annotation cp="😶">agyz | agyzsyz ýüz | sessiz | ýuwaş | ýüz</annotation>
 		<annotation cp="😶" type="tts">agyzsyz ýüz</annotation>
@@ -89,11 +89,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="😯" type="tts">aňalyp galan ýüz</annotation>
 		<annotation cp="😪">ukuly ýüz | uky | ýüz</annotation>
 		<annotation cp="😪" type="tts">ukuly ýüz</annotation>
-		<annotation cp="😫">ýadaw | ýadaw ýüz | ýüz</annotation>
+		<annotation cp="😫">ýadaw | ýüz</annotation>
 		<annotation cp="😫" type="tts">ýadaw ýüz</annotation>
 		<annotation cp="😴">uhh | uklap ýatan ýüz | uky | ýüz</annotation>
 		<annotation cp="😴" type="tts">uklap ýatan ýüz</annotation>
-		<annotation cp="😌">ynjalan | ynjalan ýüz | ýüz</annotation>
+		<annotation cp="😌">ynjalan | ýüz</annotation>
 		<annotation cp="😌" type="tts">ynjalan ýüz</annotation>
 		<annotation cp="😛">dil | dilini çykarýan ýüz | ýüz</annotation>
 		<annotation cp="😛" type="tts">dilini çykarýan ýüz</annotation>
@@ -107,7 +107,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="😒" type="tts">göwni bitmedik ýüz</annotation>
 		<annotation cp="😓">der | derli salyk ýüz | sowuk | ýüz</annotation>
 		<annotation cp="😓" type="tts">derli salyk ýüz</annotation>
-		<annotation cp="😔">gussaly | gussaly ýüz | tukat | ýüz</annotation>
+		<annotation cp="😔">gussaly | tukat | ýüz</annotation>
 		<annotation cp="😔" type="tts">gussaly ýüz</annotation>
 		<annotation cp="😕">başy çaşan | başy çaşan ýüz | ýüz</annotation>
 		<annotation cp="😕" type="tts">başy çaşan ýüz</annotation>
@@ -123,9 +123,9 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🙁" type="tts">çalaja çytyk ýüz</annotation>
 		<annotation cp="😖">ugruny ýitiren | ugruny ýitiren ýüz | ýüz</annotation>
 		<annotation cp="😖" type="tts">ugruny ýitiren ýüz</annotation>
-		<annotation cp="😞">lapykeç | lapykeç ýüz | ýüz</annotation>
+		<annotation cp="😞">lapykeç | ýüz</annotation>
 		<annotation cp="😞" type="tts">lapykeç ýüz</annotation>
-		<annotation cp="😟">aladaly | aladaly ýüz | ýüz</annotation>
+		<annotation cp="😟">aladaly | ýüz</annotation>
 		<annotation cp="😟" type="tts">aladaly ýüz</annotation>
 		<annotation cp="😤">burnundan bug çykýan ýüz | ýeňen | ýeňiş | ýüz</annotation>
 		<annotation cp="😤" type="tts">burnundan bug çykýan ýüz</annotation>
@@ -137,9 +137,9 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="😦" type="tts">açyk agyzly çytyk ýüz</annotation>
 		<annotation cp="😧">jebir çekýän | jebir çekýän ýüz | ýüz</annotation>
 		<annotation cp="😧" type="tts">jebir çekýän ýüz</annotation>
-		<annotation cp="😨">gorkan | gorkuly | gorkuly ýüz | gorky | ýüz</annotation>
+		<annotation cp="😨">gorkan | gorkuly | gorky | ýüz</annotation>
 		<annotation cp="😨" type="tts">gorkuly ýüz</annotation>
-		<annotation cp="😩">argyn | argyn ýüz | ýadaw | ýüz</annotation>
+		<annotation cp="😩">argyn | ýadaw | ýüz</annotation>
 		<annotation cp="😩" type="tts">argyn ýüz</annotation>
 		<annotation cp="🤯">aňk-taňk | partlaýan kelle</annotation>
 		<annotation cp="🤯" type="tts">partlaýan kelle</annotation>
@@ -149,15 +149,15 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="😰" type="tts">sowuk derli biynjalyk ýüz</annotation>
 		<annotation cp="😱">çeýnemek | çygyrmak | gorkan | gorkuly | gorkup çygyrýan ýüz | gorky | ýüz</annotation>
 		<annotation cp="😱" type="tts">gorkup çygyrýan ýüz</annotation>
-		<annotation cp="😳">gözi gamaşan | gyzaran | gyzaran ýüz | ýüz</annotation>
+		<annotation cp="😳">gözi gamaşan | gyzaran | ýüz</annotation>
 		<annotation cp="😳" type="tts">gyzaran ýüz</annotation>
 		<annotation cp="🤪">däli ýüz | göz | kiçi | uly</annotation>
 		<annotation cp="🤪" type="tts">däli ýüz</annotation>
 		<annotation cp="😵">başy sämeýän | başy sämeýän ýüz | ýüz</annotation>
 		<annotation cp="😵" type="tts">başy sämeýän ýüz</annotation>
-		<annotation cp="😡">gahar-gazap | gaharly | gamaşyk | gamaşyk ýüz | gazaply | gyzyl | ýüz</annotation>
+		<annotation cp="😡">gahar-gazap | gaharly | gamaşyk | gazaply | gyzyl | ýüz</annotation>
 		<annotation cp="😡" type="tts">gamaşyk ýüz</annotation>
-		<annotation cp="😠">gaharly | gaharly ýüz | gazaply | ýüz</annotation>
+		<annotation cp="😠">gaharly | gazaply | ýüz</annotation>
 		<annotation cp="😠" type="tts">gaharly ýüz</annotation>
 		<annotation cp="🤬">agzynyň üsti simwolly ýüz | sögýär</annotation>
 		<annotation cp="🤬" type="tts">agzynyň üsti simwolly ýüz</annotation>
@@ -177,7 +177,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="😇" type="tts">başy halkaly ýylgyrýan ýüz</annotation>
 		<annotation cp="🤠">çopan gyz | kowboý | kowboý papakly ýüz | papak | ýüz</annotation>
 		<annotation cp="🤠" type="tts">kowboý papakly ýüz</annotation>
-		<annotation cp="🤡">masgarabaz | masgarabaz ýüz | ýüz</annotation>
+		<annotation cp="🤡">masgarabaz | ýüz</annotation>
 		<annotation cp="🤡" type="tts">masgarabaz ýüz</annotation>
 		<annotation cp="🤥">buratino | ýalan | ýalançy ýüz | ýüz</annotation>
 		<annotation cp="🤥" type="tts">ýalançy ýüz</annotation>
@@ -187,7 +187,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🤭" type="tts">eli agzynyň üstünde ýüz</annotation>
 		<annotation cp="🧐">dykylan | monoklly ýüz</annotation>
 		<annotation cp="🧐" type="tts">monoklly ýüz</annotation>
-		<annotation cp="🤓">dälişge | dälişge ýüz | ylym uran | ýüz</annotation>
+		<annotation cp="🤓">dälişge | ylym uran | ýüz</annotation>
 		<annotation cp="🤓" type="tts">dälişge ýüz</annotation>
 		<annotation cp="😈">erteki | hyýal | şahlar | şahly ýylgyrýan ýüz | ýüz | ýylgyrmak</annotation>
 		<annotation cp="😈" type="tts">şahly ýylgyrýan ýüz</annotation>
@@ -207,7 +207,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👽" type="tts">gelmişek</annotation>
 		<annotation cp="👾">aždar | başga dünýäli | erteki | gelmişek | gelmişek nägehan | hyýal | mahluk | NLO | ýüz</annotation>
 		<annotation cp="👾" type="tts">gelmişek nägehan</annotation>
-		<annotation cp="🤖">nägehan | robot | robot ýüz | ýüz</annotation>
+		<annotation cp="🤖">nägehan | robot | ýüz</annotation>
 		<annotation cp="🤖" type="tts">robot ýüz</annotation>
 		<annotation cp="💩">gülkünç | gumalak | nägehan | nejasat | tezek | ýüz</annotation>
 		<annotation cp="💩" type="tts">tezek</annotation>
@@ -223,11 +223,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="😼" type="tts">kinaýaly ýylgyrýan pişik ýüz</annotation>
 		<annotation cp="😽">göz | öpýän pişik ýüz | pişik | posa | ýüz</annotation>
 		<annotation cp="😽" type="tts">öpýän pişik ýüz</annotation>
-		<annotation cp="🙀">argyn | argyn pişik ýüz | geň galan | pişik | wah | ýüz</annotation>
+		<annotation cp="🙀">argyn | geň galan | pişik | wah | ýüz</annotation>
 		<annotation cp="🙀" type="tts">argyn pişik ýüz</annotation>
 		<annotation cp="😿">aglamak | aglaýan pişik ýüz | gamgyn | gözýaş | pişik | ýüz</annotation>
 		<annotation cp="😿" type="tts">aglaýan pişik ýüz</annotation>
-		<annotation cp="😾">gamaşyk | gamaşyk pişik ýüz | pişik | ýüz</annotation>
+		<annotation cp="😾">gamaşyk | pişik | ýüz</annotation>
 		<annotation cp="😾" type="tts">gamaşyk pişik ýüz</annotation>
 		<annotation cp="🙈">bolanok | däl | erbet | gadagan | gör | görmedim-bilmedim maýmyn | hereket | maýmyn | ýok | ýüz</annotation>
 		<annotation cp="🙈" type="tts">görmedim-bilmedim maýmyn</annotation>
@@ -259,29 +259,29 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👨‍⚕" type="tts">erkek saglygy goraýyş işgäri</annotation>
 		<annotation cp="👩‍⚕">lukman | saglygy goraýyş | şepagat uýasy | terapist | zenan | zenan saglygy goraýyş işgäri</annotation>
 		<annotation cp="👩‍⚕" type="tts">zenan saglygy goraýyş işgäri</annotation>
-		<annotation cp="👨‍🎓">erkek | erkek talyp | talyp | uçurym</annotation>
+		<annotation cp="👨‍🎓">erkek | talyp | uçurym</annotation>
 		<annotation cp="👨‍🎓" type="tts">erkek talyp</annotation>
-		<annotation cp="👩‍🎓">talyp | uçurym | zenan | zenan talyp</annotation>
+		<annotation cp="👩‍🎓">talyp | uçurym | zenan</annotation>
 		<annotation cp="👩‍🎓" type="tts">zenan talyp</annotation>
-		<annotation cp="👨‍🏫">erkek | erkek mugallym | lektor | mugallym | professor</annotation>
+		<annotation cp="👨‍🏫">erkek | lektor | mugallym | professor</annotation>
 		<annotation cp="👨‍🏫" type="tts">erkek mugallym</annotation>
-		<annotation cp="👩‍🏫">lektor | mugallym | professor | zenan | zenan mugallym</annotation>
+		<annotation cp="👩‍🏫">lektor | mugallym | professor | zenan</annotation>
 		<annotation cp="👩‍🏫" type="tts">zenan mugallym</annotation>
 		<annotation cp="👨‍⚖">adalat | erkek | erkek kazy | terezi</annotation>
 		<annotation cp="👨‍⚖" type="tts">erkek kazy</annotation>
 		<annotation cp="👩‍⚖">adalat | terezi | zenan | zenan kazy</annotation>
 		<annotation cp="👩‍⚖" type="tts">zenan kazy</annotation>
-		<annotation cp="👨‍🌾">bagban | daýhan | erkek | erkek daýhan | oba hojalykçy</annotation>
+		<annotation cp="👨‍🌾">bagban | daýhan | erkek | oba hojalykçy</annotation>
 		<annotation cp="👨‍🌾" type="tts">erkek daýhan</annotation>
-		<annotation cp="👩‍🌾">bagban | daýhan | oba hojalykçy | zenan | zenan daýhan</annotation>
+		<annotation cp="👩‍🌾">bagban | daýhan | oba hojalykçy | zenan</annotation>
 		<annotation cp="👩‍🌾" type="tts">zenan daýhan</annotation>
-		<annotation cp="👨‍🍳">aşpez | erkek | erkek aşpez | şef</annotation>
+		<annotation cp="👨‍🍳">aşpez | erkek | şef</annotation>
 		<annotation cp="👨‍🍳" type="tts">erkek aşpez</annotation>
-		<annotation cp="👩‍🍳">aşpez | şef | zenan | zenan aşpez</annotation>
+		<annotation cp="👩‍🍳">aşpez | şef | zenan</annotation>
 		<annotation cp="👩‍🍳" type="tts">zenan aşpez</annotation>
-		<annotation cp="👨‍🔧">elektrik | erkek | erkek mehanik | mehanik | santehnik | söwdagär</annotation>
+		<annotation cp="👨‍🔧">elektrik | erkek | mehanik | santehnik | söwdagär</annotation>
 		<annotation cp="👨‍🔧" type="tts">erkek mehanik</annotation>
-		<annotation cp="👩‍🔧">elektrik | mehanik | santehnik | söwdagär | zenan | zenan mehanik</annotation>
+		<annotation cp="👩‍🔧">elektrik | mehanik | santehnik | söwdagär | zenan</annotation>
 		<annotation cp="👩‍🔧" type="tts">zenan mehanik</annotation>
 		<annotation cp="👨‍🏭">erkek | erkek zawod işçisi | gurnama | işçi | senagat | zawod</annotation>
 		<annotation cp="👨‍🏭" type="tts">erkek zawod işçisi</annotation>
@@ -291,29 +291,29 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👨‍💼" type="tts">erkek ofis işgäri</annotation>
 		<annotation cp="👩‍💼">binagär | işewürlik | ofis | ofis işgäri | ýolbaşçy | zenan | zenan ofis işgäri</annotation>
 		<annotation cp="👩‍💼" type="tts">zenan ofis işgäri</annotation>
-		<annotation cp="👨‍🔬">alym | biolog | erkek | erkek alym | fizik | himik | inžener | matematik</annotation>
+		<annotation cp="👨‍🔬">alym | biolog | erkek | fizik | himik | inžener | matematik</annotation>
 		<annotation cp="👨‍🔬" type="tts">erkek alym</annotation>
-		<annotation cp="👩‍🔬">alym | biolog | fizik | himik | inžener | matematik | zenan | zenan alym</annotation>
+		<annotation cp="👩‍🔬">alym | biolog | fizik | himik | inžener | matematik | zenan</annotation>
 		<annotation cp="👩‍🔬" type="tts">zenan alym</annotation>
-		<annotation cp="👨‍💻">dörediji | erkek | erkek tehnolog | oýlap tapyjy | programma düzüji | programma üpjünçiligi | tehnolog</annotation>
+		<annotation cp="👨‍💻">dörediji | erkek | oýlap tapyjy | programma düzüji | programma üpjünçiligi | tehnolog</annotation>
 		<annotation cp="👨‍💻" type="tts">erkek tehnolog</annotation>
-		<annotation cp="👩‍💻">dörediji | oýlap tapyjy | programma düzüji | programma üpjünçiligi | tehnolog | zenan | zenan tehnolog</annotation>
+		<annotation cp="👩‍💻">dörediji | oýlap tapyjy | programma düzüji | programma üpjünçiligi | tehnolog | zenan</annotation>
 		<annotation cp="👩‍💻" type="tts">zenan tehnolog</annotation>
-		<annotation cp="👨‍🎤">aktýor | aýdymçy | erkek | erkek aýdymçy | medeniýet işgäri | rok | ýyldyz</annotation>
+		<annotation cp="👨‍🎤">aktýor | aýdymçy | erkek | medeniýet işgäri | rok | ýyldyz</annotation>
 		<annotation cp="👨‍🎤" type="tts">erkek aýdymçy</annotation>
-		<annotation cp="👩‍🎤">aktýor | aýdymçy | medeniýet işgäri | rok | ýyldyz | zenan | zenan aýdymçy</annotation>
+		<annotation cp="👩‍🎤">aktýor | aýdymçy | medeniýet işgäri | rok | ýyldyz | zenan</annotation>
 		<annotation cp="👩‍🎤" type="tts">zenan aýdymçy</annotation>
-		<annotation cp="👨‍🎨">erkek | erkek suratkeş | palitra | suratkeş</annotation>
+		<annotation cp="👨‍🎨">erkek | palitra | suratkeş</annotation>
 		<annotation cp="👨‍🎨" type="tts">erkek suratkeş</annotation>
 		<annotation cp="👩‍🎨">palitra | suratkeş | zenan | zenan surarteş</annotation>
 		<annotation cp="👩‍🎨" type="tts">zenan surarteş</annotation>
-		<annotation cp="👨‍✈">erkek | erkek uçarman | uçar | uçarman</annotation>
+		<annotation cp="👨‍✈">erkek | uçar | uçarman</annotation>
 		<annotation cp="👨‍✈" type="tts">erkek uçarman</annotation>
-		<annotation cp="👩‍✈">uçar | uçarman | zenan | zenan uçarman</annotation>
+		<annotation cp="👩‍✈">uçar | uçarman | zenan</annotation>
 		<annotation cp="👩‍✈" type="tts">zenan uçarman</annotation>
-		<annotation cp="👨‍🚀">erkek | erkek kosmonawt | kosmonawt | raketa</annotation>
+		<annotation cp="👨‍🚀">erkek | kosmonawt | raketa</annotation>
 		<annotation cp="👨‍🚀" type="tts">erkek kosmonawt</annotation>
-		<annotation cp="👩‍🚀">kosmonawt | raketa | zenan | zenan kosmonawt</annotation>
+		<annotation cp="👩‍🚀">kosmonawt | raketa | zenan</annotation>
 		<annotation cp="👩‍🚀" type="tts">zenan kosmonawt</annotation>
 		<annotation cp="👨‍🚒">erkek | erkek ýangyn söndüriji | ýangyn söndüriji | ýangyn söndüriş ulagy</annotation>
 		<annotation cp="👨‍🚒" type="tts">erkek ýangyn söndüriji</annotation>
@@ -327,15 +327,15 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👮‍♀" type="tts">zenan polisiýa işgäri</annotation>
 		<annotation cp="🕵">aňtawçy | detektiw | içaly</annotation>
 		<annotation cp="🕵" type="tts">aňtawçy</annotation>
-		<annotation cp="🕵‍♂">aňtawçy | detektiw | erkek | erkek aňtawçy | içaly</annotation>
+		<annotation cp="🕵‍♂">aňtawçy | detektiw | erkek | içaly</annotation>
 		<annotation cp="🕵‍♂" type="tts">erkek aňtawçy</annotation>
-		<annotation cp="🕵‍♀">aňtawçy | detektiw | içaly | zenan | zenan aňtawçy</annotation>
+		<annotation cp="🕵‍♀">aňtawçy | detektiw | içaly | zenan</annotation>
 		<annotation cp="🕵‍♀" type="tts">zenan aňtawçy</annotation>
 		<annotation cp="💂">sakçy</annotation>
 		<annotation cp="💂" type="tts">sakçy</annotation>
-		<annotation cp="💂‍♂">erkek | erkek sakçy | sakçy</annotation>
+		<annotation cp="💂‍♂">erkek | sakçy</annotation>
 		<annotation cp="💂‍♂" type="tts">erkek sakçy</annotation>
-		<annotation cp="💂‍♀">sakçy | zenan | zenan sakçy</annotation>
+		<annotation cp="💂‍♀">sakçy | zenan</annotation>
 		<annotation cp="💂‍♀" type="tts">zenan sakçy</annotation>
 		<annotation cp="👷">gurluşyk | gurluşyk işçisi | işçi | papak</annotation>
 		<annotation cp="👷" type="tts">gurluşyk işçisi</annotation>
@@ -369,11 +369,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🤵" type="tts">smokinli erkek</annotation>
 		<annotation cp="👰">gelin | nikap | nikaply gelin | toý</annotation>
 		<annotation cp="👰" type="tts">nikaply gelin</annotation>
-		<annotation cp="🤰">aýal | göwreli | göwreli aýal</annotation>
+		<annotation cp="🤰">aýal | göwreli</annotation>
 		<annotation cp="🤰" type="tts">göwreli aýal</annotation>
 		<annotation cp="🤱">bäbek | emdirmek | göwüs</annotation>
 		<annotation cp="🤱" type="tts">emdirmek</annotation>
-		<annotation cp="👼">bäbek | bäbek perişde | erteki | hyýal | perişde | ýüz</annotation>
+		<annotation cp="👼">bäbek | erteki | hyýal | perişde | ýüz</annotation>
 		<annotation cp="👼" type="tts">bäbek perişde</annotation>
 		<annotation cp="🎅">aýaz | Aýaz baba | baba | baýramçylyk | kaka | Roždestwo</annotation>
 		<annotation cp="🎅" type="tts">Aýaz baba</annotation>
@@ -429,9 +429,9 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🙍‍♀" type="tts">çytylýan zenan</annotation>
 		<annotation cp="🙎">gamaşyk | gamaşyk adam | üm</annotation>
 		<annotation cp="🙎" type="tts">gamaşyk adam</annotation>
-		<annotation cp="🙎‍♂">erkek | gamaşyk | gamaşyk erkek | üm</annotation>
+		<annotation cp="🙎‍♂">erkek | gamaşyk | üm</annotation>
 		<annotation cp="🙎‍♂" type="tts">gamaşyk erkek</annotation>
-		<annotation cp="🙎‍♀">gamaşyk | gamaşyk zenan | üm | zenan</annotation>
+		<annotation cp="🙎‍♀">gamaşyk | üm | zenan</annotation>
 		<annotation cp="🙎‍♀" type="tts">gamaşyk zenan</annotation>
 		<annotation cp="🙅">bolanok | däl | el | gadagan | üm | ýok | ÝOK ümleýän adam</annotation>
 		<annotation cp="🙅" type="tts">ÝOK ümleýän adam</annotation>
@@ -533,7 +533,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🛌" type="tts">ýatalgada ýatan adam</annotation>
 		<annotation cp="🕴">erkek | işewürlik | kostýum-balak | kostýum-balakly ýokary galyp barýan erkek</annotation>
 		<annotation cp="🕴" type="tts">kostýum-balakly ýokary galyp barýan erkek</annotation>
-		<annotation cp="🗣">gürlemek | gürleýän | gürleýän kelle | kelle | sudur | ýüz</annotation>
+		<annotation cp="🗣">gürlemek | gürleýän | kelle | sudur | ýüz</annotation>
 		<annotation cp="🗣" type="tts">gürleýän kelle</annotation>
 		<annotation cp="👤">býust | sudur | sudury görünýän heýkel</annotation>
 		<annotation cp="👤" type="tts">sudury görünýän heýkel</annotation>
@@ -681,13 +681,13 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="✊" type="tts">galdyrylan ýumruk</annotation>
 		<annotation cp="👊">düwülen | el | gelýän ýumruk | ýumruk | ýumruklamak</annotation>
 		<annotation cp="👊" type="tts">gelýän ýumruk</annotation>
-		<annotation cp="🤛">çepe | çepe ýumruk | ýumruk</annotation>
+		<annotation cp="🤛">çepe | ýumruk</annotation>
 		<annotation cp="🤛" type="tts">çepe ýumruk</annotation>
-		<annotation cp="🤜">saga | saga ýumruk | ýumruk</annotation>
+		<annotation cp="🤜">saga | ýumruk</annotation>
 		<annotation cp="🤜" type="tts">saga ýumruk</annotation>
 		<annotation cp="🤚">eliň arkasy | galdyrylan | galdyrylan el arkasy</annotation>
 		<annotation cp="🤚" type="tts">galdyrylan el arkasy</annotation>
-		<annotation cp="👋">el | galgatmak | galgaýan | galgaýan el</annotation>
+		<annotation cp="👋">el | galgatmak | galgaýan</annotation>
 		<annotation cp="👋" type="tts">galgaýan el</annotation>
 		<annotation cp="🤟">el | MSS | seni söýýän ümi</annotation>
 		<annotation cp="🤟" type="tts">seni söýýän ümi</annotation>
@@ -703,7 +703,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🤲" type="tts">aýalary birleşdirip ýokary galdyrmak</annotation>
 		<annotation cp="🙏">baş egmek | birleşen eller | dileg | el | eplenen | haýyş | sag boluň | soramak | üm</annotation>
 		<annotation cp="🙏" type="tts">birleşen eller</annotation>
-		<annotation cp="🤝">duşuşyk | el | el gysyşmak | gysyşmak | ylalaşyk</annotation>
+		<annotation cp="🤝">duşuşyk | el | gysyşmak | ylalaşyk</annotation>
 		<annotation cp="🤝" type="tts">el gysyşmak</annotation>
 		<annotation cp="💅">dyrnak | dyrnak lagy | ideg | kosmetika | lak | manikýur</annotation>
 		<annotation cp="💅" type="tts">dyrnak lagy</annotation>
@@ -789,7 +789,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🕳" type="tts">deşik</annotation>
 		<annotation cp="👓">äýnek | eşik | göz | pensne</annotation>
 		<annotation cp="👓" type="tts">äýnek</annotation>
-		<annotation cp="🕶">äýnek | gara | gara äýnek | göz | pensne</annotation>
+		<annotation cp="🕶">äýnek | gara | göz | pensne</annotation>
 		<annotation cp="🕶" type="tts">gara äýnek</annotation>
 		<annotation cp="👔">boýunbagy | egin-eşik</annotation>
 		<annotation cp="👔" type="tts">boýunbagy</annotation>
@@ -853,45 +853,45 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="💍" type="tts">ýüzük</annotation>
 		<annotation cp="💎">almaz | brilliant | gymmatbaha daş | zümerret</annotation>
 		<annotation cp="💎" type="tts">gymmatbaha daş</annotation>
-		<annotation cp="🐵">maýmyn | maýmyn ýüz | ýüz</annotation>
+		<annotation cp="🐵">maýmyn | ýüz</annotation>
 		<annotation cp="🐵" type="tts">maýmyn ýüz</annotation>
 		<annotation cp="🐒">maýmyn</annotation>
 		<annotation cp="🐒" type="tts">maýmyn</annotation>
 		<annotation cp="🦍">gorilla</annotation>
 		<annotation cp="🦍" type="tts">gorilla</annotation>
-		<annotation cp="🐶">it | it ýüz | öý haýwany | ýüz</annotation>
+		<annotation cp="🐶">it | öý haýwany | ýüz</annotation>
 		<annotation cp="🐶" type="tts">it ýüz</annotation>
 		<annotation cp="🐕">it | öý haýwany</annotation>
 		<annotation cp="🐕" type="tts">it</annotation>
 		<annotation cp="🐩">it | pudl</annotation>
 		<annotation cp="🐩" type="tts">pudl</annotation>
-		<annotation cp="🐺">möjek | möjek ýüz | ýüz</annotation>
+		<annotation cp="🐺">möjek | ýüz</annotation>
 		<annotation cp="🐺" type="tts">möjek ýüz</annotation>
-		<annotation cp="🦊">tilki | tilki ýüz | ýüz</annotation>
+		<annotation cp="🦊">tilki | ýüz</annotation>
 		<annotation cp="🦊" type="tts">tilki ýüz</annotation>
-		<annotation cp="🐱">öý haýwany | pişik | pişik ýüz | ýüz</annotation>
+		<annotation cp="🐱">öý haýwany | pişik | ýüz</annotation>
 		<annotation cp="🐱" type="tts">pişik ýüz</annotation>
 		<annotation cp="🐈">öý haýwany | pişik</annotation>
 		<annotation cp="🐈" type="tts">pişik</annotation>
-		<annotation cp="🦁">Arslan | täleýnama | ýolbars | ýolbars ýüz | ýüz</annotation>
+		<annotation cp="🦁">Arslan | täleýnama | ýolbars | ýüz</annotation>
 		<annotation cp="🦁" type="tts">ýolbars ýüz</annotation>
-		<annotation cp="🐯">gaplaň | gaplaň ýüz | ýüz</annotation>
+		<annotation cp="🐯">gaplaň | ýüz</annotation>
 		<annotation cp="🐯" type="tts">gaplaň ýüz</annotation>
 		<annotation cp="🐅">gaplaň</annotation>
 		<annotation cp="🐅" type="tts">gaplaň</annotation>
 		<annotation cp="🐆">bars</annotation>
 		<annotation cp="🐆" type="tts">bars</annotation>
-		<annotation cp="🐴">at | at ýüz | ýüz</annotation>
+		<annotation cp="🐴">at | ýüz</annotation>
 		<annotation cp="🐴" type="tts">at ýüz</annotation>
 		<annotation cp="🐎">at | çapuw aty | çapyksuwar | çapyşyk</annotation>
 		<annotation cp="🐎" type="tts">at</annotation>
 		<annotation cp="🦄">ýekeşah | ýüz</annotation>
-		<annotation cp="🦄" type="tts">ýüz | ýekeşah</annotation>
+		<annotation cp="🦄" type="tts">ýüz</annotation>
 		<annotation cp="🦓">ala-mula | zebra</annotation>
 		<annotation cp="🦓" type="tts">zebra</annotation>
 		<annotation cp="🦌">sugun</annotation>
 		<annotation cp="🦌" type="tts">sugun</annotation>
-		<annotation cp="🐮">sygyr | sygyr ýüz | ýüz</annotation>
+		<annotation cp="🐮">sygyr | ýüz</annotation>
 		<annotation cp="🐮" type="tts">sygyr ýüz</annotation>
 		<annotation cp="🐂">öküz | Sowur | täleýnama</annotation>
 		<annotation cp="🐂" type="tts">öküz</annotation>
@@ -899,13 +899,13 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🐃" type="tts">gäwmiş ýüz</annotation>
 		<annotation cp="🐄">sygyr</annotation>
 		<annotation cp="🐄" type="tts">sygyr</annotation>
-		<annotation cp="🐷">doňuz | doňuz ýüz | ýüz</annotation>
+		<annotation cp="🐷">doňuz | ýüz</annotation>
 		<annotation cp="🐷" type="tts">doňuz ýüz</annotation>
 		<annotation cp="🐖">doňuz | jojuk</annotation>
 		<annotation cp="🐖" type="tts">doňuz</annotation>
 		<annotation cp="🐗">doňuz | ýekegapan</annotation>
 		<annotation cp="🐗" type="tts">ýekegapan</annotation>
-		<annotation cp="🐽">burun | doňuz | doňuz burun | ýüz</annotation>
+		<annotation cp="🐽">burun | doňuz | ýüz</annotation>
 		<annotation cp="🐽" type="tts">doňuz burun</annotation>
 		<annotation cp="🐏">erkek | goç | goýun | Hamal | täleýnama</annotation>
 		<annotation cp="🐏" type="tts">goç</annotation>
@@ -923,15 +923,15 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🐘" type="tts">pil</annotation>
 		<annotation cp="🦏">kerk</annotation>
 		<annotation cp="🦏" type="tts">kerk</annotation>
-		<annotation cp="🐭">syçan | syçan ýüz | ýüz</annotation>
+		<annotation cp="🐭">syçan | ýüz</annotation>
 		<annotation cp="🐭" type="tts">syçan ýüz</annotation>
 		<annotation cp="🐁">syçan</annotation>
 		<annotation cp="🐁" type="tts">syçan</annotation>
 		<annotation cp="🐀">alaka</annotation>
 		<annotation cp="🐀" type="tts">alaka</annotation>
-		<annotation cp="🐹">homýak | homýak ýüz | öý haýwany | ýüz</annotation>
+		<annotation cp="🐹">homýak | öý haýwany | ýüz</annotation>
 		<annotation cp="🐹" type="tts">homýak ýüz</annotation>
-		<annotation cp="🐰">eldeki towşan | öý haýwany | towşan | towşan ýüz | ýüz</annotation>
+		<annotation cp="🐰">eldeki towşan | öý haýwany | towşan | ýüz</annotation>
 		<annotation cp="🐰" type="tts">towşan ýüz</annotation>
 		<annotation cp="🐇">öý haýwany | towşan</annotation>
 		<annotation cp="🐇" type="tts">towşan</annotation>
@@ -941,11 +941,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🦔" type="tts">oklukirpi</annotation>
 		<annotation cp="🦇">wampir | ýarganat</annotation>
 		<annotation cp="🦇" type="tts">ýarganat</annotation>
-		<annotation cp="🐻">aýy | aýy ýüz | ýüz</annotation>
+		<annotation cp="🐻">aýy | ýüz</annotation>
 		<annotation cp="🐻" type="tts">aýy ýüz</annotation>
 		<annotation cp="🐨">aýy | koala</annotation>
 		<annotation cp="🐨" type="tts">koala</annotation>
-		<annotation cp="🐼">panda | panda ýüz | ýüz</annotation>
+		<annotation cp="🐼">panda | ýüz</annotation>
 		<annotation cp="🐼" type="tts">panda ýüz</annotation>
 		<annotation cp="🐾">aýak | penje | penje yzlary | yz</annotation>
 		<annotation cp="🐾" type="tts">penje yzlary</annotation>
@@ -973,7 +973,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🦆" type="tts">ördek</annotation>
 		<annotation cp="🦉">akyldar | baýguş | guş</annotation>
 		<annotation cp="🦉" type="tts">baýguş</annotation>
-		<annotation cp="🐸">gurbaga | gurbaga ýüz | ýüz</annotation>
+		<annotation cp="🐸">gurbaga | ýüz</annotation>
 		<annotation cp="🐸" type="tts">gurbaga ýüz</annotation>
 		<annotation cp="🐊">krokodil</annotation>
 		<annotation cp="🐊" type="tts">krokodil</annotation>
@@ -983,7 +983,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🦎" type="tts">hažžyk</annotation>
 		<annotation cp="🐍">göteriji | täleýnama | ýylan | Ýylançy</annotation>
 		<annotation cp="🐍" type="tts">ýylan</annotation>
-		<annotation cp="🐲">aždarha | aždarha ýüz | erteki | ýüz</annotation>
+		<annotation cp="🐲">aždarha | erteki | ýüz</annotation>
 		<annotation cp="🐲" type="tts">aždarha ýüz</annotation>
 		<annotation cp="🐉">aždarha | erteki</annotation>
 		<annotation cp="🐉" type="tts">aždarha</annotation>
@@ -999,7 +999,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🐬" type="tts">delfin</annotation>
 		<annotation cp="🐟">balyk | Balyk | täleýnama</annotation>
 		<annotation cp="🐟" type="tts">balyk</annotation>
-		<annotation cp="🐠">balyk | tropiki | tropiki balyk</annotation>
+		<annotation cp="🐠">balyk | tropiki</annotation>
 		<annotation cp="🐠" type="tts">tropiki balyk</annotation>
 		<annotation cp="🐡">balyk | çişýän balyk</annotation>
 		<annotation cp="🐡" type="tts">çişýän balyk</annotation>
@@ -1007,7 +1007,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🦈" type="tts">akula</annotation>
 		<annotation cp="🐙">osminog</annotation>
 		<annotation cp="🐙" type="tts">osminog</annotation>
-		<annotation cp="🐚">çaňňalak | spiral | spiral çaňňalak</annotation>
+		<annotation cp="🐚">çaňňalak | spiral</annotation>
 		<annotation cp="🐚" type="tts">spiral çaňňalak</annotation>
 		<annotation cp="🦀">leňňeç | Leňňeç | täleýnama</annotation>
 		<annotation cp="🦀" type="tts">leňňeç</annotation>
@@ -1045,7 +1045,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🏵" type="tts">bezeg güli</annotation>
 		<annotation cp="🌹">bägül | gül</annotation>
 		<annotation cp="🌹" type="tts">bägül</annotation>
-		<annotation cp="🥀">gül | sülleren | sülleren gül</annotation>
+		<annotation cp="🥀">gül | sülleren</annotation>
 		<annotation cp="🥀" type="tts">sülleren gül</annotation>
 		<annotation cp="🌺">gül | hytaý bägüli</annotation>
 		<annotation cp="🌺" type="tts">hytaý bägüli</annotation>
@@ -1059,7 +1059,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🌱" type="tts">şine</annotation>
 		<annotation cp="🌲">agaç | hemişe gök öwüsýän agaç</annotation>
 		<annotation cp="🌲" type="tts">hemişe gök öwüsýän agaç</annotation>
-		<annotation cp="🌳">agaç | kölegeli | ýaprakly | ýaprakly agaç</annotation>
+		<annotation cp="🌳">agaç | kölegeli | ýaprakly</annotation>
 		<annotation cp="🌳" type="tts">ýaprakly agaç</annotation>
 		<annotation cp="🌴">agaç | palma | palma agajy</annotation>
 		<annotation cp="🌴" type="tts">palma agajy</annotation>
@@ -1093,9 +1093,9 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🍌" type="tts">banan</annotation>
 		<annotation cp="🍍">ananas | miwe</annotation>
 		<annotation cp="🍍" type="tts">ananas</annotation>
-		<annotation cp="🍎">alma | gyzyl | gyzyl alma | miwe</annotation>
+		<annotation cp="🍎">alma | gyzyl | miwe</annotation>
 		<annotation cp="🍎" type="tts">gyzyl alma</annotation>
-		<annotation cp="🍏">alma | miwe | ýaşyl | ýaşyl alma</annotation>
+		<annotation cp="🍏">alma | miwe | ýaşyl</annotation>
 		<annotation cp="🍏" type="tts">ýaşyl alma</annotation>
 		<annotation cp="🍐">armyt | miwe</annotation>
 		<annotation cp="🍐" type="tts">armyt</annotation>
@@ -1121,7 +1121,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🥕" type="tts">käşir</annotation>
 		<annotation cp="🌽">gulak | gulpak | mekge | mekgejöwen</annotation>
 		<annotation cp="🌽" type="tts">mekgejöwen</annotation>
-		<annotation cp="🌶">ajy | ajy garaburç | garaburç</annotation>
+		<annotation cp="🌶">ajy | garaburç</annotation>
 		<annotation cp="🌶" type="tts">ajy garaburç</annotation>
 		<annotation cp="🥒">duzlanan | gök önüm | hyýar | iýmit</annotation>
 		<annotation cp="🥒" type="tts">hyýar</annotation>
@@ -1137,7 +1137,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🍞" type="tts">çörek</annotation>
 		<annotation cp="🥐">çörek | fransuz | iýmit | kruassan | ýarymaý ruledi</annotation>
 		<annotation cp="🥐" type="tts">kruassan</annotation>
-		<annotation cp="🥖">baget | baget çörek | çörek | fransuz | iýmit</annotation>
+		<annotation cp="🥖">baget | çörek | fransuz | iýmit</annotation>
 		<annotation cp="🥖" type="tts">baget çörek</annotation>
 		<annotation cp="🥨">bükülen | krendel</annotation>
 		<annotation cp="🥨" type="tts">krendel</annotation>
@@ -1173,13 +1173,13 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🥚" type="tts">ýumurtga</annotation>
 		<annotation cp="🍳">gowurmak | kulinariýa | skoworodka | ýumurtga</annotation>
 		<annotation cp="🍳" type="tts">kulinariýa</annotation>
-		<annotation cp="🥘">ispan palowy | iýmit | kastrýul | taba | ýalpak | ýalpak taba</annotation>
+		<annotation cp="🥘">ispan palowy | iýmit | kastrýul | taba | ýalpak</annotation>
 		<annotation cp="🥘" type="tts">ýalpak taba</annotation>
 		<annotation cp="🍲">bişirmek | gazan | naharly gazan</annotation>
 		<annotation cp="🍲" type="tts">naharly gazan</annotation>
 		<annotation cp="🥣">çemçe bilen şakäse | ertirlik | galla | tüwi hamyry</annotation>
 		<annotation cp="🥣" type="tts">çemçe bilen şakäse</annotation>
-		<annotation cp="🥗">işdäaçar | iýmit | ýaşyl | ýaşyl işdäaçar</annotation>
+		<annotation cp="🥗">işdäaçar | iýmit | ýaşyl</annotation>
 		<annotation cp="🥗" type="tts">ýaşyl işdäaçar</annotation>
 		<annotation cp="🍿">patrak</annotation>
 		<annotation cp="🍿" type="tts">patrak</annotation>
@@ -1187,25 +1187,25 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🥫" type="tts">gaplanan iýmit</annotation>
 		<annotation cp="🍱">bento | bento gutusy | guty</annotation>
 		<annotation cp="🍱" type="tts">bento gutusy</annotation>
-		<annotation cp="🍘">kreker | tüwi | tüwi kreker</annotation>
+		<annotation cp="🍘">kreker | tüwi</annotation>
 		<annotation cp="🍘" type="tts">tüwi kreker</annotation>
 		<annotation cp="🍙">tokga | tüwi | tüwi tokgasy | ýapon</annotation>
 		<annotation cp="🍙" type="tts">tüwi tokgasy</annotation>
-		<annotation cp="🍚">bişirilen | bişirilen tüwi | tüwi</annotation>
+		<annotation cp="🍚">bişirilen | tüwi</annotation>
 		<annotation cp="🍚" type="tts">bişirilen tüwi</annotation>
-		<annotation cp="🍛">karri | karri tüwi | tüwi</annotation>
+		<annotation cp="🍛">karri | tüwi</annotation>
 		<annotation cp="🍛" type="tts">karri tüwi</annotation>
-		<annotation cp="🍜">bugarýan | bugarýan jam | jam | spagetti | unaş</annotation>
+		<annotation cp="🍜">bugarýan | jam | spagetti | unaş</annotation>
 		<annotation cp="🍜" type="tts">bugarýan jam</annotation>
 		<annotation cp="🍝">makaron | spagetti</annotation>
 		<annotation cp="🍝" type="tts">spagetti</annotation>
-		<annotation cp="🍠">gowrulan | gowrulan ýeralma | süýji | ýeralma</annotation>
+		<annotation cp="🍠">gowrulan | süýji | ýeralma</annotation>
 		<annotation cp="🍠" type="tts">gowrulan ýeralma</annotation>
 		<annotation cp="🍢">çişlik | deňiz iýmidi | kebap | oden | şompul</annotation>
 		<annotation cp="🍢" type="tts">oden</annotation>
 		<annotation cp="🍣">suşi</annotation>
 		<annotation cp="🍣" type="tts">suşi</annotation>
-		<annotation cp="🍤">gowrulan | gowrulan krewetka | krewetka | krewetkajyk | tempura</annotation>
+		<annotation cp="🍤">gowrulan | krewetka | krewetkajyk | tempura</annotation>
 		<annotation cp="🍤" type="tts">gowrulan krewetka</annotation>
 		<annotation cp="🍥">balyk | girdap | süýjülik | tort | tüweleýli balyk tort</annotation>
 		<annotation cp="🍥" type="tts">tüweleýli balyk tort</annotation>
@@ -1217,9 +1217,9 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🥠" type="tts">bagt kökesi</annotation>
 		<annotation cp="🥡">balykgulak | iýmit alyp gidilýän guty</annotation>
 		<annotation cp="🥡" type="tts">iýmit alyp gidilýän guty</annotation>
-		<annotation cp="🍦">buz | buzgaýmak | desert | krem | süýji | ýumşak | ýumşak buzgaýmak</annotation>
+		<annotation cp="🍦">buz | buzgaýmak | desert | krem | süýji | ýumşak</annotation>
 		<annotation cp="🍦" type="tts">ýumşak buzgaýmak</annotation>
-		<annotation cp="🍧">buz | desert | süýji | syrylan | syrylan buz</annotation>
+		<annotation cp="🍧">buz | desert | süýji | syrylan</annotation>
 		<annotation cp="🍧" type="tts">syrylan buz</annotation>
 		<annotation cp="🍨">buz | buzgaýmak | desert | krem | süýji</annotation>
 		<annotation cp="🍨" type="tts">buzgaýmak</annotation>
@@ -1247,7 +1247,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🍼" type="tts">bäbek çüýşesi</annotation>
 		<annotation cp="🥛">bir bulgur süýt | bulgur | içmek | süýt</annotation>
 		<annotation cp="🥛" type="tts">bir bulgur süýt</annotation>
-		<annotation cp="☕">bugarýan | çaý | gyzgyn | gyzgyn içgi | içgi | içmek | kofe</annotation>
+		<annotation cp="☕">bugarýan | çaý | gyzgyn | içgi | içmek | kofe</annotation>
 		<annotation cp="☕" type="tts">gyzgyn içgi</annotation>
 		<annotation cp="🍵">çaşka | çaý | içgi | içmek | käse</annotation>
 		<annotation cp="🍵" type="tts">käse</annotation>
@@ -1267,7 +1267,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🍻" type="tts">çakyşýan piwo bokallary</annotation>
 		<annotation cp="🥂">baýramçylyk | bulgur | çakyşýan bulgurlar | içmek | jyňňyrdy</annotation>
 		<annotation cp="🥂" type="tts">çakyşýan bulgurlar</annotation>
-		<annotation cp="🥃">aýna | aýna bokal | bokal | likýor | wiski | zarba</annotation>
+		<annotation cp="🥃">aýna | bokal | likýor | wiski | zarba</annotation>
 		<annotation cp="🥃" type="tts">aýna bokal</annotation>
 		<annotation cp="🥤">mineral suw | şire | turbajykly stakan</annotation>
 		<annotation cp="🥤" type="tts">turbajykly stakan</annotation>
@@ -1321,9 +1321,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🏗" type="tts">binanyň gurluşygy</annotation>
 		<annotation cp="🏘">jaýlar</annotation>
 		<annotation cp="🏘" type="tts">jaýlar</annotation>
-		<annotation cp="🏙">şäher | şäher görnüşi</annotation>
-		<annotation cp="🏙" type="tts">şäher görnüşi</annotation>
-		<annotation cp="🏚">jaý | taşlanan | taşlanan jaý</annotation>
+		<annotation cp="🏚">jaý | taşlanan</annotation>
 		<annotation cp="🏚" type="tts">taşlanan jaý</annotation>
 		<annotation cp="🏠">jaý | öý</annotation>
 		<annotation cp="🏠" type="tts">jaý</annotation>
@@ -1379,6 +1377,8 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🌁" type="tts">ümürli</annotation>
 		<annotation cp="🌃">gije | ýyldyz | ýyldyzly gije</annotation>
 		<annotation cp="🌃" type="tts">ýyldyzly gije</annotation>
+		<annotation cp="🏙">şäher | şäher görnüşi</annotation>
+		<annotation cp="🏙" type="tts">şäher görnüşi</annotation>
 		<annotation cp="🌄">dag | dagyň aňrysyndan günüň dogşy | gün | günüň dogşy | säher</annotation>
 		<annotation cp="🌄" type="tts">dagyň aňrysyndan günüň dogşy</annotation>
 		<annotation cp="🌅">gün | günüň dogşy | säher</annotation>
@@ -1403,14 +1403,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="💈" type="tts">ala-mula spiral</annotation>
 		<annotation cp="🎪">çadyr | sirk | sirk çadyry</annotation>
 		<annotation cp="🎪" type="tts">sirk çadyry</annotation>
-		<annotation cp="🎭">drama teatr | maska | sungat | teatr | ýerine ýetiriş sungaty | ýerine ýetirmek</annotation>
-		<annotation cp="🎭" type="tts">ýerine ýetiriş sungaty</annotation>
-		<annotation cp="🖼">çarçuwa | çarçuwaly surat | muzeý | sungat | surat | surat çekmek</annotation>
-		<annotation cp="🖼" type="tts">çarçuwaly surat</annotation>
-		<annotation cp="🎨">muzeý | palitra | sungat | surat çekmek | suratkeş palitrasy</annotation>
-		<annotation cp="🎨" type="tts">suratkeş palitrasy</annotation>
-		<annotation cp="🎰">awtomat | oýun | oýun awtomaty</annotation>
-		<annotation cp="🎰" type="tts">oýun awtomaty</annotation>
 		<annotation cp="🚂">bug | demir ýol | hereketlendiriji | lokomotiw | otly</annotation>
 		<annotation cp="🚂" type="tts">lokomotiw</annotation>
 		<annotation cp="🚃">demir ýol | elektrik | otly | tramwaý | trolleýbus | ulag | wagon</annotation>
@@ -1437,7 +1429,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🚋" type="tts">tramwaý wagony</annotation>
 		<annotation cp="🚌">awtobus | ulag</annotation>
 		<annotation cp="🚌" type="tts">awtobus</annotation>
-		<annotation cp="🚍">awtobus | gelýän | gelýän awtobus</annotation>
+		<annotation cp="🚍">awtobus | gelýän</annotation>
 		<annotation cp="🚍" type="tts">gelýän awtobus</annotation>
 		<annotation cp="🚎">awtobus | tramwaý | trolleýbus</annotation>
 		<annotation cp="🚎" type="tts">trolleýbus</annotation>
@@ -1453,11 +1445,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🚔" type="tts">gelýän polisiýa awtoulagy</annotation>
 		<annotation cp="🚕">taksi | ulag</annotation>
 		<annotation cp="🚕" type="tts">taksi</annotation>
-		<annotation cp="🚖">gelýän | gelýän taksi | taksi</annotation>
+		<annotation cp="🚖">gelýän | taksi</annotation>
 		<annotation cp="🚖" type="tts">gelýän taksi</annotation>
 		<annotation cp="🚗">awtomobil | awtoulag</annotation>
 		<annotation cp="🚗" type="tts">awtomobil</annotation>
-		<annotation cp="🚘">awtomobil | awtoulag | gelýän | gelýän awtomobil</annotation>
+		<annotation cp="🚘">awtomobil | awtoulag | gelýän</annotation>
 		<annotation cp="🚘" type="tts">gelýän awtomobil</annotation>
 		<annotation cp="🚙">dynç alyş | sport ulagy | ýeňil sport awtoulagy</annotation>
 		<annotation cp="🚙" type="tts">ýeňil sport awtoulagy</annotation>
@@ -1479,6 +1471,8 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🛣" type="tts">ulag ýoly</annotation>
 		<annotation cp="🛤">demir ýol | demir ýol relsi | otly</annotation>
 		<annotation cp="🛤" type="tts">demir ýol relsi</annotation>
+		<annotation cp="🛢">boçka | nebit | nebit boçkasy</annotation>
+		<annotation cp="🛢" type="tts">nebit boçkasy</annotation>
 		<annotation cp="⛽">beket | benzin | ýangyç | ýangyç guýujy | ýangyç nasosy</annotation>
 		<annotation cp="⛽" type="tts">ýangyç nasosy</annotation>
 		<annotation cp="🚨">awtoulag | çyra | polisiýa | polisiýa awtoulagy çyrasy | pyrlanýan | sirena</annotation>
@@ -1487,10 +1481,10 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🚥" type="tts">kese ýolyşyk</annotation>
 		<annotation cp="🚦">çyra | dik ýolyşyk | signal | ýol herekedi</annotation>
 		<annotation cp="🚦" type="tts">dik ýolyşyk</annotation>
-		<annotation cp="🚧">gurluşyk | päsgelçilik</annotation>
-		<annotation cp="🚧" type="tts">gurluşyk</annotation>
 		<annotation cp="🛑">belgi | dur | dur belgisi | sekizburç</annotation>
 		<annotation cp="🛑" type="tts">dur belgisi</annotation>
+		<annotation cp="🚧">gurluşyk | päsgelçilik</annotation>
+		<annotation cp="🚧" type="tts">gurluşyk</annotation>
 		<annotation cp="⚓">gämi | gural | labyr</annotation>
 		<annotation cp="⚓" type="tts">labyr</annotation>
 		<annotation cp="⛵">deňiz | dynç alynýan ýer | gaýyk | ýahta | ýelkenli gämi</annotation>
@@ -1533,25 +1527,13 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🛸" type="tts">uçýan tabak</annotation>
 		<annotation cp="🛎">çagyryş | çagyryş jaňy | jaň | myhmanhana</annotation>
 		<annotation cp="🛎" type="tts">çagyryş jaňy</annotation>
-		<annotation cp="🚪">gapy</annotation>
-		<annotation cp="🚪" type="tts">gapy</annotation>
-		<annotation cp="🛏">myhmanhana | uky | ýatalga</annotation>
-		<annotation cp="🛏" type="tts">ýatalga</annotation>
-		<annotation cp="🛋">çyra | diwan | diwan we çyra | myhmanhana</annotation>
-		<annotation cp="🛋" type="tts">diwan we çyra</annotation>
-		<annotation cp="🚽">hajathana</annotation>
-		<annotation cp="🚽" type="tts">hajathana</annotation>
-		<annotation cp="🚿">el duşy | suw</annotation>
-		<annotation cp="🚿" type="tts">el duşy</annotation>
-		<annotation cp="🛁">duş | wanna</annotation>
-		<annotation cp="🛁" type="tts">wanna</annotation>
 		<annotation cp="⌛">çäge | çägeli sagat boldy | wagt belleýji</annotation>
 		<annotation cp="⌛" type="tts">çägeli sagat boldy</annotation>
 		<annotation cp="⏳">çäge | çägeli sagat bolmady | gumsagat | wagt belleýji</annotation>
 		<annotation cp="⏳" type="tts">çägeli sagat bolmady</annotation>
 		<annotation cp="⌚">goşar sagady | sagat</annotation>
 		<annotation cp="⌚" type="tts">goşar sagady</annotation>
-		<annotation cp="⏰">oýaryjy | oýaryjy sagat | sagat</annotation>
+		<annotation cp="⏰">oýaryjy | sagat</annotation>
 		<annotation cp="⏰" type="tts">oýaryjy sagat</annotation>
 		<annotation cp="⏱">sagat | sekundomer</annotation>
 		<annotation cp="⏱" type="tts">sekundomer</annotation>
@@ -1563,43 +1545,43 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🕛" type="tts">sagat on iki</annotation>
 		<annotation cp="🕧">12 | 12:30 | 30 | biriň ýary | diwar sagady | on iki | otuz</annotation>
 		<annotation cp="🕧" type="tts">biriň ýary</annotation>
-		<annotation cp="🕐">00 | 1 | 1:00 | bir | diwar sagady | sagat | sagat bir</annotation>
+		<annotation cp="🕐">00 | 1 | 1:00 | bir | diwar sagady | sagat</annotation>
 		<annotation cp="🕐" type="tts">sagat bir</annotation>
 		<annotation cp="🕜">1 | 1:30 | 30 | bir | diwar sagady | ikiniň ýary | otuz</annotation>
 		<annotation cp="🕜" type="tts">ikiniň ýary</annotation>
-		<annotation cp="🕑">00 | 2 | 2:00 | diwar sagady | iki | sagat | sagat iki</annotation>
+		<annotation cp="🕑">00 | 2 | 2:00 | diwar sagady | iki | sagat</annotation>
 		<annotation cp="🕑" type="tts">sagat iki</annotation>
 		<annotation cp="🕝">2 | 2:30 | 30 | diwar sagady | iki | otuz | üçüň ýary</annotation>
 		<annotation cp="🕝" type="tts">üçüň ýary</annotation>
-		<annotation cp="🕒">00 | 3 | 3:00 | diwar sagady | sagat | sagat üç | üç</annotation>
+		<annotation cp="🕒">00 | 3 | 3:00 | diwar sagady | sagat | üç</annotation>
 		<annotation cp="🕒" type="tts">sagat üç</annotation>
 		<annotation cp="🕞">3 | 3:30 | 30 | diwar sagady | dördüň ýary | otuz | üç</annotation>
 		<annotation cp="🕞" type="tts">dördüň ýary</annotation>
-		<annotation cp="🕓">00 | 4 | 4:00 | diwar sagady | dört | sagat | sagat dört</annotation>
+		<annotation cp="🕓">00 | 4 | 4:00 | diwar sagady | dört | sagat</annotation>
 		<annotation cp="🕓" type="tts">sagat dört</annotation>
 		<annotation cp="🕟">30 | 4 | 4:30 | bäşiň ýary | diwar sagady | dört | otuz</annotation>
 		<annotation cp="🕟" type="tts">bäşiň ýary</annotation>
-		<annotation cp="🕔">00 | 5 | 5:00 | bäş | diwar sagady | sagat | sagat bäş</annotation>
+		<annotation cp="🕔">00 | 5 | 5:00 | bäş | diwar sagady | sagat</annotation>
 		<annotation cp="🕔" type="tts">sagat bäş</annotation>
 		<annotation cp="🕠">30 | 5 | 5:30 | altynyň ýary | bäş | diwar sagady | otuz</annotation>
 		<annotation cp="🕠" type="tts">altynyň ýary</annotation>
-		<annotation cp="🕕">00 | 6 | 6:00 | alty | diwar sagady | sagat | sagat alty</annotation>
+		<annotation cp="🕕">00 | 6 | 6:00 | alty | diwar sagady | sagat</annotation>
 		<annotation cp="🕕" type="tts">sagat alty</annotation>
 		<annotation cp="🕡">30 | 6 | 6:30 | alty | diwar sagady | otuz | ýediniň ýary</annotation>
 		<annotation cp="🕡" type="tts">ýediniň ýary</annotation>
-		<annotation cp="🕖">00 | 7 | 7:00 | diwar sagady | sagat | sagat ýedi | ýedi</annotation>
+		<annotation cp="🕖">00 | 7 | 7:00 | diwar sagady | sagat | ýedi</annotation>
 		<annotation cp="🕖" type="tts">sagat ýedi</annotation>
 		<annotation cp="🕢">30 | 7 | 7:30 | diwar sagady | otuz | sekiziň ýary | ýedi</annotation>
 		<annotation cp="🕢" type="tts">sekiziň ýary</annotation>
-		<annotation cp="🕗">00 | 8 | 8:00 | diwar sagady | sagat | sagat sekiz | sekiz</annotation>
+		<annotation cp="🕗">00 | 8 | 8:00 | diwar sagady | sagat | sekiz</annotation>
 		<annotation cp="🕗" type="tts">sagat sekiz</annotation>
 		<annotation cp="🕣">30 | 8 | 8:30 | diwar sagady | dokuzyň ýary | otuz | sekiz</annotation>
 		<annotation cp="🕣" type="tts">dokuzyň ýary</annotation>
-		<annotation cp="🕘">00 | 9 | 9:00 | diwar sagady | dokuz | sagat | sagat dokuz</annotation>
+		<annotation cp="🕘">00 | 9 | 9:00 | diwar sagady | dokuz | sagat</annotation>
 		<annotation cp="🕘" type="tts">sagat dokuz</annotation>
 		<annotation cp="🕤">30 | 9 | 9:30 | diwar sagady | dokuz | onuň ýary | otuz</annotation>
 		<annotation cp="🕤" type="tts">onuň ýary</annotation>
-		<annotation cp="🕙">00 | 10 | 10:00 | diwar sagady | on | sagat | sagat on</annotation>
+		<annotation cp="🕙">00 | 10 | 10:00 | diwar sagady | on | sagat</annotation>
 		<annotation cp="🕙" type="tts">sagat on</annotation>
 		<annotation cp="🕥">10 | 10:30 | 30 | diwar sagady | on | on biriň ýary | otuz</annotation>
 		<annotation cp="🕥" type="tts">on biriň ýary</annotation>
@@ -1617,7 +1599,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🌔" type="tts">ulalýan aý</annotation>
 		<annotation cp="🌕">aý | dolan aý | doly</annotation>
 		<annotation cp="🌕" type="tts">dolan aý</annotation>
-		<annotation cp="🌖">aý | kiçelýän | kiçelýän aý | ýagty aý</annotation>
+		<annotation cp="🌖">aý | kiçelýän | ýagty aý</annotation>
 		<annotation cp="🌖" type="tts">kiçelýän aý</annotation>
 		<annotation cp="🌗">aý | çarýek | soňky çärýek aý</annotation>
 		<annotation cp="🌗" type="tts">soňky çärýek aý</annotation>
@@ -1643,7 +1625,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="⭐" type="tts">ak ortaça ýyldyz</annotation>
 		<annotation cp="🌟">lowurdaýan ýyldyz | lowurdy | parlaýan | uçgun | ýalpyldawuk | ýyldyz</annotation>
 		<annotation cp="🌟" type="tts">lowurdaýan ýyldyz</annotation>
-		<annotation cp="🌠">düşýän | süýnýän | süýnýän ýyldyz | ýyldyz</annotation>
+		<annotation cp="🌠">düşýän | süýnýän | ýyldyz</annotation>
 		<annotation cp="🌠" type="tts">süýnýän ýyldyz</annotation>
 		<annotation cp="☁">bulut | howa</annotation>
 		<annotation cp="☁" type="tts">bulut</annotation>
@@ -1667,7 +1649,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🌪" type="tts">tornado</annotation>
 		<annotation cp="🌫">bulut | ümür</annotation>
 		<annotation cp="🌫" type="tts">ümür</annotation>
-		<annotation cp="🌬">bulut | öwüsmek | şemal | şemal ýüz | ýüz</annotation>
+		<annotation cp="🌬">bulut | öwüsmek | şemal | ýüz</annotation>
 		<annotation cp="🌬" type="tts">şemal ýüz</annotation>
 		<annotation cp="🌀">baş aýlaýan | harasat | siklon | tupan</annotation>
 		<annotation cp="🌀" type="tts">siklon</annotation>
@@ -1719,7 +1701,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🎍" type="tts">sosna bezegi</annotation>
 		<annotation cp="🎎">baýramçylyk | gurjak | şüweleň | ýapon | ýapon gurjaklary</annotation>
 		<annotation cp="🎎" type="tts">ýapon gurjaklary</annotation>
-		<annotation cp="🎏">balyk | balyk lenta | baýramçylyk | lenta</annotation>
+		<annotation cp="🎏">balyk | baýramçylyk | lenta</annotation>
 		<annotation cp="🎏" type="tts">balyk lenta</annotation>
 		<annotation cp="🎐">baýramçylyk | hytaý jaňjagazy | jaň | jaňjagaz | ýel</annotation>
 		<annotation cp="🎐" type="tts">hytaý jaňjagazy</annotation>
@@ -1729,13 +1711,13 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🎀" type="tts">lenta</annotation>
 		<annotation cp="🎁">baýramçylyk | dolanan | dolanylgy sowgat | guty | sowgat | ýadygärlik</annotation>
 		<annotation cp="🎁" type="tts">dolanylgy sowgat</annotation>
-		<annotation cp="🎗">baýramçylyk | hatyra | hatyra lenta | lenta</annotation>
+		<annotation cp="🎗">baýramçylyk | hatyra | lenta</annotation>
 		<annotation cp="🎗" type="tts">hatyra lenta</annotation>
 		<annotation cp="🎟">giriş | giriş petekleri | petek</annotation>
 		<annotation cp="🎟" type="tts">giriş petekleri</annotation>
 		<annotation cp="🎫">giriş | petek</annotation>
 		<annotation cp="🎫" type="tts">petek</annotation>
-		<annotation cp="🎖">baýramçylyk | harby | harby medal | medal</annotation>
+		<annotation cp="🎖">baýramçylyk | harby | medal</annotation>
 		<annotation cp="🎖" type="tts">harby medal</annotation>
 		<annotation cp="🏆">baýrak | serpaý</annotation>
 		<annotation cp="🏆" type="tts">baýrak</annotation>
@@ -1761,8 +1743,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🏉" type="tts">regbi</annotation>
 		<annotation cp="🎾">raketka | tennis | top</annotation>
 		<annotation cp="🎾" type="tts">tennis</annotation>
-		<annotation cp="🎱">8 | 8 bilýard topy | 8 top | bilýard | oýun | sekiz | top</annotation>
-		<annotation cp="🎱" type="tts">8 bilýard topy</annotation>
 		<annotation cp="🎳">bouling | oýun | top</annotation>
 		<annotation cp="🎳" type="tts">bouling</annotation>
 		<annotation cp="🏏">kriket oýny | oýun | taýak | top</annotation>
@@ -1781,8 +1761,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🥋" type="tts">söweş sungaty formasy</annotation>
 		<annotation cp="🥅">derweze | gol | tor</annotation>
 		<annotation cp="🥅" type="tts">derweze</annotation>
-		<annotation cp="🎯">dart | dürs urgy | göz | nyşana | nyşanaň ortarasy | öküz | oýun | urgy</annotation>
-		<annotation cp="🎯" type="tts">dürs urgy</annotation>
 		<annotation cp="⛳">deşige dikilen baýdak | deşik | golf</annotation>
 		<annotation cp="⛳" type="tts">deşige dikilen baýdak</annotation>
 		<annotation cp="⛸">buz | buz konkisi | konki</annotation>
@@ -1797,10 +1775,18 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🛷" type="tts">sani</annotation>
 		<annotation cp="🥌">daş | kerling | oýun</annotation>
 		<annotation cp="🥌" type="tts">kerling</annotation>
+		<annotation cp="🎯">dart | dürs urgy | göz | nyşana | nyşanaň ortarasy | öküz | oýun | urgy</annotation>
+		<annotation cp="🎯" type="tts">dürs urgy</annotation>
+		<annotation cp="🎱">8 | 8 bilýard topy | bilýard | oýun | sekiz | top</annotation>
+		<annotation cp="🎱" type="tts">8 bilýard topy</annotation>
+		<annotation cp="🔮">erteki | gural | hrustal | hrustal şar | hyýal | pal | top</annotation>
+		<annotation cp="🔮" type="tts">hrustal şar</annotation>
 		<annotation cp="🎮">dolandyryjy | oýun | wideo oýun</annotation>
 		<annotation cp="🎮" type="tts">wideo oýun</annotation>
 		<annotation cp="🕹">joýstik | oýun | wideo oýun</annotation>
 		<annotation cp="🕹" type="tts">joýstik</annotation>
+		<annotation cp="🎰">awtomat | oýun | oýun awtomaty</annotation>
+		<annotation cp="🎰" type="tts">oýun awtomaty</annotation>
 		<annotation cp="🎲">kubik | oýun | oýun kubigi | zarik</annotation>
 		<annotation cp="🎲" type="tts">oýun kubigi</annotation>
 		<annotation cp="♠">garak kart | kart | oýun</annotation>
@@ -1817,6 +1803,12 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🀄" type="tts">mahjong gyzyl aždarha</annotation>
 		<annotation cp="🎴">gül | gülli kart | kart | oýnamak | oýun | ýapon</annotation>
 		<annotation cp="🎴" type="tts">gülli kart</annotation>
+		<annotation cp="🎭">drama teatr | maska | sungat | teatr | ýerine ýetiriş sungaty | ýerine ýetirmek</annotation>
+		<annotation cp="🎭" type="tts">ýerine ýetiriş sungaty</annotation>
+		<annotation cp="🖼">çarçuwa | çarçuwaly surat | muzeý | sungat | surat | surat çekmek</annotation>
+		<annotation cp="🖼" type="tts">çarçuwaly surat</annotation>
+		<annotation cp="🎨">muzeý | palitra | sungat | surat çekmek | suratkeş palitrasy</annotation>
+		<annotation cp="🎨" type="tts">suratkeş palitrasy</annotation>
 		<annotation cp="🔇">dinamik | dym-dyrs | sesi ýapyk dinamik | sessiz | ýuwaş</annotation>
 		<annotation cp="🔇" type="tts">sesi ýapyk dinamik</annotation>
 		<annotation cp="🔈">pes sesli dinamik | ýumşak</annotation>
@@ -1843,7 +1835,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🎶" type="tts">notalar</annotation>
 		<annotation cp="🎙">aýdym-saz | mik | mikrofon | studiýa | studiýa mikrofony</annotation>
 		<annotation cp="🎙" type="tts">studiýa mikrofony</annotation>
-		<annotation cp="🎚">aýdym-saz | dereje | dereje süýşüriji | süýşüriji</annotation>
+		<annotation cp="🎚">aýdym-saz | dereje | süýşüriji</annotation>
 		<annotation cp="🎚" type="tts">dereje süýşüriji</annotation>
 		<annotation cp="🎛">aýdym-saz | dolandyrmak | dolandyryş nurbatlary | nurbatlar</annotation>
 		<annotation cp="🎛" type="tts">dolandyryş nurbatlary</annotation>
@@ -1865,7 +1857,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🎻" type="tts">skripka</annotation>
 		<annotation cp="🥁">aýdym-saz | deprek | deprek çalynýan taýajyklar</annotation>
 		<annotation cp="🥁" type="tts">deprek</annotation>
-		<annotation cp="📱">el telefony | mobil | mobil telefon | öýjükli | telefon</annotation>
+		<annotation cp="📱">el telefony | mobil | öýjükli | telefon</annotation>
 		<annotation cp="📱" type="tts">mobil telefon</annotation>
 		<annotation cp="📲">almak | el telefony | jaň | mobil | ok | okly mobil telefon | öýjükli | telefon</annotation>
 		<annotation cp="📲" type="tts">okly mobil telefon</annotation>
@@ -1895,9 +1887,9 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🖲" type="tts">syçanjygyň topy</annotation>
 		<annotation cp="💽">disk | kompýuter | kompýuter diski | mini disk | optiki</annotation>
 		<annotation cp="💽" type="tts">kompýuter diski</annotation>
-		<annotation cp="💾">çeýe | çeýe disk | disk | kompýuter</annotation>
+		<annotation cp="💾">çeýe | disk | kompýuter</annotation>
 		<annotation cp="💾" type="tts">çeýe disk</annotation>
-		<annotation cp="💿">cd | disk | kompýuter | optiki | optiki disk</annotation>
+		<annotation cp="💿">cd | disk | kompýuter | optiki</annotation>
 		<annotation cp="💿" type="tts">optiki disk</annotation>
 		<annotation cp="📀">blu-ray | disk | dvd | DVD | kompýuter | optiki</annotation>
 		<annotation cp="📀" type="tts">DVD</annotation>
@@ -1915,7 +1907,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="📷" type="tts">kamera</annotation>
 		<annotation cp="📸">kamera | wideo | wspyşka | wspyşkaly kamera</annotation>
 		<annotation cp="📸" type="tts">wspyşkaly kamera</annotation>
-		<annotation cp="📹">kamera | wideo | wideo kamera</annotation>
+		<annotation cp="📹">kamera | wideo</annotation>
 		<annotation cp="📹" type="tts">wideo kamera</annotation>
 		<annotation cp="📼">magnitofon | wideo | wideo kasseta | wideokasseta</annotation>
 		<annotation cp="📼" type="tts">wideo kasseta</annotation>
@@ -1923,12 +1915,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🔍" type="tts">çepe egilen lupa</annotation>
 		<annotation cp="🔎">aýna | gözleg | gural | lupa | saga egilen lupa</annotation>
 		<annotation cp="🔎" type="tts">saga egilen lupa</annotation>
-		<annotation cp="🔬">gural | mikroskop | ylym</annotation>
-		<annotation cp="🔬" type="tts">mikroskop</annotation>
-		<annotation cp="🔭">gural | teleskop | ylym</annotation>
-		<annotation cp="🔭" type="tts">teleskop</annotation>
-		<annotation cp="📡">anten | hemra | hemra antennasy | tarelka</annotation>
-		<annotation cp="📡" type="tts">hemra antennasy</annotation>
 		<annotation cp="🕯">çyra | şem</annotation>
 		<annotation cp="🕯" type="tts">şem</annotation>
 		<annotation cp="💡">gülkünç | lampa | pikir | tok | yşyk</annotation>
@@ -1939,15 +1925,15 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🏮" type="tts">gyzyl hytaý fonarjygy</annotation>
 		<annotation cp="📔">bezelen | bezelen gapakly depderçe | depderçe | gapak | kitap</annotation>
 		<annotation cp="📔" type="tts">bezelen gapakly depderçe</annotation>
-		<annotation cp="📕">kitap | ýapyk | ýapyk kitap</annotation>
+		<annotation cp="📕">kitap | ýapyk</annotation>
 		<annotation cp="📕" type="tts">ýapyk kitap</annotation>
-		<annotation cp="📖">açyk | açyk kitap | kitap</annotation>
+		<annotation cp="📖">açyk | kitap</annotation>
 		<annotation cp="📖" type="tts">açyk kitap</annotation>
-		<annotation cp="📗">kitap | ýaşyl | ýaşyl kitap</annotation>
+		<annotation cp="📗">kitap | ýaşyl</annotation>
 		<annotation cp="📗" type="tts">ýaşyl kitap</annotation>
-		<annotation cp="📘">gök | gök kitap | kitap</annotation>
+		<annotation cp="📘">gök | kitap</annotation>
 		<annotation cp="📘" type="tts">gök kitap</annotation>
-		<annotation cp="📙">kitap | mämişi | mämişi kitap</annotation>
+		<annotation cp="📙">kitap | mämişi</annotation>
 		<annotation cp="📙" type="tts">mämişi kitap</annotation>
 		<annotation cp="📚">kitap | kitaplar</annotation>
 		<annotation cp="📚" type="tts">kitaplar</annotation>
@@ -1977,7 +1963,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="💴" type="tts">ýen banknot</annotation>
 		<annotation cp="💵">bank | banknot | basma pul | dollar banknot | kagyz pul | pul | pul birligi</annotation>
 		<annotation cp="💵" type="tts">dollar banknot</annotation>
-		<annotation cp="💶">bank | banknot | basma pul | kagyz pul | pul | pul birligi | ýewro | ýewro banknot</annotation>
+		<annotation cp="💶">bank | banknot | basma pul | kagyz pul | pul | pul birligi | ýewro</annotation>
 		<annotation cp="💶" type="tts">ýewro banknot</annotation>
 		<annotation cp="💷">bank | banknot | basma pul | funt sterlin banknot | kagyz pul | pul | pul birligi | sterlin</annotation>
 		<annotation cp="💷" type="tts">funt sterlin banknot</annotation>
@@ -2067,7 +2053,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🖇" type="tts">baglanan skrepkalar</annotation>
 		<annotation cp="📏">çyzgyç | göni çyzgyç | göni gyraly</annotation>
 		<annotation cp="📏" type="tts">göni çyzgyç</annotation>
-		<annotation cp="📐">çyzgyç | toplum | üçburç | üçburç çyzgyç</annotation>
+		<annotation cp="📐">çyzgyç | toplum | üçburç</annotation>
 		<annotation cp="📐" type="tts">üçburç çyzgyç</annotation>
 		<annotation cp="✂">gaýçy | gural | kesmek</annotation>
 		<annotation cp="✂" type="tts">gaýçy</annotation>
@@ -2087,7 +2073,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🔐" type="tts">açarly gulply</annotation>
 		<annotation cp="🔑">açar | gulp | parol</annotation>
 		<annotation cp="🔑" type="tts">açar</annotation>
-		<annotation cp="🗝">açar | gulp | köne | köne açar | ýelim</annotation>
+		<annotation cp="🗝">açar | gulp | köne | ýelim</annotation>
 		<annotation cp="🗝" type="tts">köne açar</annotation>
 		<annotation cp="🔨">çekiç | gural</annotation>
 		<annotation cp="🔨" type="tts">çekiç</annotation>
@@ -2099,7 +2085,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🛠" type="tts">çekiç we nurbat açar</annotation>
 		<annotation cp="🗡">hanjar | pyçak | ýarag</annotation>
 		<annotation cp="🗡" type="tts">hanjar</annotation>
-		<annotation cp="⚔">atanaklaýyn | atanaklaýyn gylyçlar | gylyçlar | ýarag</annotation>
+		<annotation cp="⚔">atanaklaýyn | gylyçlar | ýarag</annotation>
 		<annotation cp="⚔" type="tts">atanaklaýyn gylyçlar</annotation>
 		<annotation cp="🔫">gural | nagan | rewolwer | sapança | ýarag</annotation>
 		<annotation cp="🔫" type="tts">sapança</annotation>
@@ -2115,18 +2101,38 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="⚙" type="tts">dişli</annotation>
 		<annotation cp="🗜">gural | gysgyç | gysmak</annotation>
 		<annotation cp="🗜" type="tts">gysgyç</annotation>
-		<annotation cp="⚗">gural | himiýa | suwuklyk gaby</annotation>
-		<annotation cp="⚗" type="tts">suwuklyk gaby</annotation>
 		<annotation cp="⚖">adalat | agyrlyk | deňagramlylyk | deňagramlylyk terezisi | gural | ölçeg terezisi | täleýnama | Terezi</annotation>
 		<annotation cp="⚖" type="tts">deňagramlylyk terezisi</annotation>
 		<annotation cp="🔗">bag</annotation>
 		<annotation cp="🔗" type="tts">bag</annotation>
 		<annotation cp="⛓">zynjyr | zynjyrlar</annotation>
 		<annotation cp="⛓" type="tts">zynjyrlar</annotation>
+		<annotation cp="⚗">gural | himiýa | suwuklyk gaby</annotation>
+		<annotation cp="⚗" type="tts">suwuklyk gaby</annotation>
+		<annotation cp="🔬">gural | mikroskop | ylym</annotation>
+		<annotation cp="🔬" type="tts">mikroskop</annotation>
+		<annotation cp="🔭">gural | teleskop | ylym</annotation>
+		<annotation cp="🔭" type="tts">teleskop</annotation>
+		<annotation cp="📡">anten | hemra | hemra antennasy | tarelka</annotation>
+		<annotation cp="📡" type="tts">hemra antennasy</annotation>
 		<annotation cp="💉">gural | hassa | iňňe | lukman | lukmançylyk | sanjym | şpris</annotation>
 		<annotation cp="💉" type="tts">şpris</annotation>
 		<annotation cp="💊">gerdejik | hassa | lukman | lukmançylyk</annotation>
 		<annotation cp="💊" type="tts">gerdejik</annotation>
+		<annotation cp="🚪">gapy</annotation>
+		<annotation cp="🚪" type="tts">gapy</annotation>
+		<annotation cp="🛏">myhmanhana | uky | ýatalga</annotation>
+		<annotation cp="🛏" type="tts">ýatalga</annotation>
+		<annotation cp="🛋">çyra | diwan | diwan we çyra | myhmanhana</annotation>
+		<annotation cp="🛋" type="tts">diwan we çyra</annotation>
+		<annotation cp="🚽">hajathana</annotation>
+		<annotation cp="🚽" type="tts">hajathana</annotation>
+		<annotation cp="🚿">el duşy | suw</annotation>
+		<annotation cp="🚿" type="tts">el duşy</annotation>
+		<annotation cp="🛁">duş | wanna</annotation>
+		<annotation cp="🛁" type="tts">wanna</annotation>
+		<annotation cp="🛒">araba | el arabasy | söwda etmek | söwda merkezi arabajygy</annotation>
+		<annotation cp="🛒" type="tts">söwda merkezi arabajygy</annotation>
 		<annotation cp="🚬">çilim | çilim çekmek</annotation>
 		<annotation cp="🚬" type="tts">çilim</annotation>
 		<annotation cp="⚰">ölüm | tabyt</annotation>
@@ -2135,12 +2141,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="⚱" type="tts">jynaza gorküýzesi</annotation>
 		<annotation cp="🗿">moai | moýai | statuýa | ýüz</annotation>
 		<annotation cp="🗿" type="tts">moai</annotation>
-		<annotation cp="🛢">boçka | nebit | nebit boçkasy</annotation>
-		<annotation cp="🛢" type="tts">nebit boçkasy</annotation>
-		<annotation cp="🔮">erteki | gural | hrustal | hrustal şar | hyýal | pal | top</annotation>
-		<annotation cp="🔮" type="tts">hrustal şar</annotation>
-		<annotation cp="🛒">araba | el arabasy | söwda etmek | söwda merkezi arabajygy</annotation>
-		<annotation cp="🛒" type="tts">söwda merkezi arabajygy</annotation>
 		<annotation cp="🏧">atm | awtomatlaşdyrylan | bank | bankomat | bankomat belgisi</annotation>
 		<annotation cp="🏧" type="tts">bankomat belgisi</annotation>
 		<annotation cp="🚮">zibili bedrä taşla belgisi | zir-zibil | zir-zibil gutusy</annotation>
@@ -2163,7 +2163,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🛂" type="tts">pasport barlagy</annotation>
 		<annotation cp="🛃">gümrük nokady</annotation>
 		<annotation cp="🛃" type="tts">gümrük nokady</annotation>
-		<annotation cp="🛄">almak | goş | goş almak</annotation>
+		<annotation cp="🛄">almak | goş</annotation>
 		<annotation cp="🛄" type="tts">goş almak</annotation>
 		<annotation cp="🛅">bagaž | galdyrylan goş | goş | saklanýan ýer</annotation>
 		<annotation cp="🛅" type="tts">galdyrylan goş</annotation>
@@ -2175,7 +2175,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="⛔" type="tts">girmek gadagan</annotation>
 		<annotation cp="🚫">bolanok | gadagan | giriş | ýok</annotation>
 		<annotation cp="🚫" type="tts">gadagan</annotation>
-		<annotation cp="🚳">bolanok | däl | gadagan | tigir | welosiped | welosiped gadagan | ýok</annotation>
+		<annotation cp="🚳">bolanok | däl | gadagan | tigir | welosiped | ýok</annotation>
 		<annotation cp="🚳" type="tts">welosiped gadagan</annotation>
 		<annotation cp="🚭">bolanok | çilim çekmek | çilim çekmek gadagan | däl | gadagan | ýok</annotation>
 		<annotation cp="🚭" type="tts">çilim çekmek gadagan</annotation>
@@ -2201,7 +2201,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="➡" type="tts">saga ok</annotation>
 		<annotation cp="↘">aşak-saga ok | günorta-gündogar | gytak | ok | ugur</annotation>
 		<annotation cp="↘" type="tts">aşak-saga ok</annotation>
-		<annotation cp="⬇">aşak | aşak ok | göni | gündogar | ok | ugur</annotation>
+		<annotation cp="⬇">aşak | göni | gündogar | ok | ugur</annotation>
 		<annotation cp="⬇" type="tts">aşak ok</annotation>
 		<annotation cp="↙">aşak-çepe ok | günorta-günbatar | gytak | ok | ugur</annotation>
 		<annotation cp="↙" type="tts">aşak-çepe ok</annotation>
@@ -2245,7 +2245,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="✡" type="tts">Dawudyň ýyldyzy</annotation>
 		<annotation cp="☸">Budist | çarh | darma | darmanyň çarhy | din</annotation>
 		<annotation cp="☸" type="tts">darmanyň çarhy</annotation>
-		<annotation cp="☯">din | tao | taoist | ýang | ýin | ýin ýang</annotation>
+		<annotation cp="☯">din | tao | taoist | ýang | ýin</annotation>
 		<annotation cp="☯" type="tts">ýin ýang</annotation>
 		<annotation cp="✝">din | haç | Hristian | katolik haçy</annotation>
 		<annotation cp="✝" type="tts">katolik haçy</annotation>
@@ -2369,14 +2369,14 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="➖" type="tts">goýy aýyrmak belgisi</annotation>
 		<annotation cp="➗">bölmek | goýy bölmek belgisi | matematika</annotation>
 		<annotation cp="➗" type="tts">goýy bölmek belgisi</annotation>
-		<annotation cp="➰">buýra | buýra halka | halka</annotation>
+		<annotation cp="➰">buýra | halka</annotation>
 		<annotation cp="➰" type="tts">buýra halka</annotation>
-		<annotation cp="➿">buýra | goşa | goşa buýra halka | halka</annotation>
+		<annotation cp="➿">buýra | goşa | halka</annotation>
 		<annotation cp="➿" type="tts">goşa buýra halka</annotation>
 		<annotation cp="〽">bellijek | bölek | bölek çalşyk belgisi</annotation>
 		<annotation cp="〽" type="tts">bölek çalşyk belgisi</annotation>
-		<annotation cp="✳">bellijek | bölek | ýyldyzjyk</annotation>
-		<annotation cp="✳" type="tts">bellijek | bölek</annotation>
+		<annotation cp="✳">bellijek | ýyldyzjyk</annotation>
+		<annotation cp="✳" type="tts">bellijek</annotation>
 		<annotation cp="✴">sekiz tikenli ýyldyzjyk | ýyldyz</annotation>
 		<annotation cp="✴" type="tts">sekiz tikenli ýyldyzjyk</annotation>
 		<annotation cp="❇">uçgun</annotation>
@@ -2401,7 +2401,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="®" type="tts">bellige alnan</annotation>
 		<annotation cp="™">belgi | söwda belgisi | tm</annotation>
 		<annotation cp="™" type="tts">söwda belgisi</annotation>
-		<annotation cp="💯">100 | doly | utuk | ýüz | ýüz utuk</annotation>
+		<annotation cp="💯">100 | doly | utuk | ýüz</annotation>
 		<annotation cp="💯" type="tts">ýüz utuk</annotation>
 		<annotation cp="🔠">ABÇD | baş harp | giriziş | harplar | latyn | latyn baş harp girizme</annotation>
 		<annotation cp="🔠" type="tts">latyn baş harp girizme</annotation>
@@ -2521,9 +2521,9 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="⚪" type="tts">ak halka</annotation>
 		<annotation cp="⚫">gara halka | geometriki | halka</annotation>
 		<annotation cp="⚫" type="tts">gara halka</annotation>
-		<annotation cp="🔴">geometriki | gyzyl | gyzyl halka | halka</annotation>
+		<annotation cp="🔴">geometriki | gyzyl | halka</annotation>
 		<annotation cp="🔴" type="tts">gyzyl halka</annotation>
-		<annotation cp="🔵">geometriki | gök | gök halka | halka</annotation>
+		<annotation cp="🔵">geometriki | gök | halka</annotation>
 		<annotation cp="🔵" type="tts">gök halka</annotation>
 		<annotation cp="🏁">küşt baýdak | küştli | şaşkaly | ýaryş</annotation>
 		<annotation cp="🏁" type="tts">küşt baýdak</annotation>
