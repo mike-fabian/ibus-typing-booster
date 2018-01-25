@@ -14,33 +14,30 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-
-%define __python3 /usr/bin/python3
-Name:       ibus-typing-booster
-Version:    1.5.22
-Release:    1%{?dist}
-Summary:    A completion input method
-License:    GPL-3.0+
-Group:      System Environment/Libraries
-URL:        https://mike-fabian.github.io/ibus-typing-booster/
-Source0:    https://fedorahosted.org/releases/i/b/ibus-typing-booster/%{name}-%{version}.tar.gz
-Source1:    https://fedorahosted.org/releases/i/n/inscript2/inscript2-20160423.tar.gz
-Patch0:     fix-emoji-picker-desktop-file.patch
-Requires:   ibus >= 1.5.3
-Requires:   m17n-lib
-Requires:   python3 >= 3.3
-Requires:   dbus-1-python3
-Requires:   python3-pyenchant
-Requires:   python3-pyxdg
-# Recommend a reasonably good font which has most of the emoji:
-Recommends: gdouros-symbola-fonts
+Name:           ibus-typing-booster
+Version:        1.5.34
+Release:        0 
+Summary:        An input completion utility
+License:        GPL-3.0+
+Group:          System/X11/Utilities
+URL:            https://mike-fabian.github.io/ibus-typing-booster/
+Source0:        https://github.com/mike-fabian/ibus-typing-booster/releases/download/%{version}/%{name}-%{version}.tar.gz
+Source1:        https://releases.pagure.org/inscript2/inscript2-20160423.tar.gz
 BuildRequires:  ibus-devel
 BuildRequires:  python3
 BuildRequires:  python3-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  python3-gobject
+BuildRequires:  dbus-1-x11
+BuildRequires:  fdupes
+BuildRequires:  update-desktop-files
 # for the unit tests
 BuildRequires:  m17n-lib
 BuildRequires:  m17n-db
 BuildRequires:  python3-pyenchant
+%if 0%{?sle_version} >= 120200
+BuildRequires:  python3-pyxdg
+%endif
 %if 0%{?suse_version} == 1320
 BuildRequires:  myspell-cs_CZ
 BuildRequires:  myspell-de
@@ -58,11 +55,17 @@ BuildRequires:  myspell-es_ES
 BuildRequires:  myspell-fr_FR
 BuildRequires:  myspell-it_IT
 %endif
-BuildRequires:  desktop-file-utils
-BuildRequires:  python3-gobject
-BuildRequires:  dbus-1-x11
-BuildRequires:  fdupes
-BuildRequires:  update-desktop-files
+#
+Requires:       ibus >= 1.5.3
+Requires:       m17n-lib
+Requires:       python3 >= 3.3
+Requires:       dbus-1-python3
+Requires:       python3-pyenchant
+Requires:       python3-pyxdg
+# Recommend reasonably good fonts which have most of the emoji:
+Recommends:     noto-coloremoji-fonts
+Recommends:     gdouros-symbola-fonts
+#
 
 %description
 Ibus-typing-booster is a context sensitive completion
@@ -70,24 +73,25 @@ input method to speedup typing.
 
 %prep
 %setup -q
-%patch0 -p1
 ##extract inscript2 maps
 tar xzf %{SOURCE1}
 
 %build
-export PYTHON=%{__python3}
-%configure --disable-static --disable-additional --libexecdir=%{_prefix}/%{_lib}/ibus
+export PYTHON=%{_bindir}/python3
+%configure --disable-static --disable-additional --libexecdir=%{_libdir}/ibus
 make %{?_smp_mflags}
 
-%install 
-export PYTHON=%{__python3}
-make install DESTDIR=${RPM_BUILD_ROOT} NO_INDEX=true  INSTALL="install -p"   pkgconfigdir=%{_datadir}/pkgconfig
-gzip --force --best $RPM_BUILD_ROOT/%{_datadir}/%{name}/data/*.{xml,txt,json}
+%install
+export PYTHON=%{_bindir}/python3
+make install DESTDIR=%{buildroot} NO_INDEX=true
+gzip -n --force --best %{buildroot}/%{_datadir}/%{name}/data/*.{txt,json} \
+    %{buildroot}/%{_datadir}/%{name}/data/annotations/*.xml \
+    %{buildroot}/%{_datadir}/%{name}/data/annotationsDerived/*.xml
 
 #install inscript2 keymaps
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/m17n/icons
-cp -p inscript2/IM/* $RPM_BUILD_ROOT%{_datadir}/m17n/
-cp -p inscript2/icons/* $RPM_BUILD_ROOT%{_datadir}/m17n/icons
+test -d %{buildroot}%{_datadir}/m17n/icons || mkdir -p %{buildroot}%{_datadir}/m17n/icons
+cp -p inscript2/IM/* %{buildroot}%{_datadir}/m17n/
+cp -p inscript2/icons/* %{buildroot}%{_datadir}/m17n/icons
 
 %suse_update_desktop_file -i -u emoji-picker GTK Utility
 
@@ -97,9 +101,9 @@ cp -p inscript2/icons/* $RPM_BUILD_ROOT%{_datadir}/m17n/icons
 
 %check
 export LC_ALL=en_US.UTF-8
-export M17NDIR=$RPM_BUILD_ROOT%{_datadir}/m17n/
+export M17NDIR=%{buildroot}%{_datadir}/m17n/
 desktop-file-validate \
-    $RPM_BUILD_ROOT%{_datadir}/applications/ibus-setup-typing-booster.desktop
+    %{buildroot}%{_datadir}/applications/ibus-setup-typing-booster.desktop
 pushd engine
     # run doctests
     python3 hunspell_suggest.py
@@ -138,8 +142,8 @@ make check || cat ./tests/test-suite.log
 %doc AUTHORS COPYING README
 %{_bindir}/emoji-picker
 %{_datadir}/%{name}
-%dir %{_datadir}/appdata
-%{_datadir}/appdata/*.appdata.xml
+%dir %{_datadir}/metainfo
+%{_datadir}/metainfo/*.appdata.xml
 %{_datadir}/ibus/component/typing-booster.xml
 %{_libdir}/ibus/ibus-engine-typing-booster
 %{_libdir}/ibus/ibus-setup-typing-booster
