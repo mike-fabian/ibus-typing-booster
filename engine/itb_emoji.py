@@ -318,7 +318,7 @@ class EmojiMatcher():
                  emoji_unicode_max='100.0',
                  cldr_data=True, quick=True,
                  non_fully_qualified=False,
-                 romaji=False):
+                 romaji=True):
         '''
         Initialize the emoji matcher
 
