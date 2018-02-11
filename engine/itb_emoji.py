@@ -259,6 +259,9 @@ def expand_languages(languages):
 
     >>> expand_languages(['zh_Hant', 'zh_CN', 'zh_TW', 'zh_SG', 'zh_HK', 'zh_MO'])
     ['zh_Hant', 'zh_CN', 'zh', 'zh_TW', 'zh_Hant', 'zh_SG', 'zh', 'zh_HK', 'zh_Hant', 'zh_MO', 'zh_Hant', 'en']
+
+    >>> expand_languages(['en_GB', 'en'])
+    ['en_GB', 'en_001', 'en', 'en', 'en_001']
     '''
     expanded_languages = []
     for language in languages:

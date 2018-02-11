@@ -456,6 +456,12 @@ class EmojiPickerUI(Gtk.Window):
 
         self._emoji_by_label = self._emoji_matcher.emoji_by_label()
         expanded_languages = itb_emoji.expand_languages(self._languages)
+        # 'en_001' and 'es_419' are not very useful in the treeview to browse the
+        # languages, remove them from the list:
+        expanded_languages = [
+            lang
+            for lang in expanded_languages
+            if lang not in ('en_001', 'es_419')]
         first_language_with_categories = -1
         number_of_empty_languages = 0
         for language_index, language in enumerate(expanded_languages):
