@@ -2032,7 +2032,8 @@ class EmojiPickerUI(Gtk.Window):
         '''
         good_emoji_fonts = [
             'Noto Color Emoji 🎨',
-            'Apple Color Emoji 🎨',
+            'Twemoji 🎨', # color
+            'Apple Color Emoji 🎨', # color
             'Emoji Two 🎨', # color
             'Emoji One 🎨', # color
             'Symbola 🙾', # black and white
