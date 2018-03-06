@@ -308,18 +308,18 @@ class EmojiPickerUI(Gtk.Window):
         self._main_menu_popover.set_position(Gtk.PositionType.BOTTOM)
         self._main_menu_popover_vbox = Gtk.VBox()
         self._main_menu_clear_recently_used_button = Gtk.Button(
-            _('Clear recently used'))
+            label=_('Clear recently used'))
         self._main_menu_clear_recently_used_button.connect(
             'clicked', self.on_clear_recently_used_button_clicked)
         self._main_menu_popover_vbox.pack_start(
             self._main_menu_clear_recently_used_button, False, False, 0)
         if not self._modal:
-            self._main_menu_about_button = Gtk.Button(_('About'))
+            self._main_menu_about_button = Gtk.Button(label=_('About'))
             self._main_menu_about_button.connect(
                 'clicked', self.on_about_button_clicked)
             self._main_menu_popover_vbox.pack_start(
                 self._main_menu_about_button, False, False, 0)
-        self._main_menu_quit_button = Gtk.Button(_('Quit'))
+        self._main_menu_quit_button = Gtk.Button(label=_('Quit'))
         self._main_menu_quit_button.connect('clicked', self.on_delete_event)
         self._main_menu_popover_vbox.pack_start(
             self._main_menu_quit_button, False, False, 0)
