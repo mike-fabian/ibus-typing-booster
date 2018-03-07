@@ -60,7 +60,8 @@ MAINTAINERCLEANFILES = \
 EXTRA_DIST = \
 	config.rpath \
 	typing-booster.appdata.xml \
-	@PACKAGE_NAME@.spec \
+	@PACKAGE_NAME@.spec.fedora \
+	@PACKAGE_NAME@.spec.suse \
 	$(NULL)
 
 noinst_DIST = \

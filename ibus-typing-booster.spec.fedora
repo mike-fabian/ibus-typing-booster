@@ -1,24 +1,35 @@
 Name:       ibus-typing-booster
-Version:    1.5.24
-Release:    1%{?dist}
+Version:    1.5.34
+Release:    5%{?dist}
 Summary:    A completion input method
 License:    GPLv3+
 Group:      System Environment/Libraries
 URL:        https://mike-fabian.github.io/ibus-typing-booster/
-Source0:    https://fedorahosted.org/releases/i/b/ibus-typing-booster/%{name}-%{version}.tar.gz
+Source0:    https://github.com/mike-fabian/ibus-typing-booster/releases/download/%{version}/ibus-typing-booster-%{version}.tar.gz
 Requires:   ibus >= 1.5.3
 Requires:   m17n-lib
 Requires:   python3 >= 3.3
 Requires:   python3-dbus
 Requires:   python3-enchant
 Requires:   python3-pyxdg
-%if 0%{?fedora} >= 24
-# Recommend a reasonably good font which has most of the emoji:
+%if 0%{?fedora} >= 24 || 0%{?rhel} > 7
+# Recommend reasonably good fonts which have most of the emoji:
+%if 0%{?fedora} <= 26
+Recommends: google-noto-emoji-fonts
+%endif
+Recommends: google-noto-emoji-color-fonts
 Recommends: gdouros-symbola-fonts
 %endif
+%if 0%{?fedora} >= 26 || 0%{?rhel} > 7
+# Save some space in the binary rpm by requiring the Fedora
+# packages which contain the emoji data files:
+Requires: cldr-emoji-annotation
+Requires: unicode-ucd
+%endif
 BuildRequires:  ibus-devel
-%if 0%{?fedora} >= 24
+%if 0%{?fedora} >= 24 || 0%{?rhel} > 7
 BuildRequires:  python3-devel
+BuildRequires:  python3-pyxdg
 %else
 BuildRequires:  python34-devel
 %endif
@@ -26,6 +37,7 @@ BuildRequires:  python34-devel
 BuildRequires:  m17n-lib
 BuildRequires:  m17n-db-extras
 BuildRequires:  python3-enchant
+BuildRequires:  libappstream-glib
 BuildRequires:  hunspell-cs
 BuildRequires:  hunspell-de
 BuildRequires:  hunspell-en
@@ -59,14 +71,33 @@ make %{?_smp_mflags}
 %install 
 export PYTHON=%{__python3}
 make install DESTDIR=${RPM_BUILD_ROOT} NO_INDEX=true  INSTALL="install -p"   pkgconfigdir=%{_datadir}/pkgconfig
-gzip --force --best $RPM_BUILD_ROOT/%{_datadir}/%{name}/data/*.{xml,txt,json}
+%if 0%{?fedora} >= 26 || 0%{?rhel} > 7
+    # These files are in the required package “cldr-emoji-annotation”
+    rm $RPM_BUILD_ROOT/%{_datadir}/%{name}/data/annotations/*.xml
+    rm $RPM_BUILD_ROOT/%{_datadir}/%{name}/data/annotationsDerived/*.xml
+    # This file is in the required package “unicode-ucd”:
+    rm $RPM_BUILD_ROOT/%{_datadir}/%{name}/data/UnicodeData.txt
+    # At least emoji-data.txt emoji-sequences.txt emoji-zwj-sequences.txt
+    # are still there even on Fedora >= 26 they are not available in any packages:
+    gzip -n --force --best $RPM_BUILD_ROOT/%{_datadir}/%{name}/data/*.txt
+    # The json file from emojione is not deleted anymore because
+    # the package nodejs-emojione-json has been orphaned:
+    gzip -n --force --best $RPM_BUILD_ROOT/%{_datadir}/%{name}/data/*.json
+%else
+    gzip -n --force --best $RPM_BUILD_ROOT/%{_datadir}/%{name}/data/*.{txt,json}
+    gzip -n --force --best $RPM_BUILD_ROOT/%{_datadir}/%{name}/data/annotations/*.xml
+    gzip -n --force --best $RPM_BUILD_ROOT/%{_datadir}/%{name}/data/annotationsDerived/*.xml
+%endif
 
 %find_lang %{name}
 
 %check
 export LC_ALL=en_US.UTF-8
+appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.appdata.xml
 desktop-file-validate \
     $RPM_BUILD_ROOT%{_datadir}/applications/ibus-setup-typing-booster.desktop
+desktop-file-validate \
+    $RPM_BUILD_ROOT%{_datadir}/applications/emoji-picker.desktop
 pushd engine
     # run doctests
     python3 hunspell_suggest.py
@@ -104,7 +135,7 @@ make check || cat ./tests/test-suite.log
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
 %{_datadir}/%{name}
-%{_datadir}/appdata/typing-booster.appdata.xml
+%{_datadir}/metainfo/typing-booster.appdata.xml
 %{_datadir}/ibus/component/typing-booster.xml
 %{_libexecdir}/ibus-engine-typing-booster
 %{_libexecdir}/ibus-setup-typing-booster
@@ -116,9 +147,156 @@ make check || cat ./tests/test-suite.log
 
 
 %changelog
+* Mon Jan 22 2018 Mike FABIAN <mfabian@redhat.com> - 1.5.34-5
+- Fix Source URL in spec file, fedorahosted is retired.
+- Use gzip -n to not include build timestamps in .gz headers
+
+* Fri Feb 09 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.5.34-4
+- Escape macros in %%changelog
+
+* Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.5.34-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
+* Tue Jan 02 2018 Troy Dawson <tdawson@redhat.com> - 1.5.34-2
+- Update conditionals
+
+* Thu Oct 05 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.34-1
+- update to 1.5.34
+- Update translations from zanata (cs new, de updated)
+- Add some tooltips
+- Add an option whether to use pango font fallback to emoji-picker
+- Update emoji annotations from CLDR
+- Add Recommends: google-noto-emoji-color-fonts
+
+* Mon Sep 11 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.33-1
+- update to 1.5.33
+- Update translations from zanata (es new)
+- Install appstream metadata to /usr/share/metainfo/
+- Update UnicodeData.txt to Unicode 10.0.0
+- Fix test cases and kakasi support for the update of the
+  emoji annotations from CLDR
+- Update emoji annotations from CLDR
+- Skip the emoji which already have skin tone modifiers
+  in itb_emoji.emoji_by_label()
+- Never load characters of Unicode categories “Cc”, “Co”,
+  and “Cs” into the emoji dictionary
+- Update emoji-data.txt to 5.0
+
+* Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.5.32-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
+* Mon Apr 24 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.32-2
+- Do not require nodejs-emojione-json anymore, that package has been orphaned
+
+* Mon Apr 24 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.32-1
+- update to 1.5.32
+- Fix error when starting emoji-picker when the “recently-used” does not yet exist
+- Update emojione.json to version 3.0
+- Add the data from CLDR common/annotationsDerived
+- Load also the CLDR annotations from “annotationsDerived”
+
+* Tue Apr 18 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.31-1
+- update to 1.5.31
+- Rename option --use_vs16 to --non_fully_qualified
+  (effectivly reversing the default)
+- Make description labels in info popover selectable to be able
+  to copy and paste their contents
+- Sort similar emoji with the same number of matching labels
+  by cldr_order distance
+- Map cldr subgroup 'person-sport' to emojione category 'activity'
+- Make the categorie listings and the search work right
+  when using --use_vs16
+- Always store only non-fully-qualified emoji or emoji-sequences
+  in the internal dictionary
+- Update emoji annotations from CLDR
+
+* Mon Mar 27 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.30-1
+- update to 1.5.30
+- Update translations from zanata (de, pl, uk updated)
+- Use string order as a fallback to cldr_order in category listings
+- The rainbow flag should be a zwj sequence
+- Also display the Unicode version in the emoji info popover
+- When looking up emoji or other characters via Unicode codepoint,
+  ignore surrogates and private use characters
+- Show the fonts really used to render an emoji in the
+  info popover for the emoji
+- Fix typo in translatable string
+- itb_emoji.py: Use CLDR order to sort the candidates and
+  the similar emoji if score is the same
+
+* Mon Mar 20 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.29-1
+- update to 1.5.29
+- Add Recommends: google-noto-emoji-fonts, “Noto Color Emoji”
+  looks much better than “Symbola” even in gray scale.
+- Update translations from zanata (de, pl updated)
+- Add a “--version” command line option to emoji-picker
+- itb_emoji.py: Also read emoji-test.txt (from unicode.org)
+- emoji-picker: Set default font to first available in
+  ['Noto Color Emoji', 'Emoji One', 'Symbola']
+- Small parsing improvement of emoji-sequences.txt
+- Add support to either use U+FE0F VARIATION SELECTOR-16 in emoji sequences or not
+- emoji-picker: Show “∅ Search produced empty result.” when nothing matches in a search
+
+* Sat Mar 18 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.28-1
+- update to 1.5.28
+- Allow query by code point even if Python’s unicodedata.name()
+  does not know the character
+- Also read names from emoji-sequences.txt and emoji-zwj-sequences.txt
+- itb_emoji.py: Also read emoji-sequences.txt (from unicode.org)
+- Fix positioning of info popover (fix a typo in an “if” statement)
+- Show emoji properties from unicode.org when debugging is on
+- itb_emoji.py: Also read emoji-zwj-sequences.txt (from unicode.org)
+- Also use the emoji properties from unicode.org to decide whether
+  to offer a lookup on emojipedia
+- Use property “Emoji_Modifier_Base” from emoji-data.txt to check
+  whether an emoji supports skin tones
+- itb_emoji.py: Also read emoji-data.txt (from unicode.org)
+- Tentative skin tone support for families
+- Improve skin tone support: make it work for professions (roles) as well
+- Make skin tone popover scrollable and limit its maximum size
+
+* Fri Mar 17 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.27-1
+- update to 1.5.27
+- Update translations from zanata (pl, uk updated)
+- emoji-picker: make skin tone selection work for gendered emoji
+
+* Thu Mar 16 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.26-1
+- update to 1.5.26
+- Update translations from zanata (de updated)
+- Fix display of warning message when a dictionary is not installed.
+- Emulate xdg.BaseDirectory.save_data_path() on systems which lack pyxdg
+- Show the skin tone popover also on a long press gesture
+- Fix pyhunspell support
+  Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/5#issuecomment-286251818
+
+* Mon Mar 13 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.25-1
+- update to 1.5.25
+- on Fedora 26, save some space in the binary rpm by requiring the
+  Fedora packages which contain the emoji data files
+- Update translations from zanata (de, pl, uk updated, zh_CN new)
+- Show the categories as well on right mouse click in emoji-picker
+- Improve information displayed on right mouse click in emoji-picker
+- html.unescape() the strings parsed from the cldr annotations
+- Fix fontsize change for invisible emoji in browse flowbox
+- Add an option whether the arrow keys are allowed to reopen a preëdit
+- Add an option to work around the broken forward_key_event()
+  in the Qt 4/5 im module
+- Use xdg.BaseDirectory to add a USER_DATADIR to the
+  search path for data for itb_emoji.py
+- emoji_picker.py: Speedup: Fix wrong indentation of block
+  in _fill_flowbox_browse()
+- emoji_picker.py: Print some profiling information when debugging is enabled
+- Store the clipboard with gtk_clipboard_store() to keep it around
+  after emoji-picker quits
+- emoji-picker: Do not override the decoration layout of the header bar
+- When an emoji with a different skin tone is selected,
+  replace the original emoji immediately
+- Make emoji-picker work on dark themes like Adwaita-dark as well
+
 * Mon Mar 06 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.24-1
 - update to 1.5.24
 - Update translations from zanata (de updated)
+- The spin button to change the fontsize should grab focus without selecting
 - emoji-picker: Don’t check if ibus is running,
   ibus does not need to run for emoji-picker
 - Load .desktop files for emoji-picker and ibus-setup-typing-booster
@@ -128,6 +306,7 @@ make check || cat ./tests/test-suite.log
 - Don’t use HeaderBar with the default widget titlebar
 - Display the detailed information of an emoji as a popover, not as a tooltip
 - Use CSS to show light gray borders around flowbox and listbox children
+- create emoji-picker sub-package (Resolves: rhbz#1429154)
 
 * Mon Feb 27 2017 Mike FABIAN <mfabian@redhat.com> - 1.5.23-1
 - update to 1.5.23
@@ -233,6 +412,9 @@ make check || cat ./tests/test-suite.log
   ends of the preëdit (Resolves: rhbz#1411688)
 - Search for hunspell dictionaries in a list of directories
   (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/6)
+
+* Mon Dec 19 2016 Miro Hrončok <mhroncok@redhat.com> - 1.5.15-2
+- Rebuild for Python 3.6
 
 * Fri Dec 09 2016 Mike FABIAN <mfabian@redhat.com> - 1.5.15-1
 - update to 1.5.15
@@ -636,7 +818,7 @@ make check || cat ./tests/test-suite.log
 * Fri Jun 28 2013 Mike FABIAN <mfabian@redhat.com> - 1.2.0-1
 - Update to 1.2.0 upstream version
 - Make TAB when used to enable/disable the lookup table work as a toogle
-- Create a VIEW for “LIKE input_phrase%” in select_words() and use that
+- Create a VIEW for “LIKE input_phrase%%” in select_words() and use that
   in the following SELECT statements (Makes candidate calculation more
   than 10 times faster)
 

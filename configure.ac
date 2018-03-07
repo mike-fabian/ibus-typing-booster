@@ -79,8 +79,7 @@ AC_CONFIG_FILES([po/Makefile.in
     icons/Makefile
     icons/additional/Makefile
     hunspell-tables/Makefile
-    m4/Makefile
-    ibus-typing-booster.spec]
+    m4/Makefile]
 )
 
 AC_OUTPUT
