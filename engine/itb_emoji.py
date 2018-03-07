@@ -771,6 +771,11 @@ class EmojiMatcher():
                 if match and match.group('subgroup'):
                     subgroup = match.group('subgroup').strip()
                     continue
+                name = ''
+                pattern = re.compile(r'[^#]+#\s+\S+\s+(?P<name>.+)$')
+                match = pattern.match(line)
+                if match and match.group('name'):
+                    name = match.group('name').strip()
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
@@ -796,6 +801,9 @@ class EmojiMatcher():
                         (emoji_string, 'en'), 'categories', categories)
                     self._add_translated_categories_to_emoji_dict(
                         emoji_string, categories)
+                    if name:
+                        self._add_to_emoji_dict(
+                            (emoji_string, 'en'), 'names', [name.lower()])
 
     def _load_emojione_data(self):
         '''
@@ -1508,7 +1516,7 @@ class EmojiMatcher():
         ('🐫', 'bactrian camel')
 
         >>> mq.candidates('people')[0][:2]
-        ('👯', 'woman with bunny ears “people with bunny ears”')
+        ('👯', 'woman with bunny ears “people with bunny ears partying”')
 
         >>> mq.candidates('nature')[0][:2]
         ('🙈', 'see-no-evil monkey {nature}')
