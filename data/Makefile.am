@@ -22,6 +22,7 @@ extradata_DATA = \
 	emojione.json \
 	UnicodeData.txt \
 	emoji-data.txt \
+	emoji-variation-sequences.txt \
 	emoji-zwj-sequences.txt \
 	emoji-sequences.txt \
 	emoji-test.txt \
