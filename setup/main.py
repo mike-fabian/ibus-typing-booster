@@ -316,7 +316,7 @@ class SetupUI:
             self.config.get_value(
                 self.config_section, 'showstatusinfoinaux'))
         if self.show_status_info_in_auxiliary_text is None:
-            self.show_status_info_in_auxiliary_text = True
+            self.show_status_info_in_auxiliary_text = False
         if self.show_status_info_in_auxiliary_text is True:
             show_status_info_in_auxiliary_text_checkbox.set_active(True)
         show_status_info_in_auxiliary_text_checkbox.connect(

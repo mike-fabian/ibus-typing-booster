@@ -251,7 +251,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self._config_section,
                 'showstatusinfoinaux'))
         if self._show_status_info_in_auxiliary_text is None:
-            self._show_status_info_in_auxiliary_text = True
+            self._show_status_info_in_auxiliary_text = False
 
         self._use_digits_as_select_keys = variant_to_value(
             self._config.get_value(
