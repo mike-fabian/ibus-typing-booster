@@ -310,8 +310,7 @@ class Hunspell:
                             suggested_words[input_phrase] = 0
                         extra_suggestions = [
                             unicodedata.normalize(
-                                itb_util.NORMALIZATION_FORM_INTERNAL, x.decode(
-                                    dictionary.encoding))
+                                itb_util.NORMALIZATION_FORM_INTERNAL, x)
                             for x in
                             dictionary.pyhunspell_object.suggest(
                                 input_phrase_nfc.encode(
