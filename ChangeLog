@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 10 Apr 2018 Released 1.5.36 version
+* Make the default for self.show_status_info_in_auxiliary_text False (Resolves: rhbz#156435)
+* Adapt hunspell_suggest.py to work with pyhunspell 0.5.4
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 07 Mar 2018 Released 1.5.35 version
 * Update translations from zanata (es, pl and uk updated)
 * Update UnicodeData.txt to UnicodeData-11.0.0d13.txt

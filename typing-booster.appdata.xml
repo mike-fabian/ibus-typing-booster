@@ -16,6 +16,20 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.36" date="2018-04-10" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Make the default for
+            self.show_status_info_in_auxiliary_text False (Resolves:
+            rhbz#156435)
+          </li>
+          <li>
+            Adapt hunspell_suggest.py to work with pyhunspell 0.5.4
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.35" date="2018-03-07" urgency="medium">
       <description>
         <ul>
