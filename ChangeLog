@@ -1,6 +1,6 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
 * 10 Apr 2018 Released 1.5.36 version
-* Make the default for self.show_status_info_in_auxiliary_text False (Resolves: rhbz#156435)
+* Make the default for self.show_status_info_in_auxiliary_text False (Resolves: rhbz#1564354)
 * Adapt hunspell_suggest.py to work with pyhunspell 0.5.4
 
 * Author: Mike FABIAN <mfabian@redhat.com>

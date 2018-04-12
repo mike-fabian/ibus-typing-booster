@@ -22,7 +22,7 @@
           <li>
             Make the default for
             self.show_status_info_in_auxiliary_text False (Resolves:
-            rhbz#156435)
+            rhbz#1564354)
           </li>
           <li>
             Adapt hunspell_suggest.py to work with pyhunspell 0.5.4
