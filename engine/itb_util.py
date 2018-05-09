@@ -416,7 +416,7 @@ def get_hunspell_dictionary_wordlist(language):
             else:
                 sys.stderr.write(
                     'get_hunspell_dictionary_wordlist(): '
-                    + 'No encoding=%s found in %s\n'
+                    + 'No encoding found in %s\n'
                     %aff_path)
     else:
         sys.stderr.write(
