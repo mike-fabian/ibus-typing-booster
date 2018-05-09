@@ -894,25 +894,30 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                                     'user_freq': x[4],
                                     'timestamp': x[5]}
                                   )])
-        with codecs.open(filename, encoding='UTF-8') as file_handle:
-            lines = [
-                unicodedata.normalize(self._normalization_form_internal, x)
-                for x in file_handle.readlines()]
-            for line in lines:
-                for token in itb_util.tokenize(line):
-                    key = (token, token, p_token, pp_token)
-                    if key in database_dict:
-                        database_dict[key]['user_freq'] += 1
-                        database_dict[key]['timestamp'] = time.time()
-                    else:
-                        database_dict[key] = {'input_phrase': token,
-                                              'phrase': token,
-                                              'p_phrase': p_token,
-                                              'pp_phrase': pp_token,
-                                              'user_freq': 1,
-                                              'timestamp': time.time()}
-                    pp_token = p_token
-                    p_token = token
+        lines = []
+        try:
+            with codecs.open(filename, encoding='UTF-8') as file_handle:
+                lines = [
+                    unicodedata.normalize(self._normalization_form_internal, x)
+                    for x in file_handle.readlines()]
+        except:
+            traceback.print_exc()
+            return False
+        for line in lines:
+            for token in itb_util.tokenize(line):
+                key = (token, token, p_token, pp_token)
+                if key in database_dict:
+                    database_dict[key]['user_freq'] += 1
+                    database_dict[key]['timestamp'] = time.time()
+                else:
+                    database_dict[key] = {'input_phrase': token,
+                                          'phrase': token,
+                                          'p_phrase': p_token,
+                                          'pp_phrase': pp_token,
+                                          'user_freq': 1,
+                                          'timestamp': time.time()}
+                pp_token = p_token
+                p_token = token
         sqlargs = []
         for x in database_dict.keys():
             sqlargs.append(database_dict[x])
