@@ -39,7 +39,6 @@ setup_typing_booster_PYTHON = \
 	main.py \
 	version.py \
 	pkginstall.py \
-	setup.glade \
 	$(NULL)
 
 setup_typing_booster_built_files = \
