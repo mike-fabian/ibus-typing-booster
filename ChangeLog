@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 14 May 2018 Released 1.5.37 version
+* Update translations from Zanata (pl and uk updated)
+* Make “Add direct input” option work correctly when “Remember last preedit input method” option is off
+* Fix test case for Korean
+* Rewrite setup UI completely in Python, without using Glade
+* Fix format string in debug message when a dictionary .aff file has no encoding (Resolves: rhbz#1575659)
+* Return False in read_training_data_from_file() if file cannot be opened
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 10 Apr 2018 Released 1.5.36 version
 * Make the default for self.show_status_info_in_auxiliary_text False (Resolves: rhbz#1564354)
 * Adapt hunspell_suggest.py to work with pyhunspell 0.5.4

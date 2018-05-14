@@ -16,6 +16,33 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.37" date="2018-05-14" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from Zanata (pl and uk updated)
+          </li>
+          <li>
+            Make “Add direct input” option work correctly when
+            “Remember last preedit input method” option is off
+          </li>
+          <li>
+            Fix test case for Korean
+          </li>
+          <li>
+            Rewrite setup UI completely in Python, without using Glade
+          </li>
+          <li>
+            Fix format string in debug message when a dictionary .aff
+            file has no encoding (Resolves: rhbz#1575659)
+          </li>
+          <li>
+            Return False in read_training_data_from_file() if file
+            cannot be opened
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.36" date="2018-04-10" urgency="medium">
       <description>
         <ul>
