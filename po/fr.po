@@ -4,16 +4,17 @@
 # Jérôme Fenal <jfenal@gmail.com>, 2016. #zanata
 # José Fournier <jaaf64@zoraldia.com>, 2017. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2017. #zanata
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2017-10-05 13:12+0200\n"
+"POT-Creation-Date: 2018-05-14 16:49+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-02-21 10:18-0500\n"
+"PO-Revision-Date: 2018-05-14 10:24-0400\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -28,7 +29,7 @@ msgstr "Présentoir à émoticônes"
 msgid "Clear recently used"
 msgstr ""
 
-#: engine/emoji_picker.py:317 setup/setup.glade:727
+#: engine/emoji_picker.py:317 setup/main.py:226
 msgid "About"
 msgstr "À propos"
 
@@ -70,64 +71,64 @@ msgstr ""
 msgid "Recently used"
 msgstr "Récemment utilisé"
 
-#: engine/emoji_picker.py:593
+#: engine/emoji_picker.py:599
 msgid "Categories"
 msgstr "Catégories"
 
-#: engine/emoji_picker.py:594
+#: engine/emoji_picker.py:600
 msgid "Unicode categories"
 msgstr "Catégories Unicode"
 
-#: engine/emoji_picker.py:595
+#: engine/emoji_picker.py:601
 msgid "Keywords"
 msgstr "Mots clés"
 
-#: engine/emoji_picker.py:638
+#: engine/emoji_picker.py:644
 msgid "Fonts used to render this emoji:"
 msgstr ""
 
-#: engine/emoji_picker.py:653
+#: engine/emoji_picker.py:659
 msgid "Unicode Version:"
 msgstr ""
 
-#: engine/emoji_picker.py:675 engine/emoji_picker.py:1805
+#: engine/emoji_picker.py:681 engine/emoji_picker.py:1811
 msgid "Left click to copy"
 msgstr ""
 
-#: engine/emoji_picker.py:678
+#: engine/emoji_picker.py:684
 msgid "Long press or middle click for skin tones"
 msgstr ""
 
-#: engine/emoji_picker.py:679
+#: engine/emoji_picker.py:685
 msgid "Right click for info"
 msgstr ""
 
 #. Translators: put your names here, one name per line.
-#: engine/emoji_picker.py:1161
+#: engine/emoji_picker.py:1167
 msgid "translator-credits"
 msgstr ""
 
-#: engine/emoji_picker.py:1205
+#: engine/emoji_picker.py:1211
 msgid "Search Results"
 msgstr ""
 
-#: engine/emoji_picker.py:1209
+#: engine/emoji_picker.py:1215
 msgid "Search produced empty result."
 msgstr ""
 
-#: engine/emoji_picker.py:1480 engine/emoji_picker.py:1601
+#: engine/emoji_picker.py:1486 engine/emoji_picker.py:1607
 msgid "Copied to clipboard!"
 msgstr ""
 
-#: engine/emoji_picker.py:1915
+#: engine/emoji_picker.py:1921
 msgid "Lookup on emojipedia"
 msgstr ""
 
-#: engine/emoji_picker.py:2038 setup/main.py:395
+#: engine/emoji_picker.py:2045 setup/main.py:458
 msgid "System default"
 msgstr "Par défaut pour le système"
 
-#: engine/emoji_picker.py:2160
+#: engine/emoji_picker.py:2167
 msgid "Set Font"
 msgstr ""
 
@@ -139,13 +140,11 @@ msgstr "Désactivé"
 msgid "On"
 msgstr "Activé"
 
-#: engine/hunspell_table.py:416 engine/hunspell_table.py:418
-#: setup/setup.glade:163
+#: engine/hunspell_table.py:416 engine/hunspell_table.py:418 setup/main.py:336
 msgid "Unicode symbols and emoji predictions"
 msgstr "Prédictions des émoticônes et symboles unicodes"
 
-#: engine/hunspell_table.py:436 engine/hunspell_table.py:437
-#: setup/setup.glade:179
+#: engine/hunspell_table.py:436 engine/hunspell_table.py:437 setup/main.py:352
 msgid "Off the record mode"
 msgstr "Mode sans enregistrement"
 
@@ -167,66 +166,70 @@ msgid "Configure ibus-typing-booster “%(name)s”"
 msgstr "Configurer ibus-typing-booster « %(name)s »"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:746 engine/itb_emoji.py:948
+#: engine/itb_emoji.py:749 engine/itb_emoji.py:959
 msgid "people"
 msgstr "personnes"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:747 engine/itb_emoji.py:944
+#: engine/itb_emoji.py:750 engine/itb_emoji.py:955
 msgid "nature"
 msgstr "nature"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:748 engine/itb_emoji.py:940
+#: engine/itb_emoji.py:751 engine/itb_emoji.py:951
 msgid "food"
 msgstr "nourriture"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:749 engine/itb_emoji.py:954
+#: engine/itb_emoji.py:752 engine/itb_emoji.py:965
 msgid "travel"
 msgstr "voyage"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:750 engine/itb_emoji.py:758 engine/itb_emoji.py:936
+#: engine/itb_emoji.py:753 engine/itb_emoji.py:761 engine/itb_emoji.py:947
 msgid "activity"
 msgstr "activité"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:751 engine/itb_emoji.py:946
+#: engine/itb_emoji.py:754 engine/itb_emoji.py:957
 msgid "objects"
 msgstr "objets"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:752 engine/itb_emoji.py:952
+#: engine/itb_emoji.py:755 engine/itb_emoji.py:963
 msgid "symbols"
 msgstr "symboles"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:753 engine/itb_emoji.py:938
+#: engine/itb_emoji.py:756 engine/itb_emoji.py:949
 msgid "flags"
 msgstr "drapeaux"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:754 engine/itb_emoji.py:942
+#: engine/itb_emoji.py:757 engine/itb_emoji.py:953
 msgid "modifier"
 msgstr "modificateurs"
 
 #. not  in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:755 engine/itb_emoji.py:950
+#: engine/itb_emoji.py:758 engine/itb_emoji.py:961
 msgid "regional"
 msgstr "régions"
 
-#: setup/main.py:118
+#: setup/main.py:94
+msgid "Preferences"
+msgstr ""
+
+#: setup/main.py:116
 #, python-format
 msgid "Unknown format of engine name: IBUS_ENGINE_NAME=%(name)s"
 msgstr "Format du nom du moteur inconnu : IBUS_ENGINE_NAME=%(name)s"
 
-#: setup/main.py:124
+#: setup/main.py:122
 msgid "IBUS_ENGINE_NAME environment variable is not set."
 msgstr "La variable IBUS_ENGINE_NAME n'est pas définie."
 
-#: setup/main.py:128
+#: setup/main.py:126
 msgid ""
 "Cannot determine the config file for this engine. Please use the --config-"
 "file option."
@@ -234,78 +237,33 @@ msgstr ""
 "Impossible de déterminer le fichier de configuration pour ce moteur. Merci "
 "d'utiliser l'option --config-file"
 
-#: setup/main.py:138
+#: setup/main.py:136
 #, python-format
 msgid "Config file %(file)s does not exist."
 msgstr "Le fichier de configuration %(file)s n'existe pas."
 
-#: setup/main.py:156
+#: setup/main.py:153
 #, python-format
 msgid "Preferences for ibus-typing-booster \"%(symbol)s\""
 msgstr "Préférences pour ibus-typing-booster « %(symbol)s »"
 
-#. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:203
-msgid "Shortcut"
-msgstr "Raccourci"
+#: setup/main.py:193
+msgid "Options"
+msgstr "Options"
 
-#. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:209
-msgid "Shortcut expansion"
-msgstr "Expansion du raccourci"
+#: setup/main.py:202
+msgid "Custom shortcuts"
+msgstr "Raccourcis personnalisés"
 
-#: setup/main.py:391
-msgid "Horizontal"
-msgstr "Horizontale"
+#: setup/main.py:212
+msgid "Dictionaries and personal data"
+msgstr "Dictionnaires et données personnelles"
 
-#: setup/main.py:393
-msgid "Vertical"
-msgstr "Verticale"
-
-#: setup/main.py:485
-msgid "Another instance of this app is already running."
-msgstr ""
-"Une autre instance de cette application est déjà en cours d'exécution."
-
-#: setup/main.py:673
-msgid "Open File ..."
-msgstr "Ouvrir le fichier..."
-
-#: setup/main.py:691
-#, python-format
-msgid "Learned successfully from file %(filename)s."
-msgstr "Apprentissage réussi depuis le fichier  %(filename)s."
-
-#: setup/main.py:700
-#, python-format
-msgid "Learning from file %(filename)s failed."
-msgstr "Échec de l'apprentissage depuis le fichier  %(filename)s."
-
-#: setup/main.py:713
-msgid "Are you sure?"
-msgstr "Confirmez-vous ?"
-
-#: setup/main.py:720
-msgid ""
-"Do you really want to delete all language \n"
-"data learned from typing or reading files?"
-msgstr ""
-"Voulez-vous vraiment supprimer toutes les données\n"
-"linguistiques apprises par saisie au clavier ou lecture de fichiers ?"
-
-#: setup/main.py:1066
-msgid "ibus is not running."
-msgstr "Ibus n'est pas lancé."
-
-#: setup/setup.glade:31
-msgid "Close"
-msgstr "Fermer"
-
-#: setup/setup.glade:65
+#: setup/main.py:241
 msgid "Enable suggestions by Tab key"
 msgstr "Activer les suggestions avec la touche tabulation"
 
-#: setup/setup.glade:69
+#: setup/main.py:243
 msgid ""
 "If this option is on, suggestions are not shown by default. Typing Tab is "
 "then necessary to show the list of suggestions. After a commit the "
@@ -316,11 +274,11 @@ msgstr ""
 "Après validation, les suggestions sont de nouveau cachées jusqu'à ce que la "
 "touche Tab soit appuyée."
 
-#: setup/setup.glade:82
+#: setup/main.py:256
 msgid "Display total number of candidates"
 msgstr "Afficher le nombre total de candidats"
 
-#: setup/setup.glade:86
+#: setup/main.py:258
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
@@ -328,16 +286,16 @@ msgstr ""
 "Afficher le nombre de candidats et celui sélectionné en haut de la liste des "
 "candidats."
 
-#: setup/setup.glade:99
+#: setup/main.py:272
 msgid "Show status info in auxiliary text"
 msgstr "Informations d'état dans le texte auxiliaire"
 
-#: setup/setup.glade:103
+#: setup/main.py:274
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "
 "for the preëdit. The auxiliary text is an optional line of text displayed "
-"above the candidate list. "
+"above the candidate list."
 msgstr ""
 "Affiche dans le texte auxiliaire si les modes « Prédictions des émoticônes » "
 "et « Sans enregistrement » sont actifs ou inactifs et montre quelle méthode "
@@ -345,11 +303,11 @@ msgstr ""
 "auxiliaire est une ligne optionnelle de texte précédant la liste des "
 "candidats."
 
-#: setup/setup.glade:115
+#: setup/main.py:288
 msgid "Use digits as select keys"
 msgstr "Utiliser les chiffres comme des touches de sélection"
 
-#: setup/setup.glade:119
+#: setup/main.py:290
 msgid ""
 "Use the regular digits 1-9 as select keys. If that option is on, numbers can "
 "only by typed while no suggestions are shown. Therefore, completions for "
@@ -369,11 +327,11 @@ msgstr ""
 "d’utiliser les touches de F1 à F9 (toujours activées), car ces dernières "
 "sont plus éloignées des doigts."
 
-#: setup/setup.glade:131
+#: setup/main.py:304
 msgid "Add direct input"
 msgstr "Ajouter la saisie directe"
 
-#: setup/setup.glade:135
+#: setup/main.py:306
 msgid ""
 "This option adds British English as a second language to use in addition to "
 "the main language of this input method."
@@ -381,11 +339,11 @@ msgstr ""
 "Cette option ajoute l'anglais britannique comme seconde langue utilisable, "
 "en plus de la langue principale pour cette méthode de saisie."
 
-#: setup/setup.glade:147
+#: setup/main.py:320
 msgid "Remember last used preedit input method"
 msgstr "Retenir la dernière méthode de saisie utilisée pour la pré-édition."
 
-#: setup/setup.glade:151
+#: setup/main.py:322
 msgid ""
 "If more then one input method is used at the same time, one of them is used "
 "for the preedit.  Which input method is used for the preedit can be changed "
@@ -398,7 +356,7 @@ msgstr ""
 "cette option est activée, de tels changements sont enregistrés même si la "
 "session est redémarrée."
 
-#: setup/setup.glade:167
+#: setup/main.py:338
 msgid ""
 "Whether Unicode symbols and emoji should be included in the predictions. "
 "Emoji are pictographs like ☺♨⛵…. Unicode symbols are other symbols like "
@@ -413,7 +371,7 @@ msgstr ""
 "autres. Ils ne sont techniquement pas des émoticônes mais sont néanmoins des "
 "symboles utiles."
 
-#: setup/setup.glade:183
+#: setup/main.py:354
 msgid ""
 "While “Off the record” mode is on, learning from user input is disabled. If "
 "learned user input is available, predictions are usually much better than "
@@ -429,7 +387,37 @@ msgstr ""
 "souhaitant éviter la sauvegarde sur le disque de contenu secret saisi par "
 "l'utilisateur pourrait souhaiter activer cette option temporairement."
 
-#: setup/setup.glade:197
+#: setup/main.py:368
+msgid "Use a workaround for a bug in Qt im module"
+msgstr ""
+
+#: setup/main.py:370
+msgid ""
+"Use a workaround for bugs in the input method modules of Qt4 and Qt5. "
+"Attention, although this workaround makes it work better when the Qt input "
+"modules are used, it causes problems when XIM is used. I.e. the XIM module "
+"of Qt4 will not work well when this workaround is enabled and input via XIM "
+"into X11 programs like xterm will not work well either."
+msgstr ""
+
+#: setup/main.py:384
+msgid "Arrow keys can reopen a preedit"
+msgstr ""
+
+#: setup/main.py:386
+msgid ""
+"Whether it is allowed to reopen a preedit when the cursor reaches a word "
+"boundary after moving it with the arrow keys. Enabling this option is useful "
+"to correct already committed words. But it is quite buggy at the moment and "
+"how well it works depends on repetition speed of the arrow keys and system "
+"load. Because it is buggy, this option is off by default."
+msgstr ""
+
+#: setup/main.py:400
+msgid "Auto commit characters:"
+msgstr "Caractères d'auto-validation :"
+
+#: setup/main.py:402
 msgid ""
 "The characters in this list cause the preedit to be committed automatically, "
 "followed by a space.  For example, if “.” is an auto commit character, this "
@@ -439,7 +427,7 @@ msgid ""
 "example if you use Latin-Pre (t-latn-pre) it would be a bad idea to add “.” "
 "to that list because it would prevent you from typing “.s” to get “ṡ”. You "
 "can also disable this feature completely by making the list empty (which is "
-"the default).\n"
+"the default)."
 msgstr ""
 "Les caractères de cette liste provoquent la validation automatique de la pré-"
 "édition, en lui ajoutant une espace. Par exemple, si « . » est un caractère "
@@ -450,33 +438,41 @@ msgstr ""
 "vous utilisez Latin-Pre (t-latn-pre) cela serait une mauvaise idée d'ajouter "
 "« . » car cela vous empêcherait de saisir « .s » pour obtenir « ṡ ». Vous "
 "pouvez aussi désactiver complètement cette fonctionnalité en vidant la liste "
-"(ce qui est le comportement par défaut).\n"
+"(ce qui est le comportement par défaut)."
 
-#: setup/setup.glade:199
-msgid "Auto commit characters:"
-msgstr "Caractères d'auto-validation :"
+#: setup/main.py:420
+msgid "Candidate window page size:"
+msgstr "Taille de la fenêtre des candidats :"
 
-#: setup/setup.glade:211
+#: setup/main.py:422
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr "Nombre de suggestions affichées par page de la liste des candidats."
 
-#: setup/setup.glade:212
-msgid "Candidate window page size:"
-msgstr "Taille de la fenêtre des candidats :"
+#: setup/main.py:444
+msgid "Candidate window orientation"
+msgstr "Taille de la fenêtre des candidats"
 
-#: setup/setup.glade:249
+#: setup/main.py:446
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
 msgstr ""
 "Si la fenêtre de candidats doit être dessinée horizontalement ou "
 "verticalement."
 
-#: setup/setup.glade:250
-msgid "Candidate window orientation"
-msgstr "Taille de la fenêtre des candidats"
+#: setup/main.py:454
+msgid "Horizontal"
+msgstr "Horizontale"
 
-#: setup/setup.glade:272
+#: setup/main.py:456
+msgid "Vertical"
+msgstr "Verticale"
+
+#: setup/main.py:481
+msgid "Minimum number of chars for completion:"
+msgstr "Nombre minimum de caractères pour l'auto-complètement"
+
+#: setup/main.py:483
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
 ""
@@ -484,11 +480,11 @@ msgstr ""
 "Ne pas afficher de suggestion quand moins que ce nombre de caractères a été "
 "saisi."
 
-#: setup/setup.glade:273
-msgid "Minimum number of chars for completion:"
-msgstr "Nombre minimum de caractères pour l'auto-complètement"
+#: setup/main.py:506
+msgid "Input Method:"
+msgstr "Méthode de saisie :"
 
-#: setup/setup.glade:300
+#: setup/main.py:508
 msgid ""
 "The input method to use. See also the option “Add direct input” to add "
 "British English as a second language."
@@ -496,116 +492,119 @@ msgstr ""
 "La méthode de saisie à utiliser. Voir aussi l'option \"Ajouter la saisie "
 "directe\" pour ajouter l'anglais britannique comme une seconde langue."
 
-#: setup/setup.glade:301
-msgid "Input Method:"
-msgstr "Méthode de saisie :"
-
-#: setup/setup.glade:321
+#: setup/main.py:562
 msgid "Input Method Help"
 msgstr "Aide pour la méthode de saisie"
 
-#: setup/setup.glade:325
+#: setup/main.py:564
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
 "Affiche de l'aide montrant comment utiliser la méthode saisie sélectionnée "
 "ci-dessus."
 
-#: setup/setup.glade:335
-msgid "Use a workaround for a bug in Qt im module"
-msgstr ""
-
-#: setup/setup.glade:339
-msgid ""
-"Use a workaround for bugs in the input method modules of Qt4 and Qt5. "
-"Attention, although this workaround makes it work better when the Qt input "
-"modules are used, it causes problems when XIM is used. I.e. the XIM module "
-"of Qt4 will not work well when this workaround is enabled and input via XIM "
-"into X11 programs like xterm will not work well either."
-msgstr ""
-
-#: setup/setup.glade:351
-msgid "Arrow keys can reopen a preedit"
-msgstr ""
-
-#: setup/setup.glade:355
-msgid ""
-"Whether it is allowed to reopen a preedit when the cursor reaches a word "
-"boundary after moving it with the arrow keys. Enabling this option is useful "
-"to correct already committed words. But it is quite buggy at the moment and "
-"how well it works depends on repetition speed of the arrow keys and system "
-"load. Because it is buggy, this option is off by default."
-msgstr ""
-
-#: setup/setup.glade:371
-msgid "Options"
-msgstr "Options"
-
-#: setup/setup.glade:389
-msgid "Clear input"
-msgstr "Vide la sortie"
-
-#: setup/setup.glade:402
-msgid "Add shortcut"
-msgstr "Ajouter un raccourci"
-
-#: setup/setup.glade:417
+#: setup/main.py:573
 msgid "Enter shortcut here:"
 msgstr "Saisissez votre raccourci ici :"
 
-#: setup/setup.glade:430
+#: setup/main.py:589
 msgid "Enter shortcut expansion here:"
 msgstr "Saisissez l'expansion du raccourci ici :"
 
-#: setup/setup.glade:486
+#: setup/main.py:605
+msgid "Clear input"
+msgstr "Vide la sortie"
+
+#: setup/main.py:615
 msgid "Delete shortcut"
 msgstr "Supprimer le raccourci"
 
-#: setup/setup.glade:506
-msgid "Custom shortcuts"
-msgstr "Raccourcis personnalisés"
+#: setup/main.py:625
+msgid "Add shortcut"
+msgstr "Ajouter un raccourci"
 
-#: setup/setup.glade:523
-msgid "Install the dictionary package for this engine"
-msgstr "Installer le paquet du dictionnaire pour ce moteur"
+#. Translators: Column heading of the table listing the existing shortcuts
+#: setup/main.py:648
+msgid "Shortcut"
+msgstr "Raccourci"
 
-#: setup/setup.glade:535
+#. Translators: Column heading of the table listing the existing shortcuts
+#: setup/main.py:654
+msgid "Shortcut expansion"
+msgstr "Expansion du raccourci"
+
+#: setup/main.py:664
 msgid "Install dictionary"
 msgstr "Installer un dictionnaire"
 
-#: setup/setup.glade:548
-msgid "Learn your style by reading a text file"
-msgstr "Apprendre votre style en lisant un fichier texte"
+#: setup/main.py:666
+msgid "Install the dictionary package for this engine"
+msgstr "Installer le paquet du dictionnaire pour ce moteur"
 
-#: setup/setup.glade:560
+#: setup/main.py:673
 msgid "Learn from text file"
 msgstr "Apprendre depuis un fichier texte"
 
-#: setup/setup.glade:573
+#: setup/main.py:675
+msgid "Learn your style by reading a text file"
+msgstr "Apprendre votre style en lisant un fichier texte"
+
+#: setup/main.py:682
+msgid "Delete learned data"
+msgstr "Supprimer les données apprises"
+
+#: setup/main.py:684
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
 "Supprimer toutes les données linguistiques personnelles apprises depuis la "
 "saisie ou la lecture de fichiers"
 
-#: setup/setup.glade:585
-msgid "Delete learned data"
-msgstr "Supprimer les données apprises"
-
-#: setup/setup.glade:604
-msgid "Dictionaries and personal data"
-msgstr "Dictionnaires et données personnelles"
-
-#: setup/setup.glade:654
+#: setup/main.py:709
 msgid "A completion input method to speedup typing."
 msgstr "Une méthode d'auto-complètement  pour accélérer la saisie."
 
-#: setup/setup.glade:682
+#: setup/main.py:717
 msgid "<b>Home page:</b>"
 msgstr "<b>Site web :</b>"
 
-#: setup/setup.glade:695
+#: setup/main.py:731
 msgid "<b>Online documentation:</b>"
 msgstr "<b>Documentation en ligne :</b>"
+
+#: setup/main.py:762
+msgid "Another instance of this app is already running."
+msgstr ""
+"Une autre instance de cette application est déjà en cours d'exécution."
+
+#: setup/main.py:1188
+msgid "Open File ..."
+msgstr "Ouvrir le fichier..."
+
+#: setup/main.py:1207
+#, python-format
+msgid "Learned successfully from file %(filename)s."
+msgstr "Apprentissage réussi depuis le fichier  %(filename)s."
+
+#: setup/main.py:1216
+#, python-format
+msgid "Learning from file %(filename)s failed."
+msgstr "Échec de l'apprentissage depuis le fichier  %(filename)s."
+
+#: setup/main.py:1229
+msgid "Are you sure?"
+msgstr "Confirmez-vous ?"
+
+#: setup/main.py:1236
+msgid ""
+"Do you really want to delete all language \n"
+"data learned from typing or reading files?"
+msgstr ""
+"Voulez-vous vraiment supprimer toutes les données\n"
+"linguistiques apprises par saisie au clavier ou lecture de fichiers ?"
+
+#: setup/main.py:1342
+msgid "ibus is not running."
+msgstr "Ibus n'est pas lancé."
 
 #: typing-booster.appdata.xml:5
 msgid "Typing Booster"
@@ -626,6 +625,6 @@ msgstr ""
 " On peut ainsi améliorer sa vitesse d'écriture et son orthographe en "
 "sélectionnant simplement le mot désiré dans une liste de suggestions."
 
-#: typing-booster.appdata.xml:1166
+#: typing-booster.appdata.xml:1234
 msgid "Mike FABIAN"
 msgstr "Mike FABIAN"
