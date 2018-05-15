@@ -1041,7 +1041,7 @@ class TypingBoosterEngine(IBus.Engine):
             self.preedit_ime_menu, current_mode=0)
         if not self.is_empty():
             self._update_ui()
-        if self._remember_last_used_preedit_ime and update_dconf:
+        if update_dconf:
             self._config.set_value(
                 self._config_section,
                 'inputmethod',
@@ -1381,7 +1381,8 @@ class TypingBoosterEngine(IBus.Engine):
                 # method
                 imes = self.get_current_imes()
                 self.set_current_imes(
-                    [imes[number]] + imes[number+1:] + imes[:number])
+                    [imes[number]] + imes[number+1:] + imes[:number],
+                    update_dconf=self._remember_last_used_preedit_ime)
             return
         if ibus_property.startswith(
                 self.emoji_prediction_mode_menu['key'] + '.'):
@@ -2629,14 +2630,18 @@ class TypingBoosterEngine(IBus.Engine):
             imes = self.get_current_imes()
             if len(imes) > 1:
                 # remove the first ime from the list and append it to the end.
-                self.set_current_imes(imes[1:] + imes[:1])
+                self.set_current_imes(
+                    imes[1:] + imes[:1],
+                    update_dconf=self._remember_last_used_preedit_ime)
                 return True
 
         if key.val in (IBus.KEY_Up, IBus.KEY_KP_Up) and key.control:
             imes = self.get_current_imes()
             if len(imes) > 1:
                 # remove the last ime in the list and add it in front:
-                self.set_current_imes(imes[-1:] + imes[:-1])
+                self.set_current_imes(
+                    imes[-1:] + imes[:-1],
+                    update_dconf=self._remember_last_used_preedit_ime)
                 return True
 
         if (key.val in (IBus.KEY_Down, IBus.KEY_KP_Down)
