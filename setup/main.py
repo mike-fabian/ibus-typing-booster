@@ -1051,12 +1051,8 @@ class SetupUI(Gtk.Window):
             ime_name = model[tree_iter][1]
         if not ime_name or ime_name == 'NoIme':
             return
-        mim_file_names = {'t-latn-post': 'latn-post',
-                          't-latn-pre': 'latn-pre',
-                          'ne-inscript2': 'ne-inscript2-deva',
-                          'si-transliteration': 'si-trans'}
-        if ime_name in mim_file_names:
-            mim_file = mim_file_names[ime_name]+'.mim'
+        if ime_name in itb_util.M17N_INPUT_METHODS:
+            mim_file = itb_util.M17N_INPUT_METHODS[ime_name]
         else:
             mim_file = ime_name+'.mim'
         mim_file_contents = None
