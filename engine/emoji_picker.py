@@ -267,7 +267,7 @@ class EmojiPickerUI(Gtk.Window):
             emoji_unicode_max=self._emoji_unicode_max,
             non_fully_qualified=self._non_fully_qualified)
         self._gettext_translations = {}
-        for language in itb_emoji.expand_languages(self._languages):
+        for language in itb_util.expand_languages(self._languages):
             mo_file = gettext.find(DOMAINNAME, languages=[language])
             if (mo_file
                     and
@@ -455,7 +455,7 @@ class EmojiPickerUI(Gtk.Window):
         self._read_recently_used()
 
         self._emoji_by_label = self._emoji_matcher.emoji_by_label()
-        expanded_languages = itb_emoji.expand_languages(self._languages)
+        expanded_languages = itb_util.expand_languages(self._languages)
         # 'en_001' and 'es_419' are not very useful in the treeview to browse the
         # languages, remove them from the list:
         expanded_languages = [
@@ -495,7 +495,7 @@ class EmojiPickerUI(Gtk.Window):
         if _ARGS.debug:
             sys.stdout.write(
                 'expanded_languages  = %s\n'
-                %itb_emoji.expand_languages(self._languages)
+                %itb_util.expand_languages(self._languages)
                 + 'first_language_with_categories = %s\n'
                 %first_language_with_categories
                 + 'number_of_empty_languages = %s\n'
@@ -619,7 +619,7 @@ class EmojiPickerUI(Gtk.Window):
         descriptions = []
         descriptions.append(
             ' '.join(['U+%X' %ord(character) for character in emoji]))
-        for language in itb_emoji.expand_languages(self._languages):
+        for language in itb_util.expand_languages(self._languages):
             names = self._emoji_matcher.names(emoji, language=language)
             description = '<b>%s</b>' %language
             description_empty = True

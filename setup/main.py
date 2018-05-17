@@ -4,7 +4,7 @@
 # ibus-typing-booster - A completion input method for IBus
 #
 # Copyright (c) 2012-2013 Anish Patil <apatil@redhat.com>
-# Copyright (c) 2012-2016 Mike FABIAN <mfabian@redhat.com>
+# Copyright (c) 2012-2018 Mike FABIAN <mfabian@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ import sys
 import os
 from os import path
 import re
+import html
 import signal
 import argparse
 import locale
@@ -45,6 +46,8 @@ GLib.set_application_name('Typing Booster Preferences')
 # This makes gnome-shell load the .desktop file when running under Wayland:
 GLib.set_prgname('ibus-setup-typing-booster')
 
+require_version('Gdk', '3.0')
+from gi.repository import Gdk
 require_version('Gtk', '3.0')
 from gi.repository import Gtk
 require_version('IBus', '1.0')
@@ -55,8 +58,13 @@ from i18n import DOMAINNAME, _, init as i18n_init
 sys.path = [sys.path[0]+'/../engine'] + sys.path
 import tabsqlitedb
 import itb_util
+import itb_emoji
 
 import version
+
+GTK_VERSION = (Gtk.get_major_version(),
+               Gtk.get_minor_version(),
+               Gtk.get_micro_version())
 
 def parse_args():
     '''
@@ -64,14 +72,6 @@ def parse_args():
     '''
     parser = argparse.ArgumentParser(
         description='ibus-typing-booster setup tool')
-    parser.add_argument(
-        '-c', '--config-file',
-        nargs='?',
-        type=str,
-        action='store',
-        default='',
-        help=('Set the file name of config file for the ime engine, '
-              + 'default: %(default)s'))
     parser.add_argument(
         '-q', '--no-debug',
         action='store_true',
@@ -94,64 +94,27 @@ class SetupUI(Gtk.Window):
         Gtk.Window.__init__(self, title='🚀 ' + _('Preferences'))
         self.set_name('TypingBoosterPreferences')
         self.set_modal(True)
-        # Try to figure out the config file name:
-        self.config_file = None
-        if _ARGS.config_file:
-            # If the config file is specified on the command line, use that:
-            self.config_file = _ARGS.config_file
-        else:
-            # If the config file is not specified on the command line,
-            # try to get it from the environment. This is necessary
-            # in gnome-shell on Fedora 18 because the setup tool is
-            # called without command line options there but the
-            # environment variable IBUS_ENGINE_NAME is set:
-            try:
-                ibus_engine_name = os.environ['IBUS_ENGINE_NAME']
-                if ibus_engine_name.startswith('typing-booster:'):
-                    self.config_file = (
-                        ibus_engine_name.replace('typing-booster:', '')
-                        + '.conf')
-                else:
-                    self.__run_message_dialog(
-                        _('Unknown format of engine name: '
-                          + 'IBUS_ENGINE_NAME=%(name)s')
-                        %{'name': ibus_engine_name},
-                        Gtk.MessageType.WARNING)
-            except:
-                self.__run_message_dialog(
-                    _("IBUS_ENGINE_NAME environment variable is not set."),
-                    Gtk.MessageType.WARNING)
-        if self.config_file is None:
-            self.__run_message_dialog(
-                _('Cannot determine the config file for this engine. '
-                  + 'Please use the --config-file option.'),
-                Gtk.MessageType.ERROR)
-            sys.exit(1)
-            return
-        self.config_file_full_path = (
-            '/usr/share/ibus-typing-booster/hunspell-tables/'
-            + self.config_file)
-        if not os.path.isfile(self.config_file_full_path):
-            self.__run_message_dialog(
-                _("Config file %(file)s does not exist.")
-                %{'file': self.config_file_full_path},
-                Gtk.MessageType.ERROR)
-            sys.exit(1)
-            return
+        style_provider = Gtk.CssProvider()
+        style_provider.load_from_data(
+            b'''
+            #TypingBoosterPreferences {
+            }
+            row { /* This is for listbox rows */
+                border-style: groove;
+                border-width: 0.05px;
+            }
+            ''')
+        Gtk.StyleContext.add_provider_for_screen(
+            Gdk.Screen.get_default(),
+            style_provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
-        self.tabsqlitedb = tabsqlitedb.tabsqlitedb(
-            config_filename=self.config_file_full_path)
-        self.name = self.tabsqlitedb.ime_properties.get('name')
-        self.config_section = "engine/typing-booster/%s" % self.name
-        self.hunspell_dict_package = self.tabsqlitedb.ime_properties.get(
-            'hunspell_dict_package')
-        self.symbol = self.tabsqlitedb.ime_properties.get('symbol')
+        self.tabsqlitedb = tabsqlitedb.tabsqlitedb()
+        self.config_section = "engine/typing-booster"
 
         self.bus = bus
         self.config = self.bus.get_config()
-        self.set_title(
-            _("Preferences for ibus-typing-booster \"%(symbol)s\"")
-            %{'symbol': self.symbol})
+        self.set_title('🚀 ' + _('Preferences for ibus-typing-booster'))
         # https://tronche.com/gui/x/icccm/sec-4.html#WM_CLASS
         # gnome-shell seems to use the first argument of set_wmclass()
         # to find the .desktop file.  If the .desktop file can be
@@ -191,6 +154,14 @@ class SetupUI(Gtk.Window):
         self._options_grid.set_column_homogeneous(True)
         self._options_label = Gtk.Label(
             _('Options'))
+        self._dictionaries_and_input_methods_vbox = Gtk.VBox()
+        margin = 10
+        self._dictionaries_and_input_methods_vbox.set_margin_start(margin)
+        self._dictionaries_and_input_methods_vbox.set_margin_end(margin)
+        self._dictionaries_and_input_methods_vbox.set_margin_top(margin)
+        self._dictionaries_and_input_methods_vbox.set_margin_bottom(margin)
+        self._dictionaries_and_input_methods_label = Gtk.Label(
+            _('Dictionaries and input methods'))
         self._custom_shortcuts_grid = Gtk.Grid()
         self._custom_shortcuts_grid.set_visible(True)
         self._custom_shortcuts_grid.set_can_focus(False)
@@ -209,7 +180,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_and_personal_data_grid.set_row_homogeneous(True)
         self._dictionaries_and_personal_data_grid.set_column_homogeneous(True)
         self._dictionaries_and_personal_data_label = Gtk.Label(
-            _('Dictionaries and personal data'))
+            _('Personal data'))
         self._about_grid = Gtk.Grid()
         self._about_grid.set_visible(True)
         self._about_grid.set_can_focus(False)
@@ -227,6 +198,9 @@ class SetupUI(Gtk.Window):
         self._notebook.append_page(
             self._options_grid,
             self._options_label)
+        self._notebook.append_page(
+            self._dictionaries_and_input_methods_vbox,
+            self._dictionaries_and_input_methods_label)
         self._notebook.append_page(
             self._custom_shortcuts_grid,
             self._custom_shortcuts_label)
@@ -300,22 +274,6 @@ class SetupUI(Gtk.Window):
         if self.use_digits_as_select_keys is True:
             self._use_digits_as_select_keys_checkbutton.set_active(True)
 
-        self._add_direct_input_checkbutton = Gtk.CheckButton(
-            _('Add direct input'))
-        self._add_direct_input_checkbutton.set_tooltip_text(
-            _('This option adds British English as a second language to use in addition to the main language of this input method.'))
-        self._add_direct_input_checkbutton.connect(
-            'clicked', self.on_add_direct_input_checkbutton)
-        self._options_grid.attach(
-            self._add_direct_input_checkbutton, 0, 4, 2, 1)
-        self.add_direct_input = itb_util.variant_to_value(
-            self.config.get_value(
-                self.config_section, 'adddirectinput'))
-        if self.add_direct_input is None:
-            self.add_direct_input = False
-        if  self.add_direct_input is True:
-            self._add_direct_input_checkbutton.set_active(True)
-
         self._remember_last_used_preedit_ime_checkbutton = Gtk.CheckButton(
             _('Remember last used preedit input method'))
         self._remember_last_used_preedit_ime_checkbutton.set_tooltip_text(
@@ -323,7 +281,7 @@ class SetupUI(Gtk.Window):
         self._remember_last_used_preedit_ime_checkbutton.connect(
             'clicked', self.on_remember_last_used_preedit_ime_checkbutton)
         self._options_grid.attach(
-            self._remember_last_used_preedit_ime_checkbutton, 0, 5, 2, 1)
+            self._remember_last_used_preedit_ime_checkbutton, 0, 4, 2, 1)
         self.remember_last_used_predit_ime = itb_util.variant_to_value(
             self.config.get_value(
                 self.config_section, 'rememberlastusedpreeditime'))
@@ -339,7 +297,7 @@ class SetupUI(Gtk.Window):
         self._emoji_predictions_checkbutton.connect(
             'clicked', self.on_emoji_predictions_checkbutton)
         self._options_grid.attach(
-            self._emoji_predictions_checkbutton, 0, 6, 2, 1)
+            self._emoji_predictions_checkbutton, 0, 5, 2, 1)
         self.emoji_predictions = itb_util.variant_to_value(
             self.config.get_value(
                 self.config_section, 'emojipredictions'))
@@ -355,7 +313,7 @@ class SetupUI(Gtk.Window):
         self._off_the_record_checkbutton.connect(
             'clicked', self.on_off_the_record_checkbutton)
         self._options_grid.attach(
-            self._off_the_record_checkbutton, 0, 7, 2, 1)
+            self._off_the_record_checkbutton, 0, 6, 2, 1)
         self.off_the_record = itb_util.variant_to_value(
             self.config.get_value(
                 self.config_section, 'offtherecord'))
@@ -371,7 +329,7 @@ class SetupUI(Gtk.Window):
         self._qt_im_module_workaround_checkbutton.connect(
             'clicked', self.on_qt_im_module_workaround_checkbutton)
         self._options_grid.attach(
-            self._qt_im_module_workaround_checkbutton, 0, 8, 2, 1)
+            self._qt_im_module_workaround_checkbutton, 0, 7, 2, 1)
         self.qt_im_module_workaround = itb_util.variant_to_value(
             self.config.get_value(
                 self.config_section, 'qtimmoduleworkaround'))
@@ -387,7 +345,7 @@ class SetupUI(Gtk.Window):
         self._arrow_keys_reopen_preedit_checkbutton.connect(
             'clicked', self.on_arrow_keys_reopen_preedit_checkbutton)
         self._options_grid.attach(
-            self._arrow_keys_reopen_preedit_checkbutton, 0, 9, 2, 1)
+            self._arrow_keys_reopen_preedit_checkbutton, 0, 8, 2, 1)
         self.arrow_keys_reopen_preedit = itb_util.variant_to_value(
             self.config.get_value(
                 self.config_section, 'arrowkeysreopenpreedit'))
@@ -402,13 +360,13 @@ class SetupUI(Gtk.Window):
             _('The characters in this list cause the preedit to be committed automatically, followed by a space.  For example, if “.” is an auto commit character, this saves you typing a space manually after the end of a sentence. You can freely edit this list, a reasonable value might be “.,;:?!)”. You should not add characters to that list which are needed by your input method, for example if you use Latin-Pre (t-latn-pre) it would be a bad idea to add “.” to that list because it would prevent you from typing “.s” to get “ṡ”. You can also disable this feature completely by making the list empty (which is the default).'))
         self._auto_commit_characters_label.set_xalign(0)
         self._options_grid.attach(
-            self._auto_commit_characters_label, 0, 10, 1, 1)
+            self._auto_commit_characters_label, 0, 9, 1, 1)
 
         self._auto_commit_characters_entry = Gtk.Entry()
         self._auto_commit_characters_entry.connect(
             'notify::text', self.on_auto_commit_characters_entry)
         self._options_grid.attach(
-            self._auto_commit_characters_entry, 1, 10, 1, 1)
+            self._auto_commit_characters_entry, 1, 9, 1, 1)
         self.auto_commit_characters = itb_util.variant_to_value(
             self.config.get_value(
                 self.config_section, 'autocommitcharacters'))
@@ -422,7 +380,7 @@ class SetupUI(Gtk.Window):
             _('How many suggestion candidates to show in one page of the candidate list.'))
         self._page_size_label.set_xalign(0)
         self._options_grid.attach(
-            self._page_size_label, 0, 11, 1, 1)
+            self._page_size_label, 0, 10, 1, 1)
 
         self._page_size_adjustment = Gtk.SpinButton()
         self._page_size_adjustment.set_visible(True)
@@ -430,7 +388,7 @@ class SetupUI(Gtk.Window):
         self._page_size_adjustment.set_increments(1.0, 1.0)
         self._page_size_adjustment.set_range(1.0, 9.0)
         self._options_grid.attach(
-            self._page_size_adjustment, 1, 11, 1, 1)
+            self._page_size_adjustment, 1, 10, 1, 1)
         self.page_size = itb_util.variant_to_value(self.config.get_value(
             self.config_section, 'pagesize'))
         if self.page_size:
@@ -446,7 +404,7 @@ class SetupUI(Gtk.Window):
             _('Whether the candidate window should be drawn horizontally or vertically.'))
         self._lookup_table_orientation_label.set_xalign(0)
         self._options_grid.attach(
-            self._lookup_table_orientation_label, 0, 12, 1, 1)
+            self._lookup_table_orientation_label, 0, 11, 1, 1)
 
         self._lookup_table_orientation_combobox = Gtk.ComboBox()
         lookup_table_orientation_store = Gtk.ListStore(str, int)
@@ -472,7 +430,7 @@ class SetupUI(Gtk.Window):
             if lookup_table_orientation == item[1]:
                 self._lookup_table_orientation_combobox.set_active(i)
         self._options_grid.attach(
-            self._lookup_table_orientation_combobox, 1, 12, 1, 1)
+            self._lookup_table_orientation_combobox, 1, 11, 1, 1)
         self._lookup_table_orientation_combobox.connect(
             "changed",
             self.on_lookup_table_orientation_combobox_changed)
@@ -483,7 +441,7 @@ class SetupUI(Gtk.Window):
             _('Show no suggestions when less than this number of characters have been typed.'))
         self._min_chars_completion_label.set_xalign(0)
         self._options_grid.attach(
-            self._min_chars_completion_label, 0, 13, 1, 1)
+            self._min_chars_completion_label, 0, 12, 1, 1)
 
         self._min_char_complete_adjustment = Gtk.SpinButton()
         self._min_char_complete_adjustment.set_visible(True)
@@ -491,7 +449,7 @@ class SetupUI(Gtk.Window):
         self._min_char_complete_adjustment.set_increments(1.0, 1.0)
         self._min_char_complete_adjustment.set_range(1.0, 9.0)
         self._options_grid.attach(
-            self._min_char_complete_adjustment, 1, 13, 1, 1)
+            self._min_char_complete_adjustment, 1, 12, 1, 1)
         self.min_char_complete = itb_util.variant_to_value(
             self.config.get_value(self.config_section, 'mincharcomplete'))
         if self.min_char_complete:
@@ -502,72 +460,169 @@ class SetupUI(Gtk.Window):
         self._min_char_complete_adjustment.connect(
             'value-changed', self.on_min_char_complete_adjustment_value_changed)
 
-        self._input_method_label = Gtk.Label(
-            _('Input Method:'))
-        self._input_method_label.set_tooltip_text(
-            _('The input method to use. See also the option “Add direct input” to add British English as a second language.'))
-        self._input_method_label.set_xalign(0)
-        self._options_grid.attach(
-            self._input_method_label, 0, 14, 1, 1)
+        self._dictionaries_label = Gtk.Label()
+        self._dictionaries_label.set_text(
+            '<b>' +_('Use dictionaries for the following languages:') + '</b>')
+        self._dictionaries_label.set_use_markup(True)
+        margin = 5
+        self._dictionaries_label.set_margin_start(margin)
+        self._dictionaries_label.set_margin_end(margin)
+        self._dictionaries_label.set_margin_top(margin)
+        self._dictionaries_label.set_margin_bottom(margin)
+        self._dictionaries_label.set_hexpand(False)
+        self._dictionaries_label.set_vexpand(False)
+        self._dictionaries_label.set_xalign(0)
+        self._dictionaries_and_input_methods_vbox.pack_start(
+            self._dictionaries_label, False, False, 0)
+        self._dictionaries_scroll = Gtk.ScrolledWindow()
+        self._dictionaries_and_input_methods_vbox.pack_start(
+            self._dictionaries_scroll, True, True, 0)
+        self._dictionaries_install_missing_button = Gtk.Button(
+            _('Install missing dictionaries'))
+        self._dictionaries_install_missing_button.set_tooltip_text(
+            _('Install the dictionaries which are setup here but not installed'))
+        self._dictionaries_install_missing_button.connect(
+            'clicked', self.on_install_missing_dictionaries)
+        self._dictionaries_action_area = Gtk.ButtonBox()
+        self._dictionaries_action_area.set_can_focus(False)
+        self._dictionaries_action_area.set_layout(Gtk.ButtonBoxStyle.START)
+        self._dictionaries_and_input_methods_vbox.pack_start(
+            self._dictionaries_action_area, False, False, 0)
+        self._dictionaries_add_button = Gtk.Button()
+        self._dictionaries_add_button_label = Gtk.Label()
+        self._dictionaries_add_button_label.set_text(
+            '<span size="xx-large"><b>+</b></span>')
+        self._dictionaries_add_button_label.set_use_markup(True)
+        self._dictionaries_add_button.add(
+            self._dictionaries_add_button_label)
+        self._dictionaries_add_button.set_tooltip_text(
+            _('Add a dictionary'))
+        self._dictionaries_add_button.connect(
+            'clicked', self.on_dictionaries_add_button_clicked)
+        self._dictionaries_remove_button = Gtk.Button()
+        self._dictionaries_remove_button_label = Gtk.Label()
+        self._dictionaries_remove_button_label.set_text(
+            '<span size="xx-large"><b>−</b></span>')
+        self._dictionaries_remove_button_label.set_use_markup(True)
+        self._dictionaries_remove_button.add(
+            self._dictionaries_remove_button_label)
+        self._dictionaries_remove_button.set_tooltip_text(
+            _('Remove a dictionary'))
+        self._dictionaries_remove_button.connect(
+            'clicked', self.on_dictionaries_remove_button_clicked)
+        self._dictionaries_remove_button.set_sensitive(False)
+        self._dictionaries_up_button = Gtk.Button()
+        self._dictionaries_up_button_label = Gtk.Label()
+        self._dictionaries_up_button_label.set_text(
+            '<span size="xx-large"><b>↑</b></span>')
+        self._dictionaries_up_button_label.set_use_markup(True)
+        self._dictionaries_up_button.add(self._dictionaries_up_button_label)
+        self._dictionaries_up_button.set_tooltip_text(
+            _('Move dictionary down'))
+        self._dictionaries_up_button.connect(
+            'clicked', self.on_dictionaries_up_button_clicked)
+        self._dictionaries_up_button.set_sensitive(False)
+        self._dictionaries_down_button = Gtk.Button()
+        self._dictionaries_down_button_label = Gtk.Label()
+        self._dictionaries_down_button_label.set_text(
+            '<span size="xx-large"><b>↓</b></span>')
+        self._dictionaries_down_button_label.set_use_markup(True)
+        self._dictionaries_down_button.add(self._dictionaries_down_button_label)
+        self._dictionaries_down_button.set_tooltip_text(
+            _('Move dictionary up'))
+        self._dictionaries_down_button.connect(
+            'clicked', self.on_dictionaries_down_button_clicked)
+        self._dictionaries_down_button.set_sensitive(False)
+        self._dictionaries_action_area.add(self._dictionaries_add_button)
+        self._dictionaries_action_area.add(self._dictionaries_remove_button)
+        self._dictionaries_action_area.add(self._dictionaries_up_button)
+        self._dictionaries_action_area.add(self._dictionaries_down_button)
+        self._dictionaries_action_area.add(self._dictionaries_install_missing_button)
+        self._fill_dictionaries_listbox()
 
-        self._ime_combobox = Gtk.ComboBox()
-        self._options_grid.attach(
-            self._ime_combobox, 1, 14, 1, 1)
-        ime_store = Gtk.ListStore(str, str)
-        self.supported_imes = []
-        imes = self.tabsqlitedb.ime_properties.get('imes').split(',')
-        if not imes:
-            imes = ['Native Keyboard:NoIme']
-        for item in imes:
-            ime_store.append([item.split(':')[0], item.split(':')[1]])
-            self.supported_imes.append(item.split(':')[1])
-        self._ime_combobox.set_model(ime_store)
-        self._ime_combobox.pack_start(renderer_text, True)
-        self._ime_combobox.add_attribute(renderer_text, "text", 0)
-        self.current_imes = []
-        inputmethod = itb_util.variant_to_value(self.config.get_value(
-            self.config_section, 'inputmethod'))
-        if inputmethod:
-            inputmethods = [x.strip() for x in inputmethod.split(',')]
-            for ime in inputmethods:
-                self.current_imes.append(ime)
-        if self.current_imes == []:
-            # There is no ime set in dconf, use the first value from
-            # the combobox as the default:
-            self.current_imes = [ime_store[0][1]]
-            if self.add_direct_input and 'NoIme' not in self.current_imes:
-                self.current_imes.append('NoIme')
-        if len(self.current_imes) == 1:
-            self.main_ime = self.current_imes[0]
-        else:
-            self.main_ime = (
-                [x for x in self.current_imes if x in self.supported_imes][0])
-        combobox_has_ime = False
-        for i, dummy_item in enumerate(ime_store):
-            if ime_store[i][1] == self.main_ime:
-                self._ime_combobox.set_active(i)
-                combobox_has_ime = True
-        if combobox_has_ime is False:
-            # the combobox did not have the ime from the settings
-            # take the ime from the first row of
-            # the combobox as the fallback:
-            self.main_ime = ime_store[0][1]
-            self._ime_combobox.set_active(0)
-        self._ime_combobox.connect(
-            "changed", self.on_ime_combobox_changed)
-        if len(ime_store) < 2:
-            self._ime_combobox.set_sensitive(False)
-
-        self._input_method_help_button = Gtk.Button(
+        self._input_methods_label = Gtk.Label()
+        self._input_methods_label.set_text(
+            '<b>' + _('Use the following input methods:') + '</b>')
+        self._input_methods_label.set_use_markup(True)
+        margin = 5
+        self._input_methods_label.set_margin_start(margin)
+        self._input_methods_label.set_margin_end(margin)
+        self._input_methods_label.set_margin_top(margin)
+        self._input_methods_label.set_margin_bottom(margin)
+        self._input_methods_label.set_hexpand(False)
+        self._input_methods_label.set_vexpand(False)
+        self._input_methods_label.set_xalign(0)
+        self._dictionaries_and_input_methods_vbox.pack_start(
+            self._input_methods_label, False, False, 0)
+        self._input_methods_scroll = Gtk.ScrolledWindow()
+        self._dictionaries_and_input_methods_vbox.pack_start(
+            self._input_methods_scroll, True, True, 0)
+        self._input_methods_action_area = Gtk.ButtonBox()
+        self._input_methods_action_area.set_can_focus(False)
+        self._input_methods_action_area.set_layout(Gtk.ButtonBoxStyle.START)
+        self._dictionaries_and_input_methods_vbox.pack_start(
+            self._input_methods_action_area, False, False, 0)
+        self._input_methods_add_button = Gtk.Button()
+        self._input_methods_add_button_label = Gtk.Label()
+        self._input_methods_add_button_label.set_text(
+            '<span size="xx-large"><b>+</b></span>')
+        self._input_methods_add_button_label.set_use_markup(True)
+        self._input_methods_add_button.add(
+            self._input_methods_add_button_label)
+        self._input_methods_add_button.set_tooltip_text(
+            _('Add an input method'))
+        self._input_methods_add_button.connect(
+            'clicked', self.on_input_methods_add_button_clicked)
+        self._input_methods_add_button.set_sensitive(False)
+        self._input_methods_remove_button = Gtk.Button()
+        self._input_methods_remove_button_label = Gtk.Label()
+        self._input_methods_remove_button_label.set_text(
+            '<span size="xx-large"><b>−</b></span>')
+        self._input_methods_remove_button_label.set_use_markup(True)
+        self._input_methods_remove_button.add(
+            self._input_methods_remove_button_label)
+        self._input_methods_remove_button.set_tooltip_text(
+            _('Remove an input method'))
+        self._input_methods_remove_button.connect(
+            'clicked', self.on_input_methods_remove_button_clicked)
+        self._input_methods_remove_button.set_sensitive(False)
+        self._input_methods_up_button = Gtk.Button()
+        self._input_methods_up_button_label = Gtk.Label()
+        self._input_methods_up_button_label.set_text(
+            '<span size="xx-large"><b>↑</b></span>')
+        self._input_methods_up_button_label.set_use_markup(True)
+        self._input_methods_up_button.add(
+            self._input_methods_up_button_label)
+        self._input_methods_up_button.set_tooltip_text(
+            _('Move input method down'))
+        self._input_methods_up_button.connect(
+            'clicked', self.on_input_methods_up_button_clicked)
+        self._input_methods_up_button.set_sensitive(False)
+        self._input_methods_down_button = Gtk.Button()
+        self._input_methods_down_button_label = Gtk.Label()
+        self._input_methods_down_button_label.set_text(
+            '<span size="xx-large"><b>↓</b></span>')
+        self._input_methods_down_button_label.set_use_markup(True)
+        self._input_methods_down_button.add(
+            self._input_methods_down_button_label)
+        self._input_methods_down_button.set_tooltip_text(
+            _('Move input method up'))
+        self._input_methods_down_button.connect(
+            'clicked', self.on_input_methods_down_button_clicked)
+        self._input_methods_down_button.set_sensitive(False)
+        self._input_methods_help_button = Gtk.Button(
             _('Input Method Help'))
-        self._input_method_help_button.set_tooltip_text(
+        self._input_methods_help_button.set_tooltip_text(
             _('Display some help showing how to use the input method selected above.'))
-        self._options_grid.attach(
-            self._input_method_help_button, 0, 15, 2, 1)
-        self._input_method_help_button.connect(
-            'clicked', self.on_input_method_help_button_clicked)
-        if self.main_ime == 'NoIme':
-            self._input_method_help_button.set_sensitive(False)
+        self._input_methods_help_button.connect(
+            'clicked', self.on_input_methods_help_button_clicked)
+        self._input_methods_help_button.set_sensitive(False)
+        self._input_methods_action_area.add(self._input_methods_add_button)
+        self._input_methods_action_area.add(self._input_methods_remove_button)
+        self._input_methods_action_area.add(self._input_methods_up_button)
+        self._input_methods_action_area.add(self._input_methods_down_button)
+        self._input_methods_action_area.add(self._input_methods_help_button)
+        self._fill_input_methods_listbox()
 
         self._shortcut_label = Gtk.Label(
             _('Enter shortcut here:'))
@@ -660,21 +715,12 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.attach(
             self._shortcut_treeview_scroll, 0, 5, 3, 10)
 
-        self._install_dictionary_button = Gtk.Button(
-            _('Install dictionary'))
-        self._install_dictionary_button.set_tooltip_text(
-            _('Install the dictionary package for this engine'))
-        self._dictionaries_and_personal_data_grid.attach(
-            self._install_dictionary_button, 0, 0, 1, 1)
-        self._install_dictionary_button.connect(
-            'clicked', self.on_install_dictionary_clicked)
-
         self._learn_from_file_button = Gtk.Button(
             _('Learn from text file'))
         self._learn_from_file_button.set_tooltip_text(
             _('Learn your style by reading a text file'))
         self._dictionaries_and_personal_data_grid.attach(
-            self._learn_from_file_button, 0, 1, 1, 1)
+            self._learn_from_file_button, 0, 0, 1, 1)
         self._learn_from_file_button.connect(
             'clicked', self.on_learn_from_file_clicked)
 
@@ -683,7 +729,7 @@ class SetupUI(Gtk.Window):
         self._delete_learned_data_button.set_tooltip_text(
             _('Delete all personal language data learned from typing or from reading files'))
         self._dictionaries_and_personal_data_grid.attach(
-            self._delete_learned_data_button, 0, 2, 1, 1)
+            self._delete_learned_data_button, 0, 1, 1, 1)
         self._delete_learned_data_button.connect(
             'clicked', self.on_delete_learned_data_clicked)
 
@@ -741,6 +787,150 @@ class SetupUI(Gtk.Window):
             self._documentation_link_button, 0, 6, 1, 1)
 
         self.show_all()
+
+    def _fill_dictionaries_listbox_row(self, name):
+        missing_dictionary = False
+        row = name + ' ' # NO-BREAK SPACE as a separator
+        # add some spaces for nicer formatting:
+        row += ' ' * (20 - len(name))
+        (dic_path,
+         aff_path) = itb_util.find_hunspell_dictionary(name)
+        row += '\t' + _('Spell checking') + ' '
+        if dic_path:
+            row += '✔️'
+        else:
+            row += '❌'
+            missing_dictionary = True
+        row += ' \t' + _('Emoji') + ' '
+        if itb_emoji.find_cldr_annotation_path(name):
+            row += '✔️'
+        else:
+            row += '❌'
+        return (row, missing_dictionary)
+
+    def _fill_dictionaries_listbox(self):
+        '''
+        Fill the dictionaries listbox with the list of dictionaries read
+        from dconf.
+        '''
+        for child in self._dictionaries_scroll.get_children():
+            self._dictionaries_scroll.remove(child)
+        self._dictionaries_listbox = Gtk.ListBox()
+        self._dictionaries_scroll.add(self._dictionaries_listbox)
+        self._dictionaries_listbox_selected_dictionary_name = ''
+        self._dictionaries_listbox_selected_dictionary_index = -1
+        self._dictionaries_listbox.set_visible(True)
+        self._dictionaries_listbox.set_vexpand(True)
+        self._dictionaries_listbox.set_selection_mode(Gtk.SelectionMode.SINGLE)
+        self._dictionaries_listbox.set_activate_on_single_click(True)
+        self._dictionaries_listbox.connect(
+            'row-selected', self.on_dictionary_selected)
+        self._dictionary_names = []
+        dictionary = itb_util.variant_to_value(self.config.get_value(
+            self.config_section, 'dictionary'))
+        if dictionary:
+            names = [x.strip() for x in dictionary.split(',')]
+            for name in names:
+                self._dictionary_names.append(name)
+        if self._dictionary_names == []:
+            # There are no dictionaries set in dconf, get a default list of
+            # dictionaries from the current effective value of LC_CTYPE:
+            self._dictionary_names = itb_util.get_default_dictionaries(
+                locale.getlocale(category=locale.LC_CTYPE)[0])
+        missing_dictionaries = False
+        for name in self._dictionary_names:
+            label = Gtk.Label()
+            (text,
+             missing_dictionary) = self._fill_dictionaries_listbox_row(name)
+            if missing_dictionary:
+                missing_dictionaries = True
+            label.set_text(html.escape(text))
+            label.set_use_markup(True)
+            label.set_xalign(0)
+            margin = 1
+            label.set_margin_start(margin)
+            label.set_margin_end(margin)
+            label.set_margin_top(margin)
+            label.set_margin_bottom(margin)
+            self._dictionaries_listbox.insert(label, -1)
+        self._dictionaries_listbox.show_all()
+        self._dictionaries_install_missing_button.set_sensitive(
+            missing_dictionaries)
+
+    def _fill_input_methods_listbox_row(self, ime):
+        row = ime + ' ' # NO-BREAK SPACE as a separator
+        # add some spaces for nicer formatting:
+        row += ' ' * (20 - len(ime))
+        (path,
+         title,
+         description,
+         full_contents,
+         error) = itb_util.get_ime_help(ime)
+        if title:
+            row += '\t' + '(' + title + ')'
+        if error:
+            row += '\t' + '⚠️ ' + error
+        return row
+
+    def _fill_input_methods_listbox(self):
+        '''
+        Fill the input methods listbox with the list of input methods read
+        from dconf.
+        '''
+        for child in self._input_methods_scroll.get_children():
+            self._input_methods_scroll.remove(child)
+        self._input_methods_listbox = Gtk.ListBox()
+        self._input_methods_scroll.add(self._input_methods_listbox)
+        self._input_methods_listbox_selected_ime_name = ''
+        self._input_methods_listbox_selected_ime_index = -1
+        self._input_methods_listbox.set_visible(True)
+        self._input_methods_listbox.set_vexpand(True)
+        self._input_methods_listbox.set_selection_mode(Gtk.SelectionMode.SINGLE)
+        self._input_methods_listbox.set_activate_on_single_click(True)
+        self._input_methods_listbox.connect(
+            'row-selected', self.on_input_method_selected)
+        self.current_imes = []
+        inputmethod = itb_util.variant_to_value(self.config.get_value(
+            self.config_section, 'inputmethod'))
+        if inputmethod:
+            inputmethods = [x.strip() for x in inputmethod.split(',')]
+            for ime in inputmethods:
+                self.current_imes.append(ime)
+        if self.current_imes == []:
+            # There is no ime set in dconf, get a default list of
+            # input methods for the current effective value of LC_CTYPE:
+            self.current_imes = itb_util.get_default_input_methods(
+                locale.getlocale(category=locale.LC_CTYPE)[0])
+        if len(self.current_imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
+            sys.stderr.write(
+                'Trying to set more than the allowed maximum of %s '
+                %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
+                + 'input methods.\n'
+                + 'Trying to set: %s\n' %self.current_imes
+                + 'Really setting: %s\n'
+                %self.current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
+            self.current_imes = (
+                self.current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
+            # Save reduced list of input methods back to config:
+            self.config.set_value(
+                self.config_section,
+                'inputmethod',
+                GLib.Variant.new_string(','.join(self.current_imes)))
+        for ime in self.current_imes:
+            label = Gtk.Label()
+            label.set_text(html.escape(
+                self._fill_input_methods_listbox_row(ime)))
+            label.set_use_markup(True)
+            label.set_xalign(0)
+            margin = 1
+            label.set_margin_start(margin)
+            label.set_margin_end(margin)
+            label.set_margin_top(margin)
+            label.set_margin_bottom(margin)
+            self._input_methods_listbox.insert(label, -1)
+        self._input_methods_listbox.show_all()
+        self._input_methods_add_button.set_sensitive(
+            len(self.current_imes) < itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS)
 
     def __run_message_dialog(self, message, message_type=Gtk.MessageType.INFO):
         '''Run a dialog to show an error or warning message'''
@@ -853,25 +1043,6 @@ class SetupUI(Gtk.Window):
             self.config.set_value(
                 self.config_section,
                 'usedigitsasselectkeys',
-                GLib.Variant.new_boolean(False))
-
-    def on_add_direct_input_checkbutton(self, widget):
-        '''
-        The checkbutton whether to add direct input, i.e.  whether to add
-        native keyboard input and the British English dictionary, has
-        been clicked.
-        '''
-        if widget.get_active():
-            self.add_direct_input = True
-            self.config.set_value(
-                self.config_section,
-                'adddirectinput',
-                GLib.Variant.new_boolean(True))
-        else:
-            self.add_direct_input = False
-            self.config.set_value(
-                self.config_section,
-                'adddirectinput',
                 GLib.Variant.new_boolean(False))
 
     def on_remember_last_used_preedit_ime_checkbutton(self, widget):
@@ -1012,74 +1183,544 @@ class SetupUI(Gtk.Window):
             'mincharcomplete',
             GLib.Variant.new_int32(min_char_complete))
 
-    def on_ime_combobox_changed(self, widget):
+    def on_dictionary_to_add_selected(self, dummy_listbox, listbox_row):
         '''
-        A change of the active input method has been requested
-        with the combobox.
+        Signal handler for selecting a dictionary to add
+
+        :param dummy_listbox: The list box used to select the dictionary to add
+        :type dummy_listbox: Gtk.ListBox object
+        :param listbox_row: A row containing a dictionary name
+        :type listbox_row: Gtk.ListBoxRow object
         '''
-        tree_iter = widget.get_active_iter()
-        if tree_iter != None:
-            model = widget.get_model()
-            main_ime = model[tree_iter][1]
-            # Remove all supported imes and 'NoIme' from the current imes.
-            # This is to keep additional imes which might have been added
-            # setting the dconf key directly instead of using this setup tool.
-            self.current_imes = [
-                x for x in self.current_imes if (
-                    x not in self.supported_imes and x != 'NoIme')]
-            self.current_imes = [main_ime] + self.current_imes
-            if ('NoIme' not in self.current_imes
-                    and self.add_direct_input is True):
-                self.current_imes.append('NoIme')
+        name = listbox_row.get_child().get_text().split(' ')[0]
+        if GTK_VERSION >= (3, 22, 0):
+            self._dictionaries_add_popover.popdown()
+        self._dictionaries_add_popover.hide()
+        if not name or name in self._dictionary_names:
+            return
+        self._dictionary_names = [name] + self._dictionary_names
+        self.config.set_value(
+            self.config_section,
+            'dictionary',
+            GLib.Variant.new_string(','.join(self._dictionary_names)))
+        self._fill_dictionaries_listbox()
+        self._dictionaries_listbox_selected_dictionary_index = 0
+        self._dictionaries_listbox_selected_dictionary_name = name
+        self._dictionaries_listbox.select_row(
+            self._dictionaries_listbox.get_row_at_index(0))
+
+    def _fill_dictionaries_add_listbox(self, filter_text):
+        '''
+        Fill the listbox of dictionaries to choose from
+
+        :param filter_text: The filter text to limit the dictionaries
+                            listed. Only dictionaries which contain
+                            the filter text as a substring
+                            (ignoring case and spaces) are listed.
+        :type filter_text: String
+        '''
+        for child in self._dictionaries_add_popover_scroll.get_children():
+            self._dictionaries_add_popover_scroll.remove(child)
+        self._dictionaries_add_listbox = Gtk.ListBox()
+        self._dictionaries_add_popover_scroll.add(
+            self._dictionaries_add_listbox)
+        self._dictionaries_add_listbox.set_visible(True)
+        self._dictionaries_add_listbox.set_vexpand(True)
+        self._dictionaries_add_listbox.set_selection_mode(
+            Gtk.SelectionMode.SINGLE)
+        self._dictionaries_add_listbox.set_activate_on_single_click(True)
+        self._dictionaries_add_listbox.connect(
+            'row-selected', self.on_dictionary_to_add_selected)
+        rows = []
+        for name in sorted(itb_util.SUPPORTED_DICTIONARIES):
+            if name in self._dictionary_names:
+                continue
+            if not (filter_text.replace(' ', '').lower()
+                in name.replace(' ', '').lower()):
+                continue
+            rows.append(self._fill_dictionaries_listbox_row(name)[0])
+        for row in rows:
+            label = Gtk.Label()
+            label.set_text(html.escape(row))
+            label.set_use_markup(True)
+            label.set_xalign(0)
+            margin = 1
+            label.set_margin_start(margin)
+            label.set_margin_end(margin)
+            label.set_margin_top(margin)
+            label.set_margin_bottom(margin)
+            self._dictionaries_add_listbox.insert(label, -1)
+        self._dictionaries_add_popover.show_all()
+
+    def on_dictionaries_search_entry_changed(self, search_entry):
+        '''
+        Signal handler for changed text in the dictionaries search entry
+
+        :param search_entry: The search entry
+        :type search_entry: Gtk.SearchEntry object
+        '''
+        filter_text = search_entry.get_text()
+        self._fill_dictionaries_add_listbox(filter_text)
+
+    def on_dictionaries_add_button_clicked(self, *dummy_args):
+        '''
+        Signal handler called when the “add” button to add another
+        dictionary has been clicked.
+        '''
+        self._dictionaries_add_popover = Gtk.Popover()
+        self._dictionaries_add_popover.set_relative_to(
+            self._dictionaries_add_button)
+        self._dictionaries_add_popover.set_position(Gtk.PositionType.RIGHT)
+        self._dictionaries_add_popover.set_vexpand(True)
+        self._dictionaries_add_popover.set_hexpand(True)
+        dictionaries_add_popover_vbox = Gtk.VBox()
+        margin = 12
+        dictionaries_add_popover_vbox.set_margin_start(margin)
+        dictionaries_add_popover_vbox.set_margin_end(margin)
+        dictionaries_add_popover_vbox.set_margin_top(margin)
+        dictionaries_add_popover_vbox.set_margin_bottom(margin)
+        dictionaries_add_popover_vbox.set_spacing(margin)
+        dictionaries_add_popover_label = Gtk.Label()
+        dictionaries_add_popover_label.set_text(_('Add dictionary'))
+        dictionaries_add_popover_label.set_visible(True)
+        dictionaries_add_popover_label.set_halign(Gtk.Align.FILL)
+        dictionaries_add_popover_vbox.pack_start(
+            dictionaries_add_popover_label, False, False, 0)
+        dictionaries_add_popover_search_entry = Gtk.SearchEntry()
+        dictionaries_add_popover_search_entry.set_can_focus(True)
+        dictionaries_add_popover_search_entry.set_visible(True)
+        dictionaries_add_popover_search_entry.set_halign(Gtk.Align.FILL)
+        dictionaries_add_popover_search_entry.set_hexpand(False)
+        dictionaries_add_popover_search_entry.set_vexpand(False)
+        dictionaries_add_popover_search_entry.connect(
+            'search-changed', self.on_dictionaries_search_entry_changed)
+        dictionaries_add_popover_vbox.pack_start(
+            dictionaries_add_popover_search_entry, False, False, 0)
+        self._dictionaries_add_popover_scroll = Gtk.ScrolledWindow()
+        self._dictionaries_add_popover_scroll.set_hexpand(True)
+        self._dictionaries_add_popover_scroll.set_vexpand(True)
+        self._dictionaries_add_popover_scroll.set_kinetic_scrolling(False)
+        self._dictionaries_add_popover_scroll.set_overlay_scrolling(True)
+        self._fill_dictionaries_add_listbox('')
+        dictionaries_add_popover_vbox.pack_start(
+            self._dictionaries_add_popover_scroll, True, True, 0)
+        self._dictionaries_add_popover.add(dictionaries_add_popover_vbox)
+        if GTK_VERSION >= (3, 22, 0):
+            self._dictionaries_add_popover.popup()
+        self._dictionaries_add_popover.show_all()
+
+    def on_dictionaries_remove_button_clicked(self, *dummy_args):
+        '''
+        Signal handler called when the “remove” button for
+        an input method has been clicked.
+        '''
+        index = self._dictionaries_listbox_selected_dictionary_index
+        if (not (index >= 0 and index < len(self._dictionary_names))):
+            # This should not happen, one should not be able
+            # to click the remove button in this case, just return:
+            return
+        self._dictionary_names = (
+            self._dictionary_names[:index]
+            + self._dictionary_names[index + 1:])
+        self.config.set_value(
+            self.config_section,
+            'dictionary',
+            GLib.Variant.new_string(','.join(self._dictionary_names)))
+        self._fill_dictionaries_listbox()
+        self._dictionaries_listbox_selected_dictionary_index = -1
+        self._dictionaries_listbox_selected_dictionary_name = ''
+        self._dictionaries_listbox.unselect_all()
+
+    def on_dictionaries_up_button_clicked(self, *dummy_args):
+        '''
+        Signal handler called when the “up” button for a dictionary
+        has been clicked.
+
+        Increases the priority of the selected dictionary.
+        '''
+        index = self._dictionaries_listbox_selected_dictionary_index
+        if (not (index > 0 and index < len(self._dictionary_names))):
+            # This should not happen, one should not be able
+            # to click the up button in this case, just return:
+            return
+        self._dictionary_names = (
+            self._dictionary_names[:index - 1]
+            + [self._dictionary_names[index]]
+            + [self._dictionary_names[index - 1]]
+            + self._dictionary_names[index + 1:])
+        self.config.set_value(
+            self.config_section,
+            'dictionary',
+            GLib.Variant.new_string(','.join(self._dictionary_names)))
+        self._fill_dictionaries_listbox()
+        self._dictionaries_listbox_selected_dictionary_index = index - 1
+        self._dictionaries_listbox_selected_dictionary_name = (
+            self._dictionary_names[index - 1])
+        self._dictionaries_listbox.select_row(
+            self._dictionaries_listbox.get_row_at_index(index - 1))
+
+    def on_dictionaries_down_button_clicked(self, *dummy_args):
+        '''
+        Signal handler called when the “down” button for a dictionary
+        has been clicked.
+
+        Lowers the priority of the selected dictionary.
+        '''
+        index = self._dictionaries_listbox_selected_dictionary_index
+        if (not (index >= 0 and index < len(self._dictionary_names) - 1)):
+            # This should not happen, one should not be able
+            # to click the down button in this case, just return:
+            return
+        self._dictionary_names = (
+            self._dictionary_names[:index]
+            + [self._dictionary_names[index + 1]]
+            + [self._dictionary_names[index]]
+            + self._dictionary_names[index + 2:])
+        self.config.set_value(
+            self.config_section,
+            'dictionary',
+            GLib.Variant.new_string(','.join(self._dictionary_names)))
+        self._fill_dictionaries_listbox()
+        self._dictionaries_listbox_selected_dictionary_index = index + 1
+        self._dictionaries_listbox_selected_dictionary_name = (
+            self._dictionary_names[index + 1])
+        self._dictionaries_listbox.select_row(
+            self._dictionaries_listbox.get_row_at_index(index + 1))
+
+    def on_install_missing_dictionaries(self, *dummy_args):
+        '''
+        Signal handler called when the “Install missing dictionaries”
+        button is clicked.
+
+        Tries to install the appropriate dictionary packages.
+        '''
+        missing_dictionary_packages = set()
+        for name in self._dictionary_names:
+            (dic_path,
+             aff_path) = itb_util.find_hunspell_dictionary(name)
+            if not dic_path:
+                missing_dictionary_packages.add(
+                    'hunspell-' + name.split('_')[0])
+        for package in missing_dictionary_packages:
+            InstallPkg(package)
+        self._fill_dictionaries_listbox()
+        if missing_dictionary_packages:
+            # Write a timestamp to dconf to trigger the callback
+            # for changed dconf values in the engine and reload
+            # the dictionaries:
             self.config.set_value(
                 self.config_section,
-                'inputmethod',
-                GLib.Variant.new_string(','.join(self.current_imes)))
-            if main_ime == 'NoIme':
-                self._input_method_help_button.set_sensitive(False)
-            else:
-                self._input_method_help_button.set_sensitive(True)
+                'dictionaryinstalltimestamp',
+                GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
 
-    def on_input_method_help_button_clicked(self, dummy_widget):
+    def on_dictionary_selected(self, dummy_listbox, listbox_row):
+        '''
+        Signal handler called when a dictionary is selected
+
+        :param dummy_listbox: The listbox used to select dictionaries
+        :type dummy_listbox: Gtk.ListBox object
+        :param listbox_row: A row containing the dictionary name
+        :type listbox_row: Gtk.ListBoxRow object
+        '''
+        if listbox_row:
+            self._dictionaries_listbox_selected_dictionary_name = (
+                listbox_row.get_child().get_text().split(' ')[0])
+            self._dictionaries_listbox_selected_dictionary_index = (
+                listbox_row.get_index())
+            self._dictionaries_remove_button.set_sensitive(True)
+            self._dictionaries_up_button.set_sensitive(
+                self._dictionaries_listbox_selected_dictionary_index > 0)
+            self._dictionaries_down_button.set_sensitive(
+                self._dictionaries_listbox_selected_dictionary_index
+                < len(self._dictionary_names) - 1)
+        else:
+            # all rows have been unselected
+            self._dictionaries_listbox_selected_dictionary_name = ''
+            self._dictionaries_listbox_selected_dictionary_index = -1
+            self._dictionaries_remove_button.set_sensitive(False)
+            self._dictionaries_up_button.set_sensitive(False)
+            self._dictionaries_down_button.set_sensitive(False)
+
+    def on_input_method_to_add_selected(self, dummy_listbox, listbox_row):
+        '''
+        Signal handler for selecting an input method to add
+
+        :param dummy_listbox: The list box used to select the input method to add
+        :type dummy_listbox: Gtk.ListBox object
+        :param listbox_row: A row containing an input method name
+        :type listbox_row: Gtk.ListBoxRow object
+        '''
+        ime = listbox_row.get_child().get_text().split(' ')[0]
+        if GTK_VERSION >= (3, 22, 0):
+            self._input_methods_add_popover.popdown()
+        self._input_methods_add_popover.hide()
+        if not ime or ime in self.current_imes:
+            return
+        self.current_imes = [ime] + self.current_imes
+        self.config.set_value(
+            self.config_section,
+            'inputmethod',
+            GLib.Variant.new_string(','.join(self.current_imes)))
+        self._fill_input_methods_listbox()
+        self._input_methods_listbox_selected_ime_index = 0
+        self._input_methods_listbox_selected_ime_name = ime
+        self._input_methods_listbox.select_row(
+            self._input_methods_listbox.get_row_at_index(0))
+
+    def _fill_input_methods_add_listbox(self, filter_text):
+        '''
+        Fill the listbox of input methods to choose from
+
+        :param filter_text: The filter text to limit the input methods
+                            listed. Only input methods which contain
+                            the filter text as a substring
+                            (ignoring case and spaces) are listed.
+        :type filter_text: String
+        '''
+        for child in self._input_methods_add_popover_scroll.get_children():
+            self._input_methods_add_popover_scroll.remove(child)
+        self._input_methods_add_listbox = Gtk.ListBox()
+        self._input_methods_add_popover_scroll.add(
+            self._input_methods_add_listbox)
+        self._input_methods_add_listbox.set_visible(True)
+        self._input_methods_add_listbox.set_vexpand(True)
+        self._input_methods_add_listbox.set_selection_mode(
+            Gtk.SelectionMode.SINGLE)
+        self._input_methods_add_listbox.set_activate_on_single_click(True)
+        self._input_methods_add_listbox.connect(
+            'row-selected', self.on_input_method_to_add_selected)
+        rows = []
+        for ime in ['NoIme'] + sorted(itb_util.M17N_INPUT_METHODS):
+            if ime in self.current_imes:
+                continue
+            row = self._fill_input_methods_listbox_row(ime)
+            if (filter_text.replace(' ', '').lower()
+                in row.replace(' ', '').lower()):
+                rows.append(row)
+        for row in rows:
+            label = Gtk.Label()
+            label.set_text(html.escape(row))
+            label.set_use_markup(True)
+            label.set_xalign(0)
+            margin = 1
+            label.set_margin_start(margin)
+            label.set_margin_end(margin)
+            label.set_margin_top(margin)
+            label.set_margin_bottom(margin)
+            self._input_methods_add_listbox.insert(label, -1)
+        self._input_methods_add_popover.show_all()
+
+    def on_input_methods_search_entry_changed(self, search_entry):
+        '''
+        Signal handler for changed text in the input methods search entry
+
+        :param search_entry: The search entry
+        :type search_entry: Gtk.SearchEntry object
+        '''
+        filter_text = search_entry.get_text()
+        self._fill_input_methods_add_listbox(filter_text)
+
+    def on_input_methods_add_button_clicked(self, *dummy_args):
+        '''
+        Signal handler called when the “add” button to add another
+        input method has been clicked.
+        '''
+        if len(self.current_imes) >= itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
+            # Actually this should never happen because the button to add
+            # an input method should not be sensitive if the maximum number
+            # of input methods is  already reached.
+            #
+            # Probably it is better not to make this message translatable
+            # in order not to create extra work for the translators to
+            # translate a message which should never be displayed anyway.
+            self.__run_message_dialog(
+                'The maximum number of input methods is %s.'
+                %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS,
+                message_type=Gtk.MessageType.ERROR)
+            return
+        self._input_methods_add_popover = Gtk.Popover()
+        self._input_methods_add_popover.set_relative_to(
+            self._input_methods_add_button)
+        self._input_methods_add_popover.set_position(Gtk.PositionType.RIGHT)
+        self._input_methods_add_popover.set_vexpand(True)
+        self._input_methods_add_popover.set_hexpand(True)
+        input_methods_add_popover_vbox = Gtk.VBox()
+        margin = 12
+        input_methods_add_popover_vbox.set_margin_start(margin)
+        input_methods_add_popover_vbox.set_margin_end(margin)
+        input_methods_add_popover_vbox.set_margin_top(margin)
+        input_methods_add_popover_vbox.set_margin_bottom(margin)
+        input_methods_add_popover_vbox.set_spacing(margin)
+        input_methods_add_popover_label = Gtk.Label()
+        input_methods_add_popover_label.set_text(_('Add input method'))
+        input_methods_add_popover_label.set_visible(True)
+        input_methods_add_popover_label.set_halign(Gtk.Align.FILL)
+        input_methods_add_popover_vbox.pack_start(
+            input_methods_add_popover_label, False, False, 0)
+        input_methods_add_popover_search_entry = Gtk.SearchEntry()
+        input_methods_add_popover_search_entry.set_can_focus(True)
+        input_methods_add_popover_search_entry.set_visible(True)
+        input_methods_add_popover_search_entry.set_halign(Gtk.Align.FILL)
+        input_methods_add_popover_search_entry.set_hexpand(False)
+        input_methods_add_popover_search_entry.set_vexpand(False)
+        input_methods_add_popover_search_entry.connect(
+            'search-changed', self.on_input_methods_search_entry_changed)
+        input_methods_add_popover_vbox.pack_start(
+            input_methods_add_popover_search_entry, False, False, 0)
+        self._input_methods_add_popover_scroll = Gtk.ScrolledWindow()
+        self._input_methods_add_popover_scroll.set_hexpand(True)
+        self._input_methods_add_popover_scroll.set_vexpand(True)
+        self._input_methods_add_popover_scroll.set_kinetic_scrolling(False)
+        self._input_methods_add_popover_scroll.set_overlay_scrolling(True)
+        self._fill_input_methods_add_listbox('')
+        input_methods_add_popover_vbox.pack_start(
+            self._input_methods_add_popover_scroll, True, True, 0)
+        self._input_methods_add_popover.add(input_methods_add_popover_vbox)
+        if GTK_VERSION >= (3, 22, 0):
+            self._input_methods_add_popover.popup()
+        self._input_methods_add_popover.show_all()
+
+    def on_input_methods_remove_button_clicked(self, *dummy_args):
+        '''
+        Signal handler called when the “remove” button for
+        an input method has been clicked.
+        '''
+        index = self._input_methods_listbox_selected_ime_index
+        if (not (index >= 0 and index < len(self.current_imes))):
+            # This should not happen, one should not be able
+            # to click the remove button in this case, just return:
+            return
+        self.current_imes = (
+            self.current_imes[:index]
+            + self.current_imes[index + 1:])
+        self.config.set_value(
+            self.config_section,
+            'inputmethod',
+            GLib.Variant.new_string(','.join(self.current_imes)))
+        self._fill_input_methods_listbox()
+        self._input_methods_listbox_selected_ime_index = -1
+        self._input_methods_listbox_selected_ime_name = ''
+        self._input_methods_listbox.unselect_all()
+
+    def on_input_methods_up_button_clicked(self, *dummy_args):
+        '''
+        Signal handler called when the “up” button for an input method
+        has been clicked.
+
+        Increases the priority of the selected input method.
+        '''
+        index = self._input_methods_listbox_selected_ime_index
+        if (not (index > 0 and index < len(self.current_imes))):
+            # This should not happen, one should not be able
+            # to click the up button in this case, just return:
+            return
+        self.current_imes = (
+            self.current_imes[:index - 1]
+            + [self.current_imes[index]]
+            + [self.current_imes[index - 1]]
+            + self.current_imes[index + 1:])
+        self.config.set_value(
+            self.config_section,
+            'inputmethod',
+            GLib.Variant.new_string(','.join(self.current_imes)))
+        self._fill_input_methods_listbox()
+        self._input_methods_listbox_selected_ime_index = index - 1
+        self._input_methods_listbox_selected_ime_name = (
+            self.current_imes[index - 1])
+        self._input_methods_listbox.select_row(
+            self._input_methods_listbox.get_row_at_index(index - 1))
+
+    def on_input_methods_down_button_clicked(self, *dummy_args):
+        '''
+        Signal handler called when the “down” button for an input method
+        has been clicked.
+
+        Lowers the priority of the selected input method.
+        '''
+        index = self._input_methods_listbox_selected_ime_index
+        if (not (index >= 0 and index < len(self.current_imes) - 1)):
+            # This should not happen, one should not be able
+            # to click the down button in this case, just return:
+            return
+        self.current_imes = (
+            self.current_imes[:index]
+            + [self.current_imes[index + 1]]
+            + [self.current_imes[index]]
+            + self.current_imes[index + 2:])
+        self.config.set_value(
+            self.config_section,
+            'inputmethod',
+            GLib.Variant.new_string(','.join(self.current_imes)))
+        self._fill_input_methods_listbox()
+        self._input_methods_listbox_selected_ime_index = index + 1
+        self._input_methods_listbox_selected_ime_name = self.current_imes[index + 1]
+        self._input_methods_listbox.select_row(
+            self._input_methods_listbox.get_row_at_index(index + 1))
+
+    def on_input_methods_help_button_clicked(self, dummy_widget):
         '''
         Show a help window for the input method selected in the
-        combobox.
+        listbox.
         '''
-        tree_iter = self._ime_combobox.get_active_iter()
-        if tree_iter != None:
-            model = self._ime_combobox.get_model()
-            ime_name = model[tree_iter][1]
-        if not ime_name or ime_name == 'NoIme':
+        if not self._input_methods_listbox_selected_ime_name:
             return
-        if ime_name in itb_util.M17N_INPUT_METHODS:
-            mim_file = itb_util.M17N_INPUT_METHODS[ime_name]
+        (path,
+         title,
+         description,
+         full_contents,
+         error) = itb_util.get_ime_help(
+             self._input_methods_listbox_selected_ime_name)
+        window_title = self._input_methods_listbox_selected_ime_name
+        if title:
+            window_title += '   ' + title
+        if path:
+            window_title += '   ' + path
+        if error:
+            window_contents = error
         else:
-            mim_file = ime_name+'.mim'
-        mim_file_contents = None
-        try:
-            mim_file_contents = open(
-                '/usr/share/m17n/%(mim)s' %{'mim': mim_file},
-                mode='r',
-                encoding='UTF-8',
-                errors='ignore'
-            ).read()
-        except:
-            import traceback
-            traceback.print_exc()
-        if mim_file_contents:
-            description_pattern = re.compile(
-                r'\([\s]*description[\s]*"(?P<description>.+?)(?<!\\)"[\s]*\)',
-                re.DOTALL|re.MULTILINE|re.UNICODE)
-            match = description_pattern.search(mim_file_contents)
-            description = u''
-            if match:
-                description = match.group('description').replace('\\"', '"')
-            win = InputMethodHelpWindow(
-                parent=self,
-                title=mim_file,
-                description=description,
-                long_description=mim_file_contents)
-            win.show_all()
+            window_contents = description
+            if full_contents:
+                window_contents += (
+                    '\n\n'
+                    + '############################################################'
+                    + '\n'
+                    + 'Complete file implementing the input method follows here:\n'
+                    + '############################################################'
+                    + '\n'
+                    + full_contents)
+        win = HelpWindow(
+            parent=self,
+            title=window_title,
+            contents=window_contents),
+
+    def on_input_method_selected(self, dummy_listbox, listbox_row):
+        '''
+        Signal handler called when an input method is selected
+
+        :param dummy_listbox: The listbox used to select input methods
+        :type dummy_listbox: Gtk.ListBox object
+        :param listbox_row: A row containing the input method name
+        :type listbox_row: Gtk.ListBoxRow object
+        '''
+        if listbox_row:
+            self._input_methods_listbox_selected_ime_name = (
+                listbox_row.get_child().get_text().split(' ')[0])
+            index = listbox_row.get_index()
+            self._input_methods_listbox_selected_ime_index = index
+            self._input_methods_remove_button.set_sensitive(True)
+            self._input_methods_up_button.set_sensitive(
+                index > 0 and index < len(self.current_imes))
+            self._input_methods_down_button.set_sensitive(
+                index >= 0 and index < len(self.current_imes) - 1)
+            self._input_methods_help_button.set_sensitive(True)
+        else:
+            # all rows have been unselected
+            self._input_methods_listbox_selected_ime_name = ''
+            self._input_methods_listbox_selected_ime_index = -1
+            self._input_methods_remove_button.set_sensitive(False)
+            self._input_methods_up_button.set_sensitive(False)
+            self._input_methods_down_button.set_sensitive(False)
+            self._input_methods_help_button.set_sensitive(False)
 
     def on_shortcut_clear_clicked(self, dummy_widget):
         '''
@@ -1157,22 +1798,6 @@ class SetupUI(Gtk.Window):
             self._shortcut_entry.set_text(shortcut)
             self._shortcut_expansion_entry.set_text(shortcut_expansion)
 
-    def on_install_dictionary_clicked(self, dummy_widget):
-        '''
-        The button to install the main dictionary for this engine
-        has been clicked.
-        '''
-        self._install_dictionary_button.set_sensitive(False)
-        InstallPkg(self.hunspell_dict_package)
-        # Write a timestamp to dconf to trigger the callback
-        # for changed dconf values in the engine and reload
-        # the dictionary:
-        self.config.set_value(
-            self.config_section,
-            'dictionaryinstalltimestamp',
-            GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
-        self._install_dictionary_button.set_sensitive(True)
-
     def on_learn_from_file_clicked(self, dummy_widget):
         '''
         The button to learn from a user supplied text file
@@ -1240,22 +1865,21 @@ class SetupUI(Gtk.Window):
             self.tabsqlitedb.remove_all_phrases()
         self._delete_learned_data_button.set_sensitive(True)
 
-class InputMethodHelpWindow(Gtk.Window):
+class HelpWindow(Gtk.Window):
     '''
-    A window to show help for an input method
+    A window to show help
 
     :param parent: The parent object
-    :type parent: Gtk.Dialog object
-    :param title: Window title of the help window
-    :type title: string
-    :param description: description of the m17n input method
-    :type description: string
-    :param long_description: full contents of the file
-                             implementing the m17n input method
-    :type long_description: string
+    :type parent: Gtk.Window object
+    :param title: Title of the help window
+    :type title: String
+    :param contents: Contents of the help window
+    :type contents: String
     '''
-    def __init__(self, parent=None,
-                 title='', description='', long_description=''):
+    def __init__(self,
+                 parent=None,
+                 title='',
+                 contents=''):
         Gtk.Window.__init__(self, title=title)
         if parent:
             self.set_parent(parent)
@@ -1268,17 +1892,7 @@ class InputMethodHelpWindow(Gtk.Window):
         self.vbox = Gtk.VBox(spacing=0)
         self.add(self.vbox)
         self.text_buffer = Gtk.TextBuffer()
-        self.text_buffer.insert_at_cursor(description)
-        self.text_buffer.insert_at_cursor(
-            '\n\n'
-            + '############################################################'
-            + '\n')
-        self.text_buffer.insert_at_cursor(
-            'Complete file implementing the input method follows here:\n')
-        self.text_buffer.insert_at_cursor(
-            '############################################################'
-            + '\n')
-        self.text_buffer.insert_at_cursor(long_description)
+        self.text_buffer.insert_at_cursor(contents)
         self.text_view = Gtk.TextView()
         self.text_view.set_buffer(self.text_buffer)
         self.text_view.set_editable(False)
@@ -1295,6 +1909,7 @@ class InputMethodHelpWindow(Gtk.Window):
         self.hbox = Gtk.HBox(spacing=0)
         self.hbox.pack_end(self.close_button, False, False, 0)
         self.vbox.pack_start(self.hbox, False, False, 5)
+        self.show_all()
 
     def on_close_button_clicked(self, dummy_widget):
         '''

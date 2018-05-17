@@ -77,8 +77,6 @@ AC_CONFIG_FILES([po/Makefile.in
     data/annotations/Makefile
     data/annotationsDerived/Makefile
     icons/Makefile
-    icons/additional/Makefile
-    hunspell-tables/Makefile
     m4/Makefile]
 )
 

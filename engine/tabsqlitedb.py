@@ -4,7 +4,7 @@
 # ibus-typing-booster - A completion input method for IBus
 #
 # Copyright (c) 2011-2013 Anish Patil <apatil@redhat.com>
-# Copyright (c) 2012-2016 Mike FABIAN <mfabian@redhat.com>
+# Copyright (c) 2012-2018 Mike FABIAN <mfabian@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,33 +33,6 @@ DEBUG_LEVEL = int(0)
 
 USER_DATABASE_VERSION = '0.65'
 
-class ImeProperties:
-    def __init__(self, configfile_path=None):
-        '''
-        configfile_path is the full path to the config file, for example
-        “/usr/share/ibus-typing-booster/hunspell-tables/en_US.conf”
-        '''
-        self.ime_property_cache = {}
-        if os.path.exists(configfile_path) and os.path.isfile(configfile_path):
-            comment_patt = re.compile('^#')
-            with codecs.open(
-                configfile_path,
-                mode='r',
-                encoding='UTF-8') as file_handle:
-                for line in file_handle:
-                    if not comment_patt.match(line):
-                        attr, val = line.strip().split('=', 1)
-                        self.ime_property_cache[attr.strip()] = val.strip()
-        else:
-            sys.stderr.write(
-                "Error: ImeProperties: No such file: %s" %configfile_path)
-
-    def get(self, key):
-        if key in self.ime_property_cache:
-            return self.ime_property_cache[key]
-        else:
-            return None
-
 class tabsqlitedb:
     '''Phrase databases for ibus-typing-booster
 
@@ -82,7 +55,7 @@ class tabsqlitedb:
     user_db: Database on disk where the phrases learned from the user are stored
         user_freq >= 1: The number of times the user has used this phrase
     '''
-    def __init__(self, config_filename='', user_db_file=''):
+    def __init__(self, user_db_file=''):
         global DEBUG_LEVEL
         try:
             DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
@@ -90,8 +63,7 @@ class tabsqlitedb:
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.__init__(config_filename = %s, user_db_file = %s)\n"
-                %(config_filename, user_db_file))
+                "tabsqlitedb.__init__(user_db_file = %s)\n" %user_db_file)
         self.user_db_file = user_db_file
         if not self.user_db_file:
             self.user_db_file = path.join(
@@ -110,14 +82,7 @@ class tabsqlitedb:
 
         self.old_phrases = []
 
-        self.ime_properties = ImeProperties(config_filename)
-        self._language = self.ime_properties.get('language')
-        self._normalization_form_internal = 'NFD'
-
-        dictionary_names = [
-            x.replace('.dic', '').strip()
-            for x in self.ime_properties.get("hunspell_dict").split(',')]
-        self.hunspell_obj = hunspell_suggest.Hunspell(dictionary_names)
+        self.hunspell_obj = hunspell_suggest.Hunspell(())
 
         if self.user_db_file != ':memory:':
             if not os.path.exists(self.user_db_file):
@@ -297,13 +262,13 @@ class tabsqlitedb:
             return
         input_phrase = itb_util.remove_accents(input_phrase)
         input_phrase = unicodedata.normalize(
-            self._normalization_form_internal, input_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
         phrase = unicodedata.normalize(
-            self._normalization_form_internal, phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
         p_phrase = unicodedata.normalize(
-            self._normalization_form_internal, p_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, p_phrase)
         pp_phrase = unicodedata.normalize(
-            self._normalization_form_internal, pp_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, pp_phrase)
         sqlstr = '''
         UPDATE user_db.phrases
         SET user_freq = :user_freq, timestamp = :timestamp
@@ -369,13 +334,13 @@ class tabsqlitedb:
             return
         input_phrase = itb_util.remove_accents(input_phrase)
         input_phrase = unicodedata.normalize(
-            self._normalization_form_internal, input_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
         phrase = unicodedata.normalize(
-            self._normalization_form_internal, phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
         p_phrase = unicodedata.normalize(
-            self._normalization_form_internal, p_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, p_phrase)
         pp_phrase = unicodedata.normalize(
-            self._normalization_form_internal, pp_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, pp_phrase)
         select_sqlstr = '''
         SELECT * FROM user_db.phrases
         WHERE input_phrase = :input_phrase
@@ -464,11 +429,11 @@ class tabsqlitedb:
         [(phrase, user_freq), ...]
         '''
         input_phrase = unicodedata.normalize(
-            self._normalization_form_internal, input_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
         p_phrase = unicodedata.normalize(
-            self._normalization_form_internal, p_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, p_phrase)
         pp_phrase = unicodedata.normalize(
-            self._normalization_form_internal, pp_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, pp_phrase)
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "tabsqlitedb.select_words() "
@@ -492,7 +457,7 @@ class tabsqlitedb:
         # in the German hunspell dictionary would not find it either.
         input_phrase = itb_util.remove_accents(input_phrase)
         input_phrase = unicodedata.normalize(
-            self._normalization_form_internal, input_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
         # Now phrase_frequencies might contain something like this:
         #
         # {'code': 0, 'communicability': 0, 'cold': 0, 'colour': 0}
@@ -758,14 +723,14 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         if not phrase:
             return
         phrase = unicodedata.normalize(
-            self._normalization_form_internal, phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
         p_phrase = unicodedata.normalize(
-            self._normalization_form_internal, p_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, p_phrase)
         pp_phrase = unicodedata.normalize(
-            self._normalization_form_internal, pp_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, pp_phrase)
         input_phrase = itb_util.remove_accents(input_phrase)
         input_phrase = unicodedata.normalize(
-            self._normalization_form_internal, input_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
 
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
@@ -837,10 +802,10 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         if not phrase:
             return
         phrase = unicodedata.normalize(
-            self._normalization_form_internal, phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
         if input_phrase:
             input_phrase = unicodedata.normalize(
-                self._normalization_form_internal, input_phrase)
+                itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
         if input_phrase:
             delete_sqlstr = '''
             DELETE FROM user_db.phrases
@@ -867,7 +832,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             db.close()
             phrases = [
                 (unicodedata.normalize(
-                    self._normalization_form_internal, x[0]), x[1])
+                    itb_util.NORMALIZATION_FORM_INTERNAL, x[0]), x[1])
                 for x in
                 phrases
             ]
@@ -898,7 +863,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         try:
             with codecs.open(filename, encoding='UTF-8') as file_handle:
                 lines = [
-                    unicodedata.normalize(self._normalization_form_internal, x)
+                    unicodedata.normalize(itb_util.NORMALIZATION_FORM_INTERNAL, x)
                     for x in file_handle.readlines()]
         except:
             traceback.print_exc()

@@ -4,7 +4,7 @@
 # ibus-typing-booster - A completion input method for IBus
 #
 # Copyright (c) 2011-2013 Anish Patil <apatil@redhat.com>
-# Copyright (c) 2012-2016 Mike FABIAN <mfabian@redhat.com>
+# Copyright (c) 2012-2018 Mike FABIAN <mfabian@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ import sys
 import unicodedata
 import re
 import time
+import locale
 from gettext import dgettext
 from gi import require_version
 require_version('IBus', '1.0')
@@ -191,9 +192,9 @@ class TypingBoosterEngine(IBus.Engine):
         self._bus = bus
         self.db = db
         self._setup_pid = 0
-        self._name = self.db.ime_properties.get('name')
+        self._name = 'typing-booster'
         self._config_section = itb_util.config_section_normalize(
-            "engine/typing-booster/%s" % self._name)
+            'engine/%s' % self._name)
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 'TypingBoosterEngine.__init__() self._config_section = %s\n'
@@ -264,8 +265,7 @@ class TypingBoosterEngine(IBus.Engine):
             os.getenv('IBUS_HUNSPELL_TABLE_LOCATION'),
             os.path.sep, 'icons', os.path.sep)
 
-        self._status = self.db.ime_properties.get(
-            'status_prompt').encode('utf8')
+        self._status = '🚀' # FIXME: apparently not used anymore?
 
         self.is_lookup_table_enabled_by_tab = False
         self._tab_enable = variant_to_value(self._config.get_value(
@@ -310,30 +310,19 @@ class TypingBoosterEngine(IBus.Engine):
             self._config_section,
             'dictionary'))
         if dictionary:
-            # There is a dictionary setting in dconf, use that instead
-            # of the default dictionary from the config file:
-            self.db.hunspell_obj.set_dictionary_names(
-                [x.strip() for x in dictionary.split(',')])
-        self._dictionary_names = self.db.hunspell_obj.get_dictionary_names()
-
-        self._add_direct_input = variant_to_value(self._config.get_value(
-            self._config_section,
-            'adddirectinput'))
-        if self._add_direct_input is None:
-            self._add_direct_input = False
-
-        if self._add_direct_input:
-            # if direct input is used as well, add the British English
-            # dictionary unless it is already there:
-            if 'en_GB' not in self._dictionary_names:
-                self._dictionary_names.append('en_GB')
-                self.db.hunspell_obj.set_dictionary_names(
-                    self._dictionary_names)
-                # write changed default dictionary list to dconf:
-                self._config.set_value(
-                    self._config_section,
-                    'dictionary',
-                    GLib.Variant.new_string(','.join(self._dictionary_names)))
+            # There is a dictionary setting in dconf, use that:
+            self._dictionary_names = [x.strip() for x in dictionary.split(',')]
+        else:
+            # There is no dictionary setting in dconf. Get the default
+            # dictionaries for the current effective value of
+            # LC_CTYPE and save it to the config:
+            self._dictionary_names = itb_util.get_default_dictionaries(
+                locale.getlocale(category=locale.LC_CTYPE)[0])
+            self._config.set_value(
+                self._config_section,
+                'dictionary',
+                GLib.Variant.new_string(','.join(self._dictionary_names)))
+        self.db.hunspell_obj.set_dictionary_names(self._dictionary_names[:])
 
         if  self._emoji_predictions:
             if DEBUG_LEVEL > 1:
@@ -346,21 +335,12 @@ class TypingBoosterEngine(IBus.Engine):
         else:
             self.emoji_matcher = None
 
-        self._supported_imes = []
-        imes = self.db.ime_properties.get('imes').split(',')
-        for item in imes:
-            mim_name = item.split(':')[1]
-            if not mim_name in self._supported_imes:
-                self._supported_imes.append(mim_name)
-        if self._supported_imes == []:
-            self._supported_imes = ['NoIme']
-
         # The number of current imes needs to be limited to some fixed
         # maximum number because of the property menu to select the preëdit
         # ime. Unfortunately the number of sub-properties for such a menu
         # cannot be changed, as a workaround a fixed number can be used
         # and unused entries can be hidden.
-        self._current_imes_max = 10
+        itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS = 10
         self._current_imes = []
         # Try to get the selected input methods from dconf:
         inputmethod = variant_to_value(self._config.get_value(
@@ -371,16 +351,25 @@ class TypingBoosterEngine(IBus.Engine):
             for ime in inputmethods:
                 self._current_imes.append(ime)
         if self._current_imes == []:
-            # There is no ime set in dconf, fall
-            # back to the first of the supported imes:
-            self._current_imes = [self._supported_imes[0]]
-            if self._add_direct_input and 'NoIme' not in self._current_imes:
-                self._current_imes.append('NoIme')
-            # No imes were found in dconf, write the default:
+            # There is no ime set in dconf, get a default list
+            # of input methods for the current effective value of LC_CTYPE
+            # and save it to the config:
+            self._current_imes = itb_util.get_default_input_methods(
+                locale.getlocale(category=locale.LC_CTYPE)[0])
             self._config.set_value(
                 self._config_section,
                 'inputmethod',
                 GLib.Variant.new_string(','.join(self._current_imes)))
+        if len(self._current_imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
+            sys.stderr.write(
+                'Trying to set more than the allowed maximum of %s '
+                %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
+                + 'input methods.\n'
+                + 'Trying to set: %s\n' %self._current_imes
+                + 'Really setting: %s\n'
+                %self._current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
+            self._current_imes = (
+                self._current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
 
         self._commit_happened_after_focus_in = False
 
@@ -952,13 +941,6 @@ class TypingBoosterEngine(IBus.Engine):
         '''Get word before previous word'''
         return self._pp_phrase
 
-    def get_supported_imes(self):
-        '''Get list of supported input methods
-
-        It is important to return a copy, we do not want to change
-        the private member variable directly.'''
-        return self._supported_imes[:]
-
     def push_context(self, phrase):
         '''Pushes a word on the context stack which remembers the last two
         words typed.
@@ -1017,14 +999,15 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if imes == self._current_imes: # nothing to do
             return
-        if len(imes) > self._current_imes_max:
+        if len(imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
             sys.stderr.write(
                 'Trying to set more than the allowed maximum of %s '
-                %self._current_imes_max
+                %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
                 + 'input methods.\n'
                 + 'Trying to set: %s\n' %imes
-                + 'Really setting: %s\n' %imes[:self._current_imes_max])
-            imes = imes[:self._current_imes_max]
+                + 'Really setting: %s\n'
+                %imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
+            imes = imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS]
         if set(imes) != set(self._current_imes):
             # Input methods have been added or removed from the list
             # of current input methods. Initialize the
@@ -1087,57 +1070,13 @@ class TypingBoosterEngine(IBus.Engine):
         # the private member variable directly.
         return self._dictionary_names[:]
 
-    def set_add_direct_input(self, mode, update_dconf=True):
-        '''Set the current value of the “Add direct input” mode
-
-        :param mode: Whether “Add direct input” mode is on or off
-        :type mode: boolean
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
-        '''
-        imes = self.get_current_imes()
-        dictionary_names = self.db.hunspell_obj.get_dictionary_names()
-        self._add_direct_input = mode
-        if mode:
-            if 'NoIme' not in imes:
-                imes.append('NoIme')
-            if 'en_GB' not in dictionary_names:
-                dictionary_names.append('en_GB')
-        else:
-            imes = [x for x in imes if x != 'NoIme']
-            if not imes:
-                imes = ['NoIme']
-            # always keep the first dictionary, i.e. always keep
-            # the original one from the config file
-            dictionary_names = (
-                [dictionary_names[0]]
-                + [x for x in dictionary_names[1:] if x != 'en_GB'])
-        self.set_dictionary_names(dictionary_names, update_dconf=True)
-        self.set_current_imes(imes, update_dconf=True)
-        if update_dconf:
-            self._config.set_value(
-                self._config_section,
-                'adddirectinput',
-                GLib.Variant.new_boolean(mode))
-
-    def get_add_direct_input(self):
-        '''Get the current value of the “Add direct input” mode
-
-        :rtype: boolean
-        '''
-        return self._add_direct_input
-
     def _update_preedit_ime_menu_dicts(self):
         '''
         Update the dictionary for the preëdit ime menu.
         '''
         self.preedit_ime_properties = {}
         current_imes = self.get_current_imes()
-        current_imes_max = self._current_imes_max
+        current_imes_max = itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
         for i in range(0, current_imes_max):
             if i < len(current_imes):
                 self.preedit_ime_properties[
@@ -1350,8 +1289,7 @@ class TypingBoosterEngine(IBus.Engine):
             label=IBus.Text.new_from_string(_('Setup')),
             icon='gtk-preferences',
             tooltip=IBus.Text.new_from_string(
-                _('Configure ibus-typing-booster “%(name)s”') %{
-                    'name': self._name.replace('typing-booster:', '')}),
+                _('Preferences for ibus-typing-booster')),
             sensitive=True,
             visible=True)
         self.main_prop_list.append(self._setup_property)
@@ -1411,12 +1349,10 @@ class TypingBoosterEngine(IBus.Engine):
         setup_cmd = os.path.join(
             os.getenv('IBUS_HUNSPELL_LIB_LOCATION'),
             'ibus-setup-typing-booster')
-        config_file = self._name.replace('typing-booster:', '') + '.conf'
         self._setup_pid = os.spawnl(
             os.P_NOWAIT,
             setup_cmd,
-            'ibus-setup-typing-booster',
-            '--config-file %s' %config_file)
+            'ibus-setup-typing-booster')
 
     def reset(self):
         '''Clear the preëdit and close the lookup table
@@ -3124,9 +3060,6 @@ class TypingBoosterEngine(IBus.Engine):
         if name == "dictionary":
             self.set_dictionary_names(
                 [x.strip() for x in value.split(',')], update_dconf=False)
-            return
-        if name == "adddirectinput":
-            self.set_add_direct_input(value, update_dconf=False)
             return
         if name == "dictionaryinstalltimestamp":
             # A dictionary has been updated or installed,

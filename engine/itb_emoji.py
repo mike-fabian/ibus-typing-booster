@@ -3,7 +3,7 @@
 #
 # ibus-typing-booster - A completion input method for IBus
 #
-# Copyright (c) 2015-2016 Mike FABIAN <mfabian@redhat.com>
+# Copyright (c) 2015-2018 Mike FABIAN <mfabian@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -71,6 +71,14 @@ except (ImportError,):
 DATADIR = os.path.join(os.path.dirname(__file__), '../data')
 # USER_DATADIR will be “~/.local/share/ibus-typing-booster/data” by default
 USER_DATADIR = itb_util.xdg_save_data_path('ibus-typing-booster/data')
+CLDR_ANNOTATION_DIRNAMES = (
+    USER_DATADIR, DATADIR,
+    # On Fedora >= 25 there is a
+    # “cldr-emoji-annotation” package which has the
+    # .xml files here in the subdirs “annotations”
+    # and “annotationsDerived”:
+    '/usr/share/unicode/cldr/common/',
+    '/local/mfabian/src/cldr-svn/trunk/common/')
 
 UNICODE_CATEGORIES = {
     'Cc': {'valid': False, 'major': 'Other', 'minor': 'Control'},
@@ -236,49 +244,6 @@ def _in_range(codepoint):
     '''
     return any([x <= codepoint <= y for x, y in VALID_RANGES])
 
-SPANISH_419_LOCALES = (
-    'es_AR', 'es_MX', 'es_BO', 'es_CL', 'es_CO', 'es_CR',
-    'es_CU', 'es_DO', 'es_EC', 'es_GT', 'es_HN', 'es_NI',
-    'es_PA', 'es_PE', 'es_PR', 'es_PY', 'es_SV', 'es_US',
-    'es_UY', 'es_VE',)
-
-def expand_languages(languages):
-    '''Expands the given list of languages by including fallbacks.
-
-    Returns a possibly longer list of languages by adding
-    aliases and fallbacks.
-
-    :param languages: A list of languages (or locale names)
-    :type languages: List of strings
-    :rtype: List  of strings
-
-    Examples:
-
-    >>> expand_languages(['es_MX', 'es_ES', 'ja_JP'])
-    ['es_MX', 'es_419', 'es', 'es_ES', 'es', 'ja_JP', 'ja', 'en']
-
-    >>> expand_languages(['zh_Hant', 'zh_CN', 'zh_TW', 'zh_SG', 'zh_HK', 'zh_MO'])
-    ['zh_Hant', 'zh_CN', 'zh', 'zh_TW', 'zh_Hant', 'zh_SG', 'zh', 'zh_HK', 'zh_Hant', 'zh_MO', 'zh_Hant', 'en']
-
-    >>> expand_languages(['en_GB', 'en'])
-    ['en_GB', 'en_001', 'en', 'en', 'en_001']
-    '''
-    expanded_languages = []
-    for language in languages:
-        expanded_languages.append(language)
-        if language in SPANISH_419_LOCALES:
-            expanded_languages.append('es_419')
-        if language in ('zh_TW', 'zh_HK', 'zh_MO'):
-            expanded_languages.append('zh_Hant')
-        if language[:2] == 'en':
-            expanded_languages.append('en_001')
-        if (language not in ('zh_TW', 'zh_HK', 'zh_MO', 'zh_Hant')
-                and language.split('_')[:1] != [language]):
-            expanded_languages += language.split('_')[:1]
-    if 'en' not in expanded_languages:
-        expanded_languages.append('en')
-    return expanded_languages
-
 def _find_path_and_open_function(dirnames, basenames, subdir=''):
     '''Find the first existing file of a list of basenames and dirnames
 
@@ -311,6 +276,30 @@ def _find_path_and_open_function(dirnames, basenames, subdir=''):
             if os.path.exists(path):
                 return (path, gzip.open)
     return ('', None)
+
+def find_cldr_annotation_path(language):
+    '''
+    Finds which CLDR annotation file would be used for the language given
+
+    Returns the full path of the  file found or an empty string if
+    no file can be found for the language given.
+
+    This function is intended to be used by the ibus-typing-booster
+    setup tool to check whether CLDR annotations exist for a certain
+    language.
+
+    :param language: The language to search the annotation file for
+    :type language: String
+    :rtype: String
+    '''
+    dirnames = CLDR_ANNOTATION_DIRNAMES
+    for language in itb_util.expand_languages([language]):
+        basenames = (language + '.xml',)
+        (path, open_function) = _find_path_and_open_function(
+            dirnames, basenames, subdir='annotations')
+        if path:
+            return path
+    return ''
 
 class EmojiMatcher():
     '''A class to find Emoji which best match a query string'''
@@ -346,7 +335,7 @@ class EmojiMatcher():
         '''
         self._languages = languages
         self._gettext_translations = {}
-        for language in expand_languages(self._languages):
+        for language in itb_util.expand_languages(self._languages):
             mo_file = gettext.find(DOMAINNAME, languages=[language])
             if (mo_file
                     and
@@ -408,7 +397,7 @@ class EmojiMatcher():
         self._load_unicode_emoji_test()
         self._load_emojione_data()
         if cldr_data:
-            for language in expand_languages(self._languages):
+            for language in itb_util.expand_languages(self._languages):
                 self._load_cldr_annotation_data(language, 'annotations')
                 self._load_cldr_annotation_data(language, 'annotationsDerived')
 
@@ -966,13 +955,13 @@ class EmojiMatcher():
         ]
 
         if (IMPORT_PYKAKASI_SUCCESSFUL
-                and 'ja' in expand_languages(self._languages)):
+                and 'ja' in itb_util.expand_languages(self._languages)):
             KAKASI_INSTANCE.setMode('H', 'H')
             KAKASI_INSTANCE.setMode('K', 'H')
             KAKASI_INSTANCE.setMode('J', 'H')
             kakasi_converter = KAKASI_INSTANCE.getConverter()
 
-        for language in expand_languages(self._languages):
+        for language in itb_util.expand_languages(self._languages):
             if self._gettext_translations[language]:
                 translated_categories = []
                 for category in categories:
@@ -1020,13 +1009,7 @@ class EmojiMatcher():
 
         Translations are loaded from the annotation data from CLDR.
         '''
-        dirnames = (USER_DATADIR, DATADIR,
-                    # On Fedora >= 25 there is a
-                    # “cldr-emoji-annotation” package which has the
-                    # .xml files here in the subdirs “annotations”
-                    # and “annotationsDerived”:
-                    '/usr/share/unicode/cldr/common/',
-                    '/local/mfabian/src/cldr-svn/trunk/common/')
+        dirnames = CLDR_ANNOTATION_DIRNAMES
         basenames = (language + '.xml',)
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames, subdir=subdir)
@@ -1785,7 +1768,7 @@ class EmojiMatcher():
                 return self._emoji_dict[(emoji_string, language)]['names']
             else:
                 return []
-        for language in expand_languages(self._languages):
+        for language in itb_util.expand_languages(self._languages):
             if ((emoji_string, language) in self._emoji_dict
                     and 'names' in self._emoji_dict[(emoji_string, language)]):
                 return self._emoji_dict[(emoji_string, language)]['names']
@@ -1902,7 +1885,7 @@ class EmojiMatcher():
                 return self._emoji_dict[(emoji_string, language)]['keywords']
             else:
                 return []
-        for language in expand_languages(self._languages):
+        for language in itb_util.expand_languages(self._languages):
             if ((emoji_string, language) in self._emoji_dict
                     and 'keywords' in self._emoji_dict[(emoji_string, language)]):
                 return self._emoji_dict[(emoji_string, language)]['keywords']
@@ -1940,7 +1923,7 @@ class EmojiMatcher():
                 return self._emoji_dict[(emoji_string, language)]['categories']
             else:
                 return []
-        for language in expand_languages(self._languages):
+        for language in itb_util.expand_languages(self._languages):
             if ((emoji_string, language) in self._emoji_dict
                     and 'categories' in self._emoji_dict[(emoji_string, language)]):
                 return self._emoji_dict[(emoji_string, language)]['categories']
@@ -2012,7 +1995,7 @@ class EmojiMatcher():
             emoji_string, non_fully_qualified=True)
         candidate_scores = {}
         original_labels = {}
-        expanded_languages = expand_languages(self._languages)
+        expanded_languages = itb_util.expand_languages(self._languages)
         label_keys = ('ucategories', 'categories', 'keywords')
         for language in expanded_languages:
             original_labels[language] = set()

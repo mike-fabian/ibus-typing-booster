@@ -115,16 +115,20 @@ class Hunspell:
     '''A class to suggest completions or corrections
     using a list of Hunspell dictionaries
     '''
-    def __init__(self, dictionary_names = ('en_US',)):
+    def __init__(self, dictionary_names=()):
         global DEBUG_LEVEL
         try:
             DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
         except (TypeError, ValueError):
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "Hunspell.__init__(dictionary_names=%s)\n"
-                %dictionary_names)
+            if dictionary_names:
+                sys.stderr.write(
+                    'Hunspell.__init__(dictionary_names=%s)\n'
+                    %dictionary_names)
+            else:
+                sys.stderr.write(
+                    'Hunspell.__init__(dictionary_names=())\n')
         self._suggest_cache = {}
         self._dictionary_names = dictionary_names
         self._dictionaries = []
@@ -134,9 +138,13 @@ class Hunspell:
         '''Initialize the hunspell dictionaries
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "Hunspell.init_dictionaries() dictionary_names=%s\n"
-                %self._dictionary_names)
+            if self._dictionary_names:
+                sys.stderr.write(
+                    'Hunspell.init_dictionaries() dictionary_names=%s\n'
+                    %self._dictionary_names)
+            else:
+                sys.stderr.write(
+                    'Hunspell.init_dictionaries() dictionary_names=()\n')
         self._suggest_cache = {}
         self._dictionaries = []
         for dictionary_name in self._dictionary_names:

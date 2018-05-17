@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 # vim:et sts=4 sw=4
 #
 # ibus-typing-booster - A completion input method for IBus
 #
 # Copyright (c) 2011-2013 Anish Patil <apatil@redhat.com>
-# Copyright (c) 2012-2016 Mike FABIAN <mfabian@redhat.com>
+# Copyright (c) 2012-2018 Mike FABIAN <mfabian@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -40,14 +41,10 @@ except (TypeError, ValueError):
     DEBUG_LEVEL = int(0)
 
 try:
-    CONFIG_FILE_DIR = os.path.join(
-        os.getenv('IBUS_TYPING_BOOSTER_LOCATION'),
-        'hunspell-tables')
     ICON_DIR = os.path.join(
         os.getenv('IBUS_TYPING_BOOSTER_LOCATION'),
         'icons')
 except:
-    CONFIG_FILE_DIR = "/usr/share/ibus-typing-booster/hunspell-tables"
     ICON_DIR = "/usr/share/ibus-typing-booster/icons"
 
 def parse_args():
@@ -103,9 +100,7 @@ class IMApp:
         self.__mainloop = GLib.MainLoop()
         self.__bus = IBus.Bus()
         self.__bus.connect("disconnected", self.__bus_destroy_cb)
-        self.__factory = factory.EngineFactory(
-            self.__bus,
-            config_file_dir = CONFIG_FILE_DIR)
+        self.__factory = factory.EngineFactory(self.__bus)
         self.destroyed = False
         if exec_by_ibus:
             self.__bus.request_name(
@@ -120,32 +115,30 @@ class IMApp:
                 homepage="http://mike-fabian.github.io/ibus-typing-booster",
                 textdomain="ibus-typing-booster")
             # now we get IME info from self.__factory.db
-            name = self.__factory.db.ime_properties.get("name")
-            longname = self.__factory.db.ime_properties.get("ime_name")
-            description = self.__factory.db.ime_properties.get("description")
-            language = self.__factory.db.ime_properties.get("language")
-            credit = self.__factory.db.ime_properties.get("credit")
-            author = self.__factory.db.ime_properties.get("author")
-            icon = self.__factory.db.ime_properties.get("icon")
-            if icon:
-                icon = os.path.join (ICON_DIR, icon)
-                if not os.access( icon, os.F_OK):
-                    icon = ''
-            layout = self.__factory.db.ime_properties.get("layout")
-            symbol = self.__factory.db.ime_properties.get("symbol")
+            name = 'typing-booster'
+            longname = 'Typing Booster'
+            description = 'A completion input method to speedup typing.'
+            language = 't'
+            author = (
+                'Mike FABIAN <mfabian@redhat.com>'
+                + ', Anish Patil <anish.developer@gmail.com>')
+            icon = os.path.join(ICON_DIR, 'ibus-typing-booster.svg')
+            if not os.access(icon, os.F_OK):
+                icon = ''
+            layout = 'default'
+            symbol = '🚀'
 
             engine = IBus.EngineDesc(name=name,
                                      longname=longname,
                                      description=description,
                                      language=language,
-                                     license=credit,
+                                     license='GPL',
                                      author=author,
                                      icon=icon,
                                      layout=layout,
                                      symbol=symbol)
             self.__component.add_engine(engine)
             self.__bus.register_component(self.__component)
-
 
     def run(self):
         if DEBUG_LEVEL > 1:
@@ -214,61 +207,43 @@ def main():
 
     if _ARGS.xml:
         from xml.etree.ElementTree import Element, SubElement, tostring
-        # Find all config files in CONFIG_FILE_DIR, extract the ime
-        # properties and print the xml file for the engines
-        confs = [x for x in os.listdir(CONFIG_FILE_DIR) if x.endswith('.conf')]
 
         egs = Element('engines')
 
-        for conf in confs:
-            _ime_properties = tabsqlitedb.ImeProperties(
-                os.path.join(CONFIG_FILE_DIR,conf))
+        for language in ('t',):
             _engine = SubElement (egs,'engine')
 
             _name = SubElement (_engine, 'name')
-            _name.text = _ime_properties.get('name')
+            _name.text = 'typing-booster'
 
             _longname = SubElement (_engine, 'longname')
-            _longname.text = ''
-            try:
-                _longname.text = _ime_properties.get('ime_name')
-            except:
-                pass
-            if not _longname.text:
-                _longname.text = _name.text
+            _longname.text = 'Typing Booster'
 
             _language = SubElement (_engine, 'language')
-            _langs = _ime_properties.get ('language')
-            if _langs:
-                _langs = _langs.split (',')
-                if len (_langs) == 1:
-                    _language.text = _langs[0].strip()
-                else:
-                    # we ignore the place
-                    _language.text = _langs[0].strip().split('_')[0]
+            _language.text = language
 
             _license = SubElement (_engine, 'license')
-            _license.text = _ime_properties.get ('license')
+            _license.text = 'GPL'
 
             _author = SubElement (_engine, 'author')
-            _author.text  = _ime_properties.get ('author')
+            _author.text = (
+                'Mike FABIAN <mfabian@redhat.com>'
+                + ', Anish Patil <anish.developer@gmail.com>')
 
             _icon = SubElement (_engine, 'icon')
-            _icon_basename = _ime_properties.get ('icon')
-            if _icon_basename:
-                _icon.text = os.path.join (ICON_DIR, _icon_basename)
+            _icon.text = os.path.join(ICON_DIR, 'ibus-typing-booster.svg')
 
             _layout = SubElement (_engine, 'layout')
-            _layout.text = _ime_properties.get ('layout')
+            _layout.text = 'default'
 
             _desc = SubElement (_engine, 'description')
-            _desc.text = _ime_properties.get ('description')
+            _desc.text = 'A completion input method to speedup typing.'
 
             _symbol = SubElement(_engine,'symbol')
-            _symbol.text = _ime_properties.get('symbol')
+            _symbol.text = '🚀'
 
             _setup = SubElement(_engine,'setup')
-            _setup.text = _ime_properties.get('setup')
+            _setup.text = '/usr/libexec/ibus-setup-typing-booster'
 
         # now format the xmlout pretty
         indent (egs)

@@ -5,6 +5,7 @@ engine/factory.py
 engine/hunspell_suggest.py
 engine/hunspell_table.py
 engine/itb_emoji.py
+engine/itb_util.py
 engine/main.py
 engine/tabsqlitedb.py
 setup/main.py

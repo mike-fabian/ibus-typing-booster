@@ -40,13 +40,10 @@ sys.path.pop(0)
 class ItbTestCase(unittest.TestCase):
     def setUp(self):
         self.bus = IBus.Bus()
-        # it doesn’t really matter which config file for which language is used
-        self.db = tabsqlitedb.tabsqlitedb(
-            config_filename ='../hunspell-tables/de_DE.conf',
-            user_db_file = ':memory:')
+        self.db = tabsqlitedb.tabsqlitedb(user_db_file = ':memory:')
         self.engine = TypingBoosterEngine(
             self.bus,
-            '/com/redhat/IBus/engines/table/typing_booster_de_DE/engine/0',
+            '/com/redhat/IBus/engines/table/typing_booster/engine/0',
             self.db,
             unit_test = True)
         self.backup_original_settings()
@@ -83,8 +80,6 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_current_imes())
         self.orig_dictionary_names = (
             self.engine.get_dictionary_names())
-        self.orig_add_direct_input = (
-            self.engine.get_add_direct_input())
         self.orig_qt_im_module_workaround = (
             self.engine.get_qt_im_module_workaround())
 
@@ -115,8 +110,6 @@ class ItbTestCase(unittest.TestCase):
             self.orig_current_imes)
         self.engine.set_dictionary_names(
             self.orig_dictionary_names)
-        self.engine.set_add_direct_input(
-            self.orig_add_direct_input)
         self.engine.set_qt_im_module_workaround(
             self.orig_qt_im_module_workaround)
 
@@ -132,7 +125,6 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_use_digits_as_select_keys(True)
         self.engine.set_current_imes(['NoIme'])
         self.engine.set_dictionary_names(['en_US'])
-        self.engine.set_add_direct_input(False)
         self.engine.set_qt_im_module_workaround(False)
 
     def test_dummy(self):
@@ -334,10 +326,9 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text_cursor_pos, 0)
         self.assertEqual(self.engine.mock_preedit_text_visible, False)
 
-    def test_marathi_add_direct_input(self):
-        self.engine.set_current_imes(['mr-itrans'])
-        self.engine.set_dictionary_names(['mr_IN'])
-        self.engine.set_add_direct_input(True)
+    def test_marathi_and_britisch_english(self):
+        self.engine.set_current_imes(['mr-itrans', 'NoIme'])
+        self.engine.set_dictionary_names(['mr_IN', 'en_GB'])
         self.assertEqual(
             self.engine.get_current_imes(), ['mr-itrans', 'NoIme'])
         self.assertEqual(

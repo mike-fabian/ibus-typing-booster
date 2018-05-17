@@ -13,7 +13,7 @@
     <homepage>http://mike-fabian.github.io/ibus-typing-booster</homepage>
     <textdomain>ibus-typing-booster</textdomain>
     <observed-paths>
-        <path>${pkgdatadir}/hunspell-tables/</path>
+        <path>${pkgdatadir}/data/</path>
     </observed-paths>
     <engines exec='${libexecdir}/ibus-engine-typing-booster --xml'/>
 </component>

@@ -1,7 +1,7 @@
 #!/bin/sh
 # vim:set et sts=4 sw=4
 #
-# ibus-hunspell-table - The Tables engine for IBus
+# ibus-typing-booster - A completion input method for IBus
 #
 # Copyright (c) 2011-2012 Anish Patil <anish.developer@gmail.com>
 # Copyright (c) 2013 Mike FABIAN <mfabian@redhat.com>

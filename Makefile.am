@@ -1,8 +1,9 @@
 # vim:set noet ts=4
 #
-# ibus-hunspell-table - The Table engine for IBus
+# ibus-typing-booster - A completion input method for IBus
 #
 # Copyright (c) 2011-2012 Anish Patil <anish.developer@gmail.com>
+# Copyright (c) 2012-2018 Mike FABIAN <mfabian@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +23,6 @@ SUBDIRS = \
 	engine \
 	icons \
 	m4 \
-	hunspell-tables \
 	data \
 	data/annotations \
 	data/annotationsDerived \
