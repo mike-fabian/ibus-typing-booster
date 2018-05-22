@@ -16,6 +16,18 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="1.5.38" date="2018-05-22" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Refresh french translation (thanks to Thierry Thomas)
+          </li>
+          <li>
+            Mark comments in the emoji-picker about dialog as translatable
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.37" date="2018-05-14" urgency="medium">
       <description>
         <ul>

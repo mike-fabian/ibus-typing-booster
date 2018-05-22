@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 22 May 2018 Released 1.5.38 version
+* Refresh french translation (thanks to Thierry Thomas)
+* Mark comments in the emoji-picker about dialog as translatable
+
 * 14 May 2018 Released 1.5.37 version
 * Update translations from Zanata (pl and uk updated)
 * Make “Add direct input” option work correctly when “Remember last preedit input method” option is off
