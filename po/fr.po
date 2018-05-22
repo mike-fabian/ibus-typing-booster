@@ -1,11 +1,10 @@
-# Alexandre Moine <nobrakal@gmail.com>, 2016. #zanata
+# Thierry Thomas <thierry@FreeBSD.org>, 2018.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2016. #zanata
 # José Fournier <jaaf64@zoraldia.com>, 2016. #zanata
 # Jérôme Fenal <jfenal@gmail.com>, 2016. #zanata
 # José Fournier <jaaf64@zoraldia.com>, 2017. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2017. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata
-# Thierry Thomas <thierry@FreeBSD.org>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -15,11 +14,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-05-16 18:37+0200\n"
-"Last-Translator: Thierry Thomas <thierry@FreeBSD.org>\n"
+"PO-Revision-Date: 2018-05-22 11:16+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: French\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Generator: Zanata 4.4.5\n"
 
 #: engine/emoji_picker.py:193
 msgid "Emoji Picker"
@@ -109,6 +109,11 @@ msgstr "Clic droit pour des informations"
 #: engine/emoji_picker.py:1167
 msgid "translator-credits"
 msgstr ""
+"Thierry Thomas <thierry@FreeBSD.org>, 2018.\n"
+"Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2016.\n"
+"José Fournier <jaaf64@zoraldia.com>, 2016.\n"
+"Jérôme Fenal <jfenal@gmail.com>, 2016.\n"
+"Alexandre Moine <nobrakal@gmail.com>, 2016."
 
 #: engine/emoji_picker.py:1211
 msgid "Search Results"
@@ -320,14 +325,14 @@ msgid ""
 "fingers."
 msgstr ""
 "Utiliser les chiffres de 1 à 9 comme des touches de sélection. Si cette "
-"option est activée, les chiffres peuvent être tapés uniquement lorsqu’"
-"aucune suggestion n’est affichée. Par conséquent, l’auto-complètement "
-"pour les nombres ne peut pas être suggéré. Aussi, saisir des mots contenant "
-"des chiffres, comme « A4 », est plus difficile car taper « 4 » "
-"sélectionnerait la quatrième suggestion. D’un autre côté, sélectionner des "
-"suggestions en utilisant les chiffres de 1 à 9 est plus facile que "
-"d’utiliser les touches de F1 à F9 (toujours activées), car ces dernières "
-"sont plus éloignées des doigts."
+"option est activée, les chiffres peuvent être tapés uniquement lorsqu’aucune "
+"suggestion n’est affichée. Par conséquent, l’auto-complètement pour les "
+"nombres ne peut pas être suggéré. Aussi, saisir des mots contenant des "
+"chiffres, comme « A4 », est plus difficile car taper « 4 » sélectionnerait "
+"la quatrième suggestion. D’un autre côté, sélectionner des suggestions en "
+"utilisant les chiffres de 1 à 9 est plus facile que d’utiliser les touches "
+"de F1 à F9 (toujours activées), car ces dernières sont plus éloignées des "
+"doigts."
 
 #: setup/main.py:304
 msgid "Add direct input"
@@ -404,9 +409,9 @@ msgstr ""
 "Utiliser un contournement pour des bugs dans les modules de méthode d’entrée "
 "dans Qt4 et Qt5. Attention : bien que ce contournement améliore le "
 "fonctionnement des modules de Qt, cela provoque des problèmes si XIM est "
-"utilisé. C.à d. que le module XIM de Qt4 fonctionnera mal si ce contournement "
-"est activé et la saisie via XIM dans les programmes Xorg tels qu’xterm ne "
-"fonctionnera pas bien non plus."
+"utilisé. C.à d. que le module XIM de Qt4 fonctionnera mal si ce "
+"contournement est activé et la saisie via XIM dans les programmes Xorg tels "
+"qu’xterm ne fonctionnera pas bien non plus."
 
 #: setup/main.py:384
 msgid "Arrow keys can reopen a preedit"
@@ -420,12 +425,12 @@ msgid ""
 "how well it works depends on repetition speed of the arrow keys and system "
 "load. Because it is buggy, this option is off by default."
 msgstr ""
-"Indique s’il est possible de rouvrir une pré-édition après avoir atteint "
-"la limite d’un mot avec une flèche. Cette option est utile pour corriger "
-"des mots déjà validés. Mais elle est un peu buguée pour l’instant et "
-"fonctionne plus ou moins bien selon la vitesse de répétition des touches "
-"des flèches et de la charge du système. À cause de ce bug, cette option "
-"est désactivée par défaut."
+"Indique s’il est possible de rouvrir une pré-édition après avoir atteint la "
+"limite d’un mot avec une flèche. Cette option est utile pour corriger des "
+"mots déjà validés. Mais elle est un peu buguée pour l’instant et fonctionne "
+"plus ou moins bien selon la vitesse de répétition des touches des flèches et "
+"de la charge du système. À cause de ce bug, cette option est désactivée par "
+"défaut."
 
 #: setup/main.py:400
 msgid "Auto commit characters:"
@@ -513,8 +518,8 @@ msgstr "Aide pour la méthode de saisie"
 #: setup/main.py:564
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
-"Affiche de l’aide montrant comment utiliser la méthode de saisie sélectionnée "
-"ci-dessus."
+"Affiche de l’aide montrant comment utiliser la méthode de saisie "
+"sélectionnée ci-dessus."
 
 #: setup/main.py:573
 msgid "Enter shortcut here:"
