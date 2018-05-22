@@ -1155,7 +1155,7 @@ class EmojiPickerUI(Gtk.Window):
             '🚀 ibus-typing-booster')
         aboutdialog.set_version(version.get_version())
         aboutdialog.set_comments(
-            'A completion input method to speedup typing')
+            _('A completion input method to speedup typing.'))
         aboutdialog.set_copyright(
             'Copyright © 2017 Mike FABIAN')
         aboutdialog.set_authors([
