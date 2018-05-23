@@ -23,7 +23,7 @@ import gi
 from gi.repository import Gio, GLib
 
 class InstallPkg(object):
-    def __init__(self,pkg):
+    def __init__(self, pkg):
         bus_type = Gio.BusType.SESSION
         flags = 0
         iface_info = None
