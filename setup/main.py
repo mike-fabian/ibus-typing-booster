@@ -140,8 +140,11 @@ class SetupUI(Gtk.Window):
         self._main_container.pack_start(self._notebook, True, True, 0)
         self._dialog_action_area = Gtk.ButtonBox()
         self._dialog_action_area.set_can_focus(False)
-        self._dialog_action_area.set_layout(Gtk.ButtonBoxStyle.END)
+        self._dialog_action_area.set_layout(Gtk.ButtonBoxStyle.EDGE)
         self._main_container.pack_end(self._dialog_action_area, True, True, 0)
+        self._about_button = Gtk.Button(_('About'))
+        self._about_button.connect('clicked', self.on_about_button_clicked)
+        self._dialog_action_area.add(self._about_button)
         self._close_button = Gtk.Button(stock=Gtk.STOCK_CLOSE)
         self._close_button.connect('clicked', self.on_close_clicked)
         self._dialog_action_area.add(self._close_button)
@@ -171,20 +174,6 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.set_column_homogeneous(True)
         self._custom_shortcuts_label = Gtk.Label(
             _('Custom shortcuts'))
-        self._about_grid = Gtk.Grid()
-        self._about_grid.set_visible(True)
-        self._about_grid.set_can_focus(False)
-        self._about_grid.set_margin_left(10)
-        self._about_grid.set_margin_right(10)
-        self._about_grid.set_margin_top(10)
-        self._about_grid.set_margin_bottom(10)
-        self._about_grid.set_border_width(6)
-        self._about_grid.set_column_spacing(10)
-        self._about_grid.set_row_spacing(10)
-        self._about_grid.set_row_homogeneous(False)
-        self._about_grid.set_column_homogeneous(True)
-        self._about_label = Gtk.Label(
-            _('About'))
         self._notebook.append_page(
             self._options_grid,
             self._options_label)
@@ -194,9 +183,6 @@ class SetupUI(Gtk.Window):
         self._notebook.append_page(
             self._custom_shortcuts_grid,
             self._custom_shortcuts_label)
-        self._notebook.append_page(
-            self._about_grid,
-            self._about_label)
 
         self._tab_enable_checkbutton = Gtk.CheckButton(
             _('Enable suggestions by Tab key'))
@@ -720,59 +706,6 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.attach(
             self._shortcut_treeview_scroll, 0, 5, 3, 10)
 
-        self._ibus_typing_booster_emoji_label = Gtk.Label()
-        self._ibus_typing_booster_emoji_label.set_markup(
-            '<span font="48">🚀</span>')
-        self._ibus_typing_booster_emoji_label.set_hexpand(True)
-        self._ibus_typing_booster_emoji_label.set_vexpand(False)
-        self._about_grid.attach(
-            self._ibus_typing_booster_emoji_label, 0, 0, 1, 1)
-
-        self._name_version_label = Gtk.Label()
-        self._name_version_label.set_markup(
-            '<span font_size="large"><b>ibus-typing-booster %s</b></span>'
-            %version.get_version())
-        self._name_version_label.set_hexpand(True)
-        self._name_version_label.set_vexpand(False)
-        self._about_grid.attach(
-            self._name_version_label, 0, 1, 1, 1)
-
-        self._long_description_label = Gtk.Label()
-        self._long_description_label.set_markup(
-            _('A completion input method to speedup typing.'))
-        self._long_description_label.set_hexpand(True)
-        self._long_description_label.set_vexpand(False)
-        self._about_grid.attach(
-            self._long_description_label, 0, 2, 1, 1)
-
-        self._home_page_label = Gtk.Label()
-        self._home_page_label.set_markup(
-            _('<b>Home page:</b>'))
-        self._home_page_label.set_hexpand(True)
-        self._home_page_label.set_vexpand(False)
-        self._about_grid.attach(
-            self._home_page_label, 0, 3, 1, 1)
-
-        self._home_page_link_button = Gtk.LinkButton(
-            'http://mike-fabian.github.io/ibus-typing-booster',
-            'http://mike-fabian.github.io/ibus-typing-booster')
-        self._about_grid.attach(
-            self._home_page_link_button, 0, 4, 1, 1)
-
-        self._documentation_link_button_label = Gtk.Label()
-        self._documentation_link_button_label.set_markup(
-            _('<b>Online documentation:</b>'))
-        self._documentation_link_button_label.set_hexpand(True)
-        self._documentation_link_button_label.set_vexpand(False)
-        self._about_grid.attach(
-            self._documentation_link_button_label, 0, 5, 1, 1)
-
-        self._documentation_link_button = Gtk.LinkButton(
-            'http://mike-fabian.github.io/ibus-typing-booster/documentation.html',
-            'http://mike-fabian.github.io/ibus-typing-booster/documentation.html')
-        self._about_grid.attach(
-            self._documentation_link_button, 0, 6, 1, 1)
-
         self.show_all()
 
     def _fill_dictionaries_listbox_row(self, name):
@@ -959,6 +892,15 @@ class SetupUI(Gtk.Window):
         The button to close the dialog has been clicked.
         '''
         Gtk.main_quit()
+
+    def on_about_button_clicked(self, dummy_button):
+        '''
+        The “About” button has been clicked
+
+        :param dummy_button: The “About” button
+        :type dummy_button: Gtk.Button object
+        '''
+        aboutdialog = itb_util.ItbAboutDialog()
 
     def on_tab_enable_checkbutton(self, widget):
         '''
