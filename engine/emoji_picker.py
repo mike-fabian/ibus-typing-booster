@@ -1120,18 +1120,6 @@ class EmojiPickerUI(Gtk.Window):
                 Gtk.main_iteration()
         self._search_bar.handle_event(event_key)
 
-    def on_close_aboutdialog( # pylint: disable=no-self-use
-            self, about_dialog, dummy_response):
-        '''
-        The “About” dialog has been closed by the user
-
-        :param about_dialog: The “About” dialog
-        :type about_dialog: GtkDialog object
-        :param dummy_response: The response when the “About” dialog was closed
-        :type dummy_response: Gtk.ResponseType enum
-        '''
-        about_dialog.destroy()
-
     def on_about_button_clicked(self, dummy_button):
         '''
         The “About” button has been clicked
@@ -1144,55 +1132,7 @@ class EmojiPickerUI(Gtk.Window):
         if GTK_VERSION >= (3, 22, 0):
             self._main_menu_popover.popdown()
         self._main_menu_popover.hide()
-        aboutdialog = Gtk.AboutDialog()
-        # An empty string in aboutdialog.set_logo_icon_name('')
-        # prevents an ugly default icon to be shown. We don’t yet
-        # have nice icons for ibus-typing-booster.
-        aboutdialog.set_logo_icon_name('')
-        aboutdialog.set_title(
-            '🚀 ibus-typing-booster %s' %version.get_version())
-        aboutdialog.set_program_name(
-            '🚀 ibus-typing-booster')
-        aboutdialog.set_version(version.get_version())
-        aboutdialog.set_comments(
-            _('A completion input method to speedup typing.'))
-        aboutdialog.set_copyright(
-            'Copyright © 2017 Mike FABIAN')
-        aboutdialog.set_authors([
-            'Mike FABIAN <maiku.fabian@gmail.com>',
-            'Anish Patil <anish.developer@gmail.com>',
-            ])
-        aboutdialog.set_translator_credits(
-            # Translators: put your names here, one name per line.
-            _('translator-credits'))
-        # aboutdialog.set_artists('')
-        aboutdialog.set_documenters([
-            'Mike FABIAN <maiku.fabian@gmail.com>',
-            ])
-        aboutdialog.set_website(
-            'http://mike-fabian.github.io/ibus-typing-booster')
-        aboutdialog.set_website_label(
-            'http://mike-fabian.github.io/ibus-typing-booster')
-        aboutdialog.set_license('''
-        This program is free software: you can redistribute it and/or modify
-        it under the terms of the GNU General Public License as published by
-        the Free Software Foundation, either version 3 of the License, or
-        (at your option) any later version.
-
-        This program is distributed in the hope that it will be useful,
-        but WITHOUT ANY WARRANTY; without even the implied warranty of
-        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-        GNU General Public License for more details.
-
-        You should have received a copy of the GNU General Public License
-        along with this program.  If not, see <http://www.gnu.org/licenses/>
-        ''')
-        aboutdialog.set_wrap_license(True)
-        # overrides the above .set_license()
-        aboutdialog.set_license_type(Gtk.License.GPL_3_0)
-        aboutdialog.connect('response', self.on_close_aboutdialog)
-        aboutdialog.set_transient_for(self)
-        aboutdialog.show()
+        aboutdialog = itb_util.ItbAboutDialog()
 
     def _fill_flowbox_with_search_results(self):
         '''
