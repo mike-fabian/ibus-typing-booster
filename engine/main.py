@@ -31,6 +31,7 @@ from signal import signal, SIGTERM, SIGINT
 
 import factory
 import tabsqlitedb
+import version
 
 DEBUG_LEVEL = int(0)
 try:
@@ -112,10 +113,10 @@ class IMApp:
         else:
             self.__component = IBus.Component(
                 name="org.freedesktop.IBus.IbusTypingBooster",
-                description="Table Component",
-                version="0.1.0",
+                description="Typing Booster Component",
+                version=version.get_version(),
                 license="GPL",
-                author="Anish Patil <apatill@redhat.com>",
+                author="Mike FABIAN <mfabian@redhat.com>, Anish Patil <anish.developer@gmail.com>",
                 homepage="http://mike-fabian.github.io/ibus-typing-booster",
                 textdomain="ibus-typing-booster")
             # now we get IME info from self.__factory.db
