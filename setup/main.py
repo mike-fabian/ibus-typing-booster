@@ -171,16 +171,6 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.set_column_homogeneous(True)
         self._custom_shortcuts_label = Gtk.Label(
             _('Custom shortcuts'))
-        self._dictionaries_and_personal_data_grid = Gtk.Grid()
-        self._dictionaries_and_personal_data_grid.set_visible(True)
-        self._dictionaries_and_personal_data_grid.set_can_focus(False)
-        self._dictionaries_and_personal_data_grid.set_border_width(6)
-        self._dictionaries_and_personal_data_grid.set_column_spacing(6)
-        self._dictionaries_and_personal_data_grid.set_row_spacing(6)
-        self._dictionaries_and_personal_data_grid.set_row_homogeneous(True)
-        self._dictionaries_and_personal_data_grid.set_column_homogeneous(True)
-        self._dictionaries_and_personal_data_label = Gtk.Label(
-            _('Personal data'))
         self._about_grid = Gtk.Grid()
         self._about_grid.set_visible(True)
         self._about_grid.set_can_focus(False)
@@ -204,9 +194,6 @@ class SetupUI(Gtk.Window):
         self._notebook.append_page(
             self._custom_shortcuts_grid,
             self._custom_shortcuts_label)
-        self._notebook.append_page(
-            self._dictionaries_and_personal_data_grid,
-            self._dictionaries_and_personal_data_label)
         self._notebook.append_page(
             self._about_grid,
             self._about_label)
@@ -459,6 +446,24 @@ class SetupUI(Gtk.Window):
             self._min_char_complete_adjustment.set_value(1)
         self._min_char_complete_adjustment.connect(
             'value-changed', self.on_min_char_complete_adjustment_value_changed)
+
+        self._learn_from_file_button = Gtk.Button(
+            _('Learn from text file'))
+        self._learn_from_file_button.set_tooltip_text(
+            _('Learn your style by reading a text file'))
+        self._options_grid.attach(
+            self._learn_from_file_button, 0, 13, 2, 1)
+        self._learn_from_file_button.connect(
+            'clicked', self.on_learn_from_file_clicked)
+
+        self._delete_learned_data_button = Gtk.Button(
+            _('Delete learned data'))
+        self._delete_learned_data_button.set_tooltip_text(
+            _('Delete all personal language data learned from typing or from reading files'))
+        self._options_grid.attach(
+            self._delete_learned_data_button, 0, 14, 2, 1)
+        self._delete_learned_data_button.connect(
+            'clicked', self.on_delete_learned_data_clicked)
 
         self._dictionaries_label = Gtk.Label()
         self._dictionaries_label.set_text(
@@ -714,24 +719,6 @@ class SetupUI(Gtk.Window):
         self._shortcut_treeview_scroll.add(self._shortcut_treeview)
         self._custom_shortcuts_grid.attach(
             self._shortcut_treeview_scroll, 0, 5, 3, 10)
-
-        self._learn_from_file_button = Gtk.Button(
-            _('Learn from text file'))
-        self._learn_from_file_button.set_tooltip_text(
-            _('Learn your style by reading a text file'))
-        self._dictionaries_and_personal_data_grid.attach(
-            self._learn_from_file_button, 0, 0, 1, 1)
-        self._learn_from_file_button.connect(
-            'clicked', self.on_learn_from_file_clicked)
-
-        self._delete_learned_data_button = Gtk.Button(
-            _('Delete learned data'))
-        self._delete_learned_data_button.set_tooltip_text(
-            _('Delete all personal language data learned from typing or from reading files'))
-        self._dictionaries_and_personal_data_grid.attach(
-            self._delete_learned_data_button, 0, 1, 1, 1)
-        self._delete_learned_data_button.connect(
-            'clicked', self.on_delete_learned_data_clicked)
 
         self._ibus_typing_booster_emoji_label = Gtk.Label()
         self._ibus_typing_booster_emoji_label.set_markup(
