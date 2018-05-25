@@ -16,6 +16,41 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.0.0" date="2018-05-28" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations because of the merge of the engines
+            (de, pl, uk updated)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Do not hardcode icon names in desktop files (Resolves:
+            https://github.com/mike-fabian/ibus-typing-booster/issues/17)
+          </li>
+          <li>
+            Change the default for “Unicode symbols and emoji
+            predictions” to “False”
+          </li>
+          <li>
+            Merge all typing-booster engines into one
+          </li>
+          <li>
+            Change the UI of the setup tool to make it possible to
+            select multiple input methods and dictionaries
+          </li>
+          <li>
+            Move the buttons to learn from a file and to delete
+            learned data to the options tab
+          </li>
+          <li>
+            Use the same “About” dialog in the setup tool as in emoji-picker
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.38" date="2018-05-22" urgency="medium">
       <description>
         <ul>

@@ -1,4 +1,15 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 28 May 2018 Released 2.0.0 version
+* Update translations because of the merge of the engines (de, pl, uk updated)
+* Update emoji annotations from CLDR
+* Do not hardcode icon names in desktop files (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/17)
+* Change the default for “Unicode symbols and emoji predictions” to “False”
+* Merge all typing-booster engines into one
+* Change the UI of the setup tool to make it possible to select multiple input methods and dictionaries
+* Move the buttons to learn from a file and to delete learned data to the options tab
+* Use the same “About” dialog in the setup tool as in emoji-picker
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 22 May 2018 Released 1.5.38 version
 * Refresh french translation (thanks to Thierry Thomas)
 * Mark comments in the emoji-picker about dialog as translatable
