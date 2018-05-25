@@ -211,7 +211,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._config_section,
             'emojipredictions'))
         if self._emoji_predictions is None:
-            self._emoji_predictions = True # default
+            self._emoji_predictions = False # default
 
         self._min_char_complete = variant_to_value(self._config.get_value(
             self._config_section,

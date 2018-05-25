@@ -275,7 +275,7 @@ class SetupUI(Gtk.Window):
             self.config.get_value(
                 self.config_section, 'emojipredictions'))
         if self.emoji_predictions is None:
-            self.emoji_predictions = True
+            self.emoji_predictions = False
         if self.emoji_predictions is True:
             self._emoji_predictions_checkbutton.set_active(True)
 
