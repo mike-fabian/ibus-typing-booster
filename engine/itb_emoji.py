@@ -1505,7 +1505,7 @@ class EmojiMatcher():
         ('🙈', 'see-no-evil monkey {nature}')
 
         >>> mq.candidates('travel')[0][:2]
-        ('🏎️', 'racing car {travel}')
+        ('\U0001f9f3', 'luggage {travel}')
 
         >>> mq.candidates('ferry')[0][:2]
         ('⛴\ufe0f', 'ferry')
