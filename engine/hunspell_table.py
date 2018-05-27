@@ -2951,6 +2951,25 @@ class TypingBoosterEngine(IBus.Engine):
         IBus.InputPurpose.PIN
 
         '''
+        purpose_names = {
+            IBus.InputPurpose.FREE_FORM: 'FREE_FORM',
+            IBus.InputPurpose.ALPHA: 'ALPHA',
+            IBus.InputPurpose.DIGITS: 'DIGITS',
+            IBus.InputPurpose.NUMBER: 'NUMBER',
+            IBus.InputPurpose.PHONE: 'PHONE',
+            IBus.InputPurpose.URL: 'URL',
+            IBus.InputPurpose.EMAIL: 'EMAIL',
+            IBus.InputPurpose.NAME: 'NAME',
+            IBus.InputPurpose.PASSWORD: 'PASSWORD',
+            IBus.InputPurpose.PIN: 'PIN',
+        }
+        sys.stderr.write(
+            'do_set_content_type(%s) self._has_input_purpose = %s\n'
+            %(purpose, self._has_input_purpose))
+        if purpose in purpose_names:
+            sys.stderr.write('purpose_name = %s\n' %purpose_names[purpose])
+        else:
+            sys.stderr.write('unknown purpose_name\n')
         if self._has_input_purpose:
             self._input_purpose = purpose
 
