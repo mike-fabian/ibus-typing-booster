@@ -2,7 +2,7 @@
 Name=Typing Booster Preferences
 Comment=Set ibus-typing-booster Preferences
 Exec=${LIBEXECDIR}/ibus-setup-typing-booster
-Icon=${PKGDATADIR}/icons/ibus-typing-booster.svg
+Icon=ibus-typing-booster
 NoDisplay=true
 Type=Application
 StartupNotify=true
