@@ -1957,7 +1957,7 @@ method.</td>
   To be able to input emoji using their Japanese names, one first
   needs to install the
   packages <code>m17n-db-extras</code>, <code>m17n-lib-anthy</code>
-  and <code>anthy</code> on Fedora. On Fedora one can do this using
+  and <code>anthy</code> on Fedora. On Fedora 28 one can do this using
   the command:
 </p>
 <p>
@@ -1971,37 +1971,10 @@ method.</td>
   library work.
 </p>
 <p>
-  Then one needs to add the ja-anthy input method and the Japanese
-  dictionary to the setup of ibus typing booster.  For details
-  see <a href="#multilingual-setup-dconf">Multilingual setup using
-  dconf</a>.
-</p>
-<p>
-  Which language version version of ibus-typing-booster is used does not
-  matter here. Let’s assume we are using the American English typing booster.
-  You may first want to check which dictionaries and input methods are already
-  setup:
-</p>
-<p>
-  <code>dconf dump /desktop/ibus/engine/typing-booster/typing-booster-en-us/</code>
-</p>
-<p>
-  Look at the contents of the <code>inputmethod</code> and <code>dictionary</code>
-  keys. Then add <code>ja-anthy</code> and <code>ja_JP</code> in addition
-  to what was already there. For example like this:
-</p>
-<p>
-  <code>dconf write /desktop/ibus/engine/typing-booster/typing-booster-en-us/inputmethod '"NoIme,ja-anthy"'</code>
-</p>
-<p>
-  “NoIme” means “no input method”, which means direct keyboard input.
-</p>
-<p>
-  <code>dconf write /desktop/ibus/engine/typing-booster/typing-booster-en-us/dictionary '"ja_JP,en_US"'</code>  
-</p>
-<p>
-  Here I did put the <code>ja-anthy</code> input method at second
-  priority and the <code>ja_JP</code> dictionary at first priority.
+  Then one needs to add the “ja-anthy” input method and the Japanese
+  dictionary (“ja_JP”) to the setup of ibus typing booster.  For
+  details how to add input methods and dictionaries
+  see <a href="#multilingual-input">Multilingual input</a>.
 </p>
 
 <br class="clearboth">
@@ -2022,7 +1995,7 @@ method.</td>
   (U+1F40C SNAIL) listed as a candidate.
 </p>
 <p>
-  It is labelled in the candidate list in Japanese hiragan syllables,
+  It is labelled in the candidate list in Japanese hiragana syllables,
   i.e. “かたつむり”. The Latin “katatsumuri” was transliterated by the
   ja-anthy input method to “かたつむり” and this was then looked up in
   the  dictionaries. The Latin text “katatsumuri” was of course
