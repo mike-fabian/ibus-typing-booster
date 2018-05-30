@@ -16,6 +16,44 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.0.1" date="2018-06-21" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (ja updated)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Fix some bugs in the usage of “prefix” for prefixes other
+            than “/usr” (For FreeBSD)
+          </li>
+          <li>
+            Make itb_util.get_ime_help() work on FreeBS
+          </li>
+          <li>
+            Update UnicodeData.txt to Unicode 11.0.0
+          </li>
+          <li>
+            Remove useless 't-nil vi-base': 'vi-base.mim', from
+            M17N_INPUT_METHODS
+          </li>
+          <li>
+            Remove extra space in entry for sa-IAST input method to
+            make it work
+          </li>
+          <li>
+            Show in the setup tool in the input listbox whether
+            minput_open_im() succeeded.
+          </li>
+          <li>
+            Use the rocket icon emoji_u1f680.svg from the “Noto Color
+            Emoji” font
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.0" date="2018-05-28" urgency="medium">
       <description>
         <ul>

@@ -1,4 +1,16 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 21 Jun 2018 Released 2.0.1 version
+* Update translations from zanata (ja updated)
+* Update emoji annotations from CLDR
+* Fix some bugs in the usage of “prefix” for prefixes other than “/usr” (For FreeBSD)
+* Make itb_util.get_ime_help() work on FreeBSD
+* Update UnicodeData.txt to Unicode 11.0.0
+* Remove useless 't-nil vi-base': 'vi-base.mim', from M17N_INPUT_METHODS
+* Remove extra space in entry for sa-IAST input method to make it work
+* Show in the setup  tool in the input listbox whether minput_open_im() succeeded.
+* Use the rocket icon emoji_u1f680.svg from the “Noto Color Emoji” font
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 28 May 2018 Released 2.0.0 version
 * Update translations because of the merge of the engines (de, pl, uk updated)
 * Update emoji annotations from CLDR
