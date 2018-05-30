@@ -1450,8 +1450,9 @@ method.</td>
 </table>
 
 <p>
-  This screenshot shows the setup tool again and the options for
-  ibus-typing-booster in the input method menu of the gnome panel.
+  This screenshot shows the options tab of the setup tool and the
+  options for ibus-typing-booster in the input method menu of the
+  gnome panel.
 </p>
 <p>
   As an alternative to using the “Control+Down” and “Control+Up”
@@ -1462,11 +1463,17 @@ method.</td>
 <p>
   In the setup tool, there is an option “Remember last used preëdit
   input method”.  If that option is disabled, ibus-typing-booster will
-  always use Hindi in the preëdit when you log in to your desktop and
-  use ibus-typing-booster for the first time after the login. If this
-  option is enabled, ibus-typing-booster will remember which input
-  method was used last when you logged out of your desktop and start
-  using that the next time you log in.
+  always start using the input method with the highest priority in the
+  setup tool for the preëdit when you log in to your desktop and use
+  ibus-typing-booster for the first time after the login. In our setup
+  shown in the previous screenshot, the input method with the highest
+  priority is “NoIme”, i.e. direct keyboard input. If the option to
+  remember the last used preëdit input method is enabled,
+  ibus-typing-booster will change the priority in the setup when you
+  switch to a different input method for the preëdit using the key
+  bindings or the Gnome panel.  That way, ibus-typing-booster will
+  remember which input method was used last when you logged out of
+  your desktop and start using that the next time you log in.
 </p>
 
 <br class="clearboth">
