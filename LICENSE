@@ -1,0 +1,26 @@
+----------------------------------------------------------------------
+
+ibus-typing-booster is free software: you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+A copy of the GNU General Public License is included along with
+ibus-typing-booster in the COPYING file. You can also get the GNU
+General Public License here: <http://www.gnu.org/licenses/>.
+
+----------------------------------------------------------------------
+
+The icon in icons/ibus-typing-booster.svg is taken from the source of
+the Google “Noto Color Emoji” font, see:
+<https://github.com/googlei18n/noto-emoji>
+
+The original file name is emoji_u1f680.svg.
+
+The .png versions of this icon are generated from that .svg file.
+
+The Google “Noto Color Emoji” font is licensed under the Apache
+License Version 2.0. This licnense is included along with
+ibus-typing-booster in the APACHE-LICENSE-2.0 file. You can also get
+it here: <https://www.apache.org/licenses/LICENSE-2.0>
+----------------------------------------------------------------------
