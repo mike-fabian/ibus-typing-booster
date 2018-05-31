@@ -1489,7 +1489,7 @@ M17N_INPUT_METHODS = {
     'ru-translit': 'ru-translit.mim',
     'ru-yawerty': 'ru-yawerty.mim',
     'sa-harvard-kyoto': 'sa-harvard-kyoto.mim',
-    'sa-IAST ': 'sa-iast.mim',
+    'sa-IAST': 'sa-iast.mim',
     'sa-inscript2': 'sa-inscript2.mim',
     'sa-itrans': 'sa-itrans.mim',
     'sat-inscript2': 'sat-inscript2-deva.mim',
