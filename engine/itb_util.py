@@ -1531,7 +1531,7 @@ M17N_INPUT_METHODS = {
     't-unicode': 'unicode.mim',
     'ur-phonetic': 'ur-phonetic.mim',
     'uz-kbd': 'uz-kbd.mim',
-    't-nil vi-base': 'vi-base.mim',
+    # 't-nil vi-base': 'vi-base.mim', # not useful
     'vi-han': 'vi-han.mim',
     'vi-nomvni': 'vi-nom-vni.mim',
     'vi-nomtelex': 'vi-nom.mim',
