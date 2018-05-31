@@ -56,6 +56,7 @@ from pkginstall import InstallPkg
 from i18n import DOMAINNAME, _, init as i18n_init
 
 sys.path = [sys.path[0]+'/../engine'] + sys.path
+from m17n_translit import Transliterator
 import tabsqlitedb
 import itb_util
 import itb_emoji
@@ -790,6 +791,11 @@ class SetupUI(Gtk.Window):
             row += '\t' + '(' + title + ')'
         if error:
             row += '\t' + '⚠️ ' + error
+        try:
+            dummy = Transliterator(ime)
+            row += '\t' + '✔️'
+        except ValueError as open_error:
+            row += '\t' + '❌ ' + str(open_error)
         return row
 
     def _fill_input_methods_listbox(self):
