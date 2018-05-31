@@ -36,6 +36,7 @@ from gettext import dgettext
 from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus
+require_version('GLib', '2.0')
 from gi.repository import GLib
 from m17n_translit import Transliterator
 import itb_util
