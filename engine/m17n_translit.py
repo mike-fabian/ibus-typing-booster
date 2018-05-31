@@ -257,6 +257,10 @@ class Transliterator:
     >>> trans.transliterate(['n', 'i', '3', 'h', 'a', 'o', '3'])
     '你好'
 
+    >>> trans = Transliterator('ko-romaja')
+    >>> trans.transliterate(list('annyeonghaseyo'))
+    '안녕하세요'
+
     If initializing the transliterator fails, for example
     because a non-existing input method was given as the argument,
     a ValueError is raised:
