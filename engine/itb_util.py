@@ -2069,6 +2069,20 @@ def get_ime_help(ime_name):
             otherwise it might contain an error message.
 
     “NoIme” is handled as a special case.
+
+    Examples:
+
+    >>> get_ime_help('latn-post')[1]
+    'Latin-post'
+
+    >>> get_ime_help('latn-post')[4]
+    ''
+
+    >>> get_ime_help('mr-itrans')[1]
+    'क'
+
+    >>> get_ime_help('ko-romaja')[1]
+    '로마자'
     '''
     path = ''
     title = ''
@@ -2089,7 +2103,19 @@ def get_ime_help(ime_name):
         mim_file = M17N_INPUT_METHODS[ime_name]
     else:
         mim_file = ime_name+'.mim'
-    path = '/usr/share/m17n/%(mim)s' %{'mim': mim_file}
+    dirnames = [
+        '/usr/share/m17n',
+        '/usr/local/share/m17n', # On FreeBSD, the .mim files are here
+    ]
+    m17n_dir = ''
+    for dirname in dirnames:
+        if os.path.isdir(dirname):
+            m17n_dir = dirname
+    if not m17n_dir:
+        # Maybe don’t mark this error message as translatable, it should
+        # never happen in practice:
+        return ('', '', '', '', ('m17n dir not found, tried: %s' %dirnames))
+    path = os.path.join(m17n_dir, mim_file)
     try:
         with open(path, mode='r', encoding='UTF-8', errors='ignore') as ime_file:
             full_contents = ime_file.read()
