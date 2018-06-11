@@ -263,7 +263,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._use_digits_as_select_keys = True
 
         self._icon_dir = '%s%s%s%s' % (
-            os.getenv('IBUS_HUNSPELL_TABLE_LOCATION'),
+            os.getenv('IBUS_TYPING_BOOSTER_LOCATION'),
             os.path.sep, 'icons', os.path.sep)
 
         self._status = '🚀' # FIXME: apparently not used anymore?
@@ -1348,7 +1348,7 @@ class TypingBoosterEngine(IBus.Engine):
                 return
             self._setup_pid = 0
         setup_cmd = os.path.join(
-            os.getenv('IBUS_HUNSPELL_LIB_LOCATION'),
+            os.getenv('IBUS_TYPING_BOOSTER_LIB_LOCATION'),
             'ibus-setup-typing-booster')
         self._setup_pid = os.spawnl(
             os.P_NOWAIT,

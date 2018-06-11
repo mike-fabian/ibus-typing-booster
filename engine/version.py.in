@@ -21,3 +21,6 @@
 
 def get_version():
     return "@VERSION@"
+
+def get_prefix():
+    return '@prefix@'

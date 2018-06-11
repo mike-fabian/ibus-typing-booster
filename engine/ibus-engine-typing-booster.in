@@ -19,10 +19,8 @@
 
 PYTHON=@PYTHON@
 prefix=@prefix@
-datarootdir=@datarootdir@
-datadir=@datadir@
-export IBUS_HUNSPELL_TABLE_LOCATION=@datarootdir@/ibus-typing-booster
-export IBUS_HUNSPELL_LIB_LOCATION=@libexecdir@
+export IBUS_TYPING_BOOSTER_LOCATION=${prefix}/share/ibus-typing-booster
+export IBUS_TYPING_BOOSTER_LIB_LOCATION=${prefix}/libexec
 export PYTHONIOENCODING=UTF-8
 
 # Set this variable to something > 0 to get more debug output.
@@ -36,14 +34,14 @@ export PYTHONIOENCODING=UTF-8
 for arg in $@; do
 	case $arg in
 	--xml | -x)
-		exec ${PYTHON} @datarootdir@/ibus-typing-booster/engine/main.py --xml;;
+		exec ${PYTHON} ${prefix}/share/ibus-typing-booster/engine/main.py --xml;;
 	--help | -h)
-		exec ${PYTHON} @datarootdir@/ibus-typing-booster/engine/main.py $@;;
+		exec ${PYTHON} ${prefix}/share/ibus-typing-booster/engine/main.py $@;;
         *)
 		if [ "x${IBUS_TYPING_BOOSTER_PROFILE}" != "x" ]; then
-                        exec ${PYTHON} @datarootdir@/ibus-typing-booster/engine/main.py --profile $@
+                        exec ${PYTHON} ${prefix}/share/ibus-typing-booster/engine/main.py --profile $@
                 else
-                        exec ${PYTHON} @datarootdir@/ibus-typing-booster/engine/main.py $@
+                        exec ${PYTHON} ${prefix}/share/ibus-typing-booster/engine/main.py $@
                 fi
                 exit 0
                 ;;

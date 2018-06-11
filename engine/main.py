@@ -45,7 +45,17 @@ try:
         os.getenv('IBUS_TYPING_BOOSTER_LOCATION'),
         'icons')
 except:
-    ICON_DIR = "/usr/share/ibus-typing-booster/icons"
+    ICON_DIR = os.path.join(
+        version.get_prefix(), 'share/ibus-typing-booster/icons')
+
+try:
+    SETUP_TOOL = os.path.join(
+        os.getenv('IBUS_TYPING_BOOSTER_LIB_LOCATION'),
+        'ibus-setup-typing-booster')
+except:
+    SETUP_TOOL = os.path.join(
+        version.get_prefix(),
+        'libexec/ibus-setup-typing-booster')
 
 def parse_args():
     '''Parse the command line arguments'''
@@ -243,7 +253,7 @@ def main():
             _symbol.text = '🚀'
 
             _setup = SubElement(_engine,'setup')
-            _setup.text = '/usr/libexec/ibus-setup-typing-booster'
+            _setup.text = SETUP_TOOL
 
         # now format the xmlout pretty
         indent (egs)

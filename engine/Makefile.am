@@ -91,7 +91,7 @@ typing-booster.xml: typing-booster.xml.in
 
 test:
 	$(ENV) \
-		IBUS_HUNSPELL_TABLE_LOCATION=$(abs_top_srcdir) \
+		IBUS_TYPING_BOOSTER_LOCATION=$(abs_top_srcdir) \
 		DBUS_DEBUG=true \
 		LANG=en_US \
 		PYTHONPATH=$(abs_top_srcdir) \
