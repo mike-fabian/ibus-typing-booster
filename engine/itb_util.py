@@ -339,8 +339,6 @@ def get_default_input_methods(locale):
         default_input_methods = LOCALE_DEFAULTS[locale]['inputmethods']
     else:
         default_input_methods = ['NoIme']
-    sys.stderr.write('get_default_input_methods(%s) returns %s\n'
-                     %(locale, default_input_methods))
     return default_input_methods
 
 def get_default_dictionaries(locale):
@@ -363,8 +361,6 @@ def get_default_dictionaries(locale):
         default_dictionaries = LOCALE_DEFAULTS[locale]['dictionaries']
     else:
         default_dictionaries = ['en_US']
-    sys.stderr.write('get_default_dictionaries(%s) returns %s\n'
-                     %(locale, default_dictionaries))
     return default_dictionaries
 
 HUNSPELL_DICTIONARIES = {
