@@ -2,7 +2,7 @@
 # German translation of ibus-typing-booster
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the ibus-typing-booster package.
-#
+# 
 # Translators:
 # Mike FABIAN <mfabian@redhat.com>, 2012.
 # Mike FABIAN <mfabian@redhat.com>, 2016. #zanata
@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2018-05-28 21:56+0200\n"
+"POT-Creation-Date: 2018-05-25 14:20+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2018-05-26 06:04+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <trans-de@lists.fedoraproject.org>\n"
 "Language: de\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Zanata 4.4.5\n"
 
@@ -132,35 +132,35 @@ msgstr "Systemvorgabe"
 msgid "Set Font"
 msgstr "Font einstellen"
 
-#: engine/hunspell_table.py:395 engine/hunspell_table.py:415
+#: engine/hunspell_table.py:385 engine/hunspell_table.py:405
 msgid "Off"
 msgstr "Aus"
 
-#: engine/hunspell_table.py:400 engine/hunspell_table.py:420
+#: engine/hunspell_table.py:390 engine/hunspell_table.py:410
 msgid "On"
 msgstr "An"
 
-#: engine/hunspell_table.py:405 engine/hunspell_table.py:407 setup/main.py:267
+#: engine/hunspell_table.py:395 engine/hunspell_table.py:397 setup/main.py:267
 msgid "Unicode symbols and emoji predictions"
 msgstr "Vorschläge auch für Unicode Symbole und Emoji"
 
-#: engine/hunspell_table.py:425 engine/hunspell_table.py:426 setup/main.py:283
+#: engine/hunspell_table.py:415 engine/hunspell_table.py:416 setup/main.py:283
 msgid "Off the record mode"
 msgstr "Vertraulicher Modus"
 
-#: engine/hunspell_table.py:1095
+#: engine/hunspell_table.py:1084
 msgid "Preedit input method"
 msgstr "Preedit-Eingabemethode:"
 
-#: engine/hunspell_table.py:1096
+#: engine/hunspell_table.py:1085
 msgid "Switch preedit input method"
 msgstr "Umschalten der Preedit-Eingabemethode"
 
-#: engine/hunspell_table.py:1289
+#: engine/hunspell_table.py:1278
 msgid "Setup"
 msgstr "Einstellungen"
 
-#: engine/hunspell_table.py:1292 setup/main.py:117
+#: engine/hunspell_table.py:1281 setup/main.py:117
 msgid "Preferences for ibus-typing-booster"
 msgstr "Ibus Typing Booster Einstellungen"
 
@@ -215,11 +215,11 @@ msgstr "Modifikator"
 msgid "regional"
 msgstr "Regional"
 
-#: engine/itb_util.py:2085
+#: engine/itb_util.py:2083
 msgid "Native Keyboard"
 msgstr "Direkte Tastatureingabe"
 
-#: engine/itb_util.py:2087
+#: engine/itb_util.py:2085
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -232,32 +232,32 @@ msgstr ""
 "weiteren Änderungen. D.h. hier wird keinerlei Transliteration oder "
 "Komposition benutzt."
 
-#: engine/itb_util.py:2101
+#: engine/itb_util.py:2099
 msgid "File not found"
 msgstr "Datei nicht gefunden"
 
-#: engine/itb_util.py:2103
+#: engine/itb_util.py:2101
 msgid "Permission error"
 msgstr "Fehler bei den Zugriffsrechten"
 
-#: engine/itb_util.py:2105
+#: engine/itb_util.py:2103
 msgid "Unicode decoding error"
 msgstr "Unicode-Dekodierfehler"
 
-#: engine/itb_util.py:2107
+#: engine/itb_util.py:2105
 msgid "Unknown error"
 msgstr "Unbekannter Fehler"
 
-#: engine/itb_util.py:2157
+#: engine/itb_util.py:2155
 msgid "A completion input method to speedup typing."
 msgstr "Eine vervollständigende Inputmethode zum schnelleren Tippen."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:2166
+#: engine/itb_util.py:2164
 msgid "translator-credits"
 msgstr "Mike FABIAN <mfabian@redhat.com>, 2018"
 
-#: engine/itb_util.py:2174
+#: engine/itb_util.py:2172
 msgid "Online documentation:"
 msgstr "Online Dokumentation"
 
@@ -338,8 +338,8 @@ msgstr ""
 "Option an ist, können Zahlen nur getippt werden, wenn keine Wortvorschläge "
 "gezeigt werden. Und das Tippen von Wörtern, die Zahlen enthalten, wie zum "
 "Beispiel „A4“ ist dann schwieriger, weil das Tippen von „4“ den vierten "
-"Vorschlag auswählt. Andererseits ist das Auswählen von Wortvorschlägen mit "
-"1-9 etwas leichter als mit F1-F9 (geht immer), weil F1-F9 weiter von den "
+"Vorschlag auswählt. Andererseits ist das Auswählen von Wortvorschlägen mit 1-"
+"9 etwas leichter als mit F1-F9 (geht immer), weil F1-F9 weiter von den "
 "Fingern weg sind."
 
 #: setup/main.py:251
@@ -493,6 +493,7 @@ msgstr "Mindestanzahl Zeichen für Vervollständigung"
 #: setup/main.py:414
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
+""
 msgstr ""
 "Keine Vorschläge anzeigen wenn weniger als die hier eingestellte Anzahl von "
 "Buchstaben getippt wurde."
@@ -520,129 +521,129 @@ msgstr ""
 msgid "Use dictionaries for the following languages:"
 msgstr "Benutze Wörterbücher für die folgenden Sprachen"
 
-#: setup/main.py:472
+#: setup/main.py:480
+msgid "Add a dictionary"
+msgstr "Wörterbuch hinzufügen"
+
+#: setup/main.py:486
+msgid "Remove a dictionary"
+msgstr "Wörterbuch entfernen"
+
+#: setup/main.py:493
+msgid "Move dictionary down"
+msgstr "Wörterbuch abwärts schieben"
+
+#: setup/main.py:500
+msgid "Move dictionary up"
+msgstr "Wörterbuch aufwärts schieben"
+
+#: setup/main.py:505
 msgid "Install missing dictionaries"
 msgstr "Installiere fehlende Wörterbucher"
 
-#: setup/main.py:474
+#: setup/main.py:507
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr ""
 "Installiere die Wörterbuchpakete die hier ausgewählt aber nicht\n"
 "installiert sind"
 
-#: setup/main.py:490
-msgid "Add a dictionary"
-msgstr "Wörterbuch hinzufügen"
-
-#: setup/main.py:501
-msgid "Remove a dictionary"
-msgstr "Wörterbuch entfernen"
-
-#: setup/main.py:512
-msgid "Move dictionary down"
-msgstr "Wörterbuch abwärts schieben"
-
-#: setup/main.py:523
-msgid "Move dictionary up"
-msgstr "Wörterbuch aufwärts schieben"
-
-#: setup/main.py:536
+#: setup/main.py:518
 msgid "Use the following input methods:"
 msgstr "Benutze die folgenden Eingabemethoden:"
 
-#: setup/main.py:564
+#: setup/main.py:542
 msgid "Add an input method"
 msgstr "Eingabemethode hinzufügen"
 
-#: setup/main.py:576
+#: setup/main.py:548
 msgid "Remove an input method"
 msgstr "Eingabemethode entfernen"
 
-#: setup/main.py:588
+#: setup/main.py:555
 msgid "Move input method down"
 msgstr "Eingabemethode abwärts schieben"
 
-#: setup/main.py:600
+#: setup/main.py:562
 msgid "Move input method up"
 msgstr "Eingabemethode aufwärts schieben"
 
-#: setup/main.py:605
+#: setup/main.py:567
 msgid "Input Method Help"
 msgstr "Hilfe für Eingabemethode:"
 
-#: setup/main.py:607
+#: setup/main.py:569
 msgid "Display some help showing how to use the input method selected above."
 msgstr "Hilfe zur Benutzung der oben ausgewählten Eingabemethode anzeigen."
 
-#: setup/main.py:619
+#: setup/main.py:580
 msgid "Enter shortcut here:"
 msgstr "Abkürzung hier eintippen:"
 
-#: setup/main.py:635
+#: setup/main.py:596
 msgid "Enter shortcut expansion here:"
 msgstr "Expansion der Abkürzung hier eingeben:"
 
-#: setup/main.py:651
+#: setup/main.py:612
 msgid "Clear input"
 msgstr "Eingabe leeren"
 
-#: setup/main.py:661
+#: setup/main.py:622
 msgid "Delete shortcut"
 msgstr "Abkürzung löschen"
 
-#: setup/main.py:671
+#: setup/main.py:632
 msgid "Add shortcut"
 msgstr "Abkürzung hinzufügen"
 
 #. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:694
+#: setup/main.py:655
 msgid "Shortcut"
 msgstr "Abkürzung"
 
 #. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:700
+#: setup/main.py:661
 msgid "Shortcut expansion"
 msgstr "Expansion der Abkürzung"
 
-#: setup/main.py:718
+#: setup/main.py:678
 msgid "Spell checking"
 msgstr "Rechtschreibprüfung"
 
-#: setup/main.py:724
+#: setup/main.py:683
 msgid "Emoji"
 msgstr "Emoji"
 
-#: setup/main.py:872
+#: setup/main.py:808
 msgid "Another instance of this app is already running."
 msgstr "Eine Instanz dieses Programms läuft schon."
 
-#: setup/main.py:1213
+#: setup/main.py:1147
 msgid "Add dictionary"
 msgstr "Wörterbuch hinzufügen"
 
-#: setup/main.py:1484
+#: setup/main.py:1403
 msgid "Add input method"
 msgstr "Eingabemethode hinzufügen"
 
-#: setup/main.py:1738
+#: setup/main.py:1657
 msgid "Open File ..."
 msgstr "Öffne Datei"
 
-#: setup/main.py:1757
+#: setup/main.py:1676
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Das Lernen aus der Datei %(filename)s war erfolgreich."
 
-#: setup/main.py:1766
+#: setup/main.py:1685
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Fehler beim Lernen aus der Datai %(filename)s."
 
-#: setup/main.py:1779
+#: setup/main.py:1698
 msgid "Are you sure?"
 msgstr "Sind Sie sicher?"
 
-#: setup/main.py:1786
+#: setup/main.py:1705
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -650,7 +651,7 @@ msgstr ""
 "Wollen Sie wirklich alle Sprachdaten löschen, die aus den\n"
 "Usereingaben oder aus Dateien gelernt wurden?"
 
-#: setup/main.py:1882
+#: setup/main.py:1801
 msgid "ibus is not running."
 msgstr "Ibus läuft nicht."
 
@@ -669,11 +670,10 @@ msgid ""
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
 "Ibus-typing-booster ist eine vorausschauende Eingabemethode, die "
-"vollständige Wörter basiered auf dem Kontext und teilweisem Input "
-"vorschlägt. Man kann einfach das gewünschte Wort aus einer List von "
-"Vorschlägen auswählen und so seine Tippgeschwindigkeit und Rechtschreibung "
-"verbessern."
+"vollständige Wörter basiered auf dem Kontext und teilweisem Input vorschlägt."
+" Man kann einfach das gewünschte Wort aus einer List von Vorschlägen "
+"auswählen und so seine Tippgeschwindigkeit und Rechtschreibung verbessern."
 
-#: typing-booster.appdata.xml:1291
+#: typing-booster.appdata.xml:1279
 msgid "Mike FABIAN"
 msgstr "Mike FABIAN"
