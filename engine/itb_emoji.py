@@ -1397,43 +1397,43 @@ class EmojiMatcher():
         ('🇺🇸', 'united states “us”')
 
         >>> mq.candidates('flag us')[0][:2]
-        ('🇺🇸', 'united states “us” [flag]')
+        ('🇺🇸', 'united states “flag: united states”')
 
         >>> mq.candidates('united states')[0][:2]
-        ('🇺🇸', 'united states')
+        ('🇺🇸', 'united states “flag: united states”')
 
         >>> mq.candidates('united')[0][:2]
-        ('🇦🇪', 'united arab emirates')
+        ('🇦🇪', 'united arab emirates “flag: united arab emirates”')
 
         >>> mq.candidates('united minor outlying islands')[0][:2]
-        ('🇺🇲', 'u.s. outlying islands')
+        ('🇺🇲', 'u.s. outlying islands “flag: u.s. outlying islands”')
 
         >>> mq.candidates('united arab')[0][:2]
-        ('🇦🇪', 'united arab emirates')
+        ('🇦🇪', 'united arab emirates “flag: united arab emirates”')
 
         >>> mq.candidates('mm')[0][:2]
         ('🇲🇲', 'myanmar (burma) “mm”')
 
         >>> mq.candidates('flag mm')[0][:2]
-        ('🇲🇲', 'myanmar (burma) “mm” [flag]')
+        ('🇲🇲', 'myanmar (burma) “flag: myanmar (burma)”')
 
         >>> mq.candidates('myanmar')[0][:2]
-        ('🇲🇲', 'Myanmar')
+        ('🇲🇲', 'myanmar (burma) “flag: myanmar (burma)”')
 
         >>> mq.candidates('sj')[0][:2]
         ('🇸🇯', 'svalbard & jan mayen “sj”')
 
         >>> mq.candidates('flag sj')[0][:2]
-        ('🇸🇯', 'svalbard & jan mayen “sj” [flag]')
+        ('🇸🇯', 'svalbard & jan mayen “flag: svalbard & jan mayen”')
 
         >>> mq.candidates('svalbard')[0][:2]
-        ('🇸🇯', 'Svalbard e Jan Mayen')
+        ('🇸🇯', 'svalbard & jan mayen “flag: svalbard & jan mayen”')
 
         >>> mq.candidates('jan mayen')[0][:2]
-        ('🇸🇯', 'Spitzbergen und Jan Mayen')
+        ('🇸🇯', 'svalbard & jan mayen “flag: svalbard & jan mayen”')
 
         >>> mq.candidates('mayen')[0][:2]
-        ('🇸🇯', 'Spitzbergen und Jan Mayen')
+        ('🇸🇯', 'svalbard & jan mayen “flag: svalbard & jan mayen”')
 
         >>> mq.candidates(':-)')[0][:2]
         ('🙂', 'slightly smiling face “:-)”')
@@ -1815,7 +1815,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages=['it_IT', 'es_ES', 'es_MX', 'ja_JP'])
         >>> matcher.name('🖥')
-        'desktop PC'
+        'computer fisso'
 
         >>> matcher = EmojiMatcher(languages=['fr_FR'])
         >>> matcher.name('🖥')
@@ -1977,7 +1977,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['es_MX', 'it_IT', 'de_DE', 'en_US', 'es_ES', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
-        [('🐫', 'camello [🐫, animal, joroba]', 3), ('🐪', 'dromedario [animal, joroba]', 2), ('🐐', 'cabra [animal]', 1), ('🐑', 'oveja [animal]', 1), ('🐘', 'elefante [animal]', 1)]
+        [('🐫', 'camello [🐫, animal, camélido, camello, joroba]', 5), ('🐪', 'dromedario [animal, camélido, joroba]', 3), ('\U0001f999', 'llama [camélido]', 1), ('🐐', 'cabra [animal]', 1), ('🐑', 'oveja [animal]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)

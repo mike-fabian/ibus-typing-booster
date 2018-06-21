@@ -105,6 +105,8 @@ extradata_DATA = \
 	sq.xml \
 	sr.xml \
 	sr_Latn.xml \
+	sr_Cyrl.xml \
+	sr_Cyrl_BA.xml \
 	sv.xml \
 	sw.xml \
 	ta.xml \
