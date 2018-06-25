@@ -158,8 +158,9 @@ class KeyEvent:
                self.name,
                self.unicode,
                self.msymbol)
-            + "control=%s mod1=%s mod5=%s release=%s\n"
-            % (self.control,
+            + "shift=%s control=%s mod1=%s mod5=%s release=%s\n"
+            % (self.shift,
+               self.control,
                self.mod1,
                self.mod5,
                self.release))
@@ -2563,6 +2564,16 @@ class TypingBoosterEngine(IBus.Engine):
             self._update_ui()
             return True
 
+        if (key.val == IBus.KEY_Tab
+            and self._tab_enable
+            and not self.is_lookup_table_enabled_by_tab
+            and not self.is_empty()):
+            self.is_lookup_table_enabled_by_tab = True
+            # update the ui here to see the effect immediately
+            # do not wait for the next keypress:
+            self._update_ui()
+            return True
+
         if key.val in (IBus.KEY_Down, IBus.KEY_KP_Down) and key.control:
             imes = self.get_current_imes()
             if len(imes) > 1:
@@ -2581,29 +2592,31 @@ class TypingBoosterEngine(IBus.Engine):
                     update_dconf=self._remember_last_used_preedit_ime)
                 return True
 
-        if (key.val in (IBus.KEY_Down, IBus.KEY_KP_Down)
+        if (key.val in (IBus.KEY_Down, IBus.KEY_KP_Down, IBus.KEY_Tab)
             and self.get_lookup_table().get_number_of_candidates()):
-            res = self._arrow_down()
+            dummy = self._arrow_down()
             self._update_lookup_table_and_aux()
-            return res
+            return True
 
-        if (key.val in (IBus.KEY_Up, IBus.KEY_KP_Up)
+        if (((key.val in (IBus.KEY_Up, IBus.KEY_KP_Up))
+             or
+             (key.val in (IBus.KEY_Tab, IBus.KEY_ISO_Left_Tab) and key.shift))
             and self.get_lookup_table().get_number_of_candidates()):
-            res = self._arrow_up()
+            dummy = self._arrow_up()
             self._update_lookup_table_and_aux()
-            return res
+            return True
 
         if (key.val in (IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down)
             and self.get_lookup_table().get_number_of_candidates()):
-            res = self._page_down()
+            dummy = self._page_down()
             self._update_lookup_table_and_aux()
-            return res
+            return True
 
         if (key.val in (IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up)
             and self.get_lookup_table().get_number_of_candidates()):
-            res = self._page_up()
+            dummy = self._page_up()
             self._update_lookup_table_and_aux()
-            return res
+            return True
 
         # Select a candidate to commit or remove:
         if (self.get_lookup_table().get_number_of_candidates()
@@ -2655,16 +2668,6 @@ class TypingBoosterEngine(IBus.Engine):
 
         if key.val == IBus.KEY_F10 and key.mod5: # AltGr+F10
             self._start_setup()
-            return True
-
-        if (key.val == IBus.KEY_Tab
-            and self._tab_enable
-            and not self.is_lookup_table_enabled_by_tab
-            and not self.is_empty()):
-            self.is_lookup_table_enabled_by_tab = True
-            # update the ui here to see the effect immediately
-            # do not wait for the next keypress:
-            self._update_ui()
             return True
 
         # These keys may trigger a commit:
