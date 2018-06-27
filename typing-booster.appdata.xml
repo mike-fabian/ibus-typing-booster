@@ -16,6 +16,16 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.0.2" date="2018-06-27" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Better Tab handling, use Tab to switch to the next
+            candidate, not to commit
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.1" date="2018-06-21" urgency="medium">
       <description>
         <ul>

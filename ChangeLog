@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 27 Jun 2018 Released 2.0.2 version
+* Better Tab handling, use Tab to switch to the next candidate, not to commit
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 21 Jun 2018 Released 2.0.1 version
 * Update translations from zanata (ja updated)
 * Update emoji annotations from CLDR
