@@ -1,8 +1,8 @@
 Name:       ibus-typing-booster
-Version:    1.5.34
-Release:    5%{?dist}
+Version:    2.0.2
+Release:    1%{?dist}
 Summary:    A completion input method
-License:    GPLv3+
+License:    GPLv3+, ASL 2.0
 Group:      System Environment/Libraries
 URL:        https://mike-fabian.github.io/ibus-typing-booster/
 Source0:    https://github.com/mike-fabian/ibus-typing-booster/releases/download/%{version}/ibus-typing-booster-%{version}.tar.gz
@@ -107,19 +107,18 @@ pushd engine
 popd
 eval $(dbus-launch --sh-syntax)
 dconf dump /
-dconf write /desktop/ibus/engine/typing-booster/typing-booster-de-de/offtherecord false
-dconf write /desktop/ibus/engine/typing-booster/typing-booster-de-de/usedigitsasselectkeys true
-dconf write /desktop/ibus/engine/typing-booster/typing-booster-de-de/tabenable false
-dconf write /desktop/ibus/engine/typing-booster/typing-booster-de-de/inputmethod "'NoIme'"
-dconf write /desktop/ibus/engine/typing-booster/typing-booster-de-de/adddirectinput false
-dconf write /desktop/ibus/engine/typing-booster/typing-booster-de-de/rememberlastusedpreeditime true
-dconf write /desktop/ibus/engine/typing-booster/typing-booster-de-de/mincharcomplete 1
-dconf write /desktop/ibus/engine/typing-booster/typing-booster-de-de/dictionary "'en_US'"
-dconf write /desktop/ibus/engine/typing-booster/typing-booster-de-de/emojipredictions true
-dconf write /desktop/ibus/engine/typing-booster/typing-booster-de-de/autocommitcharacters "''"
-dconf write /desktop/ibus/engine/typing-booster/typing-booster-de-de/pagesize 6
-dconf write /desktop/ibus/engine/typing-booster/typing-booster-de-de/shownumberofcandidates true
-dconf write /desktop/ibus/engine/typing-booster/typing-booster-de-de/showstatusinfoinaux true
+dconf write /desktop/ibus/engine/typing-booster/offtherecord false
+dconf write /desktop/ibus/engine/typing-booster/usedigitsasselectkeys true
+dconf write /desktop/ibus/engine/typing-booster/tabenable false
+dconf write /desktop/ibus/engine/typing-booster/inputmethod "'NoIme'"
+dconf write /desktop/ibus/engine/typing-booster/rememberlastusedpreeditime true
+dconf write /desktop/ibus/engine/typing-booster/mincharcomplete 1
+dconf write /desktop/ibus/engine/typing-booster/dictionary "'en_US'"
+dconf write /desktop/ibus/engine/typing-booster/emojipredictions true
+dconf write /desktop/ibus/engine/typing-booster/autocommitcharacters "''"
+dconf write /desktop/ibus/engine/typing-booster/pagesize 6
+dconf write /desktop/ibus/engine/typing-booster/shownumberofcandidates true
+dconf write /desktop/ibus/engine/typing-booster/showstatusinfoinaux true
 dconf dump /
 ibus-daemon -drx
 make check || cat ./tests/test-suite.log
@@ -137,6 +136,14 @@ make check || cat ./tests/test-suite.log
 %{_datadir}/%{name}
 %{_datadir}/metainfo/typing-booster.appdata.xml
 %{_datadir}/ibus/component/typing-booster.xml
+%{_datadir}/icons/hicolor/16x16/apps/ibus-typing-booster.png
+%{_datadir}/icons/hicolor/22x22/apps/ibus-typing-booster.png
+%{_datadir}/icons/hicolor/32x32/apps/ibus-typing-booster.png
+%{_datadir}/icons/hicolor/48x48/apps/ibus-typing-booster.png
+%{_datadir}/icons/hicolor/64x64/apps/ibus-typing-booster.png
+%{_datadir}/icons/hicolor/128x128/apps/ibus-typing-booster.png
+%{_datadir}/icons/hicolor/256x256/apps/ibus-typing-booster.png
+%{_datadir}/icons/hicolor/scalable/apps/ibus-typing-booster.svg
 %{_libexecdir}/ibus-engine-typing-booster
 %{_libexecdir}/ibus-setup-typing-booster
 %{_datadir}/applications/ibus-setup-typing-booster.desktop
@@ -147,7 +154,69 @@ make check || cat ./tests/test-suite.log
 
 
 %changelog
-* Mon Jan 22 2018 Mike FABIAN <mfabian@redhat.com> - 1.5.34-5
+* Wed Jun 27 2018 Mike FABIAN <mfabian@redhat.com> - 2.0.2-1
+- Update to 2.0.2
+- Better Tab handling, use Tab to switch to the next candidate, not to commit
+
+* Thu Jun 21 2018 Mike FABIAN <mfabian@redhat.com> - 2.0.1-1
+- Update to 2.0.1
+- Update translations from zanata (ja updated)
+- Update emoji annotations from CLDR
+- Fix some bugs in the usage of “prefix” for prefixes other than “/usr” (For FreeBSD)
+- Make itb_util.get_ime_help() work on FreeBSD
+- Update UnicodeData.txt to Unicode 11.0.0
+- Remove useless 't-nil vi-base': 'vi-base.mim', from M17N_INPUT_METHODS
+- Remove extra space in entry for sa-IAST input method to make it work
+- Show in the setup tool in the input listbox whether minput_open_im() succeeded.
+- Use the rocket icon emoji_u1f680.svg from the “Noto Color Emoji” font
+
+* Mon May 28 2018 Mike FABIAN <mfabian@redhat.com> - 2.0.0-1
+- Update to 2.0.0
+- Update translations because of the merge of the engines (de, pl, uk updated)
+- Update emoji annotations from CLDR
+- Do not hardcode icon names in desktop files
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/17)
+- Change the default for “Unicode symbols and emoji predictions” to “False”
+- Merge all typing-booster engines into one
+- Change the UI of the setup tool to make it possible to select
+  multiple input methods and dictionaries
+- Move the buttons to learn from a file and to delete learned data to the options tab
+- Use the same “About” dialog in the setup tool as in emoji-picker
+
+* Tue May 22 2018 Mike FABIAN <mfabian@redhat.com> - 1.5.38-2
+- Update to 1.5.38
+- Refresh french translation (thanks to Thierry Thomas)
+- Mark comments in the emoji-picker about dialog as translatable
+
+* Mon May 14 2018 Mike FABIAN <mfabian@redhat.com> - 1.5.37-1
+- Update to 1.5.37
+- Update translations from Zanata (pl and uk updated)
+- Make “Add direct input” option work correctly when
+  “Remember last preedit input method” option is off
+- Fix test case for Korean
+- Rewrite setup UI completely in Python, without using Glade
+- Fix format string in debug message when a dictionary .aff file has no encoding
+  (Resolves: rhbz#1575659)
+- Return False in read_training_data_from_file() if file cannot be opened
+
+* Tue Apr 10 2018 Mike FABIAN <mfabian@redhat.com> - 1.5.36-1
+- Update to 1.5.36
+- Make the default for self.show_status_info_in_auxiliary_text False
+  (Resolves: rhbz#156435)
+- Adapt hunspell_suggest.py to work with pyhunspell 0.5.4
+
+* Wed Mar 07 2018 Mike FABIAN <mfabian@redhat.com> - 1.5.35-1
+- Update to 1.5.35
+- Update translations from zanata (es, pl and uk updated)
+- Update UnicodeData.txt to UnicodeData-11.0.0d13.txt
+- Read also the emoji names from the emoji-test.txt file
+- Update Unicode emoji data to a prerelease of Unicode Emoji Data 11.0
+- Fix PyGTKDeprecationWarning: Using positional arguments with the GObject constructor has been deprecat
+-d.
+- Add “Twemoji” as a good colour emoji font to the emoji-picker font list
+- Don’t show the languages en_001 and  es_419 in the browsing treeview
+- Use romaji=True by default in EmojiMatcher
+- Update emoji annotations from CLDR
 - Fix Source URL in spec file, fedorahosted is retired.
 - Use gzip -n to not include build timestamps in .gz headers
 
