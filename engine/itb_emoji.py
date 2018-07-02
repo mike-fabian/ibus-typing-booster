@@ -544,7 +544,7 @@ class EmojiMatcher():
                 '_load_unicode_data(): could not find "%s" in "%s"\n'
                 %(basenames, dirnames))
             return
-        with open_function(path, mode='rt') as unicode_data_file:
+        with open_function(path, mode='rt', encoding='utf-8') as unicode_data_file:
             for line in unicode_data_file.readlines():
                 if not line.strip():
                     continue
@@ -589,7 +589,7 @@ class EmojiMatcher():
                 '_load_unicode_emoji_data(): could not find "%s" in "%s"\n'
                 %(basenames, dirnames))
             return
-        with open_function(path, mode='rt') as unicode_emoji_data_file:
+        with open_function(path, mode='rt', encoding='utf-8') as unicode_emoji_data_file:
             for line in unicode_emoji_data_file.readlines():
                 unicode_version = ''
                 pattern = re.compile(
@@ -632,7 +632,7 @@ class EmojiMatcher():
                 '_load_unicode_emoji_sequences(): could not find "%s" in "%s"\n'
                 %(basenames, dirnames))
             return
-        with open_function(path, mode='rt') as unicode_emoji_sequences_file:
+        with open_function(path, mode='rt', encoding='utf-8') as unicode_emoji_sequences_file:
             for line in unicode_emoji_sequences_file.readlines():
                 unicode_version = ''
                 pattern = re.compile(
@@ -675,7 +675,7 @@ class EmojiMatcher():
                 '_load_unicode_emoji_zwj_sequences(): could not find "%s" in "%s"\n'
                 %(basenames, dirnames))
             return
-        with open_function(path, mode='rt') as unicode_emoji_zwj_sequences_file:
+        with open_function(path, mode='rt', encoding='utf-8') as unicode_emoji_zwj_sequences_file:
             for line in unicode_emoji_zwj_sequences_file.readlines():
                 unicode_version = ''
                 pattern = re.compile(
@@ -730,7 +730,7 @@ class EmojiMatcher():
                 '_load_unicode_emoji_test(): could not find "%s" in "%s"\n'
                 %(basenames, dirnames))
             return
-        with open_function(path, mode='rt') as unicode_emoji_test_file:
+        with open_function(path, mode='rt', encoding='utf-8') as unicode_emoji_test_file:
             group = ''
             subgroup = ''
             cldr_order = 0
@@ -811,7 +811,7 @@ class EmojiMatcher():
                 '_load_emojione_data(): could not find "%s" in "%s"\n'
                 %(basenames, dirnames))
             return
-        with open_function(path, mode='rt') as emoji_one_file:
+        with open_function(path, mode='rt', encoding='utf-8') as emoji_one_file:
             emojione = json.load(emoji_one_file)
         if '1f600' not in emojione:
             emojione_version = 2
@@ -1020,7 +1020,7 @@ class EmojiMatcher():
         # but only the fallback 'es' was really found):
         language = os.path.basename(
             path).replace('.gz', '').replace('.xml', '')
-        with open_function(path, mode='rt') as cldr_annotation_file:
+        with open_function(path, mode='rt', encoding='utf-8') as cldr_annotation_file:
             pattern = re.compile(
                 r'.*<annotation cp="(?P<emojistring>[^"]+)"'
                 +r'\s*(?P<tts>type="tts"){0,1}'
