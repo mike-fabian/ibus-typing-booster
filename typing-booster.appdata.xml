@@ -16,6 +16,28 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.1.0" date="2018-07-18" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            emoji-picker: Show a concise description of a selected
+            emoji in the header bar
+          </li>
+          <li>
+            Update the setup UI when settings are changed outside of
+            the setup UI
+          </li>
+          <li>
+            Migrate IBusConfig to GSettings (The old settings are
+            unfortunately lost, so one has to open the setup tool
+            and recreate ones favourite settings).
+          </li>
+          <li>
+            Read emoji data files always in UTF-8
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.2" date="2018-06-27" urgency="medium">
       <description>
         <ul>
