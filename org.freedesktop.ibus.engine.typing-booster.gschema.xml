@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema path="/org/freedesktop/ibus/engine/typing-booster/"
+          id="org.freedesktop.ibus.engine.typing-booster">
+    <key name="qtimmoduleworkaround" type="b">
+      <default>false</default>
+      <summary>Use a workaround for a bug in Qt im module</summary>
+      <description>
+        Use a workaround for bugs in the input method modules of Qt4
+        and Qt5. Attention, although this workaround makes it work
+        better when the Qt input modules are used, it causes problems
+        when XIM is used. I.e. the XIM module of Qt4 will not work
+        well when this workaround is enabled and input via XIM into
+        X11 programs like xterm will not work well either.
+      </description>
+    </key>
+    <key name="arrowkeysreopenpreedit" type="b">
+      <default>false</default>
+      <summary>Arrow keys can reopen a preedit</summary>
+      <description>
+        Whether it is allowed to reopen a preedit when the cursor
+        reaches a word boundary after moving it with the arrow
+        keys. Enabling this option is useful to correct already
+        committed words. But it is quite buggy at the moment and how
+        well it works depends on repetition speed of the arrow keys
+        and system load. Because it is buggy, this option is off by
+        default.
+      </description>
+    </key>
+    <key name="emojipredictions" type="b">
+      <default>false</default>
+      <summary>Unicode symbols and emoji predictions</summary>
+      <description>
+        Whether Unicode symbols and emoji should be included in the
+        predictions. Emoji are pictographs like ☺♨⛵…. Unicode symbols
+        are other symbols like mathematical symbols (∀∑∯…), arrows
+        (←↑↔…), currency symbols (€₹₺…), braille patterns (⠥⠩…), and
+        many other symbols. These are technically not emoji but
+        nevertheless useful symbols.
+      </description>
+    </key>
+    <key name="offtherecord" type="b">
+      <default>false</default>
+      <summary>Off the record mode</summary>
+      <description>
+        While “Off the record” mode is on, learning from user input is
+        disabled. If learned user input is available, predictions are
+        usually much better than predictions using only
+        dictionaries. Therefore, one should use this option
+        sparingly. Only if one wants to avoid saving secret user input
+        to disk it might make sense to use this option temporarily.
+      </description>
+    </key>
+    <key name="autocommitcharacters" type="s">
+      <default>''</default>
+      <summary>Auto commit characters</summary>
+      <description>
+        The characters in this list cause the preedit to be committed
+        automatically, followed by a space.  For example, if “.” is an
+        auto commit character, this saves you typing a space manually
+        after the end of a sentence. You can freely edit this list, a
+        reasonable value might be “.,;:?!)”. You should not add
+        characters to that list which are needed by your input method,
+        for example if you use Latin-Pre (t-latn-pre) it would be a
+        bad idea to add “.” to that list because it would prevent you
+        from typing “.s” to get “ṡ”. You can also disable this feature
+        completely by making the list empty (which is the default).
+      </description>
+    </key>
+    <key name="tabenable" type="b">
+      <default>false</default>
+      <summary>Enable suggestions by Tab key</summary>
+      <description>
+        If this option is on, suggestions are not shown by
+        default. Typing Tab is then necessary to show the list of
+        suggestions. After a commit the suggestions are hidden again
+        until the next Tab key is typed.
+      </description>
+    </key>
+    <key name="rememberlastusedpreeditime" type="b">
+      <default>false</default>
+      <summary>Remember last used preedit input method</summary>
+      <description>
+        If more then one input method is used at the same time, one of
+        them is used for the preedit.  Which input method is used for
+        the preedit can be changed via the menu or via shortcut
+        keys. If this option is enabled, such a change is remembered
+        even if the session is restarted.
+      </description>
+    </key>
+    <key name="pagesize" type="i">
+      <default>6</default>
+      <summary>Candidate window page size</summary>
+      <description>
+        How many suggestion candidates to show in one page of the
+        candidate list.
+      </description>
+    </key>
+    <key name="lookuptableorientation" type="i">
+      <default>1</default>
+      <summary>Candidate window orientation</summary>
+      <description>
+        Whether the candidate window should be drawn horizontally or
+        vertically.
+      </description>
+    </key>
+    <key name="mincharcomplete" type="i">
+      <default>1</default>
+      <summary>Minimum number of chars for completion</summary>
+      <description>
+        Show no suggestions when less than this number of characters
+        have been typed.
+      </description>
+    </key>
+    <key name="shownumberofcandidates" type="b">
+      <default>false</default>
+      <summary>Display total number of candidates</summary>
+      <description>
+        Display how many candidates there are and which one is
+        selected on top of the list of candidates.
+      </description>
+    </key>
+    <key name="showstatusinfoinaux" type="b">
+      <default>false</default>
+      <summary>Show status info in auxiliary text</summary>
+      <description>
+        Show in the auxiliary text whether “Emoji prediction” mode and
+        “Off the record” mode are on or off and show which input
+        method is currently used for the preëdit. The auxiliary text
+        is an optional line of text displayed above the candidate
+        list.
+      </description>
+    </key>
+    <key name="usedigitsasselectkeys" type="b">
+      <default>true</default>
+      <summary>Use digits as select keys</summary>
+      <description>
+        Use the regular digits 1-9 as select keys. If that option is
+        on, numbers can only by typed while no suggestions are
+        shown. Therefore, completions for numbers cannot be
+        suggested. And typing words containing numbers, like “A4” is
+        more difficult as typing “4” would select the 4th
+        suggestion. On the other hand, selecting suggestions using 1-9
+        is easier then using the always enabled select keys F1-F9 as
+        the latter keys are farther away from the fingers.
+      </description>
+    </key>
+    <key name="inputmethod" type="s">
+      <default>''</default>
+      <summary>A list of inputmethods to use</summary>
+      <description>
+        Comma separated list of m17n input methods to use.
+      </description>
+    </key>
+    <key name="dictionary" type="s">
+      <default>''</default>
+      <summary>A list of dictionaries to use</summary>
+      <description>
+        Comma separated list of dictionaries to use.
+      </description>
+    </key>
+    <key name="dictionaryinstalltimestamp" type="s">
+      <default>''</default>
+      <summary>Time when a dictionary last was installed</summary>
+      <description>
+        If that time stamp changes, reload all dictionaries.
+      </description>
+    </key>
+  </schema>
+</schemalist>

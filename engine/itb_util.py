@@ -1837,30 +1837,6 @@ def contains_letter(text):
             return True
     return False
 
-def config_section_normalize(section):
-    '''Replaces “_:” with “-” in the dconf section and converts to lower case
-
-    :param section: The name of the dconf section
-    :type section: string
-    :rtype: string
-
-    To make the comparison of the dconf sections work correctly.
-
-    I avoid using .lower() here because it is locale dependent, when
-    using .lower() this would not achieve the desired effect of
-    comparing the dconf sections case insentively in some locales, it
-    would fail for example if Turkish locale (tr_TR.UTF-8) is set.
-
-    Examples:
-
-    >>> config_section_normalize('Foo_bAr:Baz')
-    'foo-bar-baz'
-    '''
-    return re.sub(r'[_:]', r'-', section).translate(
-        bytes.maketrans(
-            bytes(string.ascii_uppercase.encode('ascii')),
-            bytes(string.ascii_lowercase.encode('ascii'))))
-
 def variant_to_value(variant):
     '''
     Convert a GLib variant to a value

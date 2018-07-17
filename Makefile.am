@@ -41,6 +41,24 @@ appdata_DATA = \
 
 appdatadir = $(datadir)/metainfo
 
+schemas_DATA = \
+	org.freedesktop.ibus.engine.typing-booster.gschema.xml
+	$(NULL)
+
+schemasdir = $(datadir)/glib-2.0/schemas/
+
+install-data-hook:
+	if test -z "$(DESTDIR)"; then \
+	    glib-compile-schemas $(schemasdir); \
+	fi
+
+uninstall-hook:
+	SCHEMAS_FILES=`ls $(schemasdir)/*.gschema.xml` || true;         \
+	if test -z "$$SCHEMAS_FILES" &&                                 \
+	    test -f $(schemasdir)/gschemas.compiled; then               \
+	    rm $(schemasdir)/gschemas.compiled;                         \
+	fi
+
 AUX_DIST = \
 	config.guess \
 	config.sub \
@@ -60,6 +78,7 @@ MAINTAINERCLEANFILES = \
 EXTRA_DIST = \
 	config.rpath \
 	typing-booster.appdata.xml \
+	$(schemas_DATA) \
 	@PACKAGE_NAME@.spec.fedora \
 	@PACKAGE_NAME@.spec.suse \
 	$(NULL)

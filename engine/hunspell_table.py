@@ -36,6 +36,8 @@ from gettext import dgettext
 from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus
+require_version('Gio', '2.0')
+from gi.repository import Gio
 require_version('GLib', '2.0')
 from gi.repository import GLib
 from m17n_translit import Transliterator
@@ -75,31 +77,6 @@ SPELL_CHECKING_CANDIDATE_SYMBOL = '✓'
 
 # ⭐ U+2B50 WHITE MEDIUM STAR
 USER_DATABASE_CANDIDATE_SYMBOL = '⭐'
-
-def variant_to_value(variant):
-    '''Returns the value of a GLib.Variant
-    '''
-    # pylint: disable=unidiomatic-typecheck
-    if type(variant) != GLib.Variant:
-        return variant
-    type_string = variant.get_type_string()
-    if type_string == 's':
-        return variant.get_string()
-    elif type_string == 'i':
-        return variant.get_int32()
-    elif type_string == 'b':
-        return variant.get_boolean()
-    elif type_string == 'as':
-        # In the latest pygobject3 3.3.4 or later, g_variant_dup_strv
-        # returns the allocated strv but in the previous release,
-        # it returned the tuple of (strv, length)
-        if type(GLib.Variant.new_strv([]).dup_strv()) == tuple:
-            return variant.dup_strv()[0]
-        else:
-            return variant.dup_strv()
-    else:
-        print('error: unknown variant type: %s' %type_string)
-    return variant
 
 def argb(alpha, red, green, blue):
     '''Returns a 32bit ARGB value'''
@@ -194,30 +171,22 @@ class TypingBoosterEngine(IBus.Engine):
         self._bus = bus
         self.db = db
         self._setup_pid = 0
-        self._name = 'typing-booster'
-        self._config_section = itb_util.config_section_normalize(
-            'engine/%s' % self._name)
-        if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                'TypingBoosterEngine.__init__() self._config_section = %s\n'
-                % self._config_section)
-        self._config = self._bus.get_config()
-        self._config.connect('value-changed', self.__config_value_changed_cb)
+        self._gsettings = Gio.Settings(
+            schema='org.freedesktop.ibus.engine.typing-booster')
+        self._gsettings.connect('changed', self.on_gsettings_value_changed)
 
         # Between some events sent to ibus like forward_key_event(),
         # delete_surrounding_text(), commit_text(), a sleep is necessary.
         # Without the sleep, these events may be processed out of order.
         self._ibus_event_sleep_seconds = 0.1
 
-        self._emoji_predictions = variant_to_value(self._config.get_value(
-            self._config_section,
-            'emojipredictions'))
+        self._emoji_predictions = itb_util.variant_to_value(
+            self._gsettings.get_value('emojipredictions'))
         if self._emoji_predictions is None:
             self._emoji_predictions = False # default
 
-        self._min_char_complete = variant_to_value(self._config.get_value(
-            self._config_section,
-            'mincharcomplete'))
+        self._min_char_complete = itb_util.variant_to_value(
+            self._gsettings.get_value('mincharcomplete'))
         if self._min_char_complete is None:
             self._min_char_complete = 1 # default
         if self._min_char_complete < 1:
@@ -225,9 +194,8 @@ class TypingBoosterEngine(IBus.Engine):
         if self._min_char_complete > 9:
             self._min_char_complete = 9 # maximum
 
-        self._page_size = variant_to_value(self._config.get_value(
-            self._config_section,
-            'pagesize'))
+        self._page_size = itb_util.variant_to_value(
+            self._gsettings.get_value('pagesize'))
         if self._page_size is None:
             self._page_size = 6 # reasonable default page size
         if self._page_size < 1:
@@ -235,31 +203,23 @@ class TypingBoosterEngine(IBus.Engine):
         if self._page_size > 9:
             self._page_size = 9 # maximum page size supported
 
-        self._lookup_table_orientation = variant_to_value(
-            self._config.get_value(
-                self._config_section,
-                'lookuptableorientation'))
+        self._lookup_table_orientation = itb_util.variant_to_value(
+            self._gsettings.get_value('lookuptableorientation'))
         if self._lookup_table_orientation is None:
             self._lookup_table_orientation = IBus.Orientation.VERTICAL
 
-        self._show_number_of_candidates = variant_to_value(
-            self._config.get_value(
-                self._config_section,
-                'shownumberofcandidates'))
+        self._show_number_of_candidates = itb_util.variant_to_value(
+            self._gsettings.get_value('shownumberofcandidates'))
         if self._show_number_of_candidates is None:
             self._show_number_of_candidates = False
 
-        self._show_status_info_in_auxiliary_text = variant_to_value(
-            self._config.get_value(
-                self._config_section,
-                'showstatusinfoinaux'))
+        self._show_status_info_in_auxiliary_text = itb_util.variant_to_value(
+            self._gsettings.get_value('showstatusinfoinaux'))
         if self._show_status_info_in_auxiliary_text is None:
             self._show_status_info_in_auxiliary_text = False
 
-        self._use_digits_as_select_keys = variant_to_value(
-            self._config.get_value(
-                self._config_section,
-                'usedigitsasselectkeys'))
+        self._use_digits_as_select_keys = itb_util.variant_to_value(
+            self._gsettings.get_value('usedigitsasselectkeys'))
         if self._use_digits_as_select_keys is None:
             self._use_digits_as_select_keys = True
 
@@ -270,58 +230,49 @@ class TypingBoosterEngine(IBus.Engine):
         self._status = '🚀' # FIXME: apparently not used anymore?
 
         self.is_lookup_table_enabled_by_tab = False
-        self._tab_enable = variant_to_value(self._config.get_value(
-            self._config_section,
-            "tabenable"))
+        self._tab_enable = itb_util.variant_to_value(
+            self._gsettings.get_value('tabenable'))
         if self._tab_enable is None:
             self._tab_enable = False
 
-        self._off_the_record = variant_to_value(self._config.get_value(
-            self._config_section,
-            'offtherecord'))
+        self._off_the_record = itb_util.variant_to_value(
+            self._gsettings.get_value('offtherecord'))
         if self._off_the_record is None:
             self._off_the_record = False # default
 
-        self._qt_im_module_workaround = variant_to_value(self._config.get_value(
-            self._config_section,
-            'qtimmoduleworkaround'))
+        self._qt_im_module_workaround = itb_util.variant_to_value(
+            self._gsettings.get_value('qtimmoduleworkaround'))
         if self._qt_im_module_workaround is None:
             self._qt_im_module_workaround = False # default
 
-        self._arrow_keys_reopen_preedit = variant_to_value(self._config.get_value(
-            self._config_section,
-            'arrowkeysreopenpreedit'))
+        self._arrow_keys_reopen_preedit = itb_util.variant_to_value(
+            self._gsettings.get_value('arrowkeysreopenpreedit'))
         if self._arrow_keys_reopen_preedit is None:
             self._arrow_keys_reopen_preedit = False # default
 
-        self._auto_commit_characters = variant_to_value(self._config.get_value(
-            self._config_section,
-            'autocommitcharacters'))
+        self._auto_commit_characters = itb_util.variant_to_value(
+            self._gsettings.get_value('autocommitcharacters'))
         if not self._auto_commit_characters:
             self._auto_commit_characters = '' # default
 
         self._remember_last_used_preedit_ime = False
-        self._remember_last_used_preedit_ime = variant_to_value(
-            self._config.get_value(
-                self._config_section,
-                "rememberlastusedpreeditime"))
+        self._remember_last_used_preedit_ime = itb_util.variant_to_value(
+            self._gsettings.get_value('rememberlastusedpreeditime'))
         if self._remember_last_used_preedit_ime is None:
             self._remember_last_used_preedit_ime = False
 
-        dictionary = variant_to_value(self._config.get_value(
-            self._config_section,
-            'dictionary'))
+        dictionary = itb_util.variant_to_value(
+            self._gsettings.get_value('dictionary'))
         if dictionary:
-            # There is a dictionary setting in dconf, use that:
+            # There is a dictionary setting in Gsettings, use that:
             self._dictionary_names = [x.strip() for x in dictionary.split(',')]
         else:
-            # There is no dictionary setting in dconf. Get the default
+            # There is no dictionary setting in Gsettings. Get the default
             # dictionaries for the current effective value of
-            # LC_CTYPE and save it to the config:
+            # LC_CTYPE and save it to Gsettings:
             self._dictionary_names = itb_util.get_default_dictionaries(
                 locale.getlocale(category=locale.LC_CTYPE)[0])
-            self._config.set_value(
-                self._config_section,
+            self._gsettings.set_value(
                 'dictionary',
                 GLib.Variant.new_string(','.join(self._dictionary_names)))
         self.db.hunspell_obj.set_dictionary_names(self._dictionary_names[:])
@@ -344,22 +295,20 @@ class TypingBoosterEngine(IBus.Engine):
         # and unused entries can be hidden.
         itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS = 10
         self._current_imes = []
-        # Try to get the selected input methods from dconf:
-        inputmethod = variant_to_value(self._config.get_value(
-            self._config_section,
-            'inputmethod'))
+        # Try to get the selected input methods from Gsettings:
+        inputmethod = itb_util.variant_to_value(
+            self._gsettings.get_value('inputmethod'))
         if inputmethod:
             inputmethods = [x.strip() for x in inputmethod.split(',')]
             for ime in inputmethods:
                 self._current_imes.append(ime)
         if self._current_imes == []:
-            # There is no ime set in dconf, get a default list
+            # There is no ime set in Gsettings, get a default list
             # of input methods for the current effective value of LC_CTYPE
-            # and save it to the config:
+            # and save it to Gsettings:
             self._current_imes = itb_util.get_default_input_methods(
                 locale.getlocale(category=locale.LC_CTYPE)[0])
-            self._config.set_value(
-                self._config_section,
+            self._gsettings.set_value(
                 'inputmethod',
                 GLib.Variant.new_string(','.join(self._current_imes)))
         if len(self._current_imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
@@ -987,17 +936,17 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._current_imes[:]
 
-    def set_current_imes(self, imes, update_dconf=True):
+    def set_current_imes(self, imes, update_gsettings=True):
         '''Set current list of input methods
 
         :param imes: List of input methods
         :type imes: List of strings
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if imes == self._current_imes: # nothing to do
             return
@@ -1026,23 +975,22 @@ class TypingBoosterEngine(IBus.Engine):
             self.preedit_ime_menu, current_mode=0)
         if not self.is_empty():
             self._update_ui()
-        if update_dconf:
-            self._config.set_value(
-                self._config_section,
+        if update_gsettings:
+            self._gsettings.set_value(
                 'inputmethod',
                 GLib.Variant.new_string(','.join(imes)))
 
-    def set_dictionary_names(self, dictionary_names, update_dconf=True):
+    def set_dictionary_names(self, dictionary_names, update_gsettings=True):
         '''Set current dictionary names
 
         :param dictionary_names: List of names of dictionaries to use
         :type dictionary_names: List of strings
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if dictionary_names == self._dictionary_names: # nothing to do
             return
@@ -1057,9 +1005,8 @@ class TypingBoosterEngine(IBus.Engine):
                     languages=dictionary_names)
         if not self.is_empty():
             self._update_ui()
-        if update_dconf:
-            self._config.set_value(
-                self._config_section,
+        if update_gsettings:
+            self._gsettings.set_value(
                 'dictionary',
                 GLib.Variant.new_string(','.join(dictionary_names)))
 
@@ -1322,7 +1269,7 @@ class TypingBoosterEngine(IBus.Engine):
                 imes = self.get_current_imes()
                 self.set_current_imes(
                     [imes[number]] + imes[number+1:] + imes[:number],
-                    update_dconf=self._remember_last_used_preedit_ime)
+                    update_gsettings=self._remember_last_used_preedit_ime)
             return
         if ibus_property.startswith(
                 self.emoji_prediction_mode_menu['key'] + '.'):
@@ -1853,43 +1800,42 @@ class TypingBoosterEngine(IBus.Engine):
         if len(tokens) > 1:
             self._pp_phrase = tokens[-2]
 
-    def set_qt_im_module_workaround(self, mode, update_dconf=True):
+    def set_qt_im_module_workaround(self, mode, update_gsettings=True):
         '''Sets whether the workaround for the qt im module is used or not
 
         :param mode: Whether to use the workaround for the qt im module or not
         :type mode: boolean
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "set_qt_im_module_workaround(%s, update_dconf = %s)\n"
-                %(mode, update_dconf))
+                "set_qt_im_module_workaround(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
         if mode == self._qt_im_module_workaround:
             return
         self._qt_im_module_workaround = mode
-        if update_dconf:
-            self._config.set_value(
-                self._config_section,
+        if update_gsettings:
+            self._gsettings.set_value(
                 'qtimmoduleworkaround',
                 GLib.Variant.new_boolean(mode))
 
-    def toggle_qt_im_module_workaround(self, update_dconf=True):
+    def toggle_qt_im_module_workaround(self, update_gsettings=True):
         '''Toggles whether the workaround for the qt im module is used or not
 
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         self.set_qt_im_module_workaround(
-            not self._qt_im_module_workaround, update_dconf)
+            not self._qt_im_module_workaround, update_gsettings)
 
     def get_qt_im_module_workaround(self):
         '''Returns the current value of the flag to enable
@@ -1899,43 +1845,42 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._qt_im_module_workaround
 
-    def set_arrow_keys_reopen_preedit(self, mode, update_dconf=True):
+    def set_arrow_keys_reopen_preedit(self, mode, update_gsettings=True):
         '''Sets whether the arrow keys are allowed to reopen a preëdit
 
         :param mode: Whether arrow keys can reopen a preëdit
         :type mode: boolean
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "set_arrow_keys_reopen_preedit(%s, update_dconf = %s)\n"
-                %(mode, update_dconf))
+                "set_arrow_keys_reopen_preedit(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
         if mode == self._arrow_keys_reopen_preedit:
             return
         self._arrow_keys_reopen_preedit = mode
-        if update_dconf:
-            self._config.set_value(
-                self._config_section,
+        if update_gsettings:
+            self._gsettings.set_value(
                 'arrowkeysreopenpreedit',
                 GLib.Variant.new_boolean(mode))
 
-    def toggle_arrow_keys_reopen_preedit(self, update_dconf=True):
+    def toggle_arrow_keys_reopen_preedit(self, update_gsettings=True):
         '''Toggles whether arrow keys are allowed to reopen a preëdit
 
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         self.set_arrow_keys_reopen_preedit(
-            not self._arrow_keys_reopen_preedit, update_dconf)
+            not self._arrow_keys_reopen_preedit, update_gsettings)
 
     def get_arrow_keys_reopen_preedit(self):
         '''Returns the current value of the flag whether to
@@ -1945,22 +1890,22 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._arrow_keys_reopen_preedit
 
-    def set_emoji_prediction_mode(self, mode, update_dconf=True):
+    def set_emoji_prediction_mode(self, mode, update_gsettings=True):
         '''Sets the emoji prediction mode
 
         :param mode: Whether to switch emoji prediction on or off
         :type mode: boolean
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "set_emoji_prediction_mode(%s, update_dconf = %s)\n"
-                %(mode, update_dconf))
+                "set_emoji_prediction_mode(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
         if mode == self._emoji_predictions:
             return
         self._emoji_predictions = mode
@@ -1974,24 +1919,23 @@ class TypingBoosterEngine(IBus.Engine):
             self.emoji_matcher = itb_emoji.EmojiMatcher(
                 languages=self._dictionary_names)
         self._update_ui()
-        if update_dconf:
-            self._config.set_value(
-                self._config_section,
+        if update_gsettings:
+            self._gsettings.set_value(
                 'emojipredictions',
                 GLib.Variant.new_boolean(mode))
 
-    def toggle_emoji_prediction_mode(self, update_dconf=True):
+    def toggle_emoji_prediction_mode(self, update_gsettings=True):
         '''Toggles whether emoji predictions are shown or not
 
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         self.set_emoji_prediction_mode(
-            not self._emoji_predictions, update_dconf)
+            not self._emoji_predictions, update_gsettings)
 
     def get_emoji_prediction_mode(self):
         '''Returns the current value of the emoji prediction mode
@@ -2000,47 +1944,46 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._emoji_predictions
 
-    def set_off_the_record_mode(self, mode, update_dconf=True):
+    def set_off_the_record_mode(self, mode, update_gsettings=True):
         '''Sets the “Off the record” mode
 
         :param mode: Whether to prevent saving input to the
                      user database or not
         :type mode: boolean
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "set_off_the_record_mode(%s, update_dconf = %s)\n"
-                %(mode, update_dconf))
+                "set_off_the_record_mode(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
         if mode == self._off_the_record:
             return
         self._off_the_record = mode
         self._init_or_update_property_menu(
             self.off_the_record_mode_menu, mode)
         self._update_ui() # because of the indicator in the auxiliary text
-        if update_dconf:
-            self._config.set_value(
-                self._config_section,
+        if update_gsettings:
+            self._gsettings.set_value(
                 'offtherecord',
                 GLib.Variant.new_boolean(mode))
 
-    def toggle_off_the_record_mode(self, update_dconf=True):
+    def toggle_off_the_record_mode(self, update_gsettings=True):
         '''Toggles whether input is saved to the user database or not
 
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         self.set_off_the_record_mode(
-            not self._off_the_record, update_dconf)
+            not self._off_the_record, update_gsettings)
 
     def get_off_the_record_mode(self):
         '''Returns the current value of the “off the record” mode
@@ -2050,29 +1993,28 @@ class TypingBoosterEngine(IBus.Engine):
         return self._off_the_record
 
     def set_auto_commit_characters(self, auto_commit_characters,
-                                   update_dconf=True):
+                                   update_gsettings=True):
         '''Sets the auto commit characters
 
         :param auto_commit_characters: The characters which trigger a commit
                                        with an extra space
         :type auto_commit_characters: string
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "set_auto_commit_characters(%s, update_dconf = %s)\n"
-                %(auto_commit_characters, update_dconf))
+                "set_auto_commit_characters(%s, update_gsettings = %s)\n"
+                %(auto_commit_characters, update_gsettings))
         if auto_commit_characters == self._auto_commit_characters:
             return
         self._auto_commit_characters = auto_commit_characters
-        if update_dconf:
-            self._config.set_value(
-                self._config_section,
+        if update_gsettings:
+            self._gsettings.set_value(
                 'autocommitcharacters',
                 GLib.Variant.new_string(auto_commit_characters))
 
@@ -2083,28 +2025,27 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._auto_commit_characters
 
-    def set_tab_enable(self, mode, update_dconf=True):
+    def set_tab_enable(self, mode, update_gsettings=True):
         '''Sets the “Tab enable” mode
 
         :param mode: Whether to show a candidate list only when typing Tab
         :type mode: boolean
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "set_tab_enable(%s, update_dconf = %s)\n"
-                %(mode, update_dconf))
+                "set_tab_enable(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
         if mode == self._tab_enable:
             return
         self._tab_enable = mode
-        if update_dconf:
-            self._config.set_value(
-                self._config_section,
+        if update_gsettings:
+            self._gsettings.set_value(
                 'tabenable',
                 GLib.Variant.new_boolean(mode))
 
@@ -2115,29 +2056,28 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._tab_enable
 
-    def set_remember_last_used_preedit_ime(self, mode, update_dconf=True):
+    def set_remember_last_used_preedit_ime(self, mode, update_gsettings=True):
         '''Sets the “Remember last used preëdit ime” mode
 
         :param mode: Whether to remember the input method used last for
                      the preëdit
         :type mode: boolean
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "set_remember_last_used_preedit_ime(%s, update_dconf = %s)\n"
-                %(mode, update_dconf))
+                "set_remember_last_used_preedit_ime(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
         if mode == self._remember_last_used_preedit_ime:
             return
         self._remember_last_used_preedit_ime = mode
-        if update_dconf:
-            self._config.set_value(
-                self._config_section,
+        if update_gsettings:
+            self._gsettings.set_value(
                 'rememberlastusedpreeditime',
                 GLib.Variant.new_boolean(mode))
 
@@ -2149,31 +2089,30 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._remember_last_used_preedit_ime
 
-    def set_page_size(self, page_size, update_dconf=True):
+    def set_page_size(self, page_size, update_gsettings=True):
         '''Sets the page size of the lookup table
 
         :param page_size: The page size of the lookup table
         :type mode: integer >= 1 and <= 9
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "set_page_size(%s, update_dconf = %s)\n"
-                %(page_size, update_dconf))
+                "set_page_size(%s, update_gsettings = %s)\n"
+                %(page_size, update_gsettings))
         if page_size == self._page_size:
             return
         if page_size >= 1 and page_size <= 9:
             self._page_size = page_size
             self._lookup_table.set_page_size(self._page_size)
             self.reset()
-            if update_dconf:
-                self._config.set_value(
-                    self._config_section,
+            if update_gsettings:
+                self._gsettings.set_value(
                     'pagesize',
                     GLib.Variant.new_int32(page_size))
 
@@ -2184,31 +2123,30 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._page_size
 
-    def set_lookup_table_orientation(self, orientation, update_dconf=True):
+    def set_lookup_table_orientation(self, orientation, update_gsettings=True):
         '''Sets the page size of the lookup table
 
         :param orientation: The orientation of the lookup table
         :type mode: integer >= 0 and <= 2
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "set_lookup_table_orientation(%s, update_dconf = %s)\n"
-                %(orientation, update_dconf))
+                "set_lookup_table_orientation(%s, update_gsettings = %s)\n"
+                %(orientation, update_gsettings))
         if orientation == self._lookup_table_orientation:
             return
         if orientation >= 0 and orientation <= 2:
             self._lookup_table_orientation = orientation
             self._lookup_table.set_orientation(self._lookup_table_orientation)
             self.reset()
-            if update_dconf:
-                self._config.set_value(
-                    self._config_section,
+            if update_gsettings:
+                self._gsettings.set_value(
                     'lookuptableorientation',
                     GLib.Variant.new_int32(orientation))
 
@@ -2219,31 +2157,30 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._lookup_table_orientation
 
-    def set_min_char_complete(self, min_char_complete, update_dconf=True):
+    def set_min_char_complete(self, min_char_complete, update_gsettings=True):
         '''Sets the minimum number of characters to try completion
 
         :param min_char_complete: The minimum number of characters
                                   to type before completion is tried.
         :type mode: integer >= 1 and <= 9
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "set_min_char_complete(%s, update_dconf = %s)\n"
-                %(min_char_complete, update_dconf))
+                "set_min_char_complete(%s, update_gsettings = %s)\n"
+                %(min_char_complete, update_gsettings))
         if min_char_complete == self._min_char_complete:
             return
         if min_char_complete >= 1 and min_char_complete <= 9:
             self._min_char_complete = min_char_complete
             self.reset()
-            if update_dconf:
-                self._config.set_value(
-                    self._config_section,
+            if update_gsettings:
+                self._gsettings.set_value(
                     'mincharcomplete',
                     GLib.Variant.new_int32(min_char_complete))
 
@@ -2254,30 +2191,29 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._min_char_complete
 
-    def set_show_number_of_candidates(self, mode, update_dconf=True):
+    def set_show_number_of_candidates(self, mode, update_gsettings=True):
         '''Sets the “Show number of candidates” mode
 
         :param mode: Whether to show the number of candidates
                      in the auxiliary text
         :type mode: boolean
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "set_show_number_of_candidates(%s, update_dconf = %s)\n"
-                %(mode, update_dconf))
+                "set_show_number_of_candidates(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
         if mode == self._show_number_of_candidates:
             return
         self._show_number_of_candidates = mode
         self.reset()
-        if update_dconf:
-            self._config.set_value(
-                self._config_section,
+        if update_gsettings:
+            self._gsettings.set_value(
                 'shownumberofcandidates',
                 GLib.Variant.new_boolean(mode))
 
@@ -2288,7 +2224,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._show_number_of_candidates
 
-    def set_show_status_info_in_auxiliary_text(self, mode, update_dconf=True):
+    def set_show_status_info_in_auxiliary_text(self, mode, update_gsettings=True):
         '''Sets the “Show status info in auxiliary text” mode
 
         :param mode: Whether to show status information in the
@@ -2299,25 +2235,24 @@ class TypingBoosterEngine(IBus.Engine):
                      and which input method is currently used for
                      the preëdit text.
         :type mode: boolean
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "set_show_status_info_in_auxiliary_text"
-                + "(%s, update_dconf = %s)\n"
-                %(mode, update_dconf))
+                + "(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
         if mode == self._show_status_info_in_auxiliary_text:
             return
         self._show_status_info_in_auxiliary_text = mode
         self.reset()
-        if update_dconf:
-            self._config.set_value(
-                self._config_section,
+        if update_gsettings:
+            self._gsettings.set_value(
                 'showstatusinfoinaux',
                 GLib.Variant.new_boolean(mode))
 
@@ -2329,29 +2264,28 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._show_status_info_in_auxiliary_text
 
-    def set_use_digits_as_select_keys(self, mode, update_dconf=True):
+    def set_use_digits_as_select_keys(self, mode, update_gsettings=True):
         '''Sets the “Use digits as select keys” mode
 
         :param mode: Whether to use digits as select keys
         :type mode: boolean
-        :param update_dconf: Whether to write the change to dconf.
-                             Set this to False if this method is
-                             called because the dconf key changed
-                             to avoid endless loops when the dconf
-                             key is changed twice in a short time.
-        :type update_dconf: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "set_use_digits_as_select_keys(%s, update_dconf = %s)\n"
-                %(mode, update_dconf))
+                "set_use_digits_as_select_keys(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
         if mode == self._use_digits_as_select_keys:
             return
         self._use_digits_as_select_keys = mode
         self.reset()
-        if update_dconf:
-            self._config.set_value(
-                self._config_section,
+        if update_gsettings:
+            self._gsettings.set_value(
                 'usedigitsasselectkeys',
                 GLib.Variant.new_boolean(mode))
 
@@ -2580,7 +2514,7 @@ class TypingBoosterEngine(IBus.Engine):
                 # remove the first ime from the list and append it to the end.
                 self.set_current_imes(
                     imes[1:] + imes[:1],
-                    update_dconf=self._remember_last_used_preedit_ime)
+                    update_gsettings=self._remember_last_used_preedit_ime)
                 return True
 
         if key.val in (IBus.KEY_Up, IBus.KEY_KP_Up) and key.control:
@@ -2589,7 +2523,7 @@ class TypingBoosterEngine(IBus.Engine):
                 # remove the last ime in the list and add it in front:
                 self.set_current_imes(
                     imes[-1:] + imes[:-1],
-                    update_dconf=self._remember_last_used_preedit_ime)
+                    update_gsettings=self._remember_last_used_preedit_ime)
                 return True
 
         if (key.val in (IBus.KEY_Down, IBus.KEY_KP_Down, IBus.KEY_Tab)
@@ -3026,68 +2960,67 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_lookup_table_and_aux()
         return res
 
-    def __config_value_changed_cb(self, config, section, name, value):
-        '''This function is called when a value in the dconf settings changes
+    def on_gsettings_value_changed(self, settings, key):
         '''
-        if (itb_util.config_section_normalize(self._config_section)
-            != itb_util.config_section_normalize(section)):
+        Called when a value in the settings has been changed.
+        '''
+        value = itb_util.variant_to_value(self._gsettings.get_value(key))
+        sys.stderr.write('Settings changed: key=%s value=%s\n' %(key, value))
+        if key == 'qtimmoduleworkaround':
+            self.set_qt_im_module_workaround(value, update_gsettings=False)
             return
-        print("config value %(n)s for engine %(en)s changed"
-              %{'n': name, 'en': self._name})
-        value = variant_to_value(value)
-        if name == "qtimmoduleworkaround":
-            self.set_qt_im_module_workaround(value, update_dconf=False)
+        if key == 'arrowkeysreopenpreedit':
+            self.set_arrow_keys_reopen_preedit(value, update_gsettings=False)
             return
-        if name == "arrowkeysreopenpreedit":
-            self.set_arrow_keys_reopen_preedit(value, update_dconf=False)
+        if key == 'emojipredictions':
+            self.set_emoji_prediction_mode(value, update_gsettings=False)
             return
-        if name == "emojipredictions":
-            self.set_emoji_prediction_mode(value, update_dconf=False)
+        if key == 'offtherecord':
+            self.set_off_the_record_mode(value, update_gsettings=False)
             return
-        if name == "offtherecord":
-            self.set_off_the_record_mode(value, update_dconf=False)
+        if key == 'autocommitcharacters':
+            self.set_auto_commit_characters(value, update_gsettings=False)
             return
-        if name == "autocommitcharacters":
-            self.set_auto_commit_characters(value, update_dconf=False)
+        if key == 'tabenable':
+            self.set_tab_enable(value, update_gsettings=False)
             return
-        if name == "tabenable":
-            self.set_tab_enable(value, update_dconf=False)
-            return
-        if name == "rememberlastusedpreeditime":
+        if key == 'rememberlastusedpreeditime':
             self.set_remember_last_used_preedit_ime(
-                value, update_dconf=False)
+                value, update_gsettings=False)
             return
-        if name == "pagesize":
-            self.set_page_size(value, update_dconf=False)
+        if key == 'pagesize':
+            self.set_page_size(value, update_gsettings=False)
             return
-        if name == "lookuptableorientation":
-            self.set_lookup_table_orientation(value, update_dconf=False)
+        if key == 'lookuptableorientation':
+            self.set_lookup_table_orientation(value, update_gsettings=False)
             return
-        if name == "mincharcomplete":
-            self.set_min_char_complete(value, update_dconf=False)
+        if key == 'mincharcomplete':
+            self.set_min_char_complete(value, update_gsettings=False)
             return
-        if name == "shownumberofcandidates":
-            self.set_show_number_of_candidates(value, update_dconf=False)
+        if key == 'shownumberofcandidates':
+            self.set_show_number_of_candidates(value, update_gsettings=False)
             return
-        if name == "showstatusinfoinaux":
+        if key == 'showstatusinfoinaux':
             self.set_show_status_info_in_auxiliary_text(
-                value, update_dconf=False)
+                value, update_gsettings=False)
             return
-        if name == "usedigitsasselectkeys":
-            self.set_use_digits_as_select_keys(value, update_dconf=False)
+        if key == 'usedigitsasselectkeys':
+            self.set_use_digits_as_select_keys(value, update_gsettings=False)
             return
-        if name == "inputmethod":
+        if key == 'inputmethod':
             self.set_current_imes(
-                [x.strip() for x in value.split(',')], update_dconf=False)
+                [x.strip() for x in value.split(',')], update_gsettings=False)
             return
-        if name == "dictionary":
+        if key == 'dictionary':
             self.set_dictionary_names(
-                [x.strip() for x in value.split(',')], update_dconf=False)
+                [x.strip() for x in value.split(',')], update_gsettings=False)
             return
-        if name == "dictionaryinstalltimestamp":
+        if key == 'dictionaryinstalltimestamp':
             # A dictionary has been updated or installed,
             # (re)load all dictionaries:
-            print("Reloading dictionaries ...")
+            print('Reloading dictionaries ...')
             self.db.hunspell_obj.init_dictionaries()
             self.reset()
             return
+        sys.stderr.write('Unknown key\n')
+        return

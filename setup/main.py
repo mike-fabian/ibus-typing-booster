@@ -37,6 +37,8 @@ import dbus.service
 import dbus.glib
 
 from gi import require_version
+require_version('Gio', '2.0')
+from gi.repository import Gio
 require_version('GLib', '2.0')
 from gi.repository import GLib
 
@@ -88,7 +90,7 @@ class SetupUI(Gtk.Window):
     '''
     User interface of the setup tool
     '''
-    def __init__(self, bus):
+    def __init__(self):
         ## fixme: if not self.check_instance():
         ##    dummy_service = SetupService()
         dummy_service = SetupService()
@@ -111,10 +113,10 @@ class SetupUI(Gtk.Window):
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
         self.tabsqlitedb = tabsqlitedb.tabsqlitedb()
-        self.config_section = "engine/typing-booster"
 
-        self.bus = bus
-        self.config = self.bus.get_config()
+        self._gsettings = Gio.Settings(
+            schema='org.freedesktop.ibus.engine.typing-booster')
+        self._gsettings.connect('changed', self.on_gsettings_value_changed)
         self.set_title('🚀 ' + _('Preferences for ibus-typing-booster'))
         # https://tronche.com/gui/x/icccm/sec-4.html#WM_CLASS
         # gnome-shell seems to use the first argument of set_wmclass()
@@ -194,7 +196,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.attach(
             self._tab_enable_checkbutton, 0, 0, 2, 1)
         self.tab_enable = itb_util.variant_to_value(
-            self.config.get_value(self.config_section, 'tabenable'))
+            self._gsettings.get_value('tabenable'))
         if self.tab_enable is None:
             self.tab_enable = False
         if  self.tab_enable is True:
@@ -209,8 +211,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.attach(
             self._show_number_of_candidates_checkbutton, 0, 1, 2, 1)
         self.show_number_of_candidates = itb_util.variant_to_value(
-            self.config.get_value(
-                self.config_section, 'shownumberofcandidates'))
+            self._gsettings.get_value('shownumberofcandidates'))
         if self.show_number_of_candidates is None:
             self.show_number_of_candidates = False
         if  self.show_number_of_candidates is True:
@@ -225,8 +226,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.attach(
             self._show_status_info_in_auxiliary_text_checkbutton, 0, 2, 2, 1)
         self.show_status_info_in_auxiliary_text = itb_util.variant_to_value(
-            self.config.get_value(
-                self.config_section, 'showstatusinfoinaux'))
+            self._gsettings.get_value('showstatusinfoinaux'))
         if self.show_status_info_in_auxiliary_text is None:
             self.show_status_info_in_auxiliary_text = False
         if self.show_status_info_in_auxiliary_text is True:
@@ -241,8 +241,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.attach(
             self._use_digits_as_select_keys_checkbutton, 0, 3, 2, 1)
         self.use_digits_as_select_keys = itb_util.variant_to_value(
-            self.config.get_value(
-                self.config_section, 'usedigitsasselectkeys'))
+            self._gsettings.get_value('usedigitsasselectkeys'))
         if self.use_digits_as_select_keys is None:
             self.use_digits_as_select_keys = True
         if self.use_digits_as_select_keys is True:
@@ -257,8 +256,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.attach(
             self._remember_last_used_preedit_ime_checkbutton, 0, 4, 2, 1)
         self.remember_last_used_predit_ime = itb_util.variant_to_value(
-            self.config.get_value(
-                self.config_section, 'rememberlastusedpreeditime'))
+            self._gsettings.get_value('rememberlastusedpreeditime'))
         if self.remember_last_used_predit_ime is None:
             self.remember_last_used_predit_ime = False
         if  self.remember_last_used_predit_ime is True:
@@ -273,8 +271,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.attach(
             self._emoji_predictions_checkbutton, 0, 5, 2, 1)
         self.emoji_predictions = itb_util.variant_to_value(
-            self.config.get_value(
-                self.config_section, 'emojipredictions'))
+            self._gsettings.get_value('emojipredictions'))
         if self.emoji_predictions is None:
             self.emoji_predictions = False
         if self.emoji_predictions is True:
@@ -289,8 +286,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.attach(
             self._off_the_record_checkbutton, 0, 6, 2, 1)
         self.off_the_record = itb_util.variant_to_value(
-            self.config.get_value(
-                self.config_section, 'offtherecord'))
+            self._gsettings.get_value('offtherecord'))
         if self.off_the_record is None:
             self.off_the_record = False
         if self.off_the_record is True:
@@ -305,8 +301,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.attach(
             self._qt_im_module_workaround_checkbutton, 0, 7, 2, 1)
         self.qt_im_module_workaround = itb_util.variant_to_value(
-            self.config.get_value(
-                self.config_section, 'qtimmoduleworkaround'))
+            self._gsettings.get_value('qtimmoduleworkaround'))
         if self.qt_im_module_workaround is None:
             self.qt_im_module_workaround = False
         if self.qt_im_module_workaround is True:
@@ -321,8 +316,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.attach(
             self._arrow_keys_reopen_preedit_checkbutton, 0, 8, 2, 1)
         self.arrow_keys_reopen_preedit = itb_util.variant_to_value(
-            self.config.get_value(
-                self.config_section, 'arrowkeysreopenpreedit'))
+            self._gsettings.get_value('arrowkeysreopenpreedit'))
         if self.arrow_keys_reopen_preedit is None:
             self.arrow_keys_reopen_preedit = False
         if self.arrow_keys_reopen_preedit is True:
@@ -342,8 +336,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.attach(
             self._auto_commit_characters_entry, 1, 9, 1, 1)
         self.auto_commit_characters = itb_util.variant_to_value(
-            self.config.get_value(
-                self.config_section, 'autocommitcharacters'))
+            self._gsettings.get_value('autocommitcharacters'))
         if not self.auto_commit_characters:
             self.auto_commit_characters = ''
         self._auto_commit_characters_entry.set_text(self.auto_commit_characters)
@@ -363,8 +356,8 @@ class SetupUI(Gtk.Window):
         self._page_size_adjustment.set_range(1.0, 9.0)
         self._options_grid.attach(
             self._page_size_adjustment, 1, 10, 1, 1)
-        self.page_size = itb_util.variant_to_value(self.config.get_value(
-            self.config_section, 'pagesize'))
+        self.page_size = itb_util.variant_to_value(
+            self._gsettings.get_value('pagesize'))
         if self.page_size:
             self._page_size_adjustment.set_value(int(self.page_size))
         else:
@@ -396,8 +389,7 @@ class SetupUI(Gtk.Window):
         self._lookup_table_orientation_combobox.add_attribute(
             renderer_text, "text", 0)
         lookup_table_orientation = itb_util.variant_to_value(
-            self.config.get_value(
-                self.config_section, 'lookuptableorientation'))
+            self._gsettings.get_value('lookuptableorientation'))
         if lookup_table_orientation is None:
             lookup_table_orientation = IBus.Orientation.VERTICAL
         for i, item in enumerate(lookup_table_orientation_store):
@@ -425,7 +417,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.attach(
             self._min_char_complete_adjustment, 1, 12, 1, 1)
         self.min_char_complete = itb_util.variant_to_value(
-            self.config.get_value(self.config_section, 'mincharcomplete'))
+            self._gsettings.get_value('mincharcomplete'))
         if self.min_char_complete:
             self._min_char_complete_adjustment.set_value(
                 int(self.min_char_complete))
@@ -747,8 +739,8 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox.connect(
             'row-selected', self.on_dictionary_selected)
         self._dictionary_names = []
-        dictionary = itb_util.variant_to_value(self.config.get_value(
-            self.config_section, 'dictionary'))
+        dictionary = itb_util.variant_to_value(
+            self._gsettings.get_value('dictionary'))
         if dictionary:
             names = [x.strip() for x in dictionary.split(',')]
             for name in names:
@@ -816,8 +808,8 @@ class SetupUI(Gtk.Window):
         self._input_methods_listbox.connect(
             'row-selected', self.on_input_method_selected)
         self.current_imes = []
-        inputmethod = itb_util.variant_to_value(self.config.get_value(
-            self.config_section, 'inputmethod'))
+        inputmethod = itb_util.variant_to_value(
+            self._gsettings.get_value('inputmethod'))
         if inputmethod:
             inputmethods = [x.strip() for x in inputmethod.split(',')]
             for ime in inputmethods:
@@ -837,9 +829,8 @@ class SetupUI(Gtk.Window):
                 %self.current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
             self.current_imes = (
                 self.current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
-            # Save reduced list of input methods back to config:
-            self.config.set_value(
-                self.config_section,
+            # Save reduced list of input methods back to settings:
+            self._gsettings.set_value(
                 'inputmethod',
                 GLib.Variant.new_string(','.join(self.current_imes)))
         for ime in self.current_imes:
@@ -899,6 +890,13 @@ class SetupUI(Gtk.Window):
         '''
         Gtk.main_quit()
 
+    def on_gsettings_value_changed(self, settings, key):
+        '''
+        Called when a value in the settings has been changed.
+        '''
+        value = itb_util.variant_to_value(self._gsettings.get_value(key))
+        sys.stderr.write('Settings changed: key=%s value=%s\n' %(key, value))
+
     def on_about_button_clicked(self, dummy_button):
         '''
         The “About” button has been clicked
@@ -915,14 +913,12 @@ class SetupUI(Gtk.Window):
         '''
         if widget.get_active():
             self.tab_enable = True
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'tabenable',
                 GLib.Variant.new_boolean(True))
         else:
             self.tab_enable = False
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'tabenable',
                 GLib.Variant.new_boolean(False))
 
@@ -933,14 +929,12 @@ class SetupUI(Gtk.Window):
         '''
         if widget.get_active():
             self.show_number_of_candidates = True
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'shownumberofcandidates',
                 GLib.Variant.new_boolean(True))
         else:
             self.show_number_of_candidates = False
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'shownumberofcandidates',
                 GLib.Variant.new_boolean(False))
 
@@ -951,14 +945,12 @@ class SetupUI(Gtk.Window):
         '''
         if widget.get_active():
             self.show_status_info_in_auxiliary_text = True
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'showstatusinfoinaux',
                 GLib.Variant.new_boolean(True))
         else:
             self.show_status_info_in_auxiliary_text = False
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'showstatusinfoinaux',
                 GLib.Variant.new_boolean(False))
 
@@ -969,14 +961,12 @@ class SetupUI(Gtk.Window):
         '''
         if widget.get_active():
             self.use_digits_as_select_keys = True
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'usedigitsasselectkeys',
                 GLib.Variant.new_boolean(True))
         else:
             self.use_digits_as_select_keys = False
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'usedigitsasselectkeys',
                 GLib.Variant.new_boolean(False))
 
@@ -987,14 +977,12 @@ class SetupUI(Gtk.Window):
         '''
         if widget.get_active():
             self.remember_last_used_predit_ime = True
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'rememberlastusedpreeditime',
                 GLib.Variant.new_boolean(True))
         else:
             self.remember_last_used_predit_ime = False
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'rememberlastusedpreeditime',
                 GLib.Variant.new_boolean(False))
 
@@ -1005,14 +993,12 @@ class SetupUI(Gtk.Window):
         '''
         if widget.get_active():
             self.emoji_predictions = True
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'emojipredictions',
                 GLib.Variant.new_boolean(True))
         else:
             self.emoji_predictions = False
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'emojipredictions',
                 GLib.Variant.new_boolean(False))
 
@@ -1024,14 +1010,12 @@ class SetupUI(Gtk.Window):
         '''
         if widget.get_active():
             self.off_the_record = True
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'offtherecord',
                 GLib.Variant.new_boolean(True))
         else:
             self.off_the_record = False
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'offtherecord',
                 GLib.Variant.new_boolean(False))
 
@@ -1043,14 +1027,12 @@ class SetupUI(Gtk.Window):
         '''
         if widget.get_active():
             self.qt_im_module_workaround = True
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'qtimmoduleworkaround',
                 GLib.Variant.new_boolean(True))
         else:
             self.qt_im_module_workaround = False
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'qtimmoduleworkaround',
                 GLib.Variant.new_boolean(False))
 
@@ -1061,14 +1043,12 @@ class SetupUI(Gtk.Window):
         '''
         if widget.get_active():
             self.arrow_keys_reopen_preedit = True
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'arrowkeysreopenpreedit',
                 GLib.Variant.new_boolean(True))
         else:
             self.arrow_keys_reopen_preedit = False
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'arrowkeysreopenpreedit',
                 GLib.Variant.new_boolean(False))
 
@@ -1077,8 +1057,7 @@ class SetupUI(Gtk.Window):
         The list of characters triggering an auto commit has been changed.
         '''
         self.auto_commit_characters = widget.get_text()
-        self.config.set_value(
-            self.config_section,
+        self._gsettings.set_value(
             'autocommitcharacters',
             GLib.Variant.new_string(self.auto_commit_characters))
 
@@ -1087,8 +1066,7 @@ class SetupUI(Gtk.Window):
         The page size of the lookup table has been changed.
         '''
         page_size = self._page_size_adjustment.get_value()
-        self.config.set_value(
-            self.config_section,
+        self._gsettings.set_value(
             'pagesize',
             GLib.Variant.new_int32(page_size))
 
@@ -1101,8 +1079,7 @@ class SetupUI(Gtk.Window):
         if tree_iter != None:
             model = widget.get_model()
             orientation = model[tree_iter][1]
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'lookuptableorientation',
                 GLib.Variant.new_int32(orientation))
 
@@ -1113,8 +1090,7 @@ class SetupUI(Gtk.Window):
         '''
         min_char_complete = (
             self._min_char_complete_adjustment.get_value())
-        self.config.set_value(
-            self.config_section,
+        self._gsettings.set_value(
             'mincharcomplete',
             GLib.Variant.new_int32(min_char_complete))
 
@@ -1134,8 +1110,7 @@ class SetupUI(Gtk.Window):
         if not name or name in self._dictionary_names:
             return
         self._dictionary_names = [name] + self._dictionary_names
-        self.config.set_value(
-            self.config_section,
+        self._gsettings.set_value(
             'dictionary',
             GLib.Variant.new_string(','.join(self._dictionary_names)))
         self._fill_dictionaries_listbox()
@@ -1257,8 +1232,7 @@ class SetupUI(Gtk.Window):
         self._dictionary_names = (
             self._dictionary_names[:index]
             + self._dictionary_names[index + 1:])
-        self.config.set_value(
-            self.config_section,
+        self._gsettings.set_value(
             'dictionary',
             GLib.Variant.new_string(','.join(self._dictionary_names)))
         self._fill_dictionaries_listbox()
@@ -1283,8 +1257,7 @@ class SetupUI(Gtk.Window):
             + [self._dictionary_names[index]]
             + [self._dictionary_names[index - 1]]
             + self._dictionary_names[index + 1:])
-        self.config.set_value(
-            self.config_section,
+        self._gsettings.set_value(
             'dictionary',
             GLib.Variant.new_string(','.join(self._dictionary_names)))
         self._fill_dictionaries_listbox()
@@ -1311,8 +1284,7 @@ class SetupUI(Gtk.Window):
             + [self._dictionary_names[index + 1]]
             + [self._dictionary_names[index]]
             + self._dictionary_names[index + 2:])
-        self.config.set_value(
-            self.config_section,
+        self._gsettings.set_value(
             'dictionary',
             GLib.Variant.new_string(','.join(self._dictionary_names)))
         self._fill_dictionaries_listbox()
@@ -1343,8 +1315,7 @@ class SetupUI(Gtk.Window):
             # Write a timestamp to dconf to trigger the callback
             # for changed dconf values in the engine and reload
             # the dictionaries:
-            self.config.set_value(
-                self.config_section,
+            self._gsettings.set_value(
                 'dictionaryinstalltimestamp',
                 GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
 
@@ -1392,8 +1363,7 @@ class SetupUI(Gtk.Window):
         if not ime or ime in self.current_imes:
             return
         self.current_imes = [ime] + self.current_imes
-        self.config.set_value(
-            self.config_section,
+        self._gsettings.set_value(
             'inputmethod',
             GLib.Variant.new_string(','.join(self.current_imes)))
         self._fill_input_methods_listbox()
@@ -1528,8 +1498,7 @@ class SetupUI(Gtk.Window):
         self.current_imes = (
             self.current_imes[:index]
             + self.current_imes[index + 1:])
-        self.config.set_value(
-            self.config_section,
+        self._gsettings.set_value(
             'inputmethod',
             GLib.Variant.new_string(','.join(self.current_imes)))
         self._fill_input_methods_listbox()
@@ -1554,8 +1523,7 @@ class SetupUI(Gtk.Window):
             + [self.current_imes[index]]
             + [self.current_imes[index - 1]]
             + self.current_imes[index + 1:])
-        self.config.set_value(
-            self.config_section,
+        self._gsettings.set_value(
             'inputmethod',
             GLib.Variant.new_string(','.join(self.current_imes)))
         self._fill_input_methods_listbox()
@@ -1582,8 +1550,7 @@ class SetupUI(Gtk.Window):
             + [self.current_imes[index + 1]]
             + [self.current_imes[index]]
             + self.current_imes[index + 2:])
-        self.config.set_value(
-            self.config_section,
+        self._gsettings.set_value(
             'inputmethod',
             GLib.Variant.new_string(','.join(self.current_imes)))
         self._fill_input_methods_listbox()
@@ -1889,5 +1856,5 @@ if __name__ == '__main__':
         DIALOG.run()
         DIALOG.destroy()
         sys.exit(1)
-    SETUP_UI = SetupUI(IBus.Bus())
+    SETUP_UI = SetupUI()
     Gtk.main()
