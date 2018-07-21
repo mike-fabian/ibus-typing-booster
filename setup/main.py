@@ -195,11 +195,11 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_tab_enable_checkbutton)
         self._options_grid.attach(
             self._tab_enable_checkbutton, 0, 0, 2, 1)
-        self.tab_enable = itb_util.variant_to_value(
+        self._tab_enable = itb_util.variant_to_value(
             self._gsettings.get_value('tabenable'))
-        if self.tab_enable is None:
-            self.tab_enable = False
-        if  self.tab_enable is True:
+        if self._tab_enable is None:
+            self._tab_enable = False
+        if  self._tab_enable is True:
             self._tab_enable_checkbutton.set_active(True)
 
         self._show_number_of_candidates_checkbutton = Gtk.CheckButton(
@@ -210,11 +210,11 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_show_number_of_candidates_checkbutton)
         self._options_grid.attach(
             self._show_number_of_candidates_checkbutton, 0, 1, 2, 1)
-        self.show_number_of_candidates = itb_util.variant_to_value(
+        self._show_number_of_candidates = itb_util.variant_to_value(
             self._gsettings.get_value('shownumberofcandidates'))
-        if self.show_number_of_candidates is None:
-            self.show_number_of_candidates = False
-        if  self.show_number_of_candidates is True:
+        if self._show_number_of_candidates is None:
+            self._show_number_of_candidates = False
+        if  self._show_number_of_candidates is True:
             self._show_number_of_candidates_checkbutton.set_active(True)
 
         self._show_status_info_in_auxiliary_text_checkbutton = Gtk.CheckButton(
@@ -225,11 +225,11 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_show_status_info_in_auxiliary_text_checkbutton)
         self._options_grid.attach(
             self._show_status_info_in_auxiliary_text_checkbutton, 0, 2, 2, 1)
-        self.show_status_info_in_auxiliary_text = itb_util.variant_to_value(
+        self._show_status_info_in_auxiliary_text = itb_util.variant_to_value(
             self._gsettings.get_value('showstatusinfoinaux'))
-        if self.show_status_info_in_auxiliary_text is None:
-            self.show_status_info_in_auxiliary_text = False
-        if self.show_status_info_in_auxiliary_text is True:
+        if self._show_status_info_in_auxiliary_text is None:
+            self._show_status_info_in_auxiliary_text = False
+        if self._show_status_info_in_auxiliary_text is True:
             self._show_status_info_in_auxiliary_text_checkbutton.set_active(True)
 
         self._use_digits_as_select_keys_checkbutton = Gtk.CheckButton(
@@ -240,11 +240,11 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_use_digits_as_select_keys_checkbutton)
         self._options_grid.attach(
             self._use_digits_as_select_keys_checkbutton, 0, 3, 2, 1)
-        self.use_digits_as_select_keys = itb_util.variant_to_value(
+        self._use_digits_as_select_keys = itb_util.variant_to_value(
             self._gsettings.get_value('usedigitsasselectkeys'))
-        if self.use_digits_as_select_keys is None:
-            self.use_digits_as_select_keys = True
-        if self.use_digits_as_select_keys is True:
+        if self._use_digits_as_select_keys is None:
+            self._use_digits_as_select_keys = True
+        if self._use_digits_as_select_keys is True:
             self._use_digits_as_select_keys_checkbutton.set_active(True)
 
         self._remember_last_used_preedit_ime_checkbutton = Gtk.CheckButton(
@@ -255,11 +255,11 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_remember_last_used_preedit_ime_checkbutton)
         self._options_grid.attach(
             self._remember_last_used_preedit_ime_checkbutton, 0, 4, 2, 1)
-        self.remember_last_used_predit_ime = itb_util.variant_to_value(
+        self._remember_last_used_preedit_ime = itb_util.variant_to_value(
             self._gsettings.get_value('rememberlastusedpreeditime'))
-        if self.remember_last_used_predit_ime is None:
-            self.remember_last_used_predit_ime = False
-        if  self.remember_last_used_predit_ime is True:
+        if self._remember_last_used_preedit_ime is None:
+            self._remember_last_used_preedit_ime = False
+        if  self._remember_last_used_preedit_ime is True:
             self._remember_last_used_preedit_ime_checkbutton.set_active(True)
 
         self._emoji_predictions_checkbutton = Gtk.CheckButton(
@@ -270,11 +270,11 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_emoji_predictions_checkbutton)
         self._options_grid.attach(
             self._emoji_predictions_checkbutton, 0, 5, 2, 1)
-        self.emoji_predictions = itb_util.variant_to_value(
+        self._emoji_predictions = itb_util.variant_to_value(
             self._gsettings.get_value('emojipredictions'))
-        if self.emoji_predictions is None:
-            self.emoji_predictions = False
-        if self.emoji_predictions is True:
+        if self._emoji_predictions is None:
+            self._emoji_predictions = False
+        if self._emoji_predictions is True:
             self._emoji_predictions_checkbutton.set_active(True)
 
         self._off_the_record_checkbutton = Gtk.CheckButton(
@@ -285,11 +285,11 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_off_the_record_checkbutton)
         self._options_grid.attach(
             self._off_the_record_checkbutton, 0, 6, 2, 1)
-        self.off_the_record = itb_util.variant_to_value(
+        self._off_the_record = itb_util.variant_to_value(
             self._gsettings.get_value('offtherecord'))
-        if self.off_the_record is None:
-            self.off_the_record = False
-        if self.off_the_record is True:
+        if self._off_the_record is None:
+            self._off_the_record = False
+        if self._off_the_record is True:
             self._off_the_record_checkbutton.set_active(True)
 
         self._qt_im_module_workaround_checkbutton = Gtk.CheckButton(
@@ -300,11 +300,11 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_qt_im_module_workaround_checkbutton)
         self._options_grid.attach(
             self._qt_im_module_workaround_checkbutton, 0, 7, 2, 1)
-        self.qt_im_module_workaround = itb_util.variant_to_value(
+        self._qt_im_module_workaround = itb_util.variant_to_value(
             self._gsettings.get_value('qtimmoduleworkaround'))
-        if self.qt_im_module_workaround is None:
-            self.qt_im_module_workaround = False
-        if self.qt_im_module_workaround is True:
+        if self._qt_im_module_workaround is None:
+            self._qt_im_module_workaround = False
+        if self._qt_im_module_workaround is True:
             self._qt_im_module_workaround_checkbutton.set_active(True)
 
         self._arrow_keys_reopen_preedit_checkbutton = Gtk.CheckButton(
@@ -315,11 +315,11 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_arrow_keys_reopen_preedit_checkbutton)
         self._options_grid.attach(
             self._arrow_keys_reopen_preedit_checkbutton, 0, 8, 2, 1)
-        self.arrow_keys_reopen_preedit = itb_util.variant_to_value(
+        self._arrow_keys_reopen_preedit = itb_util.variant_to_value(
             self._gsettings.get_value('arrowkeysreopenpreedit'))
-        if self.arrow_keys_reopen_preedit is None:
-            self.arrow_keys_reopen_preedit = False
-        if self.arrow_keys_reopen_preedit is True:
+        if self._arrow_keys_reopen_preedit is None:
+            self._arrow_keys_reopen_preedit = False
+        if self._arrow_keys_reopen_preedit is True:
             self._arrow_keys_reopen_preedit_checkbutton.set_active(True)
 
         self._auto_commit_characters_label = Gtk.Label(
@@ -331,15 +331,15 @@ class SetupUI(Gtk.Window):
             self._auto_commit_characters_label, 0, 9, 1, 1)
 
         self._auto_commit_characters_entry = Gtk.Entry()
-        self._auto_commit_characters_entry.connect(
-            'notify::text', self.on_auto_commit_characters_entry)
         self._options_grid.attach(
             self._auto_commit_characters_entry, 1, 9, 1, 1)
-        self.auto_commit_characters = itb_util.variant_to_value(
+        self._auto_commit_characters = itb_util.variant_to_value(
             self._gsettings.get_value('autocommitcharacters'))
-        if not self.auto_commit_characters:
-            self.auto_commit_characters = ''
-        self._auto_commit_characters_entry.set_text(self.auto_commit_characters)
+        if not self._auto_commit_characters:
+            self._auto_commit_characters = ''
+        self._auto_commit_characters_entry.set_text(self._auto_commit_characters)
+        self._auto_commit_characters_entry.connect(
+            'notify::text', self.on_auto_commit_characters_entry)
 
         self._page_size_label = Gtk.Label(
             _('Candidate window page size:'))
@@ -356,10 +356,10 @@ class SetupUI(Gtk.Window):
         self._page_size_adjustment.set_range(1.0, 9.0)
         self._options_grid.attach(
             self._page_size_adjustment, 1, 10, 1, 1)
-        self.page_size = itb_util.variant_to_value(
+        self._page_size = itb_util.variant_to_value(
             self._gsettings.get_value('pagesize'))
-        if self.page_size:
-            self._page_size_adjustment.set_value(int(self.page_size))
+        if self._page_size:
+            self._page_size_adjustment.set_value(int(self._page_size))
         else:
             self._page_size_adjustment.set_value(6)
         self._page_size_adjustment.connect(
@@ -374,26 +374,26 @@ class SetupUI(Gtk.Window):
             self._lookup_table_orientation_label, 0, 11, 1, 1)
 
         self._lookup_table_orientation_combobox = Gtk.ComboBox()
-        lookup_table_orientation_store = Gtk.ListStore(str, int)
-        lookup_table_orientation_store.append(
+        self._lookup_table_orientation_store = Gtk.ListStore(str, int)
+        self._lookup_table_orientation_store.append(
             [_('Horizontal'), IBus.Orientation.HORIZONTAL])
-        lookup_table_orientation_store.append(
+        self._lookup_table_orientation_store.append(
             [_('Vertical'), IBus.Orientation.VERTICAL])
-        lookup_table_orientation_store.append(
+        self._lookup_table_orientation_store.append(
             [_('System default'), IBus.Orientation.SYSTEM])
         self._lookup_table_orientation_combobox.set_model(
-            lookup_table_orientation_store)
+            self._lookup_table_orientation_store)
         renderer_text = Gtk.CellRendererText()
         self._lookup_table_orientation_combobox.pack_start(
             renderer_text, True)
         self._lookup_table_orientation_combobox.add_attribute(
             renderer_text, "text", 0)
-        lookup_table_orientation = itb_util.variant_to_value(
+        self._lookup_table_orientation = itb_util.variant_to_value(
             self._gsettings.get_value('lookuptableorientation'))
-        if lookup_table_orientation is None:
-            lookup_table_orientation = IBus.Orientation.VERTICAL
-        for i, item in enumerate(lookup_table_orientation_store):
-            if lookup_table_orientation == item[1]:
+        if self._lookup_table_orientation is None:
+            self._lookup_table_orientation = IBus.Orientation.VERTICAL
+        for i, item in enumerate(self._lookup_table_orientation_store):
+            if self._lookup_table_orientation == item[1]:
                 self._lookup_table_orientation_combobox.set_active(i)
         self._options_grid.attach(
             self._lookup_table_orientation_combobox, 1, 11, 1, 1)
@@ -416,11 +416,11 @@ class SetupUI(Gtk.Window):
         self._min_char_complete_adjustment.set_range(1.0, 9.0)
         self._options_grid.attach(
             self._min_char_complete_adjustment, 1, 12, 1, 1)
-        self.min_char_complete = itb_util.variant_to_value(
+        self._min_char_complete = itb_util.variant_to_value(
             self._gsettings.get_value('mincharcomplete'))
-        if self.min_char_complete:
+        if self._min_char_complete:
             self._min_char_complete_adjustment.set_value(
-                int(self.min_char_complete))
+                int(self._min_char_complete))
         else:
             self._min_char_complete_adjustment.set_value(1)
         self._min_char_complete_adjustment.connect(
@@ -744,7 +744,8 @@ class SetupUI(Gtk.Window):
         if dictionary:
             names = [x.strip() for x in dictionary.split(',')]
             for name in names:
-                self._dictionary_names.append(name)
+                if name:
+                    self._dictionary_names.append(name)
         if self._dictionary_names == []:
             # There are no dictionaries set in dconf, get a default list of
             # dictionaries from the current effective value of LC_CTYPE:
@@ -807,33 +808,34 @@ class SetupUI(Gtk.Window):
         self._input_methods_listbox.set_activate_on_single_click(True)
         self._input_methods_listbox.connect(
             'row-selected', self.on_input_method_selected)
-        self.current_imes = []
+        self._current_imes = []
         inputmethod = itb_util.variant_to_value(
             self._gsettings.get_value('inputmethod'))
         if inputmethod:
             inputmethods = [x.strip() for x in inputmethod.split(',')]
             for ime in inputmethods:
-                self.current_imes.append(ime)
-        if self.current_imes == []:
+                if ime:
+                    self._current_imes.append(ime)
+        if self._current_imes == []:
             # There is no ime set in dconf, get a default list of
             # input methods for the current effective value of LC_CTYPE:
-            self.current_imes = itb_util.get_default_input_methods(
+            self._current_imes = itb_util.get_default_input_methods(
                 locale.getlocale(category=locale.LC_CTYPE)[0])
-        if len(self.current_imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
+        if len(self._current_imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
             sys.stderr.write(
                 'Trying to set more than the allowed maximum of %s '
                 %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
                 + 'input methods.\n'
-                + 'Trying to set: %s\n' %self.current_imes
+                + 'Trying to set: %s\n' %self._current_imes
                 + 'Really setting: %s\n'
-                %self.current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
-            self.current_imes = (
-                self.current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
+                %self._current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
+            self._current_imes = (
+                self._current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
             # Save reduced list of input methods back to settings:
             self._gsettings.set_value(
                 'inputmethod',
-                GLib.Variant.new_string(','.join(self.current_imes)))
-        for ime in self.current_imes:
+                GLib.Variant.new_string(','.join(self._current_imes)))
+        for ime in self._current_imes:
             label = Gtk.Label()
             label.set_text(html.escape(
                 self._fill_input_methods_listbox_row(ime)))
@@ -847,7 +849,7 @@ class SetupUI(Gtk.Window):
             self._input_methods_listbox.insert(label, -1)
         self._input_methods_listbox.show_all()
         self._input_methods_add_button.set_sensitive(
-            len(self.current_imes) < itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS)
+            len(self._current_imes) < itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS)
 
     def __run_message_dialog(self, message, message_type=Gtk.MessageType.INFO):
         '''Run a dialog to show an error or warning message'''
@@ -893,9 +895,72 @@ class SetupUI(Gtk.Window):
     def on_gsettings_value_changed(self, settings, key):
         '''
         Called when a value in the settings has been changed.
+
+        :param settings: The settings object
+        :type settings: Gio.Settings object
+        :param key: The key of the setting which has changed
+        :type key: String
         '''
         value = itb_util.variant_to_value(self._gsettings.get_value(key))
         sys.stderr.write('Settings changed: key=%s value=%s\n' %(key, value))
+
+        if key == 'qtimmoduleworkaround':
+            self.set_qt_im_module_workaround(value, update_gsettings=False)
+            return
+        if key == 'arrowkeysreopenpreedit':
+            self.set_arrow_keys_reopen_preedit(value, update_gsettings=False)
+            return
+        if key == 'emojipredictions':
+            self.set_emoji_prediction_mode(value, update_gsettings=False)
+            return
+        if key == 'offtherecord':
+            self.set_off_the_record_mode(value, update_gsettings=False)
+            return
+        if key == 'autocommitcharacters':
+            self.set_auto_commit_characters(value, update_gsettings=False)
+            return
+        if key == 'tabenable':
+            self.set_tab_enable(value, update_gsettings=False)
+            return
+        if key == 'rememberlastusedpreeditime':
+            self.set_remember_last_used_preedit_ime(
+                value, update_gsettings=False)
+            return
+        if key == 'pagesize':
+            self.set_page_size(value, update_gsettings=False)
+            return
+        if key == 'lookuptableorientation':
+            self.set_lookup_table_orientation(value, update_gsettings=False)
+            return
+        if key == 'mincharcomplete':
+            self.set_min_char_complete(value, update_gsettings=False)
+            return
+        if key == 'shownumberofcandidates':
+            self.set_show_number_of_candidates(value, update_gsettings=False)
+            return
+        if key == 'showstatusinfoinaux':
+            self.set_show_status_info_in_auxiliary_text(
+                value, update_gsettings=False)
+            return
+        if key == 'usedigitsasselectkeys':
+            self.set_use_digits_as_select_keys(value, update_gsettings=False)
+            return
+        if key == 'inputmethod':
+            self.set_current_imes(
+                [x.strip() for x in value.split(',')], update_gsettings=False)
+            return
+        if key == 'dictionary':
+            self.set_dictionary_names(
+                [x.strip() for x in value.split(',')], update_gsettings=False)
+            return
+        if key == 'dictionaryinstalltimestamp':
+            # A dictionary has been updated or installed,
+            # the ibus-typing-booster will (re)load all dictionaries,
+            # but here in the setup tool there is nothing to do.
+            sys.stderr.write('A dictionary has been updated or installed.')
+            return
+        sys.stderr.write('Unknown key\n')
+        return
 
     def on_about_button_clicked(self, dummy_button):
         '''
@@ -911,96 +976,48 @@ class SetupUI(Gtk.Window):
         The checkbutton whether to show candidates only when
         requested with the tab key or not has been clicked.
         '''
-        if widget.get_active():
-            self.tab_enable = True
-            self._gsettings.set_value(
-                'tabenable',
-                GLib.Variant.new_boolean(True))
-        else:
-            self.tab_enable = False
-            self._gsettings.set_value(
-                'tabenable',
-                GLib.Variant.new_boolean(False))
+        self.set_tab_enable(
+            widget.get_active(), update_gsettings=True)
 
     def on_show_number_of_candidates_checkbutton(self, widget):
         '''
         The checkbutton whether to show the number of candidates
         on top of the lookup table has been clicked.
         '''
-        if widget.get_active():
-            self.show_number_of_candidates = True
-            self._gsettings.set_value(
-                'shownumberofcandidates',
-                GLib.Variant.new_boolean(True))
-        else:
-            self.show_number_of_candidates = False
-            self._gsettings.set_value(
-                'shownumberofcandidates',
-                GLib.Variant.new_boolean(False))
+        self.set_show_number_of_candidates(
+            widget.get_active(), update_gsettings=True)
 
     def on_show_status_info_in_auxiliary_text_checkbutton(self, widget):
         '''
         The checkbutton whether to show status in the auxiliary text,
         has been clicked.
         '''
-        if widget.get_active():
-            self.show_status_info_in_auxiliary_text = True
-            self._gsettings.set_value(
-                'showstatusinfoinaux',
-                GLib.Variant.new_boolean(True))
-        else:
-            self.show_status_info_in_auxiliary_text = False
-            self._gsettings.set_value(
-                'showstatusinfoinaux',
-                GLib.Variant.new_boolean(False))
+        self.set_show_status_info_in_auxiliary_text(
+            widget.get_active(), update_gsettings=True)
 
     def on_use_digits_as_select_keys_checkbutton(self, widget):
         '''
         The checkbutton whether to use the digits 1 … 9 as select
         keys has been clicked.
         '''
-        if widget.get_active():
-            self.use_digits_as_select_keys = True
-            self._gsettings.set_value(
-                'usedigitsasselectkeys',
-                GLib.Variant.new_boolean(True))
-        else:
-            self.use_digits_as_select_keys = False
-            self._gsettings.set_value(
-                'usedigitsasselectkeys',
-                GLib.Variant.new_boolean(False))
+        self.set_use_digits_as_select_keys(
+            widget.get_active(), update_gsettings=True)
 
     def on_remember_last_used_preedit_ime_checkbutton(self, widget):
         '''
         The checkbutton whether to remember the last used input method
         for the preëdit has been clicked.
         '''
-        if widget.get_active():
-            self.remember_last_used_predit_ime = True
-            self._gsettings.set_value(
-                'rememberlastusedpreeditime',
-                GLib.Variant.new_boolean(True))
-        else:
-            self.remember_last_used_predit_ime = False
-            self._gsettings.set_value(
-                'rememberlastusedpreeditime',
-                GLib.Variant.new_boolean(False))
+        self.set_remember_last_used_preedit_ime(
+            widget.get_active(), update_gsettings=True)
 
     def on_emoji_predictions_checkbutton(self, widget):
         '''
         The checkbutton whether to predict emoji as well or not
         has been clicked.
         '''
-        if widget.get_active():
-            self.emoji_predictions = True
-            self._gsettings.set_value(
-                'emojipredictions',
-                GLib.Variant.new_boolean(True))
-        else:
-            self.emoji_predictions = False
-            self._gsettings.set_value(
-                'emojipredictions',
-                GLib.Variant.new_boolean(False))
+        self.set_emoji_prediction_mode(
+            widget.get_active(), update_gsettings=True)
 
     def on_off_the_record_checkbutton(self, widget):
         '''
@@ -1008,16 +1025,8 @@ class SetupUI(Gtk.Window):
         learn from user data by saving user input to the user database
         or not, has been clicked.
         '''
-        if widget.get_active():
-            self.off_the_record = True
-            self._gsettings.set_value(
-                'offtherecord',
-                GLib.Variant.new_boolean(True))
-        else:
-            self.off_the_record = False
-            self._gsettings.set_value(
-                'offtherecord',
-                GLib.Variant.new_boolean(False))
+        self.set_off_the_record_mode(
+            widget.get_active(), update_gsettings=True)
 
     def on_qt_im_module_workaround_checkbutton(self, widget):
         '''
@@ -1025,50 +1034,30 @@ class SetupUI(Gtk.Window):
         implementation of forward_key_event() in the Qt 4/5 input
         module, has been clicked.
         '''
-        if widget.get_active():
-            self.qt_im_module_workaround = True
-            self._gsettings.set_value(
-                'qtimmoduleworkaround',
-                GLib.Variant.new_boolean(True))
-        else:
-            self.qt_im_module_workaround = False
-            self._gsettings.set_value(
-                'qtimmoduleworkaround',
-                GLib.Variant.new_boolean(False))
+        self.set_qt_im_module_workaround(
+            widget.get_active(), update_gsettings=True)
 
     def on_arrow_keys_reopen_preedit_checkbutton(self, widget):
         '''
         The checkbutton whether arrow keys are allowed to reopen
         a preëdit, has been clicked.
         '''
-        if widget.get_active():
-            self.arrow_keys_reopen_preedit = True
-            self._gsettings.set_value(
-                'arrowkeysreopenpreedit',
-                GLib.Variant.new_boolean(True))
-        else:
-            self.arrow_keys_reopen_preedit = False
-            self._gsettings.set_value(
-                'arrowkeysreopenpreedit',
-                GLib.Variant.new_boolean(False))
+        self.set_arrow_keys_reopen_preedit(
+            widget.get_active(), update_gsettings=True)
 
     def on_auto_commit_characters_entry(self, widget, dummy_property_spec):
         '''
         The list of characters triggering an auto commit has been changed.
         '''
-        self.auto_commit_characters = widget.get_text()
-        self._gsettings.set_value(
-            'autocommitcharacters',
-            GLib.Variant.new_string(self.auto_commit_characters))
+        self.set_auto_commit_characters(
+            widget.get_text(), update_gsettings=True)
 
     def on_page_size_adjustment_value_changed(self, dummy_widget):
         '''
         The page size of the lookup table has been changed.
         '''
-        page_size = self._page_size_adjustment.get_value()
-        self._gsettings.set_value(
-            'pagesize',
-            GLib.Variant.new_int32(page_size))
+        self.set_page_size(
+            self._page_size_adjustment.get_value(), update_gsettings=True)
 
     def on_lookup_table_orientation_combobox_changed(self, widget):
         '''
@@ -1079,20 +1068,16 @@ class SetupUI(Gtk.Window):
         if tree_iter != None:
             model = widget.get_model()
             orientation = model[tree_iter][1]
-            self._gsettings.set_value(
-                'lookuptableorientation',
-                GLib.Variant.new_int32(orientation))
+            self.set_lookup_table_orientation(
+                orientation, update_gsettings=True)
 
     def on_min_char_complete_adjustment_value_changed(self, dummy_widget):
         '''
         The value for the mininum number of characters before
         completion is attempted has been changed.
         '''
-        min_char_complete = (
-            self._min_char_complete_adjustment.get_value())
-        self._gsettings.set_value(
-            'mincharcomplete',
-            GLib.Variant.new_int32(min_char_complete))
+        self.set_min_char_complete(
+            self._min_char_complete_adjustment.get_value(), update_gsettings=True)
 
     def on_dictionary_to_add_selected(self, dummy_listbox, listbox_row):
         '''
@@ -1109,11 +1094,8 @@ class SetupUI(Gtk.Window):
         self._dictionaries_add_popover.hide()
         if not name or name in self._dictionary_names:
             return
-        self._dictionary_names = [name] + self._dictionary_names
-        self._gsettings.set_value(
-            'dictionary',
-            GLib.Variant.new_string(','.join(self._dictionary_names)))
-        self._fill_dictionaries_listbox()
+        self.set_dictionary_names(
+            [name] + self._dictionary_names, update_gsettings=True)
         self._dictionaries_listbox_selected_dictionary_index = 0
         self._dictionaries_listbox_selected_dictionary_name = name
         self._dictionaries_listbox.select_row(
@@ -1229,13 +1211,10 @@ class SetupUI(Gtk.Window):
             # This should not happen, one should not be able
             # to click the remove button in this case, just return:
             return
-        self._dictionary_names = (
+        self.set_dictionary_names(
             self._dictionary_names[:index]
-            + self._dictionary_names[index + 1:])
-        self._gsettings.set_value(
-            'dictionary',
-            GLib.Variant.new_string(','.join(self._dictionary_names)))
-        self._fill_dictionaries_listbox()
+            + self._dictionary_names[index + 1:],
+            update_gsettings=True)
         self._dictionaries_listbox_selected_dictionary_index = -1
         self._dictionaries_listbox_selected_dictionary_name = ''
         self._dictionaries_listbox.unselect_all()
@@ -1252,15 +1231,12 @@ class SetupUI(Gtk.Window):
             # This should not happen, one should not be able
             # to click the up button in this case, just return:
             return
-        self._dictionary_names = (
+        self.set_dictionary_names(
             self._dictionary_names[:index - 1]
             + [self._dictionary_names[index]]
             + [self._dictionary_names[index - 1]]
-            + self._dictionary_names[index + 1:])
-        self._gsettings.set_value(
-            'dictionary',
-            GLib.Variant.new_string(','.join(self._dictionary_names)))
-        self._fill_dictionaries_listbox()
+            + self._dictionary_names[index + 1:],
+            update_gsettings=True)
         self._dictionaries_listbox_selected_dictionary_index = index - 1
         self._dictionaries_listbox_selected_dictionary_name = (
             self._dictionary_names[index - 1])
@@ -1279,15 +1255,12 @@ class SetupUI(Gtk.Window):
             # This should not happen, one should not be able
             # to click the down button in this case, just return:
             return
-        self._dictionary_names = (
+        self.set_dictionary_names(
             self._dictionary_names[:index]
             + [self._dictionary_names[index + 1]]
             + [self._dictionary_names[index]]
-            + self._dictionary_names[index + 2:])
-        self._gsettings.set_value(
-            'dictionary',
-            GLib.Variant.new_string(','.join(self._dictionary_names)))
-        self._fill_dictionaries_listbox()
+            + self._dictionary_names[index + 2:],
+            update_gsettings=True)
         self._dictionaries_listbox_selected_dictionary_index = index + 1
         self._dictionaries_listbox_selected_dictionary_name = (
             self._dictionary_names[index + 1])
@@ -1360,13 +1333,10 @@ class SetupUI(Gtk.Window):
         if GTK_VERSION >= (3, 22, 0):
             self._input_methods_add_popover.popdown()
         self._input_methods_add_popover.hide()
-        if not ime or ime in self.current_imes:
+        if not ime or ime in self._current_imes:
             return
-        self.current_imes = [ime] + self.current_imes
-        self._gsettings.set_value(
-            'inputmethod',
-            GLib.Variant.new_string(','.join(self.current_imes)))
-        self._fill_input_methods_listbox()
+        self.set_current_imes(
+            [ime] + self._current_imes, update_gsettings=True)
         self._input_methods_listbox_selected_ime_index = 0
         self._input_methods_listbox_selected_ime_name = ime
         self._input_methods_listbox.select_row(
@@ -1396,7 +1366,7 @@ class SetupUI(Gtk.Window):
             'row-selected', self.on_input_method_to_add_selected)
         rows = []
         for ime in ['NoIme'] + sorted(itb_util.M17N_INPUT_METHODS):
-            if ime in self.current_imes:
+            if ime in self._current_imes:
                 continue
             row = self._fill_input_methods_listbox_row(ime)
             if (filter_text.replace(' ', '').lower()
@@ -1430,7 +1400,7 @@ class SetupUI(Gtk.Window):
         Signal handler called when the “add” button to add another
         input method has been clicked.
         '''
-        if len(self.current_imes) >= itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
+        if len(self._current_imes) >= itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
             # Actually this should never happen because the button to add
             # an input method should not be sensitive if the maximum number
             # of input methods is  already reached.
@@ -1491,17 +1461,13 @@ class SetupUI(Gtk.Window):
         an input method has been clicked.
         '''
         index = self._input_methods_listbox_selected_ime_index
-        if (not (index >= 0 and index < len(self.current_imes))):
+        if (not (index >= 0 and index < len(self._current_imes))):
             # This should not happen, one should not be able
             # to click the remove button in this case, just return:
             return
-        self.current_imes = (
-            self.current_imes[:index]
-            + self.current_imes[index + 1:])
-        self._gsettings.set_value(
-            'inputmethod',
-            GLib.Variant.new_string(','.join(self.current_imes)))
-        self._fill_input_methods_listbox()
+        self.set_current_imes(
+            self._current_imes[:index] + self._current_imes[index + 1:],
+            update_gsettings=True)
         self._input_methods_listbox_selected_ime_index = -1
         self._input_methods_listbox_selected_ime_name = ''
         self._input_methods_listbox.unselect_all()
@@ -1514,22 +1480,19 @@ class SetupUI(Gtk.Window):
         Increases the priority of the selected input method.
         '''
         index = self._input_methods_listbox_selected_ime_index
-        if (not (index > 0 and index < len(self.current_imes))):
+        if (not (index > 0 and index < len(self._current_imes))):
             # This should not happen, one should not be able
             # to click the up button in this case, just return:
             return
-        self.current_imes = (
-            self.current_imes[:index - 1]
-            + [self.current_imes[index]]
-            + [self.current_imes[index - 1]]
-            + self.current_imes[index + 1:])
-        self._gsettings.set_value(
-            'inputmethod',
-            GLib.Variant.new_string(','.join(self.current_imes)))
-        self._fill_input_methods_listbox()
+        self.set_current_imes(
+            self._current_imes[:index - 1]
+            + [self._current_imes[index]]
+            + [self._current_imes[index - 1]]
+            + self._current_imes[index + 1:],
+            update_gsettings=True)
         self._input_methods_listbox_selected_ime_index = index - 1
         self._input_methods_listbox_selected_ime_name = (
-            self.current_imes[index - 1])
+            self._current_imes[index - 1])
         self._input_methods_listbox.select_row(
             self._input_methods_listbox.get_row_at_index(index - 1))
 
@@ -1541,21 +1504,18 @@ class SetupUI(Gtk.Window):
         Lowers the priority of the selected input method.
         '''
         index = self._input_methods_listbox_selected_ime_index
-        if (not (index >= 0 and index < len(self.current_imes) - 1)):
+        if (not (index >= 0 and index < len(self._current_imes) - 1)):
             # This should not happen, one should not be able
             # to click the down button in this case, just return:
             return
-        self.current_imes = (
-            self.current_imes[:index]
-            + [self.current_imes[index + 1]]
-            + [self.current_imes[index]]
-            + self.current_imes[index + 2:])
-        self._gsettings.set_value(
-            'inputmethod',
-            GLib.Variant.new_string(','.join(self.current_imes)))
-        self._fill_input_methods_listbox()
+        self.set_current_imes(
+            self._current_imes[:index]
+            + [self._current_imes[index + 1]]
+            + [self._current_imes[index]]
+            + self._current_imes[index + 2:],
+            update_gsettings=True)
         self._input_methods_listbox_selected_ime_index = index + 1
-        self._input_methods_listbox_selected_ime_name = self.current_imes[index + 1]
+        self._input_methods_listbox_selected_ime_name = self._current_imes[index + 1]
         self._input_methods_listbox.select_row(
             self._input_methods_listbox.get_row_at_index(index + 1))
 
@@ -1611,9 +1571,9 @@ class SetupUI(Gtk.Window):
             self._input_methods_listbox_selected_ime_index = index
             self._input_methods_remove_button.set_sensitive(True)
             self._input_methods_up_button.set_sensitive(
-                index > 0 and index < len(self.current_imes))
+                index > 0 and index < len(self._current_imes))
             self._input_methods_down_button.set_sensitive(
-                index >= 0 and index < len(self.current_imes) - 1)
+                index >= 0 and index < len(self._current_imes) - 1)
             self._input_methods_help_button.set_sensitive(True)
         else:
             # all rows have been unselected
@@ -1766,6 +1726,419 @@ class SetupUI(Gtk.Window):
         if response == Gtk.ResponseType.OK:
             self.tabsqlitedb.remove_all_phrases()
         self._delete_learned_data_button.set_sensitive(True)
+
+    def set_qt_im_module_workaround(self, mode, update_gsettings=True):
+        '''Sets whether the workaround for the qt im module is used or not
+
+        :param mode: Whether to use the workaround for the qt im module or not
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_qt_im_module_workaround(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._qt_im_module_workaround:
+            return
+        self._qt_im_module_workaround = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'qtimmoduleworkaround',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._qt_im_module_workaround_checkbutton.set_active(mode)
+
+    def set_arrow_keys_reopen_preedit(self, mode, update_gsettings=True):
+        '''Sets whether the arrow keys are allowed to reopen a preëdit
+
+        :param mode: Whether arrow keys can reopen a preëdit
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_arrow_keys_reopen_preedit(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._arrow_keys_reopen_preedit:
+            return
+        self._arrow_keys_reopen_preedit = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'arrowkeysreopenpreedit',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._arrow_keys_reopen_preedit_checkbutton.set_active(mode)
+
+    def set_emoji_prediction_mode(self, mode, update_gsettings=True):
+        '''Sets the emoji prediction mode
+
+        :param mode: Whether to switch emoji prediction on or off
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_emoji_prediction_mode(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._emoji_predictions:
+            return
+        self._emoji_predictions = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'emojipredictions',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._emoji_predictions_checkbutton.set_active(mode)
+
+    def set_off_the_record_mode(self, mode, update_gsettings=True):
+        '''Sets the “Off the record” mode
+
+        :param mode: Whether to prevent saving input to the
+                     user database or not
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_off_the_record_mode(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._off_the_record:
+            return
+        self._off_the_record = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'offtherecord',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._off_the_record_checkbutton.set_active(mode)
+
+    def set_auto_commit_characters(self, auto_commit_characters,
+                                   update_gsettings=True):
+        '''Sets the auto commit characters
+
+        :param auto_commit_characters: The characters which trigger a commit
+                                       with an extra space
+        :type auto_commit_characters: string
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_auto_commit_characters(%s, update_gsettings = %s)\n"
+            %(auto_commit_characters, update_gsettings))
+        if auto_commit_characters == self._auto_commit_characters:
+            return
+        self._auto_commit_characters = auto_commit_characters
+        if update_gsettings:
+            self._gsettings.set_value(
+                'autocommitcharacters',
+                GLib.Variant.new_string(auto_commit_characters))
+        else:
+            self._auto_commit_characters_entry.set_text(self._auto_commit_characters)
+
+    def set_tab_enable(self, mode, update_gsettings=True):
+        '''Sets the “Tab enable” mode
+
+        :param mode: Whether to show a candidate list only when typing Tab
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_tab_enable(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._tab_enable:
+            return
+        self._tab_enable = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'tabenable',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._tab_enable_checkbutton.set_active(mode)
+
+    def set_remember_last_used_preedit_ime(self, mode, update_gsettings=True):
+        '''Sets the “Remember last used preëdit ime” mode
+
+        :param mode: Whether to remember the input method used last for
+                     the preëdit
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_remember_last_used_preedit_ime(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._remember_last_used_preedit_ime:
+            return
+        self._remember_last_used_preedit_ime = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'rememberlastusedpreeditime',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._remember_last_used_preedit_ime_checkbutton.set_active(mode)
+
+    def set_page_size(self, page_size, update_gsettings=True):
+        '''Sets the page size of the lookup table
+
+        :param page_size: The page size of the lookup table
+        :type mode: integer >= 1 and <= 9
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_page_size(%s, update_gsettings = %s)\n"
+            %(page_size, update_gsettings))
+        if page_size == self._page_size:
+            return
+        if page_size >= 1 and page_size <= 9:
+            self._page_size = page_size
+            if update_gsettings:
+                self._gsettings.set_value(
+                    'pagesize',
+                    GLib.Variant.new_int32(page_size))
+            else:
+                self._page_size_adjustment.set_value(int(page_size))
+
+    def set_lookup_table_orientation(self, orientation, update_gsettings=True):
+        '''Sets the page size of the lookup table
+
+        :param orientation: The orientation of the lookup table
+        :type mode: integer >= 0 and <= 2
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_lookup_table_orientation(%s, update_gsettings = %s)\n"
+            %(orientation, update_gsettings))
+        if orientation == self._lookup_table_orientation:
+            return
+        if orientation >= 0 and orientation <= 2:
+            self._lookup_table_orientation = orientation
+            if update_gsettings:
+                self._gsettings.set_value(
+                    'lookuptableorientation',
+                    GLib.Variant.new_int32(orientation))
+            else:
+                for i, item in enumerate(self._lookup_table_orientation_store):
+                    if self._lookup_table_orientation == item[1]:
+                        self._lookup_table_orientation_combobox.set_active(i)
+
+
+    def set_min_char_complete(self, min_char_complete, update_gsettings=True):
+        '''Sets the minimum number of characters to try completion
+
+        :param min_char_complete: The minimum number of characters
+                                  to type before completion is tried.
+        :type mode: integer >= 1 and <= 9
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_min_char_complete(%s, update_gsettings = %s)\n"
+            %(min_char_complete, update_gsettings))
+        if min_char_complete == self._min_char_complete:
+            return
+        if min_char_complete >= 1 and min_char_complete <= 9:
+            self._min_char_complete = min_char_complete
+            if update_gsettings:
+                self._gsettings.set_value(
+                    'mincharcomplete',
+                    GLib.Variant.new_int32(min_char_complete))
+            else:
+                self._min_char_complete_adjustment.set_value(int(min_char_complete))
+
+    def set_show_number_of_candidates(self, mode, update_gsettings=True):
+        '''Sets the “Show number of candidates” mode
+
+        :param mode: Whether to show the number of candidates
+                     in the auxiliary text
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_show_number_of_candidates(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._show_number_of_candidates:
+            return
+        self._show_number_of_candidates = mode
+        self._show_number_of_candidates_checkbutton.set_active(mode)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'shownumberofcandidates',
+                GLib.Variant.new_boolean(mode))
+
+    def set_show_status_info_in_auxiliary_text(self, mode, update_gsettings=True):
+        '''Sets the “Show status info in auxiliary text” mode
+
+        :param mode: Whether to show status information in the
+                     auxiliary text.
+                     Currently the status information which can be
+                     displayed there is whether emoji mode and
+                     off-the-record mode are on or off
+                     and which input method is currently used for
+                     the preëdit text.
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_show_status_info_in_auxiliary_text"
+            + "(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._show_status_info_in_auxiliary_text:
+            return
+        self._show_status_info_in_auxiliary_text = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'showstatusinfoinaux',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._show_status_info_in_auxiliary_text_checkbutton.set_active(mode)
+
+    def set_use_digits_as_select_keys(self, mode, update_gsettings=True):
+        '''Sets the “Use digits as select keys” mode
+
+        :param mode: Whether to use digits as select keys
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_use_digits_as_select_keys(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._use_digits_as_select_keys:
+            return
+        self._use_digits_as_select_keys = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'usedigitsasselectkeys',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._use_digits_as_select_keys_checkbutton.set_active(mode)
+
+    def set_current_imes(self, imes, update_gsettings=True):
+        '''Set current list of input methods
+
+        :param imes: List of input methods
+        :type imes: List of strings
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        imes = [x for x in imes if x]
+        if imes == self._current_imes: # nothing to do
+            return
+        if len(imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
+            sys.stderr.write(
+                'Trying to set more than the allowed maximum of %s '
+                %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
+                + 'input methods.\n'
+                + 'Trying to set: %s\n' %imes
+                + 'Really setting: %s\n'
+                %imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
+            imes = imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS]
+        self._current_imes = imes
+        self._fill_input_methods_listbox()
+        if update_gsettings:
+            self._gsettings.set_value(
+                'inputmethod',
+                GLib.Variant.new_string(','.join(imes)))
+        else:
+            # unselect all rows:
+            self._input_methods_listbox_selected_ime_name = ''
+            self._input_methods_listbox_selected_ime_index = -1
+            self._input_methods_remove_button.set_sensitive(False)
+            self._input_methods_up_button.set_sensitive(False)
+            self._input_methods_down_button.set_sensitive(False)
+            self._input_methods_help_button.set_sensitive(False)
+
+
+    def set_dictionary_names(self, dictionary_names, update_gsettings=True):
+        '''Set current dictionary names
+
+        :param dictionary_names: List of names of dictionaries to use
+        :type dictionary_names: List of strings
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        dictionary_names = [x for x in dictionary_names if x]
+        if dictionary_names == self._dictionary_names: # nothing to do
+            return
+        self._dictionary_names = dictionary_names
+        print(self._dictionary_names)
+        self._fill_dictionaries_listbox()
+        if update_gsettings:
+            self._gsettings.set_value(
+                'dictionary',
+                GLib.Variant.new_string(','.join(dictionary_names)))
+        else:
+            # unselect all rows:
+            self._dictionaries_listbox_selected_dictionary_name = ''
+            self._dictionaries_listbox_selected_dictionary_index = -1
+            self._dictionaries_remove_button.set_sensitive(False)
+            self._dictionaries_up_button.set_sensitive(False)
+            self._dictionaries_down_button.set_sensitive(False)
 
 class HelpWindow(Gtk.Window):
     '''

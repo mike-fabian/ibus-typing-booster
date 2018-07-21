@@ -261,11 +261,15 @@ class TypingBoosterEngine(IBus.Engine):
         if self._remember_last_used_preedit_ime is None:
             self._remember_last_used_preedit_ime = False
 
+        self._dictionary_names = []
         dictionary = itb_util.variant_to_value(
             self._gsettings.get_value('dictionary'))
         if dictionary:
             # There is a dictionary setting in Gsettings, use that:
-            self._dictionary_names = [x.strip() for x in dictionary.split(',')]
+            names = [x.strip() for x in dictionary.split(',')]
+            for name in names:
+                if name:
+                    self._dictionary_names.append(name)
         else:
             # There is no dictionary setting in Gsettings. Get the default
             # dictionaries for the current effective value of
@@ -301,7 +305,8 @@ class TypingBoosterEngine(IBus.Engine):
         if inputmethod:
             inputmethods = [x.strip() for x in inputmethod.split(',')]
             for ime in inputmethods:
-                self._current_imes.append(ime)
+                if ime:
+                    self._current_imes.append(ime)
         if self._current_imes == []:
             # There is no ime set in Gsettings, get a default list
             # of input methods for the current effective value of LC_CTYPE
@@ -2963,6 +2968,11 @@ class TypingBoosterEngine(IBus.Engine):
     def on_gsettings_value_changed(self, settings, key):
         '''
         Called when a value in the settings has been changed.
+
+        :param settings: The settings object
+        :type settings: Gio.Settings object
+        :param key: The key of the setting which has changed
+        :type key: String
         '''
         value = itb_util.variant_to_value(self._gsettings.get_value(key))
         sys.stderr.write('Settings changed: key=%s value=%s\n' %(key, value))
