@@ -1027,6 +1027,34 @@ class EmojiPickerUI(Gtk.Window):
         self._selection_clipboard.store()
         self._selection_primary.store() # Does not work.
 
+    def _show_concise_emoji_description_in_header_bar(self, emoji):
+        '''
+        Show a concise description of an emoji in the header bar
+        of the program.
+
+        :param emoji: The emoji for which a description should be
+                      shown in the header bar.
+        :type emoji: String
+        '''
+        self._header_bar.set_title(emoji)
+        self._header_bar.set_subtitle('')
+        # Display the names of the emoji in the first language
+        # where names are available in the header bar title:
+        for language in itb_util.expand_languages(self._languages):
+            names = self._emoji_matcher.names(emoji, language=language)
+            if names:
+                self._header_bar.set_title(emoji + ' ' + ', '.join(names))
+                break
+        # Display the keywords of the emoji in the first language
+        # where keywords are available in the header bar subtitle:
+        for language in itb_util.expand_languages(self._languages):
+            keywords = self._emoji_matcher.keywords(emoji, language=language)
+            if keywords:
+                self._header_bar.set_subtitle(
+                    self._translate_key('Keywords', language) + ': '
+                    + ', '.join(keywords))
+                break
+
     def _print_profiling_information(self):
         '''
         Print some profiling information to stdout.
@@ -1411,6 +1439,7 @@ class EmojiPickerUI(Gtk.Window):
         (emoji, name) = self._parse_emoji_and_name_from_text(text)
         if not emoji:
             return Gdk.EVENT_PROPAGATE
+        self._show_concise_emoji_description_in_header_bar(emoji)
         self._set_clipboards(emoji)
         self._add_to_recently_used(emoji)
         self._emoji_selected_popover = Gtk.Popover()
@@ -1538,6 +1567,7 @@ class EmojiPickerUI(Gtk.Window):
         (emoji, dummy_name) = self._parse_emoji_and_name_from_text(text)
         if not emoji:
             return
+        self._show_concise_emoji_description_in_header_bar(emoji)
         self._set_clipboards(emoji)
         self._add_to_recently_used(emoji)
         self._skin_tone_selected_popover = Gtk.Popover()
