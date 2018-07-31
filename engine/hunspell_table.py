@@ -2548,13 +2548,13 @@ class TypingBoosterEngine(IBus.Engine):
             self._update_lookup_table_and_aux()
             return True
 
-        if (key.val in (IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down)
+        if (key.val in (IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down, IBus.KEY_KP_Next)
             and self.get_lookup_table().get_number_of_candidates()):
             dummy = self._page_down()
             self._update_lookup_table_and_aux()
             return True
 
-        if (key.val in (IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up)
+        if (key.val in (IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up, IBus.KEY_KP_Prior)
             and self.get_lookup_table().get_number_of_candidates()):
             dummy = self._page_up()
             self._update_lookup_table_and_aux()
@@ -2622,8 +2622,12 @@ class TypingBoosterEngine(IBus.Engine):
                              IBus.KEY_BackSpace,
                              IBus.KEY_Down, IBus.KEY_KP_Down,
                              IBus.KEY_Up, IBus.KEY_KP_Up,
-                             IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down,
-                             IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up)
+                             IBus.KEY_Page_Down,
+                             IBus.KEY_KP_Page_Down,
+                             IBus.KEY_KP_Next,
+                             IBus.KEY_Page_Up,
+                             IBus.KEY_KP_Page_Up,
+                             IBus.KEY_KP_Prior)
                  or (len(key.msymbol) == 3
                      and key.msymbol[:2] in ('A-', 'C-', 'G-')
                      and not self._has_transliteration([key.msymbol])))):
