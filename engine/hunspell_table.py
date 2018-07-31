@@ -2129,10 +2129,13 @@ class TypingBoosterEngine(IBus.Engine):
         return self._page_size
 
     def set_lookup_table_orientation(self, orientation, update_gsettings=True):
-        '''Sets the page size of the lookup table
+        '''Sets the orientation of the lookup table
 
         :param orientation: The orientation of the lookup table
         :type mode: integer >= 0 and <= 2
+                    IBUS_ORIENTATION_HORIZONTAL = 0,
+                    IBUS_ORIENTATION_VERTICAL   = 1,
+                    IBUS_ORIENTATION_SYSTEM     = 2.
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
