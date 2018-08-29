@@ -20,22 +20,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 
+import re
+import os
+import sys
+from gettext import dgettext
+_ = lambda a: dgettext("ibus-typing-booster", a)
+N_ = lambda a: a
 from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus
 import hunspell_table
 import tabsqlitedb
-import re
-import os
-import sys
-
-from gettext import dgettext
-_  = lambda a : dgettext ("ibus-typing-booster", a)
-N_ = lambda a : a
 
 DEBUG_LEVEL = int(0)
 
-class EngineFactory (IBus.Factory):
+class EngineFactory(IBus.Factory):
     """Table IM Engine Factory"""
     def __init__(self, bus):
         global DEBUG_LEVEL
@@ -45,6 +44,7 @@ class EngineFactory (IBus.Factory):
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
             sys.stderr.write("EngineFactory.__init__(bus=%s)\n" %bus)
+        self.db = None
         self.dbdict = {}
         self.enginedict = {}
         self.bus = bus
@@ -64,7 +64,7 @@ class EngineFactory (IBus.Factory):
             if engine_name in self.dbdict:
                 self.db = self.dbdict[engine_name]
             else:
-                self.db = tabsqlitedb.tabsqlitedb()
+                self.db = tabsqlitedb.TabSqliteDb()
                 self.dbdict[engine_name] = self.db
             if engine_name in self.enginedict:
                 engine = self.enginedict[engine_name]
@@ -77,15 +77,13 @@ class EngineFactory (IBus.Factory):
         except:
             print("failed to create engine %s" %engine_name)
             import traceback
-            traceback.print_exc ()
+            traceback.print_exc()
             raise Exception("Cannot create engine %s" % engine_name)
 
-    def do_destroy (self):
+    def do_destroy(self):
         '''Destructor, which finish some task for IME'''
         if DEBUG_LEVEL > 1:
             sys.stderr.write("EngineFactory.do_destroy()\n")
         for _db in self.dbdict:
             self.dbdict[_db].sync_usrdb()
         super(EngineFactory, self).destroy()
-
-

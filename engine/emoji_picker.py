@@ -456,8 +456,8 @@ class EmojiPickerUI(Gtk.Window):
 
         self._emoji_by_label = self._emoji_matcher.emoji_by_label()
         expanded_languages = itb_util.expand_languages(self._languages)
-        # 'en_001' and 'es_419' are not very useful in the treeview to browse the
-        # languages, remove them from the list:
+        # 'en_001' and 'es_419' are not very useful in the treeview to
+        # browse the languages, remove them from the list:
         expanded_languages = [
             lang
             for lang in expanded_languages
@@ -602,8 +602,7 @@ class EmojiPickerUI(Gtk.Window):
         ]
         if self._gettext_translations[language]:
             return self._gettext_translations[language].gettext(key)
-        else:
-            return key
+        return key
 
     def _emoji_descriptions(self, emoji):
         '''
@@ -851,7 +850,7 @@ class EmojiPickerUI(Gtk.Window):
             except (PermissionError, SyntaxError, IndentationError):
                 import traceback
                 traceback.print_exc()
-            except Exception as exception:
+            except Exception as dummy_exception:
                 import traceback
                 traceback.print_exc()
             else: # no exception occured
@@ -872,8 +871,7 @@ class EmojiPickerUI(Gtk.Window):
             if self._font == '':
                 self._font = 'emoji'
         if ('fontsize' in options_dict
-                and (isinstance(options_dict['fontsize'], int)
-                     or isinstance(options_dict['fontsize'], float))):
+                and (isinstance(options_dict['fontsize'], (int, float)))):
             self._fontsize = options_dict['fontsize']
         if ('fallback' in options_dict
                 and (isinstance(options_dict['fallback'], bool))):
@@ -917,7 +915,7 @@ class EmojiPickerUI(Gtk.Window):
             except (PermissionError, SyntaxError, IndentationError):
                 import traceback
                 traceback.print_exc()
-            except Exception as exception:
+            except Exception as dummy_exception:
                 import traceback
                 traceback.print_exc()
             else: # no exception occured
@@ -973,10 +971,10 @@ class EmojiPickerUI(Gtk.Window):
                 ('', '', self._recently_used_label)):
             self._clear_flowbox()
 
-    def on_clear_recently_used_button_clicked(self, dummy_button):
+    def on_clear_recently_used_button_clicked(self, _button):
         '''
-        :param dummy_button: The “Clear recently used” button
-        :type dummy_button: Gtk.Button object
+        :param _button: The “Clear recently used” button
+        :type _button: Gtk.Button object
         '''
         if _ARGS.debug:
             sys.stdout.write('on_clear_recently_used_button_clicked()\n')
@@ -1084,12 +1082,12 @@ class EmojiPickerUI(Gtk.Window):
             self._print_profiling_information()
         Gtk.main_quit()
 
-    def on_main_window_key_press_event(self, dummy_window, event_key):
+    def on_main_window_key_press_event(self, _window, event_key):
         '''
         Some key has been typed into the main window
 
-        :param dummy_window: The main window
-        :type dummy_window: Gtk.Window object
+        :param _window: The main window
+        :type _window: Gtk.Window object
         :param event_key:
         :type event_key: Gdk.EventKey object
         '''
@@ -1148,19 +1146,19 @@ class EmojiPickerUI(Gtk.Window):
                 Gtk.main_iteration()
         self._search_bar.handle_event(event_key)
 
-    def on_about_button_clicked(self, dummy_button):
+    def on_about_button_clicked(self, _button):
         '''
         The “About” button has been clicked
 
-        :param dummy_button: The “About” button
-        :type dummy_button: Gtk.Button object
+        :param _button: The “About” button
+        :type _button: Gtk.Button object
         '''
         if _ARGS.debug:
             sys.stdout.write('on_about_button_clicked()\n')
         if GTK_VERSION >= (3, 22, 0):
             self._main_menu_popover.popdown()
         self._main_menu_popover.hide()
-        aboutdialog = itb_util.ItbAboutDialog()
+        itb_util.ItbAboutDialog()
 
     def _fill_flowbox_with_search_results(self):
         '''
@@ -1459,7 +1457,7 @@ class EmojiPickerUI(Gtk.Window):
         self._emoji_selected_popover.show_all()
         GLib.timeout_add(500, self._emoji_selected_popover_popdown)
 
-    def on_emoji_selected(self, dummy_flowbox, flowbox_child):
+    def on_emoji_selected(self, _flowbox, flowbox_child):
         '''
         Signal handler for selecting an emoji in the flowbox
         via the flowbox selection
@@ -1468,8 +1466,8 @@ class EmojiPickerUI(Gtk.Window):
         skin tone popovers. In that case, emoji selection is handled
         in on_flowbox_event_box_button_release() instead.
 
-        :param dummy_flowbox: The flowbox displaying the Emoji
-        :type dummy_flowbox: Gtk.FlowBox object
+        :param _flowbox: The flowbox displaying the Emoji
+        :type _flowbox: Gtk.FlowBox object
         :param flowbox_child: The child object containing the selected emoji
         :type flowbox_child: Gtk.FlowBoxChild object
         '''
@@ -1479,12 +1477,12 @@ class EmojiPickerUI(Gtk.Window):
         self._emoji_event_box_selected(event_box)
         return Gdk.EVENT_PROPAGATE
 
-    def on_main_menu_button_clicked(self, dummy_button):
+    def on_main_menu_button_clicked(self, _button):
         '''
         The main menu button has been clicked
 
-        :param button: The main menu button
-        :type button: Gtk.Button object
+        :param _button: The main menu button
+        :type _button: Gtk.Button object
         '''
         if _ARGS.debug:
             sys.stdout.write('on_main_menu_button_clicked()\n')
@@ -1492,12 +1490,12 @@ class EmojiPickerUI(Gtk.Window):
             self._main_menu_popover.popup()
         self._main_menu_popover.show_all()
 
-    def on_toggle_search_button_clicked(self, dummy_button):
+    def on_toggle_search_button_clicked(self, _button):
         '''
         The search button in the header bar has been clicked
 
-        :param dummy_button: The search button
-        :type  dummy_button: Gtk.Button object
+        :param _button: The search button
+        :type  _button: Gtk.Button object
         '''
         if _ARGS.debug:
             sys.stdout.write('on_toggle_search_button_clicked()\n')
@@ -1547,12 +1545,12 @@ class EmojiPickerUI(Gtk.Window):
             self._skin_tone_popover = None
         return False
 
-    def on_skin_tone_selected(self, dummy_flowbox, flowbox_child):
+    def on_skin_tone_selected(self, _flowbox, flowbox_child):
         '''
         Signal handler for selecting a skin tone emoji
 
-        :param dummy_flowbox: The flowbox displaying the skin tone emoji
-        :type dummy_flowbox: Gtk.FlowBox object
+        :param _flowbox: The flowbox displaying the skin tone emoji
+        :type _flowbox: Gtk.FlowBox object
         :param flowbox_child: The child object containing the selected emoji
         :type flowbox_child: Gtk.FlowBoxChild object
         '''
@@ -2082,12 +2080,12 @@ class EmojiPickerUI(Gtk.Window):
                 %filter_text)
         self._fill_listbox_font(filter_text)
 
-    def on_font_selected(self, dummy_listbox, listbox_row):
+    def on_font_selected(self, _listbox, listbox_row):
         '''
         Signal handler for selecting a font
 
-        :param dummy_listbox: The list box used to select a font
-        :type dummy_listbox: Gtk.ListBox object
+        :param _listbox: The list box used to select a font
+        :type _listbox: Gtk.ListBox object
         :param listbox_row: A row containing a font name
         :type listbox_row: Gtk.ListBoxRow object
         '''
@@ -2112,12 +2110,12 @@ class EmojiPickerUI(Gtk.Window):
         self._busy_start()
         GLib.idle_add(self._change_flowbox_font)
 
-    def on_font_button_clicked(self, dummy_button):
+    def on_font_button_clicked(self, _button):
         '''
         The font button in the header bar has been clicked
 
-        :param dummy_button: The font button
-        :type dummy_button: Gtk.Button object
+        :param _button: The font button
+        :type _button: Gtk.Button object
         '''
         if _ARGS.debug:
             sys.stdout.write(

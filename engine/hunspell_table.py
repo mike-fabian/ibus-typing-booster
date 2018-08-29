@@ -550,7 +550,7 @@ class TypingBoosterEngine(IBus.Engine):
         # Selecting them does still work because the string which
         # is committed is not read from the lookup table but
         # from self._candidates[index][0].
-        phrase = phrase.replace(' ','').replace(' ','')
+        phrase = phrase.replace(' ', '').replace(' ', '')
         # Embed “phrase” and “comment” separately with “Explicit
         # Directional Embeddings” (RLE, LRE, PDF).
         #
@@ -1800,7 +1800,7 @@ class TypingBoosterEngine(IBus.Engine):
         tokens = ([
             itb_util.strip_token(token)
             for token in itb_util.tokenize(text[:cursor_pos])])
-        if len(tokens):
+        if tokens:
             self._p_phrase = tokens[-1]
         if len(tokens) > 1:
             self._pp_phrase = tokens[-2]
@@ -2076,7 +2076,8 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "set_remember_last_used_preedit_ime(%s, update_gsettings = %s)\n"
+                'set_remember_last_used_preedit_ime('
+                + '%s, update_gsettings = %s)\n'
                 %(mode, update_gsettings))
         if mode == self._remember_last_used_preedit_ime:
             return
@@ -2232,7 +2233,8 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._show_number_of_candidates
 
-    def set_show_status_info_in_auxiliary_text(self, mode, update_gsettings=True):
+    def set_show_status_info_in_auxiliary_text(
+            self, mode, update_gsettings=True):
         '''Sets the “Show status info in auxiliary text” mode
 
         :param mode: Whether to show status information in the
@@ -2374,8 +2376,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._unit_test:
             self.forward_key_event(keyval, keycode, state)
             return True
-        else:
-            return False
+        return False
 
     def _forward_key_event_left(self):
         '''Forward an arrow left event to the application.'''
@@ -2548,13 +2549,17 @@ class TypingBoosterEngine(IBus.Engine):
             self._update_lookup_table_and_aux()
             return True
 
-        if (key.val in (IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down, IBus.KEY_KP_Next)
+        if (key.val in (IBus.KEY_Page_Down,
+                        IBus.KEY_KP_Page_Down,
+                        IBus.KEY_KP_Next)
             and self.get_lookup_table().get_number_of_candidates()):
             dummy = self._page_down()
             self._update_lookup_table_and_aux()
             return True
 
-        if (key.val in (IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up, IBus.KEY_KP_Prior)
+        if (key.val in (IBus.KEY_Page_Up,
+                        IBus.KEY_KP_Page_Up,
+                        IBus.KEY_KP_Prior)
             and self.get_lookup_table().get_number_of_candidates()):
             dummy = self._page_up()
             self._update_lookup_table_and_aux()
@@ -2721,7 +2726,7 @@ class TypingBoosterEngine(IBus.Engine):
             # it off because the commit key is passed to the
             # application later anyway and we do not want to pass it
             # twice:
-            if len(key.msymbol) and input_phrase.endswith(key.msymbol):
+            if key.msymbol and input_phrase.endswith(key.msymbol):
                 input_phrase = input_phrase[:-len(key.msymbol)]
             if (self.get_lookup_table().get_number_of_candidates()
                 and self.get_lookup_table().cursor_visible):
@@ -2809,9 +2814,8 @@ class TypingBoosterEngine(IBus.Engine):
             # https://bugzilla.redhat.com/show_bug.cgi?id=1291238
             if self._qt_im_module_workaround:
                 return self._return_false(key.val, key.code, key.state)
-            else:
-                self.forward_key_event(key.val, key.code, key.state)
-                return True
+            self.forward_key_event(key.val, key.code, key.state)
+            return True
 
         if key.unicode:
             # If the suggestions are only enabled by Tab key, i.e. the
@@ -2884,7 +2888,7 @@ class TypingBoosterEngine(IBus.Engine):
         self.reset()
         return
 
-    def do_set_content_type(self, purpose, dummy_hints):
+    def do_set_content_type(self, purpose, _hints):
         '''Called when the input purpose changes
 
         The input purpose is one of these
@@ -2972,7 +2976,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_lookup_table_and_aux()
         return res
 
-    def on_gsettings_value_changed(self, settings, key):
+    def on_gsettings_value_changed(self, _settings, key):
         '''
         Called when a value in the settings has been changed.
 

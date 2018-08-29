@@ -16,7 +16,9 @@
 # GNU General Public License for more details.
 #  You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
-
+'''
+Module for ibus-typing-booster to access the sqlite3 databases
+'''
 import os
 import os.path as path
 import sys
@@ -33,7 +35,7 @@ DEBUG_LEVEL = int(0)
 
 USER_DATABASE_VERSION = '0.65'
 
-class tabsqlitedb:
+class TabSqliteDb:
     '''Phrase databases for ibus-typing-booster
 
     The phrases table in the database has columns with the names:
@@ -63,7 +65,7 @@ class tabsqlitedb:
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.__init__(user_db_file = %s)\n" %user_db_file)
+                "TabSqliteDb.__init__(user_db_file = %s)\n" %user_db_file)
         self.user_db_file = user_db_file
         if not self.user_db_file:
             self.user_db_file = path.join(
@@ -216,13 +218,13 @@ class tabsqlitedb:
         self.create_tables()
         if self.old_phrases:
             sqlargs = []
-            for x in self.old_phrases:
+            for ophrase in self.old_phrases:
                 sqlargs.append(
-                    {'input_phrase': x[0],
-                     'phrase': x[0],
+                    {'input_phrase': ophrase[0],
+                     'phrase': ophrase[0],
                      'p_phrase': '',
                      'pp_phrase': '',
-                     'user_freq': x[1],
+                     'user_freq': ophrase[1],
                      'timestamp': time.time()})
             sqlstr = '''
             INSERT INTO user_db.phrases (input_phrase, phrase, p_phrase, pp_phrase, user_freq, timestamp)
@@ -283,9 +285,9 @@ class tabsqlitedb:
                    'timestamp': time.time()}
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.update_phrase() sqlstr=%s\n" %sqlstr)
+                "TabSqliteDb.update_phrase() sqlstr=%s\n" %sqlstr)
             sys.stderr.write(
-                "tabsqlitedb.update_phrase() sqlargs=%s\n" %sqlargs)
+                "TabSqliteDb.update_phrase() sqlargs=%s\n" %sqlargs)
         try:
             self.db.execute(sqlstr, sqlargs)
             if commit:
@@ -299,13 +301,13 @@ class tabsqlitedb:
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.sync_userdb() "
+                "TabSqliteDb.sync_userdb() "
                 + "commit and execute checkpoint ...\n")
         self.db.commit()
         self.db.execute('PRAGMA wal_checkpoint;')
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.sync_userdb() "
+                "TabSqliteDb.sync_userdb() "
                 + "commit and execute checkpoint done.\n")
 
     def create_tables(self):
@@ -325,7 +327,7 @@ class tabsqlitedb:
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.add_phrase() "
+                "TabSqliteDb.add_phrase() "
                 + "input_phrase=%s " % input_phrase.encode('UTF-8')
                 + "phrase=%s " % phrase.encode('UTF-8')
                 + "user_freq=%s " % user_freq
@@ -369,9 +371,9 @@ class tabsqlitedb:
                           'timestamp': time.time()}
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.add_phrase() insert_sqlstr=%s\n" %insert_sqlstr)
+                "TabSqliteDb.add_phrase() insert_sqlstr=%s\n" %insert_sqlstr)
             sys.stderr.write(
-                "tabsqlitedb.add_phrase() insert_sqlargs=%s\n" %insert_sqlargs)
+                "TabSqliteDb.add_phrase() insert_sqlargs=%s\n" %insert_sqlargs)
         try:
             self.db.execute(insert_sqlstr, insert_sqlargs)
             if commit:
@@ -380,6 +382,10 @@ class tabsqlitedb:
             traceback.print_exc()
 
     def optimize_database(self):
+        '''
+        Optimize the database by copying the contents
+        to temporary tables and back.
+        '''
         sqlstr = '''
             CREATE TABLE tmp AS SELECT * FROM %(database)s.phrases;
             DELETE FROM user_db.phrases;
@@ -402,6 +408,7 @@ class tabsqlitedb:
         self.db.commit()
 
     def create_indexes(self, commit=True):
+        '''Create indexes for the database.'''
         sqlstr = '''
         CREATE INDEX IF NOT EXISTS user_db.phrases_index_p ON phrases
         (input_phrase, id ASC);
@@ -436,7 +443,7 @@ class tabsqlitedb:
             itb_util.NORMALIZATION_FORM_INTERNAL, pp_phrase)
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.select_words() "
+                "TabSqliteDb.select_words() "
                 + "input_phrase=%s " % input_phrase.encode('UTF-8')
                 + "p_phrase=%s " % p_phrase.encode('UTF-8')
                 + "pp_phrase=%s\n" % pp_phrase.encode('UTF-8'))
@@ -445,7 +452,7 @@ class tabsqlitedb:
             x for x in self.hunspell_obj.suggest(input_phrase)])
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.select_words() hunspell: best_candidates=%s\n"
+                "TabSqliteDb.select_words() hunspell: best_candidates=%s\n"
                 %self.best_candidates(phrase_frequencies))
         # Remove the accents *after* getting the hunspell candidates.
         # If the accents were removed before getting the hunspell candidates
@@ -528,7 +535,7 @@ class tabsqlitedb:
             phrase_frequencies.update([(x[0], x[1]/float(count))])
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.select_words() Unigram best_candidates=%s\n"
+                "TabSqliteDb.select_words() Unigram best_candidates=%s\n"
                 %self.best_candidates(phrase_frequencies))
         if not p_phrase:
             # If no context for bigram matching is available, return
@@ -562,7 +569,7 @@ class tabsqlitedb:
                   +0.5*phrase_frequencies[x[0]])])
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.select_words() Bigram best_candidates=%s\n"
+                "TabSqliteDb.select_words() Bigram best_candidates=%s\n"
                 %self.best_candidates(phrase_frequencies))
         if not pp_phrase:
             # If no context for trigram matching is available, return
@@ -600,11 +607,16 @@ class tabsqlitedb:
                   +0.5*phrase_frequencies[x[0]])])
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.select_words() Trigram best_candidates=%s\n"
+                "TabSqliteDb.select_words() Trigram best_candidates=%s\n"
                 %self.best_candidates(phrase_frequencies))
         return self.best_candidates(phrase_frequencies)
 
     def generate_userdb_desc(self):
+        '''
+        Add a description table to the user database
+
+        This adds the database version and  the create time
+        '''
         try:
             sqlstring = ('CREATE TABLE IF NOT EXISTS user_db.desc '
                          + '(name PRIMARY KEY, value);')
@@ -620,6 +632,9 @@ class tabsqlitedb:
             traceback.print_exc()
 
     def init_user_db(self):
+        '''
+        Initialize the user database unless it is an in-memory database
+        '''
         if self.user_db_file == ':memory:':
             return
         if not path.exists(self.user_db_file):
@@ -699,10 +714,10 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         sqlargs = {'freq': itb_util.SHORTCUT_USER_FREQ}
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.list_user_shortcuts() sqlstr=%s\n"
+                "TabSqliteDb.list_user_shortcuts() sqlstr=%s\n"
                 %sqlstr)
             sys.stderr.write(
-                "tabsqlitedb.list_user_shortcuts() sqlargs=%s\n"
+                "TabSqliteDb.list_user_shortcuts() sqlargs=%s\n"
                 %sqlargs)
         result = self.db.execute(sqlstr, sqlargs).fetchall()
         if DEBUG_LEVEL > 1:
@@ -734,7 +749,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
 
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.check_phrase_and_update_frequency() "
+                "TabSqliteDb.check_phrase_and_update_frequency() "
                 + "phrase=%(p)s, input_phrase=%(t)s\n"
                 %{'p': phrase.encode('UTF-8'),
                   't': input_phrase.encode('UTF-8')})
@@ -759,16 +774,16 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                    'pp_phrase': pp_phrase}
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.check_phrase_and_update_frequency() sqlstr=%s\n"
+                "TabSqliteDb.check_phrase_and_update_frequency() sqlstr=%s\n"
                 %sqlstr)
             sys.stderr.write(
-                "tabsqlitedb.check_phrase_and_update_frequency() sqlargs=%s\n"
+                "TabSqliteDb.check_phrase_and_update_frequency() sqlargs=%s\n"
                 %sqlargs)
         result = self.db.execute(sqlstr, sqlargs).fetchall()
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "check_phrase_and_update_frequency() result=%s\n" %result)
-        if len(result) > 0:
+        if result:
             # A match was found in user_db, increase user frequency by
             # user_freq_increment (1 by default)
             self.update_phrase(input_phrase=input_phrase,
@@ -797,7 +812,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
-                "tabsqlitedb.remove_phrase() phrase=%(p)s\n"
+                "TabSqliteDb.remove_phrase() phrase=%(p)s\n"
                 %{'p': phrase.encode('UTF-8')})
         if not phrase:
             return
@@ -842,6 +857,12 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             return []
 
     def read_training_data_from_file(self, filename):
+        '''
+        Read data to train the prediction from a text file.
+
+        :param filename: Full path of the text file to read.
+        :type filename: String
+        '''
         if not os.path.isfile(filename):
             return False
         rows = self.db.execute(
@@ -863,7 +884,8 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         try:
             with codecs.open(filename, encoding='UTF-8') as file_handle:
                 lines = [
-                    unicodedata.normalize(itb_util.NORMALIZATION_FORM_INTERNAL, x)
+                    unicodedata.normalize(
+                        itb_util.NORMALIZATION_FORM_INTERNAL, x)
                     for x in file_handle.readlines()]
         except:
             traceback.print_exc()
@@ -904,6 +926,10 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         return True
 
     def remove_all_phrases(self):
+        '''
+        Remove all phrases from the database, i.e. delete all the
+        data learned from user input or text files.
+        '''
         try:
             self.db.execute('DELETE FROM phrases;')
             self.db.commit()

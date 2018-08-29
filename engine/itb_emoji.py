@@ -270,8 +270,7 @@ def _find_path_and_open_function(dirnames, basenames, subdir=''):
             if os.path.exists(path):
                 if path.endswith('.gz'):
                     return (path, gzip.open)
-                else:
-                    return (path, open)
+                return (path, open)
             path = os.path.join(dirname, basename + '.gz')
             if os.path.exists(path):
                 return (path, gzip.open)
@@ -293,9 +292,9 @@ def find_cldr_annotation_path(language):
     :rtype: String
     '''
     dirnames = CLDR_ANNOTATION_DIRNAMES
-    for language in itb_util.expand_languages([language]):
-        basenames = (language + '.xml',)
-        (path, open_function) = _find_path_and_open_function(
+    for _language in itb_util.expand_languages([language]):
+        basenames = (_language + '.xml',)
+        (path, dummy_open_function) = _find_path_and_open_function(
             dirnames, basenames, subdir='annotations')
         if path:
             return path
@@ -318,9 +317,9 @@ class EmojiMatcher():
         :type languages: List or tuple of strings
         :param unicode_data: Whether to load the UnicodeData.txt file as well
         :type unicode_data: Boolean
-        :param unicode_data_all: Whether to load *all* of the Unicode characters
-                                  from UnicodeData.txt. If False, most regular
-                                  letters are omitted.
+        :param unicode_data_all: Whether to load *all* of the Unicode
+                                 characters from UnicodeData.txt.
+                                 If False, most regular letters are omitted.
         :type unicode_data_all: Boolean
         :param cldr_data: Whether to load data from CLDR as well
         :type cldr_data: Boolean
@@ -402,6 +401,7 @@ class EmojiMatcher():
                 self._load_cldr_annotation_data(language, 'annotationsDerived')
 
     def get_languages(self):
+        # pylint: disable=line-too-long
         '''Returns a copy of the list of languages of this EmojiMatcher
 
         Useful to check whether an already available EmojiMatcher instance
@@ -421,6 +421,8 @@ class EmojiMatcher():
         ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP']
 
         '''
+        # pylint: enable=line-too-long
+        #
         # Use list() to make a copy instead of self._languages[:] because
         # the latter might return the default tuple ('en_US',) instead
         # of a list ['en_US'] which makes comparison with another list
@@ -429,6 +431,7 @@ class EmojiMatcher():
 
     def variation_selector_16_normalize(
             self, emoji_string, non_fully_qualified=False):
+        # pylint: disable=line-too-long
         '''Removes or adds emoji presentation selectors (U+FE0F VARIATION
         SELECTOR-16)
 
@@ -490,16 +493,16 @@ class EmojiMatcher():
         >>> matcher.variation_selector_16_normalize('⛹', non_fully_qualified=False)
         '⛹\ufe0f'
         '''
+        # pylint: enable=line-too-long
         if emoji_string != '\ufe0f':
             emoji_string = emoji_string.replace('\ufe0f', '')
         if non_fully_qualified:
             return emoji_string
-        else:
-            retval = ''
-            length = len(emoji_string)
-            for index, character in enumerate(emoji_string):
-                retval += character
-                if ((character not in SKIN_TONE_MODIFIERS)
+        retval = ''
+        length = len(emoji_string)
+        for index, character in enumerate(emoji_string):
+            retval += character
+            if ((character not in SKIN_TONE_MODIFIERS)
                     and ('Emoji' in self.properties(character))
                     and ('Emoji_Presentation'
                          not in self.properties(character))
@@ -507,8 +510,8 @@ class EmojiMatcher():
                              and
                              emoji_string[index + 1]
                              in SKIN_TONE_MODIFIERS)):
-                    retval += '\ufe0f'
-            return retval
+                retval += '\ufe0f'
+        return retval
 
     def _add_to_emoji_dict(self, emoji_dict_key, values_key, values):
         '''Adds data to the emoji_dict if not already there'''
@@ -520,8 +523,8 @@ class EmojiMatcher():
             emoji_dict_key[1])
         if emoji_dict_key not in self._emoji_dict:
             self._emoji_dict[emoji_dict_key] = {}
-        if type(values) is list:
-            if (values_key not in self._emoji_dict[emoji_dict_key]):
+        if isinstance(values, list):
+            if values_key not in self._emoji_dict[emoji_dict_key]:
                 self._emoji_dict[emoji_dict_key][values_key] = []
             for value in values:
                 if (value not in
@@ -544,7 +547,8 @@ class EmojiMatcher():
                 '_load_unicode_data(): could not find "%s" in "%s"\n'
                 %(basenames, dirnames))
             return
-        with open_function(path, mode='rt', encoding='utf-8') as unicode_data_file:
+        with open_function(
+            path, mode='rt', encoding='utf-8') as unicode_data_file:
             for line in unicode_data_file.readlines():
                 if not line.strip():
                     continue
@@ -589,19 +593,20 @@ class EmojiMatcher():
                 '_load_unicode_emoji_data(): could not find "%s" in "%s"\n'
                 %(basenames, dirnames))
             return
-        with open_function(path, mode='rt', encoding='utf-8') as unicode_emoji_data_file:
+        with open_function(
+            path, mode='rt', encoding='utf-8') as unicode_emoji_data_file:
             for line in unicode_emoji_data_file.readlines():
                 unicode_version = ''
                 pattern = re.compile(
                     r'[^;]*;[^;]*#\s*(?P<uversion>[0-9]+\.[0-9]+)\s*'
                     + r'\[[0-9]+\]')
-                match  = pattern.match(line)
+                match = pattern.match(line)
                 if match and match.group('uversion'):
                     unicode_version = match.group('uversion')
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
-                codepoint_string, property = [
+                codepoint_string, property_string = [
                     x.strip() for x in line.split(';')[:2]]
                 codepoint_range = [
                     int(x, 16) for x in codepoint_string.split('..')]
@@ -612,7 +617,7 @@ class EmojiMatcher():
                         codepoint_range[0], codepoint_range[1] + 1):
                     emoji_string = chr(codepoint)
                     self._add_to_emoji_dict(
-                        (emoji_string, 'en'), 'properties', [property])
+                        (emoji_string, 'en'), 'properties', [property_string])
                     if unicode_version:
                         self._add_to_emoji_dict(
                             (emoji_string, 'en'), 'uversion', unicode_version)
@@ -629,22 +634,24 @@ class EmojiMatcher():
             dirnames, basenames)
         if not path:
             sys.stderr.write(
-                '_load_unicode_emoji_sequences(): could not find "%s" in "%s"\n'
+                '_load_unicode_emoji_sequences(): '
+                + 'could not find "%s" in "%s"\n'
                 %(basenames, dirnames))
             return
-        with open_function(path, mode='rt', encoding='utf-8') as unicode_emoji_sequences_file:
+        with open_function(
+            path, mode='rt', encoding='utf-8') as unicode_emoji_sequences_file:
             for line in unicode_emoji_sequences_file.readlines():
                 unicode_version = ''
                 pattern = re.compile(
                     r'[^;]*;[^;]*;[^;]*#\s*(?P<uversion>[0-9]+\.[0-9]+)\s*'
                     + r'\[[0-9]+\]')
-                match  = pattern.match(line)
+                match = pattern.match(line)
                 if match and match.group('uversion'):
                     unicode_version = match.group('uversion')
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
-                codepoints, property, name = [
+                codepoints, property_string, name = [
                     x.strip() for x in line.split(';')[:3]]
                 if codepoints == '0023 FE0F 20E3' and name == 'keycap:':
                     name = 'keycap: #'
@@ -653,7 +660,7 @@ class EmojiMatcher():
                     emoji_string += chr(int(codepoint, 16))
                 if emoji_string:
                     self._add_to_emoji_dict(
-                        (emoji_string, 'en'), 'properties', [property])
+                        (emoji_string, 'en'), 'properties', [property_string])
                     self._add_to_emoji_dict(
                         (emoji_string, 'en'), 'names', [name.lower()])
                     if unicode_version:
@@ -672,29 +679,33 @@ class EmojiMatcher():
             dirnames, basenames)
         if not path:
             sys.stderr.write(
-                '_load_unicode_emoji_zwj_sequences(): could not find "%s" in "%s"\n'
+                '_load_unicode_emoji_zwj_sequences(): '
+                + 'could not find "%s" in "%s"\n'
                 %(basenames, dirnames))
             return
-        with open_function(path, mode='rt', encoding='utf-8') as unicode_emoji_zwj_sequences_file:
+        with open_function(
+            path,
+            mode='rt',
+            encoding='utf-8') as unicode_emoji_zwj_sequences_file:
             for line in unicode_emoji_zwj_sequences_file.readlines():
                 unicode_version = ''
                 pattern = re.compile(
                     r'[^;]*;[^;]*;[^;]*#\s*(?P<uversion>[0-9]+\.[0-9]+)\s*'
                     + r'\[[0-9]+\]')
-                match  = pattern.match(line)
+                match = pattern.match(line)
                 if match and match.group('uversion'):
                     unicode_version = match.group('uversion')
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
-                codepoints, property, name = [
+                codepoints, property_string, name = [
                     x.strip() for x in line.split(';')[:3]]
                 emoji_string = ''
                 for codepoint in codepoints.split(' '):
                     emoji_string += chr(int(codepoint, 16))
                 if emoji_string:
                     self._add_to_emoji_dict(
-                        (emoji_string, 'en'), 'properties', [property])
+                        (emoji_string, 'en'), 'properties', [property_string])
                     self._add_to_emoji_dict(
                         (emoji_string, 'en'), 'names', [name.lower()])
                     if unicode_version:
@@ -730,7 +741,8 @@ class EmojiMatcher():
                 '_load_unicode_emoji_test(): could not find "%s" in "%s"\n'
                 %(basenames, dirnames))
             return
-        with open_function(path, mode='rt', encoding='utf-8') as unicode_emoji_test_file:
+        with open_function(
+            path, mode='rt', encoding='utf-8') as unicode_emoji_test_file:
             group = ''
             subgroup = ''
             cldr_order = 0
@@ -768,9 +780,9 @@ class EmojiMatcher():
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
-                codepoints, property = [
+                codepoints, property_string = [
                     x.strip() for x in line.split(';')[:2]]
-                if property == 'non-fully-qualified':
+                if property_string == 'non-fully-qualified':
                     # The non-fully-qualified sequences are
                     # all duplicates of the fully-qualified
                     # sequences.
@@ -811,7 +823,8 @@ class EmojiMatcher():
                 '_load_emojione_data(): could not find "%s" in "%s"\n'
                 %(basenames, dirnames))
             return
-        with open_function(path, mode='rt', encoding='utf-8') as emoji_one_file:
+        with open_function(
+            path, mode='rt', encoding='utf-8') as emoji_one_file:
             emojione = json.load(emoji_one_file)
         if '1f600' not in emojione:
             emojione_version = 2
@@ -1020,7 +1033,8 @@ class EmojiMatcher():
         # but only the fallback 'es' was really found):
         language = os.path.basename(
             path).replace('.gz', '').replace('.xml', '')
-        with open_function(path, mode='rt', encoding='utf-8') as cldr_annotation_file:
+        with open_function(
+            path, mode='rt', encoding='utf-8') as cldr_annotation_file:
             pattern = re.compile(
                 r'.*<annotation cp="(?P<emojistring>[^"]+)"'
                 +r'\s*(?P<tts>type="tts"){0,1}'
@@ -1044,7 +1058,7 @@ class EmojiMatcher():
                                 [content,
                                  pinyin.get(content)]
                             )
-                        elif (language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL):
+                        elif language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
                             KAKASI_INSTANCE.setMode('H', 'H')
                             KAKASI_INSTANCE.setMode('K', 'H')
                             KAKASI_INSTANCE.setMode('J', 'H')
@@ -1065,7 +1079,8 @@ class EmojiMatcher():
                                 KAKASI_INSTANCE.setMode('C', True)
                                 # capitalize default: no Capitalize
                                 KAKASI_INSTANCE.setMode('c', False)
-                                kakasi_converter = KAKASI_INSTANCE.getConverter()
+                                kakasi_converter = (
+                                    KAKASI_INSTANCE.getConverter())
                                 self._add_to_emoji_dict(
                                     (emoji_string, language),
                                     'names',
@@ -1081,21 +1096,21 @@ class EmojiMatcher():
                     else:
                         if (language in ('zh', 'zh_Hant')
                                 and IMPORT_PINYIN_SUCCESSFUL):
-                            for x in content.split('|'):
-                                keyword = x.strip()
+                            for content_part in content.split('|'):
+                                keyword = content_part.strip()
                                 keyword_pinyin = pinyin.get(keyword)
                                 self._add_to_emoji_dict(
                                     (emoji_string, language),
                                     'keywords',
                                     [keyword, keyword_pinyin]
                                 )
-                        elif (language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL):
+                        elif language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
                             KAKASI_INSTANCE.setMode('H', 'H')
                             KAKASI_INSTANCE.setMode('K', 'H')
                             KAKASI_INSTANCE.setMode('J', 'H')
                             kakasi_converter = KAKASI_INSTANCE.getConverter()
-                            for x in content.split('|'):
-                                keyword = x.strip()
+                            for content_part in content.split('|'):
+                                keyword = content_part.strip()
                                 keyword_hiragana = kakasi_converter.do(keyword)
                                 self._add_to_emoji_dict(
                                     (emoji_string, language),
@@ -1114,8 +1129,8 @@ class EmojiMatcher():
                                 KAKASI_INSTANCE.setMode('c', False)
                                 kakasi_converter = (
                                     KAKASI_INSTANCE.getConverter())
-                                for x in content.split('|'):
-                                    keyword = x.strip()
+                                for content_part in content.split('|'):
+                                    keyword = content_part.strip()
                                     keyword_romaji = kakasi_converter.do(
                                         keyword).lower()
                                     self._add_to_emoji_dict(
@@ -1297,6 +1312,7 @@ class EmojiMatcher():
         return total_score
 
     def candidates(self, query_string, match_limit=20, debug=tuple()):
+        # pylint: disable=line-too-long
         '''
         Find a list of emoji which best match a query string.
 
@@ -1608,6 +1624,7 @@ class EmojiMatcher():
         >>> mq.candidates('')
         []
         '''
+        # pylint: enable=line-too-long
         if not query_string:
             return []
         # self._emoji_dict contains only non-fully-qualified sequences:
@@ -1703,10 +1720,10 @@ class EmojiMatcher():
         try:
             codepoint = int(query_string, 16)
             if (codepoint >= 0x0 and codepoint <= 0x1FFFFF
-                # exclude surrogates and private use characters:
-                and not (codepoint >= 0xd800 and codepoint <= 0xf8ff)
-                and not (codepoint >= 0xf0000 and codepoint <= 0xffffd)
-                and not (codepoint >= 0x100000 and codepoint <= 0x10fffd)):
+                    # exclude surrogates and private use characters:
+                    and not (codepoint >= 0xd800 and codepoint <= 0xf8ff)
+                    and not (codepoint >= 0xf0000 and codepoint <= 0xffffd)
+                    and not (codepoint >= 0x100000 and codepoint <= 0x10fffd)):
                 char = chr(codepoint)
                 name = self.name(char)
                 if not name:
@@ -1737,6 +1754,7 @@ class EmojiMatcher():
         return sorted_candidates
 
     def names(self, emoji_string, language=''):
+        # pylint: disable=line-too-long
         '''Find the names of an emoji
 
         Returns a list of names of the emoji in the language requested
@@ -1759,22 +1777,26 @@ class EmojiMatcher():
         >>> matcher.names('🙂')
         ['slightly smiling face', 'slight smile', ':)', ':-)', '=]', '=)', ':]']
         '''
+        # pylint: enable=line-too-long
+        #
         # self._emoji_dict contains only non-fully-qualified sequences:
         emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
         if language:
             if ((emoji_string, language) in self._emoji_dict
-                    and 'names' in self._emoji_dict[(emoji_string, language)]):
+                    and
+                    'names' in self._emoji_dict[(emoji_string, language)]):
                 return self._emoji_dict[(emoji_string, language)]['names']
-            else:
-                return []
-        for language in itb_util.expand_languages(self._languages):
-            if ((emoji_string, language) in self._emoji_dict
-                    and 'names' in self._emoji_dict[(emoji_string, language)]):
-                return self._emoji_dict[(emoji_string, language)]['names']
+            return []
+        for _language in itb_util.expand_languages(self._languages):
+            if ((emoji_string, _language) in self._emoji_dict
+                    and
+                    'names' in self._emoji_dict[(emoji_string, _language)]):
+                return self._emoji_dict[(emoji_string, _language)]['names']
         return []
 
     def name(self, emoji_string, language=''):
+        # pylint: disable=line-too-long
         '''Find the main name of an emoji.
 
         Returns a name of the emoji in the language requested
@@ -1844,13 +1866,14 @@ class EmojiMatcher():
         >>> matcher.name(' ')
         'space'
         '''
+        # pylint: enable=line-too-long
         names = self.names(emoji_string, language=language)
         if names:
             return names[0]
-        else:
-            return ''
+        return ''
 
     def keywords(self, emoji_string, language=''):
+        # pylint: disable=line-too-long
         '''Return the keywords of an emoji
 
         Returns a list of keywords of the emoji in the language requested
@@ -1876,22 +1899,26 @@ class EmojiMatcher():
         >>> matcher.keywords('🙂', language='it')
         ['faccina con sorriso accennato', 'mezzo sorriso', 'sorriso', 'sorriso a bocca chiusa']
         '''
+        # pylint: enable=line-too-long
+        #
         # self._emoji_dict contains only non-fully-qualified sequences:
         emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
         if language:
             if ((emoji_string, language) in self._emoji_dict
-                    and 'keywords' in self._emoji_dict[(emoji_string, language)]):
+                    and
+                    'keywords' in self._emoji_dict[(emoji_string, language)]):
                 return self._emoji_dict[(emoji_string, language)]['keywords']
-            else:
-                return []
-        for language in itb_util.expand_languages(self._languages):
-            if ((emoji_string, language) in self._emoji_dict
-                    and 'keywords' in self._emoji_dict[(emoji_string, language)]):
-                return self._emoji_dict[(emoji_string, language)]['keywords']
+            return []
+        for _language in itb_util.expand_languages(self._languages):
+            if ((emoji_string, _language) in self._emoji_dict
+                    and
+                    'keywords' in self._emoji_dict[(emoji_string, _language)]):
+                return self._emoji_dict[(emoji_string, _language)]['keywords']
         return []
 
     def categories(self, emoji_string, language=''):
+        # pylint: disable=line-too-long
         '''Return the categories of an emoji
 
         Returns a list of categories of the emoji in the language requested
@@ -1914,22 +1941,28 @@ class EmojiMatcher():
         >>> matcher.categories('🙂')
         ['people']
         '''
+        # pylint: enable=line-too-long
+        #
         # self._emoji_dict contains only non-fully-qualified sequences:
         emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
         if language:
             if ((emoji_string, language) in self._emoji_dict
-                    and 'categories' in self._emoji_dict[(emoji_string, language)]):
-                return self._emoji_dict[(emoji_string, language)]['categories']
-            else:
-                return []
-        for language in itb_util.expand_languages(self._languages):
-            if ((emoji_string, language) in self._emoji_dict
-                    and 'categories' in self._emoji_dict[(emoji_string, language)]):
-                return self._emoji_dict[(emoji_string, language)]['categories']
+                    and 'categories' in
+                    self._emoji_dict[(emoji_string, language)]):
+                return self._emoji_dict[
+                    (emoji_string, language)]['categories']
+            return []
+        for _language in itb_util.expand_languages(self._languages):
+            if ((emoji_string, _language) in self._emoji_dict
+                    and 'categories' in
+                    self._emoji_dict[(emoji_string, _language)]):
+                return self._emoji_dict[
+                    (emoji_string, _language)]['categories']
         return []
 
     def similar(self, emoji_string, match_limit=1000):
+        # pylint: disable=line-too-long
         '''Find similar emojis
 
         “Similar” means they share categories or keywords.
@@ -1990,6 +2023,8 @@ class EmojiMatcher():
         >>> matcher.similar('🏄‍♂', match_limit = 2)
         [('🏄\u200d♂️', 'hombre haciendo surf [🏄\u200d♂️, hombre, hombre haciendo surf, surf, surfero, surfista]', 6), ('🏄🏻\u200d♂️', 'hombre haciendo surf: tono de piel claro [hombre, hombre haciendo surf, surf, surfero, surfista]', 5)]
         '''
+        # pylint: enable=line-too-long
+        #
         # self._emoji_dict contains only non-fully-qualified sequences:
         emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
@@ -2058,21 +2093,23 @@ class EmojiMatcher():
                                 candidate_scores[scores_key] = [label]
         candidates = []
         cldr_order_emoji_string = self.cldr_order(emoji_string)
-        for x in sorted(candidate_scores.items(),
-                        key=lambda x: (
-                            expanded_languages.index(x[0][1]), # language index
-                            - len(x[1]), # number of matching labels
-                            # abs(difference in cldr_order):
-                            + abs(self.cldr_order(x[0][0]) - cldr_order_emoji_string),
-                            self.cldr_order(x[0][0]), # CLDR order
-                            - len(x[0][0]), # length of emoji string
-                            x[0][2], # emoji name
-                        ))[:match_limit]:
+        for csi in sorted(
+                candidate_scores.items(),
+                key=lambda csi: (
+                    expanded_languages.index(csi[0][1]), # language index
+                    - len(csi[1]), # number of matching labels
+                    # abs(difference in cldr_order):
+                    + abs(self.cldr_order(csi[0][0])
+                          - cldr_order_emoji_string),
+                    self.cldr_order(csi[0][0]), # CLDR order
+                    - len(csi[0][0]), # length of emoji string
+                    csi[0][2], # emoji name
+                ))[:match_limit]:
             emoji = self.variation_selector_16_normalize(
-                x[0][0],
+                csi[0][0],
                 non_fully_qualified=self._non_fully_qualified)
-            name = x[0][2] + ' [' + ', '.join(x[1]) + ']'
-            score = len(x[1])
+            name = csi[0][2] + ' [' + ', '.join(csi[1]) + ']'
+            score = len(csi[1])
             candidates.append((emoji, name, score))
         return candidates
 
@@ -2087,7 +2124,7 @@ class EmojiMatcher():
                 emoji = self.variation_selector_16_normalize(
                     emoji_key[0],
                     non_fully_qualified=self._non_fully_qualified)
-                unicode_version  = self.unicode_version(emoji)
+                unicode_version = self.unicode_version(emoji)
                 if (unicode_version
                         and (LooseVersion(unicode_version)
                              < LooseVersion(self._emoji_unicode_min)
@@ -2218,10 +2255,9 @@ class EmojiMatcher():
         emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
         if (((emoji_string, 'en') in self._emoji_dict)
-            and ('properties' in self._emoji_dict[(emoji_string, 'en')])):
+                and ('properties' in self._emoji_dict[(emoji_string, 'en')])):
             return self._emoji_dict[(emoji_string, 'en')]['properties']
-        else:
-            return []
+        return []
 
     def unicode_version(self, emoji_string):
         '''
@@ -2235,10 +2271,9 @@ class EmojiMatcher():
         emoji_string = self.variation_selector_16_normalize(
             emoji_string, non_fully_qualified=True)
         if (((emoji_string, 'en') in self._emoji_dict)
-            and ('uversion' in self._emoji_dict[(emoji_string, 'en')])):
+                and ('uversion' in self._emoji_dict[(emoji_string, 'en')])):
             return self._emoji_dict[(emoji_string, 'en')]['uversion']
-        else:
-            return ''
+        return ''
 
     def skin_tone_modifier_supported(self, emoji_string):
         '''Checks whether skin tone modifiers are possible for this emoji
@@ -2276,10 +2311,10 @@ class EmojiMatcher():
         '''
         if len(self.skin_tone_variants(emoji_string)) > 1:
             return True
-        else:
-            return False
+        return False
 
     def skin_tone_variants(self, emoji_string):
+        # pylint: disable=line-too-long
         '''
         Returns a list of skin tone variants for the given emoji
 
@@ -2358,6 +2393,7 @@ class EmojiMatcher():
         >>> matcher.skin_tone_variants('🏌\u200d♂')
         ['🏌\u200d♂', '🏌🏻\u200d♂', '🏌🏼\u200d♂', '🏌🏽\u200d♂', '🏌🏾\u200d♂', '🏌🏿\u200d♂']
         '''
+        # pylint: enable=line-too-long
         if not emoji_string or emoji_string in SKIN_TONE_MODIFIERS:
             return [emoji_string]
         emoji_string = self.variation_selector_16_normalize(
@@ -2369,7 +2405,7 @@ class EmojiMatcher():
                     non_fully_qualified=self._non_fully_qualified)
                 for tone in ('',) + SKIN_TONE_MODIFIERS]
         if ((emoji_string[-1] in SKIN_TONE_MODIFIERS)
-            and ((emoji_string, 'en') in self._emoji_dict)):
+                and ((emoji_string, 'en') in self._emoji_dict)):
             return [
                 self.variation_selector_16_normalize(
                     emoji_string[:-1] + tone,
@@ -2428,6 +2464,7 @@ class EmojiMatcher():
 
     if IMPORT_PINYIN_SUCCESSFUL:
         def _doctest_pinyin(self):
+            # pylint: disable=line-too-long
             '''
             >>> matcher = EmojiMatcher(languages = ['zh_CN'])
             >>> matcher.candidates('saima')[0][:2]
@@ -2444,9 +2481,11 @@ class EmojiMatcher():
             >>> matcher.similar('🏇', match_limit=1)
             [('🏇', '賽馬 [🏇, 騎馬, qímǎ]', 3)]
             '''
+            # pylint: enable=line-too-long
 
     if IMPORT_PYKAKASI_SUCCESSFUL:
         def _doctest_pykakasi(self):
+            # pylint: disable=line-too-long
             '''
             >>> matcher = EmojiMatcher(languages = ['ja_JP'], romaji=True)
             >>> matcher.candidates('katatsumuri')[0][:2]
@@ -2465,27 +2504,28 @@ class EmojiMatcher():
             [('😱', '恐怖 [😱, がーん, ショック, しょっく, 叫び, さけび, 恐怖, きょうふ, 顔, かお, ga-n, shokku, sakebi, kyoufu, kao]', 15), ('🙀', '絶望する猫 [がーん, ショック, しょっく, 顔, かお, ga-n, shokku, kao]', 8), ('🤯', '頭爆発 [ショック, しょっく, 顔, かお, shokku, kao]', 6), ('😨', '青ざめ [がーん, 顔, かお, ga-n, kao]', 5), ('😰', '冷や汗青ざめ [顔, かお, kao]', 3)]
 
             '''
+            # pylint: enable=line-too-long
 
     def list_emoji_one_bugs(self):
         '''
+        Function to list bugs in emojione.json to help with reporting bugs.
         '''
         print('--------------------------------------------------')
         print('Possible bugs in emojione.json:')
         print('--------------------------------------------------')
         print('\n')
-        for emoji_key, emoji_value in sorted(self._emoji_dict.items()):
+        for emoji_key, dummy_emoji_value in sorted(self._emoji_dict.items()):
             if emoji_key[1] == 'en':
                 if ((emoji_key[0] + SKIN_TONE_MODIFIERS[0], 'en')
-                    in self._emoji_dict):
-                    if (not 'Emoji_Modifier_Base'
-                        in self.properties(emoji_key[0])):
+                        in self._emoji_dict):
+                    if ('Emoji_Modifier_Base'
+                            not in self.properties(emoji_key[0])):
                         print('emoji “%s” (U+%X) has skintones in emojione '
                               %(emoji_key[0], ord(emoji_key[0]))
                               + 'but not the Emoji_Modifier_Base '
                               + 'property in emoji-data.txt.')
                 if 'Emoji_Modifier_Base' in self.properties(emoji_key[0]):
-                    if (not 'emoji_order'
-                        in self._emoji_dict[
+                    if ('emoji_order' not in self._emoji_dict[
                             (emoji_key[0] + SKIN_TONE_MODIFIERS[0], 'en')]):
                         print('emoji “%s” (U+%X) '
                               %(emoji_key[0], ord(emoji_key[0]))
@@ -2494,14 +2534,14 @@ class EmojiMatcher():
                               + 'in emojione.')
                 if 'Emoji_ZWJ_Sequence' in self.properties(emoji_key[0]):
                     if ('emoji_order'
-                        not in self._emoji_dict[(emoji_key[0], 'en')]):
+                            not in self._emoji_dict[(emoji_key[0], 'en')]):
                         print('ZWJ sequence “%s” '
                               %emoji_key[0]
                               + 'from unicode.org missing in emojione')
                 else:
                     if (('emoji_order'
-                        in self._emoji_dict[(emoji_key[0], 'en')])
-                        and '\u200d' in emoji_key[0]):
+                         in self._emoji_dict[(emoji_key[0], 'en')])
+                            and '\u200d' in emoji_key[0]):
                         print('ZWJ sequence “%s” '
                               %emoji_key[0]
                               + 'in emojione but not in unicode.org')

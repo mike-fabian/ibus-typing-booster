@@ -321,7 +321,7 @@ class Transliterator:
         :type msymbol_list: A list of strings
         :rtype: string
         '''
-        if type(msymbol_list) != type([]):
+        if not isinstance(msymbol_list, list):
             raise ValueError('Argument of transliterate() must be a list.')
         if self._dummy:
             return ''.join(msymbol_list)
@@ -343,8 +343,7 @@ class Transliterator:
 
 if __name__ == "__main__":
     import doctest
-    (failed,  attempted) = doctest.testmod()
-    if failed:
+    (FAILED, _ATTEMPTED) = doctest.testmod()
+    if FAILED:
         sys.exit(1)
-    else:
-        sys.exit(0)
+    sys.exit(0)

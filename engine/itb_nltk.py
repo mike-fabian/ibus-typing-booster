@@ -37,7 +37,7 @@ import sys
 import nltk
 from nltk.corpus import wordnet
 
-def synonyms(word, keep_original = True):
+def synonyms(word, keep_original=True):
     '''List synonyms for word
 
     :param word: The word for which synonyms should be looked up
@@ -62,10 +62,10 @@ def synonyms(word, keep_original = True):
     if word in result:
         result.remove(word)
     if keep_original:
-        result =  [word] + result
+        result = [word] + result
     return result[:]
 
-def hyponyms(word, keep_original = True):
+def hyponyms(word, keep_original=True):
     '''List hyponyms for word
 
     :param word: The word for which hyponyms should be looked up
@@ -91,10 +91,10 @@ def hyponyms(word, keep_original = True):
     if word in result:
         result.remove(word)
     if keep_original:
-        result =  [word] + result
+        result = [word] + result
     return result[:]
 
-def hypernyms(word, keep_original = True):
+def hypernyms(word, keep_original=True):
     '''List hypernyms for word
 
     :param word: The word for which hyperyms should be looked up
@@ -120,10 +120,10 @@ def hypernyms(word, keep_original = True):
     if word in result:
         result.remove(word)
     if keep_original:
-        result =  [word] + result
+        result = [word] + result
     return result[:]
 
-def related(word, keep_original = True):
+def related(word, keep_original=True):
     '''List all related words (synonyms, hypernyms, and hyponyms)
 
     :param word: The word for which related words should be looked up
@@ -140,14 +140,14 @@ def related(word, keep_original = True):
     ['fedora', 'Stetson', 'felt hat', 'homburg', 'trilby', 'chapeau', 'hat', 'lid']
     '''
     result = (
-        synonyms(word, keep_original = False)
-        + hypernyms(word, keep_original = False)
-        + hyponyms(word, keep_original = False)
+        synonyms(word, keep_original=False)
+        + hypernyms(word, keep_original=False)
+        + hyponyms(word, keep_original=False)
     )
     if word in result:
         result.remove(word)
     if keep_original:
-        result =  [word] + result
+        result = [word] + result
     return result[:]
 
 def _init():
@@ -161,7 +161,6 @@ def _init():
     except (LookupError,):
         raise LookupError
     except:
-        import sys
         print("Unexpected error:", sys.exc_info()[0])
         raise
     return
@@ -198,7 +197,7 @@ def main():
 
     import doctest
     _init()
-    (failed,  attempted) = doctest.testmod()
+    (failed, dummy_attempted) = doctest.testmod()
 
     if BENCHMARK:
         profile.disable()
@@ -210,8 +209,7 @@ def main():
 
     if failed:
         sys.exit(1)
-    else:
-        sys.exit(0)
+    sys.exit(0)
 
 if __name__ == "__main__":
     main()

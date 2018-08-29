@@ -48,6 +48,5 @@ class InstallPkg(object):
             # dictionary is really installed or the user cancels:
             proxy.set_default_timeout(0x7fffffff) # timeout in milliseconds
             proxy.InstallPackageNames("(uass)", 0, [pkg], "show-confirm-search,hide-finished")
-        except GLib.GError as e:
-            print("GError: " + str(e))
-
+        except GLib.GError as exception:
+            print("GError: " + str(exception))

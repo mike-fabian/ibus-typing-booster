@@ -186,21 +186,21 @@ def cleanup (ima_ins):
     ima_ins.quit()
     sys.exit()
 
-def indent(elem, level=0):
+def indent(element, level=0):
     '''Use to format xml Element pretty :)'''
     i = "\n" + level*"    "
-    if len(elem):
-        if not elem.text or not elem.text.strip():
-            elem.text = i + "    "
-        for e in elem:
-            indent(e, level+1)
-            if not e.tail or not e.tail.strip():
-                e.tail = i + "    "
-        if not e.tail or not e.tail.strip():
-            e.tail = i
+    if len(element):
+        if not element.text or not element.text.strip():
+            element.text = i + "    "
+        for subelement in element:
+            indent(subelement, level+1)
+            if not subelement.tail or not subelement.tail.strip():
+                subelement.tail = i + "    "
+        if not subelement.tail or not subelement.tail.strip():
+            subelement.tail = i
     else:
-        if level and (not elem.tail or not elem.tail.strip()):
-            elem.tail = i
+        if level and (not element.tail or not element.tail.strip()):
+            element.tail = i
 
 def main():
     '''Main program'''

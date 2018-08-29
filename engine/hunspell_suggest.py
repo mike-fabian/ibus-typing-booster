@@ -27,8 +27,6 @@ hunspell dictonaries.
 import os
 import sys
 import unicodedata
-import re
-import traceback
 import itb_util
 
 DEBUG_LEVEL = int(0)
@@ -56,7 +54,7 @@ MAX_WORDS = 100
 class Dictionary:
     '''A class to hold a hunspell dictionary
     '''
-    def __init__(self, name = 'en_US'):
+    def __init__(self, name='en_US'):
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "Dictionary.__init__(name=%s)\n" %name)
@@ -98,9 +96,9 @@ class Dictionary:
                     (x, itb_util.remove_accents(x))
                     for x in self.words
                 ]
-            for x in self.words:
-                if len(x) > self.max_word_len:
-                    self.max_word_len = len(x)
+            for word in self.words:
+                if len(word) > self.max_word_len:
+                    self.max_word_len = len(word)
             if DEBUG_LEVEL > 1:
                 sys.stderr.write(
                     'load_dictionary() max_word_len = %s\n'
@@ -109,7 +107,8 @@ class Dictionary:
                 self.enchant_dict = enchant.Dict(self.name)
             elif IMPORT_HUNSPELL_SUCCESSFUL and self.dic_path:
                 aff_path = self.dic_path.replace('.dic', '.aff')
-                self.pyhunspell_object = hunspell.HunSpell(self.dic_path, aff_path)
+                self.pyhunspell_object = hunspell.HunSpell(
+                    self.dic_path, aff_path)
 
 class Hunspell:
     '''A class to suggest completions or corrections
@@ -168,6 +167,7 @@ class Hunspell:
             self.init_dictionaries()
 
     def suggest(self, input_phrase):
+        # pylint: disable=line-too-long
         '''Return completions or corrections for the input phrase
 
         :param input_phrase: A string to find completions or corrections for
@@ -181,7 +181,8 @@ class Hunspell:
 
         Examples:
 
-        (Attention, the return values are in internal normalization form ('NFD'))
+        (Attention, the return values are in internal
+        normalization form ('NFD'))
 
         >>> h = Hunspell(['de_DE', 'cs_CZ'])
         >>> h.suggest('Geschwindigkeitsubertre')[0]
@@ -219,6 +220,7 @@ class Hunspell:
         >>> h.suggest('tenéis')[0]
         ('tenéis', 0)
         '''
+        # pylint: enable=line-too-long
         if input_phrase in self._suggest_cache:
             return self._suggest_cache[input_phrase]
         if DEBUG_LEVEL > 1:
@@ -330,8 +332,8 @@ class Hunspell:
                             if suggestion not in suggested_words])
             else:
                 if (dictionary.name[:2]
-                    not in ('ja', 'ja_JP',
-                            'zh', 'zh_CN', 'zh_TW', 'zh_MO', 'zh_SG')):
+                        not in ('ja', 'ja_JP',
+                                'zh', 'zh_CN', 'zh_TW', 'zh_MO', 'zh_SG')):
                     # For some languages, hunspell dictionaries don’t
                     # exist because hunspell makes no sense for these
                     # languages.  In these cases, just ignore that the
@@ -345,15 +347,15 @@ class Hunspell:
                          0)])
         for word in suggested_words:
             if (suggested_words[word] == -1
-                and
-                itb_util.remove_accents(word)
-                == itb_util.remove_accents(input_phrase)):
+                    and
+                    itb_util.remove_accents(word)
+                    == itb_util.remove_accents(input_phrase)):
                 # This spell checking correction is actually even
                 # an accent insensitive match, adjust accordingly:
                 suggested_words[word] = 0
-        sorted_suggestions =  sorted(
+        sorted_suggestions = sorted(
             suggested_words.items(),
-            key = lambda x: (
+            key=lambda x: (
                 - x[1],    # 0: in dictionary, -1: hunspell
                 len(x[0]), # length of word ascending
                 x[0],      # alphabetical
@@ -372,12 +374,13 @@ def main():
     runs some tests and prints profiling data.
     '''
     if BENCHMARK:
-        import cProfile, pstats
+        import cProfile
+        import pstats
         profile = cProfile.Profile()
         profile.enable()
 
     import doctest
-    (failed,  attempted) = doctest.testmod()
+    (failed, dummy_attempted) = doctest.testmod()
 
     if BENCHMARK:
         profile.disable()

@@ -48,7 +48,7 @@ libpango__PangoLayoutLine._fields_ = [
     ('layout', ctypes.POINTER(libpango__PangoLayout)),
     ('start_index', ctypes.c_int), # start of line as byte index into layout->text
     ('length', ctypes.c_int), # length of line in bytes
-    ('runs', ctypes.POINTER(glib__GSList)), 
+    ('runs', ctypes.POINTER(glib__GSList)),
     ('is_paragraph_start', ctypes.c_uint), # TRUE if this is the first line of the paragraph
     ('resolved_dir', ctypes.c_uint), # Resolved PangoDirection of line
 ]
@@ -173,7 +173,8 @@ def get_fonts_used_for_text(font, text, fallback=True):
         pango_analysis = pango_item_p.contents.analysis
         pango_font_p = pango_analysis.font
         font_description_used = libpango__pango_font_describe(pango_font_p)
-        run_text = text_utf8[offset:offset + length].decode('UTF-8', errors='replace')
+        run_text = text_utf8[offset:offset + length].decode(
+            'UTF-8', errors='replace')
         run_family = libpango__pango_font_description_get_family(
             font_description_used).decode('UTF-8', errors='replace')
         fonts_used.append((run_text, run_family))
@@ -201,7 +202,8 @@ def _init():
     global libgtk3__gtk_init
     libgtk3__gtk_init = libgtk3__lib.gtk_init
     libgtk3__gtk_init.argtypes = [
-        ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.POINTER(ctypes.c_char_p))]
+        ctypes.POINTER(ctypes.c_int),
+        ctypes.POINTER(ctypes.POINTER(ctypes.c_char_p))]
     global libgtk3__gtk_label_new
     libgtk3__gtk_label_new = libgtk3__lib.gtk_label_new
     libgtk3__gtk_label_new.argtypes = [ctypes.c_char_p]
@@ -209,12 +211,14 @@ def _init():
         libgtk3__GtkWidget)
     global libgtk3__gtk_widget_get_pango_context
     libgtk3__gtk_widget_get_pango_context = libgtk3__lib.gtk_widget_get_pango_context
-    libgtk3__gtk_widget_get_pango_context.argtypes = [ctypes.POINTER(libgtk3__GtkWidget)]
+    libgtk3__gtk_widget_get_pango_context.argtypes = [
+        ctypes.POINTER(libgtk3__GtkWidget)]
     libgtk3__gtk_widget_get_pango_context.restype = ctypes.POINTER(
         libpango__PangoContext)
     global libpango__pango_layout_new
     libpango__pango_layout_new = libpango__lib.pango_layout_new
-    libpango__pango_layout_new.argtypes = [ctypes.POINTER(libpango__PangoContext)]
+    libpango__pango_layout_new.argtypes = [
+        ctypes.POINTER(libpango__PangoContext)]
     libpango__pango_layout_new.restype = ctypes.POINTER(
         libpango__PangoLayout)
     global libpango__pango_font_description_from_string
@@ -297,8 +301,7 @@ __module_init = __ModuleInitializer()
 
 if __name__ == "__main__":
     import doctest
-    (failed,  attempted) = doctest.testmod()
-    if failed:
+    (FAILED, _ATTEMPTED) = doctest.testmod()
+    if FAILED:
         sys.exit(1)
-    else:
-        sys.exit(0)
+    sys.exit(0)

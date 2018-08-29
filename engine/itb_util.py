@@ -2209,5 +2209,4 @@ if __name__ == "__main__":
     (FAILED, ATTEMPTED) = doctest.testmod()
     if FAILED:
         sys.exit(1)
-    else:
-        sys.exit(0)
+    sys.exit(0)

@@ -40,7 +40,7 @@ sys.path.pop(0)
 class ItbTestCase(unittest.TestCase):
     def setUp(self):
         self.bus = IBus.Bus()
-        self.db = tabsqlitedb.tabsqlitedb(user_db_file = ':memory:')
+        self.db = tabsqlitedb.TabSqliteDb(user_db_file = ':memory:')
         self.engine = TypingBoosterEngine(
             self.bus,
             '/com/redhat/IBus/engines/table/typing_booster/engine/0',
