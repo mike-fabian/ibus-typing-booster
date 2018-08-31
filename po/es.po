@@ -1,6 +1,6 @@
 # Emilio Herrera <ehespinosa57@gmail.com>, 2017. #zanata
 # Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2017. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata
+# Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -10,11 +10,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-05-14 10:31+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"PO-Revision-Date: 2018-08-23 08:44+0000\n"
+"Last-Translator: Máximo Castañeda Riloba <mcrcctm@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
-"X-Generator: Zanata 4.4.5\n"
+"X-Generator: Zanata 4.6.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: engine/emoji_picker.py:193
@@ -155,7 +155,7 @@ msgstr "Ajuste"
 
 #: engine/hunspell_table.py:1281 setup/main.py:117
 msgid "Preferences for ibus-typing-booster"
-msgstr ""
+msgstr "Preferencias para ibus-typing-booster"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:738 engine/itb_emoji.py:948
@@ -210,7 +210,7 @@ msgstr "regional"
 
 #: engine/itb_util.py:2083
 msgid "Native Keyboard"
-msgstr ""
+msgstr "Teclado nativo"
 
 #: engine/itb_util.py:2085
 msgid ""
@@ -218,22 +218,25 @@ msgid ""
 "whatever comes from the current keyboard layout without any further changes. "
 "So no transliteration or composing is done here."
 msgstr ""
+"Entrada directa del teclado. No es realmente un método de entrada, usa lo "
+"que venga del teclado sin cambios, así que no hay transliteración ni "
+"composición."
 
 #: engine/itb_util.py:2099
 msgid "File not found"
-msgstr ""
+msgstr "Archivo no encotrado"
 
 #: engine/itb_util.py:2101
 msgid "Permission error"
-msgstr ""
+msgstr "Error de permisos"
 
 #: engine/itb_util.py:2103
 msgid "Unicode decoding error"
-msgstr ""
+msgstr "Error de decodificación Unicode"
 
 #: engine/itb_util.py:2105
 msgid "Unknown error"
-msgstr ""
+msgstr "Error desconocido"
 
 #: engine/itb_util.py:2155
 msgid "A completion input method to speedup typing."
@@ -246,11 +249,11 @@ msgstr "Créditos del traductor"
 
 #: engine/itb_util.py:2172
 msgid "Online documentation:"
-msgstr ""
+msgstr "Documentación en línea:"
 
 #: setup/main.py:94
 msgid "Preferences"
-msgstr ""
+msgstr "Preferencias"
 
 #: setup/main.py:159
 msgid "Options"
@@ -258,7 +261,7 @@ msgstr "Opciones"
 
 #: setup/main.py:167
 msgid "Dictionaries and input methods"
-msgstr ""
+msgstr "Diccionarios y métodos de entrada"
 
 #: setup/main.py:176
 msgid "Custom shortcuts"
@@ -302,8 +305,8 @@ msgid ""
 "for the preëdit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
-"Muestra en el texto auxiliar si los modos “Emoji prediction”  y “Off the "
-"record”  están on u off y muestra cual es el método de entrada usado "
+"Muestra en el texto auxiliar si los modos de predicción de emoji y de no "
+"grabación están activos o no, y cuál es el método de entrada usado "
 "actualmente para la predicción. El texto auxiliar es una línea opcional de "
 "texto mostrada debajo de la lista de candidatos."
 
@@ -430,15 +433,14 @@ msgid ""
 "the default)."
 msgstr ""
 "Los caracteres de esta lista hacen que el predictivo sea confirmado "
-"automáticamente, seguido de un espacio.  Por ejemplo, si “.” es un carçacter "
-"confirmación automática, esto evita que usted tenga que teclear un espacio "
-"manualmente después del fin de una frase. Usted puede editar libremente esta "
-"lista, un valor razonable puede ser “.,;:?!)”. Usted no debería añadir a "
-"esta lista caracteres que sean necesarios para su método de entrada, por "
-"ejemplo si usted usa Latin-Pre (t-latn-pre) sería una mala idea añadir “.” a "
-"esta lista porque evitaría que usted teclee “.s” para obtener “ṡ”. Usted "
-"también puede deshabilitar esta característica completamente haciendo una "
-"lista vacía (como sucede por defecto)."
+"automáticamente, seguido de un espacio.  Por ejemplo, si “.” es un carácter "
+"de confirmación automática, le evita teclear un espacio manualmente después "
+"del fin de una frase. Puede editar libremente esta lista, un valor razonable "
+"puede ser “.,;:?!)”. No debería añadir a la lista caracteres que sean "
+"necesarios para su método de entrada. Por ejemplo, si usa Latin-Pre (t-latn-"
+"pre) sería una mala idea añadir “.” a esta lista porque le impediría obtener "
+"“ṡ” tecleando “.s”. También puede desactivar esta característica "
+"completamente dejando la lista vacía (que es el valor predeterminado)."
 
 #: setup/main.py:351
 msgid "Candidate window page size:"
@@ -448,7 +450,7 @@ msgstr "Tamaño de página de la ventana de candidatos:"
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr ""
-"Cuantas sugerencis candidatas se muestran en una página de la lista de "
+"Cuántas sugerencias candidatas se muestran en una página de la lista de "
 "candidatos."
 
 #: setup/main.py:375
@@ -501,51 +503,51 @@ msgstr ""
 
 #: setup/main.py:456
 msgid "Use dictionaries for the following languages:"
-msgstr ""
+msgstr "Usar diccionarios para los siguientes idiomas:"
 
 #: setup/main.py:480
 msgid "Add a dictionary"
-msgstr ""
+msgstr "Añadir diccionario"
 
 #: setup/main.py:486
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "Eliminar diccionario"
 
 #: setup/main.py:493
 msgid "Move dictionary down"
-msgstr ""
+msgstr "Bajar prioridad de diccionario"
 
 #: setup/main.py:500
 msgid "Move dictionary up"
-msgstr ""
+msgstr "Subir prioridad de diccionario"
 
 #: setup/main.py:505
 msgid "Install missing dictionaries"
-msgstr ""
+msgstr "Instalar los diccionarios que faltan"
 
 #: setup/main.py:507
 msgid "Install the dictionaries which are setup here but not installed"
-msgstr ""
+msgstr "Instalar los diccionarios configurados pero que no existen"
 
 #: setup/main.py:518
 msgid "Use the following input methods:"
-msgstr ""
+msgstr "Usar los siguientes métodos de entrada:"
 
 #: setup/main.py:542
 msgid "Add an input method"
-msgstr ""
+msgstr "Añadir un método de entrada"
 
 #: setup/main.py:548
 msgid "Remove an input method"
-msgstr ""
+msgstr "Eliminar un método de entrada"
 
 #: setup/main.py:555
 msgid "Move input method down"
-msgstr ""
+msgstr "Bajar método de entrada"
 
 #: setup/main.py:562
 msgid "Move input method up"
-msgstr ""
+msgstr "Subir método de entrada"
 
 #: setup/main.py:567
 msgid "Input Method Help"
@@ -589,11 +591,11 @@ msgstr "Expansión de atajo"
 
 #: setup/main.py:678
 msgid "Spell checking"
-msgstr ""
+msgstr "Corrección ortográfica"
 
 #: setup/main.py:683
 msgid "Emoji"
-msgstr ""
+msgstr "Emoji"
 
 #: setup/main.py:808
 msgid "Another instance of this app is already running."
@@ -601,11 +603,11 @@ msgstr "Otra instancia de esta app ya está corriendo."
 
 #: setup/main.py:1147
 msgid "Add dictionary"
-msgstr ""
+msgstr "Añadir diccionario"
 
 #: setup/main.py:1403
 msgid "Add input method"
-msgstr ""
+msgstr "Añadir método de entrada"
 
 #: setup/main.py:1657
 msgid "Open File ..."

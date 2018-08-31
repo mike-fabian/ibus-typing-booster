@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: lexuge <LEXUGEyky@outlook.com>\n"
 "Language-Team: Chinese (China)\n"
 "Language: zh_CN\n"
-"X-Generator: Zanata 4.4.5\n"
+"X-Generator: Zanata 4.6.2\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 
 #: engine/emoji_picker.py:193
