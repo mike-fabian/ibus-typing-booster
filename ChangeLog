@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 04 Sep 2018 Released 2.1.1 version
+* Update translations from zanata (es updated, 100% complete now)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 18 Jul 2018 Released 2.1.0 version
 * emoji-picker: Show a concise description of a selected emoji in the header bar
 * Update the setup UI when settings are changed outside of the setup UI
