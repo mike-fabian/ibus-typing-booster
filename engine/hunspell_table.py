@@ -779,20 +779,35 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
+    def _get_lookup_table_current_page(self):
+        '''
+        Returns the index of the currently visible page of the lookup table.
+
+        The first page has index 0.
+
+        :rtype: Integer
+        '''
+        page, dummy_pos_in_page = divmod(
+            self._lookup_table.get_cursor_pos(),
+            self._lookup_table.get_page_size())
+        return page
+
     def _set_lookup_table_cursor_pos_in_current_page(self, index):
         '''Sets the cursor in the lookup table to index in the current page
 
         Returns True if successful, False if not.
 
-        The topmost candidate has the index 0 and the label “1”.
+        :param index: The index in the current page of the lookup table.
+                      The topmost candidate has the index 0 and the label “1”.
+        :type index: Integer
+        :rtype: Boolean
         '''
         page_size = self._lookup_table.get_page_size()
-        if index > page_size:
+        if index < 0 or index >= page_size:
             return False
-        page, dummy_pos_in_page = divmod(self._lookup_table.get_cursor_pos(),
-                                         page_size)
+        page = self._get_lookup_table_current_page()
         new_pos = page * page_size + index
-        if new_pos > self._lookup_table.get_number_of_candidates():
+        if new_pos >= self._lookup_table.get_number_of_candidates():
             return False
         self._lookup_table.set_cursor_pos(new_pos)
         return True
@@ -824,7 +839,12 @@ class TypingBoosterEngine(IBus.Engine):
         '''Remove the candidate shown at index in the candidate list
         from the user database.
 
-        The index parameter should start from 0.
+        Returns True if successful, False if not.
+
+        :param index: The index in the current page of the lookup table.
+                      The topmost candidate has the index 0 and the label “1”.
+        :type index: Integer
+        :rtype: Boolean
 
         The removal is done independent of the input phrase, all
         rows in the user database for that phrase are deleted.
@@ -2584,13 +2604,17 @@ class TypingBoosterEngine(IBus.Engine):
                     index = key.val - IBus.KEY_KP_1
             if key.val >= IBus.KEY_F1 and key.val <= IBus.KEY_F9:
                 index = key.val - IBus.KEY_F1
-            if index >= 0 and index < self._page_size:
+            candidate_number = (
+                self._get_lookup_table_current_page() * self._page_size
+                + index)
+            if (candidate_number
+                < self._lookup_table.get_number_of_candidates()
+                and index >= 0 and index < self._page_size):
                 if key.control:
                     # Remove the candidate from the user database
-                    res = self.remove_candidate_from_user_database(
-                        index)
-                    self._update_ui()
-                    return res
+                    if self.remove_candidate_from_user_database(index):
+                        self._update_ui()
+                        return True
                 else:
                     # Commit a candidate:
                     phrase = (
@@ -2598,7 +2622,7 @@ class TypingBoosterEngine(IBus.Engine):
                             index))
                     if phrase:
                         self._commit_string(phrase + ' ')
-                    return True
+                        return True
 
         if key.val == IBus.KEY_F6 and key.mod5: # AltGr+F6
             self.toggle_emoji_prediction_mode()
