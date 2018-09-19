@@ -559,3 +559,32 @@ class ItbTestCase(unittest.TestCase):
                          'bactrian camel')
         self.engine.do_process_key_event(IBus.KEY_F6, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'camel 🐫 ')
+
+    def test_selecting_non_existing_candidates(self):
+        '''
+        Test case for: https://bugzilla.redhat.com/show_bug.cgi?id=1630349
+
+        Trying to use the 1-9 or F1-F9 keys to select candidates beyond
+        the end of the candidate list should not cause ibus-typing-booster
+        to stop working.
+        '''
+        self.engine.set_current_imes(['NoIme'])
+        self.engine.set_dictionary_names(['en_US'])
+        self.engine.do_process_key_event(IBus.KEY_b, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.assertEqual(self.engine._candidates, [('Marcelo', -1, '', False, True), ('Barcelona', -1, '', False, True)])
+        self.engine.do_process_key_event(IBus.KEY_3, 0, 0)
+        # Nothing should be committed:
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine.mock_preedit_text, 'barcelo3')
+        self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'barcelo')
+        self.assertEqual(self.engine._candidates, [('Marcelo', -1, '', False, True), ('Barcelona', -1, '', False, True)])
+        self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, 'Barcelona ')
+        self.assertEqual(self.engine.mock_preedit_text, '')
