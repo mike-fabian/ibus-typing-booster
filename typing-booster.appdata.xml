@@ -19,6 +19,36 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.1.2" date="2018-09-21" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (de, pl updated)
+          </li>
+          <li>
+            Add typing-booster.its and typing-booster.loc to avoid
+            making the release descriptions and developer name in
+            typing-booster.appdata.xml translatable.
+          </li>
+          <li>
+            Remove code to check whether another instance of the setup
+            tool is running.
+          </li>
+          <li>
+            Add new option to avoid adding a space when committing by
+            label or mouse (Resolves:
+            https://github.com/mike-fabian/ibus-typing-booster/issues/39)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Do not try to commit if index is >= the current number of candidates
+            (Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=1630349).
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.1.1" date="2018-09-04" urgency="medium">
       <description>
         <ul>

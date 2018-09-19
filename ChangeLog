@@ -1,4 +1,14 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 21 Sep 2018 Released 2.1.2 version
+* Update translations from zanata (de, pl updated)
+* Add typing-booster.its and typing-booster.loc to avoid making the release descriptions and developer name in typing-booster.appdata.xml translatable.
+* Remove code to check whether another instance of the setup tool is running.
+* Add new option to avoid adding a space when committing by label or mouse (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/39)
+* Update emoji annotations from CLDR
+* Do not try to commit if index is >= the current number of candidates (Resolves: rhbz#1630349)
+* Add test case for https://bugzilla.redhat.com/show_bug.cgi?id=1630349
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 04 Sep 2018 Released 2.1.1 version
 * Update translations from zanata (es updated, 100% complete now)
 
