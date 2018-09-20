@@ -9,7 +9,7 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 -->
 <ldml>
 	<identity>
-		<version number="$Revision$"/>
+		<version number="$Revision: 14412 $"/>
 		<language type="br"/>
 	</identity>
 </ldml>

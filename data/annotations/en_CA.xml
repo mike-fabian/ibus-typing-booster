@@ -7,13 +7,11 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 -->
 <ldml>
 	<identity>
-		<version number="$Revision: 14205 $"/>
+		<version number="$Revision: 14453 $"/>
 		<language type="en"/>
 		<territory type="CA"/>
 	</identity>
 	<annotations>
-		<annotation cp="🦳">gray | grey | hair | old | white</annotation>
-		<annotation cp="🧿">bead | charm | evil eye | nazar | talisman</annotation>
 		<annotation cp="😋">delicious | face | savoring | savouring | smile | yum</annotation>
 		<annotation cp="😍" draft="contributed">smiling face with heart eyes</annotation>
 		<annotation cp="😍" type="tts" draft="contributed">smiling face with heart eyes</annotation>
@@ -49,6 +47,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🤜">fist | right-facing fist | rightward</annotation>
 		<annotation cp="🤟" draft="contributed">love you gesture</annotation>
 		<annotation cp="🤟" type="tts" draft="contributed">love you gesture</annotation>
+		<annotation cp="🦳">gray | grey | hair | old | white</annotation>
 		<annotation cp="🗨">dialogue | left speech bubble | speech</annotation>
 		<annotation cp="👕">clothing | shirt | t-shirt | T-shirt | tee-shirt | tshirt</annotation>
 		<annotation cp="🎒" draft="contributed">backpack</annotation>
@@ -77,6 +76,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🌯">Mexican | wrap</annotation>
 		<annotation cp="🥫" draft="contributed">canned food</annotation>
 		<annotation cp="🥫" type="tts" draft="contributed">canned food</annotation>
+		<annotation cp="🥡" draft="contributed">takeout box</annotation>
 		<annotation cp="🍦">cream | dessert | ice | soft | sweet</annotation>
 		<annotation cp="🍪" draft="contributed">cookie</annotation>
 		<annotation cp="🍪" type="tts" draft="contributed">cookie</annotation>
@@ -151,6 +151,8 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🎑" type="tts" draft="contributed">moon-viewing ceremony</annotation>
 		<annotation cp="🏉" draft="contributed">rugby</annotation>
 		<annotation cp="🏉" type="tts" draft="contributed">rugby</annotation>
+		<annotation cp="🏏" draft="contributed">ball | bat | cricket | game</annotation>
+		<annotation cp="🧿">bead | charm | evil eye | nazar | talisman</annotation>
 		<annotation cp="🀄" draft="contributed">Mahjong red dragon</annotation>
 		<annotation cp="🀄" type="tts" draft="contributed">Mahjong red dragon</annotation>
 		<annotation cp="💾">computer | disk | diskette | floppy</annotation>
