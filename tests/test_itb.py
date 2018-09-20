@@ -76,6 +76,8 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_show_status_info_in_auxiliary_text())
         self.orig_use_digits_as_select_keys = (
             self.engine.get_use_digits_as_select_keys())
+        self.orig_add_space_on_commit = (
+            self.engine.get_add_space_on_commit())
         self.orig_current_imes = (
             self.engine.get_current_imes())
         self.orig_dictionary_names = (
@@ -106,6 +108,8 @@ class ItbTestCase(unittest.TestCase):
             self.orig_show_status_info_in_auxiliary_text)
         self.engine.set_use_digits_as_select_keys(
             self.orig_use_digits_as_select_keys)
+        self.engine.set_add_space_on_commit(
+            self.orig_add_space_on_commit)
         self.engine.set_current_imes(
             self.orig_current_imes)
         self.engine.set_dictionary_names(
@@ -123,6 +127,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_min_char_complete(1)
         self.engine.set_show_number_of_candidates(False)
         self.engine.set_use_digits_as_select_keys(True)
+        self.engine.set_add_space_on_commit(True)
         self.engine.set_current_imes(['NoIme'])
         self.engine.set_dictionary_names(['en_US'])
         self.engine.set_qt_im_module_workaround(False)
@@ -588,3 +593,35 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'Barcelona ')
         self.assertEqual(self.engine.mock_preedit_text, '')
+
+    def test_add_space_on_commit(self):
+        '''Test new option to avoid adding spaces when committing by label
+        (1-9 or F1-F9 key) or by mouse click.  See:
+        https://github.com/mike-fabian/ibus-typing-booster/issues/39
+        '''
+        self.engine.set_current_imes(['NoIme'])
+        self.engine.set_dictionary_names(['en_US'])
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'test')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine._candidates[0][0], 'test')
+        self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        # By default a space should be added:
+        self.assertEqual(self.engine.mock_committed_text, 'test ')
+        # Now set the option to avoid the extra space:
+        self.engine.set_add_space_on_commit(False)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'test')
+        self.assertEqual(self.engine.mock_committed_text, 'test ')
+        self.assertEqual(self.engine._candidates[0][0], 'test')
+        self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        # No space should be added now:
+        self.assertEqual(self.engine.mock_committed_text, 'test test')

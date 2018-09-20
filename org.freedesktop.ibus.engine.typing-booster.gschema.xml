@@ -88,6 +88,16 @@
         even if the session is restarted.
       </description>
     </key>
+    <key name="addspaceoncommit" type="b">
+      <default>true</default>
+      <summary>Add a space when committing by label or mouse</summary>
+      <description>
+        Add a space if a candidate from the candidate list is
+        committed using a key for the label in front of the candidate
+        (I.e. the using the 1-9 or F1-F9) or by clicking on a
+        candidate with the mouse.
+      </description>
+    </key>
     <key name="pagesize" type="i">
       <default>6</default>
       <summary>Candidate window page size</summary>

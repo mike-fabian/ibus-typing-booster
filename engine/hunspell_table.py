@@ -261,6 +261,11 @@ class TypingBoosterEngine(IBus.Engine):
         if self._remember_last_used_preedit_ime is None:
             self._remember_last_used_preedit_ime = False
 
+        self._add_space_on_commit = itb_util.variant_to_value(
+            self._gsettings.get_value('addspaceoncommit'))
+        if self._add_space_on_commit is None:
+            self._add_space_on_commit = True
+
         self._dictionary_names = []
         dictionary = itb_util.variant_to_value(
             self._gsettings.get_value('dictionary'))
@@ -1825,6 +1830,55 @@ class TypingBoosterEngine(IBus.Engine):
         if len(tokens) > 1:
             self._pp_phrase = tokens[-2]
 
+    def set_add_space_on_commit(self, mode, update_gsettings=True):
+        '''Sets whether a space is added when a candidate is committed by 1-9
+        or F1-F9 or by mouse click.
+
+        :param mode: Whether to add a space when committing by label
+                     or mouse click.
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_add_space_on_commit(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
+        if mode == self._add_space_on_commit:
+            return
+        self._add_space_on_commit = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'addspaceoncommit',
+                GLib.Variant.new_boolean(mode))
+
+    def toggle_add_space_on_commit(self, update_gsettings=True):
+        '''Toggles whether a space is added when a candidate is committed by 1-9
+        or F1-F9 or by mouse click.
+
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        self.set_add_space_on_commit(
+            not self._add_space_on_commit, update_gsettings)
+
+    def get_add_space_on_commit(self):
+        '''Returns the current value of the flag whether to add a space when a
+        candidate is committed by 1-9 or F1-F9 or by mouse click.
+
+        :rtype: boolean
+        '''
+        return self._add_space_on_commit
+
     def set_qt_im_module_workaround(self, mode, update_gsettings=True):
         '''Sets whether the workaround for the qt im module is used or not
 
@@ -2344,7 +2398,9 @@ class TypingBoosterEngine(IBus.Engine):
         if button == 1:
             phrase = self.get_string_from_lookup_table_cursor_pos()
             if phrase:
-                self._commit_string(phrase + ' ')
+                if self._add_space_on_commit:
+                    phrase += ' '
+                self._commit_string(phrase)
             return
         if (button == 3
             and (state & IBus.ModifierType.MOD1_MASK)
@@ -2621,7 +2677,9 @@ class TypingBoosterEngine(IBus.Engine):
                         self.get_string_from_lookup_table_current_page(
                             index))
                     if phrase:
-                        self._commit_string(phrase + ' ')
+                        if self._add_space_on_commit:
+                            phrase += ' '
+                        self._commit_string(phrase)
                         return True
 
         if key.val == IBus.KEY_F6 and key.mod5: # AltGr+F6
@@ -3013,6 +3071,9 @@ class TypingBoosterEngine(IBus.Engine):
         sys.stderr.write('Settings changed: key=%s value=%s\n' %(key, value))
         if key == 'qtimmoduleworkaround':
             self.set_qt_im_module_workaround(value, update_gsettings=False)
+            return
+        if key == 'addspaceoncommit':
+            self.set_add_space_on_commit(value, update_gsettings=False)
             return
         if key == 'arrowkeysreopenpreedit':
             self.set_arrow_keys_reopen_preedit(value, update_gsettings=False)

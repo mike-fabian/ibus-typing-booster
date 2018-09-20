@@ -246,6 +246,21 @@ class SetupUI(Gtk.Window):
         if self._use_digits_as_select_keys is True:
             self._use_digits_as_select_keys_checkbutton.set_active(True)
 
+        self._add_space_on_commit_checkbutton = Gtk.CheckButton(
+            _('Add a space when committing by label or mouse'))
+        self._add_space_on_commit_checkbutton.set_tooltip_text(
+            _('Add a space if a candidate from the candidate list is committed using a key for the label in front of the candidate (I.e. the using the 1-9 or F1-F9 keys) or by clicking on a candidate with the mouse.'))
+        self._add_space_on_commit_checkbutton.connect(
+            'clicked', self.on_add_space_on_commit_checkbutton)
+        self._options_grid.attach(
+            self._add_space_on_commit_checkbutton, 0, 4, 2, 1)
+        self._add_space_on_commit = itb_util.variant_to_value(
+            self._gsettings.get_value('addspaceoncommit'))
+        if self._add_space_on_commit is None:
+            self._add_space_on_commit = True
+        if self._add_space_on_commit is True:
+            self._add_space_on_commit_checkbutton.set_active(True)
+
         self._remember_last_used_preedit_ime_checkbutton = Gtk.CheckButton(
             _('Remember last used preedit input method'))
         self._remember_last_used_preedit_ime_checkbutton.set_tooltip_text(
@@ -253,7 +268,7 @@ class SetupUI(Gtk.Window):
         self._remember_last_used_preedit_ime_checkbutton.connect(
             'clicked', self.on_remember_last_used_preedit_ime_checkbutton)
         self._options_grid.attach(
-            self._remember_last_used_preedit_ime_checkbutton, 0, 4, 2, 1)
+            self._remember_last_used_preedit_ime_checkbutton, 0, 5, 2, 1)
         self._remember_last_used_preedit_ime = itb_util.variant_to_value(
             self._gsettings.get_value('rememberlastusedpreeditime'))
         if self._remember_last_used_preedit_ime is None:
@@ -268,7 +283,7 @@ class SetupUI(Gtk.Window):
         self._emoji_predictions_checkbutton.connect(
             'clicked', self.on_emoji_predictions_checkbutton)
         self._options_grid.attach(
-            self._emoji_predictions_checkbutton, 0, 5, 2, 1)
+            self._emoji_predictions_checkbutton, 0, 6, 2, 1)
         self._emoji_predictions = itb_util.variant_to_value(
             self._gsettings.get_value('emojipredictions'))
         if self._emoji_predictions is None:
@@ -283,7 +298,7 @@ class SetupUI(Gtk.Window):
         self._off_the_record_checkbutton.connect(
             'clicked', self.on_off_the_record_checkbutton)
         self._options_grid.attach(
-            self._off_the_record_checkbutton, 0, 6, 2, 1)
+            self._off_the_record_checkbutton, 0, 7, 2, 1)
         self._off_the_record = itb_util.variant_to_value(
             self._gsettings.get_value('offtherecord'))
         if self._off_the_record is None:
@@ -298,7 +313,7 @@ class SetupUI(Gtk.Window):
         self._qt_im_module_workaround_checkbutton.connect(
             'clicked', self.on_qt_im_module_workaround_checkbutton)
         self._options_grid.attach(
-            self._qt_im_module_workaround_checkbutton, 0, 7, 2, 1)
+            self._qt_im_module_workaround_checkbutton, 0, 8, 2, 1)
         self._qt_im_module_workaround = itb_util.variant_to_value(
             self._gsettings.get_value('qtimmoduleworkaround'))
         if self._qt_im_module_workaround is None:
@@ -313,7 +328,7 @@ class SetupUI(Gtk.Window):
         self._arrow_keys_reopen_preedit_checkbutton.connect(
             'clicked', self.on_arrow_keys_reopen_preedit_checkbutton)
         self._options_grid.attach(
-            self._arrow_keys_reopen_preedit_checkbutton, 0, 8, 2, 1)
+            self._arrow_keys_reopen_preedit_checkbutton, 0, 9, 2, 1)
         self._arrow_keys_reopen_preedit = itb_util.variant_to_value(
             self._gsettings.get_value('arrowkeysreopenpreedit'))
         if self._arrow_keys_reopen_preedit is None:
@@ -327,11 +342,11 @@ class SetupUI(Gtk.Window):
             _('The characters in this list cause the preedit to be committed automatically, followed by a space.  For example, if “.” is an auto commit character, this saves you typing a space manually after the end of a sentence. You can freely edit this list, a reasonable value might be “.,;:?!)”. You should not add characters to that list which are needed by your input method, for example if you use Latin-Pre (t-latn-pre) it would be a bad idea to add “.” to that list because it would prevent you from typing “.s” to get “ṡ”. You can also disable this feature completely by making the list empty (which is the default).'))
         self._auto_commit_characters_label.set_xalign(0)
         self._options_grid.attach(
-            self._auto_commit_characters_label, 0, 9, 1, 1)
+            self._auto_commit_characters_label, 0, 10, 1, 1)
 
         self._auto_commit_characters_entry = Gtk.Entry()
         self._options_grid.attach(
-            self._auto_commit_characters_entry, 1, 9, 1, 1)
+            self._auto_commit_characters_entry, 1, 10, 1, 1)
         self._auto_commit_characters = itb_util.variant_to_value(
             self._gsettings.get_value('autocommitcharacters'))
         if not self._auto_commit_characters:
@@ -347,7 +362,7 @@ class SetupUI(Gtk.Window):
             _('How many suggestion candidates to show in one page of the candidate list.'))
         self._page_size_label.set_xalign(0)
         self._options_grid.attach(
-            self._page_size_label, 0, 10, 1, 1)
+            self._page_size_label, 0, 11, 1, 1)
 
         self._page_size_adjustment = Gtk.SpinButton()
         self._page_size_adjustment.set_visible(True)
@@ -355,7 +370,7 @@ class SetupUI(Gtk.Window):
         self._page_size_adjustment.set_increments(1.0, 1.0)
         self._page_size_adjustment.set_range(1.0, 9.0)
         self._options_grid.attach(
-            self._page_size_adjustment, 1, 10, 1, 1)
+            self._page_size_adjustment, 1, 11, 1, 1)
         self._page_size = itb_util.variant_to_value(
             self._gsettings.get_value('pagesize'))
         if self._page_size:
@@ -371,7 +386,7 @@ class SetupUI(Gtk.Window):
             _('Whether the candidate window should be drawn horizontally or vertically.'))
         self._lookup_table_orientation_label.set_xalign(0)
         self._options_grid.attach(
-            self._lookup_table_orientation_label, 0, 11, 1, 1)
+            self._lookup_table_orientation_label, 0, 12, 1, 1)
 
         self._lookup_table_orientation_combobox = Gtk.ComboBox()
         self._lookup_table_orientation_store = Gtk.ListStore(str, int)
@@ -396,7 +411,7 @@ class SetupUI(Gtk.Window):
             if self._lookup_table_orientation == item[1]:
                 self._lookup_table_orientation_combobox.set_active(i)
         self._options_grid.attach(
-            self._lookup_table_orientation_combobox, 1, 11, 1, 1)
+            self._lookup_table_orientation_combobox, 1, 12, 1, 1)
         self._lookup_table_orientation_combobox.connect(
             "changed",
             self.on_lookup_table_orientation_combobox_changed)
@@ -407,7 +422,7 @@ class SetupUI(Gtk.Window):
             _('Show no suggestions when less than this number of characters have been typed.'))
         self._min_chars_completion_label.set_xalign(0)
         self._options_grid.attach(
-            self._min_chars_completion_label, 0, 12, 1, 1)
+            self._min_chars_completion_label, 0, 13, 1, 1)
 
         self._min_char_complete_adjustment = Gtk.SpinButton()
         self._min_char_complete_adjustment.set_visible(True)
@@ -415,7 +430,7 @@ class SetupUI(Gtk.Window):
         self._min_char_complete_adjustment.set_increments(1.0, 1.0)
         self._min_char_complete_adjustment.set_range(1.0, 9.0)
         self._options_grid.attach(
-            self._min_char_complete_adjustment, 1, 12, 1, 1)
+            self._min_char_complete_adjustment, 1, 13, 1, 1)
         self._min_char_complete = itb_util.variant_to_value(
             self._gsettings.get_value('mincharcomplete'))
         if self._min_char_complete:
@@ -432,7 +447,7 @@ class SetupUI(Gtk.Window):
         self._learn_from_file_button.set_tooltip_text(
             _('Learn your style by reading a text file'))
         self._options_grid.attach(
-            self._learn_from_file_button, 0, 13, 2, 1)
+            self._learn_from_file_button, 0, 14, 2, 1)
         self._learn_from_file_button.connect(
             'clicked', self.on_learn_from_file_clicked)
 
@@ -441,7 +456,7 @@ class SetupUI(Gtk.Window):
         self._delete_learned_data_button.set_tooltip_text(
             _('Delete all personal language data learned from typing or from reading files'))
         self._options_grid.attach(
-            self._delete_learned_data_button, 0, 14, 2, 1)
+            self._delete_learned_data_button, 0, 15, 2, 1)
         self._delete_learned_data_button.connect(
             'clicked', self.on_delete_learned_data_clicked)
 
@@ -945,6 +960,9 @@ class SetupUI(Gtk.Window):
         if key == 'qtimmoduleworkaround':
             self.set_qt_im_module_workaround(value, update_gsettings=False)
             return
+        if key == 'addspaceoncommit':
+            self.set_add_space_on_commit(value, update_gsettings=False)
+            return
         if key == 'arrowkeysreopenpreedit':
             self.set_arrow_keys_reopen_preedit(value, update_gsettings=False)
             return
@@ -1039,6 +1057,14 @@ class SetupUI(Gtk.Window):
         keys has been clicked.
         '''
         self.set_use_digits_as_select_keys(
+            widget.get_active(), update_gsettings=True)
+
+    def on_add_space_on_commit_checkbutton(self, widget):
+        '''
+        The checkbutton whether to add a space when committing by
+        label or mouse click.
+        '''
+        self.set_add_space_on_commit(
             widget.get_active(), update_gsettings=True)
 
     def on_remember_last_used_preedit_ime_checkbutton(self, widget):
@@ -2114,6 +2140,31 @@ class SetupUI(Gtk.Window):
                 GLib.Variant.new_boolean(mode))
         else:
             self._use_digits_as_select_keys_checkbutton.set_active(mode)
+
+    def set_add_space_on_commit(self, mode, update_gsettings=True):
+        '''Sets the “Add a space when committing by label or mouse” mode
+
+        :param mode: Whether to add a space when committing by label or mouse
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_add_space_on_commit(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._add_space_on_commit:
+            return
+        self._add_space_on_commit = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'addspaceoncommit',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._add_space_on_commit_checkbutton.set_active(mode)
 
     def set_current_imes(self, imes, update_gsettings=True):
         '''Set current list of input methods
