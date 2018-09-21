@@ -87,10 +87,6 @@ class SetupUI(Gtk.Window):
     User interface of the setup tool
     '''
     def __init__(self):
-        SetupService()
-        # FIXME: self.check_instance() Why should we check whether
-        # another instance of the setup tool is already running?
-        # Running multiple setup tools at the same time works just fine ...
         Gtk.Window.__init__(self, title='🚀 ' + _('Preferences'))
         self.set_name('TypingBoosterPreferences')
         self.set_modal(True)
@@ -2287,16 +2283,6 @@ class HelpWindow(Gtk.Window):
         Close the input method help window when the close button is clicked
         '''
         self.destroy()
-
-class SetupService(dbus.service.Object):
-    '''
-    Sets up a dummy dbus service to be able check whether
-    an instance of the setup tool is already running.
-    '''
-    def __init__(self):
-        bus_name = dbus.service.BusName(
-            'org.ibus.typingbooster', bus=dbus.SessionBus())
-        dbus.service.Object.__init__(self, bus_name, '/org/ibus/typingbooster')
 
 if __name__ == '__main__':
     if not _ARGS.no_debug:
