@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-05-25 06:49+0000\n"
+"PO-Revision-Date: 2018-09-30 04:36+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -341,7 +341,7 @@ msgstr ""
 
 #: setup/main.py:246
 msgid "Add a space when committing by label or mouse"
-msgstr ""
+msgstr "Додавати пробіл при надсиланні за допомогою мітки або миші"
 
 #: setup/main.py:248
 msgid ""
@@ -349,6 +349,9 @@ msgid ""
 "for the label in front of the candidate (I.e. the using the 1-9 or F1-F9 "
 "keys) or by clicking on a candidate with the mouse."
 msgstr ""
+"Додавати пробіл, якщо варіант зі списку варіантів надсилається за допомогою "
+"клавіші мітки перед записом варіанта (тобто, за допомогою клавіш 1-9 або F1-"
+"F9) або натисканням пункту мітки за допомогою миші."
 
 #: setup/main.py:261
 msgid "Remember last used preedit input method"
