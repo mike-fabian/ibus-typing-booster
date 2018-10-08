@@ -1,6 +1,6 @@
 Name:       ibus-typing-booster
-Version:    2.0.2
-Release:    1%{?dist}
+Version:    2.1.2
+Release:    2%{?dist}
 Summary:    A completion input method
 License:    GPLv3+, ASL 2.0
 Group:      System Environment/Libraries
@@ -8,7 +8,8 @@ URL:        https://mike-fabian.github.io/ibus-typing-booster/
 Source0:    https://github.com/mike-fabian/ibus-typing-booster/releases/download/%{version}/ibus-typing-booster-%{version}.tar.gz
 Requires:   ibus >= 1.5.3
 Requires:   m17n-lib
-Requires:   python3 >= 3.3
+Requires:   python(abi) >= 3.3
+%{?__python3:Requires: %{__python3}}
 Requires:   python3-dbus
 Requires:   python3-enchant
 Requires:   python3-pyxdg
@@ -45,6 +46,7 @@ BuildRequires:  hunspell-es
 BuildRequires:  hunspell-fr
 BuildRequires:  hunspell-it
 BuildRequires:  hunspell-ko
+BuildRequires:  glib2
 BuildArch:  noarch
 
 %description
@@ -105,20 +107,26 @@ pushd engine
     python3 itb_emoji.py
     python3 itb_util.py
 popd
+mkdir -p /tmp/glib-2.0/schemas/
+cp org.freedesktop.ibus.engine.typing-booster.gschema.xml \
+   /tmp/glib-2.0/schemas/org.freedesktop.ibus.engine.typing-booster.gschema.xml
+glib-compile-schemas /tmp/glib-2.0/schemas #&>/dev/null || :
+export XDG_DATA_DIRS=/tmp
 eval $(dbus-launch --sh-syntax)
 dconf dump /
-dconf write /desktop/ibus/engine/typing-booster/offtherecord false
-dconf write /desktop/ibus/engine/typing-booster/usedigitsasselectkeys true
-dconf write /desktop/ibus/engine/typing-booster/tabenable false
-dconf write /desktop/ibus/engine/typing-booster/inputmethod "'NoIme'"
-dconf write /desktop/ibus/engine/typing-booster/rememberlastusedpreeditime true
-dconf write /desktop/ibus/engine/typing-booster/mincharcomplete 1
-dconf write /desktop/ibus/engine/typing-booster/dictionary "'en_US'"
-dconf write /desktop/ibus/engine/typing-booster/emojipredictions true
-dconf write /desktop/ibus/engine/typing-booster/autocommitcharacters "''"
-dconf write /desktop/ibus/engine/typing-booster/pagesize 6
-dconf write /desktop/ibus/engine/typing-booster/shownumberofcandidates true
-dconf write /desktop/ibus/engine/typing-booster/showstatusinfoinaux true
+dconf write /org/freedesktop/ibus/engine/typing-booster/offtherecord false
+dconf write /org/freedesktop/ibus/engine/typing-booster/usedigitsasselectkeys true
+dconf write /org/freedesktop/ibus/engine/typing-booster/addspaceoncommit true
+dconf write /org/freedesktop/ibus/engine/typing-booster/tabenable false
+dconf write /org/freedesktop/ibus/engine/typing-booster/inputmethod "'NoIme'"
+dconf write /org/freedesktop/ibus/engine/typing-booster/rememberlastusedpreeditime true
+dconf write /org/freedesktop/ibus/engine/typing-booster/mincharcomplete 1
+dconf write /org/freedesktop/ibus/engine/typing-booster/dictionary "'en_US'"
+dconf write /org/freedesktop/ibus/engine/typing-booster/emojipredictions true
+dconf write /org/freedesktop/ibus/engine/typing-booster/autocommitcharacters "''"
+dconf write /org/freedesktop/ibus/engine/typing-booster/pagesize 6
+dconf write /org/freedesktop/ibus/engine/typing-booster/shownumberofcandidates true
+dconf write /org/freedesktop/ibus/engine/typing-booster/showstatusinfoinaux true
 dconf dump /
 ibus-daemon -drx
 make check || cat ./tests/test-suite.log
@@ -147,6 +155,7 @@ make check || cat ./tests/test-suite.log
 %{_libexecdir}/ibus-engine-typing-booster
 %{_libexecdir}/ibus-setup-typing-booster
 %{_datadir}/applications/ibus-setup-typing-booster.desktop
+%{_datadir}/glib-2.0/schemas/org.freedesktop.ibus.engine.typing-booster.gschema.xml
 
 %files -n emoji-picker
 %{_bindir}/emoji-picker
@@ -154,6 +163,45 @@ make check || cat ./tests/test-suite.log
 
 
 %changelog
+* Mon Sep 24 2018 Mike FABIAN <mfabian@redhat.com> - 2.1.2-2
+- Require the Python interpreter directly instead of using the package name
+- Related: rhbz#1619153
+
+* Mon Sep 24 2018 Mike FABIAN <mfabian@redhat.com> - 2.1.2-1
+- Update to 2.1.2
+- Update translations from zanata (de, pl updated)
+- Add typing-booster.its and typing-booster.loc to avoid making the
+  release descriptions and developer name in typing-booster.appdata.xml
+  translatable.
+- Remove code to check whether another instance of the setup tool is running.
+- Add new option to avoid adding a space when committing by label or mouse
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/39)
+- Update emoji annotations from CLDR
+- Do not try to commit if index is >= the current number of candidates
+  (Resolves: rhbz#1630349)
+- Add test case for https://bugzilla.redhat.com/show_bug.cgi?id=1630349
+
+* Tue Sep 04 2018 Mike FABIAN <mfabian@redhat.com> - 2.1.1-1
+- Update translations from zanata (es updated, 100% complete now)
+
+* Thu Aug 23 2018 Mike FABIAN <mfabian@redhat.com> - 2.1.0-2
+- Make “make check“ test cases work again when building the rpm
+
+* Tue Jul 24 2018 Mike FABIAN <mfabian@redhat.com> - 2.1.0-1
+- Update to 2.1.0
+- emoji-picker: Show a concise description of a selected emoji in the header bar
+- Update the setup UI when settings are changed outside of the setup UI
+- Migrate IBusConfig to GSettings (The old settings are
+  unfortunately lost, so one has to open the setup tool
+  and recreate ones favourite settings).
+- Read emoji data files always in UTF-8
+
+* Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.2-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
+* Mon Jul 02 2018 Miro Hrončok <mhroncok@redhat.com> - 2.0.2-2
+- Rebuilt for Python 3.7
+
 * Wed Jun 27 2018 Mike FABIAN <mfabian@redhat.com> - 2.0.2-1
 - Update to 2.0.2
 - Better Tab handling, use Tab to switch to the next candidate, not to commit
@@ -169,6 +217,9 @@ make check || cat ./tests/test-suite.log
 - Remove extra space in entry for sa-IAST input method to make it work
 - Show in the setup tool in the input listbox whether minput_open_im() succeeded.
 - Use the rocket icon emoji_u1f680.svg from the “Noto Color Emoji” font
+
+* Tue Jun 19 2018 Miro Hrončok <mhroncok@redhat.com> - 2.0.0-2
+- Rebuilt for Python 3.7
 
 * Mon May 28 2018 Mike FABIAN <mfabian@redhat.com> - 2.0.0-1
 - Update to 2.0.0
