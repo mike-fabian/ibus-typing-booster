@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 08 Oct 2018 Released 2.1.3 version
+* Update translations from zanata (uk updated)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 21 Sep 2018 Released 2.1.2 version
 * Update translations from zanata (de, pl updated)
 * Add typing-booster.its and typing-booster.loc to avoid making the release descriptions and developer name in typing-booster.appdata.xml translatable.

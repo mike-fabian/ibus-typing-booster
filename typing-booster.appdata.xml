@@ -19,6 +19,15 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.1.3" date="2018-10-08" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (uk updated)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.1.2" date="2018-09-21" urgency="medium">
       <description>
         <ul>
