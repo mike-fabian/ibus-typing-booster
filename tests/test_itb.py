@@ -62,6 +62,8 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_auto_commit_characters())
         self.orig_tab_enable = (
             self.engine.get_tab_enable())
+        self.orig_inline_completion = (
+            self.engine.get_inline_completion())
         self.orig_remember_last_used_preedit_ime = (
             self.engine.get_remember_last_used_preedit_ime())
         self.orig_page_size = (
@@ -94,6 +96,8 @@ class ItbTestCase(unittest.TestCase):
             self.orig_auto_commit_characters)
         self.engine.set_tab_enable(
             self.orig_tab_enable)
+        self.engine.set_inline_completion(
+            self.orig_inline_completion)
         self.engine.set_remember_last_used_preedit_ime(
             self.orig_remember_last_used_preedit_ime)
         self.engine.set_page_size(
@@ -122,6 +126,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_off_the_record_mode(False)
         self.engine.set_auto_commit_characters('')
         self.engine.set_tab_enable(False)
+        self.engine.set_inline_completion(False)
         self.engine.set_remember_last_used_preedit_ime(False)
         self.engine.set_page_size(6)
         self.engine.set_min_char_complete(1)

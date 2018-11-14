@@ -98,6 +98,18 @@
         candidate with the mouse.
       </description>
     </key>
+    <key name="inlinecompletion" type="b">
+      <default>false</default>
+      <summary>Use inline completion</summary>
+      <description>
+        Whether the best completion is first shown inline in the
+        preëdit instead of showing a full candidate list. The inline
+        candidate can be selected by typing Tab and then committed as
+        usual, for example by typing Space or Control+Space. Typing
+        Tab again moves to the next candidate and opens the full
+        candidate list.
+      </description>
+    </key>
     <key name="pagesize" type="i">
       <default>6</default>
       <summary>Candidate window page size</summary>

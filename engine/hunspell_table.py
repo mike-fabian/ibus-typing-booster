@@ -267,6 +267,11 @@ class TypingBoosterEngine(IBus.Engine):
         if self._add_space_on_commit is None:
             self._add_space_on_commit = True
 
+        self._inline_completion = itb_util.variant_to_value(
+            self._gsettings.get_value('inlinecompletion'))
+        if self._inline_completion is None:
+            self._inline_completion = False
+
         self._dictionary_names = []
         dictionary = itb_util.variant_to_value(
             self._gsettings.get_value('dictionary'))
@@ -1446,13 +1451,60 @@ class TypingBoosterEngine(IBus.Engine):
             or self.get_lookup_table().get_number_of_candidates() == 0
             or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
             self.hide_lookup_table()
-        else:
+            return
+        if (not self._inline_completion
+            or self.get_lookup_table().get_cursor_pos() != 0):
+            # Show standard lookup table:
             self.update_lookup_table(self.get_lookup_table(), True)
+            self._update_preedit()
+            return
+        # There is at least one candidate the lookup table cursor
+        # points to the first candidate, the lookup table is enabled
+        # and inline completion is on.
+        typed_string = unicodedata.normalize(
+            'NFC', self._transliterated_strings[
+                self.get_current_imes()[0]])
+        first_candidate = self._candidates[0][0]
+        if (not first_candidate.startswith(typed_string)
+            or first_candidate == typed_string):
+            # The first candidate is not a direct completion of the
+            # typed string. Trying to show that inline gets very
+            # confusing.  Don’t do that, show standard lookup table:
+            self.update_lookup_table(self.get_lookup_table(), True)
+            self._update_preedit()
+            return
+        # Show only the first candidate, inline in the preëdit, hide
+        # the lookup table and the auxiliary text:
+        completion = first_candidate[len(typed_string):]
+        self.hide_lookup_table()
+        text  = IBus.Text.new_from_string('')
+        super(TypingBoosterEngine, self).update_auxiliary_text(text, False)
+        text = IBus.Text.new_from_string(typed_string + completion)
+        attrs = IBus.AttrList()
+        attrs.append(IBus.attr_underline_new(
+            IBus.AttrUnderline.SINGLE, 0, len(typed_string)))
+        if self.get_lookup_table().cursor_visible:
+            attrs.append(IBus.attr_underline_new(
+            IBus.AttrUnderline.DOUBLE, len(typed_string), len(typed_string + completion)))
+        else:
+            attrs.append(IBus.attr_underline_new(
+            IBus.AttrUnderline.NONE, len(typed_string), len(typed_string + completion)))
+        i = 0
+        while attrs.get(i) != None:
+            attr = attrs.get(i)
+            text.append_attribute(attr.get_attr_type(),
+                                  attr.get_value(),
+                                  attr.get_start_index(),
+                                  attr.get_end_index())
+            i += 1
+        super(TypingBoosterEngine, self).update_preedit_text(
+            text, self.get_caret(), True)
+        return
 
     def _update_lookup_table_and_aux(self):
         '''Update the lookup table and the auxiliary text'''
-        self._update_lookup_table()
         self._update_aux()
+        self._update_lookup_table()
         self._lookup_table_is_invalid = False
 
     def _update_candidates_and_lookup_table_and_aux(self):
@@ -1882,6 +1934,56 @@ class TypingBoosterEngine(IBus.Engine):
         :rtype: boolean
         '''
         return self._add_space_on_commit
+
+    def set_inline_completion(self, mode, update_gsettings=True):
+        '''Sets whether the best completion is first shown inline in the preëdit
+        instead of using a combobox to show a candidate list.
+
+        :param mode: Whether to show completions inline
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_inline_completion(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
+        if mode == self._inline_completion:
+            return
+        self._inline_completion = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'inlinecompletion',
+                GLib.Variant.new_boolean(mode))
+
+    def toggle_inline_completion(self, update_gsettings=True):
+        '''Toggles whether the best completion is first shown inline in the preëdit
+        instead of using a combobox to show a candidate list.
+
+
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        self.set_inline_completion(
+            not self._inline_completion, update_gsettings)
+
+    def get_inline_completion(self):
+        '''Returns the current value of the flag whether to show a completion
+        first inline in the preëdit instead of using a combobox to show a
+        candidate list.
+
+        :rtype: boolean
+        '''
+        return self._inline_completion
 
     def set_qt_im_module_workaround(self, mode, update_gsettings=True):
         '''Sets whether the workaround for the qt im module is used or not
@@ -2582,6 +2684,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self.get_lookup_table().clear()
                 self.get_lookup_table().set_cursor_visible(False)
                 self._update_lookup_table_and_aux()
+                self._update_preedit()
                 self._candidates = []
                 return True
             self.reset()
@@ -3081,6 +3184,9 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if key == 'addspaceoncommit':
             self.set_add_space_on_commit(value, update_gsettings=False)
+            return
+        if key == 'inlinecompletion':
+            self.set_inline_completion(value, update_gsettings=False)
             return
         if key == 'arrowkeysreopenpreedit':
             self.set_arrow_keys_reopen_preedit(value, update_gsettings=False)
