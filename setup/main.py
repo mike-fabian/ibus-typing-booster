@@ -148,8 +148,9 @@ class SetupUI(Gtk.Window):
         self._options_grid = Gtk.Grid()
         self._options_grid.set_visible(True)
         self._options_grid.set_can_focus(False)
-        self._options_grid.set_border_width(6)
-        self._options_grid.set_column_spacing(6)
+        self._options_grid.set_border_width(0)
+        self._options_grid.set_row_spacing(0)
+        self._options_grid.set_column_spacing(5)
         self._options_grid.set_row_homogeneous(True)
         self._options_grid.set_column_homogeneous(True)
         self._options_label = Gtk.Label(
