@@ -185,6 +185,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._emoji_predictions is None:
             self._emoji_predictions = False # default
 
+        self.is_lookup_table_enabled_by_min_char_complete = False
         self._min_char_complete = itb_util.variant_to_value(
             self._gsettings.get_value('mincharcomplete'))
         if self._min_char_complete is None:
@@ -643,6 +644,7 @@ class TypingBoosterEngine(IBus.Engine):
             return
         self._candidates = []
         phrase_frequencies = {}
+        self.is_lookup_table_enabled_by_min_char_complete = False
         for ime in self._current_imes:
             if self._transliterated_strings[ime]:
                 candidates = []
@@ -652,8 +654,10 @@ class TypingBoosterEngine(IBus.Engine):
                     itb_util.lstrip_token(self._transliterated_strings[ime]))
                 if (stripped_transliterated_string
                         and ((len(stripped_transliterated_string)
-                              >= self._min_char_complete)
-                             or self._tab_enable)):
+                              >= self._min_char_complete))):
+                    self.is_lookup_table_enabled_by_min_char_complete = True
+                if (self.is_lookup_table_enabled_by_min_char_complete
+                        or self.is_lookup_table_enabled_by_tab):
                     prefix_length = (
                         len(self._transliterated_strings[ime])
                         - len(stripped_transliterated_string))
@@ -2570,7 +2574,8 @@ class TypingBoosterEngine(IBus.Engine):
                 # Force an update to the original lookup table:
                 self._update_ui()
                 return True
-            if self._tab_enable and self.is_lookup_table_enabled_by_tab:
+            if ((self._tab_enable or self._min_char_complete > 1)
+                    and self.is_lookup_table_enabled_by_tab):
                 # If lookup table was enabled by typing Tab, close it again
                 # but keep the preëdit:
                 self.is_lookup_table_enabled_by_tab = False
@@ -2584,7 +2589,9 @@ class TypingBoosterEngine(IBus.Engine):
             return True
 
         if (key.val == IBus.KEY_Tab
-            and self._tab_enable
+            and (self._tab_enable
+                 or (self._min_char_complete > 1
+                     and not self.is_lookup_table_enabled_by_min_char_complete))
             and not self.is_lookup_table_enabled_by_tab
             and not self.is_empty()):
             self.is_lookup_table_enabled_by_tab = True
