@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2018-09-21 14:01+0200\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2018-11-19 19:04+0100\n"
 "PO-Revision-Date: 2018-05-22 11:16+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: French\n"
 "Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Generator: Zanata 4.6.2\n"
 
@@ -121,7 +121,7 @@ msgstr "Copié vers le presse-papier !"
 msgid "Lookup on emojipedia"
 msgstr "Interrogation d’Emojipedia"
 
-#: engine/emoji_picker.py:2013 setup/main.py:394
+#: engine/emoji_picker.py:2013 setup/main.py:410
 msgid "System default"
 msgstr "Par défaut pour le système"
 
@@ -129,35 +129,35 @@ msgstr "Par défaut pour le système"
 msgid "Set Font"
 msgstr "Choix de police"
 
-#: engine/hunspell_table.py:356 engine/hunspell_table.py:376
+#: engine/hunspell_table.py:362 engine/hunspell_table.py:382
 msgid "Off"
 msgstr "Désactivé"
 
-#: engine/hunspell_table.py:361 engine/hunspell_table.py:381
+#: engine/hunspell_table.py:367 engine/hunspell_table.py:387
 msgid "On"
 msgstr "Activé"
 
-#: engine/hunspell_table.py:366 engine/hunspell_table.py:368 setup/main.py:276
+#: engine/hunspell_table.py:372 engine/hunspell_table.py:374 setup/main.py:292
 msgid "Unicode symbols and emoji predictions"
 msgstr "Prédictions des émoticônes et symboles unicodes"
 
-#: engine/hunspell_table.py:386 engine/hunspell_table.py:387 setup/main.py:291
+#: engine/hunspell_table.py:392 engine/hunspell_table.py:393 setup/main.py:307
 msgid "Off the record mode"
 msgstr "Mode sans enregistrement"
 
-#: engine/hunspell_table.py:1074
+#: engine/hunspell_table.py:1083
 msgid "Preedit input method"
 msgstr "Méthode de saisie pour la pré-édition."
 
-#: engine/hunspell_table.py:1075
+#: engine/hunspell_table.py:1084
 msgid "Switch preedit input method"
 msgstr "Changer la méthode de pré-édition"
 
-#: engine/hunspell_table.py:1268
+#: engine/hunspell_table.py:1277
 msgid "Setup"
 msgstr "Configuration"
 
-#: engine/hunspell_table.py:1271 setup/main.py:113
+#: engine/hunspell_table.py:1280 setup/main.py:113
 msgid "Preferences for ibus-typing-booster"
 msgstr ""
 
@@ -261,38 +261,51 @@ msgstr ""
 msgid "Preferences"
 msgstr "Préférences"
 
-#: setup/main.py:156
+#: setup/main.py:157
 msgid "Options"
 msgstr "Options"
 
-#: setup/main.py:164
+#: setup/main.py:165
 msgid "Dictionaries and input methods"
 msgstr ""
 
-#: setup/main.py:173
+#: setup/main.py:174
 msgid "Custom shortcuts"
 msgstr "Raccourcis personnalisés"
 
-#: setup/main.py:185
+#: setup/main.py:186
 msgid "Enable suggestions by Tab key"
 msgstr "Activer les suggestions avec la touche tabulation"
 
-#: setup/main.py:187
+#: setup/main.py:188
 msgid ""
 "If this option is on, suggestions are not shown by default. Typing Tab is "
 "then necessary to show the list of suggestions. After a commit the "
 "suggestions are hidden again until the next Tab key is typed."
 msgstr ""
-"Si cette option est activée, les suggestions ne sont pas montrées par défaut."
-" Appuyer sur Tab est alors nécessaire pour montrer la liste des suggestions. "
-"Après validation, les suggestions sont de nouveau cachées jusqu’à ce que la "
-"touche Tab soit appuyée."
+"Si cette option est activée, les suggestions ne sont pas montrées par "
+"défaut. Appuyer sur Tab est alors nécessaire pour montrer la liste des "
+"suggestions. Après validation, les suggestions sont de nouveau cachées "
+"jusqu’à ce que la touche Tab soit appuyée."
 
-#: setup/main.py:200
+#: setup/main.py:201
+msgid "Use inline completion"
+msgstr ""
+
+#: setup/main.py:203
+msgid ""
+"Whether the best completion is first shown inline in the preëdit instead of "
+"showing a full candidate list. The inline candidate can be selected by "
+"typing Tab and then committed as usual, for example by typing Space or "
+"Control+Space. Typing Tab again moves to the next candidate and opens the "
+"full candidate list."
+msgstr ""
+
+#: setup/main.py:216
 msgid "Display total number of candidates"
 msgstr "Afficher le nombre total de candidats"
 
-#: setup/main.py:202
+#: setup/main.py:218
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
@@ -300,11 +313,11 @@ msgstr ""
 "Afficher le nombre de candidats et celui sélectionné en haut de la liste des "
 "candidats."
 
-#: setup/main.py:215
+#: setup/main.py:231
 msgid "Show status info in auxiliary text"
 msgstr "Informations d’état dans le texte auxiliaire"
 
-#: setup/main.py:217
+#: setup/main.py:233
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "
@@ -317,11 +330,11 @@ msgstr ""
 "auxiliaire est une ligne optionnelle de texte précédant la liste des "
 "candidats."
 
-#: setup/main.py:231
+#: setup/main.py:247
 msgid "Use digits as select keys"
 msgstr "Utiliser les chiffres comme des touches de sélection"
 
-#: setup/main.py:233
+#: setup/main.py:249
 msgid ""
 "Use the regular digits 1-9 as select keys. If that option is on, numbers can "
 "only by typed while no suggestions are shown. Therefore, completions for "
@@ -341,22 +354,22 @@ msgstr ""
 "de F1 à F9 (toujours activées), car ces dernières sont plus éloignées des "
 "doigts."
 
-#: setup/main.py:246
+#: setup/main.py:262
 msgid "Add a space when committing by label or mouse"
 msgstr ""
 
-#: setup/main.py:248
+#: setup/main.py:264
 msgid ""
 "Add a space if a candidate from the candidate list is committed using a key "
 "for the label in front of the candidate (I.e. the using the 1-9 or F1-F9 "
 "keys) or by clicking on a candidate with the mouse."
 msgstr ""
 
-#: setup/main.py:261
+#: setup/main.py:277
 msgid "Remember last used preedit input method"
 msgstr "Retenir la dernière méthode de saisie utilisée pour la pré-édition."
 
-#: setup/main.py:263
+#: setup/main.py:279
 msgid ""
 "If more then one input method is used at the same time, one of them is used "
 "for the preedit.  Which input method is used for the preedit can be changed "
@@ -369,7 +382,7 @@ msgstr ""
 "cette option est activée, de tels changements sont enregistrés même si la "
 "session est redémarrée."
 
-#: setup/main.py:278
+#: setup/main.py:294
 msgid ""
 "Whether Unicode symbols and emoji should be included in the predictions. "
 "Emoji are pictographs like ☺♨⛵…. Unicode symbols are other symbols like "
@@ -384,7 +397,7 @@ msgstr ""
 "autres. Ils ne sont techniquement pas des émoticônes mais sont néanmoins des "
 "symboles utiles."
 
-#: setup/main.py:293
+#: setup/main.py:309
 msgid ""
 "While “Off the record” mode is on, learning from user input is disabled. If "
 "learned user input is available, predictions are usually much better than "
@@ -400,11 +413,11 @@ msgstr ""
 "souhaitant éviter la sauvegarde sur le disque de contenu secret saisi par "
 "l’utilisateur pourrait souhaiter activer cette option temporairement."
 
-#: setup/main.py:306
+#: setup/main.py:322
 msgid "Use a workaround for a bug in Qt im module"
 msgstr "Utiliser le contournement d’un bug dans le module Qt IM"
 
-#: setup/main.py:308
+#: setup/main.py:324
 msgid ""
 "Use a workaround for bugs in the input method modules of Qt4 and Qt5. "
 "Attention, although this workaround makes it work better when the Qt input "
@@ -419,11 +432,11 @@ msgstr ""
 "contournement est activé et la saisie via XIM dans les programmes Xorg tels "
 "qu’xterm ne fonctionnera pas bien non plus."
 
-#: setup/main.py:321
+#: setup/main.py:337
 msgid "Arrow keys can reopen a preedit"
 msgstr "Les flèches peuvent rouvrir une pré-édition"
 
-#: setup/main.py:323
+#: setup/main.py:339
 msgid ""
 "Whether it is allowed to reopen a preedit when the cursor reaches a word "
 "boundary after moving it with the arrow keys. Enabling this option is useful "
@@ -438,11 +451,11 @@ msgstr ""
 "de la charge du système. À cause de ce bug, cette option est désactivée par "
 "défaut."
 
-#: setup/main.py:336
+#: setup/main.py:352
 msgid "Auto commit characters:"
 msgstr "Caractères d auto-validation :"
 
-#: setup/main.py:338
+#: setup/main.py:354
 msgid ""
 "The characters in this list cause the preedit to be committed automatically, "
 "followed by a space.  For example, if “.” is an auto commit character, this "
@@ -465,193 +478,191 @@ msgstr ""
 "pouvez aussi désactiver complètement cette fonctionnalité en vidant la liste "
 "(ce qui est le comportement par défaut)."
 
-#: setup/main.py:356
+#: setup/main.py:372
 msgid "Candidate window page size:"
 msgstr "Taille de la fenêtre des candidats :"
 
-#: setup/main.py:358
+#: setup/main.py:374
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr "Nombre de suggestions affichées par page de la liste des candidats."
 
-#: setup/main.py:380
+#: setup/main.py:396
 msgid "Candidate window orientation"
 msgstr "Orientation de la fenêtre des candidats"
 
-#: setup/main.py:382
+#: setup/main.py:398
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
 msgstr ""
 "Si la fenêtre de candidats doit être dessinée horizontalement ou "
 "verticalement."
 
-#: setup/main.py:390
+#: setup/main.py:406
 msgid "Horizontal"
 msgstr "Horizontale"
 
-#: setup/main.py:392
+#: setup/main.py:408
 msgid "Vertical"
 msgstr "Verticale"
 
-#: setup/main.py:416
+#: setup/main.py:432
 msgid "Minimum number of chars for completion:"
 msgstr "Nombre minimum de caractères pour l’auto-complètement :"
 
-#: setup/main.py:418
+#: setup/main.py:434
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
-""
 msgstr ""
 "Ne pas afficher de suggestion tant que ce nombre de caractères n’a pas été "
 "saisi."
 
-#: setup/main.py:442
+#: setup/main.py:458
 msgid "Learn from text file"
 msgstr "Apprendre depuis un fichier texte"
 
-#: setup/main.py:444
+#: setup/main.py:460
 msgid "Learn your style by reading a text file"
 msgstr "Apprendre votre style en lisant un fichier texte"
 
-#: setup/main.py:451
+#: setup/main.py:467
 msgid "Delete learned data"
 msgstr "Supprimer les données apprises"
 
-#: setup/main.py:453
+#: setup/main.py:469
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
 "Supprimer toutes les données linguistiques personnelles apprises depuis la "
 "saisie ou la lecture de fichiers"
 
-#: setup/main.py:461
+#: setup/main.py:477
 msgid "Use dictionaries for the following languages:"
 msgstr ""
 
-#: setup/main.py:477
+#: setup/main.py:493
 msgid "Install missing dictionaries"
 msgstr ""
 
-#: setup/main.py:479
+#: setup/main.py:495
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr ""
 
-#: setup/main.py:495
+#: setup/main.py:511
 msgid "Add a dictionary"
 msgstr ""
 
-#: setup/main.py:506
+#: setup/main.py:522
 msgid "Remove a dictionary"
 msgstr ""
 
-#: setup/main.py:517
+#: setup/main.py:533
 msgid "Move dictionary down"
 msgstr ""
 
-#: setup/main.py:529
+#: setup/main.py:545
 msgid "Move dictionary up"
 msgstr ""
 
-#: setup/main.py:550
+#: setup/main.py:566
 msgid "Use the following input methods:"
 msgstr ""
 
-#: setup/main.py:578
+#: setup/main.py:594
 msgid "Add an input method"
 msgstr ""
 
-#: setup/main.py:590
+#: setup/main.py:606
 msgid "Remove an input method"
 msgstr ""
 
-#: setup/main.py:602
+#: setup/main.py:618
 msgid "Move input method down"
 msgstr ""
 
-#: setup/main.py:614
+#: setup/main.py:630
 msgid "Move input method up"
 msgstr ""
 
-#: setup/main.py:619
+#: setup/main.py:635
 msgid "Input Method Help"
 msgstr "Aide pour la méthode de saisie"
 
-#: setup/main.py:621
+#: setup/main.py:637
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
 "Affiche de l’aide montrant comment utiliser la méthode de saisie "
 "sélectionnée ci-dessus."
 
-#: setup/main.py:640
+#: setup/main.py:656
 msgid "Enter shortcut here:"
 msgstr "Saisissez votre raccourci ici :"
 
-#: setup/main.py:656
+#: setup/main.py:672
 msgid "Enter shortcut expansion here:"
 msgstr "Saisissez l’expansion du raccourci ici :"
 
-#: setup/main.py:672
+#: setup/main.py:688
 msgid "Clear input"
 msgstr "Vide l’entrée"
 
-#: setup/main.py:682
+#: setup/main.py:698
 msgid "Delete shortcut"
 msgstr "Supprimer le raccourci"
 
-#: setup/main.py:692
+#: setup/main.py:708
 msgid "Add shortcut"
 msgstr "Ajouter un raccourci"
 
 #. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:715
+#: setup/main.py:731
 msgid "Shortcut"
 msgstr "Raccourci"
 
 #. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:721
+#: setup/main.py:737
 msgid "Shortcut expansion"
 msgstr "Expansion du raccourci"
 
-#: setup/main.py:750
+#: setup/main.py:766
 msgid "Spell checking"
 msgstr ""
 
-#: setup/main.py:756
+#: setup/main.py:772
 msgid "Emoji"
 msgstr ""
 
-#: setup/main.py:920
+#: setup/main.py:936
 msgid "Another instance of this app is already running."
-msgstr ""
-"Une autre instance de cette application est déjà en cours d’exécution."
+msgstr "Une autre instance de cette application est déjà en cours d’exécution."
 
-#: setup/main.py:1237
+#: setup/main.py:1264
 msgid "Add dictionary"
 msgstr ""
 
-#: setup/main.py:1492
+#: setup/main.py:1519
 msgid "Add input method"
 msgstr ""
 
-#: setup/main.py:1734
+#: setup/main.py:1761
 msgid "Open File ..."
 msgstr "Ouvrir le fichier…"
 
-#: setup/main.py:1753
+#: setup/main.py:1780
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Apprentissage réussi depuis le fichier  %(filename)s."
 
-#: setup/main.py:1762
+#: setup/main.py:1789
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Échec de l’apprentissage depuis le fichier %(filename)s."
 
-#: setup/main.py:1775
+#: setup/main.py:1802
 msgid "Are you sure?"
 msgstr "Confirmez-vous ?"
 
-#: setup/main.py:1782
+#: setup/main.py:1809
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -659,7 +670,7 @@ msgstr ""
 "Voulez-vous vraiment supprimer toutes les données\n"
 "linguistiques apprises par saisie au clavier ou lecture de fichiers ?"
 
-#: setup/main.py:2314
+#: setup/main.py:2367
 msgid "ibus is not running."
 msgstr "Ibus n’est pas lancé."
 

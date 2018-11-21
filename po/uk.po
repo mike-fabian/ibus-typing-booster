@@ -9,17 +9,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2018-09-21 14:01+0200\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2018-11-19 19:04+0100\n"
 "PO-Revision-Date: 2018-09-30 04:36+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Zanata 4.6.2\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
 #: engine/emoji_picker.py:193
 msgid "Emoji Picker"
@@ -121,7 +121,7 @@ msgstr "Скопійовано до буфера обміну даними!"
 msgid "Lookup on emojipedia"
 msgstr "Шукати у емодзіпедії"
 
-#: engine/emoji_picker.py:2013 setup/main.py:394
+#: engine/emoji_picker.py:2013 setup/main.py:410
 msgid "System default"
 msgstr "Типова системна"
 
@@ -129,35 +129,35 @@ msgstr "Типова системна"
 msgid "Set Font"
 msgstr "Встановити шрифт"
 
-#: engine/hunspell_table.py:356 engine/hunspell_table.py:376
+#: engine/hunspell_table.py:362 engine/hunspell_table.py:382
 msgid "Off"
 msgstr "Вимкн."
 
-#: engine/hunspell_table.py:361 engine/hunspell_table.py:381
+#: engine/hunspell_table.py:367 engine/hunspell_table.py:387
 msgid "On"
 msgstr "Увімкн."
 
-#: engine/hunspell_table.py:366 engine/hunspell_table.py:368 setup/main.py:276
+#: engine/hunspell_table.py:372 engine/hunspell_table.py:374 setup/main.py:292
 msgid "Unicode symbols and emoji predictions"
 msgstr "Пропозиці для символів Unicode та емодзі"
 
-#: engine/hunspell_table.py:386 engine/hunspell_table.py:387 setup/main.py:291
+#: engine/hunspell_table.py:392 engine/hunspell_table.py:393 setup/main.py:307
 msgid "Off the record mode"
 msgstr "Режим без запису"
 
-#: engine/hunspell_table.py:1074
+#: engine/hunspell_table.py:1083
 msgid "Preedit input method"
 msgstr "Спосіб введення попереднього редагування"
 
-#: engine/hunspell_table.py:1075
+#: engine/hunspell_table.py:1084
 msgid "Switch preedit input method"
 msgstr "Перемкнути спосіб введення попереднього редагування"
 
-#: engine/hunspell_table.py:1268
+#: engine/hunspell_table.py:1277
 msgid "Setup"
 msgstr "Налаштування"
 
-#: engine/hunspell_table.py:1271 setup/main.py:113
+#: engine/hunspell_table.py:1280 setup/main.py:113
 msgid "Preferences for ibus-typing-booster"
 msgstr "Параметри для ibus-typing-booster"
 
@@ -262,23 +262,23 @@ msgstr "Документація у інтернеті:"
 msgid "Preferences"
 msgstr "Налаштування"
 
-#: setup/main.py:156
+#: setup/main.py:157
 msgid "Options"
 msgstr "Параметри"
 
-#: setup/main.py:164
+#: setup/main.py:165
 msgid "Dictionaries and input methods"
 msgstr "Словники і способи введення"
 
-#: setup/main.py:173
+#: setup/main.py:174
 msgid "Custom shortcuts"
 msgstr "Нетипові скорочення"
 
-#: setup/main.py:185
+#: setup/main.py:186
 msgid "Enable suggestions by Tab key"
 msgstr "Увімкнути пропозиції за клавішею Tab"
 
-#: setup/main.py:187
+#: setup/main.py:188
 msgid ""
 "If this option is on, suggestions are not shown by default. Typing Tab is "
 "then necessary to show the list of suggestions. After a commit the "
@@ -289,22 +289,35 @@ msgstr ""
 "варіанта список пропозицій знову буде приховано, аж доки ви не натиснете Tab "
 "знову."
 
-#: setup/main.py:200
+#: setup/main.py:201
+msgid "Use inline completion"
+msgstr ""
+
+#: setup/main.py:203
+msgid ""
+"Whether the best completion is first shown inline in the preëdit instead of "
+"showing a full candidate list. The inline candidate can be selected by "
+"typing Tab and then committed as usual, for example by typing Space or "
+"Control+Space. Typing Tab again moves to the next candidate and opens the "
+"full candidate list."
+msgstr ""
+
+#: setup/main.py:216
 msgid "Display total number of candidates"
 msgstr "Показувати загальну кількість варіантів"
 
-#: setup/main.py:202
+#: setup/main.py:218
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
 msgstr ""
 "Показувати кількість варіантів і вибраний варіант над списком варіантів."
 
-#: setup/main.py:215
+#: setup/main.py:231
 msgid "Show status info in auxiliary text"
 msgstr "Показувати дані щодо стану у допоміжному тексті"
 
-#: setup/main.py:217
+#: setup/main.py:233
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "
@@ -316,11 +329,11 @@ msgstr ""
 "preëdit. Допоміжний текст — додатковий рядок, показаний над списком "
 "варіантів."
 
-#: setup/main.py:231
+#: setup/main.py:247
 msgid "Use digits as select keys"
 msgstr "Використовувати клавіші цифр для вибору"
 
-#: setup/main.py:233
+#: setup/main.py:249
 msgid ""
 "Use the regular digits 1-9 as select keys. If that option is on, numbers can "
 "only by typed while no suggestions are shown. Therefore, completions for "
@@ -339,11 +352,11 @@ msgstr ""
 "вибору, F1-F9, оскільки ці клавіші розташовано далі від типового "
 "розташування пальців на клавіатурі."
 
-#: setup/main.py:246
+#: setup/main.py:262
 msgid "Add a space when committing by label or mouse"
 msgstr "Додавати пробіл при надсиланні за допомогою мітки або миші"
 
-#: setup/main.py:248
+#: setup/main.py:264
 msgid ""
 "Add a space if a candidate from the candidate list is committed using a key "
 "for the label in front of the candidate (I.e. the using the 1-9 or F1-F9 "
@@ -353,13 +366,13 @@ msgstr ""
 "клавіші мітки перед записом варіанта (тобто, за допомогою клавіш 1-9 або F1-"
 "F9) або натисканням пункту мітки за допомогою миші."
 
-#: setup/main.py:261
+#: setup/main.py:277
 msgid "Remember last used preedit input method"
 msgstr ""
 "Запам’ятовувати останній використаний спосіб введення попереднього "
 "редагування"
 
-#: setup/main.py:263
+#: setup/main.py:279
 msgid ""
 "If more then one input method is used at the same time, one of them is used "
 "for the preedit.  Which input method is used for the preedit can be changed "
@@ -372,7 +385,7 @@ msgstr ""
 "позначено цей пункт, програма запам’ятовуватиме таку зміну і відновлюватиме "
 "спосіб введення навіть після перезапуску сеансу. "
 
-#: setup/main.py:278
+#: setup/main.py:294
 msgid ""
 "Whether Unicode symbols and emoji should be included in the predictions. "
 "Emoji are pictographs like ☺♨⛵…. Unicode symbols are other symbols like "
@@ -386,7 +399,7 @@ msgstr ""
 "абетки Брайля (⠥⠩…) тощо. З технічної точки зору, це не емодзі, але все ж "
 "корисні символи."
 
-#: setup/main.py:293
+#: setup/main.py:309
 msgid ""
 "While “Off the record” mode is on, learning from user input is disabled. If "
 "learned user input is available, predictions are usually much better than "
@@ -401,11 +414,11 @@ msgstr ""
 "якщо слід запобігти зберіганню на диску якоїсь конфіденційної інформації; "
 "вмикайте його лише тимчасово."
 
-#: setup/main.py:306
+#: setup/main.py:322
 msgid "Use a workaround for a bug in Qt im module"
 msgstr "Використовувати обхідний шлях щодо вади у модулі im Qt"
 
-#: setup/main.py:308
+#: setup/main.py:324
 msgid ""
 "Use a workaround for bugs in the input method modules of Qt4 and Qt5. "
 "Attention, although this workaround makes it work better when the Qt input "
@@ -413,18 +426,18 @@ msgid ""
 "of Qt4 will not work well when this workaround is enabled and input via XIM "
 "into X11 programs like xterm will not work well either."
 msgstr ""
-"Використовувати обхідні шляхи щодо вад у модулях способів введення Qt4 і Qt5."
-" Увага! Хоча цей обхідний шлях поліпшує роботу з використаними модулями "
+"Використовувати обхідні шляхи щодо вад у модулях способів введення Qt4 і "
+"Qt5. Увага! Хоча цей обхідний шлях поліпшує роботу з використаними модулями "
 "способів введення Qt, він спричиняє проблеми із використанням XIM. Тобто "
 "модуль XIM  Qt4 із цим обхідним шляхом не працюватиме як слід, а введення за "
 "допомого XIM у програмах X11, зокрема xterm, також працюватиме не так, як ви "
 "б сподівалися."
 
-#: setup/main.py:321
+#: setup/main.py:337
 msgid "Arrow keys can reopen a preedit"
 msgstr "Клавіші зі стрілками можуть повторно відкривати попереднє редагування"
 
-#: setup/main.py:323
+#: setup/main.py:339
 msgid ""
 "Whether it is allowed to reopen a preedit when the cursor reaches a word "
 "boundary after moving it with the arrow keys. Enabling this option is useful "
@@ -439,11 +452,11 @@ msgstr ""
 "від швидкості повторення сигналів при затисканні клавіші та навантаження на "
 "систему. Оскільки є вади, типово цей пункт не позначено."
 
-#: setup/main.py:336
+#: setup/main.py:352
 msgid "Auto commit characters:"
 msgstr "Автонадсилання символів:"
 
-#: setup/main.py:338
+#: setup/main.py:354
 msgid ""
 "The characters in this list cause the preedit to be committed automatically, "
 "followed by a space.  For example, if “.” is an auto commit character, this "
@@ -466,191 +479,190 @@ msgstr ""
 "повністю вимкнути цю можливість, якщо спорожните список (тобто повернете "
 "йому типове значення)."
 
-#: setup/main.py:356
+#: setup/main.py:372
 msgid "Candidate window page size:"
 msgstr "Розмір сторінки вікна варіантів:"
 
-#: setup/main.py:358
+#: setup/main.py:374
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr ""
 "Кількість варіантів, які слід показувати на одній сторінці списку варіантів."
 
-#: setup/main.py:380
+#: setup/main.py:396
 msgid "Candidate window orientation"
 msgstr "Орієнтація вікна варіантів"
 
-#: setup/main.py:382
+#: setup/main.py:398
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
 msgstr "Визначає орієнтацію вікна варіантів, вертикальну чи горизонтальну."
 
-#: setup/main.py:390
+#: setup/main.py:406
 msgid "Horizontal"
 msgstr "Горизонтально"
 
-#: setup/main.py:392
+#: setup/main.py:408
 msgid "Vertical"
 msgstr "Вертикально"
 
-#: setup/main.py:416
+#: setup/main.py:432
 msgid "Minimum number of chars for completion:"
 msgstr "Мінімальна кількість символів для автозавершення:"
 
-#: setup/main.py:418
+#: setup/main.py:434
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
-""
 msgstr ""
 "Не показувати пропозицій, якщо кількість введених символів є меншою за "
 "вказану."
 
-#: setup/main.py:442
+#: setup/main.py:458
 msgid "Learn from text file"
 msgstr "Навчатися за текстовим файлом"
 
-#: setup/main.py:444
+#: setup/main.py:460
 msgid "Learn your style by reading a text file"
 msgstr "Вивчити ваш стиль шляхом читання текстового файла"
 
-#: setup/main.py:451
+#: setup/main.py:467
 msgid "Delete learned data"
 msgstr "Вилучити вивчені дані"
 
-#: setup/main.py:453
+#: setup/main.py:469
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
 "Вилучити усі особисті дані мови, вивчені на основі введених даних або "
 "читання файлів"
 
-#: setup/main.py:461
+#: setup/main.py:477
 msgid "Use dictionaries for the following languages:"
 msgstr "Використовувати словники для таких мов:"
 
-#: setup/main.py:477
+#: setup/main.py:493
 msgid "Install missing dictionaries"
 msgstr "Встановити невстановлені словники"
 
-#: setup/main.py:479
+#: setup/main.py:495
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Встановити словники, які налаштовано тут, але які не встановлено"
 
-#: setup/main.py:495
+#: setup/main.py:511
 msgid "Add a dictionary"
 msgstr "Додати словник"
 
-#: setup/main.py:506
+#: setup/main.py:522
 msgid "Remove a dictionary"
 msgstr "Вилучити словник"
 
-#: setup/main.py:517
+#: setup/main.py:533
 msgid "Move dictionary down"
 msgstr "Пересунути словник нижче"
 
-#: setup/main.py:529
+#: setup/main.py:545
 msgid "Move dictionary up"
 msgstr "Пересунути словник вище"
 
-#: setup/main.py:550
+#: setup/main.py:566
 msgid "Use the following input methods:"
 msgstr "Використовувати такі способи введення:"
 
-#: setup/main.py:578
+#: setup/main.py:594
 msgid "Add an input method"
 msgstr "Додати спосіб введення"
 
-#: setup/main.py:590
+#: setup/main.py:606
 msgid "Remove an input method"
 msgstr "Вилучити спосіб введення"
 
-#: setup/main.py:602
+#: setup/main.py:618
 msgid "Move input method down"
 msgstr "Пересунути спосіб введення нижче"
 
-#: setup/main.py:614
+#: setup/main.py:630
 msgid "Move input method up"
 msgstr "Пересунути спосіб введення вище"
 
-#: setup/main.py:619
+#: setup/main.py:635
 msgid "Input Method Help"
 msgstr "Довідка зі способу введення"
 
-#: setup/main.py:621
+#: setup/main.py:637
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
 "Показувати довідкову інформацію щодо того, як користуватися способом "
 "введення, вибраним вище."
 
-#: setup/main.py:640
+#: setup/main.py:656
 msgid "Enter shortcut here:"
 msgstr "Вкажіть скорочення:"
 
-#: setup/main.py:656
+#: setup/main.py:672
 msgid "Enter shortcut expansion here:"
 msgstr "Вкажіть розгортання скорочення:"
 
-#: setup/main.py:672
+#: setup/main.py:688
 msgid "Clear input"
 msgstr "Вилучити введене"
 
-#: setup/main.py:682
+#: setup/main.py:698
 msgid "Delete shortcut"
 msgstr "Вилучити скорочення"
 
-#: setup/main.py:692
+#: setup/main.py:708
 msgid "Add shortcut"
 msgstr "Додати скорочення"
 
 #. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:715
+#: setup/main.py:731
 msgid "Shortcut"
 msgstr "Скорочення"
 
 #. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:721
+#: setup/main.py:737
 msgid "Shortcut expansion"
 msgstr "Розгортання скорочення"
 
-#: setup/main.py:750
+#: setup/main.py:766
 msgid "Spell checking"
 msgstr "Перевірка правопису"
 
-#: setup/main.py:756
+#: setup/main.py:772
 msgid "Emoji"
 msgstr "Емодзі"
 
-#: setup/main.py:920
+#: setup/main.py:936
 msgid "Another instance of this app is already running."
 msgstr "Вже запущено інший екземпляр цієї програми."
 
-#: setup/main.py:1237
+#: setup/main.py:1264
 msgid "Add dictionary"
 msgstr "Додати словник"
 
-#: setup/main.py:1492
+#: setup/main.py:1519
 msgid "Add input method"
 msgstr "Додати спосіб введення"
 
-#: setup/main.py:1734
+#: setup/main.py:1761
 msgid "Open File ..."
 msgstr "Відкрити файл…"
 
-#: setup/main.py:1753
+#: setup/main.py:1780
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Успішно вивчено з файла %(filename)s."
 
-#: setup/main.py:1762
+#: setup/main.py:1789
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Спроба навчання з файла %(filename)s зазнала невдачі."
 
-#: setup/main.py:1775
+#: setup/main.py:1802
 msgid "Are you sure?"
 msgstr "Ви впевнені?"
 
-#: setup/main.py:1782
+#: setup/main.py:1809
 msgid ""
 "Do you really want to delete all language \n"
 "data learned from typing or reading files?"
@@ -658,7 +670,7 @@ msgstr ""
 "Ви справді хочете вилучити усі дані мови, \n"
 "вивчені із введених даних і читання файлів?"
 
-#: setup/main.py:2314
+#: setup/main.py:2367
 msgid "ibus is not running."
 msgstr "ibus не запущено."
 
