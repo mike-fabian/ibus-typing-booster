@@ -171,6 +171,14 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.set_column_homogeneous(True)
         self._custom_shortcuts_label = Gtk.Label(
             _('Custom shortcuts'))
+        self._keybindings_vbox = Gtk.VBox()
+        margin = 10
+        self._keybindings_vbox.set_margin_start(margin)
+        self._keybindings_vbox.set_margin_end(margin)
+        self._keybindings_vbox.set_margin_top(margin)
+        self._keybindings_vbox.set_margin_bottom(margin)
+        self._keybindings_label = Gtk.Label(
+            _('Key bindings'))
         self._notebook.append_page(
             self._options_grid,
             self._options_label)
@@ -180,11 +188,14 @@ class SetupUI(Gtk.Window):
         self._notebook.append_page(
             self._custom_shortcuts_grid,
             self._custom_shortcuts_label)
+        self._notebook.append_page(
+            self._keybindings_vbox,
+            self._keybindings_label)
 
         self._tab_enable_checkbutton = Gtk.CheckButton(
-            _('Enable suggestions by Tab key'))
+            _('Enable suggestions by key (Default is the Tab key)'))
         self._tab_enable_checkbutton.set_tooltip_text(
-            _('If this option is on, suggestions are not shown by default. Typing Tab is then necessary to show the list of suggestions. After a commit the suggestions are hidden again until the next Tab key is typed.'))
+            _('If this option is on, suggestions are not shown by default. Typing a key is then necessary to show the list of suggestions. The key to use for this can be changed in the key bindings settings. By default it is the Tab key. After a commit the suggestions are hidden again until the next key bound to this command is typed.'))
         self._tab_enable_checkbutton.connect(
             'clicked', self.on_tab_enable_checkbutton)
         self._options_grid.attach(
@@ -742,6 +753,111 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.attach(
             self._shortcut_treeview_scroll, 0, 5, 3, 10)
 
+        self._keybindings_label = Gtk.Label()
+        self._keybindings_label.set_text(
+            '<b>' + _('Current key bindings:') + '</b>')
+        self._keybindings_label.set_use_markup(True)
+        self._keybindings_label.set_margin_start(margin)
+        self._keybindings_label.set_margin_end(margin)
+        self._keybindings_label.set_margin_top(margin)
+        self._keybindings_label.set_margin_bottom(margin)
+        self._keybindings_label.set_hexpand(False)
+        self._keybindings_label.set_vexpand(False)
+        self._keybindings_label.set_xalign(0)
+        self._keybindings_treeview_scroll = Gtk.ScrolledWindow()
+        self._keybindings_treeview_scroll.set_can_focus(False)
+        self._keybindings_treeview_scroll.set_hexpand(False)
+        self._keybindings_treeview_scroll.set_vexpand(True)
+        #self._keybindings_treeview_scroll.set_shadow_type(in)
+        self._keybindings_treeview = Gtk.TreeView()
+        self._keybindings_treeview_model = Gtk.ListStore(str, str)
+        self._keybindings_treeview.set_model(self._keybindings_treeview_model)
+        self._keybindings = {}
+        # Don’t just use get_value(), if the user has changed the
+        # settings, get_value() will get the user settings and new
+        # keybindings might have been added by an update to the default
+        # settings. Therefore, get the default settings first and
+        # update them with the user settings:
+        self._keybindings = itb_util.variant_to_value(
+            self._gsettings.get_default_value('keybindings'))
+        itb_util.dict_update_existing_keys(
+            self._keybindings,
+            itb_util.variant_to_value(
+                self._gsettings.get_value('keybindings')))
+        for command in sorted(self._keybindings):
+            self._keybindings_treeview_model.append(
+                (command, repr(self._keybindings[command])))
+        self._keybindings_treeview.append_column(
+            Gtk.TreeViewColumn(
+                # Translators: Column heading of the table listing the existing key bindings
+                _('Command'),
+                Gtk.CellRendererText(),
+                text=0))
+        self._keybindings_treeview.append_column(
+            Gtk.TreeViewColumn(
+                # Translators: Column heading of the table listing the existing key bindings
+                _('Key bindings'),
+                Gtk.CellRendererText(),
+                text=1))
+        self._keybindings_treeview.get_selection().connect(
+            'changed', self.on_keybindings_treeview_row_selected)
+        self._keybindings_treeview.connect(
+            'row-activated', self.on_keybindings_treeview_row_activated)
+        self._keybindings_treeview_scroll.add(self._keybindings_treeview)
+        self._keybindings_vbox.pack_start(
+            self._keybindings_label, False, False, 0)
+        self._keybindings_vbox.pack_start(
+            self._keybindings_treeview_scroll, True, True, 0)
+        self._keybindings_action_area = Gtk.ButtonBox()
+        self._keybindings_action_area.set_can_focus(False)
+        self._keybindings_action_area.set_layout(Gtk.ButtonBoxStyle.START)
+        self._keybindings_vbox.pack_start(
+            self._keybindings_action_area, False, False, 0)
+        self._keybindings_edit_button = Gtk.Button()
+        self._keybindings_edit_button_label = Gtk.Label()
+        self._keybindings_edit_button_label.set_text(
+            _('Edit'))
+        self._keybindings_edit_button.add(
+            self._keybindings_edit_button_label)
+        self._keybindings_edit_button.set_tooltip_text(
+            _('Edit the key bindings for the selected command'))
+        self._keybindings_edit_button.set_sensitive(False)
+        self._keybindings_edit_button.connect(
+            'clicked', self.on_keybindings_edit_button_clicked)
+        self._keybindings_default_button = Gtk.Button()
+        self._keybindings_default_button_label = Gtk.Label()
+        self._keybindings_default_button_label.set_text(
+            _('Set to default'))
+        self._keybindings_default_button.add(
+            self._keybindings_default_button_label)
+        self._keybindings_default_button.set_tooltip_text(
+            _('Set default key bindings for the selected command'))
+        self._keybindings_default_button.set_sensitive(False)
+        self._keybindings_default_button.connect(
+            'clicked', self.on_keybindings_default_button_clicked)
+        self._keybindings_all_default_button = Gtk.Button()
+        self._keybindings_all_default_button_label = Gtk.Label()
+        self._keybindings_all_default_button_label.set_text(
+            _('Set all to default'))
+        self._keybindings_all_default_button.add(
+            self._keybindings_all_default_button_label)
+        self._keybindings_all_default_button.set_tooltip_text(
+            _('Set default key bindings for all commands'))
+        self._keybindings_all_default_button.set_sensitive(True)
+        self._keybindings_all_default_button.connect(
+            'clicked', self.on_keybindings_all_default_button_clicked)
+        self._keybindings_action_area.add(self._keybindings_edit_button)
+        self._keybindings_action_area.add(self._keybindings_default_button)
+        self._keybindings_action_area.add(self._keybindings_all_default_button)
+        self._keybindings_selected_command = ''
+        self._keybindings_edit_popover_selected_keybinding = ''
+        self._keybindings_edit_popover_listbox = None
+        self._keybindings_edit_popover = None
+        self._keybindings_edit_popover_scroll = None
+        self._keybindings_edit_popover_add_button = None
+        self._keybindings_edit_popover_remove_button = None
+        self._keybindings_edit_popover_default_button = None
+
         self.show_all()
 
     def _fill_dictionaries_listbox_row(self, name):
@@ -1022,6 +1138,9 @@ class SetupUI(Gtk.Window):
         if key == 'dictionary':
             self.set_dictionary_names(
                 [x.strip() for x in value.split(',')], update_gsettings=False)
+            return
+        if key == 'keybindings':
+            self.set_keybindings(value, update_gsettings=False)
             return
         if key == 'dictionaryinstalltimestamp':
             # A dictionary has been updated or installed,
@@ -1749,6 +1868,276 @@ class SetupUI(Gtk.Window):
             self._shortcut_entry.set_text(shortcut)
             self._shortcut_expansion_entry.set_text(shortcut_expansion)
 
+    def on_keybindings_treeview_row_activated(self, _treeview, treepath, _treeviewcolumn):
+        '''
+        A row in the treeview listing the key bindings has  been activated.
+
+        :param treeview: The treeview listing the key bindings
+        :type treeview: Gtk.TreeView object
+        :param treepath: The path to the activated row
+        :type treepath: Gtk.TreePath object
+        :param treeviewcolumn: A column in the treeview listing the key bindings
+        :type treeviewcolumn: Gtk.TreeViewColumn object
+        '''
+        model = self._keybindings_treeview_model
+        iterator = model.get_iter(treepath)
+        command  = model[iterator][0]
+        if command != self._keybindings_selected_command:
+            # This should not happen, if a row is activated it should
+            # already be selected,
+            # i.e. on_keybindings_treeview_row_selected() should have
+            # been called already and this should have set
+            # self._keybindings_selected_command
+            sys.stderr.write(
+                'Unexpected error, command = "%s" ' % command
+                + 'self._keybindings_selected_command = "%s"\n'
+                % self._keybindings_selected_command)
+            return
+        self._create_and_show_keybindings_edit_popover()
+
+    def on_keybindings_treeview_row_selected(self, selection):
+        '''
+        A row in the treeview listing the key bindings has been selected.
+        '''
+        (model, iterator) = selection.get_selected()
+        if iterator:
+            self._keybindings_selected_command = model[iterator][0]
+            self._keybindings_default_button.set_sensitive(True)
+            self._keybindings_edit_button.set_sensitive(True)
+        else:
+            # all rows have been unselected
+            self._keybindings_selected_command = ''
+            self._keybindings_default_button.set_sensitive(False)
+            self._keybindings_edit_button.set_sensitive(False)
+
+    def on_keybindings_edit_listbox_row_selected(self, _listbox, listbox_row):
+        '''
+        Signal handler for selecting one of the key bindings
+        for a certain command
+
+        :param _listbox: The list box used to select a key binding
+        :type _listbox: Gtk.ListBox object
+        :param listbox_row: A row containing a key binding
+        :type listbox_row: Gtk.ListBoxRow object
+        '''
+        if  listbox_row:
+            self._keybindings_edit_popover_selected_keybinding = (
+                listbox_row.get_child().get_text().split(' ')[0])
+            self._keybindings_edit_popover_remove_button.set_sensitive(True)
+        else:
+            # all rows have been unselected
+            self._keybindings_edit_popover_selected_keybinding = ''
+            self._keybindings_edit_popover_remove_button.set_sensitive(False)
+
+    def on_keybindings_edit_popover_add_button_clicked(self, *dummy_args):
+        '''
+        Signal handler called when the “Add” button to add
+        a key binding has been clicked.
+        '''
+        key_input_dialog = itb_util.ItbKeyInputDialog(parent=self)
+        response = key_input_dialog.run()
+        key_input_dialog.destroy()
+        if response == Gtk.ResponseType.OK:
+            keyval, state = key_input_dialog.e
+            key = itb_util.KeyEvent(keyval, 0, state)
+            keybinding = itb_util.keyevent_to_keybinding(key)
+            command = self._keybindings_selected_command
+            if keybinding not in self._keybindings[command]:
+                self._keybindings[command].append(keybinding)
+                self._fill_keybindings_edit_popover_listbox()
+                self.set_keybindings(self._keybindings)
+
+    def on_keybindings_edit_popover_remove_button_clicked(self, *dummy_args):
+        '''
+        Signal handler called when the “Remove” button to remove
+        a key binding has been clicked.
+        '''
+        keybinding = self._keybindings_edit_popover_selected_keybinding
+        command = self._keybindings_selected_command
+        if (keybinding and command
+                and keybinding in self._keybindings[command]):
+            self._keybindings[command].remove(keybinding)
+            self._fill_keybindings_edit_popover_listbox()
+            self.set_keybindings(self._keybindings)
+
+    def on_keybindings_edit_popover_default_button_clicked(self, *dummy_args):
+        '''
+        Signal handler called  when the “Default” button to set
+        the  keybindings to the default has been clicked.
+        '''
+        default_keybindings = itb_util.variant_to_value(
+            self._gsettings.get_default_value('keybindings'))
+        command = self._keybindings_selected_command
+        if command and command in default_keybindings:
+            new_keybindings = self._keybindings
+            new_keybindings[command] = default_keybindings[command]
+            self._fill_keybindings_edit_popover_listbox()
+            self.set_keybindings(new_keybindings)
+
+    def _fill_keybindings_edit_popover_listbox(self):
+        '''
+        Fill the edit listbox to with the key bindings of the currently
+        selected command
+        '''
+        for child in self._keybindings_edit_popover_scroll.get_children():
+            self._keybindings_edit_popover_scroll.remove(child)
+        self._keybindings_edit_popover_listbox = Gtk.ListBox()
+        self._keybindings_edit_popover_scroll.add(
+            self._keybindings_edit_popover_listbox)
+        self._keybindings_edit_popover_listbox.set_visible(True)
+        self._keybindings_edit_popover_listbox.set_vexpand(True)
+        self._keybindings_edit_popover_listbox.set_selection_mode(
+            Gtk.SelectionMode.SINGLE)
+        self._keybindings_edit_popover_listbox.set_activate_on_single_click(True)
+        self._keybindings_edit_popover_listbox.connect(
+            'row-selected', self.on_keybindings_edit_listbox_row_selected)
+        for keybinding in sorted(self._keybindings[self._keybindings_selected_command]):
+            label = Gtk.Label()
+            label.set_text(html.escape(keybinding))
+            label.set_use_markup(True)
+            label.set_xalign(0)
+            margin = 1
+            label.set_margin_start(margin)
+            label.set_margin_end(margin)
+            label.set_margin_top(margin)
+            label.set_margin_bottom(margin)
+            self._keybindings_edit_popover_listbox.insert(label, -1)
+        self._keybindings_edit_popover_remove_button.set_sensitive(False)
+        self._keybindings_edit_popover_listbox.show_all()
+
+    def _create_and_show_keybindings_edit_popover(self):
+        '''
+        Create and show the popover to edit the key bindings for a command
+        '''
+        self._keybindings_edit_popover = Gtk.Popover()
+        self._keybindings_edit_popover.set_relative_to(
+            self._keybindings_edit_button)
+        self._keybindings_edit_popover.set_position(Gtk.PositionType.RIGHT)
+        self._keybindings_edit_popover.set_vexpand(True)
+        self._keybindings_edit_popover.set_hexpand(True)
+        keybindings_edit_popover_vbox = Gtk.VBox()
+        margin = 12
+        keybindings_edit_popover_vbox.set_margin_start(margin)
+        keybindings_edit_popover_vbox.set_margin_end(margin)
+        keybindings_edit_popover_vbox.set_margin_top(margin)
+        keybindings_edit_popover_vbox.set_margin_bottom(margin)
+        keybindings_edit_popover_vbox.set_spacing(margin)
+        keybindings_edit_popover_label = Gtk.Label()
+        keybindings_edit_popover_label.set_text(
+            _('Edit key bindings for command “%s”'
+              %self._keybindings_selected_command))
+        keybindings_edit_popover_label.set_visible(True)
+        keybindings_edit_popover_label.set_halign(Gtk.Align.FILL)
+        keybindings_edit_popover_vbox.pack_start(
+            keybindings_edit_popover_label, False, False, 0)
+        self._keybindings_edit_popover_scroll = Gtk.ScrolledWindow()
+        self._keybindings_edit_popover_scroll.set_hexpand(True)
+        self._keybindings_edit_popover_scroll.set_vexpand(True)
+        self._keybindings_edit_popover_scroll.set_kinetic_scrolling(False)
+        self._keybindings_edit_popover_scroll.set_overlay_scrolling(True)
+        keybindings_edit_popover_vbox.pack_start(
+            self._keybindings_edit_popover_scroll, True, True, 0)
+        keybindings_edit_popover_button_box = Gtk.ButtonBox()
+        keybindings_edit_popover_button_box.set_can_focus(False)
+        keybindings_edit_popover_button_box.set_layout(
+            Gtk.ButtonBoxStyle.START)
+        keybindings_edit_popover_vbox.pack_start(
+            keybindings_edit_popover_button_box, False, False, 0)
+        self._keybindings_edit_popover_add_button = Gtk.Button()
+        keybindings_edit_popover_add_button_label = Gtk.Label()
+        keybindings_edit_popover_add_button_label.set_text(
+            '<span size="xx-large"><b>+</b></span>')
+        keybindings_edit_popover_add_button_label.set_use_markup(True)
+        self._keybindings_edit_popover_add_button.add(
+            keybindings_edit_popover_add_button_label)
+        self._keybindings_edit_popover_add_button.set_tooltip_text(
+            _('Add a key binding'))
+        self._keybindings_edit_popover_add_button.connect(
+            'clicked', self.on_keybindings_edit_popover_add_button_clicked)
+        self._keybindings_edit_popover_add_button.set_sensitive(True)
+        self._keybindings_edit_popover_remove_button = Gtk.Button()
+        keybindings_edit_popover_remove_button_label = Gtk.Label()
+        keybindings_edit_popover_remove_button_label.set_text(
+            '<span size="xx-large"><b>-</b></span>')
+        keybindings_edit_popover_remove_button_label.set_use_markup(True)
+        self._keybindings_edit_popover_remove_button.add(
+            keybindings_edit_popover_remove_button_label)
+        self._keybindings_edit_popover_remove_button.set_tooltip_text(
+            _('Remove selected key binding'))
+        self._keybindings_edit_popover_remove_button.connect(
+            'clicked', self.on_keybindings_edit_popover_remove_button_clicked)
+        self._keybindings_edit_popover_remove_button.set_sensitive(False)
+        self._keybindings_edit_popover_default_button = Gtk.Button()
+        keybindings_edit_popover_default_button_label = Gtk.Label()
+        keybindings_edit_popover_default_button_label.set_text(
+            _('Set to default'))
+        keybindings_edit_popover_default_button_label.set_use_markup(True)
+        self._keybindings_edit_popover_default_button.add(
+            keybindings_edit_popover_default_button_label)
+        self._keybindings_edit_popover_default_button.set_tooltip_text(
+            _('Set default key bindings for the selected command'))
+        self._keybindings_edit_popover_default_button.connect(
+            'clicked', self.on_keybindings_edit_popover_default_button_clicked)
+        self._keybindings_edit_popover_default_button.set_sensitive(True)
+        keybindings_edit_popover_button_box.add(
+            self._keybindings_edit_popover_add_button)
+        keybindings_edit_popover_button_box.add(
+            self._keybindings_edit_popover_remove_button)
+        keybindings_edit_popover_button_box.add(
+            self._keybindings_edit_popover_default_button)
+        self._keybindings_edit_popover.add(keybindings_edit_popover_vbox)
+        self._fill_keybindings_edit_popover_listbox()
+        if GTK_VERSION >= (3, 22, 0):
+            self._keybindings_edit_popover.popup()
+        self._keybindings_edit_popover.show_all()
+
+    def on_keybindings_edit_button_clicked(self, *dummy_args):
+        '''
+        Signal handler called when the “edit” button to edit the
+        key bindings for a command has been clicked.
+        '''
+        self._create_and_show_keybindings_edit_popover()
+
+    def on_keybindings_default_button_clicked(self, *dummy_args):
+        '''
+        Signal handler called when the “Set to default” button to reset the
+        key bindings for a command to the default has been clicked.
+        '''
+        default_keybindings = itb_util.variant_to_value(
+            self._gsettings.get_default_value('keybindings'))
+        command = self._keybindings_selected_command
+        if command and command in default_keybindings:
+            new_keybindings = self._keybindings
+            new_keybindings[command] = default_keybindings[command]
+            self.set_keybindings(new_keybindings)
+
+    def on_keybindings_all_default_button_clicked(self, *dummy_args):
+        '''
+        Signal handler called when the “Set all to default” button to reset the
+        all key bindings top their defaults has been clicked.
+        '''
+        self._keybindings_all_default_button.set_sensitive(False)
+        confirm_question = Gtk.Dialog(
+            title=_('Are you sure?'),
+            parent=self,
+            buttons=(
+                Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        box = confirm_question.get_content_area()
+        box.add(Gtk.Label(
+            _('Do you really want to set the key bindings for \n'
+              + 'all commands to their defaults?')))
+        confirm_question.show_all()
+        response = confirm_question.run()
+        confirm_question.destroy()
+        while Gtk.events_pending():
+            Gtk.main_iteration()
+        if response == Gtk.ResponseType.OK:
+            default_keybindings = itb_util.variant_to_value(
+                self._gsettings.get_default_value('keybindings'))
+            self.set_keybindings(default_keybindings)
+        self._keybindings_all_default_button.set_sensitive(True)
+
     def on_learn_from_file_clicked(self, _widget):
         '''
         The button to learn from a user supplied text file
@@ -2283,6 +2672,48 @@ class SetupUI(Gtk.Window):
             self._dictionaries_remove_button.set_sensitive(False)
             self._dictionaries_up_button.set_sensitive(False)
             self._dictionaries_down_button.set_sensitive(False)
+
+    def set_keybindings(self, keybindings, update_gsettings=True):
+        '''Set current key bindings
+
+        :param keybindings: The key bindings to use
+        :type keybindings: Dictionary of key bindings for commands.
+                           Commands which do not already
+                           exist in the current key bindings dictionary
+                           will be ignored.
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        new_keybindings = {}
+        # Get the default settings:
+        new_keybindings = itb_util.variant_to_value(
+            self._gsettings.get_default_value('keybindings'))
+        # Update the default settings with the possibly changed settings:
+        itb_util.dict_update_existing_keys(new_keybindings, keybindings)
+        self._keybindings = new_keybindings
+        # update the tree model
+        model = self._keybindings_treeview_model
+        iterator = model.get_iter_first()
+        while iterator:
+            for command in self._keybindings:
+                if model.get_value(iterator, 0) == command:
+                    model.set_value(iterator, 1, repr(self._keybindings[command]))
+            iterator = model.iter_next(iterator)
+        if update_gsettings:
+            variant_dict = GLib.VariantDict(GLib.Variant('a{sv}', {}))
+            for command in sorted(self._keybindings):
+                variant_array = GLib.Variant.new_array(
+                    GLib.VariantType('s'),
+                    [GLib.Variant.new_string(x)
+                     for x in self._keybindings[command]])
+                variant_dict.insert_value(command, variant_array)
+            self._gsettings.set_value(
+                'keybindings',
+                variant_dict.end())
 
 class HelpWindow(Gtk.Window):
     '''

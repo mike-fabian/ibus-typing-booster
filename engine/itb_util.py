@@ -1853,17 +1853,40 @@ def variant_to_value(variant):
         return variant.get_int32()
     elif type_string == 'b':
         return variant.get_boolean()
-    elif type_string == 'as':
-        # In the latest pygobject3 3.3.4 or later, g_variant_dup_strv
-        # returns the allocated strv but in the previous release,
-        # it returned the tuple of (strv, length)
-        if type(GLib.Variant.new_strv([]).dup_strv()) == tuple:
-            return variant.dup_strv()[0]
-        else:
-            return variant.dup_strv()
+    elif type_string == 'v':
+        return variant.unpack()
+    elif len(type_string) > 0 and type_string[0] == 'a':
+        return variant.unpack()
     else:
         print('error: unknown variant type: %s' %type_string)
     return variant
+
+def dict_update_existing_keys(pdict, other_pdict):
+    '''Update values of existing keys in a Python dict from another Python dict
+
+    Using pdict.update(other_pdict) would add keys and values from other_pdict
+    to pdict even for keys which do not exist in pdict. Sometimes I want
+    to update only existing keys and ignore new keys.
+
+    :param pdict: The Python dict to update
+    :type pdict: Python dict
+    :param other_pdict: The Python dict to get the updates from
+    :type other_pdict: Python dict
+
+    Examples:
+
+    >>> old_pdict = {'a': 1, 'b': 2}
+    >>> new_pdict = {'b': 3, 'c': 4}
+    >>> dict_update_existing_keys(old_pdict, new_pdict)
+    >>> old_pdict
+    {'a': 1, 'b': 3}
+    >>> old_pdict.update(new_pdict)
+    >>> old_pdict
+    {'a': 1, 'b': 3, 'c': 4}
+    '''
+    for key in other_pdict:
+        if key in pdict:
+            pdict[key] = other_pdict[key]
 
 def find_hunspell_dictionary(language):
     '''
@@ -2184,6 +2207,21 @@ class KeyEvent:
                 self.msymbol = 'A-' + self.msymbol
             if self.mod5:
                 self.msymbol = 'G-' + self.msymbol
+
+    def __eq__(self, other):
+        if (self.val == other.val
+                and self.code == other.code
+                and self.state == other.state):
+            return True
+        return False
+
+    def __ne__(self, other):
+        if (self.val != other.val
+                or self.code != other.code
+                or self.state != other.state):
+            return True
+        return False
+
     def __str__(self):
         return (
             "val=%s code=%s state=0x%08x name='%s' unicode='%s' msymbol='%s' "
@@ -2193,12 +2231,130 @@ class KeyEvent:
                self.name,
                self.unicode,
                self.msymbol)
-            + "shift=%s control=%s mod1=%s mod5=%s release=%s\n"
+            + "shift=%s lock=%s control=%s super=%s hyper=%s meta=%s "
             % (self.shift,
+               self.lock,
                self.control,
-               self.mod1,
+               self.super,
+               self.hyper,
+               self.meta)
+            + "mod1=%s mod5=%s release=%s\n"
+            % (self.mod1,
                self.mod5,
                self.release))
+
+def keyevent_to_keybinding(keyevent):
+    keybinding=''
+    if keyevent.shift:
+        keybinding += 'Shift+'
+    if keyevent.lock:
+        keybinding += 'Lock+'
+    if keyevent.control:
+        keybinding += 'Control+'
+    if keyevent.super:
+        keybinding += 'Super+'
+    if keyevent.hyper:
+        keybinding += 'Hyper+'
+    if keyevent.meta:
+        keybinding += 'Meta+'
+    if keyevent.mod1:
+        keybinding += 'Mod1+'
+    if keyevent.mod2:
+        keybinding += 'Mod2+'
+    if keyevent.mod3:
+        keybinding += 'Mod3+'
+    if keyevent.mod4:
+        keybinding += 'Mod4+'
+    if keyevent.mod5:
+        keybinding += 'Mod5+'
+    keybinding += keyevent.name
+    return keybinding
+
+def keybinding_to_keyevent(keybinding):
+    name = keybinding.split('+')[-1]
+    keyval = IBus.keyval_from_name(name)
+    state = 0
+    if 'Shift+' in keybinding:
+        state |= IBus.ModifierType.SHIFT_MASK
+    if 'Lock+' in keybinding:
+        state |= IBus.ModifierType.LOCK_MASK
+    if 'Control+' in keybinding:
+        state |= IBus.ModifierType.CONTROL_MASK
+    if 'Super+' in keybinding:
+        state |= IBus.ModifierType.SUPER_MASK
+    if 'Hyper+' in keybinding:
+        state |= IBus.ModifierType.HYPER_MASK
+    if 'Meta+' in keybinding:
+        state |= IBus.ModifierType.META_MASK
+    if 'Mod1+' in keybinding:
+        state |= IBus.ModifierType.MOD1_MASK
+    if 'Mod2+' in keybinding:
+        state |= IBus.ModifierType.MOD2_MASK
+    if 'Mod3+' in keybinding:
+        state |= IBus.ModifierType.MOD3_MASK
+    if 'Mod4+' in keybinding:
+        state |= IBus.ModifierType.MOD4_MASK
+    if 'Mod5+' in keybinding:
+        state |= IBus.ModifierType.MOD5_MASK
+    return KeyEvent(keyval, 0, state)
+
+class HotKeys:
+    '''Class to make checking whether a key matches a hotkey for a certain
+    command easy
+    '''
+    def __init__(self, keybindings):
+        self._hotkeys = {}
+        for command in keybindings:
+            for keybinding in keybindings[command]:
+                key = keybinding_to_keyevent(keybinding)
+                if command in self._hotkeys:
+                    self._hotkeys[command].append((key.val, key.state))
+                else:
+                    self._hotkeys[command] = [(key.val, key.state)]
+
+    def __contains__(self, command_key_tuple):
+        if not isinstance(command_key_tuple, tuple):
+            return False
+        command = command_key_tuple[1]
+        key = command_key_tuple[0]
+        if command in self._hotkeys:
+            if (key.val, key.state) in self._hotkeys[command]:
+                return True
+        return False
+
+    def __str__(self):
+        return repr(self._hotkeys)
+
+class ItbKeyInputDialog(Gtk.MessageDialog):
+    def __init__(
+            self,
+            title=_('Key input'),
+            parent=None,
+            buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)):
+        Gtk.Dialog.__init__(
+            self,
+            title=title,
+            parent=parent,
+            buttons=buttons)
+        self.set_modal(True)
+        self.set_markup('<big><b>%s</b></big>'
+                        % _('Please press a key (or a key combination)'))
+        self.format_secondary_text(
+            _('The dialog will be closed when the key is released'))
+        self.connect('key_press_event', self.on_key_press_event)
+        self.connect('key_release_event', self.on_key_release_event)
+        if parent:
+            self.set_transient_for(parent.get_toplevel())
+        self.show()
+
+    def on_key_press_event(# pylint: disable=no-self-use
+            self, widget, event):
+        widget.e = (event.keyval, event.get_state())
+        return True
+    def on_key_release_event(# pylint: disable=no-self-use
+            self, widget, dummy_event):
+        widget.response(Gtk.ResponseType.OK)
+        return True
 
 class ItbAboutDialog(Gtk.AboutDialog):
     def  __init__(self, parent=None):

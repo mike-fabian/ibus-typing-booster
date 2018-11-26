@@ -219,6 +219,12 @@ class TypingBoosterEngine(IBus.Engine):
         if self._inline_completion is None:
             self._inline_completion = False
 
+        self._keybindings = {}
+        self._hotkeys = None
+        self.set_keybindings(
+            itb_util.variant_to_value(self._gsettings.get_value('keybindings')),
+            update_gsettings=False)
+
         self._dictionary_names = []
         dictionary = itb_util.variant_to_value(
             self._gsettings.get_value('dictionary'))
@@ -1004,6 +1010,48 @@ class TypingBoosterEngine(IBus.Engine):
         # It is important to return a copy, we do not want to change
         # the private member variable directly.
         return self._dictionary_names[:]
+
+    def set_keybindings(self, keybindings, update_gsettings=True):
+        '''Set current key bindings
+
+        :param keybindings: The key bindings to use
+        :type keybindings: Dictionary of key bindings for commands
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        new_keybindings = {}
+        # Get the default settings:
+        new_keybindings = itb_util.variant_to_value(
+            self._gsettings.get_default_value('keybindings'))
+        # Update the default settings with the possibly changed settings:
+        itb_util.dict_update_existing_keys(new_keybindings, keybindings)
+        self._keybindings = new_keybindings
+        # Update hotkeys:
+        self._hotkeys = itb_util.HotKeys(self._keybindings)
+        if update_gsettings:
+            variant_dict = GLib.VariantDict(GLib.Variant('a{sv}', {}))
+            for command in sorted(self._keybindings):
+                variant_array = GLib.Variant.new_array(
+                    GLib.VariantType('s'),
+                    [GLib.Variant.new_string(x)
+                     for x in self._keybindings[command]])
+                variant_dict.insert_value(command, variant_array)
+            self._gsettings.set_value(
+                'keybindings',
+                variant_dict.end())
+
+    def get_keybindings(self):
+        '''Get current key bindings
+
+        :rtype: Python dictionary of key bindings for commands
+        '''
+        # It is important to return a copy, we do not want to change
+        # the private member variable directly.
+        return self._keybindings.copy()
 
     def _update_preedit_ime_menu_dicts(self):
         '''
@@ -2608,7 +2656,7 @@ class TypingBoosterEngine(IBus.Engine):
                         input_phrase=transliterated_digit)
                     return True
 
-        if key.val == IBus.KEY_Escape:
+        if (key, 'cancel') in self._hotkeys:
             if self.is_empty():
                 return self._return_false(key.val, key.code, key.state)
             if self.get_lookup_table().cursor_visible:
@@ -2638,7 +2686,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._update_ui()
             return True
 
-        if (key.val == IBus.KEY_Tab
+        if ((key, 'enable_lookup') in self._hotkeys
             and (self._tab_enable
                  or (self._min_char_complete > 1
                      and not self.is_lookup_table_enabled_by_min_char_complete))
@@ -2650,7 +2698,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._update_ui()
             return True
 
-        if key.val in (IBus.KEY_Down, IBus.KEY_KP_Down) and key.control:
+        if (key, 'next_input_method') in self._hotkeys:
             imes = self.get_current_imes()
             if len(imes) > 1:
                 # remove the first ime from the list and append it to the end.
@@ -2659,7 +2707,7 @@ class TypingBoosterEngine(IBus.Engine):
                     update_gsettings=self._remember_last_used_preedit_ime)
                 return True
 
-        if key.val in (IBus.KEY_Up, IBus.KEY_KP_Up) and key.control:
+        if (key, 'previous_input_method') in self._hotkeys:
             imes = self.get_current_imes()
             if len(imes) > 1:
                 # remove the last ime in the list and add it in front:
@@ -2668,32 +2716,26 @@ class TypingBoosterEngine(IBus.Engine):
                     update_gsettings=self._remember_last_used_preedit_ime)
                 return True
 
-        if (key.val in (IBus.KEY_Down, IBus.KEY_KP_Down, IBus.KEY_Tab)
-            and self.get_lookup_table().get_number_of_candidates()):
+        if ((key, 'select_next_candidate') in self._hotkeys
+                and self.get_lookup_table().get_number_of_candidates()):
             dummy = self._arrow_down()
             self._update_lookup_table_and_aux()
             return True
 
-        if (((key.val in (IBus.KEY_Up, IBus.KEY_KP_Up))
-             or
-             (key.val in (IBus.KEY_Tab, IBus.KEY_ISO_Left_Tab) and key.shift))
-            and self.get_lookup_table().get_number_of_candidates()):
+        if ((key, 'select_previous_candidate') in self._hotkeys
+                and self.get_lookup_table().get_number_of_candidates()):
             dummy = self._arrow_up()
             self._update_lookup_table_and_aux()
             return True
 
-        if (key.val in (IBus.KEY_Page_Down,
-                        IBus.KEY_KP_Page_Down,
-                        IBus.KEY_KP_Next)
-            and self.get_lookup_table().get_number_of_candidates()):
+        if ((key, 'lookup_table_page_down') in self._hotkeys
+                and self.get_lookup_table().get_number_of_candidates()):
             dummy = self._page_down()
             self._update_lookup_table_and_aux()
             return True
 
-        if (key.val in (IBus.KEY_Page_Up,
-                        IBus.KEY_KP_Page_Up,
-                        IBus.KEY_KP_Prior)
-            and self.get_lookup_table().get_number_of_candidates()):
+        if ((key, 'lookup_table_page_up') in self._hotkeys
+                and self.get_lookup_table().get_number_of_candidates()):
             dummy = self._page_up()
             self._update_lookup_table_and_aux()
             return True
@@ -2739,20 +2781,20 @@ class TypingBoosterEngine(IBus.Engine):
                         self._commit_string(phrase)
                         return True
 
-        if key.val == IBus.KEY_F6 and key.mod5: # AltGr+F6
+        if (key, 'toogle_emoji_prediction') in self._hotkeys:
             self.toggle_emoji_prediction_mode()
             return True
 
-        if key.val == IBus.KEY_F9 and key.mod5: # AltGr+F9
+        if (key, 'toggle_off_the_record') in self._hotkeys:
             self.toggle_off_the_record_mode()
             return True
 
-        if (key.val == IBus.KEY_F12 and key.mod5 # AltGr+F12
+        if ((key, 'lookup_related') in self._hotkeys
             and not self.is_empty()):
             self._lookup_related_candidates()
             return True
 
-        if key.val == IBus.KEY_F10 and key.mod5: # AltGr+F10
+        if (key, 'setup') in self._hotkeys:
             self._start_setup()
             return True
 
@@ -3180,6 +3222,9 @@ class TypingBoosterEngine(IBus.Engine):
         if key == 'dictionary':
             self.set_dictionary_names(
                 [x.strip() for x in value.split(',')], update_gsettings=False)
+            return
+        if key == 'keybindings':
+            self.set_keybindings(value, update_gsettings=False)
             return
         if key == 'dictionaryinstalltimestamp':
             # A dictionary has been updated or installed,
