@@ -2139,8 +2139,8 @@ def xdg_save_data_path(*resource):
         return path
 
 class ItbAboutDialog(Gtk.AboutDialog):
-    def  __init__(self):
-        Gtk.AboutDialog.__init__(self)
+    def  __init__(self, parent=None):
+        Gtk.AboutDialog.__init__(self, parent=parent)
         self.set_modal(True)
         # An empty string in aboutdialog.set_logo_icon_name('')
         # prevents an ugly default icon to be shown. We don’t yet
@@ -2189,7 +2189,8 @@ class ItbAboutDialog(Gtk.AboutDialog):
         # overrides the above .set_license()
         self.set_license_type(Gtk.License.GPL_3_0)
         self.connect('response', self.on_close_aboutdialog)
-        self.set_transient_for(self)
+        if parent:
+            self.set_transient_for(parent.get_toplevel())
         self.show()
 
     def on_close_aboutdialog( # pylint: disable=no-self-use
