@@ -32,7 +32,6 @@ import locale
 from time import strftime
 import dbus
 import dbus.service
-import dbus.glib
 
 from gi import require_version
 require_version('Gio', '2.0')
