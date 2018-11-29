@@ -530,7 +530,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_up_button_label.set_use_markup(True)
         self._dictionaries_up_button.add(self._dictionaries_up_button_label)
         self._dictionaries_up_button.set_tooltip_text(
-            _('Move dictionary down'))
+            _('Move dictionary up'))
         self._dictionaries_up_button.connect(
             'clicked', self.on_dictionaries_up_button_clicked)
         self._dictionaries_up_button.set_sensitive(False)
@@ -542,7 +542,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_down_button.add(
             self._dictionaries_down_button_label)
         self._dictionaries_down_button.set_tooltip_text(
-            _('Move dictionary up'))
+            _('Move dictionary down'))
         self._dictionaries_down_button.connect(
             'clicked', self.on_dictionaries_down_button_clicked)
         self._dictionaries_down_button.set_sensitive(False)
@@ -615,7 +615,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_up_button.add(
             self._input_methods_up_button_label)
         self._input_methods_up_button.set_tooltip_text(
-            _('Move input method down'))
+            _('Move input method up'))
         self._input_methods_up_button.connect(
             'clicked', self.on_input_methods_up_button_clicked)
         self._input_methods_up_button.set_sensitive(False)
@@ -627,7 +627,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_down_button.add(
             self._input_methods_down_button_label)
         self._input_methods_down_button.set_tooltip_text(
-            _('Move input method up'))
+            _('Move input method down'))
         self._input_methods_down_button.connect(
             'clicked', self.on_input_methods_down_button_clicked)
         self._input_methods_down_button.set_sensitive(False)
