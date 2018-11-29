@@ -28,6 +28,8 @@ import string
 import unicodedata
 import gettext
 from gi import require_version
+require_version('IBus', '1.0')
+from gi.repository import IBus
 require_version('GLib', '2.0')
 from gi.repository import GLib
 require_version('Gdk', '3.0')
@@ -2137,6 +2139,66 @@ def xdg_save_data_path(*resource):
         if not os.path.isdir(path):
             os.makedirs(path)
         return path
+
+class KeyEvent:
+    '''Key event class used to make the checking of details of the key
+    event easy
+    '''
+    def __init__(self, keyval, keycode, state):
+        self.val = keyval
+        self.code = keycode
+        self.state = state
+        self.name = IBus.keyval_name(self.val)
+        self.unicode = IBus.keyval_to_unicode(self.val)
+        self.msymbol = self.unicode
+        self.shift = self.state & IBus.ModifierType.SHIFT_MASK != 0
+        self.lock = self.state & IBus.ModifierType.LOCK_MASK != 0
+        self.control = self.state & IBus.ModifierType.CONTROL_MASK != 0
+        self.super = self.state & IBus.ModifierType.SUPER_MASK != 0
+        self.hyper = self.state & IBus.ModifierType.HYPER_MASK != 0
+        self.meta = self.state & IBus.ModifierType.META_MASK != 0
+        # mod1: Usually Alt_L (0x40),  Alt_R (0x6c),  Meta_L (0xcd)
+        self.mod1 = self.state & IBus.ModifierType.MOD1_MASK != 0
+        # mod2: Usually Num_Lock (0x4d)
+        self.mod2 = self.state & IBus.ModifierType.MOD2_MASK != 0
+        self.mod3 = self.state & IBus.ModifierType.MOD3_MASK != 0
+        # mod4: Usually Super_L (0xce),  Hyper_L (0xcf)
+        self.mod4 = self.state & IBus.ModifierType.MOD4_MASK != 0
+        # mod5: ISO_Level3_Shift (0x5c),  Mode_switch (0xcb)
+        self.mod5 = self.state & IBus.ModifierType.MOD5_MASK != 0
+        self.button1 = self.state & IBus.ModifierType.BUTTON1_MASK != 0
+        self.button2 = self.state & IBus.ModifierType.BUTTON2_MASK != 0
+        self.button3 = self.state & IBus.ModifierType.BUTTON3_MASK != 0
+        self.button4 = self.state & IBus.ModifierType.BUTTON4_MASK != 0
+        self.button5 = self.state & IBus.ModifierType.BUTTON5_MASK != 0
+        self.super = self.state & IBus.ModifierType.SUPER_MASK != 0
+        self.hyper = self.state & IBus.ModifierType.HYPER_MASK != 0
+        self.meta = self.state & IBus.ModifierType.META_MASK != 0
+        self.release = self.state & IBus.ModifierType.RELEASE_MASK != 0
+        # MODIFIER_MASK: Modifier mask for the all the masks above
+        self.modifier = self.state & IBus.ModifierType.MODIFIER_MASK != 0
+        if is_ascii(self.msymbol):
+            if self.control:
+                self.msymbol = 'C-' + self.msymbol
+            if self.mod1:
+                self.msymbol = 'A-' + self.msymbol
+            if self.mod5:
+                self.msymbol = 'G-' + self.msymbol
+    def __str__(self):
+        return (
+            "val=%s code=%s state=0x%08x name='%s' unicode='%s' msymbol='%s' "
+            % (self.val,
+               self.code,
+               self.state,
+               self.name,
+               self.unicode,
+               self.msymbol)
+            + "shift=%s control=%s mod1=%s mod5=%s release=%s\n"
+            % (self.shift,
+               self.control,
+               self.mod1,
+               self.mod5,
+               self.release))
 
 class ItbAboutDialog(Gtk.AboutDialog):
     def  __init__(self, parent=None):

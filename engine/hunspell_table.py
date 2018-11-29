@@ -89,59 +89,6 @@ def rgb(red, green, blue):
     '''Returns a 32bit ARGB value with the alpha value set to fully opaque'''
     return argb(255, red, green, blue)
 
-class KeyEvent:
-    '''Key event class used to make the checking of details of the key
-    event easy
-    '''
-    def __init__(self, keyval, keycode, state):
-        self.val = keyval
-        self.code = keycode
-        self.state = state
-        self.name = IBus.keyval_name(self.val)
-        self.unicode = IBus.keyval_to_unicode(self.val)
-        self.msymbol = self.unicode
-        self.shift = self.state & IBus.ModifierType.SHIFT_MASK != 0
-        self.lock = self.state & IBus.ModifierType.LOCK_MASK != 0
-        self.control = self.state & IBus.ModifierType.CONTROL_MASK != 0
-        self.mod1 = self.state & IBus.ModifierType.MOD1_MASK != 0
-        self.mod2 = self.state & IBus.ModifierType.MOD2_MASK != 0
-        self.mod3 = self.state & IBus.ModifierType.MOD3_MASK != 0
-        self.mod4 = self.state & IBus.ModifierType.MOD4_MASK != 0
-        self.mod5 = self.state & IBus.ModifierType.MOD5_MASK != 0
-        self.button1 = self.state & IBus.ModifierType.BUTTON1_MASK != 0
-        self.button2 = self.state & IBus.ModifierType.BUTTON2_MASK != 0
-        self.button3 = self.state & IBus.ModifierType.BUTTON3_MASK != 0
-        self.button4 = self.state & IBus.ModifierType.BUTTON4_MASK != 0
-        self.button5 = self.state & IBus.ModifierType.BUTTON5_MASK != 0
-        self.super = self.state & IBus.ModifierType.SUPER_MASK != 0
-        self.hyper = self.state & IBus.ModifierType.HYPER_MASK != 0
-        self.meta = self.state & IBus.ModifierType.META_MASK != 0
-        self.release = self.state & IBus.ModifierType.RELEASE_MASK != 0
-        # MODIFIER_MASK: Modifier mask for the all the masks above
-        self.modifier = self.state & IBus.ModifierType.MODIFIER_MASK != 0
-        if itb_util.is_ascii(self.msymbol):
-            if self.control:
-                self.msymbol = 'C-' + self.msymbol
-            if self.mod1:
-                self.msymbol = 'A-' + self.msymbol
-            if self.mod5:
-                self.msymbol = 'G-' + self.msymbol
-    def __str__(self):
-        return (
-            "val=%s code=%s state=0x%08x name='%s' unicode='%s' msymbol='%s' "
-            % (self.val,
-               self.code,
-               self.state,
-               self.name,
-               self.unicode,
-               self.msymbol)
-            + "shift=%s control=%s mod1=%s mod5=%s release=%s\n"
-            % (self.shift,
-               self.control,
-               self.mod1,
-               self.mod5,
-               self.release))
-
 ########################
 ### Engine Class #####
 ####################
@@ -2578,7 +2525,7 @@ class TypingBoosterEngine(IBus.Engine):
             in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN]):
             return self._return_false(keyval, keycode, state)
 
-        key = KeyEvent(keyval, keycode, state)
+        key = itb_util.KeyEvent(keyval, keycode, state)
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "process_key_event() "
