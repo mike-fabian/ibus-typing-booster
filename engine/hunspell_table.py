@@ -2913,8 +2913,7 @@ class TypingBoosterEngine(IBus.Engine):
                 and self.get_lookup_table().cursor_visible):
                 # something is selected in the lookup table, commit
                 # the selected phrase
-                phrase = self.get_string_from_lookup_table_cursor_pos()
-                commit_string = phrase
+                commit_string = self.get_string_from_lookup_table_cursor_pos()
             elif (key.val in (IBus.KEY_Return, IBus.KEY_KP_Enter)
                   and (self._typed_string_cursor
                        < len(self._typed_string))):
