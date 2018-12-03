@@ -360,7 +360,7 @@ class TypingBoosterEngine(IBus.Engine):
         sys.stderr.write(
             '--- Initialized and ready for input: %s ---\n'
             %time.strftime('%Y-%m-%d: %H:%M:%S'))
-        self.reset()
+        self._clear_input_and_update_ui()
 
     def _init_transliterators(self):
         '''Initialize the dictionary of m17n-db transliterator objects'''
@@ -1337,7 +1337,7 @@ class TypingBoosterEngine(IBus.Engine):
             setup_cmd,
             'ibus-setup-typing-booster')
 
-    def reset(self):
+    def _clear_input_and_update_ui(self):
         '''Clear the preëdit and close the lookup table
         '''
         self._clear_input()
@@ -1346,7 +1346,7 @@ class TypingBoosterEngine(IBus.Engine):
     def do_destroy(self):
         '''Called when this input engine is destroyed
         '''
-        self.reset()
+        self._clear_input_and_update_ui()
         self.do_focus_out()
         super(TypingBoosterEngine, self).destroy()
 
@@ -1711,8 +1711,7 @@ class TypingBoosterEngine(IBus.Engine):
                             %(text, cursor_pos, anchor_pos) + '\n')
         super(TypingBoosterEngine, self).commit_text(
             IBus.Text.new_from_string(commit_phrase))
-        self._clear_input()
-        self._update_ui()
+        self._clear_input_and_update_ui()
         self._commit_happened_after_focus_in = True
         stripped_input_phrase = itb_util.strip_token(input_phrase)
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
@@ -2291,7 +2290,7 @@ class TypingBoosterEngine(IBus.Engine):
         if page_size >= 1 and page_size <= 9:
             self._page_size = page_size
             self._lookup_table.set_page_size(self._page_size)
-            self.reset()
+            self._clear_input_and_update_ui()
             if update_gsettings:
                 self._gsettings.set_value(
                     'pagesize',
@@ -2328,7 +2327,7 @@ class TypingBoosterEngine(IBus.Engine):
         if orientation >= 0 and orientation <= 2:
             self._lookup_table_orientation = orientation
             self._lookup_table.set_orientation(self._lookup_table_orientation)
-            self.reset()
+            self._clear_input_and_update_ui()
             if update_gsettings:
                 self._gsettings.set_value(
                     'lookuptableorientation',
@@ -2362,7 +2361,7 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if min_char_complete >= 1 and min_char_complete <= 9:
             self._min_char_complete = min_char_complete
-            self.reset()
+            self._clear_input_and_update_ui()
             if update_gsettings:
                 self._gsettings.set_value(
                     'mincharcomplete',
@@ -2395,7 +2394,7 @@ class TypingBoosterEngine(IBus.Engine):
         if mode == self._show_number_of_candidates:
             return
         self._show_number_of_candidates = mode
-        self.reset()
+        self._clear_input_and_update_ui()
         if update_gsettings:
             self._gsettings.set_value(
                 'shownumberofcandidates',
@@ -2435,7 +2434,7 @@ class TypingBoosterEngine(IBus.Engine):
         if mode == self._show_status_info_in_auxiliary_text:
             return
         self._show_status_info_in_auxiliary_text = mode
-        self.reset()
+        self._clear_input_and_update_ui()
         if update_gsettings:
             self._gsettings.set_value(
                 'showstatusinfoinaux',
@@ -2468,7 +2467,7 @@ class TypingBoosterEngine(IBus.Engine):
         if mode == self._use_digits_as_select_keys:
             return
         self._use_digits_as_select_keys = mode
-        self.reset()
+        self._clear_input_and_update_ui()
         if update_gsettings:
             self._gsettings.set_value(
                 'usedigitsasselectkeys',
@@ -2682,7 +2681,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self._update_preedit()
                 self._candidates = []
                 return True
-            self.reset()
+            self._clear_input_and_update_ui()
             self._update_ui()
             return True
 
@@ -3065,7 +3064,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._has_input_purpose:
             self._input_purpose = 0
         self.clear_context()
-        self.reset()
+        self._clear_input_and_update_ui()
         return
 
     def do_set_content_type(self, purpose, _hints):
@@ -3116,7 +3115,7 @@ class TypingBoosterEngine(IBus.Engine):
 
     def do_disable(self):
         '''Called when this input engine is disabled'''
-        self.reset()
+        self._clear_input_and_update_ui()
 
     def do_page_up(self):
         '''Called when the page up button in the lookup table is clicked with
@@ -3230,7 +3229,7 @@ class TypingBoosterEngine(IBus.Engine):
             # (re)load all dictionaries:
             print('Reloading dictionaries ...')
             self.db.hunspell_obj.init_dictionaries()
-            self.reset()
+            self._clear_input_and_update_ui()
             return
         sys.stderr.write('Unknown key\n')
         return
