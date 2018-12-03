@@ -1359,8 +1359,8 @@ class TypingBoosterEngine(IBus.Engine):
             'NFC', self._transliterated_strings[
                 self.get_current_imes()[0]])
         if _str == '':
-            super(TypingBoosterEngine, self).update_preedit_text(
-                IBus.Text.new_from_string(''), 0, False)
+            super(TypingBoosterEngine, self).update_preedit_text_with_mode(
+                IBus.Text.new_from_string(''), 0, False, IBus.PreeditFocusMode.COMMIT)
         else:
             attrs = IBus.AttrList()
             attrs.append(IBus.attr_underline_new(
@@ -1374,8 +1374,8 @@ class TypingBoosterEngine(IBus.Engine):
                                       attr.get_start_index(),
                                       attr.get_end_index())
                 i += 1
-            super(TypingBoosterEngine, self).update_preedit_text(
-                text, self.get_caret(), True)
+            super(TypingBoosterEngine, self).update_preedit_text_with_mode(
+                text, self.get_caret(), True, IBus.PreeditFocusMode.COMMIT)
 
     def _update_aux(self):
         '''Update auxiliary text'''
@@ -1494,8 +1494,8 @@ class TypingBoosterEngine(IBus.Engine):
                                   attr.get_start_index(),
                                   attr.get_end_index())
             i += 1
-        super(TypingBoosterEngine, self).update_preedit_text(
-            text, self.get_caret(), True)
+        super(TypingBoosterEngine, self).update_preedit_text_with_mode(
+            text, self.get_caret(), True, IBus.PreeditFocusMode.COMMIT)
         return
 
     def _update_lookup_table_and_aux(self):
@@ -3064,6 +3064,54 @@ class TypingBoosterEngine(IBus.Engine):
         self._commit_happened_after_focus_in = False
         self._update_ui()
 
+    def _record_in_database_and_push_context(
+            self, commit_phrase='', input_phrase=''):
+        '''Record an commit_phrase/input_phrase pair in the user database.
+
+        This function does *not* do the actual commit, it assumes that
+        the commit has already happened! If the preëdit has already
+        been committed because the focus has been moved to another
+        window or to a different cursor position in the same window by
+        using a mouse click, this function should be called with both
+        parameters empty. In this case it records what has been in the
+        already committed preëdit into the user database.
+
+        :param commit_phrase: The phrase which has been committed already.
+                              This parameter can be empty, then it is made
+                              equal to what has been in the preedit.
+        :type commit_phrase: String
+        :param input_phrase: The typed input. This parameter can be empty,
+                             then the transliterated input is used.
+        :type input_phrase: String
+
+        '''
+        if not input_phrase:
+            input_phrase = self._transliterated_strings[
+                self.get_current_imes()[0]]
+        if not commit_phrase:
+            typed_string = unicodedata.normalize('NFC', input_phrase)
+            first_candidate = self._candidates[0][0]
+            if (not self._inline_completion
+                or self.get_lookup_table().get_cursor_pos() != 0
+                or not first_candidate.startswith(typed_string)
+                or first_candidate == typed_string):
+                # Standard lookup table was shown, preedit contained
+                # input_phrase:
+                commit_phrase = input_phrase
+            else:
+                commit_phrase = first_candidate
+        # commit_phrase should always be in NFC:
+        commit_phrase = unicodedata.normalize('NFC', commit_phrase)
+        stripped_input_phrase = itb_util.strip_token(input_phrase)
+        stripped_commit_phrase = itb_util.strip_token(commit_phrase)
+        if not self._off_the_record:
+            self.db.check_phrase_and_update_frequency(
+                input_phrase=stripped_input_phrase,
+                phrase=stripped_commit_phrase,
+                p_phrase=self.get_p_phrase(),
+                pp_phrase=self.get_pp_phrase())
+        self.push_context(stripped_commit_phrase)
+
     def do_focus_out(self):
         '''Called when a window looses focus while this input engine is
         enabled
@@ -3073,7 +3121,30 @@ class TypingBoosterEngine(IBus.Engine):
             sys.stderr.write('do_focus_out()\n')
         if self._has_input_purpose:
             self._input_purpose = 0
+        # The preëdit, if there was any, has already been committed
+        # automatically because
+        # update_preedit_text_with_mode(,,,IBus.PreeditFocusMode.COMMIT)
+        # has been used. But the contents of the preëdit have not
+        # been recorded in the user database yet. Do it now:
+        if not self.is_empty():
+            self._record_in_database_and_push_context()
         self.clear_context()
+        self._clear_input_and_update_ui()
+        return
+
+    def do_reset(self):
+        '''Called when the mouse pointer is used to move to cursor to a
+        different position in the current window.
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write('do_reset()\n')
+        # The preëdit, if there was any, has already been committed
+        # automatically because
+        # update_preedit_text_with_mode(,,,IBus.PreeditFocusMode.COMMIT)
+        # has been used. But the contents of the preëdit have not
+        # been recorded in the user database yet. Do it now:
+        if not self.is_empty():
+            self._record_in_database_and_push_context()
         self._clear_input_and_update_ui()
         return
 
