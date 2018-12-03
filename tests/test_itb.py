@@ -86,6 +86,8 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_dictionary_names())
         self.orig_qt_im_module_workaround = (
             self.engine.get_qt_im_module_workaround())
+        self.orig_keybindings = (
+            self.engine.get_keybindings())
 
     def restore_original_settings(self):
         self.engine.set_emoji_prediction_mode(
@@ -120,9 +122,11 @@ class ItbTestCase(unittest.TestCase):
             self.orig_dictionary_names)
         self.engine.set_qt_im_module_workaround(
             self.orig_qt_im_module_workaround)
+        self.engine.set_keybindings(
+            self.orig_keybindings)
 
     def set_default_settings(self):
-        self.engine.set_emoji_prediction_mode(True)
+        self.engine.set_emoji_prediction_mode(False)
         self.engine.set_off_the_record_mode(False)
         self.engine.set_auto_commit_characters('')
         self.engine.set_tab_enable(False)
@@ -136,6 +140,20 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_current_imes(['NoIme'])
         self.engine.set_dictionary_names(['en_US'])
         self.engine.set_qt_im_module_workaround(False)
+        self.engine.set_keybindings({
+            'cancel': ['Escape'],
+            'enable_lookup': ['Tab', 'ISO_Left_Tab'],
+            'lookup_related': ['Mod5+F12'],
+            'lookup_table_page_down': ['Page_Down', 'KP_Page_Down', 'KP_Next'],
+            'lookup_table_page_up': ['Page_Up', 'KP_Page_Up', 'KP_Prior'],
+            'next_input_method': ['Control+Down', 'Control+KP_Down'],
+            'previous_input_method': ['Control+Up', 'Control+KP_Up'],
+            'select_next_candidate': ['Tab', 'ISO_Left_Tab', 'Down', 'KP_Down'],
+            'select_previous_candidate': ['Shift+Tab', 'Shift+ISO_Left_Tab', 'Up', 'KP_Up'],
+            'setup': ['Mod5+F10'],
+            'toggle_emoji_prediction': ['Mod5+F6'],
+            'toggle_off_the_record': ['Mod5+F9'],
+        })
 
     def test_dummy(self):
         self.assertEqual(True, True)
@@ -256,6 +274,7 @@ class ItbTestCase(unittest.TestCase):
     def test_emoji_related_tab_enable_cursor_visible_escape(self):
         self.engine.set_current_imes(['NoIme'])
         self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_emoji_prediction_mode(True)
         self.engine.set_tab_enable(True)
         self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
@@ -630,3 +649,42 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
         # No space should be added now:
         self.assertEqual(self.engine.mock_committed_text, 'test test')
+
+    def test_tab_enable_key_binding_changed(self):
+        self.engine.set_current_imes(['NoIme', 't-latn-post'])
+        self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_tab_enable(True)
+        self.engine.set_keybindings({
+            'cancel': ['Escape'],
+            'enable_lookup': ['Insert'], # changed from default Tab
+            'lookup_related': ['Mod5+F12'],
+            'lookup_table_page_down': ['Page_Down', 'KP_Page_Down', 'KP_Next'],
+            'lookup_table_page_up': ['Page_Up', 'KP_Page_Up', 'KP_Prior'],
+            'next_input_method': ['Control+Down', 'Control+KP_Down'],
+            'previous_input_method': ['Control+Up', 'Control+KP_Up'],
+            'select_next_candidate': ['Tab', 'ISO_Left_Tab', 'Down', 'KP_Down'],
+            'select_previous_candidate': ['Shift+Tab', 'Shift+ISO_Left_Tab', 'Up', 'KP_Up'],
+            'setup': ['Mod5+F10'],
+            'toggle_emoji_prediction': ['Mod5+F6'],
+            'toggle_off_the_record': ['Mod5+F9'],
+        })
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        # Tab should trigger a commit now instead of enabling the
+        # lookup (which is what Tab would do by default):
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'test\t')
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_Insert, 0, 0)
+        self.assertEqual(self.engine._candidates[0][0], 'cerulean')
+        self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, 'test\tcerulean ')
