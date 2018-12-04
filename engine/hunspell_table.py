@@ -1519,7 +1519,9 @@ class TypingBoosterEngine(IBus.Engine):
             # If the lookup table would be hidden anyway, there is no
             # point in updating the candidates, save some time by making
             # sure the lookup table and the auxiliary text are really
-            # hidden and return immediately:
+            # empty and hidden and return immediately:
+            self.get_lookup_table().clear()
+            self.get_lookup_table().set_cursor_visible(False)
             self.hide_lookup_table()
             self._current_auxiliary_text = IBus.Text.new_from_string('')
             super(TypingBoosterEngine, self).update_auxiliary_text(
