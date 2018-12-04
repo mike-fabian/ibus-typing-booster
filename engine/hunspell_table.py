@@ -2880,7 +2880,7 @@ class TypingBoosterEngine(IBus.Engine):
                 else:
                     self._remove_character_before_cursor()
                 self._update_ui()
-                return  True
+                return True
             if (key.val in (IBus.KEY_Delete,)
                 and self._typed_string_cursor < len(self._typed_string)):
                 self.is_lookup_table_enabled_by_tab = False
