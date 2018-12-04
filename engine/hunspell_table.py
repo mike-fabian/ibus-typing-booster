@@ -1511,6 +1511,8 @@ class TypingBoosterEngine(IBus.Engine):
 
     def _update_ui(self):
         '''Update User Interface'''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write('_update_ui()\n')
         self._update_preedit()
         if self.is_empty():
             # Hide lookup table again if preëdit became empty and
