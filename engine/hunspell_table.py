@@ -1346,6 +1346,8 @@ class TypingBoosterEngine(IBus.Engine):
     def do_destroy(self):
         '''Called when this input engine is destroyed
         '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write('do_destroy()\n')
         self._clear_input_and_update_ui()
         self.do_focus_out()
         super(TypingBoosterEngine, self).destroy()
@@ -3053,6 +3055,8 @@ class TypingBoosterEngine(IBus.Engine):
         '''Called when a window gets focus while this input engine is enabled
 
         '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write('do_focus_in()\n')
         self.register_properties(self.main_prop_list)
         self.clear_context()
         self._commit_happened_after_focus_in = False
@@ -3063,6 +3067,8 @@ class TypingBoosterEngine(IBus.Engine):
         enabled
 
         '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write('do_focus_out()\n')
         if self._has_input_purpose:
             self._input_purpose = 0
         self.clear_context()
@@ -3110,6 +3116,8 @@ class TypingBoosterEngine(IBus.Engine):
 
     def do_enable(self):
         '''Called when this input engine is enabled'''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write('do_enable()\n')
         # Tell the input-context that the engine will utilize
         # surrounding-text:
         self.get_surrounding_text()
@@ -3117,6 +3125,8 @@ class TypingBoosterEngine(IBus.Engine):
 
     def do_disable(self):
         '''Called when this input engine is disabled'''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write('do_disable()\n')
         self._clear_input_and_update_ui()
 
     def do_page_up(self):
