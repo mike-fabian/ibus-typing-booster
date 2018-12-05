@@ -2523,6 +2523,118 @@ class TypingBoosterEngine(IBus.Engine):
             self._lookup_related_candidates()
             return
 
+    def _handle_hotkeys(self, key):
+        '''
+        Handle hotkey commands
+
+        Returns True if the key was completely handled, False if not.
+
+        :param key: The typed key. If this is a hotkey,
+                    execute the command for this hotkey.
+        :type key: KeyEvent object
+        :rtype: Boolean
+        '''
+        if (key, 'cancel') in self._hotkeys:
+            if self.is_empty():
+                return False
+            if self.get_lookup_table().cursor_visible:
+                # A candidate is selected in the lookup table.
+                # Deselect it and show the first page of the candidate
+                # list:
+                self.get_lookup_table().set_cursor_visible(False)
+                self.get_lookup_table().set_cursor_pos(0)
+                self._update_lookup_table_and_aux()
+                return True
+            if self._lookup_table_shows_related_candidates:
+                # Force an update to the original lookup table:
+                self._update_ui()
+                return True
+            if ((self._tab_enable or self._min_char_complete > 1)
+                    and self.is_lookup_table_enabled_by_tab):
+                # If lookup table was enabled by typing Tab, close it again
+                # but keep the preëdit:
+                self.is_lookup_table_enabled_by_tab = False
+                self.get_lookup_table().clear()
+                self.get_lookup_table().set_cursor_visible(False)
+                self._update_lookup_table_and_aux()
+                self._update_preedit()
+                self._candidates = []
+                return True
+            self._clear_input_and_update_ui()
+            self._update_ui()
+            return True
+
+        if ((key, 'enable_lookup') in self._hotkeys
+            and (self._tab_enable
+                 or (self._min_char_complete > 1
+                     and not self.is_lookup_table_enabled_by_min_char_complete))
+            and not self.is_lookup_table_enabled_by_tab
+            and not self.is_empty()):
+            self.is_lookup_table_enabled_by_tab = True
+            # update the ui here to see the effect immediately
+            # do not wait for the next keypress:
+            self._update_ui()
+            return True
+
+        if (key, 'next_input_method') in self._hotkeys:
+            imes = self.get_current_imes()
+            if len(imes) > 1:
+                # remove the first ime from the list and append it to the end.
+                self.set_current_imes(
+                    imes[1:] + imes[:1],
+                    update_gsettings=self._remember_last_used_preedit_ime)
+                return True
+
+        if (key, 'previous_input_method') in self._hotkeys:
+            imes = self.get_current_imes()
+            if len(imes) > 1:
+                # remove the last ime in the list and add it in front:
+                self.set_current_imes(
+                    imes[-1:] + imes[:-1],
+                    update_gsettings=self._remember_last_used_preedit_ime)
+                return True
+
+        if ((key, 'select_next_candidate') in self._hotkeys
+                and self.get_lookup_table().get_number_of_candidates()):
+            dummy = self._arrow_down()
+            self._update_lookup_table_and_aux()
+            return True
+
+        if ((key, 'select_previous_candidate') in self._hotkeys
+                and self.get_lookup_table().get_number_of_candidates()):
+            dummy = self._arrow_up()
+            self._update_lookup_table_and_aux()
+            return True
+
+        if ((key, 'lookup_table_page_down') in self._hotkeys
+                and self.get_lookup_table().get_number_of_candidates()):
+            dummy = self._page_down()
+            self._update_lookup_table_and_aux()
+            return True
+
+        if ((key, 'lookup_table_page_up') in self._hotkeys
+                and self.get_lookup_table().get_number_of_candidates()):
+            dummy = self._page_up()
+            self._update_lookup_table_and_aux()
+            return True
+
+        if (key, 'toggle_emoji_prediction') in self._hotkeys:
+            self.toggle_emoji_prediction_mode()
+            return True
+
+        if (key, 'toggle_off_the_record') in self._hotkeys:
+            self.toggle_off_the_record_mode()
+            return True
+
+        if ((key, 'lookup_related') in self._hotkeys
+            and not self.is_empty()):
+            self._lookup_related_candidates()
+            return True
+
+        if (key, 'setup') in self._hotkeys:
+            self._start_setup()
+            return True
+
     def _return_false(self, keyval, keycode, state):
         '''A replacement for “return False” in do_process_key_event()
 
@@ -2661,88 +2773,7 @@ class TypingBoosterEngine(IBus.Engine):
                         input_phrase=transliterated_digit)
                     return True
 
-        if (key, 'cancel') in self._hotkeys:
-            if self.is_empty():
-                return self._return_false(key.val, key.code, key.state)
-            if self.get_lookup_table().cursor_visible:
-                # A candidate is selected in the lookup table.
-                # Deselect it and show the first page of the candidate
-                # list:
-                self.get_lookup_table().set_cursor_visible(False)
-                self.get_lookup_table().set_cursor_pos(0)
-                self._update_lookup_table_and_aux()
-                return True
-            if self._lookup_table_shows_related_candidates:
-                # Force an update to the original lookup table:
-                self._update_ui()
-                return True
-            if ((self._tab_enable or self._min_char_complete > 1)
-                    and self.is_lookup_table_enabled_by_tab):
-                # If lookup table was enabled by typing Tab, close it again
-                # but keep the preëdit:
-                self.is_lookup_table_enabled_by_tab = False
-                self.get_lookup_table().clear()
-                self.get_lookup_table().set_cursor_visible(False)
-                self._update_lookup_table_and_aux()
-                self._update_preedit()
-                self._candidates = []
-                return True
-            self._clear_input_and_update_ui()
-            self._update_ui()
-            return True
-
-        if ((key, 'enable_lookup') in self._hotkeys
-            and (self._tab_enable
-                 or (self._min_char_complete > 1
-                     and not self.is_lookup_table_enabled_by_min_char_complete))
-            and not self.is_lookup_table_enabled_by_tab
-            and not self.is_empty()):
-            self.is_lookup_table_enabled_by_tab = True
-            # update the ui here to see the effect immediately
-            # do not wait for the next keypress:
-            self._update_ui()
-            return True
-
-        if (key, 'next_input_method') in self._hotkeys:
-            imes = self.get_current_imes()
-            if len(imes) > 1:
-                # remove the first ime from the list and append it to the end.
-                self.set_current_imes(
-                    imes[1:] + imes[:1],
-                    update_gsettings=self._remember_last_used_preedit_ime)
-                return True
-
-        if (key, 'previous_input_method') in self._hotkeys:
-            imes = self.get_current_imes()
-            if len(imes) > 1:
-                # remove the last ime in the list and add it in front:
-                self.set_current_imes(
-                    imes[-1:] + imes[:-1],
-                    update_gsettings=self._remember_last_used_preedit_ime)
-                return True
-
-        if ((key, 'select_next_candidate') in self._hotkeys
-                and self.get_lookup_table().get_number_of_candidates()):
-            dummy = self._arrow_down()
-            self._update_lookup_table_and_aux()
-            return True
-
-        if ((key, 'select_previous_candidate') in self._hotkeys
-                and self.get_lookup_table().get_number_of_candidates()):
-            dummy = self._arrow_up()
-            self._update_lookup_table_and_aux()
-            return True
-
-        if ((key, 'lookup_table_page_down') in self._hotkeys
-                and self.get_lookup_table().get_number_of_candidates()):
-            dummy = self._page_down()
-            self._update_lookup_table_and_aux()
-            return True
-
-        if ((key, 'lookup_table_page_up') in self._hotkeys
-                and self.get_lookup_table().get_number_of_candidates()):
-            dummy = self._page_up()
-            self._update_lookup_table_and_aux()
+        if self._handle_hotkeys(key):
             return True
 
         # Select a candidate to commit or remove:
@@ -2785,23 +2816,6 @@ class TypingBoosterEngine(IBus.Engine):
                             phrase += ' '
                         self._commit_string(phrase)
                         return True
-
-        if (key, 'toogle_emoji_prediction') in self._hotkeys:
-            self.toggle_emoji_prediction_mode()
-            return True
-
-        if (key, 'toggle_off_the_record') in self._hotkeys:
-            self.toggle_off_the_record_mode()
-            return True
-
-        if ((key, 'lookup_related') in self._hotkeys
-            and not self.is_empty()):
-            self._lookup_related_candidates()
-            return True
-
-        if (key, 'setup') in self._hotkeys:
-            self._start_setup()
-            return True
 
         # These keys may trigger a commit:
         if (key.msymbol not in ('G- ',)
