@@ -1337,7 +1337,7 @@ class EmojiMatcher():
         >>> mq = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
 
         >>> mq.candidates('😺', match_limit=3)
-        [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, grinning cat face]', 9), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, mouth, open, smile]', 6), ('😄', 'smiling face with open mouth and smiling eyes [So, people, face, mouth, open, smile]', 6)]
+        [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, grinning]', 9), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, mouth, open, smile]', 6), ('😄', 'smiling face with open mouth and smiling eyes [So, people, face, mouth, open, smile]', 6)]
 
         >>> mq.candidates('ネコ＿')[0][:2]
         ('🐈', 'ネコ')
@@ -1394,7 +1394,7 @@ class EmojiMatcher():
         ('👨🏿', 'man: dark skin tone “man tone5”')
 
         >>> mq.candidates('tone')[0][:2]
-        ('🕵🏻', 'detective: light skin tone “sleuth or spy tone1”')
+        ('🖐🏻', 'hand with fingers splayed: light skin tone “raised hand with fingers splayed tone1”')
 
         >>> mq.candidates('tone1')[0][:2]
         ('🏻', 'emoji modifier fitzpatrick type-1-2 “tone1”')
@@ -1412,49 +1412,49 @@ class EmojiMatcher():
         ('🅰\ufe0f', 'negative squared latin capital letter a')
 
         >>> mq.candidates('c')[0][:2]
-        ('©\ufe0f', 'Copyright')
+        ('©️', 'copyright sign')
 
         >>> mq.candidates('us')[0][:2]
-        ('🇺🇸', 'united states “us”')
+        ('🇺🇸', 'flag: united states “us”')
 
         >>> mq.candidates('flag us')[0][:2]
-        ('🇺🇸', 'united states “flag: united states”')
+        ('🇺🇸', 'flag: united states “us”')
 
         >>> mq.candidates('united states')[0][:2]
-        ('🇺🇸', 'united states “flag: united states”')
+        ('🇺🇸', 'flag: united states')
 
         >>> mq.candidates('united')[0][:2]
-        ('🇦🇪', 'united arab emirates “flag: united arab emirates”')
+        ('🇦🇪', 'flag: united arab emirates')
 
         >>> mq.candidates('united minor outlying islands')[0][:2]
-        ('🇺🇲', 'u.s. outlying islands “flag: u.s. outlying islands”')
+        ('🇺🇲', 'flag: u.s. outlying islands')
 
         >>> mq.candidates('united arab')[0][:2]
-        ('🇦🇪', 'united arab emirates “flag: united arab emirates”')
+        ('🇦🇪', 'flag: united arab emirates')
 
         >>> mq.candidates('mm')[0][:2]
-        ('🇲🇲', 'myanmar (burma) “mm”')
+        ('🇲🇲', 'flag: myanmar (burma) “mm”')
 
         >>> mq.candidates('flag mm')[0][:2]
-        ('🇲🇲', 'myanmar (burma) “flag: myanmar (burma)”')
+        ('🇲🇲', 'flag: myanmar (burma) “mm”')
 
         >>> mq.candidates('myanmar')[0][:2]
-        ('🇲🇲', 'myanmar (burma) “flag: myanmar (burma)”')
+        ('🇲🇲', 'flag: myanmar (burma) “myanmar burma”')
 
         >>> mq.candidates('sj')[0][:2]
-        ('🇸🇯', 'svalbard & jan mayen “sj”')
+        ('🇸🇯', 'flag: svalbard & jan mayen “sj”')
 
         >>> mq.candidates('flag sj')[0][:2]
-        ('🇸🇯', 'svalbard & jan mayen “flag: svalbard & jan mayen”')
+        ('🇸🇯', 'flag: svalbard & jan mayen “sj”')
 
         >>> mq.candidates('svalbard')[0][:2]
-        ('🇸🇯', 'svalbard & jan mayen “flag: svalbard & jan mayen”')
+        ('🇸🇯', 'flag: svalbard & jan mayen')
 
         >>> mq.candidates('jan mayen')[0][:2]
-        ('🇸🇯', 'svalbard & jan mayen “flag: svalbard & jan mayen”')
+        ('🇸🇯', 'flag: svalbard & jan mayen')
 
         >>> mq.candidates('mayen')[0][:2]
-        ('🇸🇯', 'svalbard & jan mayen “flag: svalbard & jan mayen”')
+        ('🇸🇯', 'flag: svalbard & jan mayen')
 
         >>> mq.candidates(':-)')[0][:2]
         ('🙂', 'slightly smiling face “:-)”')
@@ -1611,7 +1611,7 @@ class EmojiMatcher():
         ('🤔', 'visage en pleine réflexion')
 
         >>> mq.candidates('🤔', match_limit = 3)
-        [('🤔', 'visage en pleine réflexion [🤔, réflexion, visage, visage en pleine réflexion]', 4), ('🤩', 'visage avec des étoiles à la place des yeux [visage]', 1), ('🤗', 'visage qui fait un câlin [visage]', 1)]
+        [('🤔', 'visage en pleine réflexion [🤔, réflexion, visage, visage en pleine réflexion]', 4), ('🤐', 'visage avec bouche fermeture éclair [visage]', 1), ('🤗', 'visage qui fait un câlin [visage]', 1)]
 
         >>> mq = EmojiMatcher(languages = ['fr_FR'])
         >>> mq.candidates('2019')
@@ -1995,11 +1995,11 @@ class EmojiMatcher():
         []
 
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, smiling face]', 8), ('🙂', 'slightly smiling face [So, people, face, smile]', 4), ('😙', 'kissing face with smiling eyes [So, people, face, smile]', 4), ('😍', 'smiling face with heart-shaped eyes [So, people, face, smile]', 4), ('😎', 'smiling face with sunglasses [So, people, face, smile]', 4)]
+        [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, smiling face]', 8), ('😙', 'kissing face with smiling eyes [So, people, face, smile]', 4), ('😋', 'face savouring delicious food [So, people, face, smile]', 4), ('😍', 'smiling face with heart-shaped eyes [So, people, face, smile]', 4), ('😇', 'smiling face with halo [So, people, face, smile]', 4)]
 
         >>> matcher = EmojiMatcher(languages = ['it_IT', 'en_US', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, emozionarsi, faccina, sorridente]', 5), ('😚', 'faccina che bacia con occhi chiusi [faccina]', 1), ('😙', 'faccina che bacia con occhi sorridenti [faccina]', 1), ('🤗', 'faccina che abbraccia [faccina]', 1), ('😗', 'faccina che bacia [faccina]', 1)]
+        [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, emozionarsi, faccina, sorridente]', 5), ('😚', 'faccina che bacia con occhi chiusi [faccina]', 1), ('😗', 'faccina che bacia [faccina]', 1), ('😙', 'faccina che bacia con occhi sorridenti [faccina]', 1), ('😘', 'faccina che manda un bacio [faccina]', 1)]
 
         >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.similar('🐫', match_limit = 5)
