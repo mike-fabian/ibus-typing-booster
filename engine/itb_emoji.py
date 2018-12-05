@@ -653,6 +653,8 @@ class EmojiMatcher():
                     continue
                 codepoints, property_string, name = [
                     x.strip() for x in line.split(';')[:3]]
+                if property_string == 'Basic_Emoji':
+                    continue
                 if codepoints == '0023 FE0F 20E3' and name == 'keycap:':
                     name = 'keycap: #'
                 emoji_string = ''
@@ -748,6 +750,8 @@ class EmojiMatcher():
             cldr_order = 0
             cldr_group_to_emojione_category = {
                 'Smileys & People': N_('people'),
+                'Smileys & Emotion': N_('people'), # New in Unicode 12.0
+                'People & Body': N_('people'), # New in Unicode 12.0
                 'Animals & Nature': N_('nature'),
                 'Food & Drink': N_('food'),
                 'Travel & Places': N_('travel'),
@@ -755,8 +759,9 @@ class EmojiMatcher():
                 'Objects': N_('objects'),
                 'Symbols': N_('symbols'),
                 'Flags': N_('flags'),
-                'Modifiers': N_('modifier'), # not  in emoji-test.txt
-                'Regional': N_('regional'), # not  in emoji-test.txt
+                'Modifiers': N_('modifier'), # not in emoji-test.txt
+                'Component': N_('modifier'), # New in Unicode 12.0
+                'Regional': N_('regional'), # not in emoji-test.txt
             }
             cldr_subgroup_to_emojione_category = {
                 'person-sport':  N_('activity'),
