@@ -1878,11 +1878,11 @@ def dict_update_existing_keys(pdict, other_pdict):
     >>> old_pdict = {'a': 1, 'b': 2}
     >>> new_pdict = {'b': 3, 'c': 4}
     >>> dict_update_existing_keys(old_pdict, new_pdict)
-    >>> old_pdict
-    {'a': 1, 'b': 3}
+    >>> sorted(old_pdict.items())
+    [('a', 1), ('b', 3)]
     >>> old_pdict.update(new_pdict)
-    >>> old_pdict
-    {'a': 1, 'b': 3, 'c': 4}
+    >>> sorted(old_pdict.items())
+    [('a', 1), ('b', 3), ('c', 4)]
     '''
     for key in other_pdict:
         if key in pdict:
