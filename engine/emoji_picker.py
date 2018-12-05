@@ -137,12 +137,23 @@ def parse_args():
         help=('Load only emoji which were added to Unicode '
               + 'not earlier than this Unicode version. '
               + 'default: %(default)s'))
+    # Guess current Unicode version:
+    unicode_versions = (
+        ('20180605', '11.0'),
+        ('20190701', '12.0'),
+        ('20200701', '13.0'),
+    )
+    current_date = time.strftime('%Y%m%d')
+    current_unicode_version = 10.0
+    for (date, version) in unicode_versions:
+        if current_date > date:
+            current_unicode_version = version
     parser.add_argument(
         '--emoji_unicode_max',
         nargs='?',
         type=str,
         action='store',
-        default='100.0',
+        default=current_unicode_version,
         help=('Load only emoji which were added to Unicode '
               + 'not later than this Unicode version. '
               + 'default: %(default)s'))
