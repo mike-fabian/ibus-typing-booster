@@ -1058,10 +1058,9 @@ class SetupUI(Gtk.Window):
         '''
         confirm_question = Gtk.Dialog(
             title=_('Are you sure?'),
-            parent=self,
-            buttons=(
-                Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                Gtk.STOCK_OK, Gtk.ResponseType.OK))
+            parent=self)
+        confirm_question.add_button(_('_Cancel'), Gtk.ResponseType.CANCEL)
+        confirm_question.add_button(_('_OK'), Gtk.ResponseType.OK)
         box = confirm_question.get_content_area()
         label = Gtk.Label()
         label.set_text(message)
