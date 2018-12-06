@@ -1461,7 +1461,8 @@ class EmojiPickerUI(Gtk.Window):
             rectangle.width = self._fontsize * 1.5
             rectangle.height = self._fontsize * 1.5
             self._emoji_selected_popover.set_pointing_to(rectangle)
-        label = Gtk.Label(_('Copied to clipboard!'))
+        label = Gtk.Label()
+        label.set_text(_('Copied to clipboard!'))
         self._emoji_selected_popover.add(label)
         if GTK_VERSION >= (3, 22, 0):
             self._emoji_selected_popover.popup()
@@ -1583,7 +1584,8 @@ class EmojiPickerUI(Gtk.Window):
         self._skin_tone_selected_popover.set_relative_to(
             flowbox_child.get_child())
         self._skin_tone_selected_popover.set_position(Gtk.PositionType.TOP)
-        label = Gtk.Label(_('Copied to clipboard!'))
+        label = Gtk.Label()
+        label.set_text(_('Copied to clipboard!'))
         self._skin_tone_selected_popover.add(label)
         if GTK_VERSION >= (3, 22, 0):
             self._skin_tone_selected_popover.popup()
@@ -2065,7 +2067,8 @@ class EmojiPickerUI(Gtk.Window):
             if filter_text.replace(' ', '').lower()
             in font.replace(' ', '').lower()]
         for font in fonts:
-            label = Gtk.Label(font)
+            label = Gtk.Label()
+            label.set_text(font)
             label.set_xalign(0)
             margin = 1
             label.set_margin_start(margin)

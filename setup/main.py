@@ -138,7 +138,7 @@ class SetupUI(Gtk.Window):
         self._dialog_action_area.set_can_focus(False)
         self._dialog_action_area.set_layout(Gtk.ButtonBoxStyle.EDGE)
         self._main_container.pack_end(self._dialog_action_area, True, True, 0)
-        self._about_button = Gtk.Button(_('About'))
+        self._about_button = Gtk.Button(label=_('About'))
         self._about_button.connect('clicked', self.on_about_button_clicked)
         self._dialog_action_area.add(self._about_button)
         self._close_button = Gtk.Button(stock=Gtk.STOCK_CLOSE)
@@ -152,15 +152,16 @@ class SetupUI(Gtk.Window):
         self._options_grid.set_column_spacing(5)
         self._options_grid.set_row_homogeneous(True)
         self._options_grid.set_column_homogeneous(True)
-        self._options_label = Gtk.Label(
-            _('Options'))
+        self._options_label = Gtk.Label()
+        self._options_label.set_text(_('Options'))
         self._dictionaries_and_input_methods_vbox = Gtk.VBox()
         margin = 10
         self._dictionaries_and_input_methods_vbox.set_margin_start(margin)
         self._dictionaries_and_input_methods_vbox.set_margin_end(margin)
         self._dictionaries_and_input_methods_vbox.set_margin_top(margin)
         self._dictionaries_and_input_methods_vbox.set_margin_bottom(margin)
-        self._dictionaries_and_input_methods_label = Gtk.Label(
+        self._dictionaries_and_input_methods_label = Gtk.Label()
+        self._dictionaries_and_input_methods_label.set_text(
             _('Dictionaries and input methods'))
         self._custom_shortcuts_grid = Gtk.Grid()
         self._custom_shortcuts_grid.set_visible(True)
@@ -169,16 +170,16 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.set_column_spacing(6)
         self._custom_shortcuts_grid.set_row_homogeneous(True)
         self._custom_shortcuts_grid.set_column_homogeneous(True)
-        self._custom_shortcuts_label = Gtk.Label(
-            _('Custom shortcuts'))
+        self._custom_shortcuts_label = Gtk.Label()
+        self._custom_shortcuts_label.set_text(_('Custom shortcuts'))
         self._keybindings_vbox = Gtk.VBox()
         margin = 10
         self._keybindings_vbox.set_margin_start(margin)
         self._keybindings_vbox.set_margin_end(margin)
         self._keybindings_vbox.set_margin_top(margin)
         self._keybindings_vbox.set_margin_bottom(margin)
-        self._keybindings_label = Gtk.Label(
-            _('Key bindings'))
+        self._keybindings_label = Gtk.Label()
+        self._keybindings_label.set_text(_('Key bindings'))
         self._notebook.append_page(
             self._options_grid,
             self._options_label)
@@ -193,7 +194,7 @@ class SetupUI(Gtk.Window):
             self._keybindings_label)
 
         self._tab_enable_checkbutton = Gtk.CheckButton(
-            _('Enable suggestions by key (Default is the Tab key)'))
+            label=_('Enable suggestions by key (Default is the Tab key)'))
         self._tab_enable_checkbutton.set_tooltip_text(
             _('If this option is on, suggestions are not shown by default. Typing a key is then necessary to show the list of suggestions. The key to use for this can be changed in the key bindings settings. By default it is the Tab key. After a commit the suggestions are hidden again until the next key bound to this command is typed.'))
         self._tab_enable_checkbutton.connect(
@@ -208,7 +209,7 @@ class SetupUI(Gtk.Window):
             self._tab_enable_checkbutton.set_active(True)
 
         self._inline_completion_checkbutton = Gtk.CheckButton(
-            _('Use inline completion'))
+            label=_('Use inline completion'))
         self._inline_completion_checkbutton.set_tooltip_text(
             _('Whether the best completion is first shown inline in the preëdit instead of showing a full candidate list. The inline candidate can be selected by typing Tab and then committed as usual, for example by typing Space or Control+Space. Typing Tab again moves to the next candidate and opens the full candidate list.'))
         self._inline_completion_checkbutton.connect(
@@ -223,7 +224,7 @@ class SetupUI(Gtk.Window):
             self._inline_completion_checkbutton.set_active(True)
 
         self._show_number_of_candidates_checkbutton = Gtk.CheckButton(
-            _('Display total number of candidates'))
+            label=_('Display total number of candidates'))
         self._show_number_of_candidates_checkbutton.set_tooltip_text(
             _('Display how many candidates there are and which one is selected on top of the list of candidates.'))
         self._show_number_of_candidates_checkbutton.connect(
@@ -238,7 +239,7 @@ class SetupUI(Gtk.Window):
             self._show_number_of_candidates_checkbutton.set_active(True)
 
         self._show_status_info_in_auxiliary_text_checkbutton = Gtk.CheckButton(
-            _('Show status info in auxiliary text'))
+            label=_('Show status info in auxiliary text'))
         self._show_status_info_in_auxiliary_text_checkbutton.set_tooltip_text(
             _('Show in the auxiliary text whether “Emoji prediction”  mode and “Off the record”  mode are on or off and show which input method is currently used for the preëdit. The auxiliary text is an optional line of text displayed above the candidate list.'))
         self._show_status_info_in_auxiliary_text_checkbutton.connect(
@@ -254,7 +255,7 @@ class SetupUI(Gtk.Window):
                 True)
 
         self._use_digits_as_select_keys_checkbutton = Gtk.CheckButton(
-            _('Use digits as select keys'))
+            label=_('Use digits as select keys'))
         self._use_digits_as_select_keys_checkbutton.set_tooltip_text(
             _('Use the regular digits 1-9 as select keys. If that option is on, numbers can only by typed while no suggestions are shown. Therefore, completions for numbers cannot be suggested. And typing words containing numbers, like “A4” is more difficult as typing “4” would select the 4th suggestion. On the other hand, selecting suggestions using 1-9 is easier then using the always enabled select keys F1-F9 as the latter keys are farther away from the fingers.'))
         self._use_digits_as_select_keys_checkbutton.connect(
@@ -269,7 +270,7 @@ class SetupUI(Gtk.Window):
             self._use_digits_as_select_keys_checkbutton.set_active(True)
 
         self._add_space_on_commit_checkbutton = Gtk.CheckButton(
-            _('Add a space when committing by label or mouse'))
+            label=_('Add a space when committing by label or mouse'))
         self._add_space_on_commit_checkbutton.set_tooltip_text(
             _('Add a space if a candidate from the candidate list is committed using a key for the label in front of the candidate (I.e. the using the 1-9 or F1-F9 keys) or by clicking on a candidate with the mouse.'))
         self._add_space_on_commit_checkbutton.connect(
@@ -284,7 +285,7 @@ class SetupUI(Gtk.Window):
             self._add_space_on_commit_checkbutton.set_active(True)
 
         self._remember_last_used_preedit_ime_checkbutton = Gtk.CheckButton(
-            _('Remember last used preedit input method'))
+            label=_('Remember last used preedit input method'))
         self._remember_last_used_preedit_ime_checkbutton.set_tooltip_text(
             _('If more then one input method is used at the same time, one of them is used for the preedit.  Which input method is used for the preedit can be changed via the menu or via shortcut keys. If this option is enabled, such a change is remembered even if the session is restarted. '))
         self._remember_last_used_preedit_ime_checkbutton.connect(
@@ -299,7 +300,7 @@ class SetupUI(Gtk.Window):
             self._remember_last_used_preedit_ime_checkbutton.set_active(True)
 
         self._emoji_predictions_checkbutton = Gtk.CheckButton(
-            _('Unicode symbols and emoji predictions'))
+            label=_('Unicode symbols and emoji predictions'))
         self._emoji_predictions_checkbutton.set_tooltip_text(
             _('Whether Unicode symbols and emoji should be included in the predictions. Emoji are pictographs like ☺♨⛵…. Unicode symbols are other symbols like mathematical symbols (∀∑∯…), arrows (←↑↔…), currency symbols (€₹₺…), braille patterns (⠥⠩…), and many other symbols. These are technically not emoji but nevertheless useful symbols.'))
         self._emoji_predictions_checkbutton.connect(
@@ -314,7 +315,7 @@ class SetupUI(Gtk.Window):
             self._emoji_predictions_checkbutton.set_active(True)
 
         self._off_the_record_checkbutton = Gtk.CheckButton(
-            _('Off the record mode'))
+            label=_('Off the record mode'))
         self._off_the_record_checkbutton.set_tooltip_text(
             _('While “Off the record” mode is on, learning from user input is disabled. If learned user input is available, predictions are usually much better than predictions using only dictionaries. Therefore, one should use this option sparingly. Only if one wants to avoid saving secret user input to disk it might make sense to use this option temporarily.'))
         self._off_the_record_checkbutton.connect(
@@ -329,7 +330,7 @@ class SetupUI(Gtk.Window):
             self._off_the_record_checkbutton.set_active(True)
 
         self._qt_im_module_workaround_checkbutton = Gtk.CheckButton(
-            _('Use a workaround for a bug in Qt im module'))
+            label=_('Use a workaround for a bug in Qt im module'))
         self._qt_im_module_workaround_checkbutton.set_tooltip_text(
             _('Use a workaround for bugs in the input method modules of Qt4 and Qt5. Attention, although this workaround makes it work better when the Qt input modules are used, it causes problems when XIM is used. I.e. the XIM module of Qt4 will not work well when this workaround is enabled and input via XIM into X11 programs like xterm will not work well either.'))
         self._qt_im_module_workaround_checkbutton.connect(
@@ -344,7 +345,7 @@ class SetupUI(Gtk.Window):
             self._qt_im_module_workaround_checkbutton.set_active(True)
 
         self._arrow_keys_reopen_preedit_checkbutton = Gtk.CheckButton(
-            _('Arrow keys can reopen a preedit'))
+            label=_('Arrow keys can reopen a preedit'))
         self._arrow_keys_reopen_preedit_checkbutton.set_tooltip_text(
             _('Whether it is allowed to reopen a preedit when the cursor reaches a word boundary after moving it with the arrow keys. Enabling this option is useful to correct already committed words. But it is quite buggy at the moment and how well it works depends on repetition speed of the arrow keys and system load. Because it is buggy, this option is off by default.'))
         self._arrow_keys_reopen_preedit_checkbutton.connect(
@@ -358,7 +359,8 @@ class SetupUI(Gtk.Window):
         if self._arrow_keys_reopen_preedit is True:
             self._arrow_keys_reopen_preedit_checkbutton.set_active(True)
 
-        self._auto_commit_characters_label = Gtk.Label(
+        self._auto_commit_characters_label = Gtk.Label()
+        self._auto_commit_characters_label.set_text(
             _('Auto commit characters:'))
         self._auto_commit_characters_label.set_tooltip_text(
             _('The characters in this list cause the preedit to be committed automatically, followed by a space.  For example, if “.” is an auto commit character, this saves you typing a space manually after the end of a sentence. You can freely edit this list, a reasonable value might be “.,;:?!)”. You should not add characters to that list which are needed by your input method, for example if you use Latin-Pre (t-latn-pre) it would be a bad idea to add “.” to that list because it would prevent you from typing “.s” to get “ṡ”. You can also disable this feature completely by making the list empty (which is the default).'))
@@ -378,8 +380,8 @@ class SetupUI(Gtk.Window):
         self._auto_commit_characters_entry.connect(
             'notify::text', self.on_auto_commit_characters_entry)
 
-        self._page_size_label = Gtk.Label(
-            _('Candidate window page size:'))
+        self._page_size_label = Gtk.Label()
+        self._page_size_label.set_text(_('Candidate window page size:'))
         self._page_size_label.set_tooltip_text(
             _('How many suggestion candidates to show in one page of the candidate list.'))
         self._page_size_label.set_xalign(0)
@@ -402,7 +404,8 @@ class SetupUI(Gtk.Window):
         self._page_size_adjustment.connect(
             'value-changed', self.on_page_size_adjustment_value_changed)
 
-        self._lookup_table_orientation_label = Gtk.Label(
+        self._lookup_table_orientation_label = Gtk.Label()
+        self._lookup_table_orientation_label.set_text(
             _('Candidate window orientation'))
         self._lookup_table_orientation_label.set_tooltip_text(
             _('Whether the candidate window should be drawn horizontally or vertically.'))
@@ -438,7 +441,8 @@ class SetupUI(Gtk.Window):
             "changed",
             self.on_lookup_table_orientation_combobox_changed)
 
-        self._min_chars_completion_label = Gtk.Label(
+        self._min_chars_completion_label = Gtk.Label()
+        self._min_chars_completion_label.set_text(
             _('Minimum number of chars for completion:'))
         self._min_chars_completion_label.set_tooltip_text(
             _('Show no suggestions when less than this number of characters have been typed.'))
@@ -465,7 +469,7 @@ class SetupUI(Gtk.Window):
             self.on_min_char_complete_adjustment_value_changed)
 
         self._learn_from_file_button = Gtk.Button(
-            _('Learn from text file'))
+            label=_('Learn from text file'))
         self._learn_from_file_button.set_tooltip_text(
             _('Learn your style by reading a text file'))
         self._options_grid.attach(
@@ -474,7 +478,7 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_learn_from_file_clicked)
 
         self._delete_learned_data_button = Gtk.Button(
-            _('Delete learned data'))
+            label=_('Delete learned data'))
         self._delete_learned_data_button.set_tooltip_text(
             _('Delete all personal language data learned from typing or from reading files'))
         self._options_grid.attach(
@@ -500,7 +504,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_and_input_methods_vbox.pack_start(
             self._dictionaries_scroll, True, True, 0)
         self._dictionaries_install_missing_button = Gtk.Button(
-            _('Install missing dictionaries'))
+            label=_('Install missing dictionaries'))
         self._dictionaries_install_missing_button.set_tooltip_text(
             _('Install the dictionaries which are setup here but not installed'))
         self._dictionaries_install_missing_button.connect(
@@ -642,7 +646,7 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_input_methods_down_button_clicked)
         self._input_methods_down_button.set_sensitive(False)
         self._input_methods_help_button = Gtk.Button(
-            _('Input Method Help'))
+            label=_('Input Method Help'))
         self._input_methods_help_button.set_tooltip_text(
             _('Display some help showing how to use the input method selected above.'))
         self._input_methods_help_button.connect(
@@ -662,8 +666,8 @@ class SetupUI(Gtk.Window):
         self._input_methods_add_popover_scroll = None
         self._fill_input_methods_listbox()
 
-        self._shortcut_label = Gtk.Label(
-            _('Enter shortcut here:'))
+        self._shortcut_label = Gtk.Label()
+        self._shortcut_label.set_text(_('Enter shortcut here:'))
         self._shortcut_label.set_hexpand(False)
         self._shortcut_label.set_vexpand(False)
         self._shortcut_label.set_xalign(0)
@@ -678,7 +682,8 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.attach(
             self._shortcut_entry, 0, 1, 3, 1)
 
-        self._shortcut_expansion_label = Gtk.Label(
+        self._shortcut_expansion_label = Gtk.Label()
+        self._shortcut_expansion_label.set_text(
             _('Enter shortcut expansion here:'))
         self._shortcut_expansion_label.set_hexpand(False)
         self._shortcut_expansion_label.set_vexpand(False)
@@ -695,7 +700,7 @@ class SetupUI(Gtk.Window):
             self._shortcut_expansion_entry, 0, 3, 3, 1)
 
         self._shortcut_clear_button = Gtk.Button(
-            _('Clear input'))
+            label=_('Clear input'))
         self._shortcut_clear_button.set_receives_default(False)
         self._shortcut_clear_button.set_hexpand(False)
         self._shortcut_clear_button.set_vexpand(False)
@@ -705,7 +710,7 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_shortcut_clear_clicked)
 
         self._shortcut_delete_button = Gtk.Button(
-            _('Delete shortcut'))
+            label=_('Delete shortcut'))
         self._shortcut_delete_button.set_receives_default(False)
         self._shortcut_delete_button.set_hexpand(False)
         self._shortcut_delete_button.set_vexpand(False)
@@ -715,7 +720,7 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_shortcut_delete_clicked)
 
         self._shortcut_add_button = Gtk.Button(
-            _('Add shortcut'))
+            label=_('Add shortcut'))
         self._shortcut_add_button.set_receives_default(False)
         self._shortcut_add_button.set_hexpand(False)
         self._shortcut_add_button.set_vexpand(False)
@@ -2124,9 +2129,11 @@ class SetupUI(Gtk.Window):
                 Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                 Gtk.STOCK_OK, Gtk.ResponseType.OK))
         box = confirm_question.get_content_area()
-        box.add(Gtk.Label(
+        label = Gtk.Label()
+        label.set_text(
             _('Do you really want to set the key bindings for \n'
-              + 'all commands to their defaults?')))
+              + 'all commands to their defaults?'))
+        box.add(label)
         confirm_question.show_all()
         response = confirm_question.run()
         confirm_question.destroy()
@@ -2193,9 +2200,11 @@ class SetupUI(Gtk.Window):
                 Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
                 Gtk.STOCK_OK, Gtk.ResponseType.OK))
         box = confirm_question.get_content_area()
-        box.add(Gtk.Label(
+        label = Gtk.Label()
+        label.set_text(
             _('Do you really want to delete all language \n'
-              + 'data learned from typing or reading files?')))
+              + 'data learned from typing or reading files?'))
+        box.add(label)
         confirm_question.show_all()
         response = confirm_question.run()
         confirm_question.destroy()
