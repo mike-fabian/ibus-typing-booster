@@ -1063,7 +1063,17 @@ class SetupUI(Gtk.Window):
         confirm_question.add_button(_('_OK'), Gtk.ResponseType.OK)
         box = confirm_question.get_content_area()
         label = Gtk.Label()
-        label.set_text(message)
+        label.set_text(
+            '<span size="large" color="#ff0000"><b>'
+            + html.escape(message)
+            + '</b></span>')
+        label.set_use_markup(True)
+        label.set_xalign(0)
+        margin = 10
+        label.set_margin_start(margin)
+        label.set_margin_end(margin)
+        label.set_margin_top(margin)
+        label.set_margin_bottom(margin)
         box.add(label)
         confirm_question.show_all()
         response = confirm_question.run()
