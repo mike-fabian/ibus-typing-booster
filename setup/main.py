@@ -1046,6 +1046,31 @@ class SetupUI(Gtk.Window):
         dialog.run()
         dialog.destroy()
 
+    def _run_are_you_sure_dialog(self, message):
+        '''
+        Run a dialog to show a “Are you sure?” message.
+
+        Returns Gtk.ResponseType.OK or Gtk.ResponseType.CANCEL
+
+        :rtype: Gtk.ResponseType (enum)
+        '''
+        confirm_question = Gtk.Dialog(
+            title=_('Are you sure?'),
+            parent=self,
+            buttons=(
+                Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        box = confirm_question.get_content_area()
+        label = Gtk.Label()
+        label.set_text(message)
+        box.add(label)
+        confirm_question.show_all()
+        response = confirm_question.run()
+        confirm_question.destroy()
+        while Gtk.events_pending():
+            Gtk.main_iteration()
+        return response
+
     def check_instance(self):
         '''
         Check whether another instance of the setup tool is running already
@@ -2122,23 +2147,9 @@ class SetupUI(Gtk.Window):
         all key bindings top their defaults has been clicked.
         '''
         self._keybindings_all_default_button.set_sensitive(False)
-        confirm_question = Gtk.Dialog(
-            title=_('Are you sure?'),
-            parent=self,
-            buttons=(
-                Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        box = confirm_question.get_content_area()
-        label = Gtk.Label()
-        label.set_text(
+        response = self._run_are_you_sure_dialog(
             _('Do you really want to set the key bindings for \n'
               + 'all commands to their defaults?'))
-        box.add(label)
-        confirm_question.show_all()
-        response = confirm_question.run()
-        confirm_question.destroy()
-        while Gtk.events_pending():
-            Gtk.main_iteration()
         if response == Gtk.ResponseType.OK:
             default_keybindings = itb_util.variant_to_value(
                 self._gsettings.get_default_value('keybindings'))
@@ -2193,23 +2204,9 @@ class SetupUI(Gtk.Window):
         user input or text files has been clicked.
         '''
         self._delete_learned_data_button.set_sensitive(False)
-        confirm_question = Gtk.Dialog(
-            title=_('Are you sure?'),
-            parent=self,
-            buttons=(
-                Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                Gtk.STOCK_OK, Gtk.ResponseType.OK))
-        box = confirm_question.get_content_area()
-        label = Gtk.Label()
-        label.set_text(
+        response = self._run_are_you_sure_dialog(
             _('Do you really want to delete all language \n'
               + 'data learned from typing or reading files?'))
-        box.add(label)
-        confirm_question.show_all()
-        response = confirm_question.run()
-        confirm_question.destroy()
-        while Gtk.events_pending():
-            Gtk.main_iteration()
         if response == Gtk.ResponseType.OK:
             self.tabsqlitedb.remove_all_phrases()
         self._delete_learned_data_button.set_sensitive(True)
