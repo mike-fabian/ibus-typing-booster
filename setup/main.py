@@ -141,7 +141,10 @@ class SetupUI(Gtk.Window):
         self._about_button = Gtk.Button(label=_('About'))
         self._about_button.connect('clicked', self.on_about_button_clicked)
         self._dialog_action_area.add(self._about_button)
-        self._close_button = Gtk.Button(stock=Gtk.STOCK_CLOSE)
+        self._close_button = Gtk.Button()
+        self._close_button_label = Gtk.Label()
+        self._close_button_label.set_text_with_mnemonic(_('_Close'))
+        self._close_button.add(self._close_button_label)
         self._close_button.connect('clicked', self.on_close_clicked)
         self._dialog_action_area.add(self._close_button)
         self._options_grid = Gtk.Grid()
@@ -1051,7 +1054,6 @@ class SetupUI(Gtk.Window):
         Run a dialog to show a “Are you sure?” message.
 
         Returns Gtk.ResponseType.OK or Gtk.ResponseType.CANCEL
-
         :rtype: Gtk.ResponseType (enum)
         '''
         confirm_question = Gtk.Dialog(
@@ -2760,7 +2762,10 @@ class HelpWindow(Gtk.Window):
         self.scrolledwindow.set_vexpand(True)
         self.scrolledwindow.add(self.text_view)
         self.vbox.pack_start(self.scrolledwindow, True, True, 0)
-        self.close_button = Gtk.Button(stock=Gtk.STOCK_CLOSE)
+        self.close_button = Gtk.Button()
+        self.close_button_label = Gtk.Label()
+        self.close_button_label.set_text_with_mnemonic(_('_Close'))
+        self.close_button.add(self.close_button_label)
         self.close_button.connect("clicked", self.on_close_button_clicked)
         self.hbox = Gtk.HBox(spacing=0)
         self.hbox.pack_end(self.close_button, False, False, 0)
