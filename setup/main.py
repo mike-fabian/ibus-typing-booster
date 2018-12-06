@@ -2165,11 +2165,11 @@ class SetupUI(Gtk.Window):
         self._learn_from_file_button.set_sensitive(False)
         filename = ''
         chooser = Gtk.FileChooserDialog(
-            _('Open File ...'),
-            self,
-            Gtk.FileChooserAction.OPEN,
-            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-             Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+            title=_('Open File ...'),
+            parent=self,
+            action=Gtk.FileChooserAction.OPEN)
+        chooser.add_button(_('_Cancel'), Gtk.ResponseType.CANCEL)
+        chooser.add_button(_('_OK'), Gtk.ResponseType.OK)
         response = chooser.run()
         if response == Gtk.ResponseType.OK:
             filename = chooser.get_filename()
