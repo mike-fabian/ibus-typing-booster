@@ -2329,13 +2329,12 @@ class ItbKeyInputDialog(Gtk.MessageDialog):
     def __init__(
             self,
             title=_('Key input'),
-            parent=None,
-            buttons=(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)):
+            parent=None):
         Gtk.Dialog.__init__(
             self,
             title=title,
-            parent=parent,
-            buttons=buttons)
+            parent=parent)
+        self.add_button(_('Cancel'), Gtk.ResponseType.CANCEL)
         self.set_modal(True)
         self.set_markup('<big><b>%s</b></big>'
                         % _('Please press a key (or a key combination)'))
