@@ -19,6 +19,29 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.3.1" date="2018-12-08" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (cs, de, es, fr, ja, pl,
+            pt_BR, uk, zh_CN updated)
+          </li>
+          <li>
+            Avoid some PyGTKDeprecationWarnings
+          </li>
+          <li>
+            Don’t show Unicode 12.0 draft emoji by default in
+            emoji-picker
+          </li>
+          <li>
+            Update emoji data to Unicode 12.0 draft
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.3.0" date="2018-12-05" urgency="medium">
       <description>
         <ul>
