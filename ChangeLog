@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 11 Dec 2018 Released 2.3.2 version
+* Key bindings should match independent of whether Num Lock or Caps Lock are on or off.
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 08 Dec 2018 Released 2.3.1 version
 * Update translations from zanata (cs, de, es, fr, ja, pl, pt_BR, uk, zh_CN updated)
 * Avoid some PyGTKDeprecationWarnings

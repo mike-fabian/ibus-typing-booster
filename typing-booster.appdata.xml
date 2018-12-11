@@ -19,6 +19,16 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.3.2" date="2018-12-11" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Key bindings should match independent of whether Num Lock
+            or Caps Lock are on or off.
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.3.1" date="2018-12-08" urgency="medium">
       <description>
         <ul>
