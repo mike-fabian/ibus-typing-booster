@@ -2534,6 +2534,11 @@ class TypingBoosterEngine(IBus.Engine):
         :type key: KeyEvent object
         :rtype: Boolean
         '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                '_handle_hotkeys(): KeyEvent object: %s\n' % key)
+            sys.stderr.write(
+                '_handle_hotkeys(): self._hotkeys=%s\n' % str(self._hotkeys))
         if (key, 'cancel') in self._hotkeys:
             if self.is_empty():
                 return False

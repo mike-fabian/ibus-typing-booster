@@ -51,6 +51,13 @@ DOMAINNAME = 'ibus-typing-booster'
 _ = lambda a: gettext.dgettext(DOMAINNAME, a)
 N_ = lambda a: a
 
+# When matching keybindings, the following modifiers
+# for all bits set in this mask are ignored:
+KEYBINDING_IGNORE_MASK = (
+            IBus.ModifierType.LOCK_MASK | # Caps Lock
+            IBus.ModifierType.MOD2_MASK   # Num Lock
+)
+
 MAXIMUM_NUMBER_OF_INPUT_METHODS = 10
 
 NORMALIZATION_FORM_INTERNAL = 'NFD'
@@ -2307,18 +2314,22 @@ class HotKeys:
         for command in keybindings:
             for keybinding in keybindings[command]:
                 key = keybinding_to_keyevent(keybinding)
+                val = key.val
+                state = key.state & ~KEYBINDING_IGNORE_MASK
                 if command in self._hotkeys:
-                    self._hotkeys[command].append((key.val, key.state))
+                    self._hotkeys[command].append((val, state))
                 else:
-                    self._hotkeys[command] = [(key.val, key.state)]
+                    self._hotkeys[command] = [(val, state)]
 
     def __contains__(self, command_key_tuple):
         if not isinstance(command_key_tuple, tuple):
             return False
         command = command_key_tuple[1]
         key = command_key_tuple[0]
+        val = key.val
+        state = key.state & ~KEYBINDING_IGNORE_MASK
         if command in self._hotkeys:
-            if (key.val, key.state) in self._hotkeys[command]:
+            if (val, state) in self._hotkeys[command]:
                 return True
         return False
 
@@ -2348,7 +2359,8 @@ class ItbKeyInputDialog(Gtk.MessageDialog):
 
     def on_key_press_event(# pylint: disable=no-self-use
             self, widget, event):
-        widget.e = (event.keyval, event.get_state())
+        widget.e = (event.keyval,
+                    event.get_state() & ~KEYBINDING_IGNORE_MASK)
         return True
     def on_key_release_event(# pylint: disable=no-self-use
             self, widget, dummy_event):
