@@ -24,7 +24,7 @@ msgstr "Selector de Emoji"
 
 #: engine/emoji_picker.py:322
 msgid "Clear recently used"
-msgstr "Limpiar lo usado recientemente"
+msgstr "Limpiar recientes"
 
 #: engine/emoji_picker.py:328 setup/main.py:141
 msgid "About"
@@ -32,7 +32,7 @@ msgstr "Sobre"
 
 #: engine/emoji_picker.py:333
 msgid "Quit"
-msgstr "Dejar"
+msgstr "Cerrar"
 
 #: engine/emoji_picker.py:343
 msgid "Search for emoji"
@@ -128,11 +128,11 @@ msgstr "Fijar Fuente"
 
 #: engine/hunspell_table.py:315 engine/hunspell_table.py:335
 msgid "Off"
-msgstr "Fuera"
+msgstr "Deshabilitar"
 
 #: engine/hunspell_table.py:320 engine/hunspell_table.py:340
 msgid "On"
-msgstr "Dentro"
+msgstr "Habilitar"
 
 #: engine/hunspell_table.py:325 engine/hunspell_table.py:327 setup/main.py:306
 msgid "Unicode symbols and emoji predictions"
