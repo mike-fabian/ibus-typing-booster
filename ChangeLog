@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 13 Dec 2018 Released 2.3.3 version
+* Toggle candidates between 'title', 'upper', and 'lower' case when Shift is typed.
+* Improve Spanish translation (Thanks to Ismael Venegas Castelló)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 11 Dec 2018 Released 2.3.2 version
 * Key bindings should match independent of whether Num Lock or Caps Lock are on or off.
 

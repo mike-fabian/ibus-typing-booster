@@ -19,6 +19,20 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.3.3" date="2018-12-13" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Toggle candidates between 'title', 'upper', and 'lower'
+            case when Shift is typed.
+          </li>
+          <li>
+            Improve Spanish translation
+            (Thanks to Ismael Venegas Castelló)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.3.2" date="2018-12-11" urgency="medium">
       <description>
         <ul>
