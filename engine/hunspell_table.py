@@ -300,8 +300,39 @@ class TypingBoosterEngine(IBus.Engine):
         self._transliterated_strings = {}
         self._transliterators = {}
         self._init_transliterators()
-        # self._candidates: hold candidates selected from database and hunspell
+        # self._candidates: Array to hold candidates found in the
+        #                   user database, the (hunspell) dictionaries,
+        #                   produced by hunspell spellchecking, found
+        #                   by the emoji matcher, or found by looking
+        #                   up related matches.
+        #
+        # Each elememt of the self._candidates array is a tuple like
+        #
+        #     (phrase, user_freq, comment, from_user_db, spell_checking)
+        #
+        #          phrase:  String, the candidate itself, i.e. the text
+        #                   which might be eventually committed.
+        #          user_freq: Float, a number indicating a usage frequency.
+        #                     If the candidate comes from the user database,
+        #                     this is a floating point number between 0 and 1.
+        #                     If the candidate comes from the emoji matcher,
+        #                     it is some integer number, usually quite big.
+        #                     If the candidate comes from looking up related
+        #                     stuff it is usually a small integer  number.
+        #          comment: String, may give some extra  information about
+        #                   the candidate, for example the name of an emoji.
+        #                   This is just some extra information, it will not be
+        #                   committed.
+        #          from_user_db: Boolean, True if this candidate comes from the
+        #                        user database, False if not.
+        #          spell_checking: Boolean, True if this candidate was produced
+        #                          by spellchecking, False if not.
         self._candidates = []
+        self._candidates_case_mode = 'orig'
+        # 'orig': candidates have original case.
+        # 'title': candidates have been converted to Python’s title case.
+        # 'upper': candidates have been completely converted to upper case.
+        # 'lower': candidates have been completely converted to lower case.
         self._lookup_table = IBus.LookupTable()
         self._lookup_table.clear()
         self._lookup_table.set_page_size(self._page_size)
@@ -397,6 +428,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
         self._candidates = []
+        self._candidates_case_mode = 'orig'
         self._typed_string = []
         self._typed_string_cursor = 0
         for ime in self._current_imes:
@@ -601,6 +633,7 @@ class TypingBoosterEngine(IBus.Engine):
             # empty input does not pointlessly try to find candidates.
             return
         self._candidates = []
+        self._candidates_case_mode = 'orig'
         phrase_frequencies = {}
         self.is_lookup_table_enabled_by_min_char_complete = False
         for ime in self._current_imes:
@@ -1627,11 +1660,59 @@ class TypingBoosterEngine(IBus.Engine):
         self.get_lookup_table().clear()
         self.get_lookup_table().set_cursor_visible(False)
         for cand in related_candidates:
-            self._candidates.append((cand[0], cand[2], cand[1]))
+            self._candidates.append((cand[0], cand[2], cand[1], False, False))
             self._append_candidate_to_lookup_table(
                 phrase=cand[0], user_freq=cand[2], comment=cand[1])
         self._update_lookup_table_and_aux()
         self._lookup_table_shows_related_candidates = True
+
+    def _candidates_case_mode_change(self):
+        '''Toggle current candidates between 'title', 'upper', and 'lower' case
+
+        Change the case of all the candidates in the current list of
+        candidates to one of three modes, title case, upper case or
+        lower case. Then create a new lookup table and fill it with
+        the changed candidates to make the changes visible. But keep
+        the cursor position and cursor visibility status of the old
+        lookup table.
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write('_candidates_case_mode_change()\n')
+        if (self.is_empty()
+            or not self._candidates
+            or not self.get_lookup_table().get_number_of_candidates()):
+            return
+        new_candidates = []
+        if self._candidates_case_mode in ('orig', 'lower'):
+            self._candidates_case_mode = 'title'
+        elif self._candidates_case_mode == 'title':
+            self._candidates_case_mode = 'upper'
+        elif self._candidates_case_mode == 'upper':
+            self._candidates_case_mode = 'lower'
+        for cand in self._candidates:
+            # Python’s title case has problems when the string is in NFD.
+            # In that case something like this can happen:
+            #
+            # >>> str.title('bücher')
+            # 'BüCher'
+            #
+            # Therefore, make sure the case change is done after the string
+            # is converted to NFC.
+            new_candidates.append(
+                (getattr(str, self._candidates_case_mode)
+                 (unicodedata.normalize('NFC', cand[0])),
+                 cand[1], cand[2], cand[3], cand[4]))
+        self._candidates = new_candidates
+        cursor_visible = self.get_lookup_table().cursor_visible
+        cursor_pos = self.get_lookup_table().get_cursor_pos()
+        self.get_lookup_table().clear()
+        for cand in self._candidates:
+            self._append_candidate_to_lookup_table(
+                phrase=cand[0], user_freq=cand[1], comment=cand[2],
+                from_user_db=cand[3], spell_checking=cand[4])
+        self.get_lookup_table().set_cursor_pos(cursor_pos)
+        self.get_lookup_table().set_cursor_visible(cursor_visible)
+        self._update_lookup_table_and_aux()
 
     def _has_transliteration(self, msymbol_list):
         '''Check whether the current input (list of msymbols) has a
@@ -2550,7 +2631,8 @@ class TypingBoosterEngine(IBus.Engine):
                 self.get_lookup_table().set_cursor_pos(0)
                 self._update_lookup_table_and_aux()
                 return True
-            if self._lookup_table_shows_related_candidates:
+            if (self._lookup_table_shows_related_candidates
+                or self._candidates_case_mode != 'orig'):
                 # Force an update to the original lookup table:
                 self._update_ui()
                 return True
@@ -2564,6 +2646,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self._update_lookup_table_and_aux()
                 self._update_preedit()
                 self._candidates = []
+                self._candidates_case_mode = 'orig'
                 return True
             self._clear_input_and_update_ui()
             self._update_ui()
@@ -3061,6 +3144,10 @@ class TypingBoosterEngine(IBus.Engine):
                 self._commit_string(
                     input_phrase + ' ', input_phrase=input_phrase)
             self._update_ui()
+            return True
+
+        if key.name in ('Shift_L', 'Shift_R') and not key.unicode:
+            self._candidates_case_mode_change()
             return True
 
         # What kind of key was this??
