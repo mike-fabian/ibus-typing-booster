@@ -959,23 +959,25 @@ layout: default
   <ul>
     <li>
       If the option “☐ Enable suggestions by Tab key” is <em>not</em>
-      set: “Tab” selects the next candidate from the candidate list.
+      set: “Tab” always just executes “select_next_candidate”
+      which selects the next candidate from the candidate list.
     </li>
     <li>
       If the option “☑ Enable suggestions by Tab key” is set, no
       candidate list is shown by default:
       <ul>
         <li>
-          If Tab has not yet been typed: Request to show the
-          candidate list (nothing might be shown if no candidates can
-          be found).
+          If no candidate list is shown: “enable_lookup” is executed
+          which requests to show the candidate list (nothing might be
+          shown if no candidates can be found).
         </li>
         <li>
-          If Tab has been typed already, i.e. the candidate list has
-          already been requested: Select next candidate in the list.
-          After each commit and after each change of the contents of
-          the preëdit, the candidate list will be hidden again until
-          one types Tab to request it.
+          If a candidate list is already shown:
+          “select_next_candidate” is executed which selects the next
+          candidate in the list.  After each commit and after each
+          change of the contents of the preëdit, the candidate list
+          will be hidden again until the “enable_lookup” requests it
+          again.
         </li>
       <ul>
     </li>
@@ -983,8 +985,16 @@ layout: default
 </td>
 </tr>
 <tr>
+<td>Shift+Tab</td>
+<td>
+  Bound by default to the command “select_previous_candidate” which
+  selects the previous candidate in the candidate list.
+</td>
+</tr>
+<tr>
 <td>Escape</td>
 <td>
+  Bound by default to the command “cancel”.
   <ul>
     <li>
       When a candidate is selected (no matter whether this is a normal
@@ -1010,7 +1020,7 @@ layout: default
 </td>
 </tr>
 <tr>
-<td>Left  (Arrow left)</td>
+<td>Left (Arrow left)</td>
 <td>Move cursor one typed key left in the preëdit text. May trigger a
 commit if the left end of the preëdit is reached.</td>
 </tr>
@@ -1052,20 +1062,32 @@ text.</td>
 text.</td>
 </tr>
 <tr>
-<td>Down  (Arrow down)</td>
-<td>Select the next candidate.</td>
+<td>Down (Arrow down)</td>
+<td>
+  Bound by default to the command “select_next_candidate”.
+  Selects the next candidate.
+</td>
 </tr>
 <tr>
-<td>Up    (Arrow up)</td>
-<td>Select the previous candidate.</td>
+<td>Up (Arrow up)</td>
+<td>
+  Bound by default to the command “select_previous_candidate”. Selects
+  the previous candidate.
+</td>
 </tr>
 <tr>
 <td>Page_Up</td>
-<td>Show next page of candidates.</td>
+<td>
+  Bound by default to the command “lookup_table_page_up”.
+  Shows the previous page of candidates.
+</td>
 </tr>
 <tr>
 <td>Page_Down</td>
-<td>Show previous page of candidates.</td>
+<td>
+  Bound by default to the command “lookup_table_page_down”.
+  Show next page of candidates.
+</td>
 </tr>
 <tr>
 <td>F1</td>
@@ -1132,6 +1154,8 @@ select keys” is enabled.
 <tr>
   <td>AltGr+F6</td>
   <td>
+    Bound by default to the command “toggle_emoji_prediction”.
+    <br>
     Toggle the <a href="#emoji-predictions">emoji and Unicode
       symbol</a> prediction on/off. This has the same result as using
       the setup tool to change this.
@@ -1140,6 +1164,8 @@ select keys” is enabled.
 <tr>
   <td>AltGr+F9</td>
   <td>
+    Bound by default to the command “toggle_off_the_record”.
+    <br>
     Toggle the “Off the record” mode.  This has the same result as
     using the setup tool to change this.
     <br>
@@ -1154,13 +1180,17 @@ select keys” is enabled.
 <tr>
   <td>AltGr+F10</td>
   <td>
-    Open the setup tool
+    Bound by default to the command “setup”.
+    <br>
+    Opens the setup tool.
   </td>
 </tr>
 <tr>
   <td>AltGr+F12</td>
   <td>
-    Show related <a href="#emoji-predictions">emoji and Unicode symbols</a>
+    Bound by default to the command “lookup_related”.
+    <br>
+    Shows related <a href="#emoji-predictions">emoji and Unicode symbols</a>
     or <a href="#related-words-nltk">related words</a>
   </td>
 </tr>
@@ -1188,13 +1218,21 @@ following additional key bindings are available:</p>
 <tbody>
 <tr>
 <td>Control+Down</td>
-<td>Switch input method used for the preëdit to the next input
-method</td>
+<td>
+  Bound by default to the command “next_input_method”.
+  <br>
+  Switches the input method used for the preëdit to the next input
+  method.
+</td>
 </tr>
 <tr>
 <td>Control+Up</td>
-<td>Switch input method used for the preëdit to the previous input
-method.</td>
+<td>
+  Bound by default to the command “previous_input_method”.
+  <br>
+  Switches the input method used for the preëdit to the previous input
+  method.
+</td>
 </tr>
 </tbody>
 </table>
