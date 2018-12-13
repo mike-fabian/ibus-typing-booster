@@ -274,10 +274,10 @@ layout: default
 <p>
   Some options are also directly available in the input source menu of
   the gnome panel to have quicker access to these often used options
-  than having to open the setup tool. There are also <a href="">key bindings</a>
-  and <a href="">mouse bindings</a> for these frequently used options
-  which are shown in the input source menu of the gnome panel as well
-  as a reminder.
+  than having to open the setup tool. There are
+  also <a href="key-bindings">key and mouse bindings</a> for these
+  frequently used options which are shown in the input source menu of
+  the gnome panel as well as a reminder.
 </p>
 
 <br class="clearboth">
@@ -597,10 +597,10 @@ layout: default
   Some options are also directly available in the input method menu of
   the system tray icon to have quicker access to these often used
   options than having to open the setup tool of the
-  ibus-typing-booster engine. There are also <a href="">key
-  bindings</a> and <a href="">mouse bindings</a> for these frequently
-  used options which are shown in the input method menu of the system tray icon
-  as well as a reminder.
+  ibus-typing-booster engine. There are
+  also <a href="key-bindings">key and mouse bindings</a> for these
+  frequently used options which are shown in the input method menu of
+  the system tray icon as well as a reminder.
 </p>
 <p>
   On the top left of this screenshot you see the “property panel”
@@ -802,10 +802,9 @@ layout: default
   the input source menu of the panel to have quicker access to these
   often used options than having to open the setup tool.  For example
   the option to switch emoji mode on or off is available in the panel
-  menu. There are also <a href="">key bindings</a>
-  and <a href="">mouse bindings</a> for these frequently used options
-  which are shown in the input source menu of the panel as well
-  as a reminder.
+  menu. There are also <a href="key-bindings">key and mouse
+  bindings</a> for these frequently used options which are shown in
+  the input source menu of the panel as well as a reminder.
 </p>
 
 <br class="clearboth">
@@ -873,7 +872,7 @@ layout: default
 <br class="clearboth">
 <a name="key-bindings"></a>
 <br>
-<h2>Key bindings</h2>
+<h2>Key and mouse bindings</h2>
 
 <br class="clearboth">
 <a name="key-bindings-altgr"></a>
@@ -884,7 +883,7 @@ layout: default
   uses the keyboard layout which was selected last.
 </p>
 <p>
-  As some of the key bindings in the table below use key combinations
+  As some of the default key bindings in the table below use key combinations
   starting with “AltGr”, it is recommended to use a keyboard layout
   where the right “Alt” key is really an “AltGr” key and not just a
   duplicate of the left “Alt” key. If you do not have a real “AltGr”
@@ -913,7 +912,11 @@ layout: default
 <br class="clearboth">
 <a name="key-bindings-table"></a>
 <br>
-<h3>Table of key bindings</h3>
+<h3>Table of default key bindings</h3>
+
+Some of these key bindings can be customized in the setup tool, see
+<a href="key-bindings-customization">Customizing key bindings</a>. The
+following table explains the defaults.
 
 <br class="clearboth">
 <table border="2" cellspacing="10" cellpadding="10">
@@ -952,9 +955,7 @@ layout: default
   <ul>
     <li>
       If the option “☐ Enable suggestions by Tab key” is <em>not</em>
-      set: “Tab” behaves like the other “commit keys”, i.e. it commits
-      the preëdit (or the selected candidate, if any) and sends a Tab
-      to the appplication.
+      set: “Tab” selects the next candidate from the candidate list.
     </li>
     <li>
       If the option “☑ Enable suggestions by Tab key” is set, no
@@ -967,12 +968,10 @@ layout: default
         </li>
         <li>
           If Tab has been typed already, i.e. the candidate list has
-          already been requested: Commit selected candidate (or
-          preëdit if no candidate is selected), then pass the Tab to
-          the application.  *And* hide the candidate list again after
-          each commit!  That means that when typing continues after
-          each commit, no candidate list is shown until one types Tab
-          to request it.
+          already been requested: Select next candidate in the list.
+          After each commit and after each change of the contents of
+          the preëdit, the candidate list will be hidden again until
+          one types Tab to request it.
         </li>
       <ul>
     </li>
@@ -992,8 +991,10 @@ layout: default
       When no candidate is selected:
       <ul>
         <li>
-          When a lookup table with related candidates is shown: go
-          back to the original lookup table.
+          When a lookup table with related candidates is shown or a
+          lookup table where upper/lower-case has been changed by
+          typing the Shift key is shown: go back to the original
+          lookup table.
         </li>
         <li>
           When a normal lookup table is shown: close it and clear the
@@ -1197,7 +1198,10 @@ method.</td>
 <br class="clearboth">
 <a name="mouse-bindings"></a>
 <br>
-<h2>Mouse bindings</h2>
+<h3>Mouse bindings</h3>
+
+These mouse bindings are currently hardcoded and can not yet be
+customized.
 
 <br class="clearboth">
 <table border="2" cellspacing="10" cellpadding="10">
@@ -1255,6 +1259,24 @@ method.</td>
 </tr>
 </tbody>
 </table>
+
+<br class="clearboth">
+<a name="key-bindings-customization"></a>
+<br>
+<h3>Customizing key bindings</h3>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Customizing the key bindings with the setup tool</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-key-bindings-customization.png">
+        <img src="images/thumbs/gnome-key-bindings-customization.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
 
 <br class="clearboth">
 <a name="multilingual-input"></a>
@@ -1518,7 +1540,8 @@ method.</td>
   the current example, both key bindings behave the same. But there
   can be more than two input methods and then “Control+Down” moves in
   one direction through the list of input methods and “Control+Up” in
-  the other direction (see <a href="">key bindings</a>).
+  the other direction (see <a href="key-bindings">key and mouse
+  bindings</a>).
 </p>
 
 <br class="clearboth">
