@@ -56,7 +56,11 @@ http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindin
 A copy of that key bindings and mouse bindings documentation is
 included here for convenience:
 
-Key bindings
+Table of default key bindings
+
+Some of these key bindings can be customized in the setup tool.
+The following table explains the defaults:
+
 
 ┏━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃  Key combination  │                         Effect                          ┃
@@ -71,32 +75,41 @@ Key bindings
 ┃ Enter             │ Commit the preëdit (or the selected candidate, if any)  ┃
 ┃                   │ and send a Enter to the application.                    ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
+┃                   │ Bound by default to the commands                        ┃
+┃                   │ “select_next_candidate” and “enable_lookup”.            ┃
+┃                   │                                                         ┃
 ┃                   │   • If the option “☐ Enable suggestions by Tab key” is  ┃
-┃                   │     not set: “Tab” behaves like the other “commit       ┃
-┃                   │     keys”, i.e. it commits the preëdit (or the selected ┃
-┃                   │     candidate, if any) and sends a Tab to the           ┃
-┃                   │     appplication.                                       ┃
+┃                   │     not set: “Tab” always just executes                 ┃
+┃                   │     “select_next_candidate” which selects the next      ┃
+┃                   │     candidate from the candidate list.                  ┃
 ┃                   │   • If the option “☑ Enable suggestions by Tab key” is  ┃
 ┃                   │     set, no candidate list is shown by default:         ┃
-┃                   │       □ If Tab has not yet been typed: Request to show  ┃
-┃                   │         the candidate list (nothing might be shown if   ┃
-┃ Tab               │         no candidates can be found).                    ┃
-┃                   │       □ If Tab has been typed already, i.e. the         ┃
-┃                   │         candidate list has already been requested:      ┃
-┃                   │         Commit selected candidate (or preëdit if no     ┃
-┃                   │         candidate is selected), then pass the Tab to    ┃
-┃                   │         the application. *And* hide the candidate list  ┃
-┃                   │         again after each commit! That means that when   ┃
-┃                   │         typing continues after each commit, no          ┃
-┃                   │         candidate list is shown until one types Tab to  ┃
-┃                   │         request it.                                     ┃
+┃ Tab               │       □ If no candidate list is shown: “enable_lookup”  ┃
+┃                   │         is executed which requests to show the          ┃
+┃                   │         candidate list (nothing might be shown if no    ┃
+┃                   │         candidates can be found).                       ┃
+┃                   │       □ If a candidate list is already shown:           ┃
+┃                   │         “select_next_candidate” is executed which       ┃
+┃                   │         selects the next candidate in the list. After   ┃
+┃                   │         each commit and after each change of the        ┃
+┃                   │         contents of the preëdit, the candidate list     ┃
+┃                   │         will be hidden again until the “enable_lookup”  ┃
+┃                   │         requests it again.                              ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
+┃                   │ Bound by default to the command                         ┃
+┃ Shift+Tab         │ “select_previous_candidate”.                            ┃
+┃                   │ Selects the previous candidate in the candidate list.   ┃
+┠───────────────────┼─────────────────────────────────────────────────────────┨
+┃                   │ Bound by default to the command “cancel”.               ┃
+┃                   │                                                         ┃
 ┃                   │   • When a candidate is selected (no matter whether     ┃
 ┃                   │     this is a normal lookup table or a “related” lookup ┃
 ┃                   │     table): Show the first page of that lookup table    ┃
 ┃                   │     again with no candidate selected.                   ┃
 ┃ Escape            │   • When no candidate is selected:                      ┃
 ┃                   │       □ When a lookup table with related candidates is  ┃
+┃                   │         shown or a lookup table where upper/lower-case  ┃
+┃                   │         has been changed by typing the Shift key is     ┃
 ┃                   │         shown: go back to the original lookup table.    ┃
 ┃                   │       □ When a normal lookup table is shown: close it   ┃
 ┃                   │         and clear the preëdit.                          ┃
@@ -131,13 +144,20 @@ Key bindings
 ┃ Control+Delete    │ Remove everything to the right of the cursor in the     ┃
 ┃                   │ preëdit text.                                           ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
-┃ Down (Arrow down) │ Select the next candidate.                              ┃
+┃                   │ Bound by default to the command                         ┃
+┃ Down (Arrow down) │ “select_next_candidate”.                                ┃
+┃                   │ Selects the next candidate.                             ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
-┃ Up (Arrow up)     │ Select the previous candidate.                          ┃
+┃                   │ Bound by default to the command                         ┃
+┃ Up (Arrow up)     │ “select_previous_candidate”.                            ┃
+┃                   │ Selects the previous candidate.                         ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
-┃ Page_Up           │ Show next page of candidates.                           ┃
+┃ Page_Up           │ Bound by default to the command “lookup_table_page_up”. ┃
+┃                   │ Shows the previous page of candidates.                  ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
-┃ Page_Down         │ Show previous page of candidates.                       ┃
+┃                   │ Bound by default to the command                         ┃
+┃ Page_Down         │ “lookup_table_page_down”.                               ┃
+┃                   │ Shows the next page of candidates.                      ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ F1                │ Commit the candidate with the label “1” followed by a   ┃
 ┃                   │ space                                                   ┃
@@ -183,23 +203,30 @@ Key bindings
 ┃ Control+1 …       │ Same as Control+F1 … Control+F9 if the option “Use      ┃
 ┃ Control+9         │ digits as select keys” is enabled.                      ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
-┃                   │ Toggle the emoji and Unicode symbol prediction on/off.  ┃
-┃ AltGr+F6          │ This has the same result as using the setup tool to     ┃
+┃                   │ Bound by default to the command                         ┃
+┃                   │ “toggle_emoji_prediction”.                              ┃
+┃ AltGr+F6          │ Toggle the emoji and Unicode symbol prediction on/off.  ┃
+┃                   │ This has the same result as using the setup tool to     ┃
 ┃                   │ change this.                                            ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
+┃                   │ Bound by default to the command                         ┃
+┃                   │ “toggle_off_the_record”.                                ┃
 ┃                   │ Toggle the “Off the record” mode. This has the same     ┃
 ┃                   │ result as using the setup tool to change this.          ┃
 ┃                   │ While “Off the record” mode is on, learning from user   ┃
-┃                   │ input is disabled. If learned user input is available,  ┃
-┃ AltGr+F9          │ predictions are usually much better than predictions    ┃
+┃ AltGr+F9          │ input is disabled. If learned user input is available,  ┃
+┃                   │ predictions are usually much better than predictions    ┃
 ┃                   │ using only dictionaries. Therefore, one should use this ┃
 ┃                   │ option sparingly. Only if one wants to avoid saving     ┃
 ┃                   │ secret user input to disk it might make sense to use    ┃
 ┃                   │ this option temporarily.                                ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
-┃ AltGr+F10         │ Open the setup tool                                     ┃
+┃ AltGr+F10         │ Bound by default to the command “setup”.                ┃
+┃                   │ Opens the setup tool.                                   ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
-┃ AltGr+F12         │ Show related emoji and Unicode symbols or related words ┃
+┃                   │ Bound by default to the command “lookup_related”.       ┃
+┃ AltGr+F12         │ Shows related emoji and Unicode symbols or related      ┃
+┃                   │ words                                                   ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ AltGr+Space       │ Insert a literal space into the preëdit.                ┃
 ┗━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
@@ -208,20 +235,26 @@ Key bindings
 When more than one input method at the same time is used, the following
 additional key bindings are available:
 
-┏━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃      Key      │                           Effect                            ┃
-┃  combination  │                                                             ┃
-┠───────────────┼─────────────────────────────────────────────────────────────┨
-┃ Control+Down  │ Switch input method used for the preëdit to the next input  ┃
-┃               │ method                                                      ┃
-┠───────────────┼─────────────────────────────────────────────────────────────┨
-┃ Control+Up    │ Switch input method used for the preëdit to the previous    ┃
-┃               │ input method.                                               ┃
-┗━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃     Key      │                            Effect                            ┃
+┃ combination  │                                                              ┃
+┠──────────────┼──────────────────────────────────────────────────────────────┨
+┃              │ Bound by default to the command “next_input_method”.         ┃
+┃ Control+Down │ Switches the input method used for the preëdit to the next   ┃
+┃              │ input method.                                                ┃
+┠──────────────┼──────────────────────────────────────────────────────────────┨
+┃              │ Bound by default to the command “previous_input_method”.     ┃
+┃ Control+Up   │ Switches the input method used for the preëdit to the        ┃
+┃              │ previous input method.                                       ┃
+┗━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
 
 
 Mouse bindings
+
+These mouse bindings are currently hardcoded and can not yet be customized.
+
 
 ┏━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃   Mouse event    │                          Effect                          ┃
@@ -234,16 +267,16 @@ Mouse bindings
 ┃ candidate        │ from user input, nothing happens).                       ┃
 ┠──────────────────┼──────────────────────────────────────────────────────────┨
 ┃ Button 3 click   │ Show related emoji and Unicode symbols or related words  ┃
-┃ on a candidate   │ (Same as Alt+F12).                                       ┃
+┃ on a candidate   │ (Same as AltGr+F12).                                     ┃
 ┠──────────────────┼──────────────────────────────────────────────────────────┨
 ┃ Control + Button │ Toggle the emoji and Unicode symbol prediction on/off    ┃
-┃ 3 click anywhere │ (Same as Alt+F6). This has the same result as using the  ┃
-┃ in the candidate │ setup tool to change this.                               ┃
+┃ 3 click anywhere │ (Same as AltGr+F6). This has the same result as using    ┃
+┃ in the candidate │ the setup tool to change this.                           ┃
 ┃ list             │                                                          ┃
 ┠──────────────────┼──────────────────────────────────────────────────────────┨
-┃                  │ Toggle the “Off the record” mode (Same as Alt+F9). This  ┃
-┃                  │ has the same result as using the setup tool to change    ┃
-┃                  │ this.                                                    ┃
+┃                  │ Toggle the “Off the record” mode (Same as AltGr+F9).     ┃
+┃                  │ This has the same result as using the setup tool to      ┃
+┃                  │ change this.                                             ┃
 ┃ Alt + Button 3   │ While “Off the record” mode is on, learning from user    ┃
 ┃ click anywhere   │ input is disabled. If learned user input is available,   ┃
 ┃ in the candidate │ predictions are usually much better than predictions     ┃
