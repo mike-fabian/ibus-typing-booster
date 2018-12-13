@@ -1075,7 +1075,7 @@ class EmojiPickerUI(Gtk.Window):
         stats.print_stats('emoji_picker', 25)
         stats.print_stats('itb_emoji', 25)
 
-    def on_delete_event(self, *dummy_args):
+    def on_delete_event(self, *_args):
         '''
         The window has been deleted, probably by the window manager.
         '''
@@ -1084,7 +1084,7 @@ class EmojiPickerUI(Gtk.Window):
             self._print_profiling_information()
         Gtk.main_quit()
 
-    def on_destroy_event(self, *dummy_args):
+    def on_destroy_event(self, *_args):
         '''
         The window has been destroyed.
         '''

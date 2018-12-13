@@ -222,7 +222,8 @@ class TypingBoosterEngine(IBus.Engine):
         self._keybindings = {}
         self._hotkeys = None
         self.set_keybindings(
-            itb_util.variant_to_value(self._gsettings.get_value('keybindings')),
+            itb_util.variant_to_value(
+                self._gsettings.get_value('keybindings')),
             update_gsettings=False)
 
         self._dictionary_names = []
@@ -606,7 +607,7 @@ class TypingBoosterEngine(IBus.Engine):
                 len(phrase)))
         text = IBus.Text.new_from_string(phrase)
         i = 0
-        while attrs.get(i) != None:
+        while attrs.get(i) is not None:
             attr = attrs.get(i)
             text.append_attribute(attr.get_attr_type(),
                                   attr.get_value(),
@@ -743,7 +744,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._append_candidate_to_lookup_table(
                 phrase=cand[0], user_freq=cand[1], comment=cand[2],
                 from_user_db=cand[3], spell_checking=cand[4])
-        return True
+        return
 
     def _arrow_down(self):
         '''Process Arrow Down Key Event
@@ -751,7 +752,7 @@ class TypingBoosterEngine(IBus.Engine):
         if not self._lookup_table.cursor_visible:
             self._lookup_table.set_cursor_visible(True)
             return True
-        elif self._lookup_table.cursor_down():
+        if self._lookup_table.cursor_down():
             return True
         return False
 
@@ -1393,14 +1394,15 @@ class TypingBoosterEngine(IBus.Engine):
                 self.get_current_imes()[0]])
         if _str == '':
             super(TypingBoosterEngine, self).update_preedit_text_with_mode(
-                IBus.Text.new_from_string(''), 0, False, IBus.PreeditFocusMode.COMMIT)
+                IBus.Text.new_from_string(''), 0, False,
+                IBus.PreeditFocusMode.COMMIT)
         else:
             attrs = IBus.AttrList()
             attrs.append(IBus.attr_underline_new(
                 IBus.AttrUnderline.SINGLE, 0, len(_str)))
             text = IBus.Text.new_from_string(_str)
             i = 0
-            while attrs.get(i) != None:
+            while attrs.get(i) is not None:
                 attr = attrs.get(i)
                 text.append_attribute(attr.get_attr_type(),
                                       attr.get_value(),
@@ -1451,7 +1453,7 @@ class TypingBoosterEngine(IBus.Engine):
                 len(aux_string)))
         text = IBus.Text.new_from_string(aux_string)
         i = 0
-        while attrs.get(i) != None:
+        while attrs.get(i) is not None:
             attr = attrs.get(i)
             text.append_attribute(attr.get_attr_type(),
                                   attr.get_value(),
@@ -1507,7 +1509,7 @@ class TypingBoosterEngine(IBus.Engine):
         # the lookup table and the auxiliary text:
         completion = first_candidate[len(typed_string):]
         self.hide_lookup_table()
-        text  = IBus.Text.new_from_string('')
+        text = IBus.Text.new_from_string('')
         super(TypingBoosterEngine, self).update_auxiliary_text(text, False)
         text = IBus.Text.new_from_string(typed_string + completion)
         attrs = IBus.AttrList()
@@ -1515,12 +1517,14 @@ class TypingBoosterEngine(IBus.Engine):
             IBus.AttrUnderline.SINGLE, 0, len(typed_string)))
         if self.get_lookup_table().cursor_visible:
             attrs.append(IBus.attr_underline_new(
-            IBus.AttrUnderline.DOUBLE, len(typed_string), len(typed_string + completion)))
+                IBus.AttrUnderline.DOUBLE,
+                len(typed_string), len(typed_string + completion)))
         else:
             attrs.append(IBus.attr_underline_new(
-            IBus.AttrUnderline.NONE, len(typed_string), len(typed_string + completion)))
+                IBus.AttrUnderline.NONE,
+                len(typed_string), len(typed_string + completion)))
         i = 0
-        while attrs.get(i) != None:
+        while attrs.get(i) is not None:
             attr = attrs.get(i)
             text.append_attribute(attr.get_attr_type(),
                                   attr.get_value(),
@@ -1995,8 +1999,8 @@ class TypingBoosterEngine(IBus.Engine):
                 GLib.Variant.new_boolean(mode))
 
     def toggle_add_space_on_commit(self, update_gsettings=True):
-        '''Toggles whether a space is added when a candidate is committed by 1-9
-        or F1-F9 or by mouse click.
+        '''Toggles whether a space is added when a candidate is committed by
+        1-9 or F1-F9 or by mouse click.
 
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
@@ -2004,6 +2008,7 @@ class TypingBoosterEngine(IBus.Engine):
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
+
         '''
         self.set_add_space_on_commit(
             not self._add_space_on_commit, update_gsettings)
@@ -2017,8 +2022,8 @@ class TypingBoosterEngine(IBus.Engine):
         return self._add_space_on_commit
 
     def set_inline_completion(self, mode, update_gsettings=True):
-        '''Sets whether the best completion is first shown inline in the preëdit
-        instead of using a combobox to show a candidate list.
+        '''Sets whether the best completion is first shown inline in the
+        preëdit instead of using a combobox to show a candidate list.
 
         :param mode: Whether to show completions inline
         :type mode: boolean
@@ -2043,8 +2048,8 @@ class TypingBoosterEngine(IBus.Engine):
                 GLib.Variant.new_boolean(mode))
 
     def toggle_inline_completion(self, update_gsettings=True):
-        '''Toggles whether the best completion is first shown inline in the preëdit
-        instead of using a combobox to show a candidate list.
+        '''Toggles whether the best completion is first shown inline in the
+        preëdit instead of using a combobox to show a candidate list.
 
 
         :param update_gsettings: Whether to write the change to Gsettings.
@@ -2053,6 +2058,7 @@ class TypingBoosterEngine(IBus.Engine):
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
+
         '''
         self.set_inline_completion(
             not self._inline_completion, update_gsettings)
@@ -2374,7 +2380,7 @@ class TypingBoosterEngine(IBus.Engine):
                 %(page_size, update_gsettings))
         if page_size == self._page_size:
             return
-        if page_size >= 1 and page_size <= 9:
+        if 1 <= page_size <= 9:
             self._page_size = page_size
             self._lookup_table.set_page_size(self._page_size)
             self._clear_input_and_update_ui()
@@ -2411,7 +2417,7 @@ class TypingBoosterEngine(IBus.Engine):
                 %(orientation, update_gsettings))
         if orientation == self._lookup_table_orientation:
             return
-        if orientation >= 0 and orientation <= 2:
+        if 0 <= orientation <= 2:
             self._lookup_table_orientation = orientation
             self._lookup_table.set_orientation(self._lookup_table_orientation)
             self._clear_input_and_update_ui()
@@ -2446,7 +2452,7 @@ class TypingBoosterEngine(IBus.Engine):
                 %(min_char_complete, update_gsettings))
         if min_char_complete == self._min_char_complete:
             return
-        if min_char_complete >= 1 and min_char_complete <= 9:
+        if 1 <= min_char_complete <= 9:
             self._min_char_complete = min_char_complete
             self._clear_input_and_update_ui()
             if update_gsettings:
@@ -2723,6 +2729,8 @@ class TypingBoosterEngine(IBus.Engine):
             self._start_setup()
             return True
 
+        return False
+
     def _return_false(self, keyval, keycode, state):
         '''A replacement for “return False” in do_process_key_event()
 
@@ -2766,7 +2774,6 @@ class TypingBoosterEngine(IBus.Engine):
         # right keycode, this does not work correctly, i.e.
         # self.forward_key_event(IBus.KEY_Left, 0, 0) does *not* work!
         self.forward_key_event(IBus.KEY_Left, 105, 0)
-        return
 
     def do_process_key_event(self, keyval, keycode, state):
         '''Process Key Events
@@ -2888,7 +2895,7 @@ class TypingBoosterEngine(IBus.Engine):
                 + index)
             if (candidate_number
                 < self._lookup_table.get_number_of_candidates()
-                and index >= 0 and index < self._page_size):
+                and 0 <= index < self._page_size):
                 if key.control:
                     # Remove the candidate from the user database
                     if self.remove_candidate_from_user_database(index):
@@ -3236,7 +3243,6 @@ class TypingBoosterEngine(IBus.Engine):
             self._record_in_database_and_push_context()
         self.clear_context()
         self._clear_input_and_update_ui()
-        return
 
     def do_reset(self):
         '''Called when the mouse pointer is used to move to cursor to a
@@ -3252,7 +3258,6 @@ class TypingBoosterEngine(IBus.Engine):
         if not self.is_empty():
             self._record_in_database_and_push_context()
         self._clear_input_and_update_ui()
-        return
 
     def do_set_content_type(self, purpose, _hints):
         '''Called when the input purpose changes

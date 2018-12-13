@@ -23,12 +23,12 @@ import os
 import sys
 import argparse
 import time
+import re
+from signal import signal, SIGTERM, SIGINT
 from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus
 from gi.repository import GLib
-import re
-from signal import signal, SIGTERM, SIGINT
 
 import factory
 import tabsqlitedb
@@ -62,43 +62,44 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--daemon', '-d',
-        action = 'store_true',
-        dest = 'daemon',
-        default = False,
-        help = 'Run as daemon, default: %(default)s')
+        action='store_true',
+        dest='daemon',
+        default=False,
+        help='Run as daemon, default: %(default)s')
     parser.add_argument(
         '--ibus', '-i',
-        action = 'store_true',
-        dest = 'ibus',
-        default = False,
-        help = 'Set the IME icon file, default: %(default)s')
+        action='store_true',
+        dest='ibus',
+        default=False,
+        help='Set the IME icon file, default: %(default)s')
     parser.add_argument(
         '--xml', '-x',
-        action = 'store_true',
-        dest = 'xml',
-        default = False,
-        help = 'output the engines xml part, default: %(default)s')
+        action='store_true',
+        dest='xml',
+        default=False,
+        help='output the engines xml part, default: %(default)s')
     parser.add_argument(
         '--no-debug', '-n',
-        action = 'store_true',
-        dest = 'no_debug',
-        default = False,
-        help = 'Do not redirect stdout and stderr to '
+        action='store_true',
+        dest='no_debug',
+        default=False,
+        help='Do not redirect stdout and stderr to '
         + '~/.local/share/ibus-typing-booster/debug.log, '
         + 'default: %(default)s')
     parser.add_argument(
         '--profile', '-p',
-        action = 'store_true',
-        dest = 'profile',
-        default = False,
-        help = 'print profiling information into the debug log. '
+        action='store_true',
+        dest='profile',
+        default=False,
+        help='print profiling information into the debug log. '
         + 'Works only when --no-debug is not used.')
     return parser.parse_args()
 
 _ARGS = parse_args()
 
 if _ARGS.profile:
-    import cProfile, pstats
+    import cProfile
+    import pstats
     _PROFILE = cProfile.Profile()
 
 class IMApp:
@@ -121,7 +122,8 @@ class IMApp:
                 description="Typing Booster Component",
                 version=version.get_version(),
                 license="GPL",
-                author="Mike FABIAN <mfabian@redhat.com>, Anish Patil <anish.developer@gmail.com>",
+                author=("Mike FABIAN <mfabian@redhat.com>, "
+                        + "Anish Patil <anish.developer@gmail.com>"),
                 homepage="http://mike-fabian.github.io/ibus-typing-booster",
                 textdomain="ibus-typing-booster")
             # now we get IME info from self.__factory.db
@@ -182,7 +184,7 @@ class IMApp:
             stats.print_stats('hunspell_table', 25)
             stats.print_stats('itb_emoji', 25)
 
-def cleanup (ima_ins):
+def cleanup(ima_ins):
     ima_ins.quit()
     sys.exit()
 
@@ -221,55 +223,55 @@ def main():
         egs = Element('engines')
 
         for language in ('t',):
-            _engine = SubElement (egs,'engine')
+            _engine = SubElement(egs, 'engine')
 
-            _name = SubElement (_engine, 'name')
+            _name = SubElement(_engine, 'name')
             _name.text = 'typing-booster'
 
-            _longname = SubElement (_engine, 'longname')
+            _longname = SubElement(_engine, 'longname')
             _longname.text = 'Typing Booster'
 
-            _language = SubElement (_engine, 'language')
+            _language = SubElement(_engine, 'language')
             _language.text = language
 
-            _license = SubElement (_engine, 'license')
+            _license = SubElement(_engine, 'license')
             _license.text = 'GPL'
 
-            _author = SubElement (_engine, 'author')
+            _author = SubElement(_engine, 'author')
             _author.text = (
                 'Mike FABIAN <mfabian@redhat.com>'
                 + ', Anish Patil <anish.developer@gmail.com>')
 
-            _icon = SubElement (_engine, 'icon')
+            _icon = SubElement(_engine, 'icon')
             _icon.text = os.path.join(ICON_DIR, 'ibus-typing-booster.svg')
 
-            _layout = SubElement (_engine, 'layout')
+            _layout = SubElement(_engine, 'layout')
             _layout.text = 'default'
 
-            _desc = SubElement (_engine, 'description')
+            _desc = SubElement(_engine, 'description')
             _desc.text = 'A completion input method to speedup typing.'
 
-            _symbol = SubElement(_engine,'symbol')
+            _symbol = SubElement(_engine, 'symbol')
             _symbol.text = '🚀'
 
-            _setup = SubElement(_engine,'setup')
+            _setup = SubElement(_engine, 'setup')
             _setup.text = SETUP_TOOL
 
         # now format the xmlout pretty
-        indent (egs)
+        indent(egs)
         egsout = tostring(egs, encoding='utf8', method='xml').decode('utf-8')
         patt = re.compile('<\?.*\?>\n')
         egsout = patt.sub('', egsout)
         sys.stdout.buffer.write((egsout+'\n').encode('utf-8'))
         return 0
 
-    if _ARGS.daemon :
+    if _ARGS.daemon:
         if os.fork():
             sys.exit()
 
     ima = IMApp(_ARGS.ibus)
-    signal (SIGTERM, lambda signum, stack_frame: cleanup(ima))
-    signal (SIGINT, lambda signum, stack_frame: cleanup(ima))
+    signal(SIGTERM, lambda signum, stack_frame: cleanup(ima))
+    signal(SIGINT, lambda signum, stack_frame: cleanup(ima))
     try:
         ima.run()
     except KeyboardInterrupt:
@@ -277,4 +279,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

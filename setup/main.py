@@ -1095,19 +1095,19 @@ class SetupUI(Gtk.Window):
         else:
             return False
 
-    def on_delete_event(self, *dummy_args):
+    def on_delete_event(self, *_args):
         '''
         The window has been deleted, probably by the window manager.
         '''
         Gtk.main_quit()
 
-    def on_destroy_event(self, *dummy_args):
+    def on_destroy_event(self, *_args):
         '''
         The window has been destroyed.
         '''
         Gtk.main_quit()
 
-    def on_close_clicked(self, *dummy_args):
+    def on_close_clicked(self, *_args):
         '''
         The button to close the dialog has been clicked.
         '''
@@ -1311,7 +1311,7 @@ class SetupUI(Gtk.Window):
         with the combobox
         '''
         tree_iter = widget.get_active_iter()
-        if tree_iter != None:
+        if tree_iter is not None:
             model = widget.get_model()
             orientation = model[tree_iter][1]
             self.set_lookup_table_orientation(
@@ -1401,7 +1401,7 @@ class SetupUI(Gtk.Window):
         filter_text = search_entry.get_text()
         self._fill_dictionaries_add_listbox(filter_text)
 
-    def on_dictionaries_add_button_clicked(self, *dummy_args):
+    def on_dictionaries_add_button_clicked(self, *_args):
         '''
         Signal handler called when the “add” button to add another
         dictionary has been clicked.
@@ -1448,13 +1448,13 @@ class SetupUI(Gtk.Window):
             self._dictionaries_add_popover.popup()
         self._dictionaries_add_popover.show_all()
 
-    def on_dictionaries_remove_button_clicked(self, *dummy_args):
+    def on_dictionaries_remove_button_clicked(self, *_args):
         '''
         Signal handler called when the “remove” button for
         an input method has been clicked.
         '''
         index = self._dictionaries_listbox_selected_dictionary_index
-        if not (index >= 0 and index < len(self._dictionary_names)):
+        if not 0 <= index < len(self._dictionary_names):
             # This should not happen, one should not be able
             # to click the remove button in this case, just return:
             return
@@ -1466,7 +1466,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox_selected_dictionary_name = ''
         self._dictionaries_listbox.unselect_all()
 
-    def on_dictionaries_up_button_clicked(self, *dummy_args):
+    def on_dictionaries_up_button_clicked(self, *_args):
         '''
         Signal handler called when the “up” button for a dictionary
         has been clicked.
@@ -1474,7 +1474,7 @@ class SetupUI(Gtk.Window):
         Increases the priority of the selected dictionary.
         '''
         index = self._dictionaries_listbox_selected_dictionary_index
-        if not (index > 0 and index < len(self._dictionary_names)):
+        if not 0 < index < len(self._dictionary_names):
             # This should not happen, one should not be able
             # to click the up button in this case, just return:
             return
@@ -1490,7 +1490,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox.select_row(
             self._dictionaries_listbox.get_row_at_index(index - 1))
 
-    def on_dictionaries_down_button_clicked(self, *dummy_args):
+    def on_dictionaries_down_button_clicked(self, *_args):
         '''
         Signal handler called when the “down” button for a dictionary
         has been clicked.
@@ -1498,7 +1498,7 @@ class SetupUI(Gtk.Window):
         Lowers the priority of the selected dictionary.
         '''
         index = self._dictionaries_listbox_selected_dictionary_index
-        if not (index >= 0 and index < len(self._dictionary_names) - 1):
+        if not 0 <= index < len(self._dictionary_names) - 1:
             # This should not happen, one should not be able
             # to click the down button in this case, just return:
             return
@@ -1514,7 +1514,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox.select_row(
             self._dictionaries_listbox.get_row_at_index(index + 1))
 
-    def on_install_missing_dictionaries(self, *dummy_args):
+    def on_install_missing_dictionaries(self, *_args):
         '''
         Signal handler called when the “Install missing dictionaries”
         button is clicked.
@@ -1643,7 +1643,7 @@ class SetupUI(Gtk.Window):
         filter_text = search_entry.get_text()
         self._fill_input_methods_add_listbox(filter_text)
 
-    def on_input_methods_add_button_clicked(self, *dummy_args):
+    def on_input_methods_add_button_clicked(self, *_args):
         '''
         Signal handler called when the “add” button to add another
         input method has been clicked.
@@ -1703,13 +1703,13 @@ class SetupUI(Gtk.Window):
             self._input_methods_add_popover.popup()
         self._input_methods_add_popover.show_all()
 
-    def on_input_methods_remove_button_clicked(self, *dummy_args):
+    def on_input_methods_remove_button_clicked(self, *_args):
         '''
         Signal handler called when the “remove” button for
         an input method has been clicked.
         '''
         index = self._input_methods_listbox_selected_ime_index
-        if not (index >= 0 and index < len(self._current_imes)):
+        if not 0 <= index < len(self._current_imes):
             # This should not happen, one should not be able
             # to click the remove button in this case, just return:
             return
@@ -1720,7 +1720,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_listbox_selected_ime_name = ''
         self._input_methods_listbox.unselect_all()
 
-    def on_input_methods_up_button_clicked(self, *dummy_args):
+    def on_input_methods_up_button_clicked(self, *_args):
         '''
         Signal handler called when the “up” button for an input method
         has been clicked.
@@ -1728,7 +1728,7 @@ class SetupUI(Gtk.Window):
         Increases the priority of the selected input method.
         '''
         index = self._input_methods_listbox_selected_ime_index
-        if not (index > 0 and index < len(self._current_imes)):
+        if not 0 < index < len(self._current_imes):
             # This should not happen, one should not be able
             # to click the up button in this case, just return:
             return
@@ -1744,7 +1744,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_listbox.select_row(
             self._input_methods_listbox.get_row_at_index(index - 1))
 
-    def on_input_methods_down_button_clicked(self, *dummy_args):
+    def on_input_methods_down_button_clicked(self, *_args):
         '''
         Signal handler called when the “down” button for an input method
         has been clicked.
@@ -1752,7 +1752,7 @@ class SetupUI(Gtk.Window):
         Lowers the priority of the selected input method.
         '''
         index = self._input_methods_listbox_selected_ime_index
-        if not (index >= 0 and index < len(self._current_imes) - 1):
+        if not 0 <= index < len(self._current_imes) - 1:
             # This should not happen, one should not be able
             # to click the down button in this case, just return:
             return
@@ -1820,9 +1820,9 @@ class SetupUI(Gtk.Window):
             self._input_methods_listbox_selected_ime_index = index
             self._input_methods_remove_button.set_sensitive(True)
             self._input_methods_up_button.set_sensitive(
-                index > 0 and index < len(self._current_imes))
+                0 < index < len(self._current_imes))
             self._input_methods_down_button.set_sensitive(
-                index >= 0 and index < len(self._current_imes) - 1)
+                0 <= index < len(self._current_imes) - 1)
             self._input_methods_help_button.set_sensitive(True)
         else:
             # all rows have been unselected
@@ -1909,7 +1909,8 @@ class SetupUI(Gtk.Window):
             self._shortcut_entry.set_text(shortcut)
             self._shortcut_expansion_entry.set_text(shortcut_expansion)
 
-    def on_keybindings_treeview_row_activated(self, _treeview, treepath, _treeviewcolumn):
+    def on_keybindings_treeview_row_activated(
+            self, _treeview, treepath, _treeviewcolumn):
         '''
         A row in the treeview listing the key bindings has  been activated.
 
@@ -1917,12 +1918,13 @@ class SetupUI(Gtk.Window):
         :type treeview: Gtk.TreeView object
         :param treepath: The path to the activated row
         :type treepath: Gtk.TreePath object
-        :param treeviewcolumn: A column in the treeview listing the key bindings
+        :param treeviewcolumn: A column in the treeview listing the
+                               key bindings
         :type treeviewcolumn: Gtk.TreeViewColumn object
         '''
         model = self._keybindings_treeview_model
         iterator = model.get_iter(treepath)
-        command  = model[iterator][0]
+        command = model[iterator][0]
         if command != self._keybindings_selected_command:
             # This should not happen, if a row is activated it should
             # already be selected,
@@ -1970,7 +1972,7 @@ class SetupUI(Gtk.Window):
             self._keybindings_edit_popover_selected_keybinding = ''
             self._keybindings_edit_popover_remove_button.set_sensitive(False)
 
-    def on_keybindings_edit_popover_add_button_clicked(self, *dummy_args):
+    def on_keybindings_edit_popover_add_button_clicked(self, *_args):
         '''
         Signal handler called when the “Add” button to add
         a key binding has been clicked.
@@ -1988,7 +1990,7 @@ class SetupUI(Gtk.Window):
                 self._fill_keybindings_edit_popover_listbox()
                 self.set_keybindings(self._keybindings)
 
-    def on_keybindings_edit_popover_remove_button_clicked(self, *dummy_args):
+    def on_keybindings_edit_popover_remove_button_clicked(self, *_args):
         '''
         Signal handler called when the “Remove” button to remove
         a key binding has been clicked.
@@ -2001,7 +2003,7 @@ class SetupUI(Gtk.Window):
             self._fill_keybindings_edit_popover_listbox()
             self.set_keybindings(self._keybindings)
 
-    def on_keybindings_edit_popover_default_button_clicked(self, *dummy_args):
+    def on_keybindings_edit_popover_default_button_clicked(self, *_args):
         '''
         Signal handler called  when the “Default” button to set
         the  keybindings to the default has been clicked.
@@ -2029,10 +2031,12 @@ class SetupUI(Gtk.Window):
         self._keybindings_edit_popover_listbox.set_vexpand(True)
         self._keybindings_edit_popover_listbox.set_selection_mode(
             Gtk.SelectionMode.SINGLE)
-        self._keybindings_edit_popover_listbox.set_activate_on_single_click(True)
+        self._keybindings_edit_popover_listbox.set_activate_on_single_click(
+            True)
         self._keybindings_edit_popover_listbox.connect(
             'row-selected', self.on_keybindings_edit_listbox_row_selected)
-        for keybinding in sorted(self._keybindings[self._keybindings_selected_command]):
+        for keybinding in sorted(
+                self._keybindings[self._keybindings_selected_command]):
             label = Gtk.Label()
             label.set_text(html.escape(keybinding))
             label.set_use_markup(True)
@@ -2132,14 +2136,14 @@ class SetupUI(Gtk.Window):
             self._keybindings_edit_popover.popup()
         self._keybindings_edit_popover.show_all()
 
-    def on_keybindings_edit_button_clicked(self, *dummy_args):
+    def on_keybindings_edit_button_clicked(self, *_args):
         '''
         Signal handler called when the “edit” button to edit the
         key bindings for a command has been clicked.
         '''
         self._create_and_show_keybindings_edit_popover()
 
-    def on_keybindings_default_button_clicked(self, *dummy_args):
+    def on_keybindings_default_button_clicked(self, *_args):
         '''
         Signal handler called when the “Set to default” button to reset the
         key bindings for a command to the default has been clicked.
@@ -2152,7 +2156,7 @@ class SetupUI(Gtk.Window):
             new_keybindings[command] = default_keybindings[command]
             self.set_keybindings(new_keybindings)
 
-    def on_keybindings_all_default_button_clicked(self, *dummy_args):
+    def on_keybindings_all_default_button_clicked(self, *_args):
         '''
         Signal handler called when the “Set all to default” button to reset the
         all key bindings top their defaults has been clicked.
@@ -2445,7 +2449,7 @@ class SetupUI(Gtk.Window):
             %(page_size, update_gsettings))
         if page_size == self._page_size:
             return
-        if page_size >= 1 and page_size <= 9:
+        if 1 <= page_size <= 9:
             self._page_size = page_size
             if update_gsettings:
                 self._gsettings.set_value(
@@ -2471,7 +2475,7 @@ class SetupUI(Gtk.Window):
             %(orientation, update_gsettings))
         if orientation == self._lookup_table_orientation:
             return
-        if orientation >= 0 and orientation <= 2:
+        if 0 <= orientation <= 2:
             self._lookup_table_orientation = orientation
             if update_gsettings:
                 self._gsettings.set_value(
@@ -2501,7 +2505,7 @@ class SetupUI(Gtk.Window):
             %(min_char_complete, update_gsettings))
         if min_char_complete == self._min_char_complete:
             return
-        if min_char_complete >= 1 and min_char_complete <= 9:
+        if 1 <= min_char_complete <= 9:
             self._min_char_complete = min_char_complete
             if update_gsettings:
                 self._gsettings.set_value(
@@ -2718,7 +2722,8 @@ class SetupUI(Gtk.Window):
         while iterator:
             for command in self._keybindings:
                 if model.get_value(iterator, 0) == command:
-                    model.set_value(iterator, 1, repr(self._keybindings[command]))
+                    model.set_value(iterator, 1,
+                                    repr(self._keybindings[command]))
             iterator = model.iter_next(iterator)
         if update_gsettings:
             variant_dict = GLib.VariantDict(GLib.Variant('a{sv}', {}))

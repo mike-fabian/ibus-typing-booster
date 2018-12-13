@@ -163,7 +163,6 @@ def _init():
     except:
         print("Unexpected error:", sys.exc_info()[0])
         raise
-    return
 
 def _del():
     '''Cleanup, nothing to do here'''
@@ -191,7 +190,8 @@ def main():
     runs some tests and prints profiling data.
     '''
     if BENCHMARK:
-        import cProfile, pstats
+        import cProfile
+        import pstats
         profile = cProfile.Profile()
         profile.enable()
 

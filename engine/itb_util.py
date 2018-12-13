@@ -27,6 +27,7 @@ import re
 import string
 import unicodedata
 import gettext
+import traceback
 from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus
@@ -54,8 +55,8 @@ N_ = lambda a: a
 # When matching keybindings, the following modifiers
 # for all bits set in this mask are ignored:
 KEYBINDING_IGNORE_MASK = (
-            IBus.ModifierType.LOCK_MASK | # Caps Lock
-            IBus.ModifierType.MOD2_MASK   # Num Lock
+    IBus.ModifierType.LOCK_MASK | # Caps Lock
+    IBus.ModifierType.MOD2_MASK   # Num Lock
 )
 
 MAXIMUM_NUMBER_OF_INPUT_METHODS = 10
@@ -1822,8 +1823,7 @@ def bidi_embed(text):
     '''
     if is_right_to_left(text):
         return chr(0x202B) + text + chr(0x202C) # RLE + text + PDF
-    else:
-        return chr(0x202A) + text + chr(0x202C) # LRE + text + PDF
+    return chr(0x202A) + text + chr(0x202C) # LRE + text + PDF
 
 def contains_letter(text):
     '''Returns whether “text” contains a “letter” type character
@@ -1856,16 +1856,15 @@ def variant_to_value(variant):
     type_string = variant.get_type_string()
     if type_string == 's':
         return variant.get_string()
-    elif type_string == 'i':
+    if type_string == 'i':
         return variant.get_int32()
-    elif type_string == 'b':
+    if type_string == 'b':
         return variant.get_boolean()
-    elif type_string == 'v':
+    if type_string == 'v':
         return variant.unpack()
-    elif len(type_string) > 0 and type_string[0] == 'a':
+    if len(type_string) > 0 and type_string[0] == 'a':
         return variant.unpack()
-    else:
-        print('error: unknown variant type: %s' %type_string)
+    print('error: unknown variant type: %s' %type_string)
     return variant
 
 def dict_update_existing_keys(pdict, other_pdict):
@@ -2068,13 +2067,13 @@ def get_ime_help(ime_name):
     :param ime_name: Name of the input method
     :type ime_name: String
     :rtype: tuple of the form (path, title, description, full_contents, error)
-            where “path” is the full path of the file implementing the input method,
-            “title” is title of the input method,
+            where “path” is the full path of the file implementing the
+            input method, “title” is title of the input method,
             “description” is the description of the input method,
             and full_contents is the full content of the file implementing
             the input method.
-            “error” is empty if getting help for the input method was successfull,
-            otherwise it might contain an error message.
+            “error” is empty if getting help for the input method was
+            successfull, otherwise it might contain an error message.
 
     “NoIme” is handled as a special case.
 
@@ -2125,7 +2124,10 @@ def get_ime_help(ime_name):
         return ('', '', '', '', ('m17n dir not found, tried: %s' %dirnames))
     path = os.path.join(m17n_dir, mim_file)
     try:
-        with open(path, mode='r', encoding='UTF-8', errors='ignore') as ime_file:
+        with open(path,
+                  mode='r',
+                  encoding='UTF-8',
+                  errors='ignore') as ime_file:
             full_contents = ime_file.read()
     except FileNotFoundError:
         return ('', '', '', '', _('File not found'))
@@ -2158,17 +2160,16 @@ def xdg_save_data_path(*resource):
     '''
     if IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL:
         return xdg.BaseDirectory.save_data_path(*resource)
-    else:
-        # Replicate implementation of xdg.BaseDirectory.save_data_path
-        # here:
-        xdg_data_home = os.environ.get('XDG_DATA_HOME') or os.path.join(
-            os.path.expanduser('~'), '.local', 'share')
-        resource = os.path.join(*resource)
-        assert not resource.startswith('/')
-        path = os.path.join(xdg_data_home, resource)
-        if not os.path.isdir(path):
-            os.makedirs(path)
-        return path
+    # Replicate implementation of xdg.BaseDirectory.save_data_path
+    # here:
+    xdg_data_home = os.environ.get('XDG_DATA_HOME') or os.path.join(
+        os.path.expanduser('~'), '.local', 'share')
+    resource = os.path.join(*resource)
+    assert not resource.startswith('/')
+    path = os.path.join(xdg_data_home, resource)
+    if not os.path.isdir(path):
+        os.makedirs(path)
+    return path
 
 class KeyEvent:
     '''Key event class used to make the checking of details of the key
@@ -2251,7 +2252,7 @@ class KeyEvent:
                self.release))
 
 def keyevent_to_keybinding(keyevent):
-    keybinding=''
+    keybinding = ''
     if keyevent.shift:
         keybinding += 'Shift+'
     if keyevent.lock:
@@ -2363,7 +2364,7 @@ class ItbKeyInputDialog(Gtk.MessageDialog):
                     event.get_state() & ~KEYBINDING_IGNORE_MASK)
         return True
     def on_key_release_event(# pylint: disable=no-self-use
-            self, widget, dummy_event):
+            self, widget, _event):
         widget.response(Gtk.ResponseType.OK)
         return True
 
@@ -2423,14 +2424,14 @@ class ItbAboutDialog(Gtk.AboutDialog):
         self.show()
 
     def on_close_aboutdialog( # pylint: disable=no-self-use
-            self, dummy_about_dialog, dummy_response):
+            self, _about_dialog, _response):
         '''
         The “About” dialog has been closed by the user
 
-        :param dummy_about_dialog: The “About” dialog
-        :type dummy_about_dialog: GtkDialog object
-        :param dummy_response: The response when the “About” dialog was closed
-        :type dummy_response: Gtk.ResponseType enum
+        :param _about_dialog: The “About” dialog
+        :type _about_dialog: GtkDialog object
+        :param _response: The response when the “About” dialog was closed
+        :type _response: Gtk.ResponseType enum
         '''
         self.destroy()
 

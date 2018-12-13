@@ -548,7 +548,7 @@ class EmojiMatcher():
                 %(basenames, dirnames))
             return
         with open_function(
-            path, mode='rt', encoding='utf-8') as unicode_data_file:
+                path, mode='rt', encoding='utf-8') as unicode_data_file:
             for line in unicode_data_file.readlines():
                 if not line.strip():
                     continue
@@ -594,7 +594,7 @@ class EmojiMatcher():
                 %(basenames, dirnames))
             return
         with open_function(
-            path, mode='rt', encoding='utf-8') as unicode_emoji_data_file:
+                path, mode='rt', encoding='utf-8') as unicode_emoji_data_file:
             for line in unicode_emoji_data_file.readlines():
                 unicode_version = ''
                 pattern = re.compile(
@@ -639,7 +639,9 @@ class EmojiMatcher():
                 %(basenames, dirnames))
             return
         with open_function(
-            path, mode='rt', encoding='utf-8') as unicode_emoji_sequences_file:
+                path,
+                mode='rt',
+                encoding='utf-8') as unicode_emoji_sequences_file:
             for line in unicode_emoji_sequences_file.readlines():
                 unicode_version = ''
                 pattern = re.compile(
@@ -686,9 +688,9 @@ class EmojiMatcher():
                 %(basenames, dirnames))
             return
         with open_function(
-            path,
-            mode='rt',
-            encoding='utf-8') as unicode_emoji_zwj_sequences_file:
+                path,
+                mode='rt',
+                encoding='utf-8') as unicode_emoji_zwj_sequences_file:
             for line in unicode_emoji_zwj_sequences_file.readlines():
                 unicode_version = ''
                 pattern = re.compile(
@@ -744,7 +746,7 @@ class EmojiMatcher():
                 %(basenames, dirnames))
             return
         with open_function(
-            path, mode='rt', encoding='utf-8') as unicode_emoji_test_file:
+                path, mode='rt', encoding='utf-8') as unicode_emoji_test_file:
             group = ''
             subgroup = ''
             cldr_order = 0
@@ -829,7 +831,7 @@ class EmojiMatcher():
                 %(basenames, dirnames))
             return
         with open_function(
-            path, mode='rt', encoding='utf-8') as emoji_one_file:
+                path, mode='rt', encoding='utf-8') as emoji_one_file:
             emojione = json.load(emoji_one_file)
         if '1f600' not in emojione:
             emojione_version = 2
@@ -1039,7 +1041,7 @@ class EmojiMatcher():
         language = os.path.basename(
             path).replace('.gz', '').replace('.xml', '')
         with open_function(
-            path, mode='rt', encoding='utf-8') as cldr_annotation_file:
+                path, mode='rt', encoding='utf-8') as cldr_annotation_file:
             pattern = re.compile(
                 r'.*<annotation cp="(?P<emojistring>[^"]+)"'
                 +r'\s*(?P<tts>type="tts"){0,1}'
@@ -1724,11 +1726,11 @@ class EmojiMatcher():
 
         try:
             codepoint = int(query_string, 16)
-            if (codepoint >= 0x0 and codepoint <= 0x1FFFFF
+            if (0x0 <= codepoint <= 0x1FFFFF
                     # exclude surrogates and private use characters:
-                    and not (codepoint >= 0xd800 and codepoint <= 0xf8ff)
-                    and not (codepoint >= 0xf0000 and codepoint <= 0xffffd)
-                    and not (codepoint >= 0x100000 and codepoint <= 0x10fffd)):
+                    and not (0xd800 <= codepoint <= 0xf8ff)
+                    and not (0xf0000 <= codepoint <= 0xffffd)
+                    and not (0x100000 <= codepoint <= 0x10fffd)):
                 char = chr(codepoint)
                 name = self.name(char)
                 if not name:
