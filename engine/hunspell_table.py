@@ -271,12 +271,6 @@ class TypingBoosterEngine(IBus.Engine):
         else:
             self.emoji_matcher = None
 
-        # The number of current imes needs to be limited to some fixed
-        # maximum number because of the property menu to select the preëdit
-        # ime. Unfortunately the number of sub-properties for such a menu
-        # cannot be changed, as a workaround a fixed number can be used
-        # and unused entries can be hidden.
-        itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS = 10
         # Try to get the selected input methods from Gsettings:
         inputmethod = itb_util.variant_to_value(
             self._gsettings.get_value('inputmethod'))

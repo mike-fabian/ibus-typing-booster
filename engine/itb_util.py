@@ -59,6 +59,11 @@ KEYBINDING_IGNORE_MASK = (
     IBus.ModifierType.MOD2_MASK   # Num Lock
 )
 
+# The number of current imes needs to be limited to some fixed
+# maximum number because of the property menu to select the preëdit
+# ime. Unfortunately the number of sub-properties for such a menu
+# cannot be changed, as a workaround a fixed number can be used
+# and unused entries can be hidden.
 MAXIMUM_NUMBER_OF_INPUT_METHODS = 10
 
 NORMALIZATION_FORM_INTERNAL = 'NFD'
