@@ -147,6 +147,17 @@ class SetupUI(Gtk.Window):
         self._close_button.add(self._close_button_label)
         self._close_button.connect('clicked', self.on_close_clicked)
         self._dialog_action_area.add(self._close_button)
+
+        self._dictionaries_and_input_methods_vbox = Gtk.VBox()
+        margin = 10
+        self._dictionaries_and_input_methods_vbox.set_margin_start(margin)
+        self._dictionaries_and_input_methods_vbox.set_margin_end(margin)
+        self._dictionaries_and_input_methods_vbox.set_margin_top(margin)
+        self._dictionaries_and_input_methods_vbox.set_margin_bottom(margin)
+        self._dictionaries_and_input_methods_label = Gtk.Label()
+        self._dictionaries_and_input_methods_label.set_text(
+            _('Dictionaries and input methods'))
+
         self._options_grid = Gtk.Grid()
         self._options_grid.set_visible(True)
         self._options_grid.set_can_focus(False)
@@ -157,15 +168,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.set_column_homogeneous(True)
         self._options_label = Gtk.Label()
         self._options_label.set_text(_('Options'))
-        self._dictionaries_and_input_methods_vbox = Gtk.VBox()
-        margin = 10
-        self._dictionaries_and_input_methods_vbox.set_margin_start(margin)
-        self._dictionaries_and_input_methods_vbox.set_margin_end(margin)
-        self._dictionaries_and_input_methods_vbox.set_margin_top(margin)
-        self._dictionaries_and_input_methods_vbox.set_margin_bottom(margin)
-        self._dictionaries_and_input_methods_label = Gtk.Label()
-        self._dictionaries_and_input_methods_label.set_text(
-            _('Dictionaries and input methods'))
+
         self._custom_shortcuts_grid = Gtk.Grid()
         self._custom_shortcuts_grid.set_visible(True)
         self._custom_shortcuts_grid.set_can_focus(False)
@@ -175,6 +178,7 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.set_column_homogeneous(True)
         self._custom_shortcuts_label = Gtk.Label()
         self._custom_shortcuts_label.set_text(_('Custom shortcuts'))
+
         self._keybindings_vbox = Gtk.VBox()
         margin = 10
         self._keybindings_vbox.set_margin_start(margin)
@@ -184,11 +188,11 @@ class SetupUI(Gtk.Window):
         self._keybindings_label = Gtk.Label()
         self._keybindings_label.set_text(_('Key bindings'))
         self._notebook.append_page(
-            self._options_grid,
-            self._options_label)
-        self._notebook.append_page(
             self._dictionaries_and_input_methods_vbox,
             self._dictionaries_and_input_methods_label)
+        self._notebook.append_page(
+            self._options_grid,
+            self._options_label)
         self._notebook.append_page(
             self._custom_shortcuts_grid,
             self._custom_shortcuts_label)
@@ -867,6 +871,8 @@ class SetupUI(Gtk.Window):
         self._keybindings_edit_popover_default_button = None
 
         self.show_all()
+
+        self._notebook.set_current_page(0) # Has to be after show_all()
 
     def _fill_dictionaries_listbox_row(self, name):
         '''
