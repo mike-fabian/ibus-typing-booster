@@ -122,6 +122,20 @@ class TypingBoosterEngine(IBus.Engine):
             schema='org.freedesktop.ibus.engine.typing-booster')
         self._gsettings.connect('changed', self.on_gsettings_value_changed)
 
+        self._prop_dict = {}
+        self._sub_props_dict = {}
+        self.main_prop_list = []
+        self.emoji_prediction_mode_menu = {}
+        self.emoji_prediction_mode_properties = {}
+        self.off_the_record_mode_menu = {}
+        self.off_the_record_mode_properties = {}
+        self.preedit_ime_menu = {}
+        self.preedit_ime_properties = {}
+        self.preedit_ime_sub_properties_prop_list = []
+        self._setup_property = None
+
+        self._current_imes = []
+
         # Between some events sent to ibus like forward_key_event(),
         # delete_surrounding_text(), commit_text(), a sleep is necessary.
         # Without the sleep, these events may be processed out of order.
@@ -263,7 +277,6 @@ class TypingBoosterEngine(IBus.Engine):
         # cannot be changed, as a workaround a fixed number can be used
         # and unused entries can be hidden.
         itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS = 10
-        self._current_imes = []
         # Try to get the selected input methods from Gsettings:
         inputmethod = itb_util.variant_to_value(
             self._gsettings.get_value('inputmethod'))
@@ -357,7 +370,7 @@ class TypingBoosterEngine(IBus.Engine):
             'label': _('Unicode symbols and emoji predictions'),
             'tooltip':
             _('Unicode symbols and emoji predictions'),
-            'shortcut_hint': '(AltGr-F6, Control+RightMouse)',
+            'shortcut_hint': repr(self._keybindings['toggle_emoji_prediction']),
             'sub_properties': self.emoji_prediction_mode_properties
         }
         self.off_the_record_mode_properties = {
@@ -376,17 +389,11 @@ class TypingBoosterEngine(IBus.Engine):
             'key': 'OffTheRecordMode',
             'label': _('Off the record mode'),
             'tooltip': _('Off the record mode'),
-            'shortcut_hint': '(AltGr-F9, Alt+RightMouse)',
+            'shortcut_hint': repr(self._keybindings['toggle_off_the_record']),
             'sub_properties': self.off_the_record_mode_properties
         }
-        self._prop_dict = {}
-        self._sub_props_dict = {}
-        self.main_prop_list = []
-        self.preedit_ime_menu = {}
-        self.preedit_ime_properties = {}
-        self.preedit_ime_sub_properties_prop_list = []
+
         self._update_preedit_ime_menu_dicts()
-        self._setup_property = None
         self._init_properties()
 
         sys.stderr.write(
@@ -1066,6 +1073,33 @@ class TypingBoosterEngine(IBus.Engine):
         self._keybindings = new_keybindings
         # Update hotkeys:
         self._hotkeys = itb_util.HotKeys(self._keybindings)
+        # Some property menus have tooltips which show hints for the
+        # key bindings. These may need to be updated if the key
+        # bindings have changed. I don’t check whether the key
+        # bindings really have changed, just update them anyway.
+        #
+        # But update them only if these menus have already been
+        # filled. At program start they might still be empty at the
+        # time when self.set_keybindings() is called, they might be
+        # filled later and then the tooltips get the current
+        # keybindings already.
+        if self.emoji_prediction_mode_menu:
+            self.emoji_prediction_mode_menu['shortcut_hint'] = (
+                repr(self._keybindings['toggle_emoji_prediction']))
+            self._init_or_update_property_menu(
+                self.emoji_prediction_mode_menu,
+                self._emoji_predictions)
+        if self.off_the_record_mode_menu:
+            self.off_the_record_mode_menu['shortcut_hint'] = (
+                repr(self._keybindings['toggle_off_the_record']))
+            self._init_or_update_property_menu(
+                self.off_the_record_mode_menu,
+                self._off_the_record)
+        if self.preedit_ime_menu:
+            self._update_preedit_ime_menu_dicts()
+            self._init_or_update_property_menu_preedit_ime(
+                self.preedit_ime_menu, current_mode=0)
+
         if update_gsettings:
             variant_dict = GLib.VariantDict(GLib.Variant('a{sv}', {}))
             for command in sorted(self._keybindings):
@@ -1111,7 +1145,10 @@ class TypingBoosterEngine(IBus.Engine):
             'key': 'PreeditIme',
             'label': _('Preedit input method'),
             'tooltip': _('Switch preedit input method'),
-            'shortcut_hint': '(Ctrl+ArrowUp, Ctrl+ArrowDown)',
+            'shortcut_hint':
+            'Next: ' + repr(self._keybindings['next_input_method'])
+            + '\n'
+            'Previous: '+ repr(self._keybindings['previous_input_method']),
             'sub_properties': self.preedit_ime_properties}
 
     def _init_or_update_property_menu_preedit_ime(self, menu, current_mode=0):
