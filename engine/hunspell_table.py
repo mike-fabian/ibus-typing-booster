@@ -1124,10 +1124,9 @@ class TypingBoosterEngine(IBus.Engine):
         for prop in sub_properties:
             if sub_properties[prop]['number'] == int(current_mode):
                 symbol = sub_properties[prop]['symbol']
-                label = '%(label)s (%(symbol)s) %(shortcut_hint)s' % {
+                label = '%(label)s (%(symbol)s)' % {
                     'label': menu['label'],
-                    'symbol': symbol,
-                    'shortcut_hint': menu['shortcut_hint']}
+                    'symbol': symbol}
                 tooltip = '%(tooltip)s\n%(shortcut_hint)s' % {
                     'tooltip': menu['tooltip'],
                     'shortcut_hint': menu['shortcut_hint']}
@@ -1210,10 +1209,9 @@ class TypingBoosterEngine(IBus.Engine):
         for prop in sub_properties_dict:
             if sub_properties_dict[prop]['number'] == int(current_mode):
                 symbol = sub_properties_dict[prop]['symbol']
-                label = '%(symbol)s %(label)s %(shortcut_hint)s' % {
+                label = '%(symbol)s %(label)s' % {
                     'label': menu['label'],
-                    'symbol': symbol,
-                    'shortcut_hint': menu['shortcut_hint']}
+                    'symbol': symbol}
                 tooltip = '%(tooltip)s\n%(shortcut_hint)s' % {
                     'tooltip': menu['tooltip'],
                     'shortcut_hint': menu['shortcut_hint']}
