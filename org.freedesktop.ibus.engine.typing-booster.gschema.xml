@@ -2,6 +2,150 @@
 <schemalist>
   <schema path="/org/freedesktop/ibus/engine/typing-booster/"
           id="org.freedesktop.ibus.engine.typing-booster">
+    <key name="colorinlinecompletion" type="b">
+      <default>true</default>
+      <summary>Use color for inline completion</summary>
+      <description>
+        Here you can choose whether a custom color is used for
+        a suggestion shown inline.
+      </description>
+    </key>
+    <key name="colorinlinecompletionstring" type="s">
+      <default>'rgb(127,127,127)'</default>
+      <summary>Choose color for inline completion</summary>
+      <description>
+        Here you can specify which color to use for inline completion.
+        This setting only has an effect if the use of color for inline
+        completion is enabled and inline completion is enabled.
+      </description>
+    </key>
+    <key name="coloruserdb" type="b">
+      <default>false</default>
+      <summary>Use color for user database suggestions</summary>
+      <description>
+        Here you can choose whether a custom color is used for
+        candidates in the lookup table which come from the user
+        database.
+      </description>
+    </key>
+    <key name="coloruserdbstring" type="s">
+      <default>'rgb(0, 0, 0)'</default>
+      <summary>Choose color for user database suggestions</summary>
+      <description>
+        Here you can specify which color to use for candidates in the
+        lookup table which come from the user database. This setting
+        only has an effect if the use of color for candidates from the
+        user database is enabled.
+      </description>
+    </key>
+    <key name="colorspellcheck" type="b">
+      <default>false</default>
+      <summary>Use color for spellchecking suggestions</summary>
+      <description>
+        Here you can choose whether a custom color is used for
+        candidates in the lookup table which come from spellchecking.
+      </description>
+    </key>
+    <key name="colorspellcheckstring" type="s">
+      <default>'rgb(164,0,0)'</default>
+      <summary>Choose color for spellchecking suggestions</summary>
+      <description>
+        Here you can specify which color to use for candidates in the
+        lookup table which come from spellchecking. This setting only
+        has an effect if the use of color for candidates from
+        spellchecking is enabled.
+      </description>
+    </key>
+    <key name="colordictionary" type="b">
+      <default>false</default>
+      <summary>Use color for dictionary suggestions</summary>
+      <description>
+        Here you can choose whether a custom color is used for candidates in
+        the lookup table which come from a dictionary.
+      </description>
+    </key>
+    <key name="colordictionarystring" type="s">
+      <default>'rgb(127,127,127)'</default>
+      <summary>Choose color for dictionary suggestions</summary>
+      <description>
+        Here you can specify which color to use for candidates in the
+        lookup table which come from a dictionary. This setting only
+        has an effect if the use of color for candidates from
+        a dictionary is enabled.
+      </description>
+    </key>
+    <key name="labeluserdb" type="b">
+      <default>false</default>
+      <summary>Use a label for user database suggestions</summary>
+      <description>
+        Here you can choose whether a label is used for candidates in
+        the lookup table which come from the user database.
+      </description>
+    </key>
+    <key name="labeluserdbstring" type="s">
+      <default>'⭐'</default>
+      <summary>Choose label for userdatabase suggestions</summary>
+      <description>
+        Here you can specify which label to use for candidates in the
+        lookup table which come from the user database. This setting only
+        has an effect if the use of a label for candidates from
+        the user database is enabled.
+      </description>
+    </key>
+    <key name="labelspellcheck" type="b">
+      <default>false</default>
+      <summary>Use a label for spellchecking suggestions</summary>
+      <description>
+        Here you can choose whether a label is used for candidates in
+        the lookup table which come from spellchecking.
+      </description>
+    </key>
+    <key name="labelspellcheckstring" type="s">
+      <default>'✓'</default>
+      <summary>Choose label for spellchecking suggestions</summary>
+      <description>
+        Here you can specify which label to use for candidates in the
+        lookup table which come from spellchecking. This setting only
+        has an effect if the use of a label for candidates from
+        spellchecking is enabled.
+      </description>
+    </key>
+    <key name="labeldictionary" type="b">
+      <default>false</default>
+      <summary>Use a label for dictionary suggestions</summary>
+      <description>
+        Here you can choose whether a label is used for candidates in
+        the lookup table which come from a dictionary.
+      </description>
+    </key>
+    <key name="labeldictionarystring" type="s">
+      <default>'📖'</default>
+      <summary>Choose label for dictionary suggestions</summary>
+      <description>
+        Here you can specify which label to use for candidates in the
+        lookup table which come from a dictionary. This setting only
+        has an effect if the use of a label for candidates from
+        a dictionary is enabled.
+      </description>
+    </key>
+    <key name="labelbusy" type="b">
+      <default>true</default>
+      <summary>Use a label to indicate busy state</summary>
+      <description>
+        Here you can choose whether a label is used to indicate when
+        ibus-typing-booster is busy.
+      </description>
+    </key>
+    <key name="labelbusystring" type="s">
+      <default>'⏳'</default>
+      <summary>Choose label to indicate busy state</summary>
+      <description>
+        Here you can specify which label is used to indicate when
+        ibus-typing-booster is busy. This setting only has an effect
+        if the use of a label for candidates from a dictionary is
+        enabled.
+      </description>
+    </key>
     <key name="qtimmoduleworkaround" type="b">
       <default>false</default>
       <summary>Use a workaround for a bug in Qt im module</summary>

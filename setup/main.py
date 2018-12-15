@@ -133,9 +133,14 @@ class SetupUI(Gtk.Window):
         self._notebook.set_visible(True)
         self._notebook.set_can_focus(False)
         self._notebook.set_scrollable(False)
+        self._notebook.set_hexpand(True)
+        self._notebook.set_vexpand(True)
         self._main_container.pack_start(self._notebook, True, True, 0)
         self._dialog_action_area = Gtk.ButtonBox()
+        self._dialog_action_area.set_visible(True)
         self._dialog_action_area.set_can_focus(False)
+        self._dialog_action_area.set_hexpand(True)
+        self._dialog_action_area.set_vexpand(False)
         self._dialog_action_area.set_layout(Gtk.ButtonBoxStyle.EDGE)
         self._main_container.pack_end(self._dialog_action_area, True, True, 0)
         self._about_button = Gtk.Button(label=_('About'))
@@ -147,6 +152,10 @@ class SetupUI(Gtk.Window):
         self._close_button.add(self._close_button_label)
         self._close_button.connect('clicked', self.on_close_clicked)
         self._dialog_action_area.add(self._close_button)
+
+        grid_border_width = 10
+        grid_row_spacing = 10
+        grid_column_spacing = 10
 
         self._dictionaries_and_input_methods_vbox = Gtk.VBox()
         margin = 10
@@ -161,20 +170,23 @@ class SetupUI(Gtk.Window):
         self._options_grid = Gtk.Grid()
         self._options_grid.set_visible(True)
         self._options_grid.set_can_focus(False)
-        self._options_grid.set_border_width(0)
-        self._options_grid.set_row_spacing(0)
-        self._options_grid.set_column_spacing(5)
-        self._options_grid.set_row_homogeneous(True)
+        self._options_grid.set_border_width(grid_border_width)
+        self._options_grid.set_row_spacing(grid_row_spacing)
+        self._options_grid.set_column_spacing(grid_column_spacing)
+        self._options_grid.set_row_homogeneous(False)
         self._options_grid.set_column_homogeneous(True)
+        self._options_grid.set_hexpand(True)
+        self._options_grid.set_vexpand(False)
         self._options_label = Gtk.Label()
         self._options_label.set_text(_('Options'))
 
         self._custom_shortcuts_grid = Gtk.Grid()
         self._custom_shortcuts_grid.set_visible(True)
         self._custom_shortcuts_grid.set_can_focus(False)
-        self._custom_shortcuts_grid.set_border_width(6)
-        self._custom_shortcuts_grid.set_column_spacing(6)
-        self._custom_shortcuts_grid.set_row_homogeneous(True)
+        self._custom_shortcuts_grid.set_border_width(grid_border_width)
+        self._custom_shortcuts_grid.set_row_spacing(grid_row_spacing)
+        self._custom_shortcuts_grid.set_column_spacing(grid_column_spacing)
+        self._custom_shortcuts_grid.set_row_homogeneous(False)
         self._custom_shortcuts_grid.set_column_homogeneous(True)
         self._custom_shortcuts_label = Gtk.Label()
         self._custom_shortcuts_label.set_text(_('Custom shortcuts'))
@@ -187,6 +199,20 @@ class SetupUI(Gtk.Window):
         self._keybindings_vbox.set_margin_bottom(margin)
         self._keybindings_label = Gtk.Label()
         self._keybindings_label.set_text(_('Key bindings'))
+
+        self._appearance_grid = Gtk.Grid()
+        self._appearance_grid.set_visible(True)
+        self._appearance_grid.set_can_focus(False)
+        self._appearance_grid.set_border_width(grid_border_width)
+        self._appearance_grid.set_row_spacing(grid_row_spacing)
+        self._appearance_grid.set_column_spacing(grid_column_spacing)
+        self._appearance_grid.set_row_homogeneous(False)
+        self._appearance_grid.set_column_homogeneous(True)
+        self._appearance_grid.set_hexpand(True)
+        self._appearance_grid.set_vexpand(False)
+        self._appearance_label = Gtk.Label()
+        self._appearance_label.set_text(_('Appearance'))
+
         self._notebook.append_page(
             self._dictionaries_and_input_methods_vbox,
             self._dictionaries_and_input_methods_label)
@@ -199,6 +225,9 @@ class SetupUI(Gtk.Window):
         self._notebook.append_page(
             self._keybindings_vbox,
             self._keybindings_label)
+        self._notebook.append_page(
+            self._appearance_grid,
+            self._appearance_label)
 
         self._tab_enable_checkbutton = Gtk.CheckButton(
             label=_('Enable suggestions by key (Default is the Tab key)'))
@@ -870,6 +899,286 @@ class SetupUI(Gtk.Window):
         self._keybindings_edit_popover_remove_button = None
         self._keybindings_edit_popover_default_button = None
 
+        self._color_inline_completion_checkbutton = Gtk.CheckButton(
+            label=_('Use color for inline completion'))
+        self._color_inline_completion_checkbutton.set_tooltip_text(
+            _('Here you can choose whether a custom color is used for a suggestion shown inline.'))
+        self._color_inline_completion_checkbutton.set_hexpand(False)
+        self._color_inline_completion_checkbutton.set_vexpand(False)
+        self._appearance_grid.attach(
+            self._color_inline_completion_checkbutton, 0, 0, 1, 1)
+        self._color_inline_completion = itb_util.variant_to_value(
+            self._gsettings.get_value('colorinlinecompletion'))
+        if self._color_inline_completion is None:
+            self._color_inline_completion  = True
+        self._color_inline_completion_checkbutton.set_active(self._color_inline_completion)
+        self._color_inline_completion_checkbutton.connect(
+            'clicked', self.on_color_inline_completion_checkbutton)
+        self._color_inline_completion_rgba_colorbutton = Gtk.ColorButton()
+        margin = 0
+        self._color_inline_completion_rgba_colorbutton.set_margin_start(margin)
+        self._color_inline_completion_rgba_colorbutton.set_margin_end(margin)
+        self._color_inline_completion_rgba_colorbutton.set_margin_top(margin)
+        self._color_inline_completion_rgba_colorbutton.set_margin_bottom(margin)
+        self._color_inline_completion_rgba_colorbutton.set_hexpand(False)
+        self._color_inline_completion_rgba_colorbutton.set_vexpand(False)
+        self._color_inline_completion_rgba_colorbutton.set_title(
+            _('Choose color for inline completion'))
+        self._color_inline_completion_rgba_colorbutton.set_tooltip_text(
+            _('Here you can specify which color to use for inline completion. This setting only has an effect if the use of color for inline completion is enabled and inline completion is enabled.'))
+        self._color_inline_completion_string = itb_util.variant_to_value(
+            self._gsettings.get_value('colorinlinecompletionstring'))
+        gdk_rgba = Gdk.RGBA()
+        gdk_rgba.parse(self._color_inline_completion_string)
+        self._color_inline_completion_rgba_colorbutton.set_rgba(gdk_rgba)
+        self._appearance_grid.attach(
+            self._color_inline_completion_rgba_colorbutton, 1, 0, 1, 1)
+        self._color_inline_completion_rgba_colorbutton.set_sensitive(
+            self._color_inline_completion)
+        self._color_inline_completion_rgba_colorbutton.connect(
+            'color-set', self.on_color_inline_completion_color_set)
+
+        self._color_userdb_checkbutton = Gtk.CheckButton(
+            label=_('Use color for user database suggestions'))
+        self._color_userdb_checkbutton.set_tooltip_text(
+            _('Here you can choose whether a custom color is used for candidates in the lookup table which come from the user database.'))
+        self._color_userdb_checkbutton.set_hexpand(False)
+        self._color_userdb_checkbutton.set_vexpand(False)
+        self._appearance_grid.attach(
+            self._color_userdb_checkbutton, 0, 1, 1, 1)
+        self._color_userdb = itb_util.variant_to_value(
+            self._gsettings.get_value('coloruserdb'))
+        if self._color_userdb is None:
+            self._color_userdb  = False
+        self._color_userdb_checkbutton.set_active(self._color_userdb)
+        self._color_userdb_checkbutton.connect(
+            'clicked', self.on_color_userdb_checkbutton)
+        self._color_userdb_rgba_colorbutton = Gtk.ColorButton()
+        margin = 0
+        self._color_userdb_rgba_colorbutton.set_margin_start(margin)
+        self._color_userdb_rgba_colorbutton.set_margin_end(margin)
+        self._color_userdb_rgba_colorbutton.set_margin_top(margin)
+        self._color_userdb_rgba_colorbutton.set_margin_bottom(margin)
+        self._color_userdb_rgba_colorbutton.set_hexpand(False)
+        self._color_userdb_rgba_colorbutton.set_vexpand(False)
+        self._color_userdb_rgba_colorbutton.set_title(
+            _('Choose color for user database suggestions'))
+        self._color_userdb_rgba_colorbutton.set_tooltip_text(
+            _('Here you can specify which color to use for candidates in the lookup table which come from the user database. This setting only has an effect if the use of color for candidates from the user database is enabled.'))
+        self._color_userdb_string = itb_util.variant_to_value(
+            self._gsettings.get_value('coloruserdbstring'))
+        gdk_rgba = Gdk.RGBA()
+        gdk_rgba.parse(self._color_userdb_string)
+        self._color_userdb_rgba_colorbutton.set_rgba(gdk_rgba)
+        self._appearance_grid.attach(
+            self._color_userdb_rgba_colorbutton, 1, 1, 1, 1)
+        self._color_userdb_rgba_colorbutton.set_sensitive(
+            self._color_userdb)
+        self._color_userdb_rgba_colorbutton.connect(
+            'color-set', self.on_color_userdb_color_set)
+
+        self._color_spellcheck_checkbutton = Gtk.CheckButton(
+            label=_('Use color for spellchecking suggestions'))
+        self._color_spellcheck_checkbutton.set_tooltip_text(
+            _('Here you can choose whether a custom color is used for candidates in the lookup table which come from spellchecking.'))
+        self._color_spellcheck_checkbutton.set_hexpand(False)
+        self._color_spellcheck_checkbutton.set_vexpand(False)
+        self._appearance_grid.attach(
+            self._color_spellcheck_checkbutton, 0, 2, 1, 1)
+        self._color_spellcheck = itb_util.variant_to_value(
+            self._gsettings.get_value('colorspellcheck'))
+        if self._color_spellcheck is None:
+            self._color_spellcheck  = False
+        self._color_spellcheck_checkbutton.set_active(self._color_spellcheck)
+        self._color_spellcheck_checkbutton.connect(
+            'clicked', self.on_color_spellcheck_checkbutton)
+        self._color_spellcheck_rgba_colorbutton = Gtk.ColorButton()
+        margin = 0
+        self._color_spellcheck_rgba_colorbutton.set_margin_start(margin)
+        self._color_spellcheck_rgba_colorbutton.set_margin_end(margin)
+        self._color_spellcheck_rgba_colorbutton.set_margin_top(margin)
+        self._color_spellcheck_rgba_colorbutton.set_margin_bottom(margin)
+        self._color_spellcheck_rgba_colorbutton.set_hexpand(False)
+        self._color_spellcheck_rgba_colorbutton.set_vexpand(False)
+        self._color_spellcheck_rgba_colorbutton.set_title(
+            _('Choose color for spellchecking suggestions'))
+        self._color_spellcheck_rgba_colorbutton.set_tooltip_text(
+            _('Here you can specify which color to use for candidates in the lookup table which come from spellchecking. This setting only has an effect if the use of color for candidates from spellchecking is enabled.'))
+        self._color_spellcheck_string = itb_util.variant_to_value(
+            self._gsettings.get_value('colorspellcheckstring'))
+        gdk_rgba = Gdk.RGBA()
+        gdk_rgba.parse(self._color_spellcheck_string)
+        self._color_spellcheck_rgba_colorbutton.set_rgba(gdk_rgba)
+        self._appearance_grid.attach(
+            self._color_spellcheck_rgba_colorbutton, 1, 2, 1, 1)
+        self._color_spellcheck_rgba_colorbutton.set_sensitive(
+            self._color_spellcheck)
+        self._color_spellcheck_rgba_colorbutton.connect(
+            'color-set', self.on_color_spellcheck_color_set)
+
+        self._color_dictionary_checkbutton = Gtk.CheckButton(
+            label=_('Use color for dictionary suggestions'))
+        self._color_dictionary_checkbutton.set_tooltip_text(
+            _('Here you can choose whether a custom color is used for candidates in the lookup table which come from a dictionary.'))
+        self._color_dictionary_checkbutton.set_hexpand(False)
+        self._color_dictionary_checkbutton.set_vexpand(False)
+        self._appearance_grid.attach(
+            self._color_dictionary_checkbutton, 0, 3, 1, 1)
+        self._color_dictionary = itb_util.variant_to_value(
+            self._gsettings.get_value('colordictionary'))
+        if self._color_dictionary is None:
+            self._color_dictionary  = False
+        self._color_dictionary_checkbutton.set_active(self._color_dictionary)
+        self._color_dictionary_checkbutton.connect(
+            'clicked', self.on_color_dictionary_checkbutton)
+        self._color_dictionary_rgba_colorbutton = Gtk.ColorButton()
+        margin = 0
+        self._color_dictionary_rgba_colorbutton.set_margin_start(margin)
+        self._color_dictionary_rgba_colorbutton.set_margin_end(margin)
+        self._color_dictionary_rgba_colorbutton.set_margin_top(margin)
+        self._color_dictionary_rgba_colorbutton.set_margin_bottom(margin)
+        self._color_dictionary_rgba_colorbutton.set_hexpand(False)
+        self._color_dictionary_rgba_colorbutton.set_vexpand(False)
+        self._color_dictionary_rgba_colorbutton.set_title(
+            _('Choose color for dictionary suggestions'))
+        self._color_dictionary_rgba_colorbutton.set_tooltip_text(
+            _('Here you can specify which color to use for candidates in the lookup table which come from a dictionary. This setting only has an effect if the use of color for candidates from a dictionary is enabled.'))
+        self._color_dictionary_string = itb_util.variant_to_value(
+            self._gsettings.get_value('colordictionarystring'))
+        gdk_rgba = Gdk.RGBA()
+        gdk_rgba.parse(self._color_dictionary_string)
+        self._color_dictionary_rgba_colorbutton.set_rgba(gdk_rgba)
+        self._appearance_grid.attach(
+            self._color_dictionary_rgba_colorbutton, 1, 3, 1, 1)
+        self._color_dictionary_rgba_colorbutton.set_sensitive(
+            self._color_dictionary)
+        self._color_dictionary_rgba_colorbutton.connect(
+            'color-set', self.on_color_dictionary_color_set)
+
+        self._label_userdb_checkbutton = Gtk.CheckButton(
+            label=_('Use label for user database suggestions'))
+        self._label_userdb_checkbutton.set_tooltip_text(
+            _('Here you can choose whether a label is used for candidates in the lookup table which come from the user database.'))
+        self._label_userdb_checkbutton.set_hexpand(False)
+        self._label_userdb_checkbutton.set_vexpand(False)
+        self._appearance_grid.attach(
+            self._label_userdb_checkbutton, 0, 4, 1, 1)
+        self._label_userdb = itb_util.variant_to_value(
+            self._gsettings.get_value('labeluserdb'))
+        if self._label_userdb is None:
+            self._label_userdb  = False
+        self._label_userdb_checkbutton.set_active(self._label_userdb)
+        self._label_userdb_checkbutton.connect(
+            'clicked', self.on_label_userdb_checkbutton)
+        self._label_userdb_entry = Gtk.Entry()
+        self._label_userdb_entry.set_visible(True)
+        self._label_userdb_entry.set_can_focus(True)
+        self._label_userdb_entry.set_hexpand(False)
+        self._label_userdb_entry.set_vexpand(False)
+        self._appearance_grid.attach(
+            self._label_userdb_entry, 1, 4, 1, 1)
+        self._label_userdb_string = itb_util.variant_to_value(
+            self._gsettings.get_value('labeluserdbstring'))
+        if not self._label_userdb_string:
+            self._label_userdb_string = ''
+        self._label_userdb_entry.set_text(
+            self._label_userdb_string)
+        self._label_userdb_entry.connect(
+            'notify::text', self.on_label_userdb_entry)
+
+        self._label_spellcheck_checkbutton = Gtk.CheckButton(
+            label=_('Use label for spellchecking suggestions'))
+        self._label_spellcheck_checkbutton.set_tooltip_text(
+            _('Here you can choose whether a label is used for candidates in the lookup table which come from spellchecking.'))
+        self._label_spellcheck_checkbutton.set_hexpand(False)
+        self._label_spellcheck_checkbutton.set_vexpand(False)
+        self._appearance_grid.attach(
+            self._label_spellcheck_checkbutton, 0, 5, 1, 1)
+        self._label_spellcheck = itb_util.variant_to_value(
+            self._gsettings.get_value('labelspellcheck'))
+        if self._label_spellcheck is None:
+            self._label_spellcheck  = False
+        self._label_spellcheck_checkbutton.set_active(self._label_spellcheck)
+        self._label_spellcheck_checkbutton.connect(
+            'clicked', self.on_label_spellcheck_checkbutton)
+        self._label_spellcheck_entry = Gtk.Entry()
+        self._label_spellcheck_entry.set_visible(True)
+        self._label_spellcheck_entry.set_can_focus(True)
+        self._label_spellcheck_entry.set_hexpand(False)
+        self._label_spellcheck_entry.set_vexpand(False)
+        self._appearance_grid.attach(
+            self._label_spellcheck_entry, 1, 5, 1, 1)
+        self._label_spellcheck_string = itb_util.variant_to_value(
+            self._gsettings.get_value('labelspellcheckstring'))
+        if not self._label_spellcheck_string:
+            self._label_spellcheck_string = ''
+        self._label_spellcheck_entry.set_text(
+            self._label_spellcheck_string)
+        self._label_spellcheck_entry.connect(
+            'notify::text', self.on_label_spellcheck_entry)
+
+        self._label_dictionary_checkbutton = Gtk.CheckButton(
+            label=_('Use label for dictionary suggestions'))
+        self._label_dictionary_checkbutton.set_tooltip_text(
+            _('Here you can choose whether a label is used for candidates in the lookup table which come from a dictionary.'))
+        self._label_dictionary_checkbutton.set_hexpand(False)
+        self._label_dictionary_checkbutton.set_vexpand(False)
+        self._appearance_grid.attach(
+            self._label_dictionary_checkbutton, 0, 6, 1, 1)
+        self._label_dictionary = itb_util.variant_to_value(
+            self._gsettings.get_value('labeldictionary'))
+        if self._label_dictionary is None:
+            self._label_dictionary  = False
+        self._label_dictionary_checkbutton.set_active(self._label_dictionary)
+        self._label_dictionary_checkbutton.connect(
+            'clicked', self.on_label_dictionary_checkbutton)
+        self._label_dictionary_entry = Gtk.Entry()
+        self._label_dictionary_entry.set_visible(True)
+        self._label_dictionary_entry.set_can_focus(True)
+        self._label_dictionary_entry.set_hexpand(False)
+        self._label_dictionary_entry.set_vexpand(False)
+        self._appearance_grid.attach(
+            self._label_dictionary_entry, 1, 6, 1, 1)
+        self._label_dictionary_string = itb_util.variant_to_value(
+            self._gsettings.get_value('labeldictionarystring'))
+        if not self._label_dictionary_string:
+            self._label_dictionary_string = ''
+        self._label_dictionary_entry.set_text(
+            self._label_dictionary_string)
+        self._label_dictionary_entry.connect(
+            'notify::text', self.on_label_dictionary_entry)
+
+        self._label_busy_checkbutton = Gtk.CheckButton(
+            label=_('Use a label to indicate busy state'))
+        self._label_busy_checkbutton.set_tooltip_text(
+            _('Here you can choose whether a label is used to indicate when ibus-typing-booster is busy.'))
+        self._label_busy_checkbutton.set_hexpand(False)
+        self._label_busy_checkbutton.set_vexpand(False)
+        self._appearance_grid.attach(
+            self._label_busy_checkbutton, 0, 7, 1, 1)
+        self._label_busy = itb_util.variant_to_value(
+            self._gsettings.get_value('labelbusy'))
+        if self._label_busy is None:
+            self._label_busy  = True
+        self._label_busy_checkbutton.set_active(self._label_busy)
+        self._label_busy_checkbutton.connect(
+            'clicked', self.on_label_busy_checkbutton)
+        self._label_busy_entry = Gtk.Entry()
+        self._label_busy_entry.set_visible(True)
+        self._label_busy_entry.set_can_focus(True)
+        self._label_busy_entry.set_hexpand(False)
+        self._label_busy_entry.set_vexpand(False)
+        self._appearance_grid.attach(
+            self._label_busy_entry, 1, 7, 1, 1)
+        self._label_busy_string = itb_util.variant_to_value(
+            self._gsettings.get_value('labelbusystring'))
+        if not self._label_busy_string:
+            self._label_busy_string = ''
+        self._label_busy_entry.set_text(
+            self._label_busy_string)
+        self._label_busy_entry.connect(
+            'notify::text', self.on_label_busy_entry)
+
         self.show_all()
 
         self._notebook.set_current_page(0) # Has to be after show_all()
@@ -1178,6 +1487,62 @@ class SetupUI(Gtk.Window):
         if key == 'usedigitsasselectkeys':
             self.set_use_digits_as_select_keys(value, update_gsettings=False)
             return
+        if key == 'colorinlinecompletion':
+            self.set_color_inline_completion(
+                value, update_gsettings=False)
+            return
+        if key == 'colorinlinecompletionstring':
+            self.set_color_inline_completion_string(
+                value, update_gsettings=False)
+            return
+        if key == 'coloruserdb':
+            self.set_color_userdb(
+                value, update_gsettings=False)
+            return
+        if key == 'coloruserdbstring':
+            self.set_color_userdb_string(
+                value, update_gsettings=False)
+            return
+        if key == 'colorspellcheck':
+            self.set_color_spellcheck(
+                value, update_gsettings=False)
+            return
+        if key == 'colorspellcheckstring':
+            self.set_color_spellcheck_string(
+                value, update_gsettings=False)
+            return
+        if key == 'colordictionary':
+            self.set_color_dictionary(
+                value, update_gsettings=False)
+            return
+        if key == 'colordictionarystring':
+            self.set_color_dictionary_string(
+                value, update_gsettings=False)
+            return
+        if key == 'labeluserdb':
+            self.set_label_userdb(value, update_gsettings=False)
+            return
+        if key == 'labeluserdbstring':
+            self.set_label_userdb_string(value, update_gsettings=False)
+            return
+        if key == 'labelspellcheck':
+            self.set_label_spellcheck(value, update_gsettings=False)
+            return
+        if key == 'labelspellcheckstring':
+            self.set_label_spellcheck_string(value, update_gsettings=False)
+            return
+        if key == 'labeldictionary':
+            self.set_label_dictionary(value, update_gsettings=False)
+            return
+        if key == 'labeldictionarystring':
+            self.set_label_dictionary_string(value, update_gsettings=False)
+            return
+        if key == 'labelbusy':
+            self.set_label_busy(value, update_gsettings=False)
+            return
+        if key == 'labelbusystring':
+            self.set_label_busy_string(value, update_gsettings=False)
+            return
         if key == 'inputmethod':
             self.set_current_imes(
                 [x.strip() for x in value.split(',')], update_gsettings=False)
@@ -1206,6 +1571,154 @@ class SetupUI(Gtk.Window):
         :type _button: Gtk.Button object
         '''
         itb_util.ItbAboutDialog()
+
+    def on_color_inline_completion_checkbutton(self, widget):
+        '''
+        The checkbutton whether to use color for inline completion
+        has been clicked.
+
+        :param widget: The check button clicked
+        :type widget:  Gtk.CheckButton
+        '''
+        self.set_color_inline_completion(widget.get_active(), update_gsettings=True)
+
+    def on_color_inline_completion_color_set(self, widget):
+        '''
+        A color has been set for the inline completion
+
+        :param widget: The color button where a color was set
+        :type widget: Gtk.ColorButton
+        '''
+        self.set_color_inline_completion_string(
+            widget.get_rgba().to_string(), update_gsettings=True)
+
+    def on_color_userdb_checkbutton(self, widget):
+        '''
+        The checkbutton whether to use color for candidates from the user database
+        has been clicked.
+
+        :param widget: The check button clicked
+        :type widget:  Gtk.CheckButton
+        '''
+        self.set_color_userdb(widget.get_active(), update_gsettings=True)
+
+    def on_color_userdb_color_set(self, widget):
+        '''
+        A color has been set for the candidates from the user database.
+
+        :param widget: The color button where a color was set
+        :type widget: Gtk.ColorButton
+        '''
+        self.set_color_userdb_string(
+            widget.get_rgba().to_string(), update_gsettings=True)
+
+    def on_color_spellcheck_checkbutton(self, widget):
+        '''
+        The checkbutton whether to use color for candidates from spellchecking
+        has been clicked.
+
+        :param widget: The check button clicked
+        :type widget:  Gtk.CheckButton
+        '''
+        self.set_color_spellcheck(widget.get_active(), update_gsettings=True)
+
+    def on_color_spellcheck_color_set(self, widget):
+        '''
+        A color has been set for the candidates from spellchecking
+
+        :param widget: The color button where a color was set
+        :type widget: Gtk.ColorButton
+        '''
+        self.set_color_spellcheck_string(
+            widget.get_rgba().to_string(), update_gsettings=True)
+
+    def on_color_dictionary_checkbutton(self, widget):
+        '''
+        The checkbutton whether to use color for candidates from a dictionary
+        has been clicked.
+
+        :param widget: The check button clicked
+        :type widget:  Gtk.CheckButton
+        '''
+        self.set_color_dictionary(widget.get_active(), update_gsettings=True)
+
+    def on_color_dictionary_color_set(self, widget):
+        '''
+        A color has been set for the candidates from a dictionary
+
+        :param widget: The color button where a color was set
+        :type widget: Gtk.ColorButton
+        '''
+        self.set_color_dictionary_string(
+            widget.get_rgba().to_string(), update_gsettings=True)
+
+    def on_label_userdb_checkbutton(self, widget):
+        '''
+        The checkbutton whether to use a label for candidates from the
+        user database has been clicked.
+
+        :param widget: The check button clicked
+        :type widget:  Gtk.CheckButton
+        '''
+        self.set_label_userdb(widget.get_active(), update_gsettings=True)
+
+    def on_label_userdb_entry(self, widget, _property_spec):
+        '''
+        The label for candidates from the user database has been  changed.
+        '''
+        self.set_label_userdb_string(
+            widget.get_text(), update_gsettings=True)
+
+    def on_label_spellcheck_checkbutton(self, widget):
+        '''
+        The checkbutton whether to use a label for candidates from
+        spellchecking has been clicked.
+
+        :param widget: The check button clicked
+        :type widget:  Gtk.CheckButton
+        '''
+        self.set_label_spellcheck(widget.get_active(), update_gsettings=True)
+
+    def on_label_spellcheck_entry(self, widget, _property_spec):
+        '''
+        The label for candidates from spellchecking has been  changed.
+        '''
+        self.set_label_spellcheck_string(
+            widget.get_text(), update_gsettings=True)
+
+    def on_label_dictionary_checkbutton(self, widget):
+        '''
+        The checkbutton whether to use a label for candidates from a dictionary
+        has been clicked.
+
+        :param widget: The check button clicked
+        :type widget:  Gtk.CheckButton
+        '''
+        self.set_label_dictionary(widget.get_active(), update_gsettings=True)
+
+    def on_label_dictionary_entry(self, widget, _property_spec):
+        '''
+        The label for candidates from a dictionary has been  changed.
+        '''
+        self.set_label_dictionary_string(
+            widget.get_text(), update_gsettings=True)
+
+    def on_label_busy_checkbutton(self, widget):
+        '''
+        The checkbutton whether to use a label to indicate when
+        ibus-typing-booster is busy.
+
+        :param widget: The check button clicked
+        :type widget:  Gtk.CheckButton
+        '''
+        self.set_label_busy(widget.get_active(), update_gsettings=True)
+
+    def on_label_busy_entry(self, widget, _property_spec):
+        '''
+        The label to indicate when ibus-typing-booster is busy
+        '''
+        self.set_label_busy_string(
+            widget.get_text(), update_gsettings=True)
 
     def on_tab_enable_checkbutton(self, widget):
         '''
@@ -2360,6 +2873,443 @@ class SetupUI(Gtk.Window):
         else:
             self._auto_commit_characters_entry.set_text(
                 self._auto_commit_characters)
+
+    def set_color_inline_completion(self, mode, update_gsettings=True):
+        '''Sets whether to use color for inline completion
+
+        :param mode: Whether to use color for inline completion
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_color_inline_completion(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._color_inline_completion:
+            return
+        self._color_inline_completion = mode
+        self._color_inline_completion_rgba_colorbutton.set_sensitive(mode)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorinlinecompletion',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._color_inline_completion_checkbutton.set_active(mode)
+
+    def set_color_inline_completion_string(
+            self, color_string, update_gsettings=True):
+        '''Sets the color for inline completion
+
+        :param color_string: The color for inline completion
+        :type color_string: String
+                            - Standard name from the X11 rgb.txt
+                            - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                         or ”#rrrrggggbbbb”
+                            - RGB color: “rgb(r,g,b)”
+                            - RGBA color: “rgba(r,g,b,a)”
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_color_inline_completion_string(%s, update_gsettings = %s)\n"
+            %(color_string, update_gsettings))
+        if color_string == self._color_inline_completion_string:
+            return
+        self._color_inline_completion_string = color_string
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorinlinecompletionstring',
+                GLib.Variant.new_string(color_string))
+        else:
+            gdk_rgba = Gdk.RGBA()
+            gdk_rgba.parse(color_string)
+            self._color_inline_completion_rgba_colorbutton.set_rgba(gdk_rgba)
+
+    def set_color_userdb(self, mode, update_gsettings=True):
+        '''Sets whether to use color for user database suggestions
+
+        :param mode: Whether to use color for user database suggestions
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_color_userdb(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._color_userdb:
+            return
+        self._color_userdb = mode
+        self._color_userdb_rgba_colorbutton.set_sensitive(mode)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'coloruserdb',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._color_userdb_checkbutton.set_active(mode)
+
+    def set_color_userdb_string(self, color_string, update_gsettings=True):
+        '''Sets the color for user database suggestions
+
+        :param color_string: The color for user database suggestions
+        :type color_string: String
+                            - Standard name from the X11 rgb.txt
+                            - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                         or ”#rrrrggggbbbb”
+                            - RGB color: “rgb(r,g,b)”
+                            - RGBA color: “rgba(r,g,b,a)”
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_color_userdb_string(%s, update_gsettings = %s)\n"
+            %(color_string, update_gsettings))
+        if color_string == self._color_userdb_string:
+            return
+        self._color_userdb_string = color_string
+        if update_gsettings:
+            self._gsettings.set_value(
+                'coloruserdbstring',
+                GLib.Variant.new_string(color_string))
+        else:
+            gdk_rgba = Gdk.RGBA()
+            gdk_rgba.parse(color_string)
+            self._color_userdb_rgba_colorbutton.set_rgba(gdk_rgba)
+
+    def set_color_spellcheck(self, mode, update_gsettings=True):
+        '''Sets whether to use color for spellchecking suggestions
+
+        :param mode: Whether to use color for spellchecking suggestions
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_color_spellcheck(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._color_spellcheck:
+            return
+        self._color_spellcheck = mode
+        self._color_spellcheck_rgba_colorbutton.set_sensitive(mode)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorspellcheck',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._color_spellcheck_checkbutton.set_active(mode)
+
+    def set_color_spellcheck_string(self, color_string, update_gsettings=True):
+        '''Sets the color for spellchecking suggestions
+
+        :param color_string: The color for spellchecking suggestions
+        :type color_string: String
+                            - Standard name from the X11 rgb.txt
+                            - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                         or ”#rrrrggggbbbb”
+                            - RGB color: “rgb(r,g,b)”
+                            - RGBA color: “rgba(r,g,b,a)”
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_color_spellcheck_string(%s, update_gsettings = %s)\n"
+            %(color_string, update_gsettings))
+        if color_string == self._color_spellcheck_string:
+            return
+        self._color_spellcheck_string = color_string
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorspellcheckstring',
+                GLib.Variant.new_string(color_string))
+        else:
+            gdk_rgba = Gdk.RGBA()
+            gdk_rgba.parse(color_string)
+            self._color_spellcheck_rgba_colorbutton.set_rgba(gdk_rgba)
+
+    def set_color_dictionary(self, mode, update_gsettings=True):
+        '''Sets whether to use color for dictionary suggestions
+
+        :param mode: Whether to use color for dictionary suggestions
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_color_dictionary(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._color_dictionary:
+            return
+        self._color_dictionary = mode
+        self._color_dictionary_rgba_colorbutton.set_sensitive(mode)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colordictionary',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._color_dictionary_checkbutton.set_active(mode)
+
+    def set_color_dictionary_string(self, color_string, update_gsettings=True):
+        '''Sets the color for dictionary suggestions
+
+        :param color_string: The color for dictionary suggestions
+        :type color_string: String
+                            - Standard name from the X11 rgb.txt
+                            - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                         or ”#rrrrggggbbbb”
+                            - RGB color: “rgb(r,g,b)”
+                            - RGBA color: “rgba(r,g,b,a)”
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_color_dictionary_string(%s, update_gsettings = %s)\n"
+            %(color_string, update_gsettings))
+        if color_string == self._color_dictionary_string:
+            return
+        self._color_dictionary_string = color_string
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colordictionarystring',
+                GLib.Variant.new_string(color_string))
+        else:
+            gdk_rgba = Gdk.RGBA()
+            gdk_rgba.parse(color_string)
+            self._color_dictionary_rgba_colorbutton.set_rgba(gdk_rgba)
+
+    def set_label_userdb(self, mode, update_gsettings=True):
+        '''Sets whether to use a label for user database
+
+        :param mode: Whether to use a label for user database suggestions
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_label_userdb(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._label_userdb:
+            return
+        self._label_userdb = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labeluserdb',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._label_userdb_checkbutton.set_active(mode)
+
+    def set_label_userdb_string(self, label_string, update_gsettings=True):
+        '''Sets the label for user database suggestions
+
+        :param label_string: The label for user database suggestions
+        :type label_string: String
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_label_userdb_string(%s, update_gsettings = %s)\n"
+            %(label_string, update_gsettings))
+        if label_string == self._label_userdb_string:
+            return
+        self._label_userdb_string = label_string
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labeluserdbstring',
+                GLib.Variant.new_string(label_string))
+        else:
+            self._label_userdb_entry.set_text(
+                self._label_userdb_string)
+
+    def set_label_spellcheck(self, mode, update_gsettings=True):
+        '''Sets whether to use a label for spellchecking suggestions
+
+        :param mode: Whether to use a label for spellchecking suggestions
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_label_spellcheck(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._label_spellcheck:
+            return
+        self._label_spellcheck = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labelspellcheck',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._label_spellcheck_checkbutton.set_active(mode)
+
+    def set_label_spellcheck_string(self, label_string, update_gsettings=True):
+        '''Sets the label for spellchecking suggestions
+
+        :param label_string: The label for spellchecking suggestions
+        :type label_string: String
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_label_spellcheck_string(%s, update_gsettings = %s)\n"
+            %(label_string, update_gsettings))
+        if label_string == self._label_spellcheck_string:
+            return
+        self._label_spellcheck_string = label_string
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labelspellcheckstring',
+                GLib.Variant.new_string(label_string))
+        else:
+            self._label_spellcheck_entry.set_text(
+                self._label_spellcheck_string)
+
+    def set_label_dictionary(self, mode, update_gsettings=True):
+        '''Sets whether to use a label for dictionary suggestions
+
+        :param mode: Whether to use a label for dictionary suggestions
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_label_dictionary(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._label_dictionary:
+            return
+        self._label_dictionary = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labeldictionary',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._label_dictionary_checkbutton.set_active(mode)
+
+    def set_label_dictionary_string(self, label_string, update_gsettings=True):
+        '''Sets the label for dictionary suggestions
+
+        :param label_string: The label for dictionary suggestions
+        :type label_string: String
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_label_dictionary_string(%s, update_gsettings = %s)\n"
+            %(label_string, update_gsettings))
+        if label_string == self._label_dictionary_string:
+            return
+        self._label_dictionary_string = label_string
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labeldictionarystring',
+                GLib.Variant.new_string(label_string))
+        else:
+            self._label_dictionary_entry.set_text(
+                self._label_dictionary_string)
+
+    def set_label_busy(self, mode, update_gsettings=True):
+        '''Sets whether to use a label to indicate busy state
+
+        :param mode: Whether to use a label to indicate busy state
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_label_busy(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._label_busy:
+            return
+        self._label_busy = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labelbusy',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._label_busy_checkbutton.set_active(mode)
+
+    def set_label_busy_string(self, label_string, update_gsettings=True):
+        '''Sets the label used to indicate busy state
+
+        :param label_string: The label to indicate busy state
+        :type label_string: String
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_label_busy_string(%s, update_gsettings = %s)\n"
+            %(label_string, update_gsettings))
+        if label_string == self._label_busy_string:
+            return
+        self._label_busy_string = label_string
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labelbusystring',
+                GLib.Variant.new_string(label_string))
+        else:
+            self._label_busy_entry.set_text(
+                self._label_busy_string)
 
     def set_tab_enable(self, mode, update_gsettings=True):
         '''Sets the “Tab enable” mode

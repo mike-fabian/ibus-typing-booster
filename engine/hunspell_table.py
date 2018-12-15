@@ -69,29 +69,6 @@ EMOJI_PREDICTION_MODE_SYMBOL = '🙂'
 # 🕵 U+1F575 SLEUTH OR SPY
 OFF_THE_RECORD_MODE_SYMBOL = '🕵'
 
-# ⏳ U+23F3 HOURGLASS WITH FLOWING SAND
-BUSY_SYMBOL = '⏳'
-
-# ✓ U+2713 CHECK MARK
-SPELL_CHECKING_CANDIDATE_SYMBOL = '✓'
-
-# ⭐ U+2B50 WHITE MEDIUM STAR
-USER_DATABASE_CANDIDATE_SYMBOL = '⭐'
-
-def argb(alpha, red, green, blue):
-    '''Returns a 32bit ARGB value'''
-    return (((alpha & 0xff) << 24)
-            + ((red & 0xff) << 16)
-            + ((green & 0xff) << 8)
-            + (blue & 0xff))
-
-def rgb(red, green, blue):
-    '''Returns a 32bit ARGB value with the alpha value set to fully opaque'''
-    return argb(255, red, green, blue)
-
-########################
-### Engine Class #####
-####################
 class TypingBoosterEngine(IBus.Engine):
     '''The IBus Engine for ibus-typing-booster'''
 
@@ -226,6 +203,78 @@ class TypingBoosterEngine(IBus.Engine):
             self._gsettings.get_value('inlinecompletion'))
         if self._inline_completion is None:
             self._inline_completion = False
+
+        self._color_inline_completion = itb_util.variant_to_value(
+            self._gsettings.get_value('colorinlinecompletion'))
+        if self._color_inline_completion is None:
+            self._color_inline_completion = True
+
+        self._color_inline_completion_string = itb_util.variant_to_value(
+            self._gsettings.get_value('colorinlinecompletionstring'))
+        self._color_inline_completion_argb = itb_util.color_string_to_argb(
+            self._color_inline_completion_string)
+
+        self._color_userdb = itb_util.variant_to_value(
+            self._gsettings.get_value('coloruserdb'))
+        if self._color_userdb is None:
+            self._color_userdb = True
+
+        self._color_userdb_string = itb_util.variant_to_value(
+            self._gsettings.get_value('coloruserdbstring'))
+        self._color_userdb_argb = itb_util.color_string_to_argb(
+            self._color_userdb_string)
+
+        self._color_spellcheck = itb_util.variant_to_value(
+            self._gsettings.get_value('colorspellcheck'))
+        if self._color_spellcheck is None:
+            self._color_spellcheck = True
+
+        self._color_spellcheck_string = itb_util.variant_to_value(
+            self._gsettings.get_value('colorspellcheckstring'))
+        self._color_spellcheck_argb = itb_util.color_string_to_argb(
+            self._color_spellcheck_string)
+
+        self._color_dictionary = itb_util.variant_to_value(
+            self._gsettings.get_value('colordictionary'))
+        if self._color_dictionary is None:
+            self._color_dictionary = True
+
+        self._color_dictionary_string = itb_util.variant_to_value(
+            self._gsettings.get_value('colordictionarystring'))
+        self._color_dictionary_argb = itb_util.color_string_to_argb(
+            self._color_dictionary_string)
+
+        self._label_userdb = itb_util.variant_to_value(
+            self._gsettings.get_value('labeluserdb'))
+        if self._label_userdb is None:
+            self._label_userdb = True
+
+        self._label_userdb_string = itb_util.variant_to_value(
+            self._gsettings.get_value('labeluserdbstring'))
+
+        self._label_spellcheck = itb_util.variant_to_value(
+            self._gsettings.get_value('labelspellcheck'))
+        if self._label_spellcheck is None:
+            self._label_spellcheck = True
+
+        self._label_spellcheck_string = itb_util.variant_to_value(
+            self._gsettings.get_value('labelspellcheckstring'))
+
+        self._label_dictionary = itb_util.variant_to_value(
+            self._gsettings.get_value('labeldictionary'))
+        if self._label_dictionary is None:
+            self._label_dictionary = True
+
+        self._label_dictionary_string = itb_util.variant_to_value(
+            self._gsettings.get_value('labeldictionarystring'))
+
+        self._label_busy = itb_util.variant_to_value(
+            self._gsettings.get_value('labelbusy'))
+        if self._label_busy is None:
+            self._label_busy = True
+
+        self._label_busy_string = itb_util.variant_to_value(
+            self._gsettings.get_value('labelbusystring'))
 
         self._keybindings = {}
         self._hotkeys = None
@@ -572,32 +621,39 @@ class TypingBoosterEngine(IBus.Engine):
         attrs = IBus.AttrList()
         if comment:
             phrase += ' ' + itb_util.bidi_embed(comment)
-        if DEBUG_LEVEL > 0:
-            if spell_checking: # spell checking suggestion
-                phrase = phrase + ' ' + SPELL_CHECKING_CANDIDATE_SYMBOL
-                if  DEBUG_LEVEL > 1:
-                    attrs.append(IBus.attr_foreground_new(
-                        rgb(0xff, 0x00, 0x00), 0, len(phrase)))
-            elif from_user_db:
-                # This was found in the user database.  So it is
-                # possible to delete it with a key binding or
-                # mouse-click, if the user desires. Mark it
-                # differently to show that it is deletable:
-                phrase = phrase + ' ' + USER_DATABASE_CANDIDATE_SYMBOL
-                if  DEBUG_LEVEL > 1:
-                    attrs.append(IBus.attr_foreground_new(
-                        rgb(0xff, 0x7f, 0x00), 0, len(phrase)))
-            else:
-                # This is a (possibly accent insensitive) match in a
-                # hunspell dictionary or an emoji matched by
-                # EmojiMatcher.
-                if  DEBUG_LEVEL > 1:
-                    attrs.append(IBus.attr_foreground_new(
-                        rgb(0x00, 0x00, 0x00), 0, len(phrase)))
+        if spell_checking: # spell checking suggestion
+            if (self._label_spellcheck
+                and self._label_spellcheck_string.strip()):
+                phrase = phrase + ' ' + self._label_spellcheck_string.strip()
+            if self._color_spellcheck:
+                attrs.append(IBus.attr_foreground_new(
+                    self._color_spellcheck_argb, 0, len(phrase)))
+        elif from_user_db:
+            # This was found in the user database.  So it is
+            # possible to delete it with a key binding or
+            # mouse-click, if the user desires. Mark it
+            # differently to show that it is deletable:
+            if (self._label_userdb
+                and self._label_userdb_string.strip()):
+                phrase = phrase + ' ' + self._label_userdb_string.strip()
+            if self._color_userdb:
+                attrs.append(IBus.attr_foreground_new(
+                    self._color_userdb_argb, 0, len(phrase)))
+        else:
+            # This is a (possibly accent insensitive) match in a
+            # hunspell dictionary or an emoji matched by
+            # EmojiMatcher.
+            if (self._label_dictionary
+                and self._label_dictionary_string.strip()):
+                phrase = phrase + ' ' + self._label_dictionary_string.strip()
+            if self._color_dictionary:
+                attrs.append(IBus.attr_foreground_new(
+                    self._color_dictionary_argb, 0, len(phrase)))
         if DEBUG_LEVEL > 1:
+            # Show frequency information for debugging
             phrase += ' ' + str(user_freq)
             attrs.append(IBus.attr_foreground_new(
-                rgb(0x00, 0xff, 0x00),
+                itb_util.color_string_to_argb('HotPink'),
                 len(phrase) - len(str(user_freq)),
                 len(phrase)))
         text = IBus.Text.new_from_string(phrase)
@@ -1460,7 +1516,7 @@ class TypingBoosterEngine(IBus.Engine):
         # Needs fix in ibus.
         attrs = IBus.AttrList()
         attrs.append(IBus.attr_foreground_new(
-            rgb(0x95, 0x15, 0xb5),
+            itb_util.color_string_to_argb('SlateGray'),
             0,
             len(aux_string)))
         if DEBUG_LEVEL > 0:
@@ -1469,7 +1525,7 @@ class TypingBoosterEngine(IBus.Engine):
                 + ' ' + self.get_p_phrase())
             aux_string += context
             attrs.append(IBus.attr_foreground_new(
-                rgb(0x00, 0xff, 0x00),
+                itb_util.color_string_to_argb('DeepPink'),
                 len(aux_string)-len(context),
                 len(aux_string)))
         text = IBus.Text.new_from_string(aux_string)
@@ -1541,6 +1597,10 @@ class TypingBoosterEngine(IBus.Engine):
                 IBus.AttrUnderline.DOUBLE,
                 len(typed_string), len(typed_string + completion)))
         else:
+            if self._color_inline_completion:
+                attrs.append(IBus.attr_foreground_new(
+                    self._color_inline_completion_argb,
+                    len(typed_string), len(typed_string + completion)))
             attrs.append(IBus.attr_underline_new(
                 IBus.AttrUnderline.NONE,
                 len(typed_string), len(typed_string + completion)))
@@ -1597,10 +1657,16 @@ class TypingBoosterEngine(IBus.Engine):
         self.get_lookup_table().clear()
         self.get_lookup_table().set_cursor_visible(False)
         self.hide_lookup_table()
-        # Show an hourglass with moving sand in the auxiliary text to
-        # indicate that the lookup table is being updated:
-        super(TypingBoosterEngine, self).update_auxiliary_text(
-            IBus.Text.new_from_string(BUSY_SYMBOL), True)
+        if self._label_busy and self._label_busy_string.strip():
+            # Show a label in the auxiliary text to indicate that the
+            # lookup table is being updated (by default an hourglass
+            # with moving sand):
+            super(TypingBoosterEngine, self).update_auxiliary_text(
+                IBus.Text.new_from_string(
+                    self._label_busy_string.strip()), True)
+        else:
+            super(TypingBoosterEngine, self).update_auxiliary_text(
+                IBus.Text.new_from_string(''), False)
         if self._unit_test:
             self._update_candidates_and_lookup_table_and_aux()
         else:
@@ -1634,8 +1700,16 @@ class TypingBoosterEngine(IBus.Engine):
         # found:
         if self.get_lookup_table().get_number_of_candidates():
             self.hide_lookup_table()
-        super(TypingBoosterEngine, self).update_auxiliary_text(
-            IBus.Text.new_from_string(BUSY_SYMBOL), True)
+        if self._label_busy and self._label_busy_string.strip():
+            # Show a label in the auxiliary text to indicate that the
+            # lookup table is being updated (by default an hourglass
+            # with moving sand):
+            super(TypingBoosterEngine, self).update_auxiliary_text(
+                IBus.Text.new_from_string(
+                    self._label_busy_string.strip()), True)
+        else:
+            super(TypingBoosterEngine, self).update_auxiliary_text(
+                IBus.Text.new_from_string(''), False)
         related_candidates = []
         # Try to find similar emoji even if emoji predictions are
         # turned off.  Even when they are turned off, an emoji might
@@ -2317,6 +2391,531 @@ class TypingBoosterEngine(IBus.Engine):
         :rtype: string
         '''
         return self._auto_commit_characters
+
+    def set_color_inline_completion(self, mode, update_gsettings=True):
+        '''Sets whether to use color for inline completion
+
+        :param mode: Whether to use color for inline completion
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_color_inline_completion(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
+        if mode == self._color_inline_completion:
+            return
+        self._color_inline_completion = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorinlinecompletion',
+                GLib.Variant.new_boolean(mode))
+
+    def get_color_inline_completion(self):
+        '''Returns the current value of the “color inline completion” mode
+
+        :rtype: Boolean
+        '''
+        return self._color_inline_completion
+
+    def set_color_inline_completion_string(
+            self, color_string, update_gsettings=True):
+        '''Sets the color for inline completion
+
+        :param color_string: The color for inline completion
+        :type color_string: String
+                            - Standard name from the X11 rgb.txt
+                            - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                         or ”#rrrrggggbbbb”
+                            - RGB color: “rgb(r,g,b)”
+                            - RGBA color: “rgba(r,g,b,a)”
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_color_inline_completion_string(%s, update_gsettings = %s)\n"
+                %(color_string, update_gsettings))
+        if color_string == self._color_inline_completion_string:
+            return
+        self._color_inline_completion_string = color_string
+        self._color_inline_completion_argb = itb_util.color_string_to_argb(
+            self._color_inline_completion_string)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorinlinecompletionstring',
+                GLib.Variant.new_string(color_string))
+
+    def get_color_inline_completion_string(self):
+        '''Returns the current value of the “color inline completion” string
+
+        :rtype: String
+        '''
+        return self._color_inline_completion_string
+
+    def set_color_userdb(self, mode, update_gsettings=True):
+        '''Sets whether to use color for user database suggestions
+
+        :param mode: Whether to use color for user database suggestions
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_color_userdb(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
+        if mode == self._color_userdb:
+            return
+        self._color_userdb = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'coloruserdb',
+                GLib.Variant.new_boolean(mode))
+
+    def get_color_userdb(self):
+        '''Returns the current value of the “color userdb” mode
+
+        :rtype: Boolean
+        '''
+        return self._color_userdb
+
+    def set_color_userdb_string(self, color_string, update_gsettings=True):
+        '''Sets the color for user database suggestions
+
+        :param color_string: The color for user database suggestions
+        :type color_string: String
+                            - Standard name from the X11 rgb.txt
+                            - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                         or ”#rrrrggggbbbb”
+                            - RGB color: “rgb(r,g,b)”
+                            - RGBA color: “rgba(r,g,b,a)”
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_color_userdb_string(%s, update_gsettings = %s)\n"
+                %(color_string, update_gsettings))
+        if color_string == self._color_userdb_string:
+            return
+        self._color_userdb_string = color_string
+        self._color_userdb_argb = itb_util.color_string_to_argb(
+            self._color_userdb_string)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'coloruserdbstring',
+                GLib.Variant.new_string(color_string))
+
+    def get_color_userdb_string(self):
+        '''Returns the current value of the “color userdb” string
+
+        :rtype: String
+        '''
+        return self._color_userdb_string
+
+    def set_color_spellcheck(self, mode, update_gsettings=True):
+        '''Sets whether to use color for spellchecking suggestions
+
+        :param mode: Whether to use color for spellchecking suggestions
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_color_spellcheck(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
+        if mode == self._color_spellcheck:
+            return
+        self._color_spellcheck = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorspellcheck',
+                GLib.Variant.new_boolean(mode))
+
+    def get_color_spellcheck(self):
+        '''Returns the current value of the “color spellcheck” mode
+
+        :rtype: Boolean
+        '''
+        return self._color_spellcheck
+
+    def set_color_spellcheck_string(self, color_string, update_gsettings=True):
+        '''Sets the color for spellchecking suggestions
+
+        :param color_string: The color for spellchecking suggestions
+        :type color_string: String
+                            - Standard name from the X11 rgb.txt
+                            - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                         or ”#rrrrggggbbbb”
+                            - RGB color: “rgb(r,g,b)”
+                            - RGBA color: “rgba(r,g,b,a)”
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_color_spellcheck_string(%s, update_gsettings = %s)\n"
+                %(color_string, update_gsettings))
+        if color_string == self._color_spellcheck_string:
+            return
+        self._color_spellcheck_string = color_string
+        self._color_spellcheck_argb = itb_util.color_string_to_argb(
+            self._color_spellcheck_string)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorspellcheckstring',
+                GLib.Variant.new_string(color_string))
+
+    def get_color_spellcheck_string(self):
+        '''Returns the current value of the “color spellcheck” string
+
+        :rtype: String
+        '''
+        return self._color_spellcheck_string
+
+    def set_color_dictionary(self, mode, update_gsettings=True):
+        '''Sets whether to use color for dictionary suggestions
+
+        :param mode: Whether to use color for dictionary suggestions
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_color_dictionary(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
+        if mode == self._color_dictionary:
+            return
+        self._color_dictionary = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colordictionary',
+                GLib.Variant.new_boolean(mode))
+
+    def get_color_dictionary(self):
+        '''Returns the current value of the “color dictionary” mode
+
+        :rtype: Boolean
+        '''
+        return self._color_dictionary
+
+    def set_color_dictionary_string(self, color_string, update_gsettings=True):
+        '''Sets the color for dictionary suggestions
+
+        :param color_string: The color for dictionary suggestions
+        :type color_string: String
+                            - Standard name from the X11 rgb.txt
+                            - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                         or ”#rrrrggggbbbb”
+                            - RGB color: “rgb(r,g,b)”
+                            - RGBA color: “rgba(r,g,b,a)”
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_color_dictionary_string(%s, update_gsettings = %s)\n"
+                %(color_string, update_gsettings))
+        if color_string == self._color_dictionary_string:
+            return
+        self._color_dictionary_string = color_string
+        self._color_dictionary_argb = itb_util.color_string_to_argb(
+            self._color_dictionary_string)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colordictionarystring',
+                GLib.Variant.new_string(color_string))
+
+    def get_color_dictionary_string(self):
+        '''Returns the current value of the “color dictionary” string
+
+        :rtype: String
+        '''
+        return self._color_dictionary_string
+
+    def set_label_userdb(self, mode, update_gsettings=True):
+        '''Sets whether to use a label for user database
+
+        :param mode: Whether to use a label for user database suggestions
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_label_userdb(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
+        if mode == self._label_userdb:
+            return
+        self._label_userdb = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labeluserdb',
+                GLib.Variant.new_boolean(mode))
+
+    def get_label_userdb(self):
+        '''Returns the current value of the “label userdb” mode
+
+        :rtype: Boolean
+        '''
+        return self._label_userdb
+
+    def set_label_userdb_string(self, label_string, update_gsettings=True):
+        '''Sets the label for user database suggestions
+
+        :param label_string: The label for user database suggestions
+        :type label_string: String
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_label_userdb_string(%s, update_gsettings = %s)\n"
+                %(label_string, update_gsettings))
+        if label_string == self._label_userdb_string:
+            return
+        self._label_userdb_string = label_string
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labeluserdbstring',
+                GLib.Variant.new_string(label_string))
+
+    def get_label_userdb_string(self):
+        '''Returns the current value of the “label userdb” string
+
+        :rtype: String
+        '''
+        return self._label_userdb_string
+
+    def set_label_spellcheck(self, mode, update_gsettings=True):
+        '''Sets whether to use a label for spellchecking suggestions
+
+        :param mode: Whether to use a label for spellchecking suggestions
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_label_spellcheck(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
+        if mode == self._label_spellcheck:
+            return
+        self._label_spellcheck = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labelspellcheck',
+                GLib.Variant.new_boolean(mode))
+
+    def get_label_spellcheck(self):
+        '''Returns the current value of the “label spellcheck” mode
+
+        :rtype: Boolean
+        '''
+        return self._label_spellcheck
+
+    def set_label_spellcheck_string(self, label_string, update_gsettings=True):
+        '''Sets the label for spellchecking suggestions
+
+        :param label_string: The label for spellchecking suggestions
+        :type label_string: String
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_label_spellcheck_string(%s, update_gsettings = %s)\n"
+                %(label_string, update_gsettings))
+        if label_string == self._label_spellcheck_string:
+            return
+        self._label_spellcheck_string = label_string
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labelspellcheckstring',
+                GLib.Variant.new_string(label_string))
+
+    def get_label_spellcheck_string(self):
+        '''Returns the current value of the “label spellcheck” string
+
+        :rtype: String
+        '''
+        return self._label_spellcheck_string
+
+    def set_label_dictionary(self, mode, update_gsettings=True):
+        '''Sets whether to use a label for dictionary suggestions
+
+        :param mode: Whether to use a label for dictionary suggestions
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_label_dictionary(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
+        if mode == self._label_dictionary:
+            return
+        self._label_dictionary = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labeldictionary',
+                GLib.Variant.new_boolean(mode))
+
+    def get_label_dictionary(self):
+        '''Returns the current value of the “label dictionary” mode
+
+        :rtype: Boolean
+        '''
+        return self._label_dictionary
+
+    def set_label_dictionary_string(self, label_string, update_gsettings=True):
+        '''Sets the label for dictionary suggestions
+
+        :param label_string: The label for dictionary suggestions
+        :type label_string: String
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_label_dictionary_string(%s, update_gsettings = %s)\n"
+                %(label_string, update_gsettings))
+        if label_string == self._label_dictionary_string:
+            return
+        self._label_dictionary_string = label_string
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labeldictionarystring',
+                GLib.Variant.new_string(label_string))
+
+    def get_label_dictionary_string(self):
+        '''Returns the current value of the “label dictionary” string
+
+        :rtype: String
+        '''
+        return self._label_dictionary_string
+
+    def set_label_busy(self, mode, update_gsettings=True):
+        '''Sets whether to use a label to indicate busy state
+
+        :param mode: Whether to use a label to indicate busy state
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_label_busy(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
+        if mode == self._label_busy:
+            return
+        self._label_busy = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labelbusy',
+                GLib.Variant.new_boolean(mode))
+
+    def get_label_busy(self):
+        '''Returns the current value of the “label busy” mode
+
+        :rtype: Boolean
+        '''
+        return self._label_busy
+
+    def set_label_busy_string(self, label_string, update_gsettings=True):
+        '''Sets the label used to indicate busy state
+
+        :param label_string: The label to indicate busy state
+        :type label_string: String
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_label_busy_string(%s, update_gsettings = %s)\n"
+                %(label_string, update_gsettings))
+        if label_string == self._label_busy_string:
+            return
+        self._label_busy_string = label_string
+        if update_gsettings:
+            self._gsettings.set_value(
+                'labelbusystring',
+                GLib.Variant.new_string(label_string))
+
+    def get_label_busy_string(self):
+        '''Returns the current value of the “label busy” string
+
+        :rtype: String
+        '''
+        return self._label_busy_string
 
     def set_tab_enable(self, mode, update_gsettings=True):
         '''Sets the “Tab enable” mode
@@ -3429,6 +4028,62 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if key == 'usedigitsasselectkeys':
             self.set_use_digits_as_select_keys(value, update_gsettings=False)
+            return
+        if key == 'colorinlinecompletion':
+            self.set_color_inline_completion(
+                value, update_gsettings=False)
+            return
+        if key == 'colorinlinecompletionstring':
+            self.set_color_inline_completion_string(
+                value, update_gsettings=False)
+            return
+        if key == 'coloruserdb':
+            self.set_color_userdb(
+                value, update_gsettings=False)
+            return
+        if key == 'coloruserdbstring':
+            self.set_color_userdb_string(
+                value, update_gsettings=False)
+            return
+        if key == 'colorspellcheck':
+            self.set_color_spellcheck(
+                value, update_gsettings=False)
+            return
+        if key == 'colorspellcheckstring':
+            self.set_color_spellcheck_string(
+                value, update_gsettings=False)
+            return
+        if key == 'colordictionary':
+            self.set_color_dictionary(
+                value, update_gsettings=False)
+            return
+        if key == 'colordictionarystring':
+            self.set_color_dictionary_string(
+                value, update_gsettings=False)
+            return
+        if key == 'labeluserdb':
+            self.set_label_userdb(value, update_gsettings=False)
+            return
+        if key == 'labeluserdbstring':
+            self.set_label_userdb_string(value, update_gsettings=False)
+            return
+        if key == 'labelspellcheck':
+            self.set_label_spellcheck(value, update_gsettings=False)
+            return
+        if key == 'labelspellcheckstring':
+            self.set_label_spellcheck_string(value, update_gsettings=False)
+            return
+        if key == 'labeldictionary':
+            self.set_label_dictionary(value, update_gsettings=False)
+            return
+        if key == 'labeldictionarystring':
+            self.set_label_dictionary_string(value, update_gsettings=False)
+            return
+        if key == 'labelbusy':
+            self.set_label_busy(value, update_gsettings=False)
+            return
+        if key == 'labelbusystring':
+            self.set_label_busy_string(value, update_gsettings=False)
             return
         if key == 'inputmethod':
             self.set_current_imes(

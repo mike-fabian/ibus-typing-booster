@@ -1691,6 +1691,43 @@ def tokenize(text):
         tokens.append(strip_token(word))
     return tokens
 
+def color_string_to_argb(color_string):
+    '''
+    Converts a color string to a 32bit  ARGB value
+
+    :param color_string: The color to convert to 32bit ARGB
+    :type color_string: String
+                        - Standard name from the X11 rgb.txt
+                        - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                     or ”#rrrrggggbbbb”
+                        - RGB color: “rgb(r,g,b)”
+                        - RGBA color: “rgba(r,g,b,a)”
+    :rtype: Integer
+
+    Examples:
+
+    >>> print('%x' %color_string_to_argb('rgb(0xff, 0x10, 0x25)'))
+    ffff1025
+
+    >>> print('%x' %color_string_to_argb('#108040'))
+    ff108040
+
+    >>> print('%x' %color_string_to_argb('#fff000888'))
+    ffff0088
+
+    >>> print('%x' %color_string_to_argb('#ffff00008888'))
+    ffff0088
+
+    >>> print('%x' %color_string_to_argb('rgba(0xff, 0x10, 0x25, 0.5)'))
+    7fff1025
+    '''
+    gdk_rgba = Gdk.RGBA()
+    gdk_rgba.parse(color_string)
+    return (((int(gdk_rgba.alpha * 0xff) & 0xff) << 24)
+            + ((int(gdk_rgba.red * 0xff) & 0xff) << 16)
+            + ((int(gdk_rgba.green * 0xff) & 0xff) << 8)
+            + ((int(gdk_rgba.blue * 0xff) & 0xff)))
+
 def is_ascii(text):
     '''Checks whether all characters in text are ASCII characters
 
