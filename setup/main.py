@@ -259,37 +259,6 @@ class SetupUI(Gtk.Window):
         if  self._inline_completion is True:
             self._inline_completion_checkbutton.set_active(True)
 
-        self._show_number_of_candidates_checkbutton = Gtk.CheckButton(
-            label=_('Display total number of candidates'))
-        self._show_number_of_candidates_checkbutton.set_tooltip_text(
-            _('Display how many candidates there are and which one is selected on top of the list of candidates.'))
-        self._show_number_of_candidates_checkbutton.connect(
-            'clicked', self.on_show_number_of_candidates_checkbutton)
-        self._options_grid.attach(
-            self._show_number_of_candidates_checkbutton, 0, 2, 2, 1)
-        self._show_number_of_candidates = itb_util.variant_to_value(
-            self._gsettings.get_value('shownumberofcandidates'))
-        if self._show_number_of_candidates is None:
-            self._show_number_of_candidates = False
-        if  self._show_number_of_candidates is True:
-            self._show_number_of_candidates_checkbutton.set_active(True)
-
-        self._show_status_info_in_auxiliary_text_checkbutton = Gtk.CheckButton(
-            label=_('Show status info in auxiliary text'))
-        self._show_status_info_in_auxiliary_text_checkbutton.set_tooltip_text(
-            _('Show in the auxiliary text whether “Emoji prediction”  mode and “Off the record”  mode are on or off and show which input method is currently used for the preëdit. The auxiliary text is an optional line of text displayed above the candidate list.'))
-        self._show_status_info_in_auxiliary_text_checkbutton.connect(
-            'clicked', self.on_show_status_info_in_auxiliary_text_checkbutton)
-        self._options_grid.attach(
-            self._show_status_info_in_auxiliary_text_checkbutton, 0, 3, 2, 1)
-        self._show_status_info_in_auxiliary_text = itb_util.variant_to_value(
-            self._gsettings.get_value('showstatusinfoinaux'))
-        if self._show_status_info_in_auxiliary_text is None:
-            self._show_status_info_in_auxiliary_text = False
-        if self._show_status_info_in_auxiliary_text is True:
-            self._show_status_info_in_auxiliary_text_checkbutton.set_active(
-                True)
-
         self._use_digits_as_select_keys_checkbutton = Gtk.CheckButton(
             label=_('Use digits as select keys'))
         self._use_digits_as_select_keys_checkbutton.set_tooltip_text(
@@ -297,7 +266,7 @@ class SetupUI(Gtk.Window):
         self._use_digits_as_select_keys_checkbutton.connect(
             'clicked', self.on_use_digits_as_select_keys_checkbutton)
         self._options_grid.attach(
-            self._use_digits_as_select_keys_checkbutton, 0, 4, 2, 1)
+            self._use_digits_as_select_keys_checkbutton, 0, 2, 2, 1)
         self._use_digits_as_select_keys = itb_util.variant_to_value(
             self._gsettings.get_value('usedigitsasselectkeys'))
         if self._use_digits_as_select_keys is None:
@@ -312,7 +281,7 @@ class SetupUI(Gtk.Window):
         self._add_space_on_commit_checkbutton.connect(
             'clicked', self.on_add_space_on_commit_checkbutton)
         self._options_grid.attach(
-            self._add_space_on_commit_checkbutton, 0, 5, 2, 1)
+            self._add_space_on_commit_checkbutton, 0, 3, 2, 1)
         self._add_space_on_commit = itb_util.variant_to_value(
             self._gsettings.get_value('addspaceoncommit'))
         if self._add_space_on_commit is None:
@@ -327,7 +296,7 @@ class SetupUI(Gtk.Window):
         self._remember_last_used_preedit_ime_checkbutton.connect(
             'clicked', self.on_remember_last_used_preedit_ime_checkbutton)
         self._options_grid.attach(
-            self._remember_last_used_preedit_ime_checkbutton, 0, 6, 2, 1)
+            self._remember_last_used_preedit_ime_checkbutton, 0, 4, 2, 1)
         self._remember_last_used_preedit_ime = itb_util.variant_to_value(
             self._gsettings.get_value('rememberlastusedpreeditime'))
         if self._remember_last_used_preedit_ime is None:
@@ -342,7 +311,7 @@ class SetupUI(Gtk.Window):
         self._emoji_predictions_checkbutton.connect(
             'clicked', self.on_emoji_predictions_checkbutton)
         self._options_grid.attach(
-            self._emoji_predictions_checkbutton, 0, 7, 2, 1)
+            self._emoji_predictions_checkbutton, 0, 5, 2, 1)
         self._emoji_predictions = itb_util.variant_to_value(
             self._gsettings.get_value('emojipredictions'))
         if self._emoji_predictions is None:
@@ -357,7 +326,7 @@ class SetupUI(Gtk.Window):
         self._off_the_record_checkbutton.connect(
             'clicked', self.on_off_the_record_checkbutton)
         self._options_grid.attach(
-            self._off_the_record_checkbutton, 0, 8, 2, 1)
+            self._off_the_record_checkbutton, 0, 6, 2, 1)
         self._off_the_record = itb_util.variant_to_value(
             self._gsettings.get_value('offtherecord'))
         if self._off_the_record is None:
@@ -372,7 +341,7 @@ class SetupUI(Gtk.Window):
         self._qt_im_module_workaround_checkbutton.connect(
             'clicked', self.on_qt_im_module_workaround_checkbutton)
         self._options_grid.attach(
-            self._qt_im_module_workaround_checkbutton, 0, 9, 2, 1)
+            self._qt_im_module_workaround_checkbutton, 0, 7, 2, 1)
         self._qt_im_module_workaround = itb_util.variant_to_value(
             self._gsettings.get_value('qtimmoduleworkaround'))
         if self._qt_im_module_workaround is None:
@@ -387,7 +356,7 @@ class SetupUI(Gtk.Window):
         self._arrow_keys_reopen_preedit_checkbutton.connect(
             'clicked', self.on_arrow_keys_reopen_preedit_checkbutton)
         self._options_grid.attach(
-            self._arrow_keys_reopen_preedit_checkbutton, 0, 10, 2, 1)
+            self._arrow_keys_reopen_preedit_checkbutton, 0, 8, 2, 1)
         self._arrow_keys_reopen_preedit = itb_util.variant_to_value(
             self._gsettings.get_value('arrowkeysreopenpreedit'))
         if self._arrow_keys_reopen_preedit is None:
@@ -402,11 +371,11 @@ class SetupUI(Gtk.Window):
             _('The characters in this list cause the preedit to be committed automatically, followed by a space.  For example, if “.” is an auto commit character, this saves you typing a space manually after the end of a sentence. You can freely edit this list, a reasonable value might be “.,;:?!)”. You should not add characters to that list which are needed by your input method, for example if you use Latin-Pre (t-latn-pre) it would be a bad idea to add “.” to that list because it would prevent you from typing “.s” to get “ṡ”. You can also disable this feature completely by making the list empty (which is the default).'))
         self._auto_commit_characters_label.set_xalign(0)
         self._options_grid.attach(
-            self._auto_commit_characters_label, 0, 11, 1, 1)
+            self._auto_commit_characters_label, 0, 9, 1, 1)
 
         self._auto_commit_characters_entry = Gtk.Entry()
         self._options_grid.attach(
-            self._auto_commit_characters_entry, 1, 11, 1, 1)
+            self._auto_commit_characters_entry, 1, 9, 1, 1)
         self._auto_commit_characters = itb_util.variant_to_value(
             self._gsettings.get_value('autocommitcharacters'))
         if not self._auto_commit_characters:
@@ -416,67 +385,6 @@ class SetupUI(Gtk.Window):
         self._auto_commit_characters_entry.connect(
             'notify::text', self.on_auto_commit_characters_entry)
 
-        self._page_size_label = Gtk.Label()
-        self._page_size_label.set_text(_('Candidate window page size:'))
-        self._page_size_label.set_tooltip_text(
-            _('How many suggestion candidates to show in one page of the candidate list.'))
-        self._page_size_label.set_xalign(0)
-        self._options_grid.attach(
-            self._page_size_label, 0, 12, 1, 1)
-
-        self._page_size_adjustment = Gtk.SpinButton()
-        self._page_size_adjustment.set_visible(True)
-        self._page_size_adjustment.set_can_focus(True)
-        self._page_size_adjustment.set_increments(1.0, 1.0)
-        self._page_size_adjustment.set_range(1.0, 9.0)
-        self._options_grid.attach(
-            self._page_size_adjustment, 1, 12, 1, 1)
-        self._page_size = itb_util.variant_to_value(
-            self._gsettings.get_value('pagesize'))
-        if self._page_size:
-            self._page_size_adjustment.set_value(int(self._page_size))
-        else:
-            self._page_size_adjustment.set_value(6)
-        self._page_size_adjustment.connect(
-            'value-changed', self.on_page_size_adjustment_value_changed)
-
-        self._lookup_table_orientation_label = Gtk.Label()
-        self._lookup_table_orientation_label.set_text(
-            _('Candidate window orientation'))
-        self._lookup_table_orientation_label.set_tooltip_text(
-            _('Whether the candidate window should be drawn horizontally or vertically.'))
-        self._lookup_table_orientation_label.set_xalign(0)
-        self._options_grid.attach(
-            self._lookup_table_orientation_label, 0, 13, 1, 1)
-
-        self._lookup_table_orientation_combobox = Gtk.ComboBox()
-        self._lookup_table_orientation_store = Gtk.ListStore(str, int)
-        self._lookup_table_orientation_store.append(
-            [_('Horizontal'), IBus.Orientation.HORIZONTAL])
-        self._lookup_table_orientation_store.append(
-            [_('Vertical'), IBus.Orientation.VERTICAL])
-        self._lookup_table_orientation_store.append(
-            [_('System default'), IBus.Orientation.SYSTEM])
-        self._lookup_table_orientation_combobox.set_model(
-            self._lookup_table_orientation_store)
-        renderer_text = Gtk.CellRendererText()
-        self._lookup_table_orientation_combobox.pack_start(
-            renderer_text, True)
-        self._lookup_table_orientation_combobox.add_attribute(
-            renderer_text, "text", 0)
-        self._lookup_table_orientation = itb_util.variant_to_value(
-            self._gsettings.get_value('lookuptableorientation'))
-        if self._lookup_table_orientation is None:
-            self._lookup_table_orientation = IBus.Orientation.VERTICAL
-        for i, item in enumerate(self._lookup_table_orientation_store):
-            if self._lookup_table_orientation == item[1]:
-                self._lookup_table_orientation_combobox.set_active(i)
-        self._options_grid.attach(
-            self._lookup_table_orientation_combobox, 1, 13, 1, 1)
-        self._lookup_table_orientation_combobox.connect(
-            "changed",
-            self.on_lookup_table_orientation_combobox_changed)
-
         self._min_chars_completion_label = Gtk.Label()
         self._min_chars_completion_label.set_text(
             _('Minimum number of chars for completion:'))
@@ -484,7 +392,7 @@ class SetupUI(Gtk.Window):
             _('Show no suggestions when less than this number of characters have been typed.'))
         self._min_chars_completion_label.set_xalign(0)
         self._options_grid.attach(
-            self._min_chars_completion_label, 0, 14, 1, 1)
+            self._min_chars_completion_label, 0, 10, 1, 1)
 
         self._min_char_complete_adjustment = Gtk.SpinButton()
         self._min_char_complete_adjustment.set_visible(True)
@@ -492,7 +400,7 @@ class SetupUI(Gtk.Window):
         self._min_char_complete_adjustment.set_increments(1.0, 1.0)
         self._min_char_complete_adjustment.set_range(1.0, 9.0)
         self._options_grid.attach(
-            self._min_char_complete_adjustment, 1, 14, 1, 1)
+            self._min_char_complete_adjustment, 1, 10, 1, 1)
         self._min_char_complete = itb_util.variant_to_value(
             self._gsettings.get_value('mincharcomplete'))
         if self._min_char_complete:
@@ -509,7 +417,7 @@ class SetupUI(Gtk.Window):
         self._learn_from_file_button.set_tooltip_text(
             _('Learn your style by reading a text file'))
         self._options_grid.attach(
-            self._learn_from_file_button, 0, 15, 2, 1)
+            self._learn_from_file_button, 0, 11, 2, 1)
         self._learn_from_file_button.connect(
             'clicked', self.on_learn_from_file_clicked)
 
@@ -518,7 +426,7 @@ class SetupUI(Gtk.Window):
         self._delete_learned_data_button.set_tooltip_text(
             _('Delete all personal language data learned from typing or from reading files'))
         self._options_grid.attach(
-            self._delete_learned_data_button, 0, 16, 2, 1)
+            self._delete_learned_data_button, 0, 12, 2, 1)
         self._delete_learned_data_button.connect(
             'clicked', self.on_delete_learned_data_clicked)
 
@@ -899,6 +807,98 @@ class SetupUI(Gtk.Window):
         self._keybindings_edit_popover_remove_button = None
         self._keybindings_edit_popover_default_button = None
 
+        self._show_number_of_candidates_checkbutton = Gtk.CheckButton(
+            label=_('Display total number of candidates'))
+        self._show_number_of_candidates_checkbutton.set_tooltip_text(
+            _('Display how many candidates there are and which one is selected on top of the list of candidates.'))
+        self._show_number_of_candidates_checkbutton.connect(
+            'clicked', self.on_show_number_of_candidates_checkbutton)
+        self._appearance_grid.attach(
+            self._show_number_of_candidates_checkbutton, 0, 0, 2, 1)
+        self._show_number_of_candidates = itb_util.variant_to_value(
+            self._gsettings.get_value('shownumberofcandidates'))
+        if self._show_number_of_candidates is None:
+            self._show_number_of_candidates = False
+        if  self._show_number_of_candidates is True:
+            self._show_number_of_candidates_checkbutton.set_active(True)
+
+        self._show_status_info_in_auxiliary_text_checkbutton = Gtk.CheckButton(
+            label=_('Show status info in auxiliary text'))
+        self._show_status_info_in_auxiliary_text_checkbutton.set_tooltip_text(
+            _('Show in the auxiliary text whether “Emoji prediction”  mode and “Off the record”  mode are on or off and show which input method is currently used for the preëdit. The auxiliary text is an optional line of text displayed above the candidate list.'))
+        self._show_status_info_in_auxiliary_text_checkbutton.connect(
+            'clicked', self.on_show_status_info_in_auxiliary_text_checkbutton)
+        self._appearance_grid.attach(
+            self._show_status_info_in_auxiliary_text_checkbutton, 0, 1, 2, 1)
+        self._show_status_info_in_auxiliary_text = itb_util.variant_to_value(
+            self._gsettings.get_value('showstatusinfoinaux'))
+        if self._show_status_info_in_auxiliary_text is None:
+            self._show_status_info_in_auxiliary_text = False
+        if self._show_status_info_in_auxiliary_text is True:
+            self._show_status_info_in_auxiliary_text_checkbutton.set_active(
+                True)
+
+        self._page_size_label = Gtk.Label()
+        self._page_size_label.set_text(_('Candidate window page size:'))
+        self._page_size_label.set_tooltip_text(
+            _('How many suggestion candidates to show in one page of the candidate list.'))
+        self._page_size_label.set_xalign(0)
+        self._appearance_grid.attach(
+            self._page_size_label, 0, 2, 1, 1)
+
+        self._page_size_adjustment = Gtk.SpinButton()
+        self._page_size_adjustment.set_visible(True)
+        self._page_size_adjustment.set_can_focus(True)
+        self._page_size_adjustment.set_increments(1.0, 1.0)
+        self._page_size_adjustment.set_range(1.0, 9.0)
+        self._appearance_grid.attach(
+            self._page_size_adjustment, 1, 2, 1, 1)
+        self._page_size = itb_util.variant_to_value(
+            self._gsettings.get_value('pagesize'))
+        if self._page_size:
+            self._page_size_adjustment.set_value(int(self._page_size))
+        else:
+            self._page_size_adjustment.set_value(6)
+        self._page_size_adjustment.connect(
+            'value-changed', self.on_page_size_adjustment_value_changed)
+
+        self._lookup_table_orientation_label = Gtk.Label()
+        self._lookup_table_orientation_label.set_text(
+            _('Candidate window orientation'))
+        self._lookup_table_orientation_label.set_tooltip_text(
+            _('Whether the candidate window should be drawn horizontally or vertically.'))
+        self._lookup_table_orientation_label.set_xalign(0)
+        self._appearance_grid.attach(
+            self._lookup_table_orientation_label, 0, 3, 1, 1)
+
+        self._lookup_table_orientation_combobox = Gtk.ComboBox()
+        self._lookup_table_orientation_store = Gtk.ListStore(str, int)
+        self._lookup_table_orientation_store.append(
+            [_('Horizontal'), IBus.Orientation.HORIZONTAL])
+        self._lookup_table_orientation_store.append(
+            [_('Vertical'), IBus.Orientation.VERTICAL])
+        self._lookup_table_orientation_store.append(
+            [_('System default'), IBus.Orientation.SYSTEM])
+        self._lookup_table_orientation_combobox.set_model(
+            self._lookup_table_orientation_store)
+        renderer_text = Gtk.CellRendererText()
+        self._lookup_table_orientation_combobox.pack_start(
+            renderer_text, True)
+        self._lookup_table_orientation_combobox.add_attribute(
+            renderer_text, "text", 0)
+        self._lookup_table_orientation = itb_util.variant_to_value(
+            self._gsettings.get_value('lookuptableorientation'))
+        if self._lookup_table_orientation is None:
+            self._lookup_table_orientation = IBus.Orientation.VERTICAL
+        for i, item in enumerate(self._lookup_table_orientation_store):
+            if self._lookup_table_orientation == item[1]:
+                self._lookup_table_orientation_combobox.set_active(i)
+        self._appearance_grid.attach(
+            self._lookup_table_orientation_combobox, 1, 3, 1, 1)
+        self._lookup_table_orientation_combobox.connect(
+            "changed",
+            self.on_lookup_table_orientation_combobox_changed)
+
         self._color_inline_completion_checkbutton = Gtk.CheckButton(
             label=_('Use color for inline completion'))
         self._color_inline_completion_checkbutton.set_tooltip_text(
@@ -906,7 +906,7 @@ class SetupUI(Gtk.Window):
         self._color_inline_completion_checkbutton.set_hexpand(False)
         self._color_inline_completion_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._color_inline_completion_checkbutton, 0, 0, 1, 1)
+            self._color_inline_completion_checkbutton, 0, 4, 1, 1)
         self._color_inline_completion = itb_util.variant_to_value(
             self._gsettings.get_value('colorinlinecompletion'))
         if self._color_inline_completion is None:
@@ -932,7 +932,7 @@ class SetupUI(Gtk.Window):
         gdk_rgba.parse(self._color_inline_completion_string)
         self._color_inline_completion_rgba_colorbutton.set_rgba(gdk_rgba)
         self._appearance_grid.attach(
-            self._color_inline_completion_rgba_colorbutton, 1, 0, 1, 1)
+            self._color_inline_completion_rgba_colorbutton, 1, 4, 1, 1)
         self._color_inline_completion_rgba_colorbutton.set_sensitive(
             self._color_inline_completion)
         self._color_inline_completion_rgba_colorbutton.connect(
@@ -945,7 +945,7 @@ class SetupUI(Gtk.Window):
         self._color_userdb_checkbutton.set_hexpand(False)
         self._color_userdb_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._color_userdb_checkbutton, 0, 1, 1, 1)
+            self._color_userdb_checkbutton, 0, 5, 1, 1)
         self._color_userdb = itb_util.variant_to_value(
             self._gsettings.get_value('coloruserdb'))
         if self._color_userdb is None:
@@ -971,7 +971,7 @@ class SetupUI(Gtk.Window):
         gdk_rgba.parse(self._color_userdb_string)
         self._color_userdb_rgba_colorbutton.set_rgba(gdk_rgba)
         self._appearance_grid.attach(
-            self._color_userdb_rgba_colorbutton, 1, 1, 1, 1)
+            self._color_userdb_rgba_colorbutton, 1, 5, 1, 1)
         self._color_userdb_rgba_colorbutton.set_sensitive(
             self._color_userdb)
         self._color_userdb_rgba_colorbutton.connect(
@@ -984,7 +984,7 @@ class SetupUI(Gtk.Window):
         self._color_spellcheck_checkbutton.set_hexpand(False)
         self._color_spellcheck_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._color_spellcheck_checkbutton, 0, 2, 1, 1)
+            self._color_spellcheck_checkbutton, 0, 6, 1, 1)
         self._color_spellcheck = itb_util.variant_to_value(
             self._gsettings.get_value('colorspellcheck'))
         if self._color_spellcheck is None:
@@ -1010,7 +1010,7 @@ class SetupUI(Gtk.Window):
         gdk_rgba.parse(self._color_spellcheck_string)
         self._color_spellcheck_rgba_colorbutton.set_rgba(gdk_rgba)
         self._appearance_grid.attach(
-            self._color_spellcheck_rgba_colorbutton, 1, 2, 1, 1)
+            self._color_spellcheck_rgba_colorbutton, 1, 6, 1, 1)
         self._color_spellcheck_rgba_colorbutton.set_sensitive(
             self._color_spellcheck)
         self._color_spellcheck_rgba_colorbutton.connect(
@@ -1023,7 +1023,7 @@ class SetupUI(Gtk.Window):
         self._color_dictionary_checkbutton.set_hexpand(False)
         self._color_dictionary_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._color_dictionary_checkbutton, 0, 3, 1, 1)
+            self._color_dictionary_checkbutton, 0, 7, 1, 1)
         self._color_dictionary = itb_util.variant_to_value(
             self._gsettings.get_value('colordictionary'))
         if self._color_dictionary is None:
@@ -1049,7 +1049,7 @@ class SetupUI(Gtk.Window):
         gdk_rgba.parse(self._color_dictionary_string)
         self._color_dictionary_rgba_colorbutton.set_rgba(gdk_rgba)
         self._appearance_grid.attach(
-            self._color_dictionary_rgba_colorbutton, 1, 3, 1, 1)
+            self._color_dictionary_rgba_colorbutton, 1, 7, 1, 1)
         self._color_dictionary_rgba_colorbutton.set_sensitive(
             self._color_dictionary)
         self._color_dictionary_rgba_colorbutton.connect(
@@ -1062,7 +1062,7 @@ class SetupUI(Gtk.Window):
         self._label_userdb_checkbutton.set_hexpand(False)
         self._label_userdb_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_userdb_checkbutton, 0, 4, 1, 1)
+            self._label_userdb_checkbutton, 0, 8, 1, 1)
         self._label_userdb = itb_util.variant_to_value(
             self._gsettings.get_value('labeluserdb'))
         if self._label_userdb is None:
@@ -1076,7 +1076,7 @@ class SetupUI(Gtk.Window):
         self._label_userdb_entry.set_hexpand(False)
         self._label_userdb_entry.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_userdb_entry, 1, 4, 1, 1)
+            self._label_userdb_entry, 1, 8, 1, 1)
         self._label_userdb_string = itb_util.variant_to_value(
             self._gsettings.get_value('labeluserdbstring'))
         if not self._label_userdb_string:
@@ -1093,7 +1093,7 @@ class SetupUI(Gtk.Window):
         self._label_spellcheck_checkbutton.set_hexpand(False)
         self._label_spellcheck_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_spellcheck_checkbutton, 0, 5, 1, 1)
+            self._label_spellcheck_checkbutton, 0, 9, 1, 1)
         self._label_spellcheck = itb_util.variant_to_value(
             self._gsettings.get_value('labelspellcheck'))
         if self._label_spellcheck is None:
@@ -1107,7 +1107,7 @@ class SetupUI(Gtk.Window):
         self._label_spellcheck_entry.set_hexpand(False)
         self._label_spellcheck_entry.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_spellcheck_entry, 1, 5, 1, 1)
+            self._label_spellcheck_entry, 1, 9, 1, 1)
         self._label_spellcheck_string = itb_util.variant_to_value(
             self._gsettings.get_value('labelspellcheckstring'))
         if not self._label_spellcheck_string:
@@ -1124,7 +1124,7 @@ class SetupUI(Gtk.Window):
         self._label_dictionary_checkbutton.set_hexpand(False)
         self._label_dictionary_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_dictionary_checkbutton, 0, 6, 1, 1)
+            self._label_dictionary_checkbutton, 0, 10, 1, 1)
         self._label_dictionary = itb_util.variant_to_value(
             self._gsettings.get_value('labeldictionary'))
         if self._label_dictionary is None:
@@ -1138,7 +1138,7 @@ class SetupUI(Gtk.Window):
         self._label_dictionary_entry.set_hexpand(False)
         self._label_dictionary_entry.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_dictionary_entry, 1, 6, 1, 1)
+            self._label_dictionary_entry, 1, 10, 1, 1)
         self._label_dictionary_string = itb_util.variant_to_value(
             self._gsettings.get_value('labeldictionarystring'))
         if not self._label_dictionary_string:
@@ -1155,7 +1155,7 @@ class SetupUI(Gtk.Window):
         self._label_busy_checkbutton.set_hexpand(False)
         self._label_busy_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_busy_checkbutton, 0, 7, 1, 1)
+            self._label_busy_checkbutton, 0, 11, 1, 1)
         self._label_busy = itb_util.variant_to_value(
             self._gsettings.get_value('labelbusy'))
         if self._label_busy is None:
@@ -1169,7 +1169,7 @@ class SetupUI(Gtk.Window):
         self._label_busy_entry.set_hexpand(False)
         self._label_busy_entry.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_busy_entry, 1, 7, 1, 1)
+            self._label_busy_entry, 1, 11, 1, 1)
         self._label_busy_string = itb_util.variant_to_value(
             self._gsettings.get_value('labelbusystring'))
         if not self._label_busy_string:
