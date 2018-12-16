@@ -3058,7 +3058,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         :param min_char_complete: The minimum number of characters
                                   to type before completion is tried.
-        :type mode: integer >= 1 and <= 9
+        :type min_char_complete: integer >= 1 and <= 9
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
