@@ -3,20 +3,21 @@
 # José Fournier <jaaf64@zoraldia.com>, 2016. #zanata
 # José Fournier <jaaf64@zoraldia.com>, 2017. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2017. #zanata
+# Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2018. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2018-12-07 18:55+0100\n"
-"PO-Revision-Date: 2018-12-07 06:07+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: French\n"
-"Language: fr\n"
+"POT-Creation-Date: 2018-12-19 16:36+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2018-12-18 12:57+0000\n"
+"Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
+"Language-Team: French\n"
+"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Generator: Zanata 4.6.2\n"
 
@@ -28,7 +29,7 @@ msgstr "Présentoir à émoticônes"
 msgid "Clear recently used"
 msgstr "Effacer les derniers utilisés"
 
-#: engine/emoji_picker.py:328 setup/main.py:141
+#: engine/emoji_picker.py:328 setup/main.py:148
 msgid "About"
 msgstr "À propos"
 
@@ -98,7 +99,7 @@ msgstr "Clic gauche pour copier"
 
 #: engine/emoji_picker.py:694
 msgid "Long press or middle click for skin tones"
-msgstr ""
+msgstr "Appui long ou clic central pour les teintes de peau"
 
 #: engine/emoji_picker.py:695
 msgid "Right click for info"
@@ -120,7 +121,7 @@ msgstr "Copié vers le presse-papier !"
 msgid "Lookup on emojipedia"
 msgstr "Interrogation d’Emojipedia"
 
-#: engine/emoji_picker.py:2026 setup/main.py:426
+#: engine/emoji_picker.py:2026 setup/main.py:1132
 msgid "System default"
 msgstr "Par défaut pour le système"
 
@@ -128,184 +129,248 @@ msgstr "Par défaut pour le système"
 msgid "Set Font"
 msgstr "Choix de police"
 
-#: engine/hunspell_table.py:315 engine/hunspell_table.py:335
+#: engine/hunspell_table.py:419 engine/hunspell_table.py:439
 msgid "Off"
 msgstr "Désactivé"
 
-#: engine/hunspell_table.py:320 engine/hunspell_table.py:340
+#: engine/hunspell_table.py:424 engine/hunspell_table.py:444
 msgid "On"
 msgstr "Activé"
 
-#: engine/hunspell_table.py:325 engine/hunspell_table.py:327 setup/main.py:306
+#. Translators: Whether Unicode symbols and emoji should be
+#. included in the predictions. Emoji are pictographs like
+#. ☺♨⛵…. Unicode symbols are other symbols like
+#. mathematical symbols (∀∑∯…), arrows (←↑↔…), currency
+#. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
+#. symbols. These are technically not emoji but
+#. nevertheless useful symbols.
+#: engine/hunspell_table.py:429 engine/hunspell_table.py:431 setup/main.py:406
 msgid "Unicode symbols and emoji predictions"
 msgstr "Prédictions des émoticônes et symboles unicodes"
 
-#: engine/hunspell_table.py:345 engine/hunspell_table.py:346 setup/main.py:321
+#. Translators: While “Off the record” mode is on, learning
+#. from user input is disabled. If learned user input is
+#. available, predictions are usually much better than
+#. predictions using only dictionaries. Therefore, one
+#. should use this option sparingly. Only if one wants to
+#. avoid saving secret user input to disk it might make
+#. sense to use this option temporarily.
+#: engine/hunspell_table.py:449 engine/hunspell_table.py:450 setup/main.py:434
 msgid "Off the record mode"
 msgstr "Mode sans enregistrement"
 
-#: engine/hunspell_table.py:1078
+#: engine/hunspell_table.py:1212
 msgid "Preedit input method"
 msgstr "Méthode de saisie pour la pré-édition."
 
-#: engine/hunspell_table.py:1079
+#: engine/hunspell_table.py:1213
 msgid "Switch preedit input method"
 msgstr "Changer la méthode de pré-édition"
 
-#: engine/hunspell_table.py:1272
+#: engine/hunspell_table.py:1405
 msgid "Setup"
 msgstr "Configuration"
 
-#: engine/hunspell_table.py:1275 setup/main.py:112
+#: engine/hunspell_table.py:1408 setup/main.py:114
 msgid "Preferences for ibus-typing-booster"
-msgstr ""
+msgstr "Préférences pour ibus-typing-booster"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:752 engine/itb_emoji.py:753 engine/itb_emoji.py:754
-#: engine/itb_emoji.py:966
+#: engine/itb_emoji.py:754 engine/itb_emoji.py:755 engine/itb_emoji.py:756
+#: engine/itb_emoji.py:968
 msgid "people"
 msgstr "personnes"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:755 engine/itb_emoji.py:962
+#: engine/itb_emoji.py:757 engine/itb_emoji.py:964
 msgid "nature"
 msgstr "nature"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:756 engine/itb_emoji.py:958
+#: engine/itb_emoji.py:758 engine/itb_emoji.py:960
 msgid "food"
 msgstr "nourriture"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:757 engine/itb_emoji.py:972
+#: engine/itb_emoji.py:759 engine/itb_emoji.py:974
 msgid "travel"
 msgstr "voyage"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:758 engine/itb_emoji.py:767 engine/itb_emoji.py:954
+#: engine/itb_emoji.py:760 engine/itb_emoji.py:769 engine/itb_emoji.py:956
 msgid "activity"
 msgstr "activité"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:759 engine/itb_emoji.py:964
+#: engine/itb_emoji.py:761 engine/itb_emoji.py:966
 msgid "objects"
 msgstr "objets"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:760 engine/itb_emoji.py:970
+#: engine/itb_emoji.py:762 engine/itb_emoji.py:972
 msgid "symbols"
 msgstr "symboles"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:761 engine/itb_emoji.py:956
+#: engine/itb_emoji.py:763 engine/itb_emoji.py:958
 msgid "flags"
 msgstr "drapeaux"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:762 engine/itb_emoji.py:763 engine/itb_emoji.py:960
+#: engine/itb_emoji.py:764 engine/itb_emoji.py:765 engine/itb_emoji.py:962
 msgid "modifier"
 msgstr "modificateurs"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:764 engine/itb_emoji.py:968
+#: engine/itb_emoji.py:766 engine/itb_emoji.py:970
 msgid "regional"
 msgstr "régions"
 
-#: engine/itb_util.py:2096
+#: engine/itb_util.py:2144
 msgid "Native Keyboard"
-msgstr ""
+msgstr "Clavier natif"
 
-#: engine/itb_util.py:2098
+#: engine/itb_util.py:2146
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
 "So no transliteration or composing is done here."
 msgstr ""
+"Méthode de saisie directe. Ce n'est pas réellement une méthode de saisie, "
+"elle utilise tout ce qui vient de l'agencement de clavier sans aucun "
+"changement. Donc aucune translitération ou composition n'est faite ici."
 
-#: engine/itb_util.py:2124
+#: engine/itb_util.py:2175
 msgid "File not found"
-msgstr ""
+msgstr "Fichier non trouvé"
 
-#: engine/itb_util.py:2126
+#: engine/itb_util.py:2177
 msgid "Permission error"
-msgstr ""
+msgstr "Erreur d'autorisation"
 
-#: engine/itb_util.py:2128
+#: engine/itb_util.py:2179
 msgid "Unicode decoding error"
-msgstr ""
+msgstr "Erreur de décodage unicode"
 
-#: engine/itb_util.py:2130
+#: engine/itb_util.py:2181
 msgid "Unknown error"
-msgstr ""
+msgstr "Erreur inconnue"
 
-#: engine/itb_util.py:2331
+#. Translators: This is used in the title bar of a dialog window
+#. requesting that the user types a key to be used as a new
+#. key binding for a command.
+#: engine/itb_util.py:2388
 msgid "Key input"
-msgstr ""
+msgstr "Touche d'entrée"
 
-#: engine/itb_util.py:2337
+#: engine/itb_util.py:2394
 msgid "Cancel"
 msgstr "Annuler"
 
-#: engine/itb_util.py:2340
+#. Translators: This is from the dialog to enter a key or a
+#. key combination to be used as a key binding for a
+#. command.
+#: engine/itb_util.py:2401
 msgid "Please press a key (or a key combination)"
-msgstr ""
+msgstr "Veuillez appuyer sur une touche (ou une combinaison de touches)"
 
-#: engine/itb_util.py:2342
+#. Translators: This is from the dialog to enter a key or a
+#. key combination to be used as a key binding for a
+#. command.
+#: engine/itb_util.py:2406
 msgid "The dialog will be closed when the key is released"
-msgstr ""
+msgstr "La fenêtre se fermera lorsque la touche sera relâchée"
 
-#: engine/itb_util.py:2372
+#: engine/itb_util.py:2437
 msgid "A completion input method to speedup typing."
 msgstr "Une méthode d’auto-complètement pour accélérer la saisie."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:2381
+#: engine/itb_util.py:2446
 msgid "translator-credits"
 msgstr ""
 "Thierry Thomas <thierry@FreeBSD.org>, 2018.\n"
-"Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2016.\n"
+"Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2016, 2018.\n"
 "José Fournier <jaaf64@zoraldia.com>, 2016.\n"
 "Jérôme Fenal <jfenal@gmail.com>, 2016.\n"
 "Alexandre Moine <nobrakal@gmail.com>, 2016."
 
-#: engine/itb_util.py:2389
+#: engine/itb_util.py:2454
 msgid "Online documentation:"
-msgstr ""
+msgstr "Documentation en ligne :"
 
-#: setup/main.py:89
+#: setup/main.py:91
 msgid "Preferences"
 msgstr "Préférences"
 
-#: setup/main.py:146 setup/main.py:2776
+#: setup/main.py:153 setup/main.py:4278
 msgid "_Close"
 msgstr "_Fermer"
 
-#: setup/main.py:159
+#. Translators: This is the label of a tab in the setup
+#. tool. Here the user can setup the dictionaries for the
+#. languages he wants to use and the input methods to use
+#. to be able to type all the languages he is interested
+#. in.
+#: setup/main.py:175
+msgid "Dictionaries and input methods"
+msgstr "Dictionnaires et méthodes de saisie"
+
+#. Translators: This is the label of a tab in the setup tool.
+#. Here the user can set up some options which influence the
+#. behaviour of ibus-typing-booster.
+#: setup/main.py:191
 msgid "Options"
 msgstr "Options"
 
-#: setup/main.py:168
-msgid "Dictionaries and input methods"
-msgstr ""
-
-#: setup/main.py:177
+#. Translators: This is a label of a tab in the setup tool.
+#. Here the user can create custom shortcuts. For example if
+#. the user wants that whenever he types “rotfl” that “rolling
+#. on the floor laughing” is shown as a high priority
+#. candidate, he can define such a custom shortcut here.
+#: setup/main.py:207
 msgid "Custom shortcuts"
 msgstr "Raccourcis personnalisés"
 
-#. Translators: Column heading of the table listing the existing key bindings
-#: setup/main.py:185 setup/main.py:807
+#. Translators: This is the label of a tab in the setup tool.
+#. Here the user can customize the key bindings to execute
+#. certain commands of ibus-typing-booster. For example
+#. which key to use to request completion, which key to
+#. use to move to the next completion candidate etc...
+#. Translators: Column heading of the table listing the
+#. existing key bindings
+#: setup/main.py:221 setup/main.py:978
 msgid "Key bindings"
-msgstr ""
+msgstr "Raccourcis clavier"
 
-#: setup/main.py:200
+#. Translators: This is the label of a tab in the setup tool.
+#. Here the user can set up some options which influence how
+#. ibus-typing-booster looks like, i.e. something like whether
+#. extra info should be shown on top of the candidate list and
+#. how many entries one page of the candidate list should have.
+#. Also one can choose here which colours to use for different
+#. types of candidates (candidates from the user database, from
+#. dictionaries, or from spellchecking) and/or whether
+#. diffent types of candidates should be marked with labels.
+#: setup/main.py:243
+msgid "Appearance"
+msgstr "Apparence"
+
+#. Translators: If this option is on, suggestions are not
+#. shown by default. Typing a key is then necessary to show
+#. the list of suggestions. The key to use for this can be
+#. changed in the key bindings settings. By default it is
+#. the Tab key. After a commit the suggestions are hidden
+#. again until the next key bound to this command is typed.
+#: setup/main.py:268
 msgid "Enable suggestions by key (Default is the Tab key)"
-msgstr ""
+msgstr "Activer les suggestions par une touche (Tab est utilisée par défaut)"
 
-#: setup/main.py:202
+#: setup/main.py:270
 msgid ""
 "If this option is on, suggestions are not shown by default. Typing a key is "
 "then necessary to show the list of suggestions. The key to use for this can "
@@ -313,54 +378,46 @@ msgid ""
 "a commit the suggestions are hidden again until the next key bound to this "
 "command is typed."
 msgstr ""
+"Si cette option est activée, les suggestions ne sont pas montrées par défaut."
+" Appuyer sur une touche est alors nécessaire pour montrer la liste des "
+"suggestions. La touche à utiliser peut être changée par les paramètres de "
+"raccourcis clavier. Par défaut, il s'agit de la touche Tab. Après "
+"validation, les suggestions sont de nouveau cachées jusqu’à nouvel appui sur "
+"la touche."
 
-#: setup/main.py:215
+#. Translators: Whether the best completion is first shown
+#. inline in the preedit instead of showing a full
+#. candidate list. The inline candidate can be selected by
+#. typing Tab and then committed as usual, for example by
+#. typing Space or Control+Space. Typing Tab again moves to
+#. the next candidate and opens the full candidate list.
+#: setup/main.py:296
 msgid "Use inline completion"
-msgstr ""
+msgstr "Utiliser le complètement automatique"
 
-#: setup/main.py:217
+#: setup/main.py:298
 msgid ""
-"Whether the best completion is first shown inline in the preëdit instead of "
+"Whether the best completion is first shown inline in the preedit instead of "
 "showing a full candidate list. The inline candidate can be selected by "
 "typing Tab and then committed as usual, for example by typing Space or "
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
 
-#: setup/main.py:230
-msgid "Display total number of candidates"
-msgstr "Afficher le nombre total de candidats"
-
-#: setup/main.py:232
-msgid ""
-"Display how many candidates there are and which one is selected on top of "
-"the list of candidates."
-msgstr ""
-"Afficher le nombre de candidats et celui sélectionné en haut de la liste des "
-"candidats."
-
-#: setup/main.py:245
-msgid "Show status info in auxiliary text"
-msgstr "Informations d’état dans le texte auxiliaire"
-
-#: setup/main.py:247
-msgid ""
-"Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
-"record”  mode are on or off and show which input method is currently used "
-"for the preëdit. The auxiliary text is an optional line of text displayed "
-"above the candidate list."
-msgstr ""
-"Affiche dans le texte auxiliaire si les modes « Prédictions des émoticônes » "
-"et « Sans enregistrement » sont actifs ou inactifs et montre quelle méthode "
-"de saisie est en cours d’utilisation  pour la pré-édition. Le texte "
-"auxiliaire est une ligne optionnelle de texte précédant la liste des "
-"candidats."
-
-#: setup/main.py:261
+#. Translators: Use the regular digits 1-9 as select
+#. keys. If that option is on, numbers can only by typed
+#. while no suggestions are shown. Therefore, completions
+#. for numbers cannot be suggested. And typing words
+#. containing numbers, like “A4” is more difficult as
+#. typing “4” would select the 4th suggestion. On the other
+#. hand, selecting suggestions using 1-9 is easier then
+#. using the always enabled select keys F1-F9 as the latter
+#. keys are farther away from the fingers.
+#: setup/main.py:326
 msgid "Use digits as select keys"
 msgstr "Utiliser les chiffres comme des touches de sélection"
 
-#: setup/main.py:263
+#: setup/main.py:328
 msgid ""
 "Use the regular digits 1-9 as select keys. If that option is on, numbers can "
 "only by typed while no suggestions are shown. Therefore, completions for "
@@ -380,27 +437,40 @@ msgstr ""
 "de F1 à F9 (toujours activées), car ces dernières sont plus éloignées des "
 "doigts."
 
-#: setup/main.py:276
+#. Translators: Add a space if a candidate from the
+#. candidate list is committed using a key for the label in
+#. front of the candidate (I.e. the using the 1-9 or F1-F9
+#. keys) or by clicking on a candidate with the mouse.
+#: setup/main.py:354
 msgid "Add a space when committing by label or mouse"
-msgstr ""
+msgstr "Ajouter une espace lors de la validation par label ou souris"
 
-#: setup/main.py:278
+#: setup/main.py:356
 msgid ""
 "Add a space if a candidate from the candidate list is committed using a key "
 "for the label in front of the candidate (I.e. the using the 1-9 or F1-F9 "
 "keys) or by clicking on a candidate with the mouse."
 msgstr ""
+"Ajouter une espace si un candidat de la liste est validé via une touche ou "
+"pour le libellé en face du candidat (ie. en utilisation les touches 1-9 ou "
+"F1-F9) ou en cliquant sur un candidat avec la souris."
 
-#: setup/main.py:291
+#. Translators: If more then one input method is used at
+#. the same time, one of them is used for the preedit.
+#. Which input method is used for the preedit can be
+#. changed via the menu or via shortcut keys. If this
+#. option is enabled, such a change is remembered even if
+#. the session is restarted.
+#: setup/main.py:379
 msgid "Remember last used preedit input method"
 msgstr "Retenir la dernière méthode de saisie utilisée pour la pré-édition."
 
-#: setup/main.py:293
+#: setup/main.py:381
 msgid ""
 "If more then one input method is used at the same time, one of them is used "
-"for the preedit.  Which input method is used for the preedit can be changed "
+"for the preedit. Which input method is used for the preedit can be changed "
 "via the menu or via shortcut keys. If this option is enabled, such a change "
-"is remembered even if the session is restarted. "
+"is remembered even if the session is restarted."
 msgstr ""
 "Si plusieurs méthodes de saisies sont utilisées simultanément, l’une d’entre "
 "elles est utilisée pour la pré-édition. Le menu ou les raccourcis clavier "
@@ -408,7 +478,7 @@ msgstr ""
 "cette option est activée, de tels changements sont enregistrés même si la "
 "session est redémarrée."
 
-#: setup/main.py:308
+#: setup/main.py:408
 msgid ""
 "Whether Unicode symbols and emoji should be included in the predictions. "
 "Emoji are pictographs like ☺♨⛵…. Unicode symbols are other symbols like "
@@ -423,7 +493,7 @@ msgstr ""
 "autres. Ils ne sont techniquement pas des émoticônes mais sont néanmoins des "
 "symboles utiles."
 
-#: setup/main.py:323
+#: setup/main.py:436
 msgid ""
 "While “Off the record” mode is on, learning from user input is disabled. If "
 "learned user input is available, predictions are usually much better than "
@@ -439,11 +509,18 @@ msgstr ""
 "souhaitant éviter la sauvegarde sur le disque de contenu secret saisi par "
 "l’utilisateur pourrait souhaiter activer cette option temporairement."
 
-#: setup/main.py:336
+#. Translators: Use a workaround for bugs in the input
+#. method modules of Qt4 and Qt5. Attention, although this
+#. workaround makes it work better when the Qt input
+#. modules are used, it causes problems when XIM is
+#. used. I.e. the XIM module of Qt4 will not work well when
+#. this workaround is enabled and input via XIM into X11
+#. programs like xterm will not work well either.
+#: setup/main.py:463
 msgid "Use a workaround for a bug in Qt im module"
 msgstr "Utiliser le contournement d’un bug dans le module Qt IM"
 
-#: setup/main.py:338
+#: setup/main.py:465
 msgid ""
 "Use a workaround for bugs in the input method modules of Qt4 and Qt5. "
 "Attention, although this workaround makes it work better when the Qt input "
@@ -458,11 +535,19 @@ msgstr ""
 "contournement est activé et la saisie via XIM dans les programmes Xorg tels "
 "qu’xterm ne fonctionnera pas bien non plus."
 
-#: setup/main.py:351
+#. Translators: Whether it is allowed to reopen a preedit
+#. when the cursor reaches a word boundary after moving it
+#. with the arrow keys. Enabling this option is useful to
+#. correct already committed words. But it is quite buggy
+#. at the moment and how well it works depends on
+#. repetition speed of the arrow keys and system
+#. load. Because it is buggy, this option is off by
+#. default.
+#: setup/main.py:493
 msgid "Arrow keys can reopen a preedit"
 msgstr "Les flèches peuvent rouvrir une pré-édition"
 
-#: setup/main.py:353
+#: setup/main.py:495
 msgid ""
 "Whether it is allowed to reopen a preedit when the cursor reaches a word "
 "boundary after moving it with the arrow keys. Enabling this option is useful "
@@ -477,11 +562,23 @@ msgstr ""
 "de la charge du système. À cause de ce bug, cette option est désactivée par "
 "défaut."
 
-#: setup/main.py:367
+#. Translators: The characters in this list cause the
+#. preedit to be committed automatically, followed by a
+#. space. For example, if “.” is an auto commit character,
+#. this saves you typing a space manually after the end of
+#. a sentence. You can freely edit this list, a reasonable
+#. value might be “.,;:?!)”. You should not add characters
+#. to that list which are needed by your input method, for
+#. example if you use Latin-Pre (t-latn-pre) it would be a
+#. bad idea to add “.” to that list because it would
+#. prevent you from typing “.s” to get “ṡ”. You can also
+#. disable this feature completely by making the list empty
+#. (which is the default).
+#: setup/main.py:528
 msgid "Auto commit characters:"
 msgstr "Caractères d auto-validation :"
 
-#: setup/main.py:369
+#: setup/main.py:530
 msgid ""
 "The characters in this list cause the preedit to be committed automatically, "
 "followed by a space.  For example, if “.” is an auto commit character, this "
@@ -504,259 +601,604 @@ msgstr ""
 "pouvez aussi désactiver complètement cette fonctionnalité en vidant la liste "
 "(ce qui est le comportement par défaut)."
 
-#: setup/main.py:387
-msgid "Candidate window page size:"
-msgstr "Taille de la fenêtre des candidats :"
-
-#: setup/main.py:389
-msgid ""
-"How many suggestion candidates to show in one page of the candidate list."
-msgstr "Nombre de suggestions affichées par page de la liste des candidats."
-
-#: setup/main.py:412
-msgid "Candidate window orientation"
-msgstr "Orientation de la fenêtre des candidats"
-
-#: setup/main.py:414
-msgid ""
-"Whether the candidate window should be drawn horizontally or vertically."
-msgstr ""
-"Si la fenêtre de candidats doit être dessinée horizontalement ou "
-"verticalement."
-
-#: setup/main.py:422
-msgid "Horizontal"
-msgstr "Horizontale"
-
-#: setup/main.py:424
-msgid "Vertical"
-msgstr "Verticale"
-
-#: setup/main.py:449
+#. Translators: Show no suggestions when less than this
+#. number of characters have been typed.
+#: setup/main.py:564
 msgid "Minimum number of chars for completion:"
 msgstr "Nombre minimum de caractères pour l’auto-complètement :"
 
-#: setup/main.py:451
+#: setup/main.py:566
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
+""
 msgstr ""
 "Ne pas afficher de suggestion tant que ce nombre de caractères n’a pas été "
 "saisi."
 
-#: setup/main.py:475
+#. Translators: When the debug level is greater than 0,
+#. debug information may be printed to the log file and
+#. debug information may also be shown graphically.
+#: setup/main.py:595
+msgid "Debug level:"
+msgstr "Niveau de débogage :"
+
+#: setup/main.py:597
+msgid ""
+"When greater than 0, debug information may be printed to the log file and "
+"debug information may also be shown graphically."
+msgstr ""
+"Quand supérieur à 0, les informations de débogue peuvent être imprimées dans "
+"le fichier journal et les informations de débogage peuvent également être "
+"montrées graphiquement."
+
+#. Translators: A button used to popup a file selector to
+#. choose a text file and learn your writing style by
+#. reading that text file.
+#: setup/main.py:626
 msgid "Learn from text file"
 msgstr "Apprendre depuis un fichier texte"
 
-#: setup/main.py:477
+#: setup/main.py:628
 msgid "Learn your style by reading a text file"
 msgstr "Apprendre votre style en lisant un fichier texte"
 
-#: setup/main.py:484
+#. Translators: A button used to delete all personal
+#. language data learned from typing or from reading files.
+#: setup/main.py:637
 msgid "Delete learned data"
 msgstr "Supprimer les données apprises"
 
-#: setup/main.py:486
+#: setup/main.py:639
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
 "Supprimer toutes les données linguistiques personnelles apprises depuis la "
 "saisie ou la lecture de fichiers"
 
-#: setup/main.py:494
+#. Translators: This is the header of the list of
+#. dictionaries which are currently set up to be used by
+#. ibus-typing-booster.
+#: setup/main.py:651
 msgid "Use dictionaries for the following languages:"
-msgstr ""
+msgstr "Utiliser les dictionnaires pour les langues suivantes :"
 
-#: setup/main.py:510
+#. Translators: A button used to try to install the
+#. dictionaries which are setup here but not installed
+#: setup/main.py:669
 msgid "Install missing dictionaries"
-msgstr ""
+msgstr "Installer les dictionnaires manquants"
 
-#: setup/main.py:512
+#: setup/main.py:671
 msgid "Install the dictionaries which are setup here but not installed"
-msgstr ""
+msgstr "Installe le dictionnaires configurés mais non installés"
 
-#: setup/main.py:528
+#: setup/main.py:688
 msgid "Add a dictionary"
-msgstr ""
+msgstr "Ajouter un dictionnaire"
 
-#: setup/main.py:539
+#: setup/main.py:699
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "Retirer un dictionnaire"
 
-#: setup/main.py:550
+#: setup/main.py:710
 msgid "Move dictionary up"
-msgstr ""
+msgstr "Monter le dictionnaire"
 
-#: setup/main.py:562
+#: setup/main.py:722
 msgid "Move dictionary down"
-msgstr ""
+msgstr "Descendre le dictionnaire"
 
-#: setup/main.py:583
+#. Translators: This is the header of the list of input
+#. methods which are currently set up to be used by
+#. ibus-typing-booster.
+#: setup/main.py:746
 msgid "Use the following input methods:"
-msgstr ""
+msgstr "Utiliser les méthodes de saisie suivantes :"
 
-#: setup/main.py:611
+#: setup/main.py:774
 msgid "Add an input method"
-msgstr ""
+msgstr "Ajouter une méthode de saisie"
 
-#: setup/main.py:623
+#: setup/main.py:786
 msgid "Remove an input method"
-msgstr ""
+msgstr "Retirer une méthode de saisie"
 
-#: setup/main.py:635
+#: setup/main.py:798
 msgid "Move input method up"
-msgstr ""
+msgstr "Remonter la méthode de saisie"
 
-#: setup/main.py:647
+#: setup/main.py:810
 msgid "Move input method down"
-msgstr ""
+msgstr "Descendre la méthode de saisie"
 
-#: setup/main.py:652
+#. Translators: A button to display some help showing how
+#. to use the input method selected in the list of input
+#. methods.
+#: setup/main.py:818
 msgid "Input Method Help"
 msgstr "Aide pour la méthode de saisie"
 
-#: setup/main.py:654
+#: setup/main.py:820
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
 "Affiche de l’aide montrant comment utiliser la méthode de saisie "
 "sélectionnée ci-dessus."
 
-#: setup/main.py:673
+#: setup/main.py:840
 msgid "Enter shortcut here:"
 msgstr "Saisissez votre raccourci ici :"
 
-#: setup/main.py:690
+#: setup/main.py:857
 msgid "Enter shortcut expansion here:"
 msgstr "Saisissez l’expansion du raccourci ici :"
 
-#: setup/main.py:706
+#: setup/main.py:873
 msgid "Clear input"
 msgstr "Vide l’entrée"
 
-#: setup/main.py:716
+#: setup/main.py:883
 msgid "Delete shortcut"
 msgstr "Supprimer le raccourci"
 
-#: setup/main.py:726
+#: setup/main.py:893
 msgid "Add shortcut"
 msgstr "Ajouter un raccourci"
 
-#. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:749
+#. Translators: Column heading of the table listing the
+#. existing shortcuts
+#: setup/main.py:917
 msgid "Shortcut"
 msgstr "Raccourci"
 
-#. Translators: Column heading of the table listing the existing shortcuts
-#: setup/main.py:755
+#. Translators: Column heading of the table listing the
+#. existing shortcuts
+#: setup/main.py:924
 msgid "Shortcut expansion"
 msgstr "Expansion du raccourci"
 
-#: setup/main.py:766
+#: setup/main.py:935
 msgid "Current key bindings:"
-msgstr ""
+msgstr "Raccourcis clavier actuels :"
 
-#. Translators: Column heading of the table listing the existing key bindings
-#: setup/main.py:801
+#. Translators: Column heading of the table listing the
+#. existing key bindings
+#: setup/main.py:971
 msgid "Command"
-msgstr ""
+msgstr "Commande"
 
-#: setup/main.py:827
+#: setup/main.py:998
 msgid "Edit"
-msgstr ""
+msgstr "Modifier"
 
-#: setup/main.py:831
+#: setup/main.py:1002
 msgid "Edit the key bindings for the selected command"
-msgstr ""
+msgstr "Modifier les raccourcis clavier pour la commande sélectionnée"
 
-#: setup/main.py:838 setup/main.py:2114
+#: setup/main.py:1009 setup/main.py:3076
 msgid "Set to default"
-msgstr ""
+msgstr "Réinitialiser"
 
-#: setup/main.py:842 setup/main.py:2119
+#: setup/main.py:1013 setup/main.py:3081
 msgid "Set default key bindings for the selected command"
 msgstr ""
+"Remettre le raccourcis clavier par défaut pour la commande sélectionnée"
 
-#: setup/main.py:849
+#: setup/main.py:1020
 msgid "Set all to default"
-msgstr ""
+msgstr "Tout réinitialiser"
 
-#: setup/main.py:853
+#: setup/main.py:1024
 msgid "Set default key bindings for all commands"
+msgstr "Remettre le raccourcis clavier par défaut pour toutes les commandes"
+
+#. Translators: Checkbox to choose whether to display how
+#. many candidates there are and which one is selected on
+#. top of the list of candidates.
+#: setup/main.py:1044
+msgid "Display total number of candidates"
+msgstr "Afficher le nombre total de candidats"
+
+#: setup/main.py:1046
+msgid ""
+"Display how many candidates there are and which one is selected on top of "
+"the list of candidates."
+msgstr ""
+"Afficher le nombre de candidats et celui sélectionné en haut de la liste des "
+"candidats."
+
+#. Translators: Checkbox to choose whether to show above
+#. the candidate list whether “Emoji prediction” mode and
+#. “Off the record” mode are on or off and show which input
+#. method is currently used for the preëdit. The auxiliary
+#. text is an optional line of text displayed above the
+#. candidate list.
+#: setup/main.py:1066
+msgid "Show status info in auxiliary text"
+msgstr "Informations d’état dans le texte auxiliaire"
+
+#: setup/main.py:1068
+msgid ""
+"Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
+"record”  mode are on or off and show which input method is currently used "
+"for the preëdit. The auxiliary text is an optional line of text displayed "
+"above the candidate list."
+msgstr ""
+"Affiche dans le texte auxiliaire si les modes « Prédictions des émoticônes » "
+"et « Sans enregistrement » sont actifs ou inactifs et montre quelle méthode "
+"de saisie est en cours d’utilisation  pour la pré-édition. Le texte "
+"auxiliaire est une ligne optionnelle de texte précédant la liste des "
+"candidats."
+
+#. Translators: Here one can choose how many suggestion
+#. candidates to show in one page of the candidate list.
+#: setup/main.py:1089
+msgid "Candidate window page size:"
+msgstr "Taille de la fenêtre des candidats :"
+
+#: setup/main.py:1091
+msgid ""
+"How many suggestion candidates to show in one page of the candidate list."
+msgstr "Nombre de suggestions affichées par page de la liste des candidats."
+
+#. Translators: A combobox to choose whether the candidate
+#. window should be drawn horizontally or vertically.
+#: setup/main.py:1117
+msgid "Candidate window orientation"
+msgstr "Orientation de la fenêtre des candidats"
+
+#: setup/main.py:1119
+msgid ""
+"Whether the candidate window should be drawn horizontally or vertically."
+msgstr ""
+"Si la fenêtre de candidats doit être dessinée horizontalement ou "
+"verticalement."
+
+#: setup/main.py:1128
+msgid "Horizontal"
+msgstr "Horizontale"
+
+#: setup/main.py:1130
+msgid "Vertical"
+msgstr "Verticale"
+
+#. Translators: A combobox to choose the style of
+#. underlining for the preedit.
+#: setup/main.py:1157
+msgid "Preedit underline"
 msgstr ""
 
-#: setup/main.py:889
+#: setup/main.py:1159
+msgid "Which style of underlining to use for the preedit."
+msgstr ""
+
+#. Translators: This is the setting to use no underline
+#. at all for the preedit.
+#: setup/main.py:1169
+msgid "None"
+msgstr ""
+
+#. Translators: This is the setting to use a single
+#. underline for the preedit.
+#: setup/main.py:1173
+msgid "Single"
+msgstr ""
+
+#. Translators: This is the setting to use a double
+#. underline for the preedit.
+#: setup/main.py:1177
+msgid "Double"
+msgstr ""
+
+#. Translators: This is the setting to use a low
+#. underline for the preedit.
+#: setup/main.py:1181
+msgid "Low"
+msgstr ""
+
+#. Translators: Checkbox to choose whether a preedit style
+#. like underlining will only be used if lookup is
+#. enabled. The lookup can be disabled because one uses the
+#. option to enable lookup only when a key is pressed or
+#. because one uses the option to require a minimum number
+#. of characters before a lookup is done.
+#: setup/main.py:1209
+msgid "Use preedit style only if lookup is enabled"
+msgstr ""
+
+#: setup/main.py:1211
+msgid ""
+"If this option is on, a preedit style like underlining will only be used if "
+"lookup is enabled. The lookup can be disabled because one uses the option to "
+"enable lookup only when a key is pressed or because one uses the option to "
+"require a minimum number of characters before a lookup is done."
+msgstr ""
+
+#. Translators: A checkbox where one can choose whether a
+#. custom color is used for suggestions shown inline.
+#: setup/main.py:1231
+msgid "Use color for inline completion"
+msgstr "Utilisation d'une couleur pour le complètement automatique"
+
+#: setup/main.py:1233
+msgid ""
+"Here you can choose whether a custom color is used for a suggestion shown "
+"inline."
+msgstr ""
+"Ici, vous pouvez choisir si une couleur personnalisée est utilisée pour une "
+"suggestion montrée automatiquement"
+
+#. Translators: Used in the title bar of the colour chooser
+#. dialog window where one can choose a custom colour for
+#. inline completion.
+#: setup/main.py:1263
+msgid "Choose color for inline completion"
+msgstr "Choisir la couleur pour le complètement automatique"
+
+#: setup/main.py:1265
+msgid ""
+"Here you can specify which color to use for inline completion. This setting "
+"only has an effect if the use of color for inline completion is enabled and "
+"inline completion is enabled."
+msgstr ""
+"Ici vous pouvez renseigner quelle couleur à utiliser pour le complètement "
+"automatique. Ce paramétrage n'a d'effet si l'utilisation d'une couleur "
+"personnalisée est utilisée et que le complètement automatique est activé."
+
+#. Translators: A checkbox where one can choose whether a
+#. custom color is used for suggestions coming from the
+#. user database.
+#: setup/main.py:1285
+msgid "Use color for user database suggestions"
+msgstr ""
+"Utiliser une couleur pour les suggestions provenant de la base de données de "
+"l'utilisateur"
+
+#: setup/main.py:1287
+msgid ""
+"Here you can choose whether a custom color is used for candidates in the "
+"lookup table which come from the user database."
+msgstr ""
+"Ici vous pouvez choisir si une couleur est utilisée pour les candidats dans "
+"la table de recherche provenant de la base de données de l'utilisateur."
+
+#. Translators: Used in the title bar of the colour chooser
+#. dialog window where one can choose a custom colour for
+#. suggestions from the user database.
+#: setup/main.py:1313
+msgid "Choose color for user database suggestions"
+msgstr ""
+"Choisir la couleur pour les suggestions provenant de la base de données de "
+"l'utilisateur"
+
+#: setup/main.py:1315
+msgid ""
+"Here you can specify which color to use for candidates in the lookup table "
+"which come from the user database. This setting only has an effect if the "
+"use of color for candidates from the user database is enabled."
+msgstr ""
+"Ici vous pouvez renseigner quelle couleur utiliser pour les candidats de la "
+"table de recherche provenant de la base de données de l’utilisateur. Ce "
+"paramètre n’a d’effets que lorsque de l’utilisation de couleur pour les "
+"suggestions provenant de la base de données de l’utilisateur est activité."
+
+#. Translators: A checkbox where one can choose whether a
+#. custom color is used for spellchecking suggestions.
+#: setup/main.py:1335
+msgid "Use color for spellchecking suggestions"
+msgstr "Utiliser une couleur pour les suggestions orthographiques"
+
+#: setup/main.py:1337
+msgid ""
+"Here you can choose whether a custom color is used for candidates in the "
+"lookup table which come from spellchecking."
+msgstr ""
+"Ici vous pouvez choisir si une couleur est utilisée pour les candidats dans "
+"la table de recherche provenant de la vérification orthographique."
+
+#. Translators: Used in the title bar of the colour chooser
+#. dialog window where one can choose a custom colour for
+#. spellchecking suggestions.
+#: setup/main.py:1363
+msgid "Choose color for spellchecking suggestions"
+msgstr "Choisir la couleur pour les suggestions orthographiques"
+
+#: setup/main.py:1365
+msgid ""
+"Here you can specify which color to use for candidates in the lookup table "
+"which come from spellchecking. This setting only has an effect if the use of "
+"color for candidates from spellchecking is enabled."
+msgstr ""
+"Ici vous pouvez renseigner quelle couleur utiliser pour les candidats de la "
+"table de recherche provenant de la vérification orthographique. Ce paramètre "
+"n’a d’effets que lorsque de l’utilisation de couleur pour les suggestions "
+"provenant de la  vérification orthographique est activité."
+
+#. Translators: A checkbox where one can choose whether a
+#. custom color is used for suggestions coming from a
+#. dictionary.
+#: setup/main.py:1386
+msgid "Use color for dictionary suggestions"
+msgstr "Utiliser une couleur pour les suggestions du dictionnaire"
+
+#: setup/main.py:1388
+msgid ""
+"Here you can choose whether a custom color is used for candidates in the "
+"lookup table which come from a dictionary."
+msgstr ""
+"Ici vous pouvez choisir si une couleur est utilisée pour les candidats dans "
+"la table de recherche provenant d'un dictionnaire."
+
+#. Translators: Used in the title bar of the colour chooser
+#. dialog window where one can choose a custom colour for
+#. suggestions from a dictionary.
+#: setup/main.py:1414
+msgid "Choose color for dictionary suggestions"
+msgstr "Choisir une couleur pour les suggestions du dictionnaire"
+
+#: setup/main.py:1416
+msgid ""
+"Here you can specify which color to use for candidates in the lookup table "
+"which come from a dictionary. This setting only has an effect if the use of "
+"color for candidates from a dictionary is enabled."
+msgstr ""
+"Ici vous pouvez renseigner quelle couleur utiliser pour les candidats de la "
+"table de recherche provenant d'un dictionnaire. Ce paramètre n’a d’effets "
+"que lorsque de l’utilisation de couleur pour les suggestions provenant d'un "
+"dictionnaire est activité."
+
+#. Translators: A checkbox where one can choose whether a
+#. label is used to mark suggestions coming from the user
+#. database in the candidate list.
+#: setup/main.py:1437
+msgid "Use label for user database suggestions"
+msgstr ""
+"Utiliser un libellé pour les suggestions provenant de la base de données de "
+"l'utilisateur"
+
+#: setup/main.py:1439
+msgid ""
+"Here you can choose whether a label is used for candidates in the lookup "
+"table which come from the user database."
+msgstr ""
+"Ici vous pouvez choisir si un libellé est utilisé pour les candidats dans la "
+"table de recherche provenant de la base de données de l'utilisateur."
+
+#. Translators: A checkbox where one can choose whether a
+#. label is used to mark suggestions coming from spellchecking
+#. in the candidate list.
+#: setup/main.py:1473
+msgid "Use label for spellchecking suggestions"
+msgstr "Utiliser un libellé pour les suggestions orthographiques"
+
+#: setup/main.py:1475
+msgid ""
+"Here you can choose whether a label is used for candidates in the lookup "
+"table which come from spellchecking."
+msgstr ""
+"Ici vous pouvez choisir si un libellé est utilisé pour les candidats dans la "
+"table de recherche provenant de la vérification orthographique."
+
+#. Translators: A checkbox where one can choose whether a
+#. label is used to mark suggestions coming from a
+#. dictionary in the candidate list.
+#: setup/main.py:1509
+msgid "Use label for dictionary suggestions"
+msgstr "Utiliser un libellé pour les suggestions du dictionnaire"
+
+#: setup/main.py:1511
+msgid ""
+"Here you can choose whether a label is used for candidates in the lookup "
+"table which come from a dictionary."
+msgstr ""
+"Ici vous pouvez choisir si un libellé est utilisé pour les candidats dans la "
+"table de recherche provenant d'un dictionnaire."
+
+#. Translators: A checkbox where one can choose whether a
+#. label is used to show when ibus-typing-booster is busy.
+#: setup/main.py:1544
+msgid "Use a label to indicate busy state"
+msgstr "Utiliser un libellé pour indiquer un état occupé"
+
+#: setup/main.py:1546
+msgid ""
+"Here you can choose whether a label is used to indicate when ibus-typing-"
+"booster is busy."
+msgstr ""
+"Ici, vous pouvez choisir si une étiquette est utilisée pour indiquer quand "
+"ibus-typing-booster est occupé."
+
+#: setup/main.py:1597
 msgid "Spell checking"
-msgstr ""
+msgstr "Vérification orthographique"
 
-#: setup/main.py:895
+#: setup/main.py:1603
 msgid "Emoji"
-msgstr ""
+msgstr "Emoji"
 
-#: setup/main.py:1060
+#: setup/main.py:1768
 msgid "Are you sure?"
 msgstr "Confirmez-vous ?"
 
-#: setup/main.py:1062 setup/main.py:2181
+#: setup/main.py:1770 setup/main.py:3148
 msgid "_Cancel"
 msgstr "A_nnuler"
 
-#: setup/main.py:1063 setup/main.py:2182
+#: setup/main.py:1771 setup/main.py:3149
 msgid "_OK"
 msgstr "_Valider"
 
-#: setup/main.py:1092
+#: setup/main.py:1803
 msgid "Another instance of this app is already running."
-msgstr "Une autre instance de cette application est déjà en cours d’exécution."
+msgstr ""
+"Une autre instance de cette application est déjà en cours d’exécution."
 
-#: setup/main.py:1423
+#: setup/main.py:2378
 msgid "Add dictionary"
-msgstr ""
+msgstr "Ajouter un dictionnaire"
 
-#: setup/main.py:1678
+#: setup/main.py:2633
 msgid "Add input method"
-msgstr ""
+msgstr "Ajouter une méthode de saisie"
 
-#: setup/main.py:2068
+#: setup/main.py:3030
 #, python-format
 msgid "Edit key bindings for command “%s”"
-msgstr ""
+msgstr "Modifier le raccourcis clavier pour la commande \"%s\""
 
-#: setup/main.py:2095
+#: setup/main.py:3057
 msgid "Add a key binding"
-msgstr ""
+msgstr "Ajouter un raccourcis claviers"
 
-#: setup/main.py:2107
+#: setup/main.py:3069
 msgid "Remove selected key binding"
-msgstr ""
+msgstr "Supprimer le raccourcis clavier sélectionné"
 
-#: setup/main.py:2162
+#. Translators: This is the text in the centre of a small
+#. dialog window, trying to confirm whether the user is
+#. really sure to reset the key bindings for *all* commands
+#. to their defaults. This cannot be reversed so the user
+#. should be really sure he wants to do that.
+#: setup/main.py:3129
 msgid ""
-"Do you really want to set the key bindings for \n"
-"all commands to their defaults?"
+"Do you really want to set the key bindings for all commands to their "
+"defaults?"
 msgstr ""
+"Voulez-vous vraiment redéfinir les raccourcis claviers pour toutes les "
+"commandes ?"
 
-#: setup/main.py:2178
+#: setup/main.py:3145
 msgid "Open File ..."
 msgstr "Ouvrir le fichier…"
 
-#: setup/main.py:2197
+#: setup/main.py:3164
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Apprentissage réussi depuis le fichier  %(filename)s."
 
-#: setup/main.py:2206
+#: setup/main.py:3173
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Échec de l’apprentissage depuis le fichier %(filename)s."
 
-#: setup/main.py:2219
+#. Translators: This is the text in the centre of a small
+#. dialog window, trying to confirm whether the user is
+#. really sure to to delete all the data
+#. ibus-typing-booster has learned from what the user has
+#. typed or from text files the user has given as input to
+#. learn from. If the user has used ibus-typing-booster for
+#. a long time, predictions are much better than in the
+#. beginning because of the learning from user
+#. input. Deleting this learned data cannot be reversed. So
+#. the user should be really sure he really wants to do that.
+#: setup/main.py:3196
 msgid ""
-"Do you really want to delete all language \n"
-"data learned from typing or reading files?"
+"Do you really want to delete all language data learned from typing or "
+"reading files?"
 msgstr ""
-"Voulez-vous vraiment supprimer toutes les données\n"
-"linguistiques apprises par saisie au clavier ou lecture de fichiers ?"
+"Voulez-vous vraiment supprimer toutes les données linguistiques apprises par "
+"saisie au clavier ou lecture de fichiers ?"
 
-#: setup/main.py:2817
+#: setup/main.py:4319
 msgid "ibus is not running."
 msgstr "Ibus n’est pas lancé."
 
