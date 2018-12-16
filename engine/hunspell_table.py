@@ -185,12 +185,6 @@ class TypingBoosterEngine(IBus.Engine):
         if self._use_digits_as_select_keys is None:
             self._use_digits_as_select_keys = True
 
-        self._icon_dir = '%s%s%s%s' % (
-            os.getenv('IBUS_TYPING_BOOSTER_LOCATION'),
-            os.path.sep, 'icons', os.path.sep)
-
-        self._status = '🚀' # FIXME: apparently not used anymore?
-
         self.is_lookup_table_enabled_by_tab = False
         self._tab_enable = itb_util.variant_to_value(
             self._gsettings.get_value('tabenable'))
