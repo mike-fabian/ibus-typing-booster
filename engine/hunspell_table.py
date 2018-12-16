@@ -133,6 +133,16 @@ class TypingBoosterEngine(IBus.Engine):
         if self._min_char_complete > 9:
             self._min_char_complete = 9 # maximum
 
+        self._debug_level = itb_util.variant_to_value(
+            self._gsettings.get_value('debuglevel'))
+        if self._debug_level is None:
+            self._debug_level = 0 # default
+        if self._debug_level < 0:
+            self._debug_level = 0 # minimum
+        if self._debug_level > 255:
+            self._debug_level = 255 # maximum
+        DEBUG_LEVEL = self._debug_level
+
         self._page_size = itb_util.variant_to_value(
             self._gsettings.get_value('pagesize'))
         if self._page_size is None:
@@ -3087,6 +3097,41 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._min_char_complete
 
+    def set_debug_level(self, debug_level, update_gsettings=True):
+        '''Sets the debug level
+
+        :param debug_level: The debug level
+        :type debug_level: integer >= 0 and <= 255
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        global DEBUG_LEVEL
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_debug_level(%s, update_gsettings = %s)\n"
+                %(debug_level, update_gsettings))
+        if debug_level == self._debug_level:
+            return
+        if 0 <= debug_level <= 255:
+            self._debug_level = debug_level
+            DEBUG_LEVEL = debug_level
+            self._clear_input_and_update_ui()
+            if update_gsettings:
+                self._gsettings.set_value(
+                    'debuglevel',
+                    GLib.Variant.new_int32(debug_level))
+
+    def get_debug_level(self):
+        '''Returns the current debug level
+
+        :rtype: integer
+        '''
+        return self._debug_level
+
     def set_show_number_of_candidates(self, mode, update_gsettings=True):
         '''Sets the “Show number of candidates” mode
 
@@ -4018,6 +4063,9 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if key == 'mincharcomplete':
             self.set_min_char_complete(value, update_gsettings=False)
+            return
+        if key == 'debuglevel':
+            self.set_debug_level(value, update_gsettings=False)
             return
         if key == 'shownumberofcandidates':
             self.set_show_number_of_candidates(value, update_gsettings=False)

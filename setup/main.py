@@ -412,12 +412,39 @@ class SetupUI(Gtk.Window):
             'value-changed',
             self.on_min_char_complete_adjustment_value_changed)
 
+        self._debug_level_label = Gtk.Label()
+        self._debug_level_label.set_text(
+            _('Debug level:'))
+        self._debug_level_label.set_tooltip_text(
+            _('When greater than 0, debug information may be printed to the log file and debug information may also be shown graphically.'))
+        self._debug_level_label.set_xalign(0)
+        self._options_grid.attach(
+            self._debug_level_label, 0, 11, 1, 1)
+
+        self._debug_level_adjustment = Gtk.SpinButton()
+        self._debug_level_adjustment.set_visible(True)
+        self._debug_level_adjustment.set_can_focus(True)
+        self._debug_level_adjustment.set_increments(1.0, 1.0)
+        self._debug_level_adjustment.set_range(0.0, 255.0)
+        self._options_grid.attach(
+            self._debug_level_adjustment, 1, 11, 1, 1)
+        self._debug_level = itb_util.variant_to_value(
+            self._gsettings.get_value('debuglevel'))
+        if self._debug_level:
+            self._debug_level_adjustment.set_value(
+                int(self._debug_level))
+        else:
+            self._debug_level_adjustment.set_value(0)
+        self._debug_level_adjustment.connect(
+            'value-changed',
+            self.on_debug_level_adjustment_value_changed)
+
         self._learn_from_file_button = Gtk.Button(
             label=_('Learn from text file'))
         self._learn_from_file_button.set_tooltip_text(
             _('Learn your style by reading a text file'))
         self._options_grid.attach(
-            self._learn_from_file_button, 0, 11, 2, 1)
+            self._learn_from_file_button, 0, 12, 2, 1)
         self._learn_from_file_button.connect(
             'clicked', self.on_learn_from_file_clicked)
 
@@ -426,7 +453,7 @@ class SetupUI(Gtk.Window):
         self._delete_learned_data_button.set_tooltip_text(
             _('Delete all personal language data learned from typing or from reading files'))
         self._options_grid.attach(
-            self._delete_learned_data_button, 0, 12, 2, 1)
+            self._delete_learned_data_button, 0, 13, 2, 1)
         self._delete_learned_data_button.connect(
             'clicked', self.on_delete_learned_data_clicked)
 
@@ -1477,6 +1504,9 @@ class SetupUI(Gtk.Window):
         if key == 'mincharcomplete':
             self.set_min_char_complete(value, update_gsettings=False)
             return
+        if key == 'debuglevel':
+            self.set_debug_level(value, update_gsettings=False)
+            return
         if key == 'shownumberofcandidates':
             self.set_show_number_of_candidates(value, update_gsettings=False)
             return
@@ -1843,6 +1873,14 @@ class SetupUI(Gtk.Window):
         '''
         self.set_min_char_complete(
             self._min_char_complete_adjustment.get_value(),
+            update_gsettings=True)
+
+    def on_debug_level_adjustment_value_changed(self, _widget):
+        '''
+        The value for the debug level has been changed.
+        '''
+        self.set_debug_level(
+            self._debug_level_adjustment.get_value(),
             update_gsettings=True)
 
     def on_dictionary_to_add_selected(self, _listbox, listbox_row):
@@ -3470,6 +3508,33 @@ class SetupUI(Gtk.Window):
             else:
                 self._min_char_complete_adjustment.set_value(
                     int(min_char_complete))
+
+    def set_debug_level(self, debug_level, update_gsettings=True):
+        '''Sets the debug level
+
+        :param debug level: The debug level
+        :type debug_level: Integer >= 0 and <= 255
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_debug_level(%s, update_gsettings = %s)\n"
+            %(debug_level, update_gsettings))
+        if debug_level == self._debug_level:
+            return
+        if 0 <= debug_level <= 255:
+            self._debug_level = debug_level
+            if update_gsettings:
+                self._gsettings.set_value(
+                    'debuglevel',
+                    GLib.Variant.new_int32(debug_level))
+            else:
+                self._debug_level.set_value(
+                    int(debug_level))
 
     def set_show_number_of_candidates(self, mode, update_gsettings=True):
         '''Sets the “Show number of candidates” mode
