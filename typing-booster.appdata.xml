@@ -19,6 +19,59 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.4.0" date="2018-12-19" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (de, es, fr, ja, pl, uk updated)
+          </li>
+          <li>
+            Add new command 'toggle_hide_input' to hide the preëdit,
+            lookup table, and auxiliary text
+          </li>
+          <li>
+            Add an option to use preedit style only if lookup is enabled
+          </li>
+          <li>
+            Add an option to choose the style of underlining the preedit
+          </li>
+          <li>
+            Don’t try to record the first candidate when there is none
+            after an automatic commit on focus out or reset (Resolves:
+            rhbz#1659128)
+          </li>
+          <li>
+            Add an option in the setup tool to set the debug level
+          </li>
+          <li>
+            Move appearance related options to the new “Appearance” tab
+          </li>
+          <li>
+            Add settings for colour and other appearance stuff
+          </li>
+          <li>
+            Move “Dictionaries and input methods” Tab in the setup
+            tool to the first position
+          </li>
+          <li>
+            Update the shortcut hints in the tooltips when keybindings
+            change
+          </li>
+          <li>
+            Only show the label in the panel menus for emoji-mode and
+            off-the-record-mode
+          </li>
+          <li>
+            Don’t show the shortcut hints in the menu labels, takes
+            too much space there.
+          </li>
+          <li>
+            Update README because of the recent change to make
+            keybindings configurable.
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.3.3" date="2018-12-13" urgency="medium">
       <description>
         <ul>

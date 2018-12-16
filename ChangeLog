@@ -1,4 +1,20 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 19 Dec 2018 Released 2.4.0 version
+* Update translations from zanata (de, es, fr, ja, pl, uk updated)
+* Add new command 'toggle_hide_input' to hide the preëdit, lookup table, and auxiliary text
+* Add an option to use preedit style only if lookup is enabled
+* Add an option to choose the style of underlining the preedit
+* Don’t try to record the first candidate when there is none after an automatic commit on focus out or reset (Resolves: rhbz#1659128)
+* Add an option in the setup tool to set the debug level
+* Move appearance related options to the new “Appearance” tab
+* Add settings for colour and other appearance stuff
+* Move “Dictionaries and input methods” Tab in the setup tool to the first position
+* Update the shortcut hints in the tooltips when keybindings change
+* Only show the label in the panel menus for emoji-mode and off-the-record-mode
+* Don’t show the shortcut hints in the menu labels, takes too much space there.
+* Update README because of the recent change to make keybindings configurable.
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 13 Dec 2018 Released 2.3.3 version
 * Toggle candidates between 'title', 'upper', and 'lower' case when Shift is typed.
 * Improve Spanish translation (Thanks to Ismael Venegas Castelló)

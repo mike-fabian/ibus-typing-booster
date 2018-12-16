@@ -1886,6 +1886,11 @@ class TypingBoosterEngine(IBus.Engine):
         # lookup table is first hidden again and one has to type
         # Tab again to show it.
         self.is_lookup_table_enabled_by_tab = False
+        # Same for the case when the lookup table was enabled by
+        # the minimum numbers to complete, reset this here to
+        # make sure that the preëdit styling for the next letter
+        # typed will be correct.
+        self.is_lookup_table_enabled_by_min_char_complete = False
         if not input_phrase:
             input_phrase = self._transliterated_strings[
                 self.get_current_imes()[0]]
