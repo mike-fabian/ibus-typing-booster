@@ -2891,6 +2891,11 @@ class SetupUI(Gtk.Window):
         '''
         self._keybindings_all_default_button.set_sensitive(False)
         response = self._run_are_you_sure_dialog(
+            # Translators: This is the text in the centre of a small
+            # dialog window, trying to confirm whether the user is
+            # really sure to reset the key bindings for *all* commands
+            # to their defaults. This cannot be reversed so the user
+            # should be really sure he wants to do that.
             _('Do you really want to set the key bindings for '
               + 'all commands to their defaults?'))
         if response == Gtk.ResponseType.OK:
@@ -2948,6 +2953,16 @@ class SetupUI(Gtk.Window):
         '''
         self._delete_learned_data_button.set_sensitive(False)
         response = self._run_are_you_sure_dialog(
+            # Translators: This is the text in the centre of a small
+            # dialog window, trying to confirm whether the user is
+            # really sure to to delete all the data
+            # ibus-typing-booster has learned from what the user has
+            # typed or from text files the user has given as input to
+            # learn from. If the user has used ibus-typing-booster for
+            # a long time, predictions are much better than in the
+            # beginning because of the learning from user
+            # input. Deleting this learned data cannot be reversed. So
+            # the user should be really sure he really wants to do that.
             _('Do you really want to delete all language '
               + 'data learned from typing or reading files?'))
         if response == Gtk.ResponseType.OK:
