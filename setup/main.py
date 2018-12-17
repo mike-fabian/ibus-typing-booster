@@ -49,6 +49,8 @@ require_version('Gdk', '3.0')
 from gi.repository import Gdk
 require_version('Gtk', '3.0')
 from gi.repository import Gtk
+require_version('Pango', '1.0')
+from gi.repository import Pango
 require_version('IBus', '1.0')
 from gi.repository import IBus
 from pkginstall import InstallPkg
@@ -1576,6 +1578,9 @@ class SetupUI(Gtk.Window):
             + html.escape(message)
             + '</b></span>')
         label.set_use_markup(True)
+        label.set_max_width_chars(40)
+        label.set_line_wrap(True)
+        label.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
         label.set_xalign(0)
         margin = 10
         label.set_margin_start(margin)
