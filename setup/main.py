@@ -2886,7 +2886,7 @@ class SetupUI(Gtk.Window):
         '''
         self._keybindings_all_default_button.set_sensitive(False)
         response = self._run_are_you_sure_dialog(
-            _('Do you really want to set the key bindings for \n'
+            _('Do you really want to set the key bindings for '
               + 'all commands to their defaults?'))
         if response == Gtk.ResponseType.OK:
             default_keybindings = itb_util.variant_to_value(
@@ -2943,7 +2943,7 @@ class SetupUI(Gtk.Window):
         '''
         self._delete_learned_data_button.set_sensitive(False)
         response = self._run_are_you_sure_dialog(
-            _('Do you really want to delete all language \n'
+            _('Do you really want to delete all language '
               + 'data learned from typing or reading files?'))
         if response == Gtk.ResponseType.OK:
             self.tabsqlitedb.remove_all_phrases()
