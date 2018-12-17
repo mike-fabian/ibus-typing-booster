@@ -165,6 +165,11 @@ class SetupUI(Gtk.Window):
         self._dictionaries_and_input_methods_vbox.set_margin_bottom(margin)
         self._dictionaries_and_input_methods_label = Gtk.Label()
         self._dictionaries_and_input_methods_label.set_text(
+            # Translators: This is the label of a tab in the setup
+            # tool.  Here the user can setup the dictionaries for the
+            # languages he wants to use and the input methods to use
+            # to be able to type all the languages he is interested
+            # in.
             _('Dictionaries and input methods'))
 
         self._options_grid = Gtk.Grid()
@@ -178,6 +183,9 @@ class SetupUI(Gtk.Window):
         self._options_grid.set_hexpand(True)
         self._options_grid.set_vexpand(False)
         self._options_label = Gtk.Label()
+        # Translators: This is the label of a tab in the setup tool.
+        # Here the user can set up some options which influence the
+        # behaviour of ibus-typing-booster.
         self._options_label.set_text(_('Options'))
 
         self._custom_shortcuts_grid = Gtk.Grid()
@@ -189,6 +197,11 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.set_row_homogeneous(False)
         self._custom_shortcuts_grid.set_column_homogeneous(True)
         self._custom_shortcuts_label = Gtk.Label()
+        # Translators: This is a label of a tab in the setup tool.
+        # Here the user can create custom shortcuts. For example if
+        # the user wants that whenever he types “rotfl” that “rolling
+        # on the floor laughing” is shown as a high priority
+        # candidate, he can define such a custom shortcut here.
         self._custom_shortcuts_label.set_text(_('Custom shortcuts'))
 
         self._keybindings_vbox = Gtk.VBox()
@@ -198,6 +211,11 @@ class SetupUI(Gtk.Window):
         self._keybindings_vbox.set_margin_top(margin)
         self._keybindings_vbox.set_margin_bottom(margin)
         self._keybindings_label = Gtk.Label()
+        # Translators: This is the label of a tab in the setup tool.
+        # Here the user can customize the key bindings to execute
+        # certain commands of ibus-typing-booster. For example
+        # which key to use to request completion, which key to
+        # use to move to the next completion candidate etc...
         self._keybindings_label.set_text(_('Key bindings'))
 
         self._appearance_grid = Gtk.Grid()
@@ -211,6 +229,15 @@ class SetupUI(Gtk.Window):
         self._appearance_grid.set_hexpand(True)
         self._appearance_grid.set_vexpand(False)
         self._appearance_label = Gtk.Label()
+        # Translators: This is the label of a tab in the setup tool.
+        # Here the user can set up some options which influence how
+        # ibus-typing-booster looks like, i.e. something like whether
+        # extra info should be shown on top of the candidate list and
+        # how many entries one page of the candidate list should have.
+        # Also one can choose here which colours to use for different
+        # types of candidates (candidates from the user database, from
+        # dictionaries, or from spellchecking) and/or whether
+        # diffent types of candidates should be marked with labels.
         self._appearance_label.set_text(_('Appearance'))
 
         self._notebook.append_page(
@@ -230,6 +257,12 @@ class SetupUI(Gtk.Window):
             self._appearance_label)
 
         self._tab_enable_checkbutton = Gtk.CheckButton(
+            # Translators: If this option is on, suggestions are not
+            # shown by default. Typing a key is then necessary to show
+            # the list of suggestions. The key to use for this can be
+            # changed in the key bindings settings. By default it is
+            # the Tab key. After a commit the suggestions are hidden
+            # again until the next key bound to this command is typed.
             label=_('Enable suggestions by key (Default is the Tab key)'))
         self._tab_enable_checkbutton.set_tooltip_text(
             _('If this option is on, suggestions are not shown by default. Typing a key is then necessary to show the list of suggestions. The key to use for this can be changed in the key bindings settings. By default it is the Tab key. After a commit the suggestions are hidden again until the next key bound to this command is typed.'))
@@ -245,6 +278,12 @@ class SetupUI(Gtk.Window):
             self._tab_enable_checkbutton.set_active(True)
 
         self._inline_completion_checkbutton = Gtk.CheckButton(
+            # Translators: Whether the best completion is first shown
+            # inline in the preëdit instead of showing a full
+            # candidate list. The inline candidate can be selected by
+            # typing Tab and then committed as usual, for example by
+            # typing Space or Control+Space. Typing Tab again moves to
+            # the next candidate and opens the full candidate list.
             label=_('Use inline completion'))
         self._inline_completion_checkbutton.set_tooltip_text(
             _('Whether the best completion is first shown inline in the preëdit instead of showing a full candidate list. The inline candidate can be selected by typing Tab and then committed as usual, for example by typing Space or Control+Space. Typing Tab again moves to the next candidate and opens the full candidate list.'))
@@ -260,6 +299,15 @@ class SetupUI(Gtk.Window):
             self._inline_completion_checkbutton.set_active(True)
 
         self._use_digits_as_select_keys_checkbutton = Gtk.CheckButton(
+            # Translators: Use the regular digits 1-9 as select
+            # keys. If that option is on, numbers can only by typed
+            # while no suggestions are shown. Therefore, completions
+            # for numbers cannot be suggested. And typing words
+            # containing numbers, like “A4” is more difficult as
+            # typing “4” would select the 4th suggestion. On the other
+            # hand, selecting suggestions using 1-9 is easier then
+            # using the always enabled select keys F1-F9 as the latter
+            # keys are farther away from the fingers.
             label=_('Use digits as select keys'))
         self._use_digits_as_select_keys_checkbutton.set_tooltip_text(
             _('Use the regular digits 1-9 as select keys. If that option is on, numbers can only by typed while no suggestions are shown. Therefore, completions for numbers cannot be suggested. And typing words containing numbers, like “A4” is more difficult as typing “4” would select the 4th suggestion. On the other hand, selecting suggestions using 1-9 is easier then using the always enabled select keys F1-F9 as the latter keys are farther away from the fingers.'))
@@ -275,6 +323,10 @@ class SetupUI(Gtk.Window):
             self._use_digits_as_select_keys_checkbutton.set_active(True)
 
         self._add_space_on_commit_checkbutton = Gtk.CheckButton(
+            # Translators: Add a space if a candidate from the
+            # candidate list is committed using a key for the label in
+            # front of the candidate (I.e. the using the 1-9 or F1-F9
+            # keys) or by clicking on a candidate with the mouse.
             label=_('Add a space when committing by label or mouse'))
         self._add_space_on_commit_checkbutton.set_tooltip_text(
             _('Add a space if a candidate from the candidate list is committed using a key for the label in front of the candidate (I.e. the using the 1-9 or F1-F9 keys) or by clicking on a candidate with the mouse.'))
@@ -290,6 +342,12 @@ class SetupUI(Gtk.Window):
             self._add_space_on_commit_checkbutton.set_active(True)
 
         self._remember_last_used_preedit_ime_checkbutton = Gtk.CheckButton(
+            # Translators: If more then one input method is used at
+            # the same time, one of them is used for the preedit.
+            # Which input method is used for the preedit can be
+            # changed via the menu or via shortcut keys. If this
+            # option is enabled, such a change is remembered even if
+            # the session is restarted.
             label=_('Remember last used preedit input method'))
         self._remember_last_used_preedit_ime_checkbutton.set_tooltip_text(
             _('If more then one input method is used at the same time, one of them is used for the preedit.  Which input method is used for the preedit can be changed via the menu or via shortcut keys. If this option is enabled, such a change is remembered even if the session is restarted. '))
@@ -305,6 +363,13 @@ class SetupUI(Gtk.Window):
             self._remember_last_used_preedit_ime_checkbutton.set_active(True)
 
         self._emoji_predictions_checkbutton = Gtk.CheckButton(
+            # Translators: Whether Unicode symbols and emoji should be
+            # included in the predictions. Emoji are pictographs like
+            # ☺♨⛵…. Unicode symbols are other symbols like
+            # mathematical symbols (∀∑∯…), arrows (←↑↔…), currency
+            # symbols (€₹₺…), braille patterns (⠥⠩…), and many other
+            # symbols. These are technically not emoji but
+            # nevertheless useful symbols.
             label=_('Unicode symbols and emoji predictions'))
         self._emoji_predictions_checkbutton.set_tooltip_text(
             _('Whether Unicode symbols and emoji should be included in the predictions. Emoji are pictographs like ☺♨⛵…. Unicode symbols are other symbols like mathematical symbols (∀∑∯…), arrows (←↑↔…), currency symbols (€₹₺…), braille patterns (⠥⠩…), and many other symbols. These are technically not emoji but nevertheless useful symbols.'))
@@ -320,6 +385,13 @@ class SetupUI(Gtk.Window):
             self._emoji_predictions_checkbutton.set_active(True)
 
         self._off_the_record_checkbutton = Gtk.CheckButton(
+            # Translators: While “Off the record” mode is on, learning
+            # from user input is disabled. If learned user input is
+            # available, predictions are usually much better than
+            # predictions using only dictionaries. Therefore, one
+            # should use this option sparingly. Only if one wants to
+            # avoid saving secret user input to disk it might make
+            # sense to use this option temporarily.
             label=_('Off the record mode'))
         self._off_the_record_checkbutton.set_tooltip_text(
             _('While “Off the record” mode is on, learning from user input is disabled. If learned user input is available, predictions are usually much better than predictions using only dictionaries. Therefore, one should use this option sparingly. Only if one wants to avoid saving secret user input to disk it might make sense to use this option temporarily.'))
@@ -335,6 +407,13 @@ class SetupUI(Gtk.Window):
             self._off_the_record_checkbutton.set_active(True)
 
         self._qt_im_module_workaround_checkbutton = Gtk.CheckButton(
+            # Translators: Use a workaround for bugs in the input
+            # method modules of Qt4 and Qt5. Attention, although this
+            # workaround makes it work better when the Qt input
+            # modules are used, it causes problems when XIM is
+            # used. I.e. the XIM module of Qt4 will not work well when
+            # this workaround is enabled and input via XIM into X11
+            # programs like xterm will not work well either.
             label=_('Use a workaround for a bug in Qt im module'))
         self._qt_im_module_workaround_checkbutton.set_tooltip_text(
             _('Use a workaround for bugs in the input method modules of Qt4 and Qt5. Attention, although this workaround makes it work better when the Qt input modules are used, it causes problems when XIM is used. I.e. the XIM module of Qt4 will not work well when this workaround is enabled and input via XIM into X11 programs like xterm will not work well either.'))
@@ -350,6 +429,14 @@ class SetupUI(Gtk.Window):
             self._qt_im_module_workaround_checkbutton.set_active(True)
 
         self._arrow_keys_reopen_preedit_checkbutton = Gtk.CheckButton(
+            # Translators: Whether it is allowed to reopen a preedit
+            # when the cursor reaches a word boundary after moving it
+            # with the arrow keys. Enabling this option is useful to
+            # correct already committed words. But it is quite buggy
+            # at the moment and how well it works depends on
+            # repetition speed of the arrow keys and system
+            # load. Because it is buggy, this option is off by
+            # default.
             label=_('Arrow keys can reopen a preedit'))
         self._arrow_keys_reopen_preedit_checkbutton.set_tooltip_text(
             _('Whether it is allowed to reopen a preedit when the cursor reaches a word boundary after moving it with the arrow keys. Enabling this option is useful to correct already committed words. But it is quite buggy at the moment and how well it works depends on repetition speed of the arrow keys and system load. Because it is buggy, this option is off by default.'))
@@ -366,6 +453,18 @@ class SetupUI(Gtk.Window):
 
         self._auto_commit_characters_label = Gtk.Label()
         self._auto_commit_characters_label.set_text(
+            # Translators: The characters in this list cause the
+            # preedit to be committed automatically, followed by a
+            # space.  For example, if “.” is an auto commit character,
+            # this saves you typing a space manually after the end of
+            # a sentence. You can freely edit this list, a reasonable
+            # value might be “.,;:?!)”. You should not add characters
+            # to that list which are needed by your input method, for
+            # example if you use Latin-Pre (t-latn-pre) it would be a
+            # bad idea to add “.” to that list because it would
+            # prevent you from typing “.s” to get “ṡ”. You can also
+            # disable this feature completely by making the list empty
+            # (which is the default).
             _('Auto commit characters:'))
         self._auto_commit_characters_label.set_tooltip_text(
             _('The characters in this list cause the preedit to be committed automatically, followed by a space.  For example, if “.” is an auto commit character, this saves you typing a space manually after the end of a sentence. You can freely edit this list, a reasonable value might be “.,;:?!)”. You should not add characters to that list which are needed by your input method, for example if you use Latin-Pre (t-latn-pre) it would be a bad idea to add “.” to that list because it would prevent you from typing “.s” to get “ṡ”. You can also disable this feature completely by making the list empty (which is the default).'))
@@ -387,6 +486,8 @@ class SetupUI(Gtk.Window):
 
         self._min_chars_completion_label = Gtk.Label()
         self._min_chars_completion_label.set_text(
+            # Translators: Show no suggestions when less than this
+            # number of characters have been typed.
             _('Minimum number of chars for completion:'))
         self._min_chars_completion_label.set_tooltip_text(
             _('Show no suggestions when less than this number of characters have been typed.'))
@@ -414,6 +515,9 @@ class SetupUI(Gtk.Window):
 
         self._debug_level_label = Gtk.Label()
         self._debug_level_label.set_text(
+            # Translators: When the debug level is greater than 0,
+            # debug information may be printed to the log file and
+            # debug information may also be shown graphically.
             _('Debug level:'))
         self._debug_level_label.set_tooltip_text(
             _('When greater than 0, debug information may be printed to the log file and debug information may also be shown graphically.'))
@@ -440,6 +544,9 @@ class SetupUI(Gtk.Window):
             self.on_debug_level_adjustment_value_changed)
 
         self._learn_from_file_button = Gtk.Button(
+            # Translators: A button used to popup a file selector to
+            # choose a text file and learn your writing style by
+            # reading that text file.
             label=_('Learn from text file'))
         self._learn_from_file_button.set_tooltip_text(
             _('Learn your style by reading a text file'))
@@ -449,6 +556,8 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_learn_from_file_clicked)
 
         self._delete_learned_data_button = Gtk.Button(
+            # Translators: A button used to delete all personal
+            # language data learned from typing or from reading files.
             label=_('Delete learned data'))
         self._delete_learned_data_button.set_tooltip_text(
             _('Delete all personal language data learned from typing or from reading files'))
@@ -459,6 +568,9 @@ class SetupUI(Gtk.Window):
 
         self._dictionaries_label = Gtk.Label()
         self._dictionaries_label.set_text(
+            # Translators: This is the header of the list of
+            # dictionaries which are currently set up to be used by
+            # ibus-typing-booster.
             '<b>' +_('Use dictionaries for the following languages:') + '</b>')
         self._dictionaries_label.set_use_markup(True)
         margin = 5
@@ -475,6 +587,8 @@ class SetupUI(Gtk.Window):
         self._dictionaries_and_input_methods_vbox.pack_start(
             self._dictionaries_scroll, True, True, 0)
         self._dictionaries_install_missing_button = Gtk.Button(
+            # Translators: A button used to try to install the
+            # dictionaries which are setup here but not installed
             label=_('Install missing dictionaries'))
         self._dictionaries_install_missing_button.set_tooltip_text(
             _('Install the dictionaries which are setup here but not installed'))
@@ -548,6 +662,9 @@ class SetupUI(Gtk.Window):
 
         self._input_methods_label = Gtk.Label()
         self._input_methods_label.set_text(
+            # Translators: This is the header of the list of input
+            # methods which are currently set up to be used by
+            # ibus-typing-booster.
             '<b>' + _('Use the following input methods:') + '</b>')
         self._input_methods_label.set_use_markup(True)
         margin = 5
@@ -617,6 +734,9 @@ class SetupUI(Gtk.Window):
             'clicked', self.on_input_methods_down_button_clicked)
         self._input_methods_down_button.set_sensitive(False)
         self._input_methods_help_button = Gtk.Button(
+            # Translators: A button to display some help showing how
+            # to use the input method selected in the list of input
+            # methods.
             label=_('Input Method Help'))
         self._input_methods_help_button.set_tooltip_text(
             _('Display some help showing how to use the input method selected above.'))
@@ -835,6 +955,9 @@ class SetupUI(Gtk.Window):
         self._keybindings_edit_popover_default_button = None
 
         self._show_number_of_candidates_checkbutton = Gtk.CheckButton(
+            # Translators: Checkbox to choose whether to display how
+            # many candidates there are and which one is selected on
+            # top of the list of candidates.
             label=_('Display total number of candidates'))
         self._show_number_of_candidates_checkbutton.set_tooltip_text(
             _('Display how many candidates there are and which one is selected on top of the list of candidates.'))
@@ -850,6 +973,12 @@ class SetupUI(Gtk.Window):
             self._show_number_of_candidates_checkbutton.set_active(True)
 
         self._show_status_info_in_auxiliary_text_checkbutton = Gtk.CheckButton(
+            # Translators: Checkbox to choose whether to show above
+            # the candidate list whether “Emoji prediction” mode and
+            # “Off the record” mode are on or off and show which input
+            # method is currently used for the preëdit. The auxiliary
+            # text is an optional line of text displayed above the
+            # candidate list.
             label=_('Show status info in auxiliary text'))
         self._show_status_info_in_auxiliary_text_checkbutton.set_tooltip_text(
             _('Show in the auxiliary text whether “Emoji prediction”  mode and “Off the record”  mode are on or off and show which input method is currently used for the preëdit. The auxiliary text is an optional line of text displayed above the candidate list.'))
@@ -866,6 +995,8 @@ class SetupUI(Gtk.Window):
                 True)
 
         self._page_size_label = Gtk.Label()
+        # Translators: Here one can choose how many suggestion
+        # candidates to show in one page of the candidate list.
         self._page_size_label.set_text(_('Candidate window page size:'))
         self._page_size_label.set_tooltip_text(
             _('How many suggestion candidates to show in one page of the candidate list.'))
@@ -891,6 +1022,8 @@ class SetupUI(Gtk.Window):
 
         self._lookup_table_orientation_label = Gtk.Label()
         self._lookup_table_orientation_label.set_text(
+            # Translators: A combobox to choose whether the candidate
+            # window should be drawn horizontally or vertically.
             _('Candidate window orientation'))
         self._lookup_table_orientation_label.set_tooltip_text(
             _('Whether the candidate window should be drawn horizontally or vertically.'))
@@ -927,6 +1060,8 @@ class SetupUI(Gtk.Window):
             self.on_lookup_table_orientation_combobox_changed)
 
         self._color_inline_completion_checkbutton = Gtk.CheckButton(
+            # Translators: A checkbox where one can choose whether a
+            # custom color is used for suggestions shown inline.
             label=_('Use color for inline completion'))
         self._color_inline_completion_checkbutton.set_tooltip_text(
             _('Here you can choose whether a custom color is used for a suggestion shown inline.'))
@@ -950,6 +1085,9 @@ class SetupUI(Gtk.Window):
         self._color_inline_completion_rgba_colorbutton.set_hexpand(False)
         self._color_inline_completion_rgba_colorbutton.set_vexpand(False)
         self._color_inline_completion_rgba_colorbutton.set_title(
+            # Translators: Used in the title bar of the colour chooser
+            # dialog window where one can choose a custom colour for
+            # inline completion.
             _('Choose color for inline completion'))
         self._color_inline_completion_rgba_colorbutton.set_tooltip_text(
             _('Here you can specify which color to use for inline completion. This setting only has an effect if the use of color for inline completion is enabled and inline completion is enabled.'))
@@ -966,6 +1104,9 @@ class SetupUI(Gtk.Window):
             'color-set', self.on_color_inline_completion_color_set)
 
         self._color_userdb_checkbutton = Gtk.CheckButton(
+            # Translators: A checkbox where one can choose whether a
+            # custom color is used for suggestions coming from the
+            # user database.
             label=_('Use color for user database suggestions'))
         self._color_userdb_checkbutton.set_tooltip_text(
             _('Here you can choose whether a custom color is used for candidates in the lookup table which come from the user database.'))
@@ -989,6 +1130,9 @@ class SetupUI(Gtk.Window):
         self._color_userdb_rgba_colorbutton.set_hexpand(False)
         self._color_userdb_rgba_colorbutton.set_vexpand(False)
         self._color_userdb_rgba_colorbutton.set_title(
+            # Translators: Used in the title bar of the colour chooser
+            # dialog window where one can choose a custom colour for
+            # suggestions from the user database.
             _('Choose color for user database suggestions'))
         self._color_userdb_rgba_colorbutton.set_tooltip_text(
             _('Here you can specify which color to use for candidates in the lookup table which come from the user database. This setting only has an effect if the use of color for candidates from the user database is enabled.'))
@@ -1005,6 +1149,8 @@ class SetupUI(Gtk.Window):
             'color-set', self.on_color_userdb_color_set)
 
         self._color_spellcheck_checkbutton = Gtk.CheckButton(
+            # Translators: A checkbox where one can choose whether a
+            # custom color is used for spellchecking suggestions.
             label=_('Use color for spellchecking suggestions'))
         self._color_spellcheck_checkbutton.set_tooltip_text(
             _('Here you can choose whether a custom color is used for candidates in the lookup table which come from spellchecking.'))
@@ -1028,6 +1174,9 @@ class SetupUI(Gtk.Window):
         self._color_spellcheck_rgba_colorbutton.set_hexpand(False)
         self._color_spellcheck_rgba_colorbutton.set_vexpand(False)
         self._color_spellcheck_rgba_colorbutton.set_title(
+            # Translators: Used in the title bar of the colour chooser
+            # dialog window where one can choose a custom colour for
+            # spellchecking suggestions.
             _('Choose color for spellchecking suggestions'))
         self._color_spellcheck_rgba_colorbutton.set_tooltip_text(
             _('Here you can specify which color to use for candidates in the lookup table which come from spellchecking. This setting only has an effect if the use of color for candidates from spellchecking is enabled.'))
@@ -1044,6 +1193,9 @@ class SetupUI(Gtk.Window):
             'color-set', self.on_color_spellcheck_color_set)
 
         self._color_dictionary_checkbutton = Gtk.CheckButton(
+            # Translators: A checkbox where one can choose whether a
+            # custom color is used for suggestions coming from a
+            # dictionary.
             label=_('Use color for dictionary suggestions'))
         self._color_dictionary_checkbutton.set_tooltip_text(
             _('Here you can choose whether a custom color is used for candidates in the lookup table which come from a dictionary.'))
@@ -1067,6 +1219,9 @@ class SetupUI(Gtk.Window):
         self._color_dictionary_rgba_colorbutton.set_hexpand(False)
         self._color_dictionary_rgba_colorbutton.set_vexpand(False)
         self._color_dictionary_rgba_colorbutton.set_title(
+            # Translators: Used in the title bar of the colour chooser
+            # dialog window where one can choose a custom colour for
+            # suggestions from a dictionary.
             _('Choose color for dictionary suggestions'))
         self._color_dictionary_rgba_colorbutton.set_tooltip_text(
             _('Here you can specify which color to use for candidates in the lookup table which come from a dictionary. This setting only has an effect if the use of color for candidates from a dictionary is enabled.'))
@@ -1083,6 +1238,9 @@ class SetupUI(Gtk.Window):
             'color-set', self.on_color_dictionary_color_set)
 
         self._label_userdb_checkbutton = Gtk.CheckButton(
+            # Translators: A checkbox where one can choose whether a
+            # label is used to mark suggestions coming from the user
+            # database in the candidate list.
             label=_('Use label for user database suggestions'))
         self._label_userdb_checkbutton.set_tooltip_text(
             _('Here you can choose whether a label is used for candidates in the lookup table which come from the user database.'))
@@ -1114,6 +1272,9 @@ class SetupUI(Gtk.Window):
             'notify::text', self.on_label_userdb_entry)
 
         self._label_spellcheck_checkbutton = Gtk.CheckButton(
+            # Translators: A checkbox where one can choose whether a
+            # label is used to mark suggestions coming from spellchecking
+            # in the candidate list.
             label=_('Use label for spellchecking suggestions'))
         self._label_spellcheck_checkbutton.set_tooltip_text(
             _('Here you can choose whether a label is used for candidates in the lookup table which come from spellchecking.'))
@@ -1145,6 +1306,9 @@ class SetupUI(Gtk.Window):
             'notify::text', self.on_label_spellcheck_entry)
 
         self._label_dictionary_checkbutton = Gtk.CheckButton(
+            # Translators: A checkbox where one can choose whether a
+            # label is used to mark suggestions coming from a
+            # dictionary in the candidate list.
             label=_('Use label for dictionary suggestions'))
         self._label_dictionary_checkbutton.set_tooltip_text(
             _('Here you can choose whether a label is used for candidates in the lookup table which come from a dictionary.'))
@@ -1176,6 +1340,8 @@ class SetupUI(Gtk.Window):
             'notify::text', self.on_label_dictionary_entry)
 
         self._label_busy_checkbutton = Gtk.CheckButton(
+            # Translators: A checkbox where one can choose whether a
+            # label is used to show when ibus-typing-booster is busy.
             label=_('Use a label to indicate busy state'))
         self._label_busy_checkbutton.set_tooltip_text(
             _('Here you can choose whether a label is used to indicate when ibus-typing-booster is busy.'))

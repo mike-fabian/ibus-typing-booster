@@ -2382,6 +2382,9 @@ class HotKeys:
 class ItbKeyInputDialog(Gtk.MessageDialog):
     def __init__(
             self,
+            # Translators: This is used in the title bar of a dialog window
+            # requesting that the user types a key to be used as a new
+            # key binding for a command.
             title=_('Key input'),
             parent=None):
         Gtk.Dialog.__init__(
@@ -2390,9 +2393,16 @@ class ItbKeyInputDialog(Gtk.MessageDialog):
             parent=parent)
         self.add_button(_('Cancel'), Gtk.ResponseType.CANCEL)
         self.set_modal(True)
-        self.set_markup('<big><b>%s</b></big>'
-                        % _('Please press a key (or a key combination)'))
+        self.set_markup(
+            '<big><b>%s</b></big>'
+            # Translators: This is from the dialog to enter a key or a
+            # key combination to be used as a key binding for a
+            # command.
+            % _('Please press a key (or a key combination)'))
         self.format_secondary_text(
+            # Translators: This is from the dialog to enter a key or a
+            # key combination to be used as a key binding for a
+            # command.
             _('The dialog will be closed when the key is released'))
         self.connect('key_press_event', self.on_key_press_event)
         self.connect('key_release_event', self.on_key_release_event)
