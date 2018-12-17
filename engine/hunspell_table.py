@@ -3868,9 +3868,12 @@ class TypingBoosterEngine(IBus.Engine):
                 self.get_current_imes()[0]]
         if not commit_phrase:
             typed_string = unicodedata.normalize('NFC', input_phrase)
-            first_candidate = self._candidates[0][0]
+            first_candidate = ''
+            if self._candidates:
+                first_candidate = self._candidates[0][0]
             if (not self._inline_completion
                 or self.get_lookup_table().get_cursor_pos() != 0
+                or not first_candidate
                 or not first_candidate.startswith(typed_string)
                 or first_candidate == typed_string):
                 # Standard lookup table was shown, preedit contained
