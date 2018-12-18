@@ -379,11 +379,11 @@ class SetupUI(Gtk.Window):
             label=_('Remember last used preedit input method'))
         self._remember_last_used_preedit_ime_checkbutton.set_tooltip_text(
             _('If more then one input method is used at the same '
-              + 'time, one of them is used for the preedit.  '
+              + 'time, one of them is used for the preedit. '
               + 'Which input method is used for the preedit can '
               + 'be changed via the menu or via shortcut keys. '
               + 'If this option is enabled, such a change is '
-              + 'remembered even if the session is restarted. '))
+              + 'remembered even if the session is restarted.'))
         self._remember_last_used_preedit_ime_checkbutton.connect(
             'clicked', self.on_remember_last_used_preedit_ime_checkbutton)
         self._options_grid.attach(
