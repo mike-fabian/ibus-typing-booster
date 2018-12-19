@@ -1925,7 +1925,7 @@ class TypingBoosterEngine(IBus.Engine):
         self.push_context(stripped_commit_phrase)
 
     def _reopen_preedit_or_return_false(self, key):
-        '''Backspace or arrow left has been typed.
+        '''BackSpace, Delete or arrow left or right has been typed.
 
         If the end of a word has been reached again and if it is
         possible to get that word back into preëdit, do that and
