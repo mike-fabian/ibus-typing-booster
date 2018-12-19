@@ -277,6 +277,17 @@
         Which style of underlining to use for the preedit.
       </description>
     </key>
+    <key name="preeditstyleonlywhenlookup" type="b">
+      <default>false</default>
+      <summary>Use preedit style only if lookup is enabled</summary>
+      <description>
+        If this option is on, a preedit style like underlining will
+        only be used if lookup is enabled.  The lookup can be disabled
+        because one uses the option to enable lookup only when a key
+        is pressed or because one uses the option to require a minimum
+        number of characters before a lookup is done.
+      </description>
+    </key>
     <key name="mincharcomplete" type="i">
       <default>1</default>
       <summary>Minimum number of chars for completion</summary>

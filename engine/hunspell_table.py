@@ -162,6 +162,11 @@ class TypingBoosterEngine(IBus.Engine):
         if self._preedit_underline is None:
             self._preedit_underline = IBus.AttrUnderline.SINGLE
 
+        self._preedit_style_only_when_lookup = itb_util.variant_to_value(
+            self._gsettings.get_value('preeditstyleonlywhenlookup'))
+        if self._preedit_style_only_when_lookup is None:
+            self._preedit_style_only_when_lookup = False
+
         self._show_number_of_candidates = itb_util.variant_to_value(
             self._gsettings.get_value('shownumberofcandidates'))
         if self._show_number_of_candidates is None:
@@ -1490,8 +1495,18 @@ class TypingBoosterEngine(IBus.Engine):
                 IBus.PreeditFocusMode.COMMIT)
         else:
             attrs = IBus.AttrList()
-            attrs.append(IBus.attr_underline_new(
-                self._preedit_underline, 0, len(_str)))
+            if (not self._preedit_style_only_when_lookup
+                or self.is_lookup_table_enabled_by_tab
+                or self.is_lookup_table_enabled_by_min_char_complete):
+                attrs.append(IBus.attr_underline_new(
+                    self._preedit_underline, 0, len(_str)))
+            else:
+                # Preedit style “only when lookup is enabled” is
+                # requested and lookup is *not* enabled.  Therefore,
+                # make the preedit appear as if it were completely
+                # normal text:
+                attrs.append(IBus.attr_underline_new(
+                    IBus.AttrUnderline.NONE, 0, len(_str)))
             text = IBus.Text.new_from_string(_str)
             i = 0
             while attrs.get(i) is not None:
@@ -3106,6 +3121,38 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._preedit_underline
 
+    def set_preedit_style_only_when_lookup(self, mode, update_gsettings=True):
+        '''Sets the “Use preedit styling only when lookup is enabled” mode
+
+        :param mode: Whether preedit styling like underlining should
+                     be enabled only when lookup is enabled.
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_preedit_style_only_when_lookup(%s, update_gsettings=%s)\n"
+                %(mode, update_gsettings))
+        if mode == self._preedit_style_only_when_lookup:
+            return
+        self._preedit_style_only_when_lookup = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'preeditstyleonlywhenlookup',
+                GLib.Variant.new_boolean(mode))
+
+    def get_preedit_style_only_when_lookup(self):
+        '''Returns the current value of the “Tab enable” mode
+
+        :rtype: boolean
+        '''
+        return self._preedit_style_only_when_lookup
+
     def set_min_char_complete(self, min_char_complete, update_gsettings=True):
         '''Sets the minimum number of characters to try completion
 
@@ -4111,6 +4158,10 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if key == 'preeditunderline':
             self.set_preedit_underline(value, update_gsettings=False)
+            return
+        if key == 'preeditstyleonlywhenlookup':
+            self.set_preedit_style_only_when_lookup(
+                value, update_gsettings=False)
             return
         if key == 'mincharcomplete':
             self.set_min_char_complete(value, update_gsettings=False)

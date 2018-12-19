@@ -1199,6 +1199,32 @@ class SetupUI(Gtk.Window):
             "changed",
             self.on_preedit_underline_combobox_changed)
 
+        self._preedit_style_only_when_lookup_checkbutton = Gtk.CheckButton(
+            # Translators: Checkbox to choose whether a preedit style
+            # like underlining will only be used if lookup is
+            # enabled. The lookup can be disabled because one uses the
+            # option to enable lookup only when a key is pressed or
+            # because one uses the option to require a minimum number
+            # of characters before a lookup is done.
+            label=_('Use preedit style only if lookup is enabled'))
+        self._preedit_style_only_when_lookup_checkbutton.set_tooltip_text(
+            _('If this option is on, a preedit style like underlining '
+              + 'will only be used if lookup is enabled. '
+              + 'The lookup can be disabled because one uses the option '
+              + 'to enable lookup only when a key is pressed or '
+              + 'because one uses the option to require a minimum '
+              + 'number of characters before a lookup is done.'))
+        self._preedit_style_only_when_lookup_checkbutton.connect(
+            'clicked', self.on_preedit_style_only_when_lookup_checkbutton)
+        self._appearance_grid.attach(
+            self._preedit_style_only_when_lookup_checkbutton, 0, 4, 2, 1)
+        self._preedit_style_only_when_lookup = itb_util.variant_to_value(
+            self._gsettings.get_value('preeditstyleonlywhenlookup'))
+        if self._preedit_style_only_when_lookup is None:
+            self._preedit_style_only_when_lookup = False
+        if self._preedit_style_only_when_lookup is True:
+            self._preedit_style_only_when_lookup_checkbutton.set_active(True)
+
         self._color_inline_completion_checkbutton = Gtk.CheckButton(
             # Translators: A checkbox where one can choose whether a
             # custom color is used for suggestions shown inline.
@@ -1209,7 +1235,7 @@ class SetupUI(Gtk.Window):
         self._color_inline_completion_checkbutton.set_hexpand(False)
         self._color_inline_completion_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._color_inline_completion_checkbutton, 0, 4, 1, 1)
+            self._color_inline_completion_checkbutton, 0, 5, 1, 1)
         self._color_inline_completion = itb_util.variant_to_value(
             self._gsettings.get_value('colorinlinecompletion'))
         if self._color_inline_completion is None:
@@ -1246,7 +1272,7 @@ class SetupUI(Gtk.Window):
         gdk_rgba.parse(self._color_inline_completion_string)
         self._color_inline_completion_rgba_colorbutton.set_rgba(gdk_rgba)
         self._appearance_grid.attach(
-            self._color_inline_completion_rgba_colorbutton, 1, 4, 1, 1)
+            self._color_inline_completion_rgba_colorbutton, 1, 5, 1, 1)
         self._color_inline_completion_rgba_colorbutton.set_sensitive(
             self._color_inline_completion)
         self._color_inline_completion_rgba_colorbutton.connect(
@@ -1264,7 +1290,7 @@ class SetupUI(Gtk.Window):
         self._color_userdb_checkbutton.set_hexpand(False)
         self._color_userdb_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._color_userdb_checkbutton, 0, 5, 1, 1)
+            self._color_userdb_checkbutton, 0, 6, 1, 1)
         self._color_userdb = itb_util.variant_to_value(
             self._gsettings.get_value('coloruserdb'))
         if self._color_userdb is None:
@@ -1297,7 +1323,7 @@ class SetupUI(Gtk.Window):
         gdk_rgba.parse(self._color_userdb_string)
         self._color_userdb_rgba_colorbutton.set_rgba(gdk_rgba)
         self._appearance_grid.attach(
-            self._color_userdb_rgba_colorbutton, 1, 5, 1, 1)
+            self._color_userdb_rgba_colorbutton, 1, 6, 1, 1)
         self._color_userdb_rgba_colorbutton.set_sensitive(
             self._color_userdb)
         self._color_userdb_rgba_colorbutton.connect(
@@ -1314,7 +1340,7 @@ class SetupUI(Gtk.Window):
         self._color_spellcheck_checkbutton.set_hexpand(False)
         self._color_spellcheck_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._color_spellcheck_checkbutton, 0, 6, 1, 1)
+            self._color_spellcheck_checkbutton, 0, 7, 1, 1)
         self._color_spellcheck = itb_util.variant_to_value(
             self._gsettings.get_value('colorspellcheck'))
         if self._color_spellcheck is None:
@@ -1347,7 +1373,7 @@ class SetupUI(Gtk.Window):
         gdk_rgba.parse(self._color_spellcheck_string)
         self._color_spellcheck_rgba_colorbutton.set_rgba(gdk_rgba)
         self._appearance_grid.attach(
-            self._color_spellcheck_rgba_colorbutton, 1, 6, 1, 1)
+            self._color_spellcheck_rgba_colorbutton, 1, 7, 1, 1)
         self._color_spellcheck_rgba_colorbutton.set_sensitive(
             self._color_spellcheck)
         self._color_spellcheck_rgba_colorbutton.connect(
@@ -1365,7 +1391,7 @@ class SetupUI(Gtk.Window):
         self._color_dictionary_checkbutton.set_hexpand(False)
         self._color_dictionary_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._color_dictionary_checkbutton, 0, 7, 1, 1)
+            self._color_dictionary_checkbutton, 0, 8, 1, 1)
         self._color_dictionary = itb_util.variant_to_value(
             self._gsettings.get_value('colordictionary'))
         if self._color_dictionary is None:
@@ -1398,7 +1424,7 @@ class SetupUI(Gtk.Window):
         gdk_rgba.parse(self._color_dictionary_string)
         self._color_dictionary_rgba_colorbutton.set_rgba(gdk_rgba)
         self._appearance_grid.attach(
-            self._color_dictionary_rgba_colorbutton, 1, 7, 1, 1)
+            self._color_dictionary_rgba_colorbutton, 1, 8, 1, 1)
         self._color_dictionary_rgba_colorbutton.set_sensitive(
             self._color_dictionary)
         self._color_dictionary_rgba_colorbutton.connect(
@@ -1416,7 +1442,7 @@ class SetupUI(Gtk.Window):
         self._label_userdb_checkbutton.set_hexpand(False)
         self._label_userdb_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_userdb_checkbutton, 0, 8, 1, 1)
+            self._label_userdb_checkbutton, 0, 9, 1, 1)
         self._label_userdb = itb_util.variant_to_value(
             self._gsettings.get_value('labeluserdb'))
         if self._label_userdb is None:
@@ -1430,7 +1456,7 @@ class SetupUI(Gtk.Window):
         self._label_userdb_entry.set_hexpand(False)
         self._label_userdb_entry.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_userdb_entry, 1, 8, 1, 1)
+            self._label_userdb_entry, 1, 9, 1, 1)
         self._label_userdb_string = itb_util.variant_to_value(
             self._gsettings.get_value('labeluserdbstring'))
         if not self._label_userdb_string:
@@ -1452,7 +1478,7 @@ class SetupUI(Gtk.Window):
         self._label_spellcheck_checkbutton.set_hexpand(False)
         self._label_spellcheck_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_spellcheck_checkbutton, 0, 9, 1, 1)
+            self._label_spellcheck_checkbutton, 0, 10, 1, 1)
         self._label_spellcheck = itb_util.variant_to_value(
             self._gsettings.get_value('labelspellcheck'))
         if self._label_spellcheck is None:
@@ -1466,7 +1492,7 @@ class SetupUI(Gtk.Window):
         self._label_spellcheck_entry.set_hexpand(False)
         self._label_spellcheck_entry.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_spellcheck_entry, 1, 9, 1, 1)
+            self._label_spellcheck_entry, 1, 10, 1, 1)
         self._label_spellcheck_string = itb_util.variant_to_value(
             self._gsettings.get_value('labelspellcheckstring'))
         if not self._label_spellcheck_string:
@@ -1488,7 +1514,7 @@ class SetupUI(Gtk.Window):
         self._label_dictionary_checkbutton.set_hexpand(False)
         self._label_dictionary_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_dictionary_checkbutton, 0, 10, 1, 1)
+            self._label_dictionary_checkbutton, 0, 11, 1, 1)
         self._label_dictionary = itb_util.variant_to_value(
             self._gsettings.get_value('labeldictionary'))
         if self._label_dictionary is None:
@@ -1502,7 +1528,7 @@ class SetupUI(Gtk.Window):
         self._label_dictionary_entry.set_hexpand(False)
         self._label_dictionary_entry.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_dictionary_entry, 1, 10, 1, 1)
+            self._label_dictionary_entry, 1, 11, 1, 1)
         self._label_dictionary_string = itb_util.variant_to_value(
             self._gsettings.get_value('labeldictionarystring'))
         if not self._label_dictionary_string:
@@ -1522,7 +1548,7 @@ class SetupUI(Gtk.Window):
         self._label_busy_checkbutton.set_hexpand(False)
         self._label_busy_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_busy_checkbutton, 0, 11, 1, 1)
+            self._label_busy_checkbutton, 0, 12, 1, 1)
         self._label_busy = itb_util.variant_to_value(
             self._gsettings.get_value('labelbusy'))
         if self._label_busy is None:
@@ -1536,7 +1562,7 @@ class SetupUI(Gtk.Window):
         self._label_busy_entry.set_hexpand(False)
         self._label_busy_entry.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_busy_entry, 1, 11, 1, 1)
+            self._label_busy_entry, 1, 12, 1, 1)
         self._label_busy_string = itb_util.variant_to_value(
             self._gsettings.get_value('labelbusystring'))
         if not self._label_busy_string:
@@ -1847,6 +1873,10 @@ class SetupUI(Gtk.Window):
         if key == 'preeditunderline':
             self.set_preedit_underline(value, update_gsettings=False)
             return
+        if key == 'preeditstyleonlywhenlookup':
+            self.set_preedit_style_only_when_lookup(
+                value, update_gsettings=False)
+            return
         if key == 'mincharcomplete':
             self.set_min_char_complete(value, update_gsettings=False)
             return
@@ -2128,6 +2158,14 @@ class SetupUI(Gtk.Window):
         has been clicked.
         '''
         self.set_show_status_info_in_auxiliary_text(
+            widget.get_active(), update_gsettings=True)
+
+    def on_preedit_style_only_when_lookup_checkbutton(self, widget):
+        '''
+        The checkbutton whether to style the preedit only when
+        lookup is enabled has been clicked.
+        '''
+        self.set_preedit_style_only_when_lookup(
             widget.get_active(), update_gsettings=True)
 
     def on_use_digits_as_select_keys_checkbutton(self, widget):
@@ -4004,6 +4042,34 @@ class SetupUI(Gtk.Window):
         else:
             self._show_status_info_in_auxiliary_text_checkbutton.set_active(
                 mode)
+
+    def set_preedit_style_only_when_lookup(
+            self, mode, update_gsettings=True):
+        '''Sets the “Use preedit style only if lookup is enabled” mode
+
+        :param mode: Whether a preedit style like underlining should
+                     be enabled only when lookup is enabled.
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_preedit_style_only_when_lookup"
+            + "(%s, update_gsettings = %s)\n"
+            %(mode, update_gsettings))
+        if mode == self._preedit_style_only_when_lookup:
+            return
+        self._preedit_style_only_when_lookup = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'preeditstyleonlywhenlookup',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._preedit_style_only_when_lookup_checkbutton.set_active(mode)
 
     def set_use_digits_as_select_keys(self, mode, update_gsettings=True):
         '''Sets the “Use digits as select keys” mode
