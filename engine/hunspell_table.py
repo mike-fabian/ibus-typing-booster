@@ -3697,6 +3697,7 @@ class TypingBoosterEngine(IBus.Engine):
             if (key.val in (IBus.KEY_BackSpace,)
                 and self._typed_string_cursor > 0):
                 self.is_lookup_table_enabled_by_tab = False
+                self.is_lookup_table_enabled_by_min_char_complete = False
                 if key.control:
                     self._remove_string_before_cursor()
                 else:
@@ -3706,6 +3707,7 @@ class TypingBoosterEngine(IBus.Engine):
             if (key.val in (IBus.KEY_Delete,)
                 and self._typed_string_cursor < len(self._typed_string)):
                 self.is_lookup_table_enabled_by_tab = False
+                self.is_lookup_table_enabled_by_min_char_complete = False
                 if key.control:
                     self._remove_string_after_cursor()
                 else:
