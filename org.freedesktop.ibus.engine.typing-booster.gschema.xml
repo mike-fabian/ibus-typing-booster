@@ -372,6 +372,7 @@
         'toggle_emoji_prediction': &lt;['Mod5+F6']&gt;,
         'toggle_off_the_record': &lt;['Mod5+F9']&gt;,
         'lookup_related': &lt;['Mod5+F12']&gt;,
+        'toggle_hide_input': &lt;['Shift+Control+Escape']&gt;,
         'setup': &lt;['Mod5+F10']&gt;
         }
       </default>

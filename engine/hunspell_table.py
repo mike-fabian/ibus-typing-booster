@@ -193,6 +193,8 @@ class TypingBoosterEngine(IBus.Engine):
         if self._off_the_record is None:
             self._off_the_record = False # default
 
+        self._hide_input = False
+
         self._qt_im_module_workaround = itb_util.variant_to_value(
             self._gsettings.get_value('qtimmoduleworkaround'))
         if self._qt_im_module_workaround is None:
@@ -1489,6 +1491,8 @@ class TypingBoosterEngine(IBus.Engine):
         _str = unicodedata.normalize(
             'NFC', self._transliterated_strings[
                 self.get_current_imes()[0]])
+        if self._hide_input:
+            _str = '*' * len(_str)
         if _str == '':
             super(TypingBoosterEngine, self).update_preedit_text_with_mode(
                 IBus.Text.new_from_string(''), 0, False,
@@ -1569,6 +1573,7 @@ class TypingBoosterEngine(IBus.Engine):
             i += 1
         visible = True
         if (self.get_lookup_table().get_number_of_candidates() == 0
+            or self._hide_input
             or (self._tab_enable
                 and not self.is_lookup_table_enabled_by_tab)
             or not aux_string):
@@ -1587,6 +1592,7 @@ class TypingBoosterEngine(IBus.Engine):
         # an empty suggestion popup if the number of candidates
         # is zero!
         if (self.is_empty()
+            or self._hide_input
             or self.get_lookup_table().get_number_of_candidates() == 0
             or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
             self.hide_lookup_table()
@@ -1667,6 +1673,7 @@ class TypingBoosterEngine(IBus.Engine):
             # suggestions are only enabled by Tab key:
             self.is_lookup_table_enabled_by_tab = False
         if (self.is_empty()
+            or self._hide_input
             or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
             # If the lookup table would be hidden anyway, there is no
             # point in updating the candidates, save some time by making
@@ -1931,13 +1938,13 @@ class TypingBoosterEngine(IBus.Engine):
         self._commit_happened_after_focus_in = True
         stripped_input_phrase = itb_util.strip_token(input_phrase)
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
-        if not self._off_the_record:
+        if not self._off_the_record and not self._hide_input:
             self.db.check_phrase_and_update_frequency(
                 input_phrase=stripped_input_phrase,
                 phrase=stripped_commit_phrase,
                 p_phrase=self.get_p_phrase(),
                 pp_phrase=self.get_pp_phrase())
-        self.push_context(stripped_commit_phrase)
+            self.push_context(stripped_commit_phrase)
 
     def _reopen_preedit_or_return_false(self, key):
         '''BackSpace, Delete or arrow left or right has been typed.
@@ -3480,6 +3487,11 @@ class TypingBoosterEngine(IBus.Engine):
             self._lookup_related_candidates()
             return True
 
+        if (key, 'toggle_hide_input') in self._hotkeys:
+            self._hide_input = not self._hide_input
+            self._update_ui()
+            return True
+
         if (key, 'setup') in self._hotkeys:
             self._start_setup()
             return True
@@ -3977,13 +3989,13 @@ class TypingBoosterEngine(IBus.Engine):
         commit_phrase = unicodedata.normalize('NFC', commit_phrase)
         stripped_input_phrase = itb_util.strip_token(input_phrase)
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
-        if not self._off_the_record:
+        if not self._off_the_record and not self._hide_input:
             self.db.check_phrase_and_update_frequency(
                 input_phrase=stripped_input_phrase,
                 phrase=stripped_commit_phrase,
                 p_phrase=self.get_p_phrase(),
                 pp_phrase=self.get_pp_phrase())
-        self.push_context(stripped_commit_phrase)
+            self.push_context(stripped_commit_phrase)
 
     def do_focus_out(self):
         '''Called when a window looses focus while this input engine is
