@@ -270,6 +270,13 @@
         vertically.
       </description>
     </key>
+    <key name="preeditunderline" type="i">
+      <default>1</default>
+      <summary>Preedit underline</summary>
+      <description>
+        Which style of underlining to use for the preedit.
+      </description>
+    </key>
     <key name="mincharcomplete" type="i">
       <default>1</default>
       <summary>Minimum number of chars for completion</summary>

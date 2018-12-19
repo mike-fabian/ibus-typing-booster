@@ -157,6 +157,11 @@ class TypingBoosterEngine(IBus.Engine):
         if self._lookup_table_orientation is None:
             self._lookup_table_orientation = IBus.Orientation.VERTICAL
 
+        self._preedit_underline = itb_util.variant_to_value(
+            self._gsettings.get_value('preeditunderline'))
+        if self._preedit_underline is None:
+            self._preedit_underline = IBus.AttrUnderline.SINGLE
+
         self._show_number_of_candidates = itb_util.variant_to_value(
             self._gsettings.get_value('shownumberofcandidates'))
         if self._show_number_of_candidates is None:
@@ -1486,7 +1491,7 @@ class TypingBoosterEngine(IBus.Engine):
         else:
             attrs = IBus.AttrList()
             attrs.append(IBus.attr_underline_new(
-                IBus.AttrUnderline.SINGLE, 0, len(_str)))
+                self._preedit_underline, 0, len(_str)))
             text = IBus.Text.new_from_string(_str)
             i = 0
             while attrs.get(i) is not None:
@@ -1601,10 +1606,10 @@ class TypingBoosterEngine(IBus.Engine):
         text = IBus.Text.new_from_string(typed_string + completion)
         attrs = IBus.AttrList()
         attrs.append(IBus.attr_underline_new(
-            IBus.AttrUnderline.SINGLE, 0, len(typed_string)))
+            self._preedit_underline, 0, len(typed_string)))
         if self.get_lookup_table().cursor_visible:
             attrs.append(IBus.attr_underline_new(
-                IBus.AttrUnderline.DOUBLE,
+                self._preedit_underline,
                 len(typed_string), len(typed_string + completion)))
         else:
             if self._color_inline_completion:
@@ -3063,6 +3068,44 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._lookup_table_orientation
 
+    def set_preedit_underline(self, underline_mode, update_gsettings=True):
+        '''Sets the underline style for the preedit
+
+        :param underline_mode: The underline mode to be used for the preedit
+        :type mode: integer >= 0 and <= 3
+                              IBus.AttrUnderline.NONE    = 0,
+                              IBus.AttrUnderline.SINGLE  = 1,
+                              IBus.AttrUnderline.DOUBLE  = 2,
+                              IBus.AttrUnderline.LOW     = 3,
+                              IBus.AttrUnderline.ERROR   = 4,
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_preedit_underline(%s, update_gsettings = %s)\n"
+                %(underline_mode, update_gsettings))
+        if underline_mode == self._preedit_underline:
+            return
+        if 0 <= underline_mode < IBus.AttrUnderline.ERROR:
+            self._preedit_underline = underline_mode
+            self._update_ui()
+            if update_gsettings:
+                self._gsettings.set_value(
+                    'lookuptableorientation',
+                    GLib.Variant.new_int32(orientation))
+
+    def get_preedit_underline(self):
+        '''Returns the current underline style of the preedit
+
+        :rtype: integer
+        '''
+        return self._preedit_underline
+
     def set_min_char_complete(self, min_char_complete, update_gsettings=True):
         '''Sets the minimum number of characters to try completion
 
@@ -4063,6 +4106,9 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if key == 'lookuptableorientation':
             self.set_lookup_table_orientation(value, update_gsettings=False)
+            return
+        if key == 'preeditunderline':
+            self.set_preedit_underline(value, update_gsettings=False)
             return
         if key == 'mincharcomplete':
             self.set_min_char_complete(value, update_gsettings=False)

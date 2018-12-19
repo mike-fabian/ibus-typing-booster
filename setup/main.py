@@ -1048,7 +1048,7 @@ class SetupUI(Gtk.Window):
         self._show_number_of_candidates_checkbutton.connect(
             'clicked', self.on_show_number_of_candidates_checkbutton)
         self._appearance_grid.attach(
-            self._show_number_of_candidates_checkbutton, 0, 0, 2, 1)
+            self._show_number_of_candidates_checkbutton, 0, 0, 1, 1)
         self._show_number_of_candidates = itb_util.variant_to_value(
             self._gsettings.get_value('shownumberofcandidates'))
         if self._show_number_of_candidates is None:
@@ -1074,7 +1074,7 @@ class SetupUI(Gtk.Window):
         self._show_status_info_in_auxiliary_text_checkbutton.connect(
             'clicked', self.on_show_status_info_in_auxiliary_text_checkbutton)
         self._appearance_grid.attach(
-            self._show_status_info_in_auxiliary_text_checkbutton, 0, 1, 2, 1)
+            self._show_status_info_in_auxiliary_text_checkbutton, 1, 0, 1, 1)
         self._show_status_info_in_auxiliary_text = itb_util.variant_to_value(
             self._gsettings.get_value('showstatusinfoinaux'))
         if self._show_status_info_in_auxiliary_text is None:
@@ -1092,7 +1092,7 @@ class SetupUI(Gtk.Window):
               + 'one page of the candidate list.'))
         self._page_size_label.set_xalign(0)
         self._appearance_grid.attach(
-            self._page_size_label, 0, 2, 1, 1)
+            self._page_size_label, 0, 1, 1, 1)
 
         self._page_size_adjustment = Gtk.SpinButton()
         self._page_size_adjustment.set_visible(True)
@@ -1100,7 +1100,7 @@ class SetupUI(Gtk.Window):
         self._page_size_adjustment.set_increments(1.0, 1.0)
         self._page_size_adjustment.set_range(1.0, 9.0)
         self._appearance_grid.attach(
-            self._page_size_adjustment, 1, 2, 1, 1)
+            self._page_size_adjustment, 1, 1, 1, 1)
         self._page_size = itb_util.variant_to_value(
             self._gsettings.get_value('pagesize'))
         if self._page_size:
@@ -1120,7 +1120,7 @@ class SetupUI(Gtk.Window):
               + 'drawn horizontally or vertically.'))
         self._lookup_table_orientation_label.set_xalign(0)
         self._appearance_grid.attach(
-            self._lookup_table_orientation_label, 0, 3, 1, 1)
+            self._lookup_table_orientation_label, 0, 2, 1, 1)
 
         self._lookup_table_orientation_combobox = Gtk.ComboBox()
         self._lookup_table_orientation_store = Gtk.ListStore(str, int)
@@ -1145,10 +1145,59 @@ class SetupUI(Gtk.Window):
             if self._lookup_table_orientation == item[1]:
                 self._lookup_table_orientation_combobox.set_active(i)
         self._appearance_grid.attach(
-            self._lookup_table_orientation_combobox, 1, 3, 1, 1)
+            self._lookup_table_orientation_combobox, 1, 2, 1, 1)
         self._lookup_table_orientation_combobox.connect(
             "changed",
             self.on_lookup_table_orientation_combobox_changed)
+
+        self._preedit_underline_label = Gtk.Label()
+        self._preedit_underline_label.set_text(
+            # Translators: A combobox to choose the style of
+            # underlining for the preedit.
+            _('Preedit underline'))
+        self._preedit_underline_label.set_tooltip_text(
+            _('Which style of underlining to use for the preedit.'))
+        self._preedit_underline_label.set_xalign(0)
+        self._appearance_grid.attach(
+            self._preedit_underline_label, 0, 3, 1, 1)
+
+        self._preedit_underline_combobox = Gtk.ComboBox()
+        self._preedit_underline_store = Gtk.ListStore(str, int)
+        self._preedit_underline_store.append(
+            # Translators: This is the setting to use no underline
+            # at all for the preedit.
+            [_('None'), IBus.AttrUnderline.NONE])
+        self._preedit_underline_store.append(
+            # Translators: This is the setting to use a single
+            # underline for the preedit.
+            [_('Single'), IBus.AttrUnderline.SINGLE])
+        self._preedit_underline_store.append(
+            # Translators: This is the setting to use a double
+            # underline for the preedit.
+            [_('Double'), IBus.AttrUnderline.DOUBLE])
+        self._preedit_underline_store.append(
+            # Translators: This is the setting to use a low
+            # underline for the preedit.
+            [_('Low'), IBus.AttrUnderline.LOW])
+        self._preedit_underline_combobox.set_model(
+            self._preedit_underline_store)
+        renderer_text = Gtk.CellRendererText()
+        self._preedit_underline_combobox.pack_start(
+            renderer_text, True)
+        self._preedit_underline_combobox.add_attribute(
+            renderer_text, "text", 0)
+        self._preedit_underline = itb_util.variant_to_value(
+            self._gsettings.get_value('preeditunderline'))
+        if self._preedit_underline is None:
+            self._preedit_underline = IBus.AttrUnderline.SINGLE
+        for i, item in enumerate(self._preedit_underline_store):
+            if self._preedit_underline == item[1]:
+                self._preedit_underline_combobox.set_active(i)
+        self._appearance_grid.attach(
+            self._preedit_underline_combobox, 1, 3, 1, 1)
+        self._preedit_underline_combobox.connect(
+            "changed",
+            self.on_preedit_underline_combobox_changed)
 
         self._color_inline_completion_checkbutton = Gtk.CheckButton(
             # Translators: A checkbox where one can choose whether a
@@ -1795,6 +1844,9 @@ class SetupUI(Gtk.Window):
         if key == 'lookuptableorientation':
             self.set_lookup_table_orientation(value, update_gsettings=False)
             return
+        if key == 'preeditunderline':
+            self.set_preedit_underline(value, update_gsettings=False)
+            return
         if key == 'mincharcomplete':
             self.set_min_char_complete(value, update_gsettings=False)
             return
@@ -2161,6 +2213,18 @@ class SetupUI(Gtk.Window):
             orientation = model[tree_iter][1]
             self.set_lookup_table_orientation(
                 orientation, update_gsettings=True)
+
+    def on_preedit_underline_combobox_changed(self, widget):
+        '''
+        A change of the preedit underline style has been requested
+        with the combobox
+        '''
+        tree_iter = widget.get_active_iter()
+        if tree_iter is not None:
+            model = widget.get_model()
+            underline_mode = model[tree_iter][1]
+            self.set_preedit_underline(
+                underline_mode, update_gsettings=True)
 
     def on_min_char_complete_adjustment_value_changed(self, _widget):
         '''
@@ -3770,7 +3834,7 @@ class SetupUI(Gtk.Window):
         '''Sets the page size of the lookup table
 
         :param orientation: The orientation of the lookup table
-        :type mode: integer >= 0 and <= 2
+        :type orientation: integer >= 0 and <= 2
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
@@ -3794,6 +3858,38 @@ class SetupUI(Gtk.Window):
                     if self._lookup_table_orientation == item[1]:
                         self._lookup_table_orientation_combobox.set_active(i)
 
+    def set_preedit_underline(self, underline_mode, update_gsettings=True):
+        '''Sets the page size of the lookup table
+
+        :param underline_mode: The underline mode to be used for the preedit
+        :type underline_mode: integer >= 0 and <= 3
+                              IBus.AttrUnderline.NONE    = 0,
+                              IBus.AttrUnderline.SINGLE  = 1,
+                              IBus.AttrUnderline.DOUBLE  = 2,
+                              IBus.AttrUnderline.LOW     = 3,
+                              IBus.AttrUnderline.ERROR   = 4,
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_preedit_underline(%s, update_gsettings = %s)\n"
+            %(underline_mode, update_gsettings))
+        if underline_mode == self._preedit_underline:
+            return
+        if 0 <= underline_mode < IBus.AttrUnderline.ERROR:
+            self._preedit_underline = underline_mode
+            if update_gsettings:
+                self._gsettings.set_value(
+                    'preeditunderline',
+                    GLib.Variant.new_int32(underline_mode))
+            else:
+                for i, item in enumerate(self._preedit_underline_store):
+                    if self._preedit_underline == item[1]:
+                        self._preedit_underline_combobox.set_active(i)
 
     def set_min_char_complete(self, min_char_complete, update_gsettings=True):
         '''Sets the minimum number of characters to try completion
