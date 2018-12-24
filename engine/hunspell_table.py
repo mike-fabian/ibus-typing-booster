@@ -1465,6 +1465,8 @@ class TypingBoosterEngine(IBus.Engine):
         setup_cmd = os.path.join(
             os.getenv('IBUS_TYPING_BOOSTER_LIB_LOCATION'),
             'ibus-setup-typing-booster')
+        if DEBUG_LEVEL > 0:
+            sys.stderr.write('Starting setup tool: "%s"\n' % setup_cmd)
         self._setup_pid = os.spawnl(
             os.P_NOWAIT,
             setup_cmd,

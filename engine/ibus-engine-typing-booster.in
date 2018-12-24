@@ -19,8 +19,10 @@
 
 PYTHON=@PYTHON@
 prefix=@prefix@
+exec_prefix=@exec_prefix@
+libexecdir=@libexecdir@
 export IBUS_TYPING_BOOSTER_LOCATION=${prefix}/share/ibus-typing-booster
-export IBUS_TYPING_BOOSTER_LIB_LOCATION=${prefix}/libexec
+export IBUS_TYPING_BOOSTER_LIB_LOCATION=${libexecdir}
 export PYTHONIOENCODING=UTF-8
 
 # Set this variable to something > 0 to get more debug output.
