@@ -69,6 +69,9 @@ EMOJI_PREDICTION_MODE_SYMBOL = '🙂'
 # 🕵 U+1F575 SLEUTH OR SPY
 OFF_THE_RECORD_MODE_SYMBOL = '🕵'
 
+INPUT_MODE_TRUE_SYMBOL = '🚀'
+INPUT_MODE_FALSE_SYMBOL = '🐌'
+
 class TypingBoosterEngine(IBus.Engine):
     '''The IBus Engine for ibus-typing-booster'''
 
@@ -106,6 +109,8 @@ class TypingBoosterEngine(IBus.Engine):
         self.emoji_prediction_mode_properties = {}
         self.off_the_record_mode_menu = {}
         self.off_the_record_mode_properties = {}
+        self.input_mode_menu = {}
+        self.input_mode_properties = {}
         self.preedit_ime_menu = {}
         self.preedit_ime_properties = {}
         self.preedit_ime_sub_properties_prop_list = []
@@ -194,6 +199,8 @@ class TypingBoosterEngine(IBus.Engine):
             self._off_the_record = False # default
 
         self._hide_input = False
+
+        self._input_mode = True
 
         self._qt_im_module_workaround = itb_util.variant_to_value(
             self._gsettings.get_value('qtimmoduleworkaround'))
@@ -412,6 +419,39 @@ class TypingBoosterEngine(IBus.Engine):
         self._lookup_table.set_orientation(self._lookup_table_orientation)
         self._lookup_table.set_cursor_visible(False)
 
+        self.input_mode_properties = {
+            'InputMode.Off': {
+                'number': 0,
+                'symbol': INPUT_MODE_FALSE_SYMBOL,
+                'label': _('Off'),
+            },
+            'InputMode.On': {
+                'number': 1,
+                'symbol': INPUT_MODE_TRUE_SYMBOL,
+                'label': _('On'),
+            }
+        }
+        # The symbol of the property “InputMode” is displayed
+        # in the input method indicator of the Gnome3 panel.
+        # This depends on the property name “InputMode” and
+        # is case sensitive!
+        #
+        # Don’t make this symbol too long: Using “あ” for hiragana
+        # mode and “_A” for direct input mode works in ibus-anthy and
+        # ibus-kkc. So 2 Latin characters or one wide character seem
+        # to work in Gnome3.  But “☐🚀” for typing-booster on and
+        # “☑🚀” for typing-booster off do not work at all in Gnome3,
+        # only the rocket emoji is shown in that case and the ballot
+        # boxes are not visisble. In KDE these look so small that they
+        # are very hard to distinguish. Using a single emoji for each
+        # mode seems to work well both in Gnome3 and non-Gnome desktops.
+        self.input_mode_menu = {
+            'key': 'InputMode',
+            'label': _('Input mode'),
+            'tooltip': _('Here you can switch ibus-typing-booster on or off.'),
+            'shortcut_hint': repr(self._keybindings['toggle_input_mode_on_off']),
+            'sub_properties': self.input_mode_properties
+        }
         self.emoji_prediction_mode_properties = {
             'EmojiPredictionMode.Off': {
                 'number': 0,
@@ -1139,33 +1179,39 @@ class TypingBoosterEngine(IBus.Engine):
         self._keybindings = new_keybindings
         # Update hotkeys:
         self._hotkeys = itb_util.HotKeys(self._keybindings)
+        # If there is no key binding to toggle ibus-typing-booster
+        # between ”On” and “Off”, ibus-typing-booster has to be
+        # “On” always. I.e. the input mode needs to be set
+        # to True in that case:
+        if not self._keybindings['toggle_input_mode_on_off']:
+            self._input_mode = True
         # Some property menus have tooltips which show hints for the
         # key bindings. These may need to be updated if the key
-        # bindings have changed. I don’t check whether the key
-        # bindings really have changed, just update them anyway.
+        # bindings have changed.
         #
-        # But update them only if these menus have already been
-        # filled. At program start they might still be empty at the
-        # time when self.set_keybindings() is called, they might be
-        # filled later and then the tooltips get the current
-        # keybindings already.
-        if self.emoji_prediction_mode_menu:
-            self.emoji_prediction_mode_menu['shortcut_hint'] = (
-                repr(self._keybindings['toggle_emoji_prediction']))
-            self._init_or_update_property_menu(
-                self.emoji_prediction_mode_menu,
-                self._emoji_predictions)
-        if self.off_the_record_mode_menu:
-            self.off_the_record_mode_menu['shortcut_hint'] = (
-                repr(self._keybindings['toggle_off_the_record']))
-            self._init_or_update_property_menu(
-                self.off_the_record_mode_menu,
-                self._off_the_record)
-        if self.preedit_ime_menu:
-            self._update_preedit_ime_menu_dicts()
-            self._init_or_update_property_menu_preedit_ime(
-                self.preedit_ime_menu, current_mode=0)
-
+        # Also the input mode menu may need to be added or removed
+        # depending on whether a keybinding for toggling input mode
+        # was added or removed.
+        #
+        # I don’t check whether the key bindings really have changed,
+        # just update all the properties anyway.
+        #
+        # But update them only if the properties have already been
+        # initialized. At program start they might still be empty at
+        # the time when self.set_keybindings() is called.
+        if self._prop_dict:
+            if self.input_mode_menu:
+                self.input_mode_menu['shortcut_hint'] = (
+                    repr(self._keybindings['toggle_input_mode_on_off']))
+            if self.emoji_prediction_mode_menu:
+                self.emoji_prediction_mode_menu['shortcut_hint'] = (
+                    repr(self._keybindings['toggle_emoji_prediction']))
+            if self.off_the_record_mode_menu:
+                self.off_the_record_mode_menu['shortcut_hint'] = (
+                    repr(self._keybindings['toggle_off_the_record']))
+            if self.preedit_ime_menu:
+                self._update_preedit_ime_menu_dicts()
+            self._init_properties()
         if update_gsettings:
             variant_dict = GLib.VariantDict(GLib.Variant('a{sv}', {}))
             for command in sorted(self._keybindings):
@@ -1316,6 +1362,8 @@ class TypingBoosterEngine(IBus.Engine):
                 tooltip = '%(tooltip)s\n%(shortcut_hint)s' % {
                     'tooltip': menu['tooltip'],
                     'shortcut_hint': menu['shortcut_hint']}
+        visible = bool(menu_key != 'InputMode'
+                       or self._keybindings['toggle_input_mode_on_off'])
         self._init_or_update_sub_properties(
             menu_key, sub_properties_dict, current_mode=current_mode)
         if not menu_key in self._prop_dict: # initialize property
@@ -1325,8 +1373,8 @@ class TypingBoosterEngine(IBus.Engine):
                 label=IBus.Text.new_from_string(label),
                 symbol=IBus.Text.new_from_string(symbol),
                 tooltip=IBus.Text.new_from_string(tooltip),
-                sensitive=True,
-                visible=True,
+                sensitive=visible,
+                visible=visible,
                 state=IBus.PropState.UNCHECKED,
                 sub_props=self._sub_props_dict[menu_key])
             self.main_prop_list.append(self._prop_dict[menu_key])
@@ -1337,8 +1385,8 @@ class TypingBoosterEngine(IBus.Engine):
                 IBus.Text.new_from_string(symbol))
             self._prop_dict[menu_key].set_tooltip(
                 IBus.Text.new_from_string(tooltip))
-            self._prop_dict[menu_key].set_sensitive(True)
-            self._prop_dict[menu_key].set_visible(True)
+            self._prop_dict[menu_key].set_sensitive(visible)
+            self._prop_dict[menu_key].set_visible(visible)
             self.update_property(self._prop_dict[menu_key]) # important!
 
     def _init_or_update_sub_properties(self, menu_key, modes, current_mode=0):
@@ -1350,6 +1398,8 @@ class TypingBoosterEngine(IBus.Engine):
             self._sub_props_dict[menu_key] = IBus.PropList()
         else:
             update = True
+        visible = bool(menu_key != 'InputMode'
+                       or self._keybindings['toggle_input_mode_on_off'])
         for mode in sorted(modes, key=lambda x: (modes[x]['number'])):
             if modes[mode]['number'] == int(current_mode):
                 state = IBus.PropState.CHECKED
@@ -1366,8 +1416,8 @@ class TypingBoosterEngine(IBus.Engine):
                     prop_type=IBus.PropType.RADIO,
                     label=IBus.Text.new_from_string(label),
                     tooltip=IBus.Text.new_from_string(tooltip),
-                    sensitive=True,
-                    visible=True,
+                    sensitive=visible,
+                    visible=visible,
                     state=state,
                     sub_props=None)
                 self._sub_props_dict[menu_key].append(
@@ -1377,8 +1427,8 @@ class TypingBoosterEngine(IBus.Engine):
                     IBus.Text.new_from_string(label))
                 self._prop_dict[mode].set_tooltip(
                     IBus.Text.new_from_string(tooltip))
-                self._prop_dict[mode].set_sensitive(True)
-                self._prop_dict[mode].set_visible(True)
+                self._prop_dict[mode].set_sensitive(visible)
+                self._prop_dict[mode].set_visible(visible)
                 self._prop_dict[mode].set_state(state)
                 self.update_property(self._prop_dict[mode]) # important!
 
@@ -1387,7 +1437,14 @@ class TypingBoosterEngine(IBus.Engine):
         Initialize the ibus property menus
         '''
         self._prop_dict = {}
+        self._sub_props_dict = {}
+        self.preedit_ime_sub_properties_prop_list = []
         self.main_prop_list = IBus.PropList()
+
+        if self._keybindings['toggle_input_mode_on_off']:
+            self._init_or_update_property_menu(
+                self.input_mode_menu,
+                self._input_mode)
 
         self._init_or_update_property_menu(
             self.emoji_prediction_mode_menu,
@@ -1438,6 +1495,11 @@ class TypingBoosterEngine(IBus.Engine):
                     [imes[number]] + imes[number+1:] + imes[:number],
                     update_gsettings=self._remember_last_used_preedit_ime)
             return
+        if ibus_property.startswith(
+                self.input_mode_menu['key'] + '.'):
+            self.set_input_mode(
+                bool(self.input_mode_properties
+                     [ibus_property]['number']))
         if ibus_property.startswith(
                 self.emoji_prediction_mode_menu['key'] + '.'):
             self.set_emoji_prediction_mode(
@@ -2300,6 +2362,35 @@ class TypingBoosterEngine(IBus.Engine):
         :rtype: boolean
         '''
         return self._arrow_keys_reopen_preedit
+
+    def set_input_mode(self, mode):
+        '''Sets the input mode
+
+        :param mode: Whether to switch ibus-typing-booster on or off
+        :type mode: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_input_mode(%s)\n"
+                % mode)
+        if mode == self._input_mode:
+            return
+        self._input_mode = mode
+        self._init_or_update_property_menu(
+            self.input_mode_menu, mode)
+        self._clear_input_and_update_ui()
+
+    def toggle_input_mode(self):
+        '''Toggles whether ibus-typing-booster is on or off
+        '''
+        self.set_input_mode(not self._input_mode)
+
+    def get_input_mode(self):
+        '''Returns the current value of the input mode
+
+        :rtype: boolean
+        '''
+        return self._input_mode
 
     def set_emoji_prediction_mode(self, mode, update_gsettings=True):
         '''Sets the emoji prediction mode
@@ -3395,6 +3486,7 @@ class TypingBoosterEngine(IBus.Engine):
                 '_handle_hotkeys(): KeyEvent object: %s\n' % key)
             sys.stderr.write(
                 '_handle_hotkeys(): self._hotkeys=%s\n' % str(self._hotkeys))
+
         if (key, 'cancel') in self._hotkeys:
             if self.is_empty():
                 return False
@@ -3554,16 +3646,21 @@ class TypingBoosterEngine(IBus.Engine):
         Key Events include Key Press and Key Release,
         modifier means Key Pressed
         '''
-        if (self._has_input_purpose
-            and self._input_purpose
-            in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN]):
-            return self._return_false(keyval, keycode, state)
-
         key = itb_util.KeyEvent(keyval, keycode, state)
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "process_key_event() "
                 "KeyEvent object: %s" % key)
+
+        if (key, 'toggle_input_mode_on_off') in self._hotkeys:
+            self.toggle_input_mode()
+            return True
+
+        if (not self._input_mode
+            or (self._has_input_purpose
+                and self._input_purpose
+                in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN])):
+            return self._return_false(keyval, keycode, state)
 
         result = self._process_key_event(key)
         return result
