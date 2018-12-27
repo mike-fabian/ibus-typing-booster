@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 27 Dec 2018 Released 2.4.1 version
+* Update translations from zanata (pl updated)
+* Add direct input mode (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/25)
+* Fix start of setup tool when libexedir is not /usr/libexec/ (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/42)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 19 Dec 2018 Released 2.4.0 version
 * Update translations from zanata (de, es, fr, ja, pl, uk updated)
 * Add new command 'toggle_hide_input' to hide the preëdit, lookup table, and auxiliary text
