@@ -8,7 +8,7 @@
 	annotations. -->
 <ldml>
 	<identity>
-		<version number="$Revision: 14714 $" />
+		<version number="$Revision: 14761 $" />
 		<language type="en" />
 	</identity>
 	<annotations>
@@ -68,7 +68,7 @@
 		<annotation cp="🤩" type="tts">star-struck</annotation>
 		<annotation cp="🤔">face | thinking</annotation>
 		<annotation cp="🤔" type="tts">thinking face</annotation>
-		<annotation cp="🤨">distrust | face with raised eyebrow | skeptic</annotation>
+		<annotation cp="🤨">distrust | face with raised eyebrow | skeptic | raised | eyebrow</annotation>
 		<annotation cp="🤨" type="tts">face with raised eyebrow</annotation>
 		<annotation cp="😐">deadpan | face | meh | neutral</annotation>
 		<annotation cp="😐" type="tts">neutral face</annotation>
@@ -654,6 +654,8 @@
 		<annotation cp="🤹‍♂" type="tts">man juggling</annotation>
 		<annotation cp="🤹‍♀">juggling | multitask | woman</annotation>
 		<annotation cp="🤹‍♀" type="tts">woman juggling</annotation>
+		<annotation cp="🧑‍🤝‍🧑">couple | hand | hold | holding hands | person</annotation>
+		<annotation cp="🧑‍🤝‍🧑" type="tts">people holding hands</annotation>
 		<annotation cp="👫">couple | hand | hold | man | holding hands | woman</annotation>
 		<annotation cp="👫" type="tts">woman and man holding hands</annotation>
 		<annotation cp="👬">couple | Gemini | man | twins | men | holding hands | zodiac</annotation>
@@ -1764,7 +1766,7 @@
 		<annotation cp="⛄" type="tts">snowman without snow</annotation>
 		<annotation cp="☄">comet | space</annotation>
 		<annotation cp="☄" type="tts">comet</annotation>
-		<annotation cp="🔥">fire | flame | tool</annotation>
+		<annotation cp="🔥">fire | flame | tool | lit</annotation>
 		<annotation cp="🔥" type="tts">fire</annotation>
 		<annotation cp="💧">cold | comic | drop | droplet | sweat</annotation>
 		<annotation cp="💧" type="tts">droplet</annotation>
@@ -2502,9 +2504,9 @@
 		<annotation cp="☑" type="tts">check box with check</annotation>
 		<annotation cp="✔">✓ | check | mark</annotation>
 		<annotation cp="✔" type="tts">check mark</annotation>
-		<annotation cp="✖">× | x | cancel | heavy multiplication x | multiplication | multiply | x | sign</annotation>
+		<annotation cp="✖">× | x | cancel | multiplication | multiply | x | sign</annotation>
 		<annotation cp="✖" type="tts">multiplication sign</annotation>
-		<annotation cp="❌">× | x | cancel | cross mark | mark | multiplication | multiply | x</annotation>
+		<annotation cp="❌">× | x | cancel | cross | mark | multiplication | multiply | x</annotation>
 		<annotation cp="❌" type="tts">cross mark</annotation>
 		<annotation cp="❎">× | x | cross mark button | mark | square</annotation>
 		<annotation cp="❎" type="tts">cross mark button</annotation>
@@ -2526,7 +2528,7 @@
 		<annotation cp="✴" type="tts">eight-pointed star</annotation>
 		<annotation cp="❇">* | sparkle</annotation>
 		<annotation cp="❇" type="tts">sparkle</annotation>
-		<annotation cp="‼">!! | ! | bangbang | double exclamation mark | exclamation | mark | punctuation</annotation>
+		<annotation cp="‼">!! | ! | bangbang | double exclamation mark | exclamation | mark</annotation>
 		<annotation cp="‼" type="tts">double exclamation mark</annotation>
 		<annotation cp="⁉">? | ! | !? | exclamation | interrobang | mark | punctuation | question</annotation>
 		<annotation cp="⁉" type="tts">exclamation question mark</annotation>
