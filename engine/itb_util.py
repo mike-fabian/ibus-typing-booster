@@ -122,7 +122,11 @@ LOCALE_DEFAULTS = {
     'ar_TD': {'inputmethods': ['NoIme'], 'dictionaries': ['ar_TD']},
     'ar_TN': {'inputmethods':['NoIme'], 'dictionaries': ['ar_TN']},
     'ar_YE': {'inputmethods': ['NoIme'], 'dictionaries': ['ar_YE']},
-    'as_IN': {'inputmethods': ['as-inscript2', 'NoIme'], 'dictionaries': ['as_IN', 'en_GB']},
+    # libgnome-desktop/default-input-sources.h has "m17n:as:phonetic"
+    # as the default. Parag Nemade says the as translator for Fedora a long
+    # time back used as-phonetic. We have no later data from the
+    # community.
+    'as_IN': {'inputmethods': ['as-phonetic', 'NoIme'], 'dictionaries': ['as_IN', 'en_GB']},
     'ast_ES': {'inputmethods': ['NoIme'], 'dictionaries': ['ast_ES']},
     'az_AZ': {'inputmethods': ['NoIme'], 'dictionaries': ['az_AZ']},
     'be_BY': {'inputmethods': ['NoIme'], 'dictionaries': ['be_BY']},
@@ -233,7 +237,10 @@ LOCALE_DEFAULTS = {
     'it_IT': {'inputmethods': ['NoIme'], 'dictionaries': ['it_IT']},
     'kk_KZ': {'inputmethods': ['NoIme'], 'dictionaries': ['kk_KZ']},
     'km_KH': {'inputmethods': ['NoIme'], 'dictionaries': ['km_KH']},
-    'kn_IN': {'inputmethods': ['kn-inscript2', 'NoIme'], 'dictionaries': ['kn_IN', 'en_GB']},
+    # libgnome-desktop/default-input-sources.h has "m17n:kn:kgp" as
+    # the default for kn_IN. According to Parag Nemade this probably came
+    # from the translation community.
+    'kn_IN': {'inputmethods': ['kn-kgp', 'NoIme'], 'dictionaries': ['kn_IN', 'en_GB']},
     'ko_KR': {'inputmethods': ['ko-han2', 'NoIme'], 'dictionaries': ['ko_KR', 'en_GB']},
     'ku_SY': {'inputmethods': ['NoIme'], 'dictionaries': ['ku_SY']},
     'ku_TR': {'inputmethods': ['NoIme'], 'dictionaries': ['ku_TR']},
@@ -309,7 +316,10 @@ LOCALE_DEFAULTS = {
     'sv_SE': {'inputmethods': ['NoIme'], 'dictionaries': ['sv_SE']},
     'sw_KE': {'inputmethods': ['NoIme'], 'dictionaries': ['sw_KE']},
     'sw_TZ': {'inputmethods': ['NoIme'], 'dictionaries': ['sw_TZ']},
-    'ta_IN': {'inputmethods': ['ta-inscript2', 'NoIme'], 'dictionaries': ['ta_IN', 'en_GB']},
+    # libgnome-desktop/default-input-sources.h has "m17n:ta:tamil99"
+    # as the default for ta_IN. According to Parag Nemade this probably came
+    # from the translation community.
+    'ta_IN': {'inputmethods': ['ta-tamil99', 'NoIme'], 'dictionaries': ['ta_IN', 'en_GB']},
     'te_IN': {'inputmethods': ['te-inscript2', 'NoIme'], 'dictionaries': ['te_IN', 'en_GB']},
     'tet_ID': {'inputmethods': ['NoIme'], 'dictionaries': ['tet_ID']},
     'tet_TL': {'inputmethods': ['NoIme'], 'dictionaries': ['tet_TL']},
