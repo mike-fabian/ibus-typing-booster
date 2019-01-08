@@ -323,7 +323,7 @@ LOCALE_DEFAULTS = {
     'tpi_PG': {'inputmethods': ['NoIme'], 'dictionaries': ['tpi_PG']},
     'ts_ZA': {'inputmethods': ['NoIme'], 'dictionaries': ['ts_ZA']},
     'uk_UA': {'inputmethods': ['NoIme'], 'dictionaries': ['uk_UA']},
-    'ur_IN': {'inputmethods': ['NoIme'], 'dictionaries': ['ur_IN']},
+    'ur_IN': {'inputmethods': ['ur-phonetic', 'NoIme'], 'dictionaries': ['ur_IN', 'en_GB']},
     'ur_PK': {'inputmethods': ['NoIme'], 'dictionaries': ['ur_PK']},
     'uz_UZ': {'inputmethods': ['NoIme'], 'dictionaries': ['uz_UZ']},
     've_ZA': {'inputmethods': ['NoIme'], 'dictionaries': ['ve_ZA']},
