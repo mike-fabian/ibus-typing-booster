@@ -358,6 +358,14 @@
         If that time stamp changes, reload all dictionaries.
       </description>
     </key>
+    <key name="googleapplicationcredentials" type="s">
+      <default>''</default>
+      <summary>“Google application credentials” .json file</summary>
+      <description>
+        Full path of the “Google application credentials” .json file for
+        the speech-to-text API.
+      </description>
+    </key>
     <key name="keybindings" type="a{sv}">
       <default>
         {
@@ -374,6 +382,7 @@
         'lookup_related': &lt;['Mod5+F12']&gt;,
         'toggle_hide_input': &lt;['Shift+Control+Escape']&gt;,
         'toggle_input_mode_on_off': &lt;@as []&gt;,
+        'speech_recognition': &lt;@as []&gt;,
         'setup': &lt;['Mod5+F10']&gt;
         }
       </default>

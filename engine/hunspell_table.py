@@ -44,6 +44,15 @@ from m17n_translit import Transliterator
 import itb_util
 import itb_emoji
 
+IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = False
+try:
+    from google.cloud import speech
+    from google.cloud.speech import enums
+    from google.cloud.speech import types
+    IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = False
+
 __all__ = (
     "TypingBoosterEngine",
 )
@@ -304,6 +313,14 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._label_busy_string = itb_util.variant_to_value(
             self._gsettings.get_value('labelbusystring'))
+
+        self._label_speech_recognition = True
+        self._label_speech_recognition_string = '🎙️'
+
+        self._google_application_credentials = itb_util.variant_to_value(
+            self._gsettings.get_value('googleapplicationcredentials'))
+        if self._google_application_credentials is None:
+            self._google_application_credentials = ''
 
         self._keybindings = {}
         self._hotkeys = None
@@ -3052,6 +3069,39 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._label_busy_string
 
+    def set_google_application_credentials(self, path, update_gsettings=True):
+        '''Sets the label used to indicate busy state
+
+        :param path: Full path of the Google application
+                     credentials .json file.
+        :type path: String
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_google_application_credentials(%s, update_gsettings = %s)\n"
+                %(path, update_gsettings))
+        if self._google_application_credentials == path:
+            return
+        self._google_application_credentials = path
+        if update_gsettings:
+            self._gsettings.set_value(
+                'googleapplicationcredentials',
+                GLib.Variant.new_string(path))
+
+    def get_google_application_credentials(self):
+        '''Returns the current value of the full path to the
+        Google application credentials .json file.
+
+        :rtype: String
+        '''
+        return self._google_application_credentials
+
     def set_tab_enable(self, mode, update_gsettings=True):
         '''Sets the “Tab enable” mode
 
@@ -3470,6 +3520,188 @@ class TypingBoosterEngine(IBus.Engine):
             self._lookup_related_candidates()
             return
 
+    def _speech_recognition_error(self, error_message):
+        auxiliary_text_label = ''
+        if self._label_speech_recognition and self._label_speech_recognition_string.strip():
+            # Show a label in the auxiliary text to indicate speech
+            # recognition:
+            auxiliary_text_label = self._label_speech_recognition_string.strip()
+        super(TypingBoosterEngine, self).update_auxiliary_text(
+            IBus.Text.new_from_string(
+                auxiliary_text_label + '⚠️' + error_message), True)
+        time.sleep(2)
+        self._update_ui()
+        return
+
+    def _speech_recognition(self):
+        '''
+        Listen to microphone, convert to text using Google speech-to-text
+        and insert converted text.
+        '''
+        if DEBUG_LEVEL:
+            sys.stderr.write('speech_recognition()\n')
+        self._clear_input_and_update_ui()
+        if not IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL:
+            self._speech_recognition_error(
+                _('Failed to import Google speech-to-text.'))
+            return
+        if not itb_util.IMPORT_PYAUDIO_SUCCESSFUL:
+            self._speech_recognition_error(_('Failed to import pyaudio.'))
+            return
+        if not itb_util.IMPORT_QUEUE_SUCCESSFUL:
+            self._speech_recognition_error(_('Failed to import queue.'))
+            return
+        language_code = self._dictionary_names[0]
+        if not language_code:
+            self._speech_recognition_error(
+                _('No supported language for speech recognition.'))
+            return
+        if not os.path.isfile(self._google_application_credentials):
+            self._speech_recognition_error(
+                _('“Google application credentials” file “%s” not found.')
+                % self._google_application_credentials)
+            return
+
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = (
+            self._google_application_credentials)
+        try:
+            client = speech.SpeechClient()
+        except:
+            import traceback
+            traceback.print_exc()
+            self._speech_recognition_error(
+                _('Failed to init Google speech-to-text. See debug.log.'))
+            return
+
+        config = types.RecognitionConfig(
+            encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
+            sample_rate_hertz=itb_util.AUDIO_RATE,
+            language_code=language_code)
+        streaming_config = types.StreamingRecognitionConfig(
+            config=config,
+            interim_results=True)
+
+        auxiliary_text_label = ''
+        if self._label_speech_recognition and self._label_speech_recognition_string.strip():
+            # Show a label in the auxiliary text to indicate speech
+            # recognition:
+            auxiliary_text_label = self._label_speech_recognition_string.strip()
+        auxiliary_text_label += language_code
+        flag = itb_util.FLAGS.get(language_code.replace('-','_'), '')
+        if flag:
+            auxiliary_text_label += ' ' + flag
+        if language_code.replace('-', '_') not in itb_util.GOOGLE_SPEECH_TO_TEXT_LANGUAGES:
+            # The officially list of languages supported by Google speech-to-text
+            # is here: https://cloud.google.com/speech-to-text/docs/languages
+            # and I copied this list into itb_util.GOOGLE_SPEECH_TO_TEXT_LANGUAGES.
+            #
+            # But I don’t know any way to find out via the API whether a language
+            # is supported or not. When trying to set a language which is not supported,
+            # for example “gsw_CH” (Alemannic German), there is no error, but
+            # it seems to fall back to recognizing English.
+            #
+            # In the official list, only “de-DE” is supported, but when trying
+            # I found that “de”, “de-DE”, “de-AT”, “de-CH”, “de-BE”, “de-LU”
+            # all seem to work the same and seem to recognize standard German.
+            # When using “de-CH”, it uses ß when spelling even though this is not
+            # used in Switzerland, so “de-CH” seems to fall back to standard German,
+            # there seems to be no difference between using “de-DE” and “de-CH”.
+            #
+            # For “en-GB” and “en-US”, there *is* a difference, the
+            # transcribed text uses British or American spelling
+            # depending on which one of these English variants is
+            # used.
+            #
+            # I don’t want to disallow using something like “de-CH”
+            # for speech recognition just because it is not on the
+            # list of officially supported languages. Therefore, I allow
+            # *all* languages to be used for speech recognition. But when
+            # a language is not officially supported, I mark it with '❌'
+            # in the label to indicate that it is not officially supported
+            # and may just fall back to English, but it is also possible
+            # that it works just fine. One has to try it.
+            auxiliary_text_label += '❌' # not officially supported, but may work.
+        auxiliary_text_label += ': '
+        super(TypingBoosterEngine, self).update_auxiliary_text(
+            IBus.Text.new_from_string(auxiliary_text_label), True)
+
+        transcript = ''
+        with itb_util.MicrophoneStream(
+                itb_util.AUDIO_RATE, itb_util.AUDIO_CHUNK) as stream:
+            audio_generator = stream.generator()
+            requests = (types.StreamingRecognizeRequest(audio_content=content)
+                        for content in audio_generator)
+            responses = client.streaming_recognize(streaming_config, requests)
+            try:
+                for response in responses:
+                    if not response.results:
+                        continue
+                    # The `results` list is consecutive. For streaming, we
+                    # only care about the first result being considered,
+                    # since once it's `is_final`, it moves on to
+                    # considering the next utterance.
+                    result = response.results[0]
+                    if not result.alternatives:
+                        continue
+                    # Display the transcription of the top alternative.
+                    transcript = result.alternatives[0].transcript
+                    if DEBUG_LEVEL > 1:
+                        sys.stderr.write(
+                            '-------------------  %s alternative(s)\n'
+                            % len(result.alternatives))
+                        for alternative in result.alternatives:
+                            sys.stderr.write('%s\n' % alternative.transcript)
+                    # Display interim results in auxiliary text.
+                    # Showing it in the preedit because updating the
+                    # preedit causes Gtk events. And I may want to use
+                    # Gtk events to cancel voice recording Currently
+                    # this is not possible because the voice recording
+                    # blocks and Gtk events can be handled only after
+                    # the voice recording is finished.  But in future
+                    # I may try to use a different thread for the
+                    # voice recording.
+                    super(TypingBoosterEngine, self).update_auxiliary_text(
+                        IBus.Text.new_from_string(
+                            auxiliary_text_label + transcript),
+                        True)
+                    if result.is_final:
+                        break
+            except:
+                self._speech_recognition_error(
+                    _('Google speech-to-text error. See debug.log.'))
+                import traceback
+                traceback.print_exc()
+                return
+
+        if transcript:
+            # Uppercase first letter of transcript if the text left
+            # of the cursor ends with a sentence ending character
+            # or if the text left of the cursor is empty.
+            # If surrounding text cannot be used, uppercase the
+            # first letter unconditionally:
+            if not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT:
+                transcript = transcript[0].upper() + transcript[1:]
+            else:
+                surrounding_text = self.get_surrounding_text()
+                text = surrounding_text[0].get_text()
+                cursor_pos = surrounding_text[1]
+                anchor_pos = surrounding_text[2]
+                text_left = text[:cursor_pos].strip()
+                if DEBUG_LEVEL > 1:
+                    sys.stderr.write(
+                        'surrounding_text = '
+                        + '[text = "%s", cursor_pos = %s, anchor_pos = %s]'
+                        %(text, cursor_pos, anchor_pos) + '\n')
+                    sys.stderr.write(
+                        'text_left = %s\n' % text_left)
+                if not text_left or text_left[-1] in '.;:?!':
+                    transcript = transcript[0].upper() + transcript[1:]
+
+        self._insert_string_at_cursor(list(transcript))
+        self._update_transliterated_strings()
+        self._update_ui()
+        return
+
     def _handle_hotkeys(self, key):
         '''
         Handle hotkey commands
@@ -3661,6 +3893,10 @@ class TypingBoosterEngine(IBus.Engine):
                 and self._input_purpose
                 in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN])):
             return self._return_false(keyval, keycode, state)
+
+        if (key, 'speech_recognition') in self._hotkeys:
+            self._speech_recognition()
+            return True
 
         result = self._process_key_event(key)
         return result
@@ -4358,6 +4594,9 @@ class TypingBoosterEngine(IBus.Engine):
         if key == 'dictionary':
             self.set_dictionary_names(
                 [x.strip() for x in value.split(',')], update_gsettings=False)
+            return
+        if key == 'googleapplicationcredentials':
+            self.set_google_application_credentials(value, update_gsettings=False)
             return
         if key == 'keybindings':
             self.set_keybindings(value, update_gsettings=False)

@@ -242,6 +242,22 @@ class SetupUI(Gtk.Window):
         # diffent types of candidates should be marked with labels.
         self._appearance_label.set_text(_('Appearance'))
 
+        self._speech_recognition_grid = Gtk.Grid()
+        self._speech_recognition_grid.set_visible(True)
+        self._speech_recognition_grid.set_can_focus(False)
+        self._speech_recognition_grid.set_border_width(grid_border_width)
+        self._speech_recognition_grid.set_row_spacing(grid_row_spacing)
+        self._speech_recognition_grid.set_column_spacing(grid_column_spacing)
+        self._speech_recognition_grid.set_row_homogeneous(False)
+        self._speech_recognition_grid.set_column_homogeneous(False)
+        self._speech_recognition_grid.set_hexpand(True)
+        self._speech_recognition_grid.set_vexpand(False)
+        self._speech_recognition_label = Gtk.Label()
+        # Translators: This is the label of a tab in the setup tool.
+        # Here the user can set up some options related to speech
+        # recognition.
+        self._speech_recognition_label.set_text(_('Speech recognition'))
+
         self._notebook.append_page(
             self._dictionaries_and_input_methods_vbox,
             self._dictionaries_and_input_methods_label)
@@ -257,6 +273,22 @@ class SetupUI(Gtk.Window):
         self._notebook.append_page(
             self._appearance_grid,
             self._appearance_label)
+        self._notebook.append_page(
+            self._speech_recognition_grid,
+            self._speech_recognition_label)
+
+        self._keybindings = {}
+        # Don’t just use get_value(), if the user has changed the
+        # settings, get_value() will get the user settings and new
+        # keybindings might have been added by an update to the default
+        # settings. Therefore, get the default settings first and
+        # update them with the user settings:
+        self._keybindings = itb_util.variant_to_value(
+            self._gsettings.get_default_value('keybindings'))
+        itb_util.dict_update_existing_keys(
+            self._keybindings,
+            itb_util.variant_to_value(
+                self._gsettings.get_value('keybindings')))
 
         self._tab_enable_checkbutton = Gtk.CheckButton(
             # Translators: If this option is on, suggestions are not
@@ -949,18 +981,6 @@ class SetupUI(Gtk.Window):
         self._keybindings_treeview = Gtk.TreeView()
         self._keybindings_treeview_model = Gtk.ListStore(str, str)
         self._keybindings_treeview.set_model(self._keybindings_treeview_model)
-        self._keybindings = {}
-        # Don’t just use get_value(), if the user has changed the
-        # settings, get_value() will get the user settings and new
-        # keybindings might have been added by an update to the default
-        # settings. Therefore, get the default settings first and
-        # update them with the user settings:
-        self._keybindings = itb_util.variant_to_value(
-            self._gsettings.get_default_value('keybindings'))
-        itb_util.dict_update_existing_keys(
-            self._keybindings,
-            itb_util.variant_to_value(
-                self._gsettings.get_value('keybindings')))
         for command in sorted(self._keybindings):
             self._keybindings_treeview_model.append(
                 (command, repr(self._keybindings[command])))
@@ -1572,6 +1592,39 @@ class SetupUI(Gtk.Window):
         self._label_busy_entry.connect(
             'notify::text', self.on_label_busy_entry)
 
+        self._google_application_credentials_label = Gtk.Label()
+        self._google_application_credentials_label.set_text(
+            # Translators:
+            _('Set “Google application credentials” .json file:'))
+        self._google_application_credentials_label.set_tooltip_text(
+            _('Full path of the “Google application credentials” .json file.'))
+        self._google_application_credentials_label.set_xalign(0)
+        self._speech_recognition_grid.attach(
+            self._google_application_credentials_label, 0, 0, 1, 1)
+
+        self._google_application_credentials = itb_util.variant_to_value(
+            self._gsettings.get_value('googleapplicationcredentials'))
+        if not self._google_application_credentials:
+            self._google_application_credentials = 'Not set.'
+        self._google_application_credentials_button = Gtk.Button()
+        self._google_application_credentials_button_box = Gtk.HBox()
+        self._google_application_credentials_button_label = Gtk.Label()
+        self._google_application_credentials_button_label.set_text(
+            self._google_application_credentials)
+        self._google_application_credentials_button_label.set_use_markup(True)
+        self._google_application_credentials_button_label.set_max_width_chars(40)
+        self._google_application_credentials_button_label.set_line_wrap(False)
+        self._google_application_credentials_button_label.set_ellipsize(
+            Pango.EllipsizeMode.START)
+        self._google_application_credentials_button_box.pack_start(
+            self._google_application_credentials_button_label, False, False, 0)
+        self._google_application_credentials_button.add(
+            self._google_application_credentials_button_box)
+        self._speech_recognition_grid.attach(
+            self._google_application_credentials_button, 1, 0, 1, 1)
+        self._google_application_credentials_button.connect(
+            'clicked', self.on_google_application_credentials_button)
+
         self.show_all()
 
         self._notebook.set_current_page(0) # Has to be after show_all()
@@ -1607,6 +1660,12 @@ class SetupUI(Gtk.Window):
             row += '✔️'
         else:
             row += '❌'
+        if self._keybindings['speech_recognition']:
+            row += ' \t' + _('Speech recognition') + ' '
+            if name in itb_util.GOOGLE_SPEECH_TO_TEXT_LANGUAGES:
+                row += '✔️'
+            else:
+                row += '❌'
         return (row, missing_dictionary)
 
     def _fill_dictionaries_listbox(self):
@@ -1855,6 +1914,9 @@ class SetupUI(Gtk.Window):
             return
         if key == 'autocommitcharacters':
             self.set_auto_commit_characters(value, update_gsettings=False)
+            return
+        if key == 'googleapplicationcredentials':
+            self.set_google_application_credentials(value, update_gsettings=False)
             return
         if key == 'tabenable':
             self.set_tab_enable(value, update_gsettings=False)
@@ -2234,6 +2296,31 @@ class SetupUI(Gtk.Window):
         '''
         self.set_auto_commit_characters(
             widget.get_text(), update_gsettings=True)
+
+    def on_google_application_credentials_button(self, _widget):
+        '''
+        The button to select the full path of the Google application
+        credentials .json file has been clicked.
+        '''
+        self._google_application_credentials_button.set_sensitive(False)
+        filename = ''
+        chooser = Gtk.FileChooserDialog(
+            title=_('Set “Google application credentials” .json file:'),
+            parent=self,
+            action=Gtk.FileChooserAction.OPEN)
+        chooser.add_button(_('_Cancel'), Gtk.ResponseType.CANCEL)
+        chooser.add_button(_('_OK'), Gtk.ResponseType.OK)
+        response = chooser.run()
+        if response == Gtk.ResponseType.OK:
+            filename = chooser.get_filename()
+        chooser.destroy()
+        while Gtk.events_pending():
+            Gtk.main_iteration()
+        if filename:
+            self._google_application_credentials_button_label.set_text(filename)
+            self.set_google_application_credentials(
+                filename, update_gsettings=True)
+        self._google_application_credentials_button.set_sensitive(True)
 
     def on_page_size_adjustment_value_changed(self, _widget):
         '''
@@ -3329,6 +3416,33 @@ class SetupUI(Gtk.Window):
         else:
             self._auto_commit_characters_entry.set_text(
                 self._auto_commit_characters)
+
+    def set_google_application_credentials(self, path, update_gsettings=True):
+        '''Sets the auto commit characters
+
+        :param path: Full path of the Google application credentials
+                     .json file.
+        :type path: string
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        sys.stderr.write(
+            "set_google_application_credentials(%s, update_gsettings = %s)\n"
+            %(path, update_gsettings))
+        if path == self._google_application_credentials:
+            return
+        self._google_application_credentials = path
+        if update_gsettings:
+            self._gsettings.set_value(
+                'googleapplicationcredentials',
+                GLib.Variant.new_string(self._google_application_credentials))
+        else:
+            self._google_application_credentials_entry.set_text(
+                self._google_application_credentials)
 
     def set_color_inline_completion(self, mode, update_gsettings=True):
         '''Sets whether to use color for inline completion

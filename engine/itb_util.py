@@ -48,6 +48,20 @@ try:
 except (ImportError,):
     IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = False
 
+IMPORT_PYAUDIO_SUCCESSFUL = False
+try:
+    import pyaudio
+    IMPORT_PYAUDIO_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_PYAUDIO_SUCCESSFUL = False
+
+IMPORT_QUEUE_SUCCESSFUL = False
+try:
+    import queue
+    IMPORT_QUEUE_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_QUEUE_SUCCESSFUL = False
+
 DOMAINNAME = 'ibus-typing-booster'
 _ = lambda a: gettext.dgettext(DOMAINNAME, a)
 N_ = lambda a: a
@@ -1377,9 +1391,142 @@ CLDR_ANNOTATION_FILES = {
     'zu_ZA',
 }
 
+GOOGLE_SPEECH_TO_TEXT_LANGUAGES = {
+    # List of languages supported by the Google Cloud Speech-to-Text
+    # speech recognition engine.
+    #
+    # https://cloud.google.com/speech-to-text/docs/languages
+    #
+    # The original list above uses identifiers in BCP-47 format.
+    #
+    # In the list below, “-” is replaced “_” to be able to merge
+    # the list better with the lists of hunspell dictionaries and
+    # cldr annotation files.
+    'af_ZA',
+    'am_ET',
+    'hy_AM',
+    'az_AZ',
+    'id_ID',
+    'ms_MY',
+    'bn_BD',
+    'bn_IN',
+    'ca_ES',
+    'cs_CZ',
+    'da_DK',
+    'de_DE',
+    'en_AU',
+    'en_CA',
+    'en_GH',
+    'en_GB',
+    'en_IN',
+    'en_IE',
+    'en_KE',
+    'en_NZ',
+    'en_NG',
+    'en_PH',
+    'en_ZA',
+    'en_TZ',
+    'en_US',
+    'es_AR',
+    'es_BO',
+    'es_CL',
+    'es_CO',
+    'es_CR',
+    'es_EC',
+    'es_SV',
+    'es_ES',
+    'es_US',
+    'es_GT',
+    'es_HN',
+    'es_MX',
+    'es_NI',
+    'es_PA',
+    'es_PY',
+    'es_PE',
+    'es_PR',
+    'es_DO',
+    'es_UY',
+    'es_VE',
+    'eu_ES',
+    'fil_PH',
+    'fr_CA',
+    'fr_FR',
+    'gl_ES',
+    'ka_GE',
+    'gu_IN',
+    'hr_HR',
+    'zu_ZA',
+    'is_IS',
+    'it_IT',
+    'jv_ID',
+    'kn_IN',
+    'km_KH',
+    'lo_LA',
+    'lv_LV',
+    'lt_LT',
+    'hu_HU',
+    'ml_IN',
+    'mr_IN',
+    'nl_NL',
+    'ne_NP',
+    'nb_NO',
+    'pl_PL',
+    'pt_BR',
+    'pt_PT',
+    'ro_RO',
+    'si_LK',
+    'sk_SK',
+    'sl_SI',
+    'su_ID',
+    'sw_TZ',
+    'sw_KE',
+    'fi_FI',
+    'sv_SE',
+    'ta_IN',
+    'ta_SG',
+    'ta_LK',
+    'ta_MY',
+    'te_IN',
+    'vi_VN',
+    'tr_TR',
+    'ur_PK',
+    'ur_IN',
+    'el_GR',
+    'bg_BG',
+    'ru_RU',
+    'sr_RS',
+    'uk_UA',
+    'he_IL',
+    'ar_IL',
+    'ar_JO',
+    'ar_AE',
+    'ar_BH',
+    'ar_DZ',
+    'ar_SA',
+    'ar_IQ',
+    'ar_KW',
+    'ar_MA',
+    'ar_TN',
+    'ar_OM',
+    'ar_PS',
+    'ar_QA',
+    'ar_LB',
+    'ar_EG',
+    'fa_IR',
+    'hi_IN',
+    'th_TH',
+    'ko_KR',
+    'zh_TW',
+    'yue_Hant_HK',
+    'ja_JP',
+    'zh_HK',
+    'zh',
+}
+
 SUPPORTED_DICTIONARIES = set()
 SUPPORTED_DICTIONARIES.update(HUNSPELL_DICTIONARIES)
 SUPPORTED_DICTIONARIES.update(CLDR_ANNOTATION_FILES)
+SUPPORTED_DICTIONARIES.update(GOOGLE_SPEECH_TO_TEXT_LANGUAGES)
 
 FLAGS = {
     'af': '🇿🇦',
@@ -3314,6 +3461,84 @@ class ItbAboutDialog(Gtk.AboutDialog):
         :type _response: Gtk.ResponseType enum
         '''
         self.destroy()
+
+# Audio recording parameters
+AUDIO_RATE = 16000
+AUDIO_CHUNK = int(AUDIO_RATE / 10)  # 100ms
+
+class MicrophoneStream(object):
+    '''Opens a recording stream as a generator yielding the audio chunks.
+
+    This code is from:
+
+    https://github.com/GoogleCloudPlatform/python-docs-samples/blob/master/speech/cloud-client/transcribe_streaming_mic.py
+
+    https://github.com/GoogleCloudPlatform/python-docs-samples/blob/master/LICENSE
+
+    GoogleCloudPlatform/python-docs-samples is licensed under the
+    Apache License 2.0
+    '''
+    def __init__(self, rate, chunk):
+        self._rate = rate
+        self._chunk = chunk
+
+        # Create a thread-safe buffer of audio data
+        self._buff = queue.Queue()
+        self.closed = True
+
+    def __enter__(self):
+        self._audio_interface = pyaudio.PyAudio()
+        self._audio_stream = self._audio_interface.open(
+            format=pyaudio.paInt16,
+            # The API currently only supports 1-channel (mono) audio
+            # https://goo.gl/z757pE
+            channels=1, rate=self._rate,
+            input=True, frames_per_buffer=self._chunk,
+            # Run the audio stream asynchronously to fill the buffer object.
+            # This is necessary so that the input device's buffer doesn't
+            # overflow while the calling thread makes network requests, etc.
+            stream_callback=self._fill_buffer,
+        )
+
+        self.closed = False
+
+        return self
+
+    def __exit__(self, type, value, traceback):
+        self._audio_stream.stop_stream()
+        self._audio_stream.close()
+        self.closed = True
+        # Signal the generator to terminate so that the client's
+        # streaming_recognize method will not block the process termination.
+        self._buff.put(None)
+        self._audio_interface.terminate()
+
+    def _fill_buffer(self, in_data, frame_count, time_info, status_flags):
+        """Continuously collect data from the audio stream, into the buffer."""
+        self._buff.put(in_data)
+        return None, pyaudio.paContinue
+
+    def generator(self):
+        while not self.closed:
+            # Use a blocking get() to ensure there's at least one chunk of
+            # data, and stop iteration if the chunk is None, indicating the
+            # end of the audio stream.
+            chunk = self._buff.get(block=True)
+            if chunk is None:
+                return
+            data = [chunk]
+
+            # Now consume whatever other data's still buffered.
+            while True:
+                try:
+                    chunk = self._buff.get(block=False)
+                    if chunk is None:
+                        return
+                    data.append(chunk)
+                except queue.Empty:
+                    break
+
+            yield b''.join(data)
 
 if __name__ == "__main__":
     import doctest
