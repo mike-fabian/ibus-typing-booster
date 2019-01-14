@@ -377,6 +377,8 @@
         'cancel': &lt;['Escape']&gt;,
         'next_input_method': &lt;['Control+Down', 'Control+KP_Down']&gt;,
         'previous_input_method': &lt;['Control+Up', 'Control+KP_Up']&gt;,
+        'next_dictionary': &lt;['Mod1+Down', 'Mod1+KP_Down']&gt;,
+        'previous_dictionary': &lt;['Mod1+Up', 'Mod1+KP_Up']&gt;,
         'toggle_emoji_prediction': &lt;['Mod5+F6']&gt;,
         'toggle_off_the_record': &lt;['Mod5+F9']&gt;,
         'lookup_related': &lt;['Mod5+F12']&gt;,

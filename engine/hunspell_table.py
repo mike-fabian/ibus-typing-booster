@@ -3781,6 +3781,24 @@ class TypingBoosterEngine(IBus.Engine):
                     update_gsettings=self._remember_last_used_preedit_ime)
                 return True
 
+        if (key, 'next_dictionary') in self._hotkeys:
+            names = self.get_dictionary_names()
+            if len(names) > 1:
+                # remove the first dictionary from the list and append it to the end.
+                self.set_dictionary_names(
+                    names[1:] + names[:1],
+                    update_gsettings=True)
+                return True
+
+        if (key, 'previous_dictionary') in self._hotkeys:
+            names = self.get_dictionary_names()
+            if len(names) > 1:
+                # remove the last dictionary in the list and add it in front:
+                self.set_dictionary_names(
+                    names[-1:] + names[:-1],
+                    update_gsettings=True)
+                return True
+
         if ((key, 'select_next_candidate') in self._hotkeys
                 and self.get_lookup_table().get_number_of_candidates()):
             dummy = self._arrow_down()
