@@ -1590,8 +1590,10 @@ class SetupUI(Gtk.Window):
         '''
         missing_dictionary = False
         row = name + ' ' # NO-BREAK SPACE as a separator
+        flag = itb_util.FLAGS.get(name, '  ')
+        row += ' ' + flag
         # add some spaces for nicer formatting:
-        row += ' ' * (20 - len(name))
+        row += ' ' * (24 - len(name))
         (dic_path,
          dummy_aff_path) = itb_util.find_hunspell_dictionary(name)
         row += '\t' + _('Spell checking') + ' '
