@@ -19,6 +19,55 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.5.0" date="2019-01-16" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (de, ja, uk updated)
+          </li>
+          <li>
+            Add a property menu for the highest priority dictonary
+          </li>
+          <li>
+            Add a missing _update_preedit()
+          </li>
+          <li>
+            When lookup is enabled by tab but the lookup table is
+            empty, the first cancel should clear the input
+          </li>
+          <li>
+            Reset self.is_lookup_table_enabled_by_tab and
+            self.is_lookup_table_enabled_by_min_char_complete when
+            input is cleared
+          </li>
+          <li>
+            Get suggestions from hunspell dictionaries only for input
+            which does not contain spaces
+          </li>
+          <li>
+            Don’t reinitialize the dictionaries if only the order of
+            the dictionaries has changed
+          </li>
+          <li>
+            Add key bindings to change the priority of dictionaries
+          </li>
+          <li>
+            Speech recognition input using Google speech-to-text
+          </li>
+          <li>
+            Change the default input methods for as_IN, kn_IN, and
+            ta_IN
+          </li>
+          <li>
+            Make ur-phonetic the default input method for ur_IN and
+            add en_GB dictionary to default
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.4.1" date="2018-12-27" urgency="medium">
       <description>
         <ul>
