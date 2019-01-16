@@ -163,8 +163,25 @@ class Hunspell:
         one, re-initilize the dictionaries.
         '''
         if dictionary_names != self._dictionary_names:
-            self._dictionary_names = dictionary_names
-            self.init_dictionaries()
+            if set(dictionary_names) != set(self._dictionary_names):
+                # Some dictionaries are really different, reinitialize:
+                self._dictionary_names = dictionary_names
+                self.init_dictionaries()
+            else:
+                # Only the order of dictionaries has changed.
+                # Reinitializing wastes time, just reorder the
+                # dictionaries:
+                self._dictionary_names = dictionary_names
+                dictionaries_new = []
+                for name in dictionary_names:
+                    for dictionary in self._dictionaries:
+                        if dictionary.name == name:
+                            dictionaries_new.append(dictionary)
+                self._dictionaries = dictionaries_new
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write('set_dictionary_names(%s):\n' % dictionary_names)
+            for dictionary in self._dictionaries:
+                sys.stderr.write('%s\n' % dictionary.name)
 
     def suggest(self, input_phrase):
         # pylint: disable=line-too-long
