@@ -448,8 +448,15 @@ class TabSqliteDb:
                 + "p_phrase=%s " % p_phrase.encode('UTF-8')
                 + "pp_phrase=%s\n" % pp_phrase.encode('UTF-8'))
         phrase_frequencies = {}
-        phrase_frequencies.update([
-            x for x in self.hunspell_obj.suggest(input_phrase)])
+        if not ' ' in input_phrase:
+            # Get suggestions from hunspell dictionaries. But only
+            # if input_phrase does not contain spaces. The hunspell
+            # dictionaries contain only single words, not sentences.
+            # Trying to complete an input_phrase which contains spaces
+            # will never work and spell checking suggestions by hunspell
+            # for input which contains spaces is almost always nonsense.
+            phrase_frequencies.update([
+                x for x in self.hunspell_obj.suggest(input_phrase)])
         if DEBUG_LEVEL > 1:
             sys.stderr.write(
                 "TabSqliteDb.select_words() hunspell: best_candidates=%s\n"
