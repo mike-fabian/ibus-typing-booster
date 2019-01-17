@@ -1698,6 +1698,20 @@ class SetupUI(Gtk.Window):
             # dictionaries from the current effective value of LC_CTYPE:
             self._dictionary_names = itb_util.get_default_dictionaries(
                 locale.getlocale(category=locale.LC_CTYPE)[0])
+        if len(self._dictionary_names) > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
+            sys.stderr.write(
+                'Trying to set more than the allowed maximum of %s '
+                %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
+                + 'dictionaries.\n'
+                + 'Trying to set: %s\n' %self._dictionary_names
+                + 'Really setting: %s\n'
+                %self._dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
+            self._dictionary_names = (
+                self._dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
+            # Save reduced list of input methods back to settings:
+            self._gsettings.set_value(
+                'dictionary',
+                GLib.Variant.new_string(','.join(self._dictionary_names)))
         missing_dictionaries = False
         for name in self._dictionary_names:
             label = Gtk.Label()
@@ -1717,6 +1731,8 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox.show_all()
         self._dictionaries_install_missing_button.set_sensitive(
             missing_dictionaries)
+        self._dictionaries_add_button.set_sensitive(
+            len(self._dictionary_names) < itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES)
 
     def _fill_input_methods_listbox_row(self, ime):
         '''
@@ -2450,6 +2466,19 @@ class SetupUI(Gtk.Window):
         Signal handler called when the “add” button to add another
         dictionary has been clicked.
         '''
+        if len(self._dictionary_names) >= itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
+            # Actually this should never happen because the button to add
+            # a dictionary should not be sensitive if the maximum number
+            # of dictionaries is already reached.
+            #
+            # Probably it is better not to make this message translatable
+            # in order not to create extra work for the translators to
+            # translate a message which should never be displayed anyway.
+            self.__run_message_dialog(
+                'The maximum number of dictionaries is %s.'
+                %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES,
+                message_type=Gtk.MessageType.ERROR)
+            return
         self._dictionaries_add_popover = Gtk.Popover()
         self._dictionaries_add_popover.set_relative_to(
             self._dictionaries_add_button)
@@ -4292,8 +4321,16 @@ class SetupUI(Gtk.Window):
         dictionary_names = [x for x in dictionary_names if x]
         if dictionary_names == self._dictionary_names: # nothing to do
             return
+        if len(dictionary_names) > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
+            sys.stderr.write(
+                'Trying to set more than the allowed maximum of %s '
+                %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
+                + 'dictionaries.\n'
+                + 'Trying to set: %s\n' %dictionary_names
+                + 'Really setting: %s\n'
+                %dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
+            dictionary_names = dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES]
         self._dictionary_names = dictionary_names
-        print(self._dictionary_names)
         self._fill_dictionaries_listbox()
         if update_gsettings:
             self._gsettings.set_value(

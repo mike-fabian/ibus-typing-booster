@@ -120,6 +120,9 @@ class TypingBoosterEngine(IBus.Engine):
         self.off_the_record_mode_properties = {}
         self.input_mode_menu = {}
         self.input_mode_properties = {}
+        self.dictionary_menu = {}
+        self.dictionary_properties = {}
+        self.dictionary_sub_properties_prop_list = []
         self.preedit_ime_menu = {}
         self.preedit_ime_properties = {}
         self.preedit_ime_sub_properties_prop_list = []
@@ -347,6 +350,16 @@ class TypingBoosterEngine(IBus.Engine):
             self._gsettings.set_value(
                 'dictionary',
                 GLib.Variant.new_string(','.join(self._dictionary_names)))
+        if len(self._dictionary_names) > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
+            sys.stderr.write(
+                'Trying to set more than the allowed maximum of %s '
+                %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
+                + 'dictionaries.\n'
+                + 'Trying to set: %s\n' %self._dictionary_names
+                + 'Really setting: %s\n'
+                %self._dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
+            self._dictionary_names = (
+                self._dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
         self.db.hunspell_obj.set_dictionary_names(self._dictionary_names[:])
 
         if  self._emoji_predictions:
@@ -509,6 +522,7 @@ class TypingBoosterEngine(IBus.Engine):
             'sub_properties': self.off_the_record_mode_properties
         }
 
+        self._update_dictionary_menu_dicts()
         self._update_preedit_ime_menu_dicts()
         self._init_properties()
 
@@ -1152,8 +1166,20 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if dictionary_names == self._dictionary_names: # nothing to do
             return
+        if len(dictionary_names) > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
+            sys.stderr.write(
+                'Trying to set more than the allowed maximum of %s '
+                %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
+                + 'dictionaries.\n'
+                + 'Trying to set: %s\n' %dictionary_names
+                + 'Really setting: %s\n'
+                %dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
+            dictionary_names = dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES]
         self._dictionary_names = dictionary_names
         self.db.hunspell_obj.set_dictionary_names(dictionary_names)
+        self._update_dictionary_menu_dicts()
+        self._init_or_update_property_menu_dictionary(
+            self.dictionary_menu, current_mode=0)
         if self._emoji_predictions:
             if (not self.emoji_matcher
                     or
@@ -1252,6 +1278,38 @@ class TypingBoosterEngine(IBus.Engine):
         # the private member variable directly.
         return self._keybindings.copy()
 
+    def _update_dictionary_menu_dicts(self):
+        '''
+        Update the Python dicts for the highest priority dictionary menu.
+        '''
+        self.dictionary_properties = {}
+        current_dictionaries = self.get_dictionary_names()
+        current_dictionaries_max = itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
+        for i in range(0, current_dictionaries_max):
+            if i < len(current_dictionaries):
+                self.dictionary_properties[
+                    'Dictionary.' + str(i)
+                ] = {'number': i,
+                     'symbol': current_dictionaries[i]
+                     + ' ' + itb_util.FLAGS.get(current_dictionaries[i],''),
+                     'label': current_dictionaries[i]
+                     + ' ' + itb_util.FLAGS.get(current_dictionaries[i],''),
+                     'tooltip': '', # tooltips do not work in sub-properties
+                }
+            else:
+                self.dictionary_properties[
+                    'Dictionary.'+str(i)
+                ] = {'number': i, 'symbol': '', 'label': '', 'tooltip': ''}
+        self.dictionary_menu = {
+            'key': 'Dictionary',
+            'label': _('Highest priority dictionary'),
+            'tooltip': _('Choose highest priority dictionary'),
+            'shortcut_hint':
+            'Next: ' + repr(self._keybindings['next_dictionary'])
+            + '\n'
+            'Previous: '+ repr(self._keybindings['previous_dictionary']),
+            'sub_properties': self.dictionary_properties}
+
     def _update_preedit_ime_menu_dicts(self):
         '''
         Update the dictionary for the preëdit ime menu.
@@ -1281,6 +1339,48 @@ class TypingBoosterEngine(IBus.Engine):
             + '\n'
             'Previous: '+ repr(self._keybindings['previous_input_method']),
             'sub_properties': self.preedit_ime_properties}
+
+    def _init_or_update_property_menu_dictionary(self, menu, current_mode=0):
+        '''
+        Initialize or update the ibus property menu for
+        the highest priority dictionary.
+        '''
+        key = menu['key']
+        sub_properties = menu['sub_properties']
+        for prop in sub_properties:
+            if sub_properties[prop]['number'] == int(current_mode):
+                symbol = sub_properties[prop]['symbol']
+                label = '%(label)s (%(symbol)s)' % {
+                    'label': menu['label'],
+                    'symbol': symbol}
+                tooltip = '%(tooltip)s\n%(shortcut_hint)s' % {
+                    'tooltip': menu['tooltip'],
+                    'shortcut_hint': menu['shortcut_hint']}
+        visible = len(self.get_dictionary_names()) > 1
+        self._init_or_update_sub_properties_dictionary(
+            sub_properties, current_mode=current_mode)
+        if not key in self._prop_dict: # initialize property
+            self._prop_dict[key] = IBus.Property(
+                key=key,
+                prop_type=IBus.PropType.MENU,
+                label=IBus.Text.new_from_string(label),
+                symbol=IBus.Text.new_from_string(symbol),
+                tooltip=IBus.Text.new_from_string(tooltip),
+                sensitive=visible,
+                visible=visible,
+                state=IBus.PropState.UNCHECKED,
+                sub_props=self.dictionary_sub_properties_prop_list)
+            self.main_prop_list.append(self._prop_dict[key])
+        else:  # update the property
+            self._prop_dict[key].set_label(
+                IBus.Text.new_from_string(label))
+            self._prop_dict[key].set_symbol(
+                IBus.Text.new_from_string(symbol))
+            self._prop_dict[key].set_tooltip(
+                IBus.Text.new_from_string(tooltip))
+            self._prop_dict[key].set_sensitive(visible)
+            self._prop_dict[key].set_visible(visible)
+            self.update_property(self._prop_dict[key]) # important!
 
     def _init_or_update_property_menu_preedit_ime(self, menu, current_mode=0):
         '''
@@ -1323,6 +1423,50 @@ class TypingBoosterEngine(IBus.Engine):
             self._prop_dict[key].set_sensitive(visible)
             self._prop_dict[key].set_visible(visible)
             self.update_property(self._prop_dict[key]) # important!
+
+    def _init_or_update_sub_properties_dictionary(
+            self, modes, current_mode=0):
+        '''
+        Initialize or update the sub-properties of the property menu
+        for the highest priority dictionary.
+        '''
+        if not self.dictionary_sub_properties_prop_list:
+            update = False
+            self.dictionary_sub_properties_prop_list = IBus.PropList()
+        else:
+            update = True
+        number_of_current_dictionaries = len(self.get_dictionary_names())
+        for mode in sorted(modes, key=lambda x: (modes[x]['number'])):
+            visible = modes[mode]['number'] < number_of_current_dictionaries
+            if modes[mode]['number'] == int(current_mode):
+                state = IBus.PropState.CHECKED
+            else:
+                state = IBus.PropState.UNCHECKED
+            label = modes[mode]['label']
+            if 'tooltip' in modes[mode]:
+                tooltip = modes[mode]['tooltip']
+            else:
+                tooltip = ''
+            if not update: # initialize property
+                self._prop_dict[mode] = IBus.Property(
+                    key=mode,
+                    prop_type=IBus.PropType.RADIO,
+                    label=IBus.Text.new_from_string(label),
+                    tooltip=IBus.Text.new_from_string(tooltip),
+                    sensitive=visible,
+                    visible=visible,
+                    state=state,
+                    sub_props=None)
+                self.dictionary_sub_properties_prop_list.append(
+                    self._prop_dict[mode])
+            else: # update property
+                self._prop_dict[mode].set_label(
+                    IBus.Text.new_from_string(label))
+                self._prop_dict[mode].set_tooltip(
+                    IBus.Text.new_from_string(tooltip))
+                self._prop_dict[mode].set_sensitive(visible)
+                self._prop_dict[mode].set_visible(visible)
+                self.update_property(self._prop_dict[mode]) # important!
 
     def _init_or_update_sub_properties_preedit_ime(
             self, modes, current_mode=0):
@@ -1473,6 +1617,9 @@ class TypingBoosterEngine(IBus.Engine):
             self.off_the_record_mode_menu,
             self._off_the_record)
 
+        self._init_or_update_property_menu_dictionary(
+            self.dictionary_menu, current_mode=0)
+
         self._init_or_update_property_menu_preedit_ime(
             self.preedit_ime_menu, current_mode=0)
 
@@ -1502,6 +1649,17 @@ class TypingBoosterEngine(IBus.Engine):
         if prop_state != IBus.PropState.CHECKED:
             # If the mouse just hovered over a menu button and
             # no sub-menu entry was clicked, there is nothing to do:
+            return
+        if ibus_property.startswith(self.dictionary_menu['key']+'.'):
+            number = self.dictionary_properties[ibus_property]['number']
+            if number != 0:
+                # If number 0 has been clicked, there is nothing to
+                # do, the first one is already the highest priority
+                # dictionary
+                names = self.get_dictionary_names()
+                self.set_dictionary_names(
+                    [names[number]] + names[number+1:] + names[:number],
+                    update_gsettings=True)
             return
         if ibus_property.startswith(self.preedit_ime_menu['key']+'.'):
             number = self.preedit_ime_properties[ibus_property]['number']
