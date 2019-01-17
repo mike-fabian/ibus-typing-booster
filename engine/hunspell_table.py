@@ -557,6 +557,8 @@ class TypingBoosterEngine(IBus.Engine):
         self._typed_string_cursor = 0
         for ime in self._current_imes:
             self._transliterated_strings[ime] = ''
+        self.is_lookup_table_enabled_by_tab = False
+        self.is_lookup_table_enabled_by_min_char_complete = False
 
     def _insert_string_at_cursor(self, string_to_insert):
         '''Insert typed string at cursor position'''
