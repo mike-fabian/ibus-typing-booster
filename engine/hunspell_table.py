@@ -3738,9 +3738,10 @@ class TypingBoosterEngine(IBus.Engine):
                 self._update_ui()
                 return True
             if ((self._tab_enable or self._min_char_complete > 1)
-                    and self.is_lookup_table_enabled_by_tab):
-                # If lookup table was enabled by typing Tab, close it again
-                # but keep the preëdit:
+                    and self.is_lookup_table_enabled_by_tab
+                    and self.get_lookup_table().get_number_of_candidates()):
+                # If lookup table was enabled by typing Tab, and it is
+                # not empty, close it again but keep the preëdit:
                 self.is_lookup_table_enabled_by_tab = False
                 self.get_lookup_table().clear()
                 self.get_lookup_table().set_cursor_visible(False)
