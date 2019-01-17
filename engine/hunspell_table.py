@@ -1570,6 +1570,8 @@ class TypingBoosterEngine(IBus.Engine):
 
     def _update_preedit(self):
         '''Update Preedit String in UI'''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write('_update_preedit()\n')
         # get_caret() should also use NFC!
         _str = unicodedata.normalize(
             'NFC', self._transliterated_strings[
@@ -1679,6 +1681,7 @@ class TypingBoosterEngine(IBus.Engine):
             or self.get_lookup_table().get_number_of_candidates() == 0
             or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
             self.hide_lookup_table()
+            self._update_preedit()
             return
         if (not self._inline_completion
             or self.get_lookup_table().get_cursor_pos() != 0):
