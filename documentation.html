@@ -2771,13 +2771,97 @@ opens, select the wordnet corpus and click the “Download” button:</p>
 <br>
 <h2>Speech recognition</h2>
 
+<p>
+  ibus-typing-booster supports speech recognition using the
+  <a href="https://cloud.google.com/speech-to-text/">Google Cloud
+  Speech-to-Text</a> service which supports 120 languages.
+</p>
+<p>
+  This service is currently only free for up to 60 minutes per month, when
+  using it for more than 60 minutes per month one has to pay a
+  fee. The pricing is
+  explained <a href="https://cloud.google.com/speech-to-text/pricing">here</a>.
+</p>
+<p>
+  To be able to use the Google Cloud Speech-to-Text service, one has to
+  <a href="https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries">set
+  up a GCP Console project</a>.
+</p>
+<p>
+  The above link explains that one has to do the following things:
+  <ul>
+    <li>
+      Create or select a project.
+    </li>
+    <li>
+      Enable the Google Speech-to-Text API for that project.
+    </li>
+    <li>
+      Create a service account.
+    </li>
+    <li>
+      Download a private key as a .json file.
+    </li>
+  </ul>
+</p>
+<p>
+  One also has
+  to <a href="https://cloud.google.com/sdk/docs/#linux">install and
+  initialize the Google Cloud SDK</a>.
+</p>
+<p>
+  And one has to 
+  <a href="https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries#client-libraries-install-python">install
+  the client library for Python3
+  </a>. This link explains that you can install the client library
+  with the command
+  <pre><code>
+      pip install --upgrade google-cloud-speech
+  </code></pre>
+  <b>Attention:</b> on most Linux distributions today, <pre><code>pip install</code></pre>
+  will install the Python2 version of this client library. But ibus-typing-booster
+  requires Python3, so you probably have to use
+  <pre><code>
+      pip3 install --upgrade google-cloud-speech
+  </code></pre>
+  to get the Python3 version of the client library (unless on your distribution
+  <pre><code>pip</code></pre> already defaults to Python3 but that is
+  rather unlikely at the moment.  You can also add
+  the <pre><code>--user</code></pre> option if you want to install
+  this in the home directory of the user:
+  <pre><code>
+      pip3 install --user --upgrade google-cloud-speech
+  </code></pre>
+</p>
+
 <br class="clearboth">
 <table class="picture">
-  <caption></caption>
+  <caption>Set a key binding for speech recognition</caption>
   <tr>
     <td align="center">
       <a href="images/gnome-set-keybinding-for-speech-recognition.png">
         <img src="images/thumbs/gnome-set-keybinding-for-speech-recognition.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Finally, after the Google setup and installation is done, you can enable
+  speech recognition in ibus-typing-booster.
+</p>
+<p>
+  The first step is to set a key binding for speech recognition. By default
+  that key binding is empty, the screen shot shows how to set it to something.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Set the “Google application credentials” .json file</caption>
+  <tr>
+    <td align="center">
+      <a href="images/gnome-set-google-application-credentials-file.png">
+        <img src="images/thumbs/gnome-set-google-application-credentials-file.png">
       </a>
     </td>
   </tr>
