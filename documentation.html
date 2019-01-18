@@ -2774,7 +2774,9 @@ opens, select the wordnet corpus and click the “Download” button:</p>
 <p>
   ibus-typing-booster supports speech recognition using the
   <a href="https://cloud.google.com/speech-to-text/">Google Cloud
-  Speech-to-Text</a> service which supports 120 languages.
+  Speech-to-Text</a> service which
+  <a href="https://cloud.google.com/speech-to-text/docs/languages">supports
+  120 languages</a>.
 </p>
 <p>
   This service is currently only free for up to 60 minutes per month, when
@@ -2902,5 +2904,70 @@ opens, select the wordnet corpus and click the “Download” button:</p>
     </td>
   </tr>
 </table>
+
+<p>
+  The language used for speech recognition is the language of the dictionary
+  with the highest priority in ibus-typing-booster.
+</p>
+<p>
+  You can see these dictionary priorities by opening the setup tool
+  of ibus-typing-booster and looking at the “Dictionaries and input methods”
+  tab.
+</p>
+<p>
+  Here you can also see for which languages speech recognition is
+  officially supported. The official list of languages supported by
+  Google Cloud Speech-to-Text
+  is <a href="https://cloud.google.com/speech-to-text/docs/languages">here</a>.
+  In the ibus-typing-booster setup tool “Dictionaries and input
+  methods” tab, a row for a language officially supported by Google
+  Speech-to-Text is marked with “Speech recognition ✔️”, a row for a
+  language not officially supported by Google Speech-to-Text is marked
+  with “Speech recognition ❌”.
+</p>
+<p>
+  In Googles official list, only “de_DE” is supported among the German
+  variants. Therefore, one can see in the screen shot that “de_CH” is
+  marked with “Speech recognition ❌”.
+</p>
+<p>
+  But, when I tried it, I found that “de”, “de-DE”, “de-AT”, “de-CH”,
+  “de-BE”, “de-LU” all seem to work the same and seem to recognize
+  standard German.  When using “de-CH”, it uses “ß” when spelling
+  German words even though “ss” is used in Switzerland instead of “ß”.
+  There seems to be no difference between using Google Speech-to-Text
+  for all these variants of German.
+</p>
+<p>
+ However, for “en-GB” and “en-US”, there <b>is</b> a difference, the
+ produced text uses British or American spelling depending on which
+ one of these English variants is used.
+</p>
+<p>
+ I don’t want to disallow using something like “de-CH”
+ for speech recognition just because it is not on the
+ list of officially supported languages. Therefore, I allow
+ <b>all</b> languages to be used for speech recognition. But when a
+ language is not officially supported, I mark it with “Speech
+ recognition ❌” and you can try whether it works well or not.
+</p>
+<p>
+  When trying to use a language which is really not supported by
+  Google Speech-to-Text, for example “gsw_CH” (Alemannic German in
+  Switzerland), it seems to fall back to American English, i.e. it
+  behaves as if speech recognition for “en_US” were used.
+</p>
+<p>
+  To switch to a different language for speech recognition you
+  don’t always have to open the setup tool, you can also use key bindings
+  to change the highest priority dictionary, see the commands
+  “next_dictionary” and “previous_dictionary” in the key bindings tab
+  of the setup tool.
+</p>
+<p>
+  And you can also change the highest priority dictionary by using
+  the Gnome panel (or the panel of your favourite desktop) or the
+  ibus floating panel on non-Gnome desktops.
+</p>
 
 <br class="clearboth">
