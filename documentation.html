@@ -2833,6 +2833,13 @@ opens, select the wordnet corpus and click the “Download” button:</p>
       pip3 install --user --upgrade google-cloud-speech
   </code></pre>
 </p>
+<p>
+  And you need to install the Python3 module of pyaudio. How to do that
+  depends on you Linux distribution. On Fedora 29 you can do it with:
+  <pre><code>
+      sudo dnf install python3-pyaudio
+  </code></pre>
+</p>
 
 <br class="clearboth">
 <table class="picture">
@@ -2847,12 +2854,13 @@ opens, select the wordnet corpus and click the “Download” button:</p>
 </table>
 
 <p>
-  Finally, after the Google setup and installation is done, you can enable
-  speech recognition in ibus-typing-booster.
+  Finally, after the Google setup and the software installation is
+  done, you can enable speech recognition in ibus-typing-booster.
 </p>
 <p>
-  The first step is to set a key binding for speech recognition. By default
-  that key binding is empty, the screen shot shows how to set it to something.
+  One necessary thing to set up is setting a key binding for speech
+  recognition. By default that key binding is empty, the screen shot
+  shows how to set it to something.
 </p>
 
 <br class="clearboth">
@@ -2866,5 +2874,17 @@ opens, select the wordnet corpus and click the “Download” button:</p>
     </td>
   </tr>
 </table>
+
+<p>
+  Another necessary thing to setup is to specify the location of the
+  “Google application credentials” .json file which you should have
+  downloaded above
+  when <a href="https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries">
+    setting up a GCP Console project</a>.
+</p>
+<p>
+  The screen shot shows that you can do that in the “Speech recognition” tab
+  of the setup tool of ibus-typing-booster.
+</p>
 
 <br class="clearboth">
