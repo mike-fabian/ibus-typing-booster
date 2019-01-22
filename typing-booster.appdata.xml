@@ -19,6 +19,36 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.5.1" date="2019-01-29" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (de, ja, fr, pl updated)
+          </li>
+          <li>
+            Show also dictionary when “Show status in auxiliary text” is on
+          </li>
+          <li>
+            Set notebook in setup tool to scrollable
+          </li>
+          <li>
+            Make filter for dictionary selection work for language
+            descriptions if langtable available
+          </li>
+          <li>
+            Show names of languages and territories in setup tool if
+            langtable is available
+          </li>
+          <li>
+            Add option to automatically select the best candidate
+          </li>
+          <li>
+            Pressing Shift should not immediately change the case mode
+            of the candidates
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.5.0" date="2019-01-16" urgency="medium">
       <description>
         <ul>

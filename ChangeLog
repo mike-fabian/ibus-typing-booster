@@ -1,4 +1,15 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 29 Jan 2019 Released 2.5.1 version
+* Update translations from zanata (de, ja, fr, pl updated)
+* Show also dictionary when “Show status in auxiliary text” is on
+* Set notebook in setup tool to scrollable
+* Make filter for dictionary selection work for language descriptions if langtable available
+* Show names of languages and territories in setup tool if langtable is available
+* Add missing flag for csb_PL
+* Add option to automatically select the best candidate
+* Pressing Shift should not immediately change the case mode of the candidates
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 16 Jan 2019 Released 2.5.0 version
 * Update translations from zanata (de, ja, uk updated)
 * Add a property menu for the highest priority dictonary
