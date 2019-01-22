@@ -438,6 +438,7 @@ class TypingBoosterEngine(IBus.Engine):
         #          spell_checking: Boolean, True if this candidate was produced
         #                          by spellchecking, False if not.
         self._candidates = []
+        self._candidates_case_mode_wait_for_key_release = False
         self._candidates_case_mode = 'orig'
         # 'orig': candidates have original case.
         # 'title': candidates have been converted to Python’s title case.
@@ -4092,9 +4093,17 @@ class TypingBoosterEngine(IBus.Engine):
         and is passed through.
 
         '''
-        # Ignore key release events
+        # Ignore (almost all) key release events
         if key.state & IBus.ModifierType.RELEASE_MASK:
+            if (key.name in ('Shift_L', 'Shift_R')
+                and not key.unicode
+                and self._candidates_case_mode_wait_for_key_release):
+                self._candidates_case_mode_change()
+                self._candidates_case_mode_wait_for_key_release = False
+                return True
+            self._candidates_case_mode_wait_for_key_release = False
             return self._return_false(key.val, key.code, key.state)
+        self._candidates_case_mode_wait_for_key_release = False
 
         if self.is_empty():
             if DEBUG_LEVEL > 1:
@@ -4445,7 +4454,14 @@ class TypingBoosterEngine(IBus.Engine):
             return True
 
         if key.name in ('Shift_L', 'Shift_R') and not key.unicode:
-            self._candidates_case_mode_change()
+            # Don’t do the case mode change right now, the case mode
+            # should be changed only if the next key event is the
+            # release of the Shift key and no other keys are pressed
+            # inbetween.  For example Shift+Tab is the default key
+            # binding for 'select_previous_candidate' and in that case
+            # the initial press of Shift should *not* change the case
+            # mode.
+            self._candidates_case_mode_wait_for_key_release = True
             return True
 
         # What kind of key was this??
