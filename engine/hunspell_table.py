@@ -199,6 +199,11 @@ class TypingBoosterEngine(IBus.Engine):
         if self._use_digits_as_select_keys is None:
             self._use_digits_as_select_keys = True
 
+        self._auto_select_candidate = itb_util.variant_to_value(
+            self._gsettings.get_value('autoselectcandidate'))
+        if self._auto_select_candidate is None:
+            self._auto_select_candidate = False
+
         self.is_lookup_table_enabled_by_tab = False
         self._tab_enable = itb_util.variant_to_value(
             self._gsettings.get_value('tabenable'))
@@ -1900,6 +1905,12 @@ class TypingBoosterEngine(IBus.Engine):
     def _update_lookup_table_and_aux(self):
         '''Update the lookup table and the auxiliary text'''
         self._update_aux()
+        # auto select best candidate if the option
+        # self._auto_select_candidate is on:
+        if (self._lookup_table_is_invalid
+            and self._auto_select_candidate
+            and not self._lookup_table.cursor_visible):
+            self._lookup_table.set_cursor_visible(True)
         self._update_lookup_table()
         self._lookup_table_is_invalid = False
 
@@ -3647,6 +3658,39 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._use_digits_as_select_keys
 
+    def set_auto_select_candidate(self, mode, update_gsettings=True):
+        '''Sets the “Automatically select the best candidate” mode
+
+        :param mode: Whether to automatically select the best candidate
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            sys.stderr.write(
+                "set_auto_select_candidate(%s, update_gsettings = %s)\n"
+                %(mode, update_gsettings))
+        if mode == self._auto_select_candidate:
+            return
+        self._auto_select_candidate = mode
+        self._clear_input_and_update_ui()
+        if update_gsettings:
+            self._gsettings.set_value(
+                'autoselectcandidate',
+                GLib.Variant.new_boolean(mode))
+
+    def get_auto_select_candidate(self):
+        '''Returns the current value of the
+        “Automatically select the best candidate” mode
+
+        :rtype: boolean
+        '''
+        return self._auto_select_candidate
+
     def do_candidate_clicked(self, index, button, state):
         '''Called when a candidate in the lookup table
         is clicked with the mouse
@@ -4728,6 +4772,9 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if key == 'usedigitsasselectkeys':
             self.set_use_digits_as_select_keys(value, update_gsettings=False)
+            return
+        if key == 'autoselectcandidate':
+            self.set_auto_select_candidate(value, update_gsettings=False)
             return
         if key == 'colorinlinecompletion':
             self.set_color_inline_completion(

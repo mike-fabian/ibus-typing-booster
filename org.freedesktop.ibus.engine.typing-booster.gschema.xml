@@ -337,6 +337,19 @@
         the latter keys are farther away from the fingers.
       </description>
     </key>
+    <key name="autoselectcandidate" type="b">
+      <default>false</default>
+      <summary>Automatically select the best candidate</summary>
+      <description>
+        What you type will automatically be corrected to the best
+        candidate by selecting the best candidate automatically. If
+        this option is off you have to select a candidate manually by
+        using the key binding to select the next candidate. If this
+        option is on and you do not want to use the automatically
+        selected candidate, you can use the key binding for the
+        “cancel” command which will deselect all candidates.
+      </description>
+    </key>
     <key name="inputmethod" type="s">
       <default>''</default>
       <summary>A list of inputmethods to use</summary>
