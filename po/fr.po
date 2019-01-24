@@ -5,6 +5,7 @@
 # Mike FABIAN <mfabian@redhat.com>, 2017. #zanata
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2018. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata
+# Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -14,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-12-18 12:57+0000\n"
+"PO-Revision-Date: 2019-01-21 08:37+0000\n"
 "Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -141,11 +142,11 @@ msgstr "Activé"
 
 #: engine/hunspell_table.py:480
 msgid "Input mode"
-msgstr ""
+msgstr "Mode de saisie"
 
 #: engine/hunspell_table.py:481
 msgid "Here you can switch ibus-typing-booster on or off."
-msgstr ""
+msgstr "Ici vous pouvez activer ou désactiver ibus-typing-booster"
 
 #. Translators: Whether Unicode symbols and emoji should be
 #. included in the predictions. Emoji are pictographs like
@@ -171,11 +172,11 @@ msgstr "Mode sans enregistrement"
 
 #: engine/hunspell_table.py:1305
 msgid "Highest priority dictionary"
-msgstr ""
+msgstr "Dictionnaire prioritaire"
 
 #: engine/hunspell_table.py:1306
 msgid "Choose highest priority dictionary"
-msgstr ""
+msgstr "Choisissez le dictionnaire prioritaire"
 
 #: engine/hunspell_table.py:1335
 msgid "Preedit input method"
@@ -199,11 +200,11 @@ msgstr ""
 
 #: engine/hunspell_table.py:3712
 msgid "Failed to import pyaudio."
-msgstr ""
+msgstr "Échec de l'import de pyaudio."
 
 #: engine/hunspell_table.py:3715
 msgid "Failed to import queue."
-msgstr ""
+msgstr "Échec de l'import de la file d'attente."
 
 #: engine/hunspell_table.py:3723
 msgid "No supported language for speech recognition."
