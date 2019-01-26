@@ -56,6 +56,13 @@ from gi.repository import IBus
 from pkginstall import InstallPkg
 from i18n import DOMAINNAME, _, init as i18n_init
 
+IMPORT_LANGTABLE_SUCCESSFUL = False
+try:
+    import langtable
+    IMPORT_LANGTABLE_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_LANGTABLE_SUCCESSFUL = False
+
 sys.path = [sys.path[0]+'/../engine'] + sys.path
 from m17n_translit import Transliterator
 import tabsqlitedb
@@ -1675,23 +1682,33 @@ class SetupUI(Gtk.Window):
         row = name + ' ' # NO-BREAK SPACE as a separator
         flag = itb_util.FLAGS.get(name, '  ')
         row += ' ' + flag
-        # add some spaces for nicer formatting:
-        row += ' ' * (24 - len(name))
+        if IMPORT_LANGTABLE_SUCCESSFUL:
+            language_description = langtable.language_name(
+                languageId=name,
+                languageIdQuery=locale.getlocale(category=locale.LC_MESSAGES)[0])
+            if not language_description:
+                language_description = langtable.language_name(
+                    languageId=name, languageIdQuery='en')
+            if language_description:
+                language_description = (
+                    language_description[0].upper() + language_description[1:])
+                row += ' ' + language_description
+        row += ':  '
         (dic_path,
          dummy_aff_path) = itb_util.find_hunspell_dictionary(name)
-        row += '\t' + _('Spell checking') + ' '
+        row += ' ' + _('Spell checking') + ' '
         if dic_path:
             row += '✔️'
         else:
             row += '❌'
             missing_dictionary = True
-        row += ' \t' + _('Emoji') + ' '
+        row += ' ' + _('Emoji') + ' '
         if itb_emoji.find_cldr_annotation_path(name):
             row += '✔️'
         else:
             row += '❌'
         if self._keybindings['speech_recognition']:
-            row += ' \t' + _('Speech recognition') + ' '
+            row += ' ' + _('Speech recognition') + ' '
             if name in itb_util.GOOGLE_SPEECH_TO_TEXT_LANGUAGES:
                 row += '✔️'
             else:
