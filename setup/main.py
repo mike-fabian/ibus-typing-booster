@@ -2492,10 +2492,24 @@ class SetupUI(Gtk.Window):
         for name in sorted(itb_util.SUPPORTED_DICTIONARIES):
             if name in self._dictionary_names:
                 continue
-            if not (filter_text.replace(' ', '').lower()
-                    in name.replace(' ', '').lower()):
-                continue
-            rows.append(self._fill_dictionaries_listbox_row(name)[0])
+            filter_match = False
+            if (filter_text.replace(' ', '').lower()
+                in name.replace(' ', '').lower()):
+                filter_match = True
+            if IMPORT_LANGTABLE_SUCCESSFUL:
+                query_languages = [
+                    locale.getlocale(category=locale.LC_MESSAGES)[0], 'en']
+                for query_language in query_languages:
+                    if query_language:
+                        language_description = langtable.language_name(
+                            languageId=name, languageIdQuery=query_language)
+                        if (itb_util.remove_accents(
+                                filter_text.lower())
+                            in itb_util.remove_accents(
+                                language_description.lower())):
+                            filter_match = True
+            if filter_match:
+                rows.append(self._fill_dictionaries_listbox_row(name)[0])
         for row in rows:
             label = Gtk.Label()
             label.set_text(html.escape(row))
