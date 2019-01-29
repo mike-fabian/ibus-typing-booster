@@ -141,7 +141,7 @@ class SetupUI(Gtk.Window):
         self._notebook = Gtk.Notebook()
         self._notebook.set_visible(True)
         self._notebook.set_can_focus(False)
-        self._notebook.set_scrollable(False)
+        self._notebook.set_scrollable(True)
         self._notebook.set_hexpand(True)
         self._notebook.set_vexpand(True)
         self._main_container.pack_start(self._notebook, True, True, 0)
