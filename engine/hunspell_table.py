@@ -1297,9 +1297,9 @@ class TypingBoosterEngine(IBus.Engine):
                     'Dictionary.' + str(i)
                 ] = {'number': i,
                      'symbol': current_dictionaries[i]
-                     + ' ' + itb_util.FLAGS.get(current_dictionaries[i],''),
+                     + ' ' + itb_util.FLAGS.get(current_dictionaries[i], ''),
                      'label': current_dictionaries[i]
-                     + ' ' + itb_util.FLAGS.get(current_dictionaries[i],''),
+                     + ' ' + itb_util.FLAGS.get(current_dictionaries[i], ''),
                      'tooltip': '', # tooltips do not work in sub-properties
                 }
             else:
