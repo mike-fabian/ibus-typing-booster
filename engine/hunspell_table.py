@@ -1780,9 +1780,6 @@ class TypingBoosterEngine(IBus.Engine):
                 self.get_lookup_table().get_cursor_pos() + 1,
                 self.get_lookup_table().get_number_of_candidates())
         if self._show_status_info_in_auxiliary_text:
-            preedit_ime = self.get_current_imes()[0]
-            if preedit_ime != 'NoIme':
-                aux_string += preedit_ime + ' '
             if self._emoji_predictions:
                 aux_string += (
                     MODE_ON_SYMBOL + EMOJI_PREDICTION_MODE_SYMBOL + ' ')
@@ -1795,6 +1792,14 @@ class TypingBoosterEngine(IBus.Engine):
             else:
                 aux_string += (
                     MODE_OFF_SYMBOL + OFF_THE_RECORD_MODE_SYMBOL + ' ')
+            names = self.get_dictionary_names()
+            dictionary_label = (
+                names[0] + ' ' + itb_util.FLAGS.get(names[0], ''))
+            if dictionary_label:
+                aux_string += dictionary_label
+            preedit_ime = self.get_current_imes()[0]
+            if preedit_ime != 'NoIme':
+                aux_string += ' ' + preedit_ime + ' '
         # Colours do not work at the moment in the auxiliary text!
         # Needs fix in ibus.
         attrs = IBus.AttrList()
