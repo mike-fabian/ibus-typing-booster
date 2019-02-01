@@ -2493,20 +2493,26 @@ class SetupUI(Gtk.Window):
             if name in self._dictionary_names:
                 continue
             filter_match = False
-            if (filter_text.replace(' ', '').lower()
-                in name.replace(' ', '').lower()):
+            filter_text = itb_util.remove_accents(filter_text.lower())
+            filter_words = filter_text.split()
+            if (filter_text.replace(' ', '') in name.replace(' ', '').lower()):
                 filter_match = True
             if IMPORT_LANGTABLE_SUCCESSFUL:
                 query_languages = [
                     locale.getlocale(category=locale.LC_MESSAGES)[0], 'en']
                 for query_language in query_languages:
                     if query_language:
-                        language_description = langtable.language_name(
-                            languageId=name, languageIdQuery=query_language)
-                        if (itb_util.remove_accents(
-                                filter_text.lower())
-                            in itb_util.remove_accents(
-                                language_description.lower())):
+                        language_description = itb_util.remove_accents(
+                            langtable.language_name(
+                                languageId=name,
+                                languageIdQuery=query_language)).lower()
+                        all_words_match = True
+                        for filter_word in filter_words:
+                            print ('** mike filter_word %s language_description %s' %(filter_word, language_description))
+                            if filter_word not in language_description:
+                                print('** mike false')
+                                all_words_match = False
+                        if all_words_match:
                             filter_match = True
             if filter_match:
                 rows.append(self._fill_dictionaries_listbox_row(name)[0])
