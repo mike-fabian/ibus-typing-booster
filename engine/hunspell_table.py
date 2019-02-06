@@ -1260,6 +1260,8 @@ class TypingBoosterEngine(IBus.Engine):
             if self.off_the_record_mode_menu:
                 self.off_the_record_mode_menu['shortcut_hint'] = (
                     repr(self._keybindings['toggle_off_the_record']))
+            if self.dictionary_menu:
+                self._update_dictionary_menu_dicts()
             if self.preedit_ime_menu:
                 self._update_preedit_ime_menu_dicts()
             self._init_properties()
@@ -1608,6 +1610,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._prop_dict = {}
         self._sub_props_dict = {}
         self.preedit_ime_sub_properties_prop_list = []
+        self.dictionary_sub_properties_prop_list = []
         self.main_prop_list = IBus.PropList()
 
         if self._keybindings['toggle_input_mode_on_off']:
