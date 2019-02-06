@@ -413,6 +413,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._typed_string_cursor = 0
         self._p_phrase = ''
         self._pp_phrase = ''
+        self._ppp_phrase = ''
         self._transliterated_strings = {}
         self._transliterators = {}
         self._init_transliterators()
@@ -1071,16 +1072,22 @@ class TypingBoosterEngine(IBus.Engine):
         '''Get word before previous word'''
         return self._pp_phrase
 
+    def get_ppp_phrase(self):
+        '''Get 2nd word before previous word'''
+        return self._ppp_phrase
+
     def push_context(self, phrase):
         '''Pushes a word on the context stack which remembers the last two
         words typed.
         '''
+        self._ppp_phrase = self._pp_phrase
         self._pp_phrase = self._p_phrase
         self._p_phrase = phrase
 
     def clear_context(self):
         '''Clears the context stack which remembers the last two words typed
         '''
+        self._ppp_phrase = ''
         self._pp_phrase = ''
         self._p_phrase = ''
 
@@ -1816,7 +1823,8 @@ class TypingBoosterEngine(IBus.Engine):
             len(aux_string)))
         if DEBUG_LEVEL > 0:
             context = (
-                'Context: ' + self.get_pp_phrase()
+                'Context: ' + self.get_ppp_phrase()
+                + ' ' + self.get_pp_phrase()
                 + ' ' + self.get_p_phrase())
             aux_string += context
             attrs.append(IBus.attr_foreground_new(
@@ -2217,7 +2225,22 @@ class TypingBoosterEngine(IBus.Engine):
                 phrase=stripped_commit_phrase,
                 p_phrase=self.get_p_phrase(),
                 pp_phrase=self.get_pp_phrase())
-            self.push_context(stripped_commit_phrase)
+            if (self.get_p_phrase()
+                and self.get_pp_phrase()
+                and self.get_ppp_phrase()):
+                # Commit the current commit phrase and the previous
+                # phrase as a single unit as well for better
+                # completions. For example, if the current commit
+                # phrase is “to” and the total context was “I am
+                # going”, then also commit “going to” with the context
+                # “I am”:
+                self.db.check_phrase_and_update_frequency(
+                    input_phrase=
+                    self.get_p_phrase() + ' ' + stripped_commit_phrase,
+                    phrase=self.get_p_phrase() + ' ' + stripped_commit_phrase,
+                    p_phrase=self.get_pp_phrase(),
+                    pp_phrase=self.get_ppp_phrase())
+                self.push_context(stripped_commit_phrase)
 
     def _reopen_preedit_or_return_false(self, key):
         '''BackSpace, Delete or arrow left or right has been typed.
@@ -2375,6 +2398,8 @@ class TypingBoosterEngine(IBus.Engine):
             self._p_phrase = tokens[-1]
         if len(tokens) > 1:
             self._pp_phrase = tokens[-2]
+        if len(tokens) > 2:
+            self._ppp_phrase = tokens[-3]
 
     def set_add_space_on_commit(self, mode, update_gsettings=True):
         '''Sets whether a space is added when a candidate is committed by 1-9
