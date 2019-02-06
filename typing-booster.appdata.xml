@@ -19,6 +19,36 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.5.2" date="2019-02-06" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Fix test case for selecting non existing candidates for
+            Fedora rawhide
+          </li>
+          <li>
+            Update UnicodeData.txt to current Unicode 12.0 draft
+          </li>
+          <li>
+            Update emoji data to Unicode 12.0 final for 2019
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Initialize self.dictionary_sub_properties_prop_list = []
+            in self._init_properties() (Resolves:
+            https://github.com/mike-fabian/ibus-typing-booster/issues/46)
+          </li>
+          <li>
+            Fix test case for case mode change
+          </li>
+          <li>
+            Improve filter for dictionary selection if langtable available
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.5.1" date="2019-01-29" urgency="medium">
       <description>
         <ul>
