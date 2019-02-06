@@ -1363,10 +1363,10 @@ class EmojiMatcher():
         ('💩', 'cacca')
 
         >>> mq.candidates('orso')[0][:2]
-        ('🐻', 'muso di orso')
+        ('🐻', 'orso')
 
         >>> mq.candidates('lupo')[0][:2]
-        ('🐺', 'muso di lupo')
+        ('🐺', 'lupo')
 
         >>> mq.candidates('gatto')[0][:2]
         ('🐈', 'gatto')
