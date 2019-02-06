@@ -1,6 +1,6 @@
 # emoji-zwj-sequences.txt
-# Date: 2018-10-16, 21:01:53 GMT
-# © 2018 Unicode®, Inc.
+# Date: 2019-01-15, 19:25:59 GMT
+# © 2019 Unicode®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use, see http://www.unicode.org/terms_of_use.html
 #
@@ -95,8 +95,24 @@
 1F469 1F3FF 200D 1F91D 200D 1F469 1F3FC     ; Emoji_ZWJ_Sequence  ; women holding hands: dark skin tone, medium-light skin tone    #  9.0  [1] (👩🏿‍🤝‍👩🏼)
 1F469 1F3FF 200D 1F91D 200D 1F469 1F3FD     ; Emoji_ZWJ_Sequence  ; women holding hands: dark skin tone, medium skin tone          #  9.0  [1] (👩🏿‍🤝‍👩🏽)
 1F469 1F3FF 200D 1F91D 200D 1F469 1F3FE     ; Emoji_ZWJ_Sequence  ; women holding hands: dark skin tone, medium-dark skin tone     #  9.0  [1] (👩🏿‍🤝‍👩🏾)
+1F9D1 200D 1F91D 200D 1F9D1                 ; Emoji_ZWJ_Sequence  ; people holding hands                                           # 10.0  [1] (🧑‍🤝‍🧑)
+1F9D1 1F3FB 200D 1F91D 200D 1F9D1 1F3FB     ; Emoji_ZWJ_Sequence  ; people holding hands: light skin tone                          # 10.0  [1] (🧑🏻‍🤝‍🧑🏻)
+1F9D1 1F3FC 200D 1F91D 200D 1F9D1 1F3FB     ; Emoji_ZWJ_Sequence  ; people holding hands: medium-light skin tone, light skin tone  # 10.0  [1] (🧑🏼‍🤝‍🧑🏻)
+1F9D1 1F3FC 200D 1F91D 200D 1F9D1 1F3FC     ; Emoji_ZWJ_Sequence  ; people holding hands: medium-light skin tone                   # 10.0  [1] (🧑🏼‍🤝‍🧑🏼)
+1F9D1 1F3FD 200D 1F91D 200D 1F9D1 1F3FB     ; Emoji_ZWJ_Sequence  ; people holding hands: medium skin tone, light skin tone        # 10.0  [1] (🧑🏽‍🤝‍🧑🏻)
+1F9D1 1F3FD 200D 1F91D 200D 1F9D1 1F3FC     ; Emoji_ZWJ_Sequence  ; people holding hands: medium skin tone, medium-light skin tone # 10.0  [1] (🧑🏽‍🤝‍🧑🏼)
+1F9D1 1F3FD 200D 1F91D 200D 1F9D1 1F3FD     ; Emoji_ZWJ_Sequence  ; people holding hands: medium skin tone                         # 10.0  [1] (🧑🏽‍🤝‍🧑🏽)
+1F9D1 1F3FE 200D 1F91D 200D 1F9D1 1F3FB     ; Emoji_ZWJ_Sequence  ; people holding hands: medium-dark skin tone, light skin tone   # 10.0  [1] (🧑🏾‍🤝‍🧑🏻)
+1F9D1 1F3FE 200D 1F91D 200D 1F9D1 1F3FC     ; Emoji_ZWJ_Sequence  ; people holding hands: medium-dark skin tone, medium-light skin tone #10.0[1] (🧑🏾‍🤝‍🧑🏼)
+1F9D1 1F3FE 200D 1F91D 200D 1F9D1 1F3FD     ; Emoji_ZWJ_Sequence  ; people holding hands: medium-dark skin tone, medium skin tone  # 10.0  [1] (🧑🏾‍🤝‍🧑🏽)
+1F9D1 1F3FE 200D 1F91D 200D 1F9D1 1F3FE     ; Emoji_ZWJ_Sequence  ; people holding hands: medium-dark skin tone                    # 10.0  [1] (🧑🏾‍🤝‍🧑🏾)
+1F9D1 1F3FF 200D 1F91D 200D 1F9D1 1F3FB     ; Emoji_ZWJ_Sequence  ; people holding hands: dark skin tone, light skin tone          # 10.0  [1] (🧑🏿‍🤝‍🧑🏻)
+1F9D1 1F3FF 200D 1F91D 200D 1F9D1 1F3FC     ; Emoji_ZWJ_Sequence  ; people holding hands: dark skin tone, medium-light skin tone   # 10.0  [1] (🧑🏿‍🤝‍🧑🏼)
+1F9D1 1F3FF 200D 1F91D 200D 1F9D1 1F3FD     ; Emoji_ZWJ_Sequence  ; people holding hands: dark skin tone, medium skin tone         # 10.0  [1] (🧑🏿‍🤝‍🧑🏽)
+1F9D1 1F3FF 200D 1F91D 200D 1F9D1 1F3FE     ; Emoji_ZWJ_Sequence  ; people holding hands: dark skin tone, medium-dark skin tone    # 10.0  [1] (🧑🏿‍🤝‍🧑🏾)
+1F9D1 1F3FF 200D 1F91D 200D 1F9D1 1F3FF     ; Emoji_ZWJ_Sequence  ; people holding hands: dark skin tone                           # 10.0  [1] (🧑🏿‍🤝‍🧑🏿)
 
-# Total elements: 71
+# Total elements: 87
 
 # ================================================
 
@@ -423,16 +439,6 @@
 1F46E 1F3FF 200D 2642 FE0F                  ; Emoji_ZWJ_Sequence  ; man police officer: dark skin tone                             #  8.0  [1] (👮🏿‍♂️)
 1F46F 200D 2640 FE0F                        ; Emoji_ZWJ_Sequence  ; women with bunny ears                                          #  6.0  [1] (👯‍♀️)
 1F46F 200D 2642 FE0F                        ; Emoji_ZWJ_Sequence  ; men with bunny ears                                            #  6.0  [1] (👯‍♂️)
-1F46F 1F3FB 200D 2640 FE0F                  ; Emoji_ZWJ_Sequence  ; women with bunny ears: light skin tone                         #  8.0  [1] (👯🏻‍♀️)
-1F46F 1F3FB 200D 2642 FE0F                  ; Emoji_ZWJ_Sequence  ; men with bunny ears: light skin tone                           #  8.0  [1] (👯🏻‍♂️)
-1F46F 1F3FC 200D 2640 FE0F                  ; Emoji_ZWJ_Sequence  ; women with bunny ears: medium-light skin tone                  #  8.0  [1] (👯🏼‍♀️)
-1F46F 1F3FC 200D 2642 FE0F                  ; Emoji_ZWJ_Sequence  ; men with bunny ears: medium-light skin tone                    #  8.0  [1] (👯🏼‍♂️)
-1F46F 1F3FD 200D 2640 FE0F                  ; Emoji_ZWJ_Sequence  ; women with bunny ears: medium skin tone                        #  8.0  [1] (👯🏽‍♀️)
-1F46F 1F3FD 200D 2642 FE0F                  ; Emoji_ZWJ_Sequence  ; men with bunny ears: medium skin tone                          #  8.0  [1] (👯🏽‍♂️)
-1F46F 1F3FE 200D 2640 FE0F                  ; Emoji_ZWJ_Sequence  ; women with bunny ears: medium-dark skin tone                   #  8.0  [1] (👯🏾‍♀️)
-1F46F 1F3FE 200D 2642 FE0F                  ; Emoji_ZWJ_Sequence  ; men with bunny ears: medium-dark skin tone                     #  8.0  [1] (👯🏾‍♂️)
-1F46F 1F3FF 200D 2640 FE0F                  ; Emoji_ZWJ_Sequence  ; women with bunny ears: dark skin tone                          #  8.0  [1] (👯🏿‍♀️)
-1F46F 1F3FF 200D 2642 FE0F                  ; Emoji_ZWJ_Sequence  ; men with bunny ears: dark skin tone                            #  8.0  [1] (👯🏿‍♂️)
 1F471 200D 2640 FE0F                        ; Emoji_ZWJ_Sequence  ; woman: blond hair                                              #  6.0  [1] (👱‍♀️)
 1F471 200D 2642 FE0F                        ; Emoji_ZWJ_Sequence  ; man: blond hair                                                #  6.0  [1] (👱‍♂️)
 1F471 1F3FB 200D 2640 FE0F                  ; Emoji_ZWJ_Sequence  ; woman: light skin tone, blond hair                             #  8.0  [1] (👱🏻‍♀️)
@@ -699,16 +705,6 @@
 1F939 1F3FF 200D 2642 FE0F                  ; Emoji_ZWJ_Sequence  ; man juggling: dark skin tone                                   #  9.0  [1] (🤹🏿‍♂️)
 1F93C 200D 2640 FE0F                        ; Emoji_ZWJ_Sequence  ; women wrestling                                                #  9.0  [1] (🤼‍♀️)
 1F93C 200D 2642 FE0F                        ; Emoji_ZWJ_Sequence  ; men wrestling                                                  #  9.0  [1] (🤼‍♂️)
-1F93C 1F3FB 200D 2640 FE0F                  ; Emoji_ZWJ_Sequence  ; women wrestling: light skin tone                               #  9.0  [1] (🤼🏻‍♀️)
-1F93C 1F3FB 200D 2642 FE0F                  ; Emoji_ZWJ_Sequence  ; men wrestling: light skin tone                                 #  9.0  [1] (🤼🏻‍♂️)
-1F93C 1F3FC 200D 2640 FE0F                  ; Emoji_ZWJ_Sequence  ; women wrestling: medium-light skin tone                        #  9.0  [1] (🤼🏼‍♀️)
-1F93C 1F3FC 200D 2642 FE0F                  ; Emoji_ZWJ_Sequence  ; men wrestling: medium-light skin tone                          #  9.0  [1] (🤼🏼‍♂️)
-1F93C 1F3FD 200D 2640 FE0F                  ; Emoji_ZWJ_Sequence  ; women wrestling: medium skin tone                              #  9.0  [1] (🤼🏽‍♀️)
-1F93C 1F3FD 200D 2642 FE0F                  ; Emoji_ZWJ_Sequence  ; men wrestling: medium skin tone                                #  9.0  [1] (🤼🏽‍♂️)
-1F93C 1F3FE 200D 2640 FE0F                  ; Emoji_ZWJ_Sequence  ; women wrestling: medium-dark skin tone                         #  9.0  [1] (🤼🏾‍♀️)
-1F93C 1F3FE 200D 2642 FE0F                  ; Emoji_ZWJ_Sequence  ; men wrestling: medium-dark skin tone                           #  9.0  [1] (🤼🏾‍♂️)
-1F93C 1F3FF 200D 2640 FE0F                  ; Emoji_ZWJ_Sequence  ; women wrestling: dark skin tone                                #  9.0  [1] (🤼🏿‍♀️)
-1F93C 1F3FF 200D 2642 FE0F                  ; Emoji_ZWJ_Sequence  ; men wrestling: dark skin tone                                  #  9.0  [1] (🤼🏿‍♂️)
 1F93D 200D 2640 FE0F                        ; Emoji_ZWJ_Sequence  ; woman playing water polo                                       #  9.0  [1] (🤽‍♀️)
 1F93D 200D 2642 FE0F                        ; Emoji_ZWJ_Sequence  ; man playing water polo                                         #  9.0  [1] (🤽‍♂️)
 1F93D 1F3FB 200D 2640 FE0F                  ; Emoji_ZWJ_Sequence  ; woman playing water polo: light skin tone                      #  9.0  [1] (🤽🏻‍♀️)
@@ -894,7 +890,7 @@
 1F9DF 200D 2640 FE0F                        ; Emoji_ZWJ_Sequence  ; woman zombie                                                   # 10.0  [1] (🧟‍♀️)
 1F9DF 200D 2642 FE0F                        ; Emoji_ZWJ_Sequence  ; man zombie                                                     # 10.0  [1] (🧟‍♂️)
 
-# Total elements: 556
+# Total elements: 536
 
 # ================================================
 

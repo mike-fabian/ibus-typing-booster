@@ -1,6 +1,6 @@
 # emoji-data.txt
-# Date: 2018-10-15, 10:18:34 GMT
-# © 2018 Unicode®, Inc.
+# Date: 2019-01-15, 12:10:05 GMT
+# © 2019 Unicode®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use, see http://www.unicode.org/terms_of_use.html
 #
@@ -45,7 +45,7 @@
 25FB..25FE    ; Emoji                #  3.2  [4] (◻️..◾)    white medium square..black medium-small square
 2600..2604    ; Emoji                #  1.1  [5] (☀️..☄️)    sun..comet
 260E          ; Emoji                #  1.1  [1] (☎️)       telephone
-2611          ; Emoji                #  1.1  [1] (☑️)       ballot box with check
+2611          ; Emoji                #  1.1  [1] (☑️)       check box with check
 2614..2615    ; Emoji                #  4.0  [2] (☔..☕)    umbrella with rain drops..hot beverage
 2618          ; Emoji                #  4.1  [1] (☘️)       shamrock
 261D          ; Emoji                #  1.1  [1] (☝️)       index pointing up
@@ -82,14 +82,14 @@
 26F7..26FA    ; Emoji                #  5.2  [4] (⛷️..⛺)    skier..tent
 26FD          ; Emoji                #  5.2  [1] (⛽)       fuel pump
 2702          ; Emoji                #  1.1  [1] (✂️)       scissors
-2705          ; Emoji                #  6.0  [1] (✅)       white heavy check mark
+2705          ; Emoji                #  6.0  [1] (✅)       check mark button
 2708..2709    ; Emoji                #  1.1  [2] (✈️..✉️)    airplane..envelope
 270A..270B    ; Emoji                #  6.0  [2] (✊..✋)    raised fist..raised hand
 270C..270D    ; Emoji                #  1.1  [2] (✌️..✍️)    victory hand..writing hand
 270F          ; Emoji                #  1.1  [1] (✏️)       pencil
 2712          ; Emoji                #  1.1  [1] (✒️)       black nib
-2714          ; Emoji                #  1.1  [1] (✔️)       heavy check mark
-2716          ; Emoji                #  1.1  [1] (✖️)       heavy multiplication x
+2714          ; Emoji                #  1.1  [1] (✔️)       check mark
+2716          ; Emoji                #  1.1  [1] (✖️)       multiplication sign
 271D          ; Emoji                #  1.1  [1] (✝️)       latin cross
 2721          ; Emoji                #  1.1  [1] (✡️)       star of David
 2728          ; Emoji                #  6.0  [1] (✨)       sparkles
@@ -100,8 +100,8 @@
 274E          ; Emoji                #  6.0  [1] (❎)       cross mark button
 2753..2755    ; Emoji                #  6.0  [3] (❓..❕)    question mark..white exclamation mark
 2757          ; Emoji                #  5.2  [1] (❗)       exclamation mark
-2763..2764    ; Emoji                #  1.1  [2] (❣️..❤️)    heavy heart exclamation..red heart
-2795..2797    ; Emoji                #  6.0  [3] (➕..➗)    heavy plus sign..heavy division sign
+2763..2764    ; Emoji                #  1.1  [2] (❣️..❤️)    heart exclamation..red heart
+2795..2797    ; Emoji                #  6.0  [3] (➕..➗)    plus sign..division sign
 27A1          ; Emoji                #  1.1  [1] (➡️)       right arrow
 27B0          ; Emoji                #  6.0  [1] (➰)       curly loop
 27BF          ; Emoji                #  6.0  [1] (➿)       double curly loop
@@ -109,7 +109,7 @@
 2B05..2B07    ; Emoji                #  4.0  [3] (⬅️..⬇️)    left arrow..down arrow
 2B1B..2B1C    ; Emoji                #  5.1  [2] (⬛..⬜)    black large square..white large square
 2B50          ; Emoji                #  5.1  [1] (⭐)       star
-2B55          ; Emoji                #  5.2  [1] (⭕)       heavy large circle
+2B55          ; Emoji                #  5.2  [1] (⭕)       hollow red circle
 3030          ; Emoji                #  1.1  [1] (〰️)       wavy dash
 303D          ; Emoji                #  3.2  [1] (〽️)       part alternation mark
 3297          ; Emoji                #  1.1  [1] (㊗️)       Japanese “congratulations” button
@@ -206,7 +206,7 @@
 1F62E..1F62F  ; Emoji                #  6.1  [2] (😮..😯)    face with open mouth..hushed face
 1F630..1F633  ; Emoji                #  6.0  [4] (😰..😳)    anxious face with sweat..flushed face
 1F634         ; Emoji                #  6.1  [1] (😴)       sleeping face
-1F635..1F640  ; Emoji                #  6.0 [12] (😵..🙀)    dizzy face..weary cat face
+1F635..1F640  ; Emoji                #  6.0 [12] (😵..🙀)    dizzy face..weary cat
 1F641..1F642  ; Emoji                #  7.0  [2] (🙁..🙂)    slightly frowning face..slightly smiling face
 1F643..1F644  ; Emoji                #  8.0  [2] (🙃..🙄)    upside-down face..face with rolling eyes
 1F645..1F64F  ; Emoji                #  6.0 [11] (🙅..🙏)    person gesturing NO..folded hands
@@ -242,13 +242,13 @@
 1F94D..1F94F  ; Emoji                # 11.0  [3] (🥍..🥏)    lacrosse..flying disc
 1F950..1F95E  ; Emoji                #  9.0 [15] (🥐..🥞)    croissant..pancakes
 1F95F..1F96B  ; Emoji                # 10.0 [13] (🥟..🥫)    dumpling..canned food
-1F96C..1F970  ; Emoji                # 11.0  [5] (🥬..🥰)    leafy green..smiling face with 3 hearts
+1F96C..1F970  ; Emoji                # 11.0  [5] (🥬..🥰)    leafy green..smiling face with hearts
 1F971         ; Emoji                # 12.0  [1] (🥱)       yawning face
 1F973..1F976  ; Emoji                # 11.0  [4] (🥳..🥶)    partying face..cold face
 1F97A         ; Emoji                # 11.0  [1] (🥺)       pleading face
 1F97B         ; Emoji                # 12.0  [1] (🥻)       sari
 1F97C..1F97F  ; Emoji                # 11.0  [4] (🥼..🥿)    lab coat..flat shoe
-1F980..1F984  ; Emoji                #  8.0  [5] (🦀..🦄)    crab..unicorn face
+1F980..1F984  ; Emoji                #  8.0  [5] (🦀..🦄)    crab..unicorn
 1F985..1F991  ; Emoji                #  9.0 [13] (🦅..🦑)    eagle..squid
 1F992..1F997  ; Emoji                # 10.0  [6] (🦒..🦗)    giraffe..cricket
 1F998..1F9A2  ; Emoji                # 11.0 [11] (🦘..🦢)    kangaroo..swan
@@ -294,19 +294,19 @@
 26F5          ; Emoji_Presentation   #  5.2  [1] (⛵)       sailboat
 26FA          ; Emoji_Presentation   #  5.2  [1] (⛺)       tent
 26FD          ; Emoji_Presentation   #  5.2  [1] (⛽)       fuel pump
-2705          ; Emoji_Presentation   #  6.0  [1] (✅)       white heavy check mark
+2705          ; Emoji_Presentation   #  6.0  [1] (✅)       check mark button
 270A..270B    ; Emoji_Presentation   #  6.0  [2] (✊..✋)    raised fist..raised hand
 2728          ; Emoji_Presentation   #  6.0  [1] (✨)       sparkles
 274C          ; Emoji_Presentation   #  6.0  [1] (❌)       cross mark
 274E          ; Emoji_Presentation   #  6.0  [1] (❎)       cross mark button
 2753..2755    ; Emoji_Presentation   #  6.0  [3] (❓..❕)    question mark..white exclamation mark
 2757          ; Emoji_Presentation   #  5.2  [1] (❗)       exclamation mark
-2795..2797    ; Emoji_Presentation   #  6.0  [3] (➕..➗)    heavy plus sign..heavy division sign
+2795..2797    ; Emoji_Presentation   #  6.0  [3] (➕..➗)    plus sign..division sign
 27B0          ; Emoji_Presentation   #  6.0  [1] (➰)       curly loop
 27BF          ; Emoji_Presentation   #  6.0  [1] (➿)       double curly loop
 2B1B..2B1C    ; Emoji_Presentation   #  5.1  [2] (⬛..⬜)    black large square..white large square
 2B50          ; Emoji_Presentation   #  5.1  [1] (⭐)       star
-2B55          ; Emoji_Presentation   #  5.2  [1] (⭕)       heavy large circle
+2B55          ; Emoji_Presentation   #  5.2  [1] (⭕)       hollow red circle
 1F004         ; Emoji_Presentation   #  5.1  [1] (🀄)       mahjong red dragon
 1F0CF         ; Emoji_Presentation   #  6.0  [1] (🃏)       joker
 1F18E         ; Emoji_Presentation   #  6.0  [1] (🆎)       AB button (blood type)
@@ -365,7 +365,7 @@
 1F62E..1F62F  ; Emoji_Presentation   #  6.1  [2] (😮..😯)    face with open mouth..hushed face
 1F630..1F633  ; Emoji_Presentation   #  6.0  [4] (😰..😳)    anxious face with sweat..flushed face
 1F634         ; Emoji_Presentation   #  6.1  [1] (😴)       sleeping face
-1F635..1F640  ; Emoji_Presentation   #  6.0 [12] (😵..🙀)    dizzy face..weary cat face
+1F635..1F640  ; Emoji_Presentation   #  6.0 [12] (😵..🙀)    dizzy face..weary cat
 1F641..1F642  ; Emoji_Presentation   #  7.0  [2] (🙁..🙂)    slightly frowning face..slightly smiling face
 1F643..1F644  ; Emoji_Presentation   #  8.0  [2] (🙃..🙄)    upside-down face..face with rolling eyes
 1F645..1F64F  ; Emoji_Presentation   #  6.0 [11] (🙅..🙏)    person gesturing NO..folded hands
@@ -397,13 +397,13 @@
 1F94D..1F94F  ; Emoji_Presentation   # 11.0  [3] (🥍..🥏)    lacrosse..flying disc
 1F950..1F95E  ; Emoji_Presentation   #  9.0 [15] (🥐..🥞)    croissant..pancakes
 1F95F..1F96B  ; Emoji_Presentation   # 10.0 [13] (🥟..🥫)    dumpling..canned food
-1F96C..1F970  ; Emoji_Presentation   # 11.0  [5] (🥬..🥰)    leafy green..smiling face with 3 hearts
+1F96C..1F970  ; Emoji_Presentation   # 11.0  [5] (🥬..🥰)    leafy green..smiling face with hearts
 1F971         ; Emoji_Presentation   # 12.0  [1] (🥱)       yawning face
 1F973..1F976  ; Emoji_Presentation   # 11.0  [4] (🥳..🥶)    partying face..cold face
 1F97A         ; Emoji_Presentation   # 11.0  [1] (🥺)       pleading face
 1F97B         ; Emoji_Presentation   # 12.0  [1] (🥻)       sari
 1F97C..1F97F  ; Emoji_Presentation   # 11.0  [4] (🥼..🥿)    lab coat..flat shoe
-1F980..1F984  ; Emoji_Presentation   #  8.0  [5] (🦀..🦄)    crab..unicorn face
+1F980..1F984  ; Emoji_Presentation   #  8.0  [5] (🦀..🦄)    crab..unicorn
 1F985..1F991  ; Emoji_Presentation   #  9.0 [13] (🦅..🦑)    eagle..squid
 1F992..1F997  ; Emoji_Presentation   # 10.0  [6] (🦒..🦗)    giraffe..cricket
 1F998..1F9A2  ; Emoji_Presentation   # 11.0 [11] (🦘..🦢)    kangaroo..swan
@@ -555,12 +555,12 @@ E0020..E007F  ; Emoji_Component      #  3.1 [96] (󠀠..󠁿)      tag space..ca
 26E8..26FF    ; Extended_Pictographic#  5.2 [24] (⛨..⛿)    BLACK CROSS ON SHIELD..WHITE FLAG WITH HORIZONTAL MIDDLE BLACK STRIPE
 2700          ; Extended_Pictographic#  7.0  [1] (✀)       BLACK SAFETY SCISSORS
 2701..2704    ; Extended_Pictographic#  1.1  [4] (✁..✄)    UPPER BLADE SCISSORS..WHITE SCISSORS
-2705          ; Extended_Pictographic#  6.0  [1] (✅)       white heavy check mark
+2705          ; Extended_Pictographic#  6.0  [1] (✅)       check mark button
 2708..2709    ; Extended_Pictographic#  1.1  [2] (✈️..✉️)    airplane..envelope
 270A..270B    ; Extended_Pictographic#  6.0  [2] (✊..✋)    raised fist..raised hand
 270C..2712    ; Extended_Pictographic#  1.1  [7] (✌️..✒️)    victory hand..black nib
-2714          ; Extended_Pictographic#  1.1  [1] (✔️)       heavy check mark
-2716          ; Extended_Pictographic#  1.1  [1] (✖️)       heavy multiplication x
+2714          ; Extended_Pictographic#  1.1  [1] (✔️)       check mark
+2716          ; Extended_Pictographic#  1.1  [1] (✖️)       multiplication sign
 271D          ; Extended_Pictographic#  1.1  [1] (✝️)       latin cross
 2721          ; Extended_Pictographic#  1.1  [1] (✡️)       star of David
 2728          ; Extended_Pictographic#  6.0  [1] (✨)       sparkles
@@ -571,8 +571,8 @@ E0020..E007F  ; Emoji_Component      #  3.1 [96] (󠀠..󠁿)      tag space..ca
 274E          ; Extended_Pictographic#  6.0  [1] (❎)       cross mark button
 2753..2755    ; Extended_Pictographic#  6.0  [3] (❓..❕)    question mark..white exclamation mark
 2757          ; Extended_Pictographic#  5.2  [1] (❗)       exclamation mark
-2763..2767    ; Extended_Pictographic#  1.1  [5] (❣️..❧)    heavy heart exclamation..ROTATED FLORAL HEART BULLET
-2795..2797    ; Extended_Pictographic#  6.0  [3] (➕..➗)    heavy plus sign..heavy division sign
+2763..2767    ; Extended_Pictographic#  1.1  [5] (❣️..❧)    heart exclamation..ROTATED FLORAL HEART BULLET
+2795..2797    ; Extended_Pictographic#  6.0  [3] (➕..➗)    plus sign..division sign
 27A1          ; Extended_Pictographic#  1.1  [1] (➡️)       right arrow
 27B0          ; Extended_Pictographic#  6.0  [1] (➰)       curly loop
 27BF          ; Extended_Pictographic#  6.0  [1] (➿)       double curly loop
@@ -580,7 +580,7 @@ E0020..E007F  ; Emoji_Component      #  3.1 [96] (󠀠..󠁿)      tag space..ca
 2B05..2B07    ; Extended_Pictographic#  4.0  [3] (⬅️..⬇️)    left arrow..down arrow
 2B1B..2B1C    ; Extended_Pictographic#  5.1  [2] (⬛..⬜)    black large square..white large square
 2B50          ; Extended_Pictographic#  5.1  [1] (⭐)       star
-2B55          ; Extended_Pictographic#  5.2  [1] (⭕)       heavy large circle
+2B55          ; Extended_Pictographic#  5.2  [1] (⭕)       hollow red circle
 3030          ; Extended_Pictographic#  1.1  [1] (〰️)       wavy dash
 303D          ; Extended_Pictographic#  3.2  [1] (〽️)       part alternation mark
 3297          ; Extended_Pictographic#  1.1  [1] (㊗️)       Japanese “congratulations” button
@@ -679,7 +679,7 @@ E0020..E007F  ; Emoji_Component      #  3.1 [96] (󠀠..󠁿)      tag space..ca
 1F62E..1F62F  ; Extended_Pictographic#  6.1  [2] (😮..😯)    face with open mouth..hushed face
 1F630..1F633  ; Extended_Pictographic#  6.0  [4] (😰..😳)    anxious face with sweat..flushed face
 1F634         ; Extended_Pictographic#  6.1  [1] (😴)       sleeping face
-1F635..1F640  ; Extended_Pictographic#  6.0 [12] (😵..🙀)    dizzy face..weary cat face
+1F635..1F640  ; Extended_Pictographic#  6.0 [12] (😵..🙀)    dizzy face..weary cat
 1F641..1F642  ; Extended_Pictographic#  7.0  [2] (🙁..🙂)    slightly frowning face..slightly smiling face
 1F643..1F644  ; Extended_Pictographic#  8.0  [2] (🙃..🙄)    upside-down face..face with rolling eyes
 1F645..1F64F  ; Extended_Pictographic#  6.0 [11] (🙅..🙏)    person gesturing NO..folded hands
@@ -726,7 +726,7 @@ E0020..E007F  ; Emoji_Component      #  3.1 [96] (󠀠..󠁿)      tag space..ca
 1F94D..1F94F  ; Extended_Pictographic# 11.0  [3] (🥍..🥏)    lacrosse..flying disc
 1F950..1F95E  ; Extended_Pictographic#  9.0 [15] (🥐..🥞)    croissant..pancakes
 1F95F..1F96B  ; Extended_Pictographic# 10.0 [13] (🥟..🥫)    dumpling..canned food
-1F96C..1F970  ; Extended_Pictographic# 11.0  [5] (🥬..🥰)    leafy green..smiling face with 3 hearts
+1F96C..1F970  ; Extended_Pictographic# 11.0  [5] (🥬..🥰)    leafy green..smiling face with hearts
 1F971         ; Extended_Pictographic# 12.0  [1] (🥱)       yawning face
 1F972         ; Extended_Pictographic#   NA  [1] (🥲)       <reserved-1F972>
 1F973..1F976  ; Extended_Pictographic# 11.0  [4] (🥳..🥶)    partying face..cold face
@@ -734,7 +734,7 @@ E0020..E007F  ; Emoji_Component      #  3.1 [96] (󠀠..󠁿)      tag space..ca
 1F97A         ; Extended_Pictographic# 11.0  [1] (🥺)       pleading face
 1F97B         ; Extended_Pictographic# 12.0  [1] (🥻)       sari
 1F97C..1F97F  ; Extended_Pictographic# 11.0  [4] (🥼..🥿)    lab coat..flat shoe
-1F980..1F984  ; Extended_Pictographic#  8.0  [5] (🦀..🦄)    crab..unicorn face
+1F980..1F984  ; Extended_Pictographic#  8.0  [5] (🦀..🦄)    crab..unicorn
 1F985..1F991  ; Extended_Pictographic#  9.0 [13] (🦅..🦑)    eagle..squid
 1F992..1F997  ; Extended_Pictographic# 10.0  [6] (🦒..🦗)    giraffe..cricket
 1F998..1F9A2  ; Extended_Pictographic# 11.0 [11] (🦘..🦢)    kangaroo..swan
