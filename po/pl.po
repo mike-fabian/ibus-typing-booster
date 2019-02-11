@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-01-26 09:23+0000\n"
+"PO-Revision-Date: 2019-02-10 04:49+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -684,6 +684,8 @@ msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
 msgstr ""
+"Jeśli jest większe niż 0, to informacje debugowania mogą być umieszczane "
+"w pliku dziennika oraz wyświetlane graficznie."
 
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
@@ -917,11 +919,11 @@ msgstr "Pionowo"
 #. underlining for the preedit.
 #: setup/main.py:1177
 msgid "Preedit underline"
-msgstr ""
+msgstr "Podkreślenie wcześniej wprowadzonego tekstu"
 
 #: setup/main.py:1179
 msgid "Which style of underlining to use for the preedit."
-msgstr ""
+msgstr "Styl podkreślenia używany dla wcześniej wprowadzonego tekstu."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
@@ -933,19 +935,19 @@ msgstr "Brak"
 #. underline for the preedit.
 #: setup/main.py:1193
 msgid "Single"
-msgstr ""
+msgstr "Pojedyncze"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
 #: setup/main.py:1197
 msgid "Double"
-msgstr ""
+msgstr "Podwójne"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
 #: setup/main.py:1201
 msgid "Low"
-msgstr ""
+msgstr "Niskie"
 
 #. Translators: Checkbox to choose whether a preedit style
 #. like underlining will only be used if lookup is
@@ -956,6 +958,8 @@ msgstr ""
 #: setup/main.py:1229
 msgid "Use preedit style only if lookup is enabled"
 msgstr ""
+"Używanie stylu wcześniej wprowadzonego tekstu tylko, jeśli włączone jest "
+"wyszukiwanie"
 
 #: setup/main.py:1231
 msgid ""
@@ -964,25 +968,32 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
+"Jeśli ta opcja jest włączona, to styl wcześniej wprowadzonego tekstu, taki "
+"jak podkreślenie, będzie używany tylko, jeśli wyszukiwanie jest włączone. "
+"Wyszukiwanie może być wyłączone, ponieważ użytkownik używa opcji włączenia "
+"wyszukiwania tylko po naciśnięciu klawisza lub ponieważ użytkownik używa "
+"opcji wymagania minimalnej liczby znaków przed wykonaniem wyszukania."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
 #: setup/main.py:1251
 msgid "Use color for inline completion"
-msgstr ""
+msgstr "Używanie koloru do uzupełniania w wierszu"
 
 #: setup/main.py:1253
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
 msgstr ""
+"Tutaj można wybrać, czy niestandardowy kolor jest używany dla sugestii "
+"wyświetlanej w wierszu."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
 #: setup/main.py:1283
 msgid "Choose color for inline completion"
-msgstr ""
+msgstr "Wybór koloru do uzupełniania w wierszu"
 
 #: setup/main.py:1285
 msgid ""
@@ -990,26 +1001,31 @@ msgid ""
 "only has an effect if the use of color for inline completion is enabled and "
 "inline completion is enabled."
 msgstr ""
+"Tutaj można podać kolor używany do uzupełniania w wierszu. To ustawienie "
+"jest uwzględniane tylko, jeśli użycie koloru do uzupełniania w wierszu "
+"i uzupełnianie w wierszu są włączone."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
 #: setup/main.py:1305
 msgid "Use color for user database suggestions"
-msgstr ""
+msgstr "Używanie koloru dla sugestii z bazy danych użytkownika"
 
 #: setup/main.py:1307
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
 msgstr ""
+"Tutaj można wybrać, czy niestandardowy kolor jest używany dla kandydatów "
+"w tablicy wyszukiwania pochodzących z bazy danych użytkownika."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
 #: setup/main.py:1333
 msgid "Choose color for user database suggestions"
-msgstr ""
+msgstr "Wybór koloru dla sugestii z bazy danych użytkownika"
 
 #: setup/main.py:1335
 msgid ""
@@ -1017,25 +1033,31 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
 msgstr ""
+"Tutaj można podać kolor używany dla kandydatów w tablicy wyszukiwania "
+"pochodzących z bazy danych użytkownika. To ustawienie jest uwzględniane "
+"tylko, jeśli użycie koloru dla kandydatów z bazy danych użytkownika jest "
+"włączone."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
 #: setup/main.py:1355
 msgid "Use color for spellchecking suggestions"
-msgstr ""
+msgstr "Używanie koloru dla sugestii sprawdzania pisowni"
 
 #: setup/main.py:1357
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
 msgstr ""
+"Tutaj można wybrać, czy niestandardowy kolor jest używany dla kandydatów "
+"w tablicy wyszukiwania pochodzących ze sprawdzania pisowni."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
 #: setup/main.py:1383
 msgid "Choose color for spellchecking suggestions"
-msgstr ""
+msgstr "Wybór koloru dla sugestii sprawdzania pisowni"
 
 #: setup/main.py:1385
 msgid ""
@@ -1043,26 +1065,31 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
 msgstr ""
+"Tutaj można podać kolor używany dla kandydatów w tablicy wyszukiwania "
+"pochodzących ze sprawdzania pisowni. To ustawienie jest uwzględniane tylko, "
+"jeśli użycie koloru dla kandydatów ze sprawdzania pisowni jest włączone."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
 #: setup/main.py:1406
 msgid "Use color for dictionary suggestions"
-msgstr ""
+msgstr "Używanie koloru dla sugestii słownika"
 
 #: setup/main.py:1408
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
 msgstr ""
+"Tutaj można wybrać, czy niestandardowy kolor jest używany dla kandydatów "
+"w tablicy wyszukiwania pochodzących ze słownika."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
 #: setup/main.py:1434
 msgid "Choose color for dictionary suggestions"
-msgstr ""
+msgstr "Wybór koloru dla sugestii słownika"
 
 #: setup/main.py:1436
 msgid ""
@@ -1070,57 +1097,68 @@ msgid ""
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
 msgstr ""
+"Tutaj można podać kolor używany dla kandydatów w tablicy wyszukiwania "
+"pochodzących ze słownika. To ustawienie jest uwzględniane tylko, jeśli "
+"użycie koloru dla kandydatów ze słownika jest włączone."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
 #: setup/main.py:1457
 msgid "Use label for user database suggestions"
-msgstr ""
+msgstr "Używanie etykiety dla sugestii z bazy danych użytkownika"
 
 #: setup/main.py:1459
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
 msgstr ""
+"Tutaj można wybrać, czy etykieta jest używana dla kandydatów w tablicy "
+"wyszukiwania pochodzących z bazy danych użytkownika."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
 #: setup/main.py:1493
 msgid "Use label for spellchecking suggestions"
-msgstr ""
+msgstr "Używanie etykiety dla sugestii sprawdzania pisowni"
 
 #: setup/main.py:1495
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
 msgstr ""
+"Tutaj można wybrać, czy etykieta jest używana dla kandydatów w tablicy "
+"wyszukiwania pochodzących ze sprawdzania pisowni."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:1529
 msgid "Use label for dictionary suggestions"
-msgstr ""
+msgstr "Używanie etykiety dla sugestii słownika"
 
 #: setup/main.py:1531
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
+"Tutaj można wybrać, czy etykieta jest używana dla kandydatów w tablicy "
+"wyszukiwania pochodzących ze słownika."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
 #: setup/main.py:1564
 msgid "Use a label to indicate busy state"
-msgstr ""
+msgstr "Używanie etykiety do wskazywania zajętości"
 
 #: setup/main.py:1566
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
+"Tutaj można wybrać, czy etykieta jest używana do wskazywania, kiedy program "
+"ibus-typing-booster jest zajęty."
 
 #. Translators:
 #: setup/main.py:1598 setup/main.py:2324
