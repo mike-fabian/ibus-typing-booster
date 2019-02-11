@@ -19,6 +19,22 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.5.3" date="2019-02-11" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (ja, pl updated)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Use “NoIME” instead of “NoIme” as the internal name of the
+            dummy input method
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.5.2" date="2019-02-06" urgency="medium">
       <description>
         <ul>

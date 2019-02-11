@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 06 Feb 2019 Released 2.5.3 version
+* Update translations from zanata (ja, pl updated)
+* Update emoji annotations from CLDR
+* Use “NoIME” instead of “NoIme” as the internal name of the dummy input method
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 06 Feb 2019 Released 2.5.2 version
 * Fix test case for selecting non existing candidates for Fedora rawhide
 * Update UnicodeData.txt to current Unicode 12.0 draft
