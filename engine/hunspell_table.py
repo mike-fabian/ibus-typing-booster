@@ -479,7 +479,7 @@ class TypingBoosterEngine(IBus.Engine):
         # to work in Gnome3.  But “☐🚀” for typing-booster on and
         # “☑🚀” for typing-booster off do not work at all in Gnome3,
         # only the rocket emoji is shown in that case and the ballot
-        # boxes are not visisble. In KDE these look so small that they
+        # boxes are not visible. In KDE these look so small that they
         # are very hard to distinguish. Using a single emoji for each
         # mode seems to work well both in Gnome3 and non-Gnome desktops.
         self.input_mode_menu = {
