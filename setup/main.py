@@ -25,6 +25,7 @@ The setup tool for ibus typing booster.
 
 import sys
 import os
+import re
 import html
 import signal
 import argparse
@@ -1832,10 +1833,11 @@ class SetupUI(Gtk.Window):
         inputmethod = itb_util.variant_to_value(
             self._gsettings.get_value('inputmethod'))
         if inputmethod:
-            inputmethods = [x.strip() for x in inputmethod.split(',')]
+            inputmethods = [re.sub(re.escape('noime'), 'NoIME', x.strip(),
+                                   flags=re.IGNORECASE)
+                            for x in inputmethod.split(',') if x]
             for ime in inputmethods:
-                if ime:
-                    self._current_imes.append(ime)
+                self._current_imes.append(ime)
         if self._current_imes == []:
             # There is no ime set in dconf, get a default list of
             # input methods for the current effective value of LC_CTYPE:
@@ -2764,7 +2766,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_add_listbox.connect(
             'row-selected', self.on_input_method_to_add_selected)
         rows = []
-        for ime in ['NoIme'] + sorted(itb_util.M17N_INPUT_METHODS):
+        for ime in ['NoIME'] + sorted(itb_util.M17N_INPUT_METHODS):
             if ime in self._current_imes:
                 continue
             row = self._fill_input_methods_listbox_row(ime)
@@ -4381,7 +4383,9 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        imes = [x for x in imes if x]
+        imes = [re.sub(re.escape('noime'), 'NoIME', x.strip(),
+                       flags=re.IGNORECASE)
+                for x in imes if x]
         if imes == self._current_imes: # nothing to do
             return
         if len(imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:

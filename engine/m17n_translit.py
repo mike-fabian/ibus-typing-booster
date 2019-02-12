@@ -241,7 +241,7 @@ class Transliterator:
     >>> trans.transliterate(list('gru"n'))
     'grün'
 
-    >>> trans = Transliterator('NoIme')
+    >>> trans = Transliterator('NoIME')
     >>> trans.transliterate(['a', 'b', 'c', 'C-c', 'G-4'])
     'abcC-cG-4'
 
@@ -286,14 +286,14 @@ class Transliterator:
 
         :param ime: Full name of the m17n input method, for example
                     “hi-inscript2” or “t-latn-post”. There is one
-                    special input method name “NoIme”. The input method
-                    “NoIme” is just a dummy which does not transliteration
+                    special input method name “NoIME”. The input method
+                    “NoIME” is just a dummy which does not do transliteration
                     at all, it only joins the list of Msymbol names to
                     a string.
         :type ime: string
         '''
         self._dummy = False
-        if ime == 'NoIme':
+        if ime == 'NoIME':
             self._dummy = True
             return
         language = ime.split('-')[0]
@@ -319,7 +319,7 @@ class Transliterator:
 
         :param msymbol_list: A list of strings which are interpreted
                              as the names of Msymbols to transliterate.
-                             If the input method has the special name “NoIme”,
+                             If the input method has the special name “NoIME”,
                              no transliteration is done, the list of
                              Msymbols is just joined to a single string.
         :type msymbol_list: A list of strings

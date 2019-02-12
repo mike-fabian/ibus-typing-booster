@@ -382,10 +382,11 @@ class TypingBoosterEngine(IBus.Engine):
         inputmethod = itb_util.variant_to_value(
             self._gsettings.get_value('inputmethod'))
         if inputmethod:
-            inputmethods = [x.strip() for x in inputmethod.split(',')]
+            inputmethods = [re.sub(re.escape('noime'), 'NoIME', x.strip(),
+                                   flags=re.IGNORECASE)
+                            for x in inputmethod.split(',') if x]
             for ime in inputmethods:
-                if ime:
-                    self._current_imes.append(ime)
+                self._current_imes.append(ime)
         if self._current_imes == []:
             # There is no ime set in Gsettings, get a default list
             # of input methods for the current effective value of LC_CTYPE
@@ -554,8 +555,8 @@ class TypingBoosterEngine(IBus.Engine):
                     + '%s\n' %error
                     + 'Maybe /usr/share/m17n/%s.mim is not installed?\n'
                     %ime)
-                # Use dummy transliterator “NoIme” as a fallback:
-                self._transliterators[ime] = Transliterator('NoIme')
+                # Use dummy transliterator “NoIME” as a fallback:
+                self._transliterators[ime] = Transliterator('NoIME')
         self._update_transliterated_strings()
 
     def is_empty(self):
@@ -1126,6 +1127,9 @@ class TypingBoosterEngine(IBus.Engine):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
+        imes = [re.sub(re.escape('noime'), 'NoIME', x.strip(),
+                       flags=re.IGNORECASE)
+                for x in imes if x]
         if imes == self._current_imes: # nothing to do
             return
         if len(imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
@@ -1801,7 +1805,7 @@ class TypingBoosterEngine(IBus.Engine):
             if dictionary_label:
                 aux_string += dictionary_label
             preedit_ime = self.get_current_imes()[0]
-            if preedit_ime != 'NoIme':
+            if preedit_ime != 'NoIME':
                 aux_string += ' ' + preedit_ime + ' '
         # Colours do not work at the moment in the auxiliary text!
         # Needs fix in ibus.
@@ -4201,7 +4205,7 @@ class TypingBoosterEngine(IBus.Engine):
                     # opened.  Putting a digit into the candidate list
                     # is better in that case, one may be able to get a
                     # reasonable completion that way.
-                    if self.get_current_imes()[0] == 'NoIme':
+                    if self.get_current_imes()[0] == 'NoIME':
                         # If a digit has been typed and no transliteration
                         # is used, we can pass it through
                         return self._return_false(key.val, key.code, key.state)
