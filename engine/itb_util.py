@@ -1055,6 +1055,7 @@ CLDR_ANNOTATION_FILES = {
     'jgo_CM',
     'jmc',
     'jmc_TZ',
+    'jv',
     'ka',
     'ka_GE',
     'kab',

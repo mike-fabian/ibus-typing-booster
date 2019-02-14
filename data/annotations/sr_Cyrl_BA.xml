@@ -7,19 +7,15 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 -->
 <ldml>
 	<identity>
-		<version number="$Revision: 14768 $"/>
+		<version number="$Revision: 14801 $"/>
 		<language type="sr"/>
 		<script type="Cyrl"/>
 		<territory type="BA"/>
 	</identity>
 	<annotations>
 		<annotation cp="🥽" draft="contributed">заштитне наочари</annotation>
-		<annotation cp="🥽" type="tts" draft="contributed">заштитне наочари</annotation>
 		<annotation cp="🥼" draft="contributed">бели мантил</annotation>
-		<annotation cp="🥼" type="tts" draft="contributed">бели мантил</annotation>
 		<annotation cp="🥾" draft="contributed">ципела за планинарење</annotation>
-		<annotation cp="🥾" type="tts" draft="contributed">ципела за планинарење</annotation>
 		<annotation cp="🥿" draft="contributed">равна ципела</annotation>
-		<annotation cp="🥿" type="tts" draft="contributed">равна ципела</annotation>
 	</annotations>
 </ldml>
