@@ -2143,6 +2143,54 @@ class TypingBoosterEngine(IBus.Engine):
                 "_has_transliteration(%s) == False\n" %msymbol_list)
         return False
 
+    def _remove_candidate(self, index):
+        '''
+        Removes the candidate at “index” in the lookup table from the
+        user database.
+
+        :param index: The index of the candidate to remove in the lookup table
+        :type index: Integer
+        :rtype: Boolean
+        '''
+        if not self.get_lookup_table().get_number_of_candidates():
+            return False
+        candidate_number = (
+            self._get_lookup_table_current_page() * self._page_size + index)
+        if not (candidate_number
+            < self._lookup_table.get_number_of_candidates()
+            and 0 <= index < self._page_size):
+            return False
+        if self.remove_candidate_from_user_database(index):
+            self._update_ui()
+            return True
+        return False
+
+    def _commit_candidate(self, index, extra_text=''):
+        '''
+        Commits the candidate at “index” in the lookup table
+
+        Returns True if a candidate could be committed, False if not.
+
+        :param index: The index of the candidate to commit in the lookup table
+        :type index: Integer
+        :param extra_text:
+        :type extra_text: String
+        :rtype: Boolean
+        '''
+        if not self.get_lookup_table().get_number_of_candidates():
+            return False
+        candidate_number = (
+            self._get_lookup_table_current_page() * self._page_size + index)
+        if not (candidate_number
+            < self._lookup_table.get_number_of_candidates()
+            and 0 <= index < self._page_size):
+            return False
+        phrase = self.get_string_from_lookup_table_current_page(index)
+        if phrase:
+            self._commit_string(phrase + extra_text)
+            return True
+        return False
+
     def _commit_string(self, commit_phrase, input_phrase=''):
         '''Commits a string
 
@@ -4091,6 +4139,87 @@ class TypingBoosterEngine(IBus.Engine):
             self._start_setup()
             return True
 
+        if (key, 'commit_candidate_1') in self._hotkeys:
+            return self._commit_candidate(0, extra_text='')
+
+        if (key, 'commit_candidate_1_plus_space') in self._hotkeys:
+            return self._commit_candidate(0, extra_text=' ')
+
+        if (key, 'remove_candidate_1') in self._hotkeys:
+            return self._remove_candidate(0)
+
+        if (key, 'commit_candidate_2') in self._hotkeys:
+            return self._commit_candidate(1, extra_text='')
+
+        if (key, 'commit_candidate_2_plus_space') in self._hotkeys:
+            return self._commit_candidate(1, extra_text=' ')
+
+        if (key, 'remove_candidate_2') in self._hotkeys:
+            return self._remove_candidate(1)
+
+        if (key, 'commit_candidate_3') in self._hotkeys:
+            return self._commit_candidate(2, extra_text='')
+
+        if (key, 'commit_candidate_3_plus_space') in self._hotkeys:
+            return self._commit_candidate(2, extra_text=' ')
+
+        if (key, 'remove_candidate_3') in self._hotkeys:
+            return self._remove_candidate(2)
+
+        if (key, 'commit_candidate_4') in self._hotkeys:
+            return self._commit_candidate(3, extra_text='')
+
+        if (key, 'commit_candidate_4_plus_space') in self._hotkeys:
+            return self._commit_candidate(3, extra_text=' ')
+
+        if (key, 'remove_candidate_4') in self._hotkeys:
+            return self._remove_candidate(3)
+
+        if (key, 'commit_candidate_5') in self._hotkeys:
+            return self._commit_candidate(4, extra_text='')
+
+        if (key, 'commit_candidate_5_plus_space') in self._hotkeys:
+            return self._commit_candidate(4, extra_text=' ')
+
+        if (key, 'remove_candidate_5') in self._hotkeys:
+            return self._remove_candidate(4)
+
+        if (key, 'commit_candidate_6') in self._hotkeys:
+            return self._commit_candidate(5, extra_text='')
+
+        if (key, 'commit_candidate_6_plus_space') in self._hotkeys:
+            return self._commit_candidate(5, extra_text=' ')
+
+        if (key, 'remove_candidate_6') in self._hotkeys:
+            return self._remove_candidate(5)
+
+        if (key, 'commit_candidate_7') in self._hotkeys:
+            return self._commit_candidate(6, extra_text='')
+
+        if (key, 'commit_candidate_7_plus_space') in self._hotkeys:
+            return self._commit_candidate(6, extra_text=' ')
+
+        if (key, 'remove_candidate_7') in self._hotkeys:
+            return self._remove_candidate(6)
+
+        if (key, 'commit_candidate_8') in self._hotkeys:
+            return self._commit_candidate(7, extra_text='')
+
+        if (key, 'commit_candidate_8_plus_space') in self._hotkeys:
+            return self._commit_candidate(7, extra_text=' ')
+
+        if (key, 'remove_candidate_8') in self._hotkeys:
+            return self._remove_candidate(7)
+
+        if (key, 'commit_candidate_9') in self._hotkeys:
+            return self._commit_candidate(8, extra_text='')
+
+        if (key, 'commit_candidate_9_plus_space') in self._hotkeys:
+            return self._commit_candidate(8, extra_text=' ')
+
+        if (key, 'remove_candidate_9') in self._hotkeys:
+            return self._remove_candidate(8)
+
         return False
 
     def _return_false(self, keyval, keycode, state):
@@ -4249,47 +4378,6 @@ class TypingBoosterEngine(IBus.Engine):
 
         if self._handle_hotkeys(key):
             return True
-
-        # Select a candidate to commit or remove:
-        if (self.get_lookup_table().get_number_of_candidates()
-            and not key.mod1 and not key.mod5):
-            # key.mod1 (= Alt) and key.mod5 (= AltGr) should not be set
-            # here because:
-            #
-            # - in case of the digits these are used for input, not to select
-            #   (e.g. mr-inscript2 transliterates AltGr-4 to “₹”)
-            #
-            # - in case of the F1-F9 keys I want to reserve the Alt and AltGr
-            #   modifiers for possible future extensions.
-            index = -1
-            if self._use_digits_as_select_keys:
-                if key.val >= IBus.KEY_1 and key.val <= IBus.KEY_9:
-                    index = key.val - IBus.KEY_1
-                if key.val >= IBus.KEY_KP_1 and key.val <= IBus.KEY_KP_9:
-                    index = key.val - IBus.KEY_KP_1
-            if key.val >= IBus.KEY_F1 and key.val <= IBus.KEY_F9:
-                index = key.val - IBus.KEY_F1
-            candidate_number = (
-                self._get_lookup_table_current_page() * self._page_size
-                + index)
-            if (candidate_number
-                < self._lookup_table.get_number_of_candidates()
-                and 0 <= index < self._page_size):
-                if key.control:
-                    # Remove the candidate from the user database
-                    if self.remove_candidate_from_user_database(index):
-                        self._update_ui()
-                        return True
-                else:
-                    # Commit a candidate:
-                    phrase = (
-                        self.get_string_from_lookup_table_current_page(
-                            index))
-                    if phrase:
-                        if self._add_space_on_commit:
-                            phrase += ' '
-                        self._commit_string(phrase)
-                        return True
 
         # These keys may trigger a commit:
         if (key.msymbol not in ('G- ',)
