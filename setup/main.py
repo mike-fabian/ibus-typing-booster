@@ -385,15 +385,12 @@ class SetupUI(Gtk.Window):
 
         self._add_space_on_commit_checkbutton = Gtk.CheckButton(
             # Translators: Add a space if a candidate from the
-            # candidate list is committed using a key for the label in
-            # front of the candidate (I.e. the using the 1-9 or F1-F9
-            # keys) or by clicking on a candidate with the mouse.
-            label=_('Add a space when committing by label or mouse'))
+            # candidate list is committed by clicking it
+            # with the mouse.
+            label=_('Add a space when committing by mouse click'))
         self._add_space_on_commit_checkbutton.set_tooltip_text(
             _('Add a space if a candidate from the candidate '
-              + 'list is committed using a key for the label '
-              + 'in front of the candidate (I.e. the using the '
-              + '1-9 or F1-F9 keys) or by clicking on a candidate '
+              + 'list is committed by clicking it '
               + 'with the mouse.'))
         self._add_space_on_commit_checkbutton.connect(
             'clicked', self.on_add_space_on_commit_checkbutton)
