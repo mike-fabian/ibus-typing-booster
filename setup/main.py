@@ -396,7 +396,7 @@ class SetupUI(Gtk.Window):
             # candidate, you can use the key binding for the “cancel”
             # command which will deselect all candidates.
             label=_('Automatically select the best candidate'))
-        self._use_digits_as_select_keys_checkbutton.set_tooltip_text(
+        self._auto_select_candidate_checkbutton.set_tooltip_text(
             _('What you type will automatically be corrected to the best '
               + 'candidate by selecting the best candidate automatically. If '
               + 'this option is off you have to select a candidate manually '
