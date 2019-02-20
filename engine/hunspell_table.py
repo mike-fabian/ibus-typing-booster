@@ -194,6 +194,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._show_status_info_in_auxiliary_text is None:
             self._show_status_info_in_auxiliary_text = False
 
+        self._is_candidate_auto_selected = False
         self._auto_select_candidate = itb_util.variant_to_value(
             self._gsettings.get_value('autoselectcandidate'))
         if self._auto_select_candidate is None:
@@ -569,6 +570,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''Clear all input'''
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
+        self._is_candidate_auto_selected = False
         self._candidates = []
         self._candidates_case_mode = 'orig'
         self._typed_string = []
@@ -1935,8 +1937,10 @@ class TypingBoosterEngine(IBus.Engine):
         # self._auto_select_candidate is on:
         if (self._lookup_table_is_invalid
             and self._auto_select_candidate
+            and self.get_lookup_table().get_number_of_candidates()
             and not self._lookup_table.cursor_visible):
             self._lookup_table.set_cursor_visible(True)
+            self._is_candidate_auto_selected = True
         self._update_lookup_table()
         self._lookup_table_is_invalid = False
 
@@ -4566,9 +4570,19 @@ class TypingBoosterEngine(IBus.Engine):
                 self.get_context()
             if (key.msymbol in ('G- ',)
                 and not self._has_transliteration([key.msymbol])):
-                self._insert_string_at_cursor([' '])
+                insert_msymbol = ' '
             else:
-                self._insert_string_at_cursor([key.msymbol])
+                insert_msymbol = key.msymbol
+            if (not self._is_candidate_auto_selected
+                and self.get_lookup_table().get_number_of_candidates()
+                and self.get_lookup_table().cursor_visible):
+                # something is *manually* selected in the lookup
+                # table, replace the typed string with the selection
+                # and move the cursor to the end:
+                self._typed_string = list(
+                    self.get_string_from_lookup_table_cursor_pos())
+                self._typed_string_cursor = len(self._typed_string)
+            self._insert_string_at_cursor([insert_msymbol])
             # If the character typed could end a sentence, we can
             # *maybe* commit immediately.  However, if transliteration
             # is used, we may need to handle a punctuation or symbol
