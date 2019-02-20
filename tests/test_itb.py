@@ -151,7 +151,9 @@ class ItbTestCase(unittest.TestCase):
             'select_next_candidate': ['Tab', 'ISO_Left_Tab', 'Down', 'KP_Down'],
             'select_previous_candidate': ['Shift+Tab', 'Shift+ISO_Left_Tab', 'Up', 'KP_Up'],
             'setup': ['Mod5+F10'],
+            'speech_recognition': [],
             'toggle_emoji_prediction': ['Mod5+F6'],
+            'toggle_input_mode_on_off': [],
             'toggle_off_the_record': ['Mod5+F9'],
         })
 
