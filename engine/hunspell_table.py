@@ -194,11 +194,6 @@ class TypingBoosterEngine(IBus.Engine):
         if self._show_status_info_in_auxiliary_text is None:
             self._show_status_info_in_auxiliary_text = False
 
-        self._use_digits_as_select_keys = itb_util.variant_to_value(
-            self._gsettings.get_value('usedigitsasselectkeys'))
-        if self._use_digits_as_select_keys is None:
-            self._use_digits_as_select_keys = True
-
         self._auto_select_candidate = itb_util.variant_to_value(
             self._gsettings.get_value('autoselectcandidate'))
         if self._auto_select_candidate is None:
@@ -332,6 +327,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._keybindings = {}
         self._hotkeys = None
+        self._digits_used_in_keybindings = False
         self.set_keybindings(
             itb_util.variant_to_value(
                 self._gsettings.get_value('keybindings')),
@@ -1239,6 +1235,16 @@ class TypingBoosterEngine(IBus.Engine):
         # Update the default settings with the possibly changed settings:
         itb_util.dict_update_existing_keys(new_keybindings, keybindings)
         self._keybindings = new_keybindings
+        # Update self._digits_used_in_keybindings:
+        self._digits_used_in_keybindings = False
+        for command in keybindings:
+            for keybinding in keybindings[command]:
+                if (keybinding
+                    in ('0', '1', '2', '3', '4',
+                        '5', '6', '7', '8', '9',
+                        'KP_0', 'KP_1', 'KP_2', 'KP_3', 'KP_4',
+                        'KP_5', 'KP_6', 'KP_7', 'KP_8', 'KP_9')):
+                    self._digits_used_in_keybindings = True
         # Update hotkeys:
         self._hotkeys = itb_util.HotKeys(self._keybindings)
         # If there is no key binding to toggle ibus-typing-booster
@@ -3711,38 +3717,6 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._show_status_info_in_auxiliary_text
 
-    def set_use_digits_as_select_keys(self, mode, update_gsettings=True):
-        '''Sets the “Use digits as select keys” mode
-
-        :param mode: Whether to use digits as select keys
-        :type mode: boolean
-        :param update_gsettings: Whether to write the change to Gsettings.
-                                 Set this to False if this method is
-                                 called because the Gsettings key changed
-                                 to avoid endless loops when the Gsettings
-                                 key is changed twice in a short time.
-        :type update_gsettings: boolean
-        '''
-        if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_use_digits_as_select_keys(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
-        if mode == self._use_digits_as_select_keys:
-            return
-        self._use_digits_as_select_keys = mode
-        self._clear_input_and_update_ui()
-        if update_gsettings:
-            self._gsettings.set_value(
-                'usedigitsasselectkeys',
-                GLib.Variant.new_boolean(mode))
-
-    def get_use_digits_as_select_keys(self):
-        '''Returns the current value of the “Use digits as select keys” mode
-
-        :rtype: boolean
-        '''
-        return self._use_digits_as_select_keys
-
     def set_auto_select_candidate(self, mode, update_gsettings=True):
         '''Sets the “Automatically select the best candidate” mode
 
@@ -4340,7 +4314,7 @@ class TypingBoosterEngine(IBus.Engine):
                            IBus.KEY_Right, IBus.KEY_KP_Right):
                 return self._reopen_preedit_or_return_false(key)
             if key.val >= 32 and not key.control:
-                if (self._use_digits_as_select_keys
+                if (self._digits_used_in_keybindings
                     and not self._tab_enable
                     and key.msymbol
                     in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
@@ -4894,9 +4868,6 @@ class TypingBoosterEngine(IBus.Engine):
         if key == 'showstatusinfoinaux':
             self.set_show_status_info_in_auxiliary_text(
                 value, update_gsettings=False)
-            return
-        if key == 'usedigitsasselectkeys':
-            self.set_use_digits_as_select_keys(value, update_gsettings=False)
             return
         if key == 'autoselectcandidate':
             self.set_auto_select_candidate(value, update_gsettings=False)

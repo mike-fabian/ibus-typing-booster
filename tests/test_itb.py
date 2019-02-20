@@ -76,8 +76,6 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_show_number_of_candidates())
         self.orig_show_status_info_in_auxiliary_text = (
             self.engine.get_show_status_info_in_auxiliary_text())
-        self.orig_use_digits_as_select_keys = (
-            self.engine.get_use_digits_as_select_keys())
         self.orig_add_space_on_commit = (
             self.engine.get_add_space_on_commit())
         self.orig_current_imes = (
@@ -112,8 +110,6 @@ class ItbTestCase(unittest.TestCase):
             self.orig_show_number_of_candidates)
         self.engine.set_show_status_info_in_auxiliary_text(
             self.orig_show_status_info_in_auxiliary_text)
-        self.engine.set_use_digits_as_select_keys(
-            self.orig_use_digits_as_select_keys)
         self.engine.set_add_space_on_commit(
             self.orig_add_space_on_commit)
         self.engine.set_current_imes(
@@ -135,7 +131,6 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_page_size(6)
         self.engine.set_min_char_complete(1)
         self.engine.set_show_number_of_candidates(False)
-        self.engine.set_use_digits_as_select_keys(True)
         self.engine.set_add_space_on_commit(True)
         self.engine.set_current_imes(['NoIME'])
         self.engine.set_dictionary_names(['en_US'])
