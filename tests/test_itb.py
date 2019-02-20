@@ -760,6 +760,31 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९०१२३४५६७८९ ')
 
+    def test_commit_candidate_1_without_space(self):
+        self.engine.set_current_imes(['NoIME', 't-latn-post'])
+        self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_keybindings({
+            'commit_candidate_1': ['Right'],
+        })
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.assertEqual(self.engine._candidates[0][0], 'cerulean')
+        self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, 'cerulean ')
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.assertEqual(self.engine._candidates[0][0], 'cerulean')
+        self.engine.do_process_key_event(IBus.KEY_Right, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, 'cerulean cerulean')
+
     def test_toggle_candidate_case(self):
         self.engine.set_current_imes(['NoIME', 't-latn-post'])
         self.engine.set_dictionary_names(['en_US'])
