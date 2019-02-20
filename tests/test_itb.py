@@ -677,18 +677,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_dictionary_names(['en_US'])
         self.engine.set_tab_enable(True)
         self.engine.set_keybindings({
-            'cancel': ['Escape'],
             'enable_lookup': ['Insert'], # changed from default Tab
-            'lookup_related': ['Mod5+F12'],
-            'lookup_table_page_down': ['Page_Down', 'KP_Page_Down', 'KP_Next'],
-            'lookup_table_page_up': ['Page_Up', 'KP_Page_Up', 'KP_Prior'],
-            'next_input_method': ['Control+Down', 'Control+KP_Down'],
-            'previous_input_method': ['Control+Up', 'Control+KP_Up'],
-            'select_next_candidate': ['Tab', 'ISO_Left_Tab', 'Down', 'KP_Down'],
-            'select_previous_candidate': ['Shift+Tab', 'Shift+ISO_Left_Tab', 'Up', 'KP_Up'],
-            'setup': ['Mod5+F10'],
-            'toggle_emoji_prediction': ['Mod5+F6'],
-            'toggle_off_the_record': ['Mod5+F9'],
         })
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
