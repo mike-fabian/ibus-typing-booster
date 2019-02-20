@@ -661,7 +661,10 @@ class ItbTestCase(unittest.TestCase):
         # By default a space should be added:
         self.assertEqual(self.engine.mock_committed_text, 'test ')
         # Now set the option to avoid the extra space:
-        self.engine.set_add_space_on_commit(False)
+        self.engine.set_keybindings({
+            'commit_candidate_1': ['1', 'KP_1'],
+            'commit_candidate_1_plus_space': ['F1'],
+        })
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
