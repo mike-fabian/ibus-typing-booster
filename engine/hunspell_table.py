@@ -1926,8 +1926,13 @@ class TypingBoosterEngine(IBus.Engine):
                                   attr.get_start_index(),
                                   attr.get_end_index())
             i += 1
+        if (self.get_lookup_table().cursor_visible
+            and not self._is_candidate_auto_selected):
+            caret = len(first_candidate)
+        else:
+            caret = self.get_caret()
         super(TypingBoosterEngine, self).update_preedit_text_with_mode(
-            text, self.get_caret(), True, IBus.PreeditFocusMode.COMMIT)
+            text, caret, True, IBus.PreeditFocusMode.COMMIT)
         return
 
     def _update_lookup_table_and_aux(self):
