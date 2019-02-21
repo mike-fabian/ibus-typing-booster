@@ -22,6 +22,7 @@ extradata_DATA = \
 	af.xml \
 	am.xml \
 	ar.xml \
+	ar_SA.xml \
 	as.xml \
 	ast.xml \
 	az.xml \
@@ -65,10 +66,12 @@ extradata_DATA = \
 	hr.xml \
 	hu.xml \
 	hy.xml \
+	ia.xml \
 	id.xml \
 	is.xml \
 	it.xml \
 	ja.xml \
+	jv.xml \
 	ka.xml \
 	kab.xml \
 	kk.xml \
@@ -102,9 +105,11 @@ extradata_DATA = \
 	si.xml \
 	sk.xml \
 	sl.xml \
+	so.xml \
 	sq.xml \
 	sr.xml \
 	sr_Latn.xml \
+	sr_Latn_BA.xml \
 	sr_Cyrl.xml \
 	sr_Cyrl_BA.xml \
 	sv.xml \

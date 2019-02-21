@@ -10,7 +10,7 @@ terms of use, see http://www.unicode.org/copyright.html
 -->
 <ldml>
 	<identity>
-		<version number="$Revision$"/>
+		<version number="$Revision: 14867 $"/>
 		<language type="jv"/>
 	</identity>
 	<annotations>
