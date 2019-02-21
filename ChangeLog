@@ -1,4 +1,18 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 01 Mar 2019 Released 2.6.0 version
+* Update translations from zanata (de, es, fr, pl, uk updated)
+* Update emoji annotations from CLDR
+* When Left or BackSpace trigger a commit, forward Left events only when no candidate was selected (i.e. the preëdit was committed)
+* If a candidate is shown inline and *manually* selected, show the caret at the end of the candidate
+* Right, Left, BackSpace, and Delete edit the preëdit only if no candidate is *manually* selected
+* If an input char is typed while a candidate is *manually* selected, add that input to the candidate
+* Change option name 'Add a space when committing by label or mouse' in setup tool
+* Remove option “Use digits as select keys”
+* Make key bindings to commit or remove candidates via label configurable (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/48)
+* Multi word suggestions: Commit the current commit phrase and the previous phrase as a single unit as well (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/49)
+* Fix wrong tooltip for “Automatically select the best candidate” option
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 06 Feb 2019 Released 2.5.3 version
 * Update translations from zanata (ja, pl updated)
 * Update emoji annotations from CLDR

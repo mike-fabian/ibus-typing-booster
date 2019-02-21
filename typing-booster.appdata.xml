@@ -19,6 +19,56 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.6.0" date="2019-03-01" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (de, es, fr, pl, uk updated)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            When Left or BackSpace trigger a commit, forward Left
+            events only when no candidate was selected (i.e. the
+            preëdit was committed)
+          </li>
+          <li>
+            If a candidate is shown inline and *manually* selected,
+            show the caret at the end of the candidate
+          </li>
+          <li>
+            Right, Left, BackSpace, and Delete edit the preëdit only
+            if no candidate is *manually* selected
+          </li>
+          <li>
+            If an input char is typed while a candidate is *manually*
+            selected, add that input to the candidate
+          </li>
+          <li>
+            Change option name 'Add a space when committing by label
+            or mouse' in setup tool
+          </li>
+          <li>
+            Remove option “Use digits as select keys”
+          </li>
+          <li>
+            Make key bindings to commit or remove candidates via label
+            configurable (Resolves:
+            https://github.com/mike-fabian/ibus-typing-booster/issues/48)
+          </li>
+          <li>
+            Multi word suggestions: Commit the current commit phrase
+            and the previous phrase as a single unit as well (Resolves:
+            https://github.com/mike-fabian/ibus-typing-booster/issues/49)
+          </li>
+          <li>
+            Fix wrong tooltip for “Automatically select the best
+            candidate” option
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.5.3" date="2019-02-11" urgency="medium">
       <description>
         <ul>
