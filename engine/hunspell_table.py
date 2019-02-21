@@ -4530,18 +4530,30 @@ class TypingBoosterEngine(IBus.Engine):
                         '_process_key_event() '
                         + 'commit string unexpectedly empty.\n')
                 return self._return_false(key.val, key.code, key.state)
+            forward_arrow_left_events_ok = False
+            if not self.get_lookup_table().cursor_visible:
+                forward_arrow_left_events_ok = True
             self._commit_string(commit_string, input_phrase=input_phrase)
             if (key.val
-                in (IBus.KEY_Left, IBus.KEY_KP_Left, IBus.KEY_BackSpace)):
-                # After committing, the cursor is at the right side of
-                # the committed string. When the string has been
-                # committed because of arrow-left or
-                # control-arrow-left, the cursor has to be moved to
-                # the left side of the string. This should be done in
-                # a way which works even when surrounding text is not
-                # supported. We can do it by forwarding as many
-                # arrow-left events to the application as the
-                # committed string has characters.
+                in (IBus.KEY_Left, IBus.KEY_KP_Left, IBus.KEY_BackSpace)
+                and forward_arrow_left_events_ok):
+                # After committing, the cursor is at the right
+                # side of the committed string. When the string
+                # has been committed because arrow-left or
+                # control-arrow-left or backspace reached the left
+                # side of the preëdit, the cursor has to be moved
+                # to the left side of the string. This should be
+                # done in a way which works even when surrounding
+                # text is not supported. We can do it by
+                # forwarding as many arrow-left events to the
+                # application as the committed string has
+                # characters.
+                #
+                # Note that when a candidate is selected, the cursor
+                # is the selected candidated is committed and the then
+                # it is correct that the cursor is at the right side
+                # of the committed candidate, so no left key events
+                # are necessary in that case.
                 for dummy_char in commit_string:
                     self._forward_key_event_left()
                 # The sleep is needed because this is racy, without the
