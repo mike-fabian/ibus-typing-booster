@@ -4410,47 +4410,56 @@ class TypingBoosterEngine(IBus.Engine):
                 # into the preëdit, if possible.
             if self.is_empty():
                 return self._return_false(key.val, key.code, key.state)
-            if (key.val in (IBus.KEY_Right, IBus.KEY_KP_Right)
-                and (self._typed_string_cursor
-                     < len(self._typed_string))):
-                if key.control:
-                    # Move cursor to the end of the typed string
-                    self._typed_string_cursor = len(self._typed_string)
-                else:
-                    self._typed_string_cursor += 1
-                self._update_preedit()
-                self._update_lookup_table_and_aux()
-                return True
-            if (key.val in (IBus.KEY_Left, IBus.KEY_KP_Left)
-                and self._typed_string_cursor > 0):
-                if key.control:
-                    # Move cursor to the beginning of the typed string
-                    self._typed_string_cursor = 0
-                else:
-                    self._typed_string_cursor -= 1
-                self._update_preedit()
-                self._update_lookup_table_and_aux()
-                return True
-            if (key.val in (IBus.KEY_BackSpace,)
-                and self._typed_string_cursor > 0):
-                self.is_lookup_table_enabled_by_tab = False
-                self.is_lookup_table_enabled_by_min_char_complete = False
-                if key.control:
-                    self._remove_string_before_cursor()
-                else:
-                    self._remove_character_before_cursor()
-                self._update_ui()
-                return True
-            if (key.val in (IBus.KEY_Delete,)
-                and self._typed_string_cursor < len(self._typed_string)):
-                self.is_lookup_table_enabled_by_tab = False
-                self.is_lookup_table_enabled_by_min_char_complete = False
-                if key.control:
-                    self._remove_string_after_cursor()
-                else:
-                    self._remove_character_after_cursor()
-                self._update_ui()
-                return True
+            if (not self.get_lookup_table().cursor_visible
+                or self._is_candidate_auto_selected):
+                # Nothing is *manually* selected in the lookup table,
+                # the edit keys like Right, Left, BackSpace, and
+                # Delete edit the preëdit (If something is selected in
+                # the lookup table, they should cause a commit,
+                # especially when inline completion is used and the
+                # first candidate is selected, editing the preëdit is
+                # confusing):
+                if (key.val in (IBus.KEY_Right, IBus.KEY_KP_Right)
+                    and (self._typed_string_cursor
+                         < len(self._typed_string))):
+                    if key.control:
+                        # Move cursor to the end of the typed string
+                        self._typed_string_cursor = len(self._typed_string)
+                    else:
+                        self._typed_string_cursor += 1
+                    self._update_preedit()
+                    self._update_lookup_table_and_aux()
+                    return True
+                if (key.val in (IBus.KEY_Left, IBus.KEY_KP_Left)
+                    and self._typed_string_cursor > 0):
+                    if key.control:
+                        # Move cursor to the beginning of the typed string
+                        self._typed_string_cursor = 0
+                    else:
+                        self._typed_string_cursor -= 1
+                    self._update_preedit()
+                    self._update_lookup_table_and_aux()
+                    return True
+                if (key.val in (IBus.KEY_BackSpace,)
+                    and self._typed_string_cursor > 0):
+                    self.is_lookup_table_enabled_by_tab = False
+                    self.is_lookup_table_enabled_by_min_char_complete = False
+                    if key.control:
+                        self._remove_string_before_cursor()
+                    else:
+                        self._remove_character_before_cursor()
+                    self._update_ui()
+                    return True
+                if (key.val in (IBus.KEY_Delete,)
+                    and self._typed_string_cursor < len(self._typed_string)):
+                    self.is_lookup_table_enabled_by_tab = False
+                    self.is_lookup_table_enabled_by_min_char_complete = False
+                    if key.control:
+                        self._remove_string_after_cursor()
+                    else:
+                        self._remove_character_after_cursor()
+                    self._update_ui()
+                    return True
             # This key does not only a cursor movement in the preëdit,
             # it really triggers a commit.
             if DEBUG_LEVEL > 1:
