@@ -9,11 +9,91 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 -->
 <ldml>
 	<identity>
-		<version number="$Revision: 14858 $"/>
+		<version number="$Revision: 14879 $"/>
 		<language type="fr"/>
 		<territory type="CA"/>
 	</identity>
 	<annotations>
+		<annotation cp="🤏🏻" type="tts">pouce et index rapprochés : peau claire</annotation>
+		<annotation cp="🤏🏼">peau modérément claire | petite quantité | petite somme | peu | pouce et index rapprochés | un peu</annotation>
+		<annotation cp="🤏🏼" type="tts">pouce et index rapprochés : peau modérément claire</annotation>
+		<annotation cp="🤏🏽" type="tts">pouce et index rapprochés : peau légèrement mate</annotation>
+		<annotation cp="🤏🏾">peau modérément foncée | petite quantité | petite somme | peu | pouce et index rapprochés | un peu</annotation>
+		<annotation cp="🤏🏾" type="tts">pouce et index rapprochés : peau modérément foncée</annotation>
+		<annotation cp="🤏🏿" type="tts">pouce et index rapprochés : peau foncée</annotation>
+		<annotation cp="🦻🏻" type="tts">oreille appareillée : peau claire</annotation>
+		<annotation cp="🦻🏼">accessibilité | malentendant | oreille appareillée | peau modérément claire | prothèse auditive</annotation>
+		<annotation cp="🦻🏼" type="tts">oreille appareillée : peau modérément claire</annotation>
+		<annotation cp="🦻🏽" type="tts">oreille appareillée : peau légèrement mate</annotation>
+		<annotation cp="🦻🏾">accessibilité | malentendant | oreille appareillée | peau modérément foncée | prothèse auditive</annotation>
+		<annotation cp="🦻🏾" type="tts">oreille appareillée : peau modérément foncée</annotation>
+		<annotation cp="🦻🏿" type="tts">oreille appareillée : peau foncée</annotation>
+		<annotation cp="🧍🏻" type="tts">personne debout : peau claire</annotation>
+		<annotation cp="🧍🏼">debout | peau modérément claire | personne debout</annotation>
+		<annotation cp="🧍🏼" type="tts">personne debout : peau modérément claire</annotation>
+		<annotation cp="🧍🏽" type="tts">personne debout : peau légèrement mate</annotation>
+		<annotation cp="🧍🏾">debout | peau modérément foncée | personne debout</annotation>
+		<annotation cp="🧍🏾" type="tts">personne debout : peau modérément foncée</annotation>
+		<annotation cp="🧍🏿" type="tts">personne debout : peau foncée</annotation>
+		<annotation cp="🧍🏻‍♀" type="tts">femme debout : peau claire</annotation>
+		<annotation cp="🧍🏼‍♀">debout | femme | peau modérément claire</annotation>
+		<annotation cp="🧍🏼‍♀" type="tts">femme debout : peau modérément claire</annotation>
+		<annotation cp="🧍🏽‍♀" type="tts">femme debout : peau légèrement mate</annotation>
+		<annotation cp="🧍🏾‍♀">debout | femme | peau modérément foncée</annotation>
+		<annotation cp="🧍🏾‍♀" type="tts">femme debout : peau modérément foncée</annotation>
+		<annotation cp="🧍🏿‍♀" type="tts">femme debout : peau foncée</annotation>
+		<annotation cp="🧍🏻‍♂" type="tts">homme debout : peau claire</annotation>
+		<annotation cp="🧍🏼‍♂">debout | homme | peau modérément claire</annotation>
+		<annotation cp="🧍🏼‍♂" type="tts">homme debout : peau modérément claire</annotation>
+		<annotation cp="🧍🏽‍♂" type="tts">homme debout : peau légèrement mate</annotation>
+		<annotation cp="🧍🏾‍♂">debout | homme | peau modérément foncée</annotation>
+		<annotation cp="🧍🏾‍♂" type="tts">homme debout : peau modérément foncée</annotation>
+		<annotation cp="🧍🏿‍♂" type="tts">homme debout : peau foncée</annotation>
+		<annotation cp="🧎🏻" type="tts">personne à genoux : peau claire</annotation>
+		<annotation cp="🧎🏼">à genoux | peau modérément claire | personne à genoux</annotation>
+		<annotation cp="🧎🏼" type="tts">personne à genoux : peau modérément claire</annotation>
+		<annotation cp="🧎🏽" type="tts">personne à genoux : peau légèrement mate</annotation>
+		<annotation cp="🧎🏾">à genoux | peau modérément foncée | personne à genoux</annotation>
+		<annotation cp="🧎🏾" type="tts">personne à genoux : peau modérément foncée</annotation>
+		<annotation cp="🧎🏿" type="tts">personne à genoux : peau foncée</annotation>
+		<annotation cp="🧎🏻‍♀" type="tts">femme à genoux : peau claire</annotation>
+		<annotation cp="🧎🏼‍♀">à genoux | femme | femme à genoux | peau modérément claire</annotation>
+		<annotation cp="🧎🏼‍♀" type="tts">femme à genoux : peau modérément claire</annotation>
+		<annotation cp="🧎🏽‍♀" type="tts">femme à genoux : peau légèrement mate</annotation>
+		<annotation cp="🧎🏾‍♀">à genoux | femme | femme à genoux | peau modérément foncée</annotation>
+		<annotation cp="🧎🏾‍♀" type="tts">femme à genoux : peau modérément foncée</annotation>
+		<annotation cp="🧎🏿‍♀" type="tts">femme à genoux : peau foncée</annotation>
+		<annotation cp="🧎🏻‍♂" type="tts">homme à genoux : peau claire</annotation>
+		<annotation cp="🧎🏼‍♂">à genoux | homme | homme à genoux | peau modérément claire</annotation>
+		<annotation cp="🧎🏼‍♂" type="tts">homme à genoux : peau modérément claire</annotation>
+		<annotation cp="🧎🏽‍♂" type="tts">homme à genoux : peau légèrement mate</annotation>
+		<annotation cp="🧎🏾‍♂">à genoux | homme | homme à genoux | peau modérément foncée</annotation>
+		<annotation cp="🧎🏾‍♂" type="tts">homme à genoux : peau modérément foncée</annotation>
+		<annotation cp="🧎🏿‍♂" type="tts">homme à genoux : peau foncée</annotation>
+		<annotation cp="🧏🏻" type="tts">personne sourde : peau claire</annotation>
+		<annotation cp="🧏🏼">accessibilité | entendre | malentendant | oreille | peau modérément claire | personne sourde | sourd</annotation>
+		<annotation cp="🧏🏼" type="tts">personne sourde : peau modérément claire</annotation>
+		<annotation cp="🧏🏽" type="tts">personne sourde : peau légèrement mate</annotation>
+		<annotation cp="🧏🏾">accessibilité | entendre | malentendant | oreille | peau modérément foncée | personne sourde | sourd</annotation>
+		<annotation cp="🧏🏾" type="tts">personne sourde : peau modérément foncée</annotation>
+		<annotation cp="🧏🏿" type="tts">personne sourde : peau foncée</annotation>
+		<annotation cp="🧏🏻‍♀">femme | malentendante | peau claire | sourde</annotation>
+		<annotation cp="🧏🏻‍♀" type="tts">femme sourde : peau claire</annotation>
+		<annotation cp="🧏🏼‍♀">femme | malentendante | peau modérément claire | sourde</annotation>
+		<annotation cp="🧏🏼‍♀" type="tts">femme sourde : peau modérément claire</annotation>
+		<annotation cp="🧏🏽‍♀">femme | malentendante | peau légèrement mate | sourde</annotation>
+		<annotation cp="🧏🏽‍♀" type="tts">femme sourde : peau légèrement mate</annotation>
+		<annotation cp="🧏🏾‍♀">femme | malentendante | peau modérément foncée | sourde</annotation>
+		<annotation cp="🧏🏾‍♀" type="tts">femme sourde : peau modérément foncée</annotation>
+		<annotation cp="🧏🏿‍♀">femme | malentendante | peau foncée | sourde</annotation>
+		<annotation cp="🧏🏿‍♀" type="tts">femme sourde : peau foncée</annotation>
+		<annotation cp="🧏🏻‍♂" type="tts">homme sourd : peau claire</annotation>
+		<annotation cp="🧏🏼‍♂">accessibilité | entendre | homme sourd | malentendant | oreille | peau modérément claire | sourd</annotation>
+		<annotation cp="🧏🏼‍♂" type="tts">homme sourd : peau modérément claire</annotation>
+		<annotation cp="🧏🏽‍♂" type="tts">homme sourd : peau légèrement mate</annotation>
+		<annotation cp="🧏🏾‍♂">accessibilité | entendre | homme sourd | malentendant | oreille | peau modérément foncée | sourd</annotation>
+		<annotation cp="🧏🏾‍♂" type="tts">homme sourd : peau modérément foncée</annotation>
+		<annotation cp="🧏🏿‍♂" type="tts">homme sourd : peau foncée</annotation>
 		<annotation cp="👋🏻">coucou | main | peau claire | signe</annotation>
 		<annotation cp="👋🏻" type="tts">signe de la main : peau claire</annotation>
 		<annotation cp="👋🏼">coucou | main | peau modérément claire | signe</annotation>
@@ -450,6 +530,27 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👨🏾" type="tts">homme : peau modérément foncée</annotation>
 		<annotation cp="👨🏿">adulte | homme | peau foncée</annotation>
 		<annotation cp="👨🏿" type="tts">homme : peau foncée</annotation>
+		<annotation cp="👨🏻‍🦯" type="tts">homme avec canne blanche : peau claire</annotation>
+		<annotation cp="👨🏼‍🦯">accessibilité | aveugle | déficient visuel | homme | homme avec canne blanche | malvoyant | peau modérément claire</annotation>
+		<annotation cp="👨🏼‍🦯" type="tts">homme avec canne blanche : peau modérément claire</annotation>
+		<annotation cp="👨🏽‍🦯" type="tts">homme avec canne blanche : peau légèrement mate</annotation>
+		<annotation cp="👨🏾‍🦯">accessibilité | aveugle | déficient visuel | homme | homme avec canne blanche | malvoyant | peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍🦯" type="tts">homme avec canne blanche : peau modérément foncée</annotation>
+		<annotation cp="👨🏿‍🦯" type="tts">homme avec canne blanche : peau foncée</annotation>
+		<annotation cp="👨🏻‍🦼" type="tts">homme en fauteuil motorisé : peau claire</annotation>
+		<annotation cp="👨🏼‍🦼">accessibilité | fauteuil roulant | homme | homme en fauteuil motorisé | peau modérément claire</annotation>
+		<annotation cp="👨🏼‍🦼" type="tts">homme en fauteuil motorisé : peau modérément claire</annotation>
+		<annotation cp="👨🏽‍🦼" type="tts">homme en fauteuil motorisé : peau légèrement mate</annotation>
+		<annotation cp="👨🏾‍🦼">accessibilité | fauteuil roulant | homme | homme en fauteuil motorisé | peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍🦼" type="tts">homme en fauteuil motorisé : peau modérément foncée</annotation>
+		<annotation cp="👨🏿‍🦼" type="tts">homme en fauteuil motorisé : peau foncée</annotation>
+		<annotation cp="👨🏻‍🦽" type="tts">homme en fauteuil roulant manuel : peau claire</annotation>
+		<annotation cp="👨🏼‍🦽">accessibilité | fauteuil roulant | homme | homme en fauteuil roulant manuel | peau modérément claire</annotation>
+		<annotation cp="👨🏼‍🦽" type="tts">homme en fauteuil roulant manuel : peau modérément claire</annotation>
+		<annotation cp="👨🏽‍🦽" type="tts">homme en fauteuil roulant manuel : peau légèrement mate</annotation>
+		<annotation cp="👨🏾‍🦽">accessibilité | fauteuil roulant | homme | homme en fauteuil roulant manuel | peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍🦽" type="tts">homme en fauteuil roulant manuel : peau modérément foncée</annotation>
+		<annotation cp="👨🏿‍🦽" type="tts">homme en fauteuil roulant manuel : peau foncée</annotation>
 		<annotation cp="👨🏼‍🤝‍👨🏻">couple | deux hommes se tenant par la main | ensemble | gémeaux | hommes | jumeaux | main | main dans la main | peau claire | peau modérément claire | se tenant par la main | union | zodiaque</annotation>
 		<annotation cp="👨🏼‍🤝‍👨🏻" type="tts">deux hommes se tenant par la main : peau modérément claire et peau claire</annotation>
 		<annotation cp="👨🏽‍🤝‍👨🏻">couple | deux hommes se tenant par la main | ensemble | gémeaux | hommes | jumeaux | main | main dans la main | peau claire | peau légèrement mate | se tenant par la main | union | zodiaque</annotation>
@@ -518,27 +619,6 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👨🏾‍🦲" type="tts">homme : peau modérément foncée et chauve</annotation>
 		<annotation cp="👨🏿‍🦲">adulte | chauve | homme | peau foncée</annotation>
 		<annotation cp="👨🏿‍🦲" type="tts">homme : peau foncée et chauve</annotation>
-		<annotation cp="👨🏻‍🦯" type="tts">homme avec canne blanche : peau claire</annotation>
-		<annotation cp="👨🏼‍🦯">accessibilité | aveugle | déficient visuel | homme | homme avec canne blanche | malvoyant | peau modérément claire</annotation>
-		<annotation cp="👨🏼‍🦯" type="tts">homme avec canne blanche : peau modérément claire</annotation>
-		<annotation cp="👨🏽‍🦯" type="tts">homme avec canne blanche : peau légèrement mate</annotation>
-		<annotation cp="👨🏾‍🦯">accessibilité | aveugle | déficient visuel | homme | homme avec canne blanche | malvoyant | peau modérément foncée</annotation>
-		<annotation cp="👨🏾‍🦯" type="tts">homme avec canne blanche : peau modérément foncée</annotation>
-		<annotation cp="👨🏿‍🦯" type="tts">homme avec canne blanche : peau foncée</annotation>
-		<annotation cp="👨🏻‍🦼" type="tts">homme en fauteuil motorisé : peau claire</annotation>
-		<annotation cp="👨🏼‍🦼">accessibilité | fauteuil roulant | homme | homme en fauteuil motorisé | peau modérément claire</annotation>
-		<annotation cp="👨🏼‍🦼" type="tts">homme en fauteuil motorisé : peau modérément claire</annotation>
-		<annotation cp="👨🏽‍🦼" type="tts">homme en fauteuil motorisé : peau légèrement mate</annotation>
-		<annotation cp="👨🏾‍🦼">accessibilité | fauteuil roulant | homme | homme en fauteuil motorisé | peau modérément foncée</annotation>
-		<annotation cp="👨🏾‍🦼" type="tts">homme en fauteuil motorisé : peau modérément foncée</annotation>
-		<annotation cp="👨🏿‍🦼" type="tts">homme en fauteuil motorisé : peau foncée</annotation>
-		<annotation cp="👨🏻‍🦽" type="tts">homme en fauteuil roulant manuel : peau claire</annotation>
-		<annotation cp="👨🏼‍🦽">accessibilité | fauteuil roulant | homme | homme en fauteuil roulant manuel | peau modérément claire</annotation>
-		<annotation cp="👨🏼‍🦽" type="tts">homme en fauteuil roulant manuel : peau modérément claire</annotation>
-		<annotation cp="👨🏽‍🦽" type="tts">homme en fauteuil roulant manuel : peau légèrement mate</annotation>
-		<annotation cp="👨🏾‍🦽">accessibilité | fauteuil roulant | homme | homme en fauteuil roulant manuel | peau modérément foncée</annotation>
-		<annotation cp="👨🏾‍🦽" type="tts">homme en fauteuil roulant manuel : peau modérément foncée</annotation>
-		<annotation cp="👨🏿‍🦽" type="tts">homme en fauteuil roulant manuel : peau foncée</annotation>
 		<annotation cp="👱🏻‍♂">blond | homme | peau claire</annotation>
 		<annotation cp="👱🏻‍♂" type="tts">homme blond : peau claire</annotation>
 		<annotation cp="👱🏼‍♂">blond | homme | peau modérément claire</annotation>
@@ -569,6 +649,30 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👩🏾" type="tts">femme : peau modérément foncée</annotation>
 		<annotation cp="👩🏿">adulte | femme | peau foncée</annotation>
 		<annotation cp="👩🏿" type="tts">femme : peau foncée</annotation>
+		<annotation cp="👩🏻‍🦯">accessibilité | aveugle | déficiente visuelle | femme | malvoyante | peau claire</annotation>
+		<annotation cp="👩🏻‍🦯" type="tts">femme avec canne blanche : peau claire</annotation>
+		<annotation cp="👩🏼‍🦯">accessibilité | aveugle | déficiente visuelle | femme | malvoyante | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍🦯" type="tts">femme avec canne blanche : peau modérément claire</annotation>
+		<annotation cp="👩🏽‍🦯">accessibilité | aveugle | déficiente visuelle | femme | malvoyante | peau légèrement mate</annotation>
+		<annotation cp="👩🏽‍🦯" type="tts">femme avec canne blanche : peau légèrement mate</annotation>
+		<annotation cp="👩🏾‍🦯">accessibilité | aveugle | déficiente visuelle | femme | malvoyante | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍🦯" type="tts">femme avec canne blanche : peau modérément foncée</annotation>
+		<annotation cp="👩🏿‍🦯">accessibilité | aveugle | déficiente visuelle | femme | malvoyante | peau foncée</annotation>
+		<annotation cp="👩🏿‍🦯" type="tts">femme avec canne blanche : peau foncée</annotation>
+		<annotation cp="👩🏻‍🦼" type="tts">femme en fauteuil motorisé : peau claire</annotation>
+		<annotation cp="👩🏼‍🦼">accessibilité | fauteuil roulant | femme | femme en fauteuil motorisé | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍🦼" type="tts">femme en fauteuil motorisé : peau modérément claire</annotation>
+		<annotation cp="👩🏽‍🦼" type="tts">femme en fauteuil motorisé : peau légèrement mate</annotation>
+		<annotation cp="👩🏾‍🦼">accessibilité | fauteuil roulant | femme | femme en fauteuil motorisé | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍🦼" type="tts">femme en fauteuil motorisé : peau modérément foncée</annotation>
+		<annotation cp="👩🏿‍🦼" type="tts">femme en fauteuil motorisé : peau foncée</annotation>
+		<annotation cp="👩🏻‍🦽" type="tts">femme en fauteuil roulant manuel : peau claire</annotation>
+		<annotation cp="👩🏼‍🦽">accessibilité | fauteuil roulant | femme | femme en fauteuil roulant manuel | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍🦽" type="tts">femme en fauteuil roulant manuel : peau modérément claire</annotation>
+		<annotation cp="👩🏽‍🦽" type="tts">femme en fauteuil roulant manuel : peau légèrement mate</annotation>
+		<annotation cp="👩🏾‍🦽">accessibilité | fauteuil roulant | femme | femme en fauteuil roulant manuel | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍🦽" type="tts">femme en fauteuil roulant manuel : peau modérément foncée</annotation>
+		<annotation cp="👩🏿‍🦽" type="tts">femme en fauteuil roulant manuel : peau foncée</annotation>
 		<annotation cp="👩🏻‍🤝‍👨🏼">couple | ensemble | femme | homme | homme et femme se tenant par la main | main | main dans la main | peau claire | peau modérément claire | se tenant par la main | union</annotation>
 		<annotation cp="👩🏻‍🤝‍👨🏼" type="tts">homme et femme se tenant par la main : peau claire et peau modérément claire</annotation>
 		<annotation cp="👩🏻‍🤝‍👨🏽">couple | ensemble | femme | homme | homme et femme se tenant par la main | main | main dans la main | peau claire | peau légèrement mate | se tenant par la main | union</annotation>
@@ -677,30 +781,6 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👩🏾‍🦲" type="tts">femme : peau modérément foncée et chauve</annotation>
 		<annotation cp="👩🏿‍🦲">adulte | chauve | femme | peau foncée</annotation>
 		<annotation cp="👩🏿‍🦲" type="tts">femme : peau foncée et chauve</annotation>
-		<annotation cp="👩🏻‍🦯">accessibilité | aveugle | déficiente visuelle | femme | malvoyante | peau claire</annotation>
-		<annotation cp="👩🏻‍🦯" type="tts">femme avec canne blanche : peau claire</annotation>
-		<annotation cp="👩🏼‍🦯">accessibilité | aveugle | déficiente visuelle | femme | malvoyante | peau modérément claire</annotation>
-		<annotation cp="👩🏼‍🦯" type="tts">femme avec canne blanche : peau modérément claire</annotation>
-		<annotation cp="👩🏽‍🦯">accessibilité | aveugle | déficiente visuelle | femme | malvoyante | peau légèrement mate</annotation>
-		<annotation cp="👩🏽‍🦯" type="tts">femme avec canne blanche : peau légèrement mate</annotation>
-		<annotation cp="👩🏾‍🦯">accessibilité | aveugle | déficiente visuelle | femme | malvoyante | peau modérément foncée</annotation>
-		<annotation cp="👩🏾‍🦯" type="tts">femme avec canne blanche : peau modérément foncée</annotation>
-		<annotation cp="👩🏿‍🦯">accessibilité | aveugle | déficiente visuelle | femme | malvoyante | peau foncée</annotation>
-		<annotation cp="👩🏿‍🦯" type="tts">femme avec canne blanche : peau foncée</annotation>
-		<annotation cp="👩🏻‍🦼" type="tts">femme en fauteuil motorisé : peau claire</annotation>
-		<annotation cp="👩🏼‍🦼">accessibilité | fauteuil roulant | femme | femme en fauteuil motorisé | peau modérément claire</annotation>
-		<annotation cp="👩🏼‍🦼" type="tts">femme en fauteuil motorisé : peau modérément claire</annotation>
-		<annotation cp="👩🏽‍🦼" type="tts">femme en fauteuil motorisé : peau légèrement mate</annotation>
-		<annotation cp="👩🏾‍🦼">accessibilité | fauteuil roulant | femme | femme en fauteuil motorisé | peau modérément foncée</annotation>
-		<annotation cp="👩🏾‍🦼" type="tts">femme en fauteuil motorisé : peau modérément foncée</annotation>
-		<annotation cp="👩🏿‍🦼" type="tts">femme en fauteuil motorisé : peau foncée</annotation>
-		<annotation cp="👩🏻‍🦽" type="tts">femme en fauteuil roulant manuel : peau claire</annotation>
-		<annotation cp="👩🏼‍🦽">accessibilité | fauteuil roulant | femme | femme en fauteuil roulant manuel | peau modérément claire</annotation>
-		<annotation cp="👩🏼‍🦽" type="tts">femme en fauteuil roulant manuel : peau modérément claire</annotation>
-		<annotation cp="👩🏽‍🦽" type="tts">femme en fauteuil roulant manuel : peau légèrement mate</annotation>
-		<annotation cp="👩🏾‍🦽">accessibilité | fauteuil roulant | femme | femme en fauteuil roulant manuel | peau modérément foncée</annotation>
-		<annotation cp="👩🏾‍🦽" type="tts">femme en fauteuil roulant manuel : peau modérément foncée</annotation>
-		<annotation cp="👩🏿‍🦽" type="tts">femme en fauteuil roulant manuel : peau foncée</annotation>
 		<annotation cp="👱🏻‍♀">blonde | femme | peau claire</annotation>
 		<annotation cp="👱🏻‍♀" type="tts">femme blonde : peau claire</annotation>
 		<annotation cp="👱🏼‍♀">blonde | femme | peau modérément claire</annotation>
@@ -2570,85 +2650,5 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="8⃣" type="tts">dessus de touche : 8</annotation>
 		<annotation cp="9⃣">dessus de touche</annotation>
 		<annotation cp="9⃣" type="tts">dessus de touche : 9</annotation>
-		<annotation cp="🤏🏻" type="tts">pouce et index rapprochés : peau claire</annotation>
-		<annotation cp="🤏🏼">peau modérément claire | petite quantité | petite somme | peu | pouce et index rapprochés | un peu</annotation>
-		<annotation cp="🤏🏼" type="tts">pouce et index rapprochés : peau modérément claire</annotation>
-		<annotation cp="🤏🏽" type="tts">pouce et index rapprochés : peau légèrement mate</annotation>
-		<annotation cp="🤏🏾">peau modérément foncée | petite quantité | petite somme | peu | pouce et index rapprochés | un peu</annotation>
-		<annotation cp="🤏🏾" type="tts">pouce et index rapprochés : peau modérément foncée</annotation>
-		<annotation cp="🤏🏿" type="tts">pouce et index rapprochés : peau foncée</annotation>
-		<annotation cp="🦻🏻" type="tts">oreille appareillée : peau claire</annotation>
-		<annotation cp="🦻🏼">accessibilité | malentendant | oreille appareillée | peau modérément claire | prothèse auditive</annotation>
-		<annotation cp="🦻🏼" type="tts">oreille appareillée : peau modérément claire</annotation>
-		<annotation cp="🦻🏽" type="tts">oreille appareillée : peau légèrement mate</annotation>
-		<annotation cp="🦻🏾">accessibilité | malentendant | oreille appareillée | peau modérément foncée | prothèse auditive</annotation>
-		<annotation cp="🦻🏾" type="tts">oreille appareillée : peau modérément foncée</annotation>
-		<annotation cp="🦻🏿" type="tts">oreille appareillée : peau foncée</annotation>
-		<annotation cp="🧍🏻" type="tts">personne debout : peau claire</annotation>
-		<annotation cp="🧍🏼">debout | peau modérément claire | personne debout</annotation>
-		<annotation cp="🧍🏼" type="tts">personne debout : peau modérément claire</annotation>
-		<annotation cp="🧍🏽" type="tts">personne debout : peau légèrement mate</annotation>
-		<annotation cp="🧍🏾">debout | peau modérément foncée | personne debout</annotation>
-		<annotation cp="🧍🏾" type="tts">personne debout : peau modérément foncée</annotation>
-		<annotation cp="🧍🏿" type="tts">personne debout : peau foncée</annotation>
-		<annotation cp="🧍🏻‍♀" type="tts">femme debout : peau claire</annotation>
-		<annotation cp="🧍🏼‍♀">debout | femme | peau modérément claire</annotation>
-		<annotation cp="🧍🏼‍♀" type="tts">femme debout : peau modérément claire</annotation>
-		<annotation cp="🧍🏽‍♀" type="tts">femme debout : peau légèrement mate</annotation>
-		<annotation cp="🧍🏾‍♀">debout | femme | peau modérément foncée</annotation>
-		<annotation cp="🧍🏾‍♀" type="tts">femme debout : peau modérément foncée</annotation>
-		<annotation cp="🧍🏿‍♀" type="tts">femme debout : peau foncée</annotation>
-		<annotation cp="🧍🏻‍♂" type="tts">homme debout : peau claire</annotation>
-		<annotation cp="🧍🏼‍♂">debout | homme | peau modérément claire</annotation>
-		<annotation cp="🧍🏼‍♂" type="tts">homme debout : peau modérément claire</annotation>
-		<annotation cp="🧍🏽‍♂" type="tts">homme debout : peau légèrement mate</annotation>
-		<annotation cp="🧍🏾‍♂">debout | homme | peau modérément foncée</annotation>
-		<annotation cp="🧍🏾‍♂" type="tts">homme debout : peau modérément foncée</annotation>
-		<annotation cp="🧍🏿‍♂" type="tts">homme debout : peau foncée</annotation>
-		<annotation cp="🧎🏻" type="tts">personne à genoux : peau claire</annotation>
-		<annotation cp="🧎🏼">à genoux | peau modérément claire | personne à genoux</annotation>
-		<annotation cp="🧎🏼" type="tts">personne à genoux : peau modérément claire</annotation>
-		<annotation cp="🧎🏽" type="tts">personne à genoux : peau légèrement mate</annotation>
-		<annotation cp="🧎🏾">à genoux | peau modérément foncée | personne à genoux</annotation>
-		<annotation cp="🧎🏾" type="tts">personne à genoux : peau modérément foncée</annotation>
-		<annotation cp="🧎🏿" type="tts">personne à genoux : peau foncée</annotation>
-		<annotation cp="🧎🏻‍♀" type="tts">femme à genoux : peau claire</annotation>
-		<annotation cp="🧎🏼‍♀">à genoux | femme | femme à genoux | peau modérément claire</annotation>
-		<annotation cp="🧎🏼‍♀" type="tts">femme à genoux : peau modérément claire</annotation>
-		<annotation cp="🧎🏽‍♀" type="tts">femme à genoux : peau légèrement mate</annotation>
-		<annotation cp="🧎🏾‍♀">à genoux | femme | femme à genoux | peau modérément foncée</annotation>
-		<annotation cp="🧎🏾‍♀" type="tts">femme à genoux : peau modérément foncée</annotation>
-		<annotation cp="🧎🏿‍♀" type="tts">femme à genoux : peau foncée</annotation>
-		<annotation cp="🧎🏻‍♂" type="tts">homme à genoux : peau claire</annotation>
-		<annotation cp="🧎🏼‍♂">à genoux | homme | homme à genoux | peau modérément claire</annotation>
-		<annotation cp="🧎🏼‍♂" type="tts">homme à genoux : peau modérément claire</annotation>
-		<annotation cp="🧎🏽‍♂" type="tts">homme à genoux : peau légèrement mate</annotation>
-		<annotation cp="🧎🏾‍♂">à genoux | homme | homme à genoux | peau modérément foncée</annotation>
-		<annotation cp="🧎🏾‍♂" type="tts">homme à genoux : peau modérément foncée</annotation>
-		<annotation cp="🧎🏿‍♂" type="tts">homme à genoux : peau foncée</annotation>
-		<annotation cp="🧏🏻" type="tts">personne sourde : peau claire</annotation>
-		<annotation cp="🧏🏼">accessibilité | entendre | malentendant | oreille | peau modérément claire | personne sourde | sourd</annotation>
-		<annotation cp="🧏🏼" type="tts">personne sourde : peau modérément claire</annotation>
-		<annotation cp="🧏🏽" type="tts">personne sourde : peau légèrement mate</annotation>
-		<annotation cp="🧏🏾">accessibilité | entendre | malentendant | oreille | peau modérément foncée | personne sourde | sourd</annotation>
-		<annotation cp="🧏🏾" type="tts">personne sourde : peau modérément foncée</annotation>
-		<annotation cp="🧏🏿" type="tts">personne sourde : peau foncée</annotation>
-		<annotation cp="🧏🏻‍♀">femme | malentendante | peau claire | sourde</annotation>
-		<annotation cp="🧏🏻‍♀" type="tts">femme sourde : peau claire</annotation>
-		<annotation cp="🧏🏼‍♀">femme | malentendante | peau modérément claire | sourde</annotation>
-		<annotation cp="🧏🏼‍♀" type="tts">femme sourde : peau modérément claire</annotation>
-		<annotation cp="🧏🏽‍♀">femme | malentendante | peau légèrement mate | sourde</annotation>
-		<annotation cp="🧏🏽‍♀" type="tts">femme sourde : peau légèrement mate</annotation>
-		<annotation cp="🧏🏾‍♀">femme | malentendante | peau modérément foncée | sourde</annotation>
-		<annotation cp="🧏🏾‍♀" type="tts">femme sourde : peau modérément foncée</annotation>
-		<annotation cp="🧏🏿‍♀">femme | malentendante | peau foncée | sourde</annotation>
-		<annotation cp="🧏🏿‍♀" type="tts">femme sourde : peau foncée</annotation>
-		<annotation cp="🧏🏻‍♂" type="tts">homme sourd : peau claire</annotation>
-		<annotation cp="🧏🏼‍♂">accessibilité | entendre | homme sourd | malentendant | oreille | peau modérément claire | sourd</annotation>
-		<annotation cp="🧏🏼‍♂" type="tts">homme sourd : peau modérément claire</annotation>
-		<annotation cp="🧏🏽‍♂" type="tts">homme sourd : peau légèrement mate</annotation>
-		<annotation cp="🧏🏾‍♂">accessibilité | entendre | homme sourd | malentendant | oreille | peau modérément foncée | sourd</annotation>
-		<annotation cp="🧏🏾‍♂" type="tts">homme sourd : peau modérément foncée</annotation>
-		<annotation cp="🧏🏿‍♂" type="tts">homme sourd : peau foncée</annotation>
 	</annotations>
 </ldml>

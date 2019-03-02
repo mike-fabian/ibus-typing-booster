@@ -9,7 +9,7 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 -->
 <ldml>
 	<identity>
-		<version number="$Revision: 14858 $"/>
+		<version number="$Revision: 14879 $"/>
 		<language type="de"/>
 		<territory type="CH"/>
 	</identity>
@@ -44,6 +44,11 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="🦶🏾" type="tts">Fuss: mitteldunkle Hautfarbe</annotation>
 		<annotation cp="🦶🏿">dunkle Hautfarbe | Fuss</annotation>
 		<annotation cp="🦶🏿" type="tts">Fuss: dunkle Hautfarbe</annotation>
+		<annotation cp="👨🏻‍🦯">Barrierefreiheit | blind | helle Hautfarbe | Mann</annotation>
+		<annotation cp="👨🏼‍🦯">Barrierefreiheit | blind | Mann | mittelhelle Hautfarbe</annotation>
+		<annotation cp="👨🏽‍🦯">Barrierefreiheit | blind | Mann | mittlere Hautfarbe</annotation>
+		<annotation cp="👨🏾‍🦯">Barrierefreiheit | blind | Mann | mitteldunkle Hautfarbe</annotation>
+		<annotation cp="👨🏿‍🦯">Barrierefreiheit | blind | dunkle Hautfarbe | Mann</annotation>
 		<annotation cp="👨‍🦳">Mann | weisses Haar</annotation>
 		<annotation cp="👨‍🦳" type="tts">Mann: weisses Haar</annotation>
 		<annotation cp="👨🏻‍🦳">helle Hautfarbe | Mann | weisses Haar</annotation>
@@ -56,11 +61,6 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👨🏾‍🦳" type="tts">Mann: mitteldunkle Hautfarbe, weisses Haar</annotation>
 		<annotation cp="👨🏿‍🦳">dunkle Hautfarbe | Mann | weisses Haar</annotation>
 		<annotation cp="👨🏿‍🦳" type="tts">Mann: dunkle Hautfarbe, weisses Haar</annotation>
-		<annotation cp="👨🏻‍🦯">Barrierefreiheit | blind | helle Hautfarbe | Mann</annotation>
-		<annotation cp="👨🏼‍🦯">Barrierefreiheit | blind | Mann | mittelhelle Hautfarbe</annotation>
-		<annotation cp="👨🏽‍🦯">Barrierefreiheit | blind | Mann | mittlere Hautfarbe</annotation>
-		<annotation cp="👨🏾‍🦯">Barrierefreiheit | blind | Mann | mitteldunkle Hautfarbe</annotation>
-		<annotation cp="👨🏿‍🦯">Barrierefreiheit | blind | dunkle Hautfarbe | Mann</annotation>
 		<annotation cp="👩‍🦳">Frau | weisses Haar</annotation>
 		<annotation cp="👩‍🦳" type="tts">Frau: weisses Haar</annotation>
 		<annotation cp="👩🏻‍🦳">Frau | helle Hautfarbe | weisses Haar</annotation>
