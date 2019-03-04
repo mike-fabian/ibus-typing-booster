@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 06 May 2019 Released 2.6.1 version
+* Support emoji presentation and text presentation in emoji-picker
+* Improve itb_emoji.py to also support text presentation of emoji
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 01 Mar 2019 Released 2.6.0 version
 * Update translations from zanata (de, es, fr, pl, uk updated)
 * Update emoji annotations from CLDR

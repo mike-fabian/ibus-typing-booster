@@ -19,6 +19,23 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.6.1" date="2019-05-06" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Support emoji presentation and text presentation in
+            emoji-picker
+          </li>
+          <li>
+            Improve itb_emoji.py to also support text presentation of
+            emoji
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.6.0" date="2019-03-01" urgency="medium">
       <description>
         <ul>
