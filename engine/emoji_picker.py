@@ -158,20 +158,6 @@ def parse_args():
               + 'not later than this Unicode version. '
               + 'default: %(default)s'))
     parser.add_argument(
-        '--non_fully_qualified',
-        action='store_true',
-        default=False,
-        help=('Do not use the emoji variation selector '
-              + '(U+FE0F VARIATION SELECTOR-16) '
-              + 'in emoji sequences. Without this option, U+FE0F is used '
-              + 'according to the recommendation of unicode.org. '
-              + 'On some systems, and with some fonts this might make '
-              + 'some emoji sequences render incorrectly though. '
-              + 'If you see some emoji sequences rendered as several glyphs '
-              + 'instead of being rendered as a single glyph, you can try '
-              + 'whether this option improves the rendering for you. '
-              + 'default: %(default)s'))
-    parser.add_argument(
         '-d', '--debug',
         action='store_true',
         default=False,
@@ -197,7 +183,6 @@ class EmojiPickerUI(Gtk.Window):
                  unicode_data_all=False,
                  emoji_unicode_min=1.0,
                  emoji_unicode_max=100.0,
-                 non_fully_qualified=False,
                  font=None,
                  fontsize=None,
                  fallback=None):
@@ -270,13 +255,12 @@ class EmojiPickerUI(Gtk.Window):
         self._emoji_unicode_min = emoji_unicode_min
         self._emoji_unicode_max = emoji_unicode_max
         self._unicode_data_all = unicode_data_all
-        self._non_fully_qualified = non_fully_qualified
         self._emoji_matcher = itb_emoji.EmojiMatcher(
             languages=self._languages,
             unicode_data_all=self._unicode_data_all,
             emoji_unicode_min=self._emoji_unicode_min,
             emoji_unicode_max=self._emoji_unicode_max,
-            non_fully_qualified=self._non_fully_qualified)
+            variation_selector='emoji')
         self._gettext_translations = {}
         for language in itb_util.expand_languages(self._languages):
             mo_file = gettext.find(DOMAINNAME, languages=[language])
@@ -564,6 +548,26 @@ class EmojiPickerUI(Gtk.Window):
         self._spinner.stop()
         # self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.ARROW))
 
+    def _variation_selector_normalize_for_font(self, emoji):
+        '''
+        Normalize the variation selectors in the emoji sequence.
+
+        Returns a new emoji sequences with variation selectors added
+        or removed as appropriate for the current font.
+
+        :param emoji: The emoji
+        :type emoji: String
+        :rtype: String
+        '''
+        if self._font == 'text' or self._font.lower() == 'symbola':
+            return self._emoji_matcher.variation_selector_normalize(
+                emoji, 'text')
+        if self._font == 'unqualified':
+            return self._emoji_matcher.variation_selector_normalize(
+                emoji, '')
+        return self._emoji_matcher.variation_selector_normalize(
+            emoji, 'emoji')
+
     def _browse_treeview_unselect_all(self):
         '''
         Unselect everything in the treeview for browsing the categories
@@ -656,12 +660,14 @@ class EmojiPickerUI(Gtk.Window):
                 self._font + ' ' + str(self._fontsize), emoji,
                 fallback=self._fallback):
             fonts_description += '\n'
+            code_points = ''
             for char in text:
-                fonts_description += (
-                    '<span font="%s" fallback="%s" >'
-                    %(self._font, str(self._fallback).lower())
-                    + char + '</span>'
-                    + ' <span fallback="false">U+%X</span>' %ord(char))
+                code_points += ' U+%X' %ord(char)
+            fonts_description += (
+                '<span font="%s" fallback="%s" >'
+                %(self._font, str(self._fallback).lower())
+                + text + '</span>'
+                + '<span fallback="false">%s</span>' %code_points)
             fonts_description += ': ' + font_family
         descriptions.append(fonts_description)
         if self._emoji_matcher.unicode_version(emoji):
@@ -757,6 +763,7 @@ class EmojiPickerUI(Gtk.Window):
         for emoji in emoji_list:
             while Gtk.events_pending():
                 Gtk.main_iteration()
+            emoji = self._variation_selector_normalize_for_font(emoji)
             if not is_recently_used:
                 skin_tone_variants = self._emoji_matcher.skin_tone_variants(
                     emoji)
@@ -947,9 +954,7 @@ class EmojiPickerUI(Gtk.Window):
             # add or remove vs16 according to the current setting:
             if emoji:
                 self._recently_used_emoji[
-                    self._emoji_matcher.variation_selector_16_normalize(
-                        emoji,
-                        non_fully_qualified=self._non_fully_qualified)] = value
+                    self._variation_selector_normalize_for_font(emoji)] = value
         if not self._recently_used_emoji:
             self._init_recently_used()
         self._cleanup_recently_used()
@@ -1203,7 +1208,7 @@ class EmojiPickerUI(Gtk.Window):
             # filled. But then the on_search_entry_search_changed()
             # callback will think that nothing needs to be done
             # because self._candidates_invalid is True already.
-            emoji = candidate[0]
+            emoji = self._variation_selector_normalize_for_font(candidate[0])
             name = candidate[1]
             dummy_score = candidate[2]
             label = Gtk.Label()
@@ -1524,6 +1529,7 @@ class EmojiPickerUI(Gtk.Window):
             text = label.get_label()
             (emoji, name) = self._parse_emoji_and_name_from_text(text)
             if emoji:
+                emoji = self._variation_selector_normalize_for_font(emoji)
                 new_text = (
                     '<span font="%s %s" fallback="%s">'
                     %(self._font, self._fontsize, str(self._fallback).lower())
@@ -1531,7 +1537,7 @@ class EmojiPickerUI(Gtk.Window):
                     + '</span>')
                 if name:
                     new_text += (
-                        '<span fallback="false" font="%s">'
+                        '<span fallback="true" font="%s">'
                         %(self._fontsize / 2)
                         + html.escape(name)
                         + '</span>')
@@ -1719,8 +1725,11 @@ class EmojiPickerUI(Gtk.Window):
         (emoji, name) = self._parse_emoji_and_name_from_text(text)
         if not emoji:
             return
-        skin_tone_variants = self._emoji_matcher.skin_tone_variants(emoji)
-        if len(skin_tone_variants) == 1:
+        skin_tone_variants = []
+        for skin_tone_variant in self._emoji_matcher.skin_tone_variants(emoji):
+            skin_tone_variants.append(
+                self._variation_selector_normalize_for_font(skin_tone_variant))
+        if len(skin_tone_variants) <= 1:
             return
         self._skin_tone_popover = Gtk.Popover()
         self._skin_tone_popover.set_modal(True)
@@ -2023,7 +2032,12 @@ class EmojiPickerUI(Gtk.Window):
             'Segoe UI Emoji 🙾', # seems to be black and white
             'Twitter Color Emoji 🙾', # seems to be black and white
         ]
-        available_good_emoji_fonts = ['emoji (' + _('System default') + ')']
+        available_good_emoji_fonts = [
+            'emoji (' + _('System default') + ')',
+            'text (' + _('System default') + ')',
+            'unqualified (' + _('System default') + ')',
+        ]
+        available_good_emoji_fonts.append('')
         pango_context = self.get_pango_context()
         families = pango_context.list_families()
         names = sorted([family.get_name() for family in families])
@@ -2109,7 +2123,8 @@ class EmojiPickerUI(Gtk.Window):
                 'on_font_selected() font = %s\n' %repr(font))
         if font == '':
             font = 'emoji'
-        if font != self._font and font == 'emoji':
+        if font != self._font and (
+                font == 'emoji' or font == 'text' or font == 'unqualified'):
             self._fallback = True
             self._fallback_check_button.set_active(True)
         else:
@@ -2227,6 +2242,5 @@ if __name__ == '__main__':
         modal=_ARGS.modal,
         unicode_data_all=_ARGS.all,
         emoji_unicode_min=_ARGS.emoji_unicode_min,
-        emoji_unicode_max=_ARGS.emoji_unicode_max,
-        non_fully_qualified=_ARGS.non_fully_qualified)
+        emoji_unicode_max=_ARGS.emoji_unicode_max)
     Gtk.main()
