@@ -308,7 +308,7 @@ class EmojiMatcher():
                  emoji_unicode_min='1.0',
                  emoji_unicode_max='100.0',
                  cldr_data=True, quick=True,
-                 non_fully_qualified=False,
+                 variation_selector='emoji',
                  romaji=True):
         '''
         Initialize the emoji matcher
@@ -356,7 +356,7 @@ class EmojiMatcher():
         self._emoji_unicode_min = emoji_unicode_min
         self._emoji_unicode_max = emoji_unicode_max
         self._quick = quick
-        self._non_fully_qualified = non_fully_qualified
+        self._variation_selector = variation_selector
         self._romaji = romaji
         self._enchant_dicts = []
         if IMPORT_ENCHANT_SUCCESSFUL:
@@ -429,88 +429,106 @@ class EmojiMatcher():
         # more inconvenient:
         return list(self._languages)
 
-    def variation_selector_16_normalize(
-            self, emoji_string, non_fully_qualified=False):
+    def variation_selector_normalize(
+            self, emoji_string, variation_selector='emoji'):
         # pylint: disable=line-too-long
-        '''Removes or adds emoji presentation selectors (U+FE0F VARIATION
-        SELECTOR-16)
+        '''Removes or adds emoji presentation selectors
+
+        U+FE0E VARIATION SELECTOR-15 selects text presentation
+        U+FE0F VARIATION SELECTOR-16 selects emoji presentation
 
         Returns the possibly changed sequence.
 
-        If emoji_string is equal to '\ufe0f', it is returned unchanged.
+        If emoji_string is equal to '\ufe0e' or '\ufe0f', it is returned unchanged.
 
         See:
 
+        http://unicode.org/reports/tr51/#Emoji_Variation_Selector_Notes
         http://unicode.org/reports/tr51/#def_fully_qualified_emoji_zwj_sequence
         http://unicode.org/reports/tr51/#def_non_fully_qualified_emoji_zwj_sequence
 
         :param emoji_string: The emoji sequence to change.
         :type emoji_string: String
-        :param non_fully_qualified: If True, remove all VS16 characters
-                                    If False, make it a fully qualified
-                                    sequence using VS16 characters a needed.
-        :type non_fully_qualified: Boolean
+        :param variation_selector: If 'emoji', make it a fully qualified
+                                   sequence using VS16 characters as needed.
+                                   If 'text' use VS15 characters as needed
+                                   to choose the text presentation of the emojis.
+                                   If it is neither 'emoji' nor 'text',  remove
+                                   all VS15 and VS16 characters.
+        :type variation_selector: String
         :rtype: String
 
         Examples:
 
         >>> matcher = EmojiMatcher()
 
-        If non_fully_qualified=True, all variation selectors
+        If variation_selector is neither 'emoji' nor 'text, all variation selectors
         are removed from a sequence, no matter whether the sequence
         was correct or not:
 
-        >>> matcher.variation_selector_16_normalize('⛹\ufe0f\u200d♀\ufe0f', non_fully_qualified=True)
+        >>> matcher.variation_selector_normalize('⛹\ufe0f\u200d♀\ufe0f', variation_selector='')
         '⛹\u200d♀'
 
-        >>> matcher.variation_selector_16_normalize('⛹🏿\u200d♀\ufe0f', non_fully_qualified=True)
+        >>> matcher.variation_selector_normalize('⛹🏿\u200d♀\ufe0f', variation_selector='')
         '⛹🏿\u200d♀'
 
-        >>> matcher.variation_selector_16_normalize('#\ufe0f⃣', non_fully_qualified=True)
+        >>> matcher.variation_selector_normalize('#\ufe0f⃣', variation_selector='')
         '#⃣'
 
-        >>> matcher.variation_selector_16_normalize('#⃣\ufe0f', non_fully_qualified=True)
+        >>> matcher.variation_selector_normalize('#⃣\ufe0f', variation_selector='')
         '#⃣'
 
-        If non_fully_qualified=False, variation selectors are added to
-        sequences as needed and incorrect sequences are repaired:
+        If variation_selector='emoji', variation selectors-16 are added to
+        sequences as needed to make sequences fully qualified
+        and incorrect sequences are repaired:
 
-        >>> matcher.variation_selector_16_normalize('⛹🏿\ufe0f\u200d♀\ufe0f', non_fully_qualified=False)
+        >>> matcher.variation_selector_normalize('⛹🏿\ufe0f\u200d♀\ufe0f', variation_selector='emoji')
         '⛹🏿\u200d♀\ufe0f'
 
-        >>> matcher.variation_selector_16_normalize('⛹\ufe0f🏿\u200d♀\ufe0f', non_fully_qualified=False)
+        >>> matcher.variation_selector_normalize('⛹\ufe0f🏿\u200d♀\ufe0f', variation_selector='emoji')
         '⛹🏿\u200d♀\ufe0f'
 
-        >>> matcher.variation_selector_16_normalize('⛹\u200d\ufe0f♀', non_fully_qualified=False)
+        >>> matcher.variation_selector_normalize('⛹\u200d\ufe0f♀', variation_selector='emoji')
         '⛹\ufe0f\u200d♀\ufe0f'
 
-        >>> matcher.variation_selector_16_normalize('#⃣\ufe0f', non_fully_qualified=False)
+        >>> matcher.variation_selector_normalize('#⃣\ufe0f', variation_selector='emoji')
         '#\ufe0f⃣'
 
-        >>> matcher.variation_selector_16_normalize('⛹\ufe0f♀', non_fully_qualified=False)
+        >>> matcher.variation_selector_normalize('⛹\ufe0f♀', variation_selector='emoji')
         '⛹\ufe0f♀\ufe0f'
 
-        >>> matcher.variation_selector_16_normalize('⛹', non_fully_qualified=False)
+        >>> matcher.variation_selector_normalize('⛹', variation_selector='emoji')
         '⛹\ufe0f'
         '''
         # pylint: enable=line-too-long
+        if emoji_string != '\ufe0e':
+            emoji_string = emoji_string.replace('\ufe0e', '')
         if emoji_string != '\ufe0f':
             emoji_string = emoji_string.replace('\ufe0f', '')
-        if non_fully_qualified:
+        if not variation_selector:
             return emoji_string
         retval = ''
         length = len(emoji_string)
         for index, character in enumerate(emoji_string):
             retval += character
-            if ((character not in SKIN_TONE_MODIFIERS)
-                    and ('Emoji' in self.properties(character))
-                    and ('Emoji_Presentation'
-                         not in self.properties(character))
-                    and not (index < length - 1
-                             and
-                             emoji_string[index + 1]
-                             in SKIN_TONE_MODIFIERS)):
-                retval += '\ufe0f'
+            if variation_selector == 'emoji':
+                if ((character not in SKIN_TONE_MODIFIERS)
+                        and ('Emoji' in self.properties(character))
+                        and ('Emoji_Presentation'
+                             not in self.properties(character))
+                        and not (index < length - 1
+                                 and
+                                 emoji_string[index + 1]
+                                 in SKIN_TONE_MODIFIERS)):
+                    retval += '\ufe0f'
+            elif variation_selector == 'text':
+                if ((character not in SKIN_TONE_MODIFIERS)
+                        and ('Emoji' in self.properties(character))
+                        and not (index < length - 1
+                                 and
+                                 emoji_string[index + 1]
+                                 in SKIN_TONE_MODIFIERS)):
+                    retval += '\ufe0e'
         return retval
 
     def _add_to_emoji_dict(self, emoji_dict_key, values_key, values):
@@ -518,8 +536,8 @@ class EmojiMatcher():
         if not emoji_dict_key or not values_key or not values:
             return
         emoji_dict_key = (
-            self.variation_selector_16_normalize(
-                emoji_dict_key[0], non_fully_qualified=True),
+            self.variation_selector_normalize(
+                emoji_dict_key[0], variation_selector=''),
             emoji_dict_key[1])
         if emoji_dict_key not in self._emoji_dict:
             self._emoji_dict[emoji_dict_key] = {}
@@ -1634,9 +1652,10 @@ class EmojiMatcher():
         # pylint: enable=line-too-long
         if not query_string:
             return []
-        # self._emoji_dict contains only non-fully-qualified sequences:
-        query_string = self.variation_selector_16_normalize(
-            query_string, non_fully_qualified=True)
+        # self._emoji_dict contains only emoji or sequences without
+        # variation selectors:
+        query_string = self.variation_selector_normalize(
+            query_string, variation_selector='')
         # Replace any sequence of white space characters and '_'
         # and '＿' in the query string with a single ' '.  '＿'
         # (U+FF3F FULLWIDTH LOW LINE) is included here because when
@@ -1718,9 +1737,9 @@ class EmojiMatcher():
                 if keyword_good_match not in display_name:
                     display_name += ' [' + keyword_good_match + ']'
                 candidates.append((
-                    self.variation_selector_16_normalize(
+                    self.variation_selector_normalize(
                         emoji_key[0],
-                        self._non_fully_qualified),
+                        self._variation_selector),
                     display_name,
                     total_score))
 
@@ -1786,9 +1805,10 @@ class EmojiMatcher():
         '''
         # pylint: enable=line-too-long
         #
-        # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self.variation_selector_16_normalize(
-            emoji_string, non_fully_qualified=True)
+        # self._emoji_dict contains only emoji or sequences without
+        # variation selectors:
+        emoji_string = self.variation_selector_normalize(
+            emoji_string, variation_selector='')
         if language:
             if ((emoji_string, language) in self._emoji_dict
                     and
@@ -1908,9 +1928,10 @@ class EmojiMatcher():
         '''
         # pylint: enable=line-too-long
         #
-        # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self.variation_selector_16_normalize(
-            emoji_string, non_fully_qualified=True)
+        # self._emoji_dict contains only emoji or sequences without
+        # variation selectors:
+        emoji_string = self.variation_selector_normalize(
+            emoji_string, variation_selector='')
         if language:
             if ((emoji_string, language) in self._emoji_dict
                     and
@@ -1950,9 +1971,10 @@ class EmojiMatcher():
         '''
         # pylint: enable=line-too-long
         #
-        # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self.variation_selector_16_normalize(
-            emoji_string, non_fully_qualified=True)
+        # self._emoji_dict contains only emoji or sequences without
+        # variation selectors:
+        emoji_string = self.variation_selector_normalize(
+            emoji_string, variation_selector='')
         if language:
             if ((emoji_string, language) in self._emoji_dict
                     and 'categories' in
@@ -2032,9 +2054,10 @@ class EmojiMatcher():
         '''
         # pylint: enable=line-too-long
         #
-        # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self.variation_selector_16_normalize(
-            emoji_string, non_fully_qualified=True)
+        # self._emoji_dict contains only emoji or sequences without
+        # variation selectors:
+        emoji_string = self.variation_selector_normalize(
+            emoji_string, variation_selector='')
         candidate_scores = {}
         original_labels = {}
         expanded_languages = itb_util.expand_languages(self._languages)
@@ -2087,9 +2110,9 @@ class EmojiMatcher():
                 # The most similar emoji should always be the
                 # original emoji itself.
                 candidate_scores[scores_key] = [
-                    self.variation_selector_16_normalize(
+                    self.variation_selector_normalize(
                         emoji_string,
-                        non_fully_qualified=self._non_fully_qualified)]
+                        variation_selector=self._variation_selector)]
             for label_key in label_keys:
                 if label_key in self._emoji_dict[similar_key]:
                     for label in self._emoji_dict[similar_key][label_key]:
@@ -2112,9 +2135,9 @@ class EmojiMatcher():
                     - len(csi[0][0]), # length of emoji string
                     csi[0][2], # emoji name
                 ))[:match_limit]:
-            emoji = self.variation_selector_16_normalize(
+            emoji = self.variation_selector_normalize(
                 csi[0][0],
-                non_fully_qualified=self._non_fully_qualified)
+                variation_selector=self._variation_selector)
             name = csi[0][2] + ' [' + ', '.join(csi[1]) + ']'
             score = len(csi[1])
             candidates.append((emoji, name, score))
@@ -2128,9 +2151,9 @@ class EmojiMatcher():
         emoji_by_label_dict = {}
         for label_key in label_keys:
             for emoji_key, emoji_value in self._emoji_dict.items():
-                emoji = self.variation_selector_16_normalize(
+                emoji = self.variation_selector_normalize(
                     emoji_key[0],
-                    non_fully_qualified=self._non_fully_qualified)
+                    variation_selector=self._variation_selector)
                 unicode_version = self.unicode_version(emoji)
                 if (unicode_version
                         and (LooseVersion(unicode_version)
@@ -2212,9 +2235,10 @@ class EmojiMatcher():
         >>> hex(matcher.emoji_order('∬'))
         '0xffffffff'
         '''
-        # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self.variation_selector_16_normalize(
-            emoji_string, non_fully_qualified=True)
+        # self._emoji_dict contains only emoji or sequences without
+        # variation selectors:
+        emoji_string = self.variation_selector_normalize(
+            emoji_string, variation_selector='')
         if ((emoji_string, 'en') in self._emoji_dict
                 and 'emoji_order' in self._emoji_dict[(emoji_string, 'en')]):
             return int(self._emoji_dict[(emoji_string, 'en')]['emoji_order'])
@@ -2242,9 +2266,10 @@ class EmojiMatcher():
         >>> hex(matcher.cldr_order('∬'))
         '0xffffffff'
         '''
-        # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self.variation_selector_16_normalize(
-            emoji_string, non_fully_qualified=True)
+        # self._emoji_dict contains only emoji or sequences without
+        # variation selectors:
+        emoji_string = self.variation_selector_normalize(
+            emoji_string, variation_selector='')
         if ((emoji_string, 'en') in self._emoji_dict
                 and 'cldr_order' in self._emoji_dict[(emoji_string, 'en')]):
             return int(self._emoji_dict[(emoji_string, 'en')]['cldr_order'])
@@ -2258,9 +2283,10 @@ class EmojiMatcher():
         :type emoji_string: String
         :rtype: List of strings
         '''
-        # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self.variation_selector_16_normalize(
-            emoji_string, non_fully_qualified=True)
+        # self._emoji_dict contains only emoji or sequences without
+        # variation selectors:
+        emoji_string = self.variation_selector_normalize(
+            emoji_string, variation_selector='')
         if (((emoji_string, 'en') in self._emoji_dict)
                 and ('properties' in self._emoji_dict[(emoji_string, 'en')])):
             return self._emoji_dict[(emoji_string, 'en')]['properties']
@@ -2274,9 +2300,10 @@ class EmojiMatcher():
         :type emoji_string: String
         :rtype: String
         '''
-        # self._emoji_dict contains only non-fully-qualified sequences:
-        emoji_string = self.variation_selector_16_normalize(
-            emoji_string, non_fully_qualified=True)
+        # self._emoji_dict contains only emoji or sequences without
+        # variation selectors:
+        emoji_string = self.variation_selector_normalize(
+            emoji_string, variation_selector='')
         if (((emoji_string, 'en') in self._emoji_dict)
                 and ('uversion' in self._emoji_dict[(emoji_string, 'en')])):
             return self._emoji_dict[(emoji_string, 'en')]['uversion']
@@ -2393,7 +2420,7 @@ class EmojiMatcher():
         >>> matcher.skin_tone_variants('✌\ufe0f')
         ['✌\ufe0f', '✌🏻', '✌🏼', '✌🏽', '✌🏾', '✌🏿']
 
-        >>> matcher = EmojiMatcher(languages = ['en'], non_fully_qualified=True)
+        >>> matcher = EmojiMatcher(languages = ['en'], variation_selector='')
         >>> matcher.skin_tone_variants('🏌\ufe0f\u200d♂\ufe0f')
         ['🏌\u200d♂', '🏌🏻\u200d♂', '🏌🏼\u200d♂', '🏌🏽\u200d♂', '🏌🏾\u200d♂', '🏌🏿\u200d♂']
 
@@ -2403,20 +2430,20 @@ class EmojiMatcher():
         # pylint: enable=line-too-long
         if not emoji_string or emoji_string in SKIN_TONE_MODIFIERS:
             return [emoji_string]
-        emoji_string = self.variation_selector_16_normalize(
-            emoji_string, non_fully_qualified=True)
+        emoji_string = self.variation_selector_normalize(
+            emoji_string, variation_selector='')
         if 'Emoji_Modifier_Base' in self.properties(emoji_string):
             return [
-                self.variation_selector_16_normalize(
+                self.variation_selector_normalize(
                     emoji_string + tone,
-                    non_fully_qualified=self._non_fully_qualified)
+                    variation_selector=self._variation_selector)
                 for tone in ('',) + SKIN_TONE_MODIFIERS]
         if ((emoji_string[-1] in SKIN_TONE_MODIFIERS)
                 and ((emoji_string, 'en') in self._emoji_dict)):
             return [
-                self.variation_selector_16_normalize(
+                self.variation_selector_normalize(
                     emoji_string[:-1] + tone,
-                    non_fully_qualified=self._non_fully_qualified)
+                    variation_selector=self._variation_selector)
                 for tone in ('',) + SKIN_TONE_MODIFIERS]
         emoji_parts = emoji_string.split('\u200d')
         if len(emoji_parts) >= 2 and len(emoji_parts) <= 4:
@@ -2456,9 +2483,9 @@ class EmojiMatcher():
                                     + variant3)
             if skin_tone_variants:
                 return skin_tone_variants
-        return [self.variation_selector_16_normalize(
+        return [self.variation_selector_normalize(
             emoji_string,
-            non_fully_qualified=self._non_fully_qualified)]
+            variation_selector=self._variation_selector)]
 
 
     def debug_loading_data(self):
