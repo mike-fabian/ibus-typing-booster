@@ -1076,6 +1076,8 @@ class EmojiMatcher():
                 if match:
                     emoji_string = match.group('emojistring')
                     content = html.unescape(match.group('content'))
+                    if content == '↑↑↑':
+                        continue
                     if language.startswith('en'):
                         content = content.lower()
                     if match.group('tts'):
