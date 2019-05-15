@@ -78,7 +78,7 @@ CLDR_ANNOTATION_DIRNAMES = (
     # .xml files here in the subdirs “annotations”
     # and “annotationsDerived”:
     '/usr/share/unicode/cldr/common/',
-    '/local/mfabian/src/cldr-svn/trunk/common/')
+    '/local/mfabian/src/cldr/common/')
 
 UNICODE_CATEGORIES = {
     'Cc': {'valid': False, 'major': 'Other', 'minor': 'Control'},
