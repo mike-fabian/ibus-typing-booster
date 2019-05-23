@@ -9,7 +9,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 -->
 <ldml>
 	<identity>
-		<version number="$Revision: 15012 $"/>
+		<version number="$Revision$"/>
 		<language type="es"/>
 		<territory type="419"/>
 	</identity>
