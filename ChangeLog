@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 06 Jun 2019 Released 2.6.2 version
+* Emoji ZWJSequence “people holding hands” is 12.0, not 10.0
+* Update emoji annotations from CLDR
+* icons: Regenerate with proper transparency (Thanks to FeRD (Frank Dana))
+* Remove enable-background from icon SVG (Thanks to FeRD (Frank Dana))
+* Update UnicodeData.txt to current Unicode 12.1.0
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 06 May 2019 Released 2.6.1 version
 * Support emoji presentation and text presentation in emoji-picker
 * Improve itb_emoji.py to also support text presentation of emoji
