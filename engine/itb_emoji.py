@@ -2630,7 +2630,7 @@ def main():
         stats.print_stats('enchant', 25)
 
     if failed:
-        sys.exit(1)
+        sys.exit(failed)
     else:
         sys.exit(0)
 
