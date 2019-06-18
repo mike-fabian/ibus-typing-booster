@@ -2617,7 +2617,8 @@ def main():
         # added, changed, or missing.
         global DOMAINNAME
         DOMAINNAME = ''
-        (failed, dummy_attempted) = doctest.testmod()
+        flags = doctest.REPORT_NDIFF #|doctest.FAIL_FAST
+        (failed, dummy_attempted) = doctest.testmod(optionflags=flags)
 
     if BENCHMARK:
         profile.disable()
