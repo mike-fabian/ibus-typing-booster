@@ -1268,32 +1268,42 @@ class EmojiMatcher():
         # the label?
         tmp = self._string1
         for word in self._string2_word_list:
-            match = re.search(r'\b' + re.escape(word), tmp)
-            if match:
-                match_value = 100 + match.end() - match.start()
-                if match.start() == 0:
-                    match_value += 20
-                total_score += match_value
-                tmp = tmp[:match.start()] + tmp[match.end():]
-                if debug:
-                    print('Substring match from word_list, word = “%s”, '
-                          %word
-                          + 'total_score += %s' %match_value)
+            match_start = tmp.find(word)
+            if match_start < 0:
+                continue
+            if match_start == 0:
+                total_score += 120 + len(word)
+            elif tmp[match_start - 1] == ' ':
+                total_score += 100 + len(word)
+            else:
+                continue
+            # Slight speed improvement, removing the part of the string
+            # which has already been matched makes the string shorter
+            # and speeds up matching the remaining words
+            tmp = tmp[:match_start] + tmp[match_start + len(word):]
+            if debug:
+                print('Substring match from word_list, word = “%s”, '
+                      %word
+                      + 'total_score = %s' %total_score)
         # Does a word in the query string match the label if spaces in
         # the label are ignored?
         tmp = self._string1.replace(' ', '')
         for word in self._string2_word_list:
-            match = re.search(re.escape(word), tmp)
-            if match:
-                match_value = 20 + match.end() - match.start()
-                if match.start() == 0:
-                    match_value += 20
-                total_score += match_value
-                tmp = tmp[:match.start()] + tmp[match.end():]
-                if debug:
-                    print('Space insensitive substring match from word_list, '
-                          + 'word = “%s”, ' %word
-                          + 'total_score += %s' %match_value)
+            match_start = tmp.find(word)
+            if match_start < 0:
+                continue
+            if match_start == 0:
+                total_score += 40 + len(word)
+            else:
+                total_score += 20 + len(word)
+            # Slight speed improvement, removing the part of the string
+            # which has already been matched makes the string shorter
+            # and speeds up matching the remaining words
+            tmp = tmp[:match_start] + tmp[match_start + len(word):]
+            if debug:
+                print('Space insensitive substring match from word_list, '
+                      + 'word = “%s”, ' %word
+                      + 'total_score = %s' %total_score)
         if self._quick:
             self._match_cache[(self._string1, self._string2)] = total_score
             return total_score
