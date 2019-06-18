@@ -1639,7 +1639,6 @@ class EmojiMatcher():
         >>> mq.candidates('🤔', match_limit = 3)
         [('🤔', 'visage en pleine réflexion [🤔, réflexion, visage, visage en pleine réflexion]', 4), ('🤐', 'visage avec bouche fermeture éclair [visage]', 1), ('🤗', 'visage qui fait un câlin [visage]', 1)]
 
-        >>> mq = EmojiMatcher(languages = ['fr_FR'])
         >>> mq.candidates('2019')
         [('’', 'U+2019 right single quotation mark', 200)]
 
