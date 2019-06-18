@@ -1179,22 +1179,19 @@ class EmojiMatcher():
 
     def _set_seq1(self, string):
         '''Sequence 1 is a label from the emoji data'''
-        string = itb_util.remove_accents(string).lower()
-        self._string1 = string
+        self._string1 = itb_util.remove_accents(string).lower()
         if not self._quick:
             # only needed when using SequenceMatcher()
-            string = ' ' + string + ' '
-            self._seq1 = string
-            self._len1 = len(string)
-            self._matcher.set_seq1(string)
+            self._seq1 = ' ' + self._string1 + ' '
+            self._len1 = len(self._seq1)
+            self._matcher.set_seq1(self._seq1)
 
     def _set_seq2(self, string):
         '''Sequence 2 is the query string, i.e. the user input'''
-        string = itb_util.remove_accents(string).lower()
-        self._string2 = string
+        self._string2 = itb_util.remove_accents(string).lower()
         # Split the input string into a list of words:
         word_list = []
-        original_words = string.split(sep=None)
+        original_words = self._string2.split(sep=None)
         self._string2_number_of_words = len(original_words)
         for word in original_words:
             word_list += [word]
@@ -1221,10 +1218,9 @@ class EmojiMatcher():
         self._string2_word_list = sorted(word_list, key=lambda x: -len(x))
         if not self._quick:
             # only needed when using SequenceMatcher()
-            string = ' ' + string + ' '
-            self._seq2 = string
-            self._len2 = len(string)
-            self._matcher.set_seq2(string)
+            self._seq2 = ' ' + self._string2 + ' '
+            self._len2 = len(self._string2)
+            self._matcher.set_seq2(self._string2)
             self._match_cache = {}
 
     def _match(self, label, debug=False):
