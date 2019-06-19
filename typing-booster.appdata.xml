@@ -19,6 +19,18 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.6.3" date="2019-06-19" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Performance improvement of around 30% in EmojiMatcher._match()
+          </li>
+          <li>
+            Tiny performance improvement in itb_emoji.py _set_seq1()
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.6.2" date="2019-06-05" urgency="medium">
       <description>
         <ul>

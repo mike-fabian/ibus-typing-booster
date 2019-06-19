@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 19 Jun 2019 Released 2.6.3 version
+* Performance improvement of around 30% in EmojiMatcher._match()
+* Tiny performance improvement in itb_emoji.py _set_seq1()
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 06 Jun 2019 Released 2.6.2 version
 * Emoji ZWJSequence “people holding hands” is 12.0, not 10.0
 * Update emoji annotations from CLDR
