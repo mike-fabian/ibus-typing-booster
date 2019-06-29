@@ -271,7 +271,7 @@ def _find_path_and_open_function(dirnames, basenames, subdir=''):
                 if path.endswith('.gz'):
                     return (path, gzip.open)
                 return (path, open)
-            path = os.path.join(dirname, basename + '.gz')
+            path = os.path.join(dirname, subdir, basename + '.gz')
             if os.path.exists(path):
                 return (path, gzip.open)
     return ('', None)
