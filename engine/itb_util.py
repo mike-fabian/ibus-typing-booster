@@ -41,6 +41,13 @@ from gi.repository import GObject
 
 import version
 
+IMPORT_DISTRO_SUCCESSFUL = False
+try:
+    import distro
+    IMPORT_DISTRO_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_DISTRO_SUCCESSFUL = False
+
 IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = False
 try:
     import xdg.BaseDirectory
@@ -2919,6 +2926,60 @@ def dict_update_existing_keys(pdict, other_pdict):
     for key in other_pdict:
         if key in pdict:
             pdict[key] = other_pdict[key]
+
+def distro_id():
+    '''
+    Compatibility wrapper around distro.id()
+
+    :rtype: String
+
+    From the help of distro.id():
+
+        This package maintains the following reliable distro ID values:
+
+        ==============  =========================================
+        Distro ID       Distribution
+        ==============  =========================================
+        "ubuntu"        Ubuntu
+        "debian"        Debian
+        "rhel"          RedHat Enterprise Linux
+        "centos"        CentOS
+        "fedora"        Fedora
+        "sles"          SUSE Linux Enterprise Server
+        "opensuse"      openSUSE
+        "amazon"        Amazon Linux
+        "arch"          Arch Linux
+        "cloudlinux"    CloudLinux OS
+        "exherbo"       Exherbo Linux
+        "gentoo"        GenToo Linux
+        "ibm_powerkvm"  IBM PowerKVM
+        "kvmibm"        KVM for IBM z Systems
+        "linuxmint"     Linux Mint
+        "mageia"        Mageia
+        "mandriva"      Mandriva Linux
+        "parallels"     Parallels
+        "pidora"        Pidora
+        "raspbian"      Raspbian
+        "oracle"        Oracle Linux (and Oracle Enterprise Linux)
+        "scientific"    Scientific Linux
+        "slackware"     Slackware
+        "xenserver"     XenServer
+        "openbsd"       OpenBSD
+        "netbsd"        NetBSD
+        "freebsd"       FreeBSD
+        ==============  =========================================
+
+    There seem to be other return values, so far I know:
+
+        "opensuse-leap" openSUSE Leap
+        "opensuse-tumbleweed" openSUSE tumbleweed
+        "sles"          SUSE Linux Enterprise server
+        "sled"          SUSE Linux Enterprise Desktop 15 SP1
+
+    '''
+    if IMPORT_DISTRO_SUCCESSFUL:
+        return distro.id()
+    return ''
 
 def find_hunspell_dictionary(language):
     '''

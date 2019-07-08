@@ -2632,8 +2632,17 @@ class SetupUI(Gtk.Window):
             (dic_path,
              dummy_aff_path) = itb_util.find_hunspell_dictionary(name)
             if not dic_path:
-                missing_dictionary_packages.add(
-                    'hunspell-' + name.split('_')[0])
+                if (itb_util.distro_id() in
+                    ('opensuse',
+                     'opensuse-leap',
+                     'opensuse-tumbleweed',
+                     'sled',
+                     'sles')):
+                    missing_dictionary_packages.add(
+                        'myspell-' + name)
+                else:
+                    missing_dictionary_packages.add(
+                        'hunspell-' + name.split('_')[0])
         for package in missing_dictionary_packages:
             InstallPkg(package)
         self._fill_dictionaries_listbox()
