@@ -47,6 +47,7 @@ engine_table_PYTHON = \
 	m17n_translit.py \
 	emoji_picker.py \
 	itb_version.py \
+	tabstatistics.py \
 	$(NULL)
 engine_table_DATA = \
 	$(NULL)
