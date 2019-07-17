@@ -3481,7 +3481,7 @@ class ItbAboutDialog(Gtk.AboutDialog):
         self.set_comments(
             _('A completion input method to speedup typing.'))
         self.set_copyright(
-            'Copyright © 2017 Mike FABIAN')
+            'Copyright © 2017–2019 Mike FABIAN')
         self.set_authors([
             'Mike FABIAN <maiku.fabian@gmail.com>',
             'Anish Patil <anish.developer@gmail.com>',
