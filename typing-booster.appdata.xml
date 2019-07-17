@@ -19,6 +19,31 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.6.4" date="2019-07-17" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update translations from zanata (cs updated, now 100%
+            complete)
+          </li>
+          <li>
+            Do not crash if initializing enchant or pyhunspell fails,
+            continue without spellchecking
+          </li>
+          <li>
+            Try to install myspell-xx_YY packages instead of
+            hunspell-xx package on SUSE
+          </li>
+          <li>
+            Fix loading of cldr annotations when the .xml files are
+            zipped
+          </li>
+          <li>
+            Add JoyPixels to good_emoji_fonts list
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.6.3" date="2019-06-19" urgency="medium">
       <description>
         <ul>

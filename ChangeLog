@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 17 Jul 2019 Released 2.6.4 version
+* Update translations from zanata (cs updated, now 100% complete)
+* Do not crash if initializing enchant or pyhunspell fails, continue without spellchecking
+* Try to install myspell-xx_YY packages instead of hunspell-xx package on SUSE
+* Fix loading of cldr annotations when the .xml files are zipped
+* Add JoyPixels to good_emoji_fonts list
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 19 Jun 2019 Released 2.6.3 version
 * Performance improvement of around 30% in EmojiMatcher._match()
 * Tiny performance improvement in itb_emoji.py _set_seq1()
