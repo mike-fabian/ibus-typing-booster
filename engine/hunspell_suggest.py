@@ -160,7 +160,7 @@ class Hunspell:
         '''Sets the list of dictionary names.
 
         If the new list of dictionary names differs from the existing
-        one, re-initilize the dictionaries.
+        one, re-initialize the dictionaries.
         '''
         if dictionary_names != self._dictionary_names:
             if set(dictionary_names) != set(self._dictionary_names):
