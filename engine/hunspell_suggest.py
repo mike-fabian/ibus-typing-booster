@@ -104,11 +104,33 @@ class Dictionary:
                     'load_dictionary() max_word_len = %s\n'
                     % self.max_word_len)
             if IMPORT_ENCHANT_SUCCESSFUL:
-                self.enchant_dict = enchant.Dict(self.name)
+                try:
+                    self.enchant_dict = enchant.Dict(self.name)
+                except enchant.errors.DictNotFoundError as error:
+                    sys.stderr.write(
+                        'Error initializing enchant for %s: %s\n'
+                        % (self.name, error))
+                    self.enchant_dict = None
+                except:
+                    sys.stderr.write(
+                        'Unknown error initializing enchant for %s\n'
+                        % self.name)
+                    self.enchant_dict = None
             elif IMPORT_HUNSPELL_SUCCESSFUL and self.dic_path:
                 aff_path = self.dic_path.replace('.dic', '.aff')
-                self.pyhunspell_object = hunspell.HunSpell(
-                    self.dic_path, aff_path)
+                try:
+                    self.pyhunspell_object = hunspell.HunSpell(
+                        self.dic_path, aff_path)
+                except hunspell.HunSpellError as error:
+                    sys.stderr.write(
+                        'Error initializing hunspel for %s: %s\n'
+                        % (self.name, error))
+                    self.pyhunspell_object = None
+                except:
+                    sys.stderr.write(
+                        'Unknown error initializing hunspell for %s\n'
+                        % self.name)
+                    self.pyhunspell_object = None
 
 class Hunspell:
     '''A class to suggest completions or corrections
