@@ -2504,6 +2504,7 @@ M17N_INPUT_METHODS = {
     'si-sumihiri': 'si-sumihiri.mim',
     'si-transliteration': 'si-trans.mim',
     'si-wijesekera': 'si-wijesekera.mim',
+    'si-sayura': 'si-sayura.mim',
     'sk-kbd': 'sk-kbd.mim',
     'sr-kbd': 'sr-kbd.mim',
     't-ssymbol': 'ssymbol.mim',
