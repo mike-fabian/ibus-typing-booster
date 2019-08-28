@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 28 Aug 2019 Released 2.6.5 version
+* Added Dutch translation (Thanks to Heimen Stoffels)
+* Add si-sayura to the list of M17N input methods
+* Add more test cases for m17n_translit.py, especially for si-sayura.mim
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 17 Jul 2019 Released 2.6.4 version
 * Update translations from zanata (cs updated, now 100% complete)
 * Do not crash if initializing enchant or pyhunspell fails, continue without spellchecking
