@@ -45,6 +45,8 @@ def dummy():
     'අ'
     >>> trans.transliterate(list('a '))
     'අ '
+    >>> trans.transliterate(list('a a '))
+    'අ අ '
     >>> trans.transliterate(list('aa'))
     'ආ'
     >>> trans.transliterate(list('aa '))
@@ -63,9 +65,15 @@ def dummy():
     'ඈ'
     >>> trans.transliterate(list('qq'))
     'ඈ'
+    >>> trans.transliterate(list('qqq'))
+    'ඈ'
     >>> trans.transliterate(list('Aa'))
     'ආ'
     >>> trans.transliterate(list('qa'))
+    'ආ'
+    >>> trans.transliterate(list('Aaa'))
+    'ආ'
+    >>> trans.transliterate(list('qaa'))
     'ආ'
     >>> trans.transliterate(list('e'))
     'එ'
@@ -112,6 +120,8 @@ def dummy():
     >>> trans.transliterate(list('U'))
     'ඍ'
     >>> trans.transliterate(list('UU'))
+    'ඎ'
+    >>> trans.transliterate(list('UUU'))
     'ඎ'
     >>> trans.transliterate(list('V')) # FIXME agrees with ibus-sayura, but: https://www.sayura.net/im/sayura.pdf
     'ව'
