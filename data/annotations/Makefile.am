@@ -106,6 +106,7 @@ extradata_DATA = \
 	ccp_IN.xml \
 	ce.xml \
 	ce_RU.xml \
+	ceb.xml \
 	cgg.xml \
 	cgg_UG.xml \
 	chr.xml \

@@ -705,7 +705,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🧎‍♀" type="tts">naag jilba dhiganaysa</annotation>
 		<annotation cp="👨‍🦯">awood u yeelid | indhoole | nin | nin sita usha cad indhoolaha</annotation>
 		<annotation cp="👨‍🦯" type="tts">nin sita usha cad indhoolaha</annotation>
-		<annotation cp="👩‍🦯">awood u yeelid | indhoole l naag | naag sidata usha cad indhoolaha</annotation>
+		<annotation cp="👩‍🦯">awood u yeelid | indhoole | naag | naag sidata usha cad indhoolaha</annotation>
 		<annotation cp="👩‍🦯" type="tts">naag sidata usha cad indhoolaha</annotation>
 		<annotation cp="👨‍🦼">awood u yeelid | kursi curyaan | nin | nin saaran kursiga curyanka koronto ku shaqeeya</annotation>
 		<annotation cp="👨‍🦼" type="tts">nin saaran kursiga curyanka koronto ku shaqeeya</annotation>
