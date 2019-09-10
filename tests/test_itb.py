@@ -37,6 +37,18 @@ import tabsqlitedb
 import itb_util
 sys.path.pop(0)
 
+IMPORT_ENCHANT_SUCCESSFUL = False
+IMPORT_HUNSPELL_SUCCESSFUL = False
+try:
+    import enchant
+    IMPORT_ENCHANT_SUCCESSFUL = True
+except (ImportError,):
+    try:
+        import hunspell
+        IMPORT_HUNSPELL_SUCCESSFUL = True
+    except (ImportError,):
+        pass
+
 class ItbTestCase(unittest.TestCase):
     def setUp(self):
         self.bus = IBus.Bus()
@@ -175,6 +187,10 @@ class ItbTestCase(unittest.TestCase):
     def test_dummy(self):
         self.assertEqual(True, True)
 
+    @unittest.expectedFailure
+    def test_expected_failure(self):
+        self.assertEqual(False, True)
+
     def test_single_char_commit_with_space(self):
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
@@ -288,6 +304,9 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text_cursor_pos, 0)
         self.assertEqual(self.engine.mock_preedit_text_visible, False)
 
+    @unittest.skipUnless(
+        IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-enchant to work.")
     def test_emoji_related_tab_enable_cursor_visible_escape(self):
         self.engine.set_current_imes(['NoIME'])
         self.engine.set_dictionary_names(['en_US'])
@@ -372,6 +391,10 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text_cursor_pos, 0)
         self.assertEqual(self.engine.mock_preedit_text_visible, False)
 
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('mr_IN')[0],
+        "Skipping because no Marathi dictionary could be found. "
+        + "On some systems like Ubuntu or Elementary OS it is not available.")
     def test_marathi_and_britisch_english(self):
         self.engine.set_current_imes(['mr-itrans', 'NoIME'])
         self.engine.set_dictionary_names(['mr_IN', 'en_GB'])
@@ -394,18 +417,11 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'गुरु ')
 
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('ko_KR')[0],
+        "Skipping because no Korean dictionary could be found. "
+        + "On some systems like Arch Linux or FreeBSD it is not available.")
     def test_korean(self):
-        if not itb_util.get_hunspell_dictionary_wordlist('ko_KR')[0]:
-            # No Korean dictionary file could be found, skip this
-            # test.  On some systems, like 'Arch' or 'FreeBSD', there
-            # is no ko_KR.dic hunspell dictionary available, therefore
-            # there is no way to run this test on these systems.
-            # On systems where a Korean hunspell dictionary is available,
-            # make sure it is installed to make this test case run.
-            # In the ibus-typing-booster.spec file for Fedora,
-            # I have a “BuildRequires:  hunspell-ko” for that purpose
-            # to make sure this test runs when building the rpm package.
-            return
         self.engine.set_current_imes(['ko-romaja'])
         self.engine.set_dictionary_names(['ko_KR'])
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
@@ -470,6 +486,9 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'Alpenglühen ')
 
+    @unittest.skipUnless(
+        IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-enchant to work.")
     def test_accent_insensitive_matching_german_database(self):
         self.engine.set_current_imes(['t-latn-post', 'NoIME'])
         self.engine.set_dictionary_names(['de_DE'])
@@ -578,6 +597,9 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'différemment ')
 
+    @unittest.skipUnless(
+        IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-enchant to work.")
     def test_emoji_triggered_by_underscore_when_emoji_mode_is_off(self):
         self.engine.set_current_imes(['NoIME'])
         self.engine.set_dictionary_names(['en_US'])
