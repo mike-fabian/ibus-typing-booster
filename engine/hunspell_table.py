@@ -1887,7 +1887,8 @@ class TypingBoosterEngine(IBus.Engine):
         typed_string = unicodedata.normalize(
             'NFC', self._transliterated_strings[
                 self.get_current_imes()[0]])
-        first_candidate = self._candidates[0][0]
+        first_candidate = unicodedata.normalize(
+            'NFC', self._candidates[0][0])
         if (not first_candidate.startswith(typed_string)
             or first_candidate == typed_string):
             # The first candidate is not a direct completion of the
