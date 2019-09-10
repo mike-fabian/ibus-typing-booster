@@ -191,7 +191,7 @@ sys.modules["gi.repository.IBus"].PropList = MockPropList
 os.environ['IBUS_TYPING_BOOSTER_DEBUG_LEVEL'] = '255'
 loader = unittest.TestLoader()
 suite = loader.discover(".")
-runner = unittest.TextTestRunner(stream = sys.stderr, verbosity = 255)
+runner = unittest.TextTestRunner(stream=sys.stderr, verbosity=255)
 result = runner.run(suite)
 
 if result.failures or result.errors:
