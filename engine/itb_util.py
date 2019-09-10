@@ -2986,7 +2986,6 @@ def find_hunspell_dictionary(language):
     '''
     Find the hunspell dictionary file for a language
 
-
     :param language: The language of the dictionary to search for
     :type language: String
     :rtype: tuple of the form (dic_path, aff_path) where
@@ -3136,14 +3135,30 @@ def get_hunspell_dictionary_wordlist(language):
     # différemment	8
     # différence/1	2
     #
-    # Therefore, remove everthing following a '/' or a tab from a line
-    # to make the memory use of the word list a bit smaller and the
-    # regular expressions we use later to match words in the
+    # Newer French dictionaries downloaded from
+    #
+    # http://grammalecte.net/download/fr/hunspell-french-dictionaries-v6.4.1.zip
+    #
+    # even contain stuff like:
+    #
+    # différemment po:adv
+    # différence/S.() po:nom is:fem
+    #
+    # i.e. the separator between the word and the extra stuff
+    # can be a space instead of a tab.
+    #
+    # As far as I know, hunspell dictionaries never contain whitespace
+    # within the words themselves.
+    #
+    # Therefore, remove everything following a '/', ' ', or a tab from
+    # a line to make the memory use of the word list a bit smaller and
+    # the regular expressions we use later to match words in the
     # dictionary slightly simpler and maybe a tiny bit faster:
+    #
     word_list = [
         unicodedata.normalize(
             NORMALIZATION_FORM_INTERNAL,
-            re.sub(r'[/\t].*', '', x.replace('\n', '')))
+            re.sub(r'[/\t ].*', '', x.replace('\n', '')))
         for x in dic_buffer
     ]
     return (dic_path, dictionary_encoding, word_list)
