@@ -258,6 +258,14 @@ class Hunspell:
 
         >>> h.suggest('tenéis')[0]
         ('tenéis', 0)
+
+        >>> h = Hunspell(['en_US'])
+        >>> h.suggest('camel')
+        [('camel', 0), ('camellia', 0), ('camelhair', 0), ('came', -1), ('Camel', -1), ('cameo', -1), ('came l', -1), ('camels', -1)]
+
+        >>> h = Hunspell(['fr_FR'])
+        >>> h.suggest('differemmen')
+        [('différemment', 0)]
         '''
         # pylint: enable=line-too-long
         if input_phrase in self._suggest_cache:
