@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 11 Sep 2019 Released 2.6.6 version
+* When checking whether to show inline completion, normalize the first candidate as well
+* Two more test cases in hunspell_suggest.py
+* Make it work correctly with newer French hunspell dictionaries
+* Skip some unittests when dictionaries or python modules needed are not installed
+* Update emoji annotations from CLDR
+* Add more test cases to m17n_translit_test.py for si-sayura.mim
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 28 Aug 2019 Released 2.6.5 version
 * Added Dutch translation (Thanks to Heimen Stoffels)
 * Add si-sayura to the list of M17N input methods

@@ -19,6 +19,34 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.6.6" date="2019-09-11" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            When checking whether to show inline completion, normalize
+            the first candidate as well
+          </li>
+          <li>
+            Two more test cases in hunspell_suggest.py
+          </li>
+          <li>
+            Make it work correctly with newer French hunspell
+            dictionaries
+          </li>
+          <li>
+            Skip some unittests when dictionaries or python modules
+            needed are not installed
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Add more test cases to m17n_translit_test.py for
+            si-sayura.mim
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.6.5" date="2019-08-28" urgency="medium">
       <description>
         <ul>
