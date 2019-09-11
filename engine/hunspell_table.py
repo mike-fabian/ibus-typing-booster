@@ -826,6 +826,32 @@ class TypingBoosterEngine(IBus.Engine):
                     else:
                         phrase_frequencies[cand[0]] = cand[1]
         phrase_candidates = self.db.best_candidates(phrase_frequencies)
+        # If the first candidate is exactly the same as the typed string
+        # prefer longer candidates which start exactly with the typed
+        # string. If the user wants the typed string, he can easily
+        # commit the preëdit, there is no need to select a candidate in
+        # that case. Offering longer completions instead may give
+        # the opportunity to save some key strokes.
+        if phrase_candidates:
+            typed_string = unicodedata.normalize(
+                'NFC', self._transliterated_strings[
+                    self.get_current_imes()[0]])
+            first_candidate = unicodedata.normalize(
+                'NFC', phrase_candidates[0][0])
+            if typed_string == first_candidate:
+                phrase_frequencies = {}
+                first_candidate_user_freq = phrase_candidates[0][1]
+                first_candidate_length = len(first_candidate)
+                for cand in phrase_candidates:
+                    candidate_normalized = unicodedata.normalize(
+                        'NFC', cand[0])
+                    if (len(candidate_normalized) > first_candidate_length
+                        and candidate_normalized.startswith(first_candidate)):
+                        phrase_frequencies[cand[0]] = (
+                            cand[1] + first_candidate_user_freq)
+                    else:
+                        phrase_frequencies[cand[0]] = cand[1]
+                phrase_candidates = self.db.best_candidates(phrase_frequencies)
         if (self._emoji_predictions
             or self._typed_string[0] in (' ', '_')
             or self._typed_string[-1] in (' ', '_')):
