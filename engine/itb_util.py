@@ -755,6 +755,7 @@ CLDR_ANNOTATION_FILES = {
     'ccp_IN',
     'ce',
     'ce_RU',
+    'ceb',
     'cgg',
     'cgg_UG',
     'chr',
