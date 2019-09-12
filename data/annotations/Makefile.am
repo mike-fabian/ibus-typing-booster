@@ -413,8 +413,8 @@ extradata_DATA = \
 	jgo.xml \
 	jgo_CM.xml \
 	jmc.xml \
-	jv.xml \
 	jmc_TZ.xml \
+	jv.xml \
 	ka.xml \
 	ka_GE.xml \
 	kab.xml \
