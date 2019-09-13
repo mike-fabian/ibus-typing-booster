@@ -96,6 +96,7 @@ class TypingBoosterEngine(IBus.Engine):
                 % (bus, obj_path, db))
         super(TypingBoosterEngine, self).__init__(
             connection=bus.get_connection(), object_path=obj_path)
+        self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         self._unit_test = unit_test
         self._input_purpose = 0
         self._has_input_purpose = False
@@ -4245,10 +4246,18 @@ class TypingBoosterEngine(IBus.Engine):
 
     def _forward_key_event_left(self):
         '''Forward an arrow left event to the application.'''
-        # Why is the keycode for IBus.KEY_Left 105?  Without using the
-        # right keycode, this does not work correctly, i.e.
-        # self.forward_key_event(IBus.KEY_Left, 0, 0) does *not* work!
-        self.forward_key_event(IBus.KEY_Left, 105, 0)
+        # Without using a correct ibus key code, this does not work
+        # correctly, i.e. self.forward_key_event(IBus.KEY_Left, 0, 0)
+        # does *not* work anymore!
+        #
+        # The ibus key code for IBus.KEY_Left is usually 105, but
+        # it could be different on an unusual keyboard layout.
+        # It is better to make sure and calculate it correctly
+        # for the current layout.
+        self.forward_key_event(
+            IBus.KEY_Left,
+            self._keyvals_to_keycodes.ibus_keycode(IBus.KEY_Left),
+            0)
 
     def do_process_key_event(self, keyval, keycode, state):
         '''Process Key Events
@@ -4663,6 +4672,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if DEBUG_LEVEL > 1:
             sys.stderr.write('do_focus_in()\n')
+        self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         self.register_properties(self.main_prop_list)
         self.clear_context()
         self._commit_happened_after_focus_in = False
