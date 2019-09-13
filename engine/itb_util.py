@@ -3275,6 +3275,113 @@ def xdg_save_data_path(*resource):
         os.makedirs(path)
     return path
 
+class KeyvalsToKeycodes:
+    '''Class to convert key values to key codes.
+
+    Key values (Key symbols) are the codes which are sent whenever a
+    key is pressed or released.
+
+    Key codes are identifying numbers for physical keys.
+
+    The mapping from key values to key codes is usually not bijective,
+    a key value can be generated from different key codes (if that same value
+    is mapped to different hardware keys in the keyboard layout)
+    and a certain hardware key with a certain key code can generate different
+    key values depending on which modifier was pressed.
+    '''
+    def __init__(self):
+        self.keyvals_to_keycodes = {}
+        display = Gdk.Display.get_default()
+        keymap = Gdk.Keymap.get_for_display(display)
+        for keycode in range(0, 256):
+            (keycode_found,
+             dummy_keymapkeys,
+             keyvals) = Gdk.Keymap.get_entries_for_keycode(keymap, keycode)
+            if keycode_found:
+                for keyval in keyvals:
+                    if keyval:
+                        if (keyval in self.keyvals_to_keycodes
+                            and
+                            keycode not in self.keyvals_to_keycodes[keyval]):
+                            self.keyvals_to_keycodes[keyval].append(keycode)
+                        else:
+                            self.keyvals_to_keycodes[keyval] = [keycode]
+
+    def keycodes(self, keyval):
+        '''Returns a list of key codes of the hardware keys which can generate
+        the given key value on the current keyboard layout.
+
+        :param keyval: A key value
+        :type keyval: Integer
+        :return: A list of key codes of hardware keys, possibly empty
+        :rtype: List of integers between 9 and 255
+
+        '''
+        if keyval in self.keyvals_to_keycodes:
+            return self.keyvals_to_keycodes[keyval]
+        return []
+
+    def keycode(self, keyval):
+        '''Returns one key code of one hardware key which can generate the
+        given key value (there may be more than one, see the
+        keycodes() function.
+
+        :param keyval: A key value
+        :type keyval: Integer
+        :return: One key code of a hardware key which can generate
+                 the given key value
+        :rtype: Integer between 9 and 255
+
+        '''
+        keycodes = self.keycodes(keyval)
+        if keycodes:
+            return keycodes[0]
+        return 0
+
+    def ibus_keycodes(self, keyval):
+        '''Returns a list of ibus key codes of the hardware keys which can
+        generate the given key value on the current keyboard layout.
+
+        ibus key codes are calculated by subtracting 8 from the
+        “normal” key codes.  The smallest possible keycode seems to be
+        9 (usually mapped to Escape).  Therefore, after subtracting 8
+        it is at least 1.
+
+        :param keyval: A key value
+        :type keyval: Integer
+        :return: A list of ibus key codes of hardware keys, possibly empty
+        :rtype: List of integers between 1 and 247
+
+        '''
+        if keyval in self.keyvals_to_keycodes:
+            return [max(0, x - 8) for x in self.keyvals_to_keycodes[keyval]]
+        return []
+
+    def ibus_keycode(self, keyval):
+        '''Returns one ibus key code of one hardware key which can generate
+        the given key value (there may be more than one, see the
+        ibus_keycodes() function)
+
+        ibus key codes are calculated by subtracting 8 from the
+        “normal” key codes.  The smallest possible keycode seems to be
+        9 (usually mapped to Escape).  Therefore, after subtracting 8
+        it is at least 1.
+
+        :param keyval: A key value
+        :type keyval: Integer
+        :return: One ibus key code of a hardware key which can generate
+                 the given key value
+        :rtype: Integer between 1 and 247
+        '''
+        return max(0, self.keycode(keyval) - 8)
+
+    def __str__(self):
+        return_string = ''
+        for keyval in sorted(self.keyvals_to_keycodes):
+            return_string += 'keyval: %s name: %s keycodes: %s\n' % (
+                keyval, IBus.keyval_name(keyval), self.keyvals_to_keycodes[keyval])
+        return return_string
+
 class KeyEvent:
     '''Key event class used to make the checking of details of the key
     event easy
