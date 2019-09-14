@@ -1,8 +1,8 @@
-# ibus-typing-booster
+# ibus-typing-booster #
 
 Faster typing by context sensitive completion.
 
-## Introduction
+## Introduction ##
 
 Ibus-typing-booster is a completion input method to speedup typing.
 
@@ -18,12 +18,12 @@ Since then ibus-typing-booster has been improved to support many other languages
 Recently the capapility to type different languages at the same time without having to
 switch between languages has been added.
 
-## Developers:
+## Developers ##
   
   • Mike FABIAN mfabian@redhat.com
   • Anish Patil anish.developer@gmail.com
 
-## Features
+## Features ##
   
   • Context sensitive completions.
   • Learns from user input.
@@ -37,11 +37,11 @@ switch between languages has been added.
   • Several input methods and languages can be used at the same time without switching.
   • Predicts Unicode symbols and emoji as well.
 
-## Requirements
+## Requirements ##
   • Some packages are requied if you are building from source:
     ┏━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━┓
-    ┃     Package       │ Version ┃
-    ┠───────────────────┼─────────┨
+    ┃      Package      │ Version ┃
+    ┠------------------ | --------┨
     ┃ ibus              │ 1.5.3+  ┃
     ┃ libm17n-0         │ 1.7.0+  ┃
     ┃ m17n-db           │ 1.7.0+  ┃
