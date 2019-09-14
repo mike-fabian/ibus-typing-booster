@@ -41,7 +41,7 @@ switch between languages has been added.
   • Some packages are requied if you are building from source:
     ┏━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━┓
     ┃      Package      │ Version ┃
-    ┠------------------ | --------┨
+    ┠───────────────────┼─────────┨
     ┃ ibus              │ 1.5.3+  ┃
     ┃ libm17n-0         │ 1.7.0+  ┃
     ┃ m17n-db           │ 1.7.0+  ┃
