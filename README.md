@@ -8,42 +8,37 @@ Introduction
 
 Ibus-typing-booster is a completion input method to speedup typing.
 
-The project was started in 2010 for Fedora 15. The original purpose was to make typing of
-Indic languages easier and faster by providing completion and spell checking suggestions.
+The project was started in 2010 for Fedora 15. The original purpose was to make typing of Indic languages easier and faster by providing completion and spell checking suggestions.
 
-Originally it was forked from ibus-table whose developer was Yu Yuwei acevery@gmail.com,
-with contributions from Caius “kaio” Chance me@kaio.net.
+Originally it was forked from ibus-table whose developer was Yu Yuwei acevery@gmail.com, with contributions from Caius “kaio” Chance me@kaio.net.
 
-Since then ibus-typing-booster has been improved to support many other languages as well
-(most languages except Chinese and Japanese are supported).
+Since then ibus-typing-booster has been improved to support many other languages as well (most languages except Chinese and Japanese are supported).
 
-Recently the capapility to type different languages at the same time without having to
-switch between languages has been added.
+Recently the capapility to type different languages at the same time without having to switch between languages has been added.
 
 Developers
 ----------
-  
-  • Mike FABIAN mfabian@redhat.com
-  • Anish Patil anish.developer@gmail.com
+- Mike FABIAN mfabian@redhat.com<br>
+- Anish Patil anish.developer@gmail.com
 
 Features
 --------
-  
-  • Context sensitive completions.
-  • Learns from user input.
-  • Can be trained by supplying files containing typical user input.
-  • If available, hunspell and hunspell dictionaries will also be used to provide not only
-    completion but also spellchecking suggestions (But ibus-typing-booster works also
-    without hunspell by learning only from user input).
-  • Can be used with any keyboard layout.
-  • Almost all input methods supplied by libm17n are supported (including the inscript2
-    input methods).
-  • Several input methods and languages can be used at the same time without switching.
-  • Predicts Unicode symbols and emoji as well.
+- Context sensitive completions.<br>
+- Learns from user input.<br>
+- Can be trained by supplying files containing typical user input.<br>
+- If available, hunspell and hunspell dictionaries will also be used to provide not only<br>
+  completion but also spellchecking suggestions (But ibus-typing-booster works also<br>
+  without hunspell by learning only from user input).<br>
+- Can be used with any keyboard layout.<br>
+- Almost all input methods supplied by libm17n are supported (including the inscript2<br>
+  input methods).<br>
+- Several input methods and languages can be used at the same time without switching.<br>
+- Predicts Unicode symbols and emoji as well.
 
 Requirements
 ------------
-  • Some packages are requied if you are building from source:
+- Some packages are requied if you are building from source:
+```
     ┏━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━┓
     ┃      Package      │ Version ┃
     ┠───────────────────┼─────────┨
@@ -56,9 +51,10 @@ Requirements
     ┃ python3-enchant   │ 2.0.0+  ┃
     ┃ python3-gi        │ 3.26.1+ ┃
     ┗━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━┛
-  • Deactivate all the virtual environments.
+```
+- Deactivate all the virtual environments.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 You can report bugs here:
 
@@ -66,12 +62,12 @@ https://github.com/mike-fabian/ibus-typing-booster/issues
 
 Online documentation can be found here:
 
-http://mike-fabian.github.io/ibus-typing-booster/
+http://mike-fabian.github.io/ibus-typing-booster/<br>
 http://mike-fabian.github.io/ibus-typing-booster/documentation.html
 
 The key bindings and mouse bindings are documented here:
 
-http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings
+http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings<br>
 http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings
 
 Online translation (i18n - Internationalization) platform:
@@ -82,22 +78,22 @@ https://fedora.zanata.org/project/view/ibus-typing-booster
 Table of default key bindings
 -----------------------------
 
-A copy of that key bindings and mouse bindings documentation is
+A copy of that key bindings and mouse bindings documentation is<br>
 included here for convenience:
 
-Some of these key bindings can be customized in the setup tool.
+Some of these key bindings can be customized in the setup tool.<br>
 The following table explains the defaults:
 
-
+```
 ┏━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃  Key combination  │                         Effect                          ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Commit the preëdit (or the selected candidate, if any)  ┃
-┃ Space             │ and send a space to the application, i.e. commit the    ┃         
+┃ Space             │ and send a space to the application, i.e. commit the    ┃     
 ┃                   │ typed string followed by a space.                       ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Return            │ Commit the preëdit (or the selected candidate, if any)  ┃
-┃ <kbd>↩</kbd>      │ and send a Return to the application.                   ┃
+┃                   │ and send a Return to the application.                   ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Enter             │ Commit the preëdit (or the selected candidate, if any)  ┃
 ┃                   │ and send a Enter to the application.                    ┃
@@ -121,11 +117,11 @@ The following table explains the defaults:
 ┃                   │         each commit and after each change of the        ┃
 ┃                   │         contents of the preëdit, the candidate list     ┃
 ┃                   │         will be hidden again until the “enable_lookup”  ┃
-┃ <kbd>⇥</kbd>      │         requests it again.                              ┃
+┃                   │         requests it again.                              ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Bound by default to the command                         ┃
 ┃ Shift+Tab         │ “select_previous_candidate”.                            ┃
-┃ <kbd>⇧⇥</kbd>     │ Selects the previous candidate in the candidate list.   ┃
+┃                   │ Selects the previous candidate in the candidate list.   ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Bound by default to the command “cancel”.               ┃
 ┃                   │                                                         ┃
@@ -139,25 +135,25 @@ The following table explains the defaults:
 ┃                   │         has been changed by typing the Shift key is     ┃
 ┃                   │         shown: go back to the original lookup table.    ┃
 ┃                   │       □ When a normal lookup table is shown: close it   ┃
-┃ <kbd>⎋</kbd>      │         and clear the preëdit.                          ┃
+┃                   │         and clear the preëdit.                          ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Move cursor one typed key left in the preëdit text. May ┃
 ┃ Left (Arrow left) │ trigger a commit if the left end of the preëdit is      ┃
-┃ <kbd>←</kbd>      │ reached.                                                ┃
+┃                   │ reached.                                                ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Move cursor to the left end of the preëdit text. If the ┃
 ┃ Control+Left      │ cursor is already at the left end of the preëdit text,  ┃
 ┃                   │ trigger a commit and send a Control+Left to the         ┃
-┃ <kbd>⌃←</kbd>     │ application.                                            ┃
+┃                   │ application.                                            ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Right (Arrow      │ Move cursor one typed key right in preëdit text. May    ┃
 ┃ right)            │ trigger a commit if the right end of the preëdit is     ┃
-┃ <kbd>→</kbd>      │ reached.                                                ┃
+┃                   │ reached.                                                ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Move cursor to the right end of the preëdit text. If    ┃
 ┃ Control+Right     │ the cursor is already at the right end of the preëdit   ┃
 ┃                   │ text, trigger a commit and send a Control+Right to the  ┃
-┃ <kbd>⌃→</kbd>     │ application.                                            ┃
+┃                   │ application.                                            ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Backspace         │ Remove the typed key to the left of the cursor in the   ┃
 ┃                   │ preëdit text.                                           ┃
@@ -166,18 +162,18 @@ The following table explains the defaults:
 ┃                   │ preëdit text.                                           ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Delete            │ Remove the typed key to the right of the cursor in the  ┃
-┃ <kbd>⌫</kbd>      │ preëdit text.                                           ┃
+┃                   │ preëdit text.                                           ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Control+Delete    │ Remove everything to the right of the cursor in the     ┃
-┃ <kbd>⌃⌫</kbd>     │ preëdit text.                                           ┃
+┃                   │ preëdit text.                                           ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Bound by default to the command                         ┃
 ┃ Down (Arrow down) │ “select_next_candidate”.                                ┃
-┃ <kbd>↓</kbd>      │ Selects the next candidate.                             ┃
+┃                   │ Selects the next candidate.                             ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Bound by default to the command                         ┃
 ┃ Up (Arrow up)     │ “select_previous_candidate”.                            ┃
-┃ <kbd>↑</kbd>      │ Selects the previous candidate.                         ┃
+┃                   │ Selects the previous candidate.                         ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Page_Up           │ Bound by default to the command “lookup_table_page_up”. ┃
 ┃                   │ Shows the previous page of candidates.                  ┃
@@ -257,32 +253,28 @@ The following table explains the defaults:
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ AltGr+Space       │ Insert a literal space into the preëdit.                ┃
 ┗━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-
-
+```
 When more than one input method at the same time is used, the following
 additional key bindings are available:
-
-
+```
 ┏━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃     Key      │                            Effect                            ┃
 ┃ combination  │                                                              ┃
 ┠──────────────┼──────────────────────────────────────────────────────────────┨
 ┃              │ Bound by default to the command “next_input_method”.         ┃
 ┃ Control+Down │ Switches the input method used for the preëdit to the next   ┃
-┃<kbd>⌃↓</kbd> │ input method.                                                ┃
+┃              │ input method.                                                ┃
 ┠──────────────┼──────────────────────────────────────────────────────────────┨
 ┃              │ Bound by default to the command “previous_input_method”.     ┃
 ┃ Control+Up   │ Switches the input method used for the preëdit to the        ┃
-┃<kbd>⌃↑</kbd> │ previous input method.                                       ┃
+┃              │ previous input method.                                       ┃
 ┗━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
 
-
-
-Mouse bindings
+### Mouse bindings ###
 
 These mouse bindings are currently hardcoded and can not yet be customized.
-
-
+```
 ┏━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃   Mouse event    │                          Effect                          ┃
 ┠──────────────────┼──────────────────────────────────────────────────────────┨
@@ -312,3 +304,4 @@ These mouse bindings are currently hardcoded and can not yet be customized.
 ┃                  │ secret user input to disk it might make sense to use     ┃
 ┃                  │ this option temporarily.                                 ┃
 ┗━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
