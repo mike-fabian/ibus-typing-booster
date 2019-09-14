@@ -54,7 +54,8 @@ Requirements
 ```
 - Deactivate all the virtual environments.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Refernces
+---------
 
 You can report bugs here:
 
@@ -305,3 +306,4 @@ These mouse bindings are currently hardcoded and can not yet be customized.
 ┃                  │ this option temporarily.                                 ┃
 ┗━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
