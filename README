@@ -1,8 +1,10 @@
-# ibus-typing-booster #
+ibus-typing-booster
+===================
 
 Faster typing by context sensitive completion.
 
-## Introduction ##
+Introduction
+------------
 
 Ibus-typing-booster is a completion input method to speedup typing.
 
@@ -18,12 +20,14 @@ Since then ibus-typing-booster has been improved to support many other languages
 Recently the capapility to type different languages at the same time without having to
 switch between languages has been added.
 
-## Developers ##
+Developers
+----------
   
   • Mike FABIAN mfabian@redhat.com
   • Anish Patil anish.developer@gmail.com
 
-## Features ##
+Features
+--------
   
   • Context sensitive completions.
   • Learns from user input.
@@ -37,7 +41,8 @@ switch between languages has been added.
   • Several input methods and languages can be used at the same time without switching.
   • Predicts Unicode symbols and emoji as well.
 
-## Requirements ##
+Requirements
+------------
   • Some packages are requied if you are building from source:
     ┏━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━┓
     ┃      Package      │ Version ┃
@@ -73,10 +78,12 @@ Online translation (i18n - Internationalization) platform:
 
 https://fedora.zanata.org/project/view/ibus-typing-booster
 
-A copy of that key bindings and mouse bindings documentation is
-included here for convenience:
 
 Table of default key bindings
+-----------------------------
+
+A copy of that key bindings and mouse bindings documentation is
+included here for convenience:
 
 Some of these key bindings can be customized in the setup tool.
 The following table explains the defaults:
@@ -86,11 +93,11 @@ The following table explains the defaults:
 ┃  Key combination  │                         Effect                          ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Commit the preëdit (or the selected candidate, if any)  ┃
-┃ Space             │ and send a space to the application, i.e. commit the    ┃
+┃ Space             │ and send a space to the application, i.e. commit the    ┃         
 ┃                   │ typed string followed by a space.                       ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Return            │ Commit the preëdit (or the selected candidate, if any)  ┃
-┃                   │ and send a Return to the application.                   ┃
+┃ <kbd>↩</kbd>      │ and send a Return to the application.                   ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Enter             │ Commit the preëdit (or the selected candidate, if any)  ┃
 ┃                   │ and send a Enter to the application.                    ┃
@@ -114,11 +121,11 @@ The following table explains the defaults:
 ┃                   │         each commit and after each change of the        ┃
 ┃                   │         contents of the preëdit, the candidate list     ┃
 ┃                   │         will be hidden again until the “enable_lookup”  ┃
-┃                   │         requests it again.                              ┃
+┃ <kbd>⇥</kbd>      │         requests it again.                              ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Bound by default to the command                         ┃
 ┃ Shift+Tab         │ “select_previous_candidate”.                            ┃
-┃                   │ Selects the previous candidate in the candidate list.   ┃
+┃ <kbd>⇧⇥</kbd>     │ Selects the previous candidate in the candidate list.   ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Bound by default to the command “cancel”.               ┃
 ┃                   │                                                         ┃
@@ -132,25 +139,25 @@ The following table explains the defaults:
 ┃                   │         has been changed by typing the Shift key is     ┃
 ┃                   │         shown: go back to the original lookup table.    ┃
 ┃                   │       □ When a normal lookup table is shown: close it   ┃
-┃                   │         and clear the preëdit.                          ┃
+┃ <kbd>⎋</kbd>      │         and clear the preëdit.                          ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Move cursor one typed key left in the preëdit text. May ┃
 ┃ Left (Arrow left) │ trigger a commit if the left end of the preëdit is      ┃
-┃                   │ reached.                                                ┃
+┃ <kbd>←</kbd>      │ reached.                                                ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Move cursor to the left end of the preëdit text. If the ┃
 ┃ Control+Left      │ cursor is already at the left end of the preëdit text,  ┃
 ┃                   │ trigger a commit and send a Control+Left to the         ┃
-┃                   │ application.                                            ┃
+┃ <kbd>⌃←</kbd>     │ application.                                            ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Right (Arrow      │ Move cursor one typed key right in preëdit text. May    ┃
 ┃ right)            │ trigger a commit if the right end of the preëdit is     ┃
-┃                   │ reached.                                                ┃
+┃ <kbd>→</kbd>      │ reached.                                                ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Move cursor to the right end of the preëdit text. If    ┃
 ┃ Control+Right     │ the cursor is already at the right end of the preëdit   ┃
 ┃                   │ text, trigger a commit and send a Control+Right to the  ┃
-┃                   │ application.                                            ┃
+┃ <kbd>⌃→</kbd>     │ application.                                            ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Backspace         │ Remove the typed key to the left of the cursor in the   ┃
 ┃                   │ preëdit text.                                           ┃
@@ -159,18 +166,18 @@ The following table explains the defaults:
 ┃                   │ preëdit text.                                           ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Delete            │ Remove the typed key to the right of the cursor in the  ┃
-┃                   │ preëdit text.                                           ┃
+┃ <kbd>⌫</kbd>      │ preëdit text.                                           ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Control+Delete    │ Remove everything to the right of the cursor in the     ┃
-┃                   │ preëdit text.                                           ┃
+┃ <kbd>⌃⌫</kbd>     │ preëdit text.                                           ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Bound by default to the command                         ┃
 ┃ Down (Arrow down) │ “select_next_candidate”.                                ┃
-┃                   │ Selects the next candidate.                             ┃
+┃ <kbd>↓</kbd>      │ Selects the next candidate.                             ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Bound by default to the command                         ┃
 ┃ Up (Arrow up)     │ “select_previous_candidate”.                            ┃
-┃                   │ Selects the previous candidate.                         ┃
+┃ <kbd>↑</kbd>      │ Selects the previous candidate.                         ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Page_Up           │ Bound by default to the command “lookup_table_page_up”. ┃
 ┃                   │ Shows the previous page of candidates.                  ┃
@@ -262,11 +269,11 @@ additional key bindings are available:
 ┠──────────────┼──────────────────────────────────────────────────────────────┨
 ┃              │ Bound by default to the command “next_input_method”.         ┃
 ┃ Control+Down │ Switches the input method used for the preëdit to the next   ┃
-┃              │ input method.                                                ┃
+┃<kbd>⌃↓</kbd> │ input method.                                                ┃
 ┠──────────────┼──────────────────────────────────────────────────────────────┨
 ┃              │ Bound by default to the command “previous_input_method”.     ┃
 ┃ Control+Up   │ Switches the input method used for the preëdit to the        ┃
-┃              │ previous input method.                                       ┃
+┃<kbd>⌃↑</kbd> │ previous input method.                                       ┃
 ┗━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
 
