@@ -54,8 +54,8 @@ Requirements
 ```
 - Deactivate all the virtual environments.
 
-Refernces
----------
+References
+----------
 
 You can report bugs here:
 
