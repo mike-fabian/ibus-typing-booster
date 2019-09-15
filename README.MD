@@ -57,22 +57,18 @@ Requirements
 References
 ----------
 
-You can report bugs here:
-
+You can report bugs here:<br>
 https://github.com/mike-fabian/ibus-typing-booster/issues
 
-Online documentation can be found here:
-
+Online documentation can be found here:<br>
 http://mike-fabian.github.io/ibus-typing-booster/<br>
 http://mike-fabian.github.io/ibus-typing-booster/documentation.html
 
-The key bindings and mouse bindings are documented here:
-
+The key bindings and mouse bindings are documented here:<br>
 http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings<br>
 http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings
 
-Online translation (i18n - Internationalization) platform:
-
+Online translation (i18n - Internationalization) platform:<br>
 https://fedora.zanata.org/project/view/ibus-typing-booster
 
 
@@ -204,7 +200,7 @@ The following table explains the defaults:
 ┃                   │ candidate is not learned from user input, nothing       ┃
 ┃                   │ happens).                                               ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
-┃ …                 │ …                                                       ┃
+┃ ...               │ ...                                                     ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Remove the candidate with the label “9” from the        ┃
 ┃ Control+F9        │ database of learned user input (If possible, if this    ┃
