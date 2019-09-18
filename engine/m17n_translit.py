@@ -182,6 +182,10 @@ __module_init = __ModuleInitializer()
 class Transliterator:
     '''A class for transliterators using libm17n
 
+    If initializing the transliterator fails, for example because a
+    non-existing input method was given as the argument, a ValueError
+    is raised:
+
     Examples:
 
     Russian transliteration:
@@ -265,19 +269,6 @@ class Transliterator:
     >>> trans.transliterate(list('vksIal kjSka '))
     'ඩනිෂ්ක නවීන් '
 
-    If initializing the transliterator fails, for example
-    because a non-existing input method was given as the argument,
-    a ValueError is raised:
-
-    >>> trans = Transliterator('ru-translitx')
-    Traceback (most recent call last):
-      File "/usr/lib64/python3.4/doctest.py", line 1318, in __run
-        compileflags, 1), test.globs)
-      File "<doctest __main__.Transliterator[8]>", line 1, in <module>
-        trans = Transliterator('ru-translitx')
-      File "m17n_translit.py", line 194, in __init__
-        raise ValueError('minput_open_im() failed')
-    ValueError: minput_open_im() failed
     '''
     def __init__(self, ime):
         '''Initialize the input method to use for the transliteration
@@ -315,14 +306,13 @@ class Transliterator:
     def transliterate(self, msymbol_list):
         '''Transliterate a list of Msymbol names
 
-        Returns the transliteration as  a string.
-
         :param msymbol_list: A list of strings which are interpreted
                              as the names of Msymbols to transliterate.
                              If the input method has the special name “NoIME”,
                              no transliteration is done, the list of
                              Msymbols is just joined to a single string.
         :type msymbol_list: A list of strings
+        :return: The transliteration
         :rtype: string
         '''
         if not isinstance(msymbol_list, list):
