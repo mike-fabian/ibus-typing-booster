@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# vim:et sts=4 sw=4
+#!/usr/bin/python3
 #
 # ibus-typing-booster - A completion input method for IBus
 #
@@ -22,6 +21,7 @@
 This file implements the test cases for the unit tests of ibus-typing-booster
 '''
 
+import os
 import sys
 import unicodedata
 import unittest
@@ -30,6 +30,19 @@ import subprocess
 from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus
+
+# Get more verbose output in the test log:
+os.environ['IBUS_TYPING_BOOSTER_DEBUG_LEVEL'] = '255'
+
+# Monkey patch the environment with the mock classes:
+from mock_engine import MockEngine
+from mock_engine import MockLookupTable
+from mock_engine import MockProperty
+from mock_engine import MockPropList
+sys.modules["gi.repository.IBus"].Engine = MockEngine
+sys.modules["gi.repository.IBus"].LookupTable = MockLookupTable
+sys.modules["gi.repository.IBus"].Property = MockProperty
+sys.modules["gi.repository.IBus"].PropList = MockPropList
 
 sys.path.insert(0, "../engine")
 from hunspell_table import *
@@ -848,3 +861,6 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'ඩනිෂ්ක නවීන් ')
+
+if __name__ == '__main__':
+    unittest.main()

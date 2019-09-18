@@ -17,181 +17,29 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-import os
 import sys
 import unittest
 
-from gi import require_version
-require_version('IBus', '1.0')
-from gi.repository import IBus
-
-# -- Define some mock classes for the tests ----------------------------------
-class MockEngine:
-    def __init__(self, engine_name = '', connection = None, object_path = ''):
-        self.mock_auxiliary_text = ''
-        self.mock_preedit_text = ''
-        self.mock_preedit_text_cursor_pos = 0
-        self.mock_preedit_text_visible = True
-        self.mock_preedit_focus_mode = IBus.PreeditFocusMode.COMMIT
-        self.mock_committed_text = ''
-        self.mock_committed_text_cursor_pos = 0
-        self.client_capabilities = (
-            IBus.Capabilite.PREEDIT_TEXT
-            | IBus.Capabilite.AUXILIARY_TEXT
-            | IBus.Capabilite.LOOKUP_TABLE
-            | IBus.Capabilite.FOCUS
-            | IBus.Capabilite.PROPERTY)
-        # There are lots of weird problems with surrounding text
-        # which makes this hard to test. Therefore this mock
-        # engine does not try to support surrounding text, i.e.
-        # we omit “| IBus.Capabilite.SURROUNDING_TEXT” here.
-
-    def update_auxiliary_text(self, text, visible):
-        self.mock_auxiliary_text = text.text
-
-    def commit_text(self, text):
-        self.mock_committed_text = (
-            self.mock_committed_text[
-                :self.mock_committed_text_cursor_pos]
-            + text.text
-            + self.mock_committed_text[
-                self.mock_committed_text_cursor_pos:])
-        self.mock_committed_text_cursor_pos += len(text.text)
-
-    def forward_key_event(self, val, code, state):
-        if (val == IBus.KEY_Left
-            and self.mock_committed_text_cursor_pos > 0):
-            self.mock_committed_text_cursor_pos -= 1
-            return
-        unicode = IBus.keyval_to_unicode(val)
-        if unicode:
-            self.mock_committed_text = (
-            self.mock_committed_text[
-                :self.mock_committed_text_cursor_pos]
-            + unicode
-            + self.mock_committed_text[
-                self.mock_committed_text_cursor_pos:])
-            self.mock_committed_text_cursor_pos += len(unicode)
-
-    def update_lookup_table(self, table, visible):
-        pass
-
-    def update_preedit_text(self, text, cursor_pos, visible):
-        self.mock_preedit_text = text.get_text()
-        self.mock_preedit_text_cursor_pos = cursor_pos
-        self.mock_preedit_text_visible = visible
-
-    def update_preedit_text_with_mode(
-            self, text, cursor_pos, visible, focus_mode):
-        self.mock_preedit_focus_mode = focus_mode
-        self.update_preedit_text(text, cursor_pos, visible)
-
-    def register_properties(self, property_list):
-        pass
-
-    def update_property(self, property):
-        pass
-
-    def hide_lookup_table(self):
-        pass
-
-class MockLookupTable:
-    def __init__(self, page_size = 9, cursor_pos = 0, cursor_visible = False, round = True):
-        self.clear()
-        self.mock_page_size = page_size
-        self.mock_cursor_pos = cursor_pos
-        self.mock_cursor_visible = cursor_visible
-        self.cursor_visible = cursor_visible
-        self.mock_round = round
-        self.mock_candidates = []
-
-    def clear(self):
-        self.mock_candidates = []
-        self.mock_cursor_pos = 0
-
-    def set_page_size(self, size):
-        self.mock_page_size = size
-
-    def get_page_size(self):
-        return self.mock_page_size
-
-    def set_round(self, round):
-        self.mock_round = round
-
-    def set_cursor_pos(self, pos):
-        self.mock_cursor_pos = pos
-
-    def get_cursor_pos(self):
-        return self.mock_cursor_pos
-
-    def set_cursor_visible(self, visible):
-        self.mock_cursor_visible = visible
-        self.cursor_visible = visible
-
-    def cursor_down(self):
-        if len(self.mock_candidates):
-            self.mock_cursor_pos += 1
-            self.mock_cursor_pos %= len(self.mock_candidates)
-
-    def cursor_up(self):
-        if len(self.mock_candidates):
-            if self.mock_cursor_pos > 0:
-                self.mock_cursor_pos -= 1
-            else:
-                self.mock_cursor_pos = len(self.mock_candidates) - 1
-
-    def set_orientation(self, orientation):
-        self.mock_orientation = orientation
-
-    def get_number_of_candidates(self):
-        return len(self.mock_candidates)
-
-    def append_candidate(self, candidate):
-        self.mock_candidates.append(candidate.get_text())
-
-    def get_candidate(self, index):
-        return self.mock_candidates[index]
-
-    def get_number_of_candidates(self):
-        return len(self.mock_candidates)
-
-class MockPropList:
-    def append(self, property):
-        pass
-
-class MockProperty:
-    def __init__(self, *args, **kwargs):
-        pass
-
-    def set_label(self, ibus_text):
-        pass
-
-    def set_symbol(self, ibus_text):
-        pass
-
-    def set_tooltip(self, ibus_text):
-        pass
-
-    def set_sensitive(self, sensitive):
-        pass
-
-    def set_visible(self, visible):
-        pass
-
-    def set_state(self, visible):
-        pass
-
-# -- Monkey patch the environment with the mock classes ----------------------
-sys.modules["gi.repository.IBus"].Engine = MockEngine
-sys.modules["gi.repository.IBus"].LookupTable = MockLookupTable
-sys.modules["gi.repository.IBus"].Property = MockProperty
-sys.modules["gi.repository.IBus"].PropList = MockPropList
+# pip3 install tap.py --user
+IMPORT_TAP_SUCCESSFUL = False
+try:
+    from tap import TAPTestRunner
+    IMPORT_TAP_SUCCESSFUL = True
+except (ImportError,):
+    pass
 
 # -- Load and run our unit tests ---------------------------------------------
-os.environ['IBUS_TYPING_BOOSTER_DEBUG_LEVEL'] = '255'
 loader = unittest.TestLoader()
 suite = loader.discover(".")
-runner = unittest.TextTestRunner(stream=sys.stderr, verbosity=255)
+
+if IMPORT_TAP_SUCCESSFUL:
+    runner = TAPTestRunner(stream=sys.stderr, verbosity=255)
+    runner.set_outdir('.')
+    runner.set_format('Hi: {method_name} - {short_description}')
+    runner.set_combined(True)
+else:
+    runner = unittest.TextTestRunner(stream=sys.stderr, verbosity=255)
+
 result = runner.run(suite)
 
 if result.failures or result.errors:
