@@ -116,6 +116,7 @@ extradata_DATA = \
 	sr_Cyrl_BA.xml \
 	sv.xml \
 	sw.xml \
+	sw_KE.xml \
 	ta.xml \
 	te.xml \
 	th.xml \
