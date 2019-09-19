@@ -131,6 +131,16 @@ class EmojiSimilarTestCase(unittest.TestCase):
             mq.similar('🤐', match_limit = 3),
             [('🤐', 'Smiley mit Reissverschlussmund [🤐, Gesicht, Mund, Reissverschluss, Smiley mit Reissverschlussmund]', 5), ('😅', 'Lachender Smiley mit kaltem Schweiss [Gesicht]', 1), ('😃', 'grinsendes Gesicht mit grossen Augen [Gesicht]', 1)])
 
+    def test_similar_show_keywords_option_en_US(self):
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['en_US'])
+        self.assertEqual(
+            mq.similar('🐌', match_limit = 3),
+            [('🐌', 'snail [🐌, So, nature, snail]', 4), ('🐚', 'spiral shell [So, nature]', 2), ('🦋', 'butterfly [So, nature]', 2)])
+        self.assertEqual(
+            mq.similar('🐌', match_limit = 3, show_keywords=False),
+            [('🐌', 'snail', 4), ('🐚', 'spiral shell', 2), ('🦋', 'butterfly', 2)])
+
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin worked.")

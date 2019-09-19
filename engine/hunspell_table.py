@@ -2057,7 +2057,12 @@ class TypingBoosterEngine(IBus.Engine):
             != self._dictionary_names):
             self.emoji_matcher = itb_emoji.EmojiMatcher(
                 languages=self._dictionary_names)
-        related_candidates = self.emoji_matcher.similar(phrase)
+        if DEBUG_LEVEL > 0:
+            related_candidates = self.emoji_matcher.similar(
+                phrase)
+        else:
+            related_candidates = self.emoji_matcher.similar(
+                phrase, show_keywords=False)
         try:
             import itb_nltk
             for synonym in itb_nltk.synonyms(phrase, keep_original=False):

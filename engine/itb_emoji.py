@@ -1795,7 +1795,7 @@ class EmojiMatcher():
                     (emoji_string, _language)]['categories']
         return []
 
-    def similar(self, emoji_string, match_limit=1000):
+    def similar(self, emoji_string, match_limit=1000, show_keywords=True):
         # pylint: disable=line-too-long
         '''Find similar emojis
 
@@ -1804,6 +1804,13 @@ class EmojiMatcher():
         :param emoji_string: The string of Unicode  characters which are
                              used to encode the emoji
         :type emoji_string: A string
+        :param match_limit: Limit the number of matches to this amount
+        :type match_limit: Integer
+        :param show_keywords: Whether the list of keywords and categories which
+                              matched should be included in the names of the
+                              ressults.
+        :type show_keywords: Boolean
+        :return: List of similar emoji
         :rtype: A list of tuples of the form (<emoji>, <name>, <score>),
                 i.e. a list like this:
 
@@ -1923,7 +1930,10 @@ class EmojiMatcher():
             emoji = self.variation_selector_normalize(
                 csi[0][0],
                 variation_selector=self._variation_selector)
-            name = csi[0][2] + ' [' + ', '.join(csi[1]) + ']'
+            if show_keywords:
+                name = csi[0][2] + ' [' + ', '.join(csi[1]) + ']'
+            else:
+                name = csi[0][2]
             score = len(csi[1])
             candidates.append((emoji, name, score))
         return candidates
