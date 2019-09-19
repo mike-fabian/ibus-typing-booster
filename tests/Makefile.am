@@ -28,6 +28,8 @@ EXTRA_DIST = \
 	__init__.py \
 	mock_engine.py \
 	run_tests.in \
+	test_emoji_candidates.py \
+	test_emoji_similar.py \
 	test_itb.py \
 	test_keyvals_to_keycodes.py \
 	test_m17n_translit.py \
