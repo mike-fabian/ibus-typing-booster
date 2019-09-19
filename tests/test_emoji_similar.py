@@ -119,6 +119,18 @@ class EmojiSimilarTestCase(unittest.TestCase):
             mq.similar('🏄‍♂', match_limit = 2),
             [('🏄\u200d♂️', 'hombre haciendo surf [🏄\u200d♂️, hombre, hombre haciendo surf, surf, surfero, surfista]', 6), ('🏄🏻\u200d♂️', 'hombre haciendo surf: tono de piel claro [hombre, hombre haciendo surf, surf, surfero, surfista]', 5)])
 
+    def test_similar_de_DE_versus_de_CH(self):
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['de_DE'])
+        self.assertEqual(
+            mq.similar('🤐', match_limit = 3),
+            [('🤐', 'Gesicht mit Reißverschlussmund [🤐, Gesicht, Gesicht mit Reißverschlussmund, Mund, Reißverschluss]', 5), ('🤑', 'Gesicht mit Dollarzeichen [Gesicht, Mund]', 2), ('🤔', 'nachdenkendes Gesicht [Gesicht]', 1)])
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['de_CH'])
+        self.assertEqual(
+            mq.similar('🤐', match_limit = 3),
+            [('🤐', 'Smiley mit Reissverschlussmund [🤐, Gesicht, Mund, Reissverschluss, Smiley mit Reissverschlussmund]', 5), ('😅', 'Lachender Smiley mit kaltem Schweiss [Gesicht]', 1), ('😃', 'grinsendes Gesicht mit grossen Augen [Gesicht]', 1)])
+
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin worked.")

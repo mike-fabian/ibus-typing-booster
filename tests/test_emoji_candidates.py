@@ -409,6 +409,33 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('1b'),
             [('\x1b', 'U+1B', 200)])
 
+    def test_candidates_de_DE_versus_de_CH(self):
+        # FIXME: This doesn’t work perfectly, when de_CH is the main
+        # language, “Reissverschluss” should be preferred in the
+        # results.
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['de_DE'])
+        self.assertEqual(
+            mq.candidates('Reissverschluss')[0][:2],
+            ('🤐', 'Gesicht mit Reißverschlussmund'))
+        self.assertEqual(
+            mq.candidates('Reißverschluss')[0][:2],
+            ('🤐', 'Gesicht mit Reißverschlussmund'))
+        self.assertEqual(
+            mq.candidates('Reißverschluß')[0][:2],
+            ('🤐', 'Gesicht mit Reißverschlussmund'))
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['de_CH'])
+        self.assertEqual(
+            mq.candidates('Reissverschluss')[0][:2],
+            ('🤐', 'Gesicht mit Reißverschlussmund'))
+        self.assertEqual(
+            mq.candidates('Reißverschluss')[0][:2],
+            ('🤐', 'Gesicht mit Reißverschlussmund'))
+        self.assertEqual(
+            mq.candidates('Reißverschluß')[0][:2],
+            ('🤐', 'Gesicht mit Reißverschlussmund'))
+
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin worked.")
