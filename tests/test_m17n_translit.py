@@ -296,6 +296,8 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('kR')),'ක්‍ර')
         self.assertEqual(trans.transliterate(list('kY')),'ක්‍ය')
         self.assertEqual(trans.transliterate(list('E')),'එ')
+        self.assertEqual(trans.transliterate(list('takWsHN')),'තාක්‍ෂණ')
+        self.assertEqual(trans.transliterate(list('takwsHN')),'තාක්ෂණ')
 
 if __name__ == '__main__':
     unittest.main()
