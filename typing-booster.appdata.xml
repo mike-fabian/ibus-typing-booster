@@ -19,6 +19,39 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.6.7" date="2019-09-30" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            If the first candidate is exactly the same as the typed
+            string prefer longer candidates (Extends inline
+            completions automatically)
+          </li>
+          <li>
+            Move README to README.md and use some markdown to make it
+            look better on github
+          </li>
+          <li>
+            When showing similar emoji in the lookup table, show the
+            list of keywords which matched only when debugging is on
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            More unittests, restructure test files, move some doctests
+            to unittests
+          </li>
+          <li>
+            Add a utility class KeyvalsToKeycodes to find ibus key
+            codes instead of hardcoding them
+          </li>
+          <li>
+            Add ceb to CLDR_ANNOTATION_FILES
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.6.6" date="2019-09-11" urgency="medium">
       <description>
         <ul>

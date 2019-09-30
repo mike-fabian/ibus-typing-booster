@@ -1,4 +1,14 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 30 Sep 2019 Released 2.6.7 version
+* If the first candidate is exactly the same as the typed string prefer longer candidates (Extends inline completions automatically)
+* Move README to README.md and use some markdown to make it look better on github
+* When showing similar emoji in the lookup table, show the list of keywords which matched only when debugging is on
+* Update emoji annotations from CLDR
+* More unittests, restructure test files, move some doctests to unittests
+* Add a utility class KeyvalsToKeycodes to find ibus key codes instead of hardcoding them
+* Add ceb to CLDR_ANNOTATION_FILES
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 11 Sep 2019 Released 2.6.6 version
 * When checking whether to show inline completion, normalize the first candidate as well
 * Two more test cases in hunspell_suggest.py
