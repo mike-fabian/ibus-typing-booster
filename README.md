@@ -1,8 +1,8 @@
-ibus-typing-booster
+# Ibus-typing-booster
 
 Faster typing by context sensitive completion.
 
-Introduction
+## Introduction
 
 Ibus-typing-booster is a completion input method to speedup typing.
 
@@ -18,46 +18,64 @@ Since then ibus-typing-booster has been improved to support many other languages
 Recently the capapility to type different languages at the same time without having to
 switch between languages has been added.
 
-Developers:
+## Developers:
   
-  • Mike FABIAN mfabian@redhat.com
-  • Anish Patil anish.developer@gmail.com
+  - Mike FABIAN mfabian@redhat.com
+  - Anish Patil anish.developer@gmail.com
 
-Features
+## Features
   
-  • Context sensitive completions.
-  • Learns from user input.
-  • Can be trained by supplying files containing typical user input.
-  • If available, hunspell and hunspell dictionaries will also be used to provide not only
+  - Context sensitive completions.
+  - Learns from user input.
+  - Can be trained by supplying files containing typical user input.
+  - If available, hunspell and hunspell dictionaries will also be used to provide not only
     completion but also spellchecking suggestions (But ibus-typing-booster works also
     without hunspell by learning only from user input).
-  • Can be used with any keyboard layout.
-  • Almost all input methods supplied by libm17n are supported (including the inscript2
+  - Can be used with any keyboard layout.
+  - Almost all input methods supplied by libm17n are supported (including the inscript2
     input methods).
-  • Several input methods and languages can be used at the same time without switching.
-  • Predicts Unicode symbols and emoji as well.
+  - Several input methods and languages can be used at the same time without switching.
+  - Predicts Unicode symbols and emoji as well.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+## Online documentation
+
+[ibus-typing-booster home page on github](http://mike-fabian.github.io/ibus-typing-booster/)
+
+[ibus-typing-booster documentation page](http://mike-fabian.github.io/ibus-typing-booster/documentation.html)
+
+## Default key and mouse bindings
+
+[Default key bindings](http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings)
+
+[Default mouse bindings](http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings)
+
+A copy of these bindings is included below in this readme for convenience.
+
+## Bug reports
+
 You can report bugs here:
 
-https://github.com/mike-fabian/ibus-typing-booster/issues
+[ibus-typing-booster issue tracker on github](https://github.com/mike-fabian/ibus-typing-booster/issues)
 
-Online documentation can be found here:
+## Contributing translations
 
-http://mike-fabian.github.io/ibus-typing-booster/
-http://mike-fabian.github.io/ibus-typing-booster/documentation.html
+You can contribute translations using this
+[online translation platform](https://fedora.zanata.org/project/view/ibus-typing-booster).
+You can also contribute translations by using pull requests if you prefer that.
 
-The key bindings and mouse bindings are documented here:
+## Development
 
-http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings
-http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings
+If  you want to build from  source or contribute to the development, see the
+[ibus-typing-booster development page](http://mike-fabian.github.io/ibus-typing-booster/development.html).
 
-Online translation (i18n - Internationalization) platform:
+There  you should also find the requirements for building from source
+for most systems.
 
-https://fedora.zanata.org/project/view/ibus-typing-booster
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-A copy of that key bindings and mouse bindings documentation is
+A copy of the default key bindings and mouse bindings documentation is
 included here for convenience:
 
 Table of default key bindings
