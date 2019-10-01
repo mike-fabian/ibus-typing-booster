@@ -68,6 +68,7 @@ AUX_DIST = \
 	$(NULL)
 
 MAINTAINERCLEANFILES = \
+	README \
 	Makefile.in \
 	aclocal.m4 \
 	configure \
@@ -90,6 +91,10 @@ noinst_DIST = \
 #DISTCLEANFILES = \
 #	po/stamp-it \
 #	$(NULL)
+
+
+README: README.md
+	cp $< $@
 
 rpm: dist @PACKAGE_NAME@.spec
 	rpmbuild -bb \
