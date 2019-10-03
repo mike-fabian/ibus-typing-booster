@@ -27,11 +27,11 @@ This file implements the ibus engine for ibus-typing-booster
 # “Wrong continued indentation”: pylint: disable=bad-continuation
 
 import os
-import sys
 import unicodedata
 import re
 import time
 import locale
+import logging
 from gettext import dgettext
 from gi import require_version
 require_version('IBus', '1.0')
@@ -52,6 +52,8 @@ try:
     IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = False
+
+LOGGER = logging.getLogger('ibus-typing-booster')
 
 __all__ = (
     "TypingBoosterEngine",
@@ -91,9 +93,9 @@ class TypingBoosterEngine(IBus.Engine):
         except (TypeError, ValueError):
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TypingBoosterEngine.__init__(bus=%s, obj_path=%s, db=%s)\n"
-                % (bus, obj_path, db))
+            LOGGER.debug(
+                'TypingBoosterEngine.__init__(bus=%s, obj_path=%s, db=%s)',
+                bus, obj_path, db)
         super(TypingBoosterEngine, self).__init__(
             connection=bus.get_connection(), object_path=obj_path)
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
@@ -354,7 +356,7 @@ class TypingBoosterEngine(IBus.Engine):
                 'dictionary',
                 GLib.Variant.new_string(','.join(self._dictionary_names)))
         if len(self._dictionary_names) > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
-            sys.stderr.write(
+            LOGGER.warning(
                 'Trying to set more than the allowed maximum of %s '
                 %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
                 + 'dictionaries.\n'
@@ -367,12 +369,12 @@ class TypingBoosterEngine(IBus.Engine):
 
         if  self._emoji_predictions:
             if DEBUG_LEVEL > 1:
-                sys.stderr.write('Instantiate EmojiMatcher(languages = %s\n'
-                                 %self._dictionary_names)
+                LOGGER.debug('Instantiate EmojiMatcher(languages = %s',
+                             self._dictionary_names)
             self.emoji_matcher = itb_emoji.EmojiMatcher(
                 languages=self._dictionary_names)
             if DEBUG_LEVEL > 1:
-                sys.stderr.write('EmojiMatcher() instantiated.\n')
+                LOGGER.debug('EmojiMatcher() instantiated.')
         else:
             self.emoji_matcher = None
 
@@ -395,7 +397,7 @@ class TypingBoosterEngine(IBus.Engine):
                 'inputmethod',
                 GLib.Variant.new_string(','.join(self._current_imes)))
         if len(self._current_imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
-            sys.stderr.write(
+            LOGGER.warning(
                 'Trying to set more than the allowed maximum of %s '
                 %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
                 + 'input methods.\n'
@@ -532,9 +534,8 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_preedit_ime_menu_dicts()
         self._init_properties()
 
-        sys.stderr.write(
-            '--- Initialized and ready for input: %s ---\n'
-            %time.strftime('%Y-%m-%d: %H:%M:%S'))
+        LOGGER.info(
+            '********** Initialized and ready for input: **********')
         self._clear_input_and_update_ui()
 
     def _init_transliterators(self):
@@ -544,16 +545,15 @@ class TypingBoosterEngine(IBus.Engine):
             # using m17n transliteration
             try:
                 if DEBUG_LEVEL > 1:
-                    sys.stderr.write(
-                        "instantiating Transliterator(%(ime)s)\n"
-                        %{'ime': ime})
+                    LOGGER.debug(
+                        'instantiating Transliterator(%(ime)s)',
+                        {'ime': ime})
                 self._transliterators[ime] = Transliterator(ime)
             except ValueError as error:
-                sys.stderr.write(
-                    'Error initializing Transliterator %s:\n' %ime
-                    + '%s\n' %error
-                    + 'Maybe /usr/share/m17n/%s.mim is not installed?\n'
-                    %ime)
+                LOGGER.error(
+                    'Error initializing Transliterator %s: %s '
+                    'Maybe /usr/share/m17n/%s.mim is not installed?\n',
+                    ime, error, ime)
                 # Use dummy transliterator “NoIME” as a fallback:
                 self._transliterators[ime] = Transliterator('NoIME')
         self._update_transliterated_strings()
@@ -584,14 +584,10 @@ class TypingBoosterEngine(IBus.Engine):
     def _insert_string_at_cursor(self, string_to_insert):
         '''Insert typed string at cursor position'''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write("_insert_string_at_cursor() string_to_insert=%s\n"
-                             %string_to_insert)
-            sys.stderr.write("_insert_string_at_cursor() "
-                             + "self._typed_string=%s\n"
-                             %self._typed_string)
-            sys.stderr.write("_insert_string_at_cursor() "
-                             + "self._typed_string_cursor=%s\n"
-                             %self._typed_string_cursor)
+            LOGGER.debug('string_to_insert=%s', string_to_insert)
+            LOGGER.debug('self._typed_string=%s', self._typed_string)
+            LOGGER.debug('self._typed_string_cursor=%s',
+                         self._typed_string_cursor)
         self._typed_string = self._typed_string[:self._typed_string_cursor] \
                              +string_to_insert \
                              +self._typed_string[self._typed_string_cursor:]
@@ -775,8 +771,7 @@ class TypingBoosterEngine(IBus.Engine):
         candidates
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write("_update_candidates() self._typed_string=%s\n"
-                             %self._typed_string)
+            LOGGER.debug('self._typed_string=%s', self._typed_string)
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
         if self.is_empty():
@@ -1129,13 +1124,10 @@ class TypingBoosterEngine(IBus.Engine):
                 self._transliterated_strings[ime] = unicodedata.normalize(
                     'NFKD', self._transliterated_strings[ime])
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "_update_transliterated_strings() self._typed_string=%s\n"
-                %self._typed_string)
-            sys.stderr.write(
-                "_update_transliterated_strings() "
-                + "self._transliterated_strings=%s\n"
-                %self._transliterated_strings)
+            LOGGER.debug('self._typed_string=%s', self._typed_string)
+            LOGGER.debug(
+                'self._transliterated_strings=%s',
+                self._transliterated_strings)
 
     def get_current_imes(self):
         '''Get current list of input methods
@@ -1165,7 +1157,7 @@ class TypingBoosterEngine(IBus.Engine):
         if imes == self._current_imes: # nothing to do
             return
         if len(imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
-            sys.stderr.write(
+            LOGGER.error(
                 'Trying to set more than the allowed maximum of %s '
                 %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
                 + 'input methods.\n'
@@ -1209,7 +1201,7 @@ class TypingBoosterEngine(IBus.Engine):
         if dictionary_names == self._dictionary_names: # nothing to do
             return
         if len(dictionary_names) > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
-            sys.stderr.write(
+            LOGGER.error(
                 'Trying to set more than the allowed maximum of %s '
                 %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
                 + 'dictionaries.\n'
@@ -1695,9 +1687,8 @@ class TypingBoosterEngine(IBus.Engine):
         Handle clicks on properties
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "do_property_activate() ibus_property=%s prop_state=%s\n"
-                %(ibus_property, prop_state))
+            LOGGER.debug(
+                'ibus_property=%s prop_state=%s', ibus_property, prop_state)
         if ibus_property == "setup":
             self._start_setup()
             return
@@ -1760,7 +1751,7 @@ class TypingBoosterEngine(IBus.Engine):
             os.getenv('IBUS_TYPING_BOOSTER_LIB_LOCATION'),
             'ibus-setup-typing-booster')
         if DEBUG_LEVEL > 0:
-            sys.stderr.write('Starting setup tool: "%s"\n' % setup_cmd)
+            LOGGER.debug('Starting setup tool: "%s"\n', setup_cmd)
         self._setup_pid = os.spawnl(
             os.P_NOWAIT,
             setup_cmd,
@@ -1776,7 +1767,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''Called when this input engine is destroyed
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write('do_destroy()\n')
+            LOGGER.debug('entering function')
         self._clear_input_and_update_ui()
         self.do_focus_out()
         super(TypingBoosterEngine, self).destroy()
@@ -1784,7 +1775,7 @@ class TypingBoosterEngine(IBus.Engine):
     def _update_preedit(self):
         '''Update Preedit String in UI'''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write('_update_preedit()\n')
+            LOGGER.debug('entering function')
         # get_caret() should also use NFC!
         _str = unicodedata.normalize(
             'NFC', self._transliterated_strings[
@@ -1985,7 +1976,7 @@ class TypingBoosterEngine(IBus.Engine):
     def _update_ui(self):
         '''Update User Interface'''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write('_update_ui()\n')
+            LOGGER.debug('entering function')
         self._update_preedit()
         if self.is_empty():
             # Hide lookup table again if preëdit became empty and
@@ -2100,10 +2091,9 @@ class TypingBoosterEngine(IBus.Engine):
         except (ImportError, LookupError):
             pass
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                '_lookup_related_candidates():'
-                +  ' related_candidates of “%s” = %s\n'
-                %(phrase, related_candidates))
+            LOGGER.debug(
+                'related_candidates of “%s” = %s\n',
+                phrase, related_candidates)
         if not related_candidates:
             # Nothing related found, show the original lookup table
             # and original auxiliary text again:
@@ -2137,7 +2127,7 @@ class TypingBoosterEngine(IBus.Engine):
         lookup table.
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write('_candidates_case_mode_change()\n')
+            LOGGER.debug('⎆')
         if (self.is_empty()
             or not self._candidates
             or not self.get_lookup_table().get_number_of_candidates()):
@@ -2183,12 +2173,12 @@ class TypingBoosterEngine(IBus.Engine):
             if self._transliterators[ime].transliterate(
                     msymbol_list) != ''.join(msymbol_list):
                 if DEBUG_LEVEL > 1:
-                    sys.stderr.write(
-                        "_has_transliteration(%s) == True\n" %msymbol_list)
+                    LOGGER.debug(
+                        '_has_transliteration(%s) == True\n', msymbol_list)
                 return True
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "_has_transliteration(%s) == False\n" %msymbol_list)
+            LOGGER.debug(
+                '_has_transliteration(%s) == False\n', msymbol_list)
         return False
 
     def _remove_candidate(self, index):
@@ -2249,8 +2239,7 @@ class TypingBoosterEngine(IBus.Engine):
         the committed string ended a sentence.
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                '_commit_string(%s, %s)\n' %(commit_phrase, input_phrase))
+            LOGGER.debug('(%s, %s)', commit_phrase, input_phrase)
         # If the suggestions are only enabled by Tab key, i.e. the
         # lookup table is not shown until Tab has been typed, hide
         # the lookup table again after each commit. That means
@@ -2286,11 +2275,11 @@ class TypingBoosterEngine(IBus.Engine):
                 cursor_pos = surrounding_text[1]
                 anchor_pos = surrounding_text[2]
                 if DEBUG_LEVEL > 1:
-                    sys.stderr.write(
+                    LOGGER.debug(
                         'Checking for whitespace before sentence end char. '
-                        + 'surrounding_text = '
-                        + '[text = "%s", cursor_pos = %s, anchor_pos = %s]'
-                        %(text, cursor_pos, anchor_pos) + '\n')
+                        'surrounding_text = '
+                        '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
+                        text, cursor_pos, anchor_pos)
                 # The commit_phrase is *not* yet in the surrounding text,
                 # it will show up there only when the next key event is
                 # processed:
@@ -2304,11 +2293,11 @@ class TypingBoosterEngine(IBus.Engine):
                         text = surrounding_text[0].get_text()
                         cursor_pos = surrounding_text[1]
                         anchor_pos = surrounding_text[2]
-                        sys.stderr.write(
+                        LOGGER.debug(
                             'Removed whitespace before sentence end char. '
-                            + 'surrounding_text = '
-                            + '[text = "%s", cursor_pos = %s, anchor_pos = %s]'
-                            %(text, cursor_pos, anchor_pos) + '\n')
+                            'surrounding_text = '
+                            '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
+                            text, cursor_pos, anchor_pos)
         super(TypingBoosterEngine, self).commit_text(
             IBus.Text.new_from_string(commit_phrase))
         self._clear_input_and_update_ui()
@@ -2513,9 +2502,8 @@ class TypingBoosterEngine(IBus.Engine):
 
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_add_space_on_commit(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._add_space_on_commit:
             return
         self._add_space_on_commit = mode
@@ -2562,9 +2550,8 @@ class TypingBoosterEngine(IBus.Engine):
 
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_inline_completion(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._inline_completion:
             return
         self._inline_completion = mode
@@ -2611,9 +2598,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_qt_im_module_workaround(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._qt_im_module_workaround:
             return
         self._qt_im_module_workaround = mode
@@ -2656,9 +2642,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_arrow_keys_reopen_preedit(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._arrow_keys_reopen_preedit:
             return
         self._arrow_keys_reopen_preedit = mode
@@ -2695,9 +2680,7 @@ class TypingBoosterEngine(IBus.Engine):
         :type mode: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_input_mode(%s)\n"
-                % mode)
+            LOGGER.debug('(%s)', mode)
         if mode == self._input_mode:
             return
         self._input_mode = mode
@@ -2730,9 +2713,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_emoji_prediction_mode(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._emoji_predictions:
             return
         self._emoji_predictions = mode
@@ -2785,9 +2767,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_off_the_record_mode(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._off_the_record:
             return
         self._off_the_record = mode
@@ -2834,9 +2815,9 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_auto_commit_characters(%s, update_gsettings = %s)\n"
-                %(auto_commit_characters, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)',
+                auto_commit_characters, update_gsettings)
         if auto_commit_characters == self._auto_commit_characters:
             return
         self._auto_commit_characters = auto_commit_characters
@@ -2865,9 +2846,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_color_inline_completion(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._color_inline_completion:
             return
         self._color_inline_completion = mode
@@ -2902,9 +2882,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_color_inline_completion_string(%s, update_gsettings = %s)\n"
-                %(color_string, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', color_string, update_gsettings)
         if color_string == self._color_inline_completion_string:
             return
         self._color_inline_completion_string = color_string
@@ -2935,9 +2914,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_color_userdb(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._color_userdb:
             return
         self._color_userdb = mode
@@ -2971,9 +2949,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_color_userdb_string(%s, update_gsettings = %s)\n"
-                %(color_string, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', color_string, update_gsettings)
         if color_string == self._color_userdb_string:
             return
         self._color_userdb_string = color_string
@@ -3004,9 +2981,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_color_spellcheck(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._color_spellcheck:
             return
         self._color_spellcheck = mode
@@ -3040,9 +3016,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_color_spellcheck_string(%s, update_gsettings = %s)\n"
-                %(color_string, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', color_string, update_gsettings)
         if color_string == self._color_spellcheck_string:
             return
         self._color_spellcheck_string = color_string
@@ -3073,9 +3048,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_color_dictionary(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._color_dictionary:
             return
         self._color_dictionary = mode
@@ -3109,9 +3083,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_color_dictionary_string(%s, update_gsettings = %s)\n"
-                %(color_string, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', color_string, update_gsettings)
         if color_string == self._color_dictionary_string:
             return
         self._color_dictionary_string = color_string
@@ -3142,9 +3115,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_label_userdb(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._label_userdb:
             return
         self._label_userdb = mode
@@ -3173,9 +3145,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_label_userdb_string(%s, update_gsettings = %s)\n"
-                %(label_string, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', label_string, update_gsettings)
         if label_string == self._label_userdb_string:
             return
         self._label_userdb_string = label_string
@@ -3204,9 +3175,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_label_spellcheck(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._label_spellcheck:
             return
         self._label_spellcheck = mode
@@ -3235,9 +3205,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_label_spellcheck_string(%s, update_gsettings = %s)\n"
-                %(label_string, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', label_string, update_gsettings)
         if label_string == self._label_spellcheck_string:
             return
         self._label_spellcheck_string = label_string
@@ -3266,9 +3235,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_label_dictionary(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._label_dictionary:
             return
         self._label_dictionary = mode
@@ -3297,9 +3265,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_label_dictionary_string(%s, update_gsettings = %s)\n"
-                %(label_string, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', label_string, update_gsettings)
         if label_string == self._label_dictionary_string:
             return
         self._label_dictionary_string = label_string
@@ -3328,9 +3295,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_label_busy(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._label_busy:
             return
         self._label_busy = mode
@@ -3359,9 +3325,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_label_busy_string(%s, update_gsettings = %s)\n"
-                %(label_string, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', label_string, update_gsettings)
         if label_string == self._label_busy_string:
             return
         self._label_busy_string = label_string
@@ -3391,9 +3356,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_google_application_credentials(%s, update_gsettings = %s)\n"
-                %(path, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', path, update_gsettings)
         if self._google_application_credentials == path:
             return
         self._google_application_credentials = path
@@ -3423,9 +3387,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_tab_enable(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._tab_enable:
             return
         self._tab_enable = mode
@@ -3455,10 +3418,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                'set_remember_last_used_preedit_ime('
-                + '%s, update_gsettings = %s)\n'
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._remember_last_used_preedit_ime:
             return
         self._remember_last_used_preedit_ime = mode
@@ -3488,9 +3449,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_page_size(%s, update_gsettings = %s)\n"
-                %(page_size, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', page_size, update_gsettings)
         if page_size == self._page_size:
             return
         if 1 <= page_size <= 9:
@@ -3525,9 +3485,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_lookup_table_orientation(%s, update_gsettings = %s)\n"
-                %(orientation, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', orientation, update_gsettings)
         if orientation == self._lookup_table_orientation:
             return
         if 0 <= orientation <= 2:
@@ -3564,9 +3523,9 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_preedit_underline(%s, update_gsettings = %s)\n"
-                %(underline_mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)',
+                underline_mode, update_gsettings)
         if underline_mode == self._preedit_underline:
             return
         if 0 <= underline_mode < IBus.AttrUnderline.ERROR:
@@ -3598,9 +3557,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_preedit_style_only_when_lookup(%s, update_gsettings=%s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings=%s)', mode, update_gsettings)
         if mode == self._preedit_style_only_when_lookup:
             return
         self._preedit_style_only_when_lookup = mode
@@ -3630,9 +3588,9 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_min_char_complete(%s, update_gsettings = %s)\n"
-                %(min_char_complete, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)',
+                min_char_complete, update_gsettings)
         if min_char_complete == self._min_char_complete:
             return
         if 1 <= min_char_complete <= 9:
@@ -3664,9 +3622,8 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         global DEBUG_LEVEL
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_debug_level(%s, update_gsettings = %s)\n"
-                %(debug_level, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', debug_level, update_gsettings)
         if debug_level == self._debug_level:
             return
         if 0 <= debug_level <= 255:
@@ -3699,9 +3656,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_show_number_of_candidates(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._show_number_of_candidates:
             return
         self._show_number_of_candidates = mode
@@ -3738,10 +3694,8 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_show_status_info_in_auxiliary_text"
-                + "(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._show_status_info_in_auxiliary_text:
             return
         self._show_status_info_in_auxiliary_text = mode
@@ -3772,9 +3726,9 @@ class TypingBoosterEngine(IBus.Engine):
         :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "set_auto_select_candidate(%s, update_gsettings = %s)\n"
-                %(mode, update_gsettings))
+            LOGGER.debug(
+                'set_auto_select_candidate(%s, update_gsettings = %s)',
+                mode, update_gsettings)
         if mode == self._auto_select_candidate:
             return
         self._auto_select_candidate = mode
@@ -3797,9 +3751,8 @@ class TypingBoosterEngine(IBus.Engine):
         is clicked with the mouse
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                'do_candidate_clicked() index = %s button = %s state = %s\n'
-                %(index, button, state))
+            LOGGER.debug(
+                'index = %s button = %s state = %s\n', index, button, state)
         if not self._set_lookup_table_cursor_pos_in_current_page(index):
             return
         self._lookup_table.set_cursor_visible(True)
@@ -3848,7 +3801,7 @@ class TypingBoosterEngine(IBus.Engine):
         and insert converted text.
         '''
         if DEBUG_LEVEL:
-            sys.stderr.write('speech_recognition()\n')
+            LOGGER.debug('speech_recognition()\n')
         self._clear_input_and_update_ui()
         if not IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL:
             self._speech_recognition_error(
@@ -3955,11 +3908,11 @@ class TypingBoosterEngine(IBus.Engine):
                     # Display the transcription of the top alternative.
                     transcript = result.alternatives[0].transcript
                     if DEBUG_LEVEL > 1:
-                        sys.stderr.write(
-                            '-------------------  %s alternative(s)\n'
-                            % len(result.alternatives))
+                        LOGGER.debug(
+                            '-------------------  %s alternative(s)',
+                            len(result.alternatives))
                         for alternative in result.alternatives:
-                            sys.stderr.write('%s\n' % alternative.transcript)
+                            LOGGER.debug('%s', alternative.transcript)
                     # Display interim results in auxiliary text.
                     # Showing it in the preedit because updating the
                     # preedit causes Gtk events. And I may want to use
@@ -3997,12 +3950,11 @@ class TypingBoosterEngine(IBus.Engine):
                 anchor_pos = surrounding_text[2]
                 text_left = text[:cursor_pos].strip()
                 if DEBUG_LEVEL > 1:
-                    sys.stderr.write(
+                    LOGGER.debug(
                         'surrounding_text = '
-                        + '[text = "%s", cursor_pos = %s, anchor_pos = %s]'
-                        %(text, cursor_pos, anchor_pos) + '\n')
-                    sys.stderr.write(
-                        'text_left = %s\n' % text_left)
+                        '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
+                        text, cursor_pos, anchor_pos)
+                    LOGGER.debug('text_left = %s', text_left)
                 if not text_left or text_left[-1] in '.;:?!':
                     transcript = transcript[0].upper() + transcript[1:]
 
@@ -4023,10 +3975,8 @@ class TypingBoosterEngine(IBus.Engine):
         :rtype: Boolean
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                '_handle_hotkeys(): KeyEvent object: %s\n' % key)
-            sys.stderr.write(
-                '_handle_hotkeys(): self._hotkeys=%s\n' % str(self._hotkeys))
+            LOGGER.debug('KeyEvent object: %s\n', key)
+            LOGGER.debug('self._hotkeys=%s\n', str(self._hotkeys))
 
         if (key, 'cancel') in self._hotkeys:
             if self.is_empty():
@@ -4297,9 +4247,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         key = itb_util.KeyEvent(keyval, keycode, state)
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "process_key_event() "
-                "KeyEvent object: %s" % key)
+            LOGGER.debug('KeyEvent object: %s', key)
 
         if (key, 'toggle_input_mode_on_off') in self._hotkeys:
             self.toggle_input_mode()
@@ -4341,9 +4289,8 @@ class TypingBoosterEngine(IBus.Engine):
 
         if self.is_empty():
             if DEBUG_LEVEL > 1:
-                sys.stderr.write(
-                    "_process_key_event() self.is_empty(): "
-                    "KeyEvent object: %s\n" % key)
+                LOGGER.debug(
+                    'self.is_empty(): KeyEvent object: %s', key)
             # This is the first character typed since the last commit
             # there is nothing in the preëdit yet.
             if key.val < 32:
@@ -4509,7 +4456,7 @@ class TypingBoosterEngine(IBus.Engine):
             # This key does not only a cursor movement in the preëdit,
             # it really triggers a commit.
             if DEBUG_LEVEL > 1:
-                sys.stderr.write('_process_key_event() commit triggered.\n')
+                LOGGER.debug('_process_key_event() commit triggered.\n')
             # We need to transliterate
             # the preëdit again here, because adding the commit key to
             # the input might influence the transliteration. For example
@@ -4567,9 +4514,7 @@ class TypingBoosterEngine(IBus.Engine):
                 # self.is_empty(), if we get here there should
                 # have been something in the preëdit or the lookup table:
                 if DEBUG_LEVEL > 0:
-                    sys.stderr.write(
-                        '_process_key_event() '
-                        + 'commit string unexpectedly empty.\n')
+                    LOGGER.error('commit string unexpectedly empty.')
                 return self._return_false(key.val, key.code, key.state)
             forward_arrow_left_events_ok = False
             if not self.get_lookup_table().cursor_visible:
@@ -4669,9 +4614,9 @@ class TypingBoosterEngine(IBus.Engine):
                 and itb_util.contains_letter(input_phrase)
             ):
                 if DEBUG_LEVEL > 1:
-                    sys.stderr.write(
-                        'auto committing because of key.msymbol = %s'
-                        %key.msymbol)
+                    LOGGER.debug(
+                        'auto committing because of key.msymbol = %s',
+                        key.msymbol)
                 self._commit_string(
                     input_phrase + ' ', input_phrase=input_phrase)
             self._update_ui()
@@ -4702,7 +4647,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write('do_focus_in()\n')
+            LOGGER.debug('do_focus_in()\n')
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         self.register_properties(self.main_prop_list)
         self.clear_context()
@@ -4766,7 +4711,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write('do_focus_out()\n')
+            LOGGER.debug('do_focus_out()\n')
         if self._has_input_purpose:
             self._input_purpose = 0
         # The preëdit, if there was any, has already been committed
@@ -4784,7 +4729,7 @@ class TypingBoosterEngine(IBus.Engine):
         different position in the current window.
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write('do_reset()\n')
+            LOGGER.debug('do_reset()\n')
         # The preëdit, if there was any, has already been committed
         # automatically because
         # update_preedit_text_with_mode(,,,IBus.PreeditFocusMode.COMMIT)
@@ -4823,20 +4768,20 @@ class TypingBoosterEngine(IBus.Engine):
             IBus.InputPurpose.PASSWORD: 'PASSWORD',
             IBus.InputPurpose.PIN: 'PIN',
         }
-        sys.stderr.write(
-            'do_set_content_type(%s) self._has_input_purpose = %s\n'
-            %(purpose, self._has_input_purpose))
+        LOGGER.debug(
+            'do_set_content_type(%s) self._has_input_purpose = %s\n',
+            purpose, self._has_input_purpose)
         if purpose in purpose_names:
-            sys.stderr.write('purpose_name = %s\n' %purpose_names[purpose])
+            LOGGER.debug('purpose_name = %s\n', purpose_names[purpose])
         else:
-            sys.stderr.write('unknown purpose_name\n')
+            LOGGER.debug('unknown purpose_name\n')
         if self._has_input_purpose:
             self._input_purpose = purpose
 
     def do_enable(self):
         '''Called when this input engine is enabled'''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write('do_enable()\n')
+            LOGGER.debug('do_enable()\n')
         # Tell the input-context that the engine will utilize
         # surrounding-text:
         self.get_surrounding_text()
@@ -4845,7 +4790,7 @@ class TypingBoosterEngine(IBus.Engine):
     def do_disable(self):
         '''Called when this input engine is disabled'''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write('do_disable()\n')
+            LOGGER.debug('do_disable()\n')
         self._clear_input_and_update_ui()
 
     def do_page_up(self):
@@ -4896,7 +4841,7 @@ class TypingBoosterEngine(IBus.Engine):
         :type key: String
         '''
         value = itb_util.variant_to_value(self._gsettings.get_value(key))
-        sys.stderr.write('Settings changed: key=%s value=%s\n' %(key, value))
+        LOGGER.debug('Settings changed: key=%s value=%s\n', key, value)
         if key == 'qtimmoduleworkaround':
             self.set_qt_im_module_workaround(value, update_gsettings=False)
             return
@@ -5031,5 +4976,5 @@ class TypingBoosterEngine(IBus.Engine):
             self.db.hunspell_obj.init_dictionaries()
             self._clear_input_and_update_ui()
             return
-        sys.stderr.write('Unknown key\n')
+        LOGGER.warning('Unknown key\n')
         return

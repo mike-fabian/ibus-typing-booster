@@ -26,6 +26,7 @@ import os
 import re
 import string
 import unicodedata
+import logging
 import gettext
 import traceback
 from gi import require_version
@@ -68,6 +69,8 @@ try:
     IMPORT_QUEUE_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_QUEUE_SUCCESSFUL = False
+
+LOGGER = logging.getLogger('ibus-typing-booster')
 
 DOMAINNAME = 'ibus-typing-booster'
 _ = lambda a: gettext.dgettext(DOMAINNAME, a)
@@ -3011,10 +3014,8 @@ def find_hunspell_dictionary(language):
                 dic_path = os.path.join(dirname, language + '.dic')
                 aff_path = os.path.join(dirname, language + '.aff')
                 return (dic_path, aff_path)
-    sys.stderr.write(
-        'find_hunspell_dictionary(): '
-        + 'No file %s.dic found in %s\n'
-        %(language, dirnames))
+    LOGGER.warning(
+        'No file %s.dic found in %s', language, dirnames)
     return ('', '')
 
 def get_hunspell_dictionary_wordlist(language):
@@ -3033,10 +3034,7 @@ def get_hunspell_dictionary_wordlist(language):
     (dic_path, aff_path) = find_hunspell_dictionary(language)
     if not dic_path:
         return ('', '', [])
-    sys.stderr.write(
-        'get_hunspell_dictionary_wordlist(): '
-        + '%s file found.\n'
-        %dic_path)
+    LOGGER.info('%s file found.', dic_path)
     dictionary_encoding = 'UTF-8'
     if os.path.isfile(aff_path):
         aff_buffer = ''
@@ -3049,10 +3047,8 @@ def get_hunspell_dictionary_wordlist(language):
         except (FileNotFoundError, PermissionError):
             traceback.print_exc()
         except:
-            sys.stderr.write(
-                'get_hunspell_dictionary_wordlist() '
-                + 'Unexpected error loading .aff File: %s\n'
-                %aff_path)
+            LOGGER.error(
+                'Unexpected error loading .aff File: %s', aff_path)
             traceback.print_exc()
         if aff_buffer:
             encoding_pattern = re.compile(
@@ -3061,61 +3057,50 @@ def get_hunspell_dictionary_wordlist(language):
             match = encoding_pattern.search(aff_buffer)
             if match:
                 dictionary_encoding = match.group('encoding')
-                sys.stderr.write(
-                    'get_hunspell_dictionary_wordlist(): '
-                    + 'dictionary encoding=%s found in %s\n'
-                    %(dictionary_encoding, aff_path))
+                LOGGER.info(
+                    'dictionary encoding=%s found in %s',
+                    dictionary_encoding, aff_path)
             else:
-                sys.stderr.write(
-                    'get_hunspell_dictionary_wordlist(): '
-                    + 'No encoding found in %s\n'
-                    %aff_path)
+                LOGGER.info(
+                    'No encoding found in %s', aff_path)
     else:
-        sys.stderr.write(
-            'get_hunspell_dictionary_wordlist(): '
-            + '%s file missing. Trying to open %s using %s encoding\n'
-            %(aff_path, dic_path, dictionary_encoding))
+        LOGGER.info(
+            '%s file missing. Trying to open %s using %s encoding',
+            aff_path, dic_path, dictionary_encoding)
     dic_buffer = ''
     try:
         dic_buffer = open(
             dic_path, encoding=dictionary_encoding).readlines()
     except (UnicodeDecodeError, FileNotFoundError, PermissionError):
-        sys.stderr.write(
-            'get_hunspell_dictionary_wordlist(): '
-            + 'loading %s as %s encoding failed, '
-            %(dic_path, dictionary_encoding)
-            + 'fall back to ISO-8859-1.\n')
+        LOGGER.error(
+            'loading %s as %s encoding failed, fall back to ISO-8859-1.',
+            dic_path, dictionary_encoding)
         dictionary_encoding = 'ISO-8859-1'
         try:
             dic_buffer = open(
                 dic_path,
                 encoding=dictionary_encoding).readlines()
         except (UnicodeDecodeError, FileNotFoundError, PermissionError):
-            sys.stderr.write(
-                'get_hunspell_dictionary_wordlist(): '
-                + 'loading %s as %s encoding failed, '
-                %(dic_path, dictionary_encoding)
-                + 'giving up.\n')
+            LOGGER.error(
+                'loading %s as %s encoding failed, giving up.',
+                dic_path, dictionary_encoding)
             traceback.print_exc()
             return ('', '', [])
         except:
-            sys.stderr.write(
-                'get_hunspell_dictionary_wordlist(): '
-                + 'Unexpected error loading .dic File: %s\n' %dic_path)
+            LOGGER.error(
+                'Unexpected error loading .dic File: %s', dic_path)
             traceback.print_exc()
             return ('', '', [])
     except:
-        sys.stderr.write(
-            'get_hunspell_dictionary_wordlist(): '
-            + 'Unexpected error loading .dic File: %s\n' %dic_path)
+        LOGGER.error(
+            'Unexpected error loading .dic File: %s', dic_path)
         traceback.print_exc()
         return ('', '', [])
     if not dic_buffer:
         return ('', '', [])
-    sys.stderr.write(
-        'get_hunspell_dictionary_wordlist(): '
-        + 'Successfully loaded %s using %s encoding.\n'
-        %(dic_path, dictionary_encoding))
+    LOGGER.info(
+        'Successfully loaded %s using %s encoding.',
+        dic_path, dictionary_encoding)
     # http://pwet.fr/man/linux/fichiers_speciaux/hunspell says:
     #
     # > A dictionary file (*.dic) contains a list of words, one per

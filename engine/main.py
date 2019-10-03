@@ -22,8 +22,9 @@
 import os
 import sys
 import argparse
-import time
 import re
+import logging
+import logging.handlers
 from signal import signal, SIGTERM, SIGINT
 from gi import require_version
 require_version('IBus', '1.0')
@@ -33,6 +34,8 @@ from gi.repository import GLib
 import factory
 import tabsqlitedb
 import version
+
+LOGGER = logging.getLogger('ibus-typing-booster')
 
 DEBUG_LEVEL = int(0)
 try:
@@ -83,7 +86,7 @@ def parse_args():
         action='store_true',
         dest='no_debug',
         default=False,
-        help='Do not redirect stdout and stderr to '
+        help='Do not write log file '
         + '~/.local/share/ibus-typing-booster/debug.log, '
         + 'default: %(default)s')
     parser.add_argument(
@@ -100,14 +103,13 @@ _ARGS = parse_args()
 if _ARGS.profile:
     import cProfile
     import pstats
+    import io
     _PROFILE = cProfile.Profile()
 
 class IMApp:
     def __init__(self, exec_by_ibus):
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "IMApp.__init__(exec_by_ibus=%s)\n"
-                % exec_by_ibus)
+            LOGGER.debug('IMApp.__init__(exec_by_ibus=%s)\n', exec_by_ibus)
         self.__mainloop = GLib.MainLoop()
         self.__bus = IBus.Bus()
         self.__bus.connect("disconnected", self.__bus_destroy_cb)
@@ -154,7 +156,7 @@ class IMApp:
 
     def run(self):
         if DEBUG_LEVEL > 1:
-            sys.stderr.write("IMApp.run()\n")
+            LOGGER.debug('IMApp.run()\n')
         if _ARGS.profile:
             _PROFILE.enable()
         self.__mainloop.run()
@@ -162,27 +164,29 @@ class IMApp:
 
     def quit(self):
         if DEBUG_LEVEL > 1:
-            sys.stderr.write("IMApp.quit()\n")
+            LOGGER.debug('IMApp.quit()\n')
         self.__bus_destroy_cb()
 
     def __bus_destroy_cb(self, bus=None):
         if DEBUG_LEVEL > 1:
-            sys.stderr.write("IMApp.__bus_destroy_cb(bus=%s)\n" % bus)
+            LOGGER.debug('IMApp.__bus_destroy_cb(bus=%s)\n', bus)
         if self.destroyed:
             return
-        print("finalizing:)")
+        LOGGER.info('finalizing:)')
         self.__factory.do_destroy()
         self.destroyed = True
         self.__mainloop.quit()
         if _ARGS.profile:
             _PROFILE.disable()
-            stats = pstats.Stats(_PROFILE)
+            stats_stream = io.StringIO()
+            stats = pstats.Stats(_PROFILE, stream=stats_stream)
             stats.strip_dirs()
             stats.sort_stats('cumulative')
             stats.print_stats('tabsqlite', 25)
             stats.print_stats('hunspell_suggest', 25)
             stats.print_stats('hunspell_table', 25)
             stats.print_stats('itb_emoji', 25)
+            LOGGER.info('Profiling info:\n%s', stats_stream.getvalue())
 
 def cleanup(ima_ins):
     ima_ins.quit()
@@ -206,16 +210,33 @@ def indent(element, level=0):
 
 def main():
     '''Main program'''
-    if not _ARGS.xml and not _ARGS.no_debug:
-        if not os.access(
-                os.path.expanduser('~/.local/share/ibus-typing-booster'),
-                os.F_OK):
-            os.system('mkdir -p ~/.local/share/ibus-typing-booster')
-        logfile = os.path.expanduser(
-            '~/.local/share/ibus-typing-booster/debug.log')
-        sys.stdout = open(logfile, mode='a', buffering=1)
-        sys.stderr = open(logfile, mode='a', buffering=1)
-        print('--- Starting: %s ---' %time.strftime('%Y-%m-%d: %H:%M:%S'))
+    if not _ARGS.xml:
+        if _ARGS.no_debug:
+            log_handler = logging.NullHandler()
+        else:
+            if not os.access(
+                    os.path.expanduser('~/.local/share/ibus-typing-booster'),
+                    os.F_OK):
+                os.system('mkdir -p ~/.local/share/ibus-typing-booster')
+            logfile = os.path.expanduser(
+                '~/.local/share/ibus-typing-booster/debug.log')
+            log_handler = logging.handlers.TimedRotatingFileHandler(
+                logfile,
+                when='midnight',
+                interval=1,
+                backupCount=7,
+                encoding='UTF-8',
+                delay=False,
+                utc=False,
+                atTime=None)
+        log_formatter = logging.Formatter(
+            '%(asctime)s %(filename)s '
+            'line %(lineno)d %(funcName)s %(levelname)s: '
+            '%(message)s')
+        log_handler.setFormatter(log_formatter)
+        LOGGER.setLevel(logging.DEBUG)
+        LOGGER.addHandler(log_handler)
+        LOGGER.info('********** STARTING **********')
 
     if _ARGS.xml:
         from xml.etree.ElementTree import Element, SubElement, tostring

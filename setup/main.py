@@ -30,6 +30,8 @@ import html
 import signal
 import argparse
 import locale
+import logging
+import logging.handlers
 from time import strftime
 import dbus
 import dbus.service
@@ -70,6 +72,8 @@ import tabsqlitedb
 import itb_util
 import itb_emoji
 
+LOGGER = logging.getLogger('ibus-typing-booster')
+
 GTK_VERSION = (Gtk.get_major_version(),
                Gtk.get_minor_version(),
                Gtk.get_micro_version())
@@ -84,7 +88,7 @@ def parse_args():
         '-q', '--no-debug',
         action='store_true',
         default=False,
-        help=('Do not redirect stdout and stderr to '
+        help=('Do not write log file '
               + '~/.local/share/ibus-typing-booster/setup-debug.log, '
               + 'default: %(default)s'))
     return parser.parse_args()
@@ -1711,7 +1715,7 @@ class SetupUI(Gtk.Window):
             self._dictionary_names = itb_util.get_default_dictionaries(
                 locale.getlocale(category=locale.LC_CTYPE)[0])
         if len(self._dictionary_names) > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
-            sys.stderr.write(
+            LOGGER.error(
                 'Trying to set more than the allowed maximum of %s '
                 %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
                 + 'dictionaries.\n'
@@ -1808,13 +1812,13 @@ class SetupUI(Gtk.Window):
             self._current_imes = itb_util.get_default_input_methods(
                 locale.getlocale(category=locale.LC_CTYPE)[0])
         if len(self._current_imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
-            sys.stderr.write(
+            LOGGER.error(
                 'Trying to set more than the allowed maximum of %s '
                 %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
                 + 'input methods.\n'
                 + 'Trying to set: %s\n' %self._current_imes
                 + 'Really setting: %s\n'
-                %self._current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
+                % self._current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
             self._current_imes = (
                 self._current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
             # Save reduced list of input methods back to settings:
@@ -1924,7 +1928,7 @@ class SetupUI(Gtk.Window):
         :type key: String
         '''
         value = itb_util.variant_to_value(self._gsettings.get_value(key))
-        sys.stderr.write('Settings changed: key=%s value=%s\n' %(key, value))
+        LOGGER.info('Settings changed: key=%s value=%s\n', key, value)
 
         if key == 'qtimmoduleworkaround':
             self.set_qt_im_module_workaround(value, update_gsettings=False)
@@ -2057,9 +2061,9 @@ class SetupUI(Gtk.Window):
             # A dictionary has been updated or installed,
             # the ibus-typing-booster will (re)load all dictionaries,
             # but here in the setup tool there is nothing to do.
-            sys.stderr.write('A dictionary has been updated or installed.')
+            LOGGER.info('A dictionary has been updated or installed.')
             return
-        sys.stderr.write('Unknown key\n')
+        LOGGER.error('Unknown key\n')
         return
 
     def on_about_button_clicked(self, _button):
@@ -3004,9 +3008,9 @@ class SetupUI(Gtk.Window):
                     shortcut_existing = True
                 iterator = model.iter_next(iterator)
             if not shortcut_existing:
-                sys.stderr.write(
-                    'defining shortcut: “%s” -> “%s”\n'
-                    %(shortcut, shortcut_expansion))
+                LOGGER.info(
+                    'defining shortcut: “%s” -> “%s”',
+                    shortcut, shortcut_expansion)
                 self.tabsqlitedb.check_phrase_and_update_frequency(
                     input_phrase=shortcut,
                     phrase=shortcut_expansion,
@@ -3049,7 +3053,7 @@ class SetupUI(Gtk.Window):
             # i.e. on_keybindings_treeview_row_selected() should have
             # been called already and this should have set
             # self._keybindings_selected_command
-            sys.stderr.write(
+            LOGGER.error(
                 'Unexpected error, command = "%s" ' % command
                 + 'self._keybindings_selected_command = "%s"\n'
                 % self._keybindings_selected_command)
@@ -3371,9 +3375,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_qt_im_module_workaround(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._qt_im_module_workaround:
             return
         self._qt_im_module_workaround = mode
@@ -3396,9 +3399,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_arrow_keys_reopen_preedit(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._arrow_keys_reopen_preedit:
             return
         self._arrow_keys_reopen_preedit = mode
@@ -3421,9 +3423,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_emoji_prediction_mode(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._emoji_predictions:
             return
         self._emoji_predictions = mode
@@ -3447,9 +3448,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_off_the_record_mode(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._off_the_record:
             return
         self._off_the_record = mode
@@ -3474,9 +3474,9 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_auto_commit_characters(%s, update_gsettings = %s)\n"
-            %(auto_commit_characters, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)',
+            auto_commit_characters, update_gsettings)
         if auto_commit_characters == self._auto_commit_characters:
             return
         self._auto_commit_characters = auto_commit_characters
@@ -3501,9 +3501,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_google_application_credentials(%s, update_gsettings = %s)\n"
-            %(path, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', path, update_gsettings)
         if path == self._google_application_credentials:
             return
         self._google_application_credentials = path
@@ -3527,9 +3526,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_color_inline_completion(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._color_inline_completion:
             return
         self._color_inline_completion = mode
@@ -3559,9 +3557,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_color_inline_completion_string(%s, update_gsettings = %s)\n"
-            %(color_string, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', color_string, update_gsettings)
         if color_string == self._color_inline_completion_string:
             return
         self._color_inline_completion_string = color_string
@@ -3586,9 +3583,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_color_userdb(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._color_userdb:
             return
         self._color_userdb = mode
@@ -3617,9 +3613,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_color_userdb_string(%s, update_gsettings = %s)\n"
-            %(color_string, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', color_string, update_gsettings)
         if color_string == self._color_userdb_string:
             return
         self._color_userdb_string = color_string
@@ -3644,9 +3639,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_color_spellcheck(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._color_spellcheck:
             return
         self._color_spellcheck = mode
@@ -3675,9 +3669,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_color_spellcheck_string(%s, update_gsettings = %s)\n"
-            %(color_string, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', color_string, update_gsettings)
         if color_string == self._color_spellcheck_string:
             return
         self._color_spellcheck_string = color_string
@@ -3702,9 +3695,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_color_dictionary(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._color_dictionary:
             return
         self._color_dictionary = mode
@@ -3733,9 +3725,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_color_dictionary_string(%s, update_gsettings = %s)\n"
-            %(color_string, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', color_string, update_gsettings)
         if color_string == self._color_dictionary_string:
             return
         self._color_dictionary_string = color_string
@@ -3760,9 +3751,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_label_userdb(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._label_userdb:
             return
         self._label_userdb = mode
@@ -3785,9 +3775,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_label_userdb_string(%s, update_gsettings = %s)\n"
-            %(label_string, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', label_string, update_gsettings)
         if label_string == self._label_userdb_string:
             return
         self._label_userdb_string = label_string
@@ -3811,9 +3800,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_label_spellcheck(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._label_spellcheck:
             return
         self._label_spellcheck = mode
@@ -3836,9 +3824,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_label_spellcheck_string(%s, update_gsettings = %s)\n"
-            %(label_string, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', label_string, update_gsettings)
         if label_string == self._label_spellcheck_string:
             return
         self._label_spellcheck_string = label_string
@@ -3862,9 +3849,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_label_dictionary(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._label_dictionary:
             return
         self._label_dictionary = mode
@@ -3887,9 +3873,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_label_dictionary_string(%s, update_gsettings = %s)\n"
-            %(label_string, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', label_string, update_gsettings)
         if label_string == self._label_dictionary_string:
             return
         self._label_dictionary_string = label_string
@@ -3913,9 +3898,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_label_busy(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._label_busy:
             return
         self._label_busy = mode
@@ -3938,9 +3922,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_label_busy_string(%s, update_gsettings = %s)\n"
-            %(label_string, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', label_string, update_gsettings)
         if label_string == self._label_busy_string:
             return
         self._label_busy_string = label_string
@@ -3964,9 +3947,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_tab_enable(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._tab_enable:
             return
         self._tab_enable = mode
@@ -3990,9 +3972,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_inline_completion(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._inline_completion:
             return
         self._inline_completion = mode
@@ -4016,9 +3997,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_remember_last_used_preedit_ime(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._remember_last_used_preedit_ime:
             return
         self._remember_last_used_preedit_ime = mode
@@ -4041,9 +4021,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_page_size(%s, update_gsettings = %s)\n"
-            %(page_size, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', page_size, update_gsettings)
         if page_size == self._page_size:
             return
         if 1 <= page_size <= 9:
@@ -4067,9 +4046,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_lookup_table_orientation(%s, update_gsettings = %s)\n"
-            %(orientation, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', orientation, update_gsettings)
         if orientation == self._lookup_table_orientation:
             return
         if 0 <= orientation <= 2:
@@ -4100,9 +4078,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_preedit_underline(%s, update_gsettings = %s)\n"
-            %(underline_mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', underline_mode, update_gsettings)
         if underline_mode == self._preedit_underline:
             return
         if 0 <= underline_mode < IBus.AttrUnderline.ERROR:
@@ -4129,9 +4106,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_min_char_complete(%s, update_gsettings = %s)\n"
-            %(min_char_complete, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', min_char_complete, update_gsettings)
         if min_char_complete == self._min_char_complete:
             return
         if 1 <= min_char_complete <= 9:
@@ -4156,9 +4132,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_debug_level(%s, update_gsettings = %s)\n"
-            %(debug_level, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', debug_level, update_gsettings)
         if debug_level == self._debug_level:
             return
         if 0 <= debug_level <= 255:
@@ -4184,9 +4159,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_show_number_of_candidates(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._show_number_of_candidates:
             return
         self._show_number_of_candidates = mode
@@ -4215,10 +4189,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_show_status_info_in_auxiliary_text"
-            + "(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._show_status_info_in_auxiliary_text:
             return
         self._show_status_info_in_auxiliary_text = mode
@@ -4244,10 +4216,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_preedit_style_only_when_lookup"
-            + "(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._preedit_style_only_when_lookup:
             return
         self._preedit_style_only_when_lookup = mode
@@ -4270,9 +4240,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_auto_select_candidate(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._auto_select_candidate:
             return
         self._auto_select_candidate = mode
@@ -4295,9 +4264,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
-        sys.stderr.write(
-            "set_add_space_on_commit(%s, update_gsettings = %s)\n"
-            %(mode, update_gsettings))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._add_space_on_commit:
             return
         self._add_space_on_commit = mode
@@ -4326,13 +4294,13 @@ class SetupUI(Gtk.Window):
         if imes == self._current_imes: # nothing to do
             return
         if len(imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
-            sys.stderr.write(
+            LOGGER.error(
                 'Trying to set more than the allowed maximum of %s '
                 %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
                 + 'input methods.\n'
                 + 'Trying to set: %s\n' %imes
                 + 'Really setting: %s\n'
-                %imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
+                % imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
             imes = imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS]
         self._current_imes = imes
         self._fill_input_methods_listbox()
@@ -4366,13 +4334,13 @@ class SetupUI(Gtk.Window):
         if dictionary_names == self._dictionary_names: # nothing to do
             return
         if len(dictionary_names) > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
-            sys.stderr.write(
+            LOGGER.error(
                 'Trying to set more than the allowed maximum of %s '
                 %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
                 + 'dictionaries.\n'
                 + 'Trying to set: %s\n' %dictionary_names
                 + 'Really setting: %s\n'
-                %dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
+                % dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
             dictionary_names = dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES]
         self._dictionary_names = dictionary_names
         self._fill_dictionaries_listbox()
@@ -4487,16 +4455,32 @@ class HelpWindow(Gtk.Window):
         self.destroy()
 
 if __name__ == '__main__':
-    if not _ARGS.no_debug:
+    if _ARGS.no_debug:
+        log_handler = logging.NullHandler()
+    else:
         if (not os.access(
                 os.path.expanduser('~/.local/share/ibus-typing-booster'),
                 os.F_OK)):
             os.system('mkdir -p ~/.local/share/ibus-typing-booster')
-        LOGFILE = os.path.expanduser(
+        logfile = os.path.expanduser(
             '~/.local/share/ibus-typing-booster/setup-debug.log')
-        sys.stdout = open(LOGFILE, mode='a', buffering=1)
-        sys.stderr = open(LOGFILE, mode='a', buffering=1)
-        print('--- %s ---' %strftime('%Y-%m-%d: %H:%M:%S'))
+        log_handler = logging.handlers.TimedRotatingFileHandler(
+            logfile,
+            when='H',
+            interval=6,
+            backupCount=7,
+            encoding='UTF-8',
+            delay=False,
+            utc=False,
+            atTime=None)
+        log_formatter = logging.Formatter(
+            '%(asctime)s %(filename)s '
+            'line %(lineno)d %(funcName)s %(levelname)s: '
+            '%(message)s')
+        log_handler.setFormatter(log_formatter)
+        LOGGER.setLevel(logging.DEBUG)
+        LOGGER.addHandler(log_handler)
+        LOGGER.info('********** STARTING **********')
 
     # Workaround for
     # https://bugzilla.gnome.org/show_bug.cgi?id=622084
@@ -4505,7 +4489,7 @@ if __name__ == '__main__':
     try:
         locale.setlocale(locale.LC_ALL, '')
     except locale.Error:
-        sys.stderr.write("IBUS-WARNING **: Using the fallback 'C' locale")
+        LOGGER.error("IBUS-WARNING **: Using the fallback 'C' locale")
         locale.setlocale(locale.LC_ALL, 'C')
     i18n_init()
     if IBus.get_address() is None:

@@ -27,7 +27,10 @@ hunspell dictonaries.
 import os
 import sys
 import unicodedata
+import logging
 import itb_util
+
+LOGGER = logging.getLogger('ibus-typing-booster')
 
 DEBUG_LEVEL = int(0)
 
@@ -56,8 +59,7 @@ class Dictionary:
     '''
     def __init__(self, name='en_US'):
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "Dictionary.__init__(name=%s)\n" %name)
+            LOGGER.debug('Dictionary.__init__(name=%s)\n', name)
         self.name = name
         self.dic_path = ''
         self.encoding = 'UTF-8'
@@ -74,7 +76,7 @@ class Dictionary:
 
         '''
         if DEBUG_LEVEL > 0:
-            sys.stderr.write("load_dictionary() ...\n")
+            LOGGER.debug('load_dictionary() ...\n')
         (self.dic_path,
          self.encoding,
          self.words) = itb_util.get_hunspell_dictionary_wordlist(self.name)
@@ -100,21 +102,20 @@ class Dictionary:
                 if len(word) > self.max_word_len:
                     self.max_word_len = len(word)
             if DEBUG_LEVEL > 1:
-                sys.stderr.write(
-                    'load_dictionary() max_word_len = %s\n'
-                    % self.max_word_len)
+                LOGGER.debug(
+                    'max_word_len = %s\n', self.max_word_len)
             if IMPORT_ENCHANT_SUCCESSFUL:
                 try:
                     self.enchant_dict = enchant.Dict(self.name)
                 except enchant.errors.DictNotFoundError as error:
-                    sys.stderr.write(
-                        'Error initializing enchant for %s: %s\n'
-                        % (self.name, error))
+                    LOGGER.debug(
+                        'Error initializing enchant for %s: %s\n',
+                        self.name, error)
                     self.enchant_dict = None
                 except:
-                    sys.stderr.write(
-                        'Unknown error initializing enchant for %s\n'
-                        % self.name)
+                    LOGGER.debug(
+                        'Unknown error initializing enchant for %s\n',
+                        self.name)
                     self.enchant_dict = None
             elif IMPORT_HUNSPELL_SUCCESSFUL and self.dic_path:
                 aff_path = self.dic_path.replace('.dic', '.aff')
@@ -122,14 +123,14 @@ class Dictionary:
                     self.pyhunspell_object = hunspell.HunSpell(
                         self.dic_path, aff_path)
                 except hunspell.HunSpellError as error:
-                    sys.stderr.write(
-                        'Error initializing hunspel for %s: %s\n'
-                        % (self.name, error))
+                    LOGGER.debug(
+                        'Error initializing hunspel for %s: %s\n',
+                        self.name, error)
                     self.pyhunspell_object = None
                 except:
-                    sys.stderr.write(
-                        'Unknown error initializing hunspell for %s\n'
-                        % self.name)
+                    LOGGER.debug(
+                        'Unknown error initializing hunspell for %s\n',
+                        self.name)
                     self.pyhunspell_object = None
 
 class Hunspell:
@@ -144,12 +145,11 @@ class Hunspell:
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
             if dictionary_names:
-                sys.stderr.write(
-                    'Hunspell.__init__(dictionary_names=%s)\n'
-                    %dictionary_names)
+                LOGGER.debug(
+                    'Hunspell.__init__(dictionary_names=%s)\n',
+                    dictionary_names)
             else:
-                sys.stderr.write(
-                    'Hunspell.__init__(dictionary_names=())\n')
+                LOGGER.debug('Hunspell.__init__(dictionary_names=())\n')
         self._suggest_cache = {}
         self._dictionary_names = dictionary_names
         self._dictionaries = []
@@ -160,11 +160,11 @@ class Hunspell:
         '''
         if DEBUG_LEVEL > 1:
             if self._dictionary_names:
-                sys.stderr.write(
-                    'Hunspell.init_dictionaries() dictionary_names=%s\n'
-                    %self._dictionary_names)
+                LOGGER.debug(
+                    'Hunspell.init_dictionaries() dictionary_names=%s\n',
+                    self._dictionary_names)
             else:
-                sys.stderr.write(
+                LOGGER.debug(
                     'Hunspell.init_dictionaries() dictionary_names=()\n')
         self._suggest_cache = {}
         self._dictionaries = []
@@ -201,9 +201,9 @@ class Hunspell:
                             dictionaries_new.append(dictionary)
                 self._dictionaries = dictionaries_new
         if DEBUG_LEVEL > 1:
-            sys.stderr.write('set_dictionary_names(%s):\n' % dictionary_names)
+            LOGGER.debug('set_dictionary_names(%s):\n', dictionary_names)
             for dictionary in self._dictionaries:
-                sys.stderr.write('%s\n' % dictionary.name)
+                LOGGER.debug('%s\n', dictionary.name)
 
     def suggest(self, input_phrase):
         # pylint: disable=line-too-long
@@ -271,9 +271,9 @@ class Hunspell:
         if input_phrase in self._suggest_cache:
             return self._suggest_cache[input_phrase]
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "Hunspell.suggest() input_phrase=%(ip)s\n"
-                %{'ip': input_phrase.encode('UTF-8')})
+            LOGGER.debug(
+                "Hunspell.suggest() input_phrase=%(ip)s\n",
+                {'ip': input_phrase.encode('UTF-8')})
         # http://pwet.fr/man/linux/fichiers_speciaux/hunspell says:
         #
         # > A dictionary file (*.dic) contains a list of words, one per

@@ -30,6 +30,7 @@ import gzip
 import json
 import unicodedata
 import html
+import logging
 from distutils.version import LooseVersion
 from difflib import SequenceMatcher
 import gettext
@@ -67,6 +68,8 @@ try:
     IMPORT_PINYIN_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_PINYIN_SUCCESSFUL = False
+
+LOGGER = logging.getLogger('ibus-typing-booster')
 
 DATADIR = os.path.join(os.path.dirname(__file__), '../data')
 # USER_DATADIR will be “~/.local/share/ibus-typing-booster/data” by default
@@ -565,9 +568,8 @@ class EmojiMatcher():
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
         if not path:
-            sys.stderr.write(
-                '_load_unicode_data(): could not find "%s" in "%s"\n'
-                %(basenames, dirnames))
+            LOGGER.warning(
+                'could not find "%s" in "%s"', basenames, dirnames)
             return
         with open_function(
                 path, mode='rt', encoding='utf-8') as unicode_data_file:
@@ -611,9 +613,8 @@ class EmojiMatcher():
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
         if not path:
-            sys.stderr.write(
-                '_load_unicode_emoji_data(): could not find "%s" in "%s"\n'
-                %(basenames, dirnames))
+            LOGGER.warning(
+                'could not find "%s" in "%s"', basenames, dirnames)
             return
         with open_function(
                 path, mode='rt', encoding='utf-8') as unicode_emoji_data_file:
@@ -655,10 +656,8 @@ class EmojiMatcher():
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
         if not path:
-            sys.stderr.write(
-                '_load_unicode_emoji_sequences(): '
-                + 'could not find "%s" in "%s"\n'
-                %(basenames, dirnames))
+            LOGGER.warning(
+                'could not find "%s" in "%s"', basenames, dirnames)
             return
         with open_function(
                 path,
@@ -704,10 +703,8 @@ class EmojiMatcher():
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
         if not path:
-            sys.stderr.write(
-                '_load_unicode_emoji_zwj_sequences(): '
-                + 'could not find "%s" in "%s"\n'
-                %(basenames, dirnames))
+            LOGGER.warning(
+                'could not find "%s" in "%s"', basenames, dirnames)
             return
         with open_function(
                 path,
@@ -763,9 +760,8 @@ class EmojiMatcher():
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
         if not path:
-            sys.stderr.write(
-                '_load_unicode_emoji_test(): could not find "%s" in "%s"\n'
-                %(basenames, dirnames))
+            LOGGER.warning(
+                'could not find "%s" in "%s"', basenames, dirnames)
             return
         with open_function(
                 path, mode='rt', encoding='utf-8') as unicode_emoji_test_file:
@@ -848,9 +844,8 @@ class EmojiMatcher():
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
         if not path:
-            sys.stderr.write(
-                '_load_emojione_data(): could not find "%s" in "%s"\n'
-                %(basenames, dirnames))
+            LOGGER.warning(
+                'could not find "%s" in "%s"', basenames, dirnames)
             return
         with open_function(
                 path, mode='rt', encoding='utf-8') as emoji_one_file:

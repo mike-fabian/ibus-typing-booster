@@ -27,9 +27,12 @@ import unicodedata
 import sqlite3
 import time
 import re
+import logging
 import traceback
 import itb_util
 import hunspell_suggest
+
+LOGGER = logging.getLogger('ibus-typing-booster')
 
 DEBUG_LEVEL = int(0)
 
@@ -64,8 +67,8 @@ class TabSqliteDb:
         except (TypeError, ValueError):
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.__init__(user_db_file = %s)\n" %user_db_file)
+            LOGGER.debug(
+                'TabSqliteDb.__init__(user_db_file = %s)', user_db_file)
         self.user_db_file = user_db_file
         if not self.user_db_file:
             self.user_db_file = path.join(
@@ -88,9 +91,9 @@ class TabSqliteDb:
 
         if self.user_db_file != ':memory:':
             if not os.path.exists(self.user_db_file):
-                sys.stderr.write(
-                    "The user database %(udb)s does not exist yet.\n"
-                    %{'udb': self.user_db_file})
+                LOGGER.info(
+                    'The user database %(udb)s does not exist yet.',
+                    {'udb': self.user_db_file})
             else:
                 try:
                     desc = self.get_database_desc(self.user_db_file)
@@ -99,48 +102,44 @@ class TabSqliteDb:
                             or (self.get_number_of_columns_of_phrase_table(
                                 self.user_db_file)
                                 != len(self._phrase_table_column_names))):
-                        sys.stderr.write(
-                            "The user database %(udb)s "
-                            %{'udb': self.user_db_file}
-                            + "seems to be incompatible.\n")
+                        LOGGER.info(
+                            'The user database %(udb)s seems incompatible',
+                            {'udb': self.user_db_file})
                         if desc is None:
-                            sys.stderr.write(
-                                "There is no version information in "
-                                + "the database.\n")
+                            LOGGER.info(
+                                'No version information in the database')
                         elif desc["version"] != USER_DATABASE_VERSION:
-                            sys.stderr.write(
-                                "The version of the database does not match "
-                                + "(too old or too new?).\n")
-                            sys.stderr.write(
-                                "ibus-typing-booster wants version=%s\n"
-                                %USER_DATABASE_VERSION)
-                            sys.stderr.write(
-                                "But the  database actually has version=%s\n"
-                                %desc["version"])
+                            LOGGER.info(
+                                'The version of the database does not match '
+                                '(too old or too new?)')
+                            LOGGER.info(
+                                'ibus-typing-booster wants version=%s',
+                                USER_DATABASE_VERSION)
+                            LOGGER.info(
+                                'But the  database actually has version=%s',
+                                desc["version"])
                         elif (self.get_number_of_columns_of_phrase_table(
                                 self.user_db_file)
                               != len(self._phrase_table_column_names)):
-                            sys.stderr.write(
-                                "The number of columns of the database "
-                                + "does not match.\n")
-                            sys.stderr.write(
-                                "ibus-typing-booster expects %(col)s columns.\n"
-                                %{'col': len(self._phrase_table_column_names)})
-                            sys.stderr.write(
-                                "But the database actually has "
-                                + "%(col)s columns.\n"
-                                %{'col':
-                                  self.get_number_of_columns_of_phrase_table(
-                                      self.user_db_file)})
-                        sys.stderr.write(
-                            "Trying to recover the phrases from the old, "
-                            + "incompatible database.\n")
+                            LOGGER.info(
+                                'The number of columns of the database '
+                                'does not match')
+                            LOGGER.info(
+                                'ibus-typing-booster expects %(col)s columns',
+                                {'col': len(self._phrase_table_column_names)})
+                            LOGGER.info(
+                                'The database actually has %(col)s columns',
+                                {'col':
+                                 self.get_number_of_columns_of_phrase_table(
+                                     self.user_db_file)})
+                        LOGGER.info(
+                            'Trying to recover the phrases from the old, '
+                            'incompatible database')
                         self.old_phrases = self.extract_user_phrases()
                         timestamp = time.strftime('-%Y-%m-%d_%H:%M:%S')
-                        sys.stderr.write(
-                            'Renaming the incompatible database to '
-                            + '"%(name)s".\n'
-                            %{'name': self.user_db_file+timestamp})
+                        LOGGER.info(
+                            'Renaming the incompatible database to "%(name)s"',
+                            {'name': self.user_db_file+timestamp})
                         if os.path.exists(self.user_db_file):
                             os.rename(self.user_db_file,
                                       self.user_db_file+timestamp)
@@ -150,27 +149,27 @@ class TabSqliteDb:
                         if os.path.exists(self.user_db_file+'-wal'):
                             os.rename(self.user_db_file+'-wal',
                                       self.user_db_file+'-wal'+timestamp)
-                        sys.stderr.write(
-                            "Creating a new, empty database \"%(name)s\".\n"
-                            %{'name': self.user_db_file})
+                        LOGGER.info(
+                            'Creating a new, empty database "%(name)s".',
+                            {'name': self.user_db_file})
                         self.init_user_db()
-                        sys.stderr.write(
-                            "If user phrases were successfully recovered "
-                            + "from the old,\n"
-                            + "incompatible database, they will be used to "
-                            + "initialize the new database.\n")
+                        LOGGER.info(
+                            'If user phrases were successfully recovered '
+                            'from the old, '
+                            'incompatible database, they will be used to '
+                            'initialize the new database.')
                     else:
-                        sys.stderr.write(
-                            "Compatible database %(db)s found.\n"
-                            %{'db': self.user_db_file})
+                        LOGGER.info(
+                            'Compatible database %(db)s found.',
+                            {'db': self.user_db_file})
                 except:
                     traceback.print_exc()
 
         # open user phrase database
         try:
-            sys.stderr.write(
-                "Connect to the database %(name)s.\n"
-                %{'name': self.user_db_file})
+            LOGGER.info(
+                'Connect to the database %(name)s.',
+                {'name': self.user_db_file})
             self.db = sqlite3.connect(self.user_db_file)
             self.db.executescript('''
                 PRAGMA encoding = "UTF-8";
@@ -184,13 +183,13 @@ class TabSqliteDb:
                 ATTACH DATABASE "%s" AS user_db;
             ''' % self.user_db_file)
         except:
-            sys.stderr.write(
-                "Could not open the database %(name)s.\n"
-                %{'name': self.user_db_file})
+            LOGGER.error(
+                'Could not open the database %(name)s.',
+                {'name': self.user_db_file})
             timestamp = time.strftime('-%Y-%m-%d_%H:%M:%S')
-            sys.stderr.write(
-                "Renaming the incompatible database to \"%(name)s\".\n"
-                %{'name': self.user_db_file+timestamp})
+            LOGGER.info(
+                'Renaming the incompatible database to "%(name)s".',
+                {'name': self.user_db_file+timestamp})
             if os.path.exists(self.user_db_file):
                 os.rename(self.user_db_file, self.user_db_file+timestamp)
             if os.path.exists(self.user_db_file+'-shm'):
@@ -199,9 +198,9 @@ class TabSqliteDb:
             if os.path.exists(self.user_db_file+'-wal'):
                 os.rename(self.user_db_file+'-wal',
                           self.user_db_file+'-wal'+timestamp)
-            sys.stderr.write(
-                "Creating a new, empty database \"%(name)s\".\n"
-                %{'name': self.user_db_file})
+            LOGGER.info(
+                'Creating a new, empty database "%(name)s".',
+                {'name': self.user_db_file})
             self.init_user_db()
             self.db = sqlite3.connect(self.user_db_file)
             self.db.executescript('''
@@ -284,10 +283,8 @@ class TabSqliteDb:
                    'pp_phrase': pp_phrase,
                    'timestamp': time.time()}
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.update_phrase() sqlstr=%s\n" %sqlstr)
-            sys.stderr.write(
-                "TabSqliteDb.update_phrase() sqlargs=%s\n" %sqlargs)
+            LOGGER.debug('sqlstr=%s', sqlstr)
+            LOGGER.debug('sqlargs=%s', sqlargs)
         try:
             self.db.execute(sqlstr, sqlargs)
             if commit:
@@ -300,15 +297,11 @@ class TabSqliteDb:
         Trigger a checkpoint operation.
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.sync_userdb() "
-                + "commit and execute checkpoint ...\n")
+            LOGGER.debug('commit and execute checkpoint ...')
         self.db.commit()
         self.db.execute('PRAGMA wal_checkpoint;')
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.sync_userdb() "
-                + "commit and execute checkpoint done.\n")
+            LOGGER.debug('commit and execute checkpoint done.')
 
     def create_tables(self):
         '''Create table for the phrases.'''
@@ -326,12 +319,11 @@ class TabSqliteDb:
         Add phrase to database
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.add_phrase() "
-                + "input_phrase=%s " % input_phrase.encode('UTF-8')
-                + "phrase=%s " % phrase.encode('UTF-8')
-                + "user_freq=%s " % user_freq
-            )
+            LOGGER.debug(
+                'input_phrase=%s phrase=%s user_freq=%s ',
+                input_phrase.encode('UTF-8'),
+                phrase.encode('UTF-8'),
+                user_freq)
         if not input_phrase or not phrase:
             return
         input_phrase = itb_util.remove_accents(input_phrase)
@@ -370,10 +362,8 @@ class TabSqliteDb:
                           'user_freq': user_freq,
                           'timestamp': time.time()}
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.add_phrase() insert_sqlstr=%s\n" %insert_sqlstr)
-            sys.stderr.write(
-                "TabSqliteDb.add_phrase() insert_sqlargs=%s\n" %insert_sqlargs)
+            LOGGER.debug('insert_sqlstr=%s', insert_sqlstr)
+            LOGGER.debug('insert_sqlargs=%s', insert_sqlargs)
         try:
             self.db.execute(insert_sqlstr, insert_sqlargs)
             if commit:
@@ -442,11 +432,11 @@ class TabSqliteDb:
         pp_phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, pp_phrase)
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.select_words() "
-                + "input_phrase=%s " % input_phrase.encode('UTF-8')
-                + "p_phrase=%s " % p_phrase.encode('UTF-8')
-                + "pp_phrase=%s\n" % pp_phrase.encode('UTF-8'))
+            LOGGER.debug(
+                'input_phrase=%s p_phrase=%s pp_phrase=%s',
+                input_phrase.encode('UTF-8'),
+                p_phrase.encode('UTF-8'),
+                pp_phrase.encode('UTF-8'))
         phrase_frequencies = {}
         if not ' ' in input_phrase:
             # Get suggestions from hunspell dictionaries. But only
@@ -458,9 +448,9 @@ class TabSqliteDb:
             phrase_frequencies.update([
                 x for x in self.hunspell_obj.suggest(input_phrase)])
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.select_words() hunspell: best_candidates=%s\n"
-                %self.best_candidates(phrase_frequencies))
+            LOGGER.debug(
+                'hunspell: best_candidates=%s',
+                self.best_candidates(phrase_frequencies))
         # Remove the accents *after* getting the hunspell candidates.
         # If the accents were removed before getting the hunspell candidates
         # an input phrase like “Glühwürmchen” would not be added as a
@@ -541,9 +531,9 @@ class TabSqliteDb:
         for x in results_uni:
             phrase_frequencies.update([(x[0], x[1]/float(count))])
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.select_words() Unigram best_candidates=%s\n"
-                %self.best_candidates(phrase_frequencies))
+            LOGGER.debug(
+                'Unigram best_candidates=%s',
+                self.best_candidates(phrase_frequencies))
         if not p_phrase:
             # If no context for bigram matching is available, return
             # what we have so far:
@@ -575,9 +565,9 @@ class TabSqliteDb:
                   0.5*x[1]/float(count_p_phrase)
                   +0.5*phrase_frequencies[x[0]])])
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.select_words() Bigram best_candidates=%s\n"
-                %self.best_candidates(phrase_frequencies))
+            LOGGER.debug(
+                'Bigram best_candidates=%s',
+                self.best_candidates(phrase_frequencies))
         if not pp_phrase:
             # If no context for trigram matching is available, return
             # what we have so far:
@@ -613,9 +603,9 @@ class TabSqliteDb:
                   0.5*x[1]/float(count_pp_phrase_p_phrase)
                   +0.5*phrase_frequencies[x[0]])])
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.select_words() Trigram best_candidates=%s\n"
-                %self.best_candidates(phrase_frequencies))
+            LOGGER.debug(
+                'Trigram best_candidates=%s',
+                self.best_candidates(phrase_frequencies))
         return self.best_candidates(phrase_frequencies)
 
     def generate_userdb_desc(self):
@@ -720,16 +710,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         ;'''
         sqlargs = {'freq': itb_util.SHORTCUT_USER_FREQ}
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.list_user_shortcuts() sqlstr=%s\n"
-                %sqlstr)
-            sys.stderr.write(
-                "TabSqliteDb.list_user_shortcuts() sqlargs=%s\n"
-                %sqlargs)
+            LOGGER.debug('sqlstr=%s', sqlstr)
+            LOGGER.debug('sqlargs=%s', sqlargs)
         result = self.db.execute(sqlstr, sqlargs).fetchall()
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "tabsqlite.list_user_shortcuts() result=%s\n" %result)
+            LOGGER.debug('result=%s', result)
         return result
 
     def check_phrase_and_update_frequency(
@@ -755,11 +740,10 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
 
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.check_phrase_and_update_frequency() "
-                + "phrase=%(p)s, input_phrase=%(t)s\n"
-                %{'p': phrase.encode('UTF-8'),
-                  't': input_phrase.encode('UTF-8')})
+            LOGGER.debug(
+                'phrase=%(p)s, input_phrase=%(t)s',
+                {'p': phrase.encode('UTF-8'),
+                 't': input_phrase.encode('UTF-8')})
 
         # There should never be more than 1 database row for the same
         # input_phrase *and* phrase. So the following query on
@@ -780,16 +764,16 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                    'p_phrase': p_phrase,
                    'pp_phrase': pp_phrase}
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.check_phrase_and_update_frequency() sqlstr=%s\n"
-                %sqlstr)
-            sys.stderr.write(
-                "TabSqliteDb.check_phrase_and_update_frequency() sqlargs=%s\n"
-                %sqlargs)
+            LOGGER.debug(
+                'TabSqliteDb.check_phrase_and_update_frequency() sqlstr=%s',
+                sqlstr)
+            LOGGER.debug(
+                'TabSqliteDb.check_phrase_and_update_frequency() sqlargs=%s',
+                sqlargs)
         result = self.db.execute(sqlstr, sqlargs).fetchall()
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "check_phrase_and_update_frequency() result=%s\n" %result)
+            LOGGER.debug(
+                'check_phrase_and_update_frequency() result=%s', result)
         if result:
             # A match was found in user_db, increase user frequency by
             # user_freq_increment (1 by default)
@@ -818,9 +802,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         no matter for what input phrase from the database.
         '''
         if DEBUG_LEVEL > 1:
-            sys.stderr.write(
-                "TabSqliteDb.remove_phrase() phrase=%(p)s\n"
-                %{'p': phrase.encode('UTF-8')})
+            LOGGER.debug(
+                'TabSqliteDb.remove_phrase() phrase=%(p)s',
+                {'p': phrase.encode('UTF-8')})
         if not phrase:
             return
         phrase = unicodedata.normalize(
@@ -946,17 +930,17 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
 
     def dump_database(self):
         '''
-        Dump the contents of the database to stderr
+        Dump the contents of the database to the log
 
         (For debugging)
         '''
         try:
-            sys.stderr.write('SELECT * FROM desc;\n')
+            LOGGER.debug('SELECT * FROM desc;\n')
             for row in self.db.execute("SELECT * FROM desc;").fetchall():
-                sys.stderr.write('%s\n' %repr(row))
-            sys.stderr.write('SELECT * FROM phrases;\n')
+                LOGGER.debug('%s', repr(row))
+            LOGGER.debug('SELECT * FROM phrases;\n')
             for row in self.db.execute("SELECT * FROM phrases;").fetchall():
-                sys.stderr.write('%s\n' %repr(row))
+                LOGGER.debug('%s', repr(row))
         except:
             import traceback
             traceback.print_exc()
