@@ -21,7 +21,6 @@ Module for ibus-typing-booster to access the sqlite3 databases
 '''
 import os
 import os.path as path
-import sys
 import codecs
 import unicodedata
 import sqlite3
@@ -39,6 +38,7 @@ DEBUG_LEVEL = int(0)
 USER_DATABASE_VERSION = '0.65'
 
 class TabSqliteDb:
+    # pylint: disable=line-too-long
     '''Phrase databases for ibus-typing-booster
 
     The phrases table in the database has columns with the names:
@@ -60,6 +60,7 @@ class TabSqliteDb:
     user_db: Database on disk where the phrases learned from the user are stored
         user_freq >= 1: The number of times the user has used this phrase
     '''
+    # pylint: enable=line-too-long
     def __init__(self, user_db_file=''):
         global DEBUG_LEVEL
         try:
@@ -667,6 +668,7 @@ class TabSqliteDb:
             return None
 
     def get_number_of_columns_of_phrase_table(self, db_file):
+        # pylint: disable=line-too-long
         '''
         Get the number of columns in the 'phrases' table in
         the database in db_file.
@@ -680,6 +682,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         This result could be on a single line, as above, or on multiple
         lines.
         '''
+        # pylint: enable=line-too-long
         if not path.exists(db_file):
             return None
         try:
@@ -694,8 +697,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             if res:
                 tp = res.group(1).split(',')
                 return len(tp)
-            else:
-                return 0
+            return 0
         except:
             return 0
 

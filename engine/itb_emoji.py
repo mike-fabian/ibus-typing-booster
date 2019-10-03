@@ -23,6 +23,8 @@ Unicode characters.
 
 '''
 
+# “Wrong continued indentation”: pylint: disable=bad-continuation
+
 import os
 import sys
 import re
@@ -1544,9 +1546,9 @@ class EmojiMatcher():
             codepoint = int(query_string, 16)
             if (0x0 <= codepoint <= 0x1FFFFF
                     # exclude surrogates and private use characters:
-                    and not (0xd800 <= codepoint <= 0xf8ff)
-                    and not (0xf0000 <= codepoint <= 0xffffd)
-                    and not (0x100000 <= codepoint <= 0x10fffd)):
+                    and not 0xd800 <= codepoint <= 0xf8ff
+                    and not 0xf0000 <= codepoint <= 0xffffd
+                    and not 0x100000 <= codepoint <= 0x10fffd):
                 char = chr(codepoint)
                 name = self.name(char)
                 if not name:

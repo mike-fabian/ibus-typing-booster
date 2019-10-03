@@ -2117,8 +2117,7 @@ class EmojiPickerUI(Gtk.Window):
             LOGGER.debug('on_font_selected() font = %s\n', repr(font))
         if font == '':
             font = 'emoji'
-        if font != self._font and (
-                font == 'emoji' or font == 'text' or font == 'unqualified'):
+        if font != self._font and font in ('emoji', 'text', 'unqualified'):
             self._fallback = True
             self._fallback_check_button.set_active(True)
         else:

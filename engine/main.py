@@ -32,7 +32,6 @@ from gi.repository import IBus
 from gi.repository import GLib
 
 import factory
-import tabsqlitedb
 import version
 
 LOGGER = logging.getLogger('ibus-typing-booster')
@@ -195,7 +194,7 @@ def cleanup(ima_ins):
 def indent(element, level=0):
     '''Use to format xml Element pretty :)'''
     i = "\n" + level*"    "
-    if len(element):
+    if element:
         if not element.text or not element.text.strip():
             element.text = i + "    "
         for subelement in element:
@@ -284,7 +283,7 @@ def main():
         # now format the xmlout pretty
         indent(egs)
         egsout = tostring(egs, encoding='utf8', method='xml').decode('utf-8')
-        patt = re.compile('<\?.*\?>\n')
+        patt = re.compile(r'<\?.*\?>\n')
         egsout = patt.sub('', egsout)
         sys.stdout.buffer.write((egsout+'\n').encode('utf-8'))
         return 0
@@ -300,6 +299,7 @@ def main():
         ima.run()
     except KeyboardInterrupt:
         ima.quit()
+    return 0
 
 if __name__ == "__main__":
     main()

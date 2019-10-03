@@ -21,10 +21,11 @@
 Utility functions used in ibus-typing-booster
 '''
 
+# “Wrong continued indentation”: pylint: disable=bad-continuation
+
 import sys
 import os
 import re
-import string
 import unicodedata
 import logging
 import gettext
@@ -157,13 +158,15 @@ LOCALE_DEFAULTS = {
     # as the default. Parag Nemade says the as translator for Fedora a long
     # time back used as-phonetic. We have no later data from the
     # community.
-    'as_IN': {'inputmethods': ['as-phonetic', 'NoIME'], 'dictionaries': ['as_IN', 'en_GB']},
+    'as_IN': {'inputmethods': ['as-phonetic', 'NoIME'],
+              'dictionaries': ['as_IN', 'en_GB']},
     'ast_ES': {'inputmethods': ['NoIME'], 'dictionaries': ['ast_ES']},
     'az_AZ': {'inputmethods': ['NoIME'], 'dictionaries': ['az_AZ']},
     'be_BY': {'inputmethods': ['NoIME'], 'dictionaries': ['be_BY']},
     'ber_MA': {'inputmethods': ['NoIME'], 'dictionaries': ['ber_MA']},
     'bg_BG': {'inputmethods': ['NoIME'], 'dictionaries': ['bg_BG']},
-    'bn_IN': {'inputmethods': ['bn-inscript2', 'NoIME'], 'dictionaries': ['bn_IN', 'en_GB']},
+    'bn_IN': {'inputmethods': ['bn-inscript2', 'NoIME'],
+              'dictionaries': ['bn_IN', 'en_GB']},
     'br_FR': {'inputmethods': ['NoIME'], 'dictionaries': ['br_FR']},
     'bs_BA': {'inputmethods': ['NoIME'], 'dictionaries': ['bs_BA']},
     'ca_AD': {'inputmethods': ['NoIME'], 'dictionaries': ['ca_AD']},
@@ -250,11 +253,13 @@ LOCALE_DEFAULTS = {
     'gd_GB': {'inputmethods': ['NoIME'], 'dictionaries': ['gd_GB']},
     'gl_ES': {'inputmethods': ['NoIME'], 'dictionaries': ['gl_ES']},
     'grc': {'inputmethods': ['NoIME'], 'dictionaries': ['grc']},
-    'gu_IN': {'inputmethods': ['gu-inscript2', 'NoIME'], 'dictionaries': ['gu_IN', 'en_GB']},
+    'gu_IN': {'inputmethods': ['gu-inscript2', 'NoIME'],
+              'dictionaries': ['gu_IN', 'en_GB']},
     'gv_GB': {'inputmethods': ['NoIME'], 'dictionaries': ['gv_GB']},
     'haw': {'inputmethods': ['NoIME'], 'dictionaries': ['haw']},
     'he_IL': {'inputmethods': ['NoIME'], 'dictionaries': ['he_IL']},
-    'hi_IN': {'inputmethods': ['hi-inscript2', 'NoIME'], 'dictionaries': ['hi_IN', 'en_GB']},
+    'hi_IN': {'inputmethods': ['hi-inscript2', 'NoIME'],
+              'dictionaries': ['hi_IN', 'en_GB']},
     'hil_PH': {'inputmethods': ['NoIME'], 'dictionaries': ['hil_PH']},
     'hr_HR': {'inputmethods': ['NoIME'], 'dictionaries': ['hr_HR']},
     'hsb_DE': {'inputmethods': ['NoIME'], 'dictionaries': ['hsb_DE']},
@@ -271,8 +276,10 @@ LOCALE_DEFAULTS = {
     # libgnome-desktop/default-input-sources.h has "m17n:kn:kgp" as
     # the default for kn_IN. According to Parag Nemade this probably came
     # from the translation community.
-    'kn_IN': {'inputmethods': ['kn-kgp', 'NoIME'], 'dictionaries': ['kn_IN', 'en_GB']},
-    'ko_KR': {'inputmethods': ['ko-han2', 'NoIME'], 'dictionaries': ['ko_KR', 'en_GB']},
+    'kn_IN': {'inputmethods': ['kn-kgp', 'NoIME'],
+              'dictionaries': ['kn_IN', 'en_GB']},
+    'ko_KR': {'inputmethods': ['ko-han2', 'NoIME'],
+              'dictionaries': ['ko_KR', 'en_GB']},
     'ku_SY': {'inputmethods': ['NoIME'], 'dictionaries': ['ku_SY']},
     'ku_TR': {'inputmethods': ['NoIME'], 'dictionaries': ['ku_TR']},
     'ky_KG': {'inputmethods': ['NoIME'], 'dictionaries': ['ky_KG']},
@@ -281,22 +288,27 @@ LOCALE_DEFAULTS = {
     'ln_CD': {'inputmethods': ['NoIME'], 'dictionaries': ['ln_CD']},
     'lt_LT': {'inputmethods': ['NoIME'], 'dictionaries': ['lt_LT']},
     'lv_LV': {'inputmethods': ['NoIME'], 'dictionaries': ['lv_LV']},
-    'mai_IN': {'inputmethods': ['mai-inscript2', 'NoIME'], 'dictionaries': ['mai_IN', 'en_GB']},
+    'mai_IN': {'inputmethods': ['mai-inscript2', 'NoIME'],
+               'dictionaries': ['mai_IN', 'en_GB']},
     'mg': {'inputmethods': ['NoIME'], 'dictionaries': ['mg']},
     'mi_NZ': {'inputmethods': ['NoIME'], 'dictionaries': ['mi_NZ']},
     'mk_MK': {'inputmethods': ['NoIME'], 'dictionaries': ['mk_MK']},
-    'ml_IN': {'inputmethods': ['ml-inscript2', 'NoIME'], 'dictionaries': ['ml_IN', 'en_GB']},
+    'ml_IN': {'inputmethods': ['ml-inscript2', 'NoIME'],
+              'dictionaries': ['ml_IN', 'en_GB']},
     'mn_MN': {'inputmethods': ['NoIME'], 'dictionaries': ['mn_MN']},
     'mos_BF': {'inputmethods': ['NoIME'], 'dictionaries': ['mos_BF']},
-    'mr_IN': {'inputmethods': ['mr-inscript2', 'NoIME'], 'dictionaries': ['mr_IN', 'en_GB']},
+    'mr_IN': {'inputmethods': ['mr-inscript2', 'NoIME'],
+              'dictionaries': ['mr_IN', 'en_GB']},
     'ms_BN': {'inputmethods': ['NoIME'], 'dictionaries': ['ms_BN']},
     'ms_MY': {'inputmethods': ['NoIME'], 'dictionaries': ['ms_MY']},
     'mt_MT': {'inputmethods': ['NoIME'], 'dictionaries': ['mt_MT']},
     'nb_NO': {'inputmethods': ['NoIME'], 'dictionaries': ['nb_NO']},
     'nds_DE': {'inputmethods': ['NoIME'], 'dictionaries': ['nds_DE']},
     'nds_NL': {'inputmethods': ['NoIME'], 'dictionaries': ['nds_NL']},
-    'ne_IN': {'inputmethods': ['ne-rom', 'NoIME'], 'dictionaries': ['ne_IN', 'en_GB']},
-    'ne_NP': {'inputmethods': ['ne-rom', 'NoIME'], 'dictionaries': ['ne_NP', 'en_GB']},
+    'ne_IN': {'inputmethods': ['ne-rom', 'NoIME'],
+              'dictionaries': ['ne_IN', 'en_GB']},
+    'ne_NP': {'inputmethods': ['ne-rom', 'NoIME'],
+              'dictionaries': ['ne_NP', 'en_GB']},
     'nl_AW': {'inputmethods': ['NoIME'], 'dictionaries': ['nl_AW']},
     'nl_BE': {'inputmethods': ['NoIME'], 'dictionaries': ['nl_BE']},
     'nl_NL': {'inputmethods': ['NoIME'], 'dictionaries': ['nl_NL']},
@@ -307,8 +319,10 @@ LOCALE_DEFAULTS = {
     'oc_FR': {'inputmethods': ['NoIME'], 'dictionaries': ['oc_FR']},
     'om_ET': {'inputmethods': ['NoIME'], 'dictionaries': ['om_ET']},
     'om_KE': {'inputmethods': ['NoIME'], 'dictionaries': ['om_KE']},
-    'or_IN': {'inputmethods': ['or-inscript2', 'NoIME'], 'dictionaries': ['or_IN', 'en_GB']},
-    'pa_IN': {'inputmethods': ['pa-inscript2', 'NoIME'], 'dictionaries': ['pa_IN', 'en_GB']},
+    'or_IN': {'inputmethods': ['or-inscript2', 'NoIME'],
+              'dictionaries': ['or_IN', 'en_GB']},
+    'pa_IN': {'inputmethods': ['pa-inscript2', 'NoIME'],
+              'dictionaries': ['pa_IN', 'en_GB']},
     'pl_PL': {'inputmethods': ['NoIME'], 'dictionaries': ['pl_PL']},
     'plt': {'inputmethods': ['NoIME'], 'dictionaries': ['plt']},
     'pt_AO': {'inputmethods': ['NoIME'], 'dictionaries': ['pt_AO']},
@@ -350,8 +364,10 @@ LOCALE_DEFAULTS = {
     # libgnome-desktop/default-input-sources.h has "m17n:ta:tamil99"
     # as the default for ta_IN. According to Parag Nemade this probably came
     # from the translation community.
-    'ta_IN': {'inputmethods': ['ta-tamil99', 'NoIME'], 'dictionaries': ['ta_IN', 'en_GB']},
-    'te_IN': {'inputmethods': ['te-inscript2', 'NoIME'], 'dictionaries': ['te_IN', 'en_GB']},
+    'ta_IN': {'inputmethods': ['ta-tamil99', 'NoIME'],
+              'dictionaries': ['ta_IN', 'en_GB']},
+    'te_IN': {'inputmethods': ['te-inscript2', 'NoIME'],
+              'dictionaries': ['te_IN', 'en_GB']},
     'tet_ID': {'inputmethods': ['NoIME'], 'dictionaries': ['tet_ID']},
     'tet_TL': {'inputmethods': ['NoIME'], 'dictionaries': ['tet_TL']},
     'th_TH': {'inputmethods': ['NoIME'], 'dictionaries': ['th_TH']},
@@ -364,14 +380,16 @@ LOCALE_DEFAULTS = {
     'tpi_PG': {'inputmethods': ['NoIME'], 'dictionaries': ['tpi_PG']},
     'ts_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['ts_ZA']},
     'uk_UA': {'inputmethods': ['NoIME'], 'dictionaries': ['uk_UA']},
-    'ur_IN': {'inputmethods': ['ur-phonetic', 'NoIME'], 'dictionaries': ['ur_IN', 'en_GB']},
+    'ur_IN': {'inputmethods': ['ur-phonetic', 'NoIME'],
+              'dictionaries': ['ur_IN', 'en_GB']},
     'ur_PK': {'inputmethods': ['NoIME'], 'dictionaries': ['ur_PK']},
     'uz_UZ': {'inputmethods': ['NoIME'], 'dictionaries': ['uz_UZ']},
     've_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['ve_ZA']},
     'vi_VN': {'inputmethods': ['NoIME'], 'dictionaries': ['vi_VN']},
     'wa_BE': {'inputmethods': ['NoIME'], 'dictionaries': ['wa_BE']},
     'xh_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['xh_ZA']},
-    'yi_US': {'inputmethods': ['NoIME', 'yi-yivo'], 'dictionaries': ['yi_US', 'en_US']},
+    'yi_US': {'inputmethods': ['NoIME', 'yi-yivo'],
+              'dictionaries': ['yi_US', 'en_US']},
     'zu_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['zu_ZA', 'en_GB']},
 }
 
@@ -668,9 +686,10 @@ HUNSPELL_DICTIONARIES = {
 }
 
 CLDR_ANNOTATION_FILES = {
-    # List of all locales/languages where CLDR annotation files currently exist.
-    # Not all of these are necessarily available at the moment.
-    # That depends what is currently installed on the system.
+    # List of all locales/languages where CLDR annotation files
+    # currently exist.  Not all of these are necessarily available at
+    # the moment.  That depends what is currently installed on the
+    # system.
     'af',
     'af_NA',
     'af_ZA',
@@ -2569,6 +2588,7 @@ SPANISH_419_LOCALES = (
     'es_UY', 'es_VE',)
 
 def expand_languages(languages):
+    # pylint: disable=line-too-long
     '''Expands the given list of languages by including fallbacks.
 
     Returns a possibly longer list of languages by adding
@@ -2589,6 +2609,7 @@ def expand_languages(languages):
     >>> expand_languages(['en_GB', 'en'])
     ['en_GB', 'en_001', 'en', 'en', 'en_001']
     '''
+    # pylint: enable=line-too-long
     expanded_languages = []
     for language in languages:
         expanded_languages.append(language)
@@ -2623,7 +2644,7 @@ def lstrip_token(token):
     "foo'."
     '''
     token = token.lstrip()
-    while (len(token) > 0
+    while (token
            and
            unicodedata.category(token[0]) in CATEGORIES_TO_STRIP_FROM_TOKENS):
         token = token[1:]
@@ -2647,7 +2668,7 @@ def rstrip_token(token):
     ".'foo"
     '''
     token = token.rstrip()
-    while (len(token) > 0
+    while (token
            and
            unicodedata.category(token[-1]) in CATEGORIES_TO_STRIP_FROM_TOKENS):
         token = token[0:-1]
@@ -2900,9 +2921,9 @@ def variant_to_value(variant):
         return variant.get_boolean()
     if type_string == 'v':
         return variant.unpack()
-    if len(type_string) > 0 and type_string[0] == 'a':
+    if type_string and type_string[0] == 'a':
         return variant.unpack()
-    print('error: unknown variant type: %s' %type_string)
+    print('error: unknown variant type: %s' % type_string)
     return variant
 
 def dict_update_existing_keys(pdict, other_pdict):
@@ -3008,11 +3029,11 @@ def find_hunspell_dictionary(language):
     ]
     dic_path = ''
     aff_path = ''
-    for language in expand_languages([language]):
+    for lang in expand_languages([language]):
         for dirname in dirnames:
-            if os.path.isfile(os.path.join(dirname, language + '.dic')):
-                dic_path = os.path.join(dirname, language + '.dic')
-                aff_path = os.path.join(dirname, language + '.aff')
+            if os.path.isfile(os.path.join(dirname, lang + '.dic')):
+                dic_path = os.path.join(dirname, lang + '.dic')
+                aff_path = os.path.join(dirname, lang + '.aff')
                 return (dic_path, aff_path)
     LOGGER.warning(
         'No file %s.dic found in %s', language, dirnames)
@@ -3187,9 +3208,9 @@ def get_ime_help(ime_name):
         title = _('Native Keyboard')
         description = _(
             'Direct keyboard input. This is not really an input method, '
-            + 'it uses directly whatever comes from the current keyboard layout '
-            + 'without any further changes. So no transliteration or composing '
-            + 'is done here.')
+            'it uses directly whatever comes from the current keyboard layout '
+            'without any further changes. So no transliteration or composing '
+            'is done here.')
         return (path, title, description, full_contents, error)
     if ime_name in M17N_INPUT_METHODS:
         mim_file = M17N_INPUT_METHODS[ime_name]
@@ -3360,7 +3381,8 @@ class KeyvalsToKeycodes:
         return_string = ''
         for keyval in sorted(self.keyvals_to_keycodes):
             return_string += 'keyval: %s name: %s keycodes: %s\n' % (
-                keyval, IBus.keyval_name(keyval), self.keyvals_to_keycodes[keyval])
+                keyval, IBus.keyval_name(keyval),
+                self.keyvals_to_keycodes[keyval])
         return return_string
 
 class KeyEvent:

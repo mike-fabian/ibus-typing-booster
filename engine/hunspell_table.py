@@ -355,7 +355,8 @@ class TypingBoosterEngine(IBus.Engine):
             self._gsettings.set_value(
                 'dictionary',
                 GLib.Variant.new_string(','.join(self._dictionary_names)))
-        if len(self._dictionary_names) > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
+        if (len(self._dictionary_names)
+            > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES):
             LOGGER.warning(
                 'Trying to set more than the allowed maximum of %s '
                 %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
@@ -487,7 +488,8 @@ class TypingBoosterEngine(IBus.Engine):
             'key': 'InputMode',
             'label': _('Input mode'),
             'tooltip': _('Here you can switch ibus-typing-booster on or off.'),
-            'shortcut_hint': repr(self._keybindings['toggle_input_mode_on_off']),
+            'shortcut_hint': repr(
+                self._keybindings['toggle_input_mode_on_off']),
             'sub_properties': self.input_mode_properties
         }
         self.emoji_prediction_mode_properties = {
@@ -507,7 +509,8 @@ class TypingBoosterEngine(IBus.Engine):
             'label': _('Unicode symbols and emoji predictions'),
             'tooltip':
             _('Unicode symbols and emoji predictions'),
-            'shortcut_hint': repr(self._keybindings['toggle_emoji_prediction']),
+            'shortcut_hint': repr(
+                self._keybindings['toggle_emoji_prediction']),
             'sub_properties': self.emoji_prediction_mode_properties
         }
         self.off_the_record_mode_properties = {
@@ -3783,10 +3786,12 @@ class TypingBoosterEngine(IBus.Engine):
 
     def _speech_recognition_error(self, error_message):
         auxiliary_text_label = ''
-        if self._label_speech_recognition and self._label_speech_recognition_string.strip():
+        if (self._label_speech_recognition
+            and self._label_speech_recognition_string.strip()):
             # Show a label in the auxiliary text to indicate speech
             # recognition:
-            auxiliary_text_label = self._label_speech_recognition_string.strip()
+            auxiliary_text_label = (
+                self._label_speech_recognition_string.strip())
         super(TypingBoosterEngine, self).update_auxiliary_text(
             IBus.Text.new_from_string(
                 auxiliary_text_label + '⚠️' + error_message), True)
@@ -3842,30 +3847,38 @@ class TypingBoosterEngine(IBus.Engine):
             interim_results=True)
 
         auxiliary_text_label = ''
-        if self._label_speech_recognition and self._label_speech_recognition_string.strip():
+        if (self._label_speech_recognition
+            and self._label_speech_recognition_string.strip()):
             # Show a label in the auxiliary text to indicate speech
             # recognition:
-            auxiliary_text_label = self._label_speech_recognition_string.strip()
+            auxiliary_text_label = (
+                self._label_speech_recognition_string.strip())
         auxiliary_text_label += language_code
-        flag = itb_util.FLAGS.get(language_code.replace('-','_'), '')
+        flag = itb_util.FLAGS.get(language_code.replace('-', '_'), '')
         if flag:
             auxiliary_text_label += ' ' + flag
-        if language_code.replace('-', '_') not in itb_util.GOOGLE_SPEECH_TO_TEXT_LANGUAGES:
-            # The officially list of languages supported by Google speech-to-text
-            # is here: https://cloud.google.com/speech-to-text/docs/languages
-            # and I copied this list into itb_util.GOOGLE_SPEECH_TO_TEXT_LANGUAGES.
+        if (language_code.replace('-', '_')
+            not in itb_util.GOOGLE_SPEECH_TO_TEXT_LANGUAGES):
+            # The officially list of languages supported by Google
+            # speech-to-text is here:
+            # https://cloud.google.com/speech-to-text/docs/languages
+            # and I copied this list into
+            # itb_util.GOOGLE_SPEECH_TO_TEXT_LANGUAGES.
             #
-            # But I don’t know any way to find out via the API whether a language
-            # is supported or not. When trying to set a language which is not supported,
-            # for example “gsw_CH” (Alemannic German), there is no error, but
-            # it seems to fall back to recognizing English.
+            # But I don’t know any way to find out via the API whether
+            # a language is supported or not. When trying to set a
+            # language which is not supported, for example “gsw_CH”
+            # (Alemannic German), there is no error, but it seems to
+            # fall back to recognizing English.
             #
-            # In the official list, only “de-DE” is supported, but when trying
-            # I found that “de”, “de-DE”, “de-AT”, “de-CH”, “de-BE”, “de-LU”
-            # all seem to work the same and seem to recognize standard German.
-            # When using “de-CH”, it uses ß when spelling even though this is not
-            # used in Switzerland, so “de-CH” seems to fall back to standard German,
-            # there seems to be no difference between using “de-DE” and “de-CH”.
+            # In the official list, only “de-DE” is supported, but
+            # when trying I found that “de”, “de-DE”, “de-AT”,
+            # “de-CH”, “de-BE”, “de-LU” all seem to work the same and
+            # seem to recognize standard German.  When using “de-CH”,
+            # it uses ß when spelling even though this is not used in
+            # Switzerland, so “de-CH” seems to fall back to standard
+            # German, there seems to be no difference between using
+            # “de-DE” and “de-CH”.
             #
             # For “en-GB” and “en-US”, there *is* a difference, the
             # transcribed text uses British or American spelling
@@ -4011,7 +4024,8 @@ class TypingBoosterEngine(IBus.Engine):
         if ((key, 'enable_lookup') in self._hotkeys
             and (self._tab_enable
                  or (self._min_char_complete > 1
-                     and not self.is_lookup_table_enabled_by_min_char_complete))
+                     and
+                     not self.is_lookup_table_enabled_by_min_char_complete))
             and not self.is_lookup_table_enabled_by_tab
             and not self.is_empty()):
             self.is_lookup_table_enabled_by_tab = True
@@ -4041,7 +4055,8 @@ class TypingBoosterEngine(IBus.Engine):
         if (key, 'next_dictionary') in self._hotkeys:
             names = self.get_dictionary_names()
             if len(names) > 1:
-                # remove the first dictionary from the list and append it to the end.
+                # remove the first dictionary from the list and append
+                # it to the end.
                 self.set_dictionary_names(
                     names[1:] + names[:1],
                     update_gsettings=True)
@@ -4961,7 +4976,8 @@ class TypingBoosterEngine(IBus.Engine):
                 [x.strip() for x in value.split(',')], update_gsettings=False)
             return
         if key == 'googleapplicationcredentials':
-            self.set_google_application_credentials(value, update_gsettings=False)
+            self.set_google_application_credentials(
+                value, update_gsettings=False)
             return
         if key == 'keybindings':
             self.set_keybindings(value, update_gsettings=False)

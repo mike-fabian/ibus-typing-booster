@@ -23,6 +23,8 @@
 The setup tool for ibus typing booster.
 '''
 
+# “Wrong continued indentation”: pylint: disable=bad-continuation
+
 import sys
 import os
 import re
@@ -369,13 +371,13 @@ class SetupUI(Gtk.Window):
             label=_('Automatically select the best candidate'))
         self._auto_select_candidate_checkbutton.set_tooltip_text(
             _('What you type will automatically be corrected to the best '
-              + 'candidate by selecting the best candidate automatically. If '
-              + 'this option is off you have to select a candidate manually '
-              + 'by using the key binding to select the next candidate. '
-              + 'If this option is on and you do not want to use the '
-              + 'automatically selected candidate, you can use the key binding '
-              + 'for the “cancel” command which will deselect all '
-              + 'candidates.'))
+              'candidate by selecting the best candidate automatically. If '
+              'this option is off you have to select a candidate manually '
+              'by using the key binding to select the next candidate. '
+              'If this option is on and you do not want to use the '
+              'automatically selected candidate, you can use the key binding '
+              'for the “cancel” command which will deselect all '
+              'candidates.'))
         self._auto_select_candidate_checkbutton.connect(
             'clicked', self.on_auto_select_candidate_checkbutton)
         self._options_grid.attach(
@@ -1618,7 +1620,8 @@ class SetupUI(Gtk.Window):
         self._google_application_credentials_button_label.set_text(
             self._google_application_credentials)
         self._google_application_credentials_button_label.set_use_markup(True)
-        self._google_application_credentials_button_label.set_max_width_chars(40)
+        self._google_application_credentials_button_label.set_max_width_chars(
+            40)
         self._google_application_credentials_button_label.set_line_wrap(False)
         self._google_application_credentials_button_label.set_ellipsize(
             Pango.EllipsizeMode.START)
@@ -1654,7 +1657,8 @@ class SetupUI(Gtk.Window):
         if IMPORT_LANGTABLE_SUCCESSFUL:
             language_description = langtable.language_name(
                 languageId=name,
-                languageIdQuery=locale.getlocale(category=locale.LC_MESSAGES)[0])
+                languageIdQuery=locale.getlocale(
+                    category=locale.LC_MESSAGES)[0])
             if not language_description:
                 language_description = langtable.language_name(
                     languageId=name, languageIdQuery='en')
@@ -1714,7 +1718,8 @@ class SetupUI(Gtk.Window):
             # dictionaries from the current effective value of LC_CTYPE:
             self._dictionary_names = itb_util.get_default_dictionaries(
                 locale.getlocale(category=locale.LC_CTYPE)[0])
-        if len(self._dictionary_names) > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
+        if (len(self._dictionary_names)
+            > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES):
             LOGGER.error(
                 'Trying to set more than the allowed maximum of %s '
                 %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
@@ -1748,7 +1753,8 @@ class SetupUI(Gtk.Window):
         self._dictionaries_install_missing_button.set_sensitive(
             missing_dictionaries)
         self._dictionaries_add_button.set_sensitive(
-            len(self._dictionary_names) < itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES)
+            len(self._dictionary_names)
+            < itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES)
 
     def _fill_input_methods_listbox_row(self, ime):
         '''
@@ -1949,7 +1955,8 @@ class SetupUI(Gtk.Window):
             self.set_auto_commit_characters(value, update_gsettings=False)
             return
         if key == 'googleapplicationcredentials':
-            self.set_google_application_credentials(value, update_gsettings=False)
+            self.set_google_application_credentials(
+                value, update_gsettings=False)
             return
         if key == 'tabenable':
             self.set_tab_enable(value, update_gsettings=False)
@@ -2350,7 +2357,8 @@ class SetupUI(Gtk.Window):
         while Gtk.events_pending():
             Gtk.main_iteration()
         if filename:
-            self._google_application_credentials_button_label.set_text(filename)
+            self._google_application_credentials_button_label.set_text(
+                filename)
             self.set_google_application_credentials(
                 filename, update_gsettings=True)
         self._google_application_credentials_button.set_sensitive(True)
@@ -2454,7 +2462,7 @@ class SetupUI(Gtk.Window):
             filter_match = False
             filter_text = itb_util.remove_accents(filter_text.lower())
             filter_words = filter_text.split()
-            if (filter_text.replace(' ', '') in name.replace(' ', '').lower()):
+            if filter_text.replace(' ', '') in name.replace(' ', '').lower():
                 filter_match = True
             if IMPORT_LANGTABLE_SUCCESSFUL:
                 query_languages = [
@@ -2467,9 +2475,12 @@ class SetupUI(Gtk.Window):
                                 languageIdQuery=query_language)).lower()
                         all_words_match = True
                         for filter_word in filter_words:
-                            print ('** mike filter_word %s language_description %s' %(filter_word, language_description))
+                            LOGGER.info(
+                                'filter_word %s language_description %s',
+                                filter_word, language_description)
                             if filter_word not in language_description:
-                                print('** mike false')
+                                LOGGER.info(
+                                    'filter word not in language description')
                                 all_words_match = False
                         if all_words_match:
                             filter_match = True
@@ -2503,7 +2514,8 @@ class SetupUI(Gtk.Window):
         Signal handler called when the “add” button to add another
         dictionary has been clicked.
         '''
-        if len(self._dictionary_names) >= itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
+        if (len(self._dictionary_names)
+            >= itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES):
             # Actually this should never happen because the button to add
             # a dictionary should not be sensitive if the maximum number
             # of dictionaries is already reached.

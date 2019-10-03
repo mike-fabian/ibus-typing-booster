@@ -292,7 +292,6 @@ def _del():
 class __ModuleInitializer:
     def __init__(self):
         _init()
-        return
 
     def __del__(self):
         return
