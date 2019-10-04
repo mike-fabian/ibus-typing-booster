@@ -3045,11 +3045,10 @@ def get_hunspell_dictionary_wordlist(language):
                 encoding='ISO-8859-1',
                 errors='ignore').read().replace('\r\n', '\n')
         except (FileNotFoundError, PermissionError):
-            traceback.print_exc()
-        except:
-            LOGGER.error(
+            LOGGER.exception('Error loading .aff File: %s', aff_path)
+        except Exception:
+            LOGGER.exception(
                 'Unexpected error loading .aff File: %s', aff_path)
-            traceback.print_exc()
         if aff_buffer:
             encoding_pattern = re.compile(
                 r'^[\s]*SET[\s]+(?P<encoding>[-a-zA-Z0-9_]+)[\s]*$',
@@ -3072,7 +3071,7 @@ def get_hunspell_dictionary_wordlist(language):
         dic_buffer = open(
             dic_path, encoding=dictionary_encoding).readlines()
     except (UnicodeDecodeError, FileNotFoundError, PermissionError):
-        LOGGER.error(
+        LOGGER.exception(
             'loading %s as %s encoding failed, fall back to ISO-8859-1.',
             dic_path, dictionary_encoding)
         dictionary_encoding = 'ISO-8859-1'
@@ -3081,20 +3080,17 @@ def get_hunspell_dictionary_wordlist(language):
                 dic_path,
                 encoding=dictionary_encoding).readlines()
         except (UnicodeDecodeError, FileNotFoundError, PermissionError):
-            LOGGER.error(
+            LOGGER.exception(
                 'loading %s as %s encoding failed, giving up.',
                 dic_path, dictionary_encoding)
-            traceback.print_exc()
             return ('', '', [])
-        except:
-            LOGGER.error(
+        except Exception:
+            LOGGER.exception(
                 'Unexpected error loading .dic File: %s', dic_path)
-            traceback.print_exc()
             return ('', '', [])
-    except:
-        LOGGER.error(
+    except Exception:
+        LOGGER.exeption(
             'Unexpected error loading .dic File: %s', dic_path)
-        traceback.print_exc()
         return ('', '', [])
     if not dic_buffer:
         return ('', '', [])
@@ -3224,7 +3220,7 @@ def get_ime_help(ime_name):
         return ('', '', '', '', _('Permission error'))
     except UnicodeDecodeError:
         return ('', '', '', '', _('Unicode decoding error'))
-    except:
+    except Exception:
         return ('', '', '', '', _('Unknown error'))
     if full_contents:
         title_pattern = re.compile(

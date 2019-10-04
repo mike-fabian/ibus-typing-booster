@@ -107,14 +107,13 @@ class Dictionary:
             if IMPORT_ENCHANT_SUCCESSFUL:
                 try:
                     self.enchant_dict = enchant.Dict(self.name)
-                except enchant.errors.DictNotFoundError as error:
-                    LOGGER.debug(
-                        'Error initializing enchant for %s: %s\n',
-                        self.name, error)
+                except enchant.errors.DictNotFoundError:
+                    LOGGER.exception(
+                        'Error initializing enchant for %s', self.name)
                     self.enchant_dict = None
-                except:
-                    LOGGER.debug(
-                        'Unknown error initializing enchant for %s\n',
+                except Exception:
+                    LOGGER.exception(
+                        'Unknown error initializing enchant for %s',
                         self.name)
                     self.enchant_dict = None
             elif IMPORT_HUNSPELL_SUCCESSFUL and self.dic_path:
@@ -122,14 +121,13 @@ class Dictionary:
                 try:
                     self.pyhunspell_object = hunspell.HunSpell(
                         self.dic_path, aff_path)
-                except hunspell.HunSpellError as error:
+                except hunspell.HunSpellError:
                     LOGGER.debug(
-                        'Error initializing hunspel for %s: %s\n',
-                        self.name, error)
+                        'Error initializing hunspell for %s', self.name)
                     self.pyhunspell_object = None
-                except:
+                except Exception:
                     LOGGER.debug(
-                        'Unknown error initializing hunspell for %s\n',
+                        'Unknown error initializing hunspell for %s',
                         self.name)
                     self.pyhunspell_object = None
 

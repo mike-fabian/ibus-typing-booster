@@ -4489,7 +4489,7 @@ if __name__ == '__main__':
     try:
         locale.setlocale(locale.LC_ALL, '')
     except locale.Error:
-        LOGGER.error("IBUS-WARNING **: Using the fallback 'C' locale")
+        LOGGER.exception("IBUS-WARNING **: Using the fallback 'C' locale")
         locale.setlocale(locale.LC_ALL, 'C')
     i18n_init()
     if IBus.get_address() is None:

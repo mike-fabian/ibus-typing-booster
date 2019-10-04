@@ -549,11 +549,11 @@ class TypingBoosterEngine(IBus.Engine):
                         'instantiating Transliterator(%(ime)s)',
                         {'ime': ime})
                 self._transliterators[ime] = Transliterator(ime)
-            except ValueError as error:
-                LOGGER.error(
-                    'Error initializing Transliterator %s: %s '
-                    'Maybe /usr/share/m17n/%s.mim is not installed?\n',
-                    ime, error, ime)
+            except ValueError:
+                LOGGER.exception(
+                    'Error initializing Transliterator %s '
+                    'Maybe /usr/share/m17n/%s.mim is not installed?',
+                    ime, ime)
                 # Use dummy transliterator “NoIME” as a fallback:
                 self._transliterators[ime] = Transliterator('NoIME')
         self._update_transliterated_strings()
@@ -809,9 +809,8 @@ class TypingBoosterEngine(IBus.Engine):
                             stripped_transliterated_string,
                             p_phrase=self._p_phrase,
                             pp_phrase=self._pp_phrase)
-                    except:
-                        import traceback
-                        traceback.print_exc()
+                    except Exception:
+                        LOGGER.exception('Exception when calling select_words')
                 if candidates and prefix:
                     candidates = [(prefix+x[0], x[1]) for x in candidates]
                 for cand in candidates:
@@ -3828,9 +3827,8 @@ class TypingBoosterEngine(IBus.Engine):
             self._google_application_credentials)
         try:
             client = speech.SpeechClient()
-        except:
-            import traceback
-            traceback.print_exc()
+        except Exception:
+            LOGGER.exception('Exception when intializing Google speech-to-text')
             self._speech_recognition_error(
                 _('Failed to init Google speech-to-text. See debug.log.'))
             return
@@ -3928,11 +3926,10 @@ class TypingBoosterEngine(IBus.Engine):
                         True)
                     if result.is_final:
                         break
-            except:
+            except Exception:
+                LOGGER.exception('Google speech-to-text error')
                 self._speech_recognition_error(
                     _('Google speech-to-text error. See debug.log.'))
-                import traceback
-                traceback.print_exc()
                 return
 
         if transcript:

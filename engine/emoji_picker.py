@@ -869,11 +869,9 @@ class EmojiPickerUI(Gtk.Window):
                     mode='r',
                     encoding='UTF-8').read())
             except (PermissionError, SyntaxError, IndentationError):
-                import traceback
-                traceback.print_exc()
+                LOGGER.exception('Error when reading options')
             except Exception as dummy_exception:
-                import traceback
-                traceback.print_exc()
+                LOGGER.exception('Unknown error when reading options')
             else: # no exception occured
                 if _ARGS.debug:
                     LOGGER.debug(
