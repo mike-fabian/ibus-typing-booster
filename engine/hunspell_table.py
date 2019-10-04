@@ -3574,8 +3574,8 @@ class TypingBoosterEngine(IBus.Engine):
             self._update_ui()
             if update_gsettings:
                 self._gsettings.set_value(
-                    'lookuptableorientation',
-                    GLib.Variant.new_int32(orientation))
+                    'preeditunderline',
+                    GLib.Variant.new_int32(underline_mode))
 
     def get_preedit_underline(self):
         '''Returns the current underline style of the preedit
