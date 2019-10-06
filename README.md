@@ -1,94 +1,92 @@
-# Ibus-typing-booster
+ibus-typing-booster
+===================
 
 Faster typing by context sensitive completion.
 
-## Introduction
+Introduction
+------------
 
 Ibus-typing-booster is a completion input method to speedup typing.
 
-The project was started in 2010 for Fedora 15. The original purpose was to make typing of
-Indic languages easier and faster by providing completion and spell checking suggestions.
+The project was started in 2010 for Fedora 15. The original purpose was to make typing of Indic languages easier and faster by providing completion and spell checking suggestions.
 
-Originally it was forked from ibus-table whose developer was Yu Yuwei acevery@gmail.com,
-with contributions from Caius “kaio” Chance me@kaio.net.
+Originally it was forked from ibus-table whose developer was Yu Yuwei acevery@gmail.com, with contributions from Caius “kaio” Chance me@kaio.net.
 
-Since then ibus-typing-booster has been improved to support many other languages as well
-(most languages except Chinese and Japanese are supported).
+Since then ibus-typing-booster has been improved to support many other languages as well (most languages except Chinese and Japanese are supported).
 
-Recently the capapility to type different languages at the same time without having to
-switch between languages has been added.
+Recently the capapility to type different languages at the same time without having to switch between languages has been added.
 
-## Developers:
-  
-  - Mike FABIAN mfabian@redhat.com
-  - Anish Patil anish.developer@gmail.com
+Developers
+----------
+- Mike FABIAN mfabian@redhat.com<br>
+- Anish Patil anish.developer@gmail.com
 
-## Features
-  
-  - Context sensitive completions.
-  - Learns from user input.
-  - Can be trained by supplying files containing typical user input.
-  - If available, hunspell and hunspell dictionaries will also be used to provide not only
-    completion but also spellchecking suggestions (But ibus-typing-booster works also
-    without hunspell by learning only from user input).
-  - Can be used with any keyboard layout.
-  - Almost all input methods supplied by libm17n are supported (including the inscript2
-    input methods).
-  - Several input methods and languages can be used at the same time without switching.
-  - Predicts Unicode symbols and emoji as well.
+Features
+--------
+- Context sensitive completions.<br>
+- Learns from user input.<br>
+- Can be trained by supplying files containing typical user input.<br>
+- If available, hunspell and hunspell dictionaries will also be used to provide not only<br>
+  completion but also spellchecking suggestions (But ibus-typing-booster works also<br>
+  without hunspell by learning only from user input).<br>
+- Can be used with any keyboard layout.<br>
+- Almost all input methods supplied by libm17n are supported (including the inscript2<br>
+  input methods).<br>
+- Several input methods and languages can be used at the same time without switching.<br>
+- Predicts Unicode symbols and emoji as well.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Requirements
+------------
+- Some packages are requied if you are building from source:
+```
+    ┏━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━┓
+    ┃      Package      │ Version ┃
+    ┠───────────────────┼─────────┨
+    ┃ ibus              │ 1.5.3+  ┃
+    ┃ libm17n-0         │ 1.7.0+  ┃
+    ┃ m17n-db           │ 1.7.0+  ┃
+    ┃ python3           │ 3.3+    ┃
+    ┃ python3-dbus      │ 1.2.6+  ┃
+    ┃ python3-pyxdg     │ 4.0.1+  ┃
+    ┃ python3-enchant   │ 2.0.0+  ┃
+    ┃ python3-gi        │ 3.26.1+ ┃
+    ┗━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━┛
+```
+- Deactivate all the virtual environments.
 
-## Online documentation
+References
+----------
 
-[ibus-typing-booster home page on github](http://mike-fabian.github.io/ibus-typing-booster/)
+You can report bugs here:<br>
+https://github.com/mike-fabian/ibus-typing-booster/issues
 
-[ibus-typing-booster documentation page](http://mike-fabian.github.io/ibus-typing-booster/documentation.html)
+Online documentation can be found here:<br>
+http://mike-fabian.github.io/ibus-typing-booster/<br>
+http://mike-fabian.github.io/ibus-typing-booster/documentation.html
 
-## Default key and mouse bindings
+The key bindings and mouse bindings are documented here:<br>
+http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings<br>
+http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings
 
-[Default key bindings](http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings)
+Online translation (i18n - Internationalization) platform:<br>
+https://fedora.zanata.org/project/view/ibus-typing-booster
 
-[Default mouse bindings](http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings)
-
-A copy of these bindings is included below in this readme for convenience.
-
-## Bug reports
-
-You can report bugs here:
-
-[ibus-typing-booster issue tracker on github](https://github.com/mike-fabian/ibus-typing-booster/issues)
-
-## Contributing translations
-
-You can contribute translations using this
-[online translation platform](https://fedora.zanata.org/project/view/ibus-typing-booster).
-You can also contribute translations by using pull requests if you prefer that.
-
-## Development
-
-If  you want to build from  source or contribute to the development, see the
-[ibus-typing-booster development page](http://mike-fabian.github.io/ibus-typing-booster/development.html).
-
-There  you should also find the requirements for building from source
-for most systems.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-A copy of the default key bindings and mouse bindings documentation is
-included here for convenience:
 
 Table of default key bindings
+-----------------------------
 
-Some of these key bindings can be customized in the setup tool.
+A copy of that key bindings and mouse bindings documentation is<br>
+included here for convenience:
+
+Some of these key bindings can be customized in the setup tool.<br>
 The following table explains the defaults:
 
-
+```
 ┏━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃  Key combination  │                         Effect                          ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Commit the preëdit (or the selected candidate, if any)  ┃
-┃ Space             │ and send a space to the application, i.e. commit the    ┃
+┃ Space             │ and send a space to the application, i.e. commit the    ┃     
 ┃                   │ typed string followed by a space.                       ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ Return            │ Commit the preëdit (or the selected candidate, if any)  ┃
@@ -202,7 +200,7 @@ The following table explains the defaults:
 ┃                   │ candidate is not learned from user input, nothing       ┃
 ┃                   │ happens).                                               ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
-┃ …                 │ …                                                       ┃
+┃ ...               │ ...                                                     ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃                   │ Remove the candidate with the label “9” from the        ┃
 ┃ Control+F9        │ database of learned user input (If possible, if this    ┃
@@ -252,12 +250,10 @@ The following table explains the defaults:
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ AltGr+Space       │ Insert a literal space into the preëdit.                ┃
 ┗━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-
-
+```
 When more than one input method at the same time is used, the following
 additional key bindings are available:
-
-
+```
 ┏━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃     Key      │                            Effect                            ┃
 ┃ combination  │                                                              ┃
@@ -270,14 +266,12 @@ additional key bindings are available:
 ┃ Control+Up   │ Switches the input method used for the preëdit to the        ┃
 ┃              │ previous input method.                                       ┃
 ┗━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
 
-
-
-Mouse bindings
+### Mouse bindings ###
 
 These mouse bindings are currently hardcoded and can not yet be customized.
-
-
+```
 ┏━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃   Mouse event    │                          Effect                          ┃
 ┠──────────────────┼──────────────────────────────────────────────────────────┨
@@ -307,3 +301,5 @@ These mouse bindings are currently hardcoded and can not yet be customized.
 ┃                  │ secret user input to disk it might make sense to use     ┃
 ┃                  │ this option temporarily.                                 ┃
 ┗━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
