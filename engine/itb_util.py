@@ -28,6 +28,9 @@ import os
 import re
 import unicodedata
 import logging
+import shutil
+import subprocess
+import glob
 import gettext
 import traceback
 from gi import require_version
@@ -2385,202 +2388,6 @@ FLAGS = {
     'zu_ZA': '🇿🇦',
 }
 
-M17N_INPUT_METHODS = {
-    # Dictionary of all the m17n input methods which are
-    # useful with ibus-typing-booster.
-    #
-    # Key: name of input method.
-    # Value: file name where the input method is implemented.
-    'am-sera': 'am-sera.mim',
-    'ar-kbd': 'ar-kbd.mim',
-    'ar-translit': 'ar-translit.mim',
-    'as-inscript': 'as-inscript.mim',
-    'as-inscript2': 'as-inscript2.mim',
-    'as-itrans': 'as-itrans.mim',
-    'as-phonetic': 'as-phonetic.mim',
-    'ath-phonetic': 'ath-phonetic.mim',
-    'be-kbd': 'be-kbd.mim',
-    'bla-phonetic': 'bla-phonetic.mim',
-    'bn-disha': 'bn-disha.mim',
-    'bn-inscript': 'bn-inscript.mim',
-    'bn-inscript2': 'bn-inscript2.mim',
-    'bn-itrans': 'bn-itrans.mim',
-    'bn-probhat': 'bn-probhat.mim',
-    'bo-ewts': 'bo-ewts.mim',
-    'bo-tcrc': 'bo-tcrc.mim',
-    'bo-wylie': 'bo-wylie.mim',
-    'brx-inscript2': 'brx-inscript2-deva.mim',
-    # 't-nil-cjk-util': 'cjk-util.mim', # not useful
-    'cmc-kbd': 'cmc-kbd.mim',
-    'cr-western': 'cr-western.mim',
-    'cs-kbd': 'cs-kbd.mim',
-    'da-post': 'da-post.mim',
-    'doi-inscript2': 'doi-inscript2-deva.mim',
-    'dv-phonetic': 'dv-phonetic.mim',
-    'el-kbd': 'el-kbd.mim',
-    'eo-h-fundamente': 'eo-h-f.mim',
-    'eo-h-sistemo': 'eo-h.mim',
-    'eo-plena': 'eo-plena.mim',
-    'eo-q-sistemo': 'eo-q.mim',
-    'eo-vi-sistemo': 'eo-vi.mim',
-    'eo-x-sistemo': 'eo-x.mim',
-    'fa-isiri': 'fa-isiri.mim',
-    'fr-azerty': 'fr-azerty.mim',
-    # 't-nil-global': 'global.mim', # not useful
-    'grc-mizuochi': 'grc-mizuochi.mim',
-    'gu-inscript': 'gu-inscript.mim',
-    'gu-inscript2': 'gu-inscript2.mim',
-    'gu-itrans': 'gu-itrans.mim',
-    'gu-phonetic': 'gu-phonetic.mim',
-    'he-kbd': 'he-kbd.mim',
-    'hi-inscript': 'hi-inscript.mim',
-    'hi-inscript2': 'hi-inscript2.mim',
-    'hi-itrans': 'hi-itrans.mim',
-    'hi-optitransv2': 'hi-optitransv2.mim',
-    'hi-phonetic': 'hi-phonetic.mim',
-    'hi-remington': 'hi-remington.mim',
-    'hi-typewriter': 'hi-typewriter.mim',
-    'hi-vedmata': 'hi-vedmata.mim',
-    'hr-kbd': 'hr-kbd.mim',
-    'hu-rovas-post': 'hu-rovas-post.mim',
-    'hy-kbd': 'hy-kbd.mim',
-    'ii-phonetic': 'ii-phonetic.mim',
-    'iu-phonetic': 'iu-phonetic.mim',
-    'ja-anthy': 'ja-anthy.mim',
-    'ja-tcode': 'ja-tcode.mim',
-    'ja-trycode': 'ja-trycode.mim',
-    'ka-kbd': 'ka-kbd.mim',
-    'kk-arabic': 'kk-arabic.mim',
-    'kk-kbd': 'kk-kbd.mim',
-    'km-yannis': 'km-yannis.mim',
-    'kn-inscript': 'kn-inscript.mim',
-    'kn-inscript2': 'kn-inscript2.mim',
-    'kn-itrans': 'kn-itrans.mim',
-    'kn-kgp': 'kn-kgp.mim',
-    'kn-optitransv2': 'kn-optitransv2.mim',
-    'kn-typewriter': 'kn-typewriter.mim',
-    'ko-han2': 'ko-han2.mim',
-    'ko-romaja': 'ko-romaja.mim',
-    'kok-inscript2': 'kok-inscript2-deva.mim',
-    'ks-inscript': 'ks-inscript.mim',
-    'ks-kbd': 'ks-kbd.mim',
-    't-latn-post': 'latn-post.mim',
-    't-latn-pre': 'latn-pre.mim',
-    't-latn1-pre': 'latn1-pre.mim',
-    'lo-kbd': 'lo-kbd.mim',
-    'lo-lrt': 'lo-lrt.mim',
-    't-lsymbol': 'lsymbol.mim',
-    'mai-inscript': 'mai-inscript.mim',
-    'mai-inscript2': 'mai-inscript2.mim',
-    't-math-latex': 'math-latex.mim',
-    'mr-minglish': 'minglish.mim',
-    'ml-enhanced-inscript': 'ml-enhanced-inscript.mim',
-    'ml-inscript': 'ml-inscript.mim',
-    'ml-inscript2': 'ml-inscript2.mim',
-    'ml-itrans': 'ml-itrans.mim',
-    'ml-mozhi': 'ml-mozhi.mim',
-    'ml-remington': 'ml-remington.mim',
-    'ml-swanalekha': 'ml-swanalekha.mim',
-    'mni-inscript2': 'mni-inscript2-beng.mim',
-    'mni-inscript2': 'mni-inscript2-mtei.mim',
-    'mr-inscript': 'mr-inscript.mim',
-    'mr-inscript2': 'mr-inscript2.mim',
-    'mr-itrans': 'mr-itrans.mim',
-    'mr-phonetic': 'mr-phonetic.mim',
-    'mr-remington': 'mr-remington.mim',
-    'mr-typewriter': 'mr-typewriter.mim',
-    'my-kbd': 'my-kbd.mim',
-    'ne-inscript2': 'ne-inscript2-deva.mim',
-    'ne-rom-translit': 'ne-rom-translit.mim',
-    'ne-rom': 'ne-rom.mim',
-    'ne-trad-ttf': 'ne-trad-ttf.mim',
-    'ne-trad': 'ne-trad.mim',
-    'nsk-phonetic': 'nsk-phonetic.mim',
-    'oj-phonetic': 'oj-phonetic.mim',
-    'or-inscript': 'or-inscript.mim',
-    'or-inscript2': 'or-inscript2.mim',
-    'or-itrans': 'or-itrans.mim',
-    'or-phonetic': 'or-phonetic.mim',
-    'pa-anmollipi': 'pa-anmollipi.mim',
-    'pa-inscript': 'pa-inscript.mim',
-    'pa-inscript2': 'pa-inscript2-guru.mim',
-    'pa-itrans': 'pa-itrans.mim',
-    'pa-jhelum': 'pa-jhelum.mim',
-    'pa-phonetic': 'pa-phonetic.mim',
-    'ps-phonetic': 'ps-phonetic.mim',
-    't-rfc1345': 'rfc1345.mim',
-    'ru-kbd': 'ru-kbd.mim',
-    'ru-phonetic': 'ru-phonetic.mim',
-    'ru-translit': 'ru-translit.mim',
-    'ru-yawerty': 'ru-yawerty.mim',
-    'sa-harvard-kyoto': 'sa-harvard-kyoto.mim',
-    'sa-IAST': 'sa-iast.mim',
-    'sa-inscript2': 'sa-inscript2.mim',
-    'sa-itrans': 'sa-itrans.mim',
-    'sat-inscript2': 'sat-inscript2-deva.mim',
-    'sat-inscript2': 'sat-inscript2-olck.mim',
-    'sd-inscript': 'sd-inscript.mim',
-    'sd-inscript2': 'sd-inscript2-deva.mim',
-    'si-phonetic-dynamic': 'si-phonetic-dynamic.mim',
-    'si-samanala': 'si-samanala.mim',
-    'si-singlish': 'si-singlish.mim',
-    'si-sumihiri': 'si-sumihiri.mim',
-    'si-transliteration': 'si-trans.mim',
-    'si-wijesekera': 'si-wijesekera.mim',
-    'si-sayura': 'si-sayura.mim',
-    'sk-kbd': 'sk-kbd.mim',
-    'sr-kbd': 'sr-kbd.mim',
-    't-ssymbol': 'ssymbol.mim',
-    'sv-post': 'sv-post.mim',
-    't-syrc-phonetic': 'syrc-phonetic.mim',
-    'ta-inscript': 'ta-inscript.mim',
-    'ta-inscript2': 'ta-inscript2.mim',
-    'ta-itrans': 'ta-itrans.mim',
-    'ta-lk-renganathan': 'ta-lk-renganathan.mim',
-    'ta-phonetic': 'ta-phonetic.mim',
-    'ta-tamil99': 'ta-tamil99.mim',
-    'ta-typewriter': 'ta-typewriter.mim',
-    'ta-vutam': 'ta-vutam.mim',
-    'tai-sonla-kbd': 'tai-sonla.mim',
-    'te-apple': 'te-apple.mim',
-    'te-inscript': 'te-inscript.mim',
-    'te-inscript2': 'te-inscript2.mim',
-    'te-itrans': 'te-itrans.mim',
-    'te-pothana': 'te-pothana.mim',
-    'te-rts': 'te-rts.mim',
-    'te-sarala': 'te-sarala.mim',
-    'th-kesmanee': 'th-kesmanee.mim',
-    'th-pattachote': 'th-pattachote.mim',
-    'th-tis820': 'th-tis820.mim',
-    'ug-kbd': 'ug-kbd.mim',
-    'uk-kbd': 'uk-kbd.mim',
-    't-unicode': 'unicode.mim',
-    'ur-phonetic': 'ur-phonetic.mim',
-    'uz-kbd': 'uz-kbd.mim',
-    # 't-nil vi-base': 'vi-base.mim', # not useful
-    'vi-han': 'vi-han.mim',
-    'vi-nomvni': 'vi-nom-vni.mim',
-    'vi-nomtelex': 'vi-nom.mim',
-    'vi-tcvn': 'vi-tcvn.mim',
-    'vi-telex': 'vi-telex.mim',
-    'vi-viqr': 'vi-viqr.mim',
-    'vi-vni': 'vi-vni.mim',
-    'yi-yivo': 'yi-yivo.mim',
-    'zh-bopomofo': 'zh-bopomofo.mim',
-    'zh-cangjie': 'zh-cangjie.mim',
-    'zh-pinyin-vi': 'zh-pinyin-vi.mim',
-    'zh-pinyin': 'zh-pinyin.mim',
-    'zh-py-b5': 'zh-py-b5.mim',
-    'zh-py-gb': 'zh-py-gb.mim',
-    'zh-py': 'zh-py.mim',
-    'zh-quick': 'zh-quick.mim',
-    'zh-tonepy-b5': 'zh-tonepy-b5.mim',
-    'zh-tonepy-gb': 'zh-tonepy-gb.mim',
-    'zh-tonepy': 'zh-tonepy.mim',
-    # 't-nil-zh-util': 'zh-util.mim', # not useful
-    'zh-zhuyin': 'zh-zhuyin.mim',
-}
-
 SPANISH_419_LOCALES = (
     'es_AR', 'es_MX', 'es_BO', 'es_CL', 'es_CO', 'es_CR',
     'es_CU', 'es_DO', 'es_EC', 'es_GT', 'es_HN', 'es_NI',
@@ -3166,98 +2973,213 @@ def get_hunspell_dictionary_wordlist(language):
     ]
     return (dic_path, dictionary_encoding, word_list)
 
-def get_ime_help(ime_name):
+class M17nDbInfo:
+    '''Class to find and store information about the available input
+    methods from m17n-db.
     '''
-    Get help for an input method.
+    def __init__(self):
+        self._dirs = []
+        self._imes = {}
+        self._find_dirs()
+        self._find_imes()
 
-    :param ime_name: Name of the input method
-    :type ime_name: String
-    :rtype: tuple of the form (path, title, description, full_contents, error)
-            where “path” is the full path of the file implementing the
-            input method, “title” is title of the input method,
-            “description” is the description of the input method,
-            and full_contents is the full content of the file implementing
-            the input method.
-            “error” is empty if getting help for the input method was
-            successfull, otherwise it might contain an error message.
+    def _find_dirs(self):
+        '''Finds the directories which contain the m17n input methods which
+        can be used and stores the result in self._dirs
+        '''
+        self._dirs = []
+        user_dir = os.getenv('M17NDIR')
+        if not user_dir:
+            user_dir = os.path.expanduser('~/.m17n.d')
+        system_dir = ''
+        m17n_db_binary = shutil.which('m17n-db')
+        if m17n_db_binary:
+            result = subprocess.run([m17n_db_binary], stdout=subprocess.PIPE)
+            system_dir = result.stdout.strip().decode('UTF-8')
+        if not os.path.isdir(system_dir):
+            dirnames = (
+                '/usr/share/m17n',
+                '/usr/local/share/m17n', # On FreeBSD, the .mim files are here
+            )
+            for dirname in dirnames:
+                if os.path.isdir(dirname):
+                    system_dir = dirname
+                    break
+        if os.path.isdir(user_dir):
+            self._dirs.append(user_dir)
+        if os.path.isdir(system_dir):
+            self._dirs.append(system_dir)
+        else:
+            LOGGER.error(
+                'System m17n directory "%s" does not exist.', system_dir)
 
-    “NoIME” is handled as a special case.
+    def _find_imes(self):
+        '''Searches the directories in self._dirs for usable input methods and
+        stores information about the input methods found in the
+        self._imes dictionary.
+        '''
+        self._imes = {}
+        self._imes['NoIME'] = {
+            'path': '',
+            'title': _('Native Keyboard'),
+            'description': _(
+                'Direct keyboard input. This is not really an input method, '
+                'it uses directly whatever comes from '
+                'the current keyboard layout '
+                'without any further changes. '
+                'So no transliteration or composing '
+                'is done here.'),
+            'content': '',
+            }
+        for dirname in self._dirs:
+            for mim_path in glob.glob(os.path.join(dirname, '*.mim')):
+                try:
+                    with open(mim_path,
+                              mode='r',
+                              encoding='UTF-8',
+                              errors='ignore') as ime_file:
+                        full_contents = ime_file.read()
+                except FileNotFoundError:
+                    LOGGER.exception('Errror loading %s: %s',
+                                     mim_path, _('File not found'))
+                except PermissionError:
+                    LOGGER.exception('Error loading %s: %s',
+                                     mim_path, _('Permission error'))
+                except UnicodeDecodeError:
+                    LOGGER.exception('Error loading %s: %s',
+                                     mim_path, _('Unicode decoding error'))
+                except Exception:
+                    LOGGER.exception('Unexpected error loading %s: %s',
+                                     mim_path, _('Unknown error'))
+                if not full_contents:
+                    LOGGER.warning('File %s has no content', mim_path)
+                    continue
+                input_method_pattern = re.compile(
+                    r'\(\s*input-method\s+'
+                    r'(?P<lang>.+?)\s+(?P<name>.+?)[\s()]+',
+                    re.DOTALL|re.MULTILINE|re.UNICODE)
+                match = input_method_pattern.search(full_contents)
+                if not match:
+                    LOGGER.warning(
+                        'File %s does not contain “input-method”',
+                        mim_path)
+                    continue
+                lang = match.group('lang')
+                name = match.group('name')
+                if name == 'nil':
+                    LOGGER.info(
+                        'File %s has name “nil”.'
+                        'Therefore, it is not actually an input method.',
+                        mim_path)
+                    continue
+                ime = lang + '-' + name
+                if ime in self._imes:
+                    LOGGER.warning(
+                        'Duplicate input method: “%s”.'
+                        'Implemented in %s and %s.',
+                        ime, mim_path, self._imes[ime]['path'])
+                    continue
+                self._imes[ime] = {'path': mim_path}
+                title_pattern = re.compile(
+                    r'\([\s]*title[\s]*"(?P<title>.+?)(?<!\\)"[\s]*\)',
+                    re.DOTALL|re.MULTILINE|re.UNICODE)
+                match = title_pattern.search(full_contents)
+                if match:
+                    title = match.group('title').replace('\\"', '"')
+                    self._imes[ime]['title'] = title
+                description_pattern = re.compile(
+                    r'\([\s]*description[\s]*'
+                    r'"(?P<description>.+?)(?<!\\)"[\s]*\)',
+                    re.DOTALL|re.MULTILINE|re.UNICODE)
+                match = description_pattern.search(full_contents)
+                if match:
+                    description = match.group('description').replace(
+                        '\\"', '"')
+                    self._imes[ime]['description'] = description
+                self._imes[ime]['content'] = full_contents
 
-    Examples:
+    def get_dirs(self):
+        '''
+        Returns the list of directories  which contain the m17n input methods.
 
-    >>> get_ime_help('latn-post')[1]
-    'Latin-post'
+        There has be one system directory (e.g. /usr/share/m17n) and
+        it is possible that there is also a user directory indicated
+        by the M17NDIR environment variable. If the environment
+        variable M17NDIR is not set, the user directory is '~/.m17nd.'
+        if that directory exists.
 
-    >>> get_ime_help('latn-post')[4]
-    ''
+        :return: A list of one or two directories
+        :rtype: List of strings
 
-    >>> get_ime_help('mr-itrans')[1]
-    'क'
+        '''
+        return self._dirs[:]
 
-    >>> get_ime_help('ko-romaja')[1]
-    '로마자'
-    '''
-    path = ''
-    title = ''
-    description = ''
-    full_contents = ''
-    error = ''
-    if not ime_name:
-        return ('', '', '', '', '')
-    if ime_name == 'NoIME':
-        title = _('Native Keyboard')
-        description = _(
-            'Direct keyboard input. This is not really an input method, '
-            'it uses directly whatever comes from the current keyboard layout '
-            'without any further changes. So no transliteration or composing '
-            'is done here.')
-        return (path, title, description, full_contents, error)
-    if ime_name in M17N_INPUT_METHODS:
-        mim_file = M17N_INPUT_METHODS[ime_name]
-    else:
-        mim_file = ime_name+'.mim'
-    dirnames = [
-        '/usr/share/m17n',
-        '/usr/local/share/m17n', # On FreeBSD, the .mim files are here
-    ]
-    m17n_dir = ''
-    for dirname in dirnames:
-        if os.path.isdir(dirname):
-            m17n_dir = dirname
-    if not m17n_dir:
-        # Maybe don’t mark this error message as translatable, it should
-        # never happen in practice:
-        return ('', '', '', '', ('m17n dir not found, tried: %s' %dirnames))
-    path = os.path.join(m17n_dir, mim_file)
-    try:
-        with open(path,
-                  mode='r',
-                  encoding='UTF-8',
-                  errors='ignore') as ime_file:
-            full_contents = ime_file.read()
-    except FileNotFoundError:
-        return ('', '', '', '', _('File not found'))
-    except PermissionError:
-        return ('', '', '', '', _('Permission error'))
-    except UnicodeDecodeError:
-        return ('', '', '', '', _('Unicode decoding error'))
-    except Exception:
-        return ('', '', '', '', _('Unknown error'))
-    if full_contents:
-        title_pattern = re.compile(
-            r'\([\s]*title[\s]*"(?P<title>.+?)(?<!\\)"[\s]*\)',
-            re.DOTALL|re.MULTILINE|re.UNICODE)
-        match = title_pattern.search(full_contents)
-        if match:
-            title = match.group('title').replace('\\"', '"')
-        description_pattern = re.compile(
-            r'\([\s]*description[\s]*"(?P<description>.+?)(?<!\\)"[\s]*\)',
-            re.DOTALL|re.MULTILINE|re.UNICODE)
-        match = description_pattern.search(full_contents)
-        if match:
-            description = match.group('description').replace('\\"', '"')
-    return (path, title, description, full_contents, error)
+    def get_imes(self):
+        '''Get a list of the available input methods
 
+        The special input method 'NoIME' should always be first
+        in the list returned.
+
+        :return: A list of names of the available input methods.
+        :rtype: List of strings
+        '''
+        return sorted(self._imes)
+
+    def get_path(self, ime):
+        '''Get the full path of the implementation file of the input method.
+
+        :param ime: Name of the input method
+        :type ime: String
+        :return: Path of the implementation file of the input method.
+                 Empty string if no file has been found implementing “ime”
+        :rtype: String
+
+        '''
+        if ime in self._imes and 'path' in self._imes[ime]:
+            return self._imes[ime]['path']
+        return ''
+
+    def get_title(self, ime):
+        '''Get the title of the input method.
+
+        :param ime: Name of the input method
+        :type ime: String
+        :return: Title of the input method.
+                 Empty string if no title has been found.
+        :rtype: String
+        '''
+        if ime in self._imes and 'title' in self._imes[ime]:
+            return self._imes[ime]['title']
+        return ''
+
+    def get_description(self, ime):
+        '''Get the description of the input method.
+
+        :param ime: Name of the input method
+        :type ime: String
+        :return: Description of the input method.
+                 Empty string if no description has been found.
+        :rtype: String
+        '''
+        if ime in self._imes and 'description' in self._imes[ime]:
+            return self._imes[ime]['description']
+        return ''
+
+    def get_content(self, ime):
+        '''Get the content of the implementation file of the input method.
+
+        :param ime: Name of the input method
+        :type ime: String
+        :return: Content of the implementation file of the input method.
+                 Empty string if no content has been found.
+        :rtype: String
+        '''
+        if ime in self._imes and 'content' in self._imes[ime]:
+            return self._imes[ime]['content']
+        return ''
+
+    def __str__(self):
+        return repr(self._imes)
 
 def xdg_save_data_path(*resource):
     '''

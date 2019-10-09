@@ -80,6 +80,8 @@ GTK_VERSION = (Gtk.get_major_version(),
                Gtk.get_minor_version(),
                Gtk.get_micro_version())
 
+M17N_DB_INFO = None
+
 def parse_args():
     '''
     Parse the command line arguments.
@@ -1769,15 +1771,9 @@ class SetupUI(Gtk.Window):
         row = ime + ' ' # NO-BREAK SPACE as a separator
         # add some spaces for nicer formatting:
         row += ' ' * (20 - len(ime))
-        (dummy_path,
-         title,
-         dummy_description,
-         dummy_full_contents,
-         error) = itb_util.get_ime_help(ime)
+        title = M17N_DB_INFO.get_title(ime)
         if title:
             row += '\t' + '(' + title + ')'
-        if error:
-            row += '\t' + '⚠️ ' + error
         try:
             dummy = Transliterator(ime)
             row += '\t' + '✔️'
@@ -2744,7 +2740,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_add_listbox.connect(
             'row-selected', self.on_input_method_to_add_selected)
         rows = []
-        for ime in ['NoIME'] + sorted(itb_util.M17N_INPUT_METHODS):
+        for ime in M17N_DB_INFO.get_imes():
             if ime in self._current_imes:
                 continue
             row = self._fill_input_methods_listbox_row(ime)
@@ -2906,33 +2902,29 @@ class SetupUI(Gtk.Window):
         '''
         if not self._input_methods_listbox_selected_ime_name:
             return
-        (path,
-         title,
-         description,
-         full_contents,
-         error) = itb_util.get_ime_help(
-             self._input_methods_listbox_selected_ime_name)
-        window_title = self._input_methods_listbox_selected_ime_name
+        ime = self._input_methods_listbox_selected_ime_name
+        path = M17N_DB_INFO.get_path(ime)
+        title = M17N_DB_INFO.get_title(ime)
+        description = M17N_DB_INFO.get_description(ime)
+        content = M17N_DB_INFO.get_content(ime)
+        window_title = ime
         if title:
             window_title += '   ' + title
         if path:
             window_title += '   ' + path
-        if error:
-            window_contents = error
-        else:
-            window_contents = description
-            if full_contents:
-                window_contents += (
-                    '\n\n'
-                    + '##############################'
-                    + '##############################'
-                    + '\n'
-                    + 'Complete file implementing the '
-                    + 'input method follows here:\n'
-                    + '##############################'
-                    + '##############################'
-                    + '\n'
-                    + full_contents)
+        window_contents = description
+        if content:
+            window_contents += (
+                '\n\n'
+                + '##############################'
+                + '##############################'
+                + '\n'
+                + 'Complete file implementing the '
+                + 'input method follows here:\n'
+                + '##############################'
+                + '##############################'
+                + '\n'
+                + content)
         HelpWindow(
             parent=self,
             title=window_title,
@@ -4513,5 +4505,6 @@ if __name__ == '__main__':
         DIALOG.run()
         DIALOG.destroy()
         sys.exit(1)
+    M17N_DB_INFO = itb_util.M17nDbInfo()
     SETUP_UI = SetupUI()
     Gtk.main()
