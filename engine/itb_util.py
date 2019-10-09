@@ -32,7 +32,6 @@ import shutil
 import subprocess
 import glob
 import gettext
-import traceback
 from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus

@@ -411,6 +411,9 @@ class TabSqliteDb:
             self.db.commit()
 
     def best_candidates(self, phrase_frequencies):
+        '''Sorts the phrase_frequencies dictionary and returns the best
+        candidates.
+        '''
         return sorted(phrase_frequencies.items(),
                       key=lambda x: (
                           -1*x[1],   # user_freq descending
@@ -529,8 +532,9 @@ class TabSqliteDb:
         # Updating the phrase_frequency dictionary with the normalized
         # results gives: {'conspiracy': 6/11, 'code': 0,
         # 'communicability': 0, 'cold': 1/11, 'colour': 4/11}
-        for x in results_uni:
-            phrase_frequencies.update([(x[0], x[1]/float(count))])
+        for result_uni in results_uni:
+            phrase_frequencies.update(
+                [(result_uni[0], result_uni[1]/float(count))])
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'Unigram best_candidates=%s',
@@ -560,11 +564,11 @@ class TabSqliteDb:
         # Update the phrase frequency dictionary by using a linear
         # combination of the unigram and the bigram results, giving
         # both the weight of 0.5:
-        for x in results_bi:
+        for result_bi in results_bi:
             phrase_frequencies.update(
-                [(x[0],
-                  0.5*x[1]/float(count_p_phrase)
-                  +0.5*phrase_frequencies[x[0]])])
+                [(result_bi[0],
+                  0.5*result_bi[1]/float(count_p_phrase)
+                  +0.5*phrase_frequencies[result_bi[0]])])
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'Bigram best_candidates=%s',
@@ -598,11 +602,11 @@ class TabSqliteDb:
         # both the weight of 0.5 (that makes the total weights: 0.25 *
         # unigram + 0.25 * bigram + 0.5 * trigram, i.e. the trigrams
         # get higher weight):
-        for x in results_tri:
+        for result_tri in results_tri:
             phrase_frequencies.update(
-                [(x[0],
-                  0.5*x[1]/float(count_pp_phrase_p_phrase)
-                  +0.5*phrase_frequencies[x[0]])])
+                [(result_tri[0],
+                  0.5*result_tri[1]/float(count_pp_phrase_p_phrase)
+                  +0.5*phrase_frequencies[result_tri[0]])])
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'Trigram best_candidates=%s',
@@ -636,12 +640,12 @@ class TabSqliteDb:
         if self.user_db_file == ':memory:':
             return
         if not path.exists(self.user_db_file):
-            db = sqlite3.connect(self.user_db_file)
+            database = sqlite3.connect(self.user_db_file)
             # a database containing the complete German Hunspell
             # dictionary has less then 6000 pages. 20000 pages
             # should be enough to cache the complete database
             # in most cases.
-            db.executescript('''
+            database.executescript('''
                 PRAGMA encoding = "UTF-8";
                 PRAGMA case_sensitive_like = true;
                 PRAGMA page_size = 4096;
@@ -651,18 +655,18 @@ class TabSqliteDb:
                 PRAGMA journal_size_limit = 1000000;
                 PRAGMA synchronous = NORMAL;
             ''')
-            db.commit()
+            database.commit()
 
     def get_database_desc(self, db_file):
         '''Get the description of the database'''
         if not path.exists(db_file):
             return None
         try:
-            db = sqlite3.connect(db_file)
+            database = sqlite3.connect(db_file)
             desc = {}
-            for row in db.execute("SELECT * FROM desc;").fetchall():
+            for row in database.execute("SELECT * FROM desc;").fetchall():
                 desc[row[0]] = row[1]
-            db.close()
+            database.close()
             return desc
         except:
             return None
@@ -686,17 +690,17 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         if not path.exists(db_file):
             return None
         try:
-            db = sqlite3.connect(db_file)
-            tp_res = db.execute(
+            database = sqlite3.connect(db_file)
+            table_phrases_result = database.execute(
                 "select sql from sqlite_master where name='phrases';"
             ).fetchall()
             # Remove possible line breaks from the string where we
             # want to match:
-            string = ' '.join(tp_res[0][0].splitlines())
-            res = re.match(r'.*\((.*)\)', string)
-            if res:
-                tp = res.group(1).split(',')
-                return len(tp)
+            string = ' '.join(table_phrases_result[0][0].splitlines())
+            match = re.match(r'.*\((.*)\)', string)
+            if match:
+                table_phrases_columns = match.group(1).split(',')
+                return len(table_phrases_columns)
             return 0
         except:
             return 0
@@ -832,12 +836,12 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
     def extract_user_phrases(self):
         '''extract user phrases from database'''
         try:
-            db = sqlite3.connect(self.user_db_file)
-            db.execute('PRAGMA wal_checkpoint;')
-            phrases = db.execute(
+            database = sqlite3.connect(self.user_db_file)
+            database.execute('PRAGMA wal_checkpoint;')
+            phrases = database.execute(
                 'SELECT phrase, sum(user_freq) FROM phrases GROUP BY phrase;'
             ).fetchall()
-            db.close()
+            database.close()
             phrases = [
                 (unicodedata.normalize(
                     itb_util.NORMALIZATION_FORM_INTERNAL, x[0]), x[1])
@@ -864,22 +868,22 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         p_token = ''
         pp_token = ''
         database_dict = {}
-        for x  in rows:
-            database_dict.update([((x[0], x[1], x[2], x[3]),
-                                   {'input_phrase': x[0],
-                                    'phrase': x[1],
-                                    'p_phrase': x[2],
-                                    'pp_phrase': x[3],
-                                    'user_freq': x[4],
-                                    'timestamp': x[5]}
+        for row in rows:
+            database_dict.update([((row[0], row[1], row[2], row[3]),
+                                   {'input_phrase': row[0],
+                                    'phrase': row[1],
+                                    'p_phrase': row[2],
+                                    'pp_phrase': row[3],
+                                    'user_freq': row[4],
+                                    'timestamp': row[5]}
                                   )])
         lines = []
         try:
             with codecs.open(filename, encoding='UTF-8') as file_handle:
                 lines = [
                     unicodedata.normalize(
-                        itb_util.NORMALIZATION_FORM_INTERNAL, x)
-                    for x in file_handle.readlines()]
+                        itb_util.NORMALIZATION_FORM_INTERNAL, line)
+                    for line in file_handle.readlines()]
         except:
             traceback.print_exc()
             return False
@@ -899,8 +903,8 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                 pp_token = p_token
                 p_token = token
         sqlargs = []
-        for x in database_dict.keys():
-            sqlargs.append(database_dict[x])
+        for key in database_dict:
+            sqlargs.append(database_dict[key])
         sqlstr = '''
         INSERT INTO user_db.phrases (input_phrase, phrase, p_phrase, pp_phrase, user_freq, timestamp)
         VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq, :timestamp)
@@ -944,6 +948,5 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             for row in self.db.execute("SELECT * FROM phrases;").fetchall():
                 LOGGER.debug('%s', repr(row))
         except:
-            import traceback
             traceback.print_exc()
             return
