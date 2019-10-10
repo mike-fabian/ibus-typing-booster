@@ -78,7 +78,7 @@ for most systems.
 A copy of the default key bindings and mouse bindings documentation is
 included here for convenience:
 
-Table of default key bindings
+## Table of default key bindings
 
 Some of these key bindings can be customized in the setup tool.
 The following table explains the defaults:
@@ -273,7 +273,7 @@ additional key bindings are available:
 ```
 
 
-Mouse bindings
+## Mouse bindings
 
 These mouse bindings are currently hardcoded and can not yet be customized.
 
