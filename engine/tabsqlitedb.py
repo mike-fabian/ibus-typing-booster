@@ -171,8 +171,8 @@ class TabSqliteDb:
             LOGGER.info(
                 'Connect to the database %(name)s.',
                 {'name': self.user_db_file})
-            self.db = sqlite3.connect(self.user_db_file)
-            self.db.executescript('''
+            self.database = sqlite3.connect(self.user_db_file)
+            self.database.executescript('''
                 PRAGMA encoding = "UTF-8";
                 PRAGMA case_sensitive_like = true;
                 PRAGMA page_size = 4096;
@@ -203,8 +203,8 @@ class TabSqliteDb:
                 'Creating a new, empty database "%(name)s".',
                 {'name': self.user_db_file})
             self.init_user_db()
-            self.db = sqlite3.connect(self.user_db_file)
-            self.db.executescript('''
+            self.database = sqlite3.connect(self.user_db_file)
+            self.database.executescript('''
                 PRAGMA encoding = "UTF-8";
                 PRAGMA case_sensitive_like = true;
                 PRAGMA page_size = 4096;
@@ -231,13 +231,13 @@ class TabSqliteDb:
             VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq, :timestamp)
             ;'''
             try:
-                self.db.executemany(sqlstr, sqlargs)
+                self.database.executemany(sqlstr, sqlargs)
             except Exception:
                 LOGGER.exception(
                     'Unexpected error inserting old phrases '
                     'into the user database.')
-            self.db.commit()
-            self.db.execute('PRAGMA wal_checkpoint;')
+            self.database.commit()
+            self.database.execute('PRAGMA wal_checkpoint;')
 
         # do not call this always on intialization for the moment.
         # It makes the already slow “python engine/main.py --xml”
@@ -289,9 +289,9 @@ class TabSqliteDb:
             LOGGER.debug('sqlstr=%s', sqlstr)
             LOGGER.debug('sqlargs=%s', sqlargs)
         try:
-            self.db.execute(sqlstr, sqlargs)
+            self.database.execute(sqlstr, sqlargs)
             if commit:
-                self.db.commit()
+                self.database.commit()
         except Exception:
             LOGGER.exception('Unexpected error updating phrase in user_db.')
 
@@ -301,8 +301,8 @@ class TabSqliteDb:
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('commit and execute checkpoint ...')
-        self.db.commit()
-        self.db.execute('PRAGMA wal_checkpoint;')
+        self.database.commit()
+        self.database.execute('PRAGMA wal_checkpoint;')
         if DEBUG_LEVEL > 1:
             LOGGER.debug('commit and execute checkpoint done.')
 
@@ -312,8 +312,8 @@ class TabSqliteDb:
                     (id INTEGER PRIMARY KEY,
                     input_phrase TEXT, phrase TEXT, p_phrase TEXT, pp_phrase TEXT,
                     user_freq INTEGER, timestamp REAL);'''
-        self.db.execute(sqlstr)
-        self.db.commit()
+        self.database.execute(sqlstr)
+        self.database.commit()
 
     def add_phrase(self, input_phrase='', phrase='',
                    p_phrase='', pp_phrase='',
@@ -348,7 +348,7 @@ class TabSqliteDb:
             'phrase': phrase,
             'p_phrase': p_phrase,
             'pp_phrase': pp_phrase}
-        if self.db.execute(select_sqlstr, select_sqlargs).fetchall():
+        if self.database.execute(select_sqlstr, select_sqlargs).fetchall():
             # there is already such a phrase, i.e. add_phrase was called
             # in error, do nothing to avoid duplicate entries.
             return
@@ -368,9 +368,9 @@ class TabSqliteDb:
             LOGGER.debug('insert_sqlstr=%s', insert_sqlstr)
             LOGGER.debug('insert_sqlargs=%s', insert_sqlargs)
         try:
-            self.db.execute(insert_sqlstr, insert_sqlargs)
+            self.database.execute(insert_sqlstr, insert_sqlargs)
             if commit:
-                self.db.commit()
+                self.database.commit()
         except Exception:
             LOGGER.exception('Unexpected error adding phrase to database.')
 
@@ -385,9 +385,9 @@ class TabSqliteDb:
             INSERT INTO user_db.phrases SELECT * FROM tmp ORDER BY
             input_phrase, user_freq DESC, id ASC;
             DROP TABLE tmp;'''
-        self.db.executescript(sqlstr)
-        self.db.executescript("VACUUM;")
-        self.db.commit()
+        self.database.executescript(sqlstr)
+        self.database.executescript("VACUUM;")
+        self.database.commit()
 
     def drop_indexes(self):
         '''Drop the index in database to reduce it's size'''
@@ -397,8 +397,8 @@ class TabSqliteDb:
             VACUUM;
             '''
 
-        self.db.executescript(sqlstr)
-        self.db.commit()
+        self.database.executescript(sqlstr)
+        self.database.commit()
 
     def create_indexes(self, commit=True):
         '''Create indexes for the database.'''
@@ -408,9 +408,9 @@ class TabSqliteDb:
         CREATE INDEX IF NOT EXISTS user_db.phrases_index_i ON phrases
         (phrase)
         ;'''
-        self.db.executescript(sqlstr)
+        self.database.executescript(sqlstr)
         if commit:
-            self.db.commit()
+            self.database.commit()
 
     def best_candidates(self, phrase_frequencies):
         '''Sorts the phrase_frequencies dictionary and returns the best
@@ -484,13 +484,13 @@ class TabSqliteDb:
         # (“OperationalError: parameters are not allowed in views”).
         quoted_input_phrase = input_phrase.replace(
             '\x00', '').replace('"', '""')
-        self.db.execute('DROP VIEW IF EXISTS like_input_phrase_view;')
+        self.database.execute('DROP VIEW IF EXISTS like_input_phrase_view;')
         sqlstr = '''
         CREATE TEMPORARY VIEW IF NOT EXISTS like_input_phrase_view AS
         SELECT * FROM user_db.phrases
         WHERE input_phrase LIKE "%(quoted_input_phrase)s%%"
         ;''' % {'quoted_input_phrase': quoted_input_phrase}
-        self.db.execute(sqlstr)
+        self.database.execute(sqlstr)
         sqlargs = {'p_phrase': p_phrase, 'pp_phrase': pp_phrase}
         sqlstr = (
             'SELECT phrase, sum(user_freq) FROM like_input_phrase_view '
@@ -507,7 +507,7 @@ class TabSqliteDb:
             #     5|conspirac|conspiracy|||5
             #     6|conspi|conspiracy|||1
             #     7|c|conspiracy|||1
-            results_uni = self.db.execute(sqlstr, sqlargs).fetchall()
+            results_uni = self.database.execute(sqlstr, sqlargs).fetchall()
             # Then the result returned by .fetchall() is:
             #
             # [('colour', 4), ('cold', 1), ('conspiracy', 6)]
@@ -529,7 +529,7 @@ class TabSqliteDb:
         # [('colour', 4/11), ('cold', 1/11), ('conspiracy', 6/11)]
         sqlstr = 'SELECT sum(user_freq) FROM like_input_phrase_view;'
         try:
-            count = self.db.execute(sqlstr, sqlargs).fetchall()[0][0]
+            count = self.database.execute(sqlstr, sqlargs).fetchall()[0][0]
         except Exception:
             LOGGER.exception(
                 'Unexpected error getting total unigram count from user_db')
@@ -551,7 +551,7 @@ class TabSqliteDb:
             'SELECT phrase, sum(user_freq) FROM like_input_phrase_view '
             + 'WHERE p_phrase = :p_phrase GROUP BY phrase;')
         try:
-            results_bi = self.db.execute(sqlstr, sqlargs).fetchall()
+            results_bi = self.database.execute(sqlstr, sqlargs).fetchall()
         except Exception:
             LOGGER.exception(
                 'Unexpected error getting “bigram” data from user_db')
@@ -563,7 +563,8 @@ class TabSqliteDb:
             'SELECT sum(user_freq) FROM like_input_phrase_view '
             + 'WHERE p_phrase = :p_phrase;')
         try:
-            count_p_phrase = self.db.execute(sqlstr, sqlargs).fetchall()[0][0]
+            count_p_phrase = self.database.execute(
+                sqlstr, sqlargs).fetchall()[0][0]
         except Exception:
             LOGGER.exception(
                 'Unexpected error getting total bigram count from user_db')
@@ -587,7 +588,7 @@ class TabSqliteDb:
                   + 'WHERE p_phrase = :p_phrase '
                   + 'AND pp_phrase = :pp_phrase GROUP BY phrase;')
         try:
-            results_tri = self.db.execute(sqlstr, sqlargs).fetchall()
+            results_tri = self.database.execute(sqlstr, sqlargs).fetchall()
         except Exception:
             LOGGER.exception(
                 'Unexpected error getting “trigram” data from user_db')
@@ -600,7 +601,7 @@ class TabSqliteDb:
             'SELECT sum(user_freq) FROM like_input_phrase_view '
             + 'WHERE p_phrase = :p_phrase AND pp_phrase = :pp_phrase;')
         try:
-            count_pp_phrase_p_phrase = self.db.execute(
+            count_pp_phrase_p_phrase = self.database.execute(
                 sqlstr, sqlargs).fetchall()[0][0]
         except Exception:
             LOGGER.exception(
@@ -630,14 +631,15 @@ class TabSqliteDb:
         try:
             sqlstring = ('CREATE TABLE IF NOT EXISTS user_db.desc '
                          + '(name PRIMARY KEY, value);')
-            self.db.executescript(sqlstring)
+            self.database.executescript(sqlstring)
             sqlstring = 'INSERT OR IGNORE INTO user_db.desc  VALUES (?, ?);'
-            self.db.execute(sqlstring, ('version', USER_DATABASE_VERSION))
+            self.database.execute(
+                sqlstring, ('version', USER_DATABASE_VERSION))
             sqlstring = (
                 'INSERT OR IGNORE INTO user_db.desc '
                 + 'VALUES (?, DATETIME("now", "localtime"));')
-            self.db.execute(sqlstring, ("create-time", ))
-            self.db.commit()
+            self.database.execute(sqlstring, ("create-time", ))
+            self.database.commit()
         except Exception:
             LOGGER.exception('Unexpected error adding description to user_db.')
 
@@ -729,7 +731,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         if DEBUG_LEVEL > 1:
             LOGGER.debug('sqlstr=%s', sqlstr)
             LOGGER.debug('sqlargs=%s', sqlargs)
-        result = self.db.execute(sqlstr, sqlargs).fetchall()
+        result = self.database.execute(sqlstr, sqlargs).fetchall()
         if DEBUG_LEVEL > 1:
             LOGGER.debug('result=%s', result)
         return result
@@ -787,7 +789,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             LOGGER.debug(
                 'TabSqliteDb.check_phrase_and_update_frequency() sqlargs=%s',
                 sqlargs)
-        result = self.db.execute(sqlstr, sqlargs).fetchall()
+        result = self.database.execute(sqlstr, sqlargs).fetchall()
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'check_phrase_and_update_frequency() result=%s', result)
@@ -840,9 +842,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             WHERE phrase = :phrase
             ;'''
         delete_sqlargs = {'input_phrase': input_phrase, 'phrase': phrase}
-        self.db.execute(delete_sqlstr, delete_sqlargs)
+        self.database.execute(delete_sqlstr, delete_sqlargs)
         if commit:
-            self.db.commit()
+            self.database.commit()
 
     def extract_user_phrases(self):
         '''extract user phrases from database'''
@@ -873,7 +875,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         '''
         if not os.path.isfile(filename):
             return False
-        rows = self.db.execute(
+        rows = self.database.execute(
             'SELECT input_phrase, phrase, p_phrase, pp_phrase, '
             + 'user_freq, timestamp FROM phrases;').fetchall()
         p_token = ''
@@ -922,13 +924,14 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq, :timestamp)
         ;'''
         try:
-            self.db.execute('DELETE FROM phrases;')
-            # Without the following commit, the self.db.executemany() fails
-            # with “OperationalError: database is locked”.
-            self.db.commit()
-            self.db.executemany(sqlstr, sqlargs)
-            self.db.commit()
-            self.db.execute('PRAGMA wal_checkpoint;')
+            self.database.execute('DELETE FROM phrases;')
+            # Without the following commit, the
+            # self.database.executemany() fails with
+            # “OperationalError: database is locked”.
+            self.database.commit()
+            self.database.executemany(sqlstr, sqlargs)
+            self.database.commit()
+            self.database.execute('PRAGMA wal_checkpoint;')
         except Exception:
             LOGGER.exception(
                 'Unexpected error writing training data to database.')
@@ -941,9 +944,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         data learned from user input or text files.
         '''
         try:
-            self.db.execute('DELETE FROM phrases;')
-            self.db.commit()
-            self.db.execute('PRAGMA wal_checkpoint;')
+            self.database.execute('DELETE FROM phrases;')
+            self.database.commit()
+            self.database.execute('PRAGMA wal_checkpoint;')
         except Exception:
             LOGGER.exception(
                 'Unexpected error removing all phrases from database.')
@@ -956,10 +959,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         '''
         try:
             LOGGER.debug('SELECT * FROM desc;\n')
-            for row in self.db.execute("SELECT * FROM desc;").fetchall():
+            for row in self.database.execute("SELECT * FROM desc;").fetchall():
                 LOGGER.debug('%s', repr(row))
             LOGGER.debug('SELECT * FROM phrases;\n')
-            for row in self.db.execute("SELECT * FROM phrases;").fetchall():
+            for row in self.database.execute(
+                    "SELECT * FROM phrases;").fetchall():
                 LOGGER.debug('%s', repr(row))
         except Exception:
             LOGGER.exception('Unexpected error dumping database.')
