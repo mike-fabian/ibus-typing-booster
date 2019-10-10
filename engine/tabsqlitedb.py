@@ -27,7 +27,6 @@ import sqlite3
 import time
 import re
 import logging
-import traceback
 import itb_util
 import hunspell_suggest
 
@@ -163,8 +162,9 @@ class TabSqliteDb:
                         LOGGER.info(
                             'Compatible database %(db)s found.',
                             {'db': self.user_db_file})
-                except:
-                    traceback.print_exc()
+                except Exception:
+                    LOGGER.exception(
+                        'Unexpected error trying to find user database.')
 
         # open user phrase database
         try:
@@ -183,8 +183,8 @@ class TabSqliteDb:
                 PRAGMA synchronous = NORMAL;
                 ATTACH DATABASE "%s" AS user_db;
             ''' % self.user_db_file)
-        except:
-            LOGGER.error(
+        except Exception:
+            LOGGER.exception(
                 'Could not open the database %(name)s.',
                 {'name': self.user_db_file})
             timestamp = time.strftime('-%Y-%m-%d_%H:%M:%S')
@@ -232,8 +232,10 @@ class TabSqliteDb:
             ;'''
             try:
                 self.db.executemany(sqlstr, sqlargs)
-            except:
-                traceback.print_exc()
+            except Exception:
+                LOGGER.exception(
+                    'Unexpected error inserting old phrases '
+                    'into the user database.')
             self.db.commit()
             self.db.execute('PRAGMA wal_checkpoint;')
 
@@ -290,8 +292,8 @@ class TabSqliteDb:
             self.db.execute(sqlstr, sqlargs)
             if commit:
                 self.db.commit()
-        except:
-            traceback.print_exc()
+        except Exception:
+            LOGGER.exception('Unexpected error updating phrase in user_db.')
 
     def sync_usrdb(self):
         '''
@@ -370,7 +372,7 @@ class TabSqliteDb:
             if commit:
                 self.db.commit()
         except Exception:
-            traceback.print_exc()
+            LOGGER.exception('Unexpected error adding phrase to database.')
 
     def optimize_database(self):
         '''
@@ -513,8 +515,9 @@ class TabSqliteDb:
             # (“c|conspiracy|1” is not selected because it doesn’t
             # match the user input “LIKE co%”! I.e. this is filtered
             # out by the VIEW created above already)
-        except:
-            traceback.print_exc()
+        except Exception:
+            LOGGER.exception(
+                'Unexpected error getting “unigram” data from user_db.')
         if not results_uni:
             # If no unigrams matched, bigrams and trigrams cannot
             # match either. We can stop here and return what we got
@@ -527,8 +530,9 @@ class TabSqliteDb:
         sqlstr = 'SELECT sum(user_freq) FROM like_input_phrase_view;'
         try:
             count = self.db.execute(sqlstr, sqlargs).fetchall()[0][0]
-        except:
-            traceback.print_exc()
+        except Exception:
+            LOGGER.exception(
+                'Unexpected error getting total unigram count from user_db')
         # Updating the phrase_frequency dictionary with the normalized
         # results gives: {'conspiracy': 6/11, 'code': 0,
         # 'communicability': 0, 'cold': 1/11, 'colour': 4/11}
@@ -548,8 +552,9 @@ class TabSqliteDb:
             + 'WHERE p_phrase = :p_phrase GROUP BY phrase;')
         try:
             results_bi = self.db.execute(sqlstr, sqlargs).fetchall()
-        except:
-            traceback.print_exc()
+        except Exception:
+            LOGGER.exception(
+                'Unexpected error getting “bigram” data from user_db')
         if not results_bi:
             # If no bigram could be matched, return what we have so far:
             return self.best_candidates(phrase_frequencies)
@@ -559,8 +564,9 @@ class TabSqliteDb:
             + 'WHERE p_phrase = :p_phrase;')
         try:
             count_p_phrase = self.db.execute(sqlstr, sqlargs).fetchall()[0][0]
-        except:
-            traceback.print_exc()
+        except Exception:
+            LOGGER.exception(
+                'Unexpected error getting total bigram count from user_db')
         # Update the phrase frequency dictionary by using a linear
         # combination of the unigram and the bigram results, giving
         # both the weight of 0.5:
@@ -582,8 +588,9 @@ class TabSqliteDb:
                   + 'AND pp_phrase = :pp_phrase GROUP BY phrase;')
         try:
             results_tri = self.db.execute(sqlstr, sqlargs).fetchall()
-        except:
-            traceback.print_exc()
+        except Exception:
+            LOGGER.exception(
+                'Unexpected error getting “trigram” data from user_db')
         if not results_tri:
             # if no trigram could be matched, return what we have so far:
             return self.best_candidates(phrase_frequencies)
@@ -595,8 +602,9 @@ class TabSqliteDb:
         try:
             count_pp_phrase_p_phrase = self.db.execute(
                 sqlstr, sqlargs).fetchall()[0][0]
-        except:
-            traceback.print_exc()
+        except Exception:
+            LOGGER.exception(
+                'Unexpected error getting total trigram count from user_db')
         # Update the phrase frequency dictionary by using a linear
         # combination of the bigram and the trigram results, giving
         # both the weight of 0.5 (that makes the total weights: 0.25 *
@@ -630,8 +638,8 @@ class TabSqliteDb:
                 + 'VALUES (?, DATETIME("now", "localtime"));')
             self.db.execute(sqlstring, ("create-time", ))
             self.db.commit()
-        except:
-            traceback.print_exc()
+        except Exception:
+            LOGGER.exception('Unexpected error adding description to user_db.')
 
     def init_user_db(self):
         '''
@@ -668,7 +676,8 @@ class TabSqliteDb:
                 desc[row[0]] = row[1]
             database.close()
             return desc
-        except:
+        except Exception:
+            LOGGER.exception('Unexpected error getting database description.')
             return None
 
     def get_number_of_columns_of_phrase_table(self, db_file):
@@ -702,7 +711,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                 table_phrases_columns = match.group(1).split(',')
                 return len(table_phrases_columns)
             return 0
-        except:
+        except Exception:
+            LOGGER.exception(
+                'Unexpected error getting number of columns of database.')
             return 0
 
     def list_user_shortcuts(self):
@@ -849,8 +860,8 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                 phrases
             ]
             return phrases[:]
-        except:
-            traceback.print_exc()
+        except Exception:
+            LOGGER.exception('Unexpected error extracting user phrases.')
             return []
 
     def read_training_data_from_file(self, filename):
@@ -884,8 +895,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                     unicodedata.normalize(
                         itb_util.NORMALIZATION_FORM_INTERNAL, line)
                     for line in file_handle.readlines()]
-        except:
-            traceback.print_exc()
+        except Exception:
+            LOGGER.exception(
+                'Unexpected error reading training data from file.')
             return False
         for line in lines:
             for token in itb_util.tokenize(line):
@@ -917,8 +929,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             self.db.executemany(sqlstr, sqlargs)
             self.db.commit()
             self.db.execute('PRAGMA wal_checkpoint;')
-        except:
-            traceback.print_exc()
+        except Exception:
+            LOGGER.exception(
+                'Unexpected error writing training data to database.')
             return False
         return True
 
@@ -931,8 +944,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             self.db.execute('DELETE FROM phrases;')
             self.db.commit()
             self.db.execute('PRAGMA wal_checkpoint;')
-        except:
-            traceback.print_exc()
+        except Exception:
+            LOGGER.exception(
+                'Unexpected error removing all phrases from database.')
 
     def dump_database(self):
         '''
@@ -947,6 +961,6 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             LOGGER.debug('SELECT * FROM phrases;\n')
             for row in self.db.execute("SELECT * FROM phrases;").fetchall():
                 LOGGER.debug('%s', repr(row))
-        except:
-            traceback.print_exc()
+        except Exception:
+            LOGGER.exception('Unexpected error dumping database.')
             return
