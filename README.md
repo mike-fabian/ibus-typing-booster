@@ -83,7 +83,7 @@ Table of default key bindings
 Some of these key bindings can be customized in the setup tool.
 The following table explains the defaults:
 
-
+```
 ┏━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃  Key combination  │                         Effect                          ┃
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
@@ -252,12 +252,12 @@ The following table explains the defaults:
 ┠───────────────────┼─────────────────────────────────────────────────────────┨
 ┃ AltGr+Space       │ Insert a literal space into the preëdit.                ┃
 ┗━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-
+```
 
 When more than one input method at the same time is used, the following
 additional key bindings are available:
 
-
+```
 ┏━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃     Key      │                            Effect                            ┃
 ┃ combination  │                                                              ┃
@@ -270,14 +270,14 @@ additional key bindings are available:
 ┃ Control+Up   │ Switches the input method used for the preëdit to the        ┃
 ┃              │ previous input method.                                       ┃
 ┗━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-
+```
 
 
 Mouse bindings
 
 These mouse bindings are currently hardcoded and can not yet be customized.
 
-
+```
 ┏━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃   Mouse event    │                          Effect                          ┃
 ┠──────────────────┼──────────────────────────────────────────────────────────┨
@@ -307,3 +307,4 @@ These mouse bindings are currently hardcoded and can not yet be customized.
 ┃                  │ secret user input to disk it might make sense to use     ┃
 ┃                  │ this option temporarily.                                 ┃
 ┗━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
