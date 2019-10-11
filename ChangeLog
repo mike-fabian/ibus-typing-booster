@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 11 Oct 2019 Released 2.6.8 version
+* Quote the tables for the key and mouse bindings in the README.md as code
+* Do not hardcode the list of useful m17n input methods
+* Use LOGGER.exeption() in exception handlers
+* Use python logging module with log file rotation instead of writing to stdout/stderr
+* Fix set_preedit_underline() with parameter update_gsettings=True
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 30 Sep 2019 Released 2.6.7 version
 * If the first candidate is exactly the same as the typed string prefer longer candidates (Extends inline completions automatically)
 * Move README to README.md and use some markdown to make it look better on github

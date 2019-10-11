@@ -19,6 +19,30 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.6.8" date="2019-10-11" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Quote the tables for the key and mouse bindings in the
+            README.md as code
+          </li>
+          <li>
+            Do not hardcode the list of useful m17n input methods
+          </li>
+          <li>
+            Use LOGGER.exeption() in exception handlers
+          </li>
+          <li>
+            Use python logging module with log file rotation instead
+            of writing to stdout/stderr
+          </li>
+          <li>
+            Fix set_preedit_underline() with parameter
+            update_gsettings=True
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.6.7" date="2019-09-30" urgency="medium">
       <description>
         <ul>
