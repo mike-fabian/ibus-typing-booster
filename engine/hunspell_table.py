@@ -99,6 +99,7 @@ class TypingBoosterEngine(IBus.Engine):
         super(TypingBoosterEngine, self).__init__(
             connection=bus.get_connection(), object_path=obj_path)
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
+        self._compose_sequences = itb_util.ComposeSequences()
         self._unit_test = unit_test
         self._input_purpose = 0
         self._has_input_purpose = False
@@ -410,6 +411,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._commit_happened_after_focus_in = False
 
+        self._typed_compose_sequence = [] # A list of key values
         self._typed_string = [] # A list of msymbols
         self._typed_string_cursor = 0
         self._p_phrase = ''
@@ -577,6 +579,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._is_candidate_auto_selected = False
         self._candidates = []
         self._candidates_case_mode = 'orig'
+        self._typed_compose_sequence = []
         self._typed_string = []
         self._typed_string_cursor = 0
         for ime in self._current_imes:
@@ -677,7 +680,12 @@ class TypingBoosterEngine(IBus.Engine):
                 'NFKD', transliterated_string_up_to_cursor)
         transliterated_string_up_to_cursor = unicodedata.normalize(
             'NFC', transliterated_string_up_to_cursor)
-        return len(transliterated_string_up_to_cursor)
+        caret = len(transliterated_string_up_to_cursor)
+        if self._typed_compose_sequence:
+            caret += len(
+                self._compose_sequences.preedit_representation(
+                    self._typed_compose_sequence))
+        return caret
 
     def _append_candidate_to_lookup_table(
             self, phrase='', user_freq=0, comment='',
@@ -1119,9 +1127,18 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         self._transliterated_strings = {}
         for ime in self._current_imes:
-            self._transliterated_strings[ime] = (
-                self._transliterators[ime].transliterate(
-                    self._typed_string))
+            if self._typed_compose_sequence:
+                self._transliterated_strings[ime] = (
+                    self._transliterators[ime].transliterate(
+                        self._typed_string[:self._typed_string_cursor])
+                    + self._compose_sequences.preedit_representation(
+                        self._typed_compose_sequence)
+                    + self._transliterators[ime].transliterate(
+                        self._typed_string[self._typed_string_cursor:]))
+            else:
+                self._transliterated_strings[ime] = (
+                    self._transliterators[ime].transliterate(
+                        self._typed_string))
             if ime in ['ko-romaja', 'ko-han2']:
                 self._transliterated_strings[ime] = unicodedata.normalize(
                     'NFKD', self._transliterated_strings[ime])
@@ -4253,6 +4270,78 @@ class TypingBoosterEngine(IBus.Engine):
             self._keyvals_to_keycodes.ibus_keycode(IBus.KEY_Left),
             0)
 
+    def _handle_compose(self, key):
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('KeyEvent object: %s', key)
+        if key.state & IBus.ModifierType.RELEASE_MASK:
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Ignoring release event.')
+            return False
+        if (not self._typed_compose_sequence
+            and not key.name == 'Multi_key'
+            and not key.name.startswith('dead_')):
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Not in a compose sequence.')
+            return False
+        if (key.val in
+            (IBus.KEY_Shift_R,
+             IBus.KEY_Shift_L,
+             IBus.KEY_ISO_Level3_Shift,
+             IBus.KEY_Control_L,
+             IBus.KEY_Control_R,
+             IBus.KEY_Alt_L,
+             IBus.KEY_Alt_R,
+             IBus.KEY_Meta_L,
+             IBus.KEY_Meta_R,
+             IBus.KEY_Super_L,
+             IBus.KEY_Super_R)):
+            # Ignoring Shift_R, Shift_L, and ISO_Level3_Shift is
+            # necessary, they should not be added to the compose
+            # sequence because they usually modify the next key and
+            # only the result of that modified next key press should
+            # be added to the compose sequence.
+            #
+            # Ignoring the other modifiers seems optional ...
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Inside compose sequence, ignoring key %s'
+                             % IBus.keyval_name(key.val))
+            return True
+        if key.val in (IBus.KEY_BackSpace,):
+            self._typed_compose_sequence = self._typed_compose_sequence[:-1]
+        else:
+            self._typed_compose_sequence.append(key.val)
+        compose_result = self._compose_sequences.compose(
+            self._typed_compose_sequence)
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                'Inside compose sequence.'
+                'key value names=%s '
+                'compose_result=%s',
+                [IBus.keyval_name(val)
+                 for val in self._typed_compose_sequence],
+                repr(compose_result))
+        self.hide_lookup_table()
+        self._current_auxiliary_text = IBus.Text.new_from_string('')
+        super(TypingBoosterEngine, self).update_auxiliary_text(
+            self._current_auxiliary_text, False)
+        if not isinstance(compose_result, str):
+            self._update_transliterated_strings()
+            self._update_preedit()
+            return True
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('Compose sequence finished.')
+        self._typed_compose_sequence = []
+        self._update_transliterated_strings()
+        self._update_preedit()
+        if compose_result:
+            if self.get_input_mode():
+                self._insert_string_at_cursor(list(compose_result))
+                self._update_ui()
+            else:
+                super(TypingBoosterEngine, self).commit_text(
+                    IBus.Text.new_from_string(compose_result))
+        return True
+
     def do_process_key_event(self, keyval, keycode, state):
         '''Process Key Events
         Key Events include Key Press and Key Release,
@@ -4261,6 +4350,9 @@ class TypingBoosterEngine(IBus.Engine):
         key = itb_util.KeyEvent(keyval, keycode, state)
         if DEBUG_LEVEL > 1:
             LOGGER.debug('KeyEvent object: %s', key)
+
+        if self._handle_compose(key):
+            return True
 
         if (key, 'toggle_input_mode_on_off') in self._hotkeys:
             self.toggle_input_mode()

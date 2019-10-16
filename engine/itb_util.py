@@ -27,6 +27,7 @@ import sys
 import os
 import re
 import unicodedata
+import locale
 import logging
 import shutil
 import subprocess
@@ -2970,6 +2971,304 @@ def get_hunspell_dictionary_wordlist(language):
         for x in dic_buffer
     ]
     return (dic_path, dictionary_encoding, word_list)
+
+class ComposeSequences:
+    '''Class to handle compose sequences.
+
+    Finds all compose files, i.e. the system wide compose file
+    for the current locale and the compose files from the users
+    home directory and stores the compose sequences found there
+    in an internal variable.
+    '''
+    def __init__(self):
+        self._preedit_representations = {
+            # See also /usr/include/X11/keysymdef.h and
+            # ibus/src/ibusenginesimple.c
+            #
+            # Nonspacing combining marks used by the Unicode Standard
+            # may be exhibited in apparent isolation by applying them
+            # to U+00A0 NO-BREAK SPACE. This convention might be
+            # employed, for example, when talking about the combining
+            # mark itself as a mark, rather than using it in its
+            # normal way in text (that is, applied as an accent to a
+            # base letter or in other combinations).
+            IBus.KEY_Multi_key: '⎄',
+            IBus.KEY_dead_abovecomma: '᾿',
+            IBus.KEY_dead_abovedot: '˙',
+            IBus.KEY_dead_abovereversedcomma: '῾',
+            IBus.KEY_dead_abovering: '˚',
+            IBus.KEY_dead_acute: '´',
+            IBus.KEY_dead_belowbreve: '\u00A0\u032E',
+            IBus.KEY_dead_belowcircumflex: 'ꞈ',
+            IBus.KEY_dead_belowcomma: ',',
+            IBus.KEY_dead_belowdiaeresis: '\u00A0\u0324',
+            IBus.KEY_dead_belowdot: '.',
+            IBus.KEY_dead_belowmacron: 'ˍ',
+            IBus.KEY_dead_belowring: '˳',
+            IBus.KEY_dead_belowtilde: '˷',
+            IBus.KEY_dead_breve: '˘',
+            IBus.KEY_dead_caron: 'ˇ',
+            IBus.KEY_dead_cedilla: '¸',
+            IBus.KEY_dead_circumflex: '^',
+            IBus.KEY_dead_currency: '¤',
+            IBus.KEY_dead_dasia: '῾', # alias for dead_abovereversedcomma
+            IBus.KEY_dead_diaeresis: '¨',
+            IBus.KEY_dead_doubleacute: '˝',
+            IBus.KEY_dead_doublegrave: '˵',
+            IBus.KEY_dead_grave: '`',
+            IBus.KEY_dead_greek: 'μ',
+            IBus.KEY_dead_hook: '\u00A0\u0309',
+            IBus.KEY_dead_horn: '\u00A0\u031B',
+            IBus.KEY_dead_invertedbreve: '\u00A0\u0311',
+            IBus.KEY_dead_iota: 'ͺ',
+            IBus.KEY_dead_macron: '¯',
+            IBus.KEY_dead_ogonek: '˛',
+            IBus.KEY_dead_perispomeni: '~', # alias for dead_tilde
+            IBus.KEY_dead_psili: '᾿', # alias for dead_abovecomma
+            IBus.KEY_dead_semivoiced_sound: '゜',
+            IBus.KEY_dead_stroke: '/',
+            IBus.KEY_dead_tilde: '~',
+            IBus.KEY_dead_voiced_sound: '゛',
+            # Extra dead elements for German T3 layout: (in
+            # /usr/include/X11/keysymdef.h but they don’t exist in
+            # ibus.
+            #
+            # IBus.KEY_dead_lowline: '_',
+            # IBus.KEY_dead_aboveverticalline: '\u00A0\u030D',
+            # IBus.KEY_dead_belowverticalline: '\u00A0\u0329',
+            # IBus.KEY_dead_longsolidusoverlay: '\u00A0\u0338',
+            #
+            # Dead vowels for universal syllable entry:
+            IBus.KEY_dead_a: 'ぁ',
+            IBus.KEY_dead_A: 'あ',
+            IBus.KEY_dead_i: 'ぃ',
+            IBus.KEY_dead_I: 'い',
+            IBus.KEY_dead_u: 'ぅ',
+            IBus.KEY_dead_U: 'う',
+            IBus.KEY_dead_e: 'ぇ',
+            IBus.KEY_dead_E: 'え',
+            IBus.KEY_dead_o: 'ぉ',
+            IBus.KEY_dead_O: 'お',
+            IBus.KEY_dead_small_schwa: 'ə',
+            IBus.KEY_dead_capital_schwa: 'Ə',
+        }
+        self._compose_sequences = {}
+        compose_file_paths = []
+        lc_ctype_locale, lc_ctype_encoding = locale.getlocale(
+            category=locale.LC_CTYPE)
+        if lc_ctype_encoding not in ('UTF-8', 'utf8'):
+            LOGGER.warning('Not running in an UTF-8 locale: %s.%s',
+                           lc_ctype_locale, lc_ctype_encoding)
+        xorg_locale_path = '/usr/share/X11/locale'
+        for loc in (lc_ctype_locale, 'en_US'):
+            locale_compose_file = os.path.join(
+                xorg_locale_path, loc + '.UTF-8', 'Compose')
+            if os.path.isfile(locale_compose_file):
+                compose_file_paths.append(locale_compose_file)
+                break
+        compose_file_paths.append(os.path.expanduser('~/.config/ibus/Compose'))
+        compose_file_paths.append(os.path.expanduser('~/.XCompose'))
+        for path in compose_file_paths:
+            if os.path.isfile(path):
+                self._read_compose_file(path)
+
+    def _add_compose_sequence(self, sequence, result):
+        # pylint: disable=line-too-long
+        '''Adds a compose sequence to self._compose_sequences
+
+        :param sequence: Keysyms of the compose sequence as written
+                         in Compose files
+        :type sequence: String
+        :param result: The result which should be inserted when typing that
+                       compose sequence
+        :type result: String
+
+        Examples:
+
+        If a Compose file contains a line like:
+
+            <Multi_key> <asciitilde> <dead_circumflex> <A> 	: "Ẫ"   U1EAA # LATIN CAPITAL LETTER A WITH CIRCUMFLEX AND TILDE
+
+        Then “sequence” is “<Multi_key> <asciitilde> <dead_circumflex> <A>”
+        (whitespace in the sequence string is ignored) and “result” is “Ẫ”.
+
+        If conflicting compose sequences are added using this function,
+        the sequence added last wins. For example wenn calling:
+
+            _add_compose_sequence('<Multi_key> <t> <e> <s> <t>', '😇')
+            _add_compose_sequence('<Multi_key> <t> <e> <s> <t> <s>', '😇')
+
+        the sequence stored in self._compose_sequences is
+
+            <Multi_key> <t> <e> <s> <t> <s> : "😇"
+
+        and the previously stored shorter sequence
+
+            <Multi_key> <t> <e> <s> <t> : "😇"
+
+        has been deleted. When now calling
+
+            _add_compose_sequence('<Multi_key> <t> <e> <s>', '😇')
+
+        the sequence stored in self._compose_sequences is now
+
+            <Multi_key> <t> <e> <s> : "😇"
+
+        and both previously stored longer sequences have been deleted.
+        I.e. the last stored sequence always wins in case of conflicts.
+        '''
+        # pylint: enable=line-too-long
+        names = re.sub(r'[<>\s]+', ' ', sequence).strip().split()
+        keyvals = []
+        for name in names:
+            if re.match(r'U[0-9a-fA-F]{4}', name):
+                keyvals.append(int(name[1:], 16))
+            else:
+                keyvals.append(eval('IBus.KEY_' + name))
+        if not keyvals:
+            return
+        compose_sequences = self._compose_sequences
+        for keyval in keyvals:
+            if (not keyval in compose_sequences
+                or isinstance(compose_sequences[keyval], str)):
+                compose_sequences[keyval] = {}
+            last_compose_sequences = compose_sequences
+            last_keyval = keyval
+            compose_sequences = compose_sequences[keyval]
+        last_compose_sequences[last_keyval] = result
+
+    def _read_compose_file(self, compose_path):
+        '''Reads a compose file and stores the compose sequences
+        found  there in self._compose_sequences.
+
+        :param compose_path: Path to a compose file to read
+        :type compose_path: String
+        '''
+        try:
+            with open(compose_path,
+                      mode='r',
+                      encoding='UTF-8',
+                      errors='ignore') as compose_file:
+                lines = compose_file.readlines()
+        except FileNotFoundError:
+            LOGGER.exception('Errror loading %s: %s',
+                             compose_path, _('File not found'))
+        except PermissionError:
+            LOGGER.exception('Error loading %s: %s',
+                             compose_path, _('Permission error'))
+        except UnicodeDecodeError:
+            LOGGER.exception('Error loading %s: %s',
+                             compose_path, _('Unicode decoding error'))
+        except Exception:
+            LOGGER.exception('Unexpected error loading %s: %s',
+                             compose_path, _('Unknown error'))
+        if not lines:
+            LOGGER.warning('File %s has no content', compose_path)
+            return
+        LOGGER.info('Reading compose file %s', compose_path)
+        include_pattern = re.compile(
+            r'^\s*include\s*"(?P<include_path>[^"]+)".*')
+        compose_sequence_pattern = re.compile(
+            r'^\s*(?P<sequence>(<[a-zA-Z0-9_]+>\s*)+):\s*"(?P<result>.+)".*')
+        for line in lines:
+            if not line.strip():
+                continue
+            match = include_pattern.search(line)
+            if match:
+                self._read_compose_file(match.group('include_path'))
+            match = compose_sequence_pattern.search(line)
+            if match:
+                sequence = match.group('sequence')
+                result = match.group('result')
+                self._add_compose_sequence(sequence, result)
+
+    def preedit_representation(self, keyvals):
+        # pylint: disable=line-too-long
+        '''Returns a text to display in the preedit for a partially
+        typed compose sequence.
+
+        :param keyvals: A list of key values
+        :type keyvals: List of integers
+        :return: The text to display in the preedit for a partially
+                 typed compose sequence consisting of these key values
+        :rtype: String
+
+        Examples:
+
+        >>> c = ComposeSequences()
+        >>> c.preedit_representation([IBus.KEY_Multi_key, IBus.KEY_asciitilde, IBus.KEY_dead_circumflex])
+        '⎄~^'
+        '''
+        # pylint: enable=line-too-long
+        representation = ''
+        for keyval in keyvals:
+            if keyval in self._preedit_representations:
+                representation += self._preedit_representations[keyval]
+            else:
+                ibus_keyval_to_unicode = IBus.keyval_to_unicode(keyval)
+                if ibus_keyval_to_unicode:
+                    representation += ibus_keyval_to_unicode
+                else:
+                    representation += chr(keyval)
+        return representation
+
+    def compose(self, keyvals):
+        # pylint: disable=line-too-long
+        '''
+        :param keyvals: A list of key values
+        :type keyvals: List of integers
+        :return:
+            None:
+                Incomplete sequence
+                The key values are not yet a complete compose
+                sequence, but it is still possible to get a
+                complete compose sequence by adding more key values.
+            '' (empty string):
+                Empty sequence or invalid sequence.
+                Either the sequence is empty or
+                there is no such compose sequence, adding more
+                key values could not make it a valid sequence.
+            'text' (any non empty string):
+                Complete sequence, valid.
+                The returned string contains the result of the valid
+                compose sequence.
+        :rtype: String (posssibly empty) or None
+
+        Examples:
+
+        >>> c = ComposeSequences()
+
+        Incomplete sequence:
+
+        >>> repr(c.compose([IBus.KEY_Multi_key, IBus.KEY_asciitilde, IBus.KEY_dead_circumflex]))
+        'None'
+
+        Empty sequence:
+
+        >>> c.compose([])
+        ''
+
+        Invalid sequence:
+
+        >>> c.compose([IBus.KEY_dead_circumflex, IBus.KEY_x])
+        ''
+
+        Complete, valid sequence:
+
+        >>> c.compose([IBus.KEY_Multi_key, IBus.KEY_asciitilde, IBus.KEY_dead_circumflex, IBus.KEY_A])
+        'Ẫ'
+        '''
+        # pylint: enable=line-too-lon
+        if not keyvals:
+            return ''
+        compose_sequences = self._compose_sequences
+        for keyval in keyvals:
+            if keyval not in compose_sequences:
+                return ''
+            if isinstance(compose_sequences[keyval], str):
+                return compose_sequences[keyval]
+            compose_sequences = compose_sequences[keyval]
+        return None
 
 class M17nDbInfo:
     '''Class to find and store information about the available input
