@@ -3658,6 +3658,9 @@ class MicrophoneStream(object):
             yield b''.join(data)
 
 if __name__ == "__main__":
+    LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
+    LOGGER.setLevel(logging.DEBUG)
+    LOGGER.addHandler(LOG_HANDLER)
     import doctest
     (FAILED, ATTEMPTED) = doctest.testmod()
     if FAILED:

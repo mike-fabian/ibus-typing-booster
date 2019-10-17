@@ -2338,6 +2338,10 @@ def main():
 
     runs some tests and prints profiling data.
     '''
+    LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
+    LOGGER.setLevel(logging.DEBUG)
+    LOGGER.addHandler(LOG_HANDLER)
+
     if BENCHMARK:
         import cProfile
         import pstats
