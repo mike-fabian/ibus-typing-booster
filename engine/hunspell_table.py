@@ -3833,7 +3833,8 @@ class TypingBoosterEngine(IBus.Engine):
         try:
             client = speech.SpeechClient()
         except Exception:
-            LOGGER.exception('Exception when intializing Google speech-to-text')
+            LOGGER.exception(
+                'Exception when intializing Google speech-to-text')
             self._speech_recognition_error(
                 _('Failed to init Google speech-to-text. See debug.log.'))
             return

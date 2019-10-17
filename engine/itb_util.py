@@ -395,12 +395,12 @@ LOCALE_DEFAULTS = {
     'zu_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['zu_ZA', 'en_GB']},
 }
 
-def get_default_input_methods(locale):
+def get_default_input_methods(locale_string):
     '''
     Gets the default input methods for a locale
 
-    :param locale:
-    :type locale: String
+    :param locale_string:
+    :type locale_string: String
     :rtype: List of  Strings
 
     Examples:
@@ -411,18 +411,18 @@ def get_default_input_methods(locale):
     >>> get_default_input_methods('xx_YY')
     ['NoIME']
     '''
-    if locale in LOCALE_DEFAULTS:
-        default_input_methods = LOCALE_DEFAULTS[locale]['inputmethods']
+    if locale_string in LOCALE_DEFAULTS:
+        default_input_methods = LOCALE_DEFAULTS[locale_string]['inputmethods']
     else:
         default_input_methods = ['NoIME']
     return default_input_methods
 
-def get_default_dictionaries(locale):
+def get_default_dictionaries(locale_string):
     '''
     Gets the default dictionaries for a locale
 
-    :param locale:
-    :type locale: String
+    :param locale_string:
+    :type locale_string: String
     :rtype: List of  Strings
 
     Examples:
@@ -433,8 +433,8 @@ def get_default_dictionaries(locale):
     >>> get_default_dictionaries('xx_YY')
     ['en_US']
     '''
-    if locale in LOCALE_DEFAULTS:
-        default_dictionaries = LOCALE_DEFAULTS[locale]['dictionaries']
+    if locale_string in LOCALE_DEFAULTS:
+        default_dictionaries = LOCALE_DEFAULTS[locale_string]['dictionaries']
     else:
         default_dictionaries = ['en_US']
     return default_dictionaries
