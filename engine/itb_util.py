@@ -2866,11 +2866,11 @@ def get_hunspell_dictionary_wordlist(language):
     if os.path.isfile(aff_path):
         aff_buffer = ''
         try:
-            aff_buffer = open(
-                aff_path,
-                mode='r',
-                encoding='ISO-8859-1',
-                errors='ignore').read().replace('\r\n', '\n')
+            with open(aff_path,
+                      mode='r',
+                      encoding='ISO-8859-1',
+                      errors='ignore') as aff_file:
+                aff_buffer = aff_file.read().replace('\r\n', '\n')
         except (FileNotFoundError, PermissionError):
             LOGGER.exception('Error loading .aff File: %s', aff_path)
         except Exception:
@@ -2895,17 +2895,16 @@ def get_hunspell_dictionary_wordlist(language):
             aff_path, dic_path, dictionary_encoding)
     dic_buffer = ''
     try:
-        dic_buffer = open(
-            dic_path, encoding=dictionary_encoding).readlines()
+        with open(dic_path, encoding=dictionary_encoding) as dic_file:
+            dic_buffer = dic_file.readlines()
     except (UnicodeDecodeError, FileNotFoundError, PermissionError):
         LOGGER.exception(
             'loading %s as %s encoding failed, fall back to ISO-8859-1.',
             dic_path, dictionary_encoding)
         dictionary_encoding = 'ISO-8859-1'
         try:
-            dic_buffer = open(
-                dic_path,
-                encoding=dictionary_encoding).readlines()
+            with open(dic_path, encoding=dictionary_encoding) as dic_file:
+                dic_buffer = dic_file.readlines()
         except (UnicodeDecodeError, FileNotFoundError, PermissionError):
             LOGGER.exception(
                 'loading %s as %s encoding failed, giving up.',
