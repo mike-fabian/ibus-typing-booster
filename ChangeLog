@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 18 Oct 2019 Released 2.7.0 version
+* Add support for compose sequences (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/47, Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/36)
+* Test cases for compose support
+* When using doctest: log to stderr and set logging level to DEBUG
+* Properly close file handles when loading hunspell dictionaries
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 11 Oct 2019 Released 2.6.8 version
 * Quote the tables for the key and mouse bindings in the README.md as code
 * Do not hardcode the list of useful m17n input methods
