@@ -19,6 +19,60 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.7.1" date="2019-10-31" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Update Chinese translations from Weblate (13.5% translated)
+          </li>
+          <li>
+            Update Spanish translations from Weblate (92.2% translated)
+          </li>
+          <li>
+            Update Catalan translations from Weblate (12.4% translated)
+          </li>
+          <li>
+            Add Hebrew translation from Weblate (67.4% translated)
+          </li>
+          <li>
+            Add Arabic translation from Weblate (28.0% translated)
+          </li>
+          <li>
+            Update Ukrainian translations from Weblate (100.0% translated)
+          </li>
+          <li>
+            Update German translations from Weblate (100.0% translated)
+          </li>
+          <li>
+            Update Japanese translations from Weblate (35.2% translated)
+          </li>
+          <li>
+            Update French translations from Weblate (93.8% translated)
+          </li>
+          <li>
+            Add Hungarian translation from Weblate (58.0% translated)
+          </li>
+          <li>
+            Add Odia translations from Weblate (2.6% translated)
+          </li>
+          <li>
+            Improve compose file parsing to get results containing \"
+            correct
+          </li>
+          <li>
+            More test cases for compose sequences
+          </li>
+          <li>
+            Change README.md to refer to Weblate for translations
+            instead of Zanata
+          </li>
+          <li>
+            Fix display of code points in emoji-picker when running in
+            or_IN.UTF-8 locale
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.7.0" date="2019-10-18" urgency="medium">
       <description>
         <ul>
