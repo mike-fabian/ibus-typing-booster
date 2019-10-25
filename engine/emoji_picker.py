@@ -671,7 +671,7 @@ class EmojiPickerUI(Gtk.Window):
                 '<span font="%s" fallback="%s" >'
                 %(self._font, str(self._fallback).lower())
                 + text + '</span>'
-                + '<span fallback="false">%s</span>' %code_points)
+                + '<span fallback="true">%s</span>' % code_points)
             fonts_description += ': ' + font_family
         descriptions.append(fonts_description)
         if self._emoji_matcher.unicode_version(emoji):
