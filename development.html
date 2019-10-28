@@ -67,6 +67,20 @@ layout: default
     </li>
   </ul>
 
+  <p>If you build from a git checkout and not from a release tarball, you also need:</p>
+
+  <ul>
+    <li>
+      <b>Fedora</b>: autopoint
+    </li>
+    <li>
+      <b>openSUSE</b>: autopoint
+    </li>
+    <li>
+      <b>Ubuntu 16.04</b>: autopoint
+    </li>
+  </ul>
+
   <p>If you also want to run the test-suite with “make check”, you
   also need the following packages:</p>
 
@@ -97,12 +111,20 @@ layout: default
   <pre><code>cd ibus-typing-booster
 ./autogen.sh</code></pre>
 
+  <p>
+    <pre><code>autogen.sh</code></pre> automatically runs configure
+    and you can give the same arguments
+    to <pre><code>autogen.sh</code></pre> you can give to
+    configure. See below for the right arguments for your
+    distribution.
+  </p>
+
   <p>When using the source from
   a <a href="https://github.com/mike-fabian/ibus-typing-booster/releases">release
   tarball</a>, unpack the tarball and go into the source directory:</p>
 
-  <pre><code>tar xvf ibus-typing-booster-1.5.18.tar.gz
-cd ibus-typing-booster-1.5.18</code></pre>
+  <pre><code>tar xvf ibus-typing-booster-2.7.0.tar.gz
+cd ibus-typing-booster-2.7.0</code></pre>
 
   <p>Now continue like this:</p>
 
