@@ -61,9 +61,8 @@ You can report bugs here:
 
 ## Contributing translations
 
-You can contribute translations using this
-[online translation platform](https://fedora.zanata.org/project/view/ibus-typing-booster).
-You can also contribute translations by using pull requests if you prefer that.
+The best (easiest) way to contribute translations is using this
+[online translation platform](https://translate.stg.fedoraproject.org/projects/ibus-typing-booster/).
 
 ## Development
 
