@@ -39,6 +39,18 @@ sys.path.pop(0)
 # added, changed, or missing.
 itb_emoji.DOMAINNAME = ''
 
+IMPORT_ENCHANT_SUCCESSFUL = False
+IMPORT_HUNSPELL_SUCCESSFUL = False
+try:
+    import enchant
+    IMPORT_ENCHANT_SUCCESSFUL = True
+except (ImportError,):
+    try:
+        import hunspell
+        IMPORT_HUNSPELL_SUCCESSFUL = True
+    except (ImportError,):
+        pass
+
 class EmojiCandidatesTestCase(unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
@@ -311,6 +323,9 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('anchor boat')[0][:2],
             ('🚣🏻\u200d♂️', 'man rowing boat: light skin tone “man rowing boat light skin tone”'))
 
+    @unittest.skipUnless(
+        IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-enchant to work.")
     def test_candidates_spellchecking(self):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
