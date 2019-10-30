@@ -89,7 +89,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
                 [IBus.KEY_dead_circumflex,
                  IBus.KEY_x]),
             '')
-        # An empty should return an empty string:
+        # An empty sequence should return an empty string:
         self.assertEqual(
             self._compose_sequences.compose([]), '')
         # Valid sequence, would give a different result in cs_CZ locale,
@@ -99,6 +99,20 @@ class ComposeSequencesTestCase(unittest.TestCase):
                 [IBus.KEY_dead_caron,
                  IBus.KEY_u]),
             'ǔ')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_a,
+                 IBus.KEY_quotedbl]),
+            'ä')
+        # Key values of Unicode characters are equal to their Unicode
+        # code points:
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 0x0061, # U+0061 LATIN SMALL LETTER A
+                 IBus.KEY_quotedbl]),
+            'ä')
 
 if __name__ == '__main__':
     unittest.main()
