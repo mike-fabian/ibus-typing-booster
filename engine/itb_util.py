@@ -3169,7 +3169,7 @@ class ComposeSequences:
         include_pattern = re.compile(
             r'^\s*include\s*"(?P<include_path>[^"]+)".*')
         compose_sequence_pattern = re.compile(
-            r'^\s*(?P<sequence>(<[a-zA-Z0-9_]+>\s*)+):\s*"(?P<result>.+)".*')
+            r'^\s*(?P<sequence>(<[a-zA-Z0-9_]+>\s*)+):\s*"(?P<result>(\\"|[^"])+)".*')
         for line in lines:
             if not line.strip():
                 continue
@@ -3179,7 +3179,7 @@ class ComposeSequences:
             match = compose_sequence_pattern.search(line)
             if match:
                 sequence = match.group('sequence')
-                result = match.group('result')
+                result = match.group('result').replace('\\"', '"')
                 self._add_compose_sequence(sequence, result)
 
     def preedit_representation(self, keyvals):

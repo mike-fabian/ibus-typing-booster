@@ -116,6 +116,18 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_quotedbl]),
             'ä')
 
+    def test_compose_parse_double_quote_in_result(self):
+        # Make sure this sequence from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose is parsed
+        # correctly:
+        #
+        # <dead_diaeresis> <space> : "\"" quotedbl # REVERSE SOLIDUS
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_dead_diaeresis,
+                 IBus.KEY_space]),
+            '"')
+
     def test_compose_cs_CZ(self):
         # /usr/share/X11/locale/cs_CZ.UTF-8/Compose overrides some of
         # the compose sequences from
