@@ -22,6 +22,7 @@ This file implements test cases for finding key codes for key values
 '''
 
 import sys
+import locale
 import unittest
 
 from gi import require_version
@@ -34,6 +35,7 @@ sys.path.pop(0)
 
 class ComposeSequencesTestCase(unittest.TestCase):
     def setUp(self):
+        locale.setlocale(locale.LC_CTYPE, 'en_US.UTF-8')
         self._compose_sequences = itb_util.ComposeSequences()
 
     def tearDown(self):
@@ -113,6 +115,253 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  0x0061, # U+0061 LATIN SMALL LETTER A
                  IBus.KEY_quotedbl]),
             'ä')
+
+    def test_compose_cs_CZ(self):
+        # /usr/share/X11/locale/cs_CZ.UTF-8/Compose overrides some of
+        # the compose sequences from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose:
+        locale.setlocale(locale.LC_CTYPE, 'cs_CZ.UTF-8')
+        self._compose_sequences = itb_util.ComposeSequences()
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_dead_caron,
+                 IBus.KEY_u]),
+            'ů')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_dead_caron,
+                 IBus.KEY_U]),
+            'Ů')
+        # This sequence comes from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose and is not
+        # overridden in /usr/share/X11/locale/cs_CZ.UTF-8/:
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_a,
+                 IBus.KEY_quotedbl]),
+            'ä')
+
+    def test_compose_km_KH(self):
+        locale.setlocale(locale.LC_CTYPE, 'km_KH.UTF-8')
+        self._compose_sequences = itb_util.ComposeSequences()
+        # This sequence comes from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose and is not
+        # overridden in /usr/share/X11/locale/km_KH.UTF-8/:
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_a,
+                 IBus.KEY_quotedbl]),
+            'ä')
+        # /usr/share/X11/locale/km_KH.UTF-8/Compose overrides some of
+        # the compose sequences from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose (Well, actually it
+        # doesn’t, all sequences from the km_KH.UTF-8 Compose file are
+        # already in the en_US.UTF-8 Compose file. Therefore, the
+        # km_KH.UTF-8 Compose file does not really add anything at all
+        # (See
+        # https://gitlab.freedesktop.org/xorg/lib/libx11/issues/106):
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [0x17FF]),
+            'ាំ')
+
+    def test_compose_pt_BR(self):
+        # This sequence comes from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose and is not
+        # overridden in /usr/share/X11/locale/pt_BR.UTF-8/:
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_a,
+                 IBus.KEY_quotedbl]),
+            'ä')
+        # These will be overridden:
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_dead_acute,
+                 IBus.KEY_C]),
+            'Ć')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_dead_acute,
+                 IBus.KEY_c]),
+            'ć')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_U,
+                 IBus.KEY_comma]),
+            'Ų')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_U,
+                 IBus.KEY_comma,
+                 IBus.KEY_E]),
+            'Ų')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_U,
+                 IBus.KEY_comma,
+                 IBus.KEY_e]),
+            'Ų')
+        # /usr/share/X11/locale/pt_BR.UTF-8/Compose overrides some of
+        # the compose sequences from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose:
+        locale.setlocale(locale.LC_CTYPE, 'pt_BR.UTF-8')
+        self._compose_sequences = itb_util.ComposeSequences()
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_dead_acute,
+                 IBus.KEY_C]),
+            'Ç')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_dead_acute,
+                 IBus.KEY_c]),
+            'ç')
+        # Incomplete sequence now because overridden by the longer
+        # sequences:
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_U,
+                 IBus.KEY_comma]),
+            None)
+        # The new longer sequences:
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_U,
+                 IBus.KEY_comma,
+                 IBus.KEY_E]),
+            'Ḝ')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_U,
+                 IBus.KEY_comma,
+                 IBus.KEY_e]),
+            'ḝ')
+        # This sequence comes from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose and is not
+        # overridden in /usr/share/X11/locale/pt_BR.UTF-8/:
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_a,
+                 IBus.KEY_quotedbl]),
+            'ä')
+
+    def test_compose_pt_PT(self):
+        # These sequences come from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose and is not
+        # overridden in /usr/share/X11/locale/pt_PT.UTF-8/:
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_a,
+                 IBus.KEY_quotedbl]),
+            'ä')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_U,
+                 IBus.KEY_comma]),
+            'Ų')
+        # These will be overridden:
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_dead_acute,
+                 IBus.KEY_C]),
+            'Ć')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_dead_acute,
+                 IBus.KEY_c]),
+            'ć')
+        # /usr/share/X11/locale/pt_PT.UTF-8/Compose overrides some of
+        # the compose sequences from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose:
+        locale.setlocale(locale.LC_CTYPE, 'pt_PT.UTF-8')
+        self._compose_sequences = itb_util.ComposeSequences()
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_dead_acute,
+                 IBus.KEY_C]),
+            'Ç')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_dead_acute,
+                 IBus.KEY_c]),
+            'ç')
+        # This sequence comes from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose and is not
+        # overridden in /usr/share/X11/locale/pt_BR.UTF-8/:
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_a,
+                 IBus.KEY_quotedbl]),
+            'ä')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_U,
+                 IBus.KEY_comma]),
+            'Ų')
+
+    def test_compose_am_ET(self):
+        # These sequences come from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose:
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_a,
+                 IBus.KEY_quotedbl]),
+            'ä')
+        # /usr/share/X11/locale/am_ET.UTF-8/Compose overrides some of
+        # the compose sequences from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose (I think almost
+        # all of the compose sequences in the am_ET.UTF-8 compose file
+        # are weird, I think they make it impossible to type a normal
+        # ASCII “u” and a normal ASCII “\” in am_ET.UTF-8 locale when
+        # compose support works. ibus-typing-booster currently ignores
+        # compose sequences which do not start with either Multi_key
+        # or a dead key. I.e. ibus-typing-booster currently ignores
+        # all compose sequences from the am_ET.UTF-8 compose file):
+        locale.setlocale(locale.LC_CTYPE, 'am_ET.UTF-8')
+        self._compose_sequences = itb_util.ComposeSequences()
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_u,
+                 0x1200]),
+            'ሁ')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_backslash,
+                 IBus.KEY_quotedbl]),
+            '፥')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_backslash,
+                 IBus.KEY_apostrophe]),
+            '፦')
+        # This sequence comes from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose and because
+        # /usr/share/X11/locale/am_ET.UTF-8/Compose does not include
+        # /usr/share/X11/locale/en_US.UTF-8/Compose this sequence
+        # is invalid in am_ET.UTF-8 locale and therefore returns
+        # an empty string:
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_a,
+                 IBus.KEY_quotedbl]),
+            '')
 
 if __name__ == '__main__':
     unittest.main()
