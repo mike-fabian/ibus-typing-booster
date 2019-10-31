@@ -2,12 +2,11 @@
 # German translation of ibus-typing-booster
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the ibus-typing-booster package.
-#
 # Translators:
-# Mike FABIAN <mfabian@redhat.com>, 2012.
-# Mike FABIAN <mfabian@redhat.com>, 2016. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata
+# Mike FABIAN <mfabian@redhat.com>, 2012, 2019.
+# Mike FABIAN <mfabian@redhat.com>, 2016. #zanata, 2019.
+# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
 # Mike FABIAN <mfabian@redhat.com>, 2019. #zanata
 msgid ""
 msgstr ""
@@ -15,15 +14,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-02-21 23:46+0100\n"
-"PO-Revision-Date: 2019-02-22 07:23+0000\n"
+"PO-Revision-Date: 2019-10-31 00:32+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <trans-de@lists.fedoraproject.org>\n"
+"Language-Team: German <https://translate.stg.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Zanata 4.6.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 
 #: engine/emoji_picker.py:204
 msgid "Emoji Picker"
@@ -183,7 +183,7 @@ msgstr "Wähle das Wörterbuch mit höchster Priorität"
 
 #: engine/hunspell_table.py:1360
 msgid "Preedit input method"
-msgstr "Preedit-Eingabemethode:"
+msgstr "Preedit-Eingabemethode"
 
 #: engine/hunspell_table.py:1361
 msgid "Switch preedit input method"
@@ -350,7 +350,7 @@ msgstr "Mike FABIAN <mfabian@redhat.com>, 2018"
 
 #: engine/itb_util.py:3438
 msgid "Online documentation:"
-msgstr "Online Dokumentation"
+msgstr "Online Dokumentation:"
 
 #: setup/main.py:99
 msgid "Preferences"
@@ -466,7 +466,7 @@ msgstr ""
 "dann wie  üblich comitted werden,  zum Beispiel durch Tippen einer Leertaste "
 "oder Strg+Leertaste. Ein weiteres  Tippen  der Tab  Taste wählt den  "
 "nächsten Vervollständigungskandidaten aus und öffnet eine  vollständige  "
-"Kandidatenliste. "
+"Kandidatenliste."
 
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
@@ -502,7 +502,7 @@ msgstr ""
 #. with the mouse.
 #: setup/main.py:390
 msgid "Add a space when committing by mouse click"
-msgstr "Addiere ein Leerzeichen beim Committen über Mausklick "
+msgstr "Addiere ein Leerzeichen beim Committen über Mausklick"
 
 #: setup/main.py:392
 msgid ""
@@ -510,7 +510,7 @@ msgid ""
 "it with the mouse."
 msgstr ""
 "Addiere ein Leerzeichen, wenn ein Kandidat aus der Kandidatenliste durch "
-"Mausclick committed wird"
+"Mausclick committed wird."
 
 #. Translators: If more then one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -664,7 +664,7 @@ msgstr ""
 #. number of characters have been typed.
 #: setup/main.py:598
 msgid "Minimum number of chars for completion:"
-msgstr "Mindestanzahl Zeichen für Vervollständigung"
+msgstr "Mindestanzahl Zeichen für Vervollständigung:"
 
 #: setup/main.py:600
 msgid ""
@@ -718,7 +718,7 @@ msgstr ""
 #. ibus-typing-booster.
 #: setup/main.py:685
 msgid "Use dictionaries for the following languages:"
-msgstr "Benutze Wörterbücher für die folgenden Sprachen"
+msgstr "Benutze Wörterbücher für die folgenden Sprachen:"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
@@ -816,7 +816,7 @@ msgstr "Expansion der Abkürzung"
 
 #: setup/main.py:969
 msgid "Current key bindings:"
-msgstr "Aktuelle Tastenbelegungen"
+msgstr "Aktuelle Tastenbelegungen:"
 
 #. Translators: Column heading of the table listing the
 #. existing key bindings
@@ -1236,7 +1236,7 @@ msgstr ""
 
 #: setup/main.py:3296
 msgid "Open File ..."
-msgstr "Öffne Datei"
+msgstr "Öffne Datei ..."
 
 #: setup/main.py:3315
 #, python-format

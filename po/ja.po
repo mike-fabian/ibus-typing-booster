@@ -1,5 +1,5 @@
-# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata
+# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
 # Mike FABIAN <mfabian@redhat.com>, 2019. #zanata
 msgid ""
 msgstr ""
@@ -7,15 +7,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-02-21 23:46+0100\n"
-"PO-Revision-Date: 2019-02-08 06:42+0000\n"
+"PO-Revision-Date: 2019-10-27 08:13+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Japanese\n"
+"Language-Team: Japanese <https://translate.stg.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Zanata 4.6.2\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.9\n"
 
 #: engine/emoji_picker.py:204
 msgid "Emoji Picker"
@@ -43,7 +44,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:363
 msgid "Set font size"
-msgstr ""
+msgstr "フォントのサイズ"
 
 #. Translators: This is a checkbox which enables or disables
 #. the pango font fallback. If font fallback is off, only the
@@ -77,7 +78,7 @@ msgstr "Unicode のカテゴリー"
 
 #: engine/emoji_picker.py:612
 msgid "Keywords"
-msgstr ""
+msgstr "キーワード"
 
 #: engine/emoji_picker.py:654
 msgid "Fonts used to render this emoji:"
@@ -85,7 +86,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:669
 msgid "Unicode Version:"
-msgstr ""
+msgstr "ユニコードバージョン:"
 
 #: engine/emoji_picker.py:691 engine/emoji_picker.py:1792
 msgid "Left click to copy"
