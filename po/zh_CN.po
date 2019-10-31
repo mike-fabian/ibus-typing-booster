@@ -1,28 +1,30 @@
 # lexuge <LEXUGEyky@outlook.com>, 2017. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata
+# Qiyu Yan <yanqiyu01@gmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-02-21 23:46+0100\n"
-"PO-Revision-Date: 2018-12-07 06:03+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Chinese (China)\n"
+"PO-Revision-Date: 2019-10-31 00:32+0000\n"
+"Last-Translator: Qiyu Yan <yanqiyu01@gmail.com>\n"
+"Language-Team: Chinese (Simplified) <https://translate.stg.fedoraproject.org/"
+"projects/ibus-typing-booster/app/zh_CN/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Zanata 4.6.2\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.9.1\n"
 
 #: engine/emoji_picker.py:204
 msgid "Emoji Picker"
-msgstr "emoji包括"
+msgstr "Emoji 选择器"
 
 #: engine/emoji_picker.py:322
 msgid "Clear recently used"
-msgstr ""
+msgstr "清除最近使用的"
 
 #: engine/emoji_picker.py:328 setup/main.py:156
 msgid "About"
@@ -34,15 +36,15 @@ msgstr "退出"
 
 #: engine/emoji_picker.py:343
 msgid "Search for emoji"
-msgstr ""
+msgstr "搜索 Emoji"
 
 #: engine/emoji_picker.py:355
 msgid "Set the font to display emoji"
-msgstr ""
+msgstr "设置显示 Emoji 的默认字体"
 
 #: engine/emoji_picker.py:363
 msgid "Set font size"
-msgstr ""
+msgstr "设置字体大小"
 
 #. Translators: This is a checkbox which enables or disables
 #. the pango font fallback. If font fallback is off, only the
@@ -54,13 +56,13 @@ msgstr ""
 #. selected font.
 #: engine/emoji_picker.py:384
 msgid "Fallback"
-msgstr ""
+msgstr "启用用于 Emoji 的回落字体"
 
 #: engine/emoji_picker.py:386
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
-msgstr ""
+msgstr "是否当当所选的字体不能显示 Emoji 时使用回落字体以替代。"
 
 #: engine/emoji_picker.py:456
 msgid "Recently used"
