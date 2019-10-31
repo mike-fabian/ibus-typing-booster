@@ -1,9 +1,12 @@
+# This package depends on automagic byte compilation
+# https://fedoraproject.org/wiki/Changes/No_more_automagic_Python_bytecompilation_phase_2
+%global _python_bytecompile_extra 1
+
 Name:       ibus-typing-booster
-Version:    2.1.2
-Release:    2%{?dist}
+Version:    2.7.0
+Release:    1%{?dist}
 Summary:    A completion input method
 License:    GPLv3+, ASL 2.0
-Group:      System Environment/Libraries
 URL:        https://mike-fabian.github.io/ibus-typing-booster/
 Source0:    https://github.com/mike-fabian/ibus-typing-booster/releases/download/%{version}/ibus-typing-booster-%{version}.tar.gz
 Requires:   ibus >= 1.5.3
@@ -11,6 +14,7 @@ Requires:   m17n-lib
 Requires:   python(abi) >= 3.3
 %{?__python3:Requires: %{__python3}}
 Requires:   python3-dbus
+Requires:   python3-distro
 Requires:   python3-enchant
 Requires:   python3-pyxdg
 %if 0%{?fedora} >= 24 || 0%{?rhel} > 7
@@ -20,6 +24,10 @@ Recommends: google-noto-emoji-fonts
 %endif
 Recommends: google-noto-emoji-color-fonts
 Recommends: gdouros-symbola-fonts
+# For better description of the dictionaries in the setup tool
+# makes it possible to search for full language and territory names
+# and not just locale codes:
+Recommends: langtable
 %endif
 %if 0%{?fedora} >= 26 || 0%{?rhel} > 7
 # Save some space in the binary rpm by requiring the Fedora
@@ -28,6 +36,7 @@ Requires: cldr-emoji-annotation
 Requires: unicode-ucd
 %endif
 BuildRequires:  ibus-devel
+BuildRequires:  gcc
 %if 0%{?fedora} >= 24 || 0%{?rhel} > 7
 BuildRequires:  python3-devel
 BuildRequires:  python3-pyxdg
@@ -39,6 +48,9 @@ BuildRequires:  m17n-lib
 BuildRequires:  m17n-db-extras
 BuildRequires:  python3-enchant
 BuildRequires:  libappstream-glib
+BuildRequires:  desktop-file-utils
+BuildRequires:  python3-gobject
+BuildRequires:  python3-gobject-base
 BuildRequires:  hunspell-cs
 BuildRequires:  hunspell-de
 BuildRequires:  hunspell-en
@@ -47,6 +59,11 @@ BuildRequires:  hunspell-fr
 BuildRequires:  hunspell-it
 BuildRequires:  hunspell-ko
 BuildRequires:  glib2
+BuildRequires:  gtk3
+BuildRequires:  dconf
+BuildRequires:  dbus-x11
+BuildRequires:  ibus
+BuildRequires:  xorg-x11-server-Xvfb
 BuildArch:  noarch
 
 %description
@@ -94,7 +111,7 @@ make install DESTDIR=${RPM_BUILD_ROOT} NO_INDEX=true  INSTALL="install -p"   pkg
 %find_lang %{name}
 
 %check
-export LC_ALL=en_US.UTF-8
+export LC_ALL=C.UTF-8
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.appdata.xml
 desktop-file-validate \
     $RPM_BUILD_ROOT%{_datadir}/applications/ibus-setup-typing-booster.desktop
@@ -118,7 +135,7 @@ dconf write /org/freedesktop/ibus/engine/typing-booster/offtherecord false
 dconf write /org/freedesktop/ibus/engine/typing-booster/usedigitsasselectkeys true
 dconf write /org/freedesktop/ibus/engine/typing-booster/addspaceoncommit true
 dconf write /org/freedesktop/ibus/engine/typing-booster/tabenable false
-dconf write /org/freedesktop/ibus/engine/typing-booster/inputmethod "'NoIme'"
+dconf write /org/freedesktop/ibus/engine/typing-booster/inputmethod "'NoIME'"
 dconf write /org/freedesktop/ibus/engine/typing-booster/rememberlastusedpreeditime true
 dconf write /org/freedesktop/ibus/engine/typing-booster/mincharcomplete 1
 dconf write /org/freedesktop/ibus/engine/typing-booster/dictionary "'en_US'"
@@ -127,9 +144,16 @@ dconf write /org/freedesktop/ibus/engine/typing-booster/autocommitcharacters "''
 dconf write /org/freedesktop/ibus/engine/typing-booster/pagesize 6
 dconf write /org/freedesktop/ibus/engine/typing-booster/shownumberofcandidates true
 dconf write /org/freedesktop/ibus/engine/typing-booster/showstatusinfoinaux true
+dconf write /org/freedesktop/ibus/engine/typing-booster/inlinecompletion false
+dconf write /org/freedesktop/ibus/engine/typing-booster/keybindings "{'next_input_method': <['Control+Down', 'Control+KP_Down']>, 'previous_input_method': <['Control+Up', 'Control+KP_Up']>, 'lookup_related': <['Mod5+F12']>, 'enable_lookup': <['Tab', 'ISO_Left_Tab', 'KP_Divide']>, 'select_next_candidate': <['Tab', 'ISO_Left_Tab', 'Down', 'KP_Down']>, 'lookup_table_page_down': <['Page_Down', 'KP_Page_Down', 'KP_Next']>, 'toggle_emoji_prediction': <['Mod5+F6']>, 'lookup_table_page_up': <['Page_Up', 'KP_Page_Up', 'KP_Prior']>, 'toggle_off_the_record': <['Mod5+F9']>, 'cancel': <['Escape']>, 'setup': <['Mod5+F10']>, 'select_previous_candidate': <['Shift+Tab', 'Shift+ISO_Left_Tab', 'Up', 'KP_Up']>}"
 dconf dump /
+export DISPLAY=:1
+Xvfb $DISPLAY -screen 0 1024x768x16 &
 ibus-daemon -drx
-make check || cat ./tests/test-suite.log
+make -C tests run_tests
+pushd tests
+    ./run_tests
+popd
 
 %post
 [ -x %{_bindir}/ibus ] && \
@@ -163,9 +187,232 @@ make check || cat ./tests/test-suite.log
 
 
 %changelog
-* Mon Sep 24 2018 Mike FABIAN <mfabian@redhat.com> - 2.1.2-2
+* Fri Oct 18 2019 Mike FABIAN <mfabian@redhat.com> - 2.7.0-1
+- Update to 2.7.0
+- Add support for compose sequences
+  Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/47
+  Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/36
+- Test cases for compose support
+- When using doctest: log to stderr and set logging level to DEBUG
+- Properly close file handles when loading hunspell dictionaries
+
+* Fri Oct 11 2019 Mike FABIAN <mfabian@redhat.com> - 2.6.8-1
+- Update to 2.6.8
+- Quote the tables for the key and mouse bindings in the README.md as code
+- Do not hardcode the list of useful m17n input methods
+- Use LOGGER.exeption() in exception handlers
+- Use python logging module with log file rotation instead of writing to stdout/stderr
+- Fix set_preedit_underline() with parameter update_gsettings=True
+
+* Tue Oct 01 2019 Mike FABIAN <mfabian@redhat.com> - 2.6.7-1
+- Update to 2.6.7
+- If the first candidate is exactly the same as the typed string
+  prefer longer candidates (Extends inline completions automatically)
+- Move README to README.md and use some markdown to make it look better on github
+- When showing similar emoji in the lookup table, show the list of keywords
+  which matched only when debugging is on
+- Update emoji annotations from CLDR
+- More unittests, restructure test files, move some doctests to unittests
+- Add a utility class KeyvalsToKeycodes to find ibus key codes
+  instead of hardcoding them
+- Add ceb to CLDR_ANNOTATION_FILES
+
+* Wed Sep 11 2019 Mike FABIAN <mfabian@redhat.com> - 2.6.6-1
+- When checking whether to show inline completion, normalize the first candidate as well
+- Two more test cases in hunspell_suggest.py
+- Make it work correctly with newer French hunspell dictionaries
+- Skip some unittests when dictionaries or python modules needed are not installed
+- Update emoji annotations from CLDR
+- Add more test cases to m17n_translit_test.py for si-sayura.mim
+
+* Wed Aug 28 2019 Mike FABIAN <mfabian@redhat.com> - 2.6.5-1
+- Added Dutch translation (Thanks to Heimen Stoffels)
+- Add si-sayura to the list of M17N input methods
+
+* Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2.6.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
+* Wed Jul 17 2019 Mike FABIAN <mfabian@redhat.com> - 2.6.4-1
+- Update to 2.6.4
+- Update translations from zanata (cs updated, now 100% complete)
+- Do not crash if initializing enchant or pyhunspell fails,
+  continue without spellchecking (Currently, on openSUSE Tumbleweed,
+  python3-pyenchant seems broken)
+- Try to install myspell-xx_YY packages instead of hunspell-xx package on SUSE
+- Fix loading of cldr annotations when the .xml files are zipped
+- Add JoyPixels to good_emoji_fonts list
+
+* Wed Jun 19 2019 Mike FABIAN <mfabian@redhat.com> - 2.6.3-1
+- Update to 2.6.3
+- Performance improvement of around 30% in EmojiMatcher._match()
+- Tiny performance improvement in itb_emoji.py _set_seq1()
+
+* Wed Jun 05 2019 Mike FABIAN <mfabian@redhat.com> - 2.6.2-1
+- Update to 2.6.2
+- Emoji ZWJSequence “people holding hands” is 12.0, not 10.0
+- Update emoji annotations from CLDR
+- icons: Regenerate with proper transparency (Thanks to FeRD (Frank Dana))
+- Remove enable-background from icon SVG (Thanks to FeRD (Frank Dana))
+- Update UnicodeData.txt to current Unicode 12.1.0
+
+* Mon Mar 04 2019 Mike FABIAN <mfabian@redhat.com> - 2.6.1-1
+- Update to 2.6.1
+- Support emoji presentation and text presentation in emoji-picker
+- Improve itb_emoji.py to also support text presentation of emoji
+- Update emoji annotations from CLDR
+
+* Thu Feb 21 2019 Mike FABIAN <mfabian@redhat.com> - 2.6.0-1
+- Update to 2.6.0
+- Update translations from zanata (de updated)
+- Update emoji annotations from CLDR
+- When Left or BackSpace trigger a commit, forward Left events only
+  when no candidate was selected (i.e. the preëdit was committed)
+- If a candidate is shown inline and *manually* selected, show the caret
+  at the end of the candidate
+- Right, Left, BackSpace, and Delete edit the preëdit only if no
+  candidate is *manually* selected
+- If an input char is typed while a candidate is *manually* selected,
+  add that input to the candidate
+- Change option name 'Add a space when committing by label or mouse'
+  in setup tool
+- Remove option “Use digits as select keys”
+- Make key bindings to commit or remove candidates via label configurable
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/48)
+- Multi word suggestions: Commit the current commit phrase and the
+  previous phrase as a single unit as well
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/49)
+- Fix wrong tooltip for “Automatically select the best candidate” option
+- Run time consuming tests simultaneously via script (thanks to
+  Marguerite Su <i@marguerite.su>)
+
+* Mon Feb 11 2019 Mike FABIAN <mfabian@redhat.com> - 2.5.3-1
+- Update to 2.5.3
+- Update translations from zanata (ja, pl updated)
+- Update emoji annotations from CLDR
+- Use “NoIME” instead of “NoIme” as the internal name of the dummy input method
+- Remove “Recommends: python3-pyaudio” (Resolves: rhbz#1672562)
+- Add gcc to BuildRequires
+
+* Wed Feb 06 2019 Mike FABIAN <mfabian@redhat.com> - 2.5.2-1
+- Update to 2.5.2
+- Fix test case for selecting non existing candidates for Fedora rawhide
+- Update UnicodeData.txt to current Unicode 12.0 draft
+- Update emoji data to Unicode 12.0 final for 2019
+- Update emoji annotations from CLDR
+- Initialize self.dictionary_sub_properties_prop_list = [] in self._init_properties()
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/46)
+- Fix test case for case mode change
+- Improve filter for dictionary selection if langtable available
+- Add BuildRequires: gcc
+
+* Fri Feb 01 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2.5.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
+* Tue Jan 29 2019 Mike FABIAN <mfabian@redhat.com> - 2.5.1-1
+- Update to 2.5.1
+- Update translations from zanata (de, ja, fr, pl updated)
+- Show also dictionary when “Show status in auxiliary text” is on
+- Set notebook in setup tool to scrollable
+- Make filter for dictionary selection work for language descriptions if langtable available
+- Show names of languages and territories in setup tool if langtable is available
+- Add missing flag for csb_PL
+- Add option to automatically select the best candidate
+- Pressing Shift should not immediately change the case mode of the candidates
+
+* Wed Jan 16 2019 Mike FABIAN <mfabian@redhat.com> - 2.5.0-1
+- Update to 2.5.0
+- Update translations from zanata (de, ja, uk updated)
+- Add a property menu for the highest priority dictonary
+- Add a missing _update_preedit()
+- When lookup is enabled by tab but the lookup table is empty,
+  the first cancel should clear the input
+- Reset self.is_lookup_table_enabled_by_tab and
+  self.is_lookup_table_enabled_by_min_char_complete when input is cleared
+- Get suggestions from hunspell dictionaries only for input
+  which does not contain spaces
+- Don’t reinitialize the dictionaries if only the order of the dictionaries has changed
+- Add key bindings to change the priority of dictionaries
+- Speech recognition input using Google speech-to-text
+- Change the default input methods for as_IN, kn_IN, and ta_IN
+- Make ur-phonetic the default input method for ur_IN and add en_GB dictionary to default
+- Update emoji annotations from CLDR
+- Add Recommends: python3-pyaudio (For voice recognition)
+
+* Sun Dec 30 2018 Mike FABIAN <mfabian@redhat.com> - 2.4.1-1
+- Update to 2.4.1
+- Update translations from zanata (pl updated)
+- Add direct input mode
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/25)
+- Fix start of setup tool when libexedir is not /usr/libexec/
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/42)
+
+* Wed Dec 19 2018 Mike FABIAN <mfabian@redhat.com> - 2.4.0-1
+- Update to 2.4.0
+- Update translations from zanata (de, es, fr, ja, pl, uk updated)
+- Add new command 'toggle_hide_input' to hide the preëdit, lookup table, and auxiliary text
+- Add an option to use preedit style only if lookup is enabled
+- Add an option to choose the style of underlining the preedit
+- Don’t try to record the first candidate when there is none
+  after an automatic commit on focus out or reset
+  (Resolves: rhbz#1659128)
+- Add an option in the setup tool to set the debug level
+- Move appearance related options to the new “Appearance” tab
+- Add settings for colour and other appearance stuff
+- Move “Dictionaries and input methods” Tab in the setup tool to the first position
+- Update the shortcut hints in the tooltips when keybindings change
+- Only show the label in the panel menus for emoji-mode and off-the-record-mode
+- Don’t show the shortcut hints in the menu labels, takes too much space there.
+- Update README because of the recent change to make keybindings configurable.
+
+* Thu Dec 13 2018 Mike FABIAN <mfabian@redhat.com> - 2.3.3-1
+- Update to 2.3.3
+- Toggle candidates between 'title', 'upper', and 'lower' case
+  when Shift is typed.
+- Improve Spanish translation (Thanks to Ismael Venegas Castelló)
+
+* Tue Dec 11 2018 Mike FABIAN <mfabian@redhat.com> - 2.3.2-1
+- Update to 2.3.2
+- Key bindings should match independent of whether
+  Num Lock or Caps Lock are on or off.
+
+* Sat Dec 08 2018 Mike FABIAN <mfabian@redhat.com> - 2.3.1-1
+- Update to 2.3.1
+- Update translations from zanata (cs, de, es, fr, ja, pl, pt_BR, uk, zh_CN updated)
+- Avoid some PyGTKDeprecationWarnings
+- Don’t show Unicode 12.0 draft emoji by default in emoji-picker
+- Update emoji data to Unicode 12.0 draft
+- Update emoji annotations from CLDR
+
+* Wed Dec 05 2018 Mike FABIAN <mfabian@redhat.com> - 2.3.0-1
+- Update to 2.3.0
+- Update translations from zanata (de, ja, uk updated)
+- Commit the current preëdit when the focus changes
+- When preëdit empty or lookup table not enabled by key: clear the lookup table
+- Make key bindings configurable
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/15)
+- Correct tooltips for the “up” and “down” buttons for
+  input methods dictionaries
+
+* Wed Nov 28 2018 Mike FABIAN <mfabian@redhat.com> - 2.2.1-1
+- Update to 2.2.1
+- Update translations from zanata (pl, uk updated)
+
+* Wed Nov 21 2018 Mike FABIAN <mfabian@redhat.com> - 2.2.0-1
+- Update translations from zanata (de updated)
+- Save some screen space in the setup tool
+- Add inline completion feature
+- Tab should force a lookup when the minimum number of characters is not yet reached
+
+* Wed Nov 07 2018 Mike FABIAN <mfabian@redhat.com> - 2.1.3-2
+- Use C.UTF-8 instead of en_US.UTF-8 when running the test cases.
+  (Because of https://fedoraproject.org/wiki/Changes/Remove_glibc-langpacks-all_from_buildroot)
+- Add desktop-file-utils, python3-gobject, python3-gobject-base, gtk3,
+  dconf, dbus-x11, ibus to BuildRequires.
+
+* Mon Sep 24 2018 Mike FABIAN <mfabian@redhat.com> - 2.1.3-1
 - Require the Python interpreter directly instead of using the package name
 - Related: rhbz#1619153
+- Update translations from zanata (uk updated)
 
 * Mon Sep 24 2018 Mike FABIAN <mfabian@redhat.com> - 2.1.2-1
 - Update to 2.1.2
