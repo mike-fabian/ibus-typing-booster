@@ -7,13 +7,13 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-02-21 23:46+0100\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2019-06-29 03:06+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech\n"
 "Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Zanata 4.6.2\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
 
@@ -218,7 +218,6 @@ msgstr "Nenalezen soubor „%s“ s „přihlašovacími údaji do Google“."
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Nepodařilo se inicializovat Google řeč na text. Viz záznam ladících událostí."
-""
 
 #: engine/hunspell_table.py:3942
 msgid "Google speech-to-text error. See debug.log."
@@ -546,11 +545,11 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
-"Zatímco je režim „Mimo záznam“ zapnutý, je vypnuté učení ze vstupu uživatele."
-" Pokud je k dispozici naučený vstup uživatele, predikce jsou obvykle mnohem "
-"lepší než predikce pouze pomocí slovníků. Proto by tuto volbu uživatel měl "
-"používat zřídka. Pouze pokud chce zamezit ukládání tajného vstupu od "
-"uživatele, může tato volba dávat smysl pro dočasné použití."
+"Zatímco je režim „Mimo záznam“ zapnutý, je vypnuté učení ze vstupu "
+"uživatele. Pokud je k dispozici naučený vstup uživatele, predikce jsou "
+"obvykle mnohem lepší než predikce pouze pomocí slovníků. Proto by tuto volbu "
+"uživatel měl používat zřídka. Pouze pokud chce zamezit ukládání tajného "
+"vstupu od uživatele, může tato volba dávat smysl pro dočasné použití."
 
 #. Translators: Use a workaround for bugs in the input
 #. method modules of Qt4 and Qt5. Attention, although this
@@ -650,7 +649,6 @@ msgstr "Kolik znaků nejméně potřebovat pro doplňování:"
 #: setup/main.py:600
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
-""
 msgstr "Pokud je zadáno méně než tolik znaků nezobrazovat žádné návrhy."
 
 #. Translators: When the debug level is greater than 0,
@@ -688,8 +686,7 @@ msgstr "Smazat naučená data"
 #: setup/main.py:673
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
-msgstr ""
-"Smazat všechna osobní jazyková data naučená psaním nebo čtením souborů"
+msgstr "Smazat všechna osobní jazyková data naučená psaním nebo čtením souborů"
 
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
@@ -1143,8 +1140,7 @@ msgstr "Nastavit .json soubor s „přihlašovacími údaji do Google“:"
 
 #: setup/main.py:1602
 msgid "Full path of the “Google application credentials” .json file."
-msgstr ""
-"Úplný popis umístění .json souboru s „přihlašovacími údaji do Google“."
+msgstr "Úplný popis umístění .json souboru s „přihlašovacími údaji do Google“."
 
 #: setup/main.py:1664
 msgid "Spell checking"
@@ -1232,8 +1228,7 @@ msgstr "Učení ze souboru %(filename)s se nezdařilo."
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
-msgstr ""
-"Opravdu chcete smazat veškerá data naučená z psaní nebo čtení souborů?"
+msgstr "Opravdu chcete smazat veškerá data naučená z psaní nebo čtení souborů?"
 
 #: setup/main.py:4507
 msgid "ibus is not running."
