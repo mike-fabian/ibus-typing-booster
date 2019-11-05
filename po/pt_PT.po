@@ -8,13 +8,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-10-31 09:41+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2019-11-01 20:13+0000\n"
+"Last-Translator: Manuela Silva <mmsrs@sky.com>\n"
+"Language-Team: Portuguese (Portugal) <https://translate.stg.fedoraproject."
+"org/projects/ibus-typing-booster/app/pt_PT/>\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 
 #: engine/emoji_picker.py:193
 msgid "Emoji Picker"
@@ -22,19 +25,19 @@ msgstr ""
 
 #: engine/emoji_picker.py:310
 msgid "Clear recently used"
-msgstr ""
+msgstr "Limpar utilizados recentemente"
 
 #: engine/emoji_picker.py:316 setup/main.py:164
 msgid "About"
-msgstr ""
+msgstr "Sobre"
 
 #: engine/emoji_picker.py:321
 msgid "Quit"
-msgstr ""
+msgstr "Fechar"
 
 #: engine/emoji_picker.py:331
 msgid "Search for emoji"
-msgstr ""
+msgstr "Pesquisar por emoji"
 
 #: engine/emoji_picker.py:343
 msgid "Set the font to display emoji"
@@ -64,19 +67,19 @@ msgstr ""
 
 #: engine/emoji_picker.py:444
 msgid "Recently used"
-msgstr ""
+msgstr "Utilizados recentemente"
 
 #: engine/emoji_picker.py:618
 msgid "Categories"
-msgstr ""
+msgstr "Categorias"
 
 #: engine/emoji_picker.py:619
 msgid "Unicode categories"
-msgstr ""
+msgstr "Categorias de Unicode"
 
 #: engine/emoji_picker.py:620
 msgid "Keywords"
-msgstr ""
+msgstr "Palavras-chave"
 
 #: engine/emoji_picker.py:662
 msgid "Fonts used to render this emoji:"
@@ -84,11 +87,11 @@ msgstr ""
 
 #: engine/emoji_picker.py:679
 msgid "Unicode Version:"
-msgstr ""
+msgstr "Versão de Unicode:"
 
 #: engine/emoji_picker.py:701 engine/emoji_picker.py:1797
 msgid "Left click to copy"
-msgstr ""
+msgstr "Clique esquerdo para copiar"
 
 #: engine/emoji_picker.py:704
 msgid "Long press or middle click for skin tones"
@@ -100,7 +103,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:1191
 msgid "Search Results"
-msgstr ""
+msgstr "Resultados da Pesquisa"
 
 #: engine/emoji_picker.py:1195
 msgid "Search produced empty result."
@@ -108,7 +111,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:1466 engine/emoji_picker.py:1590
 msgid "Copied to clipboard!"
-msgstr ""
+msgstr "Copiado para a área de transferência!"
 
 #: engine/emoji_picker.py:1907
 msgid "Lookup on emojipedia"
@@ -117,7 +120,7 @@ msgstr ""
 #: engine/emoji_picker.py:2032 engine/emoji_picker.py:2033
 #: engine/emoji_picker.py:2034 setup/main.py:1162
 msgid "System default"
-msgstr ""
+msgstr "Predefinição do sistema"
 
 #: engine/emoji_picker.py:2157
 msgid "Set Font"
@@ -135,7 +138,7 @@ msgstr ""
 
 #: engine/hunspell_table.py:491
 msgid "Input mode"
-msgstr ""
+msgstr "Modo de entrada"
 
 #: engine/hunspell_table.py:492
 msgid "Here you can switch ibus-typing-booster on or off."
@@ -181,7 +184,7 @@ msgstr ""
 
 #: engine/hunspell_table.py:1694
 msgid "Setup"
-msgstr ""
+msgstr "Configurar"
 
 #: engine/hunspell_table.py:1697 setup/main.py:130
 msgid "Preferences for ibus-typing-booster"
@@ -221,38 +224,38 @@ msgstr ""
 #: engine/itb_emoji.py:774 engine/itb_emoji.py:775 engine/itb_emoji.py:776
 #: engine/itb_emoji.py:987
 msgid "people"
-msgstr ""
+msgstr "pessoas"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:777 engine/itb_emoji.py:983
 msgid "nature"
-msgstr ""
+msgstr "natureza"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:778 engine/itb_emoji.py:979
 msgid "food"
-msgstr ""
+msgstr "comida"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:779 engine/itb_emoji.py:993
 msgid "travel"
-msgstr ""
+msgstr "viajem"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:780 engine/itb_emoji.py:789 engine/itb_emoji.py:975
 msgid "activity"
-msgstr ""
+msgstr "atividade"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:781 engine/itb_emoji.py:985
 msgid "objects"
-msgstr ""
+msgstr "objetos"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:782 engine/itb_emoji.py:991
 msgid "symbols"
-msgstr ""
+msgstr "símbolos"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:783 engine/itb_emoji.py:977
@@ -269,15 +272,15 @@ msgstr ""
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:786 engine/itb_emoji.py:989
 msgid "regional"
-msgstr ""
+msgstr "regional"
 
 #: engine/itb_util.py:3155 engine/itb_util.py:3341
 msgid "File not found"
-msgstr ""
+msgstr "Ficheiro não encontrado"
 
 #: engine/itb_util.py:3158 engine/itb_util.py:3344
 msgid "Permission error"
-msgstr ""
+msgstr "Erro de permissão"
 
 #: engine/itb_util.py:3161 engine/itb_util.py:3347
 msgid "Unicode decoding error"
@@ -307,7 +310,7 @@ msgstr ""
 
 #: engine/itb_util.py:3785
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
@@ -330,19 +333,19 @@ msgstr ""
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:3837
 msgid "translator-credits"
-msgstr ""
+msgstr "Manuela Silva"
 
 #: engine/itb_util.py:3845
 msgid "Online documentation:"
-msgstr ""
+msgstr "Documentação on-line:"
 
 #: setup/main.py:107
 msgid "Preferences"
-msgstr ""
+msgstr "Preferências"
 
 #: setup/main.py:169 setup/main.py:4447
 msgid "_Close"
-msgstr ""
+msgstr "_Fechar"
 
 #. Translators: This is the label of a tab in the setup
 #. tool. Here the user can setup the dictionaries for the
@@ -351,14 +354,14 @@ msgstr ""
 #. in.
 #: setup/main.py:191
 msgid "Dictionaries and input methods"
-msgstr ""
+msgstr "Dicionários e métodos de entrada"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence the
 #. behaviour of ibus-typing-booster.
 #: setup/main.py:207
 msgid "Options"
-msgstr ""
+msgstr "Opções"
 
 #. Translators: This is a label of a tab in the setup tool.
 #. Here the user can create custom shortcuts. For example if
@@ -391,7 +394,7 @@ msgstr ""
 #. diffent types of candidates should be marked with labels.
 #: setup/main.py:259
 msgid "Appearance"
-msgstr ""
+msgstr "Aparência"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
@@ -595,7 +598,7 @@ msgstr ""
 #. debug information may also be shown graphically.
 #: setup/main.py:637
 msgid "Debug level:"
-msgstr ""
+msgstr "Nível de depuração:"
 
 #: setup/main.py:639
 msgid ""
@@ -608,7 +611,7 @@ msgstr ""
 #. reading that text file.
 #: setup/main.py:668
 msgid "Learn from text file"
-msgstr ""
+msgstr "Aprender do ficheiro de texto"
 
 #: setup/main.py:670
 msgid "Learn your style by reading a text file"
@@ -636,7 +639,7 @@ msgstr ""
 #. dictionaries which are setup here but not installed
 #: setup/main.py:711
 msgid "Install missing dictionaries"
-msgstr ""
+msgstr "Instalar dicionários em falta"
 
 #: setup/main.py:713
 msgid "Install the dictionaries which are setup here but not installed"
@@ -644,19 +647,19 @@ msgstr ""
 
 #: setup/main.py:730
 msgid "Add a dictionary"
-msgstr ""
+msgstr "Adicionar um dicionário"
 
 #: setup/main.py:741
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "Remover um dicionário"
 
 #: setup/main.py:752
 msgid "Move dictionary up"
-msgstr ""
+msgstr "Mover dicionário para cima"
 
 #: setup/main.py:764
 msgid "Move dictionary down"
-msgstr ""
+msgstr "Mover dicionário para baixo"
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
@@ -732,11 +735,11 @@ msgstr ""
 #. existing key bindings
 #: setup/main.py:1001
 msgid "Command"
-msgstr ""
+msgstr "Comando"
 
 #: setup/main.py:1028
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #: setup/main.py:1032
 msgid "Edit the key bindings for the selected command"
@@ -744,7 +747,7 @@ msgstr ""
 
 #: setup/main.py:1039 setup/main.py:3244
 msgid "Set to default"
-msgstr ""
+msgstr "Definir para predefinição"
 
 #: setup/main.py:1043 setup/main.py:3249
 msgid "Set default key bindings for the selected command"
@@ -752,7 +755,7 @@ msgstr ""
 
 #: setup/main.py:1050
 msgid "Set all to default"
-msgstr ""
+msgstr "Definir tudo para predefinição"
 
 #: setup/main.py:1054
 msgid "Set default key bindings for all commands"
@@ -813,11 +816,11 @@ msgstr ""
 
 #: setup/main.py:1158
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontal"
 
 #: setup/main.py:1160
 msgid "Vertical"
-msgstr ""
+msgstr "Vertical"
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
