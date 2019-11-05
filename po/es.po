@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2019-10-31 09:41+0100\n"
-"PO-Revision-Date: 2019-10-31 00:32+0000\n"
+"POT-Creation-Date: 2019-02-21 23:46+0100\n"
+"PO-Revision-Date: 2019-10-31 14:05+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Spanish <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/es/>\n"
@@ -1057,13 +1057,16 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
 msgstr ""
+"Aquí puede indicar qué color utilizar para los candidatos de la tabla de "
+"búsqueda provenientes de la revisión ortográfica. Esta opción surte efecto "
+"solo si se activa el uso de color en candidatos de la revisión ortográfica."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
 #: setup/main.py:1416
 msgid "Use color for dictionary suggestions"
-msgstr ""
+msgstr "Utilizar un color para las sugerencias de diccionario"
 
 #: setup/main.py:1418
 msgid ""
@@ -1155,7 +1158,7 @@ msgstr "Emoyi"
 
 #: setup/main.py:1864
 msgid "Are you sure?"
-msgstr "¿Está seguro?"
+msgstr "¿Lo confirma?"
 
 #: setup/main.py:1866 setup/main.py:2347 setup/main.py:3316
 msgid "_Cancel"
