@@ -8,10 +8,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-10-31 09:41+0100\n"
-"PO-Revision-Date: 2019-10-31 00:32+0000\n"
+"PO-Revision-Date: 2019-11-05 15:14+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: Hebrew <https://translate.stg.fedoraproject.org/projects/ibus-"
-"typing-booster/app/he/>\n"
+"Language-Team: Hebrew <https://translate.stg.fedoraproject.org/projects/"
+"ibus-typing-booster/app/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -450,6 +450,10 @@ msgid ""
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
+"האם ההשלמה הטובה ביותר תופיע קודם כל בתוך השורה בעריכת הקדם במקום להציג את "
+"רשימת המועמדים המלאה. ניתן לבחור את המועמד שבתוך השורה על ידי לחיצה על Tab "
+"ואז להמשיך לבחור כרגיל בין אם באמצעות הקלדת רווח או Ctrl+רווח. לחיצה נוספת "
+"על Tab עוברת למועמד הבא ופותחת את רשימת המועמדים המלאה."
 
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
@@ -461,7 +465,7 @@ msgstr ""
 #. command which will deselect all candidates.
 #: setup/main.py:373
 msgid "Automatically select the best candidate"
-msgstr ""
+msgstr "לבחור את המועמד הטוב ביותר אוטומטית"
 
 #: setup/main.py:375
 msgid ""
@@ -472,19 +476,23 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
+"המילים שבחרת לכתוב יתוקנו למועמד הטוב ביותר אוטומטית. אם אפשרות זו כבויה, "
+"עליך לבחור את המועמד ידנית על ידי בחירה באיגוד המקשים כדי לבחור את המועמד "
+"הבא. אם אפשרות זו פעילה ולא מעניין אותך להשתמש במועמד הנבחר אוטומטית, ניתן "
+"לבחור את איגוד המקשים לפקודה „ביטול” שמבטלת את הבחירה במועמדים לגמרי."
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
 #. with the mouse.
 #: setup/main.py:398
 msgid "Add a space when committing by mouse click"
-msgstr ""
+msgstr "יש להוסיף רווח בעת הגשה על ידי לחיצה עם העכבר"
 
 #: setup/main.py:400
 msgid ""
 "Add a space if a candidate from the candidate list is committed by clicking "
 "it with the mouse."
-msgstr ""
+msgstr "יש להוסיף רווח אם מועמד מרשימת המועמדים מוגש על ידי לחיצה עם העכבר."
 
 #. Translators: If more then one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -494,7 +502,7 @@ msgstr ""
 #. the session is restarted.
 #: setup/main.py:421
 msgid "Remember last used preedit input method"
-msgstr ""
+msgstr "לזכור את שיטת הקלט האחרונה של עריכת הקדם"
 
 #: setup/main.py:423
 msgid ""
@@ -503,6 +511,9 @@ msgid ""
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
 msgstr ""
+"אם נעשה שימוש בלמעלה משיטת קלט אחד בו־זמנית, אחת מהן תשמש את עריכת הקדם. "
+"ניתן לבחור בשיטת הקלט שתהיה בשימוש לעריכת הקדם דרך התפריט או דרך מקשי "
+"הקיצור. אם אפשרות זו פעילה, שינוי שכזה יישמר אפילו אם יצאת מהחשבון וחזרת."
 
 #: setup/main.py:450
 msgid ""
@@ -512,6 +523,10 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
+"האם סימני יוניקוד ואמוג׳י יופיעו בחיזוי. אמוג׳י אלו תווים ציוריים כגון ☺♨⛵…. "
+"תווי יוניקוד הם תווים אחרים כמו סימנים מתמטיים (∀∑∯…), חצים ←↑↔…), סימני "
+"הילך/מטבע (€₹₺…), תבניות ברייל (⠥⠩…) ומגוון סימנים נוספים. טכנית לא מדובר "
+"באמוג׳י אך הם עדיין שימושיים."
 
 #: setup/main.py:478
 msgid ""
@@ -521,6 +536,10 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
+"כשמצב „לא לציטוט” פעיל, הלמידה מקלט המשתמש מושבתת. אם למידה מקלט המשתמש "
+"פעילה, החיזויים הם בדרך כלל טובים יותר מחיזויים שמתקבלים ממילונים בלבד. לכן, "
+"מוטב לשקול היטב את ביטול התכונה. רק אם ברצונך להימנע משמירת קלט סודי של "
+"משתמש לכונן זה הגיוני להשתמש באפשרות זו באופן זמני."
 
 #. Translators: Use a workaround for bugs in the input
 #. method modules of Qt4 and Qt5. Attention, although this
@@ -531,7 +550,7 @@ msgstr ""
 #. programs like xterm will not work well either.
 #: setup/main.py:505
 msgid "Use a workaround for a bug in Qt im module"
-msgstr ""
+msgstr "להשתמש במעקף לתקלה במודול שיטות הקלט (im) של Qt"
 
 #: setup/main.py:507
 msgid ""
@@ -541,6 +560,10 @@ msgid ""
 "of Qt4 will not work well when this workaround is enabled and input via XIM "
 "into X11 programs like xterm will not work well either."
 msgstr ""
+"להשתמש במעקף לתקלות במודולים לשיטות הקלט של Qt4 ו־Qt5. לתשומת לבך: למרות "
+"שהמעקף הזה עובד טוב יותר כאשר מודולי הקלט של Qt בשימוש, תקלות מסוימות "
+"מתרחשות בשימוש עם XIM. למשל, המודול של XIM ל־Qt4 לא יעבוד היטב כאשר המעקף "
+"הזה פעיל וקלט של XIM לתכניות X11  כגון xterm גם כן לא יעבוד."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it
@@ -552,7 +575,7 @@ msgstr ""
 #. default.
 #: setup/main.py:535
 msgid "Arrow keys can reopen a preedit"
-msgstr ""
+msgstr "מקשי החצים יכולים לפתוח את עריכת הקדם מחדש"
 
 #: setup/main.py:537
 msgid ""
@@ -562,6 +585,11 @@ msgid ""
 "how well it works depends on repetition speed of the arrow keys and system "
 "load. Because it is buggy, this option is off by default."
 msgstr ""
+"האם מותר לפתוח מחדש את עריכת הקדם כאשר הסמן מגיע לגבול של מילה לאחר הזזתו "
+"בעזרת מקשי החצים. הפעלת אפשרות מועילה במקרים של צורך בתיקון מילים שכבר "
+"הוגשו. עם זאת מדובר במנגנון מעט לא יציב כרגע ויציבות פעולתו תלויה במהירות "
+"החזרה של מקשי החצים ובעומס על המערכת. כיוון שמדובר בתכונה בלתי יציבה, היא "
+"כבויה כבררת מחדל."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -577,7 +605,7 @@ msgstr ""
 #. (which is the default).
 #: setup/main.py:570
 msgid "Auto commit characters:"
-msgstr ""
+msgstr "אותיות להגשה אוטומטית:"
 
 #: setup/main.py:572
 msgid ""
@@ -591,145 +619,154 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
+"התווים שברשימה הזאת גורמים לכך שעריכת הקדם תוגש אוטומטית ולאחריה יתווסף "
+"רווח. למשל, אם „.” הוגדר כתו להגשה אוטומטית, תיחסך ממך הקלדה של רווח ידנית "
+"לאחר סוף המשפט. ניתן לערוך רשימה זו כראות עיניך, ערך הגיוני לרשימה זו הוא "
+"„”.,;:?!)”. מוטב שלא להוסיף תווים לרשימה הזאת כיוון ששיטת הקלט שלך זקוקה "
+"להם, למשל, בעת שימוש בפריסה Latin-Pre (t-latn-pre) לא כדאי להוסיף „.” לרשימה "
+"הזאת כיוון שתימנע ממך האפשרות להקליד „.s” כדי לכתוב „ṡ”. ניתן להשבית את "
+"התכונה הזאת לחלוטין על ידי מחיקת הרשימה לחלוטין (בררת המחדל)."
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
 #: setup/main.py:606
 msgid "Minimum number of chars for completion:"
-msgstr ""
+msgstr "מספר התווים המזערי להשלמה:"
 
 #: setup/main.py:608
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
-msgstr ""
+msgstr "לא להציג הצעות אם הוקלדו פחות תווים מהכמות הזו."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
 #. debug information may also be shown graphically.
 #: setup/main.py:637
 msgid "Debug level:"
-msgstr ""
+msgstr "רמת ניפוי שגיאות:"
 
 #: setup/main.py:639
 msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
 msgstr ""
+"אם גדול מ־0, פרטי ניפוי השגיאות ייכתבו לקובץ היומן וניתן גם להציג את פרטי "
+"ניפוי השגיאות באופן חזותי."
 
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
 #. reading that text file.
 #: setup/main.py:668
 msgid "Learn from text file"
-msgstr ""
+msgstr "למידה מקובץ טקסט"
 
 #: setup/main.py:670
 msgid "Learn your style by reading a text file"
-msgstr ""
+msgstr "למידת הסגנון שלך על ידי קריאה מקובץ טקסט"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
 #: setup/main.py:679
 msgid "Delete learned data"
-msgstr ""
+msgstr "מחיקת נתונים שלמדו"
 
 #: setup/main.py:681
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
-msgstr ""
+msgstr "למחוק את כל נתוני השפה האישיים שנלמדו דרך הקלדה או מקריאת קבצים"
 
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:693
 msgid "Use dictionaries for the following languages:"
-msgstr ""
+msgstr "להשתמש ביומנים לשפות הבאות:"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
 #: setup/main.py:711
 msgid "Install missing dictionaries"
-msgstr ""
+msgstr "התקנת מילונים חסרים"
 
 #: setup/main.py:713
 msgid "Install the dictionaries which are setup here but not installed"
-msgstr ""
+msgstr "התקנת המילונים שמוגדרים כאן אך אינם מותקנים"
 
 #: setup/main.py:730
 msgid "Add a dictionary"
-msgstr ""
+msgstr "הוספת מילון"
 
 #: setup/main.py:741
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "הסרת מילון"
 
 #: setup/main.py:752
 msgid "Move dictionary up"
-msgstr ""
+msgstr "העלאת מילון למעלה"
 
 #: setup/main.py:764
 msgid "Move dictionary down"
-msgstr ""
+msgstr "הורדת מילון למטה"
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:788
 msgid "Use the following input methods:"
-msgstr ""
+msgstr "להשתמש בשיטות הקלט הבאות:"
 
 #: setup/main.py:816
 msgid "Add an input method"
-msgstr ""
+msgstr "הוספת שיטת קלט"
 
 #: setup/main.py:828
 msgid "Remove an input method"
-msgstr ""
+msgstr "הסרת שיטת קלט"
 
 #: setup/main.py:840
 msgid "Move input method up"
-msgstr ""
+msgstr "העלאת שיטת קלט למעלה"
 
 #: setup/main.py:852
 msgid "Move input method down"
-msgstr ""
+msgstr "הורדת שיטת קלט למטה"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
 #: setup/main.py:860
 msgid "Input Method Help"
-msgstr ""
+msgstr "עזרה עם שיטות קלט"
 
 #: setup/main.py:862
 msgid "Display some help showing how to use the input method selected above."
-msgstr ""
+msgstr "להציג עזרה שמסבירה איך להשתמש בשיטת הקלט שנבחרה לעיל."
 
 #: setup/main.py:882
 msgid "Enter shortcut here:"
-msgstr ""
+msgstr "נא להקליד כאן את קיצור הדרך:"
 
 #: setup/main.py:899
 msgid "Enter shortcut expansion here:"
-msgstr ""
+msgstr "נא להקליד הרחבת קיצור דרך כאן:"
 
 #: setup/main.py:915
 msgid "Clear input"
-msgstr ""
+msgstr "מחיקת קלט"
 
 #: setup/main.py:925
 msgid "Delete shortcut"
-msgstr ""
+msgstr "מחיקת קיצור דרך"
 
 #: setup/main.py:935
 msgid "Add shortcut"
-msgstr ""
+msgstr "הוספת קיצור דרך"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
 #: setup/main.py:959
 msgid "Shortcut"
-msgstr ""
+msgstr "קיצור דרך"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -801,70 +838,73 @@ msgid ""
 "for the preëdit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
+"להציג בטקסט ההסבר האם מצב „חיזוי אמוג׳י” ומצב „שלא לציטוט” פעילים או כבויים "
+"ולהציג איזו שיטת קלט נמצאת כרגע בשימוש עבור עריכת הקדם. טקסט ההסבר היא שורת "
+"טקסט שמוצגת כרשות מעל לרשימת המועמדים."
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
 #: setup/main.py:1119
 msgid "Candidate window page size:"
-msgstr ""
+msgstr "גודל עמוד חלון מועמדים:"
 
 #: setup/main.py:1121
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
-msgstr ""
+msgstr "כמה מועמדים להצעה יש להציג בעמוד אחד ברשימת המועמדים."
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
 #: setup/main.py:1147
 msgid "Candidate window orientation"
-msgstr ""
+msgstr "כיוון חלון המועמדים"
 
 #: setup/main.py:1149
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
-msgstr ""
+msgstr "האם לצייר את חלון המועמדים לאורך או לרוחב."
 
 #: setup/main.py:1158
 msgid "Horizontal"
-msgstr "אופקי"
+msgstr "לרוחב"
 
 #: setup/main.py:1160
 msgid "Vertical"
-msgstr "אנכי"
+msgstr "לאורך"
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
 #: setup/main.py:1187
 msgid "Preedit underline"
-msgstr ""
+msgstr "קו תחתי לעריכת הקדם"
 
 #: setup/main.py:1189
 msgid "Which style of underlining to use for the preedit."
-msgstr ""
+msgstr "באיזה סגנון של קו תחתי להשתמש עבור עריכת הקדם."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
 #: setup/main.py:1199
 msgid "None"
-msgstr ""
+msgstr "בלי"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
 #: setup/main.py:1203
 msgid "Single"
-msgstr ""
+msgstr "בודד"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
 #: setup/main.py:1207
 msgid "Double"
-msgstr ""
+msgstr "כפול"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
 #: setup/main.py:1211
 msgid "Low"
-msgstr ""
+msgstr "נמוך"
 
 #. Translators: Checkbox to choose whether a preedit style
 #. like underlining will only be used if lookup is
@@ -874,7 +914,7 @@ msgstr ""
 #. of characters before a lookup is done.
 #: setup/main.py:1239
 msgid "Use preedit style only if lookup is enabled"
-msgstr ""
+msgstr "להשתמש בסגנון קדם עריכה רק אם החיפוש פעיל"
 
 #: setup/main.py:1241
 msgid ""
@@ -883,12 +923,15 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
+"אם אפשרות זו פעילה, סגנון עריכת קדם כגון סימון בקו תחתון תפעל רק אם מופעל "
+"חיפוש. ניתן להשבית את החיפוש כיוון שאפשר להפעיל את החיפוש רק בלחיצת כפתור או "
+"אם נעשה שימוש בתכונה שדורשת כמות מזערית של תווים לפני הרצת חיפוש."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
 #: setup/main.py:1261
 msgid "Use color for inline completion"
-msgstr ""
+msgstr "להשתמש בצבע להשלמה בתוך השורה"
 
 #: setup/main.py:1263
 msgid ""
@@ -954,13 +997,15 @@ msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
 msgstr ""
+"כאן ניתן לבחור האם להשתמש בצבע מותאם אישית למועמדים בטבלת החיפוש שמגיעים "
+"מבדיקת האיות."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
 #: setup/main.py:1393
 msgid "Choose color for spellchecking suggestions"
-msgstr ""
+msgstr "נא לבחור צבע להצעות מבדיקת האיות"
 
 #: setup/main.py:1395
 msgid ""
@@ -968,19 +1013,23 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
 msgstr ""
+"כאן ניתן לציין באיזה צבע להשתמש עבור מועמדים בטבלת החיפוש שמגיעים מבדיקת "
+"האיות. הגדרה זו חלה רק אם השימוש בצבע למועמדים מבדיקת האיות פעיל."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
 #: setup/main.py:1416
 msgid "Use color for dictionary suggestions"
-msgstr ""
+msgstr "להשתמש בצבע להצעות מהמילון"
 
 #: setup/main.py:1418
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
 msgstr ""
+"כאן ניתן לבחור האם להשתמש בצבע מותאם אישית עבור מועמדים בטבלת החיפוש שמגיעים "
+"מהמילון."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1168,3 +1217,6 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+"Ibus-typing-booster היא שיטת קלט עם יכולות חיזוי והיא חוזה את המילים השלמות "
+"על בסיס ההקשר וקלט חלקי. ניתן לבחור את המילה המבוקשת מרשימת הצעות ולשפר את "
+"מהירות ההקלדה וגם את האיות."
