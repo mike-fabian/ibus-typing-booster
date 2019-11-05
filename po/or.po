@@ -8,16 +8,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-10-31 09:41+0100\n"
-"PO-Revision-Date: 2019-10-25 13:28+0000\n"
+"PO-Revision-Date: 2019-10-31 14:05+0000\n"
 "Last-Translator: Ankit Behera <proneon267@gmail.com>\n"
-"Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/ibus-"
-"typing-booster/app/or/>\n"
+"Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/"
+"ibus-typing-booster/app/or/>\n"
 "Language: or\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9\n"
+"X-Generator: Weblate 3.9.1\n"
 
 #: engine/emoji_picker.py:193
 msgid "Emoji Picker"
@@ -41,11 +41,11 @@ msgstr "ଇମୋଜି ପାଇଁ ଖୋଜନ୍ତୁ"
 
 #: engine/emoji_picker.py:343
 msgid "Set the font to display emoji"
-msgstr ""
+msgstr "ଅକ୍ଷର ଶୈଳୀକୁ  ଇମୋଜୀ ଦର୍ଶାଇବା ପାଇଁ ଧାର୍ଯ୍ୟ କରନ୍ତୁ"
 
 #: engine/emoji_picker.py:351
 msgid "Set font size"
-msgstr ""
+msgstr "ଅକ୍ଷର ଶୈଳୀର ଆକାର ଧାର୍ଯ୍ୟ କରନ୍ତୁ"
 
 #. Translators: This is a checkbox which enables or disables
 #. the pango font fallback. If font fallback is off, only the
@@ -67,31 +67,31 @@ msgstr ""
 
 #: engine/emoji_picker.py:444
 msgid "Recently used"
-msgstr ""
+msgstr "ସାମ୍ପ୍ରତିକ ଭାବେ ବ୍ୟବହୃତ"
 
 #: engine/emoji_picker.py:618
 msgid "Categories"
-msgstr ""
+msgstr "ଶ୍ରେଣୀଭୁକ୍ତମାନ"
 
 #: engine/emoji_picker.py:619
 msgid "Unicode categories"
-msgstr ""
+msgstr "ୟୁନିକୋଡ଼ ଶ୍ରେଣୀଭୁକ୍ତମାନ"
 
 #: engine/emoji_picker.py:620
 msgid "Keywords"
-msgstr ""
+msgstr "ମୁଖ୍ୟଶବ୍ଦମାନ"
 
 #: engine/emoji_picker.py:662
 msgid "Fonts used to render this emoji:"
-msgstr ""
+msgstr "ଏହି ଇମୋଜୀକୁ ପ୍ରତ୍ୟପର୍ଣ କରିବା ପାଇଁ ବ୍ୟବହୃତ ଅକ୍ଷର ଶୈଳୀମାନ:"
 
 #: engine/emoji_picker.py:679
 msgid "Unicode Version:"
-msgstr ""
+msgstr "ୟୁନିକୋଡ଼ ପ୍ରକାରାନ୍ତର:"
 
 #: engine/emoji_picker.py:701 engine/emoji_picker.py:1797
 msgid "Left click to copy"
-msgstr ""
+msgstr "ନକଲ କରିବା ପାଇଁ ବାମକୁ ଚିପନ୍ତୁ"
 
 #: engine/emoji_picker.py:704
 msgid "Long press or middle click for skin tones"
@@ -99,50 +99,50 @@ msgstr ""
 
 #: engine/emoji_picker.py:705
 msgid "Right click for info"
-msgstr ""
+msgstr "ତଥ୍ୟ ପାଇଁ ଡ଼ାହାଣକୁ ଚିପନ୍ତୁ"
 
 #: engine/emoji_picker.py:1191
 msgid "Search Results"
-msgstr ""
+msgstr "ଅନୁସନ୍ଧାନ ଫଳମାନ"
 
 #: engine/emoji_picker.py:1195
 msgid "Search produced empty result."
-msgstr ""
+msgstr "ଅନୁସନ୍ଧାନ ଶୂନ୍ୟ ଫଳ ପ୍ରକାଶ କରିଛି।"
 
 #: engine/emoji_picker.py:1466 engine/emoji_picker.py:1590
 msgid "Copied to clipboard!"
-msgstr ""
+msgstr "କ୍ଲିପିବୋର୍ଡ଼କୁ ପ୍ରତିଲିପି କରଣ ସମାପ୍ତ !"
 
 #: engine/emoji_picker.py:1907
 msgid "Lookup on emojipedia"
-msgstr ""
+msgstr "ଇମୋଜୀପିଡ଼ିଆରେ ଅନୁସନ୍ଧାନ କରନ୍ତୁ"
 
 #: engine/emoji_picker.py:2032 engine/emoji_picker.py:2033
 #: engine/emoji_picker.py:2034 setup/main.py:1162
 msgid "System default"
-msgstr ""
+msgstr "ତନ୍ତ୍ର ପୂର୍ବନିଦ୍ଧାରିତ"
 
 #: engine/emoji_picker.py:2157
 msgid "Set Font"
-msgstr ""
+msgstr "ଅକ୍ଷର ଶୈଳୀ ଧାର୍ଯ୍ୟ କରନ୍ତୁ"
 
 #: engine/hunspell_table.py:467 engine/hunspell_table.py:501
 #: engine/hunspell_table.py:522
 msgid "Off"
-msgstr ""
+msgstr "ରଦ୍ଦ"
 
 #: engine/hunspell_table.py:472 engine/hunspell_table.py:506
 #: engine/hunspell_table.py:527
 msgid "On"
-msgstr ""
+msgstr "ନିରଦ୍ଦ"
 
 #: engine/hunspell_table.py:491
 msgid "Input mode"
-msgstr ""
+msgstr "ନିବେଶ ଅବସ୍ଥା"
 
 #: engine/hunspell_table.py:492
 msgid "Here you can switch ibus-typing-booster on or off."
-msgstr ""
+msgstr "ଏଠାରେ ଆପଣ ibus-typing-booster କୁ ରଦ୍ଦ ବା ନିରଦ୍ଦ କରିପାରିବେ।"
 
 #. Translators: Whether Unicode symbols and emoji should be
 #. included in the predictions. Emoji are pictographs like
@@ -153,7 +153,7 @@ msgstr ""
 #. nevertheless useful symbols.
 #: engine/hunspell_table.py:511 engine/hunspell_table.py:513 setup/main.py:448
 msgid "Unicode symbols and emoji predictions"
-msgstr ""
+msgstr "ୟୁନିକୋଡ଼ ଚିହ୍ନ ଏବଂ ଇମୋଜୀ ଭବିଷ୍ୟତବାଣୀମାନ"
 
 #. Translators: While “Off the record” mode is on, learning
 #. from user input is disabled. If learned user input is
@@ -164,47 +164,47 @@ msgstr ""
 #. sense to use this option temporarily.
 #: engine/hunspell_table.py:532 engine/hunspell_table.py:533 setup/main.py:476
 msgid "Off the record mode"
-msgstr ""
+msgstr "ଅଭିଲେଖନି ଅବସ୍ଥାକୁ ରଦ୍ଦ କରନ୍ତୁ"
 
 #: engine/hunspell_table.py:1370
 msgid "Highest priority dictionary"
-msgstr ""
+msgstr "ସର୍ବୋଚ୍ଚ ଅଗ୍ରାଧିକାର ଅଭିଧାନ"
 
 #: engine/hunspell_table.py:1371
 msgid "Choose highest priority dictionary"
-msgstr ""
+msgstr "ସର୍ବୋଚ୍ଚ ଅଗ୍ରାଧିକାର ଅଭିଧାନକୁ ବାଛନ୍ତୁ"
 
 #: engine/hunspell_table.py:1400
 msgid "Preedit input method"
-msgstr ""
+msgstr "ନିବେଶ ବିଧି ପୂର୍ବସମ୍ପାଦନ"
 
 #: engine/hunspell_table.py:1401
 msgid "Switch preedit input method"
-msgstr ""
+msgstr "ନିବେଶ ବିଧି ପୂର୍ବସମ୍ପାଦନକୁ ପରିବର୍ତ୍ତନ କରନ୍ତୁ"
 
 #: engine/hunspell_table.py:1694
 msgid "Setup"
-msgstr ""
+msgstr "ସ୍ଥାପନକରଣି"
 
 #: engine/hunspell_table.py:1697 setup/main.py:130
 msgid "Preferences for ibus-typing-booster"
-msgstr ""
+msgstr "ibus-typing-booster ପାଇଁ ଅଭିରୁଚିମାନ"
 
 #: engine/hunspell_table.py:3829
 msgid "Failed to import Google speech-to-text."
-msgstr ""
+msgstr "ଗୁଗଲ speech-to-text କୁ ଆମଦାନି କରିବାରେ ବିଫଳ।"
 
 #: engine/hunspell_table.py:3832
 msgid "Failed to import pyaudio."
-msgstr ""
+msgstr "pyaudio କୁ ଆମଦାନି କରିବାରେ ବିଫଳ।"
 
 #: engine/hunspell_table.py:3835
 msgid "Failed to import queue."
-msgstr ""
+msgstr "queue କୁ ଆମଦାନି କରିବାରେ ବିଫଳ।"
 
 #: engine/hunspell_table.py:3840
 msgid "No supported language for speech recognition."
-msgstr ""
+msgstr "ଭାଷଣ ମାନ୍ୟତା ପାଇଁ କୌଣସି ସମର୍ଥିତ ଭାଷା ନାହିଁ।"
 
 #: engine/hunspell_table.py:3844
 #, python-format
@@ -213,86 +213,86 @@ msgstr ""
 
 #: engine/hunspell_table.py:3856
 msgid "Failed to init Google speech-to-text. See debug.log."
-msgstr ""
+msgstr "ଗୁଗଲ speech-to-text କୁ ପ୍ରାରଭିକରଣରେ ବିଫଳ। debug.log ଦେଖନ୍ତୁ।"
 
 #: engine/hunspell_table.py:3963
 msgid "Google speech-to-text error. See debug.log."
-msgstr ""
+msgstr "ଗୁଗଲ speech-to-text ତ୍ରୁଟି। debug.log ଦେଖନ୍ତୁ।"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:774 engine/itb_emoji.py:775 engine/itb_emoji.py:776
 #: engine/itb_emoji.py:987
 msgid "people"
-msgstr ""
+msgstr "ଲୋକମାନେ"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:777 engine/itb_emoji.py:983
 msgid "nature"
-msgstr ""
+msgstr "ପ୍ରକୃତି"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:778 engine/itb_emoji.py:979
 msgid "food"
-msgstr ""
+msgstr "ଖାଦ୍ୟ"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:779 engine/itb_emoji.py:993
 msgid "travel"
-msgstr ""
+msgstr "ଭ୍ରମଣ"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:780 engine/itb_emoji.py:789 engine/itb_emoji.py:975
 msgid "activity"
-msgstr ""
+msgstr "କାର୍ଯ୍ୟକ୍ରମ"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:781 engine/itb_emoji.py:985
 msgid "objects"
-msgstr ""
+msgstr "ବସ୍ତୁମାନ"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:782 engine/itb_emoji.py:991
 msgid "symbols"
-msgstr ""
+msgstr "ଚିହ୍ନମାନ"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:783 engine/itb_emoji.py:977
 msgid "flags"
-msgstr ""
+msgstr "ଧ୍ବଜାମାନ"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:784 engine/itb_emoji.py:785 engine/itb_emoji.py:981
 msgid "modifier"
-msgstr ""
+msgstr "ରୂପାନ୍ତରକାରୀ"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:786 engine/itb_emoji.py:989
 msgid "regional"
-msgstr ""
+msgstr "ଆଞ୍ଚଳିକ"
 
 #: engine/itb_util.py:3155 engine/itb_util.py:3341
 msgid "File not found"
-msgstr ""
+msgstr "ତଥ୍ୟସମୂହ(ଫାଇଲ) ମିଳିଲା ନାହିଁ"
 
 #: engine/itb_util.py:3158 engine/itb_util.py:3344
 msgid "Permission error"
-msgstr ""
+msgstr "ଅନୁମତି ତ୍ରୁଟି"
 
 #: engine/itb_util.py:3161 engine/itb_util.py:3347
 msgid "Unicode decoding error"
-msgstr ""
+msgstr "ୟୁନିକୋଡ଼ ଅବସଙ୍କେତିକରଣ ତ୍ରୁଟି"
 
 #: engine/itb_util.py:3164 engine/itb_util.py:3350
 msgid "Unknown error"
-msgstr ""
+msgstr "ଅଜ୍ଞାତ ତ୍ରୁଟି"
 
 #: engine/itb_util.py:3321
 msgid "Native Keyboard"
-msgstr ""
+msgstr "ଆଞ୍ଚଳିକ କୀବୋର୍ଡ଼"
 
 #: engine/itb_util.py:3323
 msgid ""
@@ -306,18 +306,18 @@ msgstr ""
 #. key binding for a command.
 #: engine/itb_util.py:3779
 msgid "Key input"
-msgstr ""
+msgstr "କୀ ନିବେଶ"
 
 #: engine/itb_util.py:3785
 msgid "Cancel"
-msgstr ""
+msgstr "ରଦ୍ଦ"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
 #: engine/itb_util.py:3792
 msgid "Please press a key (or a key combination)"
-msgstr ""
+msgstr "ଦୟାକରି ଏକ କୀ ଦବାନ୍ତୁ (କିମ୍ବା ଏକ କୀ ମିଶ୍ରଣ)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
@@ -328,20 +328,20 @@ msgstr ""
 
 #: engine/itb_util.py:3828
 msgid "A completion input method to speedup typing."
-msgstr ""
+msgstr "ଏକ ସମ୍ପତ୍ତିକରଣ ନିବେଶ ବିଧି ଲେଖାର ଗତିକୁ ବୃଧି କରିବା ପାଇଁ।"
 
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:3837
 msgid "translator-credits"
-msgstr ""
+msgstr "ଅନୁବାଦକାରୀ-ସ୍ବୀକୃତିମାନ"
 
 #: engine/itb_util.py:3845
 msgid "Online documentation:"
-msgstr ""
+msgstr "ଅନଲାଇନ ଦସ୍ତାବିଜ଼:"
 
 #: setup/main.py:107
 msgid "Preferences"
-msgstr ""
+msgstr "ଅଭିରୁଚିମାନ"
 
 #: setup/main.py:169 setup/main.py:4447
 msgid "_Close"
@@ -354,14 +354,14 @@ msgstr ""
 #. in.
 #: setup/main.py:191
 msgid "Dictionaries and input methods"
-msgstr ""
+msgstr "ଅଭିଧାନମାନ ଏବଂ ନିବେଶ ବିଧିମାନ"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence the
 #. behaviour of ibus-typing-booster.
 #: setup/main.py:207
 msgid "Options"
-msgstr ""
+msgstr "ବିକଳ୍ପମାନ"
 
 #. Translators: This is a label of a tab in the setup tool.
 #. Here the user can create custom shortcuts. For example if
@@ -394,14 +394,14 @@ msgstr ""
 #. diffent types of candidates should be marked with labels.
 #: setup/main.py:259
 msgid "Appearance"
-msgstr ""
+msgstr "ଆକୃତି"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
 #: setup/main.py:275 setup/main.py:1686
 msgid "Speech recognition"
-msgstr ""
+msgstr "ଭାଷଣ ମାନ୍ୟକରଣ"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -430,7 +430,7 @@ msgstr ""
 #. the next candidate and opens the full candidate list.
 #: setup/main.py:344
 msgid "Use inline completion"
-msgstr ""
+msgstr "ଆଭ୍ୟନ୍ତର ରେଖା ସମାପ୍ତିକରଣ ବ୍ୟବହାର କରନ୍ତୁ"
 
 #: setup/main.py:346
 msgid ""
@@ -451,7 +451,7 @@ msgstr ""
 #. command which will deselect all candidates.
 #: setup/main.py:373
 msgid "Automatically select the best candidate"
-msgstr ""
+msgstr "ସ୍ୱୟଂ ଉତ୍ତମ ପ୍ରତିନିଧିକୁ ବାଛନ୍ତୁ"
 
 #: setup/main.py:375
 msgid ""
@@ -484,7 +484,7 @@ msgstr ""
 #. the session is restarted.
 #: setup/main.py:421
 msgid "Remember last used preedit input method"
-msgstr ""
+msgstr "ପୂର୍ବ ପୂର୍ବସମ୍ପାଦନ ନିବେଶ ବିଧିକୁ ମନେ ରଖନ୍ତୁ"
 
 #: setup/main.py:423
 msgid ""
@@ -542,7 +542,7 @@ msgstr ""
 #. default.
 #: setup/main.py:535
 msgid "Arrow keys can reopen a preedit"
-msgstr ""
+msgstr "ତୀର କୀମାନେ ଏକ ପୂର୍ବସମ୍ପାଦନକୁ ଖୋଲି ପାରିବେ"
 
 #: setup/main.py:537
 msgid ""
@@ -586,7 +586,7 @@ msgstr ""
 #. number of characters have been typed.
 #: setup/main.py:606
 msgid "Minimum number of chars for completion:"
-msgstr ""
+msgstr "ସର୍ବନିମ୍ନ ବର୍ଣ୍ଣ ସମାପ୍ତିକରଣ ପାଇଁ:"
 
 #: setup/main.py:608
 msgid ""
@@ -611,17 +611,17 @@ msgstr ""
 #. reading that text file.
 #: setup/main.py:668
 msgid "Learn from text file"
-msgstr ""
+msgstr "ଲେଖା ତଥ୍ୟକୋଷ(ଫାଇଲ) ରୁ ଶିଖନ୍ତୁ"
 
 #: setup/main.py:670
 msgid "Learn your style by reading a text file"
-msgstr ""
+msgstr "ଲେଖା ତଥ୍ୟକୋଷ(ଫାଇଲ) କୁ ପଢ଼ି ଆପଣଙ୍କ ଶୈଳି ଶିଖନ୍ତୁ"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
 #: setup/main.py:679
 msgid "Delete learned data"
-msgstr ""
+msgstr "ଶିଖିଥିବା ତଥ୍ୟକୁ ବିଲୋପ କରନ୍ତୁ"
 
 #: setup/main.py:681
 msgid ""
@@ -633,13 +633,13 @@ msgstr ""
 #. ibus-typing-booster.
 #: setup/main.py:693
 msgid "Use dictionaries for the following languages:"
-msgstr ""
+msgstr "ଉକ୍ତ ଭାଷାଗୁଡ଼ିକ ପାଇଁ ଅଭିଧାନ ବ୍ୟବହାର କରନ୍ତୁ:"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
 #: setup/main.py:711
 msgid "Install missing dictionaries"
-msgstr ""
+msgstr "ଅନୁପସ୍ଥିତ ଅଭିଧାନମାନଙ୍କୁ ସ୍ଥାପନ କରନ୍ତୁ"
 
 #: setup/main.py:713
 msgid "Install the dictionaries which are setup here but not installed"
@@ -647,49 +647,49 @@ msgstr ""
 
 #: setup/main.py:730
 msgid "Add a dictionary"
-msgstr ""
+msgstr "ଅଭିଧାନ ଯୋଗ କରନ୍ତୁ"
 
 #: setup/main.py:741
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "ଅଭିଧାନ ବିଲୋପ କରନ୍ତୁ"
 
 #: setup/main.py:752
 msgid "Move dictionary up"
-msgstr ""
+msgstr "ଅଭିଧାନକୁ ଉପରକୁ କରନ୍ତୁ"
 
 #: setup/main.py:764
 msgid "Move dictionary down"
-msgstr ""
+msgstr "ଅଭିଧାନକୁ ତଳକୁ କରନ୍ତୁ"
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:788
 msgid "Use the following input methods:"
-msgstr ""
+msgstr "ଉକ୍ତ ନିବେଶ ବିଧିଗୁଡ଼ିକୁ ବ୍ୟବହାର କରନ୍ତୁ:"
 
 #: setup/main.py:816
 msgid "Add an input method"
-msgstr ""
+msgstr "ନିବେଶ ବିଧି ଯୋଗ କରନ୍ତୁ"
 
 #: setup/main.py:828
 msgid "Remove an input method"
-msgstr ""
+msgstr "ନିବେଶ ବିଧିକୁ ବିଲୋପ କରନ୍ତୁ"
 
 #: setup/main.py:840
 msgid "Move input method up"
-msgstr ""
+msgstr "ନିବେଶ ବିଧିକୁ ଉପରକୁ କରନ୍ତୁ"
 
 #: setup/main.py:852
 msgid "Move input method down"
-msgstr ""
+msgstr "ନିବେଶ ବିଧିକୁ ତଳକୁ କରନ୍ତୁ"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
 #: setup/main.py:860
 msgid "Input Method Help"
-msgstr ""
+msgstr "ନିବେଶ ବିଧି ସହାୟତା"
 
 #: setup/main.py:862
 msgid "Display some help showing how to use the input method selected above."
