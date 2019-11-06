@@ -1,4 +1,15 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 06 Nov 2019 Released 2.7.2
+* Fix display for right-to-left languages in the dictionaries and input methods tab in the setup tool
+* Added Swahili translations from Weblate (30.1% translated)
+* Added Traditional Chinese translations from Weblate (0.5% translated)
+* Added Portuguese (Portugal) translations from Weblate (23.8% translated)
+* Update Hebrew translations from Weblate (100% translated)
+* Update Arabic translations from Weblate (100% translated)
+* Update Odia translations from Weblate (44.0% translated)
+* Update Spanisch translations from Weblate (93.3% translated)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 31 Oct 2019 Released 2.7.1
 * Update Chinese (Simplified) translations from Weblate (13.5% translated)
 * Update Spanish translations from Weblate (92.2% translated)

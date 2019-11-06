@@ -19,6 +19,34 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.7.2" date="2019-11-06" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Fix display for right-to-left languages in the
+            dictionaries and input methods tab in the setup tool
+          </li>
+          <li>
+            Added Swahili translations from Weblate (30.1% translated)
+          </li>
+          <li>
+            Added Traditional Chinese translations from Weblate (0.5% translated)
+          </li>
+          <li>
+            Added Portuguese (Portugal) translations from Weblate (23.8% translated)
+          </li>
+          <li>
+            Update Hebrew translations from Weblate (100% translated)
+          </li>
+          <li>
+            Update Arabic translations from Weblate (100% translated)
+          </li>
+          <li>
+            Update Spanisch translations from Weblate (93.3% translated)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.7.1" date="2019-10-31" urgency="medium">
       <description>
         <ul>
