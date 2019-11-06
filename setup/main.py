@@ -776,6 +776,7 @@ class SetupUI(Gtk.Window):
         self._dictionary_names = []
         self._dictionaries_listbox = None
         self._dictionaries_add_listbox = None
+        self._dictionaries_add_listbox_dictionary_names = []
         self._dictionaries_add_popover = None
         self._dictionaries_add_popover_scroll = None
         self._fill_dictionaries_listbox()
@@ -874,6 +875,7 @@ class SetupUI(Gtk.Window):
         self._current_imes = []
         self._input_methods_listbox = None
         self._input_methods_add_listbox = None
+        self._input_methods_add_listbox_imes = []
         self._input_methods_add_popover = None
         self._input_methods_add_popover_scroll = None
         self._fill_input_methods_listbox()
@@ -1653,9 +1655,11 @@ class SetupUI(Gtk.Window):
         :rtype: (String, Boolean)
         '''
         missing_dictionary = False
-        row = name + ' ' # NO-BREAK SPACE as a separator
         flag = itb_util.FLAGS.get(name, '  ')
-        row += ' ' + flag
+        row = name + ' ' + flag
+        if itb_util.is_right_to_left_messages():
+            # start the row with U+200E LEFT-TO-RIGHT MARK
+            row = chr(0x200F) + flag + ' ' + name
         if IMPORT_LANGTABLE_SUCCESSFUL:
             language_description = langtable.language_name(
                 languageId=name,
@@ -1671,23 +1675,26 @@ class SetupUI(Gtk.Window):
         row += ':  '
         (dic_path,
          dummy_aff_path) = itb_util.find_hunspell_dictionary(name)
-        row += ' ' + _('Spell checking') + ' '
+        row_item = ' ' + _('Spell checking') + ' '
         if dic_path:
-            row += '✔️'
+            row_item += '✔️'
         else:
-            row += '❌'
+            row_item += '❌'
             missing_dictionary = True
-        row += ' ' + _('Emoji') + ' '
+        row += itb_util.bidi_embed(row_item)
+        row_item = ' ' + _('Emoji') + ' '
         if itb_emoji.find_cldr_annotation_path(name):
-            row += '✔️'
+            row_item += '✔️'
         else:
-            row += '❌'
+            row_item += '❌'
+        row += itb_util.bidi_embed(row_item)
         if self._keybindings['speech_recognition']:
-            row += ' ' + _('Speech recognition') + ' '
+            row_item = ' ' + _('Speech recognition') + ' '
             if name in itb_util.GOOGLE_SPEECH_TO_TEXT_LANGUAGES:
-                row += '✔️'
+                row_item += '✔️'
             else:
-                row += '❌'
+                row_item += '❌'
+            row += itb_util.bidi_embed(row_item)
         return (row, missing_dictionary)
 
     def _fill_dictionaries_listbox(self):
@@ -1768,7 +1775,10 @@ class SetupUI(Gtk.Window):
         :type ime: String
         :rtype: String
         '''
-        row = ime + ' ' # NO-BREAK SPACE as a separator
+        row = ime
+        if itb_util.is_right_to_left_messages():
+            # start the row with U+200E LEFT-TO-RIGHT MARK
+            row = chr(0x200F) + ime
         # add some spaces for nicer formatting:
         row += ' ' * (20 - len(ime))
         title = M17N_DB_INFO.get_title(ime)
@@ -2416,7 +2426,8 @@ class SetupUI(Gtk.Window):
         :param listbox_row: A row containing a dictionary name
         :type listbox_row: Gtk.ListBoxRow object
         '''
-        name = listbox_row.get_child().get_text().split(' ')[0]
+        index = listbox_row.get_index()
+        name = self._dictionaries_add_listbox_dictionary_names[index]
         if GTK_VERSION >= (3, 22, 0):
             self._dictionaries_add_popover.popdown()
         self._dictionaries_add_popover.hide()
@@ -2439,6 +2450,7 @@ class SetupUI(Gtk.Window):
                             (ignoring case and spaces) are listed.
         :type filter_text: String
         '''
+        self._dictionaries_add_listbox_dictionary_names = []
         for child in self._dictionaries_add_popover_scroll.get_children():
             self._dictionaries_add_popover_scroll.remove(child)
         self._dictionaries_add_listbox = Gtk.ListBox()
@@ -2481,6 +2493,7 @@ class SetupUI(Gtk.Window):
                         if all_words_match:
                             filter_match = True
             if filter_match:
+                self._dictionaries_add_listbox_dictionary_names.append(name)
                 rows.append(self._fill_dictionaries_listbox_row(name)[0])
         for row in rows:
             label = Gtk.Label()
@@ -2676,16 +2689,14 @@ class SetupUI(Gtk.Window):
         :type listbox_row: Gtk.ListBoxRow object
         '''
         if listbox_row:
+            index = listbox_row.get_index()
+            self._dictionaries_listbox_selected_dictionary_index = index
             self._dictionaries_listbox_selected_dictionary_name = (
-                listbox_row.get_child().get_text().split(' ')[0])
-            self._dictionaries_listbox_selected_dictionary_index = (
-                listbox_row.get_index())
+                self._dictionary_names[index])
             self._dictionaries_remove_button.set_sensitive(True)
-            self._dictionaries_up_button.set_sensitive(
-                self._dictionaries_listbox_selected_dictionary_index > 0)
+            self._dictionaries_up_button.set_sensitive(index > 0)
             self._dictionaries_down_button.set_sensitive(
-                self._dictionaries_listbox_selected_dictionary_index
-                < len(self._dictionary_names) - 1)
+                index < len(self._dictionary_names) - 1)
         else:
             # all rows have been unselected
             self._dictionaries_listbox_selected_dictionary_name = ''
@@ -2704,7 +2715,8 @@ class SetupUI(Gtk.Window):
         :param listbox_row: A row containing an input method name
         :type listbox_row: Gtk.ListBoxRow object
         '''
-        ime = listbox_row.get_child().get_text().split(' ')[0]
+        index = listbox_row.get_index()
+        ime = self._input_methods_add_listbox_imes[index]
         if GTK_VERSION >= (3, 22, 0):
             self._input_methods_add_popover.popdown()
         self._input_methods_add_popover.hide()
@@ -2727,6 +2739,7 @@ class SetupUI(Gtk.Window):
                             (ignoring case and spaces) are listed.
         :type filter_text: String
         '''
+        self._input_methods_add_listbox_imes = []
         for child in self._input_methods_add_popover_scroll.get_children():
             self._input_methods_add_popover_scroll.remove(child)
         self._input_methods_add_listbox = Gtk.ListBox()
@@ -2746,6 +2759,7 @@ class SetupUI(Gtk.Window):
             row = self._fill_input_methods_listbox_row(ime)
             if (filter_text.replace(' ', '').lower()
                     in row.replace(' ', '').lower()):
+                self._input_methods_add_listbox_imes.append(ime)
                 rows.append(row)
         for row in rows:
             label = Gtk.Label()
@@ -2940,10 +2954,10 @@ class SetupUI(Gtk.Window):
         :type listbox_row: Gtk.ListBoxRow object
         '''
         if listbox_row:
-            self._input_methods_listbox_selected_ime_name = (
-                listbox_row.get_child().get_text().split(' ')[0])
             index = listbox_row.get_index()
             self._input_methods_listbox_selected_ime_index = index
+            self._input_methods_listbox_selected_ime_name = (
+                self._current_imes[index])
             self._input_methods_remove_button.set_sensitive(True)
             self._input_methods_up_button.set_sensitive(
                 0 < index < len(self._current_imes))

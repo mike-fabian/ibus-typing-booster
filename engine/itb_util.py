@@ -2619,6 +2619,23 @@ def remove_accents(text):
         x for x in unicodedata.normalize('NFKD', text)
         if unicodedata.category(x) != 'Mn']).translate(TRANS_TABLE)
 
+def is_right_to_left_messages():
+    '''
+    Check whether the effective LC_MESSAGES locale points to a languages
+    which is usually written  in a right-to-left script.
+
+    :return: True if right-to-left, False if not.
+    :rtype: Boolean
+    '''
+    lc_messages_locale, dummy_lc_messages_encoding = locale.getlocale(
+        category=locale.LC_MESSAGES)
+    lang = lc_messages_locale.split('_')[0]
+    if lang in ('ar', 'arc', 'dv', 'fa', 'he', 'ps', 'ur', 'yi'):
+        # 'ku' could be Latin script or Arabic script or even Cyrillic or Armenian
+        # script
+        return True
+    return False
+
 def is_right_to_left(text):
     '''Check whether a text is right-to-left text or not
 
