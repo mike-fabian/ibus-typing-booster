@@ -12,16 +12,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-11-06 18:40+0100\n"
-"PO-Revision-Date: 2019-10-26 05:53+0000\n"
+"PO-Revision-Date: 2019-11-11 06:08+0000\n"
 "Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
-"Language-Team: French <https://translate.stg.fedoraproject.org/projects/ibus-"
-"typing-booster/app/fr/>\n"
+"Language-Team: French <https://translate.stg.fedoraproject.org/projects/"
+"ibus-typing-booster/app/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9\n"
+"X-Generator: Weblate 3.9.1\n"
 
 #: engine/emoji_picker.py:193
 msgid "Emoji Picker"
@@ -148,7 +148,7 @@ msgstr "Mode de saisie"
 
 #: engine/hunspell_table.py:492
 msgid "Here you can switch ibus-typing-booster on or off."
-msgstr "Ici vous pouvez activer ou désactiver ibus-typing-booster"
+msgstr "Ici vous pouvez activer ou désactiver ibus-typing-booster."
 
 #. Translators: Whether Unicode symbols and emoji should be
 #. included in the predictions. Emoji are pictographs like
@@ -182,7 +182,7 @@ msgstr "Choisissez le dictionnaire prioritaire"
 
 #: engine/hunspell_table.py:1400
 msgid "Preedit input method"
-msgstr "Méthode de saisie pour la pré-édition."
+msgstr "Méthode de saisie de pré-édition"
 
 #: engine/hunspell_table.py:1401
 msgid "Switch preedit input method"
@@ -453,7 +453,7 @@ msgstr ""
 #. the next candidate and opens the full candidate list.
 #: setup/main.py:344
 msgid "Use inline completion"
-msgstr "Utiliser le complètement automatique"
+msgstr "Utiliser le complètement en ligne"
 
 #: setup/main.py:346
 msgid ""
@@ -463,6 +463,12 @@ msgid ""
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
+"Si la meilleure complètement est d'abord montrée en ligne dans la pré-"
+"édition au lieu d'afficher une liste complète des candidats. Le candidat en "
+"ligne peut être sélectionné en appuyant sur Tab et ensuite validé comme "
+"d'habitude, par exemple en tapant Espace ou Contrôle+Espace. La touche Tab "
+"permet de passer au candidat suivant et d'ouvrir la liste complète des "
+"candidats."
 
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
@@ -485,6 +491,13 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
+"Ce que vous saisissez sera automatiquement corrigé avec le meilleur candidat "
+"qui sera sélectionné automatiquement. Si cette option est désactivée, vous "
+"devez sélectionner manuellement le candidat en utilisant les touches  pour "
+"sélectionner le prochain candidat. Si cette option est activée et que vous "
+"ne voulez pas utiliser le candidat sélectionné automatique, vous pouvez "
+"utiliser la touche pour la commande « annuler » ce qui désélectionnera tous "
+"les candidats."
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
@@ -507,7 +520,7 @@ msgstr "Ajoute une espace si un candidat est validé à la souris."
 #. the session is restarted.
 #: setup/main.py:421
 msgid "Remember last used preedit input method"
-msgstr "Retenir la dernière méthode de saisie utilisée pour la pré-édition."
+msgstr "Retenir la dernière méthode de saisie utilisée pour la pré-édition"
 
 #: setup/main.py:423
 msgid ""
@@ -649,7 +662,7 @@ msgstr ""
 #. number of characters have been typed.
 #: setup/main.py:606
 msgid "Minimum number of chars for completion:"
-msgstr "Nombre minimum de caractères pour l’auto-complètement :"
+msgstr "Nombre minimum de caractères pour le complètement :"
 
 #: setup/main.py:608
 msgid ""
@@ -908,35 +921,35 @@ msgstr "Verticale"
 #. underlining for the preedit.
 #: setup/main.py:1189
 msgid "Preedit underline"
-msgstr ""
+msgstr "Soulignement de la pré-édition"
 
 #: setup/main.py:1191
 msgid "Which style of underlining to use for the preedit."
-msgstr ""
+msgstr "Le style de soulignement à utiliser pour la préédition."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
 #: setup/main.py:1201
 msgid "None"
-msgstr ""
+msgstr "Aucun"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
 #: setup/main.py:1205
 msgid "Single"
-msgstr ""
+msgstr "Simple"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
 #: setup/main.py:1209
 msgid "Double"
-msgstr ""
+msgstr "Double"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
 #: setup/main.py:1213
 msgid "Low"
-msgstr ""
+msgstr "Bas"
 
 #. Translators: Checkbox to choose whether a preedit style
 #. like underlining will only be used if lookup is
@@ -946,7 +959,7 @@ msgstr ""
 #. of characters before a lookup is done.
 #: setup/main.py:1241
 msgid "Use preedit style only if lookup is enabled"
-msgstr ""
+msgstr "Utiliser le style de pré-édition uniquement si la recherche est activée"
 
 #: setup/main.py:1243
 msgid ""
@@ -955,27 +968,32 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
+"Si cette option est activée, un style de pré-édition comme le soulignement "
+"ne sera activé qu'en cas de recherche. La recherche est désactivable lors ce "
+"qu'on utilise l'option pour activer la recherche uniquement lorsqu'on appuie "
+"sur une touche ou parce qu'on utilise l'option pour exiger un nombre minimum "
+"de caractères avant de faire une recherche."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
 #: setup/main.py:1263
 msgid "Use color for inline completion"
-msgstr "Utilisation d'une couleur pour le complètement automatique"
+msgstr "Utilisation d'une couleur pour le complètement en ligne"
 
 #: setup/main.py:1265
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
 msgstr ""
-"Ici, vous pouvez choisir si une couleur personnalisée est utilisée pour une "
-"suggestion montrée automatiquement"
+"Choisissez ici si une couleur personnalisée est utilisée pour une suggestion "
+"affichée en ligne."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
 #: setup/main.py:1295
 msgid "Choose color for inline completion"
-msgstr "Choisir la couleur pour le complètement automatique"
+msgstr "Choisir la couleur pour le complètement en ligne"
 
 #: setup/main.py:1297
 msgid ""
@@ -983,9 +1001,9 @@ msgid ""
 "only has an effect if the use of color for inline completion is enabled and "
 "inline completion is enabled."
 msgstr ""
-"Ici vous pouvez renseigner quelle couleur à utiliser pour le complètement "
-"automatique. Ce paramétrage n'a d'effet si l'utilisation d'une couleur "
-"personnalisée est utilisée et que le complètement automatique est activé."
+"Ici vous pouvez renseigner la couleur à utiliser pour le complètement en "
+"ligne. Ce paramétrage n'a d'effet que si l'utilisation d'une couleur "
+"personnalisée est utilisée et que le complètement en ligne est activé."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
@@ -1153,11 +1171,11 @@ msgstr ""
 #. Translators:
 #: setup/main.py:1610 setup/main.py:2354
 msgid "Set “Google application credentials” .json file:"
-msgstr ""
+msgstr "Renseignez le fichier .json «  Google application credentials » :"
 
 #: setup/main.py:1612
 msgid "Full path of the “Google application credentials” .json file."
-msgstr ""
+msgstr "Chemin complet du fichier .json «  Google application credentials »."
 
 #: setup/main.py:1678
 msgid "Spell checking"
