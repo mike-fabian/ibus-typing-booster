@@ -1,21 +1,23 @@
 # Zdenek <chmelarz@gmail.com>, 2017. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata
 # Pavel Borecki <pavel.borecki@gmail.com>, 2019. #zanata
+# Josef Hruska <hrusjos@gmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-11-06 18:40+0100\n"
-"PO-Revision-Date: 2019-06-29 03:06+0000\n"
-"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
-"Language-Team: Czech\n"
+"PO-Revision-Date: 2019-11-11 06:08+0000\n"
+"Last-Translator: Josef Hruska <hrusjos@gmail.com>\n"
+"Language-Team: Czech <https://translate.stg.fedoraproject.org/projects/"
+"ibus-typing-booster/app/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Zanata 4.6.2\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 3.9.1\n"
 
 #: engine/emoji_picker.py:193
 msgid "Emoji Picker"
@@ -145,7 +147,7 @@ msgstr "Metoda vstupu"
 
 #: engine/hunspell_table.py:492
 msgid "Here you can switch ibus-typing-booster on or off."
-msgstr "Zde je možné ibus-typing-booster vypnout nebo zapnout"
+msgstr "Zde je možné ibus-typing-booster vypnout nebo zapnout."
 
 #. Translators: Whether Unicode symbols and emoji should be
 #. included in the predictions. Emoji are pictographs like
@@ -404,7 +406,7 @@ msgstr "Navázání na klávesy"
 #. diffent types of candidates should be marked with labels.
 #: setup/main.py:259
 msgid "Appearance"
-msgstr "Vzled"
+msgstr "Vzhled"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
@@ -863,7 +865,7 @@ msgstr ""
 #. candidates to show in one page of the candidate list.
 #: setup/main.py:1121
 msgid "Candidate window page size:"
-msgstr "Velikost stránky okna s kandidáty"
+msgstr "Velikost stránky okna s kandidáty:"
 
 #: setup/main.py:1123
 msgid ""
@@ -900,7 +902,7 @@ msgstr "Podtržítko úpravy před editací"
 
 #: setup/main.py:1191
 msgid "Which style of underlining to use for the preedit."
-msgstr "Jaký styl podtrhávání použít pro úpravu před editací"
+msgstr "Jaký styl podtrhávání použít pro úpravu před editací."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
