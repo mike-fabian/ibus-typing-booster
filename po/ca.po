@@ -7,7 +7,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-11-06 18:40+0100\n"
-"PO-Revision-Date: 2019-10-31 00:31+0000\n"
+"PO-Revision-Date: 2019-11-11 06:08+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Catalan <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ca/>\n"
@@ -36,7 +36,7 @@ msgstr "Surt"
 
 #: engine/emoji_picker.py:331
 msgid "Search for emoji"
-msgstr ""
+msgstr "Cerca un emoji"
 
 #: engine/emoji_picker.py:343
 msgid "Set the font to display emoji"
@@ -74,11 +74,11 @@ msgstr "Categories"
 
 #: engine/emoji_picker.py:619
 msgid "Unicode categories"
-msgstr ""
+msgstr "Categories del Unicode"
 
 #: engine/emoji_picker.py:620
 msgid "Keywords"
-msgstr ""
+msgstr "Paraules clau"
 
 #: engine/emoji_picker.py:662
 msgid "Fonts used to render this emoji:"
@@ -86,7 +86,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:679
 msgid "Unicode Version:"
-msgstr ""
+msgstr "Versió del Unicode:"
 
 #: engine/emoji_picker.py:701 engine/emoji_picker.py:1797
 msgid "Left click to copy"
@@ -102,7 +102,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:1191
 msgid "Search Results"
-msgstr ""
+msgstr "Resultats de la cerca"
 
 #: engine/emoji_picker.py:1195
 msgid "Search produced empty result."
@@ -119,7 +119,7 @@ msgstr ""
 #: engine/emoji_picker.py:2032 engine/emoji_picker.py:2033
 #: engine/emoji_picker.py:2034 setup/main.py:1164
 msgid "System default"
-msgstr ""
+msgstr "Valor per defecte de sistema"
 
 #: engine/emoji_picker.py:2157
 msgid "Set Font"
@@ -152,7 +152,7 @@ msgstr ""
 #. nevertheless useful symbols.
 #: engine/hunspell_table.py:511 engine/hunspell_table.py:513 setup/main.py:448
 msgid "Unicode symbols and emoji predictions"
-msgstr ""
+msgstr "Prediccions d'emojis i símbols del Unicode"
 
 #. Translators: While “Off the record” mode is on, learning
 #. from user input is disabled. If learned user input is
@@ -184,7 +184,7 @@ msgstr ""
 
 #: engine/hunspell_table.py:1694
 msgid "Setup"
-msgstr "Preferències"
+msgstr "Configuració"
 
 #: engine/hunspell_table.py:1697 setup/main.py:130
 msgid "Preferences for ibus-typing-booster"
@@ -224,13 +224,13 @@ msgstr ""
 #: engine/itb_emoji.py:774 engine/itb_emoji.py:775 engine/itb_emoji.py:776
 #: engine/itb_emoji.py:987
 msgid "people"
-msgstr ""
+msgstr "gent"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:777 engine/itb_emoji.py:983
 msgid "nature"
-msgstr ""
+msgstr "natura"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:778 engine/itb_emoji.py:979
