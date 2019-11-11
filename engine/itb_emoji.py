@@ -623,7 +623,7 @@ class EmojiMatcher():
             for line in unicode_emoji_data_file.readlines():
                 unicode_version = ''
                 pattern = re.compile(
-                    r'[^;]*;[^;]*#\s*(?P<uversion>[0-9]+\.[0-9]+)\s*'
+                    r'[^;]*;[^;]*#\s*E(?P<uversion>[0-9]+\.[0-9]+)\s*'
                     + r'\[[0-9]+\]')
                 match = pattern.match(line)
                 if match and match.group('uversion'):
@@ -668,7 +668,7 @@ class EmojiMatcher():
             for line in unicode_emoji_sequences_file.readlines():
                 unicode_version = ''
                 pattern = re.compile(
-                    r'[^;]*;[^;]*;[^;]*#\s*(?P<uversion>[0-9]+\.[0-9]+)\s*'
+                    r'[^;]*;[^;]*;[^;]*#\s*E(?P<uversion>[0-9]+\.[0-9]+)\s*'
                     + r'\[[0-9]+\]')
                 match = pattern.match(line)
                 if match and match.group('uversion'):
@@ -715,7 +715,7 @@ class EmojiMatcher():
             for line in unicode_emoji_zwj_sequences_file.readlines():
                 unicode_version = ''
                 pattern = re.compile(
-                    r'[^;]*;[^;]*;[^;]*#\s*(?P<uversion>[0-9]+\.[0-9]+)\s*'
+                    r'[^;]*;[^;]*;[^;]*#\s*E(?P<uversion>[0-9]+\.[0-9]+)\s*'
                     + r'\[[0-9]+\]')
                 match = pattern.match(line)
                 if match and match.group('uversion'):
@@ -800,7 +800,9 @@ class EmojiMatcher():
                     subgroup = match.group('subgroup').strip()
                     continue
                 name = ''
-                pattern = re.compile(r'[^#]+#\s+\S+\s+(?P<name>.+)$')
+                pattern = re.compile(
+                    r'[^#]+#\s+\S+\s+E(?P<uversion>[0-9]+\.[0-9]+)'
+                    + r'\s+(?P<name>.+)$')
                 match = pattern.match(line)
                 if match and match.group('name'):
                     name = match.group('name').strip()
