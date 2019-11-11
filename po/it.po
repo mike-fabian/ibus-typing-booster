@@ -2,14 +2,15 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Alessio C. <alciregi@gmail.com>, 2019.
+# Mike FABIAN <mfabian@redhat.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-11-06 18:40+0100\n"
-"PO-Revision-Date: 2019-11-11 05:04+0000\n"
-"Last-Translator: Alessio <alciregi@gmail.com>\n"
+"PO-Revision-Date: 2019-11-11 06:08+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Italian <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/it/>\n"
 "Language: it\n"
@@ -147,9 +148,8 @@ msgid "Input mode"
 msgstr "Modalità di inserimento"
 
 #: engine/hunspell_table.py:492
-#, fuzzy
 msgid "Here you can switch ibus-typing-booster on or off."
-msgstr "Qui puoi attivare o disattivare ibus-typing-booster"
+msgstr "Qui puoi attivare o disattivare ibus-typing-booster."
 
 #. Translators: Whether Unicode symbols and emoji should be
 #. included in the predictions. Emoji are pictographs like
