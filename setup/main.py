@@ -1658,8 +1658,8 @@ class SetupUI(Gtk.Window):
         flag = itb_util.FLAGS.get(name, '  ')
         row = name + ' ' + flag
         if itb_util.is_right_to_left_messages():
-            # start the row with U+200E LEFT-TO-RIGHT MARK
-            row = chr(0x200F) + flag + ' ' + name
+            # Add U+200E LEFT-TO-RIGHT MARK to name and flag:
+            row = chr(0x200F) + name + ' ' + chr(0x200F) + flag + ' '
         if IMPORT_LANGTABLE_SUCCESSFUL:
             language_description = langtable.language_name(
                 languageId=name,
