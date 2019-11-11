@@ -1,11 +1,11 @@
 # emoji-variation-sequences.txt
-# Date: 2019-01-15, 12:10:05 GMT
+# Date: 2019-10-13, 06:53:44 GMT
 # © 2019 Unicode®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use, see http://www.unicode.org/terms_of_use.html
 #
 # Emoji Variation Sequences for UTS #51
-# Version: 12.0
+# Version: 13.0
 #
 # For documentation and usage, see http://www.unicode.org/reports/tr51
 #
@@ -219,6 +219,8 @@
 26A0 FE0F  ; emoji style; # (4.0) WARNING SIGN
 26A1 FE0E  ; text style;  # (4.0) HIGH VOLTAGE SIGN
 26A1 FE0F  ; emoji style; # (4.0) HIGH VOLTAGE SIGN
+26A7 FE0E  ; text style;  # (4.1) MALE WITH STROKE AND MALE AND FEMALE SIGN
+26A7 FE0F  ; emoji style; # (4.1) MALE WITH STROKE AND MALE AND FEMALE SIGN
 26AA FE0E  ; text style;  # (4.1) MEDIUM WHITE CIRCLE
 26AA FE0F  ; emoji style; # (4.1) MEDIUM WHITE CIRCLE
 26AB FE0E  ; text style;  # (4.1) MEDIUM BLACK CIRCLE
@@ -716,6 +718,6 @@
 1F6F3 FE0E ; text style;  # (7.0) PASSENGER SHIP
 1F6F3 FE0F ; emoji style; # (7.0) PASSENGER SHIP
 
-#Total sequences: 353
+#Total sequences: 354
 
 #EOF
