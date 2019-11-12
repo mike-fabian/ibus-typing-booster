@@ -3500,17 +3500,23 @@ def xdg_save_data_path(*resource):
     Compatibility function for systems which do not have pyxdg.
     (For example openSUSE Leap 42.1)
     '''
-    if IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL:
-        return xdg.BaseDirectory.save_data_path(*resource)
+    # if IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL:
+    #    return xdg.BaseDirectory.save_data_path(*resource)
+    #
+    # xdg.BaseDirectory.save_data_path(*resource) unfortunately
+    # can fail because it calls os.makedirs() without the exist_ok=True
+    # option, and then os.makedirs() can fail in a race condition
+    # (see: https://bugs.python.org/issue1675)
+    #
     # Replicate implementation of xdg.BaseDirectory.save_data_path
-    # here:
+    # here (and add the exist_ok=True parameter to os.makedirs()):
     xdg_data_home = os.environ.get('XDG_DATA_HOME') or os.path.join(
         os.path.expanduser('~'), '.local', 'share')
     resource = os.path.join(*resource)
     assert not resource.startswith('/')
     path = os.path.join(xdg_data_home, resource)
     if not os.path.isdir(path):
-        os.makedirs(path)
+        os.makedirs(path, exist_ok=True)
     return path
 
 class KeyvalsToKeycodes:
