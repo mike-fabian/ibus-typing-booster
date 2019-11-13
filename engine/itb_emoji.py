@@ -1828,11 +1828,11 @@ class EmojiMatcher():
         []
 
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, smiling face]', 8), ('😙', 'kissing face with smiling eyes [So, people, face, smile]', 4), ('😋', 'face savouring delicious food [So, people, face, smile]', 4), ('😍', 'smiling face with heart-shaped eyes [So, people, face, smile]', 4), ('😇', 'smiling face with halo [So, people, face, smile]', 4)]
+        [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, smiling face]', 8), ('😙', 'kissing face with smiling eyes [So, people, face, smile]', 4), ('😍', 'smiling face with heart-shaped eyes [So, people, face, smile]', 4), ('😋', 'face savouring delicious food [So, people, face, smile]', 4), ('😇', 'smiling face with halo [So, people, face, smile]', 4)]
 
         >>> matcher = EmojiMatcher(languages = ['it_IT'])
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, emozionarsi, faccina, sorridente]', 5), ('😚', 'faccina che bacia con occhi chiusi [faccina]', 1), ('😗', 'faccina che bacia [faccina]', 1), ('😙', 'faccina che bacia con occhi sorridenti [faccina]', 1), ('😘', 'faccina che manda un bacio [faccina]', 1)]
+        [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, emozionarsi, faccina, sorridente]', 5), ('😗', 'faccina che bacia [faccina]', 1), ('😚', 'faccina che bacia con occhi chiusi [faccina]', 1), ('😘', 'faccina che manda un bacio [faccina]', 1), ('😙', 'faccina che bacia con occhi sorridenti [faccina]', 1)]
 
         Some symbols which are not emoji work as well:
 
