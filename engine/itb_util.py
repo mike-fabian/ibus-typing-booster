@@ -3550,6 +3550,22 @@ class KeyvalsToKeycodes:
                             self.keyvals_to_keycodes[keyval].append(keycode)
                         else:
                             self.keyvals_to_keycodes[keyval] = [keycode]
+        # Gdk.Keymap.get_entries_for_keycode() seems to never find any
+        # key codes on big endian platforms (s390x). Might be a bug in
+        # that function. Until I figure out what the problem really
+        # is, fall back to the standard us layout for the most
+        # important key values:
+        self._standard_us_layout_keyvals_to_keycodes = {
+            IBus.KEY_Left: [113],
+            IBus.KEY_BackSpace: [22],
+            IBus.KEY_a: [38],
+        }
+        for keyval in self._standard_us_layout_keyvals_to_keycodes:
+            if keyval not in self.keyvals_to_keycodes:
+                LOGGER.warning('No keycodes found: keyval: %s name: %s',
+                               keyval, IBus.keyval_name(keyval))
+                self.keyvals_to_keycodes[keyval] = (
+                    self._standard_us_layout_keyvals_to_keycodes[keyval])
 
     def keycodes(self, keyval):
         '''Returns a list of key codes of the hardware keys which can generate
