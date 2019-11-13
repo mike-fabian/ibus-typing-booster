@@ -811,7 +811,7 @@ class EmojiMatcher():
                     continue
                 codepoints, property_string = [
                     x.strip() for x in line.split(';')[:2]]
-                if property_string == 'non-fully-qualified':
+                if property_string != 'fully-qualified':
                     # The non-fully-qualified sequences are
                     # all duplicates of the fully-qualified
                     # sequences.
