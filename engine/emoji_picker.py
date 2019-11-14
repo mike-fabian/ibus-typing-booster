@@ -144,7 +144,8 @@ def parse_args():
     # Guess current Unicode version:
     unicode_versions = (
         ('20180605', '11.0'),
-        ('20190701', '12.0'),
+        ('20190305', '12.0'),
+        ('20190507', '12.1'),
         ('20200701', '13.0'),
     )
     current_date = time.strftime('%Y%m%d')
