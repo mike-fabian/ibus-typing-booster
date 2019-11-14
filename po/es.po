@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2019-11-06 18:40+0100\n"
+"POT-Creation-Date: 2019-11-14 10:06+0900\n"
 "PO-Revision-Date: 2019-10-31 14:05+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Spanish <https://translate.stg.fedoraproject.org/projects/"
@@ -229,55 +229,55 @@ msgstr "Error en speech-to-text de Google. Lea debug.log."
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:774 engine/itb_emoji.py:775 engine/itb_emoji.py:776
-#: engine/itb_emoji.py:987
+#: engine/itb_emoji.py:989
 msgid "people"
 msgstr "gente"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:777 engine/itb_emoji.py:983
+#: engine/itb_emoji.py:777 engine/itb_emoji.py:985
 msgid "nature"
 msgstr "naturaleza"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:778 engine/itb_emoji.py:979
+#: engine/itb_emoji.py:778 engine/itb_emoji.py:981
 msgid "food"
 msgstr "alimentos"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:779 engine/itb_emoji.py:993
+#: engine/itb_emoji.py:779 engine/itb_emoji.py:995
 msgid "travel"
 msgstr "viajes"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:780 engine/itb_emoji.py:789 engine/itb_emoji.py:975
+#: engine/itb_emoji.py:780 engine/itb_emoji.py:789 engine/itb_emoji.py:977
 msgid "activity"
 msgstr "actividades"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:781 engine/itb_emoji.py:985
+#: engine/itb_emoji.py:781 engine/itb_emoji.py:987
 msgid "objects"
 msgstr "objetos"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:782 engine/itb_emoji.py:991
+#: engine/itb_emoji.py:782 engine/itb_emoji.py:993
 msgid "symbols"
 msgstr "símbolos"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:783 engine/itb_emoji.py:977
+#: engine/itb_emoji.py:783 engine/itb_emoji.py:979
 msgid "flags"
 msgstr "banderas"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:784 engine/itb_emoji.py:785 engine/itb_emoji.py:981
+#: engine/itb_emoji.py:784 engine/itb_emoji.py:785 engine/itb_emoji.py:983
 msgid "modifier"
 msgstr "modificadores"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:786 engine/itb_emoji.py:989
+#: engine/itb_emoji.py:786 engine/itb_emoji.py:991
 msgid "regional"
 msgstr "regiones"
 
@@ -314,34 +314,34 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:3796
+#: engine/itb_util.py:3818
 msgid "Key input"
 msgstr "Entrada de tecla"
 
-#: engine/itb_util.py:3802
+#: engine/itb_util.py:3824
 msgid "Cancel"
 msgstr "Cancelar"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:3809
+#: engine/itb_util.py:3831
 msgid "Please press a key (or a key combination)"
 msgstr "Por favor presiona una tecla (o combinación de teclas)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:3814
+#: engine/itb_util.py:3836
 msgid "The dialog will be closed when the key is released"
 msgstr "El diálogo se cerrará cuando la tecla sea liberada"
 
-#: engine/itb_util.py:3845
+#: engine/itb_util.py:3867
 msgid "A completion input method to speedup typing."
 msgstr "Un método de entrada de autocompletado para acelerar la mecanografía."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:3854
+#: engine/itb_util.py:3876
 msgid "translator-credits"
 msgstr ""
 "Adolfo Jayme Barrientos, 201\n"
@@ -349,7 +349,7 @@ msgstr ""
 "Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2018\n"
 "Emilio Herrera <ehespinosa57@gmail.com>, 2017"
 
-#: engine/itb_util.py:3862
+#: engine/itb_util.py:3884
 msgid "Online documentation:"
 msgstr "Documentación en línea:"
 

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2019-11-06 18:40+0100\n"
+"POT-Creation-Date: 2019-11-14 10:06+0900\n"
 "PO-Revision-Date: 2019-11-05 15:14+0000\n"
 "Last-Translator: Ahmed M. Farrag <a.m.farrag@gmail.com>\n"
 "Language-Team: Arabic <https://translate.stg.fedoraproject.org/projects/ibus-"
@@ -225,55 +225,55 @@ msgstr "وقع خطأ في محرك غوغل لتحويل الكام لنصوص.
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:774 engine/itb_emoji.py:775 engine/itb_emoji.py:776
-#: engine/itb_emoji.py:987
+#: engine/itb_emoji.py:989
 msgid "people"
 msgstr "أشخاص"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:777 engine/itb_emoji.py:983
+#: engine/itb_emoji.py:777 engine/itb_emoji.py:985
 msgid "nature"
 msgstr "طبيعة"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:778 engine/itb_emoji.py:979
+#: engine/itb_emoji.py:778 engine/itb_emoji.py:981
 msgid "food"
 msgstr "مأكولات"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:779 engine/itb_emoji.py:993
+#: engine/itb_emoji.py:779 engine/itb_emoji.py:995
 msgid "travel"
 msgstr "سفر"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:780 engine/itb_emoji.py:789 engine/itb_emoji.py:975
+#: engine/itb_emoji.py:780 engine/itb_emoji.py:789 engine/itb_emoji.py:977
 msgid "activity"
 msgstr "أنشطة"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:781 engine/itb_emoji.py:985
+#: engine/itb_emoji.py:781 engine/itb_emoji.py:987
 msgid "objects"
 msgstr "أشياء"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:782 engine/itb_emoji.py:991
+#: engine/itb_emoji.py:782 engine/itb_emoji.py:993
 msgid "symbols"
 msgstr "رموز"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:783 engine/itb_emoji.py:977
+#: engine/itb_emoji.py:783 engine/itb_emoji.py:979
 msgid "flags"
 msgstr "أعلام"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:784 engine/itb_emoji.py:785 engine/itb_emoji.py:981
+#: engine/itb_emoji.py:784 engine/itb_emoji.py:785 engine/itb_emoji.py:983
 msgid "modifier"
 msgstr "معدِّلات"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:786 engine/itb_emoji.py:989
+#: engine/itb_emoji.py:786 engine/itb_emoji.py:991
 msgid "regional"
 msgstr "مناطق"
 
@@ -310,38 +310,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:3796
+#: engine/itb_util.py:3818
 msgid "Key input"
 msgstr "اضغط المفتاح"
 
-#: engine/itb_util.py:3802
+#: engine/itb_util.py:3824
 msgid "Cancel"
 msgstr "إلغاء"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:3809
+#: engine/itb_util.py:3831
 msgid "Please press a key (or a key combination)"
 msgstr "رجاءً، اضغط على مفتاح (أو مجموعة مفاتيح)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:3814
+#: engine/itb_util.py:3836
 msgid "The dialog will be closed when the key is released"
 msgstr "سيُغلق صندوق الحوار بعد إفلات المفتاح"
 
-#: engine/itb_util.py:3845
+#: engine/itb_util.py:3867
 msgid "A completion input method to speedup typing."
 msgstr "أسلوب إدخال مُكمِل لتسريع الكتابة."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:3854
+#: engine/itb_util.py:3876
 msgid "translator-credits"
 msgstr "أحمد فراج <afarrag@fedoraproject.org>، 2019"
 
-#: engine/itb_util.py:3862
+#: engine/itb_util.py:3884
 msgid "Online documentation:"
 msgstr "دليل الاستخدام على الإنترنت:"
 

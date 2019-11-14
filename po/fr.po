@@ -11,11 +11,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2019-11-06 18:40+0100\n"
+"POT-Creation-Date: 2019-11-14 10:06+0900\n"
 "PO-Revision-Date: 2019-11-11 06:08+0000\n"
 "Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
-"Language-Team: French <https://translate.stg.fedoraproject.org/projects/"
-"ibus-typing-booster/app/fr/>\n"
+"Language-Team: French <https://translate.stg.fedoraproject.org/projects/ibus-"
+"typing-booster/app/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -231,55 +231,55 @@ msgstr "Erreur du speech-to-text de Google. Lisez debug.log."
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:774 engine/itb_emoji.py:775 engine/itb_emoji.py:776
-#: engine/itb_emoji.py:987
+#: engine/itb_emoji.py:989
 msgid "people"
 msgstr "personnes"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:777 engine/itb_emoji.py:983
+#: engine/itb_emoji.py:777 engine/itb_emoji.py:985
 msgid "nature"
 msgstr "nature"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:778 engine/itb_emoji.py:979
+#: engine/itb_emoji.py:778 engine/itb_emoji.py:981
 msgid "food"
 msgstr "nourriture"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:779 engine/itb_emoji.py:993
+#: engine/itb_emoji.py:779 engine/itb_emoji.py:995
 msgid "travel"
 msgstr "voyage"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:780 engine/itb_emoji.py:789 engine/itb_emoji.py:975
+#: engine/itb_emoji.py:780 engine/itb_emoji.py:789 engine/itb_emoji.py:977
 msgid "activity"
 msgstr "activité"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:781 engine/itb_emoji.py:985
+#: engine/itb_emoji.py:781 engine/itb_emoji.py:987
 msgid "objects"
 msgstr "objets"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:782 engine/itb_emoji.py:991
+#: engine/itb_emoji.py:782 engine/itb_emoji.py:993
 msgid "symbols"
 msgstr "symboles"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:783 engine/itb_emoji.py:977
+#: engine/itb_emoji.py:783 engine/itb_emoji.py:979
 msgid "flags"
 msgstr "drapeaux"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:784 engine/itb_emoji.py:785 engine/itb_emoji.py:981
+#: engine/itb_emoji.py:784 engine/itb_emoji.py:785 engine/itb_emoji.py:983
 msgid "modifier"
 msgstr "modificateurs"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:786 engine/itb_emoji.py:989
+#: engine/itb_emoji.py:786 engine/itb_emoji.py:991
 msgid "regional"
 msgstr "régions"
 
@@ -316,34 +316,34 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:3796
+#: engine/itb_util.py:3818
 msgid "Key input"
 msgstr "Touche d'entrée"
 
-#: engine/itb_util.py:3802
+#: engine/itb_util.py:3824
 msgid "Cancel"
 msgstr "Annuler"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:3809
+#: engine/itb_util.py:3831
 msgid "Please press a key (or a key combination)"
 msgstr "Veuillez appuyer sur une touche (ou une combinaison de touches)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:3814
+#: engine/itb_util.py:3836
 msgid "The dialog will be closed when the key is released"
 msgstr "La fenêtre se fermera lorsque la touche sera relâchée"
 
-#: engine/itb_util.py:3845
+#: engine/itb_util.py:3867
 msgid "A completion input method to speedup typing."
 msgstr "Une méthode d’auto-complètement pour accélérer la saisie."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:3854
+#: engine/itb_util.py:3876
 msgid "translator-credits"
 msgstr ""
 "Thierry Thomas <thierry@FreeBSD.org>, 2018.\n"
@@ -352,7 +352,7 @@ msgstr ""
 "Jérôme Fenal <jfenal@gmail.com>, 2016.\n"
 "Alexandre Moine <nobrakal@gmail.com>, 2016."
 
-#: engine/itb_util.py:3862
+#: engine/itb_util.py:3884
 msgid "Online documentation:"
 msgstr "Documentation en ligne :"
 
@@ -959,7 +959,8 @@ msgstr "Bas"
 #. of characters before a lookup is done.
 #: setup/main.py:1241
 msgid "Use preedit style only if lookup is enabled"
-msgstr "Utiliser le style de pré-édition uniquement si la recherche est activée"
+msgstr ""
+"Utiliser le style de pré-édition uniquement si la recherche est activée"
 
 #: setup/main.py:1243
 msgid ""

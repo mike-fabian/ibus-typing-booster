@@ -7,11 +7,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2019-11-06 18:40+0100\n"
+"POT-Creation-Date: 2019-11-14 10:06+0900\n"
 "PO-Revision-Date: 2019-11-11 06:08+0000\n"
 "Last-Translator: Ankit Behera <proneon267@gmail.com>\n"
-"Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/"
-"ibus-typing-booster/app/or/>\n"
+"Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/ibus-"
+"typing-booster/app/or/>\n"
 "Language: or\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -64,8 +64,8 @@ msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
-"ପୂର୍ବନିର୍ଦ୍ଧାରିତ ଫଣ୍ଟକୁ ଇମୋଜୀ କିମ୍ୱା ଇମୋଜୀ ଅନୁକ୍ରମମାନର ଅଂଶମାନଙ୍କ ପାଇଁ ବ୍ୟବହା"
-"ର କରିବା ଯାହା ବଛାଯାଇଥିବା ଫଣ୍ଟ ଦ୍ୱାରା ଦର୍ଶାଯାଇ ପାରୁନାହିଁ।"
+"ପୂର୍ବନିର୍ଦ୍ଧାରିତ ଫଣ୍ଟକୁ ଇମୋଜୀ କିମ୍ୱା ଇମୋଜୀ ଅନୁକ୍ରମମାନର ଅଂଶମାନଙ୍କ ପାଇଁ ବ୍ୟବହାର କରିବା ଯାହା "
+"ବଛାଯାଇଥିବା ଫଣ୍ଟ ଦ୍ୱାରା ଦର୍ଶାଯାଇ ପାରୁନାହିଁ।"
 
 #: engine/emoji_picker.py:444
 msgid "Recently used"
@@ -224,55 +224,55 @@ msgstr "ଗୁଗଲ speech-to-text ତ୍ରୁଟି। debug.log ଦେଖନ
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:774 engine/itb_emoji.py:775 engine/itb_emoji.py:776
-#: engine/itb_emoji.py:987
+#: engine/itb_emoji.py:989
 msgid "people"
 msgstr "ଲୋକମାନେ"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:777 engine/itb_emoji.py:983
+#: engine/itb_emoji.py:777 engine/itb_emoji.py:985
 msgid "nature"
 msgstr "ପ୍ରକୃତି"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:778 engine/itb_emoji.py:979
+#: engine/itb_emoji.py:778 engine/itb_emoji.py:981
 msgid "food"
 msgstr "ଖାଦ୍ୟ"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:779 engine/itb_emoji.py:993
+#: engine/itb_emoji.py:779 engine/itb_emoji.py:995
 msgid "travel"
 msgstr "ଭ୍ରମଣ"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:780 engine/itb_emoji.py:789 engine/itb_emoji.py:975
+#: engine/itb_emoji.py:780 engine/itb_emoji.py:789 engine/itb_emoji.py:977
 msgid "activity"
 msgstr "କାର୍ଯ୍ୟକ୍ରମ"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:781 engine/itb_emoji.py:985
+#: engine/itb_emoji.py:781 engine/itb_emoji.py:987
 msgid "objects"
 msgstr "ବସ୍ତୁମାନ"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:782 engine/itb_emoji.py:991
+#: engine/itb_emoji.py:782 engine/itb_emoji.py:993
 msgid "symbols"
 msgstr "ଚିହ୍ନମାନ"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:783 engine/itb_emoji.py:977
+#: engine/itb_emoji.py:783 engine/itb_emoji.py:979
 msgid "flags"
 msgstr "ଧ୍ବଜାମାନ"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:784 engine/itb_emoji.py:785 engine/itb_emoji.py:981
+#: engine/itb_emoji.py:784 engine/itb_emoji.py:785 engine/itb_emoji.py:983
 msgid "modifier"
 msgstr "ରୂପାନ୍ତରକାରୀ"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:786 engine/itb_emoji.py:989
+#: engine/itb_emoji.py:786 engine/itb_emoji.py:991
 msgid "regional"
 msgstr "ଆଞ୍ଚଳିକ"
 
@@ -302,45 +302,45 @@ msgid ""
 "whatever comes from the current keyboard layout without any further changes. "
 "So no transliteration or composing is done here."
 msgstr ""
-"ସଳଖ କୀବୋର୍ଡ଼ ନିବେଶ।  ଏହା ସତରେ କୌଣସି ନିବେଶ ମାଧ୍ୟମ ନୁହେଁ, ଏହା ସଳଖ ଭାବେ ବ୍ୟବହାର "
-"କରେ ଯାହା ସାମ୍ପ୍ରତିକ କୀବୋର୍ଡ଼ ବିନ୍ୟାସରୁ ଆସେ, ବିନା କୌଣସି ପରିବର୍ତ୍ତନ ଦ୍ୱାରା।  \n"
+"ସଳଖ କୀବୋର୍ଡ଼ ନିବେଶ।  ଏହା ସତରେ କୌଣସି ନିବେଶ ମାଧ୍ୟମ ନୁହେଁ, ଏହା ସଳଖ ଭାବେ ବ୍ୟବହାର କରେ ଯାହା "
+"ସାମ୍ପ୍ରତିକ କୀବୋର୍ଡ଼ ବିନ୍ୟାସରୁ ଆସେ, ବିନା କୌଣସି ପରିବର୍ତ୍ତନ ଦ୍ୱାରା।  \n"
 "ତେଣୁ କୌଣସି ଲିପ୍ୟନ୍ତର କିମ୍ବା ସମ୍ପାଦନା ଏଠାରେ ହୁଏ ନାହିଁ।"
 
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:3796
+#: engine/itb_util.py:3818
 msgid "Key input"
 msgstr "କୀ ନିବେଶ"
 
-#: engine/itb_util.py:3802
+#: engine/itb_util.py:3824
 msgid "Cancel"
 msgstr "ରଦ୍ଦ"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:3809
+#: engine/itb_util.py:3831
 msgid "Please press a key (or a key combination)"
 msgstr "ଦୟାକରି ଏକ କୀ ଦବାନ୍ତୁ (କିମ୍ବା ଏକ କୀ ମିଶ୍ରଣ)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:3814
+#: engine/itb_util.py:3836
 msgid "The dialog will be closed when the key is released"
 msgstr "ଡ଼ାଇଲଗ ବନ୍ଦ ହୋଇଯିବ ଯେତେବେଳେ କୀ କୁ ଛଡ଼ାଯିବ"
 
-#: engine/itb_util.py:3845
+#: engine/itb_util.py:3867
 msgid "A completion input method to speedup typing."
 msgstr "ଏକ ସମ୍ପତ୍ତିକରଣ ନିବେଶ ବିଧି ଲେଖାର ଗତିକୁ ବୃଧି କରିବା ପାଇଁ।"
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:3854
+#: engine/itb_util.py:3876
 msgid "translator-credits"
 msgstr "ଅନୁବାଦକାରୀ-ସ୍ବୀକୃତିମାନ"
 
-#: engine/itb_util.py:3862
+#: engine/itb_util.py:3884
 msgid "Online documentation:"
 msgstr "ଅନଲାଇନ ଦସ୍ତାବିଜ଼:"
 
@@ -426,11 +426,11 @@ msgid ""
 "a commit the suggestions are hidden again until the next key bound to this "
 "command is typed."
 msgstr ""
-"ଯଦି ଏହି ବିକଳ୍ପ ଚୟନ କରାଯାଇଥାଏ, ତେବେ ପରାମର୍ଶ ଗୁଡ଼ିକ ପୂର୍ବନିର୍ଦ୍ଧାରିତ ଭାବେ "
-"ଦର୍ଶାଯିବ ନାହିଁ। ସେତେବେଳେ ପରାମର୍ଶରେ ତାଲିକା ଦର୍ଶାଇବା ପାଇଁ ଏକ କୀ ଟାଇପ କରିବା ଆବଶ୍"
-"ୟକ ଅଟେ। ଏହା ପାଇଁ ବ୍ୟବହୃତ କୀ କୁ କୀ ସମ୍ବନ୍ଧ ବିଦ୍ୟାସରେ ପରିବର୍ତ୍ତନ କରାଯାଇପାରିବ। "
-"ପୂର୍ବନିର୍ଦ୍ଧାରିତ ଭାବେ ଏହା ଟାବ କୀ ଅଟେ। ପରିବର୍ଦ୍ଧନା ପରେ ପରାମର୍ଶ ଗୁଡିକ ଅଦୃଶ୍ୟ "
-"ରହେ ଯେପର୍ଯ୍ୟନ୍ତ ଏହି ଆଦେଶକୁ ସମ୍ବନ୍ଧିତ ପରିବର୍ତ୍ତିକୀ ଟାଇପ କରାଯାଇନାହିଁ।"
+"ଯଦି ଏହି ବିକଳ୍ପ ଚୟନ କରାଯାଇଥାଏ, ତେବେ ପରାମର୍ଶ ଗୁଡ଼ିକ ପୂର୍ବନିର୍ଦ୍ଧାରିତ ଭାବେ ଦର୍ଶାଯିବ ନାହିଁ। "
+"ସେତେବେଳେ ପରାମର୍ଶରେ ତାଲିକା ଦର୍ଶାଇବା ପାଇଁ ଏକ କୀ ଟାଇପ କରିବା ଆବଶ୍ୟକ ଅଟେ। ଏହା ପାଇଁ ବ୍ୟବହୃତ "
+"କୀ କୁ କୀ ସମ୍ବନ୍ଧ ବିଦ୍ୟାସରେ ପରିବର୍ତ୍ତନ କରାଯାଇପାରିବ। ପୂର୍ବନିର୍ଦ୍ଧାରିତ ଭାବେ ଏହା ଟାବ କୀ ଅଟେ। "
+"ପରିବର୍ଦ୍ଧନା ପରେ ପରାମର୍ଶ ଗୁଡିକ ଅଦୃଶ୍ୟ ରହେ ଯେପର୍ଯ୍ୟନ୍ତ ଏହି ଆଦେଶକୁ ସମ୍ବନ୍ଧିତ ପରିବର୍ତ୍ତିକୀ ଟାଇପ "
+"କରାଯାଇନାହିଁ।"
 
 #. Translators: Whether the best completion is first shown
 #. inline in the preedit instead of showing a full
@@ -601,8 +601,7 @@ msgstr "ସର୍ବନିମ୍ନ ବର୍ଣ୍ଣ ସମାପ୍ତିକ�
 #: setup/main.py:608
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
-msgstr ""
-"ଉକ୍ତ ସଂଖ୍ୟା ଠାରୁ କମ ବର୍ଣ୍ଣ ଟାଇପ କରାଯାଇଥିଲେ ଥିଲେ କୌଣସି ପରାମର୍ଶ ଦେଖନ୍ତୁ ନାହିଁ।"
+msgstr "ଉକ୍ତ ସଂଖ୍ୟା ଠାରୁ କମ ବର୍ଣ୍ଣ ଟାଇପ କରାଯାଇଥିଲେ ଥିଲେ କୌଣସି ପରାମର୍ଶ ଦେଖନ୍ତୁ ନାହିଁ।"
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -637,9 +636,7 @@ msgstr "ଶିଖିଥିବା ତଥ୍ୟକୁ ବିଲୋପ କରନ୍
 #: setup/main.py:681
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
-msgstr ""
-"ସମସ୍ତ ବ୍ୟକ୍ତିଗତ ଭାଷା ତଥ୍ୟ ଯାହା ଟାଇପିଙ୍ଗ କିମ୍ବା  ତଥ୍ୟକୋଷ(ଫାଇଲ) କୁ ପଢ଼ି "
-"ଶିଖିଛନ୍ତି"
+msgstr "ସମସ୍ତ ବ୍ୟକ୍ତିଗତ ଭାଷା ତଥ୍ୟ ଯାହା ଟାଇପିଙ୍ଗ କିମ୍ବା  ତଥ୍ୟକୋଷ(ଫାଇଲ) କୁ ପଢ଼ି ଶିଖିଛନ୍ତି"
 
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
@@ -657,8 +654,7 @@ msgstr "ଅନୁପସ୍ଥିତ ଅଭିଧାନମାନଙ୍କୁ ସ�
 #: setup/main.py:713
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr ""
-"ସେହି ଅଭିଧାନମାନଙ୍କୁ ସ୍ଥାପନ କରନ୍ତୁ ଯେଉଁ ଗୁଡ଼ିକ ଏଠାରେ ବ୍ୟବସ୍ଥା କରା ହୁଏ କିନ୍ତୁ "
-"ସ୍ଥାପିତ ହୋଇ ନାହିଁ"
+"ସେହି ଅଭିଧାନମାନଙ୍କୁ ସ୍ଥାପନ କରନ୍ତୁ ଯେଉଁ ଗୁଡ଼ିକ ଏଠାରେ ବ୍ୟବସ୍ଥା କରା ହୁଏ କିନ୍ତୁ ସ୍ଥାପିତ ହୋଇ ନାହିଁ"
 
 #: setup/main.py:730
 msgid "Add a dictionary"
