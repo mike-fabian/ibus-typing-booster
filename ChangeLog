@@ -1,4 +1,24 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 25 Nov 2019 Released 2.7.3
+* Correct release dates of Unicode 12.0.0 and 12.1.0 in emoji_picker.py
+* Add workaround if key codes cannot be found for key values (workaround for big endian platforms)
+* Fix race condition in itb_util.xdg_save_data_path() (Resolves: rhbz#1770072, rhbz#1713963, rhbz#1764520, rhbz#1768016)
+* Another fix for right-to-left languages: fix wrong order of globe emoji
+* Small fix in parsing emoji-test.txt which slightly changes the emoji sorting order
+* Adapt parsing of the emoji data files to the changes in Unicode 13.0
+* Fix emoji test cases for new emoji data files for Unicode 13.0
+* Update emoji data to current Unicode 13.0 draft
+* Add fa, it, tr to LINGUAS
+* Updated Odia translations from Weblate (53.4% translated)
+* Updated Czech translations from Weblate (100.0% translated)
+* Updated Catalan translations from Weblate (17.1% translated)
+* Added Turkish translations from Weblate (100.0% translated)
+* Added Italian translations from  Weblate (5.2% translated)
+* Portuguese (Portugal) translations moved from pt_PT to pt (23.8% translated)
+* Update French translations from Weblate (100.0% translated)
+* Added Persian translations from Weblate (0% translated)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 06 Nov 2019 Released 2.7.2
 * Fix display for right-to-left languages in the dictionaries and input methods tab in the setup tool
 * Added Swahili translations from Weblate (30.1% translated)

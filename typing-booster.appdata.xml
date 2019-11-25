@@ -19,6 +19,71 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.7.3" date="2019-11-25" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Correct release dates of Unicode 12.0.0 and 12.1.0 in
+            emoji_picker.py
+          </li>
+          <li>
+            Add workaround if key codes cannot be found for key values
+            (workaround for big endian platforms)
+          </li>
+          <li>
+            Fix race condition in itb_util.xdg_save_data_path()
+            (Resolves: rhbz#1770072, rhbz#1713963, rhbz#1764520,
+            rhbz#1768016)
+          </li>
+          <li>
+            Another fix for right-to-left languages: fix wrong order
+            of globe emoji
+          </li>
+          <li>
+            Small fix in parsing emoji-test.txt which slightly changes
+            the emoji sorting order
+          </li>
+          <li>
+            Adapt parsing of the emoji data files to the changes in
+            Unicode 13.0
+          </li>
+          <li>
+            Fix emoji test cases for new emoji data files for Unicode
+            13.0
+          </li>
+          <li>
+            Update emoji data to current Unicode 13.0 draft
+          </li>
+          <li>
+            Add fa, it, tr to LINGUAS
+          </li>
+          <li>
+            Updated Odia translations from Weblate (53.4% translated)
+          </li>
+          <li>
+            Updated Czech translations from Weblate (100.0% translated)
+          </li>
+          <li>
+            Updated Catalan translations from Weblate (17.1% translated)
+          </li>
+          <li>
+            Added Turkish translations from Weblate (100.0% translated)
+          </li>
+          <li>
+            Added Italian translations from  Weblate (5.2% translated)
+          </li>
+          <li>
+            Portuguese (Portugal) translations moved from pt_PT to pt (23.8% translated)
+          </li>
+          <li>
+            Update French translations from Weblate (100.0% translated)
+          </li>
+          <li>
+            Added Persian translations from Weblate (0% translated)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.7.2" date="2019-11-06" urgency="medium">
       <description>
         <ul>
