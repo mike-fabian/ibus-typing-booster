@@ -1,5 +1,5 @@
 # lexuge <LEXUGEyky@outlook.com>, 2017. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
 # Qiyu Yan <yanqiyu01@gmail.com>, 2019.
 msgid ""
 msgstr ""
@@ -7,8 +7,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-11-14 10:06+0900\n"
-"PO-Revision-Date: 2019-10-31 00:32+0000\n"
-"Last-Translator: Qiyu Yan <yanqiyu01@gmail.com>\n"
+"PO-Revision-Date: 2019-11-28 05:14+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.stg.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_CN/>\n"
 "Language: zh_CN\n"
@@ -82,7 +82,7 @@ msgstr "关键词"
 
 #: engine/emoji_picker.py:662
 msgid "Fonts used to render this emoji:"
-msgstr ""
+msgstr "用于渲染该 Emoji 的字体："
 
 #: engine/emoji_picker.py:679
 msgid "Unicode Version:"

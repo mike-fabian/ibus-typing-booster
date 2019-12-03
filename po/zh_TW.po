@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-11-14 10:06+0900\n"
-"PO-Revision-Date: 2019-11-05 15:14+0000\n"
+"PO-Revision-Date: 2019-11-26 06:14+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Traditional) <https://translate.stg.fedoraproject."
 "org/projects/ibus-typing-booster/app/zh_TW/>\n"
@@ -67,7 +67,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:444
 msgid "Recently used"
-msgstr ""
+msgstr "最近使用"
 
 #: engine/emoji_picker.py:618
 msgid "Categories"
