@@ -1840,7 +1840,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('€', match_limit = 5)
-        [('€', 'euro sign [€, Sc]', 2), ('؋', 'afghani sign [Sc]', 1), ('֏', 'armenian dram sign [Sc]', 1), ('₳', 'austral sign [Sc]', 1), ('৻', 'bengali ganda mark [Sc]', 1)]
+        [('€', 'euro sign [€, Sc, currency, eur, euro]', 5), ('₹', 'indian rupee sign [Sc, currency]', 2), ('£', 'pound sign [Sc, currency]', 2), ('₽', 'ruble sign [Sc, currency]', 2), ('¥', 'yen sign [Sc, currency]', 2)]
 
         '''
         # pylint: enable=line-too-long

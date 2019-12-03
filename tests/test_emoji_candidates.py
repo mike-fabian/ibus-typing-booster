@@ -356,7 +356,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('¹', 'superscript one'))
         self.assertEqual(
             mq.candidates('currency')[0][:2],
-            ('💱', 'currency exchange'))
+            ('€', 'euro sign {Currency} [currency]'))
         self.assertEqual(
             mq.candidates('connector')[0][:2],
             ('﹎', 'centreline low line {Connector}'))
@@ -371,10 +371,10 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('‼\ufe0f', 'double exclamation mark {Punctuation} [punctuation]'))
         self.assertEqual(
             mq.candidates('final quote')[0][:2],
-            ('⸅', 'right dotted substitution bracket {Final quote}'))
+            ('»', 'right-pointing double angle quotation mark {Final quote}'))
         self.assertEqual(
             mq.candidates('initial quote')[0][:2],
-            ('‟', 'double high-reversed-9 quotation mark {Initial quote}'))
+            ('«', 'left-pointing double angle quotation mark {Initial quote}'))
         self.assertEqual(
             mq.candidates('modifier')[0][:2],
             ('🏻', 'emoji modifier fitzpatrick type-1-2 {Modifier}'))
