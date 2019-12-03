@@ -2,14 +2,15 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Oguz Ersen <oguzersen@protonmail.com>, 2019.
+# Oğuz Ersen <oguzersen@protonmail.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-11-14 10:06+0900\n"
-"PO-Revision-Date: 2019-11-11 06:08+0000\n"
-"Last-Translator: Oguz Ersen <oguzersen@protonmail.com>\n"
+"PO-Revision-Date: 2019-11-28 05:14+0000\n"
+"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/tr/>\n"
 "Language: tr\n"
@@ -341,7 +342,7 @@ msgstr "Yazmayı hızlandırmak için bir tamamlama giriş yöntemi."
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:3876
 msgid "translator-credits"
-msgstr "Oguz Ersen"
+msgstr "Oğuz Ersen"
 
 #: engine/itb_util.py:3884
 msgid "Online documentation:"
