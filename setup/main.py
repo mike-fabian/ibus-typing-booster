@@ -1092,7 +1092,7 @@ class SetupUI(Gtk.Window):
             # Translators: Checkbox to choose whether to show above
             # the candidate list whether “Emoji prediction” mode and
             # “Off the record” mode are on or off and show which input
-            # method is currently used for the preëdit. The auxiliary
+            # method is currently used for the preedit. The auxiliary
             # text is an optional line of text displayed above the
             # candidate list.
             label=_('Show status info in auxiliary text'))
@@ -1100,7 +1100,7 @@ class SetupUI(Gtk.Window):
             _('Show in the auxiliary text whether “Emoji prediction”  '
               + 'mode and “Off the record”  mode are on or off '
               + 'and show which input method is currently used '
-              + 'for the preëdit. The auxiliary text is an '
+              + 'for the preedit. The auxiliary text is an '
               + 'optional line of text displayed above the '
               + 'candidate list.'))
         self._show_status_info_in_auxiliary_text_checkbutton.connect(
