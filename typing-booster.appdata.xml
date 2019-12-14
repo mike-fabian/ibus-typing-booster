@@ -19,6 +19,26 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.7.4" date="2019-12-14" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Updated Portuguese (Brazil) translations from Weblate
+            (100.0% translated)
+          </li>
+          <li>
+            Updated Turkish translations from Weblate (100.0% translated)
+          </li>
+          <li>
+            Remove weird spelling “preëdit” from messageid (Resolves:
+            https://github.com/mike-fabian/ibus-typing-booster/issues/62)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.7.3" date="2019-11-25" urgency="medium">
       <description>
         <ul>

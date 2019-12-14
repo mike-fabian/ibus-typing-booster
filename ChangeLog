@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 14 Dec 2019 Released 2.7.4
+* Updated Portuguese (Brazil) translations from Weblate (100.0% translated)
+* Updated Turkish translations from Weblate (100.0% translated)
+* Remove weird spelling “preëdit” from messageid (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/62)
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 25 Nov 2019 Released 2.7.3
 * Correct release dates of Unicode 12.0.0 and 12.1.0 in emoji_picker.py
 * Add workaround if key codes cannot be found for key values (workaround for big endian platforms)
