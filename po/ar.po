@@ -2,16 +2,17 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Ahmed M. Farrag <a.m.farrag@gmail.com>, 2019.
+# Mike FABIAN <mfabian@redhat.com>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-11-05 15:14+0000\n"
-"Last-Translator: Ahmed M. Farrag <a.m.farrag@gmail.com>\n"
-"Language-Team: Arabic <https://translate.stg.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ar/>\n"
+"PO-Revision-Date: 2019-12-14 09:52+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Language-Team: Arabic <https://translate.stg.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -838,12 +839,6 @@ msgid "Show status info in auxiliary text"
 msgstr "عرض معلومات الحالة في النص المساعد"
 
 #: setup/main.py:1100
-#, fuzzy
-#| msgid ""
-#| "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
-#| "record”  mode are on or off and show which input method is currently used "
-#| "for the preëdit. The auxiliary text is an optional line of text displayed "
-#| "above the candidate list."
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "

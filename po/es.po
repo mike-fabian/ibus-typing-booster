@@ -2,7 +2,7 @@
 # Emilio Herrera <ehespinosa57@gmail.com>, 2017. #zanata
 # Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2017. #zanata
 # Ismael Venegas Castelló <ismael.vc1337@gmail.com>, 2018. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
 # Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2018. #zanata
 # Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2019.
 msgid ""
@@ -11,8 +11,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-10-31 14:05+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
+"PO-Revision-Date: 2019-12-14 09:51+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Spanish <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/es/>\n"
 "Language: es\n"
@@ -865,12 +865,6 @@ msgid "Show status info in auxiliary text"
 msgstr "Mostrar información de estado en texto auxiliar"
 
 #: setup/main.py:1100
-#, fuzzy
-#| msgid ""
-#| "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
-#| "record”  mode are on or off and show which input method is currently used "
-#| "for the preëdit. The auxiliary text is an optional line of text displayed "
-#| "above the candidate list."
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "

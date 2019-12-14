@@ -1,5 +1,5 @@
 # Zdenek <chmelarz@gmail.com>, 2017. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
 # Pavel Borecki <pavel.borecki@gmail.com>, 2019. #zanata
 # Josef Hruska <hrusjos@gmail.com>, 2019.
 msgid ""
@@ -8,10 +8,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-11-11 06:08+0000\n"
-"Last-Translator: Josef Hruska <hrusjos@gmail.com>\n"
-"Language-Team: Czech <https://translate.stg.fedoraproject.org/projects/ibus-"
-"typing-booster/app/cs/>\n"
+"PO-Revision-Date: 2019-12-14 09:51+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Language-Team: Czech <https://translate.stg.fedoraproject.org/projects/"
+"ibus-typing-booster/app/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -850,22 +850,16 @@ msgid "Show status info in auxiliary text"
 msgstr "Zobrazit stavové informace v pomocném textu"
 
 #: setup/main.py:1100
-#, fuzzy
-#| msgid ""
-#| "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
-#| "record”  mode are on or off and show which input method is currently used "
-#| "for the preëdit. The auxiliary text is an optional line of text displayed "
-#| "above the candidate list."
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
-"Zobrazit v pomocném textu zda režim_„predikce emotikon“ a režim_„mimo "
-"záznam“ jsou zapnuté nebo vypnuté a zobrazuje, která metoda vstupu je v tuto "
-"chvíli použita pro předúpravu. Pomocný text je volitelný řádek textu "
-"zobrazovaný nad seznamem kandidátů."
+"Zobrazit v pomocném textu zda režim_„predikce emotikon“ a režim_„mimo záznam“"
+" jsou zapnuté nebo vypnuté a zobrazuje, která metoda vstupu je v tuto chvíli "
+"použita pro předúpravu. Pomocný text je volitelný řádek textu zobrazovaný "
+"nad seznamem kandidátů."
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.

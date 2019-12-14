@@ -1,7 +1,7 @@
 # Piotr Drąg <piotrdrag@gmail.com>, 2016. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata
+# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019.
 # Piotr Drąg <piotrdrag@gmail.com>, 2017. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
 # Piotr Drąg <piotrdrag@gmail.com>, 2018. #zanata
 # Piotr Drąg <piotrdrag@gmail.com>, 2019. #zanata
 msgid ""
@@ -10,16 +10,17 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-02-22 06:12+0000\n"
-"Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish\n"
+"PO-Revision-Date: 2019-12-14 09:52+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Language-Team: Polish <https://translate.stg.fedoraproject.org/projects/"
+"ibus-typing-booster/app/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Zanata 4.6.2\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2)\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.9.1\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -863,12 +864,6 @@ msgid "Show status info in auxiliary text"
 msgstr "Wyświetlanie informacji o stanie w tekście pomocniczym"
 
 #: setup/main.py:1100
-#, fuzzy
-#| msgid ""
-#| "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
-#| "record”  mode are on or off and show which input method is currently used "
-#| "for the preëdit. The auxiliary text is an optional line of text displayed "
-#| "above the candidate list."
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "
