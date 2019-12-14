@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2019-11-14 10:06+0900\n"
+"POT-Creation-Date: 2019-12-06 16:47+0100\n"
 "PO-Revision-Date: 2019-11-05 15:14+0000\n"
 "Last-Translator: Ahmed M. Farrag <a.m.farrag@gmail.com>\n"
 "Language-Team: Arabic <https://translate.stg.fedoraproject.org/projects/ibus-"
@@ -20,31 +20,31 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Generator: Weblate 3.9.1\n"
 
-#: engine/emoji_picker.py:193
+#: engine/emoji_picker.py:194
 msgid "Emoji Picker"
 msgstr "منتقي الوجوه التعبيرية"
 
-#: engine/emoji_picker.py:310
+#: engine/emoji_picker.py:311
 msgid "Clear recently used"
 msgstr "احذف المستَخدم حديثًا"
 
-#: engine/emoji_picker.py:316 setup/main.py:164
+#: engine/emoji_picker.py:317 setup/main.py:164
 msgid "About"
 msgstr "عن"
 
-#: engine/emoji_picker.py:321
+#: engine/emoji_picker.py:322
 msgid "Quit"
 msgstr "خروج"
 
-#: engine/emoji_picker.py:331
+#: engine/emoji_picker.py:332
 msgid "Search for emoji"
 msgstr "البحث عن الوجوه التعبيرية"
 
-#: engine/emoji_picker.py:343
+#: engine/emoji_picker.py:344
 msgid "Set the font to display emoji"
 msgstr "اختر نوع خط عرض الوجوه التعبيرية"
 
-#: engine/emoji_picker.py:351
+#: engine/emoji_picker.py:352
 msgid "Set font size"
 msgstr "اختر حجم الخط"
 
@@ -56,11 +56,11 @@ msgstr "اختر حجم الخط"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:372
+#: engine/emoji_picker.py:373
 msgid "Fallback"
 msgstr "الرجوع لبديل"
 
-#: engine/emoji_picker.py:374
+#: engine/emoji_picker.py:375
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -68,64 +68,64 @@ msgstr ""
 "ما إذا كنت ترغب في استخدام خط بديل للوجوده التعبيرية أو أجزائها التي لا يمكن "
 "عرضها باستخدام الخط المختار."
 
-#: engine/emoji_picker.py:444
+#: engine/emoji_picker.py:445
 msgid "Recently used"
 msgstr "المستخدَم حديثًا"
 
-#: engine/emoji_picker.py:618
+#: engine/emoji_picker.py:619
 msgid "Categories"
 msgstr "التصنيفات"
 
-#: engine/emoji_picker.py:619
+#: engine/emoji_picker.py:620
 msgid "Unicode categories"
 msgstr "تصنيفات يونيكود"
 
-#: engine/emoji_picker.py:620
+#: engine/emoji_picker.py:621
 msgid "Keywords"
 msgstr "الكلمات المفتاحية"
 
-#: engine/emoji_picker.py:662
+#: engine/emoji_picker.py:663
 msgid "Fonts used to render this emoji:"
 msgstr "الخطوط المستخدمة لرسم هذا الوجه التعبيري:"
 
-#: engine/emoji_picker.py:679
+#: engine/emoji_picker.py:680
 msgid "Unicode Version:"
 msgstr "نسخة يونيكود:"
 
-#: engine/emoji_picker.py:701 engine/emoji_picker.py:1797
+#: engine/emoji_picker.py:702 engine/emoji_picker.py:1798
 msgid "Left click to copy"
 msgstr "انقر بالزر الأيسر للنسخ"
 
-#: engine/emoji_picker.py:704
+#: engine/emoji_picker.py:705
 msgid "Long press or middle click for skin tones"
 msgstr "انقر نقرًا طويلًا أو بالزر الأوسط لتغيير لون الجلد"
 
-#: engine/emoji_picker.py:705
+#: engine/emoji_picker.py:706
 msgid "Right click for info"
 msgstr "انقر بالزر الأيمن للتفاصيل"
 
-#: engine/emoji_picker.py:1191
+#: engine/emoji_picker.py:1192
 msgid "Search Results"
 msgstr "نتائج البحث"
 
-#: engine/emoji_picker.py:1195
+#: engine/emoji_picker.py:1196
 msgid "Search produced empty result."
 msgstr "لم يسفر البحث عن أية نتائج."
 
-#: engine/emoji_picker.py:1466 engine/emoji_picker.py:1590
+#: engine/emoji_picker.py:1467 engine/emoji_picker.py:1591
 msgid "Copied to clipboard!"
 msgstr "نُسخ للحافظة!"
 
-#: engine/emoji_picker.py:1907
+#: engine/emoji_picker.py:1908
 msgid "Lookup on emojipedia"
 msgstr "ابحث في موسوعة الوجوه التعبيرية emojipedia"
 
-#: engine/emoji_picker.py:2032 engine/emoji_picker.py:2033
-#: engine/emoji_picker.py:2034 setup/main.py:1164
+#: engine/emoji_picker.py:2033 engine/emoji_picker.py:2034
+#: engine/emoji_picker.py:2035 setup/main.py:1164
 msgid "System default"
 msgstr "الوضع الافتراضي للنظام"
 
-#: engine/emoji_picker.py:2157
+#: engine/emoji_picker.py:2158
 msgid "Set Font"
 msgstr "اختر الخط"
 
@@ -830,7 +830,7 @@ msgstr "عرض عدد الاقتراحات المتاحة وأيها المخت�
 #. Translators: Checkbox to choose whether to show above
 #. the candidate list whether “Emoji prediction” mode and
 #. “Off the record” mode are on or off and show which input
-#. method is currently used for the preëdit. The auxiliary
+#. method is currently used for the preedit. The auxiliary
 #. text is an optional line of text displayed above the
 #. candidate list.
 #: setup/main.py:1098
@@ -838,10 +838,16 @@ msgid "Show status info in auxiliary text"
 msgstr "عرض معلومات الحالة في النص المساعد"
 
 #: setup/main.py:1100
+#, fuzzy
+#| msgid ""
+#| "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
+#| "record”  mode are on or off and show which input method is currently used "
+#| "for the preëdit. The auxiliary text is an optional line of text displayed "
+#| "above the candidate list."
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "
-"for the preëdit. The auxiliary text is an optional line of text displayed "
+"for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
 "عرض في النص المساعد ما إذا كان وضعي \"تنبؤ الوجوه التعبيرية\" و\"دون حفظ\" "

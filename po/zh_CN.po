@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2019-11-14 10:06+0900\n"
+"POT-Creation-Date: 2019-12-06 16:47+0100\n"
 "PO-Revision-Date: 2019-11-28 05:14+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.stg.fedoraproject.org/"
@@ -18,31 +18,31 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 3.9.1\n"
 
-#: engine/emoji_picker.py:193
+#: engine/emoji_picker.py:194
 msgid "Emoji Picker"
 msgstr "Emoji 选择器"
 
-#: engine/emoji_picker.py:310
+#: engine/emoji_picker.py:311
 msgid "Clear recently used"
 msgstr "清除最近使用的"
 
-#: engine/emoji_picker.py:316 setup/main.py:164
+#: engine/emoji_picker.py:317 setup/main.py:164
 msgid "About"
 msgstr "关于"
 
-#: engine/emoji_picker.py:321
+#: engine/emoji_picker.py:322
 msgid "Quit"
 msgstr "退出"
 
-#: engine/emoji_picker.py:331
+#: engine/emoji_picker.py:332
 msgid "Search for emoji"
 msgstr "搜索 Emoji"
 
-#: engine/emoji_picker.py:343
+#: engine/emoji_picker.py:344
 msgid "Set the font to display emoji"
 msgstr "设置显示 Emoji 的默认字体"
 
-#: engine/emoji_picker.py:351
+#: engine/emoji_picker.py:352
 msgid "Set font size"
 msgstr "设置字体大小"
 
@@ -54,74 +54,74 @@ msgstr "设置字体大小"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:372
+#: engine/emoji_picker.py:373
 msgid "Fallback"
 msgstr "启用用于 Emoji 的回落字体"
 
-#: engine/emoji_picker.py:374
+#: engine/emoji_picker.py:375
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr "是否当当所选的字体不能显示 Emoji 时使用回落字体以替代。"
 
-#: engine/emoji_picker.py:444
+#: engine/emoji_picker.py:445
 msgid "Recently used"
 msgstr ""
 
-#: engine/emoji_picker.py:618
+#: engine/emoji_picker.py:619
 msgid "Categories"
 msgstr ""
 
-#: engine/emoji_picker.py:619
+#: engine/emoji_picker.py:620
 msgid "Unicode categories"
 msgstr ""
 
-#: engine/emoji_picker.py:620
+#: engine/emoji_picker.py:621
 msgid "Keywords"
 msgstr "关键词"
 
-#: engine/emoji_picker.py:662
+#: engine/emoji_picker.py:663
 msgid "Fonts used to render this emoji:"
 msgstr "用于渲染该 Emoji 的字体："
 
-#: engine/emoji_picker.py:679
+#: engine/emoji_picker.py:680
 msgid "Unicode Version:"
 msgstr ""
 
-#: engine/emoji_picker.py:701 engine/emoji_picker.py:1797
+#: engine/emoji_picker.py:702 engine/emoji_picker.py:1798
 msgid "Left click to copy"
 msgstr "按下左键以复制"
 
-#: engine/emoji_picker.py:704
+#: engine/emoji_picker.py:705
 msgid "Long press or middle click for skin tones"
 msgstr ""
 
-#: engine/emoji_picker.py:705
+#: engine/emoji_picker.py:706
 msgid "Right click for info"
 msgstr "按下右键以获得详细信息"
 
-#: engine/emoji_picker.py:1191
+#: engine/emoji_picker.py:1192
 msgid "Search Results"
 msgstr "搜索结果"
 
-#: engine/emoji_picker.py:1195
+#: engine/emoji_picker.py:1196
 msgid "Search produced empty result."
 msgstr ""
 
-#: engine/emoji_picker.py:1466 engine/emoji_picker.py:1590
+#: engine/emoji_picker.py:1467 engine/emoji_picker.py:1591
 msgid "Copied to clipboard!"
 msgstr "已复制到剪贴板"
 
-#: engine/emoji_picker.py:1907
+#: engine/emoji_picker.py:1908
 msgid "Lookup on emojipedia"
 msgstr "在emojipedia查找"
 
-#: engine/emoji_picker.py:2032 engine/emoji_picker.py:2033
-#: engine/emoji_picker.py:2034 setup/main.py:1164
+#: engine/emoji_picker.py:2033 engine/emoji_picker.py:2034
+#: engine/emoji_picker.py:2035 setup/main.py:1164
 msgid "System default"
 msgstr ""
 
-#: engine/emoji_picker.py:2157
+#: engine/emoji_picker.py:2158
 msgid "Set Font"
 msgstr "设置字体"
 
@@ -776,7 +776,7 @@ msgstr ""
 #. Translators: Checkbox to choose whether to show above
 #. the candidate list whether “Emoji prediction” mode and
 #. “Off the record” mode are on or off and show which input
-#. method is currently used for the preëdit. The auxiliary
+#. method is currently used for the preedit. The auxiliary
 #. text is an optional line of text displayed above the
 #. candidate list.
 #: setup/main.py:1098
@@ -787,7 +787,7 @@ msgstr ""
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "
-"for the preëdit. The auxiliary text is an optional line of text displayed "
+"for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
 

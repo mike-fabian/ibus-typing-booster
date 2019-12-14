@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2019-11-14 10:06+0900\n"
+"POT-Creation-Date: 2019-12-06 16:47+0100\n"
 "PO-Revision-Date: 2019-11-28 05:14+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://translate.stg.fedoraproject.org/projects/"
@@ -20,31 +20,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.9.1\n"
 
-#: engine/emoji_picker.py:193
+#: engine/emoji_picker.py:194
 msgid "Emoji Picker"
 msgstr "Emoji Seçici"
 
-#: engine/emoji_picker.py:310
+#: engine/emoji_picker.py:311
 msgid "Clear recently used"
 msgstr "Son kullanılanları temizle"
 
-#: engine/emoji_picker.py:316 setup/main.py:164
+#: engine/emoji_picker.py:317 setup/main.py:164
 msgid "About"
 msgstr "Hakkında"
 
-#: engine/emoji_picker.py:321
+#: engine/emoji_picker.py:322
 msgid "Quit"
 msgstr "Çıkış"
 
-#: engine/emoji_picker.py:331
+#: engine/emoji_picker.py:332
 msgid "Search for emoji"
 msgstr "Emoji ara"
 
-#: engine/emoji_picker.py:343
+#: engine/emoji_picker.py:344
 msgid "Set the font to display emoji"
 msgstr "Emojinin görüntüleneceği yazı tipini ayarla"
 
-#: engine/emoji_picker.py:351
+#: engine/emoji_picker.py:352
 msgid "Set font size"
 msgstr "Yazı boyutunu ayarla"
 
@@ -56,11 +56,11 @@ msgstr "Yazı boyutunu ayarla"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:372
+#: engine/emoji_picker.py:373
 msgid "Fallback"
 msgstr "Yedek font"
 
-#: engine/emoji_picker.py:374
+#: engine/emoji_picker.py:375
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -68,64 +68,64 @@ msgstr ""
 "Seçilen yazı tipi kullanılarak görüntülenemeyen emoji ya da emoji "
 "dizilerinin bir kısmı için yedek font kullanılıp kullanılmayacağı."
 
-#: engine/emoji_picker.py:444
+#: engine/emoji_picker.py:445
 msgid "Recently used"
 msgstr "Son kullanılanlar"
 
-#: engine/emoji_picker.py:618
+#: engine/emoji_picker.py:619
 msgid "Categories"
 msgstr "Kategoriler"
 
-#: engine/emoji_picker.py:619
+#: engine/emoji_picker.py:620
 msgid "Unicode categories"
 msgstr "Unicode kategorileri"
 
-#: engine/emoji_picker.py:620
+#: engine/emoji_picker.py:621
 msgid "Keywords"
 msgstr "Anahtar kelimeler"
 
-#: engine/emoji_picker.py:662
+#: engine/emoji_picker.py:663
 msgid "Fonts used to render this emoji:"
 msgstr "Bu emojiyi oluşturmak için kullanılan fontlar:"
 
-#: engine/emoji_picker.py:679
+#: engine/emoji_picker.py:680
 msgid "Unicode Version:"
 msgstr "Unicode Versiyonu:"
 
-#: engine/emoji_picker.py:701 engine/emoji_picker.py:1797
+#: engine/emoji_picker.py:702 engine/emoji_picker.py:1798
 msgid "Left click to copy"
 msgstr "Kopyalamak için sol tıklayın"
 
-#: engine/emoji_picker.py:704
+#: engine/emoji_picker.py:705
 msgid "Long press or middle click for skin tones"
 msgstr "Cilt tonları için uzun süre basın veya orta tıklayın"
 
-#: engine/emoji_picker.py:705
+#: engine/emoji_picker.py:706
 msgid "Right click for info"
 msgstr "Bilgi için sağ tıklayın"
 
-#: engine/emoji_picker.py:1191
+#: engine/emoji_picker.py:1192
 msgid "Search Results"
 msgstr "Arama Sonuçları"
 
-#: engine/emoji_picker.py:1195
+#: engine/emoji_picker.py:1196
 msgid "Search produced empty result."
 msgstr "Arama sonucu bulunamadı."
 
-#: engine/emoji_picker.py:1466 engine/emoji_picker.py:1590
+#: engine/emoji_picker.py:1467 engine/emoji_picker.py:1591
 msgid "Copied to clipboard!"
 msgstr "Panoya kopyalandı!"
 
-#: engine/emoji_picker.py:1907
+#: engine/emoji_picker.py:1908
 msgid "Lookup on emojipedia"
 msgstr "Emojipedia'da ara"
 
-#: engine/emoji_picker.py:2032 engine/emoji_picker.py:2033
-#: engine/emoji_picker.py:2034 setup/main.py:1164
+#: engine/emoji_picker.py:2033 engine/emoji_picker.py:2034
+#: engine/emoji_picker.py:2035 setup/main.py:1164
 msgid "System default"
 msgstr "Sistem varsayılanı"
 
-#: engine/emoji_picker.py:2157
+#: engine/emoji_picker.py:2158
 msgid "Set Font"
 msgstr "Yazı Tipini Ayarla"
 
@@ -844,7 +844,7 @@ msgstr ""
 #. Translators: Checkbox to choose whether to show above
 #. the candidate list whether “Emoji prediction” mode and
 #. “Off the record” mode are on or off and show which input
-#. method is currently used for the preëdit. The auxiliary
+#. method is currently used for the preedit. The auxiliary
 #. text is an optional line of text displayed above the
 #. candidate list.
 #: setup/main.py:1098
@@ -852,10 +852,16 @@ msgid "Show status info in auxiliary text"
 msgstr "Yardımcı metinde durum bilgisini göster"
 
 #: setup/main.py:1100
+#, fuzzy
+#| msgid ""
+#| "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
+#| "record”  mode are on or off and show which input method is currently used "
+#| "for the preëdit. The auxiliary text is an optional line of text displayed "
+#| "above the candidate list."
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "
-"for the preëdit. The auxiliary text is an optional line of text displayed "
+"for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
 "Yardımcı metinde “Emoji tahmini”  modunun ve “Kayıt dışı”  modunun açık veya "
