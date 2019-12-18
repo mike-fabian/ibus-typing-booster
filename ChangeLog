@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 18 Dec 2019 Released 2.7.5
+* Add support for (almost) arbitrary dead key sequences (suggested by Marko Myllynen)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 14 Dec 2019 Released 2.7.4
 * Updated Portuguese (Brazil) translations from Weblate (100.0% translated)
 * Updated Turkish translations from Weblate (100.0% translated)

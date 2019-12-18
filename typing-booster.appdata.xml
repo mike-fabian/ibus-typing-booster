@@ -19,6 +19,16 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.7.5" date="2019-12-18" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Add support for (almost) arbitrary dead key sequences
+            (suggested by Marko Myllynen)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.7.4" date="2019-12-14" urgency="medium">
       <description>
         <ul>
