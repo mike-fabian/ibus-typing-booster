@@ -89,7 +89,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
         self.assertEqual(
             self._compose_sequences.compose(
                 [IBus.KEY_dead_circumflex,
-                 IBus.KEY_x]),
+                 IBus.KEY_openstar]),
             '')
         # An empty sequence should return an empty string:
         self.assertEqual(
@@ -374,6 +374,27 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_a,
                  IBus.KEY_quotedbl]),
             '')
+
+    def test_reasonable_dead_key_sequences(self):
+        # “reasonable” dead key sequences are are handled even if they
+        # are not defined in any Compose file.
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_dead_circumflex,
+                 IBus.KEY_x]),
+            '\u0078\u0302') # x̂
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_dead_abovedot,
+                 IBus.KEY_dead_macron,
+                 IBus.KEY_e]),
+            '\u0113\u0307') # ē̇
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_dead_macron,
+                 IBus.KEY_dead_abovedot,
+                 IBus.KEY_e]),
+            '\u0117\u0304') # ė̄
 
 if __name__ == '__main__':
     unittest.main()

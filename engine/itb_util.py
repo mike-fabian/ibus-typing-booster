@@ -3069,6 +3069,73 @@ class ComposeSequences:
             IBus.KEY_dead_small_schwa: 'ə',
             IBus.KEY_dead_capital_schwa: 'Ə',
         }
+        self._dead_keys = {
+            # See also /usr/include/X11/keysymdef.h and
+            # ibus/src/ibusenginesimple.c
+            IBus.KEY_dead_abovecomma: '\u0313', # COMBINING COMMA ABOVE
+            IBus.KEY_dead_abovedot: '\u0307', # COMBINING DOT ABOVE
+            IBus.KEY_dead_abovereversedcomma: '\u0314', # COMBINING REVERSED COMMA ABOVE
+            IBus.KEY_dead_abovering: '\u030A', # COMBINING RING ABOVE;
+            IBus.KEY_dead_acute: '\u0301', # COMBINING ACUTE ACCENT
+            IBus.KEY_dead_belowbreve: '\u032E', # COMBINING BREVE BELOW
+            IBus.KEY_dead_belowcircumflex: '\u032D', # COMBINING CIRCUMFLEX ACCENT BELOW
+            IBus.KEY_dead_belowcomma: '\u0326', # COMBINING COMMA BELOW
+            IBus.KEY_dead_belowdiaeresis: '\u0324', # COMBINING DIAERESIS BELOW
+            IBus.KEY_dead_belowdot: '\u0323', # COMBINING DOT BELOW
+            IBus.KEY_dead_belowmacron: '\u0331', # COMBINING MACRON BELOW
+            IBus.KEY_dead_belowring: '\u0325', # COMBINING RING BELOW
+            IBus.KEY_dead_belowtilde: '\u0330', # COMBINING TILDE BELOW
+            IBus.KEY_dead_breve: '\u0306', # COMBINING BREVE
+            IBus.KEY_dead_caron: '\u030C', # COMBINING CARON
+            IBus.KEY_dead_cedilla: '\u0327', # COMBINING CEDILLA
+            IBus.KEY_dead_circumflex: '\u0302', # COMBINING CIRCUMFLEX ACCENT
+            # IBus.KEY_dead_currency: '', # FIXME
+            # dead_dasia is an alias for dead_abovereversedcomma
+            IBus.KEY_dead_dasia: '\u0314', # COMBINING REVERSED COMMA ABOVE
+            IBus.KEY_dead_diaeresis: '\u0308', # COMBINING DIAERESIS
+            IBus.KEY_dead_doubleacute: '\u030B', # COMBINING DOUBLE ACUTE ACCENT
+            IBus.KEY_dead_doublegrave: '\u030F', # COMBINING DOUBLE GRAVE ACCENT
+            IBus.KEY_dead_grave: '\u0300', # COMBINING GRAVE ACCENT
+            # IBus.KEY_dead_greek: '', # FIXME
+            IBus.KEY_dead_hook: '\u0309', # COMBINING HOOK ABOVE
+            IBus.KEY_dead_horn: '\u031B', # COMBINING HORN
+            IBus.KEY_dead_invertedbreve: '\u0311', # COMBINING INVERTED BREVE
+            # IBus.KEY_dead_iota: '', # FIXME
+            IBus.KEY_dead_macron: '\u0304', # COMBINING MACRON
+            IBus.KEY_dead_ogonek: '\u0328', # COMBINING OGONEK
+            # dead_perispomeni is an alias for dead_tilde
+            IBus.KEY_dead_perispomeni: '\u0303', # COMBINING TILDE
+            # dead_psili is an alias for dead_abovecomma
+            IBus.KEY_dead_psili: '\u0313', # COMBINING COMMA ABOVE
+            # IBus.KEY_dead_semivoiced_sound: '', # FIXME
+            IBus.KEY_dead_stroke: '\u0336', # COMBINING LONG STROKE OVERLAY
+            # FIXME: 0335;COMBINING SHORT STROKE OVERLAY ???
+            IBus.KEY_dead_tilde: '\u0303', # COMBINING TILDE
+            # IBus.KEY_dead_voiced_sound: '゛', # FIXME
+            #
+            # Extra dead elements for German T3 layout: (in
+            # /usr/include/X11/keysymdef.h but they don’t exist in
+            # ibus.
+            #
+            # IBus.KEY_dead_lowline: '\u0332', # COMBINING LOW LINE
+            # IBus.KEY_dead_aboveverticalline: '\u030D', # COMBINING VERTICAL LINE ABOVE
+            # IBus.KEY_dead_belowverticalline: '\u0329', # COMBINING VERTICAL LINE BELOW
+            # IBus.KEY_dead_longsolidusoverlay: '\u0338', # COMBINING LONG SOLIDUS OVERLAY
+            #
+            # Dead vowels for universal syllable entry:
+            # IBus.KEY_dead_a: 'ぁ', # FIXME
+            # IBus.KEY_dead_A: 'あ', # FIXME
+            # IBus.KEY_dead_i: 'ぃ', # FIXME
+            # IBus.KEY_dead_I: 'い', # FIXME
+            # IBus.KEY_dead_u: 'ぅ', # FIXME
+            # IBus.KEY_dead_U: 'う', # FIXME
+            # IBus.KEY_dead_e: 'ぇ', # FIXME
+            # IBus.KEY_dead_E: 'え', # FIXME
+            # IBus.KEY_dead_o: 'ぉ', # FIXME
+            # IBus.KEY_dead_O: 'お', # FIXME
+            IBus.KEY_dead_small_schwa: '\u1DEA ', # COMBINING LATIN SMALL LETTER SCHWA
+            # IBus.KEY_dead_capital_schwa: '', # FIXME
+        }
         self._compose_sequences = {}
         compose_file_paths = []
         lc_ctype_locale, lc_ctype_encoding = locale.getlocale(
@@ -3229,9 +3296,113 @@ class ComposeSequences:
                     representation += chr(keyval)
         return representation
 
+    def _compose_dead_key_sequence(self, keyvals):
+        # pylint: disable=line-too-long
+        '''
+        Interprets a list of key values as a dead key sequence
+
+        :param keyvals: A list of key values
+        :type kevals: List of integers
+        :return:
+            None:
+                Incomplete sequence
+                The key values are not yet a complete dead key
+                sequence, but it is still possible to get a
+                dead key sequence by adding more key values.
+            '' (empty string):
+                Empty sequence or invalid sequence.
+                Either the sequence is empty or
+                there is no such dead key sequence, adding more
+                key values could not make it a valid sequence.
+            'text' (any non empty string):
+                Complete dead key sequence, valid.
+                The returned string contains the result of the valid
+                dead key sequence.
+        :rtype: String (possibly empty) or None
+
+        Examples:
+
+        >>> c = ComposeSequences()
+
+        Empty sequence:
+
+        >>> c._compose_dead_key_sequence([])
+        ''
+
+        Incomplete sequences:
+
+        >>> repr(c._compose_dead_key_sequence([IBus.KEY_dead_circumflex]))
+        'None'
+
+        >>> repr(c._compose_dead_key_sequence([IBus.KEY_dead_circumflex, IBus.KEY_dead_tilde]))
+        'None'
+
+        Invalid sequences:
+
+        >>> c._compose_dead_key_sequence([IBus.KEY_dead_circumflex, IBus.KEY_Multi_key])
+        ''
+
+        >>> c._compose_dead_key_sequence([IBus.KEY_dead_circumflex, IBus.KEY_BackSpace])
+        ''
+
+        >>> c._compose_dead_key_sequence([IBus.KEY_dead_circumflex, IBus.KEY_openstar])
+        ''
+
+        Complete, valid sequences:
+
+        >>> c._compose_dead_key_sequence([IBus.KEY_dead_circumflex, IBus.KEY_x])
+        '\u0078\u0302'
+
+        >>> c._compose_dead_key_sequence([IBus.KEY_dead_tilde, IBus.KEY_n])
+        '\u00f1'
+
+        >>> c._compose_dead_key_sequence([IBus.KEY_dead_macron, IBus.KEY_dead_abovedot, IBus.KEY_e])
+        '\u0117\u0304'
+
+        >>> c._compose_dead_key_sequence([IBus.KEY_dead_abovedot, IBus.KEY_dead_macron, IBus.KEY_e])
+        '\u0113\u0307'
+
+        >>> c._compose_dead_key_sequence([IBus.KEY_dead_belowdot, IBus.KEY_dead_abovedot, IBus.KEY_d])
+        '\u1E0D\u0307'
+
+        >>> c._compose_dead_key_sequence([IBus.KEY_dead_abovedot, IBus.KEY_dead_belowdot, IBus.KEY_d])
+        '\u1E0D\u0307'
+
+        >>> c._compose_dead_key_sequence([IBus.KEY_dead_abovedot, IBus.KEY_dead_belowdot, IBus.KEY_s])
+        '\u1E69'
+
+        >>> c._compose_dead_key_sequence([IBus.KEY_dead_belowdot, IBus.KEY_dead_abovedot, IBus.KEY_s])
+        '\u1E69'
+
+        >>> c._compose_dead_key_sequence([IBus.KEY_dead_doublegrave, IBus.KEY_Cyrillic_a])
+        '\u0430\u030F'
+        '''
+        # pylint: enable=line-too-long
+        if not keyvals:
+            return ''
+        combining_sequence = ''
+        for index, keyval in enumerate(keyvals):
+            if index < len(keyvals) - 1:
+                if keyval not in self._dead_keys:
+                    return '' # Invalid dead key sequence
+                combining_sequence = self._dead_keys[keyval] + combining_sequence
+            else:
+                if keyval in self._dead_keys:
+                    return None # Incomplete sequence
+                elif len(keyvals) == 1:
+                    return '' # Invalid dead key sequence
+                character = IBus.keyval_to_unicode(keyval)
+                if (not character
+                    or not unicodedata.category(character) in ('Lu', 'Ll')):
+                    return '' # Invalid dead key sequence
+                combining_sequence = character + combining_sequence
+        return unicodedata.normalize('NFC', combining_sequence)
+
     def compose(self, keyvals):
         # pylint: disable=line-too-long
         '''
+        Interprets a list of key values as a compose sequence
+
         :param keyvals: A list of key values
         :type keyvals: List of integers
         :return:
@@ -3267,21 +3438,32 @@ class ComposeSequences:
 
         Invalid sequence:
 
-        >>> c.compose([IBus.KEY_dead_circumflex, IBus.KEY_x])
+        >>> c._compose_dead_key_sequence([IBus.KEY_dead_circumflex, IBus.KEY_openstar])
         ''
 
         Complete, valid sequence:
 
         >>> c.compose([IBus.KEY_Multi_key, IBus.KEY_asciitilde, IBus.KEY_dead_circumflex, IBus.KEY_A])
         'Ẫ'
+
+        Not defined in any Compose file, but nevertheless valid
+        because it is interpreted as a “reasonable” dead key sequence:
+
+        >>> c.compose([IBus.KEY_dead_circumflex, IBus.KEY_x])
+        '\u0078\u0302'
         '''
-        # pylint: enable=line-too-lon
+        # pylint: enable=line-too-long
         if not keyvals:
             return ''
         compose_sequences = self._compose_sequences
         for keyval in keyvals:
             if keyval not in compose_sequences:
-                return ''
+                # This sequence is not defined in any of the Compose
+                # files read. In that sense it is an invalid sequence
+                # and “return ''” would be appropriate here.  But
+                # instead of just “return ''”, try whether it can be
+                # interpreted as a “reasonable” dead key sequence:
+                return self._compose_dead_key_sequence(keyvals)
             if isinstance(compose_sequences[keyval], str):
                 return compose_sequences[keyval]
             compose_sequences = compose_sequences[keyval]
