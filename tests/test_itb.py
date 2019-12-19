@@ -62,6 +62,13 @@ except (ImportError,):
     except (ImportError,):
         pass
 
+IMPORT_LIBVOIKKO_SUCCESSFUL = False
+try:
+    import libvoikko
+    IMPORT_LIBVOIKKO_SUCCESSFUL = True
+except (ImportError,):
+    pass
+
 class ItbTestCase(unittest.TestCase):
     def setUp(self):
         self.bus = IBus.Bus()
@@ -1063,6 +1070,25 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, 'a ̤')
         self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'aṳ')
+
+    @unittest.skipUnless(
+        IMPORT_LIBVOIKKO_SUCCESSFUL,
+        "Skipping because this test requires python3-libvoikko to work.")
+    def test_voikko(self):
+        self.engine.set_current_imes(['NoIME'])
+        self.engine.set_dictionary_names(['fi_FI'])
+        self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine._candidates, [
+            ('kissa', -1, '', False, True),
+            ('kissaa', -1, '', False, True),
+            ('kisassa', -1, '', False, True),
+            ('kisussa', -1, '', False, True)
+        ])
 
 if __name__ == '__main__':
     unittest.main()

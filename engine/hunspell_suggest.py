@@ -46,6 +46,13 @@ except (ImportError,):
     except (ImportError,):
         pass
 
+IMPORT_LIBVOIKKO_SUCCESSFUL = False
+try:
+    import libvoikko
+    IMPORT_LIBVOIKKO_SUCCESSFUL = True
+except (ImportError,):
+    pass
+
 # Maximum words that should be returned.
 # This should a rather big number in order not
 # to throw away useful matches. But making it very huge
@@ -68,7 +75,11 @@ class Dictionary:
         self.max_word_len = 0 # maximum length of words in this dictionary
         self.enchant_dict = None
         self.pyhunspell_object = None
-        self.load_dictionary()
+        self.voikko = None
+        if self.name.split('_')[0] != 'fi':
+            self.load_dictionary()
+        elif IMPORT_LIBVOIKKO_SUCCESSFUL:
+            self.voikko = libvoikko.Voikko('fi')
 
     def load_dictionary(self):
         '''Load a hunspell dictionary and instantiate a
@@ -377,7 +388,7 @@ class Hunspell:
                             if suggestion not in suggested_words])
             else:
                 if (dictionary.name[:2]
-                        not in ('ja', 'ja_JP',
+                        not in ('fi', 'ja', 'ja_JP',
                                 'zh', 'zh_CN', 'zh_TW', 'zh_MO', 'zh_SG')):
                     # For some languages, hunspell dictionaries don’t
                     # exist because hunspell makes no sense for these
@@ -390,6 +401,21 @@ class Hunspell:
                          %{'name': dictionary.name}
                          + 'Please install hunspell dictionary!',
                          0)])
+        if dictionary.voikko:
+            if dictionary.voikko.spell(input_phrase):
+                # If voikko thinks it is a correct word,
+                # it must be counted as a match:
+                suggested_words[input_phrase] = 0
+            extra_suggestions = [
+                unicodedata.normalize(
+                    itb_util.NORMALIZATION_FORM_INTERNAL, x)
+                for x in
+                dictionary.voikko.suggest(input_phrase_nfc)
+            ]
+            suggested_words.update([
+                (suggestion, -1)
+                for suggestion in extra_suggestions
+                if suggestion not in suggested_words])
         for word in suggested_words:
             if (suggested_words[word] == -1
                     and

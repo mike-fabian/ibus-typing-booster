@@ -68,6 +68,13 @@ try:
 except (ImportError,):
     IMPORT_LANGTABLE_SUCCESSFUL = False
 
+IMPORT_LIBVOIKKO_SUCCESSFUL = False
+try:
+    import libvoikko
+    IMPORT_LIBVOIKKO_SUCCESSFUL = True
+except (ImportError,):
+    pass
+
 sys.path = [sys.path[0]+'/../engine'] + sys.path
 from m17n_translit import Transliterator
 import tabsqlitedb
@@ -1673,14 +1680,21 @@ class SetupUI(Gtk.Window):
                     language_description[0].upper() + language_description[1:])
                 row += ' ' + language_description
         row += ':  '
-        (dic_path,
-         dummy_aff_path) = itb_util.find_hunspell_dictionary(name)
         row_item = ' ' + _('Spell checking') + ' '
-        if dic_path:
-            row_item += '✔️'
+        if name.split('_')[0] != 'fi':
+            (dic_path,
+             dummy_aff_path) = itb_util.find_hunspell_dictionary(name)
+            if dic_path:
+                row_item += '✔️'
+            else:
+                row_item += '❌'
+                missing_dictionary = True
         else:
-            row_item += '❌'
-            missing_dictionary = True
+            if IMPORT_LIBVOIKKO_SUCCESSFUL:
+                row_item += '✔️'
+            else:
+                row_item += '❌'
+                missing_dictionary = True
         row += itb_util.bidi_embed(row_item)
         row_item = ' ' + _('Emoji') + ' '
         if itb_emoji.find_cldr_annotation_path(name):
@@ -2654,20 +2668,23 @@ class SetupUI(Gtk.Window):
         '''
         missing_dictionary_packages = set()
         for name in self._dictionary_names:
-            (dic_path,
-             dummy_aff_path) = itb_util.find_hunspell_dictionary(name)
-            if not dic_path:
-                if (itb_util.distro_id() in
-                    ('opensuse',
-                     'opensuse-leap',
-                     'opensuse-tumbleweed',
-                     'sled',
-                     'sles')):
-                    missing_dictionary_packages.add(
-                        'myspell-' + name)
-                else:
-                    missing_dictionary_packages.add(
-                        'hunspell-' + name.split('_')[0])
+            if name.split('_')[0] == 'fi':
+                missing_dictionary_packages.add('python3-libvoikko')
+            else:
+                (dic_path,
+                 dummy_aff_path) = itb_util.find_hunspell_dictionary(name)
+                if not dic_path:
+                    if (itb_util.distro_id() in
+                        ('opensuse',
+                         'opensuse-leap',
+                         'opensuse-tumbleweed',
+                         'sled',
+                         'sles')):
+                        missing_dictionary_packages.add(
+                            'myspell-' + name)
+                    else:
+                        missing_dictionary_packages.add(
+                            'hunspell-' + name.split('_')[0])
         for package in missing_dictionary_packages:
             InstallPkg(package)
         self._fill_dictionaries_listbox()

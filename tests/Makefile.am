@@ -32,6 +32,7 @@ EXTRA_DIST = \
 	test_emoji_candidates.py \
 	test_emoji_similar.py \
 	test_emoji_unicode_version.py \
+	test_hunspell_suggest.py \
 	test_itb.py \
 	test_keyvals_to_keycodes.py \
 	test_m17n_db_info.py \
