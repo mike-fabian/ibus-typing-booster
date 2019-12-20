@@ -9,8 +9,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-12-20 00:01+0000\n"
-"Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
+"PO-Revision-Date: 2019-12-20 00:16+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Japanese <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ja/>\n"
 "Language: ja\n"
@@ -836,28 +836,24 @@ msgstr ""
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
 #: setup/main.py:1201
-#, fuzzy
 msgid "None"
 msgstr "下線なし"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
 #: setup/main.py:1205
-#, fuzzy
 msgid "Single"
 msgstr "一重下線"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
 #: setup/main.py:1209
-#, fuzzy
 msgid "Double"
 msgstr "二重下線"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
 #: setup/main.py:1213
-#, fuzzy
 msgid "Low"
 msgstr "低い下線"
 

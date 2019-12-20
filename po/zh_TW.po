@@ -10,8 +10,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-12-20 00:03+0000\n"
-"Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
+"PO-Revision-Date: 2019-12-20 00:16+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Traditional) <https://translate.stg.fedoraproject."
 "org/projects/ibus-typing-booster/app/zh_TW/>\n"
 "Language: zh_TW\n"
@@ -817,12 +817,10 @@ msgid ""
 msgstr ""
 
 #: setup/main.py:1160
-#, fuzzy
 msgid "Horizontal"
 msgstr "水平"
 
 #: setup/main.py:1162
-#, fuzzy
 msgid "Vertical"
 msgstr "垂直"
 
