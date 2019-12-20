@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Ankit Behera <proneon267@gmail.com>, 2019.
 # Anonymous <noreply@weblate.org>, 2019.
+# Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-12-19 22:41+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2019-12-20 00:16+0000\n"
+"Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
 "Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/or/>\n"
 "Language: or\n"
@@ -482,6 +483,7 @@ msgid "Add a space when committing by mouse click"
 msgstr "ଗୋଟିଏ ସ୍ପେସ ଯୋଗ କରନ୍ତୁ ମାଉସ କ୍ଲିକ ଦ୍ୱାରା ଜାରି କଲାବେଳେ"
 
 #: setup/main.py:400
+#, fuzzy
 msgid ""
 "Add a space if a candidate from the candidate list is committed by clicking "
 "it with the mouse."
@@ -494,6 +496,7 @@ msgstr "ଗୋଟିଏ ସ୍ପେସ ଯୋଗ କରନ୍ତୁ ମାଉ�
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:421
+#, fuzzy
 msgid "Remember last used preedit input method"
 msgstr "ପୂର୍ବ ପୂର୍ବସମ୍ପାଦନ ନିବେଶ ବିଧିକୁ ମନେ ରଖନ୍ତୁ"
 
@@ -1077,10 +1080,12 @@ msgid "Another instance of this app is already running."
 msgstr ""
 
 #: setup/main.py:2554
+#, fuzzy
 msgid "Add dictionary"
 msgstr "ଅଭିଧାନ ଯୋଗ କରନ୍ତୁ"
 
 #: setup/main.py:2819
+#, fuzzy
 msgid "Add input method"
 msgstr "ନିବେଶ ବିଧି ଯୋଗ କରନ୍ତୁ"
 

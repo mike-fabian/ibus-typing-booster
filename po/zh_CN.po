@@ -2,14 +2,15 @@
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
 # Qiyu Yan <yanqiyu01@gmail.com>, 2019.
 # Anonymous <noreply@weblate.org>, 2019.
+# Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-12-19 22:42+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2019-12-20 00:03+0000\n"
+"Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
 "Language-Team: Chinese (Simplified) <https://translate.stg.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_CN/>\n"
 "Language: zh_CN\n"
@@ -815,6 +816,7 @@ msgid ""
 msgstr ""
 
 #: setup/main.py:1160
+#, fuzzy
 msgid "Horizontal"
 msgstr "水平"
 

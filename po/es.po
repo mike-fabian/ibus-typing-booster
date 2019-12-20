@@ -6,14 +6,15 @@
 # Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2018. #zanata
 # Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2019.
 # Anonymous <noreply@weblate.org>, 2019.
+# Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-12-19 22:41+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2019-12-20 00:16+0000\n"
+"Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
 "Language-Team: Spanish <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/es/>\n"
 "Language: es\n"
@@ -1070,6 +1071,7 @@ msgid "Use color for dictionary suggestions"
 msgstr "Utilizar un color para las sugerencias de diccionario"
 
 #: setup/main.py:1420
+#, fuzzy
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
@@ -1081,10 +1083,12 @@ msgstr ""
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
 #: setup/main.py:1446
+#, fuzzy
 msgid "Choose color for dictionary suggestions"
 msgstr "Utilizar un color para las sugerencias de diccionario"
 
 #: setup/main.py:1448
+#, fuzzy
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
@@ -1098,10 +1102,12 @@ msgstr ""
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
 #: setup/main.py:1469
+#, fuzzy
 msgid "Use label for user database suggestions"
 msgstr "Utilizar un color para las sugerencias de la base de datos del usuario"
 
 #: setup/main.py:1471
+#, fuzzy
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
@@ -1114,10 +1120,12 @@ msgstr ""
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
 #: setup/main.py:1505
+#, fuzzy
 msgid "Use label for spellchecking suggestions"
 msgstr "Utilizar un color en las sugerencias de revisión ortográfica"
 
 #: setup/main.py:1507
+#, fuzzy
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
@@ -1129,10 +1137,12 @@ msgstr ""
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:1541
+#, fuzzy
 msgid "Use label for dictionary suggestions"
 msgstr "Utilizar un color para las sugerencias de diccionario"
 
 #: setup/main.py:1543
+#, fuzzy
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
