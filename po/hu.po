@@ -2,14 +2,15 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Balázs Meskó <meskobalazs@gmail.com>, 2019.
+# Anonymous <noreply@weblate.org>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-10-27 08:13+0000\n"
-"Last-Translator: Balázs Meskó <meskobalazs@gmail.com>\n"
+"PO-Revision-Date: 2019-12-19 22:38+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Hungarian <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/hu/>\n"
 "Language: hu\n"
@@ -17,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9\n"
+"X-Generator: Weblate 3.9.1\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -1079,11 +1080,11 @@ msgstr ""
 
 #: setup/main.py:2554
 msgid "Add dictionary"
-msgstr ""
+msgstr "Szótár hozzáadása"
 
 #: setup/main.py:2819
 msgid "Add input method"
-msgstr ""
+msgstr "Bemeneti mód hozzáadása"
 
 #: setup/main.py:3212
 #, python-format

@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 # Manuela Silva <mmsrs@sky.com>, 2019.
+# Anonymous <noreply@weblate.org>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-11-06 22:01+0000\n"
-"Last-Translator: Manuela Silva <mmsrs@sky.com>\n"
+"PO-Revision-Date: 2019-12-19 22:40+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Portuguese <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/pt/>\n"
 "Language: pt\n"
@@ -1067,7 +1068,7 @@ msgstr ""
 
 #: setup/main.py:2554
 msgid "Add dictionary"
-msgstr ""
+msgstr "Adicionar um dicionário"
 
 #: setup/main.py:2819
 msgid "Add input method"

@@ -1,14 +1,15 @@
 # Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019.
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
 # Mike FABIAN <mfabian@redhat.com>, 2019. #zanata
+# Anonymous <noreply@weblate.org>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-10-27 08:13+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"PO-Revision-Date: 2019-12-19 22:39+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Japanese <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ja/>\n"
 "Language: ja\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.9\n"
+"X-Generator: Weblate 3.9.1\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -835,25 +836,25 @@ msgstr ""
 #. at all for the preedit.
 #: setup/main.py:1201
 msgid "None"
-msgstr ""
+msgstr "下線なし"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
 #: setup/main.py:1205
 msgid "Single"
-msgstr ""
+msgstr "一重下線"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
 #: setup/main.py:1209
 msgid "Double"
-msgstr ""
+msgstr "二重下線"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
 #: setup/main.py:1213
 msgid "Low"
-msgstr ""
+msgstr "低い下線"
 
 #. Translators: Checkbox to choose whether a preedit style
 #. like underlining will only be used if lookup is

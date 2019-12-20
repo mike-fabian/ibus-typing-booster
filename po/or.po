@@ -2,16 +2,17 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Ankit Behera <proneon267@gmail.com>, 2019.
+# Anonymous <noreply@weblate.org>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-11-11 06:08+0000\n"
-"Last-Translator: Ankit Behera <proneon267@gmail.com>\n"
-"Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/ibus-"
-"typing-booster/app/or/>\n"
+"PO-Revision-Date: 2019-12-19 22:41+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/"
+"ibus-typing-booster/app/or/>\n"
 "Language: or\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -484,7 +485,7 @@ msgstr "ଗୋଟିଏ ସ୍ପେସ ଯୋଗ କରନ୍ତୁ ମାଉ�
 msgid ""
 "Add a space if a candidate from the candidate list is committed by clicking "
 "it with the mouse."
-msgstr ""
+msgstr "ଗୋଟିଏ ସ୍ପେସ ଯୋଗ କରନ୍ତୁ ମାଉସ କ୍ଲିକ ଦ୍ୱାରା ଜାରି କଲାବେଳେ"
 
 #. Translators: If more then one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -1077,11 +1078,11 @@ msgstr ""
 
 #: setup/main.py:2554
 msgid "Add dictionary"
-msgstr ""
+msgstr "ଅଭିଧାନ ଯୋଗ କରନ୍ତୁ"
 
 #: setup/main.py:2819
 msgid "Add input method"
-msgstr ""
+msgstr "ନିବେଶ ବିଧି ଯୋଗ କରନ୍ତୁ"
 
 #: setup/main.py:3212
 #, python-format
