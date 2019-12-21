@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-12-20 00:16+0000\n"
+"PO-Revision-Date: 2019-12-21 00:47+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Japanese <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ja/>\n"
@@ -139,7 +139,7 @@ msgstr "オン"
 
 #: engine/hunspell_table.py:491
 msgid "Input mode"
-msgstr ""
+msgstr "入力モード"
 
 #: engine/hunspell_table.py:492
 msgid "Here you can switch ibus-typing-booster on or off."

@@ -13,8 +13,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-12-20 00:16+0000\n"
-"Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
+"PO-Revision-Date: 2019-12-21 00:47+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Spanish <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/es/>\n"
 "Language: es\n"
@@ -1071,32 +1071,29 @@ msgid "Use color for dictionary suggestions"
 msgstr "Utilizar un color para las sugerencias de diccionario"
 
 #: setup/main.py:1420
-#, fuzzy
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
 msgstr ""
 "Aquí puede elegir si debe utilizarse un color personalizado para los "
-"candidatos de la tabla de búsqueda provenientes de la revisión ortográfica."
+"candidatos de la tabla de búsqueda provenientes de un  diccionario."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
 #: setup/main.py:1446
-#, fuzzy
 msgid "Choose color for dictionary suggestions"
 msgstr "Utilizar un color para las sugerencias de diccionario"
 
 #: setup/main.py:1448
-#, fuzzy
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
 msgstr ""
 "Aquí puede indicar qué color utilizar para los candidatos de la tabla de "
-"búsqueda provenientes de la revisión ortográfica. Esta opción surte efecto "
-"solo si se activa el uso de color en candidatos de la revisión ortográfica."
+"búsqueda provenientes de un diccionario. Esta opción surte efecto solo si se "
+"activa el uso de color en candidatos de un diccionario."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
