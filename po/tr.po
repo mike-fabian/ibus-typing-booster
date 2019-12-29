@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-06 16:47+0100\n"
-"PO-Revision-Date: 2019-12-14 09:52+0000\n"
+"PO-Revision-Date: 2019-12-29 07:15+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/tr/>\n"
@@ -342,7 +342,7 @@ msgstr "Yazmayı hızlandırmak için bir tamamlama giriş yöntemi."
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:3876
 msgid "translator-credits"
-msgstr "Oğuz Ersen"
+msgstr "Oğuz Ersen <oguzersen@protonmail.com>, 2019"
 
 #: engine/itb_util.py:3884
 msgid "Online documentation:"
