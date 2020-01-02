@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 '''
-This file implements test cases for finding key codes for key values
+This file implements test cases for emoji candidates
 '''
 
 import sys
