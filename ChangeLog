@@ -1,5 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 14 Jan 2020 Released 2.7.6
+* Use included fi_FI.dic for Finnish word suggestions
+* Add Finnish ispell dictionary fi_FI.dic
+* Minor translation updates from Weblate for pl, tr, zh_CN
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 18 Dec 2019 Released 2.7.5
+* Add libvoikko support for Finnish
 * Add support for (almost) arbitrary dead key sequences (suggested by Marko Myllynen)
 
 * Author: Mike FABIAN <mfabian@redhat.com>

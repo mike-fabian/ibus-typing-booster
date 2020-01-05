@@ -19,9 +19,27 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.7.6" date="2020-01-14" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Use included fi_FI.dic for Finnish word suggestions
+          </li>
+          <li>
+            Add Finnish ispell dictionary fi_FI.dic
+          </li>
+          <li>
+            Minor translation updates from Weblate for pl, tr, zh_CN
+          </li>
+       </ul>
+      </description>
+    </release>
     <release version="2.7.5" date="2019-12-18" urgency="medium">
       <description>
         <ul>
+          <li>
+            Add libvoikko support for Finnish
+          </li>
           <li>
             Add support for (almost) arbitrary dead key sequences
             (suggested by Marko Myllynen)
