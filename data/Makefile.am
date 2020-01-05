@@ -26,6 +26,7 @@ extradata_DATA = \
 	emoji-zwj-sequences.txt \
 	emoji-sequences.txt \
 	emoji-test.txt \
+	fi_FI.dic \
 	$(NULL)
 
 extradatadir = $(pkgdatadir)/data
