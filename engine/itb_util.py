@@ -2843,7 +2843,11 @@ def find_hunspell_dictionary(language):
             If no dictionary can be found for the requested language,
             the return value is ('', '').
     '''
+    datadir = os.path.join(os.path.dirname(__file__), '../data')
+    user_datadir = xdg_save_data_path('ibus-typing-booster/data')
     dirnames = [
+        user_datadir,
+        datadir,
         '/usr/share/hunspell',
         '/usr/share/myspell',
         '/usr/share/myspell/dicts',

@@ -133,14 +133,26 @@ class HunspellSuggestTestCase(unittest.TestCase):
             h.suggest('differemmen'),
             [('diffe\u0301remment', 0)])
 
-    @unittest.skipUnless(
-        IMPORT_LIBVOIKKO_SUCCESSFUL,
-        "Skipping because this test requires python3-libvoikko to work.")
-    def test_fi_FI(self):
+    def test_fi_FI_dictionary_file(self):
+        # dictionary file is included in ibus-typing-booster
         h = hunspell_suggest.Hunspell(['fi_FI'])
         self.assertEqual(
             h.suggest('kissa'),
-            [('kissa', 0)])
+            [('kissa', 0),
+             ('kissaa', 0),
+             ('kissani', 0),
+             ('kissassa', 0),
+             ('kissajuttu', 0),
+             ('kissamaiseksi',0)])
+        self.assertEqual(
+            h.suggest('Pariisin-suurlahettila'),
+            [('Pariisin-suurla\u0308hettila\u0308s', 0)])
+
+    @unittest.skipUnless(
+        IMPORT_LIBVOIKKO_SUCCESSFUL,
+        "Skipping because this test requires python3-libvoikko to work.")
+    def test_fi_FI_voikko(self):
+        h = hunspell_suggest.Hunspell(['fi_FI'])
         self.assertEqual(
             h.suggest('kisssa'),
             [('kissa', -1),

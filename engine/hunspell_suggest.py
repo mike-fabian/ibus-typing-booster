@@ -76,10 +76,7 @@ class Dictionary:
         self.enchant_dict = None
         self.pyhunspell_object = None
         self.voikko = None
-        if self.name.split('_')[0] != 'fi':
-            self.load_dictionary()
-        elif IMPORT_LIBVOIKKO_SUCCESSFUL:
-            self.voikko = libvoikko.Voikko('fi')
+        self.load_dictionary()
 
     def load_dictionary(self):
         '''Load a hunspell dictionary and instantiate a
@@ -95,7 +92,7 @@ class Dictionary:
             # List of languages where accent insensitive matching makes sense:
             accent_languages = (
                 'af', 'ast', 'az', 'be', 'bg', 'br', 'bs', 'ca', 'cs', 'csb',
-                'cv', 'cy', 'da', 'de', 'dsb', 'el', 'en', 'es', 'eu', 'fo',
+                'cv', 'cy', 'da', 'de', 'dsb', 'el', 'en', 'es', 'eu', 'fi', 'fo',
                 'fr', 'fur', 'fy', 'ga', 'gd', 'gl', 'grc', 'gv', 'haw', 'hr',
                 'hsb', 'ht', 'hu', 'ia', 'is', 'it', 'kk', 'ku', 'ky', 'lb',
                 'ln', 'lv', 'mg', 'mi', 'mk', 'mn', 'mos', 'mt', 'nb', 'nds',
@@ -115,6 +112,12 @@ class Dictionary:
             if DEBUG_LEVEL > 1:
                 LOGGER.debug(
                     'max_word_len = %s\n', self.max_word_len)
+            if self.name.split('_')[0] == 'fi':
+                self.enchant_dict = None
+                self.pyhunspell_object = None
+                if IMPORT_LIBVOIKKO_SUCCESSFUL:
+                    self.voikko = libvoikko.Voikko('fi')
+                return
             if IMPORT_ENCHANT_SUCCESSFUL:
                 try:
                     self.enchant_dict = enchant.Dict(self.name)
