@@ -75,7 +75,7 @@ class TabSqliteDb:
                 os.getenv('HOME'), '.local/share/ibus-typing-booster/user.db')
         if (self.user_db_file != ':memory:'
                 and not os.path.isdir(os.path.dirname(self.user_db_file))):
-            os.makedirs(os.path.dirname(self.user_db_file))
+            os.makedirs(os.path.dirname(self.user_db_file), exist_ok=True)
         self._phrase_table_column_names = [
             'id',
             'input_phrase',
