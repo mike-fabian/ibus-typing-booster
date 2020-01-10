@@ -1,5 +1,5 @@
 # lexuge <LEXUGEyky@outlook.com>, 2017. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020.
 # Qiyu Yan <yanqiyu01@gmail.com>, 2019.
 # Anonymous <noreply@weblate.org>, 2019.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-19 17:37+0100\n"
-"PO-Revision-Date: 2019-12-20 00:16+0000\n"
+"PO-Revision-Date: 2020-01-10 10:00+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.stg.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_CN/>\n"
@@ -251,17 +251,17 @@ msgstr "活动"
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:781 engine/itb_emoji.py:987
 msgid "objects"
-msgstr ""
+msgstr "实体"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:782 engine/itb_emoji.py:993
 msgid "symbols"
-msgstr ""
+msgstr "符号"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:783 engine/itb_emoji.py:979
 msgid "flags"
-msgstr ""
+msgstr "旗帜"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
@@ -318,7 +318,7 @@ msgstr "取消"
 #. command.
 #: engine/itb_util.py:4013
 msgid "Please press a key (or a key combination)"
-msgstr ""
+msgstr "请按一个键盘按键（或者一个组合按键）"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
@@ -335,6 +335,8 @@ msgstr ""
 #: engine/itb_util.py:4058
 msgid "translator-credits"
 msgstr ""
+"黄鹏 <shawn.p.huang@gmail.com>\n"
+"Fedora 简体中文组 <trans-zh_cn@lists.fedoraproject.org>"
 
 #: engine/itb_util.py:4066
 msgid "Online documentation:"
@@ -342,7 +344,7 @@ msgstr ""
 
 #: setup/main.py:114
 msgid "Preferences"
-msgstr ""
+msgstr "首选项"
 
 #: setup/main.py:176 setup/main.py:4478
 msgid "_Close"
@@ -720,7 +722,7 @@ msgstr ""
 #. existing shortcuts
 #: setup/main.py:968
 msgid "Shortcut"
-msgstr ""
+msgstr "捷径"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -736,7 +738,7 @@ msgstr ""
 #. existing key bindings
 #: setup/main.py:1010
 msgid "Command"
-msgstr ""
+msgstr "命令"
 
 #: setup/main.py:1037
 msgid "Edit"
@@ -837,7 +839,7 @@ msgstr ""
 #. at all for the preedit.
 #: setup/main.py:1208
 msgid "None"
-msgstr ""
+msgstr "无"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
@@ -1047,7 +1049,7 @@ msgstr ""
 
 #: setup/main.py:1699
 msgid "Emoji"
-msgstr ""
+msgstr "表情符号"
 
 #: setup/main.py:1888
 msgid "Are you sure?"
