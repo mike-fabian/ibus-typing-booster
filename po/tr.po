@@ -2,14 +2,14 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Oguz Ersen <oguzersen@protonmail.com>, 2019.
-# Oğuz Ersen <oguzersen@protonmail.com>, 2019.
+# Oğuz Ersen <oguzersen@protonmail.com>, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-19 17:37+0100\n"
-"PO-Revision-Date: 2019-12-29 07:15+0000\n"
+"PO-Revision-Date: 2020-01-10 00:07+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/tr/>\n"
@@ -1143,7 +1143,7 @@ msgstr "“Google uygulama kimlik bilgileri” .json dosyasını ayarla:"
 
 #: setup/main.py:1619
 msgid "Full path of the “Google application credentials” .json file."
-msgstr "“Google uygulama kimlik bilgileri” .json dosyasının tam yol adresi."
+msgstr "“Google uygulama kimlik bilgileri” .json dosyasının tam konumu."
 
 #: setup/main.py:1683
 msgid "Spell checking"
