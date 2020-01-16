@@ -1090,5 +1090,26 @@ class ItbTestCase(unittest.TestCase):
             ('kisussa', -1, '', False, True)
         ])
 
+    @unittest.skipUnless(
+        IMPORT_LIBVOIKKO_SUCCESSFUL,
+        "Skipping because this test requires python3-libvoikko to work.")
+    def test_voikko_en_GB_fi_FI(self):
+        self.engine.set_current_imes(['NoIME'])
+        self.engine.set_dictionary_names(['en_GB,fi_FI'])
+        self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        print(repr(self.engine._candidates))
+        self.assertEqual(self.engine._candidates, [
+            ('kiss', -1, '', False, True),
+            ('kissa', -1, '', False, True),
+            ('kissaa', -1, '', False, True),
+            ('kisassa', -1, '', False, True),
+            ('kisussa', -1, '', False, True)
+        ])
+
 if __name__ == '__main__':
     unittest.main()
