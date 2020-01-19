@@ -94,7 +94,7 @@ When more than one input method at the same time is used, the following addition
 | Key Combination | Effect |
 | --- | --- |
 | <kbd>Ctrl</kbd>+<kbd>↓</kbd> | Bound by default to the command "next_input_method". Switches the input method used for the preëdit to the next input method. |
-| <kbd>Ctrl</kbd>+<kbd>↑</kbd> | Bound by default to the command "previous_input_method". Switches the input method used for the preëdit to the next previous method. |
+| <kbd>Ctrl</kbd>+<kbd>↑</kbd> | Bound by default to the command "previous_input_method". Switches the input method used for the preëdit to the previous method. |
 
 ## Mouse bindings
 *These mouse bindings are currently hard-coded and cannot yet be customized.*
