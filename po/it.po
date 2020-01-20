@@ -2,14 +2,14 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Alessio C. <alciregi@gmail.com>, 2019.
-# Mike FABIAN <mfabian@redhat.com>, 2019.
+# Mike FABIAN <mfabian@redhat.com>, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2019-12-19 17:37+0100\n"
-"PO-Revision-Date: 2019-11-11 06:08+0000\n"
+"PO-Revision-Date: 2020-01-15 22:15+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Italian <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/it/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.1\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -30,7 +30,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:317 setup/main.py:171
 msgid "About"
-msgstr ""
+msgstr "Informazioni"
 
 #: engine/emoji_picker.py:322
 msgid "Quit"
@@ -68,7 +68,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:445
 msgid "Recently used"
-msgstr ""
+msgstr "Usati di recente"
 
 #: engine/emoji_picker.py:619
 msgid "Categories"
@@ -91,7 +91,6 @@ msgid "Unicode Version:"
 msgstr "Versione Unicode:"
 
 #: engine/emoji_picker.py:702 engine/emoji_picker.py:1798
-#, fuzzy
 msgid "Left click to copy"
 msgstr "Click sinistro per copiare"
 
@@ -112,18 +111,15 @@ msgid "Search produced empty result."
 msgstr "La ricerca non ha prodotto risultati."
 
 #: engine/emoji_picker.py:1467 engine/emoji_picker.py:1591
-#, fuzzy
 msgid "Copied to clipboard!"
 msgstr "Copiato negli appunti!"
 
 #: engine/emoji_picker.py:1908
-#, fuzzy
 msgid "Lookup on emojipedia"
 msgstr "Interroga l'emojipedia"
 
 #: engine/emoji_picker.py:2033 engine/emoji_picker.py:2034
 #: engine/emoji_picker.py:2035 setup/main.py:1171
-#, fuzzy
 msgid "System default"
 msgstr "Default di sistema"
 
@@ -133,13 +129,11 @@ msgstr "Imposta il Carattere"
 
 #: engine/hunspell_table.py:467 engine/hunspell_table.py:501
 #: engine/hunspell_table.py:522
-#, fuzzy
 msgid "Off"
 msgstr "Disattivato"
 
 #: engine/hunspell_table.py:472 engine/hunspell_table.py:506
 #: engine/hunspell_table.py:527
-#, fuzzy
 msgid "On"
 msgstr "Attivato"
 
@@ -159,7 +153,6 @@ msgstr "Qui puoi attivare o disattivare ibus-typing-booster."
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
 #: engine/hunspell_table.py:511 engine/hunspell_table.py:513 setup/main.py:455
-#, fuzzy
 msgid "Unicode symbols and emoji predictions"
 msgstr "Previsioni dei simboli Unicode e delle emoji"
 
@@ -325,7 +318,7 @@ msgstr ""
 #. command.
 #: engine/itb_util.py:4013
 msgid "Please press a key (or a key combination)"
-msgstr ""
+msgstr "Premere un tasto (o una combinazione di tasti)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
@@ -341,7 +334,7 @@ msgstr ""
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:4058
 msgid "translator-credits"
-msgstr ""
+msgstr "Alessio C. <alciregi@gmail.com>, 2019."
 
 #: engine/itb_util.py:4066
 msgid "Online documentation:"
@@ -349,11 +342,11 @@ msgstr ""
 
 #: setup/main.py:114
 msgid "Preferences"
-msgstr ""
+msgstr "Preferenze"
 
 #: setup/main.py:176 setup/main.py:4478
 msgid "_Close"
-msgstr ""
+msgstr "_Chiudi"
 
 #. Translators: This is the label of a tab in the setup
 #. tool. Here the user can setup the dictionaries for the
@@ -824,11 +817,11 @@ msgstr ""
 
 #: setup/main.py:1167
 msgid "Horizontal"
-msgstr ""
+msgstr "Orizzontale"
 
 #: setup/main.py:1169
 msgid "Vertical"
-msgstr ""
+msgstr "Verticale"
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
@@ -1062,11 +1055,11 @@ msgstr ""
 
 #: setup/main.py:1890 setup/main.py:2371 setup/main.py:3347
 msgid "_Cancel"
-msgstr ""
+msgstr "A_nnulla"
 
 #: setup/main.py:1891 setup/main.py:2372 setup/main.py:3348
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: setup/main.py:1923
 msgid "Another instance of this app is already running."
