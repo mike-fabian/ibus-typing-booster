@@ -1,13 +1,13 @@
 # Mike FABIAN <mfabian@redhat.com>, 2016. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata
-# Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2019.
+# Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-01-05 14:05+0100\n"
-"PO-Revision-Date: 2019-11-11 06:08+0000\n"
+"PO-Revision-Date: 2020-01-20 11:17+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Catalan <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ca/>\n"
@@ -16,15 +16,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
-msgstr ""
+msgstr "Selector d'emojis"
 
 #: engine/emoji_picker.py:311
 msgid "Clear recently used"
-msgstr ""
+msgstr "Neteja els utilitzats recentment"
 
 #: engine/emoji_picker.py:317 setup/main.py:171
 msgid "About"

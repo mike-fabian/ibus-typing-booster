@@ -4,7 +4,7 @@
 # Ismael Venegas Castelló <ismael.vc1337@gmail.com>, 2018. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
 # Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2018. #zanata
-# Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2019.
+# Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2019, 2020.
 # Anonymous <noreply@weblate.org>, 2019.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 msgid ""
@@ -13,8 +13,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-01-05 14:05+0100\n"
-"PO-Revision-Date: 2019-12-23 18:28+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"PO-Revision-Date: 2020-01-20 11:17+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: Spanish <https://translate.stg.fedoraproject.org/projects/"
 "ibus-typing-booster/app/es/>\n"
 "Language: es\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -1139,29 +1139,32 @@ msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
-"Aquí puede elegir si debe utilizarse una etiqueta personalizado para los "
-"candidatos de la tabla de búsqueda provenientes de un diccionario."
+"Aquí puede elegir si debe utilizarse una etiqueta para los candidatos de la "
+"tabla de búsqueda provenientes de un diccionario."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
 #: setup/main.py:1583
 msgid "Use a label to indicate busy state"
-msgstr ""
+msgstr "Utilizar una etiqueta para indicar estado ocupado"
 
 #: setup/main.py:1585
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
+"Aquí puede elegir si se utilizará una etiqueta para indicar cuando ibus-"
+"typing-booster está ocupado."
 
 #. Translators:
 #: setup/main.py:1617 setup/main.py:2368
 msgid "Set “Google application credentials” .json file:"
-msgstr ""
+msgstr "Establezca el archivo .json de «credenciales de aplicación de Google»:"
 
 #: setup/main.py:1619
 msgid "Full path of the “Google application credentials” .json file."
 msgstr ""
+"Ruta completa del archivo .json de «credenciales de aplicación de Google»."
 
 #: setup/main.py:1683
 msgid "Spell checking"
