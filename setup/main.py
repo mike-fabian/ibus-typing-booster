@@ -1624,7 +1624,7 @@ class SetupUI(Gtk.Window):
         self._google_application_credentials = itb_util.variant_to_value(
             self._gsettings.get_value('googleapplicationcredentials'))
         if not self._google_application_credentials:
-            self._google_application_credentials = 'Not set.'
+            self._google_application_credentials = _('File not yet set.')
         self._google_application_credentials_button = Gtk.Button()
         self._google_application_credentials_button_box = Gtk.HBox()
         self._google_application_credentials_button_label = Gtk.Label()
