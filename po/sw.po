@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-01-05 14:05+0100\n"
+"POT-Creation-Date: 2020-01-21 17:10+0100\n"
 "PO-Revision-Date: 2019-11-05 15:14+0000\n"
 "Last-Translator: Benson Muite <benson_muite@emailplus.org>\n"
 "Language-Team: Swahili <https://translate.stg.fedoraproject.org/projects/"
@@ -279,27 +279,27 @@ msgstr "mageuzi"
 msgid "regional"
 msgstr "mkoani"
 
-#: engine/itb_util.py:3243 engine/itb_util.py:3544
+#: engine/itb_util.py:3244 engine/itb_util.py:3545
 msgid "File not found"
 msgstr "Faili haionekana"
 
-#: engine/itb_util.py:3246 engine/itb_util.py:3547
+#: engine/itb_util.py:3247 engine/itb_util.py:3548
 msgid "Permission error"
 msgstr "Kosa ya kibali"
 
-#: engine/itb_util.py:3249 engine/itb_util.py:3550
+#: engine/itb_util.py:3250 engine/itb_util.py:3551
 msgid "Unicode decoding error"
 msgstr "Kosa ya kufumbua msimbosare"
 
-#: engine/itb_util.py:3252 engine/itb_util.py:3553
+#: engine/itb_util.py:3253 engine/itb_util.py:3554
 msgid "Unknown error"
 msgstr "Kosa haifahamika"
 
-#: engine/itb_util.py:3524
+#: engine/itb_util.py:3525
 msgid "Native Keyboard"
 msgstr "Kibodi Awali"
 
-#: engine/itb_util.py:3526
+#: engine/itb_util.py:3527
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -309,38 +309,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4004
+#: engine/itb_util.py:4005
 msgid "Key input"
 msgstr ""
 
-#: engine/itb_util.py:4010
+#: engine/itb_util.py:4011
 msgid "Cancel"
 msgstr ""
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4017
+#: engine/itb_util.py:4018
 msgid "Please press a key (or a key combination)"
 msgstr ""
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4022
+#: engine/itb_util.py:4023
 msgid "The dialog will be closed when the key is released"
 msgstr ""
 
-#: engine/itb_util.py:4053
+#: engine/itb_util.py:4054
 msgid "A completion input method to speedup typing."
 msgstr ""
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4062
+#: engine/itb_util.py:4063
 msgid "translator-credits"
 msgstr ""
 
-#: engine/itb_util.py:4070
+#: engine/itb_util.py:4071
 msgid "Online documentation:"
 msgstr ""
 
@@ -1043,6 +1043,10 @@ msgstr ""
 
 #: setup/main.py:1619
 msgid "Full path of the “Google application credentials” .json file."
+msgstr ""
+
+#: setup/main.py:1627
+msgid "File not yet set."
 msgstr ""
 
 #: setup/main.py:1683
