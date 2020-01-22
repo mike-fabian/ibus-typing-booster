@@ -6,22 +6,23 @@
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2018. #zanata, 2019.
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019. #zanata
+# Julien Humbert <julroy67@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-01-21 17:10+0100\n"
-"PO-Revision-Date: 2019-12-14 09:51+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: French <https://translate.stg.fedoraproject.org/projects/ibus-"
-"typing-booster/app/fr/>\n"
+"PO-Revision-Date: 2020-01-22 09:59+0000\n"
+"Last-Translator: Julien Humbert <julroy67@gmail.com>\n"
+"Language-Team: French <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -198,31 +199,30 @@ msgstr "Préférences pour ibus-typing-booster"
 
 #: engine/hunspell_table.py:3829
 msgid "Failed to import Google speech-to-text."
-msgstr "Échec de l'import du speech-to-text de Google."
+msgstr "Échec de l’import du speech-to-text de Google."
 
 #: engine/hunspell_table.py:3832
 msgid "Failed to import pyaudio."
-msgstr "Échec de l'import de pyaudio."
+msgstr "Échec de l’import de pyaudio."
 
 #: engine/hunspell_table.py:3835
 msgid "Failed to import queue."
-msgstr "Échec de l'import de la file d'attente."
+msgstr "Échec de l’import de la file d’attente."
 
 #: engine/hunspell_table.py:3840
 msgid "No supported language for speech recognition."
-msgstr "Aucune langue n'est prise en charge pour la reconnaissance vocale."
+msgstr "Aucune langue n’est prise en charge pour la reconnaissance vocale."
 
 #: engine/hunspell_table.py:3844
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
-"Le fichier d'identifiants pour les applications Google « %s » n'a pas été "
+"Le fichier d’identifiants pour les applications Google « %s » n’a pas été "
 "trouvé."
 
 #: engine/hunspell_table.py:3856
 msgid "Failed to init Google speech-to-text. See debug.log."
-msgstr ""
-"Échec de l'initialisation du speech-to-text de Google. Lisez debug.log."
+msgstr "Échec de l’initialisation du speech-to-text de Google. Lisez debug.log."
 
 #: engine/hunspell_table.py:3963
 msgid "Google speech-to-text error. See debug.log."
@@ -289,7 +289,7 @@ msgstr "Fichier non trouvé"
 
 #: engine/itb_util.py:3247 engine/itb_util.py:3548
 msgid "Permission error"
-msgstr "Erreur d'autorisation"
+msgstr "Erreur d’autorisation"
 
 #: engine/itb_util.py:3250 engine/itb_util.py:3551
 msgid "Unicode decoding error"
@@ -309,16 +309,16 @@ msgid ""
 "whatever comes from the current keyboard layout without any further changes. "
 "So no transliteration or composing is done here."
 msgstr ""
-"Méthode de saisie directe. Ce n'est pas réellement une méthode de saisie, "
-"elle utilise tout ce qui vient de l'agencement de clavier sans aucun "
-"changement. Donc aucune translitération ou composition n'est faite ici."
+"Méthode de saisie directe. Ce n’est pas réellement une méthode de saisie, "
+"elle utilise tout ce qui vient de l’agencement de clavier sans aucun "
+"changement. Donc aucune translittération ou composition n’est faite ici."
 
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
 #: engine/itb_util.py:4005
 msgid "Key input"
-msgstr "Touche d'entrée"
+msgstr "Touche d’entrée"
 
 #: engine/itb_util.py:4011
 msgid "Cancel"
@@ -441,7 +441,7 @@ msgstr ""
 "Si cette option est activée, les suggestions ne sont pas montrées par "
 "défaut. Appuyer sur une touche est alors nécessaire pour montrer la liste "
 "des suggestions. La touche à utiliser peut être changée par les paramètres "
-"de raccourcis clavier. Par défaut, il s'agit de la touche Tab. Après "
+"de raccourcis clavier. Par défaut, il s’agit de la touche Tab. Après "
 "validation, les suggestions sont de nouveau cachées jusqu’à nouvel appui sur "
 "la touche."
 
@@ -463,11 +463,11 @@ msgid ""
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
-"Si la meilleure complètement est d'abord montrée en ligne dans la pré-"
-"édition au lieu d'afficher une liste complète des candidats. Le candidat en "
-"ligne peut être sélectionné en appuyant sur Tab et ensuite validé comme "
-"d'habitude, par exemple en tapant Espace ou Contrôle+Espace. La touche Tab "
-"permet de passer au candidat suivant et d'ouvrir la liste complète des "
+"Si le meilleur complètement est d’abord montrée en ligne dans la pré-édition "
+"au lieu d’afficher une liste complète des candidats. Le candidat en ligne "
+"peut être sélectionné en appuyant sur Tab et ensuite validé comme d’"
+"habitude, par exemple en tapant Espace ou Contrôle + Espace. La touche Tab "
+"permet de passer au candidat suivant et d’ouvrir la liste complète des "
 "candidats."
 
 #. Translators: What you type will automatically be
@@ -970,16 +970,16 @@ msgid ""
 "require a minimum number of characters before a lookup is done."
 msgstr ""
 "Si cette option est activée, un style de pré-édition comme le soulignement "
-"ne sera activé qu'en cas de recherche. La recherche est désactivable lors ce "
-"qu'on utilise l'option pour activer la recherche uniquement lorsqu'on appuie "
-"sur une touche ou parce qu'on utilise l'option pour exiger un nombre minimum "
+"ne sera activé qu’en cas de recherche. La recherche est désactivable lorsqu’"
+"on utilise l’option pour activer la recherche uniquement lorsqu’on appuie "
+"sur une touche ou parce qu’on utilise l’option pour exiger un nombre minimum "
 "de caractères avant de faire une recherche."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
 #: setup/main.py:1270
 msgid "Use color for inline completion"
-msgstr "Utilisation d'une couleur pour le complètement en ligne"
+msgstr "Utilisation d’une couleur pour le complètement en ligne"
 
 #: setup/main.py:1272
 msgid ""
@@ -1003,7 +1003,7 @@ msgid ""
 "inline completion is enabled."
 msgstr ""
 "Ici vous pouvez renseigner la couleur à utiliser pour le complètement en "
-"ligne. Ce paramétrage n'a d'effet que si l'utilisation d'une couleur "
+"ligne. Ce paramétrage n’a d’effet que si l’utilisation d’une couleur "
 "personnalisée est utilisée et que le complètement en ligne est activé."
 
 #. Translators: A checkbox where one can choose whether a
@@ -1013,7 +1013,7 @@ msgstr ""
 msgid "Use color for user database suggestions"
 msgstr ""
 "Utiliser une couleur pour les suggestions provenant de la base de données de "
-"l'utilisateur"
+"l’utilisateur"
 
 #: setup/main.py:1326
 msgid ""
@@ -1021,7 +1021,7 @@ msgid ""
 "lookup table which come from the user database."
 msgstr ""
 "Ici vous pouvez choisir si une couleur est utilisée pour les candidats dans "
-"la table de recherche provenant de la base de données de l'utilisateur."
+"la table de recherche provenant de la base de données de l’utilisateur."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1030,7 +1030,7 @@ msgstr ""
 msgid "Choose color for user database suggestions"
 msgstr ""
 "Choisir la couleur pour les suggestions provenant de la base de données de "
-"l'utilisateur"
+"l’utilisateur"
 
 #: setup/main.py:1354
 msgid ""
@@ -1088,7 +1088,7 @@ msgid ""
 "lookup table which come from a dictionary."
 msgstr ""
 "Ici vous pouvez choisir si une couleur est utilisée pour les candidats dans "
-"la table de recherche provenant d'un dictionnaire."
+"la table de recherche provenant d’un dictionnaire."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1104,9 +1104,9 @@ msgid ""
 "color for candidates from a dictionary is enabled."
 msgstr ""
 "Ici vous pouvez renseigner quelle couleur utiliser pour les candidats de la "
-"table de recherche provenant d'un dictionnaire. Ce paramètre n’a d’effets "
-"que lorsque de l’utilisation de couleur pour les suggestions provenant d'un "
-"dictionnaire est activité."
+"table de recherche provenant d’un dictionnaire. Ce paramètre n’a d’effet que "
+"lorsque de l’utilisation de couleur pour les suggestions provenant d’un "
+"dictionnaire est activé."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
@@ -1115,7 +1115,7 @@ msgstr ""
 msgid "Use label for user database suggestions"
 msgstr ""
 "Utiliser un libellé pour les suggestions provenant de la base de données de "
-"l'utilisateur"
+"l’utilisateur"
 
 #: setup/main.py:1478
 msgid ""
@@ -1123,7 +1123,7 @@ msgid ""
 "table which come from the user database."
 msgstr ""
 "Ici vous pouvez choisir si un libellé est utilisé pour les candidats dans la "
-"table de recherche provenant de la base de données de l'utilisateur."
+"table de recherche provenant de la base de données de l’utilisateur."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
@@ -1153,7 +1153,7 @@ msgid ""
 "table which come from a dictionary."
 msgstr ""
 "Ici vous pouvez choisir si un libellé est utilisé pour les candidats dans la "
-"table de recherche provenant d'un dictionnaire."
+"table de recherche provenant d’un dictionnaire."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
@@ -1180,7 +1180,7 @@ msgstr "Chemin complet du fichier .json «  Google application credentials »."
 
 #: setup/main.py:1627
 msgid "File not yet set."
-msgstr ""
+msgstr "Fichier non défini."
 
 #: setup/main.py:1683
 msgid "Spell checking"
