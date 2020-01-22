@@ -3524,7 +3524,7 @@ class SetupUI(Gtk.Window):
                 self._auto_commit_characters)
 
     def set_google_application_credentials(self, path, update_gsettings=True):
-        '''Sets the auto commit characters
+        '''Sets the path of the Google application credentials file
 
         :param path: Full path of the Google application credentials
                      .json file.
@@ -3546,7 +3546,7 @@ class SetupUI(Gtk.Window):
                 'googleapplicationcredentials',
                 GLib.Variant.new_string(self._google_application_credentials))
         else:
-            self._google_application_credentials_entry.set_text(
+            self._google_application_credentials_button_label.set_text(
                 self._google_application_credentials)
 
     def set_color_inline_completion(self, mode, update_gsettings=True):
