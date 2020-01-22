@@ -9,16 +9,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-01-21 17:10+0100\n"
-"PO-Revision-Date: 2020-01-10 00:07+0000\n"
+"PO-Revision-Date: 2020-01-22 09:59+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
-"Language-Team: Turkish <https://translate.stg.fedoraproject.org/projects/"
+"Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 3.10.3\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -346,7 +346,7 @@ msgstr "Oğuz Ersen <oguzersen@protonmail.com>, 2019"
 
 #: engine/itb_util.py:4071
 msgid "Online documentation:"
-msgstr "Çevrimiçi dokümantasyon:"
+msgstr "Çevrim içi dokümantasyon:"
 
 #: setup/main.py:114
 msgid "Preferences"
@@ -986,22 +986,22 @@ msgstr ""
 #. user database.
 #: setup/main.py:1324
 msgid "Use color for user database suggestions"
-msgstr "Kullanıcı veritabanı önerileri için renk kullan"
+msgstr "Kullanıcı veri tabanı önerileri için renk kullan"
 
 #: setup/main.py:1326
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
 msgstr ""
-"Burada, arama tablosundaki adaylardan kullanıcı veritabanından gelenler için "
-"özel bir rengin kullanılıp kullanılmayacağını seçebilirsiniz."
+"Burada, arama tablosundaki adaylardan kullanıcı veri tabanından gelenler "
+"için özel bir rengin kullanılıp kullanılmayacağını seçebilirsiniz."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
 #: setup/main.py:1352
 msgid "Choose color for user database suggestions"
-msgstr "Kullanıcı veritabanı önerileri için renk seç"
+msgstr "Kullanıcı veri tabanı önerileri için renk seç"
 
 #: setup/main.py:1354
 msgid ""
@@ -1009,9 +1009,9 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
 msgstr ""
-"Burada, arama tablosundaki adaylardan kullanıcı veritabanından gelenler için "
-"hangi rengin kullanılacağını belirleyebilirsiniz. Bu ayarın yalnızca "
-"kullanıcı veritabanından gelen adaylar için renk kullanımı etkinse bir "
+"Burada, arama tablosundaki adaylardan kullanıcı veri tabanından gelenler "
+"için hangi rengin kullanılacağını belirleyebilirsiniz. Bu ayarın, yalnızca "
+"kullanıcı veri tabanından gelen adaylar için renk kullanımı etkinse bir "
 "etkisi olacaktır."
 
 #. Translators: A checkbox where one can choose whether a
@@ -1082,15 +1082,15 @@ msgstr ""
 #. database in the candidate list.
 #: setup/main.py:1476
 msgid "Use label for user database suggestions"
-msgstr "Kullanıcı veritabanı önerileri için etiket kullan"
+msgstr "Kullanıcı veri tabanı önerileri için etiket kullan"
 
 #: setup/main.py:1478
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
 msgstr ""
-"Burada, arama tablosundaki adaylardan kullanıcı veritabanından gelenler için "
-"bir etiket kullanılıp kullanılmayacağını seçebilirsiniz."
+"Burada, arama tablosundaki adaylardan kullanıcı veri tabanından gelenler "
+"için bir etiket kullanılıp kullanılmayacağını seçebilirsiniz."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
@@ -1147,7 +1147,7 @@ msgstr "“Google uygulama kimlik bilgileri” .json dosyasının tam konumu."
 
 #: setup/main.py:1627
 msgid "File not yet set."
-msgstr ""
+msgstr "Dosya henüz ayarlanmadı."
 
 #: setup/main.py:1683
 msgid "Spell checking"
