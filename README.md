@@ -4,9 +4,9 @@ Get faster typing experience by intelligent context sensitive completion.
 ## Backdrop & Introduction
 _Ibus-typing-booster_ is a completion input method to speed-up typing.
 
-The project was started in 2010 for [Fedora 15][1]. The original purpose was to make typing of Indic languages easier and faster by providing completion and spell checking suggestions.
+The project was started in 2010 for [Fedora 15](https://en.wikipedia.org/wiki/Fedora_version_history#Fedora_15). The original purpose was to make typing of Indic languages easier and faster by providing completion and spell checking suggestions.
 
-Originally it was forked from [ibus-table][2] whose developer was Yu Yuwei  acevery@gmail.com, with contributions from Caius("kaio") chanceme@kaio.net.
+Originally it was forked from [ibus-table](https://github.com/acevery/ibus-table) whose developer was Yu Yuwei acevery@gmail.com, with contributions from Caius("kaio") chanceme@kaio.net.
 
 Since then _ibus-typing-booster_ has been improved to support many other languages as well (i.e. most languages except Chinese and Japanese are supported).
 
@@ -20,35 +20,35 @@ Recently the capability to type different languages at the same time without hav
 - Context sensitive completions.
 - Learns from user input.
 - Can be trained by supplying files containing typical user input.
-- If available, [hunspell dictionaries][3] will also be used to provide not only completion but also spellchecking suggestions (But _ibus-typing-booster_ can also work without _hunspell_ by learning from user input alone).
+- If available, [hunspell dictionaries](https://github.com/hunspell/hunspell) will also be used to provide not only completion but also spellchecking suggestions (But _ibus-typing-booster_ can also work without _hunspell_ by learning from user input alone).
 - Can be used with almost any keyboard layout.
-- Almost all input methods supplied by [libm17n][4] are supported (including the [inscript2][5] input methods).
+- Almost all input methods supplied by [libm17n](https://pkgs.org/download/libm17n.so.0) are supported (including the [inscript2](https://fedoraproject.org/wiki/QA:Inscript2_Keymaps) input methods).
 - Several input methods and languages can be used at the same time without switching.
-- Predicts [Unicode][6] symbols and emojis as well.
+- Predicts [Unicode](https://en.wikipedia.org/wiki/Unicode) symbols and emojis as well.
 
 ## Online documentation
 You can find online documentation here: 
-- [_ibus-typing-booster_ home page on github][7]
-- [_ibus-typing-booster_ documentation page][8]
+- [_ibus-typing-booster_ home page on github](http://mike-fabian.github.io/ibus-typing-booster/)
+- [_ibus-typing-booster_ documentation page](http://mike-fabian.github.io/ibus-typing-booster/documentation.html)
 
 ## Feature Requests & Bug reports
 - You can report bugs here:
-[_ibus-typing-booster_ issue tracker on github][11]
+[_ibus-typing-booster_ issue tracker on github](https://github.com/mike-fabian/ibus-typing-booster/issues)
 - Request for new features here:
-[_ibus-typing-booster_ pull request on github][12]
+[_ibus-typing-booster_ pull request on github](https://github.com/mike-fabian/ibus-typing-booster/pulls)
 
 ## Contributing translations
-The best (& the easiest) way to contribute translations is using this [online translation platform][13].
+The best (& the easiest) way to contribute translations is using this [online translation platform](https://translate.fedoraproject.org/projects/ibus-typing-booster/).
 
 ## Development
 If  you want to build from  source or contribute to the development, see the
-[ibus-typing-booster development page][14].
+[ibus-typing-booster development page](http://mike-fabian.github.io/ibus-typing-booster/development.html).
 There you'd also find the requirements for building from source
 for most systems.
 
 ## Table of default key bindings
-- [Default key bindings][9]
-- [Default mouse bindings][10]
+- [Default key bindings](http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings)
+- [Default mouse bindings](http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings)
 
 *Note: A copy of these bindings is also included below in this readme for convenience. Some of these key bindings can be customized in the setup tool.*
 
@@ -107,17 +107,3 @@ When more than one input method at the same time is used, the following addition
 | <kbd>Ctrl</kbd> + Button 3 clicks anywhere in the candidate list | Toggle the emoji and Unicode symbol prediction on/off (Same as <kbd>Alt</kbd>+<kbd>F6</kbd>). This has the same result as using the setup tool to change this. |
 | <kbd>Alt</kbd> + Button 3 clicks anywhere in the candidate list | Toggle the “Off the record” mode (Same as <kbd>Alt</kbd>+<kbd>F9</kbd>).<br>This has the same result as using the setup tool to change this.<br>While "Off the record" mode is on, learning from user input is disabled. If learned user input is available, predictions are usually much better than those which predictions use only dictionaries. Therefore, one should use this option sparingly. Only if one wants to avoid saving secret user input to disk it might make sense to use this option temporarily. |
 
-[1]: https://en.wikipedia.org/wiki/Fedora_version_history#Fedora_15
-[2]: https://github.com/acevery/ibus-table
-[3]: https://github.com/hunspell/hunspell
-[4]: https://pkgs.org/download/libm17n.so.0
-[5]: https://fedoraproject.org/wiki/QA:Inscript2_Keymaps
-[6]: https://en.wikipedia.org/wiki/Unicode
-[7]: http://mike-fabian.github.io/ibus-typing-booster/
-[8]: http://mike-fabian.github.io/ibus-typing-booster/documentation.html
-[9]: http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings
-[10]: http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings
-[11]: https://github.com/mike-fabian/ibus-typing-booster/issues
-[12]: https://github.com/mike-fabian/ibus-typing-booster/pulls
-[13]: https://translate.stg.fedoraproject.org/projects/ibus-typing-booster/
-[14]: http://mike-fabian.github.io/ibus-typing-booster/development.html
