@@ -3,7 +3,7 @@
 %global _python_bytecompile_extra 1
 
 Name:       ibus-typing-booster
-Version:    2.7.0
+Version:    2.7.7
 Release:    1%{?dist}
 Summary:    A completion input method
 License:    GPLv3+, ASL 2.0
@@ -47,6 +47,7 @@ BuildRequires:  python34-devel
 BuildRequires:  m17n-lib
 BuildRequires:  m17n-db-extras
 BuildRequires:  python3-enchant
+BuildRequires:  python3-libvoikko
 BuildRequires:  libappstream-glib
 BuildRequires:  desktop-file-utils
 BuildRequires:  python3-gobject
@@ -64,6 +65,11 @@ BuildRequires:  dconf
 BuildRequires:  dbus-x11
 BuildRequires:  ibus
 BuildRequires:  xorg-x11-server-Xvfb
+BuildRequires:  glibc-langpack-en
+BuildRequires:  glibc-langpack-cs
+BuildRequires:  glibc-langpack-km
+BuildRequires:  glibc-langpack-pt
+BuildRequires:  glibc-langpack-am
 BuildArch:  noarch
 
 %description
@@ -164,7 +170,7 @@ popd
   %{_bindir}/ibus write-cache --system &>/dev/null || :
 
 %files -f %{name}.lang
-%doc AUTHORS COPYING README
+%doc AUTHORS COPYING README README.html README.md
 %{_datadir}/%{name}
 %{_datadir}/metainfo/typing-booster.appdata.xml
 %{_datadir}/ibus/component/typing-booster.xml
@@ -187,6 +193,93 @@ popd
 
 
 %changelog
+* Fri Jan 24 2020 Mike FABIAN <mfabian@redhat.com> - 2.7.7-1
+- Update to 2.7.7
+- Translation updates from Weblate for es, de, pl, he, fr, uk, tr, nl
+- Generate README.html and README from README.md
+- A thorough upgrade to README.md
+  Resolves: https://github.com/mike-fabian/ibus-typing-booster/pull/74
+- Set button label of google application credentials button correctly
+  Resolves: rhbz#1793460
+- Make si-wijesekera the default input method for si_LK.UTF-8 locale
+- Add another test case for libvoikko spellchecking together with
+  en_GB spellchecking
+
+* Sun Jan 05 2020 Mike FABIAN <mfabian@redhat.com> - 2.7.6-1
+- Update to 2.7.6
+- Use included fi_FI.dic for Finnish word suggestions
+- Add Finnish ispell dictionary fi_FI.dic
+- Minor translation updates from Weblate for pl, tr, zh_CN
+
+* Wed Dec 18 2019 Mike FABIAN <mfabian@redhat.com> - 2.7.5-1
+- Update to 2.7.5
+- Add libvoikko support for Finnish
+- Add support for (almost) arbitrary dead key sequences
+  (suggested by Marko Myllynen)
+
+* Sat Dec 14 2019 Mike FABIAN <mfabian@redhat.com> - 2.7.4-1
+- Update to 2.7.4
+- Updated Portuguese (Brazil) translations from Weblate (100.0% translated)
+- Updated Turkish translations from Weblate (100.0% translated)
+- Remove weird spelling “preëdit” from messageid
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/62)
+- Update emoji annotations from CLDR
+
+* Mon Nov 25 2019 Mike FABIAN <mfabian@redhat.com> - 2.7.3-1
+- Update to 2.7.3
+- Correct release dates of Unicode 12.0.0 and 12.1.0 in emoji_picker.py
+- Add workaround if key codes cannot be found for key values
+  (workaround for big endian platforms)
+- Fix race condition in itb_util.xdg_save_data_path()
+  Resolves: rhbz#1770072
+  Resolves: rhbz#1713963
+  Resolves: rhbz#1764520
+  Resolves: rhbz#1768016
+- Another fix for right-to-left languages: fix wrong order of globe emoji
+- Small fix in parsing emoji-test.txt which slightly changes the emoji sorting order
+- Adapt parsing of the emoji data files to the changes in Unicode 13.0
+- Fix emoji test cases for new emoji data files for Unicode 13.0
+- Update emoji data to current Unicode 13.0 draft
+- Add fa, it, tr to LINGUAS
+- Updated Odia translations from Weblate (53.4% translated)
+- Updated Czech translations from Weblate (100.0% translated)
+- Updated Catalan translations from Weblate (17.1% translated)
+- Added Turkish translations from Weblate (100.0% translated)
+- Added Italian translations from  Weblate (5.2% translated)
+- Portuguese (Portugal) translations moved from pt_PT to pt (23.8% translated)
+- Update French translations from Weblate (100.0% translated)
+- Added Persian translations from Weblate (0% translated)
+
+* Wed Nov 06 2019 Mike FABIAN <mfabian@redhat.com> - 2.7.2-1
+- Update to 2.7.2
+- Fix display for right-to-left languages in the dictionaries and
+  input methods tab in the setup tool
+- Added Swahili translations from Weblate (30.1% translated)
+- Added Traditional Chinese translations from Weblate (0.5% translated)
+- Added Portuguese (Portugal) translations from Weblate (23.8% translated)
+- Update Hebrew translations from Weblate (100% translated)
+- Update Arabic translations from Weblate (100% translated)
+- Update Odia translations from Weblate (44.0% translated)
+- Update Spanisch translations from Weblate (93.3% translated)
+
+* Thu Oct 31 2019 Mike FABIAN <mfabian@redhat.com> - 2.7.1-1
+- Update to 2.7.1
+- Update Chinese (Simplified) translations from Weblate (13.5% translated)
+- Update Spanish translations from Weblate (92.2% translated)
+- Update Catalan translations from Weblate (12.4% translated)
+- Add Hebrew translation from Weblate (67.4% translated)
+- Add Arabic translation from Weblate (28.0% translated)
+- Update Ukrainian translations from Weblate (100.0% translated)
+- Update German translations from Weblate (100.0% translated)
+- Update Japanese translations from Weblate (35.2% translated)
+- Update French translations from Weblate (93.8% translated)
+- Add Hungarian translation from Weblate (58.0% translated)
+- Add Odia translations from Weblate (2.6% translated)
+- Improve compose file parsing to get results containing \" correct
+- More test cases for compose sequences
+- Change README.md to refer to Weblate for translations instead of Zanata
+- Fix display of code points in emoji-picker when running in or_IN.UTF-8 locale
+
 * Fri Oct 18 2019 Mike FABIAN <mfabian@redhat.com> - 2.7.0-1
 - Update to 2.7.0
 - Add support for compose sequences
