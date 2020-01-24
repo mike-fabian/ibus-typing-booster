@@ -50,7 +50,7 @@ for most systems.
 - [Default key bindings](http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings)
 - [Default mouse bindings](http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings)
 
-*Note: A copy of these bindings is also included below in this readme for convenience. Some of these key bindings can be customized in the setup tool.*
+*Note: These bindings are also shown below for convenience. Some of these key bindings can be customized in the setup tool.*
 
 The following table explains the defaults:
 
