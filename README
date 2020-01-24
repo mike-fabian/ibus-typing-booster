@@ -1,0 +1,298 @@
+Ibus-typing-booster
+
+Get faster typing experience by intelligent context sensitive completion.
+
+Backdrop & Introduction
+
+Ibus-typing-booster is a completion input method to speed-up typing.
+
+The project was started in 2010 for [1]Fedora 15. The original purpose was to
+make typing of Indic languages easier and faster by providing completion and
+spell checking suggestions.
+
+Originally it was forked from [2]ibus-table whose developer was Yu Yuwei [3]
+acevery@gmail.com, with contributions from Caius("kaio") [4]chanceme@kaio.net
+.
+
+Since then ibus-typing-booster has been improved to support many other
+languages as well (i.e. most languages except Chinese and Japanese are
+supported).
+
+Recently the capability to type different languages at the same time without
+having to switch between languages has been added.
+
+Developers
+
+  • Mike Fabian [5]mfabian@redhat.com
+  • Anish Patil: [6]anish.developer@gmail.com
+
+Features
+
+  • Context sensitive completions.
+  • Learns from user input.
+  • Can be trained by supplying files containing typical user input.
+  • If available, [7]hunspell dictionaries will also be used to provide not
+    only completion but also spellchecking suggestions (But
+    ibus-typing-booster can also work without hunspell by learning from user
+    input alone).
+  • Can be used with almost any keyboard layout.
+  • Almost all input methods supplied by [8]libm17n are supported (including
+    the [9]inscript2 input methods).
+  • Several input methods and languages can be used at the same time without
+    switching.
+  • Predicts [10]Unicode symbols and emojis as well.
+
+Online documentation
+
+You can find online documentation here:
+
+  • [11]ibus-typing-booster home page on github
+  • [12]ibus-typing-booster documentation page
+
+Feature Requests & Bug reports
+
+  • You can report bugs here: [13]ibus-typing-booster issue tracker on github
+  • Request for new features here: [14]ibus-typing-booster pull request on
+    github
+
+Contributing translations
+
+The best (& the easiest) way to contribute translations is using this [15]
+online translation platform.
+
+Development
+
+If you want to build from source or contribute to the development, see the 
+[16]ibus-typing-booster development page. There you'd also find the
+requirements for building from source for most systems.
+
+Table of default key bindings
+
+  • [17]Default key bindings
+  • [18]Default mouse bindings
+
+Note: A copy of these bindings is also shown below for convenience. Some of
+these key bindings can be customized in the setup tool.
+
+The following table explains the defaults:
+
+┌───────────────┬───────────────────────────────────────────────────────────┐
+│Key Combination│                          Effect                           │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│               │Commit the preëdit (or the selected candidate, if any) and │
+│Space          │send a Space to the application, i.e. commit the typed     │
+│               │string followed by a space.                                │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│Return or Enter│Commit the preëdit (or the selected candidate, if any) and │
+│               │send a Return or Enter to the application.                 │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│               │Bound by default to the commands "select_next_candidate"   │
+│               │and "enable_lookup".                                       │
+│               │                                                           │
+│               │  • If the option "Enable suggestions by Tab" is not set   │
+│               │    (☐) then Tab always just executes                      │
+│               │    "select_next_candidate" which selects the next         │
+│               │    candidate from the candidate list.                     │
+│               │  • If the option "Enable suggestions by Tab" is set (☑),  │
+│               │    then no candidate list is shown by default:            │
+│Tab            │      □ If no candidate list is shown: "enable_lookup" is  │
+│               │        executed which requests to show the candidate list │
+│               │        (nothing might be shown if no candidates can be    │
+│               │        found).                                            │
+│               │      □ If a candidate list is already shown:              │
+│               │        "select_next_candidate" is executed which selects  │
+│               │        the next candidate in the list. After each commit  │
+│               │        and after each change of the contents of the       │
+│               │        preëdit, the candidate list will be hidden again   │
+│               │        until the "enable_lookup" requests it again.       │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│               │Bound by default to the command                            │
+│Shift+Tab      │"select_previous_candidate". Selects the previous candidate│
+│               │in the candidate list.                                     │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│               │Bound by default to the command "cancel".                  │
+│               │                                                           │
+│               │  • When a candidate is selected (no matter whether this is│
+│               │    a normal lookup table or a "related" lookup table):    │
+│               │    Show the first page of that lookup table again with no │
+│               │    candidate selected.                                    │
+│Esc            │  • When no candidate is selected:                         │
+│               │      □ When a lookup table with related candidates is     │
+│               │        shown or a lookup table where upper/lower-case has │
+│               │        been changed by typing the Shift key is shown: go  │
+│               │        back to the original lookup table.                 │
+│               │      □ When a normal lookup table is shown: close it and  │
+│               │        clear the preëdit.                                 │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│←              │Move cursor one typed key left in the preëdit text. May    │
+│               │trigger a commit if the left end of the preëdit is reached.│
+├───────────────┼───────────────────────────────────────────────────────────┤
+│               │Move cursor to the left end of the preëdit text. If the    │
+│Control+←      │cursor is already at the left end of the preëdit text,     │
+│               │trigger a commit and send a Control+← to the application.  │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│               │Move cursor one typed key right in preëdit text. May       │
+│→              │trigger a commit if the right end of the preëdit is        │
+│               │reached.                                                   │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│               │Move cursor to the right end of the preëdit text. If the   │
+│Ctrl+→         │cursor is already at the right end of the preëdit text,    │
+│               │trigger a commit and send a Ctrl+→ to the application.     │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│Backspace      │Remove the typed key to the left of the cursor in the      │
+│               │preëdit text.                                              │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│Ctrl+Backspace │Remove everything to the left of the cursor in the preëdit │
+│               │text.                                                      │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│Delete         │Remove the typed key to the right of the cursor in the     │
+│               │preëdit text.                                              │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│Ctrl+Delete    │Remove everything to the right of the cursor in the preëdit│
+│               │text.                                                      │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│↓              │Bound by default to the command "select_next_candidate".   │
+│               │Selects the next candidate.                                │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│               │Bound by default to the command                            │
+│↑              │"select_previous_candidate". Selects the previous          │
+│               │candidate.                                                 │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│Pg Up          │Bound by default to the command "lookup_table_page_up".    │
+│               │Shows the previous page of candidates.                     │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│Pg Down        │Bound by default to the command "lookup_table_page_down".  │
+│               │Shows the next page of candidates.                         │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│F1             │Commit the candidate with the label "1" followed by a      │
+│               │space.                                                     │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│F2             │Commit the candidate with the label "2" followed by a      │
+│               │space.                                                     │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│...            │...                                                        │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│F9             │Commit the candidate with the label "9" followed by a      │
+│               │space.                                                     │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│               │Remove the candidate with the label "1" from the database  │
+│Ctrl+F1        │of learned user input (If possible, if this candidate is   │
+│               │not learned from user input, nothing happens).             │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│               │Remove the candidate with the label "2" from the database  │
+│Ctrl+F2        │of learned user input (If possible, if this candidate is   │
+│               │not learned from user input, nothing happens).             │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│...            │...                                                        │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│               │Remove the candidate with the label "3" from the database  │
+│Ctrl+F9        │of learned user input (If possible, if this candidate is   │
+│               │not learned from user input, nothing happens).             │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│               │Same as F1...F9 if the option "Use digits as select keys"  │
+│               │is enabled. Enabling that option makes selecting candidates│
+│               │a bit easier because the number keys 1...9 are closer to   │
+│               │the fingers than F1...F9 on most keyboards. On the other   │
+│               │hand, it makes completing when typing numbers impossible   │
+│1...9          │and it makes typing strings which are combinations of      │
+│               │letters and numbers like "A4" more difficult. If digits are│
+│               │used as select keys, numbers can only be typed when no     │
+│               │candidate list is shown. In most cases this means that     │
+│               │numbers can only be typed when nothing else has been typed │
+│               │yet and the preëdit is empty.                              │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│Ctrl+1...Ctrl+9│Same as Ctrl+F1...Ctrl+F9 if the option “Use digits as     │
+│               │select keys” is enabled.                                   │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│               │Bound by default to the command "toggle_emoji_prediction". │
+│Alt+F6         │Toggle the emoji and Unicode symbol prediction on/off. This│
+│               │has the same result as using the setup tool to change this.│
+├───────────────┼───────────────────────────────────────────────────────────┤
+│               │Bound by default to the command "toggle_off_the_record".   │
+│               │Toggle the "Off the record" mode. This has the same result │
+│               │as using the setup tool to change this. While "Off the     │
+│               │record" mode is on, learning from user input is disabled.  │
+│Alt+F9         │If learned user input is available, predictions are usually│
+│               │much better than predictions using only dictionaries.      │
+│               │Therefore, one should use this option sparingly. Only if   │
+│               │one wants to avoid saving secret user input to disk it     │
+│               │might make sense to use this option temporarily.           │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│Alt+F10        │Bound by default to the command "setup". Opens the setup   │
+│               │tool.                                                      │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│Alt+F12        │Bound by default to the command "lookup_related". Shows    │
+│               │related emoji and Unicode symbols or related words.        │
+├───────────────┼───────────────────────────────────────────────────────────┤
+│Alt+Space      │Insert a literal space into the preëdit.                   │
+└───────────────┴───────────────────────────────────────────────────────────┘
+
+When more than one input method at the same time is used, the following
+additional key bindings are available:
+
+┌───────────┬───────────────────────────────────────────────────────────────┐
+│    Key    │                            Effect                             │
+│Combination│                                                               │
+├───────────┼───────────────────────────────────────────────────────────────┤
+│Ctrl+↓     │Bound by default to the command "next_input_method". Switches  │
+│           │the input method used for the preëdit to the next input method.│
+├───────────┼───────────────────────────────────────────────────────────────┤
+│           │Bound by default to the command "previous_input_method".       │
+│Ctrl+↑     │Switches the input method used for the preëdit to the previous │
+│           │method.                                                        │
+└───────────┴───────────────────────────────────────────────────────────────┘
+
+Mouse bindings
+
+These mouse bindings are currently hard-coded and cannot yet be customized.
+
+┌────────────────┬──────────────────────────────────────────────────────────┐
+│  Mouse Event   │                          Effect                          │
+├────────────────┼──────────────────────────────────────────────────────────┤
+│Button 1 click  │Commit the candidate clicked on followed by a space (Same │
+│on a candidate  │as F1...F9).                                              │
+├────────────────┼──────────────────────────────────────────────────────────┤
+│Ctrl + Button 1 │Remove clicked candidate from database of learned user    │
+│click on a      │input (If possible, if this candidate is not learned from │
+│candidate       │user input, nothing happens).                             │
+├────────────────┼──────────────────────────────────────────────────────────┤
+│Button 3 clicks │Show related emoji and Unicode symbols or related words   │
+│on a candidate  │(Same as Alt+F12).                                        │
+├────────────────┼──────────────────────────────────────────────────────────┤
+│Ctrl + Button 3 │Toggle the emoji and Unicode symbol prediction on/off     │
+│clicks anywhere │(Same as Alt+F6). This has the same result as using the   │
+│in the candidate│setup tool to change this.                                │
+│list            │                                                          │
+├────────────────┼──────────────────────────────────────────────────────────┤
+│                │Toggle the “Off the record” mode (Same as Alt+F9).        │
+│                │This has the same result as using the setup tool to change│
+│                │this.                                                     │
+│Alt + Button 3  │While "Off the record" mode is on, learning from user     │
+│clicks anywhere │input is disabled. If learned user input is available,    │
+│in the candidate│predictions are usually much better than those which      │
+│list            │predictions use only dictionaries. Therefore, one should  │
+│                │use this option sparingly. Only if one wants to avoid     │
+│                │saving secret user input to disk it might make sense to   │
+│                │use this option temporarily.                              │
+└────────────────┴──────────────────────────────────────────────────────────┘
+
+References:
+
+[1] https://en.wikipedia.org/wiki/Fedora_version_history#Fedora_15
+[2] https://github.com/acevery/ibus-table
+[3] mailto:acevery@gmail.com
+[4] mailto:chanceme@kaio.net
+[5] mailto:mfabian@redhat.com
+[6] mailto:anish.developer@gmail.com
+[7] https://github.com/hunspell/hunspell
+[8] https://pkgs.org/download/libm17n.so.0
+[9] https://fedoraproject.org/wiki/QA:Inscript2_Keymaps
+[10] https://en.wikipedia.org/wiki/Unicode
+[11] http://mike-fabian.github.io/ibus-typing-booster/
+[12] http://mike-fabian.github.io/ibus-typing-booster/documentation.html
+[13] https://github.com/mike-fabian/ibus-typing-booster/issues
+[14] https://github.com/mike-fabian/ibus-typing-booster/pulls
+[15] https://translate.fedoraproject.org/projects/ibus-typing-booster/
+[16] http://mike-fabian.github.io/ibus-typing-booster/development.html
+[17] http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings
+[18] http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings

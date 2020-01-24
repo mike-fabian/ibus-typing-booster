@@ -68,7 +68,6 @@ AUX_DIST = \
 	$(NULL)
 
 MAINTAINERCLEANFILES = \
-	README \
 	Makefile.in \
 	aclocal.m4 \
 	configure \
@@ -82,6 +81,8 @@ EXTRA_DIST = \
 	$(schemas_DATA) \
 	@PACKAGE_NAME@.spec.fedora \
 	@PACKAGE_NAME@.spec.suse \
+	README.html \
+	README.md \
 	$(NULL)
 
 noinst_DIST = \
@@ -93,8 +94,11 @@ noinst_DIST = \
 #	$(NULL)
 
 
-README: README.md
-	cp $< $@
+README: README.html
+	w3m -cols 78 -o display_borders=1 -o display_link_number=1 $< > $@
+
+README.html: README.md
+	pandoc -f gfm -t html --standalone --self-contained --metadata pagetitle="IBus-typing-booster README" $< > $@
 
 rpm: dist @PACKAGE_NAME@.spec
 	rpmbuild -bb \
