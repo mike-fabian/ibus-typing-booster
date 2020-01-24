@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 24 Jan 2020 Released 2.7.7
+* Translation updates from Weblate for es, de, pl, he, fr, uk, tr, nl
+* Generate README.html and README from README.md
+* A thorough upgrade to README.md (Resolves: https://github.com/mike-fabian/ibus-typing-booster/pull/74)
+* Set button label of google application credentials button correctly (Resolves: rhbz#1793460)
+* Make si-wijesekera the default input method for si_LK.UTF-8 locale
+* Add another test case for libvoikko spellchecking together with en_GB spellchecking
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 14 Jan 2020 Released 2.7.6
 * Use included fi_FI.dic for Finnish word suggestions
 * Add Finnish ispell dictionary fi_FI.dic

@@ -19,6 +19,31 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.7.7" date="2020-01-24" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Translation updates from Weblate for es, de, pl, he, fr,
+            uk, tr, nl
+          </li>
+          <li>
+            Generate README.html and README from README.md
+          </li>
+          <li>
+            A thorough upgrade to README.md (Resolves:
+            https://github.com/mike-fabian/ibus-typing-booster/pull/74)
+          </li>
+          <li>
+            Set button label of google application credentials button
+            correctly (Resolves: rhbz#1793460)
+          </li>
+          <li>
+            Add another test case for libvoikko spellchecking together
+            with en_GB spellchecking
+          </li>
+       </ul>
+      </description>
+    </release>
     <release version="2.7.6" date="2020-01-14" urgency="medium">
       <description>
         <ul>
