@@ -145,6 +145,163 @@ class Dictionary:
                         self.name)
                     self.pyhunspell_object = None
 
+    def spellcheck_enchant(self, word):
+        '''
+        Spellcheck a word using enchant
+
+        :param word: The word to spellcheck
+        :type word: String
+        :return: True if spelling is correct, False if not or unknown
+        :rtype: Boolean
+        '''
+        if not self.enchant_dict:
+            return False
+        # enchant does the right thing for all languages, including
+        # Korean, if the input is a Unicode string in NFC.
+        return self.enchant_dict.check(unicodedata.normalize('NFC', word))
+
+    def spellcheck_pyhunspell(self, word):
+        '''
+        Spellcheck a word using pyhunspell
+
+        :param word: The word to spellcheck
+        :type word: String
+        :return: True if spelling is correct, False if not or unknown
+        :rtype: Boolean
+        '''
+        if not self.pyhunspell_object:
+            return False
+        # pyhunspell needs its input passed in dictionary encoding.
+        # and also returns in dictionary encoding.
+        return self.pyhunspell_object.spell(
+            unicodedata.normalize('NFC', word).encode(
+                self.encoding, 'replace'))
+
+    def spellcheck_voikko(self, word):
+        '''
+        Spellcheck a word using voikko
+
+        :param word: The word to spellcheck
+        :type word: String
+        :return: True if spelling is correct, False if not or unknown
+        :rtype: Boolean
+        '''
+        if not self.voikko:
+            return False
+        # voikko works correctly if the input is a Unicode string in NFC.
+        return self.voikko.spell(unicodedata.normalize('NFC', word))
+
+    def spellcheck(self, word):
+        '''
+        Spellcheck a word using enchant, pyhunspell, or voikko
+
+        :param word: The word to spellcheck
+        :type word: String
+        :return: True if spelling is correct, False if not or unknown
+        :rtype: Boolean
+
+        >>> d = Dictionary('en_US')
+        >>> d.spellcheck('winter')
+        True
+
+        >>> d.spellcheck('winxer')
+        False
+        '''
+        if self.enchant_dict:
+            return self.spellcheck_enchant(word)
+        if self.pyhunspell_object:
+            return self.spellcheck_pyhunspell(word)
+        if self.voikko:
+            return self.voikko.spell(word)
+        return False
+
+    def spellcheck_suggest_enchant(self, word):
+        '''
+        Return spellchecking suggestions for word using enchant
+
+        :param word: The word to return spellchecking suggestions for
+        :type word: String
+        :return: List of spellchecking suggestions, possibly empty.
+        :rtype: List of strings
+        '''
+        if not word or not self.enchant_dict:
+            return []
+        # enchant does the right thing for all languages, including
+        # Korean, if the input is NFC. It takes Unicode strings and
+        # returns Unicode strings, no encoding and decoding is
+        # necessary, neither for Python2 nor for Python3.
+        return [
+            unicodedata.normalize(
+                itb_util.NORMALIZATION_FORM_INTERNAL, x)
+            for x in
+            self.enchant_dict.suggest(unicodedata.normalize('NFC', word))
+            ]
+
+    def spellcheck_suggest_pyhunspell(self, word):
+        '''
+        Return spellchecking suggestions for word using pyhunspell
+
+        :param word: The word to return spellchecking suggestions for
+        :type word: String
+        :return: List of spellchecking suggestions, possibly empty.
+        :rtype: List of strings
+        '''
+        if not word or not self.pyhunspell_object:
+            return []
+        # pyhunspell needs its input passed in dictionary encoding.
+        return [
+            unicodedata.normalize(
+                itb_util.NORMALIZATION_FORM_INTERNAL, x)
+            for x in
+            self.pyhunspell_object.suggest(
+                unicodedata.normalize('NFC', word).encode(
+                    self.encoding, 'replace'))
+            ]
+
+    def spellcheck_suggest_voikko(self, word):
+        '''
+        Return spellchecking suggestions for word using voikko
+
+        :param word: The word to return spellchecking suggestions for
+        :type word: String
+        :return: List of spellchecking suggestions, possibly empty.
+        :rtype: List of strings
+        '''
+        if not word:
+            return []
+        return [
+            unicodedata.normalize(
+                itb_util.NORMALIZATION_FORM_INTERNAL, x)
+            for x in
+            self.voikko.suggest(unicodedata.normalize('NFC', word))
+            ]
+
+    def spellcheck_suggest(self, word):
+        '''
+        Return spellchecking suggestions for word using enchant, pyhunspell or voikko
+
+        :param word: The word to return spellchecking suggestions for
+        :type word: String
+        :return: List of spellchecking suggestions, possibly empty.
+        :rtype: List of strings
+
+        Examples:
+
+        >>> d = Dictionary('en_US')
+        >>> d.spellcheck_suggest('kamel')
+        ['camel', 'Camel']
+
+        >>> d.spellcheck_suggest('')
+        []
+        '''
+        if self.enchant_dict:
+            return self.spellcheck_suggest_enchant(word)
+        if self.pyhunspell_object:
+            return self.spellcheck_suggest_pyhunspell(word)
+        if self.voikko:
+            return self.spellcheck_suggest_voikko(word)
+        return []
+
 class Hunspell:
     '''A class to suggest completions or corrections
     using a list of Hunspell dictionaries
@@ -326,69 +483,28 @@ class Hunspell:
                             (x, 0)
                             for x in dictionary.words
                             if x.startswith(input_phrase)])
-                if dictionary.enchant_dict:
-                    if len(input_phrase) >= 4:
-                        # Always pass NFC to enchant and convert the
-                        # result back to the internal normalization
-                        # form (NFD) (enchant does the right thing for
-                        # Korean if the input is NFC).  enchant takes
-                        # unicode strings and returns unicode strings,
-                        # no encoding and decoding to and from the
-                        # hunspell dictionary encoding is necessary
-                        # (neither for Python2 nor Python3).
-                        # (pyhunspell needs to get its input passed
-                        # in dictionary encoding and also returns it
-                        # in dictionary encoding).
-                        if dictionary.enchant_dict.check(input_phrase_nfc):
-                            # This is a valid word in this dictionary.
-                            # It might have been missed by the matching
-                            # above because the dictionary might not
-                            # contain all possible word forms (The
-                            # prefix and suffix information has been
-                            # ignored). But hunspell knows about this,
-                            # if hunspell thinks it is a correct word,
-                            # it must be counted as a match of course:
-                            suggested_words[input_phrase] = 0
-                        extra_suggestions = [
-                            unicodedata.normalize(
-                                itb_util.NORMALIZATION_FORM_INTERNAL, x)
-                            for x in
-                            dictionary.enchant_dict.suggest(input_phrase_nfc)
-                        ]
-                        suggested_words.update([
-                            (suggestion, -1)
-                            for suggestion in extra_suggestions
-                            if suggestion not in suggested_words])
-                elif dictionary.pyhunspell_object:
-                    if len(input_phrase) >= 4:
-                        # Always pass NFC to pyhunspell and convert
-                        # the result back to the internal
-                        # normalization form (NFD) (hunspell does the
-                        # right thing for Korean if the input is NFC).
-                        if dictionary.pyhunspell_object.spell(
-                                input_phrase_nfc.encode(
-                                    dictionary.encoding, 'replace')):
-                            # This is a valid word in this dictionary.
-                            # It might have been missed by the matching
-                            # above because the dictionary might not
-                            # contain all possible word forms (The
-                            # prefix and suffix information has been
-                            # ignored). But hunspell knows about this,
-                            # if hunspell thinks it is a correct word,
-                            # it must be counted as a match of course:
-                            suggested_words[input_phrase] = 0
-                        extra_suggestions = [
-                            unicodedata.normalize(
-                                itb_util.NORMALIZATION_FORM_INTERNAL, x)
-                            for x in
-                            dictionary.pyhunspell_object.suggest(
-                                input_phrase_nfc.encode(
-                                    dictionary.encoding, 'replace'))
-                        ]
-                        suggested_words.update([
-                            (suggestion, -1)
-                            for suggestion in extra_suggestions
-                            if suggestion not in suggested_words])
+                if len(input_phrase) >= 4:
+                    if dictionary.spellcheck(input_phrase):
+                        # This is a valid word in this dictionary.
+                        # It might have been missed by the
+                        # matching above because the dictionary
+                        # might not contain all possible word
+                        # forms (The prefix and suffix information
+                        # has been ignored). But the spell checker
+                        # knows about this, if the spell checker
+                        # thinks it is a correct word, it must be
+                        # counted as a match of course:
+                        suggested_words[input_phrase] = 0
+                    extra_suggestions = [
+                        unicodedata.normalize(
+                            itb_util.NORMALIZATION_FORM_INTERNAL, x)
+                        for x in
+                        dictionary.spellcheck_suggest(input_phrase)
+                    ]
+                    suggested_words.update([
+                        (suggestion, -1)
+                        for suggestion in extra_suggestions
+                        if suggestion not in suggested_words])
             else:
                 if (dictionary.name[:2]
                         not in ('fi', 'ja', 'ja_JP',
@@ -404,21 +520,6 @@ class Hunspell:
                          %{'name': dictionary.name}
                          + 'Please install hunspell dictionary!',
                          0)])
-        if dictionary.voikko:
-            if dictionary.voikko.spell(input_phrase):
-                # If voikko thinks it is a correct word,
-                # it must be counted as a match:
-                suggested_words[input_phrase] = 0
-            extra_suggestions = [
-                unicodedata.normalize(
-                    itb_util.NORMALIZATION_FORM_INTERNAL, x)
-                for x in
-                dictionary.voikko.suggest(input_phrase_nfc)
-            ]
-            suggested_words.update([
-                (suggestion, -1)
-                for suggestion in extra_suggestions
-                if suggestion not in suggested_words])
         for word in suggested_words:
             if (suggested_words[word] == -1
                     and
