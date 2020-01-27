@@ -405,9 +405,6 @@ class Hunspell:
         >>> h.suggest('Alpengluhen')[0]
         ('Alpenglühen', 0)
 
-        >>> h.suggest('filosofictejsi')
-        [('filosofičtější', 0), ('filosofičtěji', -1)]
-
         >>> h.suggest('filosofictejs')[0]
         ('filosofičtější', 0)
 

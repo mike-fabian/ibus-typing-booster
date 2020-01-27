@@ -61,7 +61,10 @@ class HunspellSuggestTestCase(unittest.TestCase):
     def test_dummy(self):
         self.assertEqual(True, True)
 
-    def test_de_DE_cs_CZ(self):
+    @unittest.skipUnless(
+        IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-enchant to work.")
+    def test_de_DE_cs_CZ_enchant(self):
         h = hunspell_suggest.Hunspell(['de_DE', 'cs_CZ'])
         self.assertEqual(
             h.suggest('Geschwindigkeitsubertre')[0],
@@ -79,6 +82,37 @@ class HunspellSuggestTestCase(unittest.TestCase):
             h.suggest('filosofictejsi'),
             [('filosofic\u030Cte\u030Cjs\u030Ci\u0301', 0),
              ('filosofic\u030Cte\u030Cji', -1)])
+        self.assertEqual(
+            h.suggest('filosofictejs')[0],
+            ('filosofic\u030Cte\u030Cjs\u030Ci\u0301', 0))
+        self.assertEqual(
+            h.suggest('filosofičtější')[0],
+            ('filosofic\u030Cte\u030Cjs\u030Ci\u0301', 0))
+        self.assertEqual(
+            h.suggest('filosofičtějš')[0],
+            ('filosofic\u030Cte\u030Cjs\u030Ci\u0301', 0))
+
+    @unittest.skipUnless(
+        IMPORT_HUNSPELL_SUCCESSFUL and not IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-pyhunspell to work.")
+    def test_de_DE_cs_CZ_pyhunspell(self):
+        h = hunspell_suggest.Hunspell(['de_DE', 'cs_CZ'])
+        self.assertEqual(
+            h.suggest('Geschwindigkeitsubertre')[0],
+            ('Geschwindigkeitsu\u0308bertretungsverfahren', 0))
+        self.assertEqual(
+            h.suggest('Geschwindigkeitsübertretungsverfahren')[0],
+            ('Geschwindigkeitsu\u0308bertretungsverfahren', 0))
+        self.assertEqual(
+            h.suggest('Glühwürmchen')[0],
+            ('Glu\u0308hwu\u0308rmchen', 0))
+        self.assertEqual(
+            h.suggest('Alpengluhen')[0],
+            ('Alpenglu\u0308hen', 0))
+        self.assertEqual(
+            h.suggest('filosofictejsi'),
+            [('filosofic\u030Cte\u030Cjs\u030Ci\u0301', 0),
+             ('filosofie\u0300ti\u0300ji', -1)])
         self.assertEqual(
             h.suggest('filosofictejs')[0],
             ('filosofic\u030Cte\u030Cjs\u030Ci\u0301', 0))
@@ -152,6 +186,8 @@ class HunspellSuggestTestCase(unittest.TestCase):
         IMPORT_LIBVOIKKO_SUCCESSFUL,
         "Skipping because this test requires python3-libvoikko to work.")
     def test_fi_FI_voikko(self):
+        d = hunspell_suggest.Dictionary('fi_FI')
+        self.assertEqual(d.has_spellchecking(), True)
         h = hunspell_suggest.Hunspell(['fi_FI'])
         self.assertEqual(
             h.suggest('kisssa'),
@@ -159,6 +195,59 @@ class HunspellSuggestTestCase(unittest.TestCase):
              ('kissaa', -1),
              ('kisassa', -1),
              ('kisussa', -1)])
+
+    @unittest.skipUnless(
+        IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-enchant to work.")
+    def test_en_US_spellcheck_enchant(self):
+        d = hunspell_suggest.Dictionary('en_US')
+        self.assertEqual(d.spellcheck_enchant('winter'), True)
+        self.assertEqual(d.spellcheck_enchant('winxer'), False)
+
+    @unittest.skipUnless(
+        IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-enchant to work.")
+    def test_en_US_spellcheck_suggest_enchant(self):
+        d = hunspell_suggest.Dictionary('en_US')
+        self.assertEqual(
+            d.spellcheck_suggest_enchant('kamel'),
+            ['camel', 'Camel'])
+
+    @unittest.skipUnless(
+        IMPORT_HUNSPELL_SUCCESSFUL and not IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-pyhunspell to work.")
+    def test_en_US_spellcheck_pyhunspell(self):
+        d = hunspell_suggest.Dictionary('en_US')
+        self.assertEqual(d.spellcheck_pyhunspell('winter'), True)
+        self.assertEqual(d.spellcheck_pyhunspell('winxer'), False)
+
+    @unittest.skipUnless(
+        IMPORT_HUNSPELL_SUCCESSFUL and not IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-pyhunspell to work.")
+    def test_en_US_spellcheck_suggest_pyhunspell(self):
+        d = hunspell_suggest.Dictionary('en_US')
+        self.assertEqual(
+            d.spellcheck_suggest_pyhunspell('kamel'),
+            ['camel', 'Camel'])
+
+    @unittest.skipUnless(
+        IMPORT_LIBVOIKKO_SUCCESSFUL,
+        "Skipping because this test requires python3-libvoikko to work.")
+    def test_fi_FI_spellcheck_voikko(self):
+        d = hunspell_suggest.Dictionary('fi_FI')
+        self.assertEqual(d.spellcheck_voikko('kissa'), True)
+        self.assertEqual(d.spellcheck_voikko('kisssa'), False)
+        self.assertEqual(d.spellcheck_voikko('Päiviä'), True)
+        self.assertEqual(d.spellcheck_voikko('Päivia'), False)
+
+    @unittest.skipUnless(
+        IMPORT_LIBVOIKKO_SUCCESSFUL,
+        "Skipping because this test requires python3-libvoikko to work.")
+    def test_fi_FI_spellcheck_suggest_voikko(self):
+        d = hunspell_suggest.Dictionary('fi_FI')
+        self.assertEqual(
+            d.spellcheck_suggest_voikko('kisssa'),
+            ['kissa', 'kissaa', 'kisassa', 'kisussa'])
 
 if __name__ == '__main__':
     unittest.main()
