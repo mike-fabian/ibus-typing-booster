@@ -1,4 +1,14 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 04 Feb 2020 Released 2.8.0
+* Translation updates from Weblate for ca, de, es, fr, nl, pl, uk
+* Update emoji annotations from CLDR
+* Update emoji data to Unicode 13.0 final
+* New option to choose whether spellchecking is done on the preedit and which colour to use
+* Spellcheck typed string in preedit and colour it if it is likely to be misspelled
+* More test cases for spellchecking and spellchecking suggestions
+* Restructure code for spellchecking and spellchecking suggestions
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 24 Jan 2020 Released 2.7.7
 * Translation updates from Weblate for es, de, pl, he, fr, uk, tr, nl
 * Generate README.html and README from README.md
