@@ -7,14 +7,15 @@
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019. #zanata
 # Julien Humbert <julroy67@gmail.com>, 2020.
+# Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-01-21 17:10+0100\n"
-"PO-Revision-Date: 2020-01-22 09:59+0000\n"
-"Last-Translator: Julien Humbert <julroy67@gmail.com>\n"
+"PO-Revision-Date: 2020-01-28 09:13+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: French <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/fr/>\n"
 "Language: fr\n"
@@ -726,7 +727,7 @@ msgstr "Installer les dictionnaires manquants"
 
 #: setup/main.py:720
 msgid "Install the dictionaries which are setup here but not installed"
-msgstr "Installe le dictionnaires configurés mais non installés"
+msgstr "Installe les dictionnaires configurés mais non installés"
 
 #: setup/main.py:737
 msgid "Add a dictionary"

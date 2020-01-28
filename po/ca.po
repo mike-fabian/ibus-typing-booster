@@ -7,9 +7,9 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-01-21 17:10+0100\n"
-"PO-Revision-Date: 2020-01-20 11:17+0000\n"
+"PO-Revision-Date: 2020-01-28 09:13+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
-"Language-Team: Catalan <https://translate.stg.fedoraproject.org/projects/"
+"Language-Team: Catalan <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -56,7 +56,7 @@ msgstr ""
 #. selected font.
 #: engine/emoji_picker.py:373
 msgid "Fallback"
-msgstr ""
+msgstr "Alternatives"
 
 #: engine/emoji_picker.py:375
 msgid ""
@@ -128,16 +128,16 @@ msgstr ""
 #: engine/hunspell_table.py:467 engine/hunspell_table.py:501
 #: engine/hunspell_table.py:522
 msgid "Off"
-msgstr ""
+msgstr "Desactivat"
 
 #: engine/hunspell_table.py:472 engine/hunspell_table.py:506
 #: engine/hunspell_table.py:527
 msgid "On"
-msgstr ""
+msgstr "Activat"
 
 #: engine/hunspell_table.py:491
 msgid "Input mode"
-msgstr ""
+msgstr "Mode d'entrada"
 
 #: engine/hunspell_table.py:492
 msgid "Here you can switch ibus-typing-booster on or off."
@@ -171,7 +171,7 @@ msgstr ""
 
 #: engine/hunspell_table.py:1371
 msgid "Choose highest priority dictionary"
-msgstr ""
+msgstr "Trieu el diccionari prioritari"
 
 #: engine/hunspell_table.py:1400
 #, fuzzy
@@ -196,11 +196,11 @@ msgstr ""
 
 #: engine/hunspell_table.py:3832
 msgid "Failed to import pyaudio."
-msgstr ""
+msgstr "Ha fallat la importació del pyaudio."
 
 #: engine/hunspell_table.py:3835
 msgid "Failed to import queue."
-msgstr ""
+msgstr "Ha fallat la importació de la cua."
 
 #: engine/hunspell_table.py:3840
 msgid "No supported language for speech recognition."
@@ -235,44 +235,44 @@ msgstr "natura"
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:778 engine/itb_emoji.py:981
 msgid "food"
-msgstr ""
+msgstr "menjar"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:779 engine/itb_emoji.py:995
 msgid "travel"
-msgstr ""
+msgstr "viatges"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:780 engine/itb_emoji.py:789 engine/itb_emoji.py:977
 msgid "activity"
-msgstr ""
+msgstr "activitats"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:781 engine/itb_emoji.py:987
 msgid "objects"
-msgstr ""
+msgstr "objectes"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:782 engine/itb_emoji.py:993
 msgid "symbols"
-msgstr ""
+msgstr "símbols"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:783 engine/itb_emoji.py:979
 msgid "flags"
-msgstr ""
+msgstr "banderes"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:784 engine/itb_emoji.py:785 engine/itb_emoji.py:983
 msgid "modifier"
-msgstr ""
+msgstr "modificadors"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:786 engine/itb_emoji.py:991
 msgid "regional"
-msgstr ""
+msgstr "regions"
 
 #: engine/itb_util.py:3244 engine/itb_util.py:3545
 msgid "File not found"
@@ -317,14 +317,14 @@ msgstr "Cancel·la"
 #. command.
 #: engine/itb_util.py:4018
 msgid "Please press a key (or a key combination)"
-msgstr ""
+msgstr "Premeu una tecla (o una combinació de tecles)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
 #: engine/itb_util.py:4023
 msgid "The dialog will be closed when the key is released"
-msgstr ""
+msgstr "El diàleg es tancarà quan es deixi anar la tecla"
 
 #: engine/itb_util.py:4054
 msgid "A completion input method to speedup typing."
@@ -337,11 +337,11 @@ msgstr ""
 
 #: engine/itb_util.py:4071
 msgid "Online documentation:"
-msgstr ""
+msgstr "Documentació en línia:"
 
 #: setup/main.py:114
 msgid "Preferences"
-msgstr ""
+msgstr "Preferències"
 
 #: setup/main.py:176 setup/main.py:4478
 msgid "_Close"
@@ -354,7 +354,7 @@ msgstr "_Tanca"
 #. in.
 #: setup/main.py:198
 msgid "Dictionaries and input methods"
-msgstr ""
+msgstr "Diccionaris i mètodes d'entrada"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence the
@@ -370,7 +370,7 @@ msgstr "Opcions"
 #. candidate, he can define such a custom shortcut here.
 #: setup/main.py:230
 msgid "Custom shortcuts"
-msgstr ""
+msgstr "Dreceres personalitzades"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can customize the key bindings to execute
@@ -381,7 +381,7 @@ msgstr ""
 #. existing key bindings
 #: setup/main.py:244 setup/main.py:1017
 msgid "Key bindings"
-msgstr ""
+msgstr "Vinculació de tecles"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence how
@@ -599,7 +599,7 @@ msgstr ""
 #. debug information may also be shown graphically.
 #: setup/main.py:644
 msgid "Debug level:"
-msgstr ""
+msgstr "Nivell de depuració:"
 
 #: setup/main.py:646
 msgid ""
@@ -642,19 +642,19 @@ msgstr ""
 #. dictionaries which are setup here but not installed
 #: setup/main.py:718
 msgid "Install missing dictionaries"
-msgstr ""
+msgstr "Instal·la els diccionaris mancants"
 
 #: setup/main.py:720
 msgid "Install the dictionaries which are setup here but not installed"
-msgstr ""
+msgstr "Instal·la els diccionaris ací configurats però que no s'han instal·lat"
 
 #: setup/main.py:737
 msgid "Add a dictionary"
-msgstr ""
+msgstr "Afegeix un diccionari"
 
 #: setup/main.py:748
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "Suprimeix un diccionari"
 
 #: setup/main.py:759
 msgid "Move dictionary up"
@@ -722,7 +722,7 @@ msgstr ""
 #. existing shortcuts
 #: setup/main.py:968
 msgid "Shortcut"
-msgstr ""
+msgstr "Drecera"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -738,7 +738,7 @@ msgstr ""
 #. existing key bindings
 #: setup/main.py:1010
 msgid "Command"
-msgstr ""
+msgstr "Ordre"
 
 #: setup/main.py:1037
 msgid "Edit"
@@ -819,11 +819,11 @@ msgstr ""
 
 #: setup/main.py:1167
 msgid "Horizontal"
-msgstr ""
+msgstr "Horitzontal"
 
 #: setup/main.py:1169
 msgid "Vertical"
-msgstr ""
+msgstr "Vertical"
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
@@ -839,19 +839,19 @@ msgstr ""
 #. at all for the preedit.
 #: setup/main.py:1208
 msgid "None"
-msgstr ""
+msgstr "Cap"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
 #: setup/main.py:1212
 msgid "Single"
-msgstr ""
+msgstr "Senzill"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
 #: setup/main.py:1216
 msgid "Double"
-msgstr ""
+msgstr "Doble"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
@@ -1049,11 +1049,11 @@ msgstr ""
 
 #: setup/main.py:1683
 msgid "Spell checking"
-msgstr ""
+msgstr "Verificació ortogràfica"
 
 #: setup/main.py:1699
 msgid "Emoji"
-msgstr ""
+msgstr "Emoji"
 
 #: setup/main.py:1888
 msgid "Are you sure?"
@@ -1073,11 +1073,11 @@ msgstr "Ja s'està executant una altra instància d'aquesta aplicació."
 
 #: setup/main.py:2568
 msgid "Add dictionary"
-msgstr ""
+msgstr "Afegeix un diccionari"
 
 #: setup/main.py:2836
 msgid "Add input method"
-msgstr ""
+msgstr "Afegeix un mètode d'entrada"
 
 #: setup/main.py:3229
 #, python-format
@@ -1135,7 +1135,7 @@ msgstr ""
 
 #: setup/main.py:4535
 msgid "ibus is not running."
-msgstr "ibus no s'està executant."
+msgstr "L'ibus no s'està executant."
 
 #: typing-booster.appdata.xml:5
 msgid "Typing Booster"
