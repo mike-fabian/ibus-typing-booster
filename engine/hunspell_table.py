@@ -1812,6 +1812,11 @@ class TypingBoosterEngine(IBus.Engine):
                 or self.is_lookup_table_enabled_by_min_char_complete):
                 attrs.append(IBus.attr_underline_new(
                     self._preedit_underline, 0, len(_str)))
+                if (self._color_spellcheck
+                    and len(_str) >= 4
+                    and not self.db.hunspell_obj.spellcheck(_str)):
+                    attrs.append(IBus.attr_foreground_new(
+                        self._color_spellcheck_argb, 0, len(_str)))
             else:
                 # Preedit style “only when lookup is enabled” is
                 # requested and lookup is *not* enabled.  Therefore,
@@ -1949,6 +1954,11 @@ class TypingBoosterEngine(IBus.Engine):
                 self._preedit_underline,
                 len(typed_string), len(typed_string + completion)))
         else:
+            if (self._color_spellcheck
+                and len(typed_string) >= 4
+                and not self.db.hunspell_obj.spellcheck(typed_string)):
+                attrs.append(IBus.attr_foreground_new(
+                    self._color_spellcheck_argb, 0, len(typed_string)))
             if self._color_inline_completion:
                 attrs.append(IBus.attr_foreground_new(
                     self._color_inline_completion_argb,

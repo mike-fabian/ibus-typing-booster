@@ -215,6 +215,27 @@ class Dictionary:
             return self.voikko.spell(word)
         return False
 
+    def has_spellchecking(self):
+        '''
+        Returns wether this dictionary supports spellchecking or not
+
+        :return: True if this dictionary spports spellchecking, False if not
+        :rtype: Boolean
+
+        Examples:
+
+        >>> d = Dictionary('en_US')
+        >>> d.has_spellchecking()
+        True
+
+        >>> d = Dictionary('zh_CN')
+        >>> d.has_spellchecking()
+        False
+        '''
+        if self.enchant_dict or self.pyhunspell_object or self.voikko:
+            return True
+        return False
+
     def spellcheck_suggest_enchant(self, word):
         '''
         Return spellchecking suggestions for word using enchant
@@ -373,6 +394,56 @@ class Hunspell:
             LOGGER.debug('set_dictionary_names(%s):\n', dictionary_names)
             for dictionary in self._dictionaries:
                 LOGGER.debug('%s\n', dictionary.name)
+
+    def spellcheck(self, input_phrase):
+        '''
+        Checks if a string is likely to be spelled correctly checking
+        multiple dictionaries
+
+        :param input_phrase: A string to spellcheck
+        :type input_phrase: String
+        :return: True if it is more likely to be spelled correctly,
+                 False if it is more likely to be spelled incorrectly.
+                 In detail this means:
+                 True:
+                     - If it is a correctly spelled word in at least one of
+                       the dictionaries supporting spellchecking
+                     - None of the dictionaries support spellchecking
+                     - Contains spaces, spellchecking cannot work
+                 else False.
+        :rtype: Boolean
+
+        Examples:
+
+        >>> h = Hunspell(['en_US', 'de_DE', 'ja_JP'])
+        >>> h.spellcheck('Hello')
+        True
+
+        >>> h.spellcheck('Grüße')
+        True
+
+        >>> h.spellcheck('Gruße')
+        False
+
+        >>> h = Hunspell(['en_US', 'ja_JP'])
+        >>> h.spellcheck('Grüße')
+        False
+
+        >>> h = Hunspell(['ja_JP'])
+        >>> h.spellcheck('Grüße')
+        True
+        '''
+        if ' ' in input_phrase:
+            return True
+        spellchecking_dictionaries_available = False
+        spellcheck_total = False
+        for dictionary in self._dictionaries:
+            if dictionary.has_spellchecking():
+                spellchecking_dictionaries_available = True
+                spellcheck_total |= dictionary.spellcheck(input_phrase)
+        if not spellcheck_total and spellchecking_dictionaries_available:
+            return False
+        return True
 
     def suggest(self, input_phrase):
         # pylint: disable=line-too-long
