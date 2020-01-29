@@ -2,6 +2,26 @@
 <schemalist>
   <schema path="/org/freedesktop/ibus/engine/typing-booster/"
           id="org.freedesktop.ibus.engine.typing-booster">
+    <key name="colorpreeditspellcheck" type="b">
+      <default>false</default>
+      <summary>Preedit spellchecking</summary>
+      <description>
+        Here you can choose whether spellchecking is done
+        on the contents of the preedit and a custom color
+        is used to indicate when the preedit might contain
+        a spelling error.
+      </description>
+    </key>
+    <key name="colorpreeditspellcheckstring" type="s">
+      <default>'rgb(164,0,0)'</default>
+      <summary>Choose color for preedit spellchecking</summary>
+      <description>
+        Here you can specify which color to use for
+        the preedit when the preedit might contain a
+        spelling error. This setting only has an
+        effect if the preedit spellchecking is enabled.
+      </description>
+    </key>
     <key name="colorinlinecompletion" type="b">
       <default>true</default>
       <summary>Use color for inline completion</summary>

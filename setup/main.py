@@ -1264,6 +1264,63 @@ class SetupUI(Gtk.Window):
         if self._preedit_style_only_when_lookup is True:
             self._preedit_style_only_when_lookup_checkbutton.set_active(True)
 
+        self._color_preedit_spellcheck_checkbutton = Gtk.CheckButton(
+            # Translators: A checkbox where one can choose whether
+            # spellchecking is done on the contents of the preedit and
+            # a custom color is used to indicate when the preedit
+            # might contain a spelling error.
+            label=_('Preedit spellchecking'))
+        self._color_preedit_spellcheck_checkbutton.set_tooltip_text(
+            _('Here you can choose whether spellchecking is done '
+              'on the contents of the preedit and a custom color '
+              'is used to indicate when the preedit might contain '
+              'a spelling error.'))
+        self._color_preedit_spellcheck_checkbutton.set_hexpand(False)
+        self._color_preedit_spellcheck_checkbutton.set_vexpand(False)
+        self._appearance_grid.attach(
+            self._color_preedit_spellcheck_checkbutton, 0, 5, 1, 1)
+        self._color_preedit_spellcheck = itb_util.variant_to_value(
+            self._gsettings.get_value('colorpreeditspellcheck'))
+        if self._color_preedit_spellcheck is None:
+            self._color_preedit_spellcheck = False
+        self._color_preedit_spellcheck_checkbutton.set_active(
+            self._color_preedit_spellcheck)
+        self._color_preedit_spellcheck_checkbutton.connect(
+            'clicked', self.on_color_preedit_spellcheck_checkbutton)
+        self._color_preedit_spellcheck_rgba_colorbutton = Gtk.ColorButton()
+        margin = 0
+        self._color_preedit_spellcheck_rgba_colorbutton.set_margin_start(
+            margin)
+        self._color_preedit_spellcheck_rgba_colorbutton.set_margin_end(
+            margin)
+        self._color_preedit_spellcheck_rgba_colorbutton.set_margin_top(
+            margin)
+        self._color_preedit_spellcheck_rgba_colorbutton.set_margin_bottom(
+            margin)
+        self._color_preedit_spellcheck_rgba_colorbutton.set_hexpand(False)
+        self._color_preedit_spellcheck_rgba_colorbutton.set_vexpand(False)
+        self._color_preedit_spellcheck_rgba_colorbutton.set_title(
+            # Translators: Used in the title bar of the colour chooser
+            # dialog window where one can choose a custom colour for
+            # the spellchecking in the preedit.
+            _('Choose color for preedit spellchecking'))
+        self._color_preedit_spellcheck_rgba_colorbutton.set_tooltip_text(
+            _('Here you can specify which color to use for '
+              'the preedit when the preedit might contain a '
+              'spelling error. This setting only has an '
+              'effect if the preedit spellchecking is enabled.'))
+        self._color_preedit_spellcheck_string = itb_util.variant_to_value(
+            self._gsettings.get_value('colorpreeditspellcheckstring'))
+        gdk_rgba = Gdk.RGBA()
+        gdk_rgba.parse(self._color_preedit_spellcheck_string)
+        self._color_preedit_spellcheck_rgba_colorbutton.set_rgba(gdk_rgba)
+        self._appearance_grid.attach(
+            self._color_preedit_spellcheck_rgba_colorbutton, 1, 5, 1, 1)
+        self._color_preedit_spellcheck_rgba_colorbutton.set_sensitive(
+            self._color_preedit_spellcheck)
+        self._color_preedit_spellcheck_rgba_colorbutton.connect(
+            'color-set', self.on_color_preedit_spellcheck_color_set)
+
         self._color_inline_completion_checkbutton = Gtk.CheckButton(
             # Translators: A checkbox where one can choose whether a
             # custom color is used for suggestions shown inline.
@@ -1274,7 +1331,7 @@ class SetupUI(Gtk.Window):
         self._color_inline_completion_checkbutton.set_hexpand(False)
         self._color_inline_completion_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._color_inline_completion_checkbutton, 0, 5, 1, 1)
+            self._color_inline_completion_checkbutton, 0, 6, 1, 1)
         self._color_inline_completion = itb_util.variant_to_value(
             self._gsettings.get_value('colorinlinecompletion'))
         if self._color_inline_completion is None:
@@ -1311,7 +1368,7 @@ class SetupUI(Gtk.Window):
         gdk_rgba.parse(self._color_inline_completion_string)
         self._color_inline_completion_rgba_colorbutton.set_rgba(gdk_rgba)
         self._appearance_grid.attach(
-            self._color_inline_completion_rgba_colorbutton, 1, 5, 1, 1)
+            self._color_inline_completion_rgba_colorbutton, 1, 6, 1, 1)
         self._color_inline_completion_rgba_colorbutton.set_sensitive(
             self._color_inline_completion)
         self._color_inline_completion_rgba_colorbutton.connect(
@@ -1329,7 +1386,7 @@ class SetupUI(Gtk.Window):
         self._color_userdb_checkbutton.set_hexpand(False)
         self._color_userdb_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._color_userdb_checkbutton, 0, 6, 1, 1)
+            self._color_userdb_checkbutton, 0, 7, 1, 1)
         self._color_userdb = itb_util.variant_to_value(
             self._gsettings.get_value('coloruserdb'))
         if self._color_userdb is None:
@@ -1362,7 +1419,7 @@ class SetupUI(Gtk.Window):
         gdk_rgba.parse(self._color_userdb_string)
         self._color_userdb_rgba_colorbutton.set_rgba(gdk_rgba)
         self._appearance_grid.attach(
-            self._color_userdb_rgba_colorbutton, 1, 6, 1, 1)
+            self._color_userdb_rgba_colorbutton, 1, 7, 1, 1)
         self._color_userdb_rgba_colorbutton.set_sensitive(
             self._color_userdb)
         self._color_userdb_rgba_colorbutton.connect(
@@ -1379,7 +1436,7 @@ class SetupUI(Gtk.Window):
         self._color_spellcheck_checkbutton.set_hexpand(False)
         self._color_spellcheck_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._color_spellcheck_checkbutton, 0, 7, 1, 1)
+            self._color_spellcheck_checkbutton, 0, 8, 1, 1)
         self._color_spellcheck = itb_util.variant_to_value(
             self._gsettings.get_value('colorspellcheck'))
         if self._color_spellcheck is None:
@@ -1412,7 +1469,7 @@ class SetupUI(Gtk.Window):
         gdk_rgba.parse(self._color_spellcheck_string)
         self._color_spellcheck_rgba_colorbutton.set_rgba(gdk_rgba)
         self._appearance_grid.attach(
-            self._color_spellcheck_rgba_colorbutton, 1, 7, 1, 1)
+            self._color_spellcheck_rgba_colorbutton, 1, 8, 1, 1)
         self._color_spellcheck_rgba_colorbutton.set_sensitive(
             self._color_spellcheck)
         self._color_spellcheck_rgba_colorbutton.connect(
@@ -1430,7 +1487,7 @@ class SetupUI(Gtk.Window):
         self._color_dictionary_checkbutton.set_hexpand(False)
         self._color_dictionary_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._color_dictionary_checkbutton, 0, 8, 1, 1)
+            self._color_dictionary_checkbutton, 0, 9, 1, 1)
         self._color_dictionary = itb_util.variant_to_value(
             self._gsettings.get_value('colordictionary'))
         if self._color_dictionary is None:
@@ -1463,7 +1520,7 @@ class SetupUI(Gtk.Window):
         gdk_rgba.parse(self._color_dictionary_string)
         self._color_dictionary_rgba_colorbutton.set_rgba(gdk_rgba)
         self._appearance_grid.attach(
-            self._color_dictionary_rgba_colorbutton, 1, 8, 1, 1)
+            self._color_dictionary_rgba_colorbutton, 1, 9, 1, 1)
         self._color_dictionary_rgba_colorbutton.set_sensitive(
             self._color_dictionary)
         self._color_dictionary_rgba_colorbutton.connect(
@@ -1481,7 +1538,7 @@ class SetupUI(Gtk.Window):
         self._label_userdb_checkbutton.set_hexpand(False)
         self._label_userdb_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_userdb_checkbutton, 0, 9, 1, 1)
+            self._label_userdb_checkbutton, 0, 10, 1, 1)
         self._label_userdb = itb_util.variant_to_value(
             self._gsettings.get_value('labeluserdb'))
         if self._label_userdb is None:
@@ -1495,7 +1552,7 @@ class SetupUI(Gtk.Window):
         self._label_userdb_entry.set_hexpand(False)
         self._label_userdb_entry.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_userdb_entry, 1, 9, 1, 1)
+            self._label_userdb_entry, 1, 10, 1, 1)
         self._label_userdb_string = itb_util.variant_to_value(
             self._gsettings.get_value('labeluserdbstring'))
         if not self._label_userdb_string:
@@ -1517,7 +1574,7 @@ class SetupUI(Gtk.Window):
         self._label_spellcheck_checkbutton.set_hexpand(False)
         self._label_spellcheck_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_spellcheck_checkbutton, 0, 10, 1, 1)
+            self._label_spellcheck_checkbutton, 0, 11, 1, 1)
         self._label_spellcheck = itb_util.variant_to_value(
             self._gsettings.get_value('labelspellcheck'))
         if self._label_spellcheck is None:
@@ -1531,7 +1588,7 @@ class SetupUI(Gtk.Window):
         self._label_spellcheck_entry.set_hexpand(False)
         self._label_spellcheck_entry.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_spellcheck_entry, 1, 10, 1, 1)
+            self._label_spellcheck_entry, 1, 11, 1, 1)
         self._label_spellcheck_string = itb_util.variant_to_value(
             self._gsettings.get_value('labelspellcheckstring'))
         if not self._label_spellcheck_string:
@@ -1553,7 +1610,7 @@ class SetupUI(Gtk.Window):
         self._label_dictionary_checkbutton.set_hexpand(False)
         self._label_dictionary_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_dictionary_checkbutton, 0, 11, 1, 1)
+            self._label_dictionary_checkbutton, 0, 12, 1, 1)
         self._label_dictionary = itb_util.variant_to_value(
             self._gsettings.get_value('labeldictionary'))
         if self._label_dictionary is None:
@@ -1567,7 +1624,7 @@ class SetupUI(Gtk.Window):
         self._label_dictionary_entry.set_hexpand(False)
         self._label_dictionary_entry.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_dictionary_entry, 1, 11, 1, 1)
+            self._label_dictionary_entry, 1, 12, 1, 1)
         self._label_dictionary_string = itb_util.variant_to_value(
             self._gsettings.get_value('labeldictionarystring'))
         if not self._label_dictionary_string:
@@ -1587,7 +1644,7 @@ class SetupUI(Gtk.Window):
         self._label_busy_checkbutton.set_hexpand(False)
         self._label_busy_checkbutton.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_busy_checkbutton, 0, 12, 1, 1)
+            self._label_busy_checkbutton, 0, 13, 1, 1)
         self._label_busy = itb_util.variant_to_value(
             self._gsettings.get_value('labelbusy'))
         if self._label_busy is None:
@@ -1601,7 +1658,7 @@ class SetupUI(Gtk.Window):
         self._label_busy_entry.set_hexpand(False)
         self._label_busy_entry.set_vexpand(False)
         self._appearance_grid.attach(
-            self._label_busy_entry, 1, 12, 1, 1)
+            self._label_busy_entry, 1, 13, 1, 1)
         self._label_busy_string = itb_util.variant_to_value(
             self._gsettings.get_value('labelbusystring'))
         if not self._label_busy_string:
@@ -2017,6 +2074,14 @@ class SetupUI(Gtk.Window):
         if key == 'autoselectcandidate':
             self.set_auto_select_candidate(value, update_gsettings=False)
             return
+        if key == 'colorpreeditspellcheck':
+            self.set_color_preedit_spellcheck(
+                value, update_gsettings=False)
+            return
+        if key == 'colorpreeditspellcheckstring':
+            self.set_color_preedit_spellcheck_string(
+                value, update_gsettings=False)
+            return
         if key == 'colorinlinecompletion':
             self.set_color_inline_completion(
                 value, update_gsettings=False)
@@ -2101,6 +2166,27 @@ class SetupUI(Gtk.Window):
         :type _button: Gtk.Button object
         '''
         itb_util.ItbAboutDialog()
+
+    def on_color_preedit_spellcheck_checkbutton(self, widget):
+        '''
+        The checkbutton whether to do spellchecking on the
+        contents of the preedit.
+
+        :param widget: The check button clicked
+        :type widget: Gtk.CheckButton
+        '''
+        self.set_color_preedit_spellcheck(
+            widget.get_active(), update_gsettings=True)
+
+    def on_color_preedit_spellcheck_color_set(self, widget):
+        '''
+        A color has been set to indicate spelling errors in the preedit
+
+        :param widget: The color button where a color was set
+        :type widget: Gtk.ColorButton
+        '''
+        self.set_color_preedit_spellcheck_string(
+            widget.get_rgba().to_string(), update_gsettings=True)
 
     def on_color_inline_completion_checkbutton(self, widget):
         '''
@@ -3548,6 +3634,63 @@ class SetupUI(Gtk.Window):
         else:
             self._google_application_credentials_button_label.set_text(
                 self._google_application_credentials)
+
+    def set_color_preedit_spellcheck(self, mode, update_gsettings=True):
+        '''Sets whether to do spellchecking on the contents of the preedit
+
+        :param mode: Whether to do spellchecking on the contents of the preedit
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._color_preedit_spellcheck:
+            return
+        self._color_preedit_spellcheck = mode
+        self._color_preedit_spellcheck_rgba_colorbutton.set_sensitive(mode)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorpreeditspellcheck',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._color_preedit_spellcheck_checkbutton.set_active(mode)
+
+    def set_color_preedit_spellcheck_string(
+            self, color_string, update_gsettings=True):
+        '''Sets the color to indicate spelling errors in the preedit
+
+        :param color_string: The color to indicate spelling errors in the preedit
+        :type color_string: String
+                            - Standard name from the X11 rgb.txt
+                            - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                         or ”#rrrrggggbbbb”
+                            - RGB color: “rgb(r,g,b)”
+                            - RGBA color: “rgba(r,g,b,a)”
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', color_string, update_gsettings)
+        if color_string == self._color_preedit_spellcheck_string:
+            return
+        self._color_preedit_spellcheck_string = color_string
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorpreeditspellcheckstring',
+                GLib.Variant.new_string(color_string))
+        else:
+            gdk_rgba = Gdk.RGBA()
+            gdk_rgba.parse(color_string)
+            self._color_preedit_spellcheck_rgba_colorbutton.set_rgba(gdk_rgba)
 
     def set_color_inline_completion(self, mode, update_gsettings=True):
         '''Sets whether to use color for inline completion

@@ -250,6 +250,16 @@ class TypingBoosterEngine(IBus.Engine):
         if self._inline_completion is None:
             self._inline_completion = False
 
+        self._color_preedit_spellcheck = itb_util.variant_to_value(
+            self._gsettings.get_value('colorpreeditspellcheck'))
+        if self._color_preedit_spellcheck is None:
+            self._color_preedit_spellcheck = True
+
+        self._color_preedit_spellcheck_string = itb_util.variant_to_value(
+            self._gsettings.get_value('colorpreeditspellcheckstring'))
+        self._color_preedit_spellcheck_argb = itb_util.color_string_to_argb(
+            self._color_preedit_spellcheck_string)
+
         self._color_inline_completion = itb_util.variant_to_value(
             self._gsettings.get_value('colorinlinecompletion'))
         if self._color_inline_completion is None:
@@ -1812,11 +1822,11 @@ class TypingBoosterEngine(IBus.Engine):
                 or self.is_lookup_table_enabled_by_min_char_complete):
                 attrs.append(IBus.attr_underline_new(
                     self._preedit_underline, 0, len(_str)))
-                if (self._color_spellcheck
+                if (self._color_preedit_spellcheck
                     and len(_str) >= 4
                     and not self.db.hunspell_obj.spellcheck(_str)):
                     attrs.append(IBus.attr_foreground_new(
-                        self._color_spellcheck_argb, 0, len(_str)))
+                        self._color_preedit_spellcheck_argb, 0, len(_str)))
             else:
                 # Preedit style “only when lookup is enabled” is
                 # requested and lookup is *not* enabled.  Therefore,
@@ -1954,11 +1964,11 @@ class TypingBoosterEngine(IBus.Engine):
                 self._preedit_underline,
                 len(typed_string), len(typed_string + completion)))
         else:
-            if (self._color_spellcheck
+            if (self._color_preedit_spellcheck
                 and len(typed_string) >= 4
                 and not self.db.hunspell_obj.spellcheck(typed_string)):
                 attrs.append(IBus.attr_foreground_new(
-                    self._color_spellcheck_argb, 0, len(typed_string)))
+                    self._color_preedit_spellcheck_argb, 0, len(typed_string)))
             if self._color_inline_completion:
                 attrs.append(IBus.attr_foreground_new(
                     self._color_inline_completion_argb,
@@ -2861,6 +2871,74 @@ class TypingBoosterEngine(IBus.Engine):
         :rtype: string
         '''
         return self._auto_commit_characters
+
+    def set_color_preedit_spellcheck(self, mode, update_gsettings=True):
+        '''Sets whether spellchecking is done on the contents of the preedit
+
+        :param mode: Whether to do spellchecking on the contents of the preedit
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._color_preedit_spellcheck:
+            return
+        self._color_preedit_spellcheck = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorpreeditspellcheck',
+                GLib.Variant.new_boolean(mode))
+
+    def get_color_preedit_spellcheck(self):
+        '''Returns the current value of the “color preedit_spellcheck” mode
+
+        :rtype: Boolean
+        '''
+        return self._color_preedit_spellcheck
+
+    def set_color_preedit_spellcheck_string(
+            self, color_string, update_gsettings=True):
+        '''Sets the color for for preedit spellchecking
+
+        :param color_string: The color for preedit spellchecking
+        :type color_string: String
+                            - Standard name from the X11 rgb.txt
+                            - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                         or ”#rrrrggggbbbb”
+                            - RGB color: “rgb(r,g,b)”
+                            - RGBA color: “rgba(r,g,b,a)”
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', color_string, update_gsettings)
+        if color_string == self._color_preedit_spellcheck_string:
+            return
+        self._color_preedit_spellcheck_string = color_string
+        self._color_preedit_spellcheck_argb = itb_util.color_string_to_argb(
+            self._color_preedit_spellcheck_string)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorpreeditspellcheckstring',
+                GLib.Variant.new_string(color_string))
+
+    def get_color_preedit_spellcheck_string(self):
+        '''Returns the current value of the “color preedit spellcheck” string
+
+        :rtype: String
+        '''
+        return self._color_preedit_spellcheck_string
 
     def set_color_inline_completion(self, mode, update_gsettings=True):
         '''Sets whether to use color for inline completion
@@ -5013,6 +5091,14 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if key == 'autoselectcandidate':
             self.set_auto_select_candidate(value, update_gsettings=False)
+            return
+        if key == 'colorpreeditspellcheck':
+            self.set_color_preedit_spellcheck(
+                value, update_gsettings=False)
+            return
+        if key == 'colorpreeditspellcheckstring':
+            self.set_color_preedit_spellcheck_string(
+                value, update_gsettings=False)
             return
         if key == 'colorinlinecompletion':
             self.set_color_inline_completion(
