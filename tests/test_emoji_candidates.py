@@ -149,7 +149,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('👨🏿', 'man: dark skin tone “man tone5”'))
         self.assertEqual(
             mq.candidates('tone')[0][:2],
-            ('🖐🏻', 'hand with fingers splayed: light skin tone “raised hand with fingers splayed tone1”'))
+            ('👲🏻', 'person with skullcap: light skin tone “man with skullcap: light skin tone”'))
         self.assertEqual(
             mq.candidates('tone1')[0][:2],
             ('🏻', 'emoji modifier fitzpatrick type-1-2 “tone1”'))

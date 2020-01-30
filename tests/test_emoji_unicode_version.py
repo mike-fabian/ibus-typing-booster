@@ -52,15 +52,15 @@ class EmojiUnicodeVersionTestCase(unittest.TestCase):
     def test_unicode_version_emoji_data_file(self):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
-        self.assertEqual(mq.unicode_version('☺'), '2.0')
-        self.assertEqual(mq.unicode_version('🤿'), '12.1')
+        self.assertEqual(mq.unicode_version('☺'), '0.6')
+        self.assertEqual(mq.unicode_version('🤿'), '12.0')
         self.assertEqual(mq.unicode_version('⚧'), '13.0')
 
     def test_unicode_version_emoji_sequences_file(self):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
         self.assertEqual(mq.unicode_version('🇿🇼'), '2.0')
-        self.assertEqual(mq.unicode_version('🤳🏽'), '4.0')
+        self.assertEqual(mq.unicode_version('🤳🏽'), '3.0')
         self.assertEqual(mq.unicode_version('🤲🏿'), '5.0')
         self.assertEqual(
             mq.unicode_version(
