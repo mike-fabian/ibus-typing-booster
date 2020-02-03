@@ -14,10 +14,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-01-29 16:40+0100\n"
-"PO-Revision-Date: 2020-01-28 09:13+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
-"Language-Team: French <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/fr/>\n"
+"PO-Revision-Date: 2020-02-03 09:17+0000\n"
+"Last-Translator: Julien Humbert <julroy67@gmail.com>\n"
+"Language-Team: French <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -982,10 +982,8 @@ msgstr ""
 #. a custom color is used to indicate when the preedit
 #. might contain a spelling error.
 #: setup/main.py:1272
-#, fuzzy
-#| msgid "Spell checking"
 msgid "Preedit spellchecking"
-msgstr "Vérification orthographique"
+msgstr "Vérification orthographique de la pré-édition"
 
 #: setup/main.py:1274
 msgid ""
@@ -993,31 +991,28 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"Vous pouvez choisir ici si la vérification orthographique est effectuée sur "
+"le contenu de la pré-édition et la couleur personnalisée utilisée pour "
+"indiquer lorsque la pré-édition contient une faute d’orthographe."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
 #: setup/main.py:1306
-#, fuzzy
-#| msgid "Choose color for spellchecking suggestions"
 msgid "Choose color for preedit spellchecking"
-msgstr "Choisir la couleur pour les suggestions orthographiques"
+msgstr ""
+"Choisir la couleur pour les suggestions orthographiques de la pré-édition"
 
 #: setup/main.py:1308
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from spellchecking. This setting only has an effect if "
-#| "the use of color for candidates from spellchecking is enabled."
 msgid ""
 "Here you can specify which color to use for the preedit when the preedit "
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
-"Ici vous pouvez renseigner quelle couleur utiliser pour les candidats de la "
-"table de recherche provenant de la vérification orthographique. Ce paramètre "
-"n’a d’effets que lorsque de l’utilisation de couleur pour les suggestions "
-"provenant de la  vérification orthographique est activité."
+"Vous pouvez renseigner ici la couleur à utiliser pour la pré-édition lorsqu’"
+"elle contient une erreur d’orthographe. Ce paramètre n’a d’effets que "
+"lorsque de l’utilisation de couleur pour les suggestions provenant de la "
+"vérification orthographique est activité."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
