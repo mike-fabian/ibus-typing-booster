@@ -11,16 +11,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-01-29 16:40+0100\n"
-"PO-Revision-Date: 2020-01-22 09:59+0000\n"
+"PO-Revision-Date: 2020-02-03 17:55+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/uk/>\n"
+"Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.10.3\n"
 
 #: engine/emoji_picker.py:194
@@ -973,10 +973,8 @@ msgstr ""
 #. a custom color is used to indicate when the preedit
 #. might contain a spelling error.
 #: setup/main.py:1272
-#, fuzzy
-#| msgid "Spell checking"
 msgid "Preedit spellchecking"
-msgstr "Перевірка правопису"
+msgstr "Перевірка правопису до редагування"
 
 #: setup/main.py:1274
 msgid ""
@@ -984,31 +982,26 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"Тут ви можете визначити, чи буде виконуватися перевірка правопису для тексту "
+"до редагування і чи буде використано нетиповий колір для позначення можливих "
+"помилок у тексті до редагування."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
 #: setup/main.py:1306
-#, fuzzy
-#| msgid "Choose color for spellchecking suggestions"
 msgid "Choose color for preedit spellchecking"
-msgstr "Вибрати колір для пропозицій від засобу перевірки правопису"
+msgstr "Виберіть колір для помилок правопису у тексті до редагування"
 
 #: setup/main.py:1308
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from spellchecking. This setting only has an effect if "
-#| "the use of color for candidates from spellchecking is enabled."
 msgid ""
 "Here you can specify which color to use for the preedit when the preedit "
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
-"Тут ви можете вказати, який колір буде використано у таблиці пошуку для "
-"варіантів, які походитимуть від засобу перевірки правопису. Цей параметр "
-"працюватиме, лише якщо увімкнено використання нетипового кольору для "
-"варіантів доповнення, які походять від засобу перевірки правопису."
+"Тут ви можете вказати, який колір буде використано для можливих помилок "
+"правопису у тексті до редагування. Цей параметр працюватиме, лише якщо "
+"увімкнено перевірку правопису до редагування."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
