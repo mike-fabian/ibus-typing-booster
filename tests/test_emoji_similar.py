@@ -110,7 +110,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         self.assertEqual(
             mq.similar('€', match_limit=5),
-            [('€', 'euro sign [€, Sc, currency, eur, euro]', 5), ('₹', 'indian rupee sign [Sc, currency]', 2), ('£', 'pound sign [Sc, currency]', 2), ('₽', 'ruble sign [Sc, currency]', 2), ('¥', 'yen sign [Sc, currency]', 2)])
+            [('€', 'euro [€, divisa, EUR, euro, moneda]', 5), ('£', 'libra esterlina [divisa, moneda]', 2), ('₽', 'rublo [divisa, moneda]', 2), ('₹', 'rupia india [divisa, moneda]', 2), ('¥', 'yen [divisa, moneda]', 2)])
 
     def test_similar_surfer_es_ES(self):
         mq = itb_emoji.EmojiMatcher(

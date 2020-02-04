@@ -78,6 +78,7 @@ extradata_DATA = \
 	bez_TZ.xml \
 	bg.xml \
 	bg_BG.xml \
+	bgn.xml \
 	bm.xml \
 	bm_ML.xml \
 	bn.xml \
@@ -563,6 +564,7 @@ extradata_DATA = \
 	pa_Arab_PK.xml \
 	pa_Guru.xml \
 	pa_Guru_IN.xml \
+	pcm.xml \
 	pl.xml \
 	pl_PL.xml \
 	prg.xml \
@@ -613,6 +615,7 @@ extradata_DATA = \
 	saq_KE.xml \
 	sbp.xml \
 	sbp_TZ.xml \
+	sc.xml \
 	sd.xml \
 	sd_PK.xml \
 	se.xml \
