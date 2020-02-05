@@ -9,10 +9,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-01-29 16:40+0100\n"
-"PO-Revision-Date: 2020-01-23 09:16+0000\n"
+"PO-Revision-Date: 2020-02-05 13:04+0000\n"
 "Last-Translator: Geert Warrink <geert.warrink@onsnet.nu>\n"
-"Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/nl/>\n"
+"Language-Team: Dutch <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -957,10 +957,8 @@ msgstr ""
 #. a custom color is used to indicate when the preedit
 #. might contain a spelling error.
 #: setup/main.py:1272
-#, fuzzy
-#| msgid "Spell checking"
 msgid "Preedit spellchecking"
-msgstr "Spellingcontrole"
+msgstr "Spellingcontrole vooraf bewerken"
 
 #: setup/main.py:1274
 msgid ""
@@ -968,30 +966,26 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"Hier kan je kiezen of spellingcontrole wordt uitgevoerd op de inhoud van "
+"vooraf bewerken en een aangepaste kleur wordt gebruikt om aan te geven "
+"wanneer vooraf bewerken mogelijk een spelfout bevat."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
 #: setup/main.py:1306
-#, fuzzy
-#| msgid "Choose color for spellchecking suggestions"
 msgid "Choose color for preedit spellchecking"
-msgstr "Kies de kleur voor spellingcontrole-suggesties"
+msgstr "Kies een kleur voor het vooraf bewerken van spellingcontrole"
 
 #: setup/main.py:1308
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from spellchecking. This setting only has an effect if "
-#| "the use of color for candidates from spellchecking is enabled."
 msgid ""
 "Here you can specify which color to use for the preedit when the preedit "
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
-"Hier kun je aangeven welke kleur je wilt gebruiken voor spellingcontrole-"
-"suggesties op de lijst. Dit is alleen van toepassing als je hebt aangegeven "
-"een kleur te willen gebruiken voor spellingcontrole-suggesties."
+"Hier kun je aangeven welke kleur moet worden gebruikt voor de voorbewerking "
+"wanneer de voorbewerking mogelijk een spelfout bevat. Deze instelling heeft "
+"alleen effect als spellingcontrole vóór bewerking is ingeschakeld."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
