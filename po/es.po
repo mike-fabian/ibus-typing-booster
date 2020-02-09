@@ -13,10 +13,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-01-29 16:40+0100\n"
-"PO-Revision-Date: 2020-01-28 09:13+0000\n"
+"PO-Revision-Date: 2020-02-09 15:49+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
-"Language-Team: Spanish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/es/>\n"
+"Language-Team: Spanish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -172,7 +172,7 @@ msgstr "Predicciones de símbolos y emoyis de Unicode"
 #. sense to use this option temporarily.
 #: engine/hunspell_table.py:542 engine/hunspell_table.py:543 setup/main.py:483
 msgid "Off the record mode"
-msgstr "Modo de privacidad"
+msgstr "Modo confidencial"
 
 #: engine/hunspell_table.py:1380
 msgid "Highest priority dictionary"
@@ -285,7 +285,7 @@ msgstr "regiones"
 
 #: engine/itb_util.py:3244 engine/itb_util.py:3545
 msgid "File not found"
-msgstr "Archivo no encotrado"
+msgstr "No se encontró el archivo"
 
 #: engine/itb_util.py:3247 engine/itb_util.py:3548
 msgid "Permission error"
@@ -329,24 +329,25 @@ msgstr "Cancelar"
 #. command.
 #: engine/itb_util.py:4018
 msgid "Please press a key (or a key combination)"
-msgstr "Por favor presiona una tecla (o combinación de teclas)"
+msgstr "Oprima una tecla (o combinación de teclas)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
 #: engine/itb_util.py:4023
 msgid "The dialog will be closed when the key is released"
-msgstr "El diálogo se cerrará cuando la tecla sea liberada"
+msgstr "El cuadro de diálogo se cerrará cuando se suelte la tecla"
 
 #: engine/itb_util.py:4054
 msgid "A completion input method to speedup typing."
-msgstr "Un método de entrada de autocompletado para acelerar la mecanografía."
+msgstr ""
+"Un método de entrada de compleción automática para acelerar la mecanografía."
 
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:4063
 msgid "translator-credits"
 msgstr ""
-"Adolfo Jayme Barrientos, 201\n"
+"Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2019-2020\n"
 "Ismael Venegas Castelló <ismael.vc1337@gmail.com>, 2018\n"
 "Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2018\n"
 "Emilio Herrera <ehespinosa57@gmail.com>, 2017"
@@ -556,7 +557,7 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
-"Mientras el modo de privacidad esté activado, se apagará el aprendizaje a "
+"Mientras el modo confidencial esté activado, se apagará el aprendizaje a "
 "partir de la entrada de usuario. Si el aprendizaje desde la entrada de "
 "usuario está disponible, las predicciones son normalmente mucho mejores que "
 "si utiliza solo los diccionarios. Por ello, debería usar esta opción con "
@@ -873,10 +874,10 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
-"Muestra en el texto auxiliar si los modos de predicción de emoji y de no "
-"grabación están activos o no, y cuál es el método de entrada usado "
-"actualmente para la predicción. El texto auxiliar es una línea opcional de "
-"texto mostrada debajo de la lista de candidatos."
+"Muestra en el texto auxiliar si los modos de predicción de emoyis y de "
+"confidencialidad están activados o no, y cuál es el método de entrada "
+"utilizado actualmente en la predicción. El texto auxiliar es un renglón "
+"opcional de texto mostrado encima de la lista de candidatos."
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
@@ -972,10 +973,8 @@ msgstr ""
 #. a custom color is used to indicate when the preedit
 #. might contain a spelling error.
 #: setup/main.py:1272
-#, fuzzy
-#| msgid "Spell checking"
 msgid "Preedit spellchecking"
-msgstr "Revisión ortográfica"
+msgstr "Revisión ortográfica de preedición"
 
 #: setup/main.py:1274
 msgid ""
@@ -983,30 +982,26 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"Aquí puede elegir si la revisión ortográfica se realiza en el contenido de "
+"la preedición; se empleará un color personalizado para indicar cuando la "
+"preedición pueda contener una falta de ortografía."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
 #: setup/main.py:1306
-#, fuzzy
-#| msgid "Choose color for spellchecking suggestions"
 msgid "Choose color for preedit spellchecking"
-msgstr "Elija el color de las sugerencias de revisión ortográfica"
+msgstr "Elija el color de la revisión ortográfica en preedición"
 
 #: setup/main.py:1308
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from spellchecking. This setting only has an effect if "
-#| "the use of color for candidates from spellchecking is enabled."
 msgid ""
 "Here you can specify which color to use for the preedit when the preedit "
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
-"Aquí puede indicar qué color utilizar para los candidatos de la tabla de "
-"búsqueda provenientes de la revisión ortográfica. Esta opción surte efecto "
-"solo si se activa el uso de color en candidatos de la revisión ortográfica."
+"Aquí puede indicar qué color utilizar para la preedición cuando esta "
+"contiene una posible falta de ortografía. Esta opción surte efecto solo si "
+"se activa la revisión ortográfica en preedición."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
@@ -1307,7 +1302,7 @@ msgstr "ibus no está ejecutándose."
 
 #: typing-booster.appdata.xml:5
 msgid "Typing Booster"
-msgstr "Typing Booster"
+msgstr "Acelerador mecanográfico"
 
 #: typing-booster.appdata.xml:6
 msgid "Predictive input method"

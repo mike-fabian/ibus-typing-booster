@@ -7,10 +7,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-01-29 16:40+0100\n"
-"PO-Revision-Date: 2020-01-28 09:13+0000\n"
+"PO-Revision-Date: 2020-02-09 15:49+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
-"Language-Team: Catalan <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ca/>\n"
+"Language-Team: Catalan <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,11 +40,11 @@ msgstr "Cerca un emoji"
 
 #: engine/emoji_picker.py:344
 msgid "Set the font to display emoji"
-msgstr ""
+msgstr "Establiu el tipus de lletra per a mostrar emojis"
 
 #: engine/emoji_picker.py:352
 msgid "Set font size"
-msgstr ""
+msgstr "Establiu la mida de la lletra"
 
 #. Translators: This is a checkbox which enables or disables
 #. the pango font fallback. If font fallback is off, only the
@@ -82,7 +82,7 @@ msgstr "Paraules clau"
 
 #: engine/emoji_picker.py:663
 msgid "Fonts used to render this emoji:"
-msgstr ""
+msgstr "Tipus de lletra utilitzats per a representar aquest emoji:"
 
 #: engine/emoji_picker.py:680
 msgid "Unicode Version:"
@@ -163,11 +163,11 @@ msgstr "Prediccions d'emojis i símbols del Unicode"
 #. sense to use this option temporarily.
 #: engine/hunspell_table.py:542 engine/hunspell_table.py:543 setup/main.py:483
 msgid "Off the record mode"
-msgstr ""
+msgstr "Mode confidencial"
 
 #: engine/hunspell_table.py:1380
 msgid "Highest priority dictionary"
-msgstr ""
+msgstr "Diccionari prioritari"
 
 #: engine/hunspell_table.py:1381
 msgid "Choose highest priority dictionary"
@@ -622,7 +622,7 @@ msgstr "Aprèn el vostre estil amb la lectura d'un fitxer de text"
 #. language data learned from typing or from reading files.
 #: setup/main.py:686
 msgid "Delete learned data"
-msgstr "Elimina les dades que s'han après"
+msgstr "Suprimeix les dades que s'han après"
 
 #: setup/main.py:688
 msgid ""
@@ -673,11 +673,11 @@ msgstr ""
 
 #: setup/main.py:824
 msgid "Add an input method"
-msgstr ""
+msgstr "Afegeix un mètode d'entrada"
 
 #: setup/main.py:836
 msgid "Remove an input method"
-msgstr ""
+msgstr "Suprimeix un mètode d'entrada"
 
 #: setup/main.py:848
 msgid "Move input method up"
@@ -712,11 +712,11 @@ msgstr ""
 
 #: setup/main.py:934
 msgid "Delete shortcut"
-msgstr ""
+msgstr "Suprimeix la drecera"
 
 #: setup/main.py:944
 msgid "Add shortcut"
-msgstr ""
+msgstr "Afegeix una drecera"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -742,7 +742,7 @@ msgstr "Ordre"
 
 #: setup/main.py:1037
 msgid "Edit"
-msgstr ""
+msgstr "Edita"
 
 #: setup/main.py:1041
 msgid "Edit the key bindings for the selected command"
@@ -1076,7 +1076,7 @@ msgstr ""
 
 #: setup/main.py:1684
 msgid "File not yet set."
-msgstr ""
+msgstr "Encara no s'ha establert el fitxer."
 
 #: setup/main.py:1740
 msgid "Spell checking"
@@ -1088,7 +1088,7 @@ msgstr "Emoji"
 
 #: setup/main.py:1945
 msgid "Are you sure?"
-msgstr "Esteu segur?"
+msgstr "N'esteu segur?"
 
 #: setup/main.py:1947 setup/main.py:2457 setup/main.py:3433
 msgid "_Cancel"
@@ -1163,6 +1163,8 @@ msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr ""
+"Realment voleu suprimir totes les dades lingüístiques apreses a partir de "
+"l'escriptura amb el teclat i de la lectura de fitxers?"
 
 #: setup/main.py:4678
 msgid "ibus is not running."
@@ -1170,12 +1172,11 @@ msgstr "L'ibus no s'està executant."
 
 #: typing-booster.appdata.xml:5
 msgid "Typing Booster"
-msgstr ""
+msgstr "Accelerador mecanogràfic"
 
 #: typing-booster.appdata.xml:6
-#, fuzzy
 msgid "Predictive input method"
-msgstr "Mètode d'entrada:"
+msgstr "Mètode d'entrada predictiu"
 
 #: typing-booster.appdata.xml:8
 msgid ""
