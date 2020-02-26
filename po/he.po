@@ -9,17 +9,17 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-01-29 16:40+0100\n"
-"PO-Revision-Date: 2020-01-21 17:05+0000\n"
+"PO-Revision-Date: 2020-02-26 06:38+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: Hebrew <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/he/>\n"
+"Language-Team: Hebrew <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 3.11.2\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -933,10 +933,8 @@ msgstr ""
 #. a custom color is used to indicate when the preedit
 #. might contain a spelling error.
 #: setup/main.py:1272
-#, fuzzy
-#| msgid "Spell checking"
 msgid "Preedit spellchecking"
-msgstr "בדיקת איות"
+msgstr "בדיקת איות טרום עריכה"
 
 #: setup/main.py:1274
 msgid ""
@@ -944,29 +942,24 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"כאן ניתן לבחור האם בדיקת האיות מתבצעת על התוכן טרום העריכה ואז צבע בהתאמה "
+"אישית ישמש לציין מתי העריכה עצמה עשויה להכיל שגיאת איות."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
 #: setup/main.py:1306
-#, fuzzy
-#| msgid "Choose color for spellchecking suggestions"
 msgid "Choose color for preedit spellchecking"
-msgstr "נא לבחור צבע להצעות מבדיקת האיות"
+msgstr "נא לבחור צבע לבדיקת האיות טרום העריכה"
 
 #: setup/main.py:1308
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from spellchecking. This setting only has an effect if "
-#| "the use of color for candidates from spellchecking is enabled."
 msgid ""
 "Here you can specify which color to use for the preedit when the preedit "
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
-"כאן ניתן לציין באיזה צבע להשתמש עבור מועמדים בטבלת החיפוש שמגיעים מבדיקת "
-"האיות. הגדרה זו חלה רק אם השימוש בצבע למועמדים מבדיקת האיות פעיל."
+"כאן ניתן לציין באיזה צבע להשתמש בטרום העריכה כאשר טרום העריכה עשויה להכיל "
+"שגיאת איות. הגדרה זו חלה רק אם טרום עריכה בבדיקת האיות פעילה."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
