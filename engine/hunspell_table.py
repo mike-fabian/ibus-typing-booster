@@ -2396,7 +2396,8 @@ class TypingBoosterEngine(IBus.Engine):
             return self._return_false(key.val, key.code, key.state)
         if (not self._arrow_keys_reopen_preedit
                 and key.val in (IBus.KEY_Left, IBus.KEY_KP_Left,
-                                IBus.KEY_Right, IBus.KEY_KP_Right)):
+                                IBus.KEY_Right, IBus.KEY_KP_Right,
+                                IBus.KEY_BackSpace)):
             # using arrows key to reopen the preëdit is disabled
             return self._return_false(key.val, key.code, key.state)
         if (key.shift
