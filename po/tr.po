@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-01-29 16:40+0100\n"
-"PO-Revision-Date: 2020-02-09 15:49+0000\n"
+"PO-Revision-Date: 2020-03-22 09:38+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/tr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 3.11.3\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -342,7 +342,7 @@ msgstr "Yazmayı hızlandırmak için bir tamamlama giriş yöntemi."
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:4063
 msgid "translator-credits"
-msgstr "Oğuz Ersen <oguzersen@protonmail.com>, 2019"
+msgstr "Oğuz Ersen <oguzersen@protonmail.com>"
 
 #: engine/itb_util.py:4071
 msgid "Online documentation:"
@@ -547,10 +547,10 @@ msgid ""
 "might make sense to use this option temporarily."
 msgstr ""
 "“Kayıt dışı” modu açıkken, kullanıcı girişinden öğrenme devre dışı "
-"bırakılır. Öğrenilmiş kullanıcı girişi mevcutsa, tahminler genellikle "
-"yalnızca sözlük kullanan tahminlerden çok daha iyidir. Bu nedenle, kişi bu "
-"seçeneği tedbirli bir şekilde kullanmalıdır. Sadece gizli kullanıcı girişini "
-"diske kaydetmekten kaçınmak isteniyorsa, bu seçeneği geçici olarak kullanmak "
+"bırakılır. Öğrenilmiş kullanıcı girişi mevcutsa, tahminler genellikle sadece "
+"sözlük kullanan tahminlerden çok daha iyidir. Bu nedenle, kişi bu seçeneği "
+"tedbirli bir şekilde kullanmalıdır. Sadece gizli kullanıcı girişini diske "
+"kaydetmekten kaçınmak isteniyorsa, bu seçeneği geçici olarak kullanmak "
 "mantıklı olabilir."
 
 #. Translators: Use a workaround for bugs in the input
@@ -935,7 +935,7 @@ msgstr "Düşük"
 #. of characters before a lookup is done.
 #: setup/main.py:1248
 msgid "Use preedit style only if lookup is enabled"
-msgstr "Ön-düzenleme tarzını yalnızca arama etkinse kullan"
+msgstr "Ön-düzenleme tarzını sadece arama etkinse kullan"
 
 #: setup/main.py:1250
 msgid ""
@@ -944,7 +944,7 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
-"Bu seçenek açıksa, alt çizgi gibi bir ön-düzenleme tarzı yalnızca arama "
+"Bu seçenek açıksa, alt çizgi gibi bir ön-düzenleme tarzı sadece arama "
 "etkinse kullanılacaktır. Sadece bir tuşa basıldığında aramayı etkinleştirme "
 "seçeneği kullanılıyorsa veya bir arama yapılmadan önce minimum sayıda "
 "karakter gerektirme seçeneği kullanılıyorsa arama devre dışı bırakılmış "
@@ -982,7 +982,7 @@ msgid ""
 "preedit spellchecking is enabled."
 msgstr ""
 "Burada, ön düzenleme olası bir yazım hatası içerdiğinde hangi rengin "
-"kullanılacağını belirtebilirsiniz. Bu ayar yalnızca ön-düzenleme yazım "
+"kullanılacağını belirtebilirsiniz. Bu ayar sadece ön-düzenleme yazım "
 "denetimi etkinleştirilmişse etkili olur."
 
 #. Translators: A checkbox where one can choose whether a
@@ -1013,7 +1013,7 @@ msgid ""
 "inline completion is enabled."
 msgstr ""
 "Burada satır içi tamamlama için hangi rengin kullanılacağını "
-"belirleyebilirsiniz. Bu ayarın yalnızca satır içi tamamlama için renk "
+"belirleyebilirsiniz. Bu ayarın sadece satır içi tamamlama için renk "
 "kullanımı ve satır içi tamamlama etkinse bir etkisi olacaktır."
 
 #. Translators: A checkbox where one can choose whether a
@@ -1045,7 +1045,7 @@ msgid ""
 "use of color for candidates from the user database is enabled."
 msgstr ""
 "Burada, arama tablosundaki adaylardan kullanıcı veri tabanından gelenler "
-"için hangi rengin kullanılacağını belirleyebilirsiniz. Bu ayarın, yalnızca "
+"için hangi rengin kullanılacağını belirleyebilirsiniz. Bu ayarın, sadece "
 "kullanıcı veri tabanından gelen adaylar için renk kullanımı etkinse bir "
 "etkisi olacaktır."
 
@@ -1077,7 +1077,7 @@ msgid ""
 "color for candidates from spellchecking is enabled."
 msgstr ""
 "Burada, arama tablosundaki adaylardan yazım denetiminden gelenler için hangi "
-"rengin kullanılacağını belirleyebilirsiniz. Bu ayarın yalnızca yazım "
+"rengin kullanılacağını belirleyebilirsiniz. Bu ayarın sadece yazım "
 "denetiminden gelen adaylar için renk kullanımı etkinse bir etkisi olacaktır."
 
 #. Translators: A checkbox where one can choose whether a
@@ -1109,7 +1109,7 @@ msgid ""
 "color for candidates from a dictionary is enabled."
 msgstr ""
 "Burada, arama tablosundaki adaylardan bir sözlükten gelenler için hangi "
-"rengin kullanılacağını belirleyebilirsiniz. Bu ayarın yalnızca bir sözlükten "
+"rengin kullanılacağını belirleyebilirsiniz. Bu ayarın sadece bir sözlükten "
 "gelen adaylar için renk kullanımı etkinse bir etkisi olacaktır."
 
 #. Translators: A checkbox where one can choose whether a
