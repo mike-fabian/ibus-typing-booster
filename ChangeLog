@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 31 Mar 2020 Released 2.8.2
+* Translation updates from Weblate for ar, tr
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 27 Feb 2020 Released 2.8.1
 * Prevent also BackSpace from reopening a preedit when the option “Arrow keys can reopen a p
 reedit” is off (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/87 https://bugzilla.redhat.com/show_bug.cgi?id=1637647)

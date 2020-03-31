@@ -19,6 +19,18 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.8.2" date="2020-03-31" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Translation updates from Weblate for ar, tr
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+       </ul>
+      </description>
+    </release>
     <release version="2.8.1" date="2020-02-27" urgency="medium">
       <description>
         <ul>
