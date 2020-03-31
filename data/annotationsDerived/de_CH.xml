@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
-<!-- Copyright © 1991-2019 Unicode, Inc.
+<!-- Copyright © 1991-2020 Unicode, Inc.
 For terms of use, see http://www.unicode.org/copyright.html
 Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
@@ -14,6 +14,11 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<territory type="CH"/>
 	</identity>
 	<annotations>
+		<annotation cp="🥷🏻">helle Hautfarbe | Ninja</annotation>
+		<annotation cp="🥷🏼">mittelhelle Hautfarbe | Ninja</annotation>
+		<annotation cp="🥷🏽">mittlere Hautfarbe | Ninja</annotation>
+		<annotation cp="🥷🏾">mitteldunkle Hautfarbe | Ninja</annotation>
+		<annotation cp="🥷🏿">dunkle Hautfarbe | Ninja</annotation>
 		<annotation cp="🖖🏻">Finger | Hand | helle Hautfarbe | Spock | Vulkanier(in) | vulkanisch | Vulkanischer Gruss</annotation>
 		<annotation cp="🖖🏻" type="tts">Vulkanischer Gruss: helle Hautfarbe</annotation>
 		<annotation cp="🖖🏼">Finger | Hand | mittelhelle Hautfarbe | Spock | Vulkanier(in) | vulkanisch | Vulkanischer Gruss</annotation>
@@ -80,26 +85,26 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👩🏾‍🦳" type="tts">Frau: mitteldunkle Hautfarbe, weisses Haar</annotation>
 		<annotation cp="👩🏿‍🦳">dunkle Hautfarbe | Frau | weisses Haar</annotation>
 		<annotation cp="👩🏿‍🦳" type="tts">Frau: dunkle Hautfarbe, weisses Haar</annotation>
-		<annotation cp="🧑🏻‍🔧">Elektriker | Handwerker | helle Hautfarbe | Klempner | Mechaniker | Sanitär</annotation>
-		<annotation cp="🧑🏼‍🔧">Elektriker | Handwerker | Klempner | Mechaniker | mittelhelle Hautfarbe | Sanitär</annotation>
-		<annotation cp="🧑🏽‍🔧">Elektriker | Handwerker | Klempner | Mechaniker | mittlere Hautfarbe | Sanitär</annotation>
-		<annotation cp="🧑🏾‍🔧">Elektriker | Handwerker | Klempner | Mechaniker | mitteldunkle Hautfarbe | Sanitär</annotation>
-		<annotation cp="🧑🏿‍🔧">dunkle Hautfarbe | Elektriker | Handwerker | Klempner | Mechaniker | Sanitär</annotation>
-		<annotation cp="🧑🏻‍🏭">Arbeiter | Fabrik | Fliessband | helle Hautfarbe | Industrie</annotation>
-		<annotation cp="🧑🏼‍🏭">Arbeiter | Fabrik | Fliessband | Industrie | mittelhelle Hautfarbe</annotation>
-		<annotation cp="🧑🏽‍🏭">Arbeiter | Fabrik | Fliessband | Industrie | mittlere Hautfarbe</annotation>
-		<annotation cp="🧑🏾‍🏭">Arbeiter | Fabrik | Fliessband | Industrie | mitteldunkle Hautfarbe</annotation>
-		<annotation cp="🧑🏿‍🏭">Arbeiter | dunkle Hautfarbe | Fabrik | Fliessband | Industrie</annotation>
+		<annotation cp="🧑🏻‍🔧">helle Hautfarbe | Mechaniker(in)</annotation>
+		<annotation cp="🧑🏼‍🔧">Mechaniker(in) | mittelhelle Hautfarbe</annotation>
+		<annotation cp="🧑🏽‍🔧">Mechaniker(in) | mittlere Hautfarbe</annotation>
+		<annotation cp="🧑🏾‍🔧">Mechaniker(in) | mitteldunkle Hautfarbe</annotation>
+		<annotation cp="🧑🏿‍🔧">dunkle Hautfarbe | Mechaniker(in)</annotation>
+		<annotation cp="🧑🏻‍🏭">Fabrikarbeiter(in) | helle Hautfarbe</annotation>
+		<annotation cp="🧑🏼‍🏭">Fabrikarbeiter(in) | mittelhelle Hautfarbe</annotation>
+		<annotation cp="🧑🏽‍🏭">Fabrikarbeiter(in) | mittlere Hautfarbe</annotation>
+		<annotation cp="🧑🏾‍🏭">Fabrikarbeiter(in) | mitteldunkle Hautfarbe</annotation>
+		<annotation cp="🧑🏿‍🏭">dunkle Hautfarbe | Fabrikarbeiter(in)</annotation>
 		<annotation cp="🧑🏻‍💼">Architekt | Büroangestellte(r) | Business | helle Hautfarbe | Manager</annotation>
 		<annotation cp="🧑🏼‍💼">Architekt | Büroangestellte(r) | Business | Manager | mittelhelle Hautfarbe</annotation>
 		<annotation cp="🧑🏽‍💼">Architekt | Büroangestellte(r) | Business | Manager | mittlere Hautfarbe</annotation>
 		<annotation cp="🧑🏾‍💼">Architekt | Büroangestellte(r) | Business | Manager | mitteldunkle Hautfarbe</annotation>
 		<annotation cp="🧑🏿‍💼">Architekt | Büroangestellte(r) | Business | dunkle Hautfarbe | Manager</annotation>
-		<annotation cp="🧑🏻‍🔬">Biologe | Biologin | helle Hautfarbe | Ingenieur(in) | Physiker(in) | Wissenschaftler(in)</annotation>
-		<annotation cp="🧑🏼‍🔬">Biologe | Biologin | Ingenieur(in) | mittelhelle Hautfarbe | Physiker(in) | Wissenschaftler(in)</annotation>
-		<annotation cp="🧑🏽‍🔬">Biologe | Biologin | Ingenieur(in) | mittlere Hautfarbe | Physiker(in) | Wissenschaftler(in)</annotation>
-		<annotation cp="🧑🏾‍🔬">Biologe | Biologin | Ingenieur(in) | mitteldunkle Hautfarbe | Physiker(in) | Wissenschaftler(in)</annotation>
-		<annotation cp="🧑🏿‍🔬">Biologe | Biologin | dunkle Hautfarbe | Ingenieur(in) | Physiker(in) | Wissenschaftler(in)</annotation>
+		<annotation cp="🧑🏻‍🔬">helle Hautfarbe | Wissenschaftler(in)</annotation>
+		<annotation cp="🧑🏼‍🔬">mittelhelle Hautfarbe | Wissenschaftler(in)</annotation>
+		<annotation cp="🧑🏽‍🔬">mittlere Hautfarbe | Wissenschaftler(in)</annotation>
+		<annotation cp="🧑🏾‍🔬">mitteldunkle Hautfarbe | Wissenschaftler(in)</annotation>
+		<annotation cp="🧑🏿‍🔬">dunkle Hautfarbe | Wissenschaftler(in)</annotation>
 		<annotation cp="🚶🏻">Fussgänger(in) | gehen | gehend | helle Hautfarbe | wandern</annotation>
 		<annotation cp="🚶🏻" type="tts">Fussgänger(in): helle Hautfarbe</annotation>
 		<annotation cp="🚶🏼">Fussgänger(in) | gehen | gehend | mittelhelle Hautfarbe | wandern</annotation>
@@ -130,16 +135,21 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="🚶🏾‍♀" type="tts">Fussgängerin: mitteldunkle Hautfarbe</annotation>
 		<annotation cp="🚶🏿‍♀">dunkle Hautfarbe | Frau | Fussgängerin | gehen | Spaziergang</annotation>
 		<annotation cp="🚶🏿‍♀" type="tts">Fussgängerin: dunkle Hautfarbe</annotation>
+		<annotation cp="🧑🏻‍🦯">Barrierefreiheit | blind | helle Hautfarbe | Person mit Langstock</annotation>
 		<annotation cp="🧑🏻‍🦯" type="tts">Person mit Langstock: helle Hautfarbe</annotation>
+		<annotation cp="🧑🏼‍🦯">Barrierefreiheit | blind | mittelhelle Hautfarbe | Person mit Langstock</annotation>
 		<annotation cp="🧑🏼‍🦯" type="tts">Person mit Langstock: mittelhelle Hautfarbe</annotation>
+		<annotation cp="🧑🏽‍🦯">Barrierefreiheit | blind | mittlere Hautfarbe | Person mit Langstock</annotation>
 		<annotation cp="🧑🏽‍🦯" type="tts">Person mit Langstock: mittlere Hautfarbe</annotation>
+		<annotation cp="🧑🏾‍🦯">Barrierefreiheit | blind | mitteldunkle Hautfarbe | Person mit Langstock</annotation>
 		<annotation cp="🧑🏾‍🦯" type="tts">Person mit Langstock: mitteldunkle Hautfarbe</annotation>
+		<annotation cp="🧑🏿‍🦯">Barrierefreiheit | blind | dunkle Hautfarbe | Person mit Langstock</annotation>
 		<annotation cp="🧑🏿‍🦯" type="tts">Person mit Langstock: dunkle Hautfarbe</annotation>
-		<annotation cp="👨🏻‍🦯">Barrierefreiheit | blind | helle Hautfarbe | Mann</annotation>
-		<annotation cp="👨🏼‍🦯">Barrierefreiheit | blind | Mann | mittelhelle Hautfarbe</annotation>
-		<annotation cp="👨🏽‍🦯">Barrierefreiheit | blind | Mann | mittlere Hautfarbe</annotation>
-		<annotation cp="👨🏾‍🦯">Barrierefreiheit | blind | Mann | mitteldunkle Hautfarbe</annotation>
-		<annotation cp="👨🏿‍🦯">Barrierefreiheit | blind | dunkle Hautfarbe | Mann</annotation>
+		<annotation cp="👨🏻‍🦯">helle Hautfarbe | Mann mit Gehstock</annotation>
+		<annotation cp="👨🏼‍🦯">Mann mit Gehstock | mittelhelle Hautfarbe</annotation>
+		<annotation cp="👨🏽‍🦯">Mann mit Gehstock | mittlere Hautfarbe</annotation>
+		<annotation cp="👨🏾‍🦯">Mann mit Gehstock | mitteldunkle Hautfarbe</annotation>
+		<annotation cp="👨🏿‍🦯">dunkle Hautfarbe | Mann mit Gehstock</annotation>
 		<annotation cp="🇧🇳" type="tts">Flagge: Brunei</annotation>
 		<annotation cp="🇧🇼" type="tts">Flagge: Botswana</annotation>
 		<annotation cp="🇧🇾" type="tts">Flagge: Weissrussland</annotation>

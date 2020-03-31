@@ -95,6 +95,7 @@ extradata_DATA = \
 	nn.xml \
 	or.xml \
 	pa.xml \
+	pcm.xml \
 	pl.xml \
 	ps.xml \
 	pt.xml \
