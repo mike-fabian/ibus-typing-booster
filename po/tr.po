@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-01-29 16:40+0100\n"
-"PO-Revision-Date: 2020-03-22 09:38+0000\n"
+"POT-Creation-Date: 2020-03-31 12:17+0200\n"
+"PO-Revision-Date: 2020-04-13 06:30+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/tr/>\n"
@@ -90,7 +90,7 @@ msgstr "Bu emojiyi oluşturmak için kullanılan fontlar:"
 
 #: engine/emoji_picker.py:680
 msgid "Unicode Version:"
-msgstr "Unicode Versiyonu:"
+msgstr "Unicode Sürümü:"
 
 #: engine/emoji_picker.py:702 engine/emoji_picker.py:1798
 msgid "Left click to copy"
@@ -123,7 +123,7 @@ msgstr "Emojipedia'da ara"
 #: engine/emoji_picker.py:2033 engine/emoji_picker.py:2034
 #: engine/emoji_picker.py:2035 setup/main.py:1171
 msgid "System default"
-msgstr "Sistem varsayılanı"
+msgstr "Sistem öntanımlı değeri"
 
 #: engine/emoji_picker.py:2158
 msgid "Set Font"
@@ -420,7 +420,7 @@ msgstr "Konuşma tanıma"
 #. again until the next key bound to this command is typed.
 #: setup/main.py:323
 msgid "Enable suggestions by key (Default is the Tab key)"
-msgstr "Önerileri tuş ile etkinleştir (Varsayılan olarak Tab tuşu)"
+msgstr "Önerileri tuş ile etkinleştir (Öntanımlı olarak Tab tuşu)"
 
 #: setup/main.py:325
 msgid ""
@@ -430,11 +430,11 @@ msgid ""
 "a commit the suggestions are hidden again until the next key bound to this "
 "command is typed."
 msgstr ""
-"Bu seçenek açıksa, öneriler varsayılan olarak gösterilmez. Öneriler "
-"listesini göstermek için bir tuşa basmak gerekecektir. Bunun için "
-"kullanılacak tuş, tuş atama ayarlarından değiştirilebilir. Varsayılan olarak "
-"Tab tuşudur. Seçilen öneri kullanıldıktan sonra öneriler, bu komuta bağlanan "
-"tuşa tekrar basılıncaya kadar gizlenir."
+"Bu seçenek açıksa, öneriler öntanımlı olarak gösterilmez. Öneriler listesini "
+"göstermek için bir tuşa basmak gerekecektir. Bunun için kullanılacak tuş, "
+"tuş atama ayarlarından değiştirilebilir. Öntanımlı olarak Tab tuşudur. "
+"Seçilen öneri kullanıldıktan sonra öneriler, bu komuta bağlanan tuşa tekrar "
+"basılıncaya kadar gizlenir."
 
 #. Translators: Whether the best completion is first shown
 #. inline in the preedit instead of showing a full
@@ -483,7 +483,7 @@ msgid ""
 msgstr ""
 "Yazdıklarınız otomatik olarak en iyi adayı seçerek otomatik olarak en iyi "
 "adayla düzeltilecektir. Bu seçenek kapalıysa, bir sonraki adayı seçmek için "
-"atanan tuşu kullanarak manuel olarak bir aday seçmeniz gerekir. Bu seçenek "
+"atanan tuşu kullanarak elle bir aday seçmeniz gerekmektedir. Bu seçenek "
 "açıksa ve otomatik olarak seçilen adayı kullanmak istemiyorsanız, tüm "
 "adayların seçimini kaldıracak olan “iptal” komutu için atanan tuşu "
 "kullanabilirsiniz."
@@ -603,7 +603,7 @@ msgstr ""
 "etkinleştirilmesi, zaten kullanılmış kelimeleri düzeltmek için "
 "kullanışlıdır. Ancak şu anda oldukça sorunludur ve ne kadar iyi çalıştığı ok "
 "tuşlarının tekrarlanma hızına ve sistem yüküne bağlıdır. Sorunlu olduğundan, "
-"bu seçenek varsayılan olarak kapalıdır."
+"bu seçenek öntanımlı olarak kapalıdır."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -640,7 +640,7 @@ msgstr ""
 "“.,;:?!)” olabilir. Giriş yönteminizin ihtiyaç duyduğu karakterleri bu "
 "listeye eklememelisiniz, örneğin Latin-Pre (t-latn-pre) kullanıyorsanız, bu "
 "listeye “.” eklemek kötü bir fikirdir, çünkü  “.s” yazarak “s” elde etmenizi "
-"engeller. Bu özelliği, listeyi boş hale getirerek (varsayılan olanı) tamamen "
+"engeller. Bu özelliği, listeyi boş hale getirerek (öntanımlı olanı) tamamen "
 "devre dışı bırakabilirsiniz."
 
 #. Translators: Show no suggestions when less than this
@@ -702,11 +702,11 @@ msgstr "Aşağıdaki diller için sözlükleri kullan:"
 #. dictionaries which are setup here but not installed
 #: setup/main.py:718
 msgid "Install missing dictionaries"
-msgstr "Eksik sözlükleri yükle"
+msgstr "Eksik sözlükleri kur"
 
 #: setup/main.py:720
 msgid "Install the dictionaries which are setup here but not installed"
-msgstr "Burada ayarlanan ancak yüklenmeyen sözlükleri yükle"
+msgstr "Burada ayarlanan ancak kurulu olmayan sözlükleri kur"
 
 #: setup/main.py:737
 msgid "Add a dictionary"
@@ -812,19 +812,19 @@ msgstr "Seçili komut için tuş atamalarını düzenle"
 
 #: setup/main.py:1048 setup/main.py:3361
 msgid "Set to default"
-msgstr "Varsayılana ayarla"
+msgstr "Öntanımlıya ayarla"
 
 #: setup/main.py:1052 setup/main.py:3366
 msgid "Set default key bindings for the selected command"
-msgstr "Seçili komut için varsayılan tuş atamalarını ayarla"
+msgstr "Seçili komut için öntanımlı tuş atamalarını ayarla"
 
 #: setup/main.py:1059
 msgid "Set all to default"
-msgstr "Tümünü varsayılana ayarla"
+msgstr "Tümünü öntanımlıya ayarla"
 
 #: setup/main.py:1063
 msgid "Set default key bindings for all commands"
-msgstr "Tüm komutlar için varsayılan tuş atamalarını ayarla"
+msgstr "Tüm komutlar için öntanımlı tuş atamalarını ayarla"
 
 #. Translators: Checkbox to choose whether to display how
 #. many candidates there are and which one is selected on
@@ -1239,7 +1239,7 @@ msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr ""
-"Tüm komutların tuş atamalarını varsayılanlarına ayarlamayı gerçekten istiyor "
+"Tüm komutların tuş atamalarını öntanımlılarına ayarlamayı gerçekten istiyor "
 "musunuz?"
 
 #: setup/main.py:3430
