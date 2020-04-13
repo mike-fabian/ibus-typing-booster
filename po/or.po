@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-01-29 16:40+0100\n"
+"POT-Creation-Date: 2020-03-31 12:17+0200\n"
 "PO-Revision-Date: 2019-12-20 00:16+0000\n"
 "Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
 "Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/ibus-"
@@ -194,32 +194,32 @@ msgstr "ସ୍ଥାପନକରଣି"
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster ପାଇଁ ଅଭିରୁଚିମାନ"
 
-#: engine/hunspell_table.py:3917
+#: engine/hunspell_table.py:3918
 msgid "Failed to import Google speech-to-text."
 msgstr "ଗୁଗଲ speech-to-text କୁ ଆମଦାନି କରିବାରେ ବିଫଳ।"
 
-#: engine/hunspell_table.py:3920
+#: engine/hunspell_table.py:3921
 msgid "Failed to import pyaudio."
 msgstr "pyaudio କୁ ଆମଦାନି କରିବାରେ ବିଫଳ।"
 
-#: engine/hunspell_table.py:3923
+#: engine/hunspell_table.py:3924
 msgid "Failed to import queue."
 msgstr "queue କୁ ଆମଦାନି କରିବାରେ ବିଫଳ।"
 
-#: engine/hunspell_table.py:3928
+#: engine/hunspell_table.py:3929
 msgid "No supported language for speech recognition."
 msgstr "ଭାଷଣ ମାନ୍ୟତା ପାଇଁ କୌଣସି ସମର୍ଥିତ ଭାଷା ନାହିଁ।"
 
-#: engine/hunspell_table.py:3932
+#: engine/hunspell_table.py:3933
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“ଗୁଗଲ ଆପ୍ଲିକେସନ କ୍ରେଡ଼େନସିଆଲସ” ଫାଇଲ “%s” ମିଳିଲା ନାହିଁ।"
 
-#: engine/hunspell_table.py:3944
+#: engine/hunspell_table.py:3945
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "ଗୁଗଲ speech-to-text କୁ ପ୍ରାରଭିକରଣରେ ବିଫଳ। debug.log ଦେଖନ୍ତୁ।"
 
-#: engine/hunspell_table.py:4051
+#: engine/hunspell_table.py:4052
 msgid "Google speech-to-text error. See debug.log."
 msgstr "ଗୁଗଲ speech-to-text ତ୍ରୁଟି। debug.log ଦେଖନ୍ତୁ।"
 
@@ -278,27 +278,27 @@ msgstr "ରୂପାନ୍ତରକାରୀ"
 msgid "regional"
 msgstr "ଆଞ୍ଚଳିକ"
 
-#: engine/itb_util.py:3244 engine/itb_util.py:3545
+#: engine/itb_util.py:3247 engine/itb_util.py:3548
 msgid "File not found"
 msgstr "ତଥ୍ୟସମୂହ(ଫାଇଲ) ମିଳିଲା ନାହିଁ"
 
-#: engine/itb_util.py:3247 engine/itb_util.py:3548
+#: engine/itb_util.py:3250 engine/itb_util.py:3551
 msgid "Permission error"
 msgstr "ଅନୁମତି ତ୍ରୁଟି"
 
-#: engine/itb_util.py:3250 engine/itb_util.py:3551
+#: engine/itb_util.py:3253 engine/itb_util.py:3554
 msgid "Unicode decoding error"
 msgstr "ୟୁନିକୋଡ଼ ଅବସଙ୍କେତିକରଣ ତ୍ରୁଟି"
 
-#: engine/itb_util.py:3253 engine/itb_util.py:3554
+#: engine/itb_util.py:3256 engine/itb_util.py:3557
 msgid "Unknown error"
 msgstr "ଅଜ୍ଞାତ ତ୍ରୁଟି"
 
-#: engine/itb_util.py:3525
+#: engine/itb_util.py:3528
 msgid "Native Keyboard"
 msgstr "ଆଞ୍ଚଳିକ କୀବୋର୍ଡ଼"
 
-#: engine/itb_util.py:3527
+#: engine/itb_util.py:3530
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -311,38 +311,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4005
+#: engine/itb_util.py:4008
 msgid "Key input"
 msgstr "କୀ ନିବେଶ"
 
-#: engine/itb_util.py:4011
+#: engine/itb_util.py:4014
 msgid "Cancel"
 msgstr "ରଦ୍ଦ"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4018
+#: engine/itb_util.py:4021
 msgid "Please press a key (or a key combination)"
 msgstr "ଦୟାକରି ଏକ କୀ ଦବାନ୍ତୁ (କିମ୍ବା ଏକ କୀ ମିଶ୍ରଣ)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4023
+#: engine/itb_util.py:4026
 msgid "The dialog will be closed when the key is released"
 msgstr "ଡ଼ାଇଲଗ ବନ୍ଦ ହୋଇଯିବ ଯେତେବେଳେ କୀ କୁ ଛଡ଼ାଯିବ"
 
-#: engine/itb_util.py:4054
+#: engine/itb_util.py:4057
 msgid "A completion input method to speedup typing."
 msgstr "ଏକ ସମ୍ପତ୍ତିକରଣ ନିବେଶ ବିଧି ଲେଖାର ଗତିକୁ ବୃଧି କରିବା ପାଇଁ।"
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4063
+#: engine/itb_util.py:4066
 msgid "translator-credits"
 msgstr "ଅନୁବାଦକାରୀ-ସ୍ବୀକୃତିମାନ"
 
-#: engine/itb_util.py:4071
+#: engine/itb_util.py:4074
 msgid "Online documentation:"
 msgstr "ଅନଲାଇନ ଦସ୍ତାବିଜ଼:"
 

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-01-29 16:40+0100\n"
+"POT-Creation-Date: 2020-03-31 12:17+0200\n"
 "PO-Revision-Date: 2019-11-05 15:14+0000\n"
 "Last-Translator: Benson Muite <benson_muite@emailplus.org>\n"
 "Language-Team: Swahili <https://translate.stg.fedoraproject.org/projects/"
@@ -192,35 +192,35 @@ msgstr "Usanidi"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Pendekezo ya msaidizi-wa-kuchapa-mbio-wa-ibus"
 
-#: engine/hunspell_table.py:3917
+#: engine/hunspell_table.py:3918
 msgid "Failed to import Google speech-to-text."
 msgstr ""
 "Haiwezekana kuwezesha programmu ya Google ya utamboaji otomatiki wa usemi."
 
-#: engine/hunspell_table.py:3920
+#: engine/hunspell_table.py:3921
 msgid "Failed to import pyaudio."
 msgstr "Haiwezekana kutumia programmu pyaudio."
 
-#: engine/hunspell_table.py:3923
+#: engine/hunspell_table.py:3924
 msgid "Failed to import queue."
 msgstr "Haiwezekana kuleta foleni."
 
-#: engine/hunspell_table.py:3928
+#: engine/hunspell_table.py:3929
 msgid "No supported language for speech recognition."
 msgstr "Hakuna lugha ina utamboaji wa usemi."
 
-#: engine/hunspell_table.py:3932
+#: engine/hunspell_table.py:3933
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Faili “%s” ya “programmu ya Google ya utambolisho“ haionekana."
 
-#: engine/hunspell_table.py:3944
+#: engine/hunspell_table.py:3945
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Haiwezekana kuanza programmu ya Google ya utamboaji wa usemi. Angalia faili "
 "ya batli ya eua."
 
-#: engine/hunspell_table.py:4051
+#: engine/hunspell_table.py:4052
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Kosa ya Google utambaoji wa usemi. Angalia faili ya batli ya eua."
 
@@ -279,27 +279,27 @@ msgstr "mageuzi"
 msgid "regional"
 msgstr "mkoani"
 
-#: engine/itb_util.py:3244 engine/itb_util.py:3545
+#: engine/itb_util.py:3247 engine/itb_util.py:3548
 msgid "File not found"
 msgstr "Faili haionekana"
 
-#: engine/itb_util.py:3247 engine/itb_util.py:3548
+#: engine/itb_util.py:3250 engine/itb_util.py:3551
 msgid "Permission error"
 msgstr "Kosa ya kibali"
 
-#: engine/itb_util.py:3250 engine/itb_util.py:3551
+#: engine/itb_util.py:3253 engine/itb_util.py:3554
 msgid "Unicode decoding error"
 msgstr "Kosa ya kufumbua msimbosare"
 
-#: engine/itb_util.py:3253 engine/itb_util.py:3554
+#: engine/itb_util.py:3256 engine/itb_util.py:3557
 msgid "Unknown error"
 msgstr "Kosa haifahamika"
 
-#: engine/itb_util.py:3525
+#: engine/itb_util.py:3528
 msgid "Native Keyboard"
 msgstr "Kibodi Awali"
 
-#: engine/itb_util.py:3527
+#: engine/itb_util.py:3530
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -309,38 +309,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4005
+#: engine/itb_util.py:4008
 msgid "Key input"
 msgstr ""
 
-#: engine/itb_util.py:4011
+#: engine/itb_util.py:4014
 msgid "Cancel"
 msgstr ""
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4018
+#: engine/itb_util.py:4021
 msgid "Please press a key (or a key combination)"
 msgstr ""
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4023
+#: engine/itb_util.py:4026
 msgid "The dialog will be closed when the key is released"
 msgstr ""
 
-#: engine/itb_util.py:4054
+#: engine/itb_util.py:4057
 msgid "A completion input method to speedup typing."
 msgstr ""
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4063
+#: engine/itb_util.py:4066
 msgid "translator-credits"
 msgstr ""
 
-#: engine/itb_util.py:4071
+#: engine/itb_util.py:4074
 msgid "Online documentation:"
 msgstr ""
 
