@@ -17,26 +17,37 @@
 # You should have received a copy of the GNU General Public License 
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-TESTS = run_tests
-
-run_tests: run_tests.in
-	sed -e 's&@PYTHON_BIN@&$(PYTHON)&g' \
-	    -e 's&@SRCDIR@&$(srcdir)&g' $< > $@
-	chmod +x $@
-
-EXTRA_DIST = \
-	__init__.py \
-	mock_engine.py \
-	run_tests.in \
+TESTS = \
 	test_compose_sequences.py \
 	test_emoji_candidates.py \
 	test_emoji_similar.py \
 	test_emoji_unicode_version.py \
+	test_gtk.py \
 	test_hunspell_suggest.py \
 	test_itb.py \
 	test_keyvals_to_keycodes.py \
 	test_m17n_db_info.py \
 	test_m17n_translit.py \
+	$(NULL)
+
+# Run test cases separatedly because test_gtk and test_itb are conflicted
+# with mock_engine
+LOG_COMPILER = $(builddir)/run_tests
+
+TESTS_ENVIRONMENT = \
+	IBUS_TYPING_BOOSTER_LOCATION=../
+
+run_tests: run_tests.in
+	sed -e 's&@PYTHON_BIN@&$(PYTHON)&g' \
+	    -e 's&@PKGDATADIR@&$(pkgdatadir)&g' \
+	    -e 's&@SRCDIR@&$(srcdir)&g' $< > $@
+	chmod +x $@
+
+EXTRA_DIST = \
+	__init__.py \
+	gtkcases.py \
+	mock_engine.py \
+	run_tests.in \
 	$(NULL)
 
 CLEANFILES = \
