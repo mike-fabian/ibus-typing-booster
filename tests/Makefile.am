@@ -37,6 +37,29 @@ LOG_COMPILER = $(builddir)/run_tests
 TESTS_ENVIRONMENT = \
 	IBUS_TYPING_BOOSTER_LOCATION=../
 
+test_meta_in = meta.test.in
+test_metas =
+
+if ENABLE_INSTALLED_TESTS
+test_metas += $(patsubst %.py, %.test, $(TESTS))
+test_source_DATA = $(test_metas)
+test_sourcedir = $(datadir)/installed-tests/ibus-typing-booster
+test_exec_SCRIPTS = \
+	$(TESTS) \
+	gtkcases.py \
+	mock_engine.py \
+	run_tests \
+	$(NULL)
+test_execdir = $(libexecdir)/installed-tests/ibus-typing-booster
+
+$(test_metas): $(test_meta_in)
+	@TEST_EXEC=`echo $@ | sed -e 's&\.test&\.py&'`; \
+	sed -e "s&@TEST_EXECDIR@&$(test_execdir)&g" \
+	    -e "s&@TEST_EXEC@&$$TEST_EXEC&g" $< > $@.tmp; \
+	mv $@.tmp $@; \
+	$(NULL)
+endif
+
 run_tests: run_tests.in
 	sed -e 's&@PYTHON_BIN@&$(PYTHON)&g' \
 	    -e 's&@PKGDATADIR@&$(pkgdatadir)&g' \
@@ -44,6 +67,7 @@ run_tests: run_tests.in
 	chmod +x $@
 
 EXTRA_DIST = \
+	$(test_meta_in) \
 	__init__.py \
 	gtkcases.py \
 	mock_engine.py \
@@ -51,6 +75,7 @@ EXTRA_DIST = \
 	$(NULL)
 
 CLEANFILES = \
+	$(test_metas) \
 	run_tests \
 	$(NULL)
 
