@@ -73,6 +73,7 @@ class SimpleGtkTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        cls._flag = False
         IBus.init()
         cls._gsettings = Gio.Settings(schema = 'org.freedesktop.ibus.engine.typing-booster')
         cls._orig_dictionary = cls._gsettings.get_string('dictionary')
@@ -96,6 +97,7 @@ class SimpleGtkTestCase(unittest.TestCase):
         cls.tearDownClass()
         Gtk.main_quit()
         signal.signal(signum, original_handler)
+        cls._flag = True
         assert False, 'signal received: ' + str(signum)
 
 
@@ -132,6 +134,7 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__component = IBus.Component(
                 name='org.freedesktop.IBus.TypingBooster.Test',
                 description='Test Anthy Component',
+                version='1.0',
                 license='GPL',
                 author=('Mike FABIAN <mfabian@redonat.com>, '
                         + 'Anish Patil <anish.developer@gmail.com>'),
@@ -394,7 +397,10 @@ class SimpleGtkTestCase(unittest.TestCase):
 
 
     def main(self):
+        # Some ATK relative warnings are called during launching GtkWindow.
+        flags = GLib.log_set_always_fatal(GLib.LogLevelFlags.LEVEL_CRITICAL)
         Gtk.main()
+        GLib.log_set_always_fatal(flags)
 
 
     def test_typing(self):
@@ -402,6 +408,8 @@ class SimpleGtkTestCase(unittest.TestCase):
             sys.exit(-1)
         self.create_window()
         self.main()
+        if self._flag:
+            self.fail('NG: signal failure')
 
 
 def print_help(out, v = 0):
