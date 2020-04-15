@@ -18,6 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 import sys
+import os
 import unittest
 
 # pip3 install tap.py --user
@@ -28,9 +29,24 @@ try:
 except (ImportError,):
     pass
 
+if 'IBUS_TYPING_BOOSTER_LOCATION' in os.environ:
+    location_path = os.environ['IBUS_TYPING_BOOSTER_LOCATION']
+    if location_path != None and location_path != '':
+        engine_path = os.path.join(location_path, 'engine')
+        sys.path.append(engine_path)
+sys.path.append('@PKGDATADIR@/engine')
+
 # -- Load and run our unit tests ---------------------------------------------
+pattern = 'test*.py'
+start_dir = os.path.dirname(__file__)
+if len(sys.argv) > 1:
+    pattern = sys.argv[len(sys.argv) - 1]
+    dir = os.path.dirname(pattern)
+    pattern = os.path.basename(pattern)
+    if dir != '.':
+        start_dir = os.path.join(start_dir, dir)
 loader = unittest.TestLoader()
-suite = loader.discover(".")
+suite = loader.discover(start_dir = start_dir, pattern = pattern)
 
 if IMPORT_TAP_SUCCESSFUL:
     runner = TAPTestRunner(stream=sys.stderr, verbosity=255)
