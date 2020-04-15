@@ -38,6 +38,7 @@ from gi.repository import IBus
 
 import argparse
 import os
+import signal
 import sys
 import unittest
 
@@ -73,11 +74,32 @@ class SimpleGtkTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         IBus.init()
+        cls._gsettings = Gio.Settings(schema = 'org.freedesktop.ibus.engine.typing-booster')
+        cls._orig_dictionary = cls._gsettings.get_string('dictionary')
+        SIGNUMS = [getattr(signal, s, None) for s in \
+                   'SIGINT SIGTERM SIGHUP'.split()]
+        for signum in filter(None, SIGNUMS):
+            original_handler = signal.getsignal(signum)
+            GLib.unix_signal_add(GLib.PRIORITY_HIGH,
+                                 signum,
+                                 cls.signal_handler,
+                                 (signum, original_handler))
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._gsettings.set_string('dictionary', cls._orig_dictionary)
+
+
+    @classmethod
+    def signal_handler(cls, user_data):
+        (signum, original_handler) = user_data
+        cls.tearDownClass()
+        Gtk.main_quit()
+        signal.signal(signum, original_handler)
+        assert False, 'signal received: ' + str(signum)
 
 
     def setUp(self):
-        self.__gsettings = Gio.Settings(schema = 'org.freedesktop.ibus.engine.typing-booster')
-        self.__orig_dictionary = self.__gsettings.get_string('dictionary')
         self.__id = 0
         self.__rerun = False
         self.__test_index = 0
@@ -86,11 +108,7 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__inserted_text = ''
         self.__commit_done = False
         self.__reset_coming = False
-        self.__gsettings.set_string('dictionary', 'fr_FR,en_US')
-
-
-    def tearDown(self):
-        self.__gsettings.set_string('dictionary', self.__orig_dictionary)
+        self._gsettings.set_string('dictionary', 'fr_FR,en_US')
 
 
     def register_ibus_engine(self):
@@ -98,14 +116,15 @@ class SimpleGtkTestCase(unittest.TestCase):
         if not self.__bus.is_connected():
             self.fail('ibus-daemon is not running')
             return False;
-        self.__bus.get_connection().signal_subscribe('org.freedesktop.DBus',
-                                              'org.freedesktop.DBus',
-                                              'NameOwnerChanged',
-                                              '/org/freedesktop/DBus',
-                                              None,
-                                              0,
-                                              self.__bus_signal_cb,
-                                              self.__bus)
+        self.__bus.get_connection().signal_subscribe(
+                'org.freedesktop.DBus',
+                'org.freedesktop.DBus',
+                'NameOwnerChanged',
+                '/org/freedesktop/DBus',
+                None,
+                0,
+                self.__bus_signal_cb,
+                self.__bus)
         self.__factory = IBus.Factory(
                 object_path=IBus.PATH_FACTORY,
                 connection=self.__bus.get_connection())
@@ -150,8 +169,14 @@ class SimpleGtkTestCase(unittest.TestCase):
     def __create_engine_cb(self, factory, engine_name):
         if engine_name != 'testTyping-booster':
             return
-        import hunspell_table
-        import tabsqlitedb
+        try:
+            import hunspell_table
+            import tabsqlitedb
+        except ModuleNotFoundError as e:
+            with self.subTest(i = 'create-engine'):
+                self.fail('NG: Not installed ibus-typing-booster %s' % str(e))
+            Gtk.main_quit()
+            return
         self.__id += 1
         object_path = '%s/%d' % (self.ENGINE_PATH, self.__id)
         db = tabsqlitedb.TabSqliteDb()
@@ -165,7 +190,8 @@ class SimpleGtkTestCase(unittest.TestCase):
         # is called.
         self.__engine.connect_after('reset', self.__engine_reset)
         self.__engine.set_off_the_record_mode(True)
-        self.__bus.get_connection().signal_subscribe(None,
+        self.__bus.get_connection().signal_subscribe(
+                None,
                 IBus.INTERFACE_ENGINE,
                 'UpdateLookupTable',
                 object_path,

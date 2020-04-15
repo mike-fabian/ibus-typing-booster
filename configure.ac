@@ -61,6 +61,16 @@ AC_ARG_ENABLE([additional],
 
 AM_CONDITIONAL([IBUS_EUROPEAN_TABLE_BUILD_ADDITIONAL],[test x"$enable_additional" = x"yes"])
 
+AC_ARG_ENABLE([installed-tests],
+    [AS_HELP_STRING([--enable-installed-tests],
+                   [Enable to install tests])],
+    [enable_installed_tests=$enableval],
+    [enable_installed_tests=no]
+)
+
+AM_CONDITIONAL([ENABLE_INSTALLED_TESTS], [test x"$enable_installed_tests" = x"yes"])
+
+
 # OUTPUT files
 AC_CONFIG_FILES([po/Makefile.in
     Makefile
