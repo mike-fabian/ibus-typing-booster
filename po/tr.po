@@ -9,16 +9,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-03-31 12:17+0200\n"
-"PO-Revision-Date: 2020-04-13 06:30+0000\n"
+"PO-Revision-Date: 2020-04-18 19:40+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
-"Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/tr/>\n"
+"Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.11.3\n"
+"X-Generator: Weblate 4.0.1\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -326,7 +326,7 @@ msgstr "İptal"
 #. command.
 #: engine/itb_util.py:4021
 msgid "Please press a key (or a key combination)"
-msgstr "Lütfen bir tuşa (veya bir tuş kombinasyonuna) basın"
+msgstr "Lütfen bir tuşa (veya bir tuş dizisine) basın"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
@@ -346,7 +346,7 @@ msgstr "Oğuz Ersen <oguzersen@protonmail.com>"
 
 #: engine/itb_util.py:4074
 msgid "Online documentation:"
-msgstr "Çevrim içi dokümantasyon:"
+msgstr "Çevrim içi belgeler:"
 
 #: setup/main.py:114
 msgid "Preferences"
@@ -547,11 +547,11 @@ msgid ""
 "might make sense to use this option temporarily."
 msgstr ""
 "“Kayıt dışı” modu açıkken, kullanıcı girişinden öğrenme devre dışı "
-"bırakılır. Öğrenilmiş kullanıcı girişi mevcutsa, tahminler genellikle sadece "
-"sözlük kullanan tahminlerden çok daha iyidir. Bu nedenle, kişi bu seçeneği "
-"tedbirli bir şekilde kullanmalıdır. Sadece gizli kullanıcı girişini diske "
-"kaydetmekten kaçınmak isteniyorsa, bu seçeneği geçici olarak kullanmak "
-"mantıklı olabilir."
+"bırakılır. Öğrenilmiş kullanıcı girişi kullanılabiliyorsa, tahminler "
+"genellikle sadece sözlük kullanan tahminlerden çok daha iyidir. Bu nedenle, "
+"kişi bu seçeneği tedbirli bir şekilde kullanmalıdır. Sadece gizli kullanıcı "
+"girişini diske kaydetmekten kaçınmak isteniyorsa, bu seçeneği geçici olarak "
+"kullanmak mantıklı olabilir."
 
 #. Translators: Use a workaround for bugs in the input
 #. method modules of Qt4 and Qt5. Attention, although this
@@ -647,7 +647,7 @@ msgstr ""
 #. number of characters have been typed.
 #: setup/main.py:613
 msgid "Minimum number of chars for completion:"
-msgstr "Tamamlama için minimum karakter sayısı:"
+msgstr "Tamamlama için asgari karakter sayısı:"
 
 #: setup/main.py:615
 msgid ""
@@ -946,7 +946,7 @@ msgid ""
 msgstr ""
 "Bu seçenek açıksa, alt çizgi gibi bir ön-düzenleme tarzı sadece arama "
 "etkinse kullanılacaktır. Sadece bir tuşa basıldığında aramayı etkinleştirme "
-"seçeneği kullanılıyorsa veya bir arama yapılmadan önce minimum sayıda "
+"seçeneği kullanılıyorsa veya bir arama yapılmadan önce asgari sayıda "
 "karakter gerektirme seçeneği kullanılıyorsa arama devre dışı bırakılmış "
 "olabilir."
 
