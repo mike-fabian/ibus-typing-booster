@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 14 May 2020 Released 2.8.3
+* Save default dictionaries and input methods when making the lists empty in the setup tool
+* Fix reading “include” instructions in Compose files and observe XCOMPOSEFILE (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/93)
+* Fix right-to-left detection for LC_MESSAGES=C (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/97)
+* GUI tests added thanks to Takao Fujiwara
+* Update UnicodeData.txt to Unicode 13.0.0
+* Translation updates from Weblate for it, hu, tr, pt_BR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 31 Mar 2020 Released 2.8.2
 * Translation updates from Weblate for ar, tr
 * Update emoji annotations from CLDR

@@ -19,6 +19,34 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.8.3" date="2020-05-14" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Save default dictionaries and input methods when making
+            the lists empty in the setup tool
+          </li>
+          <li>
+            Fix reading “include” instructions in Compose files and
+            observe XCOMPOSEFILE (Resolves:
+            https://github.com/mike-fabian/ibus-typing-booster/issues/93)
+          </li>
+          <li>
+            Fix right-to-left detection for LC_MESSAGES=C (Resolves:
+            https://github.com/mike-fabian/ibus-typing-booster/issues/97)
+          </li>
+          <li>
+            GUI tests added thanks to Takao Fujiwara
+          </li>
+          <li>
+            Update UnicodeData.txt to Unicode 13.0.0
+          </li>
+          <li>
+            Translation updates from Weblate for it, hu, tr, pt_BR
+          </li>
+       </ul>
+      </description>
+    </release>
     <release version="2.8.2" date="2020-03-31" urgency="medium">
       <description>
         <ul>
