@@ -45,10 +45,15 @@ import unittest
 # Get more verbose output in the test log:
 os.environ['IBUS_TYPING_BOOSTER_DEBUG_LEVEL'] = '255'
 
+sys.path.insert(0, "../engine")
+from hunspell_table import *
+import tabsqlitedb
+import itb_util
+sys.path.pop(0)
+
 DONE_EXIT = True
 
 from gtkcases import TestCases
-
 
 # Need to flush the output against Gtk.main()
 def printflush(sentence):
@@ -57,27 +62,25 @@ def printflush(sentence):
     except IOError:
         pass
 
-
 def printerr(sentence):
     try:
         print(sentence, flush=True, file=sys.stderr)
     except IOError:
         pass
 
-
-@unittest.skipIf(Gdk.Display.open('') == None, 'Display cannot be open.')
+@unittest.skipIf(Gdk.Display.open('') == None, 'Display cannot be opened.')
 class SimpleGtkTestCase(unittest.TestCase):
     global DONE_EXIT
     ENGINE_PATH = '/com/redhat/IBus/engines/typing_booster/Test/Engine'
-
 
     @classmethod
     def setUpClass(cls):
         cls._flag = False
         IBus.init()
-        cls._gsettings = Gio.Settings(schema = 'org.freedesktop.ibus.engine.typing-booster')
+        cls._gsettings = Gio.Settings(
+            schema='org.freedesktop.ibus.engine.typing-booster')
         cls._orig_dictionary = cls._gsettings.get_string('dictionary')
-        SIGNUMS = [getattr(signal, s, None) for s in \
+        SIGNUMS = [getattr(signal, s, None) for s in
                    'SIGINT SIGTERM SIGHUP'.split()]
         for signum in filter(None, SIGNUMS):
             original_handler = signal.getsignal(signum)
@@ -85,11 +88,9 @@ class SimpleGtkTestCase(unittest.TestCase):
                                  signum,
                                  cls.signal_handler,
                                  (signum, original_handler))
-
     @classmethod
     def tearDownClass(cls):
         cls._gsettings.set_string('dictionary', cls._orig_dictionary)
-
 
     @classmethod
     def signal_handler(cls, user_data):
@@ -99,7 +100,6 @@ class SimpleGtkTestCase(unittest.TestCase):
         signal.signal(signum, original_handler)
         cls._flag = True
         assert False, 'signal received: ' + str(signum)
-
 
     def setUp(self):
         self.__id = 0
@@ -111,7 +111,6 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__commit_done = False
         self.__reset_coming = False
         self._gsettings.set_string('dictionary', 'fr_FR,en_US')
-
 
     def register_ibus_engine(self):
         self.__bus = IBus.Bus()
@@ -133,7 +132,7 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__factory.connect('create-engine', self.__create_engine_cb)
         self.__component = IBus.Component(
                 name='org.freedesktop.IBus.TypingBooster.Test',
-                description='Test Anthy Component',
+                description='Test Typing Booster Component',
                 version='1.0',
                 license='GPL',
                 author=('Mike FABIAN <mfabian@redonat.com>, '
@@ -156,7 +155,6 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__bus.request_name('org.freedesktop.IBus.TypingBooster.Test', 0)
         return True
 
-
     def __bus_signal_cb(self, connection, sender_name, object_path,
                         interface_name, signal_name, parameters,
                         user_data):
@@ -167,7 +165,6 @@ class SimpleGtkTestCase(unittest.TestCase):
             if table.get_number_of_candidates() == 0:
                 return
             self.__lookup_test()
-
 
     def __create_engine_cb(self, factory, engine_name):
         if engine_name != 'testTyping-booster':
@@ -182,7 +179,7 @@ class SimpleGtkTestCase(unittest.TestCase):
             return
         self.__id += 1
         object_path = '%s/%d' % (self.ENGINE_PATH, self.__id)
-        db = tabsqlitedb.TabSqliteDb()
+        db = tabsqlitedb.TabSqliteDb(user_db_file=':memory:')
         self.__engine = hunspell_table.TypingBoosterEngine(
                 self.__bus,
                 object_path,
@@ -192,7 +189,6 @@ class SimpleGtkTestCase(unittest.TestCase):
         # Need to connect 'reset' after TypingBoosterEngine._clear_input()
         # is called.
         self.__engine.connect_after('reset', self.__engine_reset)
-        self.__engine.set_off_the_record_mode(True)
         self.__bus.get_connection().signal_subscribe(
                 None,
                 IBus.INTERFACE_ENGINE,
@@ -203,7 +199,6 @@ class SimpleGtkTestCase(unittest.TestCase):
                 self.__bus_signal_cb,
                 self.__bus)
         return self.__engine
-
 
     def __engine_focus_in(self, engine):
         if self.__test_index == len(TestCases['tests']):
@@ -217,18 +212,15 @@ class SimpleGtkTestCase(unittest.TestCase):
             self.__rerun = False
             self.__main_test()
 
-
     def __engine_focus_out(self, engine):
         self.__rerun = True
         self.__test_index = 0
         self.__entry.set_text('')
 
-
     def __engine_reset(self, engine):
         if self.__reset_coming:
             self.__reset_coming = False
             self.__main_test()
-
 
     def __entry_focus_in_event_cb(self, entry, event):
         if self.__test_index == len(TestCases['tests']):
@@ -239,7 +231,6 @@ class SimpleGtkTestCase(unittest.TestCase):
                                            -1, None, self.__set_engine_cb)
         return False
 
-
     def __set_engine_cb(self, object, res):
         with self.subTest(i = self.__test_index):
             if not self.__bus.set_global_engine_async_finish(res):
@@ -247,7 +238,6 @@ class SimpleGtkTestCase(unittest.TestCase):
             return
         # rerun always happen?
         #self.__main_test()
-
 
     def __get_test_condition_length(self, tag):
         tests = TestCases['tests'][self.__test_index]
@@ -257,7 +247,6 @@ class SimpleGtkTestCase(unittest.TestCase):
             return -1
         type = list(cases.keys())[0]
         return len(cases[type])
-
 
     def __entry_preedit_changed_cb(self, entry, preedit_str):
         if len(preedit_str) == 0:
@@ -273,13 +262,11 @@ class SimpleGtkTestCase(unittest.TestCase):
             return
         self.__run_cases('commit')
 
-
     def __main_test(self):
         self.__preedit_index = 0
         self.__lookup_index = 0
         self.__commit_done = False
         self.__run_cases('preedit')
-
 
     def __lookup_test(self):
         lookup_length = self.__get_test_condition_length('lookup')
@@ -296,7 +283,6 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__lookup_index += 1
         self.__run_cases('commit')
 
-
     def __run_cases(self, tag, start=-1, end=-1):
         tests = TestCases['tests'][self.__test_index]
         if tests == None:
@@ -308,7 +294,7 @@ class SimpleGtkTestCase(unittest.TestCase):
         type = list(cases.keys())[0]
         i = 0
         if type == 'string':
-            printflush('test step: %s sequences: "%s"' \
+            printflush('test step: %s sequences: "%s"'
                        % (tag, str(cases['string'])))
             for a in cases['string']:
                 if start >= 0 and i < start:
@@ -320,7 +306,7 @@ class SimpleGtkTestCase(unittest.TestCase):
                 i += 1
         if type == 'keys':
             if start == -1 and end == -1:
-                printflush('test step: %s sequences: %s' \
+                printflush('test step: %s sequences: %s'
                            % (tag, str(cases['keys'])))
             for key in cases['keys']:
                 if start >= 0 and i < start:
@@ -329,17 +315,15 @@ class SimpleGtkTestCase(unittest.TestCase):
                 if end >= 0 and i >= end:
                     break;
                 if start != -1 or end != -1:
-                    printflush('test step: %s sequences: [0x%X, 0x%X, 0x%X]' \
+                    printflush('test step: %s sequences: [0x%X, 0x%X, 0x%X]'
                                % (tag, key[0], key[1],  key[2]))
                 self.__typing(key[0], key[1], key[2])
                 i += 1
-
 
     def __typing(self, keyval, keycode, modifiers):
         self.__engine.emit('process-key-event', keyval, keycode, modifiers)
         modifiers |= IBus.ModifierType.RELEASE_MASK;
         self.__engine.emit('process-key-event', keyval, keycode, modifiers)
-
 
     def __buffer_inserted_text_cb(self, buffer, position, chars, nchars):
         tests = TestCases['tests'][self.__test_index]
@@ -383,9 +367,8 @@ class SimpleGtkTestCase(unittest.TestCase):
         if not self.__reset_coming:
             self.__main_test()
 
-
     def create_window(self):
-        window = Gtk.Window(type = Gtk.WindowType.TOPLEVEL)
+        window = Gtk.Window(type=Gtk.WindowType.TOPLEVEL)
         self.__entry = entry = Gtk.Entry()
         window.connect('destroy', Gtk.main_quit)
         entry.connect('focus-in-event', self.__entry_focus_in_event_cb)
@@ -395,13 +378,11 @@ class SimpleGtkTestCase(unittest.TestCase):
         window.add(entry)
         window.show_all()
 
-
     def main(self):
         # Some ATK relative warnings are called during launching GtkWindow.
         flags = GLib.log_set_always_fatal(GLib.LogLevelFlags.LEVEL_CRITICAL)
         Gtk.main()
         GLib.log_set_always_fatal(flags)
-
 
     def test_typing(self):
         if not self.register_ibus_engine():
@@ -411,13 +392,11 @@ class SimpleGtkTestCase(unittest.TestCase):
         if self._flag:
             self.fail('NG: signal failure')
 
-
 def print_help(out, v = 0):
     print('-k, --keep             Do not exit this program after test is done.',
           file=out)
     print('-h, --help             show this message.', file=out)
     sys.exit(v)
-
 
 def main():
     parser = argparse.ArgumentParser()
@@ -439,7 +418,6 @@ def main():
         unittest.main()
 
     unittest.main()
-
 
 if __name__ == '__main__':
     main()

@@ -72,6 +72,7 @@ EXTRA_DIST = \
 	gtkcases.py \
 	mock_engine.py \
 	run_tests.in \
+	$(TESTS) \
 	$(NULL)
 
 CLEANFILES = \
