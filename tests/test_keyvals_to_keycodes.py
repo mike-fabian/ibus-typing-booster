@@ -27,11 +27,14 @@ import unittest
 from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus
+require_version('Gdk', '3.0')
+from gi.repository import Gdk
 
 sys.path.insert(0, "../engine")
 import itb_util
 sys.path.pop(0)
 
+@unittest.skipIf(Gdk.Display.open('') == None, 'Display cannot be opened.')
 class KeyvalsToKeycodesTestCase(unittest.TestCase):
     def setUp(self):
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
