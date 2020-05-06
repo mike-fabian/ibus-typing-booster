@@ -30,6 +30,8 @@ import subprocess
 from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus
+require_version('Gdk', '3.0')
+from gi.repository import Gdk
 
 # Get more verbose output in the test log:
 os.environ['IBUS_TYPING_BOOSTER_DEBUG_LEVEL'] = '255'
@@ -69,6 +71,7 @@ try:
 except (ImportError,):
     pass
 
+@unittest.skipIf(Gdk.Display.open('') is None, 'Display cannot be opened.')
 class ItbTestCase(unittest.TestCase):
     def setUp(self):
         self.bus = IBus.Bus()
