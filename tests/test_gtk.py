@@ -21,20 +21,13 @@
 '''
 This file implements the test cases using GTK GUI
 '''
-
-from gi import require_version as gi_require_version
-gi_require_version('GLib', '2.0')
-gi_require_version('GObject', '2.0')
-gi_require_version('Gdk', '3.0')
-gi_require_version('Gio', '2.0')
-gi_require_version('Gtk', '3.0')
-gi_require_version('IBus', '1.0')
-from gi.repository import GLib
-from gi.repository import GObject
-from gi.repository import Gdk
-from gi.repository import Gio
-from gi.repository import Gtk
-from gi.repository import IBus
+# “Wrong continued indentation”: pylint: disable=bad-continuation
+# pylint: disable=attribute-defined-outside-init
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-class-docstring
+# pylint: disable=global-statement
+# pylint: disable=wrong-import-order
+# pylint: disable=wrong-import-position
 
 import argparse
 import os
@@ -42,13 +35,34 @@ import signal
 import sys
 import unittest
 
+from gi import require_version as gi_require_version
+gi_require_version('GLib', '2.0')
+gi_require_version('Gdk', '3.0')
+gi_require_version('Gio', '2.0')
+gi_require_version('Gtk', '3.0')
+gi_require_version('IBus', '1.0')
+from gi.repository import GLib
+from gi.repository import Gdk
+from gi.repository import Gio
+from gi.repository import Gtk
+from gi.repository import IBus
+
 # Get more verbose output in the test log:
 os.environ['IBUS_TYPING_BOOSTER_DEBUG_LEVEL'] = '255'
 
 sys.path.insert(0, "../engine")
-from hunspell_table import *
-import tabsqlitedb
-import itb_util
+IMPORT_HUNSPELL_SUCCESSFUL = False
+try:
+    import hunspell_table
+    IMPORT_HUNSPELL_SUCCESSFUL = True
+except (ImportError,):
+    pass
+IMPORT_TABSQLITEDB_SUCCESSFUL = False
+try:
+    import tabsqlitedb
+    IMPORT_TABSQLITEDB_SUCCESSFUL = True
+except (ImportError,):
+    pass
 sys.path.pop(0)
 
 DONE_EXIT = True
@@ -68,7 +82,7 @@ def printerr(sentence):
     except IOError:
         pass
 
-@unittest.skipIf(Gdk.Display.open('') == None, 'Display cannot be opened.')
+@unittest.skipIf(Gdk.Display.open('') is None, 'Display cannot be opened.')
 class SimpleGtkTestCase(unittest.TestCase):
     global DONE_EXIT
     ENGINE_PATH = '/com/redhat/IBus/engines/typing_booster/Test/Engine'
@@ -80,9 +94,9 @@ class SimpleGtkTestCase(unittest.TestCase):
         cls._gsettings = Gio.Settings(
             schema='org.freedesktop.ibus.engine.typing-booster')
         cls._orig_dictionary = cls._gsettings.get_string('dictionary')
-        SIGNUMS = [getattr(signal, s, None) for s in
+        signums = [getattr(signal, s, None) for s in
                    'SIGINT SIGTERM SIGHUP'.split()]
-        for signum in filter(None, SIGNUMS):
+        for signum in filter(None, signums):
             original_handler = signal.getsignal(signum)
             GLib.unix_signal_add(GLib.PRIORITY_HIGH,
                                  signum,
@@ -116,40 +130,40 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__bus = IBus.Bus()
         if not self.__bus.is_connected():
             self.fail('ibus-daemon is not running')
-            return False;
+            return False
         self.__bus.get_connection().signal_subscribe(
-                'org.freedesktop.DBus',
-                'org.freedesktop.DBus',
-                'NameOwnerChanged',
-                '/org/freedesktop/DBus',
-                None,
-                0,
-                self.__bus_signal_cb,
-                self.__bus)
+            'org.freedesktop.DBus',
+            'org.freedesktop.DBus',
+            'NameOwnerChanged',
+            '/org/freedesktop/DBus',
+            None,
+            0,
+            self.__bus_signal_cb,
+            self.__bus)
         self.__factory = IBus.Factory(
-                object_path=IBus.PATH_FACTORY,
-                connection=self.__bus.get_connection())
+            object_path=IBus.PATH_FACTORY,
+            connection=self.__bus.get_connection())
         self.__factory.connect('create-engine', self.__create_engine_cb)
         self.__component = IBus.Component(
-                name='org.freedesktop.IBus.TypingBooster.Test',
-                description='Test Typing Booster Component',
-                version='1.0',
-                license='GPL',
-                author=('Mike FABIAN <mfabian@redonat.com>, '
-                        + 'Anish Patil <anish.developer@gmail.com>'),
-                homepage='http://mike-fabian.github.io/ibus-typing-booster',
-                command_line='',
-                textdomain='ibus-typing-booster')
+            name='org.freedesktop.IBus.TypingBooster.Test',
+            description='Test Typing Booster Component',
+            version='1.0',
+            license='GPL',
+            author=('Mike FABIAN <mfabian@redonat.com>, '
+                    + 'Anish Patil <anish.developer@gmail.com>'),
+            homepage='http://mike-fabian.github.io/ibus-typing-booster',
+            command_line='',
+            textdomain='ibus-typing-booster')
         desc = IBus.EngineDesc(
-                name='testTyping-booster',
-                longname='Test Typing Booster',
-                description='Test a completion input method to speedup typing.',
-                language='t',
-                license='GPL',
-                author=('Mike FABIAN <mfabian@redonat.com>, '
-                        + 'Anish Patil <anish.developer@gmail.com>'),
-                icon='',
-                symbol='T')
+            name='testTyping-booster',
+            longname='Test Typing Booster',
+            description='Test a completion input method to speedup typing.',
+            language='t',
+            license='GPL',
+            author=('Mike FABIAN <mfabian@redonat.com>, '
+                    + 'Anish Patil <anish.developer@gmail.com>'),
+            icon='',
+            symbol='T')
         self.__component.add_engine(desc)
         self.__bus.register_component(self.__component)
         self.__bus.request_name('org.freedesktop.IBus.TypingBooster.Test', 0)
@@ -168,39 +182,37 @@ class SimpleGtkTestCase(unittest.TestCase):
 
     def __create_engine_cb(self, factory, engine_name):
         if engine_name != 'testTyping-booster':
-            return
-        try:
-            import hunspell_table
-            import tabsqlitedb
-        except ModuleNotFoundError as e:
-            with self.subTest(i = 'create-engine'):
-                self.fail('NG: Not installed ibus-typing-booster %s' % str(e))
+            return None
+        if (not IMPORT_HUNSPELL_SUCCESSFUL
+            or not IMPORT_TABSQLITEDB_SUCCESSFUL):
+            with self.subTest(i='create-engine'):
+                self.fail('NG: ibus-typing-booster not installed?')
             Gtk.main_quit()
-            return
+            return None
         self.__id += 1
         object_path = '%s/%d' % (self.ENGINE_PATH, self.__id)
-        db = tabsqlitedb.TabSqliteDb(user_db_file=':memory:')
+        database = tabsqlitedb.TabSqliteDb(user_db_file=':memory:')
         self.__engine = hunspell_table.TypingBoosterEngine(
-                self.__bus,
-                object_path,
-                db)
+            self.__bus,
+            object_path,
+            database)
         self.__engine.connect('focus-in', self.__engine_focus_in)
         self.__engine.connect('focus-out', self.__engine_focus_out)
         # Need to connect 'reset' after TypingBoosterEngine._clear_input()
         # is called.
         self.__engine.connect_after('reset', self.__engine_reset)
         self.__bus.get_connection().signal_subscribe(
-                None,
-                IBus.INTERFACE_ENGINE,
-                'UpdateLookupTable',
-                object_path,
-                None,
-                0,
-                self.__bus_signal_cb,
-                self.__bus)
+            None,
+            IBus.INTERFACE_ENGINE,
+            'UpdateLookupTable',
+            object_path,
+            None,
+            0,
+            self.__bus_signal_cb,
+            self.__bus)
         return self.__engine
 
-    def __engine_focus_in(self, engine):
+    def __engine_focus_in(self, _engine):
         if self.__test_index == len(TestCases['tests']):
             if DONE_EXIT:
                 Gtk.main_quit()
@@ -212,12 +224,12 @@ class SimpleGtkTestCase(unittest.TestCase):
             self.__rerun = False
             self.__main_test()
 
-    def __engine_focus_out(self, engine):
+    def __engine_focus_out(self, _engine):
         self.__rerun = True
         self.__test_index = 0
         self.__entry.set_text('')
 
-    def __engine_reset(self, engine):
+    def __engine_reset(self, _engine):
         if self.__reset_coming:
             self.__reset_coming = False
             self.__main_test()
@@ -231,10 +243,10 @@ class SimpleGtkTestCase(unittest.TestCase):
                                            -1, None, self.__set_engine_cb)
         return False
 
-    def __set_engine_cb(self, object, res):
-        with self.subTest(i = self.__test_index):
+    def __set_engine_cb(self, _object, res):
+        with self.subTest(i=self.__test_index):
             if not self.__bus.set_global_engine_async_finish(res):
-                self.fail('set engine failed: ' + error.message)
+                self.fail('set engine failed.')
             return
         # rerun always happen?
         #self.__main_test()
@@ -245,8 +257,8 @@ class SimpleGtkTestCase(unittest.TestCase):
             cases = tests[tag]
         except KeyError:
             return -1
-        type = list(cases.keys())[0]
-        return len(cases[type])
+        case_type = list(cases.keys())[0]
+        return len(cases[case_type])
 
     def __entry_preedit_changed_cb(self, entry, preedit_str):
         if len(preedit_str) == 0:
@@ -285,26 +297,26 @@ class SimpleGtkTestCase(unittest.TestCase):
 
     def __run_cases(self, tag, start=-1, end=-1):
         tests = TestCases['tests'][self.__test_index]
-        if tests == None:
+        if tests is None:
             return
         try:
             cases = tests[tag]
         except KeyError:
             return
-        type = list(cases.keys())[0]
+        case_type = list(cases.keys())[0]
         i = 0
-        if type == 'string':
+        if case_type == 'string':
             printflush('test step: %s sequences: "%s"'
                        % (tag, str(cases['string'])))
-            for a in cases['string']:
+            for character in cases['string']:
                 if start >= 0 and i < start:
                     i += 1
                     continue
-                if end >= 0 and i >= end:
-                    break;
-                self.__typing(ord(a), 0, 0)
+                if 0 <= end <= i:
+                    break
+                self.__typing(ord(character), 0, 0)
                 i += 1
-        if type == 'keys':
+        if case_type == 'keys':
             if start == -1 and end == -1:
                 printflush('test step: %s sequences: %s'
                            % (tag, str(cases['keys'])))
@@ -312,24 +324,24 @@ class SimpleGtkTestCase(unittest.TestCase):
                 if start >= 0 and i < start:
                     i += 1
                     continue
-                if end >= 0 and i >= end:
-                    break;
+                if 0 <= end <= i:
+                    break
                 if start != -1 or end != -1:
                     printflush('test step: %s sequences: [0x%X, 0x%X, 0x%X]'
-                               % (tag, key[0], key[1],  key[2]))
+                               % (tag, key[0], key[1], key[2]))
                 self.__typing(key[0], key[1], key[2])
                 i += 1
 
     def __typing(self, keyval, keycode, modifiers):
         self.__engine.emit('process-key-event', keyval, keycode, modifiers)
-        modifiers |= IBus.ModifierType.RELEASE_MASK;
+        modifiers |= IBus.ModifierType.RELEASE_MASK
         self.__engine.emit('process-key-event', keyval, keycode, modifiers)
 
     def __buffer_inserted_text_cb(self, buffer, position, chars, nchars):
         tests = TestCases['tests'][self.__test_index]
         cases = tests['commit']
-        type = list(cases.keys())[0]
-        if type == 'keys':
+        case_type = list(cases.keys())[0]
+        if case_type == 'keys':
             # space key is sent separatedly later
             if cases['keys'][0] == [IBus.KEY_space, 0, 0]:
                 self.__inserted_text += chars
@@ -347,15 +359,15 @@ class SimpleGtkTestCase(unittest.TestCase):
             self.__inserted_text = chars
         cases = tests['result']
         if cases['string'] == self.__inserted_text:
-            printflush('OK: %d \"%s\"' \
+            printflush('OK: %d "%s"'
                        % (self.__test_index, self.__inserted_text))
         else:
             if DONE_EXIT:
                 Gtk.main_quit()
-            with self.subTest(i = self.__test_index):
-                self.fail('NG: %d \"%s\" \"%s\"' \
+            with self.subTest(i=self.__test_index):
+                self.fail('NG: %d "%s" "%s"'
                           % (self.__test_index, str(cases['string']),
-                          self.__inserted_text))
+                             self.__inserted_text))
         self.__inserted_text = ''
         self.__test_index += 1
         if self.__test_index == len(TestCases['tests']):
@@ -378,7 +390,7 @@ class SimpleGtkTestCase(unittest.TestCase):
         window.add(entry)
         window.show_all()
 
-    def main(self):
+    def main(self): # pylint: disable=no-self-use
         # Some ATK relative warnings are called during launching GtkWindow.
         flags = GLib.log_set_always_fatal(GLib.LogLevelFlags.LEVEL_CRITICAL)
         Gtk.main()
