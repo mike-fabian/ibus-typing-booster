@@ -82,6 +82,10 @@ def printerr(sentence):
     except IOError:
         pass
 
+@unittest.skipUnless(
+    'XDG_SESSION_TYPE' in os.environ
+    and os.environ['XDG_SESSION_TYPE'] in ('x11', 'wayland'),
+    'XDG_SESSION_TYPE is neither "x11" nor "wayland".')
 @unittest.skipIf(Gdk.Display.open('') is None, 'Display cannot be opened.')
 class SimpleGtkTestCase(unittest.TestCase):
     global DONE_EXIT
