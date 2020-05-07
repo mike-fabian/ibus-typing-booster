@@ -39,6 +39,13 @@ sys.path.pop(0)
 # added, changed, or missing.
 itb_emoji.DOMAINNAME = ''
 
+@unittest.skipIf(
+    '..' not in itb_emoji.find_cldr_annotation_path('en'),
+    'Using external emoji annotations: %s '
+    % itb_emoji.find_cldr_annotation_path('en')
+    + 'Testing with older emoji annotations instead '
+    'of those included in the ibus-typing-booster source is likely '
+    'to create meaningless test failures.')
 class EmojiUnicodeVersionTestCase(unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
