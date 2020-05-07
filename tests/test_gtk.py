@@ -392,12 +392,6 @@ class SimpleGtkTestCase(unittest.TestCase):
         if self._flag:
             self.fail('NG: signal failure')
 
-def print_help(out, v = 0):
-    print('-k, --keep             Do not exit this program after test is done.',
-          file=out)
-    print('-h, --help             show this message.', file=out)
-    sys.exit(v)
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-k', '--keep', action='store_true',
