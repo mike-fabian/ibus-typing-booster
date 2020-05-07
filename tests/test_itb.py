@@ -21,6 +21,10 @@
 This file implements the test cases for the unit tests of ibus-typing-booster
 '''
 
+# pylint: disable=missing-function-docstring
+# pylint: disable=protected-access
+# pylint: disable=wrong-import-position
+
 import os
 import sys
 import unicodedata
@@ -47,9 +51,11 @@ sys.modules["gi.repository.IBus"].Property = MockProperty
 sys.modules["gi.repository.IBus"].PropList = MockPropList
 
 sys.path.insert(0, "../engine")
-from hunspell_table import *
+# pylint: disable=import-error
+import hunspell_table
 import tabsqlitedb
 import itb_util
+# pylint: enable=import-error
 sys.path.pop(0)
 
 IMPORT_ENCHANT_SUCCESSFUL = False
@@ -73,14 +79,17 @@ except (ImportError,):
 
 @unittest.skipIf(Gdk.Display.open('') is None, 'Display cannot be opened.')
 class ItbTestCase(unittest.TestCase):
+    '''
+    Test cases for ibus-typing-booster
+    '''
     def setUp(self):
         self.bus = IBus.Bus()
-        self.db = tabsqlitedb.TabSqliteDb(user_db_file = ':memory:')
-        self.engine = TypingBoosterEngine(
+        self.database = tabsqlitedb.TabSqliteDb(user_db_file=':memory:')
+        self.engine = hunspell_table.TypingBoosterEngine(
             self.bus,
             '/com/redhat/IBus/engines/table/typing_booster/engine/0',
-            self.db,
-            unit_test = True)
+            self.database,
+            unit_test=True)
         self.backup_original_settings()
         self.set_default_settings()
 
@@ -198,8 +207,10 @@ class ItbTestCase(unittest.TestCase):
             'next_input_method': ['Control+Down', 'Control+KP_Down'],
             'previous_dictionary': ['Mod1+Up', 'Mod1+KP_Up'],
             'previous_input_method': ['Control+Up', 'Control+KP_Up'],
-            'select_next_candidate': ['Tab', 'ISO_Left_Tab', 'Down', 'KP_Down'],
-            'select_previous_candidate': ['Shift+Tab', 'Shift+ISO_Left_Tab', 'Up', 'KP_Up'],
+            'select_next_candidate':
+            ['Tab', 'ISO_Left_Tab', 'Down', 'KP_Down'],
+            'select_previous_candidate':
+            ['Shift+Tab', 'Shift+ISO_Left_Tab', 'Up', 'KP_Up'],
             'setup': ['Mod5+F10'],
             'speech_recognition': [],
             'toggle_emoji_prediction': ['Mod5+F6'],
@@ -418,7 +429,7 @@ class ItbTestCase(unittest.TestCase):
         itb_util.get_hunspell_dictionary_wordlist('mr_IN')[0],
         "Skipping because no Marathi dictionary could be found. "
         + "On some systems like Ubuntu or Elementary OS it is not available.")
-    def test_marathi_and_britisch_english(self):
+    def test_marathi_and_british_english(self):
         self.engine.set_current_imes(['mr-itrans', 'NoIME'])
         self.engine.set_dictionary_names(['mr_IN', 'en_GB'])
         self.assertEqual(
@@ -623,7 +634,7 @@ class ItbTestCase(unittest.TestCase):
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
-    def test_emoji_triggered_by_underscore_when_emoji_mode_is_off(self):
+    def test_emoji_triggered_by_underscore(self):
         self.engine.set_current_imes(['NoIME'])
         self.engine.set_dictionary_names(['en_US'])
         self.engine.set_emoji_prediction_mode(False)
@@ -670,14 +681,16 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
-        self.assertEqual(self.engine._candidates, [('Barcelona', 0, '', False, False)])
+        self.assertEqual(self.engine._candidates,
+                         [('Barcelona', 0, '', False, False)])
         self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
         # Nothing should be committed:
         self.assertEqual(self.engine.mock_committed_text, '')
         self.assertEqual(self.engine.mock_preedit_text, 'Barcelona2')
         self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'Barcelona')
-        self.assertEqual(self.engine._candidates, [('Barcelona', 0, '', False, False)])
+        self.assertEqual(self.engine._candidates,
+                         [('Barcelona', 0, '', False, False)])
         self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'Barcelona ')
         self.assertEqual(self.engine.mock_preedit_text, '')
@@ -803,7 +816,8 @@ class ItbTestCase(unittest.TestCase):
         # Commit:
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
-        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९०१२३४५६७८९ ')
+        self.assertEqual(self.engine.mock_committed_text,
+                         '०१२३४५६७८९०१२३४५६७८९ ')
 
     def test_commit_candidate_1_without_space(self):
         self.engine.set_current_imes(['NoIME', 't-latn-post'])
@@ -841,10 +855,12 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.assertEqual(self.engine._candidates[0][0], 'cerulean')
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
-        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
         self.assertEqual(self.engine._candidates[0][0], 'Cerulean')
         self.engine.do_process_key_event(IBus.KEY_Shift_R, 0, 0)
-        self.engine.do_process_key_event(IBus.KEY_Shift_R, 0, IBus.ModifierType.RELEASE_MASK)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_R, 0, IBus.ModifierType.RELEASE_MASK)
         self.assertEqual(self.engine._candidates[0][0], 'CERULEAN')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'CERULEAN ')
@@ -1038,7 +1054,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'ǭǭǭǭǭǭǭǭǭǮǮǯ⎄c')
         self.engine.do_process_key_event(IBus.KEY_ezh, 0, 0)
-        self.assertEqual(self.engine.mock_preedit_text, 'ǭǭǭǭǭǭǭǭǭǮǮǯǯ' )
+        self.assertEqual(self.engine.mock_preedit_text, 'ǭǭǭǭǭǭǭǭǭǮǮǯǯ')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'ǭǭǭǭǭǭǭǭǭǮǮǯǯ ')
