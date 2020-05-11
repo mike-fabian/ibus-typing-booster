@@ -40,13 +40,13 @@ sys.path.append('@PKGDATADIR@/engine')
 pattern = 'test*.py'
 start_dir = os.path.dirname(__file__)
 if len(sys.argv) > 1:
-    pattern = sys.argv[len(sys.argv) - 1]
+    pattern = sys.argv[-1]
     dir = os.path.dirname(pattern)
     pattern = os.path.basename(pattern)
     if dir != '.':
         start_dir = os.path.join(start_dir, dir)
 loader = unittest.TestLoader()
-suite = loader.discover(start_dir = start_dir, pattern = pattern)
+suite = loader.discover(start_dir=start_dir, pattern=pattern)
 
 if IMPORT_TAP_SUCCESSFUL:
     runner = TAPTestRunner(stream=sys.stderr, verbosity=255)
