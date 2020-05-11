@@ -2633,6 +2633,8 @@ def is_right_to_left_messages():
     '''
     lc_messages_locale, dummy_lc_messages_encoding = locale.getlocale(
         category=locale.LC_MESSAGES)
+    if not lc_messages_locale:
+        return False
     lang = lc_messages_locale.split('_')[0]
     if lang in ('ar', 'arc', 'dv', 'fa', 'he', 'ps', 'ur', 'yi'):
         # 'ku' could be Latin script or Arabic script or even Cyrillic or Armenian
