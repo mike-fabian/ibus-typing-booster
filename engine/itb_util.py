@@ -3148,23 +3148,15 @@ class ComposeSequences:
         }
         self._compose_sequences = {}
         compose_file_paths = []
-        lc_ctype_locale, lc_ctype_encoding = locale.getlocale(
-            category=locale.LC_CTYPE)
-        if lc_ctype_encoding not in ('UTF-8', 'utf8'):
-            LOGGER.warning('Not running in an UTF-8 locale: %s.%s',
-                           lc_ctype_locale, lc_ctype_encoding)
-        xorg_locale_path = '/usr/share/X11/locale'
-        for loc in (lc_ctype_locale, 'en_US'):
-            locale_compose_file = os.path.join(
-                xorg_locale_path, loc + '.UTF-8', 'Compose')
-            if os.path.isfile(locale_compose_file):
-                compose_file_paths.append(locale_compose_file)
-                break
+        compose_file_paths.append(self._locale_compose_file())
         compose_file_paths.append(os.path.expanduser('~/.config/ibus/Compose'))
-        compose_file_paths.append(os.path.expanduser('~/.XCompose'))
+        # For the meaning of XCOMPOSEFILE, see
+        # https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html
+        user_compose_file = os.environ.get('XCOMPOSEFILE') or os.path.expanduser(
+            '~/.XCompose')
+        compose_file_paths.append(user_compose_file)
         for path in compose_file_paths:
-            if os.path.isfile(path):
-                self._read_compose_file(path)
+            self._read_compose_file(path)
 
     def _add_compose_sequence(self, sequence, result):
         # pylint: disable=line-too-long
@@ -3231,6 +3223,25 @@ class ComposeSequences:
             compose_sequences = compose_sequences[keyval]
         last_compose_sequences[last_keyval] = result
 
+    def _locale_compose_file(self):
+        '''Returns the full path of the default compose file for the current
+        locale
+
+        :rtype: String
+        '''
+        lc_ctype_locale, lc_ctype_encoding = locale.getlocale(
+            category=locale.LC_CTYPE)
+        if lc_ctype_encoding not in ('UTF-8', 'utf8'):
+            LOGGER.warning('Not running in an UTF-8 locale: %s.%s',
+                           lc_ctype_locale, lc_ctype_encoding)
+        xorg_locale_path = '/usr/share/X11/locale'
+        for loc in (lc_ctype_locale, 'en_US'):
+            locale_compose_file = os.path.join(
+                xorg_locale_path, loc + '.UTF-8', 'Compose')
+            if os.path.isfile(locale_compose_file):
+                return locale_compose_file
+        return ''
+
     def _read_compose_file(self, compose_path):
         '''Reads a compose file and stores the compose sequences
         found  there in self._compose_sequences.
@@ -3238,6 +3249,9 @@ class ComposeSequences:
         :param compose_path: Path to a compose file to read
         :type compose_path: String
         '''
+        if not compose_path or not os.path.isfile(compose_path):
+            LOGGER.info('Skipping reading of compose file "%s"', compose_path)
+            return
         try:
             with open(compose_path,
                       mode='r',
@@ -3260,6 +3274,8 @@ class ComposeSequences:
             LOGGER.warning('File %s has no content', compose_path)
             return
         LOGGER.info('Reading compose file %s', compose_path)
+        # For the syntax of the compose files see:
+        # https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html
         include_pattern = re.compile(
             r'^\s*include\s*"(?P<include_path>[^"]+)".*')
         compose_sequence_pattern = re.compile(
@@ -3269,7 +3285,13 @@ class ComposeSequences:
                 continue
             match = include_pattern.search(line)
             if match:
-                self._read_compose_file(match.group('include_path'))
+                include_path = match.group('include_path')
+                include_path = include_path.replace(
+                    '%L', self._locale_compose_file())
+                include_path = include_path.replace(
+                    '%H', os.path.expanduser('~'))
+                include_path = os.path.normpath(include_path)
+                self._read_compose_file(include_path)
             match = compose_sequence_pattern.search(line)
             if match:
                 sequence = match.group('sequence')
