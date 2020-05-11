@@ -31,6 +31,8 @@ TESTS = \
 	test_m17n_translit.py \
 	$(NULL)
 
+check_SCRIPTS = run_tests
+
 # Run test cases separatedly because test_gtk and test_itb are conflicted
 # with mock_engine
 LOG_COMPILER = $(builddir)/run_tests
