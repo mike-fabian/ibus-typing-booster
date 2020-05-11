@@ -30,6 +30,7 @@ from gi.repository import IBus
 
 sys.path.insert(0, "../engine")
 import hunspell_suggest
+import itb_util
 sys.path.pop(0)
 
 IMPORT_ENCHANT_SUCCESSFUL = False
@@ -166,6 +167,15 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(
             h.suggest('differemmen'),
             [('diffe\u0301remment', 0)])
+
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('el_GR')[0],
+        "Skipping because no Greek dictionary could be found. ")
+    def test_el_GR(self):
+        h = hunspell_suggest.Hunspell(['el_GR'])
+        self.assertEqual(
+            h.suggest('αλφαβητο')[0],
+            ('αλφάβητο', 0))
 
     def test_fi_FI_dictionary_file(self):
         # dictionary file is included in ibus-typing-booster
