@@ -30,6 +30,8 @@ import sys
 import unicodedata
 import unittest
 import subprocess
+import importlib
+import mock
 
 from gi import require_version
 require_version('IBus', '1.0')
@@ -40,15 +42,10 @@ from gi.repository import Gdk
 # Get more verbose output in the test log:
 os.environ['IBUS_TYPING_BOOSTER_DEBUG_LEVEL'] = '255'
 
-# Monkey patch the environment with the mock classes:
 from mock_engine import MockEngine
 from mock_engine import MockLookupTable
 from mock_engine import MockProperty
 from mock_engine import MockPropList
-sys.modules["gi.repository.IBus"].Engine = MockEngine
-sys.modules["gi.repository.IBus"].LookupTable = MockLookupTable
-sys.modules["gi.repository.IBus"].Property = MockProperty
-sys.modules["gi.repository.IBus"].PropList = MockPropList
 
 sys.path.insert(0, "../engine")
 # pylint: disable=import-error
@@ -82,7 +79,38 @@ class ItbTestCase(unittest.TestCase):
     '''
     Test cases for ibus-typing-booster
     '''
+    engine_patcher = mock.patch.object(
+        IBus, 'Engine', new=MockEngine)
+    lookup_table_patcher = mock.patch.object(
+        IBus, 'LookupTable', new=MockLookupTable)
+    property_patcher = mock.patch.object(
+        IBus, 'Property', new=MockProperty)
+    prop_list_patcher = mock.patch.object(
+        IBus, 'PropList', new=MockPropList)
+    ibus_engine = IBus.Engine
+    ibus_lookup_table = IBus.LookupTable
+    ibus_property = IBus.Property
+    ibus_prop_list = IBus.PropList
+
     def setUp(self):
+        # Patch the IBus stuff with the mock classes:
+        self.engine_patcher.start()
+        self.lookup_table_patcher.start()
+        self.property_patcher.start()
+        self.prop_list_patcher.start()
+        assert IBus.Engine is not self.ibus_engine
+        assert IBus.Engine is MockEngine
+        assert IBus.LookupTable is not self.ibus_lookup_table
+        assert IBus.LookupTable is MockLookupTable
+        assert IBus.Property is not self.ibus_property
+        assert IBus.Property is MockProperty
+        assert IBus.PropList is not self.ibus_prop_list
+        assert IBus.PropList is MockPropList
+        # Reload the hunspell_table module so that the patches
+        # are applied to TypingBoosterEngine:
+        sys.path.insert(0, "../engine")
+        importlib.reload(hunspell_table)
+        sys.path.pop(0)
         self.bus = IBus.Bus()
         self.database = tabsqlitedb.TabSqliteDb(user_db_file=':memory:')
         self.engine = hunspell_table.TypingBoosterEngine(
@@ -96,6 +124,19 @@ class ItbTestCase(unittest.TestCase):
     def tearDown(self):
         self.restore_original_settings()
         del self.engine
+        # Remove the patches from the IBus stuff:
+        self.engine_patcher.stop()
+        self.lookup_table_patcher.stop()
+        self.property_patcher.stop()
+        self.prop_list_patcher.stop()
+        assert IBus.Engine is self.ibus_engine
+        assert IBus.Engine is not MockEngine
+        assert IBus.LookupTable is self.ibus_lookup_table
+        assert IBus.LookupTable is not MockLookupTable
+        assert IBus.Property is self.ibus_property
+        assert IBus.Property is not MockProperty
+        assert IBus.PropList is self.ibus_prop_list
+        assert IBus.PropList is not MockPropList
 
     def backup_original_settings(self):
         self.orig_emoji_prediction_mode = (
