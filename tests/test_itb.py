@@ -1114,7 +1114,7 @@ class ItbTestCase(unittest.TestCase):
         "Skipping because this test requires python3-libvoikko to work.")
     def test_voikko_en_GB_fi_FI(self):
         self.engine.set_current_imes(['NoIME'])
-        self.engine.set_dictionary_names(['en_GB,fi_FI'])
+        self.engine.set_dictionary_names(['en_GB', 'fi_FI'])
         self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
