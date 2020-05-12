@@ -174,52 +174,81 @@ class ItbTestCase(unittest.TestCase):
 
     def restore_original_settings(self):
         self.engine.set_emoji_prediction_mode(
-            self.orig_emoji_prediction_mode)
+            self.orig_emoji_prediction_mode,
+            update_gsettings=False)
         self.engine.set_off_the_record_mode(
-            self.orig_off_the_record_mode)
+            self.orig_off_the_record_mode,
+            update_gsettings=False)
         self.engine.set_auto_commit_characters(
-            self.orig_auto_commit_characters)
+            self.orig_auto_commit_characters,
+            update_gsettings=False)
         self.engine.set_tab_enable(
-            self.orig_tab_enable)
+            self.orig_tab_enable,
+            update_gsettings=False)
         self.engine.set_inline_completion(
-            self.orig_inline_completion)
+            self.orig_inline_completion,
+            update_gsettings=False)
         self.engine.set_remember_last_used_preedit_ime(
-            self.orig_remember_last_used_preedit_ime)
+            self.orig_remember_last_used_preedit_ime,
+            update_gsettings=False)
         self.engine.set_page_size(
-            self.orig_page_size)
+            self.orig_page_size,
+            update_gsettings=False)
         self.engine.set_lookup_table_orientation(
-            self.orig_lookup_table_orientation)
+            self.orig_lookup_table_orientation,
+            update_gsettings=False)
         self.engine.set_min_char_complete(
-            self.orig_min_char_complete)
+            self.orig_min_char_complete,
+            update_gsettings=False)
         self.engine.set_show_number_of_candidates(
-            self.orig_show_number_of_candidates)
+            self.orig_show_number_of_candidates,
+            update_gsettings=False)
         self.engine.set_show_status_info_in_auxiliary_text(
-            self.orig_show_status_info_in_auxiliary_text)
+            self.orig_show_status_info_in_auxiliary_text,
+            update_gsettings=False)
         self.engine.set_add_space_on_commit(
-            self.orig_add_space_on_commit)
+            self.orig_add_space_on_commit,
+            update_gsettings=False)
         self.engine.set_current_imes(
-            self.orig_current_imes)
+            self.orig_current_imes,
+            update_gsettings=False)
         self.engine.set_dictionary_names(
-            self.orig_dictionary_names)
+            self.orig_dictionary_names,
+            update_gsettings=False)
         self.engine.set_qt_im_module_workaround(
-            self.orig_qt_im_module_workaround)
+            self.orig_qt_im_module_workaround,
+            update_gsettings=False)
         self.engine.set_keybindings(
-            self.orig_keybindings)
+            self.orig_keybindings,
+            update_gsettings=False)
 
     def set_default_settings(self):
-        self.engine.set_emoji_prediction_mode(False)
-        self.engine.set_off_the_record_mode(False)
-        self.engine.set_auto_commit_characters('')
-        self.engine.set_tab_enable(False)
-        self.engine.set_inline_completion(False)
-        self.engine.set_remember_last_used_preedit_ime(False)
-        self.engine.set_page_size(6)
-        self.engine.set_min_char_complete(1)
-        self.engine.set_show_number_of_candidates(False)
-        self.engine.set_add_space_on_commit(True)
-        self.engine.set_current_imes(['NoIME'])
-        self.engine.set_dictionary_names(['en_US'])
-        self.engine.set_qt_im_module_workaround(False)
+        self.engine.set_emoji_prediction_mode(
+            False, update_gsettings=False)
+        self.engine.set_off_the_record_mode(
+            False, update_gsettings=False)
+        self.engine.set_auto_commit_characters(
+            '', update_gsettings=False)
+        self.engine.set_tab_enable(
+            False, update_gsettings=False)
+        self.engine.set_inline_completion(
+            False, update_gsettings=False)
+        self.engine.set_remember_last_used_preedit_ime(
+            False, update_gsettings=False)
+        self.engine.set_page_size(
+            6, update_gsettings=False)
+        self.engine.set_min_char_complete(
+            1, update_gsettings=False)
+        self.engine.set_show_number_of_candidates(
+            False, update_gsettings=False)
+        self.engine.set_add_space_on_commit(
+            True, update_gsettings=False)
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.set_qt_im_module_workaround(
+            False, update_gsettings=False)
         self.engine.set_keybindings({
             'cancel': ['Escape'],
             'commit_candidate_1': [],
@@ -257,7 +286,7 @@ class ItbTestCase(unittest.TestCase):
             'toggle_emoji_prediction': ['Mod5+F6'],
             'toggle_input_mode_on_off': [],
             'toggle_off_the_record': ['Mod5+F9'],
-        })
+        }, update_gsettings=False)
 
     def test_dummy(self):
         self.assertEqual(True, True)
@@ -284,21 +313,24 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'a . ')
 
     def test_direct_input(self):
-        self.engine.set_current_imes(['NoIME', 't-latn-post'])
+        self.engine.set_current_imes(
+            ['NoIME', 't-latn-post'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_quotedbl, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'a" ')
 
     def test_latn_post(self):
-        self.engine.set_current_imes(['t-latn-post', 'NoIME'])
+        self.engine.set_current_imes(
+            ['t-latn-post', 'NoIME'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_quotedbl, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'ä ')
 
     def test_autocommit_characters(self):
-        self.engine.set_current_imes(['NoIME', 't-latn-post'])
+        self.engine.set_current_imes(
+            ['NoIME', 't-latn-post'], update_gsettings=False)
         self.engine.set_auto_commit_characters('.')
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_semicolon, 0, 0)
@@ -308,18 +340,22 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'a;. b ')
 
     def test_set_page_size(self):
-        self.engine.set_page_size(3)
+        self.engine.set_page_size(
+            3, update_gsettings=False)
         self.assertEqual(
             self.engine.get_lookup_table().mock_page_size,
             3)
-        self.engine.set_page_size(5)
+        self.engine.set_page_size(
+            5, update_gsettings=False)
         self.assertEqual(
             self.engine.get_lookup_table().mock_page_size,
             5)
 
     def test_complete_word_from_us_english_dictionary(self):
-        self.engine.set_current_imes(['NoIME', 't-latn-post'])
-        self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_current_imes(
+            ['NoIME', 't-latn-post'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
@@ -331,8 +367,10 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'cerulean ')
 
     def test_commit_with_arrows(self):
-        self.engine.set_current_imes(['NoIME', 't-latn-post'])
-        self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_current_imes(
+            ['NoIME', 't-latn-post'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_f, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
@@ -383,10 +421,14 @@ class ItbTestCase(unittest.TestCase):
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
     def test_emoji_related_tab_enable_cursor_visible_escape(self):
-        self.engine.set_current_imes(['NoIME'])
-        self.engine.set_dictionary_names(['en_US'])
-        self.engine.set_emoji_prediction_mode(True)
-        self.engine.set_tab_enable(True)
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.set_emoji_prediction_mode(
+            True, update_gsettings=False)
+        self.engine.set_tab_enable(
+            True, update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
@@ -471,8 +513,10 @@ class ItbTestCase(unittest.TestCase):
         "Skipping because no Marathi dictionary could be found. "
         + "On some systems like Ubuntu or Elementary OS it is not available.")
     def test_marathi_and_british_english(self):
-        self.engine.set_current_imes(['mr-itrans', 'NoIME'])
-        self.engine.set_dictionary_names(['mr_IN', 'en_GB'])
+        self.engine.set_current_imes(
+            ['mr-itrans', 'NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['mr_IN', 'en_GB'], update_gsettings=False)
         self.assertEqual(
             self.engine.get_current_imes(), ['mr-itrans', 'NoIME'])
         self.assertEqual(
@@ -497,8 +541,10 @@ class ItbTestCase(unittest.TestCase):
         "Skipping because no Korean dictionary could be found. "
         + "On some systems like Arch Linux or FreeBSD it is not available.")
     def test_korean(self):
-        self.engine.set_current_imes(['ko-romaja'])
-        self.engine.set_dictionary_names(['ko_KR'])
+        self.engine.set_current_imes(
+            ['ko-romaja'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['ko_KR'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
@@ -541,8 +587,10 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual('안녕하세요', candidates[0])
 
     def test_accent_insensitive_matching_german_dictionary(self):
-        self.engine.set_current_imes(['NoIME', 't-latn-post'])
-        self.engine.set_dictionary_names(['de_DE'])
+        self.engine.set_current_imes(
+            ['NoIME', 't-latn-post'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['de_DE'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_A, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_p, 0, 0)
@@ -565,8 +613,10 @@ class ItbTestCase(unittest.TestCase):
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
     def test_accent_insensitive_matching_german_database(self):
-        self.engine.set_current_imes(['t-latn-post', 'NoIME'])
-        self.engine.set_dictionary_names(['de_DE'])
+        self.engine.set_current_imes(
+            ['t-latn-post', 'NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['de_DE'], update_gsettings=False)
         # Type “Glühwürmchen”
         self.engine.do_process_key_event(IBus.KEY_G, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
@@ -652,8 +702,10 @@ class ItbTestCase(unittest.TestCase):
             'Glühwürmchen Glühwürmchen Glühwürmchen ')
 
     def test_accent_insensitive_matching_french_dictionary(self):
-        self.engine.set_current_imes(['NoIME', 't-latn-post'])
-        self.engine.set_dictionary_names(['fr_FR'])
+        self.engine.set_current_imes(
+            ['NoIME', 't-latn-post'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['fr_FR'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_d, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_f, 0, 0)
@@ -676,9 +728,12 @@ class ItbTestCase(unittest.TestCase):
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
     def test_emoji_triggered_by_underscore(self):
-        self.engine.set_current_imes(['NoIME'])
-        self.engine.set_dictionary_names(['en_US'])
-        self.engine.set_emoji_prediction_mode(False)
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.set_emoji_prediction_mode(
+            False, update_gsettings=False)
         # Without a leading underscore, no emoji should match:
         self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
@@ -711,8 +766,10 @@ class ItbTestCase(unittest.TestCase):
         the end of the candidate list should not cause ibus-typing-booster
         to stop working.
         '''
-        self.engine.set_current_imes(['NoIME'])
-        self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_B, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
@@ -741,8 +798,10 @@ class ItbTestCase(unittest.TestCase):
         (1-9 or F1-F9 key) or by mouse click.  See:
         https://github.com/mike-fabian/ibus-typing-booster/issues/39
         '''
-        self.engine.set_current_imes(['NoIME'])
-        self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
@@ -758,7 +817,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_keybindings({
             'commit_candidate_1': ['1', 'KP_1'],
             'commit_candidate_1_plus_space': ['F1'],
-        })
+        }, update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
@@ -772,12 +831,14 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'test test')
 
     def test_tab_enable_key_binding_changed(self):
-        self.engine.set_current_imes(['NoIME', 't-latn-post'])
-        self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_current_imes(
+            ['NoIME', 't-latn-post'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
         self.engine.set_tab_enable(True)
         self.engine.set_keybindings({
             'enable_lookup': ['Insert'], # changed from default Tab
-        })
+        }, update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
@@ -800,8 +861,10 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'test\tcerulean ')
 
     def test_digits_used_in_keybindings(self):
-        self.engine.set_current_imes(['hi-itrans'])
-        self.engine.set_dictionary_names(['hi_IN'])
+        self.engine.set_current_imes(
+            ['hi-itrans'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['hi_IN'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
@@ -839,7 +902,7 @@ class ItbTestCase(unittest.TestCase):
             'commit_candidate_8_plus_space': ['F8'],
             'commit_candidate_9': [],
             'commit_candidate_9_plus_space': ['F9'],
-        })
+        }, update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
@@ -861,11 +924,13 @@ class ItbTestCase(unittest.TestCase):
                          '०१२३४५६७८९०१२३४५६७८९ ')
 
     def test_commit_candidate_1_without_space(self):
-        self.engine.set_current_imes(['NoIME', 't-latn-post'])
-        self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_current_imes(
+            ['NoIME', 't-latn-post'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
         self.engine.set_keybindings({
             'commit_candidate_1': ['Right'],
-        })
+        }, update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
@@ -886,8 +951,10 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'cerulean cerulean')
 
     def test_toggle_candidate_case(self):
-        self.engine.set_current_imes(['NoIME', 't-latn-post'])
-        self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_current_imes(
+            ['NoIME', 't-latn-post'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
@@ -907,8 +974,10 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'CERULEAN ')
 
     def test_sinhala_wijesekera(self):
-        self.engine.set_current_imes(['si-wijesekera', 'NoIME'])
-        self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_current_imes(
+            ['si-wijesekera', 'NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_v, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
@@ -930,8 +999,10 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'ඩනිෂ්ක නවීන් ')
 
     def test_compose_and_latn_post(self):
-        self.engine.set_current_imes(['t-latn-post', 'NoIME'])
-        self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_current_imes(
+            ['t-latn-post', 'NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_T, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
@@ -1012,8 +1083,10 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, 'ẞ')
 
     def test_compose_sequences_containing_code_points(self):
-        self.engine.set_current_imes(['t-latn-pre', 'NoIME'])
-        self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_current_imes(
+            ['t-latn-pre', 'NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_dead_macron, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '¯')
         self.engine.do_process_key_event(0x01EB, 0, 0)
@@ -1121,8 +1194,10 @@ class ItbTestCase(unittest.TestCase):
                          'ǭǭǭǭǭǭǭǭǭǮǮǯǯ ≸ \u0915\u093C ')
 
     def test_compose_combining_chars_in_preedit_representation(self):
-        self.engine.set_current_imes(['t-latn-post', 'NoIME'])
-        self.engine.set_dictionary_names(['en_US'])
+        self.engine.set_current_imes(
+            ['t-latn-post', 'NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'a')
         self.engine.do_process_key_event(IBus.KEY_dead_belowdiaeresis, 0, 0)
@@ -1135,8 +1210,10 @@ class ItbTestCase(unittest.TestCase):
         IMPORT_LIBVOIKKO_SUCCESSFUL,
         "Skipping because this test requires python3-libvoikko to work.")
     def test_voikko(self):
-        self.engine.set_current_imes(['NoIME'])
-        self.engine.set_dictionary_names(['fi_FI'])
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['fi_FI'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
@@ -1154,8 +1231,10 @@ class ItbTestCase(unittest.TestCase):
         IMPORT_LIBVOIKKO_SUCCESSFUL,
         "Skipping because this test requires python3-libvoikko to work.")
     def test_voikko_en_GB_fi_FI(self):
-        self.engine.set_current_imes(['NoIME'])
-        self.engine.set_dictionary_names(['en_GB', 'fi_FI'])
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_GB', 'fi_FI'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
