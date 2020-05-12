@@ -1121,7 +1121,6 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
-        print(repr(self.engine._candidates))
         self.assertEqual(self.engine._candidates, [
             ('kiss', -1, '', False, True),
             ('kissa', -1, '', False, True),
