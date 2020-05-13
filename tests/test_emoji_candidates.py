@@ -73,6 +73,21 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             languages = ['fr_FR'])
         self.assertEqual(mq.candidates(''), [])
 
+    def test_candidates_empty_language_list(self):
+        '''
+        Emoji matching with an empty language list should fall back to English.
+        '''
+        mq = itb_emoji.EmojiMatcher(
+            languages = [])
+        self.assertEqual(
+            mq.candidates('orangutan', match_limit=1)[0][0],
+            '🦧')
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['en'])
+        self.assertEqual(
+            mq.candidates('orangutan', match_limit=1)[0][0],
+            '🦧')
+
     def test_candidates_similar_emoji(self):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
