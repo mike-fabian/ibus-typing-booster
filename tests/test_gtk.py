@@ -98,6 +98,7 @@ class SimpleGtkTestCase(unittest.TestCase):
         cls._gsettings = Gio.Settings(
             schema='org.freedesktop.ibus.engine.typing-booster')
         cls._orig_dictionary = cls._gsettings.get_string('dictionary')
+        cls._orig_tabenable = cls._gsettings.get_boolean('tabenable')
         signums = [getattr(signal, s, None) for s in
                    'SIGINT SIGTERM SIGHUP'.split()]
         for signum in filter(None, signums):
@@ -109,6 +110,7 @@ class SimpleGtkTestCase(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls._gsettings.set_string('dictionary', cls._orig_dictionary)
+        cls._gsettings.set_boolean('tabenable', cls._orig_tabenable)
 
     @classmethod
     def signal_handler(cls, user_data):
@@ -129,6 +131,7 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__commit_done = False
         self.__reset_coming = False
         self._gsettings.set_string('dictionary', 'fr_FR,en_US')
+        self._gsettings.set_boolean('tabenable', False)
 
     def register_ibus_engine(self):
         self.__bus = IBus.Bus()
