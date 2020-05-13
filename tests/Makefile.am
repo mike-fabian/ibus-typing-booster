@@ -18,11 +18,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 TESTS = \
+	test_0_gtk.py \
 	test_compose_sequences.py \
 	test_emoji_candidates.py \
 	test_emoji_similar.py \
 	test_emoji_unicode_version.py \
-	test_gtk.py \
 	test_hunspell_suggest.py \
 	test_itb.py \
 	test_itb_util.py \
