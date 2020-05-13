@@ -96,7 +96,7 @@ class TypingBoosterEngine(IBus.Engine):
             LOGGER.debug(
                 'TypingBoosterEngine.__init__(bus=%s, obj_path=%s, db=%s)',
                 bus, obj_path, db)
-        super(TypingBoosterEngine, self).__init__(
+        super().__init__(
             connection=bus.get_connection(), object_path=obj_path)
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         self._compose_sequences = itb_util.ComposeSequences()
@@ -1805,7 +1805,7 @@ class TypingBoosterEngine(IBus.Engine):
             LOGGER.debug('entering function')
         self._clear_input_and_update_ui()
         self.do_focus_out()
-        super(TypingBoosterEngine, self).destroy()
+        super().destroy()
 
     def _update_preedit(self):
         '''Update Preedit String in UI'''
@@ -1818,7 +1818,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._hide_input:
             _str = '*' * len(_str)
         if _str == '':
-            super(TypingBoosterEngine, self).update_preedit_text_with_mode(
+            super().update_preedit_text_with_mode(
                 IBus.Text.new_from_string(''), 0, False,
                 IBus.PreeditFocusMode.COMMIT)
         else:
@@ -1849,7 +1849,7 @@ class TypingBoosterEngine(IBus.Engine):
                                       attr.get_start_index(),
                                       attr.get_end_index())
                 i += 1
-            super(TypingBoosterEngine, self).update_preedit_text_with_mode(
+            super().update_preedit_text_with_mode(
                 text, self.get_caret(), True, IBus.PreeditFocusMode.COMMIT)
 
     def _update_aux(self):
@@ -1913,7 +1913,7 @@ class TypingBoosterEngine(IBus.Engine):
                 and not self.is_lookup_table_enabled_by_tab)
             or not aux_string):
             visible = False
-        super(TypingBoosterEngine, self).update_auxiliary_text(text, visible)
+        super().update_auxiliary_text(text, visible)
         self._current_auxiliary_text = text
 
     def _update_lookup_table(self):
@@ -1960,7 +1960,7 @@ class TypingBoosterEngine(IBus.Engine):
         completion = first_candidate[len(typed_string):]
         self.hide_lookup_table()
         text = IBus.Text.new_from_string('')
-        super(TypingBoosterEngine, self).update_auxiliary_text(text, False)
+        super().update_auxiliary_text(text, False)
         text = IBus.Text.new_from_string(typed_string + completion)
         attrs = IBus.AttrList()
         attrs.append(IBus.attr_underline_new(
@@ -1995,7 +1995,7 @@ class TypingBoosterEngine(IBus.Engine):
             caret = len(first_candidate)
         else:
             caret = self.get_caret()
-        super(TypingBoosterEngine, self).update_preedit_text_with_mode(
+        super().update_preedit_text_with_mode(
             text, caret, True, IBus.PreeditFocusMode.COMMIT)
         return
 
@@ -2038,7 +2038,7 @@ class TypingBoosterEngine(IBus.Engine):
             self.get_lookup_table().set_cursor_visible(False)
             self.hide_lookup_table()
             self._current_auxiliary_text = IBus.Text.new_from_string('')
-            super(TypingBoosterEngine, self).update_auxiliary_text(
+            super().update_auxiliary_text(
                 self._current_auxiliary_text, False)
             return
         self._lookup_table_shows_related_candidates = False
@@ -2053,11 +2053,11 @@ class TypingBoosterEngine(IBus.Engine):
             # Show a label in the auxiliary text to indicate that the
             # lookup table is being updated (by default an hourglass
             # with moving sand):
-            super(TypingBoosterEngine, self).update_auxiliary_text(
+            super().update_auxiliary_text(
                 IBus.Text.new_from_string(
                     self._label_busy_string.strip()), True)
         else:
-            super(TypingBoosterEngine, self).update_auxiliary_text(
+            super().update_auxiliary_text(
                 IBus.Text.new_from_string(''), False)
         if self._unit_test:
             self._update_candidates_and_lookup_table_and_aux()
@@ -2096,11 +2096,11 @@ class TypingBoosterEngine(IBus.Engine):
             # Show a label in the auxiliary text to indicate that the
             # lookup table is being updated (by default an hourglass
             # with moving sand):
-            super(TypingBoosterEngine, self).update_auxiliary_text(
+            super().update_auxiliary_text(
                 IBus.Text.new_from_string(
                     self._label_busy_string.strip()), True)
         else:
-            super(TypingBoosterEngine, self).update_auxiliary_text(
+            super().update_auxiliary_text(
                 IBus.Text.new_from_string(''), False)
         related_candidates = []
         # Try to find similar emoji even if emoji predictions are
@@ -2143,10 +2143,10 @@ class TypingBoosterEngine(IBus.Engine):
             # Nothing related found, show the original lookup table
             # and original auxiliary text again:
             if self._current_auxiliary_text:
-                super(TypingBoosterEngine, self).update_auxiliary_text(
+                super().update_auxiliary_text(
                     self._current_auxiliary_text, True)
             else:
-                super(TypingBoosterEngine, self).update_auxiliary_text(
+                super().update_auxiliary_text(
                     IBus.Text.new_from_string(''), False)
             if self.get_lookup_table().get_number_of_candidates():
                 self.update_lookup_table(self.get_lookup_table(), True)
@@ -2343,7 +2343,7 @@ class TypingBoosterEngine(IBus.Engine):
                             'surrounding_text = '
                             '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
                             text, cursor_pos, anchor_pos)
-        super(TypingBoosterEngine, self).commit_text(
+        super().commit_text(
             IBus.Text.new_from_string(commit_phrase))
         self._clear_input_and_update_ui()
         self._commit_happened_after_focus_in = True
@@ -3904,7 +3904,7 @@ class TypingBoosterEngine(IBus.Engine):
             # recognition:
             auxiliary_text_label = (
                 self._label_speech_recognition_string.strip())
-        super(TypingBoosterEngine, self).update_auxiliary_text(
+        super().update_auxiliary_text(
             IBus.Text.new_from_string(
                 auxiliary_text_label + '⚠️' + error_message), True)
         time.sleep(2)
@@ -4008,7 +4008,7 @@ class TypingBoosterEngine(IBus.Engine):
             # that it works just fine. One has to try it.
             auxiliary_text_label += '❌' # not officially supported, but may work.
         auxiliary_text_label += ': '
-        super(TypingBoosterEngine, self).update_auxiliary_text(
+        super().update_auxiliary_text(
             IBus.Text.new_from_string(auxiliary_text_label), True)
 
         transcript = ''
@@ -4046,7 +4046,7 @@ class TypingBoosterEngine(IBus.Engine):
                     # the voice recording is finished.  But in future
                     # I may try to use a different thread for the
                     # voice recording.
-                    super(TypingBoosterEngine, self).update_auxiliary_text(
+                    super().update_auxiliary_text(
                         IBus.Text.new_from_string(
                             auxiliary_text_label + transcript),
                         True)
@@ -4417,7 +4417,7 @@ class TypingBoosterEngine(IBus.Engine):
                 repr(compose_result))
         self.hide_lookup_table()
         self._current_auxiliary_text = IBus.Text.new_from_string('')
-        super(TypingBoosterEngine, self).update_auxiliary_text(
+        super().update_auxiliary_text(
             self._current_auxiliary_text, False)
         if not isinstance(compose_result, str):
             self._update_transliterated_strings()
@@ -4433,7 +4433,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self._insert_string_at_cursor(list(compose_result))
                 self._update_ui()
             else:
-                super(TypingBoosterEngine, self).commit_text(
+                super().commit_text(
                     IBus.Text.new_from_string(compose_result))
         return True
 
