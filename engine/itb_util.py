@@ -2419,6 +2419,9 @@ def expand_languages(languages):
 
     >>> expand_languages(['en_GB', 'en'])
     ['en_GB', 'en_001', 'en', 'en', 'en_001']
+
+    >>> expand_languages([])
+    ['en']
     '''
     # pylint: enable=line-too-long
     expanded_languages = []
