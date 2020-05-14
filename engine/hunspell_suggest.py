@@ -573,21 +573,6 @@ class Hunspell:
                         (suggestion, -1)
                         for suggestion in extra_suggestions
                         if suggestion not in suggested_words])
-            else:
-                if (dictionary.name[:2]
-                        not in ('fi', 'ja', 'ja_JP',
-                                'zh', 'zh_CN', 'zh_TW', 'zh_MO', 'zh_SG')):
-                    # For some languages, hunspell dictionaries don’t
-                    # exist because hunspell makes no sense for these
-                    # languages.  In these cases, just ignore that the
-                    # hunspell dictionary is missing.  With the
-                    # appropriate input method added, emoji can be
-                    # matched nevertheless.
-                    suggested_words.update([
-                        ('☹ %(name)s dictionary not found. '
-                         %{'name': dictionary.name}
-                         + 'Please install hunspell dictionary!',
-                         0)])
         for word in suggested_words:
             if (suggested_words[word] == -1
                     and
