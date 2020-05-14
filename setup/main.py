@@ -1798,6 +1798,10 @@ class SetupUI(Gtk.Window):
             # dictionaries from the current effective value of LC_CTYPE:
             self._dictionary_names = itb_util.get_default_dictionaries(
                 locale.getlocale(category=locale.LC_CTYPE)[0])
+            # And save the default dictionaries to settings:
+            self._gsettings.set_value(
+                'dictionary',
+                GLib.Variant.new_string(','.join(self._dictionary_names)))
         if (len(self._dictionary_names)
             > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES):
             LOGGER.error(
@@ -1809,7 +1813,7 @@ class SetupUI(Gtk.Window):
                 %self._dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
             self._dictionary_names = (
                 self._dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
-            # Save reduced list of input methods back to settings:
+            # Save reduced list of dictionaries back to settings:
             self._gsettings.set_value(
                 'dictionary',
                 GLib.Variant.new_string(','.join(self._dictionary_names)))
@@ -1894,6 +1898,10 @@ class SetupUI(Gtk.Window):
             # input methods for the current effective value of LC_CTYPE:
             self._current_imes = itb_util.get_default_input_methods(
                 locale.getlocale(category=locale.LC_CTYPE)[0])
+            # And save the default input methods to settings:
+            self._gsettings.set_value(
+                'inputmethod',
+                GLib.Variant.new_string(','.join(self._current_imes)))
         if len(self._current_imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
             LOGGER.error(
                 'Trying to set more than the allowed maximum of %s '
