@@ -2726,10 +2726,14 @@ class SetupUI(Gtk.Window):
             # This should not happen, one should not be able
             # to click the remove button in this case, just return:
             return
-        self.set_dictionary_names(
-            self._dictionary_names[:index]
-            + self._dictionary_names[index + 1:],
-            update_gsettings=True)
+        dictionary_names = (self._dictionary_names[:index]
+                            + self._dictionary_names[index + 1:])
+        if not dictionary_names:
+            # List of dictionaries has been made empty by the user. Set
+            # it to the empty dummy dictionary 'None' (there is a
+            # special button to get the locale default):
+            dictionary_names = ['None']
+        self.set_dictionary_names(dictionary_names, update_gsettings=True)
         self._dictionaries_listbox_selected_dictionary_index = -1
         self._dictionaries_listbox_selected_dictionary_name = ''
         self._dictionaries_listbox.unselect_all()
@@ -3004,9 +3008,14 @@ class SetupUI(Gtk.Window):
             # This should not happen, one should not be able
             # to click the remove button in this case, just return:
             return
-        self.set_current_imes(
-            self._current_imes[:index] + self._current_imes[index + 1:],
-            update_gsettings=True)
+        current_imes = (self._current_imes[:index]
+                        + self._current_imes[index + 1:])
+        if not current_imes:
+            # List of input methods has been made empty by the user
+            # set it to the native keyboard input method NoIME (there
+            # is a special button to get the locale default):
+            current_imes = ['NoIME']
+        self.set_current_imes(current_imes, update_gsettings=True)
         self._input_methods_listbox_selected_ime_index = -1
         self._input_methods_listbox_selected_ime_name = ''
         self._input_methods_listbox.unselect_all()
