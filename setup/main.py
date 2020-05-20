@@ -779,6 +779,8 @@ class SetupUI(Gtk.Window):
         self._dictionaries_default_button.add(
             self._dictionaries_default_button_label)
         self._dictionaries_default_button.set_tooltip_text(
+            # Translators: Tooltip for a button used to set the list of
+            # dictionaries to the default for the current locale.
             _('Set dictionaries to the default for the current locale.')
             + ' LC_CTYPE=%s'
             % '.'.join(locale.getlocale(category=locale.LC_CTYPE)))
@@ -894,6 +896,8 @@ class SetupUI(Gtk.Window):
         self._input_methods_default_button.add(
             self._input_methods_default_button_label)
         self._input_methods_default_button.set_tooltip_text(
+            # Translators: Tooltip for a button used to set the list of
+            # input methods to the default for the current locale.
             _('Set input methods to the default for the current locale.')
             + ' LC_CTYPE=%s'
             % '.'.join(locale.getlocale(category=locale.LC_CTYPE)))
