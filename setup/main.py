@@ -1847,21 +1847,22 @@ class SetupUI(Gtk.Window):
                 'dictionary',
                 GLib.Variant.new_string(','.join(self._dictionary_names)))
         missing_dictionaries = False
-        for name in self._dictionary_names:
-            label = Gtk.Label()
-            (text,
-             missing_dictionary) = self._fill_dictionaries_listbox_row(name)
-            if missing_dictionary:
-                missing_dictionaries = True
-            label.set_text(html.escape(text))
-            label.set_use_markup(True)
-            label.set_xalign(0)
-            margin = 1
-            label.set_margin_start(margin)
-            label.set_margin_end(margin)
-            label.set_margin_top(margin)
-            label.set_margin_bottom(margin)
-            self._dictionaries_listbox.insert(label, -1)
+        if list(self._dictionary_names) != ['None']:
+            for name in self._dictionary_names:
+                label = Gtk.Label()
+                (text,
+                 missing_dictionary) = self._fill_dictionaries_listbox_row(name)
+                if missing_dictionary:
+                    missing_dictionaries = True
+                label.set_text(html.escape(text))
+                label.set_use_markup(True)
+                label.set_xalign(0)
+                margin = 1
+                label.set_margin_start(margin)
+                label.set_margin_end(margin)
+                label.set_margin_top(margin)
+                label.set_margin_bottom(margin)
+                self._dictionaries_listbox.insert(label, -1)
         self._dictionaries_listbox.show_all()
         self._dictionaries_install_missing_button.set_sensitive(
             missing_dictionaries)
