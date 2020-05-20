@@ -712,15 +712,6 @@ class SetupUI(Gtk.Window):
         self._dictionaries_scroll = Gtk.ScrolledWindow()
         self._dictionaries_and_input_methods_vbox.pack_start(
             self._dictionaries_scroll, True, True, 0)
-        self._dictionaries_install_missing_button = Gtk.Button(
-            # Translators: A button used to try to install the
-            # dictionaries which are setup here but not installed
-            label=_('Install missing dictionaries'))
-        self._dictionaries_install_missing_button.set_tooltip_text(
-            _('Install the dictionaries which are '
-              + 'setup here but not installed'))
-        self._dictionaries_install_missing_button.connect(
-            'clicked', self.on_install_missing_dictionaries)
         self._dictionaries_action_area = Gtk.ButtonBox()
         self._dictionaries_action_area.set_can_focus(False)
         self._dictionaries_action_area.set_layout(Gtk.ButtonBoxStyle.START)
@@ -772,12 +763,36 @@ class SetupUI(Gtk.Window):
         self._dictionaries_down_button.connect(
             'clicked', self.on_dictionaries_down_button_clicked)
         self._dictionaries_down_button.set_sensitive(False)
+        self._dictionaries_install_missing_button = Gtk.Button(
+            # Translators: A button used to try to install the
+            # dictionaries which are setup here but not installed
+            label=_('Install missing dictionaries'))
+        self._dictionaries_install_missing_button.set_tooltip_text(
+            _('Install the dictionaries which are '
+              + 'setup here but not installed'))
+        self._dictionaries_install_missing_button.connect(
+            'clicked', self.on_install_missing_dictionaries)
+        self._dictionaries_default_button = Gtk.Button()
+        self._dictionaries_default_button_label = Gtk.Label()
+        self._dictionaries_default_button_label.set_text(
+            _('Set to default'))
+        self._dictionaries_default_button.add(
+            self._dictionaries_default_button_label)
+        self._dictionaries_default_button.set_tooltip_text(
+            _('Set dictionaries to the default for the current locale.')
+            + ' LC_CTYPE=%s'
+            % '.'.join(locale.getlocale(category=locale.LC_CTYPE)))
+        self._dictionaries_default_button.connect(
+            'clicked', self.on_dictionaries_default_button_clicked)
+        self._dictionaries_default_button.set_sensitive(True)
         self._dictionaries_action_area.add(self._dictionaries_add_button)
         self._dictionaries_action_area.add(self._dictionaries_remove_button)
         self._dictionaries_action_area.add(self._dictionaries_up_button)
         self._dictionaries_action_area.add(self._dictionaries_down_button)
         self._dictionaries_action_area.add(
             self._dictionaries_install_missing_button)
+        self._dictionaries_action_area.add(
+            self._dictionaries_default_button)
         self._dictionaries_listbox_selected_dictionary_name = ''
         self._dictionaries_listbox_selected_dictionary_index = -1
         self._dictionary_names = []
@@ -872,11 +887,25 @@ class SetupUI(Gtk.Window):
         self._input_methods_help_button.connect(
             'clicked', self.on_input_methods_help_button_clicked)
         self._input_methods_help_button.set_sensitive(False)
+        self._input_methods_default_button = Gtk.Button()
+        self._input_methods_default_button_label = Gtk.Label()
+        self._input_methods_default_button_label.set_text(
+            _('Set to default'))
+        self._input_methods_default_button.add(
+            self._input_methods_default_button_label)
+        self._input_methods_default_button.set_tooltip_text(
+            _('Set input methods to the default for the current locale.')
+            + ' LC_CTYPE=%s'
+            % '.'.join(locale.getlocale(category=locale.LC_CTYPE)))
+        self._input_methods_default_button.connect(
+            'clicked', self.on_input_methods_default_button_clicked)
+        self._input_methods_default_button.set_sensitive(True)
         self._input_methods_action_area.add(self._input_methods_add_button)
         self._input_methods_action_area.add(self._input_methods_remove_button)
         self._input_methods_action_area.add(self._input_methods_up_button)
         self._input_methods_action_area.add(self._input_methods_down_button)
         self._input_methods_action_area.add(self._input_methods_help_button)
+        self._input_methods_action_area.add(self._input_methods_default_button)
         self._input_methods_listbox_selected_ime_name = ''
         self._input_methods_listbox_selected_ime_index = -1
         self._current_imes = []
@@ -2790,6 +2819,16 @@ class SetupUI(Gtk.Window):
                 'dictionaryinstalltimestamp',
                 GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
 
+    def on_dictionaries_default_button_clicked(self, *_args):
+        '''Signal handler called when the “Set to default” button for the
+        dictionaries is clicked.
+
+        Sets the dictionaries to the default for the current locale.
+
+        '''
+        self.set_dictionary_names(itb_util.get_default_dictionaries(
+            locale.getlocale(category=locale.LC_CTYPE)[0]))
+
     def on_dictionary_selected(self, _listbox, listbox_row):
         '''
         Signal handler called when a dictionary is selected
@@ -3054,6 +3093,14 @@ class SetupUI(Gtk.Window):
             parent=self,
             title=window_title,
             contents=window_contents)
+
+    def on_input_methods_default_button_clicked(self, *_args):
+        '''Signal handler called when the “Set to default” button for the input methods is clicked.
+
+        Sets the input methods to the default for the current locale.
+        '''
+        self.set_current_imes(itb_util.get_default_input_methods(
+            locale.getlocale(category=locale.LC_CTYPE)[0]))
 
     def on_input_method_selected(self, _listbox, listbox_row):
         '''
