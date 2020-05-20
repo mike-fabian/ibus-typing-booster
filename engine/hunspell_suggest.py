@@ -76,7 +76,8 @@ class Dictionary:
         self.enchant_dict = None
         self.pyhunspell_object = None
         self.voikko = None
-        self.load_dictionary()
+        if self.name != 'None':
+            self.load_dictionary()
 
     def load_dictionary(self):
         '''Load a hunspell dictionary and instantiate a
@@ -206,6 +207,13 @@ class Dictionary:
 
         >>> d.spellcheck('winxer')
         False
+
+        >>> d = Dictionary('None')
+        >>> d.spellcheck('winter')
+        False
+
+        >>> d.spellcheck('winxer')
+        False
         '''
         if self.enchant_dict:
             return self.spellcheck_enchant(word)
@@ -229,6 +237,10 @@ class Dictionary:
         True
 
         >>> d = Dictionary('zh_CN')
+        >>> d.has_spellchecking()
+        False
+
+        >>> d = Dictionary('None')
         >>> d.has_spellchecking()
         False
         '''
@@ -313,6 +325,10 @@ class Dictionary:
         ['camel', 'Camel']
 
         >>> d.spellcheck_suggest('')
+        []
+
+        >>> d = Dictionary('None')
+        >>> d.spellcheck_suggest('kamel')
         []
         '''
         if self.enchant_dict:
@@ -432,6 +448,14 @@ class Hunspell:
         >>> h = Hunspell(['ja_JP'])
         >>> h.spellcheck('Grüße')
         True
+
+        >>> h = Hunspell(['en_US', 'None'])
+        >>> h.spellcheck('Grüße')
+        False
+
+        >>> h = Hunspell(['None'])
+        >>> h.spellcheck('Grüße')
+        True
         '''
         if ' ' in input_phrase:
             return True
@@ -503,6 +527,15 @@ class Hunspell:
         >>> h = Hunspell(['fr_FR'])
         >>> h.suggest('differemmen')
         [('différemment', 0)]
+
+        >>> h = Hunspell(['None'])
+        >>> h.suggest('camel')
+        []
+
+        >>> h = Hunspell(['None', 'en_US'])
+        >>> h.suggest('camel')
+        [('camel', 0), ('camellia', 0), ('camelhair', 0), ('came', -1), ('Camel', -1), ('cameo', -1), ('came l', -1), ('camels', -1)]
+
         '''
         # pylint: enable=line-too-long
         if input_phrase in self._suggest_cache:
