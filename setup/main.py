@@ -2571,7 +2571,8 @@ class SetupUI(Gtk.Window):
         if not name or name in self._dictionary_names:
             return
         self.set_dictionary_names(
-            [name] + self._dictionary_names, update_gsettings=True)
+            [name] + [x for x in self._dictionary_names if x != 'None'],
+            update_gsettings=True)
         self._dictionaries_listbox_selected_dictionary_index = 0
         self._dictionaries_listbox_selected_dictionary_name = name
         self._dictionaries_listbox.select_row(
