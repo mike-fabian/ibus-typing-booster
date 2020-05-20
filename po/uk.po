@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-05-14 10:44+0200\n"
+"POT-Creation-Date: 2020-05-20 16:27+0200\n"
 "PO-Revision-Date: 2020-02-03 17:55+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/ibus-"
@@ -124,7 +124,7 @@ msgid "Lookup on emojipedia"
 msgstr "Шукати у емодзіпедії"
 
 #: engine/emoji_picker.py:2033 engine/emoji_picker.py:2034
-#: engine/emoji_picker.py:2035 setup/main.py:1171
+#: engine/emoji_picker.py:2035 setup/main.py:1200
 msgid "System default"
 msgstr "Типова системна"
 
@@ -282,27 +282,27 @@ msgstr "модифікатор"
 msgid "regional"
 msgstr "регіональні"
 
-#: engine/itb_util.py:3266 engine/itb_util.py:3575
+#: engine/itb_util.py:3267 engine/itb_util.py:3576
 msgid "File not found"
 msgstr "Файл не знайдено"
 
-#: engine/itb_util.py:3269 engine/itb_util.py:3578
+#: engine/itb_util.py:3270 engine/itb_util.py:3579
 msgid "Permission error"
 msgstr "Помилка доступу"
 
-#: engine/itb_util.py:3272 engine/itb_util.py:3581
+#: engine/itb_util.py:3273 engine/itb_util.py:3582
 msgid "Unicode decoding error"
 msgstr "Помилка декодування Unicode"
 
-#: engine/itb_util.py:3275 engine/itb_util.py:3584
+#: engine/itb_util.py:3276 engine/itb_util.py:3585
 msgid "Unknown error"
 msgstr "Невідома помилка"
 
-#: engine/itb_util.py:3555
+#: engine/itb_util.py:3556
 msgid "Native Keyboard"
 msgstr "Природна клавіатура"
 
-#: engine/itb_util.py:3557
+#: engine/itb_util.py:3558
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -316,40 +316,40 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4035
+#: engine/itb_util.py:4036
 msgid "Key input"
 msgstr "Введення з клавіатури"
 
-#: engine/itb_util.py:4041
+#: engine/itb_util.py:4042
 msgid "Cancel"
 msgstr "Скасувати"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4048
+#: engine/itb_util.py:4049
 msgid "Please press a key (or a key combination)"
 msgstr "Будь ласка, натисніть клавішу (або комбінацію клавіш)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4053
+#: engine/itb_util.py:4054
 msgid "The dialog will be closed when the key is released"
 msgstr "Вікно буде закрито, коли ви відпустите клавіші"
 
-#: engine/itb_util.py:4084
+#: engine/itb_util.py:4085
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Спосіб введення із автоматичним доповненням, який пришвидшує введення "
 "текстів."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4093
+#: engine/itb_util.py:4094
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>"
 
-#: engine/itb_util.py:4101
+#: engine/itb_util.py:4102
 msgid "Online documentation:"
 msgstr "Документація у інтернеті:"
 
@@ -357,7 +357,7 @@ msgstr "Документація у інтернеті:"
 msgid "Preferences"
 msgstr "Налаштування"
 
-#: setup/main.py:176 setup/main.py:4629
+#: setup/main.py:176 setup/main.py:4687
 msgid "_Close"
 msgstr "_Закрити"
 
@@ -393,7 +393,7 @@ msgstr "Нетипові скорочення"
 #. use to move to the next completion candidate etc...
 #. Translators: Column heading of the table listing the
 #. existing key bindings
-#: setup/main.py:244 setup/main.py:1017
+#: setup/main.py:244 setup/main.py:1046
 msgid "Key bindings"
 msgstr "Прив'язка до клавіш"
 
@@ -413,7 +413,7 @@ msgstr "Вигляд"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:282 setup/main.py:1763
+#: setup/main.py:282 setup/main.py:1792
 msgid "Speech recognition"
 msgstr "Розпізнавання мовлення"
 
@@ -716,142 +716,150 @@ msgstr ""
 msgid "Use dictionaries for the following languages:"
 msgstr "Використовувати словники для таких мов:"
 
-#. Translators: A button used to try to install the
-#. dictionaries which are setup here but not installed
-#: setup/main.py:718
-msgid "Install missing dictionaries"
-msgstr "Встановити невстановлені словники"
-
-#: setup/main.py:720
-msgid "Install the dictionaries which are setup here but not installed"
-msgstr "Встановити словники, які налаштовано тут, але які не встановлено"
-
-#: setup/main.py:737
+#: setup/main.py:728
 msgid "Add a dictionary"
 msgstr "Додати словник"
 
-#: setup/main.py:748
+#: setup/main.py:739
 msgid "Remove a dictionary"
 msgstr "Вилучити словник"
 
-#: setup/main.py:759
+#: setup/main.py:750
 msgid "Move dictionary up"
 msgstr "Пересунути словник вище"
 
-#: setup/main.py:771
+#: setup/main.py:762
 msgid "Move dictionary down"
 msgstr "Пересунути словник нижче"
+
+#. Translators: A button used to try to install the
+#. dictionaries which are setup here but not installed
+#: setup/main.py:769
+msgid "Install missing dictionaries"
+msgstr "Встановити невстановлені словники"
+
+#: setup/main.py:771
+msgid "Install the dictionaries which are setup here but not installed"
+msgstr "Встановити словники, які налаштовано тут, але які не встановлено"
+
+#: setup/main.py:778 setup/main.py:893 setup/main.py:1077 setup/main.py:3427
+msgid "Set to default"
+msgstr "Встановити типову"
+
+#: setup/main.py:782
+msgid "Set dictionaries to the default for the current locale."
+msgstr ""
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
 #. ibus-typing-booster.
-#: setup/main.py:796
+#: setup/main.py:811
 msgid "Use the following input methods:"
 msgstr "Використовувати такі способи введення:"
 
-#: setup/main.py:824
+#: setup/main.py:839
 msgid "Add an input method"
 msgstr "Додати спосіб введення"
 
-#: setup/main.py:836
+#: setup/main.py:851
 msgid "Remove an input method"
 msgstr "Вилучити спосіб введення"
 
-#: setup/main.py:848
+#: setup/main.py:863
 msgid "Move input method up"
 msgstr "Пересунути спосіб введення вище"
 
-#: setup/main.py:860
+#: setup/main.py:875
 msgid "Move input method down"
 msgstr "Пересунути спосіб введення нижче"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
-#: setup/main.py:868
+#: setup/main.py:883
 msgid "Input Method Help"
 msgstr "Довідка зі способу введення"
 
-#: setup/main.py:870
+#: setup/main.py:885
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
 "Показувати довідкову інформацію щодо того, як користуватися способом "
 "введення, вибраним вище."
 
-#: setup/main.py:891
+#: setup/main.py:897
+msgid "Set input methods to the default for the current locale."
+msgstr ""
+
+#: setup/main.py:920
 msgid "Enter shortcut here:"
 msgstr "Вкажіть скорочення:"
 
-#: setup/main.py:908
+#: setup/main.py:937
 msgid "Enter shortcut expansion here:"
 msgstr "Вкажіть розгортання скорочення:"
 
-#: setup/main.py:924
+#: setup/main.py:953
 msgid "Clear input"
 msgstr "Вилучити введене"
 
-#: setup/main.py:934
+#: setup/main.py:963
 msgid "Delete shortcut"
 msgstr "Вилучити скорочення"
 
-#: setup/main.py:944
+#: setup/main.py:973
 msgid "Add shortcut"
 msgstr "Додати скорочення"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
-#: setup/main.py:968
+#: setup/main.py:997
 msgid "Shortcut"
 msgstr "Скорочення"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
-#: setup/main.py:975
+#: setup/main.py:1004
 msgid "Shortcut expansion"
 msgstr "Розгортання скорочення"
 
-#: setup/main.py:986
+#: setup/main.py:1015
 msgid "Current key bindings:"
 msgstr "Поточні прив'язки клавіш:"
 
 #. Translators: Column heading of the table listing the
 #. existing key bindings
-#: setup/main.py:1010
+#: setup/main.py:1039
 msgid "Command"
 msgstr "Команда"
 
-#: setup/main.py:1037
+#: setup/main.py:1066
 msgid "Edit"
 msgstr "Змінити"
 
-#: setup/main.py:1041
+#: setup/main.py:1070
 msgid "Edit the key bindings for the selected command"
 msgstr "Змінити прив'язки клавіш для вибраної команди"
 
-#: setup/main.py:1048 setup/main.py:3369
-msgid "Set to default"
-msgstr "Встановити типову"
-
-#: setup/main.py:1052 setup/main.py:3374
+#: setup/main.py:1081 setup/main.py:3432
 msgid "Set default key bindings for the selected command"
 msgstr "Встановити типову прив'язку клавіш для вибраної команди"
 
-#: setup/main.py:1059
+#: setup/main.py:1088
 msgid "Set all to default"
 msgstr "Встановити типові для усіх"
 
-#: setup/main.py:1063
+#: setup/main.py:1092
 msgid "Set default key bindings for all commands"
 msgstr "Встановити типові прив'язки клавіш для усіх команд"
 
 #. Translators: Checkbox to choose whether to display how
 #. many candidates there are and which one is selected on
 #. top of the list of candidates.
-#: setup/main.py:1083
+#: setup/main.py:1112
 msgid "Display total number of candidates"
 msgstr "Показувати загальну кількість варіантів"
 
-#: setup/main.py:1085
+#: setup/main.py:1114
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
@@ -864,11 +872,11 @@ msgstr ""
 #. method is currently used for the preedit. The auxiliary
 #. text is an optional line of text displayed above the
 #. candidate list.
-#: setup/main.py:1105
+#: setup/main.py:1134
 msgid "Show status info in auxiliary text"
 msgstr "Показувати дані щодо стану у допоміжному тексті"
 
-#: setup/main.py:1107
+#: setup/main.py:1136
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "
@@ -882,11 +890,11 @@ msgstr ""
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
-#: setup/main.py:1128
+#: setup/main.py:1157
 msgid "Candidate window page size:"
 msgstr "Розмір сторінки вікна варіантів:"
 
-#: setup/main.py:1130
+#: setup/main.py:1159
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr ""
@@ -894,54 +902,54 @@ msgstr ""
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
-#: setup/main.py:1156
+#: setup/main.py:1185
 msgid "Candidate window orientation"
 msgstr "Орієнтація вікна варіантів"
 
-#: setup/main.py:1158
+#: setup/main.py:1187
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
 msgstr "Визначає орієнтацію вікна варіантів, вертикальну чи горизонтальну."
 
-#: setup/main.py:1167
+#: setup/main.py:1196
 msgid "Horizontal"
 msgstr "Горизонтально"
 
-#: setup/main.py:1169
+#: setup/main.py:1198
 msgid "Vertical"
 msgstr "Вертикально"
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
-#: setup/main.py:1196
+#: setup/main.py:1225
 msgid "Preedit underline"
 msgstr "Підкреслювання попереднього редагування"
 
-#: setup/main.py:1198
+#: setup/main.py:1227
 msgid "Which style of underlining to use for the preedit."
 msgstr "Визначає стиль підкреслювання у режимі попереднього редагування."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
-#: setup/main.py:1208
+#: setup/main.py:1237
 msgid "None"
 msgstr "Немає"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
-#: setup/main.py:1212
+#: setup/main.py:1241
 msgid "Single"
 msgstr "Одинарне"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
-#: setup/main.py:1216
+#: setup/main.py:1245
 msgid "Double"
 msgstr "Подвійне"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
-#: setup/main.py:1220
+#: setup/main.py:1249
 msgid "Low"
 msgstr "Низьке"
 
@@ -951,11 +959,11 @@ msgstr "Низьке"
 #. option to enable lookup only when a key is pressed or
 #. because one uses the option to require a minimum number
 #. of characters before a lookup is done.
-#: setup/main.py:1248
+#: setup/main.py:1277
 msgid "Use preedit style only if lookup is enabled"
 msgstr "Стиль попереднього редагування, якщо увімкнено пошук"
 
-#: setup/main.py:1250
+#: setup/main.py:1279
 msgid ""
 "If this option is on, a preedit style like underlining will only be used if "
 "lookup is enabled. The lookup can be disabled because one uses the option to "
@@ -972,11 +980,11 @@ msgstr ""
 #. spellchecking is done on the contents of the preedit and
 #. a custom color is used to indicate when the preedit
 #. might contain a spelling error.
-#: setup/main.py:1272
+#: setup/main.py:1301
 msgid "Preedit spellchecking"
 msgstr "Перевірка правопису до редагування"
 
-#: setup/main.py:1274
+#: setup/main.py:1303
 msgid ""
 "Here you can choose whether spellchecking is done on the contents of the "
 "preedit and a custom color is used to indicate when the preedit might "
@@ -989,11 +997,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
-#: setup/main.py:1306
+#: setup/main.py:1335
 msgid "Choose color for preedit spellchecking"
 msgstr "Виберіть колір для помилок правопису у тексті до редагування"
 
-#: setup/main.py:1308
+#: setup/main.py:1337
 msgid ""
 "Here you can specify which color to use for the preedit when the preedit "
 "might contain a spelling error. This setting only has an effect if the "
@@ -1005,11 +1013,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
-#: setup/main.py:1327
+#: setup/main.py:1356
 msgid "Use color for inline completion"
 msgstr "Колір для рядкового доповнення"
 
-#: setup/main.py:1329
+#: setup/main.py:1358
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
@@ -1020,11 +1028,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
-#: setup/main.py:1359
+#: setup/main.py:1388
 msgid "Choose color for inline completion"
 msgstr "Вибрати колір для рядкового доповнення"
 
-#: setup/main.py:1361
+#: setup/main.py:1390
 msgid ""
 "Here you can specify which color to use for inline completion. This setting "
 "only has an effect if the use of color for inline completion is enabled and "
@@ -1038,11 +1046,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
-#: setup/main.py:1381
+#: setup/main.py:1410
 msgid "Use color for user database suggestions"
 msgstr "Колір для пропозицій із бази даних користувача"
 
-#: setup/main.py:1383
+#: setup/main.py:1412
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
@@ -1053,11 +1061,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
-#: setup/main.py:1409
+#: setup/main.py:1438
 msgid "Choose color for user database suggestions"
 msgstr "Вибрати колір для варіантів з бази даних користувача"
 
-#: setup/main.py:1411
+#: setup/main.py:1440
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
@@ -1070,11 +1078,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
-#: setup/main.py:1431
+#: setup/main.py:1460
 msgid "Use color for spellchecking suggestions"
 msgstr "Колір для пропозицій від засобу перевірки правопису"
 
-#: setup/main.py:1433
+#: setup/main.py:1462
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
@@ -1085,11 +1093,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
-#: setup/main.py:1459
+#: setup/main.py:1488
 msgid "Choose color for spellchecking suggestions"
 msgstr "Вибрати колір для пропозицій від засобу перевірки правопису"
 
-#: setup/main.py:1461
+#: setup/main.py:1490
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
@@ -1103,11 +1111,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
-#: setup/main.py:1482
+#: setup/main.py:1511
 msgid "Use color for dictionary suggestions"
 msgstr "Колір для пропозицій зі словника"
 
-#: setup/main.py:1484
+#: setup/main.py:1513
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
@@ -1118,11 +1126,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
-#: setup/main.py:1510
+#: setup/main.py:1539
 msgid "Choose color for dictionary suggestions"
 msgstr "Вибрати колір для пропозицій зі словника"
 
-#: setup/main.py:1512
+#: setup/main.py:1541
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
@@ -1136,11 +1144,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
-#: setup/main.py:1533
+#: setup/main.py:1562
 msgid "Use label for user database suggestions"
 msgstr "Мітка для пропозицій із бази даних користувача"
 
-#: setup/main.py:1535
+#: setup/main.py:1564
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
@@ -1152,11 +1160,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
-#: setup/main.py:1569
+#: setup/main.py:1598
 msgid "Use label for spellchecking suggestions"
 msgstr "Мітка для пропозицій від засобу перевірки правопису"
 
-#: setup/main.py:1571
+#: setup/main.py:1600
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
@@ -1168,11 +1176,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
-#: setup/main.py:1605
+#: setup/main.py:1634
 msgid "Use label for dictionary suggestions"
 msgstr "Мітка для пропозицій зі словника"
 
-#: setup/main.py:1607
+#: setup/main.py:1636
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
@@ -1182,11 +1190,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
-#: setup/main.py:1640
+#: setup/main.py:1669
 msgid "Use a label to indicate busy state"
 msgstr "Мітка для позначення стану зайнятості"
 
-#: setup/main.py:1642
+#: setup/main.py:1671
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
@@ -1195,60 +1203,60 @@ msgstr ""
 "зайнятості обробкою програми ibus-typing-booster."
 
 #. Translators:
-#: setup/main.py:1674 setup/main.py:2462
+#: setup/main.py:1703 setup/main.py:2492
 msgid "Set “Google application credentials” .json file:"
 msgstr "Вкажіть файл .json «Реєстраційні дані програми Google»:"
 
-#: setup/main.py:1676
+#: setup/main.py:1705
 msgid "Full path of the “Google application credentials” .json file."
 msgstr "Шлях до файла .json «Реєстраційні дані програми Google» повністю."
 
-#: setup/main.py:1684
+#: setup/main.py:1713
 msgid "File not yet set."
 msgstr "Файл ще не встановлено."
 
-#: setup/main.py:1740
+#: setup/main.py:1769
 msgid "Spell checking"
 msgstr "Перевірка правопису"
 
-#: setup/main.py:1756
+#: setup/main.py:1785
 msgid "Emoji"
 msgstr "Емодзі"
 
-#: setup/main.py:1953
+#: setup/main.py:1983
 msgid "Are you sure?"
 msgstr "Ви впевнені?"
 
-#: setup/main.py:1955 setup/main.py:2465 setup/main.py:3441
+#: setup/main.py:1985 setup/main.py:2495 setup/main.py:3499
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: setup/main.py:1956 setup/main.py:2466 setup/main.py:3442
+#: setup/main.py:1986 setup/main.py:2496 setup/main.py:3500
 msgid "_OK"
 msgstr "_Гаразд"
 
-#: setup/main.py:1988
+#: setup/main.py:2018
 msgid "Another instance of this app is already running."
 msgstr "Вже запущено інший екземпляр цієї програми."
 
-#: setup/main.py:2662
+#: setup/main.py:2693
 msgid "Add dictionary"
 msgstr "Додати словник"
 
-#: setup/main.py:2930
+#: setup/main.py:2975
 msgid "Add input method"
 msgstr "Додати спосіб введення"
 
-#: setup/main.py:3323
+#: setup/main.py:3381
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Змінити прив'язку клавіш для команди «%s»"
 
-#: setup/main.py:3350
+#: setup/main.py:3408
 msgid "Add a key binding"
 msgstr "Додати прив'язку клавіш"
 
-#: setup/main.py:3362
+#: setup/main.py:3420
 msgid "Remove selected key binding"
 msgstr "Вилучити позначену прив'язку клавіш"
 
@@ -1257,22 +1265,22 @@ msgstr "Вилучити позначену прив'язку клавіш"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:3422
+#: setup/main.py:3480
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr "Ви справді хочете повернути для усіх команд типові прив'язки клавіш?"
 
-#: setup/main.py:3438
+#: setup/main.py:3496
 msgid "Open File ..."
 msgstr "Відкрити файл…"
 
-#: setup/main.py:3457
+#: setup/main.py:3515
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Успішно вивчено з файла %(filename)s."
 
-#: setup/main.py:3466
+#: setup/main.py:3524
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Спроба навчання з файла %(filename)s зазнала невдачі."
@@ -1287,7 +1295,7 @@ msgstr "Спроба навчання з файла %(filename)s зазнала 
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:3489
+#: setup/main.py:3547
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1295,7 +1303,7 @@ msgstr ""
 "Ви справді хочете вилучити усі дані мови, вивчені із введених даних і "
 "читання файлів?"
 
-#: setup/main.py:4686
+#: setup/main.py:4744
 msgid "ibus is not running."
 msgstr "ibus не запущено."
 
