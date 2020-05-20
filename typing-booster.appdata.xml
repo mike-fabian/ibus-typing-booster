@@ -19,6 +19,52 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.9.0" date="2020-05-20" urgency="medium">
+      <description>
+        <ul>
+          <li>
+            Translation updates from Weblate for de, ja, pl, tr, uk, zh_CN
+          </li>
+          <li>
+            Update ibus-typing-booster.pot (Some new translatable
+            strings, tooltips for 2 new buttons)
+          </li>
+          <li>
+            Improve matching of keybindings, consider
+            IBus.ModifierType.MODIFIER_MASK (Resolves:
+            https://github.com/mike-fabian/ibus-typing-booster/issues/94)
+          </li>
+          <li>
+            Show the list of dictionaries in the setup tool only if it
+            is more than just ['None']
+          </li>
+          <li>
+            If a real dictionary is added in the setup tool, remove
+            dummy dictionary 'None'.
+          </li>
+          <li>
+            Add black flag for the special dummy dictionary 'None'
+          </li>
+          <li>
+            Add doctests to check that the special dictionary 'None'
+            is handled correctly
+          </li>
+          <li>
+            When the list of imes or dictionaries is emptied by the
+            user, set it to 'NoIME' or 'None' (Resolves:
+            https://github.com/mike-fabian/ibus-typing-booster/issues/98)
+          </li>
+          <li>
+            Add "Set to default" buttons for the list of input methods
+            and dictionaries
+          </li>
+          <li>
+            Remove the special candidate which is shown when a
+            dictionary is missing
+          </li>
+       </ul>
+      </description>
+    </release>
     <release version="2.8.3" date="2020-05-14" urgency="medium">
       <description>
         <ul>

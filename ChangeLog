@@ -1,4 +1,17 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 20 May 2020 Released 2.9.0
+* Translation updates from Weblate for de, ja, pl, tr, uk, zh_CN
+* Update ibus-typing-booster.pot (Some new translatable strings, tooltips for 2 new buttons)
+* Improve matching of keybindings, consider IBus.ModifierType.MODIFIER_MASK (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/94)
+* Show the list of dictionaries in the setup tool only if it is more than just ['None']
+* If a real dictionary is added in the setup tool, remove dummy dictionary 'None'.
+* Add black flag for the special dummy dictionary 'None'
+* Add doctests to check that the special dictionary 'None' is handled correctly
+* When the list of imes or dictionaries is emptied by the user, set it to 'NoIME' or 'None' (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/98)
+* Add "Set to default" buttons for the list of input methods and dictionaries
+* Remove the special candidate which is shown when a dictionary is missing
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 14 May 2020 Released 2.8.3
 * Save default dictionaries and input methods when making the lists empty in the setup tool
 * Fix reading “include” instructions in Compose files and observe XCOMPOSEFILE (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/93)
