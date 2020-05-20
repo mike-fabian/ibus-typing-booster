@@ -1574,6 +1574,7 @@ SUPPORTED_DICTIONARIES.update(CLDR_ANNOTATION_FILES)
 SUPPORTED_DICTIONARIES.update(GOOGLE_SPEECH_TO_TEXT_LANGUAGES)
 
 FLAGS = {
+    'None': '🏴',
     'af': '🇿🇦',
     'af_NA': '🇳🇦',
     'af_ZA': '🇿🇦',
