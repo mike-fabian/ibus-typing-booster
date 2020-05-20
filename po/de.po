@@ -14,16 +14,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-05-20 16:27+0200\n"
-"PO-Revision-Date: 2020-02-03 17:55+0000\n"
+"PO-Revision-Date: 2020-05-20 14:54+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.0.4\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -751,11 +751,12 @@ msgstr ""
 
 #: setup/main.py:778 setup/main.py:893 setup/main.py:1077 setup/main.py:3427
 msgid "Set to default"
-msgstr "Auf  Standard setzen"
+msgstr "Auf Standard setzen"
 
 #: setup/main.py:782
 msgid "Set dictionaries to the default for the current locale."
 msgstr ""
+"Zurücksetzen der Wörterbücher auf die Voreinstellung für die aktuelle Locale."
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
@@ -794,6 +795,8 @@ msgstr "Hilfe zur Benutzung der oben ausgewählten Eingabemethode anzeigen."
 #: setup/main.py:897
 msgid "Set input methods to the default for the current locale."
 msgstr ""
+"Zurücksetzen der Eingabemethoden auf die Voreinstellung für die aktuelle "
+"Locale."
 
 #: setup/main.py:920
 msgid "Enter shortcut here:"
