@@ -1,7 +1,7 @@
 # Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019.
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
 # Mike FABIAN <mfabian@redhat.com>, 2019. #zanata
-# Anonymous <noreply@weblate.org>, 2019.
+# Anonymous <noreply@weblate.org>, 2019, 2020.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 msgid ""
 msgstr ""
@@ -9,16 +9,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-05-20 16:27+0200\n"
-"PO-Revision-Date: 2019-12-21 00:47+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Japanese <https://translate.stg.fedoraproject.org/projects/"
+"PO-Revision-Date: 2020-05-21 09:29+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.0.4\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -732,7 +732,7 @@ msgstr ""
 #. existing shortcuts
 #: setup/main.py:997
 msgid "Shortcut"
-msgstr ""
+msgstr "ショートカット"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -805,7 +805,7 @@ msgstr ""
 #. candidates to show in one page of the candidate list.
 #: setup/main.py:1157
 msgid "Candidate window page size:"
-msgstr ""
+msgstr "候補ウインドウの項目数(_W):"
 
 #: setup/main.py:1159
 msgid ""

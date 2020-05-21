@@ -1,7 +1,7 @@
 # lexuge <LEXUGEyky@outlook.com>, 2017. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020.
 # Qiyu Yan <yanqiyu01@gmail.com>, 2019.
-# Anonymous <noreply@weblate.org>, 2019.
+# Anonymous <noreply@weblate.org>, 2019, 2020.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 msgid ""
 msgstr ""
@@ -9,16 +9,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-05-20 16:27+0200\n"
-"PO-Revision-Date: 2020-01-11 12:15+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Chinese (Simplified) <https://translate.stg.fedoraproject.org/"
+"PO-Revision-Date: 2020-05-21 09:25+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_CN/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.10.1\n"
+"X-Generator: Weblate 4.0.4\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -139,7 +139,7 @@ msgstr "开启"
 
 #: engine/hunspell_table.py:501
 msgid "Input mode"
-msgstr ""
+msgstr "输入模式"
 
 #: engine/hunspell_table.py:502
 msgid "Here you can switch ibus-typing-booster on or off."
@@ -289,7 +289,7 @@ msgstr ""
 
 #: engine/itb_util.py:3276 engine/itb_util.py:3585
 msgid "Unknown error"
-msgstr ""
+msgstr "未知错误"
 
 #: engine/itb_util.py:3556
 msgid "Native Keyboard"
@@ -366,7 +366,7 @@ msgstr ""
 #. behaviour of ibus-typing-booster.
 #: setup/main.py:214
 msgid "Options"
-msgstr ""
+msgstr "选项"
 
 #. Translators: This is a label of a tab in the setup tool.
 #. Here the user can create custom shortcuts. For example if
@@ -399,7 +399,7 @@ msgstr ""
 #. diffent types of candidates should be marked with labels.
 #: setup/main.py:266
 msgid "Appearance"
-msgstr ""
+msgstr "外观："
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
