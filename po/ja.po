@@ -1,6 +1,6 @@
-# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019.
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
-# Mike FABIAN <mfabian@redhat.com>, 2019. #zanata
+# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019, 2020.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020.
+# Mike FABIAN <mfabian@redhat.com>, 2019. #zanata, 2020.
 # Anonymous <noreply@weblate.org>, 2019, 2020.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 msgid ""
@@ -9,8 +9,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-05-20 16:27+0200\n"
-"PO-Revision-Date: 2020-05-21 09:29+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2020-05-21 17:05+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ja/>\n"
 "Language: ja\n"
@@ -805,7 +805,7 @@ msgstr ""
 #. candidates to show in one page of the candidate list.
 #: setup/main.py:1157
 msgid "Candidate window page size:"
-msgstr "候補ウインドウの項目数(_W):"
+msgstr "候補ウインドウの項目数:"
 
 #: setup/main.py:1159
 msgid ""

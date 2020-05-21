@@ -9,8 +9,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-05-20 16:27+0200\n"
-"PO-Revision-Date: 2020-05-21 09:25+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2020-05-21 17:05+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_CN/>\n"
 "Language: zh_CN\n"
@@ -399,7 +399,7 @@ msgstr ""
 #. diffent types of candidates should be marked with labels.
 #: setup/main.py:266
 msgid "Appearance"
-msgstr "外观："
+msgstr "外观"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
