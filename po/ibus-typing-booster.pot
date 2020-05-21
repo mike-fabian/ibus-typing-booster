@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-05-20 16:49+0200\n"
+"POT-Creation-Date: 2020-05-21 18:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -273,27 +273,27 @@ msgstr ""
 msgid "regional"
 msgstr ""
 
-#: engine/itb_util.py:3267 engine/itb_util.py:3576
+#: engine/itb_util.py:3268 engine/itb_util.py:3577
 msgid "File not found"
 msgstr ""
 
-#: engine/itb_util.py:3270 engine/itb_util.py:3579
+#: engine/itb_util.py:3271 engine/itb_util.py:3580
 msgid "Permission error"
 msgstr ""
 
-#: engine/itb_util.py:3273 engine/itb_util.py:3582
+#: engine/itb_util.py:3274 engine/itb_util.py:3583
 msgid "Unicode decoding error"
 msgstr ""
 
-#: engine/itb_util.py:3276 engine/itb_util.py:3585
+#: engine/itb_util.py:3277 engine/itb_util.py:3586
 msgid "Unknown error"
 msgstr ""
 
-#: engine/itb_util.py:3556
+#: engine/itb_util.py:3557
 msgid "Native Keyboard"
 msgstr ""
 
-#: engine/itb_util.py:3558
+#: engine/itb_util.py:3559
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -303,38 +303,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4036
+#: engine/itb_util.py:4037
 msgid "Key input"
 msgstr ""
 
-#: engine/itb_util.py:4042
+#: engine/itb_util.py:4043
 msgid "Cancel"
 msgstr ""
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4049
+#: engine/itb_util.py:4050
 msgid "Please press a key (or a key combination)"
 msgstr ""
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4054
+#: engine/itb_util.py:4055
 msgid "The dialog will be closed when the key is released"
 msgstr ""
 
-#: engine/itb_util.py:4085
+#: engine/itb_util.py:4086
 msgid "A completion input method to speedup typing."
 msgstr ""
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4094
+#: engine/itb_util.py:4095
 msgid "translator-credits"
 msgstr ""
 
-#: engine/itb_util.py:4102
+#: engine/itb_util.py:4103
 msgid "Online documentation:"
 msgstr ""
 
