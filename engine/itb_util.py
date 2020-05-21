@@ -80,11 +80,12 @@ DOMAINNAME = 'ibus-typing-booster'
 _ = lambda a: gettext.dgettext(DOMAINNAME, a)
 N_ = lambda a: a
 
-# When matching keybindings, the following modifiers
-# for all bits set in this mask are ignored:
-KEYBINDING_IGNORE_MASK = (
-    IBus.ModifierType.LOCK_MASK | # Caps Lock
-    IBus.ModifierType.MOD2_MASK   # Num Lock
+# When matching keybindings, only the bits in the following mask are
+# considered for key.state:
+KEYBINDING_STATE_MASK = (
+    IBus.ModifierType.MODIFIER_MASK
+    & ~IBus.ModifierType.LOCK_MASK # Caps Lock
+    & ~IBus.ModifierType.MOD2_MASK # Num Lock
 )
 
 # The number of current dictionaries needs to be limited to some fixed
@@ -4006,7 +4007,7 @@ class HotKeys:
             for keybinding in keybindings[command]:
                 key = keybinding_to_keyevent(keybinding)
                 val = key.val
-                state = key.state & ~KEYBINDING_IGNORE_MASK
+                state = key.state & KEYBINDING_STATE_MASK
                 if command in self._hotkeys:
                     self._hotkeys[command].append((val, state))
                 else:
@@ -4018,7 +4019,7 @@ class HotKeys:
         command = command_key_tuple[1]
         key = command_key_tuple[0]
         val = key.val
-        state = key.state & ~KEYBINDING_IGNORE_MASK
+        state = key.state & KEYBINDING_STATE_MASK
         if command in self._hotkeys:
             if (val, state) in self._hotkeys[command]:
                 return True
