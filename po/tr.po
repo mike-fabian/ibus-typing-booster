@@ -9,16 +9,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-05-20 16:27+0200\n"
-"PO-Revision-Date: 2020-04-18 19:40+0000\n"
+"PO-Revision-Date: 2020-05-21 07:39+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
-"Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/tr/>\n"
+"Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0.1\n"
+"X-Generator: Weblate 4.0.4\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -730,7 +730,7 @@ msgstr "Öntanımlıya ayarla"
 
 #: setup/main.py:782
 msgid "Set dictionaries to the default for the current locale."
-msgstr ""
+msgstr "Geçerli yerel ayar için sözlükleri öntanımlı değere ayarla."
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
@@ -770,7 +770,7 @@ msgstr ""
 
 #: setup/main.py:897
 msgid "Set input methods to the default for the current locale."
-msgstr ""
+msgstr "Geçerli yerel ayar için giriş yöntemlerini öntanımlı değere ayarla."
 
 #: setup/main.py:920
 msgid "Enter shortcut here:"
