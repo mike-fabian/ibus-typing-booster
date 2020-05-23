@@ -9,16 +9,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-05-21 18:31+0200\n"
-"PO-Revision-Date: 2020-02-05 13:04+0000\n"
+"PO-Revision-Date: 2020-05-23 13:40+0000\n"
 "Last-Translator: Geert Warrink <geert.warrink@onsnet.nu>\n"
-"Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/nl/>\n"
+"Language-Team: Dutch <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.0.4\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -734,7 +734,7 @@ msgstr "Standaard sneltoets instellen"
 #. dictionaries to the default for the current locale.
 #: setup/main.py:784
 msgid "Set dictionaries to the default for the current locale."
-msgstr ""
+msgstr "Stel woordenboeken in als de standaard voor de huidige landinstelling."
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
@@ -776,7 +776,7 @@ msgstr ""
 #. input methods to the default for the current locale.
 #: setup/main.py:901
 msgid "Set input methods to the default for the current locale."
-msgstr ""
+msgstr "Stel invoermethoden in op de standaard voor de huidige landinstelling."
 
 #: setup/main.py:924
 msgid "Enter shortcut here:"
