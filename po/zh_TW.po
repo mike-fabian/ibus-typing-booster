@@ -11,7 +11,7 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2020-05-21 18:31+0200\n"
 "PO-Revision-Date: 2020-05-24 14:40+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Chinese (Traditional) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_TW/>\n"
 "Language: zh_TW\n"
@@ -131,7 +131,7 @@ msgstr ""
 #: engine/hunspell_table.py:477 engine/hunspell_table.py:511
 #: engine/hunspell_table.py:532
 msgid "Off"
-msgstr ""
+msgstr "關閉"
 
 #: engine/hunspell_table.py:482 engine/hunspell_table.py:516
 #: engine/hunspell_table.py:537
@@ -140,7 +140,7 @@ msgstr ""
 
 #: engine/hunspell_table.py:501
 msgid "Input mode"
-msgstr ""
+msgstr "輸入模式"
 
 #: engine/hunspell_table.py:502
 msgid "Here you can switch ibus-typing-booster on or off."
@@ -186,7 +186,7 @@ msgstr ""
 
 #: engine/hunspell_table.py:1710
 msgid "Setup"
-msgstr ""
+msgstr "設置"
 
 #: engine/hunspell_table.py:1713 setup/main.py:137
 msgid "Preferences for ibus-typing-booster"
@@ -257,12 +257,12 @@ msgstr ""
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:782 engine/itb_emoji.py:993
 msgid "symbols"
-msgstr ""
+msgstr "符號"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:783 engine/itb_emoji.py:979
 msgid "flags"
-msgstr ""
+msgstr "旗幟"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
@@ -290,7 +290,7 @@ msgstr ""
 
 #: engine/itb_util.py:3277 engine/itb_util.py:3586
 msgid "Unknown error"
-msgstr ""
+msgstr "不明的錯誤"
 
 #: engine/itb_util.py:3557
 msgid "Native Keyboard"
@@ -312,7 +312,7 @@ msgstr ""
 
 #: engine/itb_util.py:4043
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
