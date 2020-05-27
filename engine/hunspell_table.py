@@ -4566,6 +4566,10 @@ class TypingBoosterEngine(IBus.Engine):
                              IBus.KEY_Page_Up,
                              IBus.KEY_KP_Page_Up,
                              IBus.KEY_KP_Prior)
+                 or (len(key.msymbol) == 1
+                     and (key.control
+                          or key.mod1 # mod1: Usually Alt
+                          or key.super or key.hyper or key.meta))
                  or (len(key.msymbol) == 3
                      and key.msymbol[:2] in ('A-', 'C-', 'G-')
                      and not self._has_transliteration([key.msymbol])))):
@@ -4601,6 +4605,18 @@ class TypingBoosterEngine(IBus.Engine):
                 # 'G- ' (AltGr-Space) is prevented from triggering
                 # a commit here, because it is used to enter spaces
                 # into the preëdit, if possible.
+                #
+                # If key.msymbol is a single character and Control,
+                # Alt, Super, Hyper, or Meta is pressed, commit the
+                # preedit and pass the key to the application because
+                # the user probably tried to use a keyboard shortcut
+                # like Control+a on a keyboard layout which does not
+                # produce ASCII, for example the Greek keyboard layout
+                # (On a keyboard layout which produces ASCII,
+                # Control+a would result in key.msymbol == 'C-a' and
+                # this would also trigger a commit unless 'C-a' is
+                # transliterated to something).  See:
+                # https://github.com/mike-fabian/ibus-typing-booster/issues/107
             if self.is_empty():
                 return self._return_false(key.val, key.code, key.state)
             if (not self.get_lookup_table().cursor_visible

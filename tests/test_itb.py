@@ -1274,5 +1274,25 @@ class ItbTestCase(unittest.TestCase):
             ('kisussa', -1, '', False, True)
         ])
 
+    def test_control_alpha(self):
+        '''Test case for
+        https://github.com/mike-fabian/ibus-typing-booster/issues/107
+
+        Control+Greek_alpha shouild trigger a commit and forward
+        the key to the application.
+        '''
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_GB'], update_gsettings=False)
+        self.engine.do_process_key_event(
+            IBus.KEY_Greek_alpha, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'α')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(
+            IBus.KEY_Greek_alpha, 0, IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'αα')
+
 if __name__ == '__main__':
     unittest.main()
