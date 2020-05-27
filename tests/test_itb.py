@@ -52,6 +52,7 @@ sys.path.insert(0, "../engine")
 import hunspell_table
 import tabsqlitedb
 import itb_util
+from m17n_translit import Transliterator
 # pylint: enable=import-error
 sys.path.pop(0)
 
@@ -287,6 +288,19 @@ class ItbTestCase(unittest.TestCase):
             'toggle_input_mode_on_off': [],
             'toggle_off_the_record': ['Mod5+F9'],
         }, update_gsettings=False)
+
+    def get_transliterator_or_skip(self, ime):
+        try:
+            sys.stderr.write('ime "%s" ... ' %ime)
+            trans = Transliterator(ime)
+        except ValueError as error:
+            trans = None
+            self.skipTest(error)
+        except Exception as error:
+            sys.stderr.write('Unexpected exception!')
+            trans = None
+            self.skipTest(error)
+        return trans
 
     def test_dummy(self):
         self.assertEqual(True, True)
@@ -859,6 +873,17 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine._candidates[0][0], 'cerulean')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'test\tcerulean ')
+
+    def test_hi_inscript2_rupee_symbol(self):
+        dummy_trans = self.get_transliterator_or_skip('hi-inscript2')
+        self.engine.set_current_imes(
+            ['hi-inscript2'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['hi_IN'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_4, 0, IBus.ModifierType.MOD5_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, '₹')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, '₹ ')
 
     def test_digits_used_in_keybindings(self):
         self.engine.set_current_imes(
