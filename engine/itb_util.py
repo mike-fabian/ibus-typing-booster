@@ -4062,7 +4062,7 @@ class ItbKeyInputDialog(Gtk.MessageDialog):
     def on_key_press_event(# pylint: disable=no-self-use
             self, widget, event):
         widget.e = (event.keyval,
-                    event.get_state() & ~KEYBINDING_IGNORE_MASK)
+                    event.get_state() & KEYBINDING_STATE_MASK)
         return True
     def on_key_release_event(# pylint: disable=no-self-use
             self, widget, _event):
