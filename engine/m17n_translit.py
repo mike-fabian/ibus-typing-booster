@@ -246,8 +246,8 @@ class Transliterator:
     'grün'
 
     >>> trans = Transliterator('NoIME')
-    >>> trans.transliterate(['a', 'b', 'c', 'C-c', 'G-4'])
-    'abcC-cG-4'
+    >>> trans.transliterate(['a', 'b', 'c', 'C-c', 'G-4', 'C-α', 'G-α'])
+    'abcC-cG-4C-αG-α'
 
     >>> trans = Transliterator('ja-anthy')
     >>> trans.transliterate(['c', 'h', 'o', 'u', 'c', 'h', 'o', 'u'])
