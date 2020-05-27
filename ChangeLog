@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 27 May 2020 Released 2.9.1
+* Translation updates form Weblate for fr, nl, zh_TW
+* Make keyboard shortcuts like Control+a work on non-ASCII keyboard layouts (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/107)
+* Fix broken adding of key bindings (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/109)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 20 May 2020 Released 2.9.0
 * Translation updates from Weblate for de, ja, pl, tr, uk, zh_CN
 * Update ibus-typing-booster.pot (Some new translatable strings, tooltips for 2 new buttons)
