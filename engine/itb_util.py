@@ -2642,8 +2642,8 @@ def is_right_to_left_messages():
         return False
     lang = lc_messages_locale.split('_')[0]
     if lang in ('ar', 'arc', 'dv', 'fa', 'he', 'ps', 'ur', 'yi'):
-        # 'ku' could be Latin script or Arabic script or even Cyrillic or Armenian
-        # script
+        # 'ku' could be Latin script or Arabic script or even Cyrillic
+        # or Armenian script
         return True
     return False
 
@@ -3157,8 +3157,8 @@ class ComposeSequences:
         compose_file_paths.append(os.path.expanduser('~/.config/ibus/Compose'))
         # For the meaning of XCOMPOSEFILE, see
         # https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html
-        user_compose_file = os.environ.get('XCOMPOSEFILE') or os.path.expanduser(
-            '~/.XCompose')
+        user_compose_file = os.environ.get(
+            'XCOMPOSEFILE') or os.path.expanduser('~/.XCompose')
         compose_file_paths.append(user_compose_file)
         for path in compose_file_paths:
             self._read_compose_file(path)
@@ -3422,11 +3422,12 @@ class ComposeSequences:
             if index < len(keyvals) - 1:
                 if keyval not in self._dead_keys:
                     return '' # Invalid dead key sequence
-                combining_sequence = self._dead_keys[keyval] + combining_sequence
+                combining_sequence = self._dead_keys[
+                    keyval] + combining_sequence
             else:
                 if keyval in self._dead_keys:
                     return None # Incomplete sequence
-                elif len(keyvals) == 1:
+                if len(keyvals) == 1:
                     return '' # Invalid dead key sequence
                 character = IBus.keyval_to_unicode(keyval)
                 if (not character
