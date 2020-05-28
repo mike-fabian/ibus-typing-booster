@@ -849,7 +849,7 @@ class ItbTestCase(unittest.TestCase):
             ['NoIME', 't-latn-post'], update_gsettings=False)
         self.engine.set_dictionary_names(
             ['en_US'], update_gsettings=False)
-        self.engine.set_tab_enable(True)
+        self.engine.set_tab_enable(True, update_gsettings=False)
         self.engine.set_keybindings({
             'enable_lookup': ['Insert'], # changed from default Tab
         }, update_gsettings=False)
