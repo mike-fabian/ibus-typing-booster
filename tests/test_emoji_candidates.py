@@ -170,8 +170,8 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('man tone5')[0][:2],
             ('👨🏿', 'man: dark skin tone “man tone5”'))
         self.assertEqual(
-            mq.candidates('tone')[0][:2],
-            ('🖐🏻', 'hand with fingers splayed: light skin tone “raised hand with fingers splayed tone1”'))
+            mq.candidates('skin tone')[0][:2],
+            ('🏻', 'emoji modifier fitzpatrick type-1-2 “tone1” [skin tone]'))
         self.assertEqual(
             mq.candidates('tone1')[0][:2],
             ('🏻', 'emoji modifier fitzpatrick type-1-2 “tone1”'))
@@ -387,16 +387,16 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('💨', 'dash symbol'))
         self.assertEqual(
             mq.candidates('close')[0][:2],
-            ('⸥', 'bottom right half bracket {Close}'))
+            ('〉', 'right angle bracket “close angle bracket” {Close}'))
         self.assertEqual(
             mq.candidates('punctuation')[0][:2],
             ('‼\ufe0f', 'double exclamation mark {Punctuation} [punctuation]'))
         self.assertEqual(
             mq.candidates('final quote')[0][:2],
-            ('»', 'right-pointing double angle quotation mark {Final quote}'))
+            ('’', 'right single quotation mark {Final quote}'))
         self.assertEqual(
             mq.candidates('initial quote')[0][:2],
-            ('«', 'left-pointing double angle quotation mark {Initial quote}'))
+            ('‘', 'left single quotation mark {Initial quote}'))
         self.assertEqual(
             mq.candidates('modifier')[0][:2],
             ('🏻', 'emoji modifier fitzpatrick type-1-2 {Modifier}'))
