@@ -3215,7 +3215,13 @@ class ComposeSequences:
             if re.match(r'U[0-9a-fA-F]{4}', name):
                 keyvals.append(int(name[1:], 16))
             else:
-                keyvals.append(eval('IBus.KEY_' + name))
+                try:
+                    keyvals.append(eval('IBus.KEY_' + name))
+                except AttributeError:
+                    LOGGER.error(
+                        'Invalid compose sequence. keysym "%s" does not exist.'
+                        % name)
+                    return
         if not keyvals:
             return
         compose_sequences = self._compose_sequences
