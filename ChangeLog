@@ -1,6 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 07 Jun 2020 Released 2.9.2
+* Translation updates from Weblate for es
+* Ignore invalid compose sequences when reading compose files
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 27 May 2020 Released 2.9.1
-* Translation updates form Weblate for fr, nl, zh_TW
+* Translation updates from Weblate for fr, nl, zh_TW
 * Make keyboard shortcuts like Control+a work on non-ASCII keyboard layouts (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/107)
 * Fix broken adding of key bindings (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/109)
 
