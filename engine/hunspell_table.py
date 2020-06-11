@@ -1120,6 +1120,10 @@ class TypingBoosterEngine(IBus.Engine):
         '''Pushes a word on the context stack which remembers the last two
         words typed.
         '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                'context=“%s” “%s” “%s” push=“%s”'
+                % (self._ppp_phrase, self._pp_phrase, self._p_phrase, phrase))
         self._ppp_phrase = self._pp_phrase
         self._pp_phrase = self._p_phrase
         self._p_phrase = phrase
@@ -1127,6 +1131,10 @@ class TypingBoosterEngine(IBus.Engine):
     def clear_context(self):
         '''Clears the context stack which remembers the last two words typed
         '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                'context=“%s” “%s” “%s”'
+                % (self._ppp_phrase, self._pp_phrase, self._p_phrase))
         self._ppp_phrase = ''
         self._pp_phrase = ''
         self._p_phrase = ''
@@ -2510,17 +2518,27 @@ class TypingBoosterEngine(IBus.Engine):
             # If getting the surrounding text is not supported, leave
             # the context as it is, i.e. rely on remembering what was
             # typed last.
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Surrounding text not supported.')
             return
         surrounding_text = self.get_surrounding_text()
+        if not surrounding_text:
+            return # should never happen
         text = surrounding_text[0].get_text()
         cursor_pos = surrounding_text[1]
-        dummy_anchor_pos = surrounding_text[2]
-        if not surrounding_text:
-            return
+        anchor_pos = surrounding_text[2]
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                'Getting context: surrounding_text = '
+                '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
+                text, cursor_pos, anchor_pos)
         if not self._commit_happened_after_focus_in:
             # Before the first commit or cursor movement, the
             # surrounding text is probably from the previously
             # focused window (bug!), don’t use it.
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug(
+                    'Skipping context from surrounding_text, no commit yet.')
             return
         tokens = ([
             itb_util.strip_token(token)
@@ -2531,6 +2549,10 @@ class TypingBoosterEngine(IBus.Engine):
             self._pp_phrase = tokens[-2]
         if len(tokens) > 2:
             self._ppp_phrase = tokens[-3]
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                'Got context from surrounding text=“%s” “%s” “%s”'
+                % (self._ppp_phrase, self._pp_phrase, self._p_phrase))
 
     def set_add_space_on_commit(self, mode, update_gsettings=True):
         '''Sets whether a space is added when a candidate is committed by 1-9
