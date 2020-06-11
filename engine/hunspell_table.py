@@ -4953,6 +4953,7 @@ class TypingBoosterEngine(IBus.Engine):
         # been recorded in the user database yet. Do it now:
         if not self.is_empty():
             self._record_in_database_and_push_context()
+        self.clear_context()
         self._clear_input_and_update_ui()
 
     def do_set_content_type(self, purpose, _hints):
