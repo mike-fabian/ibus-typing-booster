@@ -2378,7 +2378,7 @@ class TypingBoosterEngine(IBus.Engine):
                     phrase=self.get_p_phrase() + ' ' + stripped_commit_phrase,
                     p_phrase=self.get_pp_phrase(),
                     pp_phrase=self.get_ppp_phrase())
-                self.push_context(stripped_commit_phrase)
+            self.push_context(stripped_commit_phrase)
 
     def _reopen_preedit_or_return_false(self, key):
         '''BackSpace, Delete or arrow left or right has been typed.
