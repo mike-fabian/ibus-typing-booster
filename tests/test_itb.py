@@ -353,6 +353,23 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'a;. b ')
 
+    def test_push_context(self):
+        self.engine.set_current_imes(
+            ['NoIME', 't-latn-post'], update_gsettings=False)
+        self.engine.set_auto_commit_characters('.', update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_b, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_d, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, 'a b c d ')
+        self.assertEqual(self.engine._ppp_phrase, 'b')
+        self.assertEqual(self.engine._pp_phrase, 'c')
+        self.assertEqual(self.engine._p_phrase, 'd')
+
     def test_set_page_size(self):
         self.engine.set_page_size(
             3, update_gsettings=False)
