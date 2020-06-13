@@ -345,7 +345,7 @@ class ItbTestCase(unittest.TestCase):
     def test_autocommit_characters(self):
         self.engine.set_current_imes(
             ['NoIME', 't-latn-post'], update_gsettings=False)
-        self.engine.set_auto_commit_characters('.')
+        self.engine.set_auto_commit_characters('.', update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_semicolon, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_period, 0, 0)
