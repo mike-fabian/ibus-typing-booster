@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 22 Jun 2020 Released 2.9.3
+* Translation updates from Weblate for he
+* Fix wrong indentation of push_context() in _commit_string()
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 07 Jun 2020 Released 2.9.2
 * Translation updates from Weblate for es
 * Ignore invalid compose sequences when reading compose files
