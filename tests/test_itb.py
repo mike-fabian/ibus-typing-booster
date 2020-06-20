@@ -1040,6 +1040,102 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'ඩනිෂ්ක නවීන් ')
 
+    def test_vietnamese_telex(self):
+        # See also https://fedoraproject.org/wiki/QA:Bogo
+        #
+        # Type "Khoong cos gif quis hown ddoocj laapj tuwj do"
+        #
+        # You will get the Vietnamese string "Không có gì quí hơn độc lập tự do".
+        #
+        # This works exactly the same with ibus-unikey, ibus-bogo, or
+        # vi-telex used with ibus-m17n or ibus-typing-booster.
+        self.engine.set_current_imes(
+            ['vi-telex', 'NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['vi_VN'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_K, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_g, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'Không')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'Không ')
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'có')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'Không có ')
+        self.engine.do_process_key_event(IBus.KEY_g, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_f, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'gì')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'Không có gì ')
+        self.engine.do_process_key_event(IBus.KEY_q, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'quí')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'Không có gì quí ')
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_w, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'hơn')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'Không có gì quí hơn ')
+        self.engine.do_process_key_event(IBus.KEY_d, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_d, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_j, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'độc')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'Không có gì quí hơn độc ')
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_p, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_j, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'lập')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'Không có gì quí hơn độc lập ')
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_w, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_j, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'tự')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'Không có gì quí hơn độc lập tự ')
+        self.engine.do_process_key_event(IBus.KEY_d, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'do')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'Không có gì quí hơn độc lập tự do ')
+
     def test_compose_and_latn_post(self):
         self.engine.set_current_imes(
             ['t-latn-post', 'NoIME'], update_gsettings=False)
