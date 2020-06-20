@@ -15,6 +15,19 @@ layout: default
     <li><a href="#adding-non-gnome">When using other desktops than Gnome3</a></li>
     <li><a href="#adding-unity">When using the Unity desktop on Ubuntu</a></li>
   </ul>
+  <li><a href="#setup">Setup</a></li>
+  <ul>
+    <li><a href="#setup-dictionaries-input-methods">Basic setup for your language</a></li>
+    <li><a href="#options">More advanced options</a></li>
+    <ul>
+      <li><a href="#tabenable">Enable suggestions by a key</a></li>
+      <ul>
+        <li><a href="#simulate-ibus-m17n">Simulate the behaviour of ibus-m17n</a></li>
+      </ul>
+      <li><a href="#inlinecompletion">Use inline completion</a></li>
+      <li><a href="#spellchecking">Spellchecking</a></li>
+    </ul>
+  </ul>
   <li><a href="#key-bindings">Key and Mouse bindings</a></li>
   <ul>
     <li><a href="#key-bindings-altgr">The “AltGr” key</a></li>
@@ -869,6 +882,516 @@ layout: default
 <p>
   The screenshot also shows how a much bigger font was chosen for the
   candidate list with the “Use custom font” option in ibus-setup.
+</p>
+
+
+<br class="clearboth">
+<a name="setup"></a>
+<br>
+<h2>Setup</h2>
+
+Ibus-typing-booster has a setup tool which allows to adapt the behaviour a lot
+to your preferences.
+
+<br class="clearboth">
+<a name="setup-dictionaries-input-methods"></a>
+<br>
+<h3>Basic setup for your language</h3>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>The setup tool showing the default for the hi_IN.UTF-8 locale</caption>
+  <tr>
+    <td align="center">
+      <a href="images/hindi-locale-default-settings.png">
+        <img src="images/thumbs/hindi-locale-default-settings.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  The most important setup in ibus-typing-booster is to choose the
+  languages you want to use and how to input them.
+</p>
+<p>
+  ibus-typing-booster works for many languages and it may be necessary
+  to change the default dictionaries and input methods to different
+  ones depending on which languages you want to use.
+</p>
+<p>
+  When one uses ibus-typing-booster for the very first time, it checks
+  which locale is set in the environment and initialises its setup with
+  dictionaries and input methods which are useful for this locale.
+</p>
+<p>
+  But it is probably a good idea to open the setup tool and look
+  whether these defaults are OK for you. You can open the setup tool
+  by selecting ibus-typing-booster in the input method menu of the
+  panel and then clicking on the “Setup” menu item in the panel.
+</p>
+<p>
+  The screenshot of the setup tool shows the default dictionaries
+  and input methods for the locale “hi_IN.UTF-8” (Hindi in India).
+</p>
+<p>
+  For this locale, one will get the dictionaries “hi_IN” (Hindi) and
+  en_GB (British English) and the input methods “hi-inscript2” and
+  “NoIME” by default. “hi-inscript2” is an input method for Hindi.
+  “NoIME” means no input method at all, that means the characters are
+  used as they come from the current keyboard layout without any
+  transliteration. Adding the British English dictionary and the
+  “NoIME” input method makes it also possible to type English.
+</p>
+<p>
+  As English is used quite a lot in India, it is probably a good default
+  for the “hi_IN.UTF-8” locale to setup input for both Hindi and British
+  English.
+</p>
+<p>
+  But the defaults guessed from the current locale are not always what
+  a user wants. A user might use a “en_US.UTF-8” (American English)
+  locale because he prefers the user interface in English but
+  nevertheless might want to type Hindi. And even when running in the
+  “hi_IN.UTF-8” locale, the defaults might not be optimal for some
+  users.  “hi-inscript2” is not the only input method to type Hindi,
+  there are other choices.  And maybe one wants to even more different
+  languages and input methods completely unrelated to the current
+  locale.
+</p>
+<p>
+  The screenshot shows a list of dictionaries at the top and a list of
+  input methods at the bottom. Under both lists there are buttons to
+  add or remove items, to move items up or down to increase or lower
+  the priority.  And there are buttons to set the lists to the default
+  for the current locale. The input method list also has a “help” button
+  to show some help how to use a certain input method.
+</p>
+<p>
+  Both lists can hold a maximum of 10 items, i.e. you can have up to
+  10 dictionaries and 10 input methods. Don’t overdo it though, don’t
+  add more than you really need, adding more dictionaries and input
+  methods than one really needs slows down the system and reduces the
+  accuracy of the word predictions.
+</p>
+<p>
+  The list of input methods cannot be made completely empty, as soon
+  as you remove the last input method, the “NoIME” input method
+  is automatically added back because no input at all makes no sense.
+</p>
+<p>
+  The list of dictionaries can be made empty though. That doesn’t seem
+  particularly useful to me, but apparently there are some users who
+  use ibus-typing-booster mostly as a convenient input method for emoji
+  or special symbols and in that case one doesn’t need a dictionary.
+</p>
+
+<br class="clearboth">
+<a name="options"></a>
+<br>
+<h3>More advanced options</h3>
+
+<p>
+  This chapter explains more advanced options how to adapt the behaviour
+  and the look and feel of ibus-typing-booster to your preferences.
+</p>
+
+<br class="clearboth">
+<a name="tabenable"></a>
+<br>
+<h4>Enable suggestions by a key</h4>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Enable suggestions by a key option</caption>
+  <tr>
+    <td align="center">
+      <a href="images/enable-suggestions-by-key.png">
+        <img src="images/thumbs/enable-suggestions-by-key.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  By default, ibus-typing-booster pops up a list of candidates as soon
+  as you type something and you can choose a candidate to complete the
+  word you have started typing to save some key strokes, fix a
+  spelling error, or select an emoji or special character.
+</p>
+<p>
+  But some users prefer not to have these candidate lists displayed
+  all the time.  Maybe they are fast touch typists and usually type
+  without completion support and the frequent pop up of the candidate
+  lists is too visually disturbing. Calculating the candidate lists
+  also takes some time, especially if emoji predictions are enabled.
+  These calculations may actually interfere with the typing for very
+  fast typists.
+</p>
+<p>
+  But from time to time even exceptionally fast typists may still want
+  to see candidates to complete a very long word or check the spelling
+  or or input an emoji.
+</p>
+<p>
+  In that case it can be useful to check the option “Enable
+  suggestions by key”.
+</p>
+<p>
+  If that option is enabled, no candidate list is shown unless a
+  special key is pressed to request a candidate list. By default that
+  special key is Tab but this can be changed by
+  the <a href="#key-bindings-customization">customizing the keys</a>
+  bound to the command “enable_lookup”.
+</p>
+<p>
+  In the screenshot you can see that this option is enabled. And in
+  the text editor at the bottom of the screen the text “Hello Wor” has
+  been typed. “Wor” is underlined which shows that this is still in
+  preedit but no candidate list with suggestions pops up. Only when
+  the special key, Tab, is pressed the candidate list pops up.
+</p>
+<p>
+  There is another option “Minimum number of chars for completion”
+  which is 1 by default.  If that option is set to a number greater
+  than 1, then a candidate list appears automatically only when that
+  number of characters has been typed into the preedit.  But using the
+  keys bound to the “enable_lookup” command one can still request a
+  candidate list even if fewer characters have been typed.
+</p>
+<p>
+  Some users using this option to show candidate lists only on
+  request, request candidate lists only very rarely to complete an
+  unusually long and complicated word or to type an emoji. When
+  candidate lists are requested only very infrequently, some users
+  dislike that the preedit, i.e. the currently typed word, is always
+  underlined.  It is possible to disable the underlining of the
+  preedit in the “Appearance” tab of the setup tool: There is a
+  combobox where one can choose no underlining for the preedit.
+</p>
+<p>
+  But one does not have to disable the underlining of the preedit
+  always: It is even possible to hide the underline indicating the
+  preedit only as long as no candidate list is requested. To do this,
+  there is the option “Use preedit style only if lookup is enabled” in
+  the Appearances tab of the setup tool. Then the preedit looks like
+  normal text until a candidate list is requested. As soon as the
+  candidate list is requested, the preedit is again styled (usually
+  underlined), this makes it clearer which part of the text has been
+  used to calculate that candidate list.
+</p>
+<p>
+  Attention when using Wayland: Currently it is not possible to do any
+  style changes to the preedit on Wayland. On Wayland the preedit is
+  always underlined and always has the same foreground and background
+  colour as normal text, no matter what options to influence the
+  preedit style are chosen in the setup tool of
+  ibus-typing-booster. That is a missing feature in Wayland.
+</p>
+
+
+<br class="clearboth">
+<a name="simulate-ibus-m17n"></a>
+<br>
+<h5>Simulate the behaviour of ibus-m17n</h5>
+
+<p>
+  The ibus-m17n engines can be used to input many languages using all
+  the input methods from m17n-lib and m17n-db.
+</p>
+<p>
+  ibus-typing-booster can also use the same input methods from
+  m17n-lib and m17n-db.  So one can input all the languages in the
+  same way one can with ibus-m17n.  But ibus-typing-booster has many
+  additional features like completion using dictionaries,
+  spellchecking, predictions based on previous user input and being
+  able to use several input methods/transliterations at the same time.
+</p>
+<p>
+  But what if a user doesn’t need and want all the extra features of
+  ibus-typing-booster at all, just simple type one language with one
+  input method without any extra bells and whistles?
+</p>
+<p>
+  One can still use ibus-typing-booster in that case by disabling
+  all of the extra features. Then ibus-typing-booster behaves like
+  any ibus-m17n engine.
+</p>
+<p>
+  The advantage of simulating ibus-m17n using ibus-typing-booster is
+  that there are probably fewer bugs because ibus-typing-booster is
+  more actively maintained.
+</p>
+<p>
+  To simulate ibus-m17n with ibus-typing-booster, one can use the
+  following setup options:
+</p>
+<p>
+  Options tab:
+</p>
+<ul>
+  <li>
+    Check the option “Enable suggestions by key”
+  </li>
+  <li>
+    Check the option “Off the record mode”
+  </li>
+</ul>
+<p>
+  Key bindings tab:
+<p>
+  <ul>
+    <li>
+      Remove all keys bound to the command “enable_lookup”
+    </li>
+  </ul>
+</p>
+<p>
+  Dictionaries and input methods tab:
+</p>
+<ul>
+  <li>
+    Remove all input methods except the one you want to use
+  </li>
+</ul>
+<p>
+  With these settings, no candidate lists will ever pop up because one
+  would need to press a key to enable a suggestion but all such keys
+  have been removed from the “enable_lookup” command. So candidate
+  lists are never shown, just like in ibus-m17n.
+</p>
+<p>
+  No user input is recorded because of enabling the option “Off the
+  record mode”.  Recording user input would be useless because stuff
+  learned from user input is normally used to improve the quality of
+  the suggestions based on previous input. But if there are never any
+  suggestions, there is no need to record user input at all.
+</p>
+<p>
+  Without candidate lists, dictionaries are useless, therefore it
+  doesn’t matter which dictionaries are setup in the “Dictionaries and
+  input methods” tab. One can remove them all or leave them there, it
+  doesn’t matter.
+</p>
+
+<br class="clearboth">
+<a name="inlinecompletion"></a>
+<br>
+<h4>Use inline completion</h4>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Demonstration of inline completion</caption>
+  <tr>
+    <td align="center">
+      <a href="images/inline-completion.png">
+        <img src="images/thumbs/inline-completion.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Very often, the first candidate shown as a suggestion is already the
+  desired one, especially after having used ibus-typing-booster for a
+  while and it has learned what the user types often in what context.
+</p>
+<p>
+  When one ends up selecting the first candidate most of the time,
+  popping up a candidate list with more candidates all the time is
+  needlessly visually distracting.
+</p>
+<p>
+  When the option “Use inline completion” is checked, the first and
+  most likely candidate is shown inline at the writing position
+  without popping up a candidate list. The characters one has already
+  typed are shown in the current foreground colour (black in the
+  screenshot) and are underlined (Unless underlining the preedit has
+  been switched off in the “Apperance” settings). The completion which
+  is suggested is shown without the underline and in a different
+  colour. This colour is gray by default because this works in most
+  cases, it also works when the foreground text colour is white and
+  the background black.  The colour to be used for the inline
+  completion can be chosen in the “Appearance” tab. One can also
+  choose not to use a different colour, then the only difference in
+  style between the completion and the already typed characters is the
+  missing underline under the completion.
+</p>
+<p>
+  This inline completion style looks much nicer than always popping up
+  a candidate list when the predictions are fairly good and the first
+  candidate is often the desired one.
+</p>
+<p>
+  If that first candidate shown inline is what one wants, one can
+  select it by typing any of the keys bound to the
+  “select_next_candidate” command (Tab and arrow down by default).
+</p>
+<p>
+  When the candidate is selected, the style of the completion becomes
+  the same as the style of the already typed characters and the cursor
+  moves to the end of the completion.
+</p>
+<p>
+  Now one could commit it for example by typing space and continue typing
+  the next word of the text.
+</p>
+<p>
+  Or, if that candidate displayed inline happens to be not the desired
+  one, it is still possible to pop up a full candidate list with more
+  candidates by pressing the key bound to the “select_next_candidate”
+  command again. And then walk down the candidate list by continue
+  pressing that key. If nothing appropriate can be found in the whole
+  candiate list, one can use the key bound to the command “cancel”
+  (the Escape key by default) to deselect all candidates and close the
+  candidate list.  Then one could type more input characters and hope
+  that better suggestions become available after typing a bit more.
+</p>
+<p>
+  One can also ignore the candidate displayed inline completely and
+  just continue typing more input characters until a better candidate
+  is displayed.
+</p>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Inline completion when using Wayland</caption>
+  <tr>
+    <td align="center">
+      <a href="images/inline-completion-wayland.png">
+        <img src="images/thumbs/inline-completion-wayland.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Attention when using Wayland: Currently it is not possible to do any
+  style changes to the preedit on Wayland. On Wayland the preedit is
+  always underlined and always has the same foreground and background
+  colour as normal text, no matter what options to influence the
+  preedit style are chosen in the setup tool of
+  ibus-typing-booster. That is a missing feature in Wayland.
+</p>
+<p>
+  This makes the “Use inline completion” option quite hard to use on
+  Wayland.  It is possible to use it, but as the characters typed and
+  the suggested completion are displayed in exactly the same style, it
+  is quite hard to see what has been typed and what is the
+  completion. If one looks carefully, one can still see it because the
+  cursor can be seen at the end of the typed characters, everything to
+  the right of the cursor is the suggested completion.  If the
+  completion is selected by typing the key bound to the
+  “select_next_candidate” command (Tab by default), then the cursor
+  moves to the end of the completion.
+</p>
+<p>
+  One can get used to the fact that the difference between the typed
+  text and the inline completion is hard to see on Wayland, but I
+  found this to be quite hard.
+</p>
+
+<br class="clearboth">
+<a name="spellchecking"></a>
+<br>
+<h4>Spellchecking</h4>
+
+<br class="clearboth">
+<table class="picture">
+  <caption>Spellchecking shown in the preedit and the candidate list</caption>
+  <tr>
+    <td align="center">
+      <a href="images/spellchecking-preedit-and-candidate-list.png">
+        <img src="images/thumbs/spellchecking-preedit-and-candidate-list.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<p>
+  ibus-typing-booster also does spellchecking (Using hunspell for most
+  languages and voikko for Finnish).
+</p>
+<p>
+  If a word is typed which might contain a spelling error, the
+  candidate list of suggestions may contain suggestions for spelling
+  corrections, i.e. words which are not just completing the text
+  already typed to something longer or fixing some accents but
+  “seriously” changing the characters already typed, more than just
+  fixing accents, i.e. completely different characters or another
+  order of characters.
+</p>
+<p>
+  Optionally, such spellchecking suggestions can be marked in the
+  candidate list with a symbol or using a different colour in the
+  candidate list. The symbol and color can be chosen.
+</p>
+<p>
+  One can also choose to mark candidates which are (accent
+  insensitive) completions of the typed word with a symbol and/or
+  colour if they are valid words in one of the dictionaries.
+</p>
+<p>
+  And one can choose to mark candidates which are (accent insensitive)
+  completions of the typed word with a symbol and/or colour if they
+  have been remembered in the user database because the user has typed
+  them before.
+</p>
+<p>
+  All of these markings can help to get the spelling right, for
+  example if one uses a French dictionary and types “egali” and sees
+  “égalité” and “égalisation” marked as “dictionary suggestions” in
+  the candidate list, then one knows that these candidates are valid
+  words in the French dictionary and what one typed was identical to
+  the beginning of these candidates except for differents in accents.
+</p>
+<p>
+  It can also speed up typing not bothering typing the accents at all
+  (because this often requires extra key strokes) and then select the
+  correctly accented word from one of the “dictionary suggestions”.
+</p>
+<p>
+  Colour in the candidate list does not work when using Gnome, only on
+  other desktops colour can be used in the candidate list.  Marking
+  spellchecking suggestions with a symbol also works on Gnome.  By
+  default, neither colour nor symbols are used for suggestions.
+</p>
+
+<br class="clearboth">
+<br>
+<h5>Indicating spelling errors in the preedit</h5>
+
+<p>
+  One can choose that the preedit changes colour when the typed word
+  is not a valid word in any of the dictionaries setup in the
+  ”Dictionaries and input methods” tab of the setup tool.
+</p>
+<p>
+  For example, if one uses an English and a French dictionary, and the
+  typed word in the preedit is neither a valid word in English nor in
+  French, then the preedit changes colour. This is also shown in the
+  above screenshot using the default colour red.
+</p>
+<p>
+  Dictionaries where spellchecking is not supported are ignored for
+  this colour change.  For example, if one uses an English, a French,
+  and a Japanese dictionary at the same time, the preedit still
+  changes colour if the word is neither a valid English nor a valid
+  French word.  Whether the typed word is in the Japanese dictionary
+  or not doesn’t matter because the Japanese dictionary does not
+  support spellchecking.
+</p>
+<p>
+  Attention when using Wayland: On Wayland it is not possible to
+  indicate a possible spelling error in the preedit.
+</p>
+<p>
+  Currently it is not possible to do any style changes to the preedit
+  on Wayland. On Wayland the preedit is always underlined and always
+  has the same foreground and background colour as normal text, no
+  matter what options to influence the preedit style are chosen in the
+  setup tool of ibus-typing-booster. That is a missing feature in
+  Wayland.
 </p>
 
 <br class="clearboth">
