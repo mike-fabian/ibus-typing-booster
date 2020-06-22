@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-06-08 08:04+0200\n"
+"POT-Creation-Date: 2020-06-22 08:35+0200\n"
 "PO-Revision-Date: 2020-05-21 07:39+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
@@ -169,58 +169,58 @@ msgstr "Unicode sembolleri ve emoji tahminleri"
 msgid "Off the record mode"
 msgstr "Kayıt dışı modu"
 
-#: engine/hunspell_table.py:1380
+#: engine/hunspell_table.py:1388
 msgid "Highest priority dictionary"
 msgstr "En yüksek öncelikli sözlük"
 
-#: engine/hunspell_table.py:1381
+#: engine/hunspell_table.py:1389
 msgid "Choose highest priority dictionary"
 msgstr "En yüksek öncelikli sözlüğü seç"
 
-#: engine/hunspell_table.py:1410
+#: engine/hunspell_table.py:1418
 msgid "Preedit input method"
 msgstr "Ön-düzenleme giriş yöntemi"
 
-#: engine/hunspell_table.py:1411
+#: engine/hunspell_table.py:1419
 msgid "Switch preedit input method"
 msgstr "Ön-düzenleme giriş yöntemini değiştir"
 
-#: engine/hunspell_table.py:1710
+#: engine/hunspell_table.py:1718
 msgid "Setup"
 msgstr "Kurulum"
 
-#: engine/hunspell_table.py:1713 setup/main.py:137
+#: engine/hunspell_table.py:1721 setup/main.py:137
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster için tercihler"
 
-#: engine/hunspell_table.py:3924
+#: engine/hunspell_table.py:3946
 msgid "Failed to import Google speech-to-text."
 msgstr "Google konuşmadan metne (speech-to-text) alınamadı."
 
-#: engine/hunspell_table.py:3927
+#: engine/hunspell_table.py:3949
 msgid "Failed to import pyaudio."
 msgstr "Pyaudio alınamadı."
 
-#: engine/hunspell_table.py:3930
+#: engine/hunspell_table.py:3952
 msgid "Failed to import queue."
 msgstr "Queue alınamadı."
 
-#: engine/hunspell_table.py:3935
+#: engine/hunspell_table.py:3957
 msgid "No supported language for speech recognition."
 msgstr "Konuşma tanıma için desteklenen dil yok."
 
-#: engine/hunspell_table.py:3939
+#: engine/hunspell_table.py:3961
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google uygulama kimlik bilgileri” dosyası “%s” bulunamadı."
 
-#: engine/hunspell_table.py:3951
+#: engine/hunspell_table.py:3973
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Google konuşmadan metne (speech-to-text) başlatılamadı. debug.log dosyasına "
 "bakın."
 
-#: engine/hunspell_table.py:4058
+#: engine/hunspell_table.py:4080
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 "Google konuşmadan metne (speech-to-text) hatası. debug.log dosyasına bakın."

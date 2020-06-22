@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-06-08 08:04+0200\n"
+"POT-Creation-Date: 2020-06-22 08:35+0200\n"
 "PO-Revision-Date: 2020-04-22 21:40+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@mailbox.org>\n"
 "Language-Team: Hungarian <https://translate.fedoraproject.org/projects/ibus-"
@@ -171,58 +171,58 @@ msgstr "Unicode szimbólumok és emodzsi javaslatok"
 msgid "Off the record mode"
 msgstr "Tanulásmentes mód"
 
-#: engine/hunspell_table.py:1380
+#: engine/hunspell_table.py:1388
 msgid "Highest priority dictionary"
 msgstr "Legnagyobb prioritású szótár"
 
-#: engine/hunspell_table.py:1381
+#: engine/hunspell_table.py:1389
 msgid "Choose highest priority dictionary"
 msgstr "Válassza ki a legnagyobb prioritású szótárt"
 
-#: engine/hunspell_table.py:1410
+#: engine/hunspell_table.py:1418
 msgid "Preedit input method"
 msgstr "Előszerkesztési bemeneti mód"
 
-#: engine/hunspell_table.py:1411
+#: engine/hunspell_table.py:1419
 msgid "Switch preedit input method"
 msgstr "Előszerkesztési bemeneti mód váltása"
 
-#: engine/hunspell_table.py:1710
+#: engine/hunspell_table.py:1718
 msgid "Setup"
 msgstr "Beállítás"
 
-#: engine/hunspell_table.py:1713 setup/main.py:137
+#: engine/hunspell_table.py:1721 setup/main.py:137
 msgid "Preferences for ibus-typing-booster"
 msgstr "Az ibus-typing-booster beállításai"
 
-#: engine/hunspell_table.py:3924
+#: engine/hunspell_table.py:3946
 msgid "Failed to import Google speech-to-text."
 msgstr "A Google speech-to-text (beszédből szöveg) importálása sikertelen."
 
-#: engine/hunspell_table.py:3927
+#: engine/hunspell_table.py:3949
 msgid "Failed to import pyaudio."
 msgstr "A pyaudio importálása sikertelen."
 
-#: engine/hunspell_table.py:3930
+#: engine/hunspell_table.py:3952
 msgid "Failed to import queue."
 msgstr "A sor importálása sikertelen."
 
-#: engine/hunspell_table.py:3935
+#: engine/hunspell_table.py:3957
 msgid "No supported language for speech recognition."
 msgstr "Nincs támogatott nyelv a beszédfelismeréshez."
 
-#: engine/hunspell_table.py:3939
+#: engine/hunspell_table.py:3961
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "A(z) „%s” „Google alkalmazáshitelesítési” fájl nem található."
 
-#: engine/hunspell_table.py:3951
+#: engine/hunspell_table.py:3973
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "A Google speech-to-text (beszédből szöveg) előkészítése sikertelen. Lásd a "
 "debug.log fájlt."
 
-#: engine/hunspell_table.py:4058
+#: engine/hunspell_table.py:4080
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google speech-to-text (beszédből szöveg) hiba. Lásd a debug.log fájlt."
 

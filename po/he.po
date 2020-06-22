@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-06-08 08:04+0200\n"
+"POT-Creation-Date: 2020-06-22 08:35+0200\n"
 "PO-Revision-Date: 2020-06-22 06:01+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: Hebrew <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/he/>\n"
+"Language-Team: Hebrew <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -170,58 +170,58 @@ msgstr "סימני יוניקוד וחיזוי אמוג׳י"
 msgid "Off the record mode"
 msgstr "מצב שלא לציטוט"
 
-#: engine/hunspell_table.py:1380
+#: engine/hunspell_table.py:1388
 msgid "Highest priority dictionary"
 msgstr "מילון עדיפות עליונה"
 
-#: engine/hunspell_table.py:1381
+#: engine/hunspell_table.py:1389
 msgid "Choose highest priority dictionary"
 msgstr "נא לבחור את מילון העדיפות העליונה"
 
-#: engine/hunspell_table.py:1410
+#: engine/hunspell_table.py:1418
 msgid "Preedit input method"
 msgstr "שיטת קלט בעריכה מוקדמת"
 
-#: engine/hunspell_table.py:1411
+#: engine/hunspell_table.py:1419
 msgid "Switch preedit input method"
 msgstr "החלפת מצב שיטת קלט בעריכה מוקדמת"
 
-#: engine/hunspell_table.py:1710
+#: engine/hunspell_table.py:1718
 msgid "Setup"
 msgstr "הגדרה"
 
-#: engine/hunspell_table.py:1713 setup/main.py:137
+#: engine/hunspell_table.py:1721 setup/main.py:137
 msgid "Preferences for ibus-typing-booster"
 msgstr "העדפות ל־ibus-typing-booster"
 
-#: engine/hunspell_table.py:3924
+#: engine/hunspell_table.py:3946
 msgid "Failed to import Google speech-to-text."
 msgstr "הייבוא של דיבור לטקסט של Google נכשל."
 
-#: engine/hunspell_table.py:3927
+#: engine/hunspell_table.py:3949
 msgid "Failed to import pyaudio."
 msgstr "הייבוא של pyaudio נכשל."
 
-#: engine/hunspell_table.py:3930
+#: engine/hunspell_table.py:3952
 msgid "Failed to import queue."
 msgstr "ייבוא התור נכשל."
 
-#: engine/hunspell_table.py:3935
+#: engine/hunspell_table.py:3957
 msgid "No supported language for speech recognition."
 msgstr "אין שפה נתמכת לזיהוי דיבור."
 
-#: engine/hunspell_table.py:3939
+#: engine/hunspell_table.py:3961
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "הקובץ „%s” של „Google application credentials” (פרטי הגישה ליישומים של "
 "Google) לא נמצא."
 
-#: engine/hunspell_table.py:3951
+#: engine/hunspell_table.py:3973
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "הפעלת המרת דיבור לטקסט של Google נכשלה. מידע נוסף ב־debug.log."
 
-#: engine/hunspell_table.py:4058
+#: engine/hunspell_table.py:4080
 msgid "Google speech-to-text error. See debug.log."
 msgstr "שגיאה בדיבור לטקסט של Google. מידע נוסף ב־debug.log."
 
