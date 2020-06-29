@@ -14,16 +14,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-06-22 08:35+0200\n"
-"PO-Revision-Date: 2020-05-27 01:40+0000\n"
+"PO-Revision-Date: 2020-06-29 02:40+0000\n"
 "Last-Translator: Julien Humbert <julroy67@gmail.com>\n"
-"Language-Team: French <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/fr/>\n"
+"Language-Team: French <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.0.4\n"
+"X-Generator: Weblate 4.1.1\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -348,6 +348,7 @@ msgstr "Une méthode d’auto-complètement pour accélérer la saisie."
 #: engine/itb_util.py:4102
 msgid "translator-credits"
 msgstr ""
+"Julien Humbert <julroy67@gmail.com>, 2020.\n"
 "Thierry Thomas <thierry@FreeBSD.org>, 2018.\n"
 "Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2016, 2018.\n"
 "José Fournier <jaaf64@zoraldia.com>, 2016.\n"
@@ -356,7 +357,7 @@ msgstr ""
 
 #: engine/itb_util.py:4110
 msgid "Online documentation:"
-msgstr "Documentation en ligne :"
+msgstr "Documentation en ligne :"
 
 #: setup/main.py:114
 msgid "Preferences"
@@ -495,7 +496,7 @@ msgid ""
 msgstr ""
 "Ce que vous saisissez sera automatiquement corrigé avec le meilleur candidat "
 "qui sera sélectionné automatiquement. Si cette option est désactivée, vous "
-"devez sélectionner manuellement le candidat en utilisant les touches  pour "
+"devez sélectionner manuellement le candidat en utilisant les touches pour "
 "sélectionner le prochain candidat. Si cette option est activée et que vous "
 "ne voulez pas utiliser le candidat sélectionné automatique, vous pouvez "
 "utiliser la touche pour la commande « annuler » ce qui désélectionnera tous "
@@ -678,7 +679,7 @@ msgstr ""
 #. debug information may also be shown graphically.
 #: setup/main.py:644
 msgid "Debug level:"
-msgstr "Niveau de débogage :"
+msgstr "Niveau de débogage :"
 
 #: setup/main.py:646
 msgid ""
@@ -718,7 +719,7 @@ msgstr ""
 #. ibus-typing-booster.
 #: setup/main.py:700
 msgid "Use dictionaries for the following languages:"
-msgstr "Utiliser les dictionnaires pour les langues suivantes :"
+msgstr "Utiliser les dictionnaires pour les langues suivantes :"
 
 #: setup/main.py:728
 msgid "Add a dictionary"
@@ -761,7 +762,7 @@ msgstr "Définir les dictionnaires par défaut pour la locale actuelle."
 #. ibus-typing-booster.
 #: setup/main.py:813
 msgid "Use the following input methods:"
-msgstr "Utiliser les méthodes de saisie suivantes :"
+msgstr "Utiliser les méthodes de saisie suivantes :"
 
 #: setup/main.py:841
 msgid "Add an input method"
@@ -832,7 +833,7 @@ msgstr "Expansion du raccourci"
 
 #: setup/main.py:1019
 msgid "Current key bindings:"
-msgstr "Raccourcis clavier actuels :"
+msgstr "Raccourcis clavier actuels :"
 
 #. Translators: Column heading of the table listing the
 #. existing key bindings
@@ -1124,7 +1125,7 @@ msgstr ""
 "Ici vous pouvez renseigner quelle couleur utiliser pour les candidats de la "
 "table de recherche provenant de la vérification orthographique. Ce paramètre "
 "n’a d’effets que lorsque de l’utilisation de couleur pour les suggestions "
-"provenant de la  vérification orthographique est activité."
+"provenant de la vérification orthographique est activité."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
@@ -1223,11 +1224,11 @@ msgstr ""
 #. Translators:
 #: setup/main.py:1707 setup/main.py:2496
 msgid "Set “Google application credentials” .json file:"
-msgstr "Renseignez le fichier .json «  Google application credentials » :"
+msgstr "Renseignez le fichier .json « Google application credentials » :"
 
 #: setup/main.py:1709
 msgid "Full path of the “Google application credentials” .json file."
-msgstr "Chemin complet du fichier .json «  Google application credentials »."
+msgstr "Chemin complet du fichier .json « Google application credentials »."
 
 #: setup/main.py:1717
 msgid "File not yet set."
@@ -1289,7 +1290,7 @@ msgid ""
 "defaults?"
 msgstr ""
 "Voulez-vous vraiment redéfinir les raccourcis claviers pour toutes les "
-"commandes ?"
+"commandes ?"
 
 #: setup/main.py:3500
 msgid "Open File ..."
@@ -1298,7 +1299,7 @@ msgstr "Ouvrir le fichier…"
 #: setup/main.py:3519
 #, python-format
 msgid "Learned successfully from file %(filename)s."
-msgstr "Apprentissage réussi depuis le fichier  %(filename)s."
+msgstr "Apprentissage réussi depuis le fichier %(filename)s."
 
 #: setup/main.py:3528
 #, python-format
