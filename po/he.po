@@ -2,15 +2,15 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Yaron Shahrabani <sh.yaron@gmail.com>, 2019, 2020.
-# Mike FABIAN <mfabian@redhat.com>, 2019.
+# Mike FABIAN <mfabian@redhat.com>, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-06-22 08:35+0200\n"
-"PO-Revision-Date: 2020-06-24 08:40+0000\n"
-"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"PO-Revision-Date: 2020-06-30 10:40+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Hebrew <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/he/>\n"
 "Language: he\n"
@@ -564,7 +564,7 @@ msgstr ""
 "להשתמש במעקף לתקלות במודולים לשיטות הקלט של Qt4 ו־Qt5. לתשומת לבך: למרות "
 "שהמעקף הזה עובד טוב יותר כאשר מודולי הקלט של Qt בשימוש, תקלות מסוימות "
 "מתרחשות בשימוש עם XIM. למשל, המודול של XIM ל־Qt4 לא יעבוד היטב כאשר המעקף "
-"הזה פעיל וקלט של XIM לתכניות X11  כגון xterm גם כן לא יעבוד."
+"הזה פעיל וקלט של XIM לתכניות X11 כגון xterm גם כן לא יעבוד."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it
