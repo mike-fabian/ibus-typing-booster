@@ -3234,6 +3234,15 @@ class ComposeSequences:
             compose_sequences = compose_sequences[keyval]
         last_compose_sequences[last_keyval] = result
 
+    def _xorg_locale_path(self):
+        '''Returns the name of the system directory for compose files.
+
+        Usually this is “/usr/share/X11/locale”.
+
+        :rtype: String
+        '''
+        return '/usr/share/X11/locale'
+
     def _locale_compose_file(self):
         '''Returns the full path of the default compose file for the current
         locale
@@ -3245,10 +3254,9 @@ class ComposeSequences:
         if lc_ctype_encoding not in ('UTF-8', 'utf8'):
             LOGGER.warning('Not running in an UTF-8 locale: %s.%s',
                            lc_ctype_locale, lc_ctype_encoding)
-        xorg_locale_path = '/usr/share/X11/locale'
         for loc in (lc_ctype_locale, 'en_US'):
             locale_compose_file = os.path.join(
-                xorg_locale_path, loc + '.UTF-8', 'Compose')
+                self._xorg_locale_path(), loc + '.UTF-8', 'Compose')
             if os.path.isfile(locale_compose_file):
                 return locale_compose_file
         return ''
@@ -3297,6 +3305,8 @@ class ComposeSequences:
             match = include_pattern.search(line)
             if match:
                 include_path = match.group('include_path')
+                include_path = include_path.replace(
+                    '%S', self._xorg_locale_path())
                 include_path = include_path.replace(
                     '%L', self._locale_compose_file())
                 include_path = include_path.replace(
