@@ -5,22 +5,23 @@
 # Anonymous <noreply@weblate.org>, 2019.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 # Balázs Meskó <meskobalazs@mailbox.org>, 2020.
+# Bendegúz Gyönki <gyonkibendeguz@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-06-22 08:35+0200\n"
-"PO-Revision-Date: 2020-04-22 21:40+0000\n"
-"Last-Translator: Balázs Meskó <meskobalazs@mailbox.org>\n"
-"Language-Team: Hungarian <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/hu/>\n"
+"PO-Revision-Date: 2020-07-08 15:27+0000\n"
+"Last-Translator: Bendegúz Gyönki <gyonkibendeguz@gmail.com>\n"
+"Language-Team: Hungarian <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0.1\n"
+"X-Generator: Weblate 4.1.1\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -1127,11 +1128,11 @@ msgstr ""
 
 #: setup/main.py:2697
 msgid "Add dictionary"
-msgstr ""
+msgstr "Szótár hozzáadása"
 
 #: setup/main.py:2979
 msgid "Add input method"
-msgstr ""
+msgstr "Bemeneti mód hozzáadása"
 
 #: setup/main.py:3385
 #, python-format
