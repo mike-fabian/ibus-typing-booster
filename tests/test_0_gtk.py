@@ -156,7 +156,7 @@ class SimpleGtkTestCase(unittest.TestCase):
             description='Test Typing Booster Component',
             version='1.0',
             license='GPL',
-            author=('Mike FABIAN <mfabian@redonat.com>, '
+            author=('Mike FABIAN <mfabian@redhat.com>, '
                     + 'Anish Patil <anish.developer@gmail.com>'),
             homepage='http://mike-fabian.github.io/ibus-typing-booster',
             command_line='',
