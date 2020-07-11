@@ -3,14 +3,15 @@
 # Qiyu Yan <yanqiyu01@gmail.com>, 2019.
 # Anonymous <noreply@weblate.org>, 2019, 2020.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
+# Boyuan Yang <073plan@gmail.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-06-22 08:35+0200\n"
-"PO-Revision-Date: 2020-05-21 17:05+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2020-07-11 15:27+0000\n"
+"Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_CN/>\n"
 "Language: zh_CN\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.0.4\n"
+"X-Generator: Weblate 4.1.1\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -88,7 +89,7 @@ msgstr "用于渲染该 Emoji 的字体："
 
 #: engine/emoji_picker.py:680
 msgid "Unicode Version:"
-msgstr ""
+msgstr "Unicode 版本："
 
 #: engine/emoji_picker.py:702 engine/emoji_picker.py:1798
 msgid "Left click to copy"
@@ -112,7 +113,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:1467 engine/emoji_picker.py:1591
 msgid "Copied to clipboard!"
-msgstr "已复制到剪贴板"
+msgstr "已复制到剪贴板！"
 
 #: engine/emoji_picker.py:1908
 msgid "Lookup on emojipedia"
@@ -121,7 +122,7 @@ msgstr "在emojipedia查找"
 #: engine/emoji_picker.py:2033 engine/emoji_picker.py:2034
 #: engine/emoji_picker.py:2035 setup/main.py:1204
 msgid "System default"
-msgstr ""
+msgstr "系统默认"
 
 #: engine/emoji_picker.py:2158
 msgid "Set Font"
@@ -1092,7 +1093,7 @@ msgstr ""
 
 #: setup/main.py:1773
 msgid "Spell checking"
-msgstr ""
+msgstr "拼写检查"
 
 #: setup/main.py:1789
 msgid "Emoji"
@@ -1120,7 +1121,7 @@ msgstr ""
 
 #: setup/main.py:2979
 msgid "Add input method"
-msgstr ""
+msgstr "添加输入法"
 
 #: setup/main.py:3385
 #, python-format
@@ -1148,7 +1149,7 @@ msgstr ""
 
 #: setup/main.py:3500
 msgid "Open File ..."
-msgstr ""
+msgstr "打开文件…"
 
 #: setup/main.py:3519
 #, python-format
