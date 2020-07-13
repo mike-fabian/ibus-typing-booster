@@ -378,7 +378,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('¹', 'superscript one'))
         self.assertEqual(
             mq.candidates('currency')[0][:2],
-            ('€', 'euro sign {Currency} [currency]'))
+            ('₳', 'austral sign {Currency} [currency]'))
         self.assertEqual(
             mq.candidates('connector')[0][:2],
             ('﹎', 'centreline low line {Connector}'))
