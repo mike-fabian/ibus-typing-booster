@@ -37,6 +37,7 @@ ACLOCAL_AMFLAGS = -I m4
 # (See http://www.freedesktop.org/software/appstream/docs/ for more details):
 appdata_DATA = \
 	typing-booster.appdata.xml \
+	emoji-picker.appdata.xml \
 	$(NULL)
 
 appdatadir = $(datadir)/metainfo
@@ -78,6 +79,7 @@ MAINTAINERCLEANFILES = \
 EXTRA_DIST = \
 	config.rpath \
 	typing-booster.appdata.xml \
+	emoji-picker.appdata.xml \
 	$(schemas_DATA) \
 	@PACKAGE_NAME@.spec.fedora \
 	@PACKAGE_NAME@.spec.suse \
