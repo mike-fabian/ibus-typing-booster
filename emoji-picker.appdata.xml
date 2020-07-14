@@ -17,6 +17,29 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.9.4" date="2020-07-14" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.9.4</url>
+      <issues>
+        <issue>
+          Add emoji-picker.appdata.xml
+        </issue>
+        <issue>
+          Fix warnings and errors in typing-booster.appdata.xml
+        </issue>
+        <issue>
+          Update emoji annotations from CLDR
+        </issue>
+        <issue>
+          Support %S expansion in include statements in compose files
+        </issue>
+        <issue>
+          Translation update from Weblate for fr, he, hu, zh_CN
+        </issue>
+      </issues>
+    </release>
     <release version="2.9.3" date="2020-06-22" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

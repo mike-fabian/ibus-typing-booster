@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 14 Jul 2020 Released 2.9.4
+* Add emoji-picker.appdata.xml
+* Fix warnings and errors in typing-booster.appdata.xml
+* Update emoji annotations from CLDR
+* Support %S expansion in include statements in compose files
+* Translation update from Weblate for fr, he, hu, zh_CN
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 22 Jun 2020 Released 2.9.3
 * Translation updates from Weblate for he
 * Fix wrong indentation of push_context() in _commit_string()
