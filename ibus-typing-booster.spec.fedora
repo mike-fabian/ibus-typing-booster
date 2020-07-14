@@ -1,9 +1,5 @@
-# This package depends on automagic byte compilation
-# https://fedoraproject.org/wiki/Changes/No_more_automagic_Python_bytecompilation_phase_2
-%global _python_bytecompile_extra 1
-
 Name:       ibus-typing-booster
-Version:    2.7.7
+Version:    2.9.4
 Release:    1%{?dist}
 Summary:    A completion input method
 License:    GPLv3+, ASL 2.0
@@ -11,7 +7,6 @@ URL:        https://mike-fabian.github.io/ibus-typing-booster/
 Source0:    https://github.com/mike-fabian/ibus-typing-booster/releases/download/%{version}/ibus-typing-booster-%{version}.tar.gz
 Requires:   ibus >= 1.5.3
 Requires:   m17n-lib
-Requires:   python(abi) >= 3.3
 %{?__python3:Requires: %{__python3}}
 Requires:   python3-dbus
 Requires:   python3-distro
@@ -48,8 +43,10 @@ BuildRequires:  m17n-lib
 BuildRequires:  m17n-db-extras
 BuildRequires:  python3-enchant
 BuildRequires:  python3-libvoikko
+BuildRequires:  appstream
 BuildRequires:  libappstream-glib
 BuildRequires:  desktop-file-utils
+BuildRequires:  python3-mock
 BuildRequires:  python3-gobject
 BuildRequires:  python3-gobject-base
 BuildRequires:  hunspell-cs
@@ -70,11 +67,23 @@ BuildRequires:  glibc-langpack-cs
 BuildRequires:  glibc-langpack-km
 BuildRequires:  glibc-langpack-pt
 BuildRequires:  glibc-langpack-am
+BuildRequires:  glibc-langpack-de
+BuildRequires:  glibc-langpack-ar
+# A window manger is needed for the GUI test
+BuildRequires:  i3
 BuildArch:  noarch
 
 %description
 Ibus-typing-booster is a context sensitive completion
 input method to speedup typing.
+
+%package tests
+Summary:        Tests for the %{name} package
+Requires:       %{name} = %{version}-%{release}
+
+%description tests
+The %{name}-tests package contains tests that can be used to verify
+the functionality of the installed %{name} package.
 
 %package -n emoji-picker
 Summary: An emoji selection tool
@@ -90,12 +99,14 @@ Unicode symbols.
 
 %build
 export PYTHON=%{__python3}
-%configure --disable-static --disable-additional
+%configure --disable-static --disable-additional --enable-installed-tests
 make %{?_smp_mflags}
 
 %install 
 export PYTHON=%{__python3}
 make install DESTDIR=${RPM_BUILD_ROOT} NO_INDEX=true  INSTALL="install -p"   pkgconfigdir=%{_datadir}/pkgconfig
+%py_byte_compile %{python3} /usr/share/ibus-typing-booster/engine
+%py_byte_compile %{python3} /usr/share/ibus-typing-booster/setup
 %if 0%{?fedora} >= 26 || 0%{?rhel} > 7
     # These files are in the required package “cldr-emoji-annotation”
     rm $RPM_BUILD_ROOT/%{_datadir}/%{name}/data/annotations/*.xml
@@ -118,6 +129,7 @@ make install DESTDIR=${RPM_BUILD_ROOT} NO_INDEX=true  INSTALL="install -p"   pkg
 
 %check
 export LC_ALL=C.UTF-8
+appstreamcli validate --pedantic --explain --no-net %{buildroot}/%{_datadir}/metainfo/*.appdata.xml
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.appdata.xml
 desktop-file-validate \
     $RPM_BUILD_ROOT%{_datadir}/applications/ibus-setup-typing-booster.desktop
@@ -155,11 +167,30 @@ dconf write /org/freedesktop/ibus/engine/typing-booster/keybindings "{'next_inpu
 dconf dump /
 export DISPLAY=:1
 Xvfb $DISPLAY -screen 0 1024x768x16 &
-ibus-daemon -drx
-make -C tests run_tests
-pushd tests
-    ./run_tests
-popd
+# A window manager and and ibus-daemon are needed to run the GUI
+# test tests/test_gtk.py, for example i3 can be used.
+#
+# To debug what is going on if there is a problem with the GUI test
+# add BuildRequires: x11vnc and start a vnc server:
+#
+#     x11vnc -display $DISPLAY -unixsock /tmp/mysock -bg -nopw -listen localhost -xkb
+#
+# Then one can view what is going on outside of the chroot with vncviewer:
+#
+#     vncviewer /var/lib/mock/fedora-32-x86_64/root/tmp/mysock
+#
+# The GUI test will be skipped if XDG_SESSION_TYPE is not x11 or wayland.
+#
+#ibus-daemon -drx
+#touch /tmp/i3config
+#i3 -c /tmp/i3config &
+#export XDG_SESSION_TYPE=x11
+
+make check && rc=0 || rc=1
+cat tests/*.log
+if [ $rc != 0 ] ; then
+    exit $rc
+fi
 
 %post
 [ -x %{_bindir}/ibus ] && \
@@ -187,12 +218,105 @@ popd
 %{_datadir}/applications/ibus-setup-typing-booster.desktop
 %{_datadir}/glib-2.0/schemas/org.freedesktop.ibus.engine.typing-booster.gschema.xml
 
+%files tests
+%dir %{_libexecdir}/installed-tests
+%{_libexecdir}/installed-tests/%{name}
+%dir %{_datadir}/installed-tests
+%{_datadir}/installed-tests/%{name}
+
 %files -n emoji-picker
 %{_bindir}/emoji-picker
+%{_datadir}/metainfo/emoji-picker.appdata.xml
 %{_datadir}/applications/emoji-picker.desktop
 
-
 %changelog
+* Tue Jul 14 2020 Mike FABIAN <mfabian@redhat.com> - 2.9.4-1
+- Update to 2.9.4
+- Add emoji-picker.appdata.xml
+- Fix warnings and errors in typing-booster.appdata.xml
+- Update emoji annotations from CLDR
+- Support %S expansion in include statements in compose files
+- Translation update from Weblate for fr, he, hu, zh_CN
+
+* Mon Jun 22 2020 Mike FABIAN <mfabian@redhat.com> - 2.9.3-1
+- Update to 2.9.3
+- Translation updates from Weblate for he
+- Fix wrong indentation of push_context() in _commit_string()
+
+* Mon Jun 08 2020 Mike FABIAN <mfabian@redhat.com> - 2.9.2-1
+- Update to 2.9.2
+- Translation updates from Weblate for es
+- Ignore invalid compose sequences when reading compose files
+- Update emoji annotations from CLDR
+
+* Thu Jun 04 2020 Miro Hrončok <mhroncok@redhat.com> - 2.9.1-2
+- Don't explicitly require python(abi) >= 3.3
+
+* Wed May 27 2020 Mike FABIAN <mfabian@redhat.com> - 2.9.1-1
+- Update to 2.9.1
+- Translation updates form Weblate for fr, nl, zh_TW
+- Make keyboard shortcuts like Control+a work on non-ASCII keyboard layouts
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/107)
+- Fix broken adding of key bindings
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/109)
+
+* Wed May 20 2020 Mike FABIAN <mfabian@redhat.com> - 2.9.0-1
+- Translation updates from Weblate for de, ja, pl, tr, uk, zh_CN
+- Update ibus-typing-booster.pot (Some new translatable strings, tooltips for 2 new buttons)
+- Improve matching of keybindings, consider IBus.ModifierType.MODIFIER_MASK
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/94)
+- Show the list of dictionaries in the setup tool only if it is more than just ['None']
+- If a real dictionary is added in the setup tool, remove dummy dictionary 'None'.
+- Add black flag for the special dummy dictionary 'None'
+- Add doctests to check that the special dictionary 'None' is handled correctly
+- When the list of imes or dictionaries is emptied by the user, set it to 'NoIME' or 'None'
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/98)
+- Add "Set to default" buttons for the list of input methods and dictionaries
+- Remove the special candidate which is shown when a dictionary is missing
+
+* Fri May 15 2020 Mike FABIAN <mfabian@redhat.com> - 2.8.3-2
+- Do not run the Gtk GUI test from the spec file.
+
+* Sun May 03 2020 Mike FABIAN <mfabian@redhat.com> - 2.8.3-1
+- Update to 2.8.3
+- Save default dictionaries and input methods when making the lists
+  empty in the setup tool
+- Fix reading “include” instructions in Compose files and observe XCOMPOSEFILE
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/93)
+- Fix right-to-left detection for LC_MESSAGES=C
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/97)
+- GUI tests added thanks to Takao Fujiwara
+- Update UnicodeData.txt to Unicode 13.0.0
+- Translation updates for it, hu, tr, pt_BR
+
+* Tue Mar 31 2020 Mike FABIAN <mfabian@redhat.com> - 2.8.2-1
+- Update to 2.8.2
+- Translation updates from Weblate for ar, tr
+- Update emoji annotations from CLDR
+
+* Thu Feb 27 2020 Mike FABIAN <mfabian@redhat.com> - 2.8.1-1
+- Update to 2.8.1
+- Prevent also BackSpace from reopening a preedit when the option
+  “Arrow keys can reopen a preedit” is off
+- Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/87
+- Resolves: rhbz#1637647
+- Translation updates from Weblate for es, tr, he
+- Update emoji annotations from CLDR
+
+* Tue Feb 04 2020 Mike FABIAN <mfabian@redhat.com> - 2.8.0-1
+- Update to 2.8.0
+- Translation updates from Weblate for ca, de, es, fr, nl, pl, uk
+- Update emoji annotations from CLDR
+- Update emoji data to Unicode 13.0 final
+- New option to choose whether spellchecking is done on the preedit
+  and which colour to use
+- Spellcheck typed string in preedit and colour it if it is likely to be misspelled
+- More test cases for spellchecking and spellchecking suggestions
+- Restructure code for spellchecking and spellchecking suggestions
+
+* Wed Jan 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.7.7-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Fri Jan 24 2020 Mike FABIAN <mfabian@redhat.com> - 2.7.7-1
 - Update to 2.7.7
 - Translation updates from Weblate for es, de, pl, he, fr, uk, tr, nl
