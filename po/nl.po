@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-06-22 08:35+0200\n"
+"POT-Creation-Date: 2020-07-14 10:12+0200\n"
 "PO-Revision-Date: 2020-05-23 13:40+0000\n"
 "Last-Translator: Geert Warrink <geert.warrink@onsnet.nu>\n"
 "Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
@@ -281,27 +281,27 @@ msgstr "bewerking"
 msgid "regional"
 msgstr "regionaal"
 
-#: engine/itb_util.py:3274 engine/itb_util.py:3584
+#: engine/itb_util.py:3282 engine/itb_util.py:3594
 msgid "File not found"
 msgstr "Bestand niet aangetroffen"
 
-#: engine/itb_util.py:3277 engine/itb_util.py:3587
+#: engine/itb_util.py:3285 engine/itb_util.py:3597
 msgid "Permission error"
 msgstr "Toegangsfout"
 
-#: engine/itb_util.py:3280 engine/itb_util.py:3590
+#: engine/itb_util.py:3288 engine/itb_util.py:3600
 msgid "Unicode decoding error"
 msgstr "Unicode-decoderingsfout"
 
-#: engine/itb_util.py:3283 engine/itb_util.py:3593
+#: engine/itb_util.py:3291 engine/itb_util.py:3603
 msgid "Unknown error"
 msgstr "Onbekende fout"
 
-#: engine/itb_util.py:3564
+#: engine/itb_util.py:3574
 msgid "Native Keyboard"
 msgstr "Eigen toetsenbord"
 
-#: engine/itb_util.py:3566
+#: engine/itb_util.py:3576
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -314,39 +314,39 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4044
+#: engine/itb_util.py:4054
 msgid "Key input"
 msgstr "Toetsaanslag"
 
-#: engine/itb_util.py:4050
+#: engine/itb_util.py:4060
 msgid "Cancel"
 msgstr "Annuleren"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4057
+#: engine/itb_util.py:4067
 msgid "Please press a key (or a key combination)"
 msgstr "Druk op een toets (of een toetscombinatie)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4062
+#: engine/itb_util.py:4072
 msgid "The dialog will be closed when the key is released"
 msgstr "Het venster wordt gesloten zodra je de toets(en) loslaat"
 
-#: engine/itb_util.py:4093
+#: engine/itb_util.py:4103
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Een invoermethode met automatisch aanvullen om sneller te kunnen typen."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4102
+#: engine/itb_util.py:4112
 msgid "translator-credits"
 msgstr "Heimen Stoffels"
 
-#: engine/itb_util.py:4110
+#: engine/itb_util.py:4120
 msgid "Online documentation:"
 msgstr "Online-documentatie:"
 
