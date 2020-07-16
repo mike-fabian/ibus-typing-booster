@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 05 Aug 2020 Released 2.9.5
+* Treat characters 'ÅåÄäÖö' as special when matching in the Swedish dictionary (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/126)
+* Update emoji annotations from CLDR
+* AppStream tweaks by Gunnar Hjalmarsson
+* Translation update from Weblate for ca, de, es, sv
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 14 Jul 2020 Released 2.9.4
 * Add emoji-picker.appdata.xml
 * Fix warnings and errors in typing-booster.appdata.xml

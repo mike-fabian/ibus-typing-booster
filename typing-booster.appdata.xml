@@ -19,6 +19,27 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.9.5" date="2020-08-05" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.9.5</url>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/126">
+          github-issues#126: Treat characters 'ÅåÄäÖö' as special when
+          matching in the Swedish dictionary
+        </issue>
+        <issue>
+          Update emoji annotations from CLDR
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/122">
+          github-issues#122: AppStream tweaks by Gunnar Hjalmarsson
+        </issue>
+        <issue>
+          Translation update from Weblate for ca, de, es, sv
+        </issue>
+      </issues>
+    </release>
     <release version="2.9.4" date="2020-07-14" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
