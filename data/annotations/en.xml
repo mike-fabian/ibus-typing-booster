@@ -2565,8 +2565,8 @@ annotations.
 		<annotation cp="🗡" type="tts">dagger</annotation>
 		<annotation cp="⚔">crossed | swords | weapon</annotation>
 		<annotation cp="⚔" type="tts">crossed swords</annotation>
-		<annotation cp="🔫">gun | handgun | pistol | revolver | tool | weapon</annotation>
-		<annotation cp="🔫" type="tts">pistol</annotation>
+		<annotation cp="🔫">gun | handgun | pistol | revolver | tool | weapon | water</annotation>
+		<annotation cp="🔫" type="tts">water pistol</annotation>
 		<annotation cp="🏹">archer | arrow | bow | bow and arrow | Sagittarius | zodiac</annotation>
 		<annotation cp="🏹" type="tts">bow and arrow</annotation>
 		<annotation cp="🛡">shield | weapon</annotation>
@@ -3289,7 +3289,6 @@ annotations.
 		<annotation cp="|" type="tts">vertical line</annotation>
 		<annotation cp="~">tilde</annotation>
 		<annotation cp="~" type="tts">tilde</annotation>
-		<annotation cp="⁄">stroke | virgule</annotation>
 		<annotation cp="‾" type="tts">overline</annotation>
 		<annotation cp="‾">vinculum | overstrike</annotation>
 		<annotation cp="‽" type="tts">interrobang</annotation>
