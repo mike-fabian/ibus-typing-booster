@@ -61,6 +61,95 @@ except (ImportError,):
 # letter of a word until the candidate lookup table pops up.
 MAX_WORDS = 100
 
+# List of languages where accent insensitive matching makes sense:
+ACCENT_LANGUAGES = {
+    'af': '',
+    'ast': '',
+    'az': '',
+    'be': '',
+    'bg': '',
+    'br': '',
+    'bs': '',
+    'ca': '',
+    'cs': '',
+    'csb': '',
+    'cv': '',
+    'cy': '',
+    'da': 'æÆøØåÅ',
+    'de': '',
+    'dsb': '',
+    'el': '',
+    'en': '',
+    'es': '',
+    'eu': '',
+    'fi': 'åÅäÄöÖ',
+    'fo': '',
+    'fr': '',
+    'fur': '',
+    'fy': '',
+    'ga': '',
+    'gd': '',
+    'gl': '',
+    'grc': '',
+    'gv': '',
+    'haw': '',
+    'hr': '',
+    'hsb': '',
+    'ht': '',
+    'hu': '',
+    'ia': '',
+    'is': '',
+    'it': '',
+    'kk': '',
+    'ku': '',
+    'ky': '',
+    'lb': '',
+    'ln': '',
+    'lv': '',
+    'mg': '',
+    'mi': '',
+    'mk': '',
+    'mn': '',
+    'mos': '',
+    'mt': '',
+    'nb': 'æÆøØåÅ',
+    'nds': '',
+    'nl': '',
+    'nn': 'æÆøØåÅ',
+    'nr': '',
+    'nso': '',
+    'ny': '',
+    'oc': '',
+    'pl': '',
+    'plt': '',
+    'pt': '',
+    'qu': '',
+    'quh': '',
+    'ru': '',
+    'sc': '',
+    'se': '',
+    'sh': '',
+    'shs': '',
+    'sk': '',
+    'sl': '',
+    'smj': '',
+    'sq': '',
+    'sr': '',
+    'ss': '',
+    'st': '',
+    'sv': 'åÅäÄöÖ',
+    'tet': '',
+    'tk': '',
+    'tn': '',
+    'ts': '',
+    'uk': '',
+    'uz': '',
+    've': '',
+    'vi': '',
+    'wa': '',
+    'xh': '',
+}
+
 class Dictionary:
     '''A class to hold a hunspell dictionary
     '''
@@ -68,6 +157,7 @@ class Dictionary:
         if DEBUG_LEVEL > 1:
             LOGGER.debug('Dictionary.__init__(name=%s)\n', name)
         self.name = name
+        self.language = self.name.split('_')[0]
         self.dic_path = ''
         self.encoding = 'UTF-8'
         self.words = []
@@ -90,21 +180,10 @@ class Dictionary:
          self.encoding,
          self.words) = itb_util.get_hunspell_dictionary_wordlist(self.name)
         if self.words:
-            # List of languages where accent insensitive matching makes sense:
-            accent_languages = (
-                'af', 'ast', 'az', 'be', 'bg', 'br', 'bs', 'ca', 'cs', 'csb',
-                'cv', 'cy', 'da', 'de', 'dsb', 'el', 'en', 'es', 'eu', 'fi', 'fo',
-                'fr', 'fur', 'fy', 'ga', 'gd', 'gl', 'grc', 'gv', 'haw', 'hr',
-                'hsb', 'ht', 'hu', 'ia', 'is', 'it', 'kk', 'ku', 'ky', 'lb',
-                'ln', 'lv', 'mg', 'mi', 'mk', 'mn', 'mos', 'mt', 'nb', 'nds',
-                'nl', 'nn', 'nr', 'nso', 'ny', 'oc', 'pl', 'plt', 'pt', 'qu',
-                'quh', 'ru', 'sc', 'se', 'sh', 'shs', 'sk', 'sl', 'smj', 'sq',
-                'sr', 'ss', 'st', 'sv', 'tet', 'tk', 'tn', 'ts', 'uk', 'uz',
-                've', 'vi', 'wa', 'xh',
-            )
-            if self.name.split('_')[0] in accent_languages:
+            if self.language in ACCENT_LANGUAGES:
                 self.word_pairs = [
-                    (x, itb_util.remove_accents(x))
+                    (x, itb_util.remove_accents(
+                        x, keep=ACCENT_LANGUAGES[self.language]))
                     for x in self.words
                 ]
             for word in self.words:
@@ -561,9 +640,6 @@ class Hunspell:
         # make sure input_phrase is in the internal normalization form (NFD):
         input_phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
-        input_phrase_no_accents = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL,
-            itb_util.remove_accents(input_phrase))
         # But enchant and pyhunspell want NFC as input, make a copy in NFC:
         input_phrase_nfc = unicodedata.normalize('NFC', input_phrase)
 
@@ -578,7 +654,11 @@ class Hunspell:
                         suggested_words.update([
                             (x[0], 0)
                             for x in dictionary.word_pairs
-                            if x[1].startswith(input_phrase_no_accents)])
+                            if x[1].startswith(
+                                    itb_util.remove_accents(
+                                        input_phrase,
+                                        keep=ACCENT_LANGUAGES[
+                                            dictionary.language]))])
                     else:
                         suggested_words.update([
                             (x, 0)
@@ -602,18 +682,19 @@ class Hunspell:
                         for x in
                         dictionary.spellcheck_suggest(input_phrase)
                     ]
-                    suggested_words.update([
-                        (suggestion, -1)
-                        for suggestion in extra_suggestions
-                        if suggestion not in suggested_words])
-        for word in suggested_words:
-            if (suggested_words[word] == -1
-                    and
-                    itb_util.remove_accents(word)
-                    == itb_util.remove_accents(input_phrase)):
-                # This spell checking correction is actually even
-                # an accent insensitive match, adjust accordingly:
-                suggested_words[word] = 0
+                    for suggestion in extra_suggestions:
+                        if suggestion not in suggested_words:
+                            if (dictionary.word_pairs
+                                and
+                                itb_util.remove_accents(
+                                    suggestion,
+                                    keep=ACCENT_LANGUAGES[dictionary.language])
+                                == itb_util.remove_accents(
+                                    input_phrase,
+                                    keep=ACCENT_LANGUAGES[dictionary.language])):
+                                suggested_words[suggestion] = 0
+                            else:
+                                suggested_words[suggestion] = -1
         sorted_suggestions = sorted(
             suggested_words.items(),
             key=lambda x: (

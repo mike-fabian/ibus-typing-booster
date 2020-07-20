@@ -24,6 +24,7 @@ This file implements test cases for miscellaneous stuff in itb_util.py.
 import sys
 import locale
 import unittest
+import unicodedata
 
 from gi import require_version
 require_version('IBus', '1.0')
@@ -64,6 +65,39 @@ class ItbUtilTestCase(unittest.TestCase):
         self.assertEqual(itb_util.is_right_to_left_messages(), False)
         locale.setlocale(locale.LC_ALL, 'C')
         self.assertEqual(itb_util.is_right_to_left_messages(), False)
+
+    def test_remove_accents(self):
+        self.assertEqual(
+            itb_util.remove_accents('abcÅøßẞüxyz'),
+            'abcAossSSuxyz')
+        self.assertEqual(
+            itb_util.remove_accents(
+                unicodedata.normalize('NFD', 'abcÅøßẞüxyz')),
+            'abcAossSSuxyz')
+        self.assertEqual(
+            unicodedata.normalize(
+                'NFC',
+                itb_util.remove_accents('abcÅøßẞüxyz', keep='åÅØø')),
+            'abcÅøssSSuxyz')
+        self.assertEqual(
+            unicodedata.normalize(
+                'NFC',
+                itb_util.remove_accents(
+                    unicodedata.normalize('NFD', 'abcÅøßẞüxyz'),
+                    keep=unicodedata.normalize('NFD', 'åÅØø'))),
+            'abcÅøssSSuxyz')
+        self.assertEqual(
+            unicodedata.normalize(
+                'NFC',
+                itb_util.remove_accents('alkoholförgiftning', keep='åÅÖö')),
+            'alkoholförgiftning')
+        self.assertEqual(
+            unicodedata.normalize(
+                'NFC',
+                itb_util.remove_accents(
+                    unicodedata.normalize('NFD', 'alkoholförgiftning'),
+                    keep=unicodedata.normalize('NFD', 'åÅÖö'))),
+            'alkoholförgiftning')
 
 if __name__ == '__main__':
     unittest.main()

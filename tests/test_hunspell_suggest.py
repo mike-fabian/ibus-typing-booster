@@ -189,8 +189,10 @@ class HunspellSuggestTestCase(unittest.TestCase):
              ('kissajuttu', 0),
              ('kissamaiseksi',0)])
         self.assertEqual(
-            h.suggest('Pariisin-suurlahettila'),
-            [('Pariisin-suurla\u0308hettila\u0308s', 0)])
+            h.suggest('Pariisin-suurlähettila'),
+            [('Pariisin-suurla\u0308hettila\u0308s', 0),
+             ('Pariisin-suurlähetetila', -1),
+             ('Pariisin-suurlähettiala', -1)])
 
     @unittest.skipUnless(
         IMPORT_LIBVOIKKO_SUCCESSFUL,
@@ -258,6 +260,35 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(
             d.spellcheck_suggest_voikko('kisssa'),
             ['kissa', 'kissaa', 'kisassa', 'kisussa'])
+
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('sv_SE')[0],
+        "Skipping because no Swedisch dictionary could be found. ")
+    def test_sv_SE(self):
+        h = hunspell_suggest.Hunspell(['sv_SE'])
+        self.assertEqual(
+            h.suggest('östgo'),
+            [('östgot', 0),
+             ('östgöte', 0),
+             ('östgotisk', 0),
+             ('östgötsk', 0),
+             ('östgötska', 0)])
+        self.assertEqual(
+            h.suggest('östgot'),
+            [('östgot', 0),
+             ('östgotisk', 0),
+             ('Östgot', -1)])
+        self.assertEqual(
+            h.suggest('östgö'),
+            [('östgöte', 0),
+             ('östgötsk', 0),
+             ('östgötska', 0)])
+        self.assertEqual(
+            h.suggest('östgöt')[0:4],
+            [('östgöte', 0),
+             ('östgötsk', 0),
+             ('östgötska', 0),
+             ('östgot', -1)])
 
 if __name__ == '__main__':
     unittest.main()

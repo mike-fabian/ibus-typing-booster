@@ -2602,17 +2602,19 @@ TRANS_TABLE = {
     ord('ł'): 'l',
 }
 
-def remove_accents(text):
+def remove_accents(text, keep=''):
     '''Removes accents from the text
 
-    Returns the text with all accents removed
-
-    Using “from unidecode import unidecode” is more
+    Using “from unidecode import unidecode” is maybe more
     sophisticated, but I am not sure whether I can require
-    “unidecode”.
+    “unidecode”. And maybe it cannot easily keep some accents for some
+    languages.
 
     :param text: The text to change
     :type text: string
+    :param keep: A string of characters which should be kept unchanged
+    :type keep: string
+    :return: The text with some or all accents removed in NORMALIZATION_FORM_INTERNAL
     :rtype: string
 
     Examples:
@@ -2623,10 +2625,31 @@ def remove_accents(text):
     >>> remove_accents('ÅÆæŒœĳøßẞü')
     'AAEaeOEoeijossSSu'
 
+    >>> remove_accents('abcÅøßẞüxyz')
+    'abcAossSSuxyz'
+
+    >>> unicodedata.normalize('NFC', remove_accents('abcÅøßẞüxyz', keep='åÅØø'))
+    'abcÅøssSSuxyz'
+
+    >>> unicodedata.normalize('NFC', remove_accents('alkoholförgiftning', keep='åÅÖö'))
+    'alkoholförgiftning'
+
     '''
-    return ''.join([
-        x for x in unicodedata.normalize('NFKD', text)
-        if unicodedata.category(x) != 'Mn']).translate(TRANS_TABLE)
+    if not keep:
+        result = ''.join([
+            x for x in unicodedata.normalize('NFKD', text)
+            if unicodedata.category(x) != 'Mn']).translate(TRANS_TABLE)
+        return unicodedata.normalize(NORMALIZATION_FORM_INTERNAL, result)
+    result = ''
+    keep = unicodedata.normalize('NFC', keep)
+    for char in unicodedata.normalize('NFC', text):
+        if char in keep:
+            result += char
+            continue
+        result += ''.join([
+            x for x in unicodedata.normalize('NFKD', char)
+            if unicodedata.category(x) != 'Mn']).translate(TRANS_TABLE)
+    return unicodedata.normalize(NORMALIZATION_FORM_INTERNAL, result)
 
 def is_right_to_left_messages():
     '''
