@@ -8,10 +8,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-07-14 10:12+0200\n"
-"PO-Revision-Date: 2020-07-21 07:39+0000\n"
+"PO-Revision-Date: 2020-07-23 16:15+0000\n"
 "Last-Translator: Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
-"Language-Team: Swedish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/sv/>\n"
+"Language-Team: Swedish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,19 +33,19 @@ msgstr "Om"
 
 #: engine/emoji_picker.py:322
 msgid "Quit"
-msgstr ""
+msgstr "Avsluta"
 
 #: engine/emoji_picker.py:332
 msgid "Search for emoji"
-msgstr ""
+msgstr "Sök efter emoji"
 
 #: engine/emoji_picker.py:344
 msgid "Set the font to display emoji"
-msgstr ""
+msgstr "Ange teckensnitt för att visa emoji"
 
 #: engine/emoji_picker.py:352
 msgid "Set font size"
-msgstr ""
+msgstr "Ange teckenstorlek"
 
 #. Translators: This is a checkbox which enables or disables
 #. the pango font fallback. If font fallback is off, only the
@@ -64,10 +64,12 @@ msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
+"Om reservteckensnitt skall användas för emoji, eller delar av emoji-"
+"sekvenser, som inte kan visas med det valda teckensnittet."
 
 #: engine/emoji_picker.py:445
 msgid "Recently used"
-msgstr ""
+msgstr "Nyligen använt"
 
 #: engine/emoji_picker.py:619
 msgid "Categories"
@@ -75,11 +77,11 @@ msgstr "Kategorier"
 
 #: engine/emoji_picker.py:620
 msgid "Unicode categories"
-msgstr ""
+msgstr "Unicode-kategorier"
 
 #: engine/emoji_picker.py:621
 msgid "Keywords"
-msgstr ""
+msgstr "Nyckelord"
 
 #: engine/emoji_picker.py:663
 msgid "Fonts used to render this emoji:"
@@ -87,27 +89,27 @@ msgstr "Teckensnitt som används för att återge den här emojin:"
 
 #: engine/emoji_picker.py:680
 msgid "Unicode Version:"
-msgstr ""
+msgstr "Unicode-version:"
 
 #: engine/emoji_picker.py:702 engine/emoji_picker.py:1798
 msgid "Left click to copy"
-msgstr ""
+msgstr "Vänsterklick för att kopiera"
 
 #: engine/emoji_picker.py:705
 msgid "Long press or middle click for skin tones"
-msgstr ""
+msgstr "Långtryck eller mushjulsklick för hudtoner"
 
 #: engine/emoji_picker.py:706
 msgid "Right click for info"
-msgstr ""
+msgstr "Högerklick för info"
 
 #: engine/emoji_picker.py:1192
 msgid "Search Results"
-msgstr ""
+msgstr "Sökresultat"
 
 #: engine/emoji_picker.py:1196
 msgid "Search produced empty result."
-msgstr ""
+msgstr "Sökningen gav inga träffar."
 
 #: engine/emoji_picker.py:1467 engine/emoji_picker.py:1591
 msgid "Copied to clipboard!"
@@ -115,34 +117,34 @@ msgstr "Kopierat till urklipp!"
 
 #: engine/emoji_picker.py:1908
 msgid "Lookup on emojipedia"
-msgstr ""
+msgstr "Slå upp på emojipedia"
 
 #: engine/emoji_picker.py:2033 engine/emoji_picker.py:2034
 #: engine/emoji_picker.py:2035 setup/main.py:1204
 msgid "System default"
-msgstr ""
+msgstr "Systemstandard"
 
 #: engine/emoji_picker.py:2158
 msgid "Set Font"
-msgstr ""
+msgstr "Ange teckensnitt"
 
 #: engine/hunspell_table.py:477 engine/hunspell_table.py:511
 #: engine/hunspell_table.py:532
 msgid "Off"
-msgstr ""
+msgstr "Av"
 
 #: engine/hunspell_table.py:482 engine/hunspell_table.py:516
 #: engine/hunspell_table.py:537
 msgid "On"
-msgstr ""
+msgstr "På"
 
 #: engine/hunspell_table.py:501
 msgid "Input mode"
-msgstr ""
+msgstr "Indatametod"
 
 #: engine/hunspell_table.py:502
 msgid "Here you can switch ibus-typing-booster on or off."
-msgstr ""
+msgstr "Här kan du slå på eller stänga av ibus-typing-booster."
 
 #. Translators: Whether Unicode symbols and emoji should be
 #. included in the predictions. Emoji are pictographs like
@@ -153,7 +155,7 @@ msgstr ""
 #. nevertheless useful symbols.
 #: engine/hunspell_table.py:521 engine/hunspell_table.py:523 setup/main.py:455
 msgid "Unicode symbols and emoji predictions"
-msgstr ""
+msgstr "Unicode-symboler och emoji-förutsägelser"
 
 #. Translators: While “Off the record” mode is on, learning
 #. from user input is disabled. If learned user input is
@@ -164,11 +166,11 @@ msgstr ""
 #. sense to use this option temporarily.
 #: engine/hunspell_table.py:542 engine/hunspell_table.py:543 setup/main.py:483
 msgid "Off the record mode"
-msgstr ""
+msgstr "Inofficiellt läge"
 
 #: engine/hunspell_table.py:1388
 msgid "Highest priority dictionary"
-msgstr ""
+msgstr "Ordbok med högsta prioritet"
 
 #: engine/hunspell_table.py:1389
 msgid "Choose highest priority dictionary"
@@ -184,11 +186,11 @@ msgstr ""
 
 #: engine/hunspell_table.py:1718
 msgid "Setup"
-msgstr ""
+msgstr "Inställning"
 
 #: engine/hunspell_table.py:1721 setup/main.py:137
 msgid "Preferences for ibus-typing-booster"
-msgstr ""
+msgstr "Inställningar för ibus-typing-booster"
 
 #: engine/hunspell_table.py:3946
 msgid "Failed to import Google speech-to-text."
@@ -204,7 +206,7 @@ msgstr "Kunde inte importera kö."
 
 #: engine/hunspell_table.py:3957
 msgid "No supported language for speech recognition."
-msgstr ""
+msgstr "Inget språk som stöds för taligenkänning."
 
 #: engine/hunspell_table.py:3961
 #, python-format
@@ -224,13 +226,13 @@ msgstr "Google tal-till-text-fel. Se debug.log."
 #: engine/itb_emoji.py:774 engine/itb_emoji.py:775 engine/itb_emoji.py:776
 #: engine/itb_emoji.py:989
 msgid "people"
-msgstr ""
+msgstr "människor"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:777 engine/itb_emoji.py:985
 msgid "nature"
-msgstr ""
+msgstr "natur"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:778 engine/itb_emoji.py:981
@@ -240,7 +242,7 @@ msgstr "mat"
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:779 engine/itb_emoji.py:995
 msgid "travel"
-msgstr ""
+msgstr "resa"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:780 engine/itb_emoji.py:789 engine/itb_emoji.py:977
@@ -250,12 +252,12 @@ msgstr "aktivitet"
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:781 engine/itb_emoji.py:987
 msgid "objects"
-msgstr ""
+msgstr "föremål"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:782 engine/itb_emoji.py:993
 msgid "symbols"
-msgstr ""
+msgstr "symboler"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:783 engine/itb_emoji.py:979
@@ -266,13 +268,13 @@ msgstr "flaggor"
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:784 engine/itb_emoji.py:785 engine/itb_emoji.py:983
 msgid "modifier"
-msgstr ""
+msgstr "modifierare"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:786 engine/itb_emoji.py:991
 msgid "regional"
-msgstr ""
+msgstr "regional"
 
 #: engine/itb_util.py:3282 engine/itb_util.py:3594
 msgid "File not found"
@@ -280,7 +282,7 @@ msgstr "Filen hittades inte"
 
 #: engine/itb_util.py:3285 engine/itb_util.py:3597
 msgid "Permission error"
-msgstr ""
+msgstr "Rättighetsfel"
 
 #: engine/itb_util.py:3288 engine/itb_util.py:3600
 msgid "Unicode decoding error"
