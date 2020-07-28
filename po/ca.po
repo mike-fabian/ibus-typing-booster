@@ -7,20 +7,20 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-07-14 10:12+0200\n"
-"PO-Revision-Date: 2020-02-09 15:49+0000\n"
+"PO-Revision-Date: 2020-07-28 03:28+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
-"Language-Team: Catalan <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ca/>\n"
+"Language-Team: Catalan <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10.3\n"
+"X-Generator: Weblate 4.1.1\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
-msgstr "Selector d'emojis"
+msgstr "Selector d’emojis"
 
 #: engine/emoji_picker.py:311
 msgid "Clear recently used"
@@ -90,7 +90,7 @@ msgstr "Versió del Unicode:"
 
 #: engine/emoji_picker.py:702 engine/emoji_picker.py:1798
 msgid "Left click to copy"
-msgstr ""
+msgstr "Feu clic per a copiar"
 
 #: engine/emoji_picker.py:705
 msgid "Long press or middle click for skin tones"
@@ -98,7 +98,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:706
 msgid "Right click for info"
-msgstr ""
+msgstr "Feu clic dret per a mostrar informació"
 
 #: engine/emoji_picker.py:1192
 msgid "Search Results"
@@ -110,11 +110,11 @@ msgstr ""
 
 #: engine/emoji_picker.py:1467 engine/emoji_picker.py:1591
 msgid "Copied to clipboard!"
-msgstr ""
+msgstr "S’ha copiat al porta-retalls."
 
 #: engine/emoji_picker.py:1908
 msgid "Lookup on emojipedia"
-msgstr ""
+msgstr "Cerca a l’Emojipedia"
 
 #: engine/emoji_picker.py:2033 engine/emoji_picker.py:2034
 #: engine/emoji_picker.py:2035 setup/main.py:1204
@@ -137,7 +137,7 @@ msgstr "Activat"
 
 #: engine/hunspell_table.py:501
 msgid "Input mode"
-msgstr "Mode d'entrada"
+msgstr "Mode d’entrada"
 
 #: engine/hunspell_table.py:502
 msgid "Here you can switch ibus-typing-booster on or off."
@@ -152,7 +152,7 @@ msgstr ""
 #. nevertheless useful symbols.
 #: engine/hunspell_table.py:521 engine/hunspell_table.py:523 setup/main.py:455
 msgid "Unicode symbols and emoji predictions"
-msgstr "Prediccions d'emojis i símbols del Unicode"
+msgstr "Prediccions d’emojis i símbols del Unicode"
 
 #. Translators: While “Off the record” mode is on, learning
 #. from user input is disabled. If learned user input is
@@ -174,9 +174,8 @@ msgid "Choose highest priority dictionary"
 msgstr "Trieu el diccionari prioritari"
 
 #: engine/hunspell_table.py:1418
-#, fuzzy
 msgid "Preedit input method"
-msgstr "Mètode d'entrada:"
+msgstr "Mètode d’entrada de preedició"
 
 #: engine/hunspell_table.py:1419
 msgid "Switch preedit input method"
@@ -188,11 +187,11 @@ msgstr "Configuració"
 
 #: engine/hunspell_table.py:1721 setup/main.py:137
 msgid "Preferences for ibus-typing-booster"
-msgstr ""
+msgstr "Preferències de l’ibus-typing-booster"
 
 #: engine/hunspell_table.py:3946
 msgid "Failed to import Google speech-to-text."
-msgstr ""
+msgstr "Ha fallat la importació de la conversió de veu a text de Google."
 
 #: engine/hunspell_table.py:3949
 msgid "Failed to import pyaudio."
@@ -204,20 +203,24 @@ msgstr "Ha fallat la importació de la cua."
 
 #: engine/hunspell_table.py:3957
 msgid "No supported language for speech recognition."
-msgstr ""
+msgstr "Cap llengua no és compatible amb el reconeixement de veu."
 
 #: engine/hunspell_table.py:3961
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
-msgstr ""
+msgstr "No s’ha trobat el fitxer de «credencials d’aplicació de Google» «%s»."
 
 #: engine/hunspell_table.py:3973
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
+"Ha fallat la inicialització de la conversió de veu a text de Google. Vegeu "
+"debug.log."
 
 #: engine/hunspell_table.py:4080
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
+"S’ha produït un error amb la conversió de veu a text de Google. Vegeu debug."
+"log."
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
@@ -276,7 +279,7 @@ msgstr "regions"
 
 #: engine/itb_util.py:3282 engine/itb_util.py:3594
 msgid "File not found"
-msgstr ""
+msgstr "No s’ha trobat el fitxer"
 
 #: engine/itb_util.py:3285 engine/itb_util.py:3597
 msgid "Permission error"
@@ -288,11 +291,11 @@ msgstr ""
 
 #: engine/itb_util.py:3291 engine/itb_util.py:3603
 msgid "Unknown error"
-msgstr ""
+msgstr "Error desconegut"
 
 #: engine/itb_util.py:3574
 msgid "Native Keyboard"
-msgstr ""
+msgstr "Teclat natiu"
 
 #: engine/itb_util.py:3576
 msgid ""
@@ -306,7 +309,7 @@ msgstr ""
 #. key binding for a command.
 #: engine/itb_util.py:4054
 msgid "Key input"
-msgstr ""
+msgstr "Entrada de tecles"
 
 #: engine/itb_util.py:4060
 msgid "Cancel"
@@ -328,7 +331,7 @@ msgstr "El diàleg es tancarà quan es deixi anar la tecla"
 
 #: engine/itb_util.py:4103
 msgid "A completion input method to speedup typing."
-msgstr ""
+msgstr "Un mètode d’entrada de compleció per a accelerar l’escriptura."
 
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:4112
@@ -354,7 +357,7 @@ msgstr "_Tanca"
 #. in.
 #: setup/main.py:198
 msgid "Dictionaries and input methods"
-msgstr "Diccionaris i mètodes d'entrada"
+msgstr "Diccionaris i mètodes d’entrada"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence the
@@ -394,14 +397,14 @@ msgstr "Vinculació de tecles"
 #. diffent types of candidates should be marked with labels.
 #: setup/main.py:266
 msgid "Appearance"
-msgstr ""
+msgstr "Aparença"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
 #: setup/main.py:282 setup/main.py:1796
 msgid "Speech recognition"
-msgstr ""
+msgstr "Reconeixement de veu"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -451,7 +454,7 @@ msgstr ""
 #. command which will deselect all candidates.
 #: setup/main.py:380
 msgid "Automatically select the best candidate"
-msgstr ""
+msgstr "Selecciona automàticament el millor candidat"
 
 #: setup/main.py:382
 msgid ""
@@ -483,9 +486,8 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:428
-#, fuzzy
 msgid "Remember last used preedit input method"
-msgstr "Mètode d'entrada:"
+msgstr "Recorda l’últim mètode d’entrada de preedició utilitzat"
 
 #: setup/main.py:430
 msgid ""
@@ -616,13 +618,13 @@ msgstr "Aprèn del fitxer de text"
 
 #: setup/main.py:677
 msgid "Learn your style by reading a text file"
-msgstr "Aprèn el vostre estil amb la lectura d'un fitxer de text"
+msgstr "Aprèn el vostre estil amb la lectura d’un fitxer de text"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
 #: setup/main.py:686
 msgid "Delete learned data"
-msgstr "Suprimeix les dades que s'han après"
+msgstr "Suprimeix les dades que s’han après"
 
 #: setup/main.py:688
 msgid ""
@@ -636,7 +638,7 @@ msgstr ""
 #. ibus-typing-booster.
 #: setup/main.py:700
 msgid "Use dictionaries for the following languages:"
-msgstr ""
+msgstr "Utilitza diccionaris per a les llengües següents:"
 
 #: setup/main.py:728
 msgid "Add a dictionary"
@@ -666,7 +668,7 @@ msgstr "Instal·la els diccionaris ací configurats però que no s'han instal·l
 
 #: setup/main.py:778 setup/main.py:895 setup/main.py:1081 setup/main.py:3431
 msgid "Set to default"
-msgstr ""
+msgstr "Defineix com a per defecte"
 
 #. Translators: Tooltip for a button used to set the list of
 #. dictionaries to the default for the current locale.
@@ -679,15 +681,15 @@ msgstr ""
 #. ibus-typing-booster.
 #: setup/main.py:813
 msgid "Use the following input methods:"
-msgstr ""
+msgstr "Utilitza els mètodes d’entrada següents:"
 
 #: setup/main.py:841
 msgid "Add an input method"
-msgstr "Afegeix un mètode d'entrada"
+msgstr "Afegeix un mètode d’entrada"
 
 #: setup/main.py:853
 msgid "Remove an input method"
-msgstr "Suprimeix un mètode d'entrada"
+msgstr "Suprimeix un mètode d’entrada"
 
 #: setup/main.py:865
 msgid "Move input method up"
@@ -702,7 +704,7 @@ msgstr ""
 #. methods.
 #: setup/main.py:885
 msgid "Input Method Help"
-msgstr "Ajuda del mètode d'entrada"
+msgstr "Ajuda del mètode d’entrada"
 
 #: setup/main.py:887
 msgid "Display some help showing how to use the input method selected above."
@@ -716,15 +718,15 @@ msgstr ""
 
 #: setup/main.py:924
 msgid "Enter shortcut here:"
-msgstr ""
+msgstr "Introduïu la drecera ací:"
 
 #: setup/main.py:941
 msgid "Enter shortcut expansion here:"
-msgstr ""
+msgstr "Introduïu l’expansió de la drecera ací:"
 
 #: setup/main.py:957
 msgid "Clear input"
-msgstr ""
+msgstr "Neteja l’entrada"
 
 #: setup/main.py:967
 msgid "Delete shortcut"
@@ -744,7 +746,7 @@ msgstr "Drecera"
 #. existing shortcuts
 #: setup/main.py:1008
 msgid "Shortcut expansion"
-msgstr ""
+msgstr "Expansió de la drecera"
 
 #: setup/main.py:1019
 msgid "Current key bindings:"
@@ -762,15 +764,15 @@ msgstr "Edita"
 
 #: setup/main.py:1074
 msgid "Edit the key bindings for the selected command"
-msgstr ""
+msgstr "Edita la drecera de teclat de l’ordre seleccionada"
 
 #: setup/main.py:1085 setup/main.py:3436
 msgid "Set default key bindings for the selected command"
-msgstr ""
+msgstr "Estableix les dreceres per defecte de l’ordre seleccionada"
 
 #: setup/main.py:1092
 msgid "Set all to default"
-msgstr ""
+msgstr "Estableix-les totes als valors per defecte"
 
 #: setup/main.py:1096
 msgid "Set default key bindings for all commands"
@@ -894,10 +896,8 @@ msgstr ""
 #. a custom color is used to indicate when the preedit
 #. might contain a spelling error.
 #: setup/main.py:1305
-#, fuzzy
-#| msgid "Spell checking"
 msgid "Preedit spellchecking"
-msgstr "Verificació ortogràfica"
+msgstr "Verificació ortogràfica de preedició"
 
 #: setup/main.py:1307
 msgid ""
@@ -1100,7 +1100,7 @@ msgstr "Emoji"
 
 #: setup/main.py:1987
 msgid "Are you sure?"
-msgstr "N'esteu segur?"
+msgstr "N’esteu segur?"
 
 #: setup/main.py:1989 setup/main.py:2499 setup/main.py:3503
 msgid "_Cancel"
