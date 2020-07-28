@@ -14,16 +14,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-07-14 10:12+0200\n"
-"PO-Revision-Date: 2020-05-20 14:54+0000\n"
+"PO-Revision-Date: 2020-07-28 10:28+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.0.4\n"
+"X-Generator: Weblate 4.1.1\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -309,11 +309,9 @@ msgid ""
 "So no transliteration or composing is done here."
 msgstr ""
 "Direkte Tastatureingabe. Dies ist nicht wirklich eine Inputmethode, es "
-"benutzt\n"
-"was auch immer direkt vom aktuellen Tastaturlayout produziert wird ohne "
-"irgendwelche\n"
-"weiteren Änderungen. D.h. hier wird keinerlei Transliteration oder "
-"Komposition benutzt."
+"benutzt was auch immer direkt vom aktuellen Tastaturlayout produziert wird "
+"ohne irgendwelche weiteren Änderungen. D.h. hier wird keinerlei "
+"Transliteration oder Komposition benutzt."
 
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
@@ -331,14 +329,14 @@ msgstr "Abbrechen"
 #. command.
 #: engine/itb_util.py:4067
 msgid "Please press a key (or a key combination)"
-msgstr "Bitte drücken  Sie eine Taste  (oder eine Tastenkombination)"
+msgstr "Bitte drücken Sie eine Taste (oder eine Tastenkombination)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
 #: engine/itb_util.py:4072
 msgid "The dialog will be closed when the key is released"
-msgstr "Dieser Dialog wird geschlossen  sobald die  Taste losgelassen wird"
+msgstr "Dieser Dialog wird geschlossen sobald die Taste losgelassen wird"
 
 #: engine/itb_util.py:4103
 msgid "A completion input method to speedup typing."
@@ -437,11 +435,11 @@ msgid ""
 "command is typed."
 msgstr ""
 "Wenn diese Option eingeschaltet ist, werden Vorschläge per Default nicht "
-"angezeigt. Das Drücken  einer speziellen Taste ist dann notwendig um eine "
+"angezeigt. Das Drücken einer speziellen Taste ist dann notwendig um eine "
 "Liste von Vorschlägen anzuzeigen. Die Taste, die dafür benutzt wird, kann in "
-"den Tastenbelegungseinstellungen  verändert werden. Die  Voreinstellung  "
-"dafür ist  die  Tab Taste.  Nach einem Commit bleiben die Vorschläge wieder "
-"versteckt bis zum nächsten Drücken der ensprechenden  Taste."
+"den Tastenbelegungseinstellungen verändert werden. Die Voreinstellung dafür "
+"ist die Tab Taste. Nach einem Commit bleiben die Vorschläge wieder versteckt "
+"bis zum nächsten Drücken der ensprechenden Taste."
 
 #. Translators: Whether the best completion is first shown
 #. inline in the preedit instead of showing a full
@@ -463,10 +461,10 @@ msgid ""
 msgstr ""
 "Mit dieser Option wird die beste Vervollständigung direkt im Preedit "
 "angezeigt anstatt eine Kandidatenliste anzuzeigen. Der im Preedit angezeigte "
-"Vervollständigungskandidat  kann mit der Tab  Taste ausgewählt werden und  "
-"dann wie  üblich comitted werden,  zum Beispiel durch Tippen einer Leertaste "
-"oder Strg+Leertaste. Ein weiteres  Tippen  der Tab  Taste wählt den  "
-"nächsten Vervollständigungskandidaten aus und öffnet eine  vollständige  "
+"Vervollständigungskandidat kann mit der Tab Taste ausgewählt werden und dann "
+"wie üblich comitted werden, zum Beispiel durch Tippen einer Leertaste oder "
+"Strg+Leertaste. Ein weiteres Tippen der Tab Taste wählt den nächsten "
+"Vervollständigungskandidaten aus und öffnet eine vollständige "
 "Kandidatenliste."
 
 #. Translators: What you type will automatically be
@@ -546,8 +544,8 @@ msgid ""
 "nevertheless useful symbols."
 msgstr ""
 "Diese Option wählt ob auch Unicode Symbole und Emoji vorgeschlagen werden "
-"sollen. Emoji sind Piktogramme wie ☺♨⛵….  Unicode Symbole sind andere "
-"Symbole wie zum Beispiel mathematische Symbole (∀∑∯…), Pfeile (←↑↔…), "
+"sollen. Emoji sind Piktogramme wie ☺♨⛵…. Unicode Symbole sind andere Symbole "
+"wie zum Beispiel mathematische Symbole (∀∑∯…), Pfeile (←↑↔…), "
 "Währungssymbole (€₹₺…), Braillezeichen (⠥⠩…), und viele andere Symbole. "
 "Diese sind strenggenommen keine Emoji, aber trotzdem nützliche Symbole."
 
@@ -588,10 +586,10 @@ msgid ""
 msgstr ""
 "Benutzt einen Workaround für Bugs in den Inputmodulen in Qt4 und Qt5. "
 "Achtung: obwohl dieser Workaround die Funktionalität verbessert wenn die Qt "
-"Inputmodule benutzt werden, verursacht er Probleme wenn XIM benutzt wird. D."
-"h. das XIM Modul von Qt4 wird nicht gut funktionieren wenn dieser Workaround "
-"angewendet wird. Und die Eingabe über XIM in X11  Programme wie xterm wird "
-"dann auch nicht gut funktionieren."
+"Inputmodule benutzt werden, verursacht er Probleme wenn XIM benutzt wird. "
+"D.h. das XIM Modul von Qt4 wird nicht gut funktionieren wenn dieser "
+"Workaround angewendet wird. Und die Eingabe über XIM in X11 Programme wie "
+"xterm wird dann auch nicht gut funktionieren."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it
@@ -613,13 +611,12 @@ msgid ""
 "how well it works depends on repetition speed of the arrow keys and system "
 "load. Because it is buggy, this option is off by default."
 msgstr ""
-"Ob es erlaubt ist ein Preedit wieder zu öffnen wenn der Cursor  bei Bewegung "
-"mittels der  Pfeiltasten eine Wortgrenze erreicht. Diese  Option  "
-"einzuschalten ist hilfreich um Worte korrigieren zu können, die bereits "
-"committed sind. Aber es  ist ziemlich buggy im Moment. Wie gut  es "
-"funktioniert hängt von der Wiederholungsgeschwindigkeit der Pfeiltasten und "
-"von der Systemlast ab. Weil diese Option recht buggy ist, ist sie per "
-"Default aus."
+"Ob es erlaubt ist ein Preedit wieder zu öffnen wenn der Cursor bei Bewegung "
+"mittels der Pfeiltasten eine Wortgrenze erreicht. Diese Option einzuschalten "
+"ist hilfreich um Worte korrigieren zu können, die bereits committed sind. "
+"Aber es ist ziemlich buggy im Moment. Wie gut es funktioniert hängt von der "
+"Wiederholungsgeschwindigkeit der Pfeiltasten und von der Systemlast ab. Weil "
+"diese Option recht buggy ist, ist sie per Default aus."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -746,8 +743,8 @@ msgstr "Installiere fehlende Wörterbucher"
 #: setup/main.py:771
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr ""
-"Installiere die Wörterbuchpakete die hier ausgewählt aber nicht\n"
-"installiert sind"
+"Installiere die Wörterbuchpakete die hier ausgewählt aber nicht installiert "
+"sind"
 
 #: setup/main.py:778 setup/main.py:895 setup/main.py:1081 setup/main.py:3431
 msgid "Set to default"
@@ -850,7 +847,7 @@ msgstr "Editieren"
 
 #: setup/main.py:1074
 msgid "Edit the key bindings for the selected command"
-msgstr "Editieren der  Tastenbelegungen für den ausgewählten Befehl"
+msgstr "Editieren der Tastenbelegungen für den ausgewählten Befehl"
 
 #: setup/main.py:1085 setup/main.py:3436
 msgid "Set default key bindings for the selected command"
@@ -1058,7 +1055,7 @@ msgid ""
 "inline completion is enabled."
 msgstr ""
 "Hier kann man wählen welche Farbe für das Anzeigen von Inline-"
-"Vervollständigungen verwendet  wird. Diese Einstellung hat nur dann eine "
+"Vervollständigungen verwendet wird. Diese Einstellung hat nur dann eine "
 "Auswirkung, wenn die Benutzung von Farbe für Inline-Vervollständigungen "
 "eingeschaltet ist und Inline-Vervollständigungen eingeschaltet sind."
 
