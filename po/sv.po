@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-07-14 10:12+0200\n"
-"PO-Revision-Date: 2020-07-23 16:15+0000\n"
+"PO-Revision-Date: 2020-07-28 03:29+0000\n"
 "Last-Translator: Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
 "Language-Team: Swedish <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/sv/>\n"
@@ -178,11 +178,11 @@ msgstr "Välj ordlista med högsta prioritet"
 
 #: engine/hunspell_table.py:1418
 msgid "Preedit input method"
-msgstr ""
+msgstr "Preedit inmatningsmetod"
 
 #: engine/hunspell_table.py:1419
 msgid "Switch preedit input method"
-msgstr ""
+msgstr "Byt preedit inmatningsmetod"
 
 #: engine/hunspell_table.py:1718
 msgid "Setup"
@@ -286,15 +286,15 @@ msgstr "Rättighetsfel"
 
 #: engine/itb_util.py:3288 engine/itb_util.py:3600
 msgid "Unicode decoding error"
-msgstr ""
+msgstr "Unicode avkodningsfel"
 
 #: engine/itb_util.py:3291 engine/itb_util.py:3603
 msgid "Unknown error"
-msgstr ""
+msgstr "Okänt fel"
 
 #: engine/itb_util.py:3574
 msgid "Native Keyboard"
-msgstr ""
+msgstr "Inbyggt tangentbord"
 
 #: engine/itb_util.py:3576
 msgid ""
@@ -311,7 +311,7 @@ msgstr ""
 #. key binding for a command.
 #: engine/itb_util.py:4054
 msgid "Key input"
-msgstr ""
+msgstr "Tangentinmatning"
 
 #: engine/itb_util.py:4060
 msgid "Cancel"
@@ -322,14 +322,14 @@ msgstr "Avbryt"
 #. command.
 #: engine/itb_util.py:4067
 msgid "Please press a key (or a key combination)"
-msgstr ""
+msgstr "Tryck på en tangent (eller en tangentkombination)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
 #: engine/itb_util.py:4072
 msgid "The dialog will be closed when the key is released"
-msgstr ""
+msgstr "Dialogen stängs när tangenten släpps"
 
 #: engine/itb_util.py:4103
 msgid "A completion input method to speedup typing."
@@ -338,15 +338,15 @@ msgstr "En kompletterande indatametod för att påskynda textinmatning."
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:4112
 msgid "translator-credits"
-msgstr ""
+msgstr "Åke Engelbrektson"
 
 #: engine/itb_util.py:4120
 msgid "Online documentation:"
-msgstr ""
+msgstr "Dokumentation online:"
 
 #: setup/main.py:114
 msgid "Preferences"
-msgstr ""
+msgstr "Inställningar"
 
 #: setup/main.py:176 setup/main.py:4691
 msgid "_Close"
@@ -366,7 +366,7 @@ msgstr "Ordböcker och indatametoder"
 #. behaviour of ibus-typing-booster.
 #: setup/main.py:214
 msgid "Options"
-msgstr ""
+msgstr "Alternativ"
 
 #. Translators: This is a label of a tab in the setup tool.
 #. Here the user can create custom shortcuts. For example if
@@ -386,7 +386,7 @@ msgstr "Anpassade genvägar"
 #. existing key bindings
 #: setup/main.py:244 setup/main.py:1050
 msgid "Key bindings"
-msgstr ""
+msgstr "Snabbtangenter"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence how
@@ -406,7 +406,7 @@ msgstr "Utseende"
 #. recognition.
 #: setup/main.py:282 setup/main.py:1796
 msgid "Speech recognition"
-msgstr ""
+msgstr "Taligenkänning"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -426,6 +426,11 @@ msgid ""
 "a commit the suggestions are hidden again until the next key bound to this "
 "command is typed."
 msgstr ""
+"Om det här alternativet är aktiverat visas inga förslag, som standard. Ett "
+"tangettryck är då nödvändigt för att visa listan med förslag. Tangenten som "
+"ska användas för detta, kan ändras i snabbtangentinställningarna. Som "
+"standard är det tabulatortangenten. Efter ett genomförande döljs förslagen "
+"igen tills nästa tangent som är bunden till det här kommandot trycks ner."
 
 #. Translators: Whether the best completion is first shown
 #. inline in the preedit instead of showing a full
@@ -473,7 +478,7 @@ msgstr ""
 #. with the mouse.
 #: setup/main.py:405
 msgid "Add a space when committing by mouse click"
-msgstr "Lägga till ett blanksteg när bekräftad, med musklick"
+msgstr "Lägg till ett blanksteg när bekräftad, med musklick"
 
 #: setup/main.py:407
 msgid ""
@@ -618,11 +623,11 @@ msgstr ""
 #. reading that text file.
 #: setup/main.py:675
 msgid "Learn from text file"
-msgstr ""
+msgstr "Inlärning från textfil"
 
 #: setup/main.py:677
 msgid "Learn your style by reading a text file"
-msgstr ""
+msgstr "Lär in din stil genom att läsa en textfil"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
@@ -641,7 +646,7 @@ msgstr ""
 #. ibus-typing-booster.
 #: setup/main.py:700
 msgid "Use dictionaries for the following languages:"
-msgstr ""
+msgstr "Använd ordböcker för följande språk:"
 
 #: setup/main.py:728
 msgid "Add a dictionary"
@@ -649,42 +654,42 @@ msgstr "Lägg till en ordbok"
 
 #: setup/main.py:739
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "Ta bort en ordbok"
 
 #: setup/main.py:750
 msgid "Move dictionary up"
-msgstr ""
+msgstr "Flytta upp ordbok"
 
 #: setup/main.py:762
 msgid "Move dictionary down"
-msgstr ""
+msgstr "Flytta ner ordbok"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
 #: setup/main.py:769
 msgid "Install missing dictionaries"
-msgstr ""
+msgstr "Installera saknade ordböcker"
 
 #: setup/main.py:771
 msgid "Install the dictionaries which are setup here but not installed"
-msgstr ""
+msgstr "Installera de ordböcker som angetts här men inte är installerade"
 
 #: setup/main.py:778 setup/main.py:895 setup/main.py:1081 setup/main.py:3431
 msgid "Set to default"
-msgstr ""
+msgstr "Ange som standard"
 
 #. Translators: Tooltip for a button used to set the list of
 #. dictionaries to the default for the current locale.
 #: setup/main.py:784
 msgid "Set dictionaries to the default for the current locale."
-msgstr ""
+msgstr "Ange ordlistor som standard för det aktuella språket."
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:813
 msgid "Use the following input methods:"
-msgstr ""
+msgstr "Använd följande inmatningsmetoder:"
 
 #: setup/main.py:841
 msgid "Add an input method"
@@ -692,22 +697,22 @@ msgstr "Lägg till en indatametod"
 
 #: setup/main.py:853
 msgid "Remove an input method"
-msgstr ""
+msgstr "Ta bort en inmatningsmetod"
 
 #: setup/main.py:865
 msgid "Move input method up"
-msgstr ""
+msgstr "Flytta upp inmatningsmetod"
 
 #: setup/main.py:877
 msgid "Move input method down"
-msgstr ""
+msgstr "Flytta ner inmatningsmetod"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
 #: setup/main.py:885
 msgid "Input Method Help"
-msgstr ""
+msgstr "Hjälp om inmatningsmetod"
 
 #: setup/main.py:887
 msgid "Display some help showing how to use the input method selected above."
@@ -743,13 +748,13 @@ msgstr "Lägg till genväg"
 #. existing shortcuts
 #: setup/main.py:1001
 msgid "Shortcut"
-msgstr ""
+msgstr "Genväg"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
 #: setup/main.py:1008
 msgid "Shortcut expansion"
-msgstr ""
+msgstr "Genvägsexpansion"
 
 #: setup/main.py:1019
 msgid "Current key bindings:"
