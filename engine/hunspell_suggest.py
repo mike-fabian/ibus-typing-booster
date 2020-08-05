@@ -646,6 +646,10 @@ class Hunspell:
         suggested_words = {}
         for dictionary in self._dictionaries:
             if dictionary.words:
+                if dictionary.word_pairs:
+                    input_phrase_no_accents = itb_util.remove_accents(
+                        input_phrase,
+                        keep=ACCENT_LANGUAGES[dictionary.language])
                 # If the input phrase is longer than than the maximum
                 # word length in a dictionary, don’t try
                 # complete it, it just wastes time then.
@@ -654,11 +658,7 @@ class Hunspell:
                         suggested_words.update([
                             (x[0], 0)
                             for x in dictionary.word_pairs
-                            if x[1].startswith(
-                                    itb_util.remove_accents(
-                                        input_phrase,
-                                        keep=ACCENT_LANGUAGES[
-                                            dictionary.language]))])
+                            if x[1].startswith(input_phrase_no_accents)])
                     else:
                         suggested_words.update([
                             (x, 0)
@@ -689,9 +689,7 @@ class Hunspell:
                                 itb_util.remove_accents(
                                     suggestion,
                                     keep=ACCENT_LANGUAGES[dictionary.language])
-                                == itb_util.remove_accents(
-                                    input_phrase,
-                                    keep=ACCENT_LANGUAGES[dictionary.language])):
+                                == input_phrase_no_accents):
                                 suggested_words[suggestion] = 0
                             else:
                                 suggested_words[suggestion] = -1
