@@ -188,11 +188,6 @@ class HunspellSuggestTestCase(unittest.TestCase):
              ('kissassa', 0),
              ('kissajuttu', 0),
              ('kissamaiseksi',0)])
-        self.assertEqual(
-            h.suggest('Pariisin-suurlähettila'),
-            [('Pariisin-suurla\u0308hettila\u0308s', 0),
-             ('Pariisin-suurlähetetila', -1),
-             ('Pariisin-suurlähettiala', -1)])
 
     @unittest.skipUnless(
         IMPORT_LIBVOIKKO_SUCCESSFUL,
@@ -207,6 +202,11 @@ class HunspellSuggestTestCase(unittest.TestCase):
              ('kissaa', -1),
              ('kisassa', -1),
              ('kisussa', -1)])
+        self.assertEqual(
+            h.suggest('Pariisin-suurlähettila'),
+            [('Pariisin-suurla\u0308hettila\u0308s', 0),
+             ('Pariisin-suurlähetetila', -1),
+             ('Pariisin-suurlähettiala', -1)])
 
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
