@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 27 Aug 2020 Released 2.9.6
+* Make translations of 'Edit key bindings for command “%s”' work
+* Don't hide emoji-picker.desktop from AppStream (by Gunnar Hjalmarsson)
+* Translation update from Weblate for pt_BR, sv (100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 05 Aug 2020 Released 2.9.5
 * Treat characters 'ÅåÄäÖö' as special when matching in the Swedish dictionary (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/126)
 * Update emoji annotations from CLDR

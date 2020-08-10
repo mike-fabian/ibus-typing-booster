@@ -22,6 +22,24 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.9.6" date="2020-08-27" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.9.6</url>
+      <issues>
+        <issue>
+          Make translations of 'Edit key bindings for command “%s”' work
+        </issue>
+        <issue>
+          Don't hide emoji-picker.desktop from AppStream (by Gunnar
+          Hjalmarsson)
+        </issue>
+        <issue>
+          Translation update from Weblate for pt_BR, sv (100%)
+        </issue>
+      </issues>
+    </release>
     <release version="2.9.5" date="2020-08-05" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
