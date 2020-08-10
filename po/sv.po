@@ -2,16 +2,17 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Åke Engelbrektson <eson@svenskasprakfiler.se>, 2020.
+# Göran Uddeborg <goeran@uddeborg.se>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-07-14 10:12+0200\n"
-"PO-Revision-Date: 2020-07-28 03:29+0000\n"
-"Last-Translator: Åke Engelbrektson <eson@svenskasprakfiler.se>\n"
-"Language-Team: Swedish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/sv/>\n"
+"PO-Revision-Date: 2020-08-10 06:16+0000\n"
+"Last-Translator: Göran Uddeborg <goeran@uddeborg.se>\n"
+"Language-Team: Swedish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -440,7 +441,7 @@ msgstr ""
 #. the next candidate and opens the full candidate list.
 #: setup/main.py:351
 msgid "Use inline completion"
-msgstr ""
+msgstr "Använd inline-komplettering"
 
 #: setup/main.py:353
 msgid ""
@@ -450,6 +451,12 @@ msgid ""
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
+"Huruvida den bästa kompletteringen först visas inline i föreditering "
+"istället för att visa den fullständiga kandidatlistan. Inline-kandidaten kan "
+"väljas genom att trycka tabulatorn och sedan avslutas som vanligt, till "
+"exempel genom att trycka mellanslag eller Control+mellanslag.  Att skriva "
+"tabulatorn igen går till nästa kandidat och öppnar den fullständiga "
+"kandidatlistan."
 
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
@@ -472,6 +479,12 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
+"Det du skriver kommer automatiskt rättas till den bästa kandidaten genom att "
+"välja den bästa kandidaten automatiskt. Om detta alternativ är avslaget "
+"måste du manuellt välja en kandidat genom att använda tangentbindningen för "
+"att välja nästa kandidat.  Om detta alternativ är påslaget och du inte vill "
+"använda den automatiskt valda kandidaten kan du använda tangentbindningen "
+"för kommandot ”avbryt” som tar bort val av alla kandidater."
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
@@ -496,7 +509,7 @@ msgstr ""
 #. the session is restarted.
 #: setup/main.py:428
 msgid "Remember last used preedit input method"
-msgstr ""
+msgstr "Kom ihåg den senast använda förredigeringsinmatningsmetoden"
 
 #: setup/main.py:430
 msgid ""
@@ -505,6 +518,10 @@ msgid ""
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
 msgstr ""
+"Om mer än en inmatningsmetod används samtidigt används en av dem för "
+"förredigering. Vilken inmatningsmetod som används för förredigering kan "
+"ändras via menyn eller via snabbtangenter. Om detta alternativ är aktiverat "
+"sparas en sådan ändring även om sessionen startas om."
 
 #: setup/main.py:457
 msgid ""
@@ -514,6 +531,11 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
+"Huruvida Unicode-symboler och emojier skall inkluderas i förutsägelserna. "
+"Emojier är bildtecken som ☺♨⛵…. Unicode-symboler är andra symboler såsom "
+"matematiska symboler (∀∑∯…), pilar (←↑↔…), valutasymboler (€₹₺…), "
+"blindskriftsmönster (⠥⠩…) och många andra symboler. Dessa är tekniskt sett "
+"inte emojier men är hur som helst användbara symboler."
 
 #: setup/main.py:485
 msgid ""
@@ -523,6 +545,12 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
+"När läget ”utanför protokollet” är på är inlärning från användarinmatning "
+"avslaget. Om inlärd användarinmatning är tillgänglig är förutsägelserna "
+"normalt mycket bättre än förutsägelser som görs endast via ordlistor. Därför "
+"bör man vara restriktiv med användning av detta alternativ. Endast om man "
+"vill undvika att spara hemlig användarinmatning till disk är det vettigt att "
+"använda detta alternativ tillfälligt."
 
 #. Translators: Use a workaround for bugs in the input
 #. method modules of Qt4 and Qt5. Attention, although this
@@ -533,7 +561,7 @@ msgstr ""
 #. programs like xterm will not work well either.
 #: setup/main.py:512
 msgid "Use a workaround for a bug in Qt im module"
-msgstr ""
+msgstr "Använd en metod att gå runt ett fel i Qt-im-modulen"
 
 #: setup/main.py:514
 msgid ""
@@ -543,6 +571,11 @@ msgid ""
 "of Qt4 will not work well when this workaround is enabled and input via XIM "
 "into X11 programs like xterm will not work well either."
 msgstr ""
+"Använd en metod att gå runt fel i modulerna för inmatningsmetoder i Qt4 och "
+"Qt5. Observera, medan denna metod gör att det fungerar bättre när Qt-"
+"inmatningsmodulen används orsakar den problem när XIM används. D.v.s. XIM-"
+"modulen i Qt4 kommer inte fungera bra när denna metod är aktiverad och "
+"inmatning via XIM till X11-program som xterm kommer inte fungera bra heller."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it
@@ -564,6 +597,12 @@ msgid ""
 "how well it works depends on repetition speed of the arrow keys and system "
 "load. Because it is buggy, this option is off by default."
 msgstr ""
+"Huruvida det är tillåtet att återöppna en förredigering när markören når en "
+"ordgräns efter att ha flyttat den med piltangenter. Att aktivera detta "
+"alternativ är användbart för att rätta redan fastställda ord. Men det är "
+"ganska trasigt för närvarande och hur bra det fungerar beror på "
+"repetitionshastigheten för piltangenter och systemet är lastat. Eftersom det "
+"är trasigt är detta alternativ avslaget som standard."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -593,17 +632,26 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
+"Tecknen i listan förhandsredigeringen att väljas automatiskt, följda av ett "
+"mellanslag.  Till exempel, om ”.” är ett automatvalstecken besparar detta "
+"dig att skriva ett mellanslag manuellt efter slutet på en mening.  Du kan "
+"fritt redigera denna lista, ett rimligt värde kan vara ”.,;:?!)”.  Du bör "
+"inte lägga till tecken i den listan som behövs i din inmatningsmetod, till "
+"exempel om du använder Latin-Pre (t-latn-pre) vore det en dålig idé att "
+"lägga till ”.” till den listan eftersom det skulle förhindra dig från att "
+"skriva ”.s” för att få ”ṡ”.  Du kan även avaktivera denna funktion helt "
+"genom att göra listan tom (vilket är standard)."
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
 #: setup/main.py:613
 msgid "Minimum number of chars for completion:"
-msgstr ""
+msgstr "Minsta antal tecken för komplettering:"
 
 #: setup/main.py:615
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
-msgstr ""
+msgstr "Visa inga förslag när mindre än detta antal tecken har skrivits."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -617,6 +665,8 @@ msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
 msgstr ""
+"När det är större än 0 kan felsökningsinformation skrivas till loggfilen och "
+"felsökningsinformation kan även visas grafiskt."
 
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
@@ -723,6 +773,7 @@ msgstr "Visar lite hjälp om hur du använder inmatningsmetoden som valts ovan."
 #: setup/main.py:901
 msgid "Set input methods to the default for the current locale."
 msgstr ""
+"Ställ in inmatningsmetoder till standardvärdet för den aktuella lokalen."
 
 #: setup/main.py:924
 msgid "Enter shortcut here:"
@@ -776,15 +827,15 @@ msgstr "Redigera snabbtangenter för det markerade kommandot"
 
 #: setup/main.py:1085 setup/main.py:3436
 msgid "Set default key bindings for the selected command"
-msgstr ""
+msgstr "Ställ in standardtangentbindningar för det valda kommandot"
 
 #: setup/main.py:1092
 msgid "Set all to default"
-msgstr ""
+msgstr "Ställ allt till standardvärden"
 
 #: setup/main.py:1096
 msgid "Set default key bindings for all commands"
-msgstr ""
+msgstr "Ställ in standardtangentbindningar för alla kommandon"
 
 #. Translators: Checkbox to choose whether to display how
 #. many candidates there are and which one is selected on
@@ -809,7 +860,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1138
 msgid "Show status info in auxiliary text"
-msgstr ""
+msgstr "Visa statusinformation i övrig text"
 
 #: setup/main.py:1140
 msgid ""
@@ -818,6 +869,10 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
+"Visa i den övriga texten huruvida ”Emojiförutsägelse”-läget och ”Utanför "
+"protokollet”-läget är på eller av och visa vilken inmatningsmetod som för "
+"närvarande används i förredigerigen.  Den övriga texten är en valfri rad i "
+"texten som visas ovanför kandidatlistan."
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
@@ -828,7 +883,7 @@ msgstr "Kandidatfönsterstorlek:"
 #: setup/main.py:1163
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
-msgstr ""
+msgstr "Hur många kandidatförslag som skall visas på en sida av kandidatlistan."
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
@@ -839,37 +894,37 @@ msgstr "Kandidatfönsterorientering"
 #: setup/main.py:1191
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
-msgstr ""
+msgstr "Huruvida kandidatfönstret skall ritas horisontellt eller vertikalt."
 
 #: setup/main.py:1200
 msgid "Horizontal"
-msgstr ""
+msgstr "Horisontellt"
 
 #: setup/main.py:1202
 msgid "Vertical"
-msgstr ""
+msgstr "Vertikalt"
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
 #: setup/main.py:1229
 msgid "Preedit underline"
-msgstr ""
+msgstr "Förredigeringsunderstrykning"
 
 #: setup/main.py:1231
 msgid "Which style of underlining to use for the preedit."
-msgstr ""
+msgstr "Vilken sorts understrykning som skall användas fö förredigering."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
 #: setup/main.py:1241
 msgid "None"
-msgstr ""
+msgstr "Ingen"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
 #: setup/main.py:1245
 msgid "Single"
-msgstr ""
+msgstr "Enkel"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
@@ -881,7 +936,7 @@ msgstr "Dubbel"
 #. underline for the preedit.
 #: setup/main.py:1253
 msgid "Low"
-msgstr ""
+msgstr "Låg"
 
 #. Translators: Checkbox to choose whether a preedit style
 #. like underlining will only be used if lookup is
@@ -891,7 +946,7 @@ msgstr ""
 #. of characters before a lookup is done.
 #: setup/main.py:1281
 msgid "Use preedit style only if lookup is enabled"
-msgstr ""
+msgstr "Använd förredigering endast om uppslagning aktiveras"
 
 #: setup/main.py:1283
 msgid ""
@@ -900,6 +955,11 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
+"Om detta alternativ är på kommer understrykning av förredigeringsstil endast "
+"användas om uppslagning är aktiverat. Uppslagningen kan avaktiveras för att "
+"man använder alternativet att aktivera uppslagning endast när en tangent "
+"trycks ner eller för att man använder alternativet att kräva ett minsta "
+"antal tecken före en uppslagning görs."
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and
@@ -907,7 +967,7 @@ msgstr ""
 #. might contain a spelling error.
 #: setup/main.py:1305
 msgid "Preedit spellchecking"
-msgstr ""
+msgstr "Stavningskontroll av förredigering"
 
 #: setup/main.py:1307
 msgid ""
@@ -915,6 +975,9 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"Har kan du välja huruvida stavningskontroll görs på innehållet av "
+"förredigeringen och en anpassad färg används för att indikera när "
+"förredigeringen kan innehålla ett stavfel."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -929,18 +992,23 @@ msgid ""
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
+"Här kan du ange vilken färg som skall användas för förredigeringen när "
+"förredigeringen kan innehålla ett stavfel. Denna inställning har bara någon "
+"effekt om stavningskontroll av förredigeringen är aktiverat."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
 #: setup/main.py:1360
 msgid "Use color for inline completion"
-msgstr ""
+msgstr "Använd färg för inline-komplettering"
 
 #: setup/main.py:1362
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
 msgstr ""
+"Här kan du välja huruvida en anpassad färg används för ett förslag som visas "
+"inline."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -955,19 +1023,24 @@ msgid ""
 "only has an effect if the use of color for inline completion is enabled and "
 "inline completion is enabled."
 msgstr ""
+"Här kan du ange vilken färg som skall användas för inline-komplettering. "
+"Denna inställning har bara någon effekt om användningen av färg för inline-"
+"komplettering är aktiverat och inline-komplettering är aktiverat."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
 #: setup/main.py:1414
 msgid "Use color for user database suggestions"
-msgstr ""
+msgstr "Använd färg för förslag från användardatabasen"
 
 #: setup/main.py:1416
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
 msgstr ""
+"Här kan du välja huruvida en anpassad färg används för kandidater i "
+"uppslagningstabellen som kommer från användardatabasen."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -982,18 +1055,24 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
 msgstr ""
+"Här kan du ange vilken färg som skall användas för kandidater i "
+"uppslagningstabellen som kommer från användardatabasen. Denna inställning "
+"har bara någon effekt om användning av färg för kandidater från "
+"användardatabasen är aktiverat."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
 #: setup/main.py:1464
 msgid "Use color for spellchecking suggestions"
-msgstr ""
+msgstr "Använd färg för stavningskontrollsförslag"
 
 #: setup/main.py:1466
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
 msgstr ""
+"Här kan du välja huruvida en anpassad färg används för kandidater i "
+"uppslagningstabellen som kommer från stavningskontrollen."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1008,6 +1087,10 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
 msgstr ""
+"Här kan du ange vilken färg som skall användas för kandidater i "
+"uppslagningstabellen som kommer från stavningskontrollen. Denna inställning "
+"har bara någon effekt om användning av färg för kandidater från "
+"stavningskontrollen är aktiverat."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
