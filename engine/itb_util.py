@@ -2769,6 +2769,7 @@ def variant_to_value(variant):
     '''
     # pylint: disable=unidiomatic-typecheck
     if type(variant) != GLib.Variant:
+        LOGGER.info('not a GLib.Variant')
         return variant
     type_string = variant.get_type_string()
     if type_string == 's':
@@ -2781,7 +2782,7 @@ def variant_to_value(variant):
         return variant.unpack()
     if type_string and type_string[0] == 'a':
         return variant.unpack()
-    print('error: unknown variant type: %s' % type_string)
+    LOGGER.error('unknown variant type: %s', type_string)
     return variant
 
 def dict_update_existing_keys(pdict, other_pdict):
