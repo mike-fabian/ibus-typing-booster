@@ -3934,9 +3934,6 @@ class KeyEvent:
         self.button3 = self.state & IBus.ModifierType.BUTTON3_MASK != 0
         self.button4 = self.state & IBus.ModifierType.BUTTON4_MASK != 0
         self.button5 = self.state & IBus.ModifierType.BUTTON5_MASK != 0
-        self.super = self.state & IBus.ModifierType.SUPER_MASK != 0
-        self.hyper = self.state & IBus.ModifierType.HYPER_MASK != 0
-        self.meta = self.state & IBus.ModifierType.META_MASK != 0
         self.release = self.state & IBus.ModifierType.RELEASE_MASK != 0
         # MODIFIER_MASK: Modifier mask for the all the masks above
         self.modifier = self.state & IBus.ModifierType.MODIFIER_MASK != 0
