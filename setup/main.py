@@ -4310,7 +4310,7 @@ class SetupUI(Gtk.Window):
                         self._lookup_table_orientation_combobox.set_active(i)
 
     def set_preedit_underline(self, underline_mode, update_gsettings=True):
-        '''Sets the page size of the lookup table
+        '''Sets the underline mode of the preedit
 
         :param underline_mode: The underline mode to be used for the preedit
         :type underline_mode: integer >= 0 and <= 3

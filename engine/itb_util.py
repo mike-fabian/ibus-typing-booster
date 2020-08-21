@@ -4102,6 +4102,7 @@ class ItbKeyInputDialog(Gtk.MessageDialog):
         widget.e = (event.keyval,
                     event.get_state() & KEYBINDING_STATE_MASK)
         return True
+
     def on_key_release_event(# pylint: disable=no-self-use
             self, widget, _event):
         widget.response(Gtk.ResponseType.OK)

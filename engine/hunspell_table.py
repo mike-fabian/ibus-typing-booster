@@ -1039,6 +1039,7 @@ class TypingBoosterEngine(IBus.Engine):
         :param index: The index in the current page of the lookup table.
                       The topmost candidate has the index 0 and the label “1”.
         :type index: Integer
+        :return: True if successful, False if not.
         :rtype: Boolean
 
         The removal is done independent of the input phrase, all
