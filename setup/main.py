@@ -3348,8 +3348,7 @@ class SetupUI(Gtk.Window):
             True)
         self._keybindings_edit_popover_listbox.connect(
             'row-selected', self.on_keybindings_edit_listbox_row_selected)
-        for keybinding in sorted(
-                self._keybindings[self._keybindings_selected_command]):
+        for keybinding in self._keybindings[self._keybindings_selected_command]:
             label = Gtk.Label()
             label.set_text(html.escape(keybinding))
             label.set_use_markup(True)
