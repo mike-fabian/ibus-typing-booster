@@ -3381,8 +3381,9 @@ class SetupUI(Gtk.Window):
         keybindings_edit_popover_vbox.set_spacing(margin)
         keybindings_edit_popover_label = Gtk.Label()
         keybindings_edit_popover_label.set_text(
-            _('Edit key bindings for command “%s”'
-              %self._keybindings_selected_command))
+            _('Edit key bindings for command “%s”')
+            %self._keybindings_selected_command)
+        keybindings_edit_popover_label.set_use_markup(True)
         keybindings_edit_popover_label.set_visible(True)
         keybindings_edit_popover_label.set_halign(Gtk.Align.FILL)
         keybindings_edit_popover_vbox.pack_start(
