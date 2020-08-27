@@ -435,13 +435,13 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             languages = ['fr_FR'])
         self.assertEqual(
             mq.candidates('2019'),
-            [('’', 'U+2019 right single quotation mark', 200)])
+            [('’', 'U+2019 apostrophe droite', 200)])
         self.assertEqual(
             mq.candidates('41'),
             [('A', 'U+41 latin capital letter a', 200)])
         self.assertEqual(
             mq.candidates('2a'),
-            [('*', 'U+2A asterisk', 200)])
+            [('*', 'U+2A astérisque', 200)])
         self.assertEqual(
             mq.candidates('1b'),
             [('\x1b', 'U+1B', 200)])

@@ -75,7 +75,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['it_IT', 'en_US', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.similar('☺', match_limit=5),
-            [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, emozionarsi, faccina, sorridente]', 5), ('😗', 'faccina che bacia [faccina]', 1), ('😚', 'faccina che bacia con occhi chiusi [faccina]', 1), ('😘', 'faccina che manda un bacio [faccina]', 1), ('😙', 'faccina che bacia con occhi sorridenti [faccina]', 1)])
+            [('☺️', 'faccina sorridente [☺️, delineata, faccina, rilassata, sorridente]', 5), ('😗', 'faccina che bacia [faccina]', 1), ('😚', 'faccina che bacia con occhi chiusi [faccina]', 1), ('😘', 'faccina che manda un bacio [faccina]', 1), ('😙', 'faccina che bacia con occhi sorridenti [faccina]', 1)])
 
     def test_similar_camel_en_US(self):
         mq = itb_emoji.EmojiMatcher(
@@ -131,7 +131,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['de_DE'])
         self.assertEqual(
             mq.similar('🤐', match_limit = 3),
-            [('🤐', 'Gesicht mit Reißverschlussmund [🤐, Gesicht, Gesicht mit Reißverschlussmund, Mund, Reißverschluss]', 5), ('🤑', 'Gesicht mit Dollarzeichen [Gesicht, Mund]', 2), ('🤔', 'nachdenkendes Gesicht [Gesicht]', 1)])
+            [('🤐', 'Gesicht mit Reißverschlussmund [🤐, Gesicht, Gesicht mit Reißverschlussmund, Mund, Reißverschluss]', 5), ('🤔', 'nachdenkendes Gesicht [Gesicht]', 1), ('😐', 'neutrales Gesicht [Gesicht]', 1)])
         mq = itb_emoji.EmojiMatcher(
             languages = ['de_CH'])
         self.assertEqual(
