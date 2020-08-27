@@ -136,6 +136,7 @@ extradata_DATA = \
 	de_LU.xml \
 	dje.xml \
 	dje_NE.xml \
+	doi.xml \
 	dsb.xml \
 	dsb_DE.xml \
 	dua.xml \
@@ -487,6 +488,7 @@ extradata_DATA = \
 	luy_KE.xml \
 	lv.xml \
 	lv_LV.xml \
+	mai.xml \
 	mas.xml \
 	mas_KE.xml \
 	mas_TZ.xml \
@@ -500,12 +502,14 @@ extradata_DATA = \
 	mgh_MZ.xml \
 	mgo.xml \
 	mgo_CM.xml \
+	mi.xml \
 	mk.xml \
 	mk_MK.xml \
 	ml.xml \
 	ml_IN.xml \
 	mn.xml \
 	mn_MN.xml \
+	mni.xml \
 	mr.xml \
 	mr_IN.xml \
 	ms.xml \
@@ -609,10 +613,12 @@ extradata_DATA = \
 	rw_RW.xml \
 	rwk.xml \
 	rwk_TZ.xml \
+	sa.xml \
 	sah.xml \
 	sah_RU.xml \
 	saq.xml \
 	saq_KE.xml \
+	sat.xml \
 	sbp.xml \
 	sbp_TZ.xml \
 	sc.xml \
@@ -663,6 +669,7 @@ extradata_DATA = \
 	sr_Latn_ME.xml \
 	sr_Latn_RS.xml \
 	sr_Latn_XK.xml \
+	su.xml \
 	sv.xml \
 	sv_AX.xml \
 	sv_FI.xml \

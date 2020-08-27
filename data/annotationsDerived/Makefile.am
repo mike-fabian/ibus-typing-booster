@@ -78,6 +78,7 @@ extradata_DATA = \
 	km.xml \
 	kn.xml \
 	ko.xml \
+	kok.xml \
 	ku.xml \
 	ky.xml \
 	lo.xml \
