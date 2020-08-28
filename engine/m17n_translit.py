@@ -249,18 +249,6 @@ class Transliterator:
     >>> trans.transliterate(['a', 'b', 'c', 'C-c', 'G-4', 'C-α', 'G-α'])
     'abcC-cG-4C-αG-α'
 
-    >>> trans = Transliterator('ja-anthy')
-    >>> trans.transliterate(['c', 'h', 'o', 'u', 'c', 'h', 'o', 'u'])
-    'ちょうちょう'
-
-    >>> trans = Transliterator('zh-py')
-    >>> trans.transliterate(['n', 'i', 'h', 'a', 'o'])
-    '你好'
-
-    >>> trans = Transliterator('zh-tonepy')
-    >>> trans.transliterate(['n', 'i', '3', 'h', 'a', 'o', '3'])
-    '你好'
-
     >>> trans = Transliterator('ko-romaja')
     >>> trans.transliterate(list('annyeonghaseyo'))
     '안녕하세요'
