@@ -10,8 +10,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-08-05 10:11+0200\n"
-"PO-Revision-Date: 2020-05-24 14:40+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2020-08-30 15:29+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Traditional) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_TW/>\n"
 "Language: zh_TW\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.0.4\n"
+"X-Generator: Weblate 4.2.1\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -252,7 +252,7 @@ msgstr ""
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:781 engine/itb_emoji.py:987
 msgid "objects"
-msgstr ""
+msgstr "物體"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:782 engine/itb_emoji.py:993
@@ -319,7 +319,7 @@ msgstr "取消"
 #. command.
 #: engine/itb_util.py:4090
 msgid "Please press a key (or a key combination)"
-msgstr ""
+msgstr "請按鍵盤按鍵 (或是按鍵組合)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
@@ -343,7 +343,7 @@ msgstr ""
 
 #: setup/main.py:114
 msgid "Preferences"
-msgstr ""
+msgstr "偏好設定"
 
 #: setup/main.py:176 setup/main.py:4691
 msgid "_Close"
@@ -363,7 +363,7 @@ msgstr ""
 #. behaviour of ibus-typing-booster.
 #: setup/main.py:214
 msgid "Options"
-msgstr ""
+msgstr "選項"
 
 #. Translators: This is a label of a tab in the setup tool.
 #. Here the user can create custom shortcuts. For example if
@@ -753,11 +753,11 @@ msgstr ""
 #. existing key bindings
 #: setup/main.py:1043
 msgid "Command"
-msgstr ""
+msgstr "指令"
 
 #: setup/main.py:1070
 msgid "Edit"
-msgstr ""
+msgstr "編輯"
 
 #: setup/main.py:1074
 msgid "Edit the key bindings for the selected command"
@@ -850,13 +850,13 @@ msgstr ""
 #. at all for the preedit.
 #: setup/main.py:1241
 msgid "None"
-msgstr ""
+msgstr "無"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
 #: setup/main.py:1245
 msgid "Single"
-msgstr ""
+msgstr "單一"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
@@ -1093,7 +1093,7 @@ msgstr ""
 
 #: setup/main.py:1789
 msgid "Emoji"
-msgstr ""
+msgstr "繪文字"
 
 #: setup/main.py:1987
 msgid "Are you sure?"
@@ -1101,11 +1101,11 @@ msgstr ""
 
 #: setup/main.py:1989 setup/main.py:2499 setup/main.py:3503
 msgid "_Cancel"
-msgstr ""
+msgstr "取消(_C)"
 
 #: setup/main.py:1990 setup/main.py:2500 setup/main.py:3504
 msgid "_OK"
-msgstr ""
+msgstr "確定(_O)"
 
 #: setup/main.py:2022
 msgid "Another instance of this app is already running."
