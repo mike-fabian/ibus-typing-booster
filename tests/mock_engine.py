@@ -94,6 +94,17 @@ class MockEngine:
 class MockLookupTable:
     def __init__(self, page_size = 9, cursor_pos = 0, cursor_visible = False, round = True):
         self.clear()
+        self.mock_labels = {
+            1: '1.',
+            2: '2.',
+            3: '3.',
+            4: '4.',
+            5: '5.',
+            6: '6.',
+            7: '7.',
+            8: '8.',
+            9: '9.',
+        }
         self.mock_page_size = page_size
         self.mock_cursor_pos = cursor_pos
         self.mock_cursor_visible = cursor_visible
@@ -104,6 +115,12 @@ class MockLookupTable:
     def clear(self):
         self.mock_candidates = []
         self.mock_cursor_pos = 0
+
+    def set_label(self, index, label):
+        self.mock_labels[index] = label.get_text()
+
+    def get_label(self, index):
+        return self.mock_labels[index]
 
     def set_page_size(self, size):
         self.mock_page_size = size

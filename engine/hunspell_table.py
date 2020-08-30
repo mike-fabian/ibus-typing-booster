@@ -464,11 +464,7 @@ class TypingBoosterEngine(IBus.Engine):
         # 'title': candidates have been converted to Python’s title case.
         # 'upper': candidates have been completely converted to upper case.
         # 'lower': candidates have been completely converted to lower case.
-        self._lookup_table = IBus.LookupTable()
-        self._lookup_table.clear()
-        self._lookup_table.set_page_size(self._page_size)
-        self._lookup_table.set_orientation(self._lookup_table_orientation)
-        self._lookup_table.set_cursor_visible(False)
+        self._lookup_table = self._get_new_lookup_table()
 
         self.input_mode_properties = {
             'InputMode.Off': {
@@ -552,6 +548,23 @@ class TypingBoosterEngine(IBus.Engine):
         LOGGER.info(
             '********** Initialized and ready for input: **********')
         self._clear_input_and_update_ui()
+
+    def _get_new_lookup_table(self):
+        '''Get a new lookup table'''
+        lookup_table = IBus.LookupTable()
+        lookup_table.clear()
+        lookup_table.set_page_size(self._page_size)
+        lookup_table.set_orientation(self._lookup_table_orientation)
+        lookup_table.set_cursor_visible(False)
+        # lookup_table.set_round() chooses whether the cursor in the
+        # lookup table wraps around when the end or the beginning of
+        # the table is reached.  I think this is confusing for
+        # ibus-typing-booster, it should be set to False.
+        lookup_table.set_round(False)
+        for index in range(0, 9):
+            label = str(index + 1)
+            lookup_table.set_label(index, IBus.Text.new_from_string(label))
+        return lookup_table
 
     def _init_transliterators(self):
         '''Initialize the dictionary of m17n-db transliterator objects'''

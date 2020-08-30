@@ -309,6 +309,12 @@ class ItbTestCase(unittest.TestCase):
     def test_expected_failure(self):
         self.assertEqual(False, True)
 
+    def test_get_label(self):
+        self.assertEqual(self.engine.get_lookup_table().get_label(9), '9.')
+        self.engine.get_lookup_table().set_label(
+            9, IBus.Text.new_from_string('9'))
+        self.assertEqual(self.engine.get_lookup_table().get_label(9), '9')
+
     def test_single_char_commit_with_space(self):
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
