@@ -4139,6 +4139,14 @@ class TypingBoosterEngine(IBus.Engine):
             LOGGER.debug('KeyEvent object: %s\n', key)
             LOGGER.debug('self._hotkeys=%s\n', str(self._hotkeys))
 
+        if (self._prev_key, key, 'toggle_input_mode_on_off') in self._hotkeys:
+            self.toggle_input_mode()
+            return True
+
+        if (self._prev_key, key, 'speech_recognition') in self._hotkeys:
+            self._speech_recognition()
+            return True
+
         if (self._prev_key, key, 'cancel') in self._hotkeys:
             if self.is_empty():
                 return False
@@ -4524,8 +4532,7 @@ class TypingBoosterEngine(IBus.Engine):
                 in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN])):
             return self._return_false(keyval, keycode, state)
 
-        if (self._prev_key, key, 'speech_recognition') in self._hotkeys:
-            self._speech_recognition()
+        if self._handle_hotkeys(key):
             return True
 
         result = self._process_key_event(key)
@@ -4612,9 +4619,6 @@ class TypingBoosterEngine(IBus.Engine):
                         transliterated_digit,
                         input_phrase=transliterated_digit)
                     return True
-
-        if self._handle_hotkeys(key):
-            return True
 
         # These keys may trigger a commit:
         if (key.msymbol not in ('G- ',)
