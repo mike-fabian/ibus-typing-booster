@@ -4061,10 +4061,48 @@ class HotKeys:
     def __contains__(self, command_key_tuple):
         if not isinstance(command_key_tuple, tuple):
             return False
-        command = command_key_tuple[1]
-        key = command_key_tuple[0]
+        command = command_key_tuple[2]
+        key = command_key_tuple[1]
+        prev_key = command_key_tuple[0]
+        if prev_key is None:
+            # When ibus-typing-booster has just started and the very first key
+            # is pressed prev_key is not yet set. In that case, assume
+            # that it is the same as the current key:
+            prev_key = key
         val = key.val
-        state = key.state & KEYBINDING_STATE_MASK
+        state = key.state # Do not change key.state, only the copy!
+        if key.name in ('Shift_L', 'Shift_R',
+                        'Control_L', 'Control_R',
+                        'Alt_L', 'Alt_R',
+                        'Meta_L', 'Meta_R',
+                        'Super_L', 'Super_R',
+                        'ISO_Level3_Shift'):
+            # For these modifier keys, match on the release event
+            # *and* make sure that the previous key pressed was
+            # exactly the same key. Then we know that for example only
+            # Shift_L was pressed and then released with nothing in
+            # between.  For example it could not have been something
+            # like “Shift_L” then “a” followed by releasing the “a”
+            # and the “Shift_L”.
+            if (prev_key.val != val
+                or not state & IBus.ModifierType.RELEASE_MASK):
+                return False
+            state &= ~IBus.ModifierType.RELEASE_MASK
+            if key.name in ('Shift_L', 'Shift_R'):
+                state &= ~IBus.ModifierType.SHIFT_MASK
+            elif key.name in ('Control_L', 'Control_R'):
+                state &= ~IBus.ModifierType.CONTROL_MASK
+            elif key.name in ('Alt_L', 'Alt_R'):
+                state &= ~IBus.ModifierType.MOD1_MASK
+            elif key.name in ('Super_L', 'Super_R'):
+                state &= ~IBus.ModifierType.SUPER_MASK
+                state &= ~IBus.ModifierType.MOD4_MASK
+            elif key.name in ('Meta_L', 'Meta_R'):
+                state &= ~IBus.ModifierType.META_MASK
+                state &= ~IBus.ModifierType.MOD1_MASK
+            elif key.name in ('ISO_Level3_Shift',):
+                state &= ~IBus.ModifierType.MOD5_MASK
+        state = state & KEYBINDING_STATE_MASK
         if command in self._hotkeys:
             if (val, state) in self._hotkeys[command]:
                 return True

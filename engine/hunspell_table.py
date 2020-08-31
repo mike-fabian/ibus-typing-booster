@@ -421,6 +421,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._commit_happened_after_focus_in = False
 
+        self._prev_key = None
         self._typed_compose_sequence = [] # A list of key values
         self._typed_string = [] # A list of msymbols
         self._typed_string_cursor = 0
@@ -603,6 +604,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._candidates = []
         self._candidates_case_mode = 'orig'
         self._typed_compose_sequence = []
+        self._prev_key = None
         self._typed_string = []
         self._typed_string_cursor = 0
         for ime in self._current_imes:
@@ -2253,9 +2255,10 @@ class TypingBoosterEngine(IBus.Engine):
         Removes the candidate at “index” in the lookup table from the
         user database.
 
+        :return: True if a candidate could be removed, False if not
+        :rtype: Boolean
         :param index: The index of the candidate to remove in the lookup table
         :type index: Integer
-        :rtype: Boolean
         '''
         if not self.get_lookup_table().get_number_of_candidates():
             return False
@@ -2274,13 +2277,12 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         Commits the candidate at “index” in the lookup table
 
-        Returns True if a candidate could be committed, False if not.
-
+        :return: True if a candidate could be committed, False if not.
+        :rtype: Boolean
         :param index: The index of the candidate to commit in the lookup table
         :type index: Integer
         :param extra_text:
         :type extra_text: String
-        :rtype: Boolean
         '''
         if not self.get_lookup_table().get_number_of_candidates():
             return False
@@ -4137,7 +4139,7 @@ class TypingBoosterEngine(IBus.Engine):
             LOGGER.debug('KeyEvent object: %s\n', key)
             LOGGER.debug('self._hotkeys=%s\n', str(self._hotkeys))
 
-        if (key, 'cancel') in self._hotkeys:
+        if (self._prev_key, key, 'cancel') in self._hotkeys:
             if self.is_empty():
                 return False
             if self.get_lookup_table().cursor_visible:
@@ -4170,7 +4172,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._update_ui()
             return True
 
-        if ((key, 'enable_lookup') in self._hotkeys
+        if ((self._prev_key, key, 'enable_lookup') in self._hotkeys
             and (self._tab_enable
                  or (self._min_char_complete > 1
                      and
@@ -4183,7 +4185,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._update_ui()
             return True
 
-        if (key, 'next_input_method') in self._hotkeys:
+        if (self._prev_key, key, 'next_input_method') in self._hotkeys:
             imes = self.get_current_imes()
             if len(imes) > 1:
                 # remove the first ime from the list and append it to the end.
@@ -4192,7 +4194,7 @@ class TypingBoosterEngine(IBus.Engine):
                     update_gsettings=self._remember_last_used_preedit_ime)
                 return True
 
-        if (key, 'previous_input_method') in self._hotkeys:
+        if (self._prev_key, key, 'previous_input_method') in self._hotkeys:
             imes = self.get_current_imes()
             if len(imes) > 1:
                 # remove the last ime in the list and add it in front:
@@ -4201,7 +4203,7 @@ class TypingBoosterEngine(IBus.Engine):
                     update_gsettings=self._remember_last_used_preedit_ime)
                 return True
 
-        if (key, 'next_dictionary') in self._hotkeys:
+        if (self._prev_key, key, 'next_dictionary') in self._hotkeys:
             names = self.get_dictionary_names()
             if len(names) > 1:
                 # remove the first dictionary from the list and append
@@ -4211,7 +4213,7 @@ class TypingBoosterEngine(IBus.Engine):
                     update_gsettings=True)
                 return True
 
-        if (key, 'previous_dictionary') in self._hotkeys:
+        if (self._prev_key, key, 'previous_dictionary') in self._hotkeys:
             names = self.get_dictionary_names()
             if len(names) > 1:
                 # remove the last dictionary in the list and add it in front:
@@ -4220,132 +4222,159 @@ class TypingBoosterEngine(IBus.Engine):
                     update_gsettings=True)
                 return True
 
-        if ((key, 'select_next_candidate') in self._hotkeys
+        if ((self._prev_key, key, 'select_next_candidate') in self._hotkeys
                 and self.get_lookup_table().get_number_of_candidates()):
             dummy = self._arrow_down()
             self._update_lookup_table_and_aux()
             return True
 
-        if ((key, 'select_previous_candidate') in self._hotkeys
+        if ((self._prev_key, key, 'select_previous_candidate') in self._hotkeys
                 and self.get_lookup_table().get_number_of_candidates()):
             dummy = self._arrow_up()
             self._update_lookup_table_and_aux()
             return True
 
-        if ((key, 'lookup_table_page_down') in self._hotkeys
+        if ((self._prev_key, key, 'lookup_table_page_down') in self._hotkeys
                 and self.get_lookup_table().get_number_of_candidates()):
             dummy = self._page_down()
             self._update_lookup_table_and_aux()
             return True
 
-        if ((key, 'lookup_table_page_up') in self._hotkeys
+        if ((self._prev_key, key, 'lookup_table_page_up') in self._hotkeys
                 and self.get_lookup_table().get_number_of_candidates()):
             dummy = self._page_up()
             self._update_lookup_table_and_aux()
             return True
 
-        if (key, 'toggle_emoji_prediction') in self._hotkeys:
+        if (self._prev_key, key, 'toggle_emoji_prediction') in self._hotkeys:
             self.toggle_emoji_prediction_mode()
             return True
 
-        if (key, 'toggle_off_the_record') in self._hotkeys:
+        if (self._prev_key, key, 'toggle_off_the_record') in self._hotkeys:
             self.toggle_off_the_record_mode()
             return True
 
-        if ((key, 'lookup_related') in self._hotkeys
+        if ((self._prev_key, key, 'lookup_related') in self._hotkeys
             and not self.is_empty()):
             self._lookup_related_candidates()
             return True
 
-        if (key, 'toggle_hide_input') in self._hotkeys:
+        if (self._prev_key, key, 'toggle_hide_input') in self._hotkeys:
             self._hide_input = not self._hide_input
             self._update_ui()
             return True
 
-        if (key, 'setup') in self._hotkeys:
+        if (self._prev_key, key, 'setup') in self._hotkeys:
             self._start_setup()
             return True
 
-        if (key, 'commit_candidate_1') in self._hotkeys:
-            return self._commit_candidate(0, extra_text='')
+        if (self._prev_key, key, 'commit_candidate_1') in self._hotkeys:
+            if self._commit_candidate(0, extra_text=''):
+                return True
 
-        if (key, 'commit_candidate_1_plus_space') in self._hotkeys:
-            return self._commit_candidate(0, extra_text=' ')
+        if (self._prev_key, key, 'commit_candidate_1_plus_space') in self._hotkeys:
+            if self._commit_candidate(0, extra_text=' '):
+                return True
 
-        if (key, 'remove_candidate_1') in self._hotkeys:
-            return self._remove_candidate(0)
+        if (self._prev_key, key, 'remove_candidate_1') in self._hotkeys:
+            if self._remove_candidate(0):
+                return True
 
-        if (key, 'commit_candidate_2') in self._hotkeys:
-            return self._commit_candidate(1, extra_text='')
+        if (self._prev_key, key, 'commit_candidate_2') in self._hotkeys:
+            if self._commit_candidate(1, extra_text=''):
+                return True
 
-        if (key, 'commit_candidate_2_plus_space') in self._hotkeys:
-            return self._commit_candidate(1, extra_text=' ')
+        if (self._prev_key, key, 'commit_candidate_2_plus_space') in self._hotkeys:
+            if self._commit_candidate(1, extra_text=' '):
+                return True
 
-        if (key, 'remove_candidate_2') in self._hotkeys:
-            return self._remove_candidate(1)
+        if (self._prev_key, key, 'remove_candidate_2') in self._hotkeys:
+            if self._remove_candidate(1):
+                return True
 
-        if (key, 'commit_candidate_3') in self._hotkeys:
-            return self._commit_candidate(2, extra_text='')
+        if (self._prev_key, key, 'commit_candidate_3') in self._hotkeys:
+            if self._commit_candidate(2, extra_text=''):
+                return True
 
-        if (key, 'commit_candidate_3_plus_space') in self._hotkeys:
-            return self._commit_candidate(2, extra_text=' ')
+        if (self._prev_key, key, 'commit_candidate_3_plus_space') in self._hotkeys:
+            if self._commit_candidate(2, extra_text=' '):
+                return True
 
-        if (key, 'remove_candidate_3') in self._hotkeys:
-            return self._remove_candidate(2)
+        if (self._prev_key, key, 'remove_candidate_3') in self._hotkeys:
+            if self._remove_candidate(2):
+                return True
 
-        if (key, 'commit_candidate_4') in self._hotkeys:
-            return self._commit_candidate(3, extra_text='')
+        if (self._prev_key, key, 'commit_candidate_4') in self._hotkeys:
+            if self._commit_candidate(3, extra_text=''):
+                return True
 
-        if (key, 'commit_candidate_4_plus_space') in self._hotkeys:
-            return self._commit_candidate(3, extra_text=' ')
+        if (self._prev_key, key, 'commit_candidate_4_plus_space') in self._hotkeys:
+            if self._commit_candidate(3, extra_text=' '):
+                return True
 
-        if (key, 'remove_candidate_4') in self._hotkeys:
-            return self._remove_candidate(3)
+        if (self._prev_key, key, 'remove_candidate_4') in self._hotkeys:
+            if self._remove_candidate(3):
+                return True
 
-        if (key, 'commit_candidate_5') in self._hotkeys:
-            return self._commit_candidate(4, extra_text='')
+        if (self._prev_key, key, 'commit_candidate_5') in self._hotkeys:
+            if self._commit_candidate(4, extra_text=''):
+                return True
 
-        if (key, 'commit_candidate_5_plus_space') in self._hotkeys:
-            return self._commit_candidate(4, extra_text=' ')
+        if (self._prev_key, key, 'commit_candidate_5_plus_space') in self._hotkeys:
+            if self._commit_candidate(4, extra_text=' '):
+                return True
 
-        if (key, 'remove_candidate_5') in self._hotkeys:
-            return self._remove_candidate(4)
+        if (self._prev_key, key, 'remove_candidate_5') in self._hotkeys:
+            if self._remove_candidate(4):
+                return True
 
-        if (key, 'commit_candidate_6') in self._hotkeys:
-            return self._commit_candidate(5, extra_text='')
+        if (self._prev_key, key, 'commit_candidate_6') in self._hotkeys:
+            if self._commit_candidate(5, extra_text=''):
+                return True
 
-        if (key, 'commit_candidate_6_plus_space') in self._hotkeys:
-            return self._commit_candidate(5, extra_text=' ')
+        if (self._prev_key, key, 'commit_candidate_6_plus_space') in self._hotkeys:
+            if self._commit_candidate(5, extra_text=' '):
+                return True
 
-        if (key, 'remove_candidate_6') in self._hotkeys:
-            return self._remove_candidate(5)
+        if (self._prev_key, key, 'remove_candidate_6') in self._hotkeys:
+            if self._remove_candidate(5):
+                return True
 
-        if (key, 'commit_candidate_7') in self._hotkeys:
-            return self._commit_candidate(6, extra_text='')
+        if (self._prev_key, key, 'commit_candidate_7') in self._hotkeys:
+            if self._commit_candidate(6, extra_text=''):
+                return True
 
-        if (key, 'commit_candidate_7_plus_space') in self._hotkeys:
-            return self._commit_candidate(6, extra_text=' ')
+        if (self._prev_key, key, 'commit_candidate_7_plus_space') in self._hotkeys:
+            if self._commit_candidate(6, extra_text=' '):
+                return True
 
-        if (key, 'remove_candidate_7') in self._hotkeys:
-            return self._remove_candidate(6)
+        if (self._prev_key, key, 'remove_candidate_7') in self._hotkeys:
+            if self._remove_candidate(6):
+                return True
 
-        if (key, 'commit_candidate_8') in self._hotkeys:
-            return self._commit_candidate(7, extra_text='')
+        if (self._prev_key, key, 'commit_candidate_8') in self._hotkeys:
+            if self._commit_candidate(7, extra_text=''):
+                return True
 
-        if (key, 'commit_candidate_8_plus_space') in self._hotkeys:
-            return self._commit_candidate(7, extra_text=' ')
+        if (self._prev_key, key, 'commit_candidate_8_plus_space') in self._hotkeys:
+            if self._commit_candidate(7, extra_text=' '):
+                return True
 
-        if (key, 'remove_candidate_8') in self._hotkeys:
-            return self._remove_candidate(7)
+        if (self._prev_key, key, 'remove_candidate_8') in self._hotkeys:
+            if self._remove_candidate(7):
+                return True
 
-        if (key, 'commit_candidate_9') in self._hotkeys:
-            return self._commit_candidate(8, extra_text='')
+        if (self._prev_key, key, 'commit_candidate_9') in self._hotkeys:
+            if self._commit_candidate(8, extra_text=''):
+                return True
 
-        if (key, 'commit_candidate_9_plus_space') in self._hotkeys:
-            return self._commit_candidate(8, extra_text=' ')
+        if (self._prev_key, key, 'commit_candidate_9_plus_space') in self._hotkeys:
+            if self._commit_candidate(8, extra_text=' '):
+                return True
 
-        if (key, 'remove_candidate_9') in self._hotkeys:
-            return self._remove_candidate(8)
+        if (self._prev_key, key, 'remove_candidate_9') in self._hotkeys:
+            if self._remove_candidate(8):
+                return True
 
         return False
 
@@ -4485,7 +4514,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._handle_compose(key):
             return True
 
-        if (key, 'toggle_input_mode_on_off') in self._hotkeys:
+        if (self._prev_key, key, 'toggle_input_mode_on_off') in self._hotkeys:
             self.toggle_input_mode()
             return True
 
@@ -4495,11 +4524,12 @@ class TypingBoosterEngine(IBus.Engine):
                 in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN])):
             return self._return_false(keyval, keycode, state)
 
-        if (key, 'speech_recognition') in self._hotkeys:
+        if (self._prev_key, key, 'speech_recognition') in self._hotkeys:
             self._speech_recognition()
             return True
 
         result = self._process_key_event(key)
+        self._prev_key = key
         return result
 
     def _process_key_event(self, key):
