@@ -4123,71 +4123,81 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_ui()
         return
 
-    def _handle_hotkeys(self, key):
-        '''
-        Handle hotkey commands
+    def _command_toggle_input_mode_on_off(self):
+        '''Handle hotkey for the command “toggle_input_mode_on_off”
 
-        Returns True if the key was completely handled, False if not.
-
-        :param key: The typed key. If this is a hotkey,
-                    execute the command for this hotkey.
-        :type key: KeyEvent object
+        :return: True if the key was completely handled, False if not.
         :rtype: Boolean
         '''
-        if DEBUG_LEVEL > 1:
-            LOGGER.debug('KeyEvent object: %s\n', key)
-            LOGGER.debug('self._hotkeys=%s\n', str(self._hotkeys))
+        self.toggle_input_mode()
+        return True
 
-        if (self._prev_key, key, 'toggle_input_mode_on_off') in self._hotkeys:
-            self.toggle_input_mode()
+    def _command_speech_recognition(self):
+        '''Handle hotkey for the command “speech_recognition”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        self._speech_recognition()
+        return True
+
+    def _command_next_case_mode(self):
+        '''Handle hotkey for the command “next_case_mode”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        self._candidates_case_mode_change()
+        return True
+
+    def _command_cancel(self):
+        '''Handle hotkey for the command “cancel”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        if self.is_empty():
+            return False
+        if self.get_lookup_table().cursor_visible:
+            # A candidate is selected in the lookup table.
+            # Deselect it and show the first page of the candidate
+            # list:
+            self.get_lookup_table().set_cursor_visible(False)
+            self.get_lookup_table().set_cursor_pos(0)
+            self._update_lookup_table_and_aux()
             return True
-
-        if (self._prev_key, key, 'speech_recognition') in self._hotkeys:
-            self._speech_recognition()
-            return True
-
-        if (self._prev_key, key, 'next_case_mode') in self._hotkeys:
-            self._candidates_case_mode_change()
-            return True
-
-        if (self._prev_key, key, 'cancel') in self._hotkeys:
-            if self.is_empty():
-                return False
-            if self.get_lookup_table().cursor_visible:
-                # A candidate is selected in the lookup table.
-                # Deselect it and show the first page of the candidate
-                # list:
-                self.get_lookup_table().set_cursor_visible(False)
-                self.get_lookup_table().set_cursor_pos(0)
-                self._update_lookup_table_and_aux()
-                return True
-            if (self._lookup_table_shows_related_candidates
-                or self._candidates_case_mode != 'orig'):
-                # Force an update to the original lookup table:
-                self._update_ui()
-                return True
-            if ((self._tab_enable or self._min_char_complete > 1)
-                    and self.is_lookup_table_enabled_by_tab
-                    and self.get_lookup_table().get_number_of_candidates()):
-                # If lookup table was enabled by typing Tab, and it is
-                # not empty, close it again but keep the preëdit:
-                self.is_lookup_table_enabled_by_tab = False
-                self.get_lookup_table().clear()
-                self.get_lookup_table().set_cursor_visible(False)
-                self._update_lookup_table_and_aux()
-                self._update_preedit()
-                self._candidates = []
-                self._candidates_case_mode = 'orig'
-                return True
-            self._clear_input_and_update_ui()
+        if (self._lookup_table_shows_related_candidates
+            or self._candidates_case_mode != 'orig'):
+            # Force an update to the original lookup table:
             self._update_ui()
             return True
+        if ((self._tab_enable or self._min_char_complete > 1)
+                and self.is_lookup_table_enabled_by_tab
+                and self.get_lookup_table().get_number_of_candidates()):
+            # If lookup table was enabled by typing Tab, and it is
+            # not empty, close it again but keep the preëdit:
+            self.is_lookup_table_enabled_by_tab = False
+            self.get_lookup_table().clear()
+            self.get_lookup_table().set_cursor_visible(False)
+            self._update_lookup_table_and_aux()
+            self._update_preedit()
+            self._candidates = []
+            self._candidates_case_mode = 'orig'
+            return True
+        self._clear_input_and_update_ui()
+        self._update_ui()
+        return True
 
-        if ((self._prev_key, key, 'enable_lookup') in self._hotkeys
-            and (self._tab_enable
-                 or (self._min_char_complete > 1
-                     and
-                     not self.is_lookup_table_enabled_by_min_char_complete))
+    def _command_enable_lookup(self):
+        '''Handle hotkey for the command “enable_lookup”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        if ((self._tab_enable
+             or (self._min_char_complete > 1
+                 and
+                 not self.is_lookup_table_enabled_by_min_char_complete))
             and not self.is_lookup_table_enabled_by_tab
             and not self.is_empty()):
             self.is_lookup_table_enabled_by_tab = True
@@ -4195,198 +4205,422 @@ class TypingBoosterEngine(IBus.Engine):
             # do not wait for the next keypress:
             self._update_ui()
             return True
+        return False
 
-        if (self._prev_key, key, 'next_input_method') in self._hotkeys:
-            imes = self.get_current_imes()
-            if len(imes) > 1:
-                # remove the first ime from the list and append it to the end.
-                self.set_current_imes(
-                    imes[1:] + imes[:1],
-                    update_gsettings=self._remember_last_used_preedit_ime)
-                return True
+    def _command_next_input_method(self):
+        '''Handle hotkey for the command “next_input_method”
 
-        if (self._prev_key, key, 'previous_input_method') in self._hotkeys:
-            imes = self.get_current_imes()
-            if len(imes) > 1:
-                # remove the last ime in the list and add it in front:
-                self.set_current_imes(
-                    imes[-1:] + imes[:-1],
-                    update_gsettings=self._remember_last_used_preedit_ime)
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        imes = self.get_current_imes()
+        if len(imes) > 1:
+            # remove the first ime from the list and append it to the end.
+            self.set_current_imes(
+                imes[1:] + imes[:1],
+                update_gsettings=self._remember_last_used_preedit_ime)
+            return True
+        return False
 
-        if (self._prev_key, key, 'next_dictionary') in self._hotkeys:
-            names = self.get_dictionary_names()
-            if len(names) > 1:
-                # remove the first dictionary from the list and append
-                # it to the end.
-                self.set_dictionary_names(
-                    names[1:] + names[:1],
-                    update_gsettings=True)
-                return True
+    def _command_previous_input_method(self):
+        '''Handle hotkey for the command “previous_input_method”
 
-        if (self._prev_key, key, 'previous_dictionary') in self._hotkeys:
-            names = self.get_dictionary_names()
-            if len(names) > 1:
-                # remove the last dictionary in the list and add it in front:
-                self.set_dictionary_names(
-                    names[-1:] + names[:-1],
-                    update_gsettings=True)
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        imes = self.get_current_imes()
+        if len(imes) > 1:
+            # remove the last ime in the list and add it in front:
+            self.set_current_imes(
+                imes[-1:] + imes[:-1],
+                update_gsettings=self._remember_last_used_preedit_ime)
+            return True
+        return False
 
-        if ((self._prev_key, key, 'select_next_candidate') in self._hotkeys
-                and self.get_lookup_table().get_number_of_candidates()):
+    def _command_next_dictionary(self):
+        '''Handle hotkey for the command “next_dictionary”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        names = self.get_dictionary_names()
+        if len(names) > 1:
+            # remove the first dictionary from the list and append
+            # it to the end.
+            self.set_dictionary_names(
+                names[1:] + names[:1],
+                update_gsettings=True)
+            return True
+        return False
+
+    def _command_previous_dictionary(self):
+        '''Handle hotkey for the command “previous_dictionary”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        names = self.get_dictionary_names()
+        if len(names) > 1:
+            # remove the last dictionary in the list and add it in front:
+            self.set_dictionary_names(
+                names[-1:] + names[:-1],
+                update_gsettings=True)
+            return True
+        return False
+
+    def _command_select_next_candidate(self):
+        '''Handle hotkey for the command “select_next_candidate”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        if self.get_lookup_table().get_number_of_candidates():
             dummy = self._arrow_down()
             self._update_lookup_table_and_aux()
             return True
+        return False
 
-        if ((self._prev_key, key, 'select_previous_candidate') in self._hotkeys
-                and self.get_lookup_table().get_number_of_candidates()):
+    def _command_select_previous_candidate(self):
+        '''Handle hotkey for the command “select_previous_candidate”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        if self.get_lookup_table().get_number_of_candidates():
             dummy = self._arrow_up()
             self._update_lookup_table_and_aux()
             return True
+        return False
 
-        if ((self._prev_key, key, 'lookup_table_page_down') in self._hotkeys
-                and self.get_lookup_table().get_number_of_candidates()):
+    def _command_lookup_table_page_down(self):
+        '''Handle hotkey for the command “lookup_table_page_down”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        if self.get_lookup_table().get_number_of_candidates():
             dummy = self._page_down()
             self._update_lookup_table_and_aux()
             return True
+        return False
 
-        if ((self._prev_key, key, 'lookup_table_page_up') in self._hotkeys
-                and self.get_lookup_table().get_number_of_candidates()):
+    def _command_lookup_table_page_up(self):
+        '''Handle hotkey for the command “lookup_table_page_up”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        if self.get_lookup_table().get_number_of_candidates():
             dummy = self._page_up()
             self._update_lookup_table_and_aux()
             return True
+        return False
 
-        if (self._prev_key, key, 'toggle_emoji_prediction') in self._hotkeys:
-            self.toggle_emoji_prediction_mode()
-            return True
+    def _command_toggle_emoji_prediction(self):
+        '''Handle hotkey for the command “toggle_emoji_prediction”
 
-        if (self._prev_key, key, 'toggle_off_the_record') in self._hotkeys:
-            self.toggle_off_the_record_mode()
-            return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        self.toggle_emoji_prediction_mode()
+        return True
 
-        if ((self._prev_key, key, 'lookup_related') in self._hotkeys
-            and not self.is_empty()):
+    def _command_toggle_off_the_record(self):
+        '''Handle hotkey for the command “toggle_off_the_record”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        self.toggle_off_the_record_mode()
+        return True
+
+    def _command_lookup_related(self):
+        '''Handle hotkey for the command “lookup_related”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        if not self.is_empty():
             self._lookup_related_candidates()
             return True
+        return False
 
-        if (self._prev_key, key, 'toggle_hide_input') in self._hotkeys:
-            self._hide_input = not self._hide_input
-            self._update_ui()
-            return True
+    def _command_toggle_hide_input(self):
+        '''Handle hotkey for the command “toggle_hide_input”
 
-        if (self._prev_key, key, 'setup') in self._hotkeys:
-            self._start_setup()
-            return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        self._hide_input = not self._hide_input
+        self._update_ui()
+        return True
 
-        if (self._prev_key, key, 'commit_candidate_1') in self._hotkeys:
-            if self._commit_candidate(0, extra_text=''):
-                return True
+    def _command_setup(self):
+        '''Handle hotkey for the command “setup”
 
-        if (self._prev_key, key, 'commit_candidate_1_plus_space') in self._hotkeys:
-            if self._commit_candidate(0, extra_text=' '):
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        self._start_setup()
+        return True
 
-        if (self._prev_key, key, 'remove_candidate_1') in self._hotkeys:
-            if self._remove_candidate(0):
-                return True
+    def _command_commit_candidate_1(self):
+        '''Handle hotkey for the command “commit_candidate_1”
 
-        if (self._prev_key, key, 'commit_candidate_2') in self._hotkeys:
-            if self._commit_candidate(1, extra_text=''):
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(0, extra_text='')
 
-        if (self._prev_key, key, 'commit_candidate_2_plus_space') in self._hotkeys:
-            if self._commit_candidate(1, extra_text=' '):
-                return True
+    def _command_commit_candidate_1_plus_space(self):
+        '''Handle hotkey for the command “commit_candidate_1_plus_space”
 
-        if (self._prev_key, key, 'remove_candidate_2') in self._hotkeys:
-            if self._remove_candidate(1):
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(0, extra_text=' ')
 
-        if (self._prev_key, key, 'commit_candidate_3') in self._hotkeys:
-            if self._commit_candidate(2, extra_text=''):
-                return True
+    def _command_remove_candidate_1(self):
+        '''Handle hotkey for the command “remove_candidate_1”
 
-        if (self._prev_key, key, 'commit_candidate_3_plus_space') in self._hotkeys:
-            if self._commit_candidate(2, extra_text=' '):
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._remove_candidate(0)
 
-        if (self._prev_key, key, 'remove_candidate_3') in self._hotkeys:
-            if self._remove_candidate(2):
-                return True
+    def _command_commit_candidate_2(self):
+        '''Handle hotkey for the command “commit_candidate_2”
 
-        if (self._prev_key, key, 'commit_candidate_4') in self._hotkeys:
-            if self._commit_candidate(3, extra_text=''):
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(1, extra_text='')
 
-        if (self._prev_key, key, 'commit_candidate_4_plus_space') in self._hotkeys:
-            if self._commit_candidate(3, extra_text=' '):
-                return True
+    def _command_commit_candidate_2_plus_space(self):
+        '''Handle hotkey for the command “commit_candidate_2_plus_space”
 
-        if (self._prev_key, key, 'remove_candidate_4') in self._hotkeys:
-            if self._remove_candidate(3):
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(1, extra_text=' ')
 
-        if (self._prev_key, key, 'commit_candidate_5') in self._hotkeys:
-            if self._commit_candidate(4, extra_text=''):
-                return True
+    def _command_remove_candidate_2(self):
+        '''Handle hotkey for the command “remove_candidate_2”
 
-        if (self._prev_key, key, 'commit_candidate_5_plus_space') in self._hotkeys:
-            if self._commit_candidate(4, extra_text=' '):
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._remove_candidate(1)
 
-        if (self._prev_key, key, 'remove_candidate_5') in self._hotkeys:
-            if self._remove_candidate(4):
-                return True
+    def _command_commit_candidate_3(self):
+        '''Handle hotkey for the command “commit_candidate_3”
 
-        if (self._prev_key, key, 'commit_candidate_6') in self._hotkeys:
-            if self._commit_candidate(5, extra_text=''):
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(2, extra_text='')
 
-        if (self._prev_key, key, 'commit_candidate_6_plus_space') in self._hotkeys:
-            if self._commit_candidate(5, extra_text=' '):
-                return True
+    def _command_commit_candidate_3_plus_space(self):
+        '''Handle hotkey for the command “commit_candidate_3_plus_space”
 
-        if (self._prev_key, key, 'remove_candidate_6') in self._hotkeys:
-            if self._remove_candidate(5):
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(2, extra_text=' ')
 
-        if (self._prev_key, key, 'commit_candidate_7') in self._hotkeys:
-            if self._commit_candidate(6, extra_text=''):
-                return True
+    def _command_remove_candidate_3(self):
+        '''Handle hotkey for the command “remove_candidate_3”
 
-        if (self._prev_key, key, 'commit_candidate_7_plus_space') in self._hotkeys:
-            if self._commit_candidate(6, extra_text=' '):
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._remove_candidate(2)
 
-        if (self._prev_key, key, 'remove_candidate_7') in self._hotkeys:
-            if self._remove_candidate(6):
-                return True
+    def _command_commit_candidate_4(self):
+        '''Handle hotkey for the command “commit_candidate_4”
 
-        if (self._prev_key, key, 'commit_candidate_8') in self._hotkeys:
-            if self._commit_candidate(7, extra_text=''):
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(3, extra_text='')
 
-        if (self._prev_key, key, 'commit_candidate_8_plus_space') in self._hotkeys:
-            if self._commit_candidate(7, extra_text=' '):
-                return True
+    def _command_commit_candidate_4_plus_space(self):
+        '''Handle hotkey for the command “commit_candidate_4_plus_space”
 
-        if (self._prev_key, key, 'remove_candidate_8') in self._hotkeys:
-            if self._remove_candidate(7):
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(3, extra_text=' ')
 
-        if (self._prev_key, key, 'commit_candidate_9') in self._hotkeys:
-            if self._commit_candidate(8, extra_text=''):
-                return True
+    def _command_remove_candidate_4(self):
+        '''Handle hotkey for the command “remove_candidate_4”
 
-        if (self._prev_key, key, 'commit_candidate_9_plus_space') in self._hotkeys:
-            if self._commit_candidate(8, extra_text=' '):
-                return True
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._remove_candidate(3)
 
-        if (self._prev_key, key, 'remove_candidate_9') in self._hotkeys:
-            if self._remove_candidate(8):
-                return True
+    def _command_commit_candidate_5(self):
+        '''Handle hotkey for the command “commit_candidate_5”
 
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(4, extra_text='')
+
+    def _command_commit_candidate_5_plus_space(self):
+        '''Handle hotkey for the command “commit_candidate_5_plus_space”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(4, extra_text=' ')
+
+    def _command_remove_candidate_5(self):
+        '''Handle hotkey for the command “remove_candidate_5”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._remove_candidate(4)
+
+    def _command_commit_candidate_6(self):
+        '''Handle hotkey for the command “commit_candidate_6”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(5, extra_text='')
+
+    def _command_commit_candidate_6_plus_space(self):
+        '''Handle hotkey for the command “commit_candidate_6_plus_space”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(5, extra_text=' ')
+
+    def _command_remove_candidate_6(self):
+        '''Handle hotkey for the command “remove_candidate_6”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._remove_candidate(5)
+
+    def _command_commit_candidate_7(self):
+        '''Handle hotkey for the command “commit_candidate_7”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(6, extra_text='')
+
+    def _command_commit_candidate_7_plus_space(self):
+        '''Handle hotkey for the command “commit_candidate_7_plus_space”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(6, extra_text=' ')
+
+    def _command_remove_candidate_7(self):
+        '''Handle hotkey for the command “remove_candidate_7”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._remove_candidate(6)
+
+    def _command_commit_candidate_8(self):
+        '''Handle hotkey for the command “commit_candidate_8”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(7, extra_text='')
+
+    def _command_commit_candidate_8_plus_space(self):
+        '''Handle hotkey for the command “commit_candidate_8_plus_space”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(7, extra_text=' ')
+
+    def _command_remove_candidate_8(self):
+        '''Handle hotkey for the command “remove_candidate_8”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._remove_candidate(7)
+
+    def _command_commit_candidate_9(self):
+        '''Handle hotkey for the command “commit_candidate_9”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(8, extra_text='')
+
+    def _command_commit_candidate_9_plus_space(self):
+        '''Handle hotkey for the command “commit_candidate_9_plus_space”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._commit_candidate(8, extra_text=' ')
+
+    def _command_remove_candidate_9(self):
+        '''Handle hotkey for the command “remove_candidate_9”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        return self._remove_candidate(8)
+
+    def _handle_hotkeys(self, key, commands=()):
+        '''Handle hotkey commands
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        :param key: The typed key. If this is a hotkey,
+                    execute the command for this hotkey.
+        :type key: KeyEvent object
+        :param commands: A list of commands to check whether
+                         the key matches the keybinding for one of
+                         these commands.
+                         If the list of commands is empty, check
+                         *all* commands in the self._keybindings
+                         dictionary.
+        :type commands: List of strings
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('KeyEvent object: %s\n', key)
+        if DEBUG_LEVEL > 5:
+            LOGGER.debug('self._hotkeys=%s\n', str(self._hotkeys))
+
+        if not commands:
+            # If no specific command list to match is given, try to
+            # match against all commands. Sorting shouldn’t really
+            # matter, but maybe better do it sorted, then it is done
+            # in the same order as the commands are displayed in the
+            # setup tool.
+            commands = sorted(self._keybindings.keys())
+        for command in commands:
+            if (self._prev_key, key, command) in self._hotkeys:
+                if DEBUG_LEVEL > 1:
+                    LOGGER.debug('matched command=%s', command)
+                command_function_name = '_command_%s' % command
+                try:
+                    command_function = getattr(self, command_function_name)
+                except (AttributeError,):
+                    LOGGER.exception('There is no function %s',
+                                     command_function_name)
+                    return False
+                if command_function():
+                    return True
         return False
 
     def _return_false(self, keyval, keycode, state):
@@ -4525,8 +4759,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._handle_compose(key):
             return True
 
-        if (self._prev_key, key, 'toggle_input_mode_on_off') in self._hotkeys:
-            self.toggle_input_mode()
+        if self._handle_hotkeys(key, commands=['toggle_input_mode_on_off']):
             return True
 
         if (not self._input_mode
