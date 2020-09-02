@@ -23,7 +23,6 @@
 This file implements the ibus engine for ibus-typing-booster
 '''
 
-# “Use of super on an old style class”: pylint: disable=super-on-old-class
 # “Wrong continued indentation”: pylint: disable=bad-continuation
 
 import os
@@ -86,7 +85,7 @@ INPUT_MODE_FALSE_SYMBOL = '🐌'
 class TypingBoosterEngine(IBus.Engine):
     '''The IBus Engine for ibus-typing-booster'''
 
-    def __init__(self, bus, obj_path, db, unit_test=False):
+    def __init__(self, bus, obj_path, database, unit_test=False):
         global DEBUG_LEVEL
         try:
             DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
@@ -95,7 +94,7 @@ class TypingBoosterEngine(IBus.Engine):
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'TypingBoosterEngine.__init__(bus=%s, obj_path=%s, db=%s)',
-                bus, obj_path, db)
+                bus, obj_path, database)
         super().__init__(
             connection=bus.get_connection(), object_path=obj_path)
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
@@ -109,7 +108,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._lookup_table_shows_related_candidates = False
         self._current_auxiliary_text = ''
         self._bus = bus
-        self.db = db
+        self.database = database
         self._setup_pid = 0
         self._gsettings = Gio.Settings(
             schema='org.freedesktop.ibus.engine.typing-booster')
@@ -374,10 +373,12 @@ class TypingBoosterEngine(IBus.Engine):
                 + 'dictionaries.\n'
                 + 'Trying to set: %s\n' %self._dictionary_names
                 + 'Really setting: %s\n'
-                %self._dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
-            self._dictionary_names = (
-                self._dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
-        self.db.hunspell_obj.set_dictionary_names(self._dictionary_names[:])
+                %self._dictionary_names[
+                    :itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
+            self._dictionary_names = self._dictionary_names[
+                :itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES]
+        self.database.hunspell_obj.set_dictionary_names(
+            self._dictionary_names[:])
 
         if  self._emoji_predictions:
             if DEBUG_LEVEL > 1:
@@ -842,7 +843,7 @@ class TypingBoosterEngine(IBus.Engine):
                         prefix = (
                             self._transliterated_strings[ime][0:prefix_length])
                     try:
-                        candidates = self.db.select_words(
+                        candidates = self.database.select_words(
                             stripped_transliterated_string,
                             p_phrase=self._p_phrase,
                             pp_phrase=self._pp_phrase)
@@ -856,7 +857,7 @@ class TypingBoosterEngine(IBus.Engine):
                             phrase_frequencies[cand[0]], cand[1])
                     else:
                         phrase_frequencies[cand[0]] = cand[1]
-        phrase_candidates = self.db.best_candidates(phrase_frequencies)
+        phrase_candidates = self.database.best_candidates(phrase_frequencies)
         # If the first candidate is exactly the same as the typed string
         # prefer longer candidates which start exactly with the typed
         # string. If the user wants the typed string, he can easily
@@ -882,7 +883,8 @@ class TypingBoosterEngine(IBus.Engine):
                             cand[1] + first_candidate_user_freq)
                     else:
                         phrase_frequencies[cand[0]] = cand[1]
-                phrase_candidates = self.db.best_candidates(phrase_frequencies)
+                phrase_candidates = self.database.best_candidates(
+                    phrase_frequencies)
         if (self._emoji_predictions
             or self._typed_string[0] in (' ', '_')
             or self._typed_string[-1] in (' ', '_')):
@@ -1099,14 +1101,14 @@ class TypingBoosterEngine(IBus.Engine):
         # database.
         stripped_phrase = itb_util.lstrip_token(phrase)
         if stripped_phrase:
-            self.db.remove_phrase(phrase=stripped_phrase, commit=True)
+            self.database.remove_phrase(phrase=stripped_phrase, commit=True)
         # Try to remove the whole candidate as well from the database.
         # Probably this won’t do anything, just to make sure that it
         # is really removed even if the prefix also ended up in the
         # database for whatever reason (It could be because the list
         # of prefixes to strip from tokens has changed compared to a
         # an older release of ibus-typing-booster).
-        self.db.remove_phrase(phrase=phrase, commit=True)
+        self.database.remove_phrase(phrase=phrase, commit=True)
         return True
 
     def get_cursor_pos(self):
@@ -1139,8 +1141,8 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
-                'context=“%s” “%s” “%s” push=“%s”'
-                % (self._ppp_phrase, self._pp_phrase, self._p_phrase, phrase))
+                'context=“%s” “%s” “%s” push=“%s”',
+                self._ppp_phrase, self._pp_phrase, self._p_phrase, phrase)
         self._ppp_phrase = self._pp_phrase
         self._pp_phrase = self._p_phrase
         self._p_phrase = phrase
@@ -1150,8 +1152,8 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
-                'context=“%s” “%s” “%s”'
-                % (self._ppp_phrase, self._pp_phrase, self._p_phrase))
+                'context=“%s” “%s” “%s”',
+                self._ppp_phrase, self._pp_phrase, self._p_phrase)
         self._ppp_phrase = ''
         self._pp_phrase = ''
         self._p_phrase = ''
@@ -1262,9 +1264,10 @@ class TypingBoosterEngine(IBus.Engine):
                 + 'Trying to set: %s\n' %dictionary_names
                 + 'Really setting: %s\n'
                 %dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
-            dictionary_names = dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES]
+            dictionary_names = (
+                dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
         self._dictionary_names = dictionary_names
-        self.db.hunspell_obj.set_dictionary_names(dictionary_names)
+        self.database.hunspell_obj.set_dictionary_names(dictionary_names)
         self._update_dictionary_menu_dicts()
         self._init_or_update_property_menu_dictionary(
             self.dictionary_menu, current_mode=0)
@@ -1855,7 +1858,7 @@ class TypingBoosterEngine(IBus.Engine):
                     self._preedit_underline, 0, len(_str)))
                 if (self._color_preedit_spellcheck
                     and len(_str) >= 4
-                    and not self.db.hunspell_obj.spellcheck(_str)):
+                    and not self.database.hunspell_obj.spellcheck(_str)):
                     attrs.append(IBus.attr_foreground_new(
                         self._color_preedit_spellcheck_argb, 0, len(_str)))
             else:
@@ -1997,7 +2000,7 @@ class TypingBoosterEngine(IBus.Engine):
         else:
             if (self._color_preedit_spellcheck
                 and len(typed_string) >= 4
-                and not self.db.hunspell_obj.spellcheck(typed_string)):
+                and not self.database.hunspell_obj.spellcheck(typed_string)):
                 attrs.append(IBus.attr_foreground_new(
                     self._color_preedit_spellcheck_argb, 0, len(typed_string)))
             if self._color_inline_completion:
@@ -2416,7 +2419,7 @@ class TypingBoosterEngine(IBus.Engine):
         stripped_input_phrase = itb_util.strip_token(input_phrase)
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
         if not self._off_the_record and not self._hide_input:
-            self.db.check_phrase_and_update_frequency(
+            self.database.check_phrase_and_update_frequency(
                 input_phrase=stripped_input_phrase,
                 phrase=stripped_commit_phrase,
                 p_phrase=self.get_p_phrase(),
@@ -2430,7 +2433,7 @@ class TypingBoosterEngine(IBus.Engine):
                 # phrase is “to” and the total context was “I am
                 # going”, then also commit “going to” with the context
                 # “I am”:
-                self.db.check_phrase_and_update_frequency(
+                self.database.check_phrase_and_update_frequency(
                     input_phrase=
                     self.get_p_phrase() + ' ' + stripped_commit_phrase,
                     phrase=self.get_p_phrase() + ' ' + stripped_commit_phrase,
@@ -2534,7 +2537,7 @@ class TypingBoosterEngine(IBus.Engine):
             # update the candidates.
             self._update_ui()
             return True
-        elif key.val in (IBus.KEY_Delete, IBus.KEY_Right, IBus.KEY_KP_Right):
+        if key.val in (IBus.KEY_Delete, IBus.KEY_Right, IBus.KEY_KP_Right):
             pattern = re.compile(
                 r'^[\s](?P<token>[\S]+)($|[\s]+.*)')
             match = pattern.match(text[cursor_pos:])
@@ -2557,8 +2560,7 @@ class TypingBoosterEngine(IBus.Engine):
             # update the candidates.
             self._update_ui()
             return True
-        else:
-            return self._return_false(key.val, key.code, key.state)
+        return self._return_false(key.val, key.code, key.state)
 
     def get_context(self):
         '''Try to get the context from the application using the “surrounding
@@ -2609,8 +2611,8 @@ class TypingBoosterEngine(IBus.Engine):
             self._ppp_phrase = tokens[-3]
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
-                'Got context from surrounding text=“%s” “%s” “%s”'
-                % (self._ppp_phrase, self._pp_phrase, self._p_phrase))
+                'Got context from surrounding text=“%s” “%s” “%s”',
+                self._ppp_phrase, self._pp_phrase, self._p_phrase)
 
     def set_add_space_on_commit(self, mode, update_gsettings=True):
         '''Sets whether a space is added when a candidate is committed by 1-9
@@ -3977,6 +3979,12 @@ class TypingBoosterEngine(IBus.Engine):
             return
 
     def _speech_recognition_error(self, error_message):
+        '''Show an error message in the auxiliary text when
+        something goes wrong with speech recognition.
+
+        :param error_message: The text to display as error message
+        :type error_message: String
+        '''
         auxiliary_text_label = ''
         if (self._label_speech_recognition
             and self._label_speech_recognition_string.strip()):
@@ -3989,7 +3997,6 @@ class TypingBoosterEngine(IBus.Engine):
                 auxiliary_text_label + '⚠️' + error_message), True)
         time.sleep(2)
         self._update_ui()
-        return
 
     def _speech_recognition(self):
         '''
@@ -4086,7 +4093,7 @@ class TypingBoosterEngine(IBus.Engine):
             # in the label to indicate that it is not officially supported
             # and may just fall back to English, but it is also possible
             # that it works just fine. One has to try it.
-            auxiliary_text_label += '❌' # not officially supported, but may work.
+            auxiliary_text_label += '❌' # not officially supported
         auxiliary_text_label += ': '
         super().update_auxiliary_text(
             IBus.Text.new_from_string(auxiliary_text_label), True)
@@ -4728,6 +4735,11 @@ class TypingBoosterEngine(IBus.Engine):
             0)
 
     def _handle_compose(self, key):
+        '''Internal method to handle possible compose keys
+
+        :return: True if the key event has been handled, else False
+        ;rtype: Boolean
+        '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('KeyEvent object: %s', key)
         if key.state & IBus.ModifierType.RELEASE_MASK:
@@ -4760,8 +4772,8 @@ class TypingBoosterEngine(IBus.Engine):
             #
             # Ignoring the other modifiers seems optional ...
             if DEBUG_LEVEL > 1:
-                LOGGER.debug('Inside compose sequence, ignoring key %s'
-                             % IBus.keyval_name(key.val))
+                LOGGER.debug('Inside compose sequence, ignoring key %s',
+                             IBus.keyval_name(key.val))
             return True
         if key.val in (IBus.KEY_BackSpace,):
             self._typed_compose_sequence = self._typed_compose_sequence[:-1]
@@ -4830,11 +4842,11 @@ class TypingBoosterEngine(IBus.Engine):
     def _process_key_event(self, key):
         '''Internal method to process key event
 
-        Returns True if the key event has been completely handled by
-        ibus-typing-booster and should not be passed through anymore.
-        Returns False if the key event has not been handled completely
-        and is passed through.
-
+        :return: True if the key event has been completely handled by
+                 ibus-typing-booster and should not be passed through anymore.
+                 False if the key event has not been handled completely
+                 and is passed through.
+        :rtype: Boolean
         '''
         # Ignore (almost all) key release events
         if key.state & IBus.ModifierType.RELEASE_MASK:
@@ -5253,7 +5265,7 @@ class TypingBoosterEngine(IBus.Engine):
         stripped_input_phrase = itb_util.strip_token(input_phrase)
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
         if not self._off_the_record and not self._hide_input:
-            self.db.check_phrase_and_update_frequency(
+            self.database.check_phrase_and_update_frequency(
                 input_phrase=stripped_input_phrase,
                 phrase=stripped_commit_phrase,
                 p_phrase=self.get_p_phrase(),
@@ -5538,7 +5550,7 @@ class TypingBoosterEngine(IBus.Engine):
             # A dictionary has been updated or installed,
             # (re)load all dictionaries:
             print('Reloading dictionaries ...')
-            self.db.hunspell_obj.init_dictionaries()
+            self.database.hunspell_obj.init_dictionaries()
             self._clear_input_and_update_ui()
             return
         LOGGER.warning('Unknown key\n')
