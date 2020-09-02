@@ -1010,16 +1010,23 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.assertEqual(self.engine._candidates[0][0], 'cerulean')
+        # Shift_L goes to 'capitalize':
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
         self.engine.do_process_key_event(
             IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
         self.assertEqual(self.engine._candidates[0][0], 'Cerulean')
+        # The next Shift_L goes to 'upper':
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._candidates[0][0], 'CERULEAN')
+        # Shift_R goes back to 'capitalize':
         self.engine.do_process_key_event(IBus.KEY_Shift_R, 0, 0)
         self.engine.do_process_key_event(
             IBus.KEY_Shift_R, 0, IBus.ModifierType.RELEASE_MASK)
-        self.assertEqual(self.engine._candidates[0][0], 'CERULEAN')
+        self.assertEqual(self.engine._candidates[0][0], 'Cerulean')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
-        self.assertEqual(self.engine.mock_committed_text, 'CERULEAN ')
+        self.assertEqual(self.engine.mock_committed_text, 'Cerulean ')
 
     def test_sinhala_wijesekera(self):
         self.engine.set_current_imes(

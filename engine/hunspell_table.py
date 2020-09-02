@@ -461,6 +461,8 @@ class TypingBoosterEngine(IBus.Engine):
         self._candidates = []
         self._candidates_case_mode = 'orig'
         # 'orig': candidates have original case.
+        # 'capitalize': candidates have been converted to the first character
+        #               in upper case.
         # 'title': candidates have been converted to Python’s title case.
         # 'upper': candidates have been completely converted to upper case.
         # 'lower': candidates have been completely converted to lower case.
@@ -2184,29 +2186,70 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_lookup_table_and_aux()
         self._lookup_table_shows_related_candidates = True
 
-    def _candidates_case_mode_change(self):
-        '''Toggle current candidates between 'title', 'upper', and 'lower' case
+    def _candidates_case_mode_change(self, mode='next'):
+        '''Change the case of the current candidates
 
         Change the case of all the candidates in the current list of
-        candidates to one of three modes, title case, upper case or
-        lower case. Then create a new lookup table and fill it with
-        the changed candidates to make the changes visible. But keep
-        the cursor position and cursor visibility status of the old
-        lookup table.
+        candidates. Then create a new lookup table and fill it
+        with the changed candidates to make the changes visible. But
+        keep the cursor position and cursor visibility status of the
+        old lookup table.
+
+        Available modes:
+
+            'next', 'previous', 'capitalize', 'title', 'upper', 'lower'
+
+        'title' does not seem very useful, so when using 'next' or
+        'previous', 'title' is skipped.
+
+        :return: True if something was done, False if not.
+        :rtype: Boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('⎆')
+        if mode not in (
+                'next',
+                'previous',
+                'orig',
+                'capitalize',
+                'title',
+                'upper',
+                'lower'):
+            return False
         if (self.is_empty()
             or not self._candidates
             or not self.get_lookup_table().get_number_of_candidates()):
-            return
+            return False
+        case_modes = {
+            'orig': {
+                'next': 'capitalize',
+                'previous': 'lower',
+                'function': lambda x: x},
+            'capitalize': {
+                'next': 'upper',
+                'previous': 'lower',
+                'function': getattr(str, 'capitalize')},
+            'title': {
+                'next': 'upper',
+                'previous': 'capitalize',
+                'function': getattr(str, 'title')},
+            'upper': {
+                'next': 'lower',
+                'previous': 'capitalize',
+                'function': getattr(str, 'upper')},
+            'lower': {
+                'next': 'capitalize',
+                'previous': 'upper',
+                'function': getattr(str, 'lower')},
+        }
+        if mode in ('next', 'previous'):
+            self._candidates_case_mode = case_modes[
+                self._candidates_case_mode][mode]
+        else:
+            self._candidates_case_mode = mode
+        case_mode_function = case_modes[
+            self._candidates_case_mode]['function']
         new_candidates = []
-        if self._candidates_case_mode in ('orig', 'lower'):
-            self._candidates_case_mode = 'title'
-        elif self._candidates_case_mode == 'title':
-            self._candidates_case_mode = 'upper'
-        elif self._candidates_case_mode == 'upper':
-            self._candidates_case_mode = 'lower'
         for cand in self._candidates:
             # Python’s title case has problems when the string is in NFD.
             # In that case something like this can happen:
@@ -2217,8 +2260,7 @@ class TypingBoosterEngine(IBus.Engine):
             # Therefore, make sure the case change is done after the string
             # is converted to NFC.
             new_candidates.append(
-                (getattr(str, self._candidates_case_mode)
-                 (unicodedata.normalize('NFC', cand[0])),
+                (case_mode_function(unicodedata.normalize('NFC', cand[0])),
                  cand[1], cand[2], cand[3], cand[4]))
         self._candidates = new_candidates
         cursor_visible = self.get_lookup_table().cursor_visible
@@ -2231,6 +2273,7 @@ class TypingBoosterEngine(IBus.Engine):
         self.get_lookup_table().set_cursor_pos(cursor_pos)
         self.get_lookup_table().set_cursor_visible(cursor_visible)
         self._update_lookup_table_and_aux()
+        return True
 
     def _has_transliteration(self, msymbol_list):
         '''Check whether the current input (list of msymbols) has a
@@ -4147,7 +4190,16 @@ class TypingBoosterEngine(IBus.Engine):
         :return: True if the key was completely handled, False if not.
         :rtype: Boolean
         '''
-        self._candidates_case_mode_change()
+        self._candidates_case_mode_change(mode='next')
+        return True
+
+    def _command_previous_case_mode(self):
+        '''Handle hotkey for the command “next_case_mode”
+
+        :return: True if the key was completely handled, False if not.
+        :rtype: Boolean
+        '''
+        self._candidates_case_mode_change(mode='previous')
         return True
 
     def _command_cancel(self):
