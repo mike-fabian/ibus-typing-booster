@@ -2043,6 +2043,22 @@ class SetupUI(Gtk.Window):
         '''
         Gtk.main_quit()
 
+    # pylint: disable=unused-argument
+    def _reload_dictionaries(self, value, update_gsettings=False):
+        '''(re)load all dictionaries
+
+        Called when a dictionary has been updated or installed.
+
+        :param value: ignored
+        :type value: doesn’t matter
+        :param update_gsettings: ignored
+        :type update_gsettings: Boolean
+        '''
+        LOGGER.info('A dictionary has been updated or installed.\n'
+                    'ibus-typing-booster will (re)load all dictionaries.\n'
+                    'But here in the setup tool there is nothing to do.')
+    # pylint: enable=unused-argument
+
     def on_gsettings_value_changed(self, _settings, key):
         '''
         Called when a value in the settings has been changed.
@@ -2054,148 +2070,56 @@ class SetupUI(Gtk.Window):
         '''
         value = itb_util.variant_to_value(self._gsettings.get_value(key))
         LOGGER.info('Settings changed: key=%s value=%s\n', key, value)
-
-        if key == 'qtimmoduleworkaround':
-            self.set_qt_im_module_workaround(value, update_gsettings=False)
-            return
-        if key == 'addspaceoncommit':
-            self.set_add_space_on_commit(value, update_gsettings=False)
-            return
-        if key == 'arrowkeysreopenpreedit':
-            self.set_arrow_keys_reopen_preedit(value, update_gsettings=False)
-            return
-        if key == 'emojipredictions':
-            self.set_emoji_prediction_mode(value, update_gsettings=False)
-            return
-        if key == 'offtherecord':
-            self.set_off_the_record_mode(value, update_gsettings=False)
-            return
-        if key == 'autocommitcharacters':
-            self.set_auto_commit_characters(value, update_gsettings=False)
-            return
-        if key == 'googleapplicationcredentials':
-            self.set_google_application_credentials(
-                value, update_gsettings=False)
-            return
-        if key == 'tabenable':
-            self.set_tab_enable(value, update_gsettings=False)
-            return
-        if key == 'inlinecompletion':
-            self.set_inline_completion(value, update_gsettings=False)
-            return
-        if key == 'rememberlastusedpreeditime':
-            self.set_remember_last_used_preedit_ime(
-                value, update_gsettings=False)
-            return
-        if key == 'pagesize':
-            self.set_page_size(value, update_gsettings=False)
-            return
-        if key == 'lookuptableorientation':
-            self.set_lookup_table_orientation(value, update_gsettings=False)
-            return
-        if key == 'preeditunderline':
-            self.set_preedit_underline(value, update_gsettings=False)
-            return
-        if key == 'preeditstyleonlywhenlookup':
-            self.set_preedit_style_only_when_lookup(
-                value, update_gsettings=False)
-            return
-        if key == 'mincharcomplete':
-            self.set_min_char_complete(value, update_gsettings=False)
-            return
-        if key == 'debuglevel':
-            self.set_debug_level(value, update_gsettings=False)
-            return
-        if key == 'shownumberofcandidates':
-            self.set_show_number_of_candidates(value, update_gsettings=False)
-            return
-        if key == 'showstatusinfoinaux':
-            self.set_show_status_info_in_auxiliary_text(
-                value, update_gsettings=False)
-            return
-        if key == 'autoselectcandidate':
-            self.set_auto_select_candidate(value, update_gsettings=False)
-            return
-        if key == 'colorpreeditspellcheck':
-            self.set_color_preedit_spellcheck(
-                value, update_gsettings=False)
-            return
-        if key == 'colorpreeditspellcheckstring':
-            self.set_color_preedit_spellcheck_string(
-                value, update_gsettings=False)
-            return
-        if key == 'colorinlinecompletion':
-            self.set_color_inline_completion(
-                value, update_gsettings=False)
-            return
-        if key == 'colorinlinecompletionstring':
-            self.set_color_inline_completion_string(
-                value, update_gsettings=False)
-            return
-        if key == 'coloruserdb':
-            self.set_color_userdb(
-                value, update_gsettings=False)
-            return
-        if key == 'coloruserdbstring':
-            self.set_color_userdb_string(
-                value, update_gsettings=False)
-            return
-        if key == 'colorspellcheck':
-            self.set_color_spellcheck(
-                value, update_gsettings=False)
-            return
-        if key == 'colorspellcheckstring':
-            self.set_color_spellcheck_string(
-                value, update_gsettings=False)
-            return
-        if key == 'colordictionary':
-            self.set_color_dictionary(
-                value, update_gsettings=False)
-            return
-        if key == 'colordictionarystring':
-            self.set_color_dictionary_string(
-                value, update_gsettings=False)
-            return
-        if key == 'labeluserdb':
-            self.set_label_userdb(value, update_gsettings=False)
-            return
-        if key == 'labeluserdbstring':
-            self.set_label_userdb_string(value, update_gsettings=False)
-            return
-        if key == 'labelspellcheck':
-            self.set_label_spellcheck(value, update_gsettings=False)
-            return
-        if key == 'labelspellcheckstring':
-            self.set_label_spellcheck_string(value, update_gsettings=False)
-            return
-        if key == 'labeldictionary':
-            self.set_label_dictionary(value, update_gsettings=False)
-            return
-        if key == 'labeldictionarystring':
-            self.set_label_dictionary_string(value, update_gsettings=False)
-            return
-        if key == 'labelbusy':
-            self.set_label_busy(value, update_gsettings=False)
-            return
-        if key == 'labelbusystring':
-            self.set_label_busy_string(value, update_gsettings=False)
-            return
-        if key == 'inputmethod':
-            self.set_current_imes(
-                [x.strip() for x in value.split(',')], update_gsettings=False)
-            return
-        if key == 'dictionary':
-            self.set_dictionary_names(
-                [x.strip() for x in value.split(',')], update_gsettings=False)
-            return
-        if key == 'keybindings':
-            self.set_keybindings(value, update_gsettings=False)
-            return
-        if key == 'dictionaryinstalltimestamp':
-            # A dictionary has been updated or installed,
-            # the ibus-typing-booster will (re)load all dictionaries,
-            # but here in the setup tool there is nothing to do.
-            LOGGER.info('A dictionary has been updated or installed.')
+        set_functions = {
+            'qtimmoduleworkaround': self.set_qt_im_module_workaround,
+            'addspaceoncommit': self.set_add_space_on_commit,
+            'arrowkeysreopenpreedit': self.set_arrow_keys_reopen_preedit,
+            'emojipredictions': self.set_emoji_prediction_mode,
+            'offtherecord': self.set_off_the_record_mode,
+            'autocommitcharacters': self.set_auto_commit_characters,
+            'googleapplicationcredentials':
+            self.set_google_application_credentials,
+            'tabenable': self.set_tab_enable,
+            'inlinecompletion': self.set_inline_completion,
+            'rememberlastusedpreeditime':
+            self.set_remember_last_used_preedit_ime,
+            'pagesize': self.set_page_size,
+            'lookuptableorientation': self.set_lookup_table_orientation,
+            'preeditunderline': self.set_preedit_underline,
+            'preeditstyleonlywhenlookup':
+            self.set_preedit_style_only_when_lookup,
+            'mincharcomplete': self.set_min_char_complete,
+            'debuglevel': self.set_debug_level,
+            'shownumberofcandidates': self.set_show_number_of_candidates,
+            'showstatusinfoinaux': self.set_show_status_info_in_auxiliary_text,
+            'autoselectcandidate': self.set_auto_select_candidate,
+            'colorpreeditspellcheck': self.set_color_preedit_spellcheck,
+            'colorpreeditspellcheckstring':
+            self.set_color_preedit_spellcheck_string,
+            'colorinlinecompletion': self.set_color_inline_completion,
+            'colorinlinecompletionstring':
+            self.set_color_inline_completion_string,
+            'coloruserdb': self.set_color_userdb,
+            'coloruserdbstring': self.set_color_userdb_string,
+            'colorspellcheck': self.set_color_spellcheck,
+            'colorspellcheckstring': self.set_color_spellcheck_string,
+            'colordictionary': self.set_color_dictionary,
+            'colordictionarystring': self.set_color_dictionary_string,
+            'labeluserdb': self.set_label_userdb,
+            'labeluserdbstring': self.set_label_userdb_string,
+            'labelspellcheck': self.set_label_spellcheck,
+            'labelspellcheckstring': self.set_label_spellcheck_string,
+            'labeldictionary': self.set_label_dictionary,
+            'labeldictionarystring': self.set_label_dictionary_string,
+            'labelbusy': self.set_label_busy,
+            'labelbusystring': self.set_label_busy_string,
+            'inputmethod': self.set_current_imes,
+            'dictionary': self.set_dictionary_names,
+            'keybindings': self.set_keybindings,
+            'dictionaryinstalltimestamp': self._reload_dictionaries,
+        }
+        if key in set_functions:
+            set_functions[key](value, update_gsettings=False)
             return
         LOGGER.error('Unknown key\n')
         return
@@ -4528,7 +4452,9 @@ class SetupUI(Gtk.Window):
         '''Set current list of input methods
 
         :param imes: List of input methods
-        :type imes: List of strings
+        :type imes: List of strings or string
+                    If a single string is used, it should contain
+                    the names of the input methods separated by commas.
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
@@ -4536,6 +4462,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
+        if isinstance(imes, str):
+            imes = [x.strip() for x in imes.split(',')]
         imes = [re.sub(re.escape('noime'), 'NoIME', x.strip(),
                        flags=re.IGNORECASE)
                 for x in imes if x]
@@ -4570,7 +4498,10 @@ class SetupUI(Gtk.Window):
         '''Set current dictionary names
 
         :param dictionary_names: List of names of dictionaries to use
-        :type dictionary_names: List of strings
+        :type dictionary_names: List of strings or string
+                                If a single string is used, it should contain
+                                the names of the dictionaries separated
+                                by commas.
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
@@ -4578,6 +4509,8 @@ class SetupUI(Gtk.Window):
                                  key is changed twice in a short time.
         :type update_gsettings: boolean
         '''
+        if isinstance(dictionary_names, str):
+            dictionary_names = [x.strip() for x in dictionary_names.split(',')]
         dictionary_names = [x for x in dictionary_names if x]
         if dictionary_names == self._dictionary_names: # nothing to do
             return
