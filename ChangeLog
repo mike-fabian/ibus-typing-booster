@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 04 Sep 2020 Released 2.9.7
+* Add commands “next_case_mode” and “previous_case_mode” with configurable key bindings
+* Better hot key handling for modifier keys like Shift_L, …
+* Use labels 1, 2, 3, … for the lookup table instead of 1., 2., 3., …
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 27 Aug 2020 Released 2.9.6
 * Make translations of 'Edit key bindings for command “%s”' work
 * Don't hide emoji-picker.desktop from AppStream (by Gunnar Hjalmarsson)

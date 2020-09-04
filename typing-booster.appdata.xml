@@ -19,6 +19,27 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.9.7" date="2020-09-04" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.9.7</url>
+      <issues>
+        <issue>
+          Add commands “next_case_mode” and “previous_case_mode” with
+          configurable key bindings
+        </issue>
+        <issue>
+          Better hot key handling for modifier keys like Shift_L, …
+        </issue>
+        <issue>
+          Use labels 1, 2, 3, … for the lookup table instead of 1., 2., 3., …
+        </issue>
+        <issue>
+          Update emoji annotations from CLDR
+        </issue>
+      </issues>
+    </release>
     <release version="2.9.6" date="2020-08-27" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
