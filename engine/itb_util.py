@@ -1414,6 +1414,7 @@ CLDR_ANNOTATION_FILES = {
     'wae_CH',
     'wo',
     'wo_SN',
+    'xh',
     'xog',
     'xog_UG',
     'yav',

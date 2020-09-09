@@ -462,6 +462,86 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👱🏾" type="tts">mtu mwenye nywele za shaba: ngozi nyeusi kiasi</annotation>
 		<annotation cp="👱🏿">mtu mwenye nywele ya shaba | mtu mwenye nywele za shaba | mtu: nywele ya shaba | ngozi nyeusi | nywele | rangi ya shaba</annotation>
 		<annotation cp="👱🏿" type="tts">mtu mwenye nywele za shaba: ngozi nyeusi</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏼">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeupe | ngozi nyeupe kiasi</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏼" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeupe na ngozi nyeupe kiasi</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏽">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeupe | ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏽" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeupe na ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏾">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeupe | ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏾" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeupe na ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏿">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeupe | ngozi nyeusi</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏿" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeupe na ngozi nyeusi</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏻">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeupe | ngozi nyeupe kiasi</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏻" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeupe kiasi na ngozi nyeupe</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏽">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeupe kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏽" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeupe kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏾">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeupe kiasi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏾" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeupe kiasi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏿">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeupe kiasi | ngozi nyeusi</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏿" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeupe kiasi na ngozi nyeusi</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏻">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeupe | ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏻" type="tts">busu: mtu mzima, mtu mzima, ngozi ya kahawia na ngozi nyeupe</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏼">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeupe kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏼" type="tts">busu: mtu mzima, mtu mzima, ngozi ya kahawia na ngozi nyeupe kiasi</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏾">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeusi kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏾" type="tts">busu: mtu mzima, mtu mzima, ngozi ya kahawia na ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏿">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeusi | ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏿" type="tts">busu: mtu mzima, mtu mzima, ngozi ya kahawia na ngozi nyeusi</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏻">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeupe | ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏻" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeusi kiasi na ngozi nyeupe</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏼">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeupe kiasi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏼" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeusi kiasi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏽">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeusi kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏽" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeusi kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏿">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeusi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏿" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeusi kiasi na ngozi nyeusi</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏻">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeupe | ngozi nyeusi</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏻" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeusi na ngozi nyeupe</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏼">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeupe kiasi | ngozi nyeusi</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏼" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeusi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏽">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeusi | ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏽" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeusi na ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏾">busu | mapenzi | mtu mzima | mume na mke | ngozi nyeusi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏾" type="tts">busu: mtu mzima, mtu mzima, ngozi nyeusi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏼">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeupe | ngozi nyeupe kiasi | upendo</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏼" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeupe na ngozi nyeupe kiasi</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏽">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeupe | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏽" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeupe na ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏾">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeupe | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏾" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeupe na ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏿">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeupe | ngozi nyeusi | upendo</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏿" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeupe na ngozi nyeusi</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏻">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeupe | ngozi nyeupe kiasi | upendo</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏻" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeupe kiasi na ngozi nyeupe</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏽">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeupe kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏽" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeupe kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏾">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeupe kiasi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏾" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeupe kiasi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏿">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeupe kiasi | ngozi nyeusi | upendo</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏿" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeupe kiasi na ngozi nyeusi</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏻">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeupe | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏻" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi ya kahawia na ngozi nyeupe</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏼">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeupe kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏼" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi ya kahawia na ngozi nyeupe kiasi</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏾">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeusi kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏾" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi ya kahawia na ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏿">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeusi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏿" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi ya kahawia na ngozi nyeusi</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏻">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeupe | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏻" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeusi kiasi na ngozi nyeupe</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏼">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeupe kiasi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏼" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeusi kiasi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏽">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeusi kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏽" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeusi kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏿">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeusi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏿" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeusi kiasi na ngozi nyeusi</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏻">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeupe | ngozi nyeusi | upendo</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏻" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeusi na ngozi nyeupe</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏼">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeupe kiasi | ngozi nyeusi | upendo</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏼" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeusi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏽">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeusi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏽" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeusi na ngozi ya kahawia</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏾">mapenzi | moyo | mtu mzima | mume na mke | mume na mke na ishara ya moyo | ngozi nyeusi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏾" type="tts">mume na mke na ishara ya moyo: mtu mzima, mtu mzima, ngozi nyeusi na ngozi nyeusi kiasi</annotation>
 		<annotation cp="🧑‍🦰">asiyejitambulisha na jinsia yoyote | mtu mzima | nywele nyekundu</annotation>
 		<annotation cp="🧑‍🦰" type="tts">mtu mzima: nywele nyekundu</annotation>
 		<annotation cp="🧑🏻‍🦰">asiyejitambulisha na jinsia yoyote | mtu mzima | ngozi nyeupe | nywele nyekundu</annotation>
@@ -530,6 +610,16 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🧔🏾" type="tts">mtu mwenye ndevu: ngozi nyeusi kiasi</annotation>
 		<annotation cp="🧔🏿">mtu | mtu mwenye ndevu | mtu: ndevu | ndevu | ngozi nyeusi</annotation>
 		<annotation cp="🧔🏿" type="tts">mtu mwenye ndevu: ngozi nyeusi</annotation>
+		<annotation cp="🧔🏻‍♂">mwanamume | mwanamume: ndevu | ndevu | ngozi nyeupe</annotation>
+		<annotation cp="🧔🏻‍♂" type="tts">mwanamume: ngozi nyeupe na ndevu</annotation>
+		<annotation cp="🧔🏼‍♂">mwanamume | mwanamume: ndevu | ndevu | ngozi nyeupe kiasi</annotation>
+		<annotation cp="🧔🏼‍♂" type="tts">mwanamume: ngozi nyeupe kiasi na ndevu</annotation>
+		<annotation cp="🧔🏽‍♂">mwanamume | mwanamume: ndevu | ndevu | ngozi ya kahawia</annotation>
+		<annotation cp="🧔🏽‍♂" type="tts">mwanamume: ngozi ya kahawia na ndevu</annotation>
+		<annotation cp="🧔🏾‍♂">mwanamume | mwanamume: ndevu | ndevu | ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧔🏾‍♂" type="tts">mwanamume: ngozi nyeusi kiasi na ndevu</annotation>
+		<annotation cp="🧔🏿‍♂">mwanamume | mwanamume: ndevu | ndevu | ngozi nyeusi</annotation>
+		<annotation cp="🧔🏿‍♂" type="tts">mwanamume: ngozi nyeusi na ndevu</annotation>
 		<annotation cp="👱🏻‍♂">manjano | mwanamume | mwanamume mwenye nywele ya kimanjano | ngozi nyeupe | nywele</annotation>
 		<annotation cp="👱🏻‍♂" type="tts">mwanamume mwenye nywele ya kimanjano: ngozi nyeupe</annotation>
 		<annotation cp="👱🏼‍♂">manjano | mwanamume | mwanamume mwenye nywele ya kimanjano | ngozi nyeupe kiasi | nywele</annotation>
@@ -540,6 +630,106 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👱🏾‍♂" type="tts">mwanamume mwenye nywele ya kimanjano: ngozi nyeusi kiasi</annotation>
 		<annotation cp="👱🏿‍♂">manjano | mwanamume | mwanamume mwenye nywele ya kimanjano | ngozi nyeusi | nywele</annotation>
 		<annotation cp="👱🏿‍♂" type="tts">mwanamume mwenye nywele ya kimanjano: ngozi nyeusi</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏻">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏻" type="tts">busu: mwanamume, mwanamume na ngozi nyeupe</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏼">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe | ngozi nyeupe kiasi</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏼" type="tts">busu: mwanamume, mwanamume, ngozi nyeupe na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏽">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe | ngozi ya kahawia</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏽" type="tts">busu: mwanamume, mwanamume, ngozi nyeupe na ngozi ya kahawia</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏾">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏾" type="tts">busu: mwanamume, mwanamume, ngozi nyeupe na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏿">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe | ngozi nyeusi</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏿" type="tts">busu: mwanamume, mwanamume, ngozi nyeupe na ngozi nyeusi</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏻">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe | ngozi nyeupe kiasi</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏻" type="tts">busu: mwanamume, mwanamume, ngozi nyeupe kiasi na ngozi nyeupe</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏼">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe kiasi</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏼" type="tts">busu: mwanamume, mwanamume na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏽">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏽" type="tts">busu: mwanamume, mwanamume, ngozi nyeupe kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏾">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏾" type="tts">busu: mwanamume, mwanamume, ngozi nyeupe kiasi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏿">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏿" type="tts">busu: mwanamume, mwanamume, ngozi nyeupe kiasi na ngozi nyeusi</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏻">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe | ngozi ya kahawia</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏻" type="tts">busu: mwanamume, mwanamume, ngozi ya kahawia na ngozi nyeupe</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏼">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏼" type="tts">busu: mwanamume, mwanamume, ngozi ya kahawia na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏽">busu | mapenzi | mume na mke | mwanamume | ngozi ya kahawia</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏽" type="tts">busu: mwanamume, mwanamume na ngozi ya kahawia</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏾">busu | mapenzi | mume na mke | mwanamume | ngozi nyeusi kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏾" type="tts">busu: mwanamume, mwanamume, ngozi ya kahawia na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏿">busu | mapenzi | mume na mke | mwanamume | ngozi nyeusi | ngozi ya kahawia</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏿" type="tts">busu: mwanamume, mwanamume, ngozi ya kahawia na ngozi nyeusi</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏻">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏻" type="tts">busu: mwanamume, mwanamume, ngozi nyeusi kiasi na ngozi nyeupe</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏼">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏼" type="tts">busu: mwanamume, mwanamume, ngozi nyeusi kiasi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏽">busu | mapenzi | mume na mke | mwanamume | ngozi nyeusi kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏽" type="tts">busu: mwanamume, mwanamume, ngozi nyeusi kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏾">busu | mapenzi | mume na mke | mwanamume | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏾" type="tts">busu: mwanamume, mwanamume na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏿">busu | mapenzi | mume na mke | mwanamume | ngozi nyeusi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏿" type="tts">busu: mwanamume, mwanamume, ngozi nyeusi kiasi na ngozi nyeusi</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏻">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe | ngozi nyeusi</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏻" type="tts">busu: mwanamume, mwanamume, ngozi nyeusi na ngozi nyeupe</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏼">busu | mapenzi | mume na mke | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏼" type="tts">busu: mwanamume, mwanamume, ngozi nyeusi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏽">busu | mapenzi | mume na mke | mwanamume | ngozi nyeusi | ngozi ya kahawia</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏽" type="tts">busu: mwanamume, mwanamume, ngozi nyeusi na ngozi ya kahawia</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏾">busu | mapenzi | mume na mke | mwanamume | ngozi nyeusi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏾" type="tts">busu: mwanamume, mwanamume, ngozi nyeusi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏿">busu | mapenzi | mume na mke | mwanamume | ngozi nyeusi</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏿" type="tts">busu: mwanamume, mwanamume na ngozi nyeusi</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe | upendo</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏻" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume na ngozi nyeupe</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe | ngozi nyeupe kiasi | upendo</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏼" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeupe na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏽" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeupe na ngozi ya kahawia</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏾" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeupe na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏿" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeupe na ngozi nyeusi</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe | ngozi nyeupe kiasi | upendo</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏻" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeupe kiasi na ngozi nyeupe</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe kiasi | upendo</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏼" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏽" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeupe kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏾" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeupe kiasi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏿" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeupe kiasi na ngozi nyeusi</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏻" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi ya kahawia na ngozi nyeupe</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏼" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi ya kahawia na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏽" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume na ngozi ya kahawia</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeusi kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏾" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi ya kahawia na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeusi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏿" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi ya kahawia na ngozi nyeusi</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏻" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeusi kiasi na ngozi nyeupe</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏼" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeusi kiasi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeusi kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏽" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeusi kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏾" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeusi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏿" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeusi kiasi na ngozi nyeusi</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏻" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeusi na ngozi nyeupe</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏼" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeusi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeusi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏽" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeusi na ngozi ya kahawia</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeusi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏾" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume, ngozi nyeusi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamume | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏿" type="tts">mume na mke na ishara ya moyo: mwanamume, mwanamume na ngozi nyeusi</annotation>
 		<annotation cp="👨‍🦰">mtu mzima | mwanamume | nywele nyekundu</annotation>
 		<annotation cp="👨‍🦰" type="tts">mwanamume: nywele nyekundu</annotation>
 		<annotation cp="👨🏻‍🦰">mtu mzima | mwanamume | ngozi nyeupe | nywele nyekundu</annotation>
@@ -588,26 +778,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👨🏾‍🦲" type="tts">mwanamume: ngozi nyeusi kiasi na upara</annotation>
 		<annotation cp="👨🏿‍🦲">mtu mzima | mwanamume | ngozi nyeusi | upara</annotation>
 		<annotation cp="👨🏿‍🦲" type="tts">mwanamume: ngozi nyeusi na upara</annotation>
-		<annotation cp="🧔🏻‍♀">mwanamke | mwanamke: ndevu | ndevu | ngozi nyeupe</annotation>
-		<annotation cp="🧔🏻‍♀" type="tts">mwanamke: ngozi nyeupe na ndevu</annotation>
-		<annotation cp="🧔🏼‍♀">mwanamke | mwanamke: ndevu | ndevu | ngozi nyeupe kiasi</annotation>
-		<annotation cp="🧔🏼‍♀" type="tts">mwanamke: ngozi nyeupe kiasi na ndevu</annotation>
-		<annotation cp="🧔🏽‍♀">mwanamke | mwanamke: ndevu | ndevu | ngozi ya kahawia</annotation>
-		<annotation cp="🧔🏽‍♀" type="tts">mwanamke: ngozi ya kahawia na ndevu</annotation>
-		<annotation cp="🧔🏾‍♀">mwanamke | mwanamke: ndevu | ndevu | ngozi nyeusi kiasi</annotation>
-		<annotation cp="🧔🏾‍♀" type="tts">mwanamke: ngozi nyeusi kiasi na ndevu</annotation>
-		<annotation cp="🧔🏿‍♀">mwanamke | mwanamke: ndevu | ndevu | ngozi nyeusi</annotation>
-		<annotation cp="🧔🏿‍♀" type="tts">mwanamke: ngozi nyeusi na ndevu</annotation>
-		<annotation cp="🧔🏻‍♂">mwanamume | mwanamume: ndevu | ndevu | ngozi nyeupe</annotation>
-		<annotation cp="🧔🏻‍♂" type="tts">mwanamume: ngozi nyeupe na ndevu</annotation>
-		<annotation cp="🧔🏼‍♂">mwanamume | mwanamume: ndevu | ndevu | ngozi nyeupe kiasi</annotation>
-		<annotation cp="🧔🏼‍♂" type="tts">mwanamume: ngozi nyeupe kiasi na ndevu</annotation>
-		<annotation cp="🧔🏽‍♂">mwanamume | mwanamume: ndevu | ndevu | ngozi ya kahawia</annotation>
-		<annotation cp="🧔🏽‍♂" type="tts">mwanamume: ngozi ya kahawia na ndevu</annotation>
-		<annotation cp="🧔🏾‍♂">mwanamume | mwanamume: ndevu | ndevu | ngozi nyeusi kiasi</annotation>
-		<annotation cp="🧔🏾‍♂" type="tts">mwanamume: ngozi nyeusi kiasi na ndevu</annotation>
-		<annotation cp="🧔🏿‍♂">mwanamume | mwanamume: ndevu | ndevu | ngozi nyeusi</annotation>
-		<annotation cp="🧔🏿‍♂" type="tts">mwanamume: ngozi nyeusi na ndevu</annotation>
 		<annotation cp="👩🏻">msichana | mwanamke | ngozi nyeupe</annotation>
 		<annotation cp="👩🏻" type="tts">mwanamke: ngozi nyeupe</annotation>
 		<annotation cp="👩🏼">msichana | mwanamke | ngozi nyeupe kiasi</annotation>
@@ -618,6 +788,16 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👩🏾" type="tts">mwanamke: ngozi nyeusi kiasi</annotation>
 		<annotation cp="👩🏿">msichana | mwanamke | ngozi nyeusi</annotation>
 		<annotation cp="👩🏿" type="tts">mwanamke: ngozi nyeusi</annotation>
+		<annotation cp="🧔🏻‍♀">mwanamke | mwanamke: ndevu | ndevu | ngozi nyeupe</annotation>
+		<annotation cp="🧔🏻‍♀" type="tts">mwanamke: ngozi nyeupe na ndevu</annotation>
+		<annotation cp="🧔🏼‍♀">mwanamke | mwanamke: ndevu | ndevu | ngozi nyeupe kiasi</annotation>
+		<annotation cp="🧔🏼‍♀" type="tts">mwanamke: ngozi nyeupe kiasi na ndevu</annotation>
+		<annotation cp="🧔🏽‍♀">mwanamke | mwanamke: ndevu | ndevu | ngozi ya kahawia</annotation>
+		<annotation cp="🧔🏽‍♀" type="tts">mwanamke: ngozi ya kahawia na ndevu</annotation>
+		<annotation cp="🧔🏾‍♀">mwanamke | mwanamke: ndevu | ndevu | ngozi nyeusi kiasi</annotation>
+		<annotation cp="🧔🏾‍♀" type="tts">mwanamke: ngozi nyeusi kiasi na ndevu</annotation>
+		<annotation cp="🧔🏿‍♀">mwanamke | mwanamke: ndevu | ndevu | ngozi nyeusi</annotation>
+		<annotation cp="🧔🏿‍♀" type="tts">mwanamke: ngozi nyeusi na ndevu</annotation>
 		<annotation cp="👱🏻‍♀">manjano | mwanamke | mwanamke mwenye nywele ya kimanjano | ngozi nyeupe | nywele</annotation>
 		<annotation cp="👱🏻‍♀" type="tts">mwanamke mwenye nywele ya kimanjano: ngozi nyeupe</annotation>
 		<annotation cp="👱🏼‍♀">manjano | mwanamke | mwanamke mwenye nywele ya kimanjano | ngozi nyeupe kiasi | nywele</annotation>
@@ -628,6 +808,206 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👱🏾‍♀" type="tts">mwanamke mwenye nywele ya kimanjano: ngozi nyeusi kiasi</annotation>
 		<annotation cp="👱🏿‍♀">manjano | mwanamke | mwanamke mwenye nywele ya kimanjano | ngozi nyeusi | nywele</annotation>
 		<annotation cp="👱🏿‍♀" type="tts">mwanamke mwenye nywele ya kimanjano: ngozi nyeusi</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏻">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏻" type="tts">busu: mwanamke, mwanamume na ngozi nyeupe</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏼">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe | ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏼" type="tts">busu: mwanamke, mwanamume, ngozi nyeupe na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏽">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏽" type="tts">busu: mwanamke, mwanamume, ngozi nyeupe na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏾">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏾" type="tts">busu: mwanamke, mwanamume, ngozi nyeupe na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏿">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe | ngozi nyeusi</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏿" type="tts">busu: mwanamke, mwanamume, ngozi nyeupe na ngozi nyeusi</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏻">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe | ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏻" type="tts">busu: mwanamke, mwanamume, ngozi nyeupe kiasi na ngozi nyeupe</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏼">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏼" type="tts">busu: mwanamke, mwanamume na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏽">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏽" type="tts">busu: mwanamke, mwanamume, ngozi nyeupe kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏾">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏾" type="tts">busu: mwanamke, mwanamume, ngozi nyeupe kiasi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏿">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏿" type="tts">busu: mwanamke, mwanamume, ngozi nyeupe kiasi na ngozi nyeusi</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏻">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏻" type="tts">busu: mwanamke, mwanamume, ngozi ya kahawia na ngozi nyeupe</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏼">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏼" type="tts">busu: mwanamke, mwanamume, ngozi ya kahawia na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏽">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏽" type="tts">busu: mwanamke, mwanamume na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏾">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeusi kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏾" type="tts">busu: mwanamke, mwanamume, ngozi ya kahawia na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏿">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeusi | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏿" type="tts">busu: mwanamke, mwanamume, ngozi ya kahawia na ngozi nyeusi</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏻">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏻" type="tts">busu: mwanamke, mwanamume, ngozi nyeusi kiasi na ngozi nyeupe</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏼">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏼" type="tts">busu: mwanamke, mwanamume, ngozi nyeusi kiasi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏽">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeusi kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏽" type="tts">busu: mwanamke, mwanamume, ngozi nyeusi kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏾">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏾" type="tts">busu: mwanamke, mwanamume na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏿">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeusi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏿" type="tts">busu: mwanamke, mwanamume, ngozi nyeusi kiasi na ngozi nyeusi</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏻">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe | ngozi nyeusi</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏻" type="tts">busu: mwanamke, mwanamume, ngozi nyeusi na ngozi nyeupe</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏼">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏼" type="tts">busu: mwanamke, mwanamume, ngozi nyeusi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏽">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeusi | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏽" type="tts">busu: mwanamke, mwanamume, ngozi nyeusi na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏾">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeusi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏾" type="tts">busu: mwanamke, mwanamume, ngozi nyeusi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏿">busu | mapenzi | mume na mke | mwanamke | mwanamume | ngozi nyeusi</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏿" type="tts">busu: mwanamke, mwanamume na ngozi nyeusi</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏻">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏻" type="tts">busu: mwanamke, mwanamke na ngozi nyeupe</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏼">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe | ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏼" type="tts">busu: mwanamke, mwanamke, ngozi nyeupe na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏽">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏽" type="tts">busu: mwanamke, mwanamke, ngozi nyeupe na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏾">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏾" type="tts">busu: mwanamke, mwanamke, ngozi nyeupe na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏿">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe | ngozi nyeusi</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏿" type="tts">busu: mwanamke, mwanamke, ngozi nyeupe na ngozi nyeusi</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏻">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe | ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏻" type="tts">busu: mwanamke, mwanamke, ngozi nyeupe kiasi na ngozi nyeupe</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏼">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏼" type="tts">busu: mwanamke, mwanamke na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏽">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏽" type="tts">busu: mwanamke, mwanamke, ngozi nyeupe kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏾">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe kiasi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏾" type="tts">busu: mwanamke, mwanamke, ngozi nyeupe kiasi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏿">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe kiasi | ngozi nyeusi</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏿" type="tts">busu: mwanamke, mwanamke, ngozi nyeupe kiasi na ngozi nyeusi</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏻">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏻" type="tts">busu: mwanamke, mwanamke, ngozi ya kahawia na ngozi nyeupe</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏼">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏼" type="tts">busu: mwanamke, mwanamke, ngozi ya kahawia na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏽">busu | mapenzi | mume na mke | mwanamke | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏽" type="tts">busu: mwanamke, mwanamke na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏾">busu | mapenzi | mume na mke | mwanamke | ngozi nyeusi kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏾" type="tts">busu: mwanamke, mwanamke, ngozi ya kahawia na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏿">busu | mapenzi | mume na mke | mwanamke | ngozi nyeusi | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏿" type="tts">busu: mwanamke, mwanamke, ngozi ya kahawia na ngozi nyeusi</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏻">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏻" type="tts">busu: mwanamke, mwanamke, ngozi nyeusi kiasi na ngozi nyeupe</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏼">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe kiasi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏼" type="tts">busu: mwanamke, mwanamke, ngozi nyeusi kiasi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏽">busu | mapenzi | mume na mke | mwanamke | ngozi nyeusi kiasi | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏽" type="tts">busu: mwanamke, mwanamke, ngozi nyeusi kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏾">busu | mapenzi | mume na mke | mwanamke | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏾" type="tts">busu: mwanamke, mwanamke na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏿">busu | mapenzi | mume na mke | mwanamke | ngozi nyeusi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏿" type="tts">busu: mwanamke, mwanamke, ngozi nyeusi kiasi na ngozi nyeusi</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏻">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe | ngozi nyeusi</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏻" type="tts">busu: mwanamke, mwanamke, ngozi nyeusi na ngozi nyeupe</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏼">busu | mapenzi | mume na mke | mwanamke | ngozi nyeupe kiasi | ngozi nyeusi</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏼" type="tts">busu: mwanamke, mwanamke, ngozi nyeusi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏽">busu | mapenzi | mume na mke | mwanamke | ngozi nyeusi | ngozi ya kahawia</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏽" type="tts">busu: mwanamke, mwanamke, ngozi nyeusi na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏾">busu | mapenzi | mume na mke | mwanamke | ngozi nyeusi | ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏾" type="tts">busu: mwanamke, mwanamke, ngozi nyeusi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏿">busu | mapenzi | mume na mke | mwanamke | ngozi nyeusi</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏿" type="tts">busu: mwanamke, mwanamke na ngozi nyeusi</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe | upendo</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏻" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume na ngozi nyeupe</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe | ngozi nyeupe kiasi | upendo</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏼" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeupe na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏽" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeupe na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏾" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeupe na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏿" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeupe na ngozi nyeusi</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe | ngozi nyeupe kiasi | upendo</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏻" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeupe kiasi na ngozi nyeupe</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe kiasi | upendo</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏼" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏽" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeupe kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏾" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeupe kiasi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏿" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeupe kiasi na ngozi nyeusi</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏻" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi ya kahawia na ngozi nyeupe</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏼" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi ya kahawia na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏽" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeusi kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏾" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi ya kahawia na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeusi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏿" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi ya kahawia na ngozi nyeusi</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏻" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeusi kiasi na ngozi nyeupe</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏼" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeusi kiasi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeusi kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏽" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeusi kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏾" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeusi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏿" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeusi kiasi na ngozi nyeusi</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏻" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeusi na ngozi nyeupe</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeupe kiasi | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏼" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeusi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeusi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏽" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeusi na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeusi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏾" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume, ngozi nyeusi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | mwanamume | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏿" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamume na ngozi nyeusi</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe | upendo</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏻" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke na ngozi nyeupe</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe | ngozi nyeupe kiasi | upendo</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏼" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeupe na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏽" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeupe na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏾" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeupe na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏿" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeupe na ngozi nyeusi</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe | ngozi nyeupe kiasi | upendo</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏻" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeupe kiasi na ngozi nyeupe</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe kiasi | upendo</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏼" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏽" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeupe kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe kiasi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏾" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeupe kiasi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe kiasi | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏿" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeupe kiasi na ngozi nyeusi</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏻" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi ya kahawia na ngozi nyeupe</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏼" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi ya kahawia na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏽" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeusi kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏾" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi ya kahawia na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeusi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏿" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi ya kahawia na ngozi nyeusi</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏻" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeusi kiasi na ngozi nyeupe</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe kiasi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏼" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeusi kiasi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeusi kiasi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏽" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeusi kiasi na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏾" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeusi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏿" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeusi kiasi na ngozi nyeusi</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏻">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏻" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeusi na ngozi nyeupe</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏼">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeupe kiasi | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏼" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeusi na ngozi nyeupe kiasi</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏽">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeusi | ngozi ya kahawia | upendo</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏽" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeusi na ngozi ya kahawia</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏾">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeusi | ngozi nyeusi kiasi | upendo</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏾" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke, ngozi nyeusi na ngozi nyeusi kiasi</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏿">mapenzi | moyo | mume na mke | mume na mke na ishara ya moyo | mwanamke | ngozi nyeusi | upendo</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏿" type="tts">mume na mke na ishara ya moyo: mwanamke, mwanamke na ngozi nyeusi</annotation>
 		<annotation cp="👩‍🦰">msichana | mwanamke | nywele nyekundu</annotation>
 		<annotation cp="👩‍🦰" type="tts">mwanamke: nywele nyekundu</annotation>
 		<annotation cp="👩🏻‍🦰">msichana | mwanamke | ngozi nyeupe | nywele nyekundu</annotation>
@@ -3626,6 +4006,25 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🏴󠁧󠁢󠁳󠁣󠁴󠁿" type="tts">bendera: Uskoti</annotation>
 		<annotation cp="🏴󠁧󠁢󠁷󠁬󠁳󠁿">bendera</annotation>
 		<annotation cp="🏴󠁧󠁢󠁷󠁬󠁳󠁿" type="tts">bendera: Welisi</annotation>
+		<annotation cp="¤" type="tts">Sarafu isiyojulikana</annotation>
+		<annotation cp="֏" type="tts">Dram ya Armenia</annotation>
+		<annotation cp="؋" type="tts">Afghani ya Afghanistan</annotation>
+		<annotation cp="৳" type="tts">Taka ya Bangladesh</annotation>
+		<annotation cp="฿" type="tts">Baht ya Tailandi</annotation>
+		<annotation cp="៛" type="tts">Riel ya Kambodia</annotation>
+		<annotation cp="₡" type="tts">Colon ya Kostarika</annotation>
+		<annotation cp="₦" type="tts">Naira ya Nigeria</annotation>
+		<annotation cp="₪" type="tts">Shekeli Mpya ya Israel</annotation>
+		<annotation cp="₫" type="tts">Dong ya Vietnam</annotation>
+		<annotation cp="₭" type="tts">Kip ya Laosi</annotation>
+		<annotation cp="₮" type="tts">Tugrik ya Mongolia</annotation>
+		<annotation cp="₲" type="tts">Guarani ya Paragwai</annotation>
+		<annotation cp="₴" type="tts">Hryvnia ya Ukraine</annotation>
+		<annotation cp="₵" type="tts">Cedi ya Ghana</annotation>
+		<annotation cp="₸" type="tts">Tenge ya Kazakhstan</annotation>
+		<annotation cp="₺" type="tts">Lira ya Uturuki</annotation>
+		<annotation cp="₼" type="tts">Manat ya Azerbaijan</annotation>
+		<annotation cp="₾" type="tts">Lari ya Jojia</annotation>
 		<annotation cp="0⃣">kitufe</annotation>
 		<annotation cp="0⃣" type="tts">kitufe: 0</annotation>
 		<annotation cp="1⃣">kitufe</annotation>

@@ -462,6 +462,86 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👱🏾" type="tts">Person: hudtype 5, blond</annotation>
 		<annotation cp="👱🏿">blond | blond person | hår | hudtype 6 | menneske | Person: blond</annotation>
 		<annotation cp="👱🏿" type="tts">Person: hudtype 6, blond</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏼">hudtype 1–2 | hudtype 3 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏼" type="tts">kyss: vaksen, vaksen, hudtype 1–2, hudtype 3</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏽">hudtype 1–2 | hudtype 4 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏽" type="tts">kyss: vaksen, vaksen, hudtype 1–2, hudtype 4</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏾">hudtype 1–2 | hudtype 5 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏾" type="tts">kyss: vaksen, vaksen, hudtype 1–2, hudtype 5</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏿">hudtype 1–2 | hudtype 6 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏿" type="tts">kyss: vaksen, vaksen, hudtype 1–2, hudtype 6</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏻">hudtype 1–2 | hudtype 3 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏻" type="tts">kyss: vaksen, vaksen, hudtype 3, hudtype 1–2</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏽">hudtype 3 | hudtype 4 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏽" type="tts">kyss: vaksen, vaksen, hudtype 3, hudtype 4</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏾">hudtype 3 | hudtype 5 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏾" type="tts">kyss: vaksen, vaksen, hudtype 3, hudtype 5</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏿">hudtype 3 | hudtype 6 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏿" type="tts">kyss: vaksen, vaksen, hudtype 3, hudtype 6</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏻">hudtype 1–2 | hudtype 4 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏻" type="tts">kyss: vaksen, vaksen, hudtype 4, hudtype 1–2</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏼">hudtype 3 | hudtype 4 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏼" type="tts">kyss: vaksen, vaksen, hudtype 4, hudtype 3</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏾">hudtype 4 | hudtype 5 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏾" type="tts">kyss: vaksen, vaksen, hudtype 4, hudtype 5</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏿">hudtype 4 | hudtype 6 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏿" type="tts">kyss: vaksen, vaksen, hudtype 4, hudtype 6</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏻">hudtype 1–2 | hudtype 5 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏻" type="tts">kyss: vaksen, vaksen, hudtype 5, hudtype 1–2</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏼">hudtype 3 | hudtype 5 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏼" type="tts">kyss: vaksen, vaksen, hudtype 5, hudtype 3</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏽">hudtype 4 | hudtype 5 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏽" type="tts">kyss: vaksen, vaksen, hudtype 5, hudtype 4</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏿">hudtype 5 | hudtype 6 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏿" type="tts">kyss: vaksen, vaksen, hudtype 5, hudtype 6</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏻">hudtype 1–2 | hudtype 6 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏻" type="tts">kyss: vaksen, vaksen, hudtype 6, hudtype 1–2</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏼">hudtype 3 | hudtype 6 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏼" type="tts">kyss: vaksen, vaksen, hudtype 6, hudtype 3</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏽">hudtype 4 | hudtype 6 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏽" type="tts">kyss: vaksen, vaksen, hudtype 6, hudtype 4</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏾">hudtype 5 | hudtype 6 | kyss | kyssing | menneske | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏾" type="tts">kyss: vaksen, vaksen, hudtype 6, hudtype 5</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏼">hjarte | hudtype 1–2 | hudtype 3 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏼" type="tts">par med hjarte: vaksen, vaksen, hudtype 1–2, hudtype 3</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏽">hjarte | hudtype 1–2 | hudtype 4 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏽" type="tts">par med hjarte: vaksen, vaksen, hudtype 1–2, hudtype 4</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏾">hjarte | hudtype 1–2 | hudtype 5 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏾" type="tts">par med hjarte: vaksen, vaksen, hudtype 1–2, hudtype 5</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏿">hjarte | hudtype 1–2 | hudtype 6 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏿" type="tts">par med hjarte: vaksen, vaksen, hudtype 1–2, hudtype 6</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏻">hjarte | hudtype 1–2 | hudtype 3 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏻" type="tts">par med hjarte: vaksen, vaksen, hudtype 3, hudtype 1–2</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏽">hjarte | hudtype 3 | hudtype 4 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏽" type="tts">par med hjarte: vaksen, vaksen, hudtype 3, hudtype 4</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏾">hjarte | hudtype 3 | hudtype 5 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏾" type="tts">par med hjarte: vaksen, vaksen, hudtype 3, hudtype 5</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏿">hjarte | hudtype 3 | hudtype 6 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏿" type="tts">par med hjarte: vaksen, vaksen, hudtype 3, hudtype 6</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏻">hjarte | hudtype 1–2 | hudtype 4 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏻" type="tts">par med hjarte: vaksen, vaksen, hudtype 4, hudtype 1–2</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏼">hjarte | hudtype 3 | hudtype 4 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏼" type="tts">par med hjarte: vaksen, vaksen, hudtype 4, hudtype 3</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏾">hjarte | hudtype 4 | hudtype 5 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏾" type="tts">par med hjarte: vaksen, vaksen, hudtype 4, hudtype 5</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏿">hjarte | hudtype 4 | hudtype 6 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏿" type="tts">par med hjarte: vaksen, vaksen, hudtype 4, hudtype 6</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏻">hjarte | hudtype 1–2 | hudtype 5 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏻" type="tts">par med hjarte: vaksen, vaksen, hudtype 5, hudtype 1–2</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏼">hjarte | hudtype 3 | hudtype 5 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏼" type="tts">par med hjarte: vaksen, vaksen, hudtype 5, hudtype 3</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏽">hjarte | hudtype 4 | hudtype 5 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏽" type="tts">par med hjarte: vaksen, vaksen, hudtype 5, hudtype 4</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏿">hjarte | hudtype 5 | hudtype 6 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏿" type="tts">par med hjarte: vaksen, vaksen, hudtype 5, hudtype 6</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏻">hjarte | hudtype 1–2 | hudtype 6 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏻" type="tts">par med hjarte: vaksen, vaksen, hudtype 6, hudtype 1–2</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏼">hjarte | hudtype 3 | hudtype 6 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏼" type="tts">par med hjarte: vaksen, vaksen, hudtype 6, hudtype 3</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏽">hjarte | hudtype 4 | hudtype 6 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏽" type="tts">par med hjarte: vaksen, vaksen, hudtype 6, hudtype 4</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏾">hjarte | hudtype 5 | hudtype 6 | kjærleik | menneske | par med hjarte | romantikk | vaksen</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏾" type="tts">par med hjarte: vaksen, vaksen, hudtype 6, hudtype 5</annotation>
 		<annotation cp="🧑‍🦰">kjønnsnøytral | menneske | person | raudt hår | vaksen</annotation>
 		<annotation cp="🧑‍🦰" type="tts">vaksen: raudt hår</annotation>
 		<annotation cp="🧑🏻‍🦰">hudtype 1–2 | kjønnsnøytral | menneske | person | raudt hår | vaksen</annotation>
@@ -530,6 +610,16 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🧔🏾" type="tts">person: hudtype 5, skjegg</annotation>
 		<annotation cp="🧔🏿">hudtype 6 | mann | mann med skjegg | mann: skjegg | person | person: skjegg | skjegg</annotation>
 		<annotation cp="🧔🏿" type="tts">person: hudtype 6, skjegg</annotation>
+		<annotation cp="🧔🏻‍♂">hudtype 1–2 | mann | mann: skjegg | skjegg</annotation>
+		<annotation cp="🧔🏻‍♂" type="tts">mann: hudtype 1–2, skjegg</annotation>
+		<annotation cp="🧔🏼‍♂">hudtype 3 | mann | mann: skjegg | skjegg</annotation>
+		<annotation cp="🧔🏼‍♂" type="tts">mann: hudtype 3, skjegg</annotation>
+		<annotation cp="🧔🏽‍♂">hudtype 4 | mann | mann: skjegg | skjegg</annotation>
+		<annotation cp="🧔🏽‍♂" type="tts">mann: hudtype 4, skjegg</annotation>
+		<annotation cp="🧔🏾‍♂">hudtype 5 | mann | mann: skjegg | skjegg</annotation>
+		<annotation cp="🧔🏾‍♂" type="tts">mann: hudtype 5, skjegg</annotation>
+		<annotation cp="🧔🏿‍♂">hudtype 6 | mann | mann: skjegg | skjegg</annotation>
+		<annotation cp="🧔🏿‍♂" type="tts">mann: hudtype 6, skjegg</annotation>
 		<annotation cp="👱🏻‍♂">blond | hår | hudtype 1–2 | mann | mann: blond</annotation>
 		<annotation cp="👱🏻‍♂" type="tts">mann: hudtype 1–2, blond</annotation>
 		<annotation cp="👱🏼‍♂">blond | hår | hudtype 3 | mann | mann: blond</annotation>
@@ -540,6 +630,106 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👱🏾‍♂" type="tts">mann: hudtype 5, blond</annotation>
 		<annotation cp="👱🏿‍♂">blond | hår | hudtype 6 | mann | mann: blond</annotation>
 		<annotation cp="👱🏿‍♂" type="tts">mann: hudtype 6, blond</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏻">hudtype 1–2 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏻" type="tts">kyss: mann, mann, hudtype 1–2</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏼">hudtype 1–2 | hudtype 3 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏼" type="tts">kyss: mann, mann, hudtype 1–2, hudtype 3</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏽">hudtype 1–2 | hudtype 4 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏽" type="tts">kyss: mann, mann, hudtype 1–2, hudtype 4</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏾">hudtype 1–2 | hudtype 5 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏾" type="tts">kyss: mann, mann, hudtype 1–2, hudtype 5</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏿">hudtype 1–2 | hudtype 6 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏿" type="tts">kyss: mann, mann, hudtype 1–2, hudtype 6</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏻">hudtype 1–2 | hudtype 3 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏻" type="tts">kyss: mann, mann, hudtype 3, hudtype 1–2</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏼">hudtype 3 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏼" type="tts">kyss: mann, mann, hudtype 3</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏽">hudtype 3 | hudtype 4 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏽" type="tts">kyss: mann, mann, hudtype 3, hudtype 4</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏾">hudtype 3 | hudtype 5 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏾" type="tts">kyss: mann, mann, hudtype 3, hudtype 5</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏿">hudtype 3 | hudtype 6 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏿" type="tts">kyss: mann, mann, hudtype 3, hudtype 6</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏻">hudtype 1–2 | hudtype 4 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏻" type="tts">kyss: mann, mann, hudtype 4, hudtype 1–2</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏼">hudtype 3 | hudtype 4 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏼" type="tts">kyss: mann, mann, hudtype 4, hudtype 3</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏽">hudtype 4 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏽" type="tts">kyss: mann, mann, hudtype 4</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏾">hudtype 4 | hudtype 5 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏾" type="tts">kyss: mann, mann, hudtype 4, hudtype 5</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏿">hudtype 4 | hudtype 6 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏿" type="tts">kyss: mann, mann, hudtype 4, hudtype 6</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏻">hudtype 1–2 | hudtype 5 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏻" type="tts">kyss: mann, mann, hudtype 5, hudtype 1–2</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏼">hudtype 3 | hudtype 5 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏼" type="tts">kyss: mann, mann, hudtype 5, hudtype 3</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏽">hudtype 4 | hudtype 5 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏽" type="tts">kyss: mann, mann, hudtype 5, hudtype 4</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏾">hudtype 5 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏾" type="tts">kyss: mann, mann, hudtype 5</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏿">hudtype 5 | hudtype 6 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏿" type="tts">kyss: mann, mann, hudtype 5, hudtype 6</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏻">hudtype 1–2 | hudtype 6 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏻" type="tts">kyss: mann, mann, hudtype 6, hudtype 1–2</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏼">hudtype 3 | hudtype 6 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏼" type="tts">kyss: mann, mann, hudtype 6, hudtype 3</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏽">hudtype 4 | hudtype 6 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏽" type="tts">kyss: mann, mann, hudtype 6, hudtype 4</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏾">hudtype 5 | hudtype 6 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏾" type="tts">kyss: mann, mann, hudtype 6, hudtype 5</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏿">hudtype 6 | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏿" type="tts">kyss: mann, mann, hudtype 6</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏻">hjarte | hudtype 1–2 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏻" type="tts">par med hjarte: mann, mann, hudtype 1–2</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏼">hjarte | hudtype 1–2 | hudtype 3 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏼" type="tts">par med hjarte: mann, mann, hudtype 1–2, hudtype 3</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏽">hjarte | hudtype 1–2 | hudtype 4 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏽" type="tts">par med hjarte: mann, mann, hudtype 1–2, hudtype 4</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏾">hjarte | hudtype 1–2 | hudtype 5 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏾" type="tts">par med hjarte: mann, mann, hudtype 1–2, hudtype 5</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏿">hjarte | hudtype 1–2 | hudtype 6 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏿" type="tts">par med hjarte: mann, mann, hudtype 1–2, hudtype 6</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏻">hjarte | hudtype 1–2 | hudtype 3 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏻" type="tts">par med hjarte: mann, mann, hudtype 3, hudtype 1–2</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏼">hjarte | hudtype 3 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏼" type="tts">par med hjarte: mann, mann, hudtype 3</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏽">hjarte | hudtype 3 | hudtype 4 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏽" type="tts">par med hjarte: mann, mann, hudtype 3, hudtype 4</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏾">hjarte | hudtype 3 | hudtype 5 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏾" type="tts">par med hjarte: mann, mann, hudtype 3, hudtype 5</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏿">hjarte | hudtype 3 | hudtype 6 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏿" type="tts">par med hjarte: mann, mann, hudtype 3, hudtype 6</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏻">hjarte | hudtype 1–2 | hudtype 4 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏻" type="tts">par med hjarte: mann, mann, hudtype 4, hudtype 1–2</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏼">hjarte | hudtype 3 | hudtype 4 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏼" type="tts">par med hjarte: mann, mann, hudtype 4, hudtype 3</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏽">hjarte | hudtype 4 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏽" type="tts">par med hjarte: mann, mann, hudtype 4</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏾">hjarte | hudtype 4 | hudtype 5 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏾" type="tts">par med hjarte: mann, mann, hudtype 4, hudtype 5</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏿">hjarte | hudtype 4 | hudtype 6 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏿" type="tts">par med hjarte: mann, mann, hudtype 4, hudtype 6</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏻">hjarte | hudtype 1–2 | hudtype 5 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏻" type="tts">par med hjarte: mann, mann, hudtype 5, hudtype 1–2</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏼">hjarte | hudtype 3 | hudtype 5 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏼" type="tts">par med hjarte: mann, mann, hudtype 5, hudtype 3</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏽">hjarte | hudtype 4 | hudtype 5 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏽" type="tts">par med hjarte: mann, mann, hudtype 5, hudtype 4</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏾">hjarte | hudtype 5 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏾" type="tts">par med hjarte: mann, mann, hudtype 5</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏿">hjarte | hudtype 5 | hudtype 6 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏿" type="tts">par med hjarte: mann, mann, hudtype 5, hudtype 6</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏻">hjarte | hudtype 1–2 | hudtype 6 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏻" type="tts">par med hjarte: mann, mann, hudtype 6, hudtype 1–2</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏼">hjarte | hudtype 3 | hudtype 6 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏼" type="tts">par med hjarte: mann, mann, hudtype 6, hudtype 3</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏽">hjarte | hudtype 4 | hudtype 6 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏽" type="tts">par med hjarte: mann, mann, hudtype 6, hudtype 4</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏾">hjarte | hudtype 5 | hudtype 6 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏾" type="tts">par med hjarte: mann, mann, hudtype 6, hudtype 5</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏿">hjarte | hudtype 6 | kjærleik | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏿" type="tts">par med hjarte: mann, mann, hudtype 6</annotation>
 		<annotation cp="👨‍🦰">mann | menneske | raudt hår | vaksen</annotation>
 		<annotation cp="👨‍🦰" type="tts">mann: raudt hår</annotation>
 		<annotation cp="👨🏻‍🦰">hudtype 1–2 | mann | menneske | raudt hår | vaksen</annotation>
@@ -588,26 +778,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👨🏾‍🦲" type="tts">mann: hudtype 5, skalla</annotation>
 		<annotation cp="👨🏿‍🦲">hudtype 6 | mann | menneske | skalla | vaksen</annotation>
 		<annotation cp="👨🏿‍🦲" type="tts">mann: hudtype 6, skalla</annotation>
-		<annotation cp="🧔🏻‍♀">hudtype 1–2 | kvinne | kvinne: skjegg | skjegg</annotation>
-		<annotation cp="🧔🏻‍♀" type="tts">kvinne: hudtype 1–2, skjegg</annotation>
-		<annotation cp="🧔🏼‍♀">hudtype 3 | kvinne | kvinne: skjegg | skjegg</annotation>
-		<annotation cp="🧔🏼‍♀" type="tts">kvinne: hudtype 3, skjegg</annotation>
-		<annotation cp="🧔🏽‍♀">hudtype 4 | kvinne | kvinne: skjegg | skjegg</annotation>
-		<annotation cp="🧔🏽‍♀" type="tts">kvinne: hudtype 4, skjegg</annotation>
-		<annotation cp="🧔🏾‍♀">hudtype 5 | kvinne | kvinne: skjegg | skjegg</annotation>
-		<annotation cp="🧔🏾‍♀" type="tts">kvinne: hudtype 5, skjegg</annotation>
-		<annotation cp="🧔🏿‍♀">hudtype 6 | kvinne | kvinne: skjegg | skjegg</annotation>
-		<annotation cp="🧔🏿‍♀" type="tts">kvinne: hudtype 6, skjegg</annotation>
-		<annotation cp="🧔🏻‍♂">hudtype 1–2 | mann | mann: skjegg | skjegg</annotation>
-		<annotation cp="🧔🏻‍♂" type="tts">mann: hudtype 1–2, skjegg</annotation>
-		<annotation cp="🧔🏼‍♂">hudtype 3 | mann | mann: skjegg | skjegg</annotation>
-		<annotation cp="🧔🏼‍♂" type="tts">mann: hudtype 3, skjegg</annotation>
-		<annotation cp="🧔🏽‍♂">hudtype 4 | mann | mann: skjegg | skjegg</annotation>
-		<annotation cp="🧔🏽‍♂" type="tts">mann: hudtype 4, skjegg</annotation>
-		<annotation cp="🧔🏾‍♂">hudtype 5 | mann | mann: skjegg | skjegg</annotation>
-		<annotation cp="🧔🏾‍♂" type="tts">mann: hudtype 5, skjegg</annotation>
-		<annotation cp="🧔🏿‍♂">hudtype 6 | mann | mann: skjegg | skjegg</annotation>
-		<annotation cp="🧔🏿‍♂" type="tts">mann: hudtype 6, skjegg</annotation>
 		<annotation cp="👩🏻">hudtype 1–2 | kvinne | menneske | vaksen</annotation>
 		<annotation cp="👩🏻" type="tts">kvinne: hudtype 1–2</annotation>
 		<annotation cp="👩🏼">hudtype 3 | kvinne | menneske | vaksen</annotation>
@@ -618,6 +788,16 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👩🏾" type="tts">kvinne: hudtype 5</annotation>
 		<annotation cp="👩🏿">hudtype 6 | kvinne | menneske | vaksen</annotation>
 		<annotation cp="👩🏿" type="tts">kvinne: hudtype 6</annotation>
+		<annotation cp="🧔🏻‍♀">hudtype 1–2 | kvinne | kvinne: skjegg | skjegg</annotation>
+		<annotation cp="🧔🏻‍♀" type="tts">kvinne: hudtype 1–2, skjegg</annotation>
+		<annotation cp="🧔🏼‍♀">hudtype 3 | kvinne | kvinne: skjegg | skjegg</annotation>
+		<annotation cp="🧔🏼‍♀" type="tts">kvinne: hudtype 3, skjegg</annotation>
+		<annotation cp="🧔🏽‍♀">hudtype 4 | kvinne | kvinne: skjegg | skjegg</annotation>
+		<annotation cp="🧔🏽‍♀" type="tts">kvinne: hudtype 4, skjegg</annotation>
+		<annotation cp="🧔🏾‍♀">hudtype 5 | kvinne | kvinne: skjegg | skjegg</annotation>
+		<annotation cp="🧔🏾‍♀" type="tts">kvinne: hudtype 5, skjegg</annotation>
+		<annotation cp="🧔🏿‍♀">hudtype 6 | kvinne | kvinne: skjegg | skjegg</annotation>
+		<annotation cp="🧔🏿‍♀" type="tts">kvinne: hudtype 6, skjegg</annotation>
 		<annotation cp="👱🏻‍♀">blond | blondine | hår | hudtype 1–2 | kvinne | kvinne: blond</annotation>
 		<annotation cp="👱🏻‍♀" type="tts">kvinne: hudtype 1–2, blond</annotation>
 		<annotation cp="👱🏼‍♀">blond | blondine | hår | hudtype 3 | kvinne | kvinne: blond</annotation>
@@ -628,6 +808,206 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👱🏾‍♀" type="tts">kvinne: hudtype 5, blond</annotation>
 		<annotation cp="👱🏿‍♀">blond | blondine | hår | hudtype 6 | kvinne | kvinne: blond</annotation>
 		<annotation cp="👱🏿‍♀" type="tts">kvinne: hudtype 6, blond</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏻">hudtype 1–2 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏻" type="tts">kyss: kvinne, mann, hudtype 1–2</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏼">hudtype 1–2 | hudtype 3 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏼" type="tts">kyss: kvinne, mann, hudtype 1–2, hudtype 3</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏽">hudtype 1–2 | hudtype 4 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏽" type="tts">kyss: kvinne, mann, hudtype 1–2, hudtype 4</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏾">hudtype 1–2 | hudtype 5 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏾" type="tts">kyss: kvinne, mann, hudtype 1–2, hudtype 5</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏿">hudtype 1–2 | hudtype 6 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏿" type="tts">kyss: kvinne, mann, hudtype 1–2, hudtype 6</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏻">hudtype 1–2 | hudtype 3 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏻" type="tts">kyss: kvinne, mann, hudtype 3, hudtype 1–2</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏼">hudtype 3 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏼" type="tts">kyss: kvinne, mann, hudtype 3</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏽">hudtype 3 | hudtype 4 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏽" type="tts">kyss: kvinne, mann, hudtype 3, hudtype 4</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏾">hudtype 3 | hudtype 5 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏾" type="tts">kyss: kvinne, mann, hudtype 3, hudtype 5</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏿">hudtype 3 | hudtype 6 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏿" type="tts">kyss: kvinne, mann, hudtype 3, hudtype 6</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏻">hudtype 1–2 | hudtype 4 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏻" type="tts">kyss: kvinne, mann, hudtype 4, hudtype 1–2</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏼">hudtype 3 | hudtype 4 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏼" type="tts">kyss: kvinne, mann, hudtype 4, hudtype 3</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏽">hudtype 4 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏽" type="tts">kyss: kvinne, mann, hudtype 4</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏾">hudtype 4 | hudtype 5 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏾" type="tts">kyss: kvinne, mann, hudtype 4, hudtype 5</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏿">hudtype 4 | hudtype 6 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏿" type="tts">kyss: kvinne, mann, hudtype 4, hudtype 6</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏻">hudtype 1–2 | hudtype 5 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏻" type="tts">kyss: kvinne, mann, hudtype 5, hudtype 1–2</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏼">hudtype 3 | hudtype 5 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏼" type="tts">kyss: kvinne, mann, hudtype 5, hudtype 3</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏽">hudtype 4 | hudtype 5 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏽" type="tts">kyss: kvinne, mann, hudtype 5, hudtype 4</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏾">hudtype 5 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏾" type="tts">kyss: kvinne, mann, hudtype 5</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏿">hudtype 5 | hudtype 6 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏿" type="tts">kyss: kvinne, mann, hudtype 5, hudtype 6</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏻">hudtype 1–2 | hudtype 6 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏻" type="tts">kyss: kvinne, mann, hudtype 6, hudtype 1–2</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏼">hudtype 3 | hudtype 6 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏼" type="tts">kyss: kvinne, mann, hudtype 6, hudtype 3</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏽">hudtype 4 | hudtype 6 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏽" type="tts">kyss: kvinne, mann, hudtype 6, hudtype 4</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏾">hudtype 5 | hudtype 6 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏾" type="tts">kyss: kvinne, mann, hudtype 6, hudtype 5</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏿">hudtype 6 | kvinne | kyss | kyssing | mann | menneske | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏿" type="tts">kyss: kvinne, mann, hudtype 6</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏻">hudtype 1–2 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏻" type="tts">kyss: kvinne, kvinne, hudtype 1–2</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏼">hudtype 1–2 | hudtype 3 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏼" type="tts">kyss: kvinne, kvinne, hudtype 1–2, hudtype 3</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏽">hudtype 1–2 | hudtype 4 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏽" type="tts">kyss: kvinne, kvinne, hudtype 1–2, hudtype 4</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏾">hudtype 1–2 | hudtype 5 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏾" type="tts">kyss: kvinne, kvinne, hudtype 1–2, hudtype 5</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏿">hudtype 1–2 | hudtype 6 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏿" type="tts">kyss: kvinne, kvinne, hudtype 1–2, hudtype 6</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏻">hudtype 1–2 | hudtype 3 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏻" type="tts">kyss: kvinne, kvinne, hudtype 3, hudtype 1–2</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏼">hudtype 3 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏼" type="tts">kyss: kvinne, kvinne, hudtype 3</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏽">hudtype 3 | hudtype 4 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏽" type="tts">kyss: kvinne, kvinne, hudtype 3, hudtype 4</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏾">hudtype 3 | hudtype 5 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏾" type="tts">kyss: kvinne, kvinne, hudtype 3, hudtype 5</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏿">hudtype 3 | hudtype 6 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏿" type="tts">kyss: kvinne, kvinne, hudtype 3, hudtype 6</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏻">hudtype 1–2 | hudtype 4 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏻" type="tts">kyss: kvinne, kvinne, hudtype 4, hudtype 1–2</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏼">hudtype 3 | hudtype 4 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏼" type="tts">kyss: kvinne, kvinne, hudtype 4, hudtype 3</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏽">hudtype 4 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏽" type="tts">kyss: kvinne, kvinne, hudtype 4</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏾">hudtype 4 | hudtype 5 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏾" type="tts">kyss: kvinne, kvinne, hudtype 4, hudtype 5</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏿">hudtype 4 | hudtype 6 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏿" type="tts">kyss: kvinne, kvinne, hudtype 4, hudtype 6</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏻">hudtype 1–2 | hudtype 5 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏻" type="tts">kyss: kvinne, kvinne, hudtype 5, hudtype 1–2</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏼">hudtype 3 | hudtype 5 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏼" type="tts">kyss: kvinne, kvinne, hudtype 5, hudtype 3</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏽">hudtype 4 | hudtype 5 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏽" type="tts">kyss: kvinne, kvinne, hudtype 5, hudtype 4</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏾">hudtype 5 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏾" type="tts">kyss: kvinne, kvinne, hudtype 5</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏿">hudtype 5 | hudtype 6 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏿" type="tts">kyss: kvinne, kvinne, hudtype 5, hudtype 6</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏻">hudtype 1–2 | hudtype 6 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏻" type="tts">kyss: kvinne, kvinne, hudtype 6, hudtype 1–2</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏼">hudtype 3 | hudtype 6 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏼" type="tts">kyss: kvinne, kvinne, hudtype 6, hudtype 3</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏽">hudtype 4 | hudtype 6 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏽" type="tts">kyss: kvinne, kvinne, hudtype 6, hudtype 4</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏾">hudtype 5 | hudtype 6 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏾" type="tts">kyss: kvinne, kvinne, hudtype 6, hudtype 5</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏿">hudtype 6 | kvinne | kyss | kyssing | menneske | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏿" type="tts">kyss: kvinne, kvinne, hudtype 6</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏻">hjarte | hudtype 1–2 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏻" type="tts">par med hjarte: kvinne, mann, hudtype 1–2</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏼">hjarte | hudtype 1–2 | hudtype 3 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏼" type="tts">par med hjarte: kvinne, mann, hudtype 1–2, hudtype 3</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏽">hjarte | hudtype 1–2 | hudtype 4 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏽" type="tts">par med hjarte: kvinne, mann, hudtype 1–2, hudtype 4</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏾">hjarte | hudtype 1–2 | hudtype 5 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏾" type="tts">par med hjarte: kvinne, mann, hudtype 1–2, hudtype 5</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏿">hjarte | hudtype 1–2 | hudtype 6 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏿" type="tts">par med hjarte: kvinne, mann, hudtype 1–2, hudtype 6</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏻">hjarte | hudtype 1–2 | hudtype 3 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏻" type="tts">par med hjarte: kvinne, mann, hudtype 3, hudtype 1–2</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏼">hjarte | hudtype 3 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏼" type="tts">par med hjarte: kvinne, mann, hudtype 3</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏽">hjarte | hudtype 3 | hudtype 4 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏽" type="tts">par med hjarte: kvinne, mann, hudtype 3, hudtype 4</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏾">hjarte | hudtype 3 | hudtype 5 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏾" type="tts">par med hjarte: kvinne, mann, hudtype 3, hudtype 5</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏿">hjarte | hudtype 3 | hudtype 6 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏿" type="tts">par med hjarte: kvinne, mann, hudtype 3, hudtype 6</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏻">hjarte | hudtype 1–2 | hudtype 4 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏻" type="tts">par med hjarte: kvinne, mann, hudtype 4, hudtype 1–2</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏼">hjarte | hudtype 3 | hudtype 4 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏼" type="tts">par med hjarte: kvinne, mann, hudtype 4, hudtype 3</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏽">hjarte | hudtype 4 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏽" type="tts">par med hjarte: kvinne, mann, hudtype 4</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏾">hjarte | hudtype 4 | hudtype 5 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏾" type="tts">par med hjarte: kvinne, mann, hudtype 4, hudtype 5</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏿">hjarte | hudtype 4 | hudtype 6 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏿" type="tts">par med hjarte: kvinne, mann, hudtype 4, hudtype 6</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏻">hjarte | hudtype 1–2 | hudtype 5 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏻" type="tts">par med hjarte: kvinne, mann, hudtype 5, hudtype 1–2</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏼">hjarte | hudtype 3 | hudtype 5 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏼" type="tts">par med hjarte: kvinne, mann, hudtype 5, hudtype 3</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏽">hjarte | hudtype 4 | hudtype 5 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏽" type="tts">par med hjarte: kvinne, mann, hudtype 5, hudtype 4</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏾">hjarte | hudtype 5 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏾" type="tts">par med hjarte: kvinne, mann, hudtype 5</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏿">hjarte | hudtype 5 | hudtype 6 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏿" type="tts">par med hjarte: kvinne, mann, hudtype 5, hudtype 6</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏻">hjarte | hudtype 1–2 | hudtype 6 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏻" type="tts">par med hjarte: kvinne, mann, hudtype 6, hudtype 1–2</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏼">hjarte | hudtype 3 | hudtype 6 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏼" type="tts">par med hjarte: kvinne, mann, hudtype 6, hudtype 3</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏽">hjarte | hudtype 4 | hudtype 6 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏽" type="tts">par med hjarte: kvinne, mann, hudtype 6, hudtype 4</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏾">hjarte | hudtype 5 | hudtype 6 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏾" type="tts">par med hjarte: kvinne, mann, hudtype 6, hudtype 5</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏿">hjarte | hudtype 6 | kjærleik | kvinne | mann | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏿" type="tts">par med hjarte: kvinne, mann, hudtype 6</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏻">hjarte | hudtype 1–2 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏻" type="tts">par med hjarte: kvinne, kvinne, hudtype 1–2</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏼">hjarte | hudtype 1–2 | hudtype 3 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏼" type="tts">par med hjarte: kvinne, kvinne, hudtype 1–2, hudtype 3</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏽">hjarte | hudtype 1–2 | hudtype 4 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏽" type="tts">par med hjarte: kvinne, kvinne, hudtype 1–2, hudtype 4</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏾">hjarte | hudtype 1–2 | hudtype 5 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏾" type="tts">par med hjarte: kvinne, kvinne, hudtype 1–2, hudtype 5</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏿">hjarte | hudtype 1–2 | hudtype 6 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏿" type="tts">par med hjarte: kvinne, kvinne, hudtype 1–2, hudtype 6</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏻">hjarte | hudtype 1–2 | hudtype 3 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏻" type="tts">par med hjarte: kvinne, kvinne, hudtype 3, hudtype 1–2</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏼">hjarte | hudtype 3 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏼" type="tts">par med hjarte: kvinne, kvinne, hudtype 3</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏽">hjarte | hudtype 3 | hudtype 4 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏽" type="tts">par med hjarte: kvinne, kvinne, hudtype 3, hudtype 4</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏾">hjarte | hudtype 3 | hudtype 5 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏾" type="tts">par med hjarte: kvinne, kvinne, hudtype 3, hudtype 5</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏿">hjarte | hudtype 3 | hudtype 6 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏿" type="tts">par med hjarte: kvinne, kvinne, hudtype 3, hudtype 6</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏻">hjarte | hudtype 1–2 | hudtype 4 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏻" type="tts">par med hjarte: kvinne, kvinne, hudtype 4, hudtype 1–2</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏼">hjarte | hudtype 3 | hudtype 4 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏼" type="tts">par med hjarte: kvinne, kvinne, hudtype 4, hudtype 3</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏽">hjarte | hudtype 4 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏽" type="tts">par med hjarte: kvinne, kvinne, hudtype 4</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏾">hjarte | hudtype 4 | hudtype 5 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏾" type="tts">par med hjarte: kvinne, kvinne, hudtype 4, hudtype 5</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏿">hjarte | hudtype 4 | hudtype 6 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏿" type="tts">par med hjarte: kvinne, kvinne, hudtype 4, hudtype 6</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏻">hjarte | hudtype 1–2 | hudtype 5 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏻" type="tts">par med hjarte: kvinne, kvinne, hudtype 5, hudtype 1–2</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏼">hjarte | hudtype 3 | hudtype 5 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏼" type="tts">par med hjarte: kvinne, kvinne, hudtype 5, hudtype 3</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏽">hjarte | hudtype 4 | hudtype 5 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏽" type="tts">par med hjarte: kvinne, kvinne, hudtype 5, hudtype 4</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏾">hjarte | hudtype 5 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏾" type="tts">par med hjarte: kvinne, kvinne, hudtype 5</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏿">hjarte | hudtype 5 | hudtype 6 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏿" type="tts">par med hjarte: kvinne, kvinne, hudtype 5, hudtype 6</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏻">hjarte | hudtype 1–2 | hudtype 6 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏻" type="tts">par med hjarte: kvinne, kvinne, hudtype 6, hudtype 1–2</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏼">hjarte | hudtype 3 | hudtype 6 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏼" type="tts">par med hjarte: kvinne, kvinne, hudtype 6, hudtype 3</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏽">hjarte | hudtype 4 | hudtype 6 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏽" type="tts">par med hjarte: kvinne, kvinne, hudtype 6, hudtype 4</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏾">hjarte | hudtype 5 | hudtype 6 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏾" type="tts">par med hjarte: kvinne, kvinne, hudtype 6, hudtype 5</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏿">hjarte | hudtype 6 | kjærleik | kvinne | menneske | par med hjarte | romantikk</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏿" type="tts">par med hjarte: kvinne, kvinne, hudtype 6</annotation>
 		<annotation cp="👩‍🦰">kvinne | menneske | raudt hår | vaksen</annotation>
 		<annotation cp="👩‍🦰" type="tts">kvinne: raudt hår</annotation>
 		<annotation cp="👩🏻‍🦰">hudtype 1–2 | kvinne | menneske | raudt hår | vaksen</annotation>
@@ -3600,6 +3980,26 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🇿🇲" type="tts">flagg: Zambia</annotation>
 		<annotation cp="🇿🇼">flagg</annotation>
 		<annotation cp="🇿🇼" type="tts">flagg: Zimbabwe</annotation>
+		<annotation cp="¤" type="tts">ukjend valuta</annotation>
+		<annotation cp="֏" type="tts">armenske dram</annotation>
+		<annotation cp="؋" type="tts">afghanske afghani</annotation>
+		<annotation cp="৳" type="tts">bangladeshiske taka</annotation>
+		<annotation cp="฿" type="tts">thailandske baht</annotation>
+		<annotation cp="៛" type="tts">kambodsjanske riel</annotation>
+		<annotation cp="₡" type="tts">kostarikanske colón</annotation>
+		<annotation cp="₦" type="tts">nigerianske naira</annotation>
+		<annotation cp="₧" type="tts">spanske peseta</annotation>
+		<annotation cp="₪" type="tts">nye israelske sheklar</annotation>
+		<annotation cp="₫" type="tts">vietnamesiske dong</annotation>
+		<annotation cp="₭" type="tts">laotiske kip</annotation>
+		<annotation cp="₮" type="tts">mongolske tugrik</annotation>
+		<annotation cp="₲" type="tts">paraguayanske guaraní</annotation>
+		<annotation cp="₴" type="tts">ukrainske hryvnia</annotation>
+		<annotation cp="₵" type="tts">ghanesiske cedi</annotation>
+		<annotation cp="₸" type="tts">kasakhstanske tenge</annotation>
+		<annotation cp="₺" type="tts">tyrkiske lire</annotation>
+		<annotation cp="₼" type="tts">aserbajdsjanske manat</annotation>
+		<annotation cp="₾" type="tts">georgiske lari</annotation>
 		<annotation cp="0⃣">tastar</annotation>
 		<annotation cp="0⃣" type="tts">tastar: 0</annotation>
 		<annotation cp="1⃣">tastar</annotation>

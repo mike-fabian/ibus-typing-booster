@@ -431,6 +431,74 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👱🏾" type="tts">personne blonde : peau modérément foncée</annotation>
 		<annotation cp="👱🏿">blond | peau foncée | personne blonde</annotation>
 		<annotation cp="👱🏿" type="tts">personne blonde : peau foncée</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏼">adulte | baiser | bisou | couple | peau claire | peau modérément claire</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏼" type="tts">bisou : adulte, adulte, peau claire et peau modérément claire</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏽" type="tts">bisou : adulte, adulte, peau claire et peau légèrement mate</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏾">adulte | baiser | bisou | couple | peau claire | peau modérément foncée</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏾" type="tts">bisou : adulte, adulte, peau claire et peau modérément foncée</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏿" type="tts">bisou : adulte, adulte, peau claire et peau foncée</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏻">adulte | baiser | bisou | couple | peau claire | peau modérément claire</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏻" type="tts">bisou : adulte, adulte, peau modérément claire et peau claire</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏽">adulte | baiser | bisou | couple | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏽" type="tts">bisou : adulte, adulte, peau modérément claire et peau légèrement mate</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏾">adulte | baiser | bisou | couple | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏾" type="tts">bisou : adulte, adulte, peau modérément claire et peau modérément foncée</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏿">adulte | baiser | bisou | couple | peau foncée | peau modérément claire</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏿" type="tts">bisou : adulte, adulte, peau modérément claire et peau foncée</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏻" type="tts">bisou : adulte, adulte, peau légèrement mate et peau claire</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏼">adulte | baiser | bisou | couple | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏼" type="tts">bisou : adulte, adulte, peau légèrement mate et peau modérément claire</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏾">adulte | baiser | bisou | couple | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏾" type="tts">bisou : adulte, adulte, peau légèrement mate et peau modérément foncée</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏿" type="tts">bisou : adulte, adulte, peau légèrement mate et peau foncée</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏻">adulte | baiser | bisou | couple | peau claire | peau modérément foncée</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏻" type="tts">bisou : adulte, adulte, peau modérément foncée et peau claire</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏼">adulte | baiser | bisou | couple | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏼" type="tts">bisou : adulte, adulte, peau modérément foncée et peau modérément claire</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏽">adulte | baiser | bisou | couple | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏽" type="tts">bisou : adulte, adulte, peau modérément foncée et peau légèrement mate</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏿">adulte | baiser | bisou | couple | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏿" type="tts">bisou : adulte, adulte, peau modérément foncée et peau foncée</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏻" type="tts">bisou : adulte, adulte, peau foncée et peau claire</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏼">adulte | baiser | bisou | couple | peau foncée | peau modérément claire</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏼" type="tts">bisou : adulte, adulte, peau foncée et peau modérément claire</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏽" type="tts">bisou : adulte, adulte, peau foncée et peau légèrement mate</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏾">adulte | baiser | bisou | couple | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏾" type="tts">bisou : adulte, adulte, peau foncée et peau modérément foncée</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏼">adulte | amour | cœur | couple | couple avec cœur | peau claire | peau modérément claire</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏼" type="tts">couple avec cœur : adulte, adulte, peau claire et peau modérément claire</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏽" type="tts">couple avec cœur : adulte, adulte, peau claire et peau légèrement mate</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏾">adulte | amour | cœur | couple | couple avec cœur | peau claire | peau modérément foncée</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏾" type="tts">couple avec cœur : adulte, adulte, peau claire et peau modérément foncée</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏿" type="tts">couple avec cœur : adulte, adulte, peau claire et peau foncée</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏻">adulte | amour | cœur | couple | couple avec cœur | peau claire | peau modérément claire</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏻" type="tts">couple avec cœur : adulte, adulte, peau modérément claire et peau claire</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏽">adulte | amour | cœur | couple | couple avec cœur | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏽" type="tts">couple avec cœur : adulte, adulte, peau modérément claire et peau légèrement mate</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏾">adulte | amour | cœur | couple | couple avec cœur | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏾" type="tts">couple avec cœur : adulte, adulte, peau modérément claire et peau modérément foncée</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏿">adulte | amour | cœur | couple | couple avec cœur | peau foncée | peau modérément claire</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏿" type="tts">couple avec cœur : adulte, adulte, peau modérément claire et peau foncée</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏻" type="tts">couple avec cœur : adulte, adulte, peau légèrement mate et peau claire</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏼">adulte | amour | cœur | couple | couple avec cœur | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏼" type="tts">couple avec cœur : adulte, adulte, peau légèrement mate et peau modérément claire</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏾">adulte | amour | cœur | couple | couple avec cœur | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏾" type="tts">couple avec cœur : adulte, adulte, peau légèrement mate et peau modérément foncée</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏿" type="tts">couple avec cœur : adulte, adulte, peau légèrement mate et peau foncée</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏻">adulte | amour | cœur | couple | couple avec cœur | peau claire | peau modérément foncée</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏻" type="tts">couple avec cœur : adulte, adulte, peau modérément foncée et peau claire</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏼">adulte | amour | cœur | couple | couple avec cœur | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏼" type="tts">couple avec cœur : adulte, adulte, peau modérément foncée et peau modérément claire</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏽">adulte | amour | cœur | couple | couple avec cœur | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏽" type="tts">couple avec cœur : adulte, adulte, peau modérément foncée et peau légèrement mate</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏿">adulte | amour | cœur | couple | couple avec cœur | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏿" type="tts">couple avec cœur : adulte, adulte, peau modérément foncée et peau foncée</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏻" type="tts">couple avec cœur : adulte, adulte, peau foncée et peau claire</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏼">adulte | amour | cœur | couple | couple avec cœur | peau foncée | peau modérément claire</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏼" type="tts">couple avec cœur : adulte, adulte, peau foncée et peau modérément claire</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏽" type="tts">couple avec cœur : adulte, adulte, peau foncée et peau légèrement mate</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏾">adulte | amour | cœur | couple | couple avec cœur | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏾" type="tts">couple avec cœur : adulte, adulte, peau foncée et peau modérément foncée</annotation>
 		<annotation cp="🧑‍🦰">adulte | cheveux roux | genre non défini | personne</annotation>
 		<annotation cp="🧑‍🦰" type="tts">adulte : cheveux roux</annotation>
 		<annotation cp="🧑🏻‍🦰">adulte | cheveux roux | genre non défini | peau claire | personne</annotation>
@@ -499,6 +567,16 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="🧔🏾" type="tts">personne barbue : peau modérément foncée</annotation>
 		<annotation cp="🧔🏿">barbe | barbu | homme barbu | peau foncée | personne | personne barbue</annotation>
 		<annotation cp="🧔🏿" type="tts">personne barbue : peau foncée</annotation>
+		<annotation cp="🧔🏻‍♂">barbe | homme | homme barbu | peau claire</annotation>
+		<annotation cp="🧔🏻‍♂" type="tts">homme barbu : peau claire</annotation>
+		<annotation cp="🧔🏼‍♂">barbe | homme | homme barbu | peau modérément claire</annotation>
+		<annotation cp="🧔🏼‍♂" type="tts">homme barbu : peau modérément claire</annotation>
+		<annotation cp="🧔🏽‍♂">barbe | homme | homme barbu | peau légèrement mate</annotation>
+		<annotation cp="🧔🏽‍♂" type="tts">homme barbu : peau légèrement mate</annotation>
+		<annotation cp="🧔🏾‍♂">barbe | homme | homme barbu | peau modérément foncée</annotation>
+		<annotation cp="🧔🏾‍♂" type="tts">homme barbu : peau modérément foncée</annotation>
+		<annotation cp="🧔🏿‍♂">barbe | homme | homme barbu | peau foncée</annotation>
+		<annotation cp="🧔🏿‍♂" type="tts">homme barbu : peau foncée</annotation>
 		<annotation cp="👱🏻‍♂">blond | homme | peau claire</annotation>
 		<annotation cp="👱🏻‍♂" type="tts">homme blond : peau claire</annotation>
 		<annotation cp="👱🏼‍♂">blond | homme | peau modérément claire</annotation>
@@ -509,6 +587,88 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👱🏾‍♂" type="tts">homme blond : peau modérément foncée</annotation>
 		<annotation cp="👱🏿‍♂">blond | homme | peau foncée</annotation>
 		<annotation cp="👱🏿‍♂" type="tts">homme blond : peau foncée</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏻" type="tts">bisou : homme, homme et peau claire</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏼">baiser | bisou | couple | homme | peau claire | peau modérément claire</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏼" type="tts">bisou : homme, homme, peau claire et peau modérément claire</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏽" type="tts">bisou : homme, homme, peau claire et peau légèrement mate</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏾">baiser | bisou | couple | homme | peau claire | peau modérément foncée</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏾" type="tts">bisou : homme, homme, peau claire et peau modérément foncée</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏿" type="tts">bisou : homme, homme, peau claire et peau foncée</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏻">baiser | bisou | couple | homme | peau claire | peau modérément claire</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏻" type="tts">bisou : homme, homme, peau modérément claire et peau claire</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏼">baiser | bisou | couple | homme | peau modérément claire</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏼" type="tts">bisou : homme, homme et peau modérément claire</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏽">baiser | bisou | couple | homme | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏽" type="tts">bisou : homme, homme, peau modérément claire et peau légèrement mate</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏾">baiser | bisou | couple | homme | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏾" type="tts">bisou : homme, homme, peau modérément claire et peau modérément foncée</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏿">baiser | bisou | couple | homme | peau foncée | peau modérément claire</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏿" type="tts">bisou : homme, homme, peau modérément claire et peau foncée</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏻" type="tts">bisou : homme, homme, peau légèrement mate et peau claire</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏼">baiser | bisou | couple | homme | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏼" type="tts">bisou : homme, homme, peau légèrement mate et peau modérément claire</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏽" type="tts">bisou : homme, homme et peau légèrement mate</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏾">baiser | bisou | couple | homme | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏾" type="tts">bisou : homme, homme, peau légèrement mate et peau modérément foncée</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏿" type="tts">bisou : homme, homme, peau légèrement mate et peau foncée</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏻">baiser | bisou | couple | homme | peau claire | peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏻" type="tts">bisou : homme, homme, peau modérément foncée et peau claire</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏼">baiser | bisou | couple | homme | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏼" type="tts">bisou : homme, homme, peau modérément foncée et peau modérément claire</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏽">baiser | bisou | couple | homme | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏽" type="tts">bisou : homme, homme, peau modérément foncée et peau légèrement mate</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏾">baiser | bisou | couple | homme | peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏾" type="tts">bisou : homme, homme et peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏿">baiser | bisou | couple | homme | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏿" type="tts">bisou : homme, homme, peau modérément foncée et peau foncée</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏻" type="tts">bisou : homme, homme, peau foncée et peau claire</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏼">baiser | bisou | couple | homme | peau foncée | peau modérément claire</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏼" type="tts">bisou : homme, homme, peau foncée et peau modérément claire</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏽" type="tts">bisou : homme, homme, peau foncée et peau légèrement mate</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏾">baiser | bisou | couple | homme | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏾" type="tts">bisou : homme, homme, peau foncée et peau modérément foncée</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏿" type="tts">bisou : homme, homme et peau foncée</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏻" type="tts">couple avec cœur : homme, homme et peau claire</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏼">amour | cœur | couple | couple avec cœur | homme | peau claire | peau modérément claire</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏼" type="tts">couple avec cœur : homme, homme, peau claire et peau modérément claire</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏽" type="tts">couple avec cœur : homme, homme, peau claire et peau légèrement mate</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏾">amour | cœur | couple | couple avec cœur | homme | peau claire | peau modérément foncée</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏾" type="tts">couple avec cœur : homme, homme, peau claire et peau modérément foncée</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏿" type="tts">couple avec cœur : homme, homme, peau claire et peau foncée</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏻">amour | cœur | couple | couple avec cœur | homme | peau claire | peau modérément claire</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏻" type="tts">couple avec cœur : homme, homme, peau modérément claire et peau claire</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏼">amour | cœur | couple | couple avec cœur | homme | peau modérément claire</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏼" type="tts">couple avec cœur : homme, homme et peau modérément claire</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏽">amour | cœur | couple | couple avec cœur | homme | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏽" type="tts">couple avec cœur : homme, homme, peau modérément claire et peau légèrement mate</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏾">amour | cœur | couple | couple avec cœur | homme | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏾" type="tts">couple avec cœur : homme, homme, peau modérément claire et peau modérément foncée</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏿">amour | cœur | couple | couple avec cœur | homme | peau foncée | peau modérément claire</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏿" type="tts">couple avec cœur : homme, homme, peau modérément claire et peau foncée</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏻" type="tts">couple avec cœur : homme, homme, peau légèrement mate et peau claire</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏼">amour | cœur | couple | couple avec cœur | homme | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏼" type="tts">couple avec cœur : homme, homme, peau légèrement mate et peau modérément claire</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏽" type="tts">couple avec cœur : homme, homme et peau légèrement mate</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏾">amour | cœur | couple | couple avec cœur | homme | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏾" type="tts">couple avec cœur : homme, homme, peau légèrement mate et peau modérément foncée</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏿" type="tts">couple avec cœur : homme, homme, peau légèrement mate et peau foncée</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏻">amour | cœur | couple | couple avec cœur | homme | peau claire | peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏻" type="tts">couple avec cœur : homme, homme, peau modérément foncée et peau claire</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏼">amour | cœur | couple | couple avec cœur | homme | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏼" type="tts">couple avec cœur : homme, homme, peau modérément foncée et peau modérément claire</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏽">amour | cœur | couple | couple avec cœur | homme | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏽" type="tts">couple avec cœur : homme, homme, peau modérément foncée et peau légèrement mate</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏾">amour | cœur | couple | couple avec cœur | homme | peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏾" type="tts">couple avec cœur : homme, homme et peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏿">amour | cœur | couple | couple avec cœur | homme | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏿" type="tts">couple avec cœur : homme, homme, peau modérément foncée et peau foncée</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏻" type="tts">couple avec cœur : homme, homme, peau foncée et peau claire</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏼">amour | cœur | couple | couple avec cœur | homme | peau foncée | peau modérément claire</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏼" type="tts">couple avec cœur : homme, homme, peau foncée et peau modérément claire</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏽" type="tts">couple avec cœur : homme, homme, peau foncée et peau légèrement mate</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏾">amour | cœur | couple | couple avec cœur | homme | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏾" type="tts">couple avec cœur : homme, homme, peau foncée et peau modérément foncée</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏿" type="tts">couple avec cœur : homme, homme et peau foncée</annotation>
 		<annotation cp="👨‍🦰">adulte | cheveux roux | homme</annotation>
 		<annotation cp="👨‍🦰" type="tts">homme : cheveux roux</annotation>
 		<annotation cp="👨🏻‍🦰">adulte | cheveux roux | homme | peau claire</annotation>
@@ -557,26 +717,6 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👨🏾‍🦲" type="tts">homme : peau modérément foncée et chauve</annotation>
 		<annotation cp="👨🏿‍🦲">adulte | chauve | homme | peau foncée</annotation>
 		<annotation cp="👨🏿‍🦲" type="tts">homme : peau foncée et chauve</annotation>
-		<annotation cp="🧔🏻‍♀">femme barbue | peau claire</annotation>
-		<annotation cp="🧔🏻‍♀" type="tts">femme barbue : peau claire</annotation>
-		<annotation cp="🧔🏼‍♀">femme barbue | peau modérément claire</annotation>
-		<annotation cp="🧔🏼‍♀" type="tts">femme barbue : peau modérément claire</annotation>
-		<annotation cp="🧔🏽‍♀">femme barbue | peau légèrement mate</annotation>
-		<annotation cp="🧔🏽‍♀" type="tts">femme barbue : peau légèrement mate</annotation>
-		<annotation cp="🧔🏾‍♀">femme barbue | peau modérément foncée</annotation>
-		<annotation cp="🧔🏾‍♀" type="tts">femme barbue : peau modérément foncée</annotation>
-		<annotation cp="🧔🏿‍♀">femme barbue | peau foncée</annotation>
-		<annotation cp="🧔🏿‍♀" type="tts">femme barbue : peau foncée</annotation>
-		<annotation cp="🧔🏻‍♂">barbe | homme | homme barbu | peau claire</annotation>
-		<annotation cp="🧔🏻‍♂" type="tts">homme barbu : peau claire</annotation>
-		<annotation cp="🧔🏼‍♂">barbe | homme | homme barbu | peau modérément claire</annotation>
-		<annotation cp="🧔🏼‍♂" type="tts">homme barbu : peau modérément claire</annotation>
-		<annotation cp="🧔🏽‍♂">barbe | homme | homme barbu | peau légèrement mate</annotation>
-		<annotation cp="🧔🏽‍♂" type="tts">homme barbu : peau légèrement mate</annotation>
-		<annotation cp="🧔🏾‍♂">barbe | homme | homme barbu | peau modérément foncée</annotation>
-		<annotation cp="🧔🏾‍♂" type="tts">homme barbu : peau modérément foncée</annotation>
-		<annotation cp="🧔🏿‍♂">barbe | homme | homme barbu | peau foncée</annotation>
-		<annotation cp="🧔🏿‍♂" type="tts">homme barbu : peau foncée</annotation>
 		<annotation cp="👩🏻">adulte | femme | peau claire</annotation>
 		<annotation cp="👩🏻" type="tts">femme : peau claire</annotation>
 		<annotation cp="👩🏼">adulte | femme | peau modérément claire</annotation>
@@ -587,6 +727,16 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👩🏾" type="tts">femme : peau modérément foncée</annotation>
 		<annotation cp="👩🏿">adulte | femme | peau foncée</annotation>
 		<annotation cp="👩🏿" type="tts">femme : peau foncée</annotation>
+		<annotation cp="🧔🏻‍♀">femme barbue | peau claire</annotation>
+		<annotation cp="🧔🏻‍♀" type="tts">femme barbue : peau claire</annotation>
+		<annotation cp="🧔🏼‍♀">femme barbue | peau modérément claire</annotation>
+		<annotation cp="🧔🏼‍♀" type="tts">femme barbue : peau modérément claire</annotation>
+		<annotation cp="🧔🏽‍♀">femme barbue | peau légèrement mate</annotation>
+		<annotation cp="🧔🏽‍♀" type="tts">femme barbue : peau légèrement mate</annotation>
+		<annotation cp="🧔🏾‍♀">femme barbue | peau modérément foncée</annotation>
+		<annotation cp="🧔🏾‍♀" type="tts">femme barbue : peau modérément foncée</annotation>
+		<annotation cp="🧔🏿‍♀">femme barbue | peau foncée</annotation>
+		<annotation cp="🧔🏿‍♀" type="tts">femme barbue : peau foncée</annotation>
 		<annotation cp="👱🏻‍♀">blonde | femme | peau claire</annotation>
 		<annotation cp="👱🏻‍♀" type="tts">femme blonde : peau claire</annotation>
 		<annotation cp="👱🏼‍♀">blonde | femme | peau modérément claire</annotation>
@@ -597,6 +747,170 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👱🏾‍♀" type="tts">femme blonde : peau modérément foncée</annotation>
 		<annotation cp="👱🏿‍♀">blonde | femme | peau foncée</annotation>
 		<annotation cp="👱🏿‍♀" type="tts">femme blonde : peau foncée</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏻" type="tts">bisou : femme, homme et peau claire</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏼">baiser | bisou | couple | femme | homme | peau claire | peau modérément claire</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏼" type="tts">bisou : femme, homme, peau claire et peau modérément claire</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏽" type="tts">bisou : femme, homme, peau claire et peau légèrement mate</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏾">baiser | bisou | couple | femme | homme | peau claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏾" type="tts">bisou : femme, homme, peau claire et peau modérément foncée</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏿" type="tts">bisou : femme, homme, peau claire et peau foncée</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏻">baiser | bisou | couple | femme | homme | peau claire | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏻" type="tts">bisou : femme, homme, peau modérément claire et peau claire</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏼">baiser | bisou | couple | femme | homme | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏼" type="tts">bisou : femme, homme et peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏽">baiser | bisou | couple | femme | homme | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏽" type="tts">bisou : femme, homme, peau modérément claire et peau légèrement mate</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏾">baiser | bisou | couple | femme | homme | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏾" type="tts">bisou : femme, homme, peau modérément claire et peau modérément foncée</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏿">baiser | bisou | couple | femme | homme | peau foncée | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏿" type="tts">bisou : femme, homme, peau modérément claire et peau foncée</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏻" type="tts">bisou : femme, homme, peau légèrement mate et peau claire</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏼">baiser | bisou | couple | femme | homme | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏼" type="tts">bisou : femme, homme, peau légèrement mate et peau modérément claire</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏽" type="tts">bisou : femme, homme et peau légèrement mate</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏾">baiser | bisou | couple | femme | homme | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏾" type="tts">bisou : femme, homme, peau légèrement mate et peau modérément foncée</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏿" type="tts">bisou : femme, homme, peau légèrement mate et peau foncée</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏻">baiser | bisou | couple | femme | homme | peau claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏻" type="tts">bisou : femme, homme, peau modérément foncée et peau claire</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏼">baiser | bisou | couple | femme | homme | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏼" type="tts">bisou : femme, homme, peau modérément foncée et peau modérément claire</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏽">baiser | bisou | couple | femme | homme | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏽" type="tts">bisou : femme, homme, peau modérément foncée et peau légèrement mate</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏾">baiser | bisou | couple | femme | homme | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏾" type="tts">bisou : femme, homme et peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏿">baiser | bisou | couple | femme | homme | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏿" type="tts">bisou : femme, homme, peau modérément foncée et peau foncée</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏻" type="tts">bisou : femme, homme, peau foncée et peau claire</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏼">baiser | bisou | couple | femme | homme | peau foncée | peau modérément claire</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏼" type="tts">bisou : femme, homme, peau foncée et peau modérément claire</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏽" type="tts">bisou : femme, homme, peau foncée et peau légèrement mate</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏾">baiser | bisou | couple | femme | homme | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏾" type="tts">bisou : femme, homme, peau foncée et peau modérément foncée</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏿" type="tts">bisou : femme, homme et peau foncée</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏻" type="tts">bisou : femme, femme et peau claire</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏼">baiser | bisou | couple | femme | peau claire | peau modérément claire</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏼" type="tts">bisou : femme, femme, peau claire et peau modérément claire</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏽" type="tts">bisou : femme, femme, peau claire et peau légèrement mate</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏾">baiser | bisou | couple | femme | peau claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏾" type="tts">bisou : femme, femme, peau claire et peau modérément foncée</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏿" type="tts">bisou : femme, femme, peau claire et peau foncée</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏻">baiser | bisou | couple | femme | peau claire | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏻" type="tts">bisou : femme, femme, peau modérément claire et peau claire</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏼">baiser | bisou | couple | femme | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏼" type="tts">bisou : femme, femme et peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏽">baiser | bisou | couple | femme | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏽" type="tts">bisou : femme, femme, peau modérément claire et peau légèrement mate</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏾">baiser | bisou | couple | femme | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏾" type="tts">bisou : femme, femme, peau modérément claire et peau modérément foncée</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏿">baiser | bisou | couple | femme | peau foncée | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏿" type="tts">bisou : femme, femme, peau modérément claire et peau foncée</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏻" type="tts">bisou : femme, femme, peau légèrement mate et peau claire</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏼">baiser | bisou | couple | femme | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏼" type="tts">bisou : femme, femme, peau légèrement mate et peau modérément claire</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏽" type="tts">bisou : femme, femme et peau légèrement mate</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏾">baiser | bisou | couple | femme | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏾" type="tts">bisou : femme, femme, peau légèrement mate et peau modérément foncée</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏿" type="tts">bisou : femme, femme, peau légèrement mate et peau foncée</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏻">baiser | bisou | couple | femme | peau claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏻" type="tts">bisou : femme, femme, peau modérément foncée et peau claire</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏼">baiser | bisou | couple | femme | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏼" type="tts">bisou : femme, femme, peau modérément foncée et peau modérément claire</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏽">baiser | bisou | couple | femme | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏽" type="tts">bisou : femme, femme, peau modérément foncée et peau légèrement mate</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏾">baiser | bisou | couple | femme | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏾" type="tts">bisou : femme, femme et peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏿">baiser | bisou | couple | femme | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏿" type="tts">bisou : femme, femme, peau modérément foncée et peau foncée</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏻" type="tts">bisou : femme, femme, peau foncée et peau claire</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏼">baiser | bisou | couple | femme | peau foncée | peau modérément claire</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏼" type="tts">bisou : femme, femme, peau foncée et peau modérément claire</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏽" type="tts">bisou : femme, femme, peau foncée et peau légèrement mate</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏾">baiser | bisou | couple | femme | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏾" type="tts">bisou : femme, femme, peau foncée et peau modérément foncée</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏿" type="tts">bisou : femme, femme et peau foncée</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏻" type="tts">couple avec cœur : femme, homme et peau claire</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏼">amour | cœur | couple | couple avec cœur | femme | homme | peau claire | peau modérément claire</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏼" type="tts">couple avec cœur : femme, homme, peau claire et peau modérément claire</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏽" type="tts">couple avec cœur : femme, homme, peau claire et peau légèrement mate</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏾">amour | cœur | couple | couple avec cœur | femme | homme | peau claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏾" type="tts">couple avec cœur : femme, homme, peau claire et peau modérément foncée</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏿" type="tts">couple avec cœur : femme, homme, peau claire et peau foncée</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏻">amour | cœur | couple | couple avec cœur | femme | homme | peau claire | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏻" type="tts">couple avec cœur : femme, homme, peau modérément claire et peau claire</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏼">amour | cœur | couple | couple avec cœur | femme | homme | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏼" type="tts">couple avec cœur : femme, homme et peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏽">amour | cœur | couple | couple avec cœur | femme | homme | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏽" type="tts">couple avec cœur : femme, homme, peau modérément claire et peau légèrement mate</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏾">amour | cœur | couple | couple avec cœur | femme | homme | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏾" type="tts">couple avec cœur : femme, homme, peau modérément claire et peau modérément foncée</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏿">amour | cœur | couple | couple avec cœur | femme | homme | peau foncée | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏿" type="tts">couple avec cœur : femme, homme, peau modérément claire et peau foncée</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏻" type="tts">couple avec cœur : femme, homme, peau légèrement mate et peau claire</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏼">amour | cœur | couple | couple avec cœur | femme | homme | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏼" type="tts">couple avec cœur : femme, homme, peau légèrement mate et peau modérément claire</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏽" type="tts">couple avec cœur : femme, homme et peau légèrement mate</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏾">amour | cœur | couple | couple avec cœur | femme | homme | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏾" type="tts">couple avec cœur : femme, homme, peau légèrement mate et peau modérément foncée</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏿" type="tts">couple avec cœur : femme, homme, peau légèrement mate et peau foncée</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏻">amour | cœur | couple | couple avec cœur | femme | homme | peau claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏻" type="tts">couple avec cœur : femme, homme, peau modérément foncée et peau claire</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏼">amour | cœur | couple | couple avec cœur | femme | homme | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏼" type="tts">couple avec cœur : femme, homme, peau modérément foncée et peau modérément claire</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏽">amour | cœur | couple | couple avec cœur | femme | homme | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏽" type="tts">couple avec cœur : femme, homme, peau modérément foncée et peau légèrement mate</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏾">amour | cœur | couple | couple avec cœur | femme | homme | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏾" type="tts">couple avec cœur : femme, homme et peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏿">amour | cœur | couple | couple avec cœur | femme | homme | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏿" type="tts">couple avec cœur : femme, homme, peau modérément foncée et peau foncée</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏻" type="tts">couple avec cœur : femme, homme, peau foncée et peau claire</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏼">amour | cœur | couple | couple avec cœur | femme | homme | peau foncée | peau modérément claire</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏼" type="tts">couple avec cœur : femme, homme, peau foncée et peau modérément claire</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏽" type="tts">couple avec cœur : femme, homme, peau foncée et peau légèrement mate</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏾">amour | cœur | couple | couple avec cœur | femme | homme | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏾" type="tts">couple avec cœur : femme, homme, peau foncée et peau modérément foncée</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏿" type="tts">couple avec cœur : femme, homme et peau foncée</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏻" type="tts">couple avec cœur : femme, femme et peau claire</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏼">amour | cœur | couple | couple avec cœur | femme | peau claire | peau modérément claire</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏼" type="tts">couple avec cœur : femme, femme, peau claire et peau modérément claire</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏽" type="tts">couple avec cœur : femme, femme, peau claire et peau légèrement mate</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏾">amour | cœur | couple | couple avec cœur | femme | peau claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏾" type="tts">couple avec cœur : femme, femme, peau claire et peau modérément foncée</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏿" type="tts">couple avec cœur : femme, femme, peau claire et peau foncée</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏻">amour | cœur | couple | couple avec cœur | femme | peau claire | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏻" type="tts">couple avec cœur : femme, femme, peau modérément claire et peau claire</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏼">amour | cœur | couple | couple avec cœur | femme | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏼" type="tts">couple avec cœur : femme, femme et peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏽">amour | cœur | couple | couple avec cœur | femme | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏽" type="tts">couple avec cœur : femme, femme, peau modérément claire et peau légèrement mate</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏾">amour | cœur | couple | couple avec cœur | femme | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏾" type="tts">couple avec cœur : femme, femme, peau modérément claire et peau modérément foncée</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏿">amour | cœur | couple | couple avec cœur | femme | peau foncée | peau modérément claire</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏿" type="tts">couple avec cœur : femme, femme, peau modérément claire et peau foncée</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏻" type="tts">couple avec cœur : femme, femme, peau légèrement mate et peau claire</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏼">amour | cœur | couple | couple avec cœur | femme | peau légèrement mate | peau modérément claire</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏼" type="tts">couple avec cœur : femme, femme, peau légèrement mate et peau modérément claire</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏽" type="tts">couple avec cœur : femme, femme et peau légèrement mate</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏾">amour | cœur | couple | couple avec cœur | femme | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏾" type="tts">couple avec cœur : femme, femme, peau légèrement mate et peau modérément foncée</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏿" type="tts">couple avec cœur : femme, femme, peau légèrement mate et peau foncée</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏻">amour | cœur | couple | couple avec cœur | femme | peau claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏻" type="tts">couple avec cœur : femme, femme, peau modérément foncée et peau claire</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏼">amour | cœur | couple | couple avec cœur | femme | peau modérément claire | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏼" type="tts">couple avec cœur : femme, femme, peau modérément foncée et peau modérément claire</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏽">amour | cœur | couple | couple avec cœur | femme | peau légèrement mate | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏽" type="tts">couple avec cœur : femme, femme, peau modérément foncée et peau légèrement mate</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏾">amour | cœur | couple | couple avec cœur | femme | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏾" type="tts">couple avec cœur : femme, femme et peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏿">amour | cœur | couple | couple avec cœur | femme | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏿" type="tts">couple avec cœur : femme, femme, peau modérément foncée et peau foncée</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏻" type="tts">couple avec cœur : femme, femme, peau foncée et peau claire</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏼">amour | cœur | couple | couple avec cœur | femme | peau foncée | peau modérément claire</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏼" type="tts">couple avec cœur : femme, femme, peau foncée et peau modérément claire</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏽" type="tts">couple avec cœur : femme, femme, peau foncée et peau légèrement mate</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏾">amour | cœur | couple | couple avec cœur | femme | peau foncée | peau modérément foncée</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏾" type="tts">couple avec cœur : femme, femme, peau foncée et peau modérément foncée</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏿" type="tts">couple avec cœur : femme, femme et peau foncée</annotation>
 		<annotation cp="👩‍🦰">adulte | cheveux roux | femme</annotation>
 		<annotation cp="👩‍🦰" type="tts">femme : cheveux roux</annotation>
 		<annotation cp="👩🏻‍🦰">adulte | cheveux roux | femme | peau claire</annotation>
@@ -3000,6 +3314,9 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="🏴󠁧󠁢󠁥󠁮󠁧󠁿" type="tts">drapeau : Angleterre</annotation>
 		<annotation cp="🏴󠁧󠁢󠁳󠁣󠁴󠁿" type="tts">drapeau : Écosse</annotation>
 		<annotation cp="🏴󠁧󠁢󠁷󠁬󠁳󠁿" type="tts">drapeau : Pays de Galles</annotation>
+		<annotation cp="¤" type="tts">Devise inconnue</annotation>
+		<annotation cp="₭" type="tts">kip laotien</annotation>
+		<annotation cp="₼" type="tts">manat azerbaïdjanais</annotation>
 		<annotation cp="0⃣">dessus de touche</annotation>
 		<annotation cp="0⃣" type="tts">dessus de touche : 0</annotation>
 		<annotation cp="1⃣">dessus de touche</annotation>

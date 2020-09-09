@@ -462,6 +462,86 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👱🏾" type="tts">szőke hajú ember: közepesen sötét bőrtónus</annotation>
 		<annotation cp="👱🏿">sötét bőrtónus | szőke | szőke hajú ember</annotation>
 		<annotation cp="👱🏿" type="tts">szőke hajú ember: sötét bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏼">csók | felnőtt | közepesen világos bőrtónus | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏼" type="tts">csók: felnőtt, felnőtt, világos bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏽">csók | felnőtt | közepes bőrtónus | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏽" type="tts">csók: felnőtt, felnőtt, világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏾">csók | felnőtt | közepesen sötét bőrtónus | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏾" type="tts">csók: felnőtt, felnőtt, világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏿">csók | felnőtt | pár | romantika | sötét bőrtónus | világos bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍💋‍🧑🏿" type="tts">csók: felnőtt, felnőtt, világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏻">csók | felnőtt | közepesen világos bőrtónus | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏻" type="tts">csók: felnőtt, felnőtt, közepesen világos bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏽">csók | felnőtt | közepes bőrtónus | közepesen világos bőrtónus | pár | romantika</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏽" type="tts">csók: felnőtt, felnőtt, közepesen világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏾">csók | felnőtt | közepesen sötét bőrtónus | közepesen világos bőrtónus | pár | romantika</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏾" type="tts">csók: felnőtt, felnőtt, közepesen világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏿">csók | felnőtt | közepesen világos bőrtónus | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="🧑🏼‍❤‍💋‍🧑🏿" type="tts">csók: felnőtt, felnőtt, közepesen világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏻">csók | felnőtt | közepes bőrtónus | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏻" type="tts">csók: felnőtt, felnőtt, közepes bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏼">csók | felnőtt | közepes bőrtónus | közepesen világos bőrtónus | pár | romantika</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏼" type="tts">csók: felnőtt, felnőtt, közepes bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏾">csók | felnőtt | közepes bőrtónus | közepesen sötét bőrtónus | pár | romantika</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏾" type="tts">csók: felnőtt, felnőtt, közepes bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏿">csók | felnőtt | közepes bőrtónus | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="🧑🏽‍❤‍💋‍🧑🏿" type="tts">csók: felnőtt, felnőtt, közepes bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏻">csók | felnőtt | közepesen sötét bőrtónus | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏻" type="tts">csók: felnőtt, felnőtt, közepesen sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏼">csók | felnőtt | közepesen sötét bőrtónus | közepesen világos bőrtónus | pár | romantika</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏼" type="tts">csók: felnőtt, felnőtt, közepesen sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏽">csók | felnőtt | közepes bőrtónus | közepesen sötét bőrtónus | pár | romantika</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏽" type="tts">csók: felnőtt, felnőtt, közepesen sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏿">csók | felnőtt | közepesen sötét bőrtónus | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="🧑🏾‍❤‍💋‍🧑🏿" type="tts">csók: felnőtt, felnőtt, közepesen sötét bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏻">csók | felnőtt | pár | romantika | sötét bőrtónus | világos bőrtónus</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏻" type="tts">csók: felnőtt, felnőtt, sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏼">csók | felnőtt | közepesen világos bőrtónus | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏼" type="tts">csók: felnőtt, felnőtt, sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏽">csók | felnőtt | közepes bőrtónus | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏽" type="tts">csók: felnőtt, felnőtt, sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏾">csók | felnőtt | közepesen sötét bőrtónus | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="🧑🏿‍❤‍💋‍🧑🏾" type="tts">csók: felnőtt, felnőtt, sötét bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏼">felnőtt | közepesen világos bőrtónus | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏼" type="tts">pár szívvel: felnőtt, felnőtt, világos bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏽">felnőtt | közepes bőrtónus | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏽" type="tts">pár szívvel: felnőtt, felnőtt, világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏾">felnőtt | közepesen sötét bőrtónus | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏾" type="tts">pár szívvel: felnőtt, felnőtt, világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏿">felnőtt | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="🧑🏻‍❤‍🧑🏿" type="tts">pár szívvel: felnőtt, felnőtt, világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏻">felnőtt | közepesen világos bőrtónus | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏻" type="tts">pár szívvel: felnőtt, felnőtt, közepesen világos bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏽">felnőtt | közepes bőrtónus | közepesen világos bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏽" type="tts">pár szívvel: felnőtt, felnőtt, közepesen világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏾">felnőtt | közepesen sötét bőrtónus | közepesen világos bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏾" type="tts">pár szívvel: felnőtt, felnőtt, közepesen világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏿">felnőtt | közepesen világos bőrtónus | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="🧑🏼‍❤‍🧑🏿" type="tts">pár szívvel: felnőtt, felnőtt, közepesen világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏻">felnőtt | közepes bőrtónus | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏻" type="tts">pár szívvel: felnőtt, felnőtt, közepes bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏼">felnőtt | közepes bőrtónus | közepesen világos bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏼" type="tts">pár szívvel: felnőtt, felnőtt, közepes bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏾">felnőtt | közepes bőrtónus | közepesen sötét bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏾" type="tts">pár szívvel: felnőtt, felnőtt, közepes bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏿">felnőtt | közepes bőrtónus | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="🧑🏽‍❤‍🧑🏿" type="tts">pár szívvel: felnőtt, felnőtt, közepes bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏻">felnőtt | közepesen sötét bőrtónus | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏻" type="tts">pár szívvel: felnőtt, felnőtt, közepesen sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏼">felnőtt | közepesen sötét bőrtónus | közepesen világos bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏼" type="tts">pár szívvel: felnőtt, felnőtt, közepesen sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏽">felnőtt | közepes bőrtónus | közepesen sötét bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏽" type="tts">pár szívvel: felnőtt, felnőtt, közepesen sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏿">felnőtt | közepesen sötét bőrtónus | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="🧑🏾‍❤‍🧑🏿" type="tts">pár szívvel: felnőtt, felnőtt, közepesen sötét bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏻">felnőtt | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏻" type="tts">pár szívvel: felnőtt, felnőtt, sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏼">felnőtt | közepesen világos bőrtónus | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏼" type="tts">pár szívvel: felnőtt, felnőtt, sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏽">felnőtt | közepes bőrtónus | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏽" type="tts">pár szívvel: felnőtt, felnőtt, sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏾">felnőtt | közepesen sötét bőrtónus | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="🧑🏿‍❤‍🧑🏾" type="tts">pár szívvel: felnőtt, felnőtt, sötét bőrtónus és közepesen sötét bőrtónus</annotation>
 		<annotation cp="🧑‍🦰">felnőtt | vörös haj</annotation>
 		<annotation cp="🧑‍🦰" type="tts">felnőtt: vörös haj</annotation>
 		<annotation cp="🧑🏻‍🦰">felnőtt | világos bőrtónus | vörös haj</annotation>
@@ -530,6 +610,16 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🧔🏾" type="tts">szakállas ember: közepesen sötét bőrtónus</annotation>
 		<annotation cp="🧔🏿">sötét bőrtónus | szakáll | szakállas ember</annotation>
 		<annotation cp="🧔🏿" type="tts">szakállas ember: sötét bőrtónus</annotation>
+		<annotation cp="🧔🏻‍♂">férfi: szakáll | szakáll | világos bőrtónus</annotation>
+		<annotation cp="🧔🏻‍♂" type="tts">férfi: világos bőrtónus és szakáll</annotation>
+		<annotation cp="🧔🏼‍♂">férfi: szakáll | közepesen világos bőrtónus | szakáll</annotation>
+		<annotation cp="🧔🏼‍♂" type="tts">férfi: közepesen világos bőrtónus és szakáll</annotation>
+		<annotation cp="🧔🏽‍♂">férfi: szakáll | közepes bőrtónus | szakáll</annotation>
+		<annotation cp="🧔🏽‍♂" type="tts">férfi: közepes bőrtónus és szakáll</annotation>
+		<annotation cp="🧔🏾‍♂">férfi: szakáll | közepesen sötét bőrtónus | szakáll</annotation>
+		<annotation cp="🧔🏾‍♂" type="tts">férfi: közepesen sötét bőrtónus és szakáll</annotation>
+		<annotation cp="🧔🏿‍♂">férfi: szakáll | sötét bőrtónus | szakáll</annotation>
+		<annotation cp="🧔🏿‍♂" type="tts">férfi: sötét bőrtónus és szakáll</annotation>
 		<annotation cp="👱🏻‍♂">férfi | szőke | világos bőrtónus</annotation>
 		<annotation cp="👱🏻‍♂" type="tts">szőke férfi: világos bőrtónus</annotation>
 		<annotation cp="👱🏼‍♂">férfi | közepesen világos bőrtónus | szőke</annotation>
@@ -540,6 +630,106 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👱🏾‍♂" type="tts">szőke férfi: közepesen sötét bőrtónus</annotation>
 		<annotation cp="👱🏿‍♂">férfi | sötét bőrtónus | szőke</annotation>
 		<annotation cp="👱🏿‍♂" type="tts">szőke férfi: sötét bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏻">csók | férfi | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏻" type="tts">csók: férfi, férfi és világos bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏼">csók | férfi | közepesen világos bőrtónus | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏼" type="tts">csók: férfi, férfi, világos bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏽">csók | férfi | közepes bőrtónus | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏽" type="tts">csók: férfi, férfi, világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏾">csók | férfi | közepesen sötét bőrtónus | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏾" type="tts">csók: férfi, férfi, világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏿">csók | férfi | pár | romantika | sötét bőrtónus | világos bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍💋‍👨🏿" type="tts">csók: férfi, férfi, világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏻">csók | férfi | közepesen világos bőrtónus | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏻" type="tts">csók: férfi, férfi, közepesen világos bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏼">csók | férfi | közepesen világos bőrtónus | pár | romantika</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏼" type="tts">csók: férfi, férfi és közepesen világos bőrtónus</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏽">csók | férfi | közepes bőrtónus | közepesen világos bőrtónus | pár | romantika</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏽" type="tts">csók: férfi, férfi, közepesen világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏾">csók | férfi | közepesen sötét bőrtónus | közepesen világos bőrtónus | pár | romantika</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏾" type="tts">csók: férfi, férfi, közepesen világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏿">csók | férfi | közepesen világos bőrtónus | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👨🏼‍❤‍💋‍👨🏿" type="tts">csók: férfi, férfi, közepesen világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏻">csók | férfi | közepes bőrtónus | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏻" type="tts">csók: férfi, férfi, közepes bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏼">csók | férfi | közepes bőrtónus | közepesen világos bőrtónus | pár | romantika</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏼" type="tts">csók: férfi, férfi, közepes bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏽">csók | férfi | közepes bőrtónus | pár | romantika</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏽" type="tts">csók: férfi, férfi és közepes bőrtónus</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏾">csók | férfi | közepes bőrtónus | közepesen sötét bőrtónus | pár | romantika</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏾" type="tts">csók: férfi, férfi, közepes bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏿">csók | férfi | közepes bőrtónus | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👨🏽‍❤‍💋‍👨🏿" type="tts">csók: férfi, férfi, közepes bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏻">csók | férfi | közepesen sötét bőrtónus | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏻" type="tts">csók: férfi, férfi, közepesen sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏼">csók | férfi | közepesen sötét bőrtónus | közepesen világos bőrtónus | pár | romantika</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏼" type="tts">csók: férfi, férfi, közepesen sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏽">csók | férfi | közepes bőrtónus | közepesen sötét bőrtónus | pár | romantika</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏽" type="tts">csók: férfi, férfi, közepesen sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏾">csók | férfi | közepesen sötét bőrtónus | pár | romantika</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏾" type="tts">csók: férfi, férfi és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏿">csók | férfi | közepesen sötét bőrtónus | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👨🏾‍❤‍💋‍👨🏿" type="tts">csók: férfi, férfi, közepesen sötét bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏻">csók | férfi | pár | romantika | sötét bőrtónus | világos bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏻" type="tts">csók: férfi, férfi, sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏼">csók | férfi | közepesen világos bőrtónus | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏼" type="tts">csók: férfi, férfi, sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏽">csók | férfi | közepes bőrtónus | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏽" type="tts">csók: férfi, férfi, sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏾">csók | férfi | közepesen sötét bőrtónus | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏾" type="tts">csók: férfi, férfi, sötét bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏿">csók | férfi | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍💋‍👨🏿" type="tts">csók: férfi, férfi és sötét bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏻">férfi | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏻" type="tts">pár szívvel: férfi, férfi és világos bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏼">férfi | közepesen világos bőrtónus | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏼" type="tts">pár szívvel: férfi, férfi, világos bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏽">férfi | közepes bőrtónus | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏽" type="tts">pár szívvel: férfi, férfi, világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏾">férfi | közepesen sötét bőrtónus | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏾" type="tts">pár szívvel: férfi, férfi, világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏿">férfi | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👨🏻‍❤‍👨🏿" type="tts">pár szívvel: férfi, férfi, világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏻">férfi | közepesen világos bőrtónus | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏻" type="tts">pár szívvel: férfi, férfi, közepesen világos bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏼">férfi | közepesen világos bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏼" type="tts">pár szívvel: férfi, férfi és közepesen világos bőrtónus</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏽">férfi | közepes bőrtónus | közepesen világos bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏽" type="tts">pár szívvel: férfi, férfi, közepesen világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏾">férfi | közepesen sötét bőrtónus | közepesen világos bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏾" type="tts">pár szívvel: férfi, férfi, közepesen világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏿">férfi | közepesen világos bőrtónus | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👨🏼‍❤‍👨🏿" type="tts">pár szívvel: férfi, férfi, közepesen világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏻">férfi | közepes bőrtónus | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏻" type="tts">pár szívvel: férfi, férfi, közepes bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏼">férfi | közepes bőrtónus | közepesen világos bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏼" type="tts">pár szívvel: férfi, férfi, közepes bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏽">férfi | közepes bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏽" type="tts">pár szívvel: férfi, férfi és közepes bőrtónus</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏾">férfi | közepes bőrtónus | közepesen sötét bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏾" type="tts">pár szívvel: férfi, férfi, közepes bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏿">férfi | közepes bőrtónus | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👨🏽‍❤‍👨🏿" type="tts">pár szívvel: férfi, férfi, közepes bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏻">férfi | közepesen sötét bőrtónus | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏻" type="tts">pár szívvel: férfi, férfi, közepesen sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏼">férfi | közepesen sötét bőrtónus | közepesen világos bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏼" type="tts">pár szívvel: férfi, férfi, közepesen sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏽">férfi | közepes bőrtónus | közepesen sötét bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏽" type="tts">pár szívvel: férfi, férfi, közepesen sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏾">férfi | közepesen sötét bőrtónus | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏾" type="tts">pár szívvel: férfi, férfi és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏿">férfi | közepesen sötét bőrtónus | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👨🏾‍❤‍👨🏿" type="tts">pár szívvel: férfi, férfi, közepesen sötét bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏻">férfi | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏻" type="tts">pár szívvel: férfi, férfi, sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏼">férfi | közepesen világos bőrtónus | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏼" type="tts">pár szívvel: férfi, férfi, sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏽">férfi | közepes bőrtónus | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏽" type="tts">pár szívvel: férfi, férfi, sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏾">férfi | közepesen sötét bőrtónus | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏾" type="tts">pár szívvel: férfi, férfi, sötét bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏿">férfi | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👨🏿‍❤‍👨🏿" type="tts">pár szívvel: férfi, férfi és sötét bőrtónus</annotation>
 		<annotation cp="👨‍🦰">férfi | vörös haj</annotation>
 		<annotation cp="👨‍🦰" type="tts">férfi: vörös haj</annotation>
 		<annotation cp="👨🏻‍🦰">férfi | világos bőrtónus | vörös haj</annotation>
@@ -588,26 +778,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👨🏾‍🦲" type="tts">férfi: közepesen sötét bőrtónus és kopasz</annotation>
 		<annotation cp="👨🏿‍🦲">férfi | kopasz | sötét bőrtónus</annotation>
 		<annotation cp="👨🏿‍🦲" type="tts">férfi: sötét bőrtónus és kopasz</annotation>
-		<annotation cp="🧔🏻‍♀">nő: szakáll | szakáll | világos bőrtónus</annotation>
-		<annotation cp="🧔🏻‍♀" type="tts">nő: világos bőrtónus és szakáll</annotation>
-		<annotation cp="🧔🏼‍♀">közepesen világos bőrtónus | nő: szakáll | szakáll</annotation>
-		<annotation cp="🧔🏼‍♀" type="tts">nő: közepesen világos bőrtónus és szakáll</annotation>
-		<annotation cp="🧔🏽‍♀">közepes bőrtónus | nő: szakáll | szakáll</annotation>
-		<annotation cp="🧔🏽‍♀" type="tts">nő: közepes bőrtónus és szakáll</annotation>
-		<annotation cp="🧔🏾‍♀">közepesen sötét bőrtónus | nő: szakáll | szakáll</annotation>
-		<annotation cp="🧔🏾‍♀" type="tts">nő: közepesen sötét bőrtónus és szakáll</annotation>
-		<annotation cp="🧔🏿‍♀">nő: szakáll | sötét bőrtónus | szakáll</annotation>
-		<annotation cp="🧔🏿‍♀" type="tts">nő: sötét bőrtónus és szakáll</annotation>
-		<annotation cp="🧔🏻‍♂">férfi: szakáll | szakáll | világos bőrtónus</annotation>
-		<annotation cp="🧔🏻‍♂" type="tts">férfi: világos bőrtónus és szakáll</annotation>
-		<annotation cp="🧔🏼‍♂">férfi: szakáll | közepesen világos bőrtónus | szakáll</annotation>
-		<annotation cp="🧔🏼‍♂" type="tts">férfi: közepesen világos bőrtónus és szakáll</annotation>
-		<annotation cp="🧔🏽‍♂">férfi: szakáll | közepes bőrtónus | szakáll</annotation>
-		<annotation cp="🧔🏽‍♂" type="tts">férfi: közepes bőrtónus és szakáll</annotation>
-		<annotation cp="🧔🏾‍♂">férfi: szakáll | közepesen sötét bőrtónus | szakáll</annotation>
-		<annotation cp="🧔🏾‍♂" type="tts">férfi: közepesen sötét bőrtónus és szakáll</annotation>
-		<annotation cp="🧔🏿‍♂">férfi: szakáll | sötét bőrtónus | szakáll</annotation>
-		<annotation cp="🧔🏿‍♂" type="tts">férfi: sötét bőrtónus és szakáll</annotation>
 		<annotation cp="👩🏻">nő | világos bőrtónus</annotation>
 		<annotation cp="👩🏻" type="tts">nő: világos bőrtónus</annotation>
 		<annotation cp="👩🏼">közepesen világos bőrtónus | nő</annotation>
@@ -618,6 +788,16 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👩🏾" type="tts">nő: közepesen sötét bőrtónus</annotation>
 		<annotation cp="👩🏿">nő | sötét bőrtónus</annotation>
 		<annotation cp="👩🏿" type="tts">nő: sötét bőrtónus</annotation>
+		<annotation cp="🧔🏻‍♀">nő: szakáll | szakáll | világos bőrtónus</annotation>
+		<annotation cp="🧔🏻‍♀" type="tts">nő: világos bőrtónus és szakáll</annotation>
+		<annotation cp="🧔🏼‍♀">közepesen világos bőrtónus | nő: szakáll | szakáll</annotation>
+		<annotation cp="🧔🏼‍♀" type="tts">nő: közepesen világos bőrtónus és szakáll</annotation>
+		<annotation cp="🧔🏽‍♀">közepes bőrtónus | nő: szakáll | szakáll</annotation>
+		<annotation cp="🧔🏽‍♀" type="tts">nő: közepes bőrtónus és szakáll</annotation>
+		<annotation cp="🧔🏾‍♀">közepesen sötét bőrtónus | nő: szakáll | szakáll</annotation>
+		<annotation cp="🧔🏾‍♀" type="tts">nő: közepesen sötét bőrtónus és szakáll</annotation>
+		<annotation cp="🧔🏿‍♀">nő: szakáll | sötét bőrtónus | szakáll</annotation>
+		<annotation cp="🧔🏿‍♀" type="tts">nő: sötét bőrtónus és szakáll</annotation>
 		<annotation cp="👱🏻‍♀">nő | szőke | világos bőrtónus</annotation>
 		<annotation cp="👱🏻‍♀" type="tts">szőke nő: világos bőrtónus</annotation>
 		<annotation cp="👱🏼‍♀">közepesen világos bőrtónus | nő | szőke</annotation>
@@ -628,6 +808,206 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👱🏾‍♀" type="tts">szőke nő: közepesen sötét bőrtónus</annotation>
 		<annotation cp="👱🏿‍♀">nő | sötét bőrtónus | szőke</annotation>
 		<annotation cp="👱🏿‍♀" type="tts">szőke nő: sötét bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏻">csók | férfi | nő | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏻" type="tts">csók: nő, férfi és világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏼">csók | férfi | közepesen világos bőrtónus | nő | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏼" type="tts">csók: nő, férfi, világos bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏽">csók | férfi | közepes bőrtónus | nő | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏽" type="tts">csók: nő, férfi, világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏾">csók | férfi | közepesen sötét bőrtónus | nő | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏾" type="tts">csók: nő, férfi, világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏿">csók | férfi | nő | pár | romantika | sötét bőrtónus | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👨🏿" type="tts">csók: nő, férfi, világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏻">csók | férfi | közepesen világos bőrtónus | nő | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏻" type="tts">csók: nő, férfi, közepesen világos bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏼">csók | férfi | közepesen világos bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏼" type="tts">csók: nő, férfi és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏽">csók | férfi | közepes bőrtónus | közepesen világos bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏽" type="tts">csók: nő, férfi, közepesen világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏾">csók | férfi | közepesen sötét bőrtónus | közepesen világos bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏾" type="tts">csók: nő, férfi, közepesen világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏿">csók | férfi | közepesen világos bőrtónus | nő | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👨🏿" type="tts">csók: nő, férfi, közepesen világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏻">csók | férfi | közepes bőrtónus | nő | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏻" type="tts">csók: nő, férfi, közepes bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏼">csók | férfi | közepes bőrtónus | közepesen világos bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏼" type="tts">csók: nő, férfi, közepes bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏽">csók | férfi | közepes bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏽" type="tts">csók: nő, férfi és közepes bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏾">csók | férfi | közepes bőrtónus | közepesen sötét bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏾" type="tts">csók: nő, férfi, közepes bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏿">csók | férfi | közepes bőrtónus | nő | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👨🏿" type="tts">csók: nő, férfi, közepes bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏻">csók | férfi | közepesen sötét bőrtónus | nő | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏻" type="tts">csók: nő, férfi, közepesen sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏼">csók | férfi | közepesen sötét bőrtónus | közepesen világos bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏼" type="tts">csók: nő, férfi, közepesen sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏽">csók | férfi | közepes bőrtónus | közepesen sötét bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏽" type="tts">csók: nő, férfi, közepesen sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏾">csók | férfi | közepesen sötét bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏾" type="tts">csók: nő, férfi és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏿">csók | férfi | közepesen sötét bőrtónus | nő | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👨🏿" type="tts">csók: nő, férfi, közepesen sötét bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏻">csók | férfi | nő | pár | romantika | sötét bőrtónus | világos bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏻" type="tts">csók: nő, férfi, sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏼">csók | férfi | közepesen világos bőrtónus | nő | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏼" type="tts">csók: nő, férfi, sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏽">csók | férfi | közepes bőrtónus | nő | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏽" type="tts">csók: nő, férfi, sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏾">csók | férfi | közepesen sötét bőrtónus | nő | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏾" type="tts">csók: nő, férfi, sötét bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏿">csók | férfi | nő | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👨🏿" type="tts">csók: nő, férfi és sötét bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏻">csók | nő | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏻" type="tts">csók: nő, nő és világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏼">csók | közepesen világos bőrtónus | nő | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏼" type="tts">csók: nő, nő, világos bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏽">csók | közepes bőrtónus | nő | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏽" type="tts">csók: nő, nő, világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏾">csók | közepesen sötét bőrtónus | nő | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏾" type="tts">csók: nő, nő, világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏿">csók | nő | pár | romantika | sötét bőrtónus | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍💋‍👩🏿" type="tts">csók: nő, nő, világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏻">csók | közepesen világos bőrtónus | nő | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏻" type="tts">csók: nő, nő, közepesen világos bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏼">csók | közepesen világos bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏼" type="tts">csók: nő, nő és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏽">csók | közepes bőrtónus | közepesen világos bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏽" type="tts">csók: nő, nő, közepesen világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏾">csók | közepesen sötét bőrtónus | közepesen világos bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏾" type="tts">csók: nő, nő, közepesen világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏿">csók | közepesen világos bőrtónus | nő | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍💋‍👩🏿" type="tts">csók: nő, nő, közepesen világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏻">csók | közepes bőrtónus | nő | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏻" type="tts">csók: nő, nő, közepes bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏼">csók | közepes bőrtónus | közepesen világos bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏼" type="tts">csók: nő, nő, közepes bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏽">csók | közepes bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏽" type="tts">csók: nő, nő és közepes bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏾">csók | közepes bőrtónus | közepesen sötét bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏾" type="tts">csók: nő, nő, közepes bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏿">csók | közepes bőrtónus | nő | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍💋‍👩🏿" type="tts">csók: nő, nő, közepes bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏻">csók | közepesen sötét bőrtónus | nő | pár | romantika | világos bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏻" type="tts">csók: nő, nő, közepesen sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏼">csók | közepesen sötét bőrtónus | közepesen világos bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏼" type="tts">csók: nő, nő, közepesen sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏽">csók | közepes bőrtónus | közepesen sötét bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏽" type="tts">csók: nő, nő, közepesen sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏾">csók | közepesen sötét bőrtónus | nő | pár | romantika</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏾" type="tts">csók: nő, nő és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏿">csók | közepesen sötét bőrtónus | nő | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍💋‍👩🏿" type="tts">csók: nő, nő, közepesen sötét bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏻">csók | nő | pár | romantika | sötét bőrtónus | világos bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏻" type="tts">csók: nő, nő, sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏼">csók | közepesen világos bőrtónus | nő | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏼" type="tts">csók: nő, nő, sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏽">csók | közepes bőrtónus | nő | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏽" type="tts">csók: nő, nő, sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏾">csók | közepesen sötét bőrtónus | nő | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏾" type="tts">csók: nő, nő, sötét bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏿">csók | nő | pár | romantika | sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍💋‍👩🏿" type="tts">csók: nő, nő és sötét bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏻">férfi | nő | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏻" type="tts">pár szívvel: nő, férfi és világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏼">férfi | közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏼" type="tts">pár szívvel: nő, férfi, világos bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏽">férfi | közepes bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏽" type="tts">pár szívvel: nő, férfi, világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏾">férfi | közepesen sötét bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏾" type="tts">pár szívvel: nő, férfi, világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏿">férfi | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👨🏿" type="tts">pár szívvel: nő, férfi, világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏻">férfi | közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏻" type="tts">pár szívvel: nő, férfi, közepesen világos bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏼">férfi | közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏼" type="tts">pár szívvel: nő, férfi és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏽">férfi | közepes bőrtónus | közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏽" type="tts">pár szívvel: nő, férfi, közepesen világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏾">férfi | közepesen sötét bőrtónus | közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏾" type="tts">pár szívvel: nő, férfi, közepesen világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏿">férfi | közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👩🏼‍❤‍👨🏿" type="tts">pár szívvel: nő, férfi, közepesen világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏻">férfi | közepes bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏻" type="tts">pár szívvel: nő, férfi, közepes bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏼">férfi | közepes bőrtónus | közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏼" type="tts">pár szívvel: nő, férfi, közepes bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏽">férfi | közepes bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏽" type="tts">pár szívvel: nő, férfi és közepes bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏾">férfi | közepes bőrtónus | közepesen sötét bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏾" type="tts">pár szívvel: nő, férfi, közepes bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏿">férfi | közepes bőrtónus | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👩🏽‍❤‍👨🏿" type="tts">pár szívvel: nő, férfi, közepes bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏻">férfi | közepesen sötét bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏻" type="tts">pár szívvel: nő, férfi, közepesen sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏼">férfi | közepesen sötét bőrtónus | közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏼" type="tts">pár szívvel: nő, férfi, közepesen sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏽">férfi | közepes bőrtónus | közepesen sötét bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏽" type="tts">pár szívvel: nő, férfi, közepesen sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏾">férfi | közepesen sötét bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏾" type="tts">pár szívvel: nő, férfi és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏿">férfi | közepesen sötét bőrtónus | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👩🏾‍❤‍👨🏿" type="tts">pár szívvel: nő, férfi, közepesen sötét bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏻">férfi | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏻" type="tts">pár szívvel: nő, férfi, sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏼">férfi | közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏼" type="tts">pár szívvel: nő, férfi, sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏽">férfi | közepes bőrtónus | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏽" type="tts">pár szívvel: nő, férfi, sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏾">férfi | közepesen sötét bőrtónus | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏾" type="tts">pár szívvel: nő, férfi, sötét bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏿">férfi | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👩🏿‍❤‍👨🏿" type="tts">pár szívvel: nő, férfi és sötét bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏻">nő | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏻" type="tts">pár szívvel: nő, nő és világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏼">közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏼" type="tts">pár szívvel: nő, nő, világos bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏽">közepes bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏽" type="tts">pár szívvel: nő, nő, világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏾">közepesen sötét bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏾" type="tts">pár szívvel: nő, nő, világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏿">nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏻‍❤‍👩🏿" type="tts">pár szívvel: nő, nő, világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏻">közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏻" type="tts">pár szívvel: nő, nő, közepesen világos bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏼">közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏼" type="tts">pár szívvel: nő, nő és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏽">közepes bőrtónus | közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏽" type="tts">pár szívvel: nő, nő, közepesen világos bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏾">közepesen sötét bőrtónus | közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏾" type="tts">pár szívvel: nő, nő, közepesen világos bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏿">közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👩🏼‍❤‍👩🏿" type="tts">pár szívvel: nő, nő, közepesen világos bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏻">közepes bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏻" type="tts">pár szívvel: nő, nő, közepes bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏼">közepes bőrtónus | közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏼" type="tts">pár szívvel: nő, nő, közepes bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏽">közepes bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏽" type="tts">pár szívvel: nő, nő és közepes bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏾">közepes bőrtónus | közepesen sötét bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏾" type="tts">pár szívvel: nő, nő, közepes bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏿">közepes bőrtónus | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👩🏽‍❤‍👩🏿" type="tts">pár szívvel: nő, nő, közepes bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏻">közepesen sötét bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏻" type="tts">pár szívvel: nő, nő, közepesen sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏼">közepesen sötét bőrtónus | közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏼" type="tts">pár szívvel: nő, nő, közepesen sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏽">közepes bőrtónus | közepesen sötét bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏽" type="tts">pár szívvel: nő, nő, közepesen sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏾">közepesen sötét bőrtónus | nő | pár | pár szívvel | romantika | szerelem | szív</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏾" type="tts">pár szívvel: nő, nő és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏿">közepesen sötét bőrtónus | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👩🏾‍❤‍👩🏿" type="tts">pár szívvel: nő, nő, közepesen sötét bőrtónus és sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏻">nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív | világos bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏻" type="tts">pár szívvel: nő, nő, sötét bőrtónus és világos bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏼">közepesen világos bőrtónus | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏼" type="tts">pár szívvel: nő, nő, sötét bőrtónus és közepesen világos bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏽">közepes bőrtónus | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏽" type="tts">pár szívvel: nő, nő, sötét bőrtónus és közepes bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏾">közepesen sötét bőrtónus | nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏾" type="tts">pár szívvel: nő, nő, sötét bőrtónus és közepesen sötét bőrtónus</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏿">nő | pár | pár szívvel | romantika | sötét bőrtónus | szerelem | szív</annotation>
+		<annotation cp="👩🏿‍❤‍👩🏿" type="tts">pár szívvel: nő, nő és sötét bőrtónus</annotation>
 		<annotation cp="👩‍🦰">nő | vörös haj</annotation>
 		<annotation cp="👩‍🦰" type="tts">nő: vörös haj</annotation>
 		<annotation cp="👩🏻‍🦰">nő | világos bőrtónus | vörös haj</annotation>
@@ -3626,6 +4006,26 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🏴󠁧󠁢󠁳󠁣󠁴󠁿" type="tts">zászló: Skócia</annotation>
 		<annotation cp="🏴󠁧󠁢󠁷󠁬󠁳󠁿">zászló</annotation>
 		<annotation cp="🏴󠁧󠁢󠁷󠁬󠁳󠁿" type="tts">zászló: Wales</annotation>
+		<annotation cp="¤" type="tts">ismeretlen pénznem</annotation>
+		<annotation cp="֏" type="tts">örmény dram</annotation>
+		<annotation cp="؋" type="tts">afgán afghani</annotation>
+		<annotation cp="৳" type="tts">bangladesi taka</annotation>
+		<annotation cp="฿" type="tts">thai baht</annotation>
+		<annotation cp="៛" type="tts">kambodzsai riel</annotation>
+		<annotation cp="₡" type="tts">Costa Rica-i colon</annotation>
+		<annotation cp="₦" type="tts">nigériai naira</annotation>
+		<annotation cp="₧" type="tts">Spanyol peseta</annotation>
+		<annotation cp="₪" type="tts">izraeli új sékel</annotation>
+		<annotation cp="₫" type="tts">vietnámi dong</annotation>
+		<annotation cp="₭" type="tts">laoszi kip</annotation>
+		<annotation cp="₮" type="tts">mongóliai tugrik</annotation>
+		<annotation cp="₲" type="tts">paraguayi guarani</annotation>
+		<annotation cp="₴" type="tts">ukrán hrivnya</annotation>
+		<annotation cp="₵" type="tts">ghánai cedi</annotation>
+		<annotation cp="₸" type="tts">kazahsztáni tenge</annotation>
+		<annotation cp="₺" type="tts">török líra</annotation>
+		<annotation cp="₼" type="tts">azerbajdzsáni manat</annotation>
+		<annotation cp="₾" type="tts">grúz lari</annotation>
 		<annotation cp="0⃣">gombfej</annotation>
 		<annotation cp="0⃣" type="tts">gombfej: 0</annotation>
 		<annotation cp="1⃣">gombfej</annotation>
