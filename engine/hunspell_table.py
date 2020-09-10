@@ -460,13 +460,48 @@ class TypingBoosterEngine(IBus.Engine):
         #          spell_checking: Boolean, True if this candidate was produced
         #                          by spellchecking, False if not.
         self._candidates = []
-        self._candidates_case_mode = 'orig'
+        self._current_case_mode = 'orig'
         # 'orig': candidates have original case.
         # 'capitalize': candidates have been converted to the first character
         #               in upper case.
         # 'title': candidates have been converted to Python’s title case.
         # 'upper': candidates have been completely converted to upper case.
         # 'lower': candidates have been completely converted to lower case.
+        #
+        # 'title' does not seem very useful, so when using 'next' or
+        # 'previous', 'title' is skipped.
+        self._case_modes = {
+            'orig': {
+                'next': 'capitalize',
+                'previous': 'lower',
+                'function': lambda x: x},
+            'capitalize': {
+                'next': 'upper',
+                'previous': 'lower',
+                'function': getattr(str, 'capitalize')},
+            'title': {
+                'next': 'upper',
+                'previous': 'capitalize',
+                # Python’s title case has problems when the string is in NFD.
+                # In that case something like this can happen:
+                #
+                # >>> str.title('bücher')
+                # 'BüCher'
+                #
+                # Therefore, make sure the case change is done after the string
+                # is converted to NFC.
+                'function': lambda x: getattr(
+                    str, 'title')(unicodedata.normalize('NFC', x))},
+            'upper': {
+                'next': 'lower',
+                'previous': 'capitalize',
+                'function': getattr(str, 'upper')},
+            'lower': {
+                'next': 'capitalize',
+                'previous': 'upper',
+                'function': getattr(str, 'lower')},
+        }
+
         self._lookup_table = self._get_new_lookup_table()
 
         self.input_mode_properties = {
@@ -604,7 +639,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._lookup_table.set_cursor_visible(False)
         self._is_candidate_auto_selected = False
         self._candidates = []
-        self._candidates_case_mode = 'orig'
+        self._current_case_mode = 'orig'
         self._typed_compose_sequence = []
         self._prev_key = None
         self._typed_string = []
@@ -820,7 +855,6 @@ class TypingBoosterEngine(IBus.Engine):
             # empty input does not pointlessly try to find candidates.
             return
         self._candidates = []
-        self._candidates_case_mode = 'orig'
         phrase_frequencies = {}
         self.is_lookup_table_enabled_by_min_char_complete = False
         for ime in self._current_imes:
@@ -956,6 +990,8 @@ class TypingBoosterEngine(IBus.Engine):
             self._append_candidate_to_lookup_table(
                 phrase=cand[0], user_freq=cand[1], comment=cand[2],
                 from_user_db=cand[3], spell_checking=cand[4])
+        if self._current_case_mode != 'orig':
+            self._case_mode_change(mode=self._current_case_mode)
         return
 
     def _arrow_down(self):
@@ -1853,6 +1889,7 @@ class TypingBoosterEngine(IBus.Engine):
         _str = unicodedata.normalize(
             'NFC', self._transliterated_strings[
                 self.get_current_imes()[0]])
+        _str = self._case_modes[self._current_case_mode]['function'](_str)
         if self._hide_input:
             _str = '*' * len(_str)
         if _str == '':
@@ -2199,8 +2236,8 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_lookup_table_and_aux()
         self._lookup_table_shows_related_candidates = True
 
-    def _candidates_case_mode_change(self, mode='next'):
-        '''Change the case of the current candidates
+    def _case_mode_change(self, mode='next'):
+        '''Change the case of the current candidates and the preedit
 
         Change the case of all the candidates in the current list of
         candidates. Then create a new lookup table and fill it
@@ -2211,9 +2248,6 @@ class TypingBoosterEngine(IBus.Engine):
         Available modes:
 
             'next', 'previous', 'capitalize', 'title', 'upper', 'lower'
-
-        'title' does not seem very useful, so when using 'next' or
-        'previous', 'title' is skipped.
 
         :return: True if something was done, False if not.
         :rtype: Boolean
@@ -2233,47 +2267,16 @@ class TypingBoosterEngine(IBus.Engine):
             or not self._candidates
             or not self.get_lookup_table().get_number_of_candidates()):
             return False
-        case_modes = {
-            'orig': {
-                'next': 'capitalize',
-                'previous': 'lower',
-                'function': lambda x: x},
-            'capitalize': {
-                'next': 'upper',
-                'previous': 'lower',
-                'function': getattr(str, 'capitalize')},
-            'title': {
-                'next': 'upper',
-                'previous': 'capitalize',
-                'function': getattr(str, 'title')},
-            'upper': {
-                'next': 'lower',
-                'previous': 'capitalize',
-                'function': getattr(str, 'upper')},
-            'lower': {
-                'next': 'capitalize',
-                'previous': 'upper',
-                'function': getattr(str, 'lower')},
-        }
         if mode in ('next', 'previous'):
-            self._candidates_case_mode = case_modes[
-                self._candidates_case_mode][mode]
+            self._current_case_mode = self._case_modes[
+                self._current_case_mode][mode]
         else:
-            self._candidates_case_mode = mode
-        case_mode_function = case_modes[
-            self._candidates_case_mode]['function']
+            self._current_case_mode = mode
         new_candidates = []
         for cand in self._candidates:
-            # Python’s title case has problems when the string is in NFD.
-            # In that case something like this can happen:
-            #
-            # >>> str.title('bücher')
-            # 'BüCher'
-            #
-            # Therefore, make sure the case change is done after the string
-            # is converted to NFC.
             new_candidates.append(
-                (case_mode_function(unicodedata.normalize('NFC', cand[0])),
+                (self._case_modes[self._current_case_mode]['function'](
+                    cand[0]),
                  cand[1], cand[2], cand[3], cand[4]))
         self._candidates = new_candidates
         cursor_visible = self.get_lookup_table().cursor_visible
@@ -2285,7 +2288,6 @@ class TypingBoosterEngine(IBus.Engine):
                 from_user_db=cand[3], spell_checking=cand[4])
         self.get_lookup_table().set_cursor_pos(cursor_pos)
         self.get_lookup_table().set_cursor_visible(cursor_visible)
-        self._update_lookup_table_and_aux()
         return True
 
     def _has_transliteration(self, msymbol_list):
@@ -4207,7 +4209,8 @@ class TypingBoosterEngine(IBus.Engine):
         :return: True if the key was completely handled, False if not.
         :rtype: Boolean
         '''
-        self._candidates_case_mode_change(mode='next')
+        self._case_mode_change(mode='next')
+        self._update_lookup_table_and_aux()
         return True
 
     def _command_previous_case_mode(self):
@@ -4216,7 +4219,8 @@ class TypingBoosterEngine(IBus.Engine):
         :return: True if the key was completely handled, False if not.
         :rtype: Boolean
         '''
-        self._candidates_case_mode_change(mode='previous')
+        self._case_mode_change(mode='previous')
+        self._update_lookup_table_and_aux()
         return True
 
     def _command_cancel(self):
@@ -4236,7 +4240,8 @@ class TypingBoosterEngine(IBus.Engine):
             self._update_lookup_table_and_aux()
             return True
         if (self._lookup_table_shows_related_candidates
-            or self._candidates_case_mode != 'orig'):
+            or self._current_case_mode != 'orig'):
+            self._current_case_mode = 'orig'
             # Force an update to the original lookup table:
             self._update_ui()
             return True
@@ -4251,7 +4256,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._update_lookup_table_and_aux()
             self._update_preedit()
             self._candidates = []
-            self._candidates_case_mode = 'orig'
+            self._current_case_mode = 'orig'
             return True
         self._clear_input_and_update_ui()
         self._update_ui()
@@ -5029,6 +5034,8 @@ class TypingBoosterEngine(IBus.Engine):
                         self._remove_string_before_cursor()
                     else:
                         self._remove_character_before_cursor()
+                    if self.is_empty():
+                        self._current_case_mode = 'orig'
                     self._update_ui()
                     return True
                 if (key.val in (IBus.KEY_Delete,)
@@ -5039,6 +5046,8 @@ class TypingBoosterEngine(IBus.Engine):
                         self._remove_string_after_cursor()
                     else:
                         self._remove_character_after_cursor()
+                    if self.is_empty():
+                        self._current_case_mode = 'orig'
                     self._update_ui()
                     return True
             # This key does not only a cursor movement in the preëdit,
@@ -5054,6 +5063,8 @@ class TypingBoosterEngine(IBus.Engine):
             input_phrase = self._transliterators[
                 preedit_ime].transliterate(
                     self._typed_string + [key.msymbol])
+            input_phrase = self._case_modes[
+                self._current_case_mode]['function'](input_phrase)
             # If the transliteration now ends with the commit key, cut
             # it off because the commit key is passed to the
             # application later anyway and we do not want to pass it
@@ -5078,9 +5089,14 @@ class TypingBoosterEngine(IBus.Engine):
                 input_phrase_left = (
                     self._transliterators[preedit_ime].transliterate(
                         self._typed_string[:self._typed_string_cursor]))
+                input_phrase_left = self._case_modes[
+                    self._current_case_mode]['function'](input_phrase_left)
                 input_phrase_right = (
                     self._transliterators[preedit_ime].transliterate(
                         self._typed_string[self._typed_string_cursor:]))
+                if self._current_case_mode == 'upper':
+                    input_phrase_right = self._case_modes[
+                        self._current_case_mode]['function'](input_phrase_right)
                 if input_phrase_left:
                     self._commit_string(
                         input_phrase_left, input_phrase=input_phrase_left)
