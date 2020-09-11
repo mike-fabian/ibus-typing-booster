@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-08-05 10:11+0200\n"
+"POT-Creation-Date: 2020-09-04 15:43+0200\n"
 "PO-Revision-Date: 2020-09-05 10:29+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/ja/>\n"
+"Language-Team: Japanese <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -127,21 +127,21 @@ msgstr "システムのデフォルト"
 msgid "Set Font"
 msgstr "フォントの選択"
 
-#: engine/hunspell_table.py:477 engine/hunspell_table.py:511
-#: engine/hunspell_table.py:532
+#: engine/hunspell_table.py:476 engine/hunspell_table.py:510
+#: engine/hunspell_table.py:531
 msgid "Off"
 msgstr "オフ"
 
-#: engine/hunspell_table.py:482 engine/hunspell_table.py:516
-#: engine/hunspell_table.py:537
+#: engine/hunspell_table.py:481 engine/hunspell_table.py:515
+#: engine/hunspell_table.py:536
 msgid "On"
 msgstr "オン"
 
-#: engine/hunspell_table.py:501
+#: engine/hunspell_table.py:500
 msgid "Input mode"
 msgstr "入力モード"
 
-#: engine/hunspell_table.py:502
+#: engine/hunspell_table.py:501
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr ""
 
@@ -152,7 +152,7 @@ msgstr ""
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:521 engine/hunspell_table.py:523 setup/main.py:455
+#: engine/hunspell_table.py:520 engine/hunspell_table.py:522 setup/main.py:455
 msgid "Unicode symbols and emoji predictions"
 msgstr ""
 
@@ -163,60 +163,60 @@ msgstr ""
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:542 engine/hunspell_table.py:543 setup/main.py:483
+#: engine/hunspell_table.py:541 engine/hunspell_table.py:542 setup/main.py:483
 msgid "Off the record mode"
 msgstr ""
 
-#: engine/hunspell_table.py:1388
+#: engine/hunspell_table.py:1418
 msgid "Highest priority dictionary"
 msgstr ""
 
-#: engine/hunspell_table.py:1389
+#: engine/hunspell_table.py:1419
 msgid "Choose highest priority dictionary"
 msgstr ""
 
-#: engine/hunspell_table.py:1418
+#: engine/hunspell_table.py:1448
 msgid "Preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1419
+#: engine/hunspell_table.py:1449
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1718
+#: engine/hunspell_table.py:1748
 msgid "Setup"
 msgstr "設定"
 
-#: engine/hunspell_table.py:1721 setup/main.py:137
+#: engine/hunspell_table.py:1751 setup/main.py:137
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster の設定"
 
-#: engine/hunspell_table.py:3946
+#: engine/hunspell_table.py:4021
 msgid "Failed to import Google speech-to-text."
 msgstr ""
 
-#: engine/hunspell_table.py:3949
+#: engine/hunspell_table.py:4024
 msgid "Failed to import pyaudio."
 msgstr ""
 
-#: engine/hunspell_table.py:3952
+#: engine/hunspell_table.py:4027
 msgid "Failed to import queue."
 msgstr ""
 
-#: engine/hunspell_table.py:3957
+#: engine/hunspell_table.py:4032
 msgid "No supported language for speech recognition."
 msgstr ""
 
-#: engine/hunspell_table.py:3961
+#: engine/hunspell_table.py:4036
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 
-#: engine/hunspell_table.py:3973
+#: engine/hunspell_table.py:4048
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 
-#: engine/hunspell_table.py:4080
+#: engine/hunspell_table.py:4155
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 
@@ -275,27 +275,27 @@ msgstr "修飾"
 msgid "regional"
 msgstr "地方指示子"
 
-#: engine/itb_util.py:3305 engine/itb_util.py:3617
+#: engine/itb_util.py:3313 engine/itb_util.py:3625
 msgid "File not found"
 msgstr "ファイルが見つかりません"
 
-#: engine/itb_util.py:3308 engine/itb_util.py:3620
+#: engine/itb_util.py:3316 engine/itb_util.py:3628
 msgid "Permission error"
 msgstr "パーミッションエラーです"
 
-#: engine/itb_util.py:3311 engine/itb_util.py:3623
+#: engine/itb_util.py:3319 engine/itb_util.py:3631
 msgid "Unicode decoding error"
 msgstr ""
 
-#: engine/itb_util.py:3314 engine/itb_util.py:3626
+#: engine/itb_util.py:3322 engine/itb_util.py:3634
 msgid "Unknown error"
 msgstr "不明なエラー"
 
-#: engine/itb_util.py:3597
+#: engine/itb_util.py:3605
 msgid "Native Keyboard"
 msgstr ""
 
-#: engine/itb_util.py:3599
+#: engine/itb_util.py:3607
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -305,38 +305,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4077
+#: engine/itb_util.py:4120
 msgid "Key input"
 msgstr "キーの入力"
 
-#: engine/itb_util.py:4083
+#: engine/itb_util.py:4126
 msgid "Cancel"
 msgstr "キャンセル"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4090
+#: engine/itb_util.py:4133
 msgid "Please press a key (or a key combination)"
 msgstr "キーを入力してください"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4095
+#: engine/itb_util.py:4138
 msgid "The dialog will be closed when the key is released"
 msgstr "このダイアログはキーリリース時に閉じられます"
 
-#: engine/itb_util.py:4126
+#: engine/itb_util.py:4170
 msgid "A completion input method to speedup typing."
 msgstr ""
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4135
+#: engine/itb_util.py:4179
 msgid "translator-credits"
 msgstr ""
 
-#: engine/itb_util.py:4143
+#: engine/itb_util.py:4187
 msgid "Online documentation:"
 msgstr "オンラインドキュメント："
 
@@ -344,7 +344,7 @@ msgstr "オンラインドキュメント："
 msgid "Preferences"
 msgstr "設定"
 
-#: setup/main.py:176 setup/main.py:4691
+#: setup/main.py:176 setup/main.py:4624
 msgid "_Close"
 msgstr "閉じる(_C)"
 
@@ -662,7 +662,7 @@ msgstr ""
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr ""
 
-#: setup/main.py:778 setup/main.py:895 setup/main.py:1081 setup/main.py:3431
+#: setup/main.py:778 setup/main.py:895 setup/main.py:1081 setup/main.py:3355
 msgid "Set to default"
 msgstr "デフォルトに設定する"
 
@@ -762,7 +762,7 @@ msgstr "編集"
 msgid "Edit the key bindings for the selected command"
 msgstr ""
 
-#: setup/main.py:1085 setup/main.py:3436
+#: setup/main.py:1085 setup/main.py:3360
 msgid "Set default key bindings for the selected command"
 msgstr ""
 
@@ -1074,7 +1074,7 @@ msgid ""
 msgstr ""
 
 #. Translators:
-#: setup/main.py:1707 setup/main.py:2496
+#: setup/main.py:1707 setup/main.py:2420
 msgid "Set “Google application credentials” .json file:"
 msgstr ""
 
@@ -1098,11 +1098,11 @@ msgstr "絵文字"
 msgid "Are you sure?"
 msgstr "本当によろしいでしょうか？"
 
-#: setup/main.py:1989 setup/main.py:2499 setup/main.py:3503
+#: setup/main.py:1989 setup/main.py:2423 setup/main.py:3427
 msgid "_Cancel"
 msgstr "キャンセル(_C)"
 
-#: setup/main.py:1990 setup/main.py:2500 setup/main.py:3504
+#: setup/main.py:1990 setup/main.py:2424 setup/main.py:3428
 msgid "_OK"
 msgstr "OK(_O)"
 
@@ -1110,24 +1110,24 @@ msgstr "OK(_O)"
 msgid "Another instance of this app is already running."
 msgstr ""
 
-#: setup/main.py:2697
+#: setup/main.py:2621
 msgid "Add dictionary"
 msgstr "辞書を追加する"
 
-#: setup/main.py:2979
+#: setup/main.py:2903
 msgid "Add input method"
 msgstr "入力メソッドを追加する"
 
-#: setup/main.py:3385
+#: setup/main.py:3308
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "コマンド %s のキー割り当ての編集"
 
-#: setup/main.py:3412
+#: setup/main.py:3336
 msgid "Add a key binding"
 msgstr "キー割り当てを追加する"
 
-#: setup/main.py:3424
+#: setup/main.py:3348
 msgid "Remove selected key binding"
 msgstr "キー割り当てを削除する"
 
@@ -1136,22 +1136,22 @@ msgstr "キー割り当てを削除する"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:3484
+#: setup/main.py:3408
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr "すべてのコマンドのキーバインディングをデフォルトに設定したいのですか？"
 
-#: setup/main.py:3500
+#: setup/main.py:3424
 msgid "Open File ..."
 msgstr "ファイルを開く…"
 
-#: setup/main.py:3519
+#: setup/main.py:3443
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr ""
 
-#: setup/main.py:3528
+#: setup/main.py:3452
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr ""
@@ -1166,13 +1166,13 @@ msgstr ""
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:3551
+#: setup/main.py:3475
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr ""
 
-#: setup/main.py:4748
+#: setup/main.py:4681
 msgid "ibus is not running."
 msgstr "ibus が起動していません。"
 

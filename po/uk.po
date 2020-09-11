@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-08-05 10:11+0200\n"
+"POT-Creation-Date: 2020-09-04 15:43+0200\n"
 "PO-Revision-Date: 2020-06-30 10:40+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/ibus-"
@@ -132,21 +132,21 @@ msgstr "Типова системна"
 msgid "Set Font"
 msgstr "Встановити шрифт"
 
-#: engine/hunspell_table.py:477 engine/hunspell_table.py:511
-#: engine/hunspell_table.py:532
+#: engine/hunspell_table.py:476 engine/hunspell_table.py:510
+#: engine/hunspell_table.py:531
 msgid "Off"
 msgstr "Вимкн."
 
-#: engine/hunspell_table.py:482 engine/hunspell_table.py:516
-#: engine/hunspell_table.py:537
+#: engine/hunspell_table.py:481 engine/hunspell_table.py:515
+#: engine/hunspell_table.py:536
 msgid "On"
 msgstr "Увімкн."
 
-#: engine/hunspell_table.py:501
+#: engine/hunspell_table.py:500
 msgid "Input mode"
 msgstr "Режим введення"
 
-#: engine/hunspell_table.py:502
+#: engine/hunspell_table.py:501
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Тут ви можете увімкнути або вимкнути ibus-typing-booster."
 
@@ -157,7 +157,7 @@ msgstr "Тут ви можете увімкнути або вимкнути ibus
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:521 engine/hunspell_table.py:523 setup/main.py:455
+#: engine/hunspell_table.py:520 engine/hunspell_table.py:522 setup/main.py:455
 msgid "Unicode symbols and emoji predictions"
 msgstr "Пропозиці для символів Unicode та емодзі"
 
@@ -168,62 +168,62 @@ msgstr "Пропозиці для символів Unicode та емодзі"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:542 engine/hunspell_table.py:543 setup/main.py:483
+#: engine/hunspell_table.py:541 engine/hunspell_table.py:542 setup/main.py:483
 msgid "Off the record mode"
 msgstr "Режим без запису"
 
-#: engine/hunspell_table.py:1388
+#: engine/hunspell_table.py:1418
 msgid "Highest priority dictionary"
 msgstr "Словник із найвищою пріоритетністю"
 
-#: engine/hunspell_table.py:1389
+#: engine/hunspell_table.py:1419
 msgid "Choose highest priority dictionary"
 msgstr "Виберіть словник із найвищою пріоритетністю"
 
-#: engine/hunspell_table.py:1418
+#: engine/hunspell_table.py:1448
 msgid "Preedit input method"
 msgstr "Спосіб введення попереднього редагування"
 
-#: engine/hunspell_table.py:1419
+#: engine/hunspell_table.py:1449
 msgid "Switch preedit input method"
 msgstr "Перемкнути спосіб введення попереднього редагування"
 
-#: engine/hunspell_table.py:1718
+#: engine/hunspell_table.py:1748
 msgid "Setup"
 msgstr "Налаштування"
 
-#: engine/hunspell_table.py:1721 setup/main.py:137
+#: engine/hunspell_table.py:1751 setup/main.py:137
 msgid "Preferences for ibus-typing-booster"
 msgstr "Параметри для ibus-typing-booster"
 
-#: engine/hunspell_table.py:3946
+#: engine/hunspell_table.py:4021
 msgid "Failed to import Google speech-to-text."
 msgstr "Не вдалося імпортувати систему перетворення звуку на текст Google."
 
-#: engine/hunspell_table.py:3949
+#: engine/hunspell_table.py:4024
 msgid "Failed to import pyaudio."
 msgstr "Не вдалося імпортувати pyaudio."
 
-#: engine/hunspell_table.py:3952
+#: engine/hunspell_table.py:4027
 msgid "Failed to import queue."
 msgstr "Не вдалося імпортувати чергу."
 
-#: engine/hunspell_table.py:3957
+#: engine/hunspell_table.py:4032
 msgid "No supported language for speech recognition."
 msgstr "Немає підтримуваної мови для розпізнавання мовлення."
 
-#: engine/hunspell_table.py:3961
+#: engine/hunspell_table.py:4036
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Не знайдено файла «Реєстраційні дані програми Google» «%s»."
 
-#: engine/hunspell_table.py:3973
+#: engine/hunspell_table.py:4048
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Не вдалося започаткувати роботу системи перетворення мовлення на текст "
 "Google. Див. debug.log."
 
-#: engine/hunspell_table.py:4080
+#: engine/hunspell_table.py:4155
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Помилка системи перетворення мовлення на текст Google. Див. debug.log."
 
@@ -282,27 +282,27 @@ msgstr "модифікатор"
 msgid "regional"
 msgstr "регіональні"
 
-#: engine/itb_util.py:3305 engine/itb_util.py:3617
+#: engine/itb_util.py:3313 engine/itb_util.py:3625
 msgid "File not found"
 msgstr "Файл не знайдено"
 
-#: engine/itb_util.py:3308 engine/itb_util.py:3620
+#: engine/itb_util.py:3316 engine/itb_util.py:3628
 msgid "Permission error"
 msgstr "Помилка доступу"
 
-#: engine/itb_util.py:3311 engine/itb_util.py:3623
+#: engine/itb_util.py:3319 engine/itb_util.py:3631
 msgid "Unicode decoding error"
 msgstr "Помилка декодування Unicode"
 
-#: engine/itb_util.py:3314 engine/itb_util.py:3626
+#: engine/itb_util.py:3322 engine/itb_util.py:3634
 msgid "Unknown error"
 msgstr "Невідома помилка"
 
-#: engine/itb_util.py:3597
+#: engine/itb_util.py:3605
 msgid "Native Keyboard"
 msgstr "Природна клавіатура"
 
-#: engine/itb_util.py:3599
+#: engine/itb_util.py:3607
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -316,40 +316,40 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4077
+#: engine/itb_util.py:4120
 msgid "Key input"
 msgstr "Введення з клавіатури"
 
-#: engine/itb_util.py:4083
+#: engine/itb_util.py:4126
 msgid "Cancel"
 msgstr "Скасувати"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4090
+#: engine/itb_util.py:4133
 msgid "Please press a key (or a key combination)"
 msgstr "Будь ласка, натисніть клавішу (або комбінацію клавіш)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4095
+#: engine/itb_util.py:4138
 msgid "The dialog will be closed when the key is released"
 msgstr "Вікно буде закрито, коли ви відпустите клавіші"
 
-#: engine/itb_util.py:4126
+#: engine/itb_util.py:4170
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Спосіб введення із автоматичним доповненням, який пришвидшує введення "
 "текстів."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4135
+#: engine/itb_util.py:4179
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>"
 
-#: engine/itb_util.py:4143
+#: engine/itb_util.py:4187
 msgid "Online documentation:"
 msgstr "Документація у інтернеті:"
 
@@ -357,7 +357,7 @@ msgstr "Документація у інтернеті:"
 msgid "Preferences"
 msgstr "Налаштування"
 
-#: setup/main.py:176 setup/main.py:4691
+#: setup/main.py:176 setup/main.py:4624
 msgid "_Close"
 msgstr "_Закрити"
 
@@ -742,7 +742,7 @@ msgstr "Встановити невстановлені словники"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Встановити словники, які налаштовано тут, але які не встановлено"
 
-#: setup/main.py:778 setup/main.py:895 setup/main.py:1081 setup/main.py:3431
+#: setup/main.py:778 setup/main.py:895 setup/main.py:1081 setup/main.py:3355
 msgid "Set to default"
 msgstr "Встановити типову"
 
@@ -844,7 +844,7 @@ msgstr "Змінити"
 msgid "Edit the key bindings for the selected command"
 msgstr "Змінити прив'язки клавіш для вибраної команди"
 
-#: setup/main.py:1085 setup/main.py:3436
+#: setup/main.py:1085 setup/main.py:3360
 msgid "Set default key bindings for the selected command"
 msgstr "Встановити типову прив'язку клавіш для вибраної команди"
 
@@ -1207,7 +1207,7 @@ msgstr ""
 "зайнятості обробкою програми ibus-typing-booster."
 
 #. Translators:
-#: setup/main.py:1707 setup/main.py:2496
+#: setup/main.py:1707 setup/main.py:2420
 msgid "Set “Google application credentials” .json file:"
 msgstr "Вкажіть файл .json «Реєстраційні дані програми Google»:"
 
@@ -1231,11 +1231,11 @@ msgstr "Емодзі"
 msgid "Are you sure?"
 msgstr "Ви впевнені?"
 
-#: setup/main.py:1989 setup/main.py:2499 setup/main.py:3503
+#: setup/main.py:1989 setup/main.py:2423 setup/main.py:3427
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: setup/main.py:1990 setup/main.py:2500 setup/main.py:3504
+#: setup/main.py:1990 setup/main.py:2424 setup/main.py:3428
 msgid "_OK"
 msgstr "_Гаразд"
 
@@ -1243,24 +1243,24 @@ msgstr "_Гаразд"
 msgid "Another instance of this app is already running."
 msgstr "Вже запущено інший екземпляр цієї програми."
 
-#: setup/main.py:2697
+#: setup/main.py:2621
 msgid "Add dictionary"
 msgstr "Додати словник"
 
-#: setup/main.py:2979
+#: setup/main.py:2903
 msgid "Add input method"
 msgstr "Додати спосіб введення"
 
-#: setup/main.py:3385
+#: setup/main.py:3308
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Змінити прив'язку клавіш для команди «%s»"
 
-#: setup/main.py:3412
+#: setup/main.py:3336
 msgid "Add a key binding"
 msgstr "Додати прив'язку клавіш"
 
-#: setup/main.py:3424
+#: setup/main.py:3348
 msgid "Remove selected key binding"
 msgstr "Вилучити позначену прив'язку клавіш"
 
@@ -1269,22 +1269,22 @@ msgstr "Вилучити позначену прив'язку клавіш"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:3484
+#: setup/main.py:3408
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr "Ви справді хочете повернути для усіх команд типові прив'язки клавіш?"
 
-#: setup/main.py:3500
+#: setup/main.py:3424
 msgid "Open File ..."
 msgstr "Відкрити файл…"
 
-#: setup/main.py:3519
+#: setup/main.py:3443
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Успішно вивчено з файла %(filename)s."
 
-#: setup/main.py:3528
+#: setup/main.py:3452
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Спроба навчання з файла %(filename)s зазнала невдачі."
@@ -1299,7 +1299,7 @@ msgstr "Спроба навчання з файла %(filename)s зазнала 
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:3551
+#: setup/main.py:3475
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1307,7 +1307,7 @@ msgstr ""
 "Ви справді хочете вилучити усі дані мови, вивчені із введених даних і "
 "читання файлів?"
 
-#: setup/main.py:4748
+#: setup/main.py:4681
 msgid "ibus is not running."
 msgstr "ibus не запущено."
 
