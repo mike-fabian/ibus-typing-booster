@@ -2,7 +2,7 @@
 # Emilio Herrera <ehespinosa57@gmail.com>, 2017. #zanata, 2020.
 # Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2017. #zanata
 # Ismael Venegas Castelló <ismael.vc1337@gmail.com>, 2018. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020.
 # Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2018. #zanata
 # Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2019, 2020.
 # Anonymous <noreply@weblate.org>, 2019.
@@ -13,16 +13,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-08-05 10:11+0200\n"
-"PO-Revision-Date: 2020-07-16 10:01+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
-"Language-Team: Spanish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/es/>\n"
+"PO-Revision-Date: 2020-09-11 08:29+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Language-Team: Spanish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.2.2\n"
 
 #: engine/emoji_picker.py:194
 msgid "Emoji Picker"
@@ -545,7 +545,7 @@ msgid ""
 msgstr ""
 "Define si se incluirán símbolos y emoyis de Unicode en las predicciones. Los "
 "emoyis son pictogramas tales como ☺♨⛵. Entre los símbolos de Unicode se "
-"incluyen símbolos matemáticos (∀∑∯…), flechas  (←↑↔…), monedas (€₹₺…), "
+"incluyen símbolos matemáticos (∀∑∯…), flechas (←↑↔…), monedas (€₹₺…), "
 "patrones de braille (⠥⠩…) y numerosos caracteres más. Aunque técnicamente no "
 "son emoyis, estos últimos pueden resultarle útiles."
 
@@ -1126,7 +1126,7 @@ msgid ""
 "lookup table which come from a dictionary."
 msgstr ""
 "Aquí puede elegir si debe utilizarse un color personalizado para los "
-"candidatos de la tabla de búsqueda provenientes de un  diccionario."
+"candidatos de la tabla de búsqueda provenientes de un diccionario."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
