@@ -150,6 +150,8 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_tab_enable())
         self.orig_inline_completion = (
             self.engine.get_inline_completion())
+        self.orig_auto_capitalize = (
+            self.engine.get_auto_capitalize())
         self.orig_remember_last_used_preedit_ime = (
             self.engine.get_remember_last_used_preedit_ime())
         self.orig_page_size = (
@@ -188,6 +190,9 @@ class ItbTestCase(unittest.TestCase):
             update_gsettings=False)
         self.engine.set_inline_completion(
             self.orig_inline_completion,
+            update_gsettings=False)
+        self.engine.set_auto_capitalize(
+            self.orig_auto_capitalize,
             update_gsettings=False)
         self.engine.set_remember_last_used_preedit_ime(
             self.orig_remember_last_used_preedit_ime,
@@ -233,6 +238,8 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_tab_enable(
             False, update_gsettings=False)
         self.engine.set_inline_completion(
+            False, update_gsettings=False)
+        self.engine.set_auto_capitalize(
             False, update_gsettings=False)
         self.engine.set_remember_last_used_preedit_ime(
             False, update_gsettings=False)
@@ -829,6 +836,98 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'Barcelona ')
         self.assertEqual(self.engine.mock_preedit_text, '')
+
+    def test_auto_capitalize(self):
+        '''Test auto capitalization after punctuation
+        '''
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.set_auto_capitalize(True, update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'test')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine._candidates[0][0], 'test')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'test ')
+        self.assertEqual(self.engine._candidates, [])
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'test')
+        self.assertEqual(self.engine.mock_committed_text, 'test ')
+        self.assertEqual(self.engine._candidates[0][0], 'test')
+        self.engine.do_process_key_event(IBus.KEY_period, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'test test. ')
+        self.assertEqual(self.engine._candidates, [])
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'Test')
+        self.assertEqual(self.engine.mock_committed_text, 'test test. ')
+        self.assertEqual(self.engine._candidates[0][0], 'Test')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'test test. Test ')
+        self.assertEqual(self.engine._candidates, [])
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'test')
+        self.assertEqual(self.engine.mock_committed_text, 'test test. Test ')
+        self.assertEqual(self.engine._candidates[0][0], 'test')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'test test. Test test ')
+        self.assertEqual(self.engine._candidates, [])
+        self.engine.do_process_key_event(IBus.KEY_period, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'test test. Test test . ')
+        self.assertEqual(self.engine._candidates, [])
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'Test')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'test test. Test test . ')
+        self.assertEqual(self.engine._candidates[0][0], 'Test')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'test test. Test test . Test ')
+        self.engine.do_process_key_event(IBus.KEY_comma, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'test test. Test test . Test , ')
+        self.assertEqual(self.engine._candidates, [])
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'hello')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'test test. Test test . Test , ')
+        self.assertEqual(self.engine._candidates[0][0], 'hello')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'test test. Test test . Test , hello ')
 
     def test_add_space_on_commit(self):
         '''Test new option to avoid adding spaces when committing by label

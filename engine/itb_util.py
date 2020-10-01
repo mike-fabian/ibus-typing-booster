@@ -109,14 +109,17 @@ SQLITE_MAXINT = 2**63-1
 # user frequency used for a user defined shortcut
 SHORTCUT_USER_FREQ = 1000000
 
-# If a character ending a sentence is committed (possibly
-# followed by whitespace) remove trailing white space
-# before the committed string. For example if
-# commit_phrase is “!”, and the context before is “word ”,
-# make the result “word!”.  And if the commit_phrase is “!
-# ” and the context before is “word ” make the result
-# “word! ”.
-SENTENCE_END_CHARACTERS = '.,;:?!)'
+# If a punctuation character from the following list is comitted
+# (possibly followed by whitespace) remove trailing white space before
+# the committed string. For example if commit_phrase is “!”, and the
+# context before is “word ”, make the result “word!”.  And if the
+# commit_phrase is “!  ” and the context before is “word ” make the
+# result “word! ”.
+REMOVE_WHITESPACE_CHARACTERS = '.,;:?!)'
+
+# If a commit ends with one of these characters and auto-capitalization is
+# activated, capitalize the next word:
+AUTO_CAPITALIZE_CHARACTERS = '.;:?!)'
 
 CATEGORIES_TO_STRIP_FROM_TOKENS = (
     'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Pd'

@@ -274,6 +274,13 @@
         candidate list.
       </description>
     </key>
+    <key name="autocapitalize" type="b">
+      <default>false</default>
+      <summary>Auto capitalize</summary>
+      <description>
+        Automatically capitalize after punctuation.
+      </description>
+    </key>
     <key name="pagesize" type="i">
       <default>6</default>
       <summary>Candidate window page size</summary>

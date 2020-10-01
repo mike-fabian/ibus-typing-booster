@@ -249,6 +249,11 @@ class TypingBoosterEngine(IBus.Engine):
         if self._inline_completion is None:
             self._inline_completion = False
 
+        self._auto_capitalize = itb_util.variant_to_value(
+            self._gsettings.get_value('autocapitalize'))
+        if self._auto_capitalize is None:
+            self._auto_capitalize = False
+
         self._color_preedit_spellcheck = itb_util.variant_to_value(
             self._gsettings.get_value('colorpreeditspellcheck'))
         if self._color_preedit_spellcheck is None:
@@ -429,6 +434,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._p_phrase = ''
         self._pp_phrase = ''
         self._ppp_phrase = ''
+        self._new_sentence = False
         self._transliterated_strings = {}
         self._transliterators = {}
         self._init_transliterators()
@@ -1215,6 +1221,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._ppp_phrase = ''
         self._pp_phrase = ''
         self._p_phrase = ''
+        self._new_sentence = False
 
     def _update_transliterated_strings(self):
         '''Transliterates the current input (list of msymbols) for all current
@@ -2360,7 +2367,7 @@ class TypingBoosterEngine(IBus.Engine):
         :rtype: Boolean
         :param index: The index of the candidate to commit in the lookup table
         :type index: Integer
-        :param extra_text:
+        :param extra_text:  Additional text append to the commit, usually a space
         :type extra_text: String
         '''
         if not self.get_lookup_table().get_number_of_candidates():
@@ -2405,17 +2412,26 @@ class TypingBoosterEngine(IBus.Engine):
                 self.get_current_imes()[0]]
         # commit always in NFC:
         commit_phrase = unicodedata.normalize('NFC', commit_phrase)
+        pattern_non_white_space = re.compile(r'\S')
+        if pattern_non_white_space.search(commit_phrase):
+            pattern_new_sentence = re.compile(
+                r'['
+                + re.escape(itb_util.AUTO_CAPITALIZE_CHARACTERS)
+                + r']+[\s]*$')
+            self._new_sentence = False
+            if pattern_new_sentence.search(commit_phrase):
+                self._new_sentence = True
         if self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT:
-            # If a character ending a sentence is committed (possibly
-            # followed by whitespace) remove trailing white space
-            # before the committed string. For example if
+            # If a single character ending a sentence is committed
+            # (possibly followed by whitespace) remove trailing white
+            # space before the committed string. For example if
             # commit_phrase is “!”, and the context before is “word ”,
             # make the result “word!”.  And if the commit_phrase is “!
             # ” and the context before is “word ” make the result
             # “word! ”.
             pattern_sentence_end = re.compile(
                 r'^['
-                + re.escape(itb_util.SENTENCE_END_CHARACTERS)
+                + re.escape(itb_util.REMOVE_WHITESPACE_CHARACTERS)
                 + r']+[\s]*$')
             if pattern_sentence_end.search(commit_phrase):
                 surrounding_text = self.get_surrounding_text()
@@ -2737,7 +2753,6 @@ class TypingBoosterEngine(IBus.Engine):
         '''Toggles whether the best completion is first shown inline in the
         preëdit instead of using a combobox to show a candidate list.
 
-
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
@@ -2757,6 +2772,53 @@ class TypingBoosterEngine(IBus.Engine):
         :rtype: boolean
         '''
         return self._inline_completion
+
+    def set_auto_capitalize(self, mode, update_gsettings=True):
+        '''Sets whether to capitalize automatically after punctuation
+
+        :param mode: Whether to automatically capitalize after punctuation.
+        :type mode: boolean
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._auto_capitalize:
+            return
+        self._auto_capitalize = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'autocapitalize',
+                GLib.Variant.new_boolean(mode))
+
+    def toggle_auto_capitalize(self, update_gsettings=True):
+        '''Toggles whether to capitalize automatically after punctuation
+
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        :type update_gsettings: boolean
+
+        '''
+        self.set_auto_capitalize(
+            not self._auto_capitalize, update_gsettings)
+
+    def get_auto_capitalize(self):
+        '''Returns the current value of the flag whether to show a completion
+        first inline in the preëdit instead of using a combobox to show a
+        candidate list.
+
+        :rtype: boolean
+        '''
+        return self._auto_capitalize
 
     def set_qt_im_module_workaround(self, mode, update_gsettings=True):
         '''Sets whether the workaround for the qt im module is used or not
@@ -5068,6 +5130,7 @@ class TypingBoosterEngine(IBus.Engine):
                     else:
                         self._remove_character_before_cursor()
                     if self.is_empty():
+                        self._new_sentence = False
                         self._current_case_mode = 'orig'
                     self._update_ui()
                     return True
@@ -5080,6 +5143,7 @@ class TypingBoosterEngine(IBus.Engine):
                     else:
                         self._remove_character_after_cursor()
                     if self.is_empty():
+                        self._new_sentence = False
                         self._current_case_mode = 'orig'
                     self._update_ui()
                     return True
@@ -5218,6 +5282,8 @@ class TypingBoosterEngine(IBus.Engine):
                 # first key typed, we will try to complete something now
                 # get the context if possible
                 self.get_context()
+                if self._auto_capitalize and self._new_sentence:
+                    self._current_case_mode = 'capitalize'
             if (key.msymbol in ('G- ',)
                 and not self._has_transliteration([key.msymbol])):
                 insert_msymbol = ' '
@@ -5505,6 +5571,7 @@ class TypingBoosterEngine(IBus.Engine):
             'qtimmoduleworkaround': self.set_qt_im_module_workaround,
             'addspaceoncommit': self.set_add_space_on_commit,
             'inlinecompletion': self.set_inline_completion,
+            'autocapitalize': self.set_auto_capitalize,
             'arrowkeysreopenpreedit': self.set_arrow_keys_reopen_preedit,
             'emojipredictions': self.set_emoji_prediction_mode,
             'offtherecord': self.set_off_the_record_mode,
