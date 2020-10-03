@@ -5323,6 +5323,13 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('do_reset()\n')
+        if self.prev_key.val in (
+                IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter):
+            # The “Return” and “KP_Enter” keys trigger a call to
+            # do_reset().  But I don’t want to clear the context, in
+            # that case, Usually this just means that one continues to
+            # write in the next line and the context is still valid.
+            return
         # The preëdit, if there was any, has already been committed
         # automatically because
         # update_preedit_text_with_mode(,,,IBus.PreeditFocusMode.COMMIT)
