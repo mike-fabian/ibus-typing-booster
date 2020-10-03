@@ -2525,11 +2525,36 @@ def tokenize(text):
     :param text: The text to tokenize
     :type text: String
     :rtype: List of strings
+
+    Examples:
+
+    >>> tokenize('a b c')
+    ['a', 'b', 'c']
+
+    >>> tokenize('\\n a b c')
+    ['a', 'b', 'c']
+
+    >>> tokenize('a \\n b c')
+    ['a', 'b', 'c']
+
+    >>> tokenize('a (b) c')
+    ['a', 'b', 'c']
+
+    >>> tokenize('a () c')
+    ['a', 'c']
+
+    >>> tokenize('')
+    []
+
+    >>> tokenize('\\n')
+    []
     '''
     pattern = re.compile(r'[\s]+')
     tokens = []
     for word in pattern.split(text.strip()):
-        tokens.append(strip_token(word))
+        token = strip_token(word)
+        if token:
+            tokens.append(token)
     return tokens
 
 def color_string_to_argb(color_string):
