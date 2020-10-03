@@ -2595,7 +2595,9 @@ class TypingBoosterEngine(IBus.Engine):
             return
         surrounding_text = self.get_surrounding_text()
         if not surrounding_text:
-            return # should never happen
+            LOGGER.debug(
+                'Surrounding text object is None. Should never happen.')
+            return
         text = surrounding_text[0].get_text()
         cursor_pos = surrounding_text[1]
         anchor_pos = surrounding_text[2]
@@ -2603,7 +2605,7 @@ class TypingBoosterEngine(IBus.Engine):
             LOGGER.debug(
                 'Getting context: surrounding_text = '
                 '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
-                text, cursor_pos, anchor_pos)
+                repr(text), cursor_pos, anchor_pos)
         if not self._commit_happened_after_focus_in:
             # Before the first commit or cursor movement, the
             # surrounding text is probably from the previously
@@ -2614,7 +2616,10 @@ class TypingBoosterEngine(IBus.Engine):
             return
         tokens = ([
             itb_util.strip_token(token)
-            for token in itb_util.tokenize(text[:cursor_pos])])
+            for token in itb_util.tokenize(text[:cursor_pos])])[-3:]
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                'Found from surrounding text: tokens=%s', repr(tokens))
         if tokens:
             self._p_phrase = tokens[-1]
         if len(tokens) > 1:
@@ -2623,7 +2628,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._ppp_phrase = tokens[-3]
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
-                'Got context from surrounding text=“%s” “%s” “%s”',
+                'Updated context from surrounding text=“%s” “%s” “%s”',
                 self._ppp_phrase, self._pp_phrase, self._p_phrase)
 
     def set_add_space_on_commit(self, mode, update_gsettings=True):
