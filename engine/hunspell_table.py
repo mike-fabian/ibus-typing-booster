@@ -1172,7 +1172,7 @@ class TypingBoosterEngine(IBus.Engine):
         return self._ppp_phrase
 
     def push_context(self, phrase):
-        '''Pushes a word on the context stack which remembers the last two
+        '''Pushes a word on the context stack which remembers the last three
         words typed.
         '''
         if DEBUG_LEVEL > 1:
