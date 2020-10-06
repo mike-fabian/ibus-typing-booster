@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 06 Oct 2020 Released 2.9.8
+* Prevent also Delete from reopening a preedit when the option “Arrow keys can reopen a preedit” is off
+* When the input is empty, Escape should be passed through, not inserted into the preedit
+* Fix itb_util.tokenize(): if the input is only whitespace, the return should be an empty list
+* Don’t clear context after typing Return, KP_Enter, ISO_Enter
+* Improve behaviour of case modes
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 04 Sep 2020 Released 2.9.7
 * Add commands “next_case_mode” and “previous_case_mode” with configurable key bindings
 * Better hot key handling for modifier keys like Shift_L, …

@@ -22,6 +22,35 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.9.8" date="2020-10-06" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.9.8</url>
+      <issues>
+        <issue>
+          Prevent also Delete from reopening a preedit when the option
+          “Arrow keys can reopen a preedit” is off
+        </issue>
+        <issue>
+          When the input is empty, Escape should be passed through,
+          not inserted into the preedit
+        </issue>
+        <issue>
+          Fix itb_util.tokenize(): if the input is only whitespace,
+          the return should be an empty list
+        </issue>
+        <issue>
+          Don’t clear context after typing Return, KP_Enter, ISO_Enter
+        </issue>
+        <issue>
+          Improve behaviour of case modes
+        </issue>
+        <issue>
+          Update emoji annotations from CLDR
+        </issue>
+      </issues>
+    </release>
     <release version="2.9.7" date="2020-09-04" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
