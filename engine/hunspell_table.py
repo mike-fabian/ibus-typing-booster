@@ -2484,7 +2484,8 @@ class TypingBoosterEngine(IBus.Engine):
         if (not self._arrow_keys_reopen_preedit
                 and key.val in (IBus.KEY_Left, IBus.KEY_KP_Left,
                                 IBus.KEY_Right, IBus.KEY_KP_Right,
-                                IBus.KEY_BackSpace, IBus.KEY_Delete)):
+                                IBus.KEY_BackSpace,
+                                IBus.KEY_Delete, IBus.KEY_KP_Delete)):
             # using arrows key to reopen the preëdit is disabled
             return self._return_false(key.val, key.code, key.state)
         if (key.shift
@@ -2549,14 +2550,15 @@ class TypingBoosterEngine(IBus.Engine):
             # update the candidates.
             self._update_ui()
             return True
-        if key.val in (IBus.KEY_Delete, IBus.KEY_Right, IBus.KEY_KP_Right):
+        if key.val in (IBus.KEY_Delete, IBus.KEY_KP_Delete,
+                       IBus.KEY_Right, IBus.KEY_KP_Right):
             pattern = re.compile(
                 r'^[\s](?P<token>[\S]+)($|[\s]+.*)')
             match = pattern.match(text[cursor_pos:])
             if not match:
                 return self._return_false(key.val, key.code, key.state)
             token = match.group('token')
-            if key.val in (IBus.KEY_Delete,):
+            if key.val in (IBus.KEY_Delete, IBus.KEY_KP_Delete):
                 self.delete_surrounding_text(0, len(token) + 1)
             else:
                 self.forward_key_event(key.val, key.code, key.state)
@@ -4892,7 +4894,7 @@ class TypingBoosterEngine(IBus.Engine):
                 return self._return_false(key.val, key.code, key.state)
             if key.val in (IBus.KEY_BackSpace,
                            IBus.KEY_Left, IBus.KEY_KP_Left,
-                           IBus.KEY_Delete,
+                           IBus.KEY_Delete, IBus.KEY_KP_Delete,
                            IBus.KEY_Right, IBus.KEY_KP_Right):
                 return self._reopen_preedit_or_return_false(key)
             if key.val >= 32 and not key.control:
@@ -4937,7 +4939,7 @@ class TypingBoosterEngine(IBus.Engine):
             and (key.val in (IBus.KEY_space, IBus.KEY_Tab,
                              IBus.KEY_Return, IBus.KEY_KP_Enter,
                              IBus.KEY_Right, IBus.KEY_KP_Right,
-                             IBus.KEY_Delete,
+                             IBus.KEY_Delete, IBus.KEY_KP_Delete,
                              IBus.KEY_Left, IBus.KEY_KP_Left,
                              IBus.KEY_BackSpace,
                              IBus.KEY_Down, IBus.KEY_KP_Down,
@@ -5043,7 +5045,7 @@ class TypingBoosterEngine(IBus.Engine):
                         self._current_case_mode = 'orig'
                     self._update_ui()
                     return True
-                if (key.val in (IBus.KEY_Delete,)
+                if (key.val in (IBus.KEY_Delete, IBus.KEY_KP_Delete)
                     and self._typed_string_cursor < len(self._typed_string)):
                     self.is_lookup_table_enabled_by_tab = False
                     self.is_lookup_table_enabled_by_min_char_complete = False
@@ -5156,7 +5158,8 @@ class TypingBoosterEngine(IBus.Engine):
                 time.sleep(self._ibus_event_sleep_seconds)
                 if self._reopen_preedit_or_return_false(key):
                     return True
-            if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right, IBus.KEY_Delete):
+            if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right,
+                           IBus.KEY_Delete, IBus_KEY_KP_Delete):
                 if self._reopen_preedit_or_return_false(key):
                     return True
             # Forward the key event which triggered the commit here
