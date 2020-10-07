@@ -5159,7 +5159,7 @@ class TypingBoosterEngine(IBus.Engine):
                 if self._reopen_preedit_or_return_false(key):
                     return True
             if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right,
-                           IBus.KEY_Delete, IBus_KEY_KP_Delete):
+                           IBus.KEY_Delete, IBus.KEY_KP_Delete):
                 if self._reopen_preedit_or_return_false(key):
                     return True
             # Forward the key event which triggered the commit here
