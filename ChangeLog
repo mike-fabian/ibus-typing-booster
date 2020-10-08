@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 08 Oct 2020 Released 2.9.9
+* Fix typo in variable name in do_reset()
+* KP_Delete should be handled the same way as Delete
+* Translation update form Weblate for de, he, pl, tr, uk
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 06 Oct 2020 Released 2.9.8
 * Prevent also Delete from reopening a preedit when the option “Arrow keys can reopen a preedit” is off
 * When the input is empty, Escape should be passed through, not inserted into the preedit

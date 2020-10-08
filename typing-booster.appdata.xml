@@ -19,6 +19,23 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.9.9" date="2020-10-08" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.9.9</url>
+      <issues>
+        <issue>
+          Fix typo in variable name in do_reset()
+        </issue>
+        <issue>
+          KP_Delete should be handled the same way as Delete
+        </issue>
+        <issue>
+          Translation update form Weblate for de, he, pl, tr, uk
+        </issue>
+      </issues>
+    </release>
     <release version="2.9.8" date="2020-10-06" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
