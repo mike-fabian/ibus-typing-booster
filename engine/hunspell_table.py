@@ -5331,7 +5331,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('do_reset()\n')
-        if self.prev_key.val in (
+        if self._prev_key.val in (
                 IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter):
             # The “Return” and “KP_Enter” keys trigger a call to
             # do_reset().  But I don’t want to clear the context, in
