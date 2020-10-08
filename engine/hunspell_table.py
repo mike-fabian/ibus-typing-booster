@@ -5328,6 +5328,10 @@ class TypingBoosterEngine(IBus.Engine):
     def do_reset(self):
         '''Called when the mouse pointer is used to move to cursor to a
         different position in the current window.
+
+        Also called when certain keys are pressed:
+
+            Return, KP_Enter, ISO_Enter, Up, Down, (and others?)
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('do_reset()\n')
