@@ -460,6 +460,8 @@ class TypingBoosterEngine(IBus.Engine):
         #          spell_checking: Boolean, True if this candidate was produced
         #                          by spellchecking, False if not.
         self._candidates = []
+        # a copy of self._candidates in case mode 'orig':
+        self._candidates_case_mode_orig = []
         self._current_case_mode = 'orig'
         # 'orig': candidates have original case.
         # 'capitalize': candidates have been converted to the first character
@@ -990,6 +992,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._append_candidate_to_lookup_table(
                 phrase=cand[0], user_freq=cand[1], comment=cand[2],
                 from_user_db=cand[3], spell_checking=cand[4])
+        self._candidates_case_mode_orig = self._candidates.copy()
         if self._current_case_mode != 'orig':
             self._case_mode_change(mode=self._current_case_mode)
         return
@@ -1116,35 +1119,54 @@ class TypingBoosterEngine(IBus.Engine):
         want the phrase to be suggested wich such a high priority, no
         matter whether it is a system phrase or a user defined phrase.
         '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                'Removing candidate with index=%s from user database', index)
         if not self._set_lookup_table_cursor_pos_in_current_page(index):
             return False
-        phrase = self.get_string_from_lookup_table_cursor_pos()
-        if not phrase:
+        displayed_phrase = self.get_string_from_lookup_table_cursor_pos()
+        if not displayed_phrase:
             return False
-        # If the candidate to be removed from the user database starts
-        # with characters which are stripped from tokens, we probably
-        # want to delete the stripped candidate.  I.e. if the
-        # candidate is “_somestuff” we should delete “somestuff” from
-        # the user database. Especially when triggering an emoji
-        # search with the prefix “_” this is the case. For example,
-        # when one types “_ca” one could get the flag of Canada “_🇨🇦”
-        # or the castle emoji “_🏰” as suggestions from the user
-        # database if one has typed these emoji before. But only the
-        # emoji came from the database, not the prefix “_”, because it
-        # is one of the prefixes stripped from tokens.  Trying to
-        # delete the complete candidate from the user database won’t
-        # achieve anything, only the stripped token is in the
-        # database.
-        stripped_phrase = itb_util.lstrip_token(phrase)
-        if stripped_phrase:
-            self.database.remove_phrase(phrase=stripped_phrase, commit=True)
-        # Try to remove the whole candidate as well from the database.
-        # Probably this won’t do anything, just to make sure that it
-        # is really removed even if the prefix also ended up in the
-        # database for whatever reason (It could be because the list
-        # of prefixes to strip from tokens has changed compared to a
-        # an older release of ibus-typing-booster).
-        self.database.remove_phrase(phrase=phrase, commit=True)
+        index = self._lookup_table.get_cursor_pos()
+        if 0 <= index <= len(self._candidates_case_mode_orig):
+            case_mode_orig_phrase = self._candidates_case_mode_orig[index][0]
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Removing phrase with original case mode “%s”',
+                             case_mode_orig_phrase)
+                self.database.remove_phrase(
+                    phrase=case_mode_orig_phrase, commit=True)
+        for case_mode in self._case_modes:
+            # delete all case modes of the displayed candidate:
+            phrase = self._case_modes[case_mode]['function'](
+                displayed_phrase)
+            # If the candidate to be removed from the user database starts
+            # with characters which are stripped from tokens, we probably
+            # want to delete the stripped candidate.  I.e. if the
+            # candidate is “_somestuff” we should delete “somestuff” from
+            # the user database. Especially when triggering an emoji
+            # search with the prefix “_” this is the case. For example,
+            # when one types “_ca” one could get the flag of Canada “_🇨🇦”
+            # or the castle emoji “_🏰” as suggestions from the user
+            # database if one has typed these emoji before. But only the
+            # emoji came from the database, not the prefix “_”, because it
+            # is one of the prefixes stripped from tokens.  Trying to
+            # delete the complete candidate from the user database won’t
+            # achieve anything, only the stripped token is in the
+            # database.
+            stripped_phrase = itb_util.lstrip_token(phrase)
+            if stripped_phrase:
+                if DEBUG_LEVEL > 1:
+                    LOGGER.debug('Removing “%s”', stripped_phrase)
+                self.database.remove_phrase(phrase=stripped_phrase, commit=True)
+            # Try to remove the whole candidate as well from the database.
+            # Probably this won’t do anything, just to make sure that it
+            # is really removed even if the prefix also ended up in the
+            # database for whatever reason (It could be because the list
+            # of prefixes to strip from tokens has changed compared to a
+            # an older release of ibus-typing-booster).
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Removing “%s”', phrase)
+            self.database.remove_phrase(phrase=phrase, commit=True)
         return True
 
     def get_cursor_pos(self):
