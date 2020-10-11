@@ -2450,30 +2450,34 @@ class TypingBoosterEngine(IBus.Engine):
             IBus.Text.new_from_string(commit_phrase))
         self._clear_input_and_update_ui()
         self._commit_happened_after_focus_in = True
-        stripped_input_phrase = itb_util.strip_token(input_phrase)
+        if self._off_the_record or self._hide_input:
+            return
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
-        if not self._off_the_record and not self._hide_input:
+        stripped_input_phrase = itb_util.strip_token(input_phrase)
+        if not stripped_commit_phrase or not stripped_input_phrase:
+            return
+        self.database.check_phrase_and_update_frequency(
+            input_phrase=stripped_input_phrase,
+            phrase=stripped_commit_phrase,
+            p_phrase=self.get_p_phrase(),
+            pp_phrase=self.get_pp_phrase())
+        if (self.get_p_phrase()
+            and self.get_pp_phrase()
+            and self.get_ppp_phrase()):
+            # Commit the current commit phrase and the previous
+            # phrase as a single unit as well for better
+            # completions. For example, if the current commit
+            # phrase is “to” and the total context was “I am
+            # going”, then also commit “going to” with the context
+            # “I am”:
             self.database.check_phrase_and_update_frequency(
-                input_phrase=stripped_input_phrase,
-                phrase=stripped_commit_phrase,
-                p_phrase=self.get_p_phrase(),
-                pp_phrase=self.get_pp_phrase())
-            if (self.get_p_phrase()
-                and self.get_pp_phrase()
-                and self.get_ppp_phrase()):
-                # Commit the current commit phrase and the previous
-                # phrase as a single unit as well for better
-                # completions. For example, if the current commit
-                # phrase is “to” and the total context was “I am
-                # going”, then also commit “going to” with the context
-                # “I am”:
-                self.database.check_phrase_and_update_frequency(
-                    input_phrase=
-                    self.get_p_phrase() + ' ' + stripped_commit_phrase,
-                    phrase=self.get_p_phrase() + ' ' + stripped_commit_phrase,
-                    p_phrase=self.get_pp_phrase(),
-                    pp_phrase=self.get_ppp_phrase())
-            self.push_context(stripped_commit_phrase)
+                input_phrase=
+                self.get_p_phrase() + ' ' + stripped_commit_phrase,
+                phrase=self.get_p_phrase() + ' ' + stripped_commit_phrase,
+                p_phrase=self.get_pp_phrase(),
+                pp_phrase=self.get_ppp_phrase())
+        # push context after recording in the database is finished:
+        self.push_context(stripped_commit_phrase)
 
     def _reopen_preedit_or_return_false(self, key):
         '''BackSpace, Delete or arrow left or right has been typed.
