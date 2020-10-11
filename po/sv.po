@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-10-08 11:58+0200\n"
+"POT-Creation-Date: 2020-10-11 17:26+0200\n"
 "PO-Revision-Date: 2020-08-11 19:49+0000\n"
 "Last-Translator: Göran Uddeborg <goeran@uddeborg.se>\n"
 "Language-Team: Swedish <https://translate.fedoraproject.org/projects/ibus-"
@@ -121,7 +121,7 @@ msgid "Lookup on emojipedia"
 msgstr "Slå upp på emojipedia"
 
 #: engine/emoji_picker.py:2033 engine/emoji_picker.py:2034
-#: engine/emoji_picker.py:2035 setup/main.py:1204
+#: engine/emoji_picker.py:2035 setup/main.py:1221
 msgid "System default"
 msgstr "Systemstandard"
 
@@ -129,21 +129,21 @@ msgstr "Systemstandard"
 msgid "Set Font"
 msgstr "Ange teckensnitt"
 
-#: engine/hunspell_table.py:511 engine/hunspell_table.py:545
-#: engine/hunspell_table.py:566
+#: engine/hunspell_table.py:519 engine/hunspell_table.py:553
+#: engine/hunspell_table.py:574
 msgid "Off"
 msgstr "Av"
 
-#: engine/hunspell_table.py:516 engine/hunspell_table.py:550
-#: engine/hunspell_table.py:571
+#: engine/hunspell_table.py:524 engine/hunspell_table.py:558
+#: engine/hunspell_table.py:579
 msgid "On"
 msgstr "På"
 
-#: engine/hunspell_table.py:535
+#: engine/hunspell_table.py:543
 msgid "Input mode"
 msgstr "Indatametod"
 
-#: engine/hunspell_table.py:536
+#: engine/hunspell_table.py:544
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Här kan du slå på eller stänga av ibus-typing-booster."
 
@@ -154,7 +154,7 @@ msgstr "Här kan du slå på eller stänga av ibus-typing-booster."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:555 engine/hunspell_table.py:557 setup/main.py:455
+#: engine/hunspell_table.py:563 engine/hunspell_table.py:565 setup/main.py:472
 msgid "Unicode symbols and emoji predictions"
 msgstr "Unicode-symboler och emoji-förutsägelser"
 
@@ -165,60 +165,60 @@ msgstr "Unicode-symboler och emoji-förutsägelser"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:576 engine/hunspell_table.py:577 setup/main.py:483
+#: engine/hunspell_table.py:584 engine/hunspell_table.py:585 setup/main.py:500
 msgid "Off the record mode"
 msgstr "Inofficiellt läge"
 
-#: engine/hunspell_table.py:1454
+#: engine/hunspell_table.py:1483
 msgid "Highest priority dictionary"
 msgstr "Ordbok med högsta prioritet"
 
-#: engine/hunspell_table.py:1455
+#: engine/hunspell_table.py:1484
 msgid "Choose highest priority dictionary"
 msgstr "Välj ordlista med högsta prioritet"
 
-#: engine/hunspell_table.py:1484
+#: engine/hunspell_table.py:1513
 msgid "Preedit input method"
 msgstr "Preedit inmatningsmetod"
 
-#: engine/hunspell_table.py:1485
+#: engine/hunspell_table.py:1514
 msgid "Switch preedit input method"
 msgstr "Byt preedit inmatningsmetod"
 
-#: engine/hunspell_table.py:1784
+#: engine/hunspell_table.py:1813
 msgid "Setup"
 msgstr "Inställning"
 
-#: engine/hunspell_table.py:1787 setup/main.py:137
+#: engine/hunspell_table.py:1816 setup/main.py:137
 msgid "Preferences for ibus-typing-booster"
 msgstr "Inställningar för ibus-typing-booster"
 
-#: engine/hunspell_table.py:4030
+#: engine/hunspell_table.py:4118
 msgid "Failed to import Google speech-to-text."
 msgstr "Kunde inte importera Googles tal-till-text."
 
-#: engine/hunspell_table.py:4033
+#: engine/hunspell_table.py:4121
 msgid "Failed to import pyaudio."
 msgstr "Kunde inte importera pyaudio."
 
-#: engine/hunspell_table.py:4036
+#: engine/hunspell_table.py:4124
 msgid "Failed to import queue."
 msgstr "Kunde inte importera kö."
 
-#: engine/hunspell_table.py:4041
+#: engine/hunspell_table.py:4129
 msgid "No supported language for speech recognition."
 msgstr "Inget språk som stöds för taligenkänning."
 
-#: engine/hunspell_table.py:4045
+#: engine/hunspell_table.py:4133
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google application credentials” filen “%s” kunde inte hittas."
 
-#: engine/hunspell_table.py:4057
+#: engine/hunspell_table.py:4145
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Kunde inte starta Googles tal-till-text. Se debug.log."
 
-#: engine/hunspell_table.py:4164
+#: engine/hunspell_table.py:4252
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google tal-till-text-fel. Se debug.log."
 
@@ -277,27 +277,27 @@ msgstr "modifierare"
 msgid "regional"
 msgstr "regional"
 
-#: engine/itb_util.py:3339 engine/itb_util.py:3651
+#: engine/itb_util.py:3342 engine/itb_util.py:3654
 msgid "File not found"
 msgstr "Filen hittades inte"
 
-#: engine/itb_util.py:3342 engine/itb_util.py:3654
+#: engine/itb_util.py:3345 engine/itb_util.py:3657
 msgid "Permission error"
 msgstr "Rättighetsfel"
 
-#: engine/itb_util.py:3345 engine/itb_util.py:3657
+#: engine/itb_util.py:3348 engine/itb_util.py:3660
 msgid "Unicode decoding error"
 msgstr "Unicode avkodningsfel"
 
-#: engine/itb_util.py:3348 engine/itb_util.py:3660
+#: engine/itb_util.py:3351 engine/itb_util.py:3663
 msgid "Unknown error"
 msgstr "Okänt fel"
 
-#: engine/itb_util.py:3631
+#: engine/itb_util.py:3634
 msgid "Native Keyboard"
 msgstr "Inbyggt tangentbord"
 
-#: engine/itb_util.py:3633
+#: engine/itb_util.py:3636
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -310,38 +310,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4146
+#: engine/itb_util.py:4149
 msgid "Key input"
 msgstr "Tangentinmatning"
 
-#: engine/itb_util.py:4152
+#: engine/itb_util.py:4155
 msgid "Cancel"
 msgstr "Avbryt"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4159
+#: engine/itb_util.py:4162
 msgid "Please press a key (or a key combination)"
 msgstr "Tryck på en tangent (eller en tangentkombination)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4164
+#: engine/itb_util.py:4167
 msgid "The dialog will be closed when the key is released"
 msgstr "Dialogen stängs när tangenten släpps"
 
-#: engine/itb_util.py:4196
+#: engine/itb_util.py:4199
 msgid "A completion input method to speedup typing."
 msgstr "En kompletterande indatametod för att påskynda textinmatning."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4205
+#: engine/itb_util.py:4208
 msgid "translator-credits"
 msgstr "Åke Engelbrektson"
 
-#: engine/itb_util.py:4213
+#: engine/itb_util.py:4216
 msgid "Online documentation:"
 msgstr "Dokumentation online:"
 
@@ -349,7 +349,7 @@ msgstr "Dokumentation online:"
 msgid "Preferences"
 msgstr "Inställningar"
 
-#: setup/main.py:176 setup/main.py:4624
+#: setup/main.py:176 setup/main.py:4673
 msgid "_Close"
 msgstr "_Stäng"
 
@@ -385,7 +385,7 @@ msgstr "Anpassade genvägar"
 #. use to move to the next completion candidate etc...
 #. Translators: Column heading of the table listing the
 #. existing key bindings
-#: setup/main.py:244 setup/main.py:1050
+#: setup/main.py:244 setup/main.py:1067
 msgid "Key bindings"
 msgstr "Snabbtangenter"
 
@@ -405,7 +405,7 @@ msgstr "Utseende"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:282 setup/main.py:1796
+#: setup/main.py:282 setup/main.py:1813
 msgid "Speech recognition"
 msgstr "Taligenkänning"
 
@@ -458,6 +458,16 @@ msgstr ""
 "tabulatorn igen går till nästa kandidat och öppnar den fullständiga "
 "kandidatlistan."
 
+#. Translators: Whether to automatically capitalize after
+#. punctuation.
+#: setup/main.py:374
+msgid "Auto capitalize"
+msgstr ""
+
+#: setup/main.py:376
+msgid "Automatically capitalize after punctuation."
+msgstr ""
+
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
 #. candidate automatically. If this option is off you have
@@ -466,11 +476,11 @@ msgstr ""
 #. you do not want to use the automatically selected
 #. candidate, you can use the key binding for the “cancel”
 #. command which will deselect all candidates.
-#: setup/main.py:380
+#: setup/main.py:397
 msgid "Automatically select the best candidate"
 msgstr "Välj den bästa kandidaten automatiskt"
 
-#: setup/main.py:382
+#: setup/main.py:399
 msgid ""
 "What you type will automatically be corrected to the best candidate by "
 "selecting the best candidate automatically. If this option is off you have "
@@ -489,11 +499,11 @@ msgstr ""
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
 #. with the mouse.
-#: setup/main.py:405
+#: setup/main.py:422
 msgid "Add a space when committing by mouse click"
 msgstr "Lägg till ett blanksteg när bekräftad, med musklick"
 
-#: setup/main.py:407
+#: setup/main.py:424
 msgid ""
 "Add a space if a candidate from the candidate list is committed by clicking "
 "it with the mouse."
@@ -507,11 +517,11 @@ msgstr ""
 #. changed via the menu or via shortcut keys. If this
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
-#: setup/main.py:428
+#: setup/main.py:445
 msgid "Remember last used preedit input method"
 msgstr "Kom ihåg den senast använda förredigeringsinmatningsmetoden"
 
-#: setup/main.py:430
+#: setup/main.py:447
 msgid ""
 "If more then one input method is used at the same time, one of them is used "
 "for the preedit. Which input method is used for the preedit can be changed "
@@ -523,7 +533,7 @@ msgstr ""
 "ändras via menyn eller via snabbtangenter. Om detta alternativ är aktiverat "
 "sparas en sådan ändring även om sessionen startas om."
 
-#: setup/main.py:457
+#: setup/main.py:474
 msgid ""
 "Whether Unicode symbols and emoji should be included in the predictions. "
 "Emoji are pictographs like ☺♨⛵…. Unicode symbols are other symbols like "
@@ -537,7 +547,7 @@ msgstr ""
 "blindskriftsmönster (⠥⠩…) och många andra symboler. Dessa är tekniskt sett "
 "inte emojier men är hur som helst användbara symboler."
 
-#: setup/main.py:485
+#: setup/main.py:502
 msgid ""
 "While “Off the record” mode is on, learning from user input is disabled. If "
 "learned user input is available, predictions are usually much better than "
@@ -559,11 +569,11 @@ msgstr ""
 #. used. I.e. the XIM module of Qt4 will not work well when
 #. this workaround is enabled and input via XIM into X11
 #. programs like xterm will not work well either.
-#: setup/main.py:512
+#: setup/main.py:529
 msgid "Use a workaround for a bug in Qt im module"
 msgstr "Använd en metod att gå runt ett fel i Qt-im-modulen"
 
-#: setup/main.py:514
+#: setup/main.py:531
 msgid ""
 "Use a workaround for bugs in the input method modules of Qt4 and Qt5. "
 "Attention, although this workaround makes it work better when the Qt input "
@@ -585,11 +595,11 @@ msgstr ""
 #. repetition speed of the arrow keys and system
 #. load. Because it is buggy, this option is off by
 #. default.
-#: setup/main.py:542
+#: setup/main.py:559
 msgid "Arrow keys can reopen a preedit"
 msgstr "Piltangenter kan återöppna en förredigering"
 
-#: setup/main.py:544
+#: setup/main.py:561
 msgid ""
 "Whether it is allowed to reopen a preedit when the cursor reaches a word "
 "boundary after moving it with the arrow keys. Enabling this option is useful "
@@ -616,11 +626,11 @@ msgstr ""
 #. prevent you from typing “.s” to get “ṡ”. You can also
 #. disable this feature completely by making the list empty
 #. (which is the default).
-#: setup/main.py:577
+#: setup/main.py:594
 msgid "Auto commit characters:"
 msgstr "Automatiskt använda tecken:"
 
-#: setup/main.py:579
+#: setup/main.py:596
 msgid ""
 "The characters in this list cause the preedit to be committed automatically, "
 "followed by a space.  For example, if “.” is an auto commit character, this "
@@ -644,11 +654,11 @@ msgstr ""
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
-#: setup/main.py:613
+#: setup/main.py:630
 msgid "Minimum number of chars for completion:"
 msgstr "Minsta antal tecken för komplettering:"
 
-#: setup/main.py:615
+#: setup/main.py:632
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
 msgstr "Visa inga förslag när mindre än detta antal tecken har skrivits."
@@ -656,11 +666,11 @@ msgstr "Visa inga förslag när mindre än detta antal tecken har skrivits."
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
 #. debug information may also be shown graphically.
-#: setup/main.py:644
+#: setup/main.py:661
 msgid "Debug level:"
 msgstr "Felsökningsnivå:"
 
-#: setup/main.py:646
+#: setup/main.py:663
 msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
@@ -671,21 +681,21 @@ msgstr ""
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
 #. reading that text file.
-#: setup/main.py:675
+#: setup/main.py:692
 msgid "Learn from text file"
 msgstr "Inlärning från textfil"
 
-#: setup/main.py:677
+#: setup/main.py:694
 msgid "Learn your style by reading a text file"
 msgstr "Lär in din stil genom att läsa en textfil"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
-#: setup/main.py:686
+#: setup/main.py:703
 msgid "Delete learned data"
 msgstr "Ta bort inlärd data"
 
-#: setup/main.py:688
+#: setup/main.py:705
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
@@ -694,157 +704,157 @@ msgstr ""
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
 #. ibus-typing-booster.
-#: setup/main.py:700
+#: setup/main.py:717
 msgid "Use dictionaries for the following languages:"
 msgstr "Använd ordböcker för följande språk:"
 
-#: setup/main.py:728
+#: setup/main.py:745
 msgid "Add a dictionary"
 msgstr "Lägg till en ordbok"
 
-#: setup/main.py:739
+#: setup/main.py:756
 msgid "Remove a dictionary"
 msgstr "Ta bort en ordbok"
 
-#: setup/main.py:750
+#: setup/main.py:767
 msgid "Move dictionary up"
 msgstr "Flytta upp ordbok"
 
-#: setup/main.py:762
+#: setup/main.py:779
 msgid "Move dictionary down"
 msgstr "Flytta ner ordbok"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
-#: setup/main.py:769
+#: setup/main.py:786
 msgid "Install missing dictionaries"
 msgstr "Installera saknade ordböcker"
 
-#: setup/main.py:771
+#: setup/main.py:788
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Installera de ordböcker som angetts här men inte är installerade"
 
-#: setup/main.py:778 setup/main.py:895 setup/main.py:1081 setup/main.py:3355
+#: setup/main.py:795 setup/main.py:912 setup/main.py:1098 setup/main.py:3380
 msgid "Set to default"
 msgstr "Ange som standard"
 
 #. Translators: Tooltip for a button used to set the list of
 #. dictionaries to the default for the current locale.
-#: setup/main.py:784
+#: setup/main.py:801
 msgid "Set dictionaries to the default for the current locale."
 msgstr "Ange ordlistor som standard för det aktuella språket."
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
 #. ibus-typing-booster.
-#: setup/main.py:813
+#: setup/main.py:830
 msgid "Use the following input methods:"
 msgstr "Använd följande inmatningsmetoder:"
 
-#: setup/main.py:841
+#: setup/main.py:858
 msgid "Add an input method"
 msgstr "Lägg till en indatametod"
 
-#: setup/main.py:853
+#: setup/main.py:870
 msgid "Remove an input method"
 msgstr "Ta bort en inmatningsmetod"
 
-#: setup/main.py:865
+#: setup/main.py:882
 msgid "Move input method up"
 msgstr "Flytta upp inmatningsmetod"
 
-#: setup/main.py:877
+#: setup/main.py:894
 msgid "Move input method down"
 msgstr "Flytta ner inmatningsmetod"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
-#: setup/main.py:885
+#: setup/main.py:902
 msgid "Input Method Help"
 msgstr "Hjälp om inmatningsmetod"
 
-#: setup/main.py:887
+#: setup/main.py:904
 msgid "Display some help showing how to use the input method selected above."
 msgstr "Visar lite hjälp om hur du använder inmatningsmetoden som valts ovan."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
-#: setup/main.py:901
+#: setup/main.py:918
 msgid "Set input methods to the default for the current locale."
 msgstr ""
 "Ställ in inmatningsmetoder till standardvärdet för den aktuella lokalen."
 
-#: setup/main.py:924
+#: setup/main.py:941
 msgid "Enter shortcut here:"
 msgstr "Ange genväg här:"
 
-#: setup/main.py:941
+#: setup/main.py:958
 msgid "Enter shortcut expansion here:"
 msgstr "Ange genvägsexpansion här:"
 
-#: setup/main.py:957
+#: setup/main.py:974
 msgid "Clear input"
 msgstr "Rensa indata"
 
-#: setup/main.py:967
+#: setup/main.py:984
 msgid "Delete shortcut"
 msgstr "Ta bort genväg"
 
-#: setup/main.py:977
+#: setup/main.py:994
 msgid "Add shortcut"
 msgstr "Lägg till genväg"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
-#: setup/main.py:1001
+#: setup/main.py:1018
 msgid "Shortcut"
 msgstr "Genväg"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
-#: setup/main.py:1008
+#: setup/main.py:1025
 msgid "Shortcut expansion"
 msgstr "Genvägsexpansion"
 
-#: setup/main.py:1019
+#: setup/main.py:1036
 msgid "Current key bindings:"
 msgstr "Aktuella snabbtangenter:"
 
 #. Translators: Column heading of the table listing the
 #. existing key bindings
-#: setup/main.py:1043
+#: setup/main.py:1060
 msgid "Command"
 msgstr "Kommando"
 
-#: setup/main.py:1070
+#: setup/main.py:1087
 msgid "Edit"
 msgstr "Redigera"
 
-#: setup/main.py:1074
+#: setup/main.py:1091
 msgid "Edit the key bindings for the selected command"
 msgstr "Redigera snabbtangenter för det markerade kommandot"
 
-#: setup/main.py:1085 setup/main.py:3360
+#: setup/main.py:1102 setup/main.py:3385
 msgid "Set default key bindings for the selected command"
 msgstr "Ställ in standardtangentbindningar för det valda kommandot"
 
-#: setup/main.py:1092
+#: setup/main.py:1109
 msgid "Set all to default"
 msgstr "Ställ allt till standardvärden"
 
-#: setup/main.py:1096
+#: setup/main.py:1113
 msgid "Set default key bindings for all commands"
 msgstr "Ställ in standardtangentbindningar för alla kommandon"
 
 #. Translators: Checkbox to choose whether to display how
 #. many candidates there are and which one is selected on
 #. top of the list of candidates.
-#: setup/main.py:1116
+#: setup/main.py:1133
 msgid "Display total number of candidates"
 msgstr "Visar sammanlagt antal kandidater"
 
-#: setup/main.py:1118
+#: setup/main.py:1135
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
@@ -858,11 +868,11 @@ msgstr ""
 #. method is currently used for the preedit. The auxiliary
 #. text is an optional line of text displayed above the
 #. candidate list.
-#: setup/main.py:1138
+#: setup/main.py:1155
 msgid "Show status info in auxiliary text"
 msgstr "Visa statusinformation i övrig text"
 
-#: setup/main.py:1140
+#: setup/main.py:1157
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "
@@ -876,11 +886,11 @@ msgstr ""
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
-#: setup/main.py:1161
+#: setup/main.py:1178
 msgid "Candidate window page size:"
 msgstr "Kandidatfönsterstorlek:"
 
-#: setup/main.py:1163
+#: setup/main.py:1180
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr ""
@@ -888,54 +898,54 @@ msgstr ""
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
-#: setup/main.py:1189
+#: setup/main.py:1206
 msgid "Candidate window orientation"
 msgstr "Kandidatfönsterorientering"
 
-#: setup/main.py:1191
+#: setup/main.py:1208
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
 msgstr "Huruvida kandidatfönstret skall ritas horisontellt eller vertikalt."
 
-#: setup/main.py:1200
+#: setup/main.py:1217
 msgid "Horizontal"
 msgstr "Horisontellt"
 
-#: setup/main.py:1202
+#: setup/main.py:1219
 msgid "Vertical"
 msgstr "Vertikalt"
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
-#: setup/main.py:1229
+#: setup/main.py:1246
 msgid "Preedit underline"
 msgstr "Förredigeringsunderstrykning"
 
-#: setup/main.py:1231
+#: setup/main.py:1248
 msgid "Which style of underlining to use for the preedit."
 msgstr "Vilken sorts understrykning som skall användas fö förredigering."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
-#: setup/main.py:1241
+#: setup/main.py:1258
 msgid "None"
 msgstr "Ingen"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
-#: setup/main.py:1245
+#: setup/main.py:1262
 msgid "Single"
 msgstr "Enkel"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
-#: setup/main.py:1249
+#: setup/main.py:1266
 msgid "Double"
 msgstr "Dubbel"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
-#: setup/main.py:1253
+#: setup/main.py:1270
 msgid "Low"
 msgstr "Låg"
 
@@ -945,11 +955,11 @@ msgstr "Låg"
 #. option to enable lookup only when a key is pressed or
 #. because one uses the option to require a minimum number
 #. of characters before a lookup is done.
-#: setup/main.py:1281
+#: setup/main.py:1298
 msgid "Use preedit style only if lookup is enabled"
 msgstr "Använd förredigering endast om uppslagning aktiveras"
 
-#: setup/main.py:1283
+#: setup/main.py:1300
 msgid ""
 "If this option is on, a preedit style like underlining will only be used if "
 "lookup is enabled. The lookup can be disabled because one uses the option to "
@@ -966,11 +976,11 @@ msgstr ""
 #. spellchecking is done on the contents of the preedit and
 #. a custom color is used to indicate when the preedit
 #. might contain a spelling error.
-#: setup/main.py:1305
+#: setup/main.py:1322
 msgid "Preedit spellchecking"
 msgstr "Stavningskontroll av förredigering"
 
-#: setup/main.py:1307
+#: setup/main.py:1324
 msgid ""
 "Here you can choose whether spellchecking is done on the contents of the "
 "preedit and a custom color is used to indicate when the preedit might "
@@ -983,11 +993,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
-#: setup/main.py:1339
+#: setup/main.py:1356
 msgid "Choose color for preedit spellchecking"
 msgstr "Välj färg för förhandsredigering av stavningskontroll"
 
-#: setup/main.py:1341
+#: setup/main.py:1358
 msgid ""
 "Here you can specify which color to use for the preedit when the preedit "
 "might contain a spelling error. This setting only has an effect if the "
@@ -999,11 +1009,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
-#: setup/main.py:1360
+#: setup/main.py:1377
 msgid "Use color for inline completion"
 msgstr "Använd färg för inline-komplettering"
 
-#: setup/main.py:1362
+#: setup/main.py:1379
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
@@ -1014,11 +1024,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
-#: setup/main.py:1392
+#: setup/main.py:1409
 msgid "Choose color for inline completion"
 msgstr "Välj färg för slutförd infogning"
 
-#: setup/main.py:1394
+#: setup/main.py:1411
 msgid ""
 "Here you can specify which color to use for inline completion. This setting "
 "only has an effect if the use of color for inline completion is enabled and "
@@ -1031,11 +1041,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
-#: setup/main.py:1414
+#: setup/main.py:1431
 msgid "Use color for user database suggestions"
 msgstr "Använd färg för förslag från användardatabasen"
 
-#: setup/main.py:1416
+#: setup/main.py:1433
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
@@ -1046,11 +1056,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
-#: setup/main.py:1442
+#: setup/main.py:1459
 msgid "Choose color for user database suggestions"
 msgstr "Välj färg för databasförslag"
 
-#: setup/main.py:1444
+#: setup/main.py:1461
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
@@ -1063,11 +1073,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
-#: setup/main.py:1464
+#: setup/main.py:1481
 msgid "Use color for spellchecking suggestions"
 msgstr "Använd färg för stavningskontrollsförslag"
 
-#: setup/main.py:1466
+#: setup/main.py:1483
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
@@ -1078,11 +1088,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
-#: setup/main.py:1492
+#: setup/main.py:1509
 msgid "Choose color for spellchecking suggestions"
 msgstr "Välj färg för stavningskontrollsförslag"
 
-#: setup/main.py:1494
+#: setup/main.py:1511
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
@@ -1096,11 +1106,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
-#: setup/main.py:1515
+#: setup/main.py:1532
 msgid "Use color for dictionary suggestions"
 msgstr "Använd färg för ordboksförslag"
 
-#: setup/main.py:1517
+#: setup/main.py:1534
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
@@ -1111,11 +1121,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
-#: setup/main.py:1543
+#: setup/main.py:1560
 msgid "Choose color for dictionary suggestions"
 msgstr "Välj färg för ordboksförslag"
 
-#: setup/main.py:1545
+#: setup/main.py:1562
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
@@ -1129,11 +1139,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
-#: setup/main.py:1566
+#: setup/main.py:1583
 msgid "Use label for user database suggestions"
 msgstr "Använd en etikett för förslag från användardatabasen"
 
-#: setup/main.py:1568
+#: setup/main.py:1585
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
@@ -1144,11 +1154,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
-#: setup/main.py:1602
+#: setup/main.py:1619
 msgid "Use label for spellchecking suggestions"
 msgstr "Använd en etikett för stavningskontrollsförslag"
 
-#: setup/main.py:1604
+#: setup/main.py:1621
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
@@ -1159,11 +1169,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
-#: setup/main.py:1638
+#: setup/main.py:1655
 msgid "Use label for dictionary suggestions"
 msgstr "Använd en etikett för ordboksförslag"
 
-#: setup/main.py:1640
+#: setup/main.py:1657
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
@@ -1173,11 +1183,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
-#: setup/main.py:1673
+#: setup/main.py:1690
 msgid "Use a label to indicate busy state"
 msgstr "Använd en etikett för att visa upptaget tillstånd"
 
-#: setup/main.py:1675
+#: setup/main.py:1692
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
@@ -1186,61 +1196,61 @@ msgstr ""
 "typing-booster är upptagen."
 
 #. Translators:
-#: setup/main.py:1707 setup/main.py:2420
+#: setup/main.py:1724 setup/main.py:2445
 msgid "Set “Google application credentials” .json file:"
 msgstr "Ange ”Google-programkreditiv”.json-fil:"
 
-#: setup/main.py:1709
+#: setup/main.py:1726
 msgid "Full path of the “Google application credentials” .json file."
 msgstr ""
 "Fullständig sökväg till filen \"Google application credentials\" .json."
 
-#: setup/main.py:1717
+#: setup/main.py:1734
 msgid "File not yet set."
 msgstr "Filen ännu inte angiven."
 
-#: setup/main.py:1773
+#: setup/main.py:1790
 msgid "Spell checking"
 msgstr "Stavningskontroll"
 
-#: setup/main.py:1789
+#: setup/main.py:1806
 msgid "Emoji"
 msgstr "Emoji"
 
-#: setup/main.py:1987
+#: setup/main.py:2004
 msgid "Are you sure?"
 msgstr "Är du säker?"
 
-#: setup/main.py:1989 setup/main.py:2423 setup/main.py:3427
+#: setup/main.py:2006 setup/main.py:2448 setup/main.py:3452
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: setup/main.py:1990 setup/main.py:2424 setup/main.py:3428
+#: setup/main.py:2007 setup/main.py:2449 setup/main.py:3453
 msgid "_OK"
 msgstr "_OK"
 
-#: setup/main.py:2022
+#: setup/main.py:2039
 msgid "Another instance of this app is already running."
 msgstr "En annan instans av programmet körs redan."
 
-#: setup/main.py:2621
+#: setup/main.py:2646
 msgid "Add dictionary"
 msgstr "Lägg till ordbok"
 
-#: setup/main.py:2903
+#: setup/main.py:2928
 msgid "Add input method"
 msgstr "Lägg till indatametod"
 
-#: setup/main.py:3308
+#: setup/main.py:3333
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Redigera snabbtangenter för kommandot \"%s\""
 
-#: setup/main.py:3336
+#: setup/main.py:3361
 msgid "Add a key binding"
 msgstr "Lägg till en snabbtangent"
 
-#: setup/main.py:3348
+#: setup/main.py:3373
 msgid "Remove selected key binding"
 msgstr "Ta bort den valda tangentbindningen"
 
@@ -1249,7 +1259,7 @@ msgstr "Ta bort den valda tangentbindningen"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:3408
+#: setup/main.py:3433
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1257,16 +1267,16 @@ msgstr ""
 "Vill du verkligen återställa alla snabbtangenter för alla kommandon till "
 "sitt standardvärde?"
 
-#: setup/main.py:3424
+#: setup/main.py:3449
 msgid "Open File ..."
 msgstr "Öppna fil …"
 
-#: setup/main.py:3443
+#: setup/main.py:3468
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Kunde lära från filen %(filename)s."
 
-#: setup/main.py:3452
+#: setup/main.py:3477
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Misslyckades att lära från filen %(filename)s."
@@ -1281,7 +1291,7 @@ msgstr "Misslyckades att lära från filen %(filename)s."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:3475
+#: setup/main.py:3500
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1289,7 +1299,7 @@ msgstr ""
 "Vill du verkligen ta bort alla språkdata, inlärd från att skriva eller läsa "
 "filer?"
 
-#: setup/main.py:4681
+#: setup/main.py:4730
 msgid "ibus is not running."
 msgstr "ibus kör inte."
 
