@@ -22,6 +22,32 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.10.0" date="2020-10-19" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.10.0</url>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/96">
+          github-issues#96: Add option to automatically capitalize after punctuation
+        </issue>
+        <issue>
+          Don't record in user database when stripped_input_phrase or
+          stripped_commit_phrase are emty
+        </issue>
+        <issue>
+          When interactively deleting a candidate from the user
+          database, remove all case modes
+        </issue>
+        <issue>
+          Add 4 more characters ÞĦŊŦ to get special treatment in
+          remove_accents()
+        </issue>
+        <issue>
+          Translation update form Weblate for ca, es, fr, it, ja, nl, sv
+        </issue>
+      </issues>
+    </release>
     <release version="2.9.9" date="2020-10-08" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
