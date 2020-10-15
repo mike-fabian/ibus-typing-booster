@@ -2822,8 +2822,7 @@ def variant_to_value(variant):
     '''
     Convert a GLib variant to a value
     '''
-    # pylint: disable=unidiomatic-typecheck
-    if type(variant) != GLib.Variant:
+    if not isinstance(variant, GLib.Variant):
         LOGGER.info('not a GLib.Variant')
         return variant
     type_string = variant.get_type_string()
