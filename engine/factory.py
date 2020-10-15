@@ -19,16 +19,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-
+from typing import Dict
+from typing import Optional
+from typing import Union
 import re
 import os
 import logging
 from gettext import dgettext
 _ = lambda a: dgettext("ibus-typing-booster", a)
 N_ = lambda a: a
-from gi import require_version
+from gi import require_version # type: ignore
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus # type: ignore
 import hunspell_table
 import tabsqlitedb
 
@@ -38,24 +40,25 @@ DEBUG_LEVEL = int(0)
 
 class EngineFactory(IBus.Factory):
     """Table IM Engine Factory"""
-    def __init__(self, bus):
+    def __init__(self, bus) -> None:
         global DEBUG_LEVEL
         try:
-            DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+            DEBUG_LEVEL = int(str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
         except (TypeError, ValueError):
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
             LOGGER.debug('EngineFactory.__init__(bus=%s)\n', bus)
-        self.db = None
-        self.dbdict = {}
-        self.enginedict = {}
+        self.db: Optional[tabsqlitedb.TabSqliteDb] = None
+        self.dbdict: Dict[str, tabsqlitedb.TabSqliteDb] = {}
+        self.enginedict: Dict[str, hunspell_table.TypingBoosterEngine] = {}
         self.bus = bus
         #engine.Engine.CONFIG_RELOADED(bus)
         super(EngineFactory, self).__init__(
             connection=bus.get_connection(), object_path=IBus.PATH_FACTORY)
         self.engine_id = 0
 
-    def do_create_engine(self, engine_name):
+    def do_create_engine(
+            self, engine_name: str) -> hunspell_table.TypingBoosterEngine:
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'EngineFactory.do_create_engine(engine_name=%s)\n',
@@ -83,7 +86,7 @@ class EngineFactory(IBus.Factory):
             traceback.print_exc()
             raise Exception("Cannot create engine %s" % engine_name)
 
-    def do_destroy(self):
+    def do_destroy(self) -> None:
         '''Destructor, which finish some task for IME'''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('EngineFactory.do_destroy()\n')

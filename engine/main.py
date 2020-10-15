@@ -19,6 +19,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+from typing import Any
 import os
 import sys
 import argparse
@@ -26,9 +27,9 @@ import re
 import logging
 import logging.handlers
 from signal import signal, SIGTERM, SIGINT
-from gi import require_version
+from gi import require_version # type: ignore
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus # type: ignore
 from gi.repository import GLib
 
 import factory
@@ -38,13 +39,13 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 
 DEBUG_LEVEL = int(0)
 try:
-    DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+    DEBUG_LEVEL = int(str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
 except (TypeError, ValueError):
     DEBUG_LEVEL = int(0)
 
 try:
     ICON_DIR = os.path.join(
-        os.getenv('IBUS_TYPING_BOOSTER_LOCATION'),
+        str(os.getenv('IBUS_TYPING_BOOSTER_LOCATION')),
         'icons')
 except:
     ICON_DIR = os.path.join(
@@ -52,14 +53,14 @@ except:
 
 try:
     SETUP_TOOL = os.path.join(
-        os.getenv('IBUS_TYPING_BOOSTER_LIB_LOCATION'),
+        str(os.getenv('IBUS_TYPING_BOOSTER_LIB_LOCATION')),
         'ibus-setup-typing-booster')
 except:
     SETUP_TOOL = os.path.join(
         version.get_prefix(),
         'libexec/ibus-setup-typing-booster')
 
-def parse_args():
+def parse_args() -> Any:
     '''Parse the command line arguments'''
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -106,7 +107,7 @@ if _ARGS.profile:
     _PROFILE = cProfile.Profile()
 
 class IMApp:
-    def __init__(self, exec_by_ibus):
+    def __init__(self, exec_by_ibus) -> None:
         if DEBUG_LEVEL > 1:
             LOGGER.debug('IMApp.__init__(exec_by_ibus=%s)\n', exec_by_ibus)
         self.__mainloop = GLib.MainLoop()
@@ -153,7 +154,7 @@ class IMApp:
             self.__component.add_engine(engine)
             self.__bus.register_component(self.__component)
 
-    def run(self):
+    def run(self) -> None:
         if DEBUG_LEVEL > 1:
             LOGGER.debug('IMApp.run()\n')
         if _ARGS.profile:
@@ -161,12 +162,12 @@ class IMApp:
         self.__mainloop.run()
         self.__bus_destroy_cb()
 
-    def quit(self):
+    def quit(self) -> None:
         if DEBUG_LEVEL > 1:
             LOGGER.debug('IMApp.quit()\n')
         self.__bus_destroy_cb()
 
-    def __bus_destroy_cb(self, bus=None):
+    def __bus_destroy_cb(self, bus=None) -> None:
         if DEBUG_LEVEL > 1:
             LOGGER.debug('IMApp.__bus_destroy_cb(bus=%s)\n', bus)
         if self.destroyed:
@@ -187,11 +188,11 @@ class IMApp:
             stats.print_stats('itb_emoji', 25)
             LOGGER.info('Profiling info:\n%s', stats_stream.getvalue())
 
-def cleanup(ima_ins):
+def cleanup(ima_ins: IMApp) -> None:
     ima_ins.quit()
     sys.exit()
 
-def indent(element, level=0):
+def indent(element: Any, level: int = 0) -> None:
     '''Use to format xml Element pretty :)'''
     i = "\n" + level*"    "
     if element:

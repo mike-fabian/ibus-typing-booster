@@ -19,6 +19,12 @@
 '''
 Module for ibus-typing-booster to access the sqlite3 databases
 '''
+
+from typing import Dict
+from typing import List
+from typing import Tuple
+from typing import Optional
+from typing import Any
 import os
 import os.path as path
 import codecs
@@ -60,19 +66,22 @@ class TabSqliteDb:
         user_freq >= 1: The number of times the user has used this phrase
     '''
     # pylint: enable=line-too-long
-    def __init__(self, user_db_file=''):
+    def __init__(self, user_db_file='') -> None:
         global DEBUG_LEVEL
         try:
-            DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+            DEBUG_LEVEL = int(str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
         except (TypeError, ValueError):
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'TabSqliteDb.__init__(user_db_file = %s)', user_db_file)
         self.user_db_file = user_db_file
-        if not self.user_db_file:
+        if not self.user_db_file and os.getenv('HOME'):
             self.user_db_file = path.join(
-                os.getenv('HOME'), '.local/share/ibus-typing-booster/user.db')
+                str(os.getenv('HOME')), '.local/share/ibus-typing-booster/user.db')
+        if not self.user_db_file:
+            LOGGER.debug('Falling back to ":memory:" for user.db')
+            self.user_db_file = ':memory:'
         if (self.user_db_file != ':memory:'
                 and not os.path.isdir(os.path.dirname(self.user_db_file))):
             os.makedirs(os.path.dirname(self.user_db_file), exist_ok=True)
@@ -256,9 +265,14 @@ class TabSqliteDb:
         self.create_indexes(commit=False)
         self.generate_userdb_desc()
 
-    def update_phrase(self, input_phrase='', phrase='',
-                      p_phrase='', pp_phrase='',
-                      user_freq=0, commit=True):
+    def update_phrase(
+            self,
+            input_phrase: str = '',
+            phrase: str = '',
+            p_phrase: str = '',
+            pp_phrase: str = '',
+            user_freq: int = 0,
+            commit: bool = True) -> None:
         '''
         update the user frequency of a phrase
         '''
@@ -295,7 +309,7 @@ class TabSqliteDb:
         except Exception:
             LOGGER.exception('Unexpected error updating phrase in user_db.')
 
-    def sync_usrdb(self):
+    def sync_usrdb(self) -> None:
         '''
         Trigger a checkpoint operation.
         '''
@@ -306,7 +320,7 @@ class TabSqliteDb:
         if DEBUG_LEVEL > 1:
             LOGGER.debug('commit and execute checkpoint done.')
 
-    def create_tables(self):
+    def create_tables(self) -> None:
         '''Create table for the phrases.'''
         sqlstr = '''CREATE TABLE IF NOT EXISTS user_db.phrases
                     (id INTEGER PRIMARY KEY,
@@ -315,9 +329,14 @@ class TabSqliteDb:
         self.database.execute(sqlstr)
         self.database.commit()
 
-    def add_phrase(self, input_phrase='', phrase='',
-                   p_phrase='', pp_phrase='',
-                   user_freq=0, commit=True):
+    def add_phrase(
+            self,
+            input_phrase: str = '',
+            phrase: str = '',
+            p_phrase: str = '',
+            pp_phrase: str = '',
+            user_freq: int = 0,
+            commit: bool = True) -> None:
         '''
         Add phrase to database
         '''
@@ -374,7 +393,7 @@ class TabSqliteDb:
         except Exception:
             LOGGER.exception('Unexpected error adding phrase to database.')
 
-    def optimize_database(self):
+    def optimize_database(self) -> None:
         '''
         Optimize the database by copying the contents
         to temporary tables and back.
@@ -389,7 +408,7 @@ class TabSqliteDb:
         self.database.executescript("VACUUM;")
         self.database.commit()
 
-    def drop_indexes(self):
+    def drop_indexes(self) -> None:
         '''Drop the index in database to reduce it's size'''
         sqlstr = '''
             DROP INDEX IF EXISTS user_db.phrases_index_p;
@@ -400,7 +419,7 @@ class TabSqliteDb:
         self.database.executescript(sqlstr)
         self.database.commit()
 
-    def create_indexes(self, commit=True):
+    def create_indexes(self, commit: bool = True) -> None:
         '''Create indexes for the database.'''
         sqlstr = '''
         CREATE INDEX IF NOT EXISTS user_db.phrases_index_p ON phrases
@@ -412,7 +431,9 @@ class TabSqliteDb:
         if commit:
             self.database.commit()
 
-    def best_candidates(self, phrase_frequencies):
+    def best_candidates(
+            self,
+            phrase_frequencies: Dict[str, int]) -> List[Tuple[str, int]]:
         '''Sorts the phrase_frequencies dictionary and returns the best
         candidates.
         '''
@@ -423,7 +444,11 @@ class TabSqliteDb:
                           x[0]       # phrase alphabetical
                       ))[:20]
 
-    def select_words(self, input_phrase, p_phrase='', pp_phrase=''):
+    def select_words(
+            self,
+            input_phrase: str,
+            p_phrase: str = '',
+            pp_phrase: str = '') -> List[Tuple[str, int]]:
         '''
         Get phrases from database completing input_phrase.
 
@@ -443,7 +468,7 @@ class TabSqliteDb:
                 input_phrase.encode('UTF-8'),
                 p_phrase.encode('UTF-8'),
                 pp_phrase.encode('UTF-8'))
-        phrase_frequencies = {}
+        phrase_frequencies: Dict[str, int] = {}
         if not ' ' in input_phrase:
             # Get suggestions from hunspell dictionaries. But only
             # if input_phrase does not contain spaces. The hunspell
@@ -622,7 +647,7 @@ class TabSqliteDb:
                 self.best_candidates(phrase_frequencies))
         return self.best_candidates(phrase_frequencies)
 
-    def generate_userdb_desc(self):
+    def generate_userdb_desc(self) -> None:
         '''
         Add a description table to the user database
 
@@ -643,7 +668,7 @@ class TabSqliteDb:
         except Exception:
             LOGGER.exception('Unexpected error adding description to user_db.')
 
-    def init_user_db(self):
+    def init_user_db(self) -> None:
         '''
         Initialize the user database unless it is an in-memory database
         '''
@@ -667,7 +692,7 @@ class TabSqliteDb:
             ''')
             database.commit()
 
-    def get_database_desc(self, db_file):
+    def get_database_desc(self, db_file: str) -> Optional[Dict[str, str]]:
         '''Get the description of the database'''
         if not path.exists(db_file):
             return None
@@ -682,7 +707,8 @@ class TabSqliteDb:
             LOGGER.exception('Unexpected error getting database description.')
             return None
 
-    def get_number_of_columns_of_phrase_table(self, db_file):
+    def get_number_of_columns_of_phrase_table(
+            self, db_file: str) -> Optional[int]:
         # pylint: disable=line-too-long
         '''
         Get the number of columns in the 'phrases' table in
@@ -718,7 +744,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                 'Unexpected error getting number of columns of database.')
             return 0
 
-    def list_user_shortcuts(self):
+    def list_user_shortcuts(self) -> List[Tuple[str, str]]:
         '''Returns a list of user defined shortcuts from the user database.
 
         :rtype: List of tuples of strings: [(str, str), ...]
@@ -737,8 +763,13 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         return result
 
     def check_phrase_and_update_frequency(
-            self, input_phrase='', phrase='', p_phrase='',
-            pp_phrase='', user_freq_increment=1, commit=True):
+            self,
+            input_phrase: str = '',
+            phrase: str = '',
+            p_phrase: str = '',
+            pp_phrase: str = '',
+            user_freq_increment: int = 1,
+            commit: bool = True) -> None:
         '''
         Check whether input_phrase and phrase are already in database. If
         they are in the database, increase the frequency by 1, if not
@@ -814,7 +845,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                         commit=commit)
         return
 
-    def remove_phrase(self, input_phrase='', phrase='', commit=True):
+    def remove_phrase(
+            self,
+            input_phrase: str = '',
+            phrase: str = '',
+            commit: bool = True) -> None:
         '''
         Remove all rows matching “input_phrase” and “phrase” from database.
         Or, if “input_phrase” is “None”, remove all rows matching “phrase”
@@ -846,7 +881,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         if commit:
             self.database.commit()
 
-    def extract_user_phrases(self):
+    def extract_user_phrases(self) -> List[Tuple[str, int]]:
         '''extract user phrases from database'''
         try:
             database = sqlite3.connect(self.user_db_file)
@@ -866,7 +901,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             LOGGER.exception('Unexpected error extracting user phrases.')
             return []
 
-    def read_training_data_from_file(self, filename):
+    def read_training_data_from_file(self, filename: str) -> bool:
         '''
         Read data to train the prediction from a text file.
 
@@ -880,7 +915,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             + 'user_freq, timestamp FROM phrases;').fetchall()
         p_token = ''
         pp_token = ''
-        database_dict = {}
+        database_dict: Dict[Tuple[str, str, str, str], Dict[str, Any]] = {}
         for row in rows:
             database_dict.update([((row[0], row[1], row[2], row[3]),
                                    {'input_phrase': row[0],
@@ -938,7 +973,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             return False
         return True
 
-    def remove_all_phrases(self):
+    def remove_all_phrases(self) -> None:
         '''
         Remove all phrases from the database, i.e. delete all the
         data learned from user input or text files.
@@ -951,7 +986,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             LOGGER.exception(
                 'Unexpected error removing all phrases from database.')
 
-    def dump_database(self):
+    def dump_database(self) -> None:
         '''
         Dump the contents of the database to the log
 

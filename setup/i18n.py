@@ -27,14 +27,14 @@ DOMAINNAME = "ibus-typing-booster"
 _ = lambda a: gettext.dgettext(DOMAINNAME, a)
 N_ = lambda a: a
 
-def init():
+def init() -> None:
     localedir = os.getenv("IBUS_LOCALEDIR")
     # Python's locale module doesn't provide all methods on some
     # operating systems like FreeBSD
     try:
         # for non-standard localedir
-        locale.bindtextdomain(DOMAINNAME, localedir)
-        locale.bind_textdomain_codeset(DOMAINNAME, "UTF-8")
+        locale.bindtextdomain(DOMAINNAME, localedir) # type: ignore
+        locale.bind_textdomain_codeset(DOMAINNAME, "UTF-8") # type: ignore
     except AttributeError:
         pass
     gettext.bindtextdomain(DOMAINNAME, localedir)

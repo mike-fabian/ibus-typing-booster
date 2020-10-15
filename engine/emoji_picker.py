@@ -22,6 +22,11 @@
 An emoji picker for ibus typing booster.
 '''
 
+from typing import Any
+from typing import List
+from typing import Tuple
+from typing import Dict
+from typing import Optional
 import sys
 import os
 import re
@@ -37,9 +42,9 @@ import logging.handlers
 import itb_util
 import itb_pango
 
-from gi import require_version
+from gi import require_version # type: ignore
 require_version('GLib', '2.0')
-from gi.repository import GLib
+from gi.repository import GLib # type: ignore
 
 # set_prgname before importing other modules to show the name in warning
 # messages when import modules are failed. E.g. Gtk.
@@ -65,7 +70,7 @@ DOMAINNAME = 'ibus-typing-booster'
 _ = lambda a: gettext.dgettext(DOMAINNAME, a)
 N_ = lambda a: a
 
-def parse_args():
+def parse_args() -> Any:
     '''
     Parse the command line arguments.
     '''
@@ -149,7 +154,7 @@ def parse_args():
         ('20200701', '13.0'),
     )
     current_date = time.strftime('%Y%m%d')
-    current_unicode_version = 10.0
+    current_unicode_version = '13.0'
     for (date, version) in unicode_versions:
         if current_date > date:
             current_unicode_version = version
@@ -190,7 +195,7 @@ class EmojiPickerUI(Gtk.Window):
                  emoji_unicode_max=100.0,
                  font=None,
                  fontsize=None,
-                 fallback=None):
+                 fallback=None) -> None:
         Gtk.Window.__init__(self, title='🚀 ' + _('Emoji Picker'))
 
         self.set_name('EmojiPicker')
@@ -237,11 +242,11 @@ class EmojiPickerUI(Gtk.Window):
         self._font = 'emoji'
         if available_fonts:
             self._font = available_fonts[0]
-        self._fontsize = 24
+        self._fontsize = 24.0
         self._fallback = True
-        self._font_popover = None
-        self._font_popover_scroll = None
-        self._font_popover_listbox = None
+        self._font_popover: Optional[Gtk.Popover] = None
+        self._font_popover_scroll: Optional[Gtk.ScrolledWindow] = None
+        self._font_popover_listbox: Optional[Gtk.ListBox] = None
         self._options_file = os.path.join(
             itb_util.xdg_save_data_path('emoji-picker'),
             'options')
@@ -266,7 +271,7 @@ class EmojiPickerUI(Gtk.Window):
             emoji_unicode_min=self._emoji_unicode_min,
             emoji_unicode_max=self._emoji_unicode_max,
             variation_selector='emoji')
-        self._gettext_translations = {}
+        self._gettext_translations: Dict[str, Any] = {}
         for language in itb_util.expand_languages(self._languages):
             mo_file = gettext.find(DOMAINNAME, languages=[language])
             if (mo_file
@@ -286,13 +291,13 @@ class EmojiPickerUI(Gtk.Window):
             else:
                 self._gettext_translations[language] = None
 
-        self._currently_selected_label = None
+        self._currently_selected_label: Optional[Tuple[str, str, str]] = None
         self._candidates_invalid = False
         self._query_string = ''
-        self._emoji_selected_popover = None
-        self._emoji_info_popover = None
-        self._skin_tone_popover = None
-        self._skin_tone_selected_popover = None
+        self._emoji_selected_popover: Optional[Gtk.Popover] = None
+        self._emoji_info_popover: Optional[Gtk.Popover] = None
+        self._skin_tone_popover: Optional[Gtk.Popover] = None
+        self._skin_tone_selected_popover: Optional[Gtk.Popover] = None
 
         self._main_container = Gtk.VBox()
         self.add(self._main_container)
@@ -424,7 +429,7 @@ class EmojiPickerUI(Gtk.Window):
         self._flowbox_scroll.set_overlay_scrolling(True)
         self._flowbox = Gtk.FlowBox()
         self._flowbox_scroll.add(self._flowbox)
-        self._long_press_gestures = []
+        self._long_press_gestures: List[Tuple[Any, Tuple[Any, Any, Any, Any]]] = []
 
         self._left_pane = Gtk.VBox()
         self._left_pane.set_homogeneous(False)
@@ -447,7 +452,7 @@ class EmojiPickerUI(Gtk.Window):
             None,
             [self._recently_used_label, '', '', self._recently_used_label])
 
-        self._recently_used_emoji = {}
+        self._recently_used_emoji: Dict[str, Dict[str, float]] = {}
         self._recently_used_emoji_file = os.path.join(
             itb_util.xdg_save_data_path('emoji-picker'),
             'recently-used')
@@ -538,7 +543,7 @@ class EmojiPickerUI(Gtk.Window):
         self._selection_primary = Gtk.Clipboard.get(
             Gdk.SELECTION_PRIMARY)
 
-    def _busy_start(self):
+    def _busy_start(self) -> None:
         '''
         Show that this program is busy
         '''
@@ -546,14 +551,14 @@ class EmojiPickerUI(Gtk.Window):
         # self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.WATCH))
         # Gdk.flush()
 
-    def _busy_stop(self):
+    def _busy_stop(self) -> None:
         '''
         Stop showing that this program is busy
         '''
         self._spinner.stop()
         # self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.ARROW))
 
-    def _variation_selector_normalize_for_font(self, emoji):
+    def _variation_selector_normalize_for_font(self, emoji: str) -> str:
         '''
         Normalize the variation selectors in the emoji sequence.
 
@@ -561,8 +566,6 @@ class EmojiPickerUI(Gtk.Window):
         or removed as appropriate for the current font.
 
         :param emoji: The emoji
-        :type emoji: String
-        :rtype: String
         '''
         if self._font == 'text' or self._font.lower() == 'symbola':
             return self._emoji_matcher.variation_selector_normalize(
@@ -573,7 +576,7 @@ class EmojiPickerUI(Gtk.Window):
         return self._emoji_matcher.variation_selector_normalize(
             emoji, 'emoji')
 
-    def _browse_treeview_unselect_all(self):
+    def _browse_treeview_unselect_all(self) -> None:
         '''
         Unselect everything in the treeview for browsing the categories
         '''
@@ -581,7 +584,11 @@ class EmojiPickerUI(Gtk.Window):
         self._currently_selected_label = None
 
     def _add_label_key_to_model(
-            self, label_key, label_key_display, language, language_iter):
+            self,
+            label_key: str,
+            label_key_display: str,
+            language: str,
+            language_iter: Any) -> bool:
         if not label_key in self._emoji_by_label[language]:
             return False
         labels = self._sort_labels(
@@ -600,7 +607,10 @@ class EmojiPickerUI(Gtk.Window):
                  language, label_key, label])
         return True
 
-    def _sort_labels(self, labels, language): # pylint: disable=no-self-use
+    def _sort_labels( # pylint: disable=no-self-use
+            self,
+            labels: Dict[str, List[str]],
+            language: str) -> List[str]:
         return sorted(
             labels,
             key=lambda x: (
@@ -614,7 +624,7 @@ class EmojiPickerUI(Gtk.Window):
                 unicodedata.name(x[0]).startswith('DIGIT'),
                 x.lower()))
 
-    def _translate_key(self, key, language='en'):
+    def _translate_key(self, key: str, language: str = 'en') -> str:
         dummy_keys_to_translate = [
             N_('Categories'),
             N_('Unicode categories'),
@@ -624,7 +634,7 @@ class EmojiPickerUI(Gtk.Window):
             return self._gettext_translations[language].gettext(key)
         return key
 
-    def _emoji_descriptions(self, emoji):
+    def _emoji_descriptions(self, emoji: str) -> List[str]:
         '''
         Return a description of the emoji
 
@@ -632,8 +642,6 @@ class EmojiPickerUI(Gtk.Window):
         and the names of the emoji in all languages used.
 
         :param emoji: The emoji
-        :type emoji: String
-        :rtype: List of strings
         '''
         descriptions = []
         descriptions.append(
@@ -690,14 +698,14 @@ class EmojiPickerUI(Gtk.Window):
         return descriptions
 
     def _emoji_label_set_tooltip( # pylint: disable=no-self-use
-            self, emoji, label):
+            self,
+            emoji: str,
+            label: Gtk.Label) -> None:
         '''
         Set the tooltip for a label in the flowbox which shows an emoji
 
         :param emoji: The emoji
-        :type emoji: String
         :param label: The label used to show the emoji
-        :type label: Gtk.Label object
         '''
         tooltip_text = _('Left click to copy') + '\n'
         if len(self._emoji_matcher.skin_tone_variants(emoji)) > 1:
@@ -706,7 +714,7 @@ class EmojiPickerUI(Gtk.Window):
         tooltip_text += _('Right click for info')
         label.set_tooltip_text(tooltip_text)
 
-    def _clear_flowbox(self):
+    def _clear_flowbox(self) -> None:
         '''
         Clear the contents of the flowbox
         '''
@@ -733,11 +741,14 @@ class EmojiPickerUI(Gtk.Window):
                 long_press_gesture[0].disconnect(ids)
         self._long_press_gestures = []
 
-    def _fill_flowbox_browse(self):
+    def _fill_flowbox_browse(self) -> None:
         '''
         Fill the flowbox with content according to the currently
         selected label in the browsing treeview.
         '''
+        if self._currently_selected_label is None:
+            LOGGER.debug('No label is currently selected')
+            return
         (language, label_key, label) = self._currently_selected_label
         if _ARGS.debug:
             LOGGER.debug(
@@ -784,7 +795,7 @@ class EmojiPickerUI(Gtk.Window):
                                 sorted_recently_used.index(skin_tone_variant))
                     if recently_used_index < len(sorted_recently_used):
                         emoji = sorted_recently_used[recently_used_index]
-            label = Gtk.Label()
+            gtk_label = Gtk.Label()
             # Make font for emoji large using pango markup
             text = (
                 '<span font="%s %s" fallback="%s">'
@@ -798,28 +809,28 @@ class EmojiPickerUI(Gtk.Window):
                     + ' U+%X ' %ord(emoji)
                     + self._emoji_matcher.name(emoji)
                     + '</span>')
-            label.set_text(text)
-            label.set_use_markup(True)
-            label.set_can_focus(False)
-            label.set_selectable(False)
-            label.set_hexpand(False)
-            label.set_vexpand(False)
-            label.set_xalign(0.5)
-            label.set_yalign(0.5)
+            gtk_label.set_text(text)
+            gtk_label.set_use_markup(True)
+            gtk_label.set_can_focus(False)
+            gtk_label.set_selectable(False)
+            gtk_label.set_hexpand(False)
+            gtk_label.set_vexpand(False)
+            gtk_label.set_xalign(0.5)
+            gtk_label.set_yalign(0.5)
             # Gtk.Align.FILL, Gtk.Align.START, Gtk.Align.END,
             # Gtk.Align.CENTER, Gtk.Align.BASELINE
-            label.set_halign(Gtk.Align.FILL)
-            label.set_valign(Gtk.Align.FILL)
+            gtk_label.set_halign(Gtk.Align.FILL)
+            gtk_label.set_valign(Gtk.Align.FILL)
             margin = 0
-            label.set_margin_start(margin)
-            label.set_margin_end(margin)
-            label.set_margin_top(margin)
-            label.set_margin_bottom(margin)
-            self._emoji_label_set_tooltip(emoji, label)
+            gtk_label.set_margin_start(margin)
+            gtk_label.set_margin_end(margin)
+            gtk_label.set_margin_top(margin)
+            gtk_label.set_margin_bottom(margin)
+            self._emoji_label_set_tooltip(emoji, gtk_label)
             event_box = Gtk.EventBox()
             event_box.set_above_child(True)
             event_box.set_can_focus(False)
-            event_box.add(label)
+            event_box.add(gtk_label)
             event_box.add_events(Gdk.EventType.BUTTON_PRESS)
             event_box.add_events(Gdk.EventType.BUTTON_RELEASE)
             event_box.connect(
@@ -858,7 +869,7 @@ class EmojiPickerUI(Gtk.Window):
         self.show_all()
         self._busy_stop()
 
-    def _read_options(self):
+    def _read_options(self) -> None:
         '''
         Read the options for 'font' and 'fontsize' from  a file
         '''
@@ -897,7 +908,7 @@ class EmojiPickerUI(Gtk.Window):
                 and (isinstance(options_dict['fallback'], bool))):
             self._fallback = options_dict['fallback']
 
-    def _save_options(self):
+    def _save_options(self) -> None:
         '''
         Save the options for 'font' and 'fontsize' to a file
         '''
@@ -912,7 +923,7 @@ class EmojiPickerUI(Gtk.Window):
             options_file.write(repr(options_dict))
             options_file.write('\n')
 
-    def _sorted_recently_used(self):
+    def _sorted_recently_used(self) -> List[str]:
         '''
         Return a sorted list of recently used emoji
         '''
@@ -921,7 +932,7 @@ class EmojiPickerUI(Gtk.Window):
                           - self._recently_used_emoji[x]['time'],
                           - self._recently_used_emoji[x]['count']))
 
-    def _read_recently_used(self):
+    def _read_recently_used(self) -> None:
         '''
         Read the recently use emoji from a file
         '''
@@ -974,7 +985,7 @@ class EmojiPickerUI(Gtk.Window):
                     ))[self._recently_used_emoji_maximum:]:
                 del self._recently_used_emoji[emoji]
 
-    def _init_recently_used(self):
+    def _init_recently_used(self) -> None:
         '''
         Initialize the recently used emoji
 
@@ -988,7 +999,7 @@ class EmojiPickerUI(Gtk.Window):
                 ('', '', self._recently_used_label)):
             self._clear_flowbox()
 
-    def on_clear_recently_used_button_clicked(self, _button):
+    def on_clear_recently_used_button_clicked(self, _button) -> None:
         '''
         :param _button: The “Clear recently used” button
         :type _button: Gtk.Button object
@@ -1000,7 +1011,7 @@ class EmojiPickerUI(Gtk.Window):
         self._main_menu_popover.hide()
         self._init_recently_used()
 
-    def _add_to_recently_used(self, emoji):
+    def _add_to_recently_used(self, emoji) -> None:
         '''
         Adds an emoji to the resently used dictionary.
 
@@ -1018,7 +1029,7 @@ class EmojiPickerUI(Gtk.Window):
         # when the program is stopped using Control+C
         self._save_recently_used_emoji()
 
-    def _save_recently_used_emoji(self):
+    def _save_recently_used_emoji(self) -> None:
         '''
         Save the list of recently used emoji
         '''
@@ -1028,12 +1039,11 @@ class EmojiPickerUI(Gtk.Window):
             recents_file.write(repr(self._recently_used_emoji))
             recents_file.write('\n')
 
-    def _set_clipboards(self, text):
+    def _set_clipboards(self, text: str) -> None:
         '''
         Set the clipboard and the primary selection to “text”
 
         :param text: The text to set the clipboards to
-        :type text: String
         '''
         self._selection_clipboard.set_text(text, -1)
         self._selection_primary.set_text(text, -1)
@@ -1042,14 +1052,13 @@ class EmojiPickerUI(Gtk.Window):
         self._selection_clipboard.store()
         self._selection_primary.store() # Does not work.
 
-    def _show_concise_emoji_description_in_header_bar(self, emoji):
+    def _show_concise_emoji_description_in_header_bar(self, emoji: str) -> None:
         '''
         Show a concise description of an emoji in the header bar
         of the program.
 
         :param emoji: The emoji for which a description should be
                       shown in the header bar.
-        :type emoji: String
         '''
         self._header_bar.set_title(emoji)
         self._header_bar.set_subtitle('')
@@ -1070,7 +1079,7 @@ class EmojiPickerUI(Gtk.Window):
                     + ', '.join(keywords))
                 break
 
-    def _print_profiling_information(self):
+    def _print_profiling_information(self) -> None:
         '''
         Print some profiling information to the log.
         '''
@@ -1083,7 +1092,7 @@ class EmojiPickerUI(Gtk.Window):
         stats.print_stats('itb_emoji', 25)
         LOGGER.info('Profiling info:\n%s', stats_stream.getvalue())
 
-    def on_delete_event(self, *_args):
+    def on_delete_event(self, *_args) -> None:
         '''
         The window has been deleted, probably by the window manager.
         '''
@@ -1092,7 +1101,7 @@ class EmojiPickerUI(Gtk.Window):
             self._print_profiling_information()
         Gtk.main_quit()
 
-    def on_destroy_event(self, *_args):
+    def on_destroy_event(self, *_args) -> None:
         '''
         The window has been destroyed.
         '''
@@ -1101,14 +1110,15 @@ class EmojiPickerUI(Gtk.Window):
             self._print_profiling_information()
         Gtk.main_quit()
 
-    def on_main_window_key_press_event(self, _window, event_key):
+    def on_main_window_key_press_event(
+            self,
+            _window: Gtk.Window,
+            event_key: Gdk.EventKey) -> None:
         '''
         Some key has been typed into the main window
 
         :param _window: The main window
-        :type _window: Gtk.Window object
         :param event_key:
-        :type event_key: Gdk.EventKey object
         '''
         if _ARGS.debug:
             LOGGER.debug('keyval = %s\n', event_key.keyval)
@@ -1161,7 +1171,7 @@ class EmojiPickerUI(Gtk.Window):
                 Gtk.main_iteration()
         self._search_bar.handle_event(event_key)
 
-    def on_about_button_clicked(self, _button):
+    def on_about_button_clicked(self, _button) -> None:
         '''
         The “About” button has been clicked
 
@@ -1175,7 +1185,7 @@ class EmojiPickerUI(Gtk.Window):
         self._main_menu_popover.hide()
         itb_util.ItbAboutDialog()
 
-    def _fill_flowbox_with_search_results(self):
+    def _fill_flowbox_with_search_results(self) -> None:
         '''
         Get the emoji candidates for the current query string
         and fill the flowbox with the results of the query.
@@ -1281,7 +1291,7 @@ class EmojiPickerUI(Gtk.Window):
         self._busy_stop()
 
     def on_fontsize_spin_button_grab_focus( # pylint: disable=no-self-use
-            self, spin_button):
+            self, spin_button) -> bool:
         '''
         Signal handler called when the spin button to change
         the font size grabs focus
@@ -1301,7 +1311,7 @@ class EmojiPickerUI(Gtk.Window):
         return True
 
     def on_search_entry_grab_focus( # pylint: disable=no-self-use
-            self, search_entry):
+            self, search_entry) -> bool:
         '''
         Signal handler called when the search entry grabs focus
 
@@ -1319,12 +1329,13 @@ class EmojiPickerUI(Gtk.Window):
         GObject.signal_stop_emission_by_name(search_entry, 'grab-focus')
         return True
 
-    def on_search_entry_search_changed(self, search_entry):
+    def on_search_entry_search_changed(
+            self,
+            search_entry: Gtk.SearchEntry) -> None:
         '''
         Signal handler for changed text in the search entry
 
-        :param widget: The search entry
-        :type widget: Gtk.SearchEntry object
+        :param search_entry: The search entry
         '''
         query_string = search_entry.get_text()
         if _ARGS.debug:
@@ -1347,12 +1358,13 @@ class EmojiPickerUI(Gtk.Window):
         self._busy_start()
         GLib.idle_add(self._fill_flowbox_with_search_results)
 
-    def on_label_selected(self, selection):
+    def on_label_selected(
+            self,
+            selection: Gtk.TreeSelection) -> None:
         '''
         Signal handler for selecting a category in the list of categories
 
         :param selection: The selected row in the browsing treeview
-        :type selection: Gtk.TreeSelection object
         '''
         (model, iterator) = selection.get_selected()
         if not iterator:
@@ -1375,15 +1387,15 @@ class EmojiPickerUI(Gtk.Window):
             GLib.idle_add(self._fill_flowbox_browse)
 
     def on_row_activated( # pylint: disable=no-self-use
-            self, treeview, treepath, column):
+            self,
+            treeview: Gtk.TreeView,
+            treepath: Gtk.TreePath,
+            column: Gtk.TreeViewColumn) -> None:
         '''Signal handler for activating a row in the browsing treeview
 
         :param treeview: The browsing treeview
-        :type treeview: Gtk.TreeView object
         :param treepath: The path of the activated row in the browsing treeview
-        :type treepath: Gtk.TreePath object
         :param column: The column of the activated row in the browsing treeview
-        :type column: Gtk.TreeViewColumn object
         '''
         if _ARGS.debug:
             LOGGER.debug(
@@ -1391,14 +1403,14 @@ class EmojiPickerUI(Gtk.Window):
                 repr(treeview), repr(treepath), repr(column))
 
     def _parse_emoji_and_name_from_text( # pylint: disable=no-self-use
-            self, text):
+            self, text: str) -> Tuple[str, str]:
         '''
         Parse the emoji and its name out of the text of a label
 
+        Returns a tuple of two strings of the form (emoji, name)
+
         :param text: The text with markup containing the emoji
                      and maybe its name
-        :type text: String
-        :rtype: A tuple of two strings of the form (emoji, name)
         '''
         emoji = ''
         name = ''
@@ -1408,15 +1420,15 @@ class EmojiPickerUI(Gtk.Window):
         match = pattern.match(text)
         if match:
             emoji = html.unescape(match.group('emoji'))
-        if match.group('name'):
-            name = html.unescape(match.group('name'))
+            if match.group('name'):
+                name = html.unescape(match.group('name'))
         if _ARGS.debug:
             LOGGER.debug(
                 'text = %s emoji = %s name = %s\n',
                 text, emoji, name)
         return (emoji, name)
 
-    def _emoji_selected_popover_popdown(self):
+    def _emoji_selected_popover_popdown(self) -> bool:
         '''
         Hide the popover again which was shown when an emoji was selected
         '''
@@ -1427,7 +1439,7 @@ class EmojiPickerUI(Gtk.Window):
             self._emoji_selected_popover = None
         return False
 
-    def _emoji_event_box_selected(self, event_box):
+    def _emoji_event_box_selected(self, event_box): # FIXME add type hint
         '''
         Called when an event box containing an emoji
         was selected in the flowbox.
@@ -1471,7 +1483,10 @@ class EmojiPickerUI(Gtk.Window):
         self._emoji_selected_popover.show_all()
         GLib.timeout_add(500, self._emoji_selected_popover_popdown)
 
-    def on_emoji_selected(self, _flowbox, flowbox_child):
+    def on_emoji_selected(
+            self,
+            _flowbox: Gtk.FlowBox,
+            flowbox_child: Gtk.FlowBoxChild) -> Gdk.EVENT_PROPAGATE:
         '''
         Signal handler for selecting an emoji in the flowbox
         via the flowbox selection
@@ -1481,9 +1496,7 @@ class EmojiPickerUI(Gtk.Window):
         in on_flowbox_event_box_button_release() instead.
 
         :param _flowbox: The flowbox displaying the Emoji
-        :type _flowbox: Gtk.FlowBox object
         :param flowbox_child: The child object containing the selected emoji
-        :type flowbox_child: Gtk.FlowBoxChild object
         '''
         if _ARGS.debug:
             LOGGER.debug("on_emoji_selected()\n")
@@ -1491,12 +1504,11 @@ class EmojiPickerUI(Gtk.Window):
         self._emoji_event_box_selected(event_box)
         return Gdk.EVENT_PROPAGATE
 
-    def on_main_menu_button_clicked(self, _button):
+    def on_main_menu_button_clicked(self, _button: Gtk.Button) -> None:
         '''
         The main menu button has been clicked
 
         :param _button: The main menu button
-        :type _button: Gtk.Button object
         '''
         if _ARGS.debug:
             LOGGER.debug('on_main_menu_button_clicked()\n')
@@ -1504,19 +1516,18 @@ class EmojiPickerUI(Gtk.Window):
             self._main_menu_popover.popup()
         self._main_menu_popover.show_all()
 
-    def on_toggle_search_button_clicked(self, _button):
+    def on_toggle_search_button_clicked(self, _button: Gtk.Button) -> None:
         '''
         The search button in the header bar has been clicked
 
         :param _button: The search button
-        :type  _button: Gtk.Button object
         '''
         if _ARGS.debug:
             LOGGER.debug('on_toggle_search_button_clicked()\n')
         self._search_bar.set_search_mode(
             not self._search_bar.get_search_mode())
 
-    def _change_flowbox_font(self):
+    def _change_flowbox_font(self) -> None:
         '''
         Update the font and fontsize used in the current content
         of the flowbox.
@@ -1543,7 +1554,7 @@ class EmojiPickerUI(Gtk.Window):
         self.show_all()
         self._busy_stop()
 
-    def _skin_tone_selected_popover_popdown(self):
+    def _skin_tone_selected_popover_popdown(self) -> bool:
         '''
         Hide the popover which was shown when an skin tone emoji
         was selected and the popover which showed the skin tone emoji.
@@ -1560,14 +1571,15 @@ class EmojiPickerUI(Gtk.Window):
             self._skin_tone_popover = None
         return False
 
-    def on_skin_tone_selected(self, _flowbox, flowbox_child):
+    def on_skin_tone_selected(
+            self,
+            _flowbox: Gtk.FlowBox,
+            flowbox_child: Gtk.FlowBoxChild) -> None:
         '''
         Signal handler for selecting a skin tone emoji
 
         :param _flowbox: The flowbox displaying the skin tone emoji
-        :type _flowbox: Gtk.FlowBox object
         :param flowbox_child: The child object containing the selected emoji
-        :type flowbox_child: Gtk.FlowBoxChild object
         '''
         # Use .get_label() instead of .get_text() to fetch the text
         # from the label widget including any embedded underlines
@@ -1584,6 +1596,9 @@ class EmojiPickerUI(Gtk.Window):
         self._set_clipboards(emoji)
         self._add_to_recently_used(emoji)
         self._skin_tone_selected_popover = Gtk.Popover()
+        if self._skin_tone_selected_popover is None:
+            LOGGER.debug('self._skin_tone_selected_popover is None')
+            return
         self._skin_tone_selected_popover.set_relative_to(
             flowbox_child.get_child())
         self._skin_tone_selected_popover.set_position(Gtk.PositionType.TOP)
@@ -1597,6 +1612,9 @@ class EmojiPickerUI(Gtk.Window):
         # skin tone popover opened in a browse flowbox (not a search
         # results flowbox), replace the original emoji which was used
         # to open the popover immediately.
+        if self._skin_tone_popover is None:
+            LOGGER.debug('self._skin_tone_popover is None')
+            return
         label = self._skin_tone_popover.get_relative_to().get_child()
         text = label.get_label()
         (old_emoji, old_name) = self._parse_emoji_and_name_from_text(text)
@@ -1613,7 +1631,10 @@ class EmojiPickerUI(Gtk.Window):
             label.set_use_markup(True)
         GLib.timeout_add(500, self._skin_tone_selected_popover_popdown)
 
-    def on_flowbox_event_box_long_press_begin(self, gesture, event_sequence):
+    def on_flowbox_event_box_long_press_begin(
+            self,
+            gesture: Gtk.GestureLongPress,
+            event_sequence: Gdk.EventSequence) -> None:
         '''
         Signal handler called when the gesture is recognized
 
@@ -1627,27 +1648,28 @@ class EmojiPickerUI(Gtk.Window):
                 'on_flowbox_event_box_long_press_begin() %s %s\n',
                 repr(gesture), repr(event_sequence))
 
-    def on_flowbox_event_box_long_press_cancel(self, gesture, event_sequence):
+    def on_flowbox_event_box_long_press_cancel(
+            self,
+            gesture: Gtk.GestureLongPress,
+            event_sequence: Gdk.EventSequence) -> None:
         '''
         Signal handler called whenever a sequence is cancelled
 
         :param gesture: The object which received the signal
-        :type gesture: Gtk.GestureLongPress object
         :param event_sequence: the event sequence that the event belongs to
-        :type event_sequence: Gdk.EventSequence structure
         '''
         if _ARGS.debug:
             LOGGER.debug(
                 'on_flowbox_event_box_long_press_cancel() %s %s\n',
                 repr(gesture), repr(event_sequence))
 
-    def on_flowbox_event_box_long_press_cancelled(self, gesture):
+    def on_flowbox_event_box_long_press_cancelled(
+            self, gesture: Gtk.GestureLongPress) -> None:
         '''
         Signal handler called whenever a press moved too far, or was
         released before “pressed” happened.
 
         :param gesture: The object which received the signal
-        :type gesture: Gtk.GestureLongPress object
         '''
         if _ARGS.debug:
             LOGGER.debug(
@@ -1655,16 +1677,17 @@ class EmojiPickerUI(Gtk.Window):
                 repr(gesture))
 
     def on_flowbox_event_box_long_press_pressed(
-            self, gesture, x, y, event_box):
+            self,
+            gesture: Gtk.GestureLongPress,
+            x: int,
+            y: int,
+            event_box: Gtk.EventBox) -> None:
         '''
         :param gesture: The object which received the signal
-        :type gesture: Gtk.GestureLongPress object
         :param x: the X coordinate where the press happened,
                   relative to the widget allocation
-        :type x: Integer
         :param y: the Y coordinate where the press happened,
                   relative to the widget allocation
-        :type y: Integer
         '''
         if _ARGS.debug:
             LOGGER.debug(
@@ -1673,14 +1696,14 @@ class EmojiPickerUI(Gtk.Window):
         self._show_skin_tone_popover(event_box)
 
     def on_flowbox_event_box_button_release(
-            self, event_box, event_button):
+            self,
+            event_box: Gtk.EventBox,
+            event_button: Gdk.EventButton) -> Gdk.EVENT_PROPAGATE:
         '''
         Signal handler for button release events on labels in the flowbox
 
         :param event_box: The event box containing the label with the emoji.
-        :type event_box: Gtk.EventBox object
         :param event_button: The event button
-        :type event_button: Gdk.EventButton object
         '''
         if _ARGS.debug:
             LOGGER.debug(
@@ -1707,7 +1730,7 @@ class EmojiPickerUI(Gtk.Window):
             self._emoji_info_popover.hide()
         return Gdk.EVENT_PROPAGATE
 
-    def _show_skin_tone_popover(self, event_box):
+    def _show_skin_tone_popover(self, event_box: Gtk.EventBox) -> None:
         '''
         Show a skin tone popover if there is an emoji in this event box
         which supports skin tones.
@@ -1729,6 +1752,9 @@ class EmojiPickerUI(Gtk.Window):
         if len(skin_tone_variants) <= 1:
             return
         self._skin_tone_popover = Gtk.Popover()
+        if self._skin_tone_popover is None:
+            LOGGER.debug('self._skin_tone_popover is None')
+            return
         self._skin_tone_popover.set_modal(True)
         # Gtk.PopoverConstraint.NONE has an effect only under
         # Wayland, under X11 popovers are always constrained to
@@ -1821,7 +1847,8 @@ class EmojiPickerUI(Gtk.Window):
             self._skin_tone_popover.popup()
         self._skin_tone_popover.show_all()
 
-    def _show_emoji_info_popover(self, event_box):
+    def _show_emoji_info_popover(
+            self, event_box: Gtk.EventBox) -> None:
         '''
         Show an info popover if there is an emoji in this event box.
 
@@ -1829,7 +1856,6 @@ class EmojiPickerUI(Gtk.Window):
 
         :param event_box: The event box containing the label with the emoji.
                           The popover will be relative to this event box.
-        :type event_box: Gtk.EventBox object
         '''
         text = event_box.get_child().get_label()
         (emoji, name) = self._parse_emoji_and_name_from_text(text)
@@ -1934,7 +1960,10 @@ class EmojiPickerUI(Gtk.Window):
             self._emoji_info_popover.popup()
         self._emoji_info_popover.show_all()
 
-    def on_flowbox_event_box_button_press(self, event_box, event_button):
+    def on_flowbox_event_box_button_press(
+            self,
+            event_box: Gtk.EventBox,
+            event_button: Gdk.EventButton) -> Gdk.EVENT_STOP:
         '''Signal handler for button presses in flowbox children
 
         Returns Gdk.EVENT_STOP (True) to prevent a long press gesture
@@ -1946,11 +1975,7 @@ class EmojiPickerUI(Gtk.Window):
         handler which is only called when it was not a long press.
 
         :param event_box:
-        :type event_box: GtkEventBox object
         :param event_button:
-        :type event_button: Gdk.EventButton object
-        :rtype: Boolean
-
         '''
         if _ARGS.debug:
             LOGGER.debug(
@@ -1977,12 +2002,12 @@ class EmojiPickerUI(Gtk.Window):
             return Gdk.EVENT_STOP
         return Gdk.EVENT_STOP
 
-    def on_fontsize_adjustment_value_changed(self, adjustment):
+    def on_fontsize_adjustment_value_changed(
+            self, adjustment: Gtk.Adjustment) -> None:
         '''
         The fontsize adjustment in the header bar has been changed
 
         :param adjustment: The adjustment used to change the fontsize
-        :type adjustment: Gtk.Adjustment object
         '''
         value = adjustment.get_value()
         if _ARGS.debug:
@@ -1993,7 +2018,8 @@ class EmojiPickerUI(Gtk.Window):
         self._busy_start()
         GLib.idle_add(self._change_flowbox_font)
 
-    def on_fallback_check_button_toggled(self, check_button):
+    def on_fallback_check_button_toggled(
+            self, check_button: Gtk.CheckButton) -> None:
         '''
         The fallback check button in the header bar has been toggled
 
@@ -2010,7 +2036,7 @@ class EmojiPickerUI(Gtk.Window):
         self._busy_start()
         GLib.idle_add(self._change_flowbox_font)
 
-    def _list_font_names(self):
+    def _list_font_names(self) -> List[str]:
         '''
         Returns a list of font names available on the system
 
@@ -2047,7 +2073,7 @@ class EmojiPickerUI(Gtk.Window):
         names = available_good_emoji_fonts + names
         return names
 
-    def _fill_listbox_font(self, filter_text):
+    def _fill_listbox_font(self, filter_text: str) -> None:
         '''
         Fill the listbox of fonts to choose from
 
@@ -2056,14 +2082,19 @@ class EmojiPickerUI(Gtk.Window):
                             contain the the filter text as
                             a substring (ignoring case and spaces)
                             are listed.
-        :type filter_text: String
         '''
         if _ARGS.debug:
             LOGGER.debug(
                 '_fill_listbox_font() filter_text = %s\n', filter_text)
+        if self._font_popover_scroll is None:
+            LOGGER.debug('self._font_popover_scroll is None')
+            return
         for child in self._font_popover_scroll.get_children():
             self._font_popover_scroll.remove(child)
         self._font_popover_listbox = Gtk.ListBox()
+        if self._font_popover_listbox is None:
+            LOGGER.debug('self._font_popover_listbox is None')
+            return
         self._font_popover_scroll.add(self._font_popover_listbox)
         self._font_popover_listbox.set_visible(True)
         self._font_popover_listbox.set_vexpand(True)
@@ -2088,14 +2119,17 @@ class EmojiPickerUI(Gtk.Window):
             self._font_popover_listbox.insert(label, -1)
         for row in self._font_popover_listbox.get_children():
             row.get_style_context().add_class('font')
+        if self._font_popover is None:
+            LOGGER.debug('self._font_popover is None')
+            return
         self._font_popover.show_all()
 
-    def on_font_search_entry_search_changed(self, search_entry):
+    def on_font_search_entry_search_changed(
+            self, search_entry: Gtk.SearchEntry) -> None:
         '''
         Signal handler for changed text in the font search entry
 
         :param widget: The search entry
-        :type widget: Gtk.SearchEntry object
         '''
         filter_text = search_entry.get_text()
         if _ARGS.debug:
@@ -2104,14 +2138,15 @@ class EmojiPickerUI(Gtk.Window):
                 filter_text)
         self._fill_listbox_font(filter_text)
 
-    def on_font_selected(self, _listbox, listbox_row):
+    def on_font_selected(
+            self,
+            _listbox: Gtk.ListBox,
+            listbox_row: Gtk.ListBoxRow) -> None:
         '''
         Signal handler for selecting a font
 
         :param _listbox: The list box used to select a font
-        :type _listbox: Gtk.ListBox object
         :param listbox_row: A row containing a font name
-        :type listbox_row: Gtk.ListBoxRow object
         '''
         font = listbox_row.get_child().get_text().split(' ')[0]
         if _ARGS.debug:
@@ -2124,6 +2159,9 @@ class EmojiPickerUI(Gtk.Window):
         else:
             self._fallback = False
             self._fallback_check_button.set_active(False)
+        if self._font_popover is None:
+            LOGGER.debug('self._font_popover is None')
+            return
         if GTK_VERSION >= (3, 22, 0):
             self._font_popover.popdown()
         self._font_popover.hide()
@@ -2133,12 +2171,11 @@ class EmojiPickerUI(Gtk.Window):
         self._busy_start()
         GLib.idle_add(self._change_flowbox_font)
 
-    def on_font_button_clicked(self, _button):
+    def on_font_button_clicked(self, _button: Gtk.Button) -> None:
         '''
         The font button in the header bar has been clicked
 
         :param _button: The font button
-        :type _button: Gtk.Button object
         '''
         if _ARGS.debug:
             LOGGER.debug(
@@ -2179,7 +2216,7 @@ class EmojiPickerUI(Gtk.Window):
             self._font_popover.popup()
         self._font_popover.show_all()
 
-def get_languages():
+def get_languages() -> List[str]:
     '''
     Return the list of languages.
 
@@ -2204,16 +2241,16 @@ def get_languages():
 
 if __name__ == '__main__':
     if not _ARGS.debug:
-        LOG_HANDLER = logging.NullHandler()
+        LOG_HANDLER_NULL = logging.NullHandler()
     else:
-        LOG_HANDLER = logging.StreamHandler(stream=sys.stdout)
+        LOG_HANDLER_STREAM = logging.StreamHandler(stream=sys.stdout)
         LOG_FORMATTER = logging.Formatter(
             '%(asctime)s %(filename)s '
             'line %(lineno)d %(funcName)s %(levelname)s: '
             '%(message)s')
-        LOG_HANDLER.setFormatter(LOG_FORMATTER)
+        LOG_HANDLER_STREAM.setFormatter(LOG_FORMATTER)
         LOGGER.setLevel(logging.DEBUG)
-        LOGGER.addHandler(LOG_HANDLER)
+        LOGGER.addHandler(LOG_HANDLER_STREAM)
         LOGGER.info('********** STARTING **********')
         import cProfile
         import pstats

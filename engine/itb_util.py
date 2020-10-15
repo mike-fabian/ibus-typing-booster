@@ -23,6 +23,11 @@ Utility functions used in ibus-typing-booster
 
 # “Wrong continued indentation”: pylint: disable=bad-continuation
 
+from typing import Any
+from typing import Tuple
+from typing import List
+from typing import Dict
+from typing import Union
 import sys
 import os
 import re
@@ -33,9 +38,9 @@ import shutil
 import subprocess
 import glob
 import gettext
-from gi import require_version
+from gi import require_version # type: ignore
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus # type: ignore
 require_version('GLib', '2.0')
 from gi.repository import GLib
 require_version('Gdk', '3.0')
@@ -48,21 +53,21 @@ import version
 
 IMPORT_DISTRO_SUCCESSFUL = False
 try:
-    import distro
+    import distro # type: ignore
     IMPORT_DISTRO_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_DISTRO_SUCCESSFUL = False
 
 IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = False
 try:
-    import xdg.BaseDirectory
+    import xdg.BaseDirectory # type: ignore
     IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = False
 
 IMPORT_PYAUDIO_SUCCESSFUL = False
 try:
-    import pyaudio
+    import pyaudio # type: ignore
     IMPORT_PYAUDIO_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_PYAUDIO_SUCCESSFUL = False
@@ -401,13 +406,12 @@ LOCALE_DEFAULTS = {
     'zu_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['zu_ZA', 'en_GB']},
 }
 
-def get_default_input_methods(locale_string):
+def get_default_input_methods(locale_string: str) -> List[str]:
     '''
     Gets the default input methods for a locale
 
-    :param locale_string:
-    :type locale_string: String
-    :rtype: List of  Strings
+    :param locale_string: The name of the locale to get the default
+                          input methods for
 
     Examples:
 
@@ -423,13 +427,12 @@ def get_default_input_methods(locale_string):
         default_input_methods = ['NoIME']
     return default_input_methods
 
-def get_default_dictionaries(locale_string):
+def get_default_dictionaries(locale_string: str) -> List[str]:
     '''
     Gets the default dictionaries for a locale
 
-    :param locale_string:
-    :type locale_string: String
-    :rtype: List of  Strings
+    :param locale_string: The name of the locale to get the default
+                          dictionaries for
 
     Examples:
 
@@ -2411,7 +2414,7 @@ SPANISH_419_LOCALES = (
     'es_PA', 'es_PE', 'es_PR', 'es_PY', 'es_SV', 'es_US',
     'es_UY', 'es_VE',)
 
-def expand_languages(languages):
+def expand_languages(languages: List[str]) -> List[str]:
     # pylint: disable=line-too-long
     '''Expands the given list of languages by including fallbacks.
 
@@ -2419,8 +2422,6 @@ def expand_languages(languages):
     aliases and fallbacks.
 
     :param languages: A list of languages (or locale names)
-    :type languages: List of strings
-    :rtype: List  of strings
 
     Examples:
 
@@ -2453,7 +2454,7 @@ def expand_languages(languages):
         expanded_languages.append('en')
     return expanded_languages
 
-def lstrip_token(token):
+def lstrip_token(token: str) -> str:
     '''Strips some characters from the left side of a token
 
     Characters which have a type listed in CATEGORIES_TO_STRIP_FROM_TOKENS
@@ -2462,8 +2463,6 @@ def lstrip_token(token):
     The stripped token is returned.
 
     :param token: The token where characters may be stripped from
-    :type token: String
-    :rtype: String
 
     Examples:
 
@@ -2477,7 +2476,7 @@ def lstrip_token(token):
         token = token[1:]
     return token
 
-def rstrip_token(token):
+def rstrip_token(token: str) -> str:
     '''Strips some characters from the right side of a token
 
     Characters which have a type listed in CATEGORIES_TO_STRIP_FROM_TOKENS
@@ -2486,8 +2485,6 @@ def rstrip_token(token):
     The stripped token is returned.
 
     :param token: The token where characters may be stripped from
-    :type token: String
-    :rtype: String
 
     Examples:
 
@@ -2501,7 +2498,7 @@ def rstrip_token(token):
         token = token[0:-1]
     return token
 
-def strip_token(token):
+def strip_token(token: str) -> str:
     '''Strips some characters from both sides of a token
 
     Characters which have a type listed in CATEGORIES_TO_STRIP_FROM_TOKENS
@@ -2510,8 +2507,6 @@ def strip_token(token):
     The stripped token is returned.
 
     :param token: The token where characters may be stripped from
-    :type token: String
-    :rtype: String
 
     Examples:
 
@@ -2520,14 +2515,12 @@ def strip_token(token):
     '''
     return rstrip_token(lstrip_token(token))
 
-def tokenize(text):
+def tokenize(text: str) -> List[str]:
     '''Splits a text into tokens
 
-    Returns a list tokens
+    Returns a list of tokens
 
     :param text: The text to tokenize
-    :type text: String
-    :rtype: List of strings
 
     Examples:
 
@@ -2560,18 +2553,17 @@ def tokenize(text):
             tokens.append(token)
     return tokens
 
-def color_string_to_argb(color_string):
+def color_string_to_argb(color_string: str) -> int:
     '''
     Converts a color string to a 32bit  ARGB value
 
     :param color_string: The color to convert to 32bit ARGB
-    :type color_string: String
-                        - Standard name from the X11 rgb.txt
-                        - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
-                                     or ”#rrrrggggbbbb”
-                        - RGB color: “rgb(r,g,b)”
-                        - RGBA color: “rgba(r,g,b,a)”
-    :rtype: Integer
+                         Can be expressed in the following ways:
+                             - Standard name from the X11 rgb.txt
+                             - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                          or ”#rrrrggggbbbb”
+                             - RGB color: “rgb(r,g,b)”
+                             - RGBA color: “rgba(r,g,b,a)”
 
     Examples:
 
@@ -2597,14 +2589,12 @@ def color_string_to_argb(color_string):
             + ((int(gdk_rgba.green * 0xff) & 0xff) << 8)
             + ((int(gdk_rgba.blue * 0xff) & 0xff)))
 
-def is_ascii(text):
+def is_ascii(text: str) -> bool:
     '''Checks whether all characters in text are ASCII characters
 
     Returns “True” if the text is all ASCII, “False” if not.
 
     :param text: The text to check
-    :type text: string
-    :rtype: bool
 
     Examples:
 
@@ -2645,7 +2635,7 @@ TRANS_TABLE = {
     ord('Ŧ'): 'T',
 }
 
-def remove_accents(text, keep=''):
+def remove_accents(text: str, keep: str = '') -> str:
     '''Removes accents from the text
 
     Using “from unidecode import unidecode” is maybe more
@@ -2654,11 +2644,8 @@ def remove_accents(text, keep=''):
     languages.
 
     :param text: The text to change
-    :type text: string
     :param keep: A string of characters which should be kept unchanged
-    :type keep: string
     :return: The text with some or all accents removed in NORMALIZATION_FORM_INTERNAL
-    :rtype: string
 
     Examples:
 
@@ -2694,13 +2681,12 @@ def remove_accents(text, keep=''):
             if unicodedata.category(x) != 'Mn']).translate(TRANS_TABLE)
     return unicodedata.normalize(NORMALIZATION_FORM_INTERNAL, result)
 
-def is_right_to_left_messages():
+def is_right_to_left_messages() -> bool:
     '''
     Check whether the effective LC_MESSAGES locale points to a languages
     which is usually written  in a right-to-left script.
 
     :return: True if right-to-left, False if not.
-    :rtype: Boolean
     '''
     lc_messages_locale, dummy_lc_messages_encoding = locale.getlocale(
         category=locale.LC_MESSAGES)
@@ -2725,12 +2711,10 @@ def is_right_to_left_messages():
         return True
     return False
 
-def is_right_to_left(text):
+def is_right_to_left(text: str) -> bool:
     '''Check whether a text is right-to-left text or not
 
     :param text: The text to check
-    :type text: string
-    :rtype: boolean
 
     See: http://unicode.org/reports/tr9/#P2
 
@@ -2773,15 +2757,13 @@ def is_right_to_left(text):
             skip = True
     return False
 
-def bidi_embed(text):
+def bidi_embed(text: str) -> str:
     '''Embed the text using explicit directional embedding
 
     Returns “RLE + text + PDF” if the text is right-to-left,
     if not it returns “LRE + text + PDF”.
 
     :param text: The text to embed
-    :type text: string
-    :rtype: string
 
     See: http://unicode.org/reports/tr9/#Explicit_Directional_Embeddings
 
@@ -2797,12 +2779,10 @@ def bidi_embed(text):
         return chr(0x202B) + text + chr(0x202C) # RLE + text + PDF
     return chr(0x202A) + text + chr(0x202C) # LRE + text + PDF
 
-def contains_letter(text):
+def contains_letter(text: str) -> bool:
     '''Returns whether “text” contains a “letter” type character
 
     :param text: The text to check
-    :type text: string
-    :rtype: boolean
 
     Examples:
 
@@ -2818,7 +2798,7 @@ def contains_letter(text):
             return True
     return False
 
-def variant_to_value(variant):
+def variant_to_value(variant: GLib.Variant) -> Any:
     '''
     Convert a GLib variant to a value
     '''
@@ -2839,7 +2819,8 @@ def variant_to_value(variant):
     LOGGER.error('unknown variant type: %s', type_string)
     return variant
 
-def dict_update_existing_keys(pdict, other_pdict):
+def dict_update_existing_keys(
+        pdict: Dict[Any, Any], other_pdict: Dict[Any, Any]):
     '''Update values of existing keys in a Python dict from another Python dict
 
     Using pdict.update(other_pdict) would add keys and values from other_pdict
@@ -2866,11 +2847,9 @@ def dict_update_existing_keys(pdict, other_pdict):
         if key in pdict:
             pdict[key] = other_pdict[key]
 
-def distro_id():
+def distro_id() -> str:
     '''
     Compatibility wrapper around distro.id()
-
-    :rtype: String
 
     From the help of distro.id():
 
@@ -2920,17 +2899,17 @@ def distro_id():
         return distro.id()
     return ''
 
-def find_hunspell_dictionary(language):
+def find_hunspell_dictionary(language: str) -> Tuple[str, str]:
     '''
     Find the hunspell dictionary file for a language
 
     :param language: The language of the dictionary to search for
-    :type language: String
-    :rtype: tuple of the form (dic_path, aff_path) where
-            dic_path is the full path of the .dic file found
-            and aff_path is the full path of the .aff file found.
-            If no dictionary can be found for the requested language,
-            the return value is ('', '').
+
+    The returned Tuple contains (dic_path, aff_path) where
+    dic_path is the full path of the .dic file found
+    and aff_path is the full path of the .aff file found.
+    If no dictionary can be found for the requested language,
+    the return value is ('', '').
     '''
     datadir = os.path.join(os.path.dirname(__file__), '../data')
     user_datadir = xdg_save_data_path('ibus-typing-booster/data')
@@ -2956,18 +2935,21 @@ def find_hunspell_dictionary(language):
         'No file %s.dic found in %s', language, dirnames)
     return ('', '')
 
-def get_hunspell_dictionary_wordlist(language):
+def get_hunspell_dictionary_wordlist(language: str) -> Tuple[str, str, List[str]]:
     '''
     Open the hunspell dictionary file for a language
 
     :param language: The language of the dictionary to open
-    :type language: String
-    :rtype: tuple of the form (dic_path, dictionary_encoding, wordlist) where
-            dic_path is the full path of the dictionary file found,
-            dictionary_encoding is the encoding of that dictionary file,
-            and wordlist is a list of words found in that file.
-            If no dictionary can be found for the requested language,
-            the return value is ('', '', []).
+
+    The returned Tuple looks  like this:
+
+        (dic_path, dictionary_encoding, wordlist)
+
+    where dic_path is the full path of the dictionary file found,
+    dictionary_encoding is the encoding of that dictionary file,
+    and wordlist is a list of words found in that file.
+    If no dictionary can be found for the requested language,
+    the return value is ('', '', []).
     '''
     (dic_path, aff_path) = find_hunspell_dictionary(language)
     if not dic_path:
@@ -3241,16 +3223,14 @@ class ComposeSequences:
         for path in compose_file_paths:
             self._read_compose_file(path)
 
-    def _add_compose_sequence(self, sequence, result):
+    def _add_compose_sequence(self, sequence: str, result: str) -> None:
         # pylint: disable=line-too-long
         '''Adds a compose sequence to self._compose_sequences
 
         :param sequence: Keysyms of the compose sequence as written
                          in Compose files
-        :type sequence: String
         :param result: The result which should be inserted when typing that
                        compose sequence
-        :type result: String
 
         Examples:
 
@@ -3312,20 +3292,16 @@ class ComposeSequences:
             compose_sequences = compose_sequences[keyval]
         last_compose_sequences[last_keyval] = result
 
-    def _xorg_locale_path(self):
+    def _xorg_locale_path(self) -> str:
         '''Returns the name of the system directory for compose files.
 
         Usually this is “/usr/share/X11/locale”.
-
-        :rtype: String
         '''
         return '/usr/share/X11/locale'
 
-    def _locale_compose_file(self):
+    def _locale_compose_file(self) -> str:
         '''Returns the full path of the default compose file for the current
         locale
-
-        :rtype: String
         '''
         lc_ctype_locale, lc_ctype_encoding = locale.getlocale(
             category=locale.LC_CTYPE)
@@ -3339,12 +3315,11 @@ class ComposeSequences:
                 return locale_compose_file
         return ''
 
-    def _read_compose_file(self, compose_path):
+    def _read_compose_file(self, compose_path: str) -> None:
         '''Reads a compose file and stores the compose sequences
         found  there in self._compose_sequences.
 
         :param compose_path: Path to a compose file to read
-        :type compose_path: String
         '''
         if not compose_path or not os.path.isfile(compose_path):
             LOGGER.info('Skipping reading of compose file "%s"', compose_path)
@@ -3397,16 +3372,14 @@ class ComposeSequences:
                 result = match.group('result').replace('\\"', '"')
                 self._add_compose_sequence(sequence, result)
 
-    def preedit_representation(self, keyvals):
+    def preedit_representation(self, keyvals: List[int]) -> str:
         # pylint: disable=line-too-long
         '''Returns a text to display in the preedit for a partially
         typed compose sequence.
 
         :param keyvals: A list of key values
-        :type keyvals: List of integers
         :return: The text to display in the preedit for a partially
                  typed compose sequence consisting of these key values
-        :rtype: String
 
         Examples:
 
@@ -3427,13 +3400,13 @@ class ComposeSequences:
                     representation += chr(keyval)
         return representation
 
-    def _compose_dead_key_sequence(self, keyvals):
+    def _compose_dead_key_sequence(
+            self, keyvals: List[int]) -> Union[str, None]:
         # pylint: disable=line-too-long
         '''
         Interprets a list of key values as a dead key sequence
 
         :param keyvals: A list of key values
-        :type kevals: List of integers
         :return:
             None:
                 Incomplete sequence
@@ -3449,7 +3422,6 @@ class ComposeSequences:
                 Complete dead key sequence, valid.
                 The returned string contains the result of the valid
                 dead key sequence.
-        :rtype: String (possibly empty) or None
 
         Examples:
 
@@ -3530,13 +3502,12 @@ class ComposeSequences:
                 combining_sequence = character + combining_sequence
         return unicodedata.normalize('NFC', combining_sequence)
 
-    def compose(self, keyvals):
+    def compose(self, keyvals: List[int]) -> Union[str, None]:
         # pylint: disable=line-too-long
         '''
         Interprets a list of key values as a compose sequence
 
         :param keyvals: A list of key values
-        :type keyvals: List of integers
         :return:
             None:
                 Incomplete sequence
@@ -3552,7 +3523,6 @@ class ComposeSequences:
                 Complete sequence, valid.
                 The returned string contains the result of the valid
                 compose sequence.
-        :rtype: String (posssibly empty) or None
 
         Examples:
 
@@ -3605,13 +3575,13 @@ class M17nDbInfo:
     '''Class to find and store information about the available input
     methods from m17n-db.
     '''
-    def __init__(self):
-        self._dirs = []
-        self._imes = {}
+    def __init__(self) -> None:
+        self._dirs: List[str] = []
+        self._imes: Dict[str, Dict[str, str]] = {}
         self._find_dirs()
         self._find_imes()
 
-    def _find_dirs(self):
+    def _find_dirs(self) -> None:
         '''Finds the directories which contain the m17n input methods which
         can be used and stores the result in self._dirs
         '''
@@ -3641,7 +3611,7 @@ class M17nDbInfo:
             LOGGER.error(
                 'System m17n directory "%s" does not exist.', system_dir)
 
-    def _find_imes(self):
+    def _find_imes(self) -> None:
         '''Searches the directories in self._dirs for usable input methods and
         stores information about the input methods found in the
         self._imes dictionary.
@@ -3726,7 +3696,7 @@ class M17nDbInfo:
                     self._imes[ime]['description'] = description
                 self._imes[ime]['content'] = full_contents
 
-    def get_dirs(self):
+    def get_dirs(self) -> List[str]:
         '''
         Returns the list of directories  which contain the m17n input methods.
 
@@ -3737,79 +3707,68 @@ class M17nDbInfo:
         if that directory exists.
 
         :return: A list of one or two directories
-        :rtype: List of strings
 
         '''
         return self._dirs[:]
 
-    def get_imes(self):
+    def get_imes(self) -> List[str]:
         '''Get a list of the available input methods
 
         The special input method 'NoIME' should always be first
         in the list returned.
 
         :return: A list of names of the available input methods.
-        :rtype: List of strings
         '''
         return sorted(self._imes)
 
-    def get_path(self, ime):
+    def get_path(self, ime: str) -> str:
         '''Get the full path of the implementation file of the input method.
 
         :param ime: Name of the input method
-        :type ime: String
         :return: Path of the implementation file of the input method.
                  Empty string if no file has been found implementing “ime”
-        :rtype: String
-
         '''
         if ime in self._imes and 'path' in self._imes[ime]:
             return self._imes[ime]['path']
         return ''
 
-    def get_title(self, ime):
+    def get_title(self, ime: str) -> str:
         '''Get the title of the input method.
 
         :param ime: Name of the input method
-        :type ime: String
         :return: Title of the input method.
                  Empty string if no title has been found.
-        :rtype: String
         '''
         if ime in self._imes and 'title' in self._imes[ime]:
             return self._imes[ime]['title']
         return ''
 
-    def get_description(self, ime):
+    def get_description(self, ime: str) -> str:
         '''Get the description of the input method.
 
         :param ime: Name of the input method
-        :type ime: String
         :return: Description of the input method.
                  Empty string if no description has been found.
-        :rtype: String
         '''
         if ime in self._imes and 'description' in self._imes[ime]:
             return self._imes[ime]['description']
         return ''
 
-    def get_content(self, ime):
+    def get_content(self, ime: str) -> str:
         '''Get the content of the implementation file of the input method.
 
         :param ime: Name of the input method
-        :type ime: String
         :return: Content of the implementation file of the input method.
                  Empty string if no content has been found.
-        :rtype: String
         '''
         if ime in self._imes and 'content' in self._imes[ime]:
             return self._imes[ime]['content']
         return ''
 
-    def __str__(self):
+    def __str__(self) -> str:
         return repr(self._imes)
 
-def xdg_save_data_path(*resource):
+def xdg_save_data_path(*resource) -> str:
     '''
     Compatibility function for systems which do not have pyxdg.
     (For example openSUSE Leap 42.1)
@@ -3826,9 +3785,9 @@ def xdg_save_data_path(*resource):
     # here (and add the exist_ok=True parameter to os.makedirs()):
     xdg_data_home = os.environ.get('XDG_DATA_HOME') or os.path.join(
         os.path.expanduser('~'), '.local', 'share')
-    resource = os.path.join(*resource)
-    assert not resource.startswith('/')
-    path = os.path.join(xdg_data_home, resource)
+    resource_joined = os.path.join(*resource)
+    assert not resource_joined.startswith('/')
+    path = os.path.join(xdg_data_home, resource_joined)
     if not os.path.isdir(path):
         os.makedirs(path, exist_ok=True)
     return path
@@ -3847,8 +3806,8 @@ class KeyvalsToKeycodes:
     and a certain hardware key with a certain key code can generate different
     key values depending on which modifier was pressed.
     '''
-    def __init__(self):
-        self.keyvals_to_keycodes = {}
+    def __init__(self) -> None:
+        self.keyvals_to_keycodes: Dict[int, List[int]] = {}
         display = Gdk.Display.get_default()
         keymap = Gdk.Keymap.get_for_display(display)
         for keycode in range(0, 256):
@@ -3881,38 +3840,32 @@ class KeyvalsToKeycodes:
                 self.keyvals_to_keycodes[keyval] = (
                     self._standard_us_layout_keyvals_to_keycodes[keyval])
 
-    def keycodes(self, keyval):
+    def keycodes(self, keyval: int) -> List[int]:
         '''Returns a list of key codes of the hardware keys which can generate
         the given key value on the current keyboard layout.
 
         :param keyval: A key value
-        :type keyval: Integer
         :return: A list of key codes of hardware keys, possibly empty
-        :rtype: List of integers between 9 and 255
-
         '''
         if keyval in self.keyvals_to_keycodes:
             return self.keyvals_to_keycodes[keyval]
         return []
 
-    def keycode(self, keyval):
+    def keycode(self, keyval: int) -> int:
         '''Returns one key code of one hardware key which can generate the
         given key value (there may be more than one, see the
         keycodes() function.
 
         :param keyval: A key value
-        :type keyval: Integer
         :return: One key code of a hardware key which can generate
-                 the given key value
-        :rtype: Integer between 9 and 255
-
+                 the given key value, between 9 and 255
         '''
         keycodes = self.keycodes(keyval)
         if keycodes:
             return keycodes[0]
         return 0
 
-    def ibus_keycodes(self, keyval):
+    def ibus_keycodes(self, keyval: int) -> List[int]:
         '''Returns a list of ibus key codes of the hardware keys which can
         generate the given key value on the current keyboard layout.
 
@@ -3922,16 +3875,14 @@ class KeyvalsToKeycodes:
         it is at least 1.
 
         :param keyval: A key value
-        :type keyval: Integer
         :return: A list of ibus key codes of hardware keys, possibly empty
-        :rtype: List of integers between 1 and 247
-
+                 The key codes are between 1 and 247
         '''
         if keyval in self.keyvals_to_keycodes:
             return [max(0, x - 8) for x in self.keyvals_to_keycodes[keyval]]
         return []
 
-    def ibus_keycode(self, keyval):
+    def ibus_keycode(self, keyval: int) -> int:
         '''Returns one ibus key code of one hardware key which can generate
         the given key value (there may be more than one, see the
         ibus_keycodes() function)
@@ -3942,14 +3893,12 @@ class KeyvalsToKeycodes:
         it is at least 1.
 
         :param keyval: A key value
-        :type keyval: Integer
         :return: One ibus key code of a hardware key which can generate
-                 the given key value
-        :rtype: Integer between 1 and 247
+                 the given key value. It will be between 1 and 247.
         '''
         return max(0, self.keycode(keyval) - 8)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return_string = ''
         for keyval in sorted(self.keyvals_to_keycodes):
             return_string += 'keyval: %s name: %s keycodes: %s\n' % (
@@ -3961,7 +3910,7 @@ class KeyEvent:
     '''Key event class used to make the checking of details of the key
     event easy
     '''
-    def __init__(self, keyval, keycode, state):
+    def __init__(self, keyval: int, keycode: int, state: int) -> None:
         self.val = keyval
         self.code = keycode
         self.state = state
@@ -3999,21 +3948,25 @@ class KeyEvent:
             if self.mod5:
                 self.msymbol = 'G-' + self.msymbol
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, KeyEvent):
+            return NotImplemented
         if (self.val == other.val
                 and self.code == other.code
                 and self.state == other.state):
             return True
         return False
 
-    def __ne__(self, other):
+    def __ne__(self, other: object) -> bool:
+        if not isinstance(other, KeyEvent):
+            return NotImplemented
         if (self.val != other.val
                 or self.code != other.code
                 or self.state != other.state):
             return True
         return False
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
             "val=%s code=%s state=0x%08x name='%s' unicode='%s' msymbol='%s' "
             % (self.val,
@@ -4034,7 +3987,7 @@ class KeyEvent:
                self.mod5,
                self.release))
 
-def keyevent_to_keybinding(keyevent):
+def keyevent_to_keybinding(keyevent: KeyEvent) -> str:
     keybinding = ''
     if keyevent.shift:
         keybinding += 'Shift+'
@@ -4061,7 +4014,7 @@ def keyevent_to_keybinding(keyevent):
     keybinding += keyevent.name
     return keybinding
 
-def keybinding_to_keyevent(keybinding):
+def keybinding_to_keyevent(keybinding: str) -> KeyEvent:
     name = keybinding.split('+')[-1]
     keyval = IBus.keyval_from_name(name)
     state = 0
@@ -4093,8 +4046,8 @@ class HotKeys:
     '''Class to make checking whether a key matches a hotkey for a certain
     command easy
     '''
-    def __init__(self, keybindings):
-        self._hotkeys = {}
+    def __init__(self, keybindings: Dict[str, List[str]]) -> None:
+        self._hotkeys: Dict[str, List[Tuple[int, int]]] = {}
         for command in keybindings:
             for keybinding in keybindings[command]:
                 key = keybinding_to_keyevent(keybinding)
@@ -4105,7 +4058,8 @@ class HotKeys:
                 else:
                     self._hotkeys[command] = [(val, state)]
 
-    def __contains__(self, command_key_tuple):
+    def __contains__(
+            self, command_key_tuple: Tuple[KeyEvent, KeyEvent, str]) -> bool:
         if not isinstance(command_key_tuple, tuple):
             return False
         command = command_key_tuple[2]
@@ -4155,7 +4109,7 @@ class HotKeys:
                 return True
         return False
 
-    def __str__(self):
+    def __str__(self) -> str:
         return repr(self._hotkeys)
 
 class ItbKeyInputDialog(Gtk.MessageDialog):
@@ -4165,7 +4119,7 @@ class ItbKeyInputDialog(Gtk.MessageDialog):
             # requesting that the user types a key to be used as a new
             # key binding for a command.
             title=_('Key input'),
-            parent=None):
+            parent=None) -> None:
         Gtk.Dialog.__init__(
             self,
             title=title,
@@ -4190,18 +4144,18 @@ class ItbKeyInputDialog(Gtk.MessageDialog):
         self.show()
 
     def on_key_press_event(# pylint: disable=no-self-use
-            self, widget, event):
+            self, widget, event) -> bool:
         widget.e = (event.keyval,
                     event.get_state() & KEYBINDING_STATE_MASK)
         return True
 
     def on_key_release_event(# pylint: disable=no-self-use
-            self, widget, _event):
+            self, widget, _event) -> bool:
         widget.response(Gtk.ResponseType.OK)
         return True
 
 class ItbAboutDialog(Gtk.AboutDialog):
-    def  __init__(self, parent=None):
+    def  __init__(self, parent=None) -> None:
         Gtk.AboutDialog.__init__(self, parent=parent)
         self.set_modal(True)
         # An empty string in aboutdialog.set_logo_icon_name('')
@@ -4256,7 +4210,7 @@ class ItbAboutDialog(Gtk.AboutDialog):
         self.show()
 
     def on_close_aboutdialog( # pylint: disable=no-self-use
-            self, _about_dialog, _response):
+            self, _about_dialog, _response) -> None:
         '''
         The “About” dialog has been closed by the user
 

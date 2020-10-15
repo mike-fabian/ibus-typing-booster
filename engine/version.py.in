@@ -22,18 +22,14 @@
 Contains functions to return the current version number
 and prefix of ibus-typing-booster.
 '''
-def get_version():
+def get_version() -> str:
     '''
     Returns the current version number of ibus-typing-booster.
-
-    :rtype: String
     '''
     return "@VERSION@"
 
-def get_prefix():
+def get_prefix() -> str:
     '''
     Returns the current prefix of ibus-typing-booster.
-
-    :rtype: String
     '''
     return '@prefix@'

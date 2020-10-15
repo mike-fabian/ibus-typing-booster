@@ -25,6 +25,11 @@ The setup tool for ibus typing booster.
 
 # “Wrong continued indentation”: pylint: disable=bad-continuation
 
+from typing import Tuple
+from typing import List
+from typing import Dict
+from typing import Union
+from typing import Any
 import sys
 import os
 import re
@@ -35,12 +40,12 @@ import locale
 import logging
 import logging.handlers
 from time import strftime
-import dbus
-import dbus.service
+import dbus # type: ignore
+import dbus.service # type: ignore
 
-from gi import require_version
+from gi import require_version # type: ignore
 require_version('Gio', '2.0')
-from gi.repository import Gio
+from gi.repository import Gio # type: ignore
 require_version('GLib', '2.0')
 from gi.repository import GLib
 
@@ -63,20 +68,20 @@ from i18n import DOMAINNAME, _, init as i18n_init
 
 IMPORT_LANGTABLE_SUCCESSFUL = False
 try:
-    import langtable
+    import langtable # type: ignore
     IMPORT_LANGTABLE_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_LANGTABLE_SUCCESSFUL = False
 
 IMPORT_LIBVOIKKO_SUCCESSFUL = False
 try:
-    import libvoikko
+    import libvoikko # type: ignore
     IMPORT_LIBVOIKKO_SUCCESSFUL = True
 except (ImportError,):
     pass
 
 sys.path = [sys.path[0]+'/../engine'] + sys.path
-from m17n_translit import Transliterator
+from m17n_translit import Transliterator # type: ignore
 import tabsqlitedb
 import itb_util
 import itb_emoji
@@ -89,7 +94,7 @@ GTK_VERSION = (Gtk.get_major_version(),
 
 M17N_DB_INFO = None
 
-def parse_args():
+def parse_args() -> Any:
     '''
     Parse the command line arguments.
     '''
@@ -110,7 +115,7 @@ class SetupUI(Gtk.Window):
     '''
     User interface of the setup tool
     '''
-    def __init__(self):
+    def __init__(self) -> None:
         Gtk.Window.__init__(self, title='🚀 ' + _('Preferences'))
         self.set_name('TypingBoosterPreferences')
         self.set_modal(True)
@@ -814,10 +819,10 @@ class SetupUI(Gtk.Window):
             self._dictionaries_default_button)
         self._dictionaries_listbox_selected_dictionary_name = ''
         self._dictionaries_listbox_selected_dictionary_index = -1
-        self._dictionary_names = []
+        self._dictionary_names: List[str] = []
         self._dictionaries_listbox = None
         self._dictionaries_add_listbox = None
-        self._dictionaries_add_listbox_dictionary_names = []
+        self._dictionaries_add_listbox_dictionary_names: List[str] = []
         self._dictionaries_add_popover = None
         self._dictionaries_add_popover_scroll = None
         self._fill_dictionaries_listbox()
@@ -929,10 +934,10 @@ class SetupUI(Gtk.Window):
         self._input_methods_action_area.add(self._input_methods_default_button)
         self._input_methods_listbox_selected_ime_name = ''
         self._input_methods_listbox_selected_ime_index = -1
-        self._current_imes = []
+        self._current_imes: List[str] = []
         self._input_methods_listbox = None
         self._input_methods_add_listbox = None
-        self._input_methods_add_listbox_imes = []
+        self._input_methods_add_listbox_imes: List[str] = []
         self._input_methods_add_popover = None
         self._input_methods_add_popover_scroll = None
         self._fill_input_methods_listbox()
@@ -1756,7 +1761,7 @@ class SetupUI(Gtk.Window):
 
         self._notebook.set_current_page(0) # Has to be after show_all()
 
-    def _fill_dictionaries_listbox_row(self, name):
+    def _fill_dictionaries_listbox_row(self, name: str) -> Tuple[str, bool]:
         '''
         Formats the text of a line in the listbox of configured dictionaries
 
@@ -1765,8 +1770,6 @@ class SetupUI(Gtk.Window):
         is missing.
 
         :param name: Name of the hunspell dictionary
-        :type name: String
-        :rtype: (String, Boolean)
         '''
         missing_dictionary = False
         flag = itb_util.FLAGS.get(name, '  ')
@@ -1818,7 +1821,7 @@ class SetupUI(Gtk.Window):
             row += itb_util.bidi_embed(row_item)
         return (row, missing_dictionary)
 
-    def _fill_dictionaries_listbox(self):
+    def _fill_dictionaries_listbox(self) -> None:
         '''
         Fill the dictionaries listbox with the list of dictionaries read
         from dconf.
@@ -1826,6 +1829,9 @@ class SetupUI(Gtk.Window):
         for child in self._dictionaries_scroll.get_children():
             self._dictionaries_scroll.remove(child)
         self._dictionaries_listbox = Gtk.ListBox()
+        if self._dictionaries_listbox is None:
+            LOGGER.debug('self._dictionaries_listbox is None')
+            return
         self._dictionaries_scroll.add(self._dictionaries_listbox)
         self._dictionaries_listbox_selected_dictionary_name = ''
         self._dictionaries_listbox_selected_dictionary_index = -1
@@ -1891,15 +1897,13 @@ class SetupUI(Gtk.Window):
             len(self._dictionary_names)
             < itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES)
 
-    def _fill_input_methods_listbox_row(self, ime):
+    def _fill_input_methods_listbox_row(self, ime: str) -> str:
         '''
         Formats the text of a line in the listbox of configured input methods
 
         Returns the formatted line of text.
 
         :param ime: Name of the input method
-        :type ime: String
-        :rtype: String
         '''
         row = ime
         if itb_util.is_right_to_left_messages():
@@ -1907,7 +1911,9 @@ class SetupUI(Gtk.Window):
             row = chr(0x200F) + ime
         # add some spaces for nicer formatting:
         row += ' ' * (20 - len(ime))
-        title = M17N_DB_INFO.get_title(ime)
+        title = ''
+        if not M17N_DB_INFO is None:
+            title = M17N_DB_INFO.get_title(ime)
         if title:
             row += '\t' + '(' + title + ')'
         try:
@@ -1917,7 +1923,7 @@ class SetupUI(Gtk.Window):
             row += '\t' + '❌ ' + str(open_error)
         return row
 
-    def _fill_input_methods_listbox(self):
+    def _fill_input_methods_listbox(self) -> None:
         '''
         Fill the input methods listbox with the list of input methods read
         from dconf.
@@ -1925,6 +1931,9 @@ class SetupUI(Gtk.Window):
         for child in self._input_methods_scroll.get_children():
             self._input_methods_scroll.remove(child)
         self._input_methods_listbox = Gtk.ListBox()
+        if self._input_methods_listbox is None:
+            LOGGER.debug('self._input_methods_listbox is None')
+            return
         self._input_methods_scroll.add(self._input_methods_listbox)
         self._input_methods_listbox_selected_ime_name = ''
         self._input_methods_listbox_selected_ime_index = -1
@@ -1983,7 +1992,8 @@ class SetupUI(Gtk.Window):
         self._input_methods_add_button.set_sensitive(
             len(self._current_imes) < itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS)
 
-    def __run_message_dialog(self, message, message_type=Gtk.MessageType.INFO):
+    def __run_message_dialog(
+            self, message: str, message_type=Gtk.MessageType.INFO) -> None:
         '''Run a dialog to show an error or warning message'''
         dialog = Gtk.MessageDialog(
             flags=Gtk.DialogFlags.MODAL,
@@ -1993,7 +2003,7 @@ class SetupUI(Gtk.Window):
         dialog.run()
         dialog.destroy()
 
-    def _run_are_you_sure_dialog(self, message):
+    def _run_are_you_sure_dialog(self, message: str) -> Any:
         '''
         Run a dialog to show a “Are you sure?” message.
 
@@ -2029,7 +2039,7 @@ class SetupUI(Gtk.Window):
             Gtk.main_iteration()
         return response
 
-    def check_instance(self):
+    def check_instance(self) -> bool:
         '''
         Check whether another instance of the setup tool is running already
         '''
@@ -2042,48 +2052,46 @@ class SetupUI(Gtk.Window):
         else:
             return False
 
-    def on_delete_event(self, *_args):
+    def on_delete_event(self, *_args) -> None:
         '''
         The window has been deleted, probably by the window manager.
         '''
         Gtk.main_quit()
 
-    def on_destroy_event(self, *_args):
+    def on_destroy_event(self, *_args) -> None:
         '''
         The window has been destroyed.
         '''
         Gtk.main_quit()
 
-    def on_close_clicked(self, *_args):
+    def on_close_clicked(self, *_args) -> None:
         '''
         The button to close the dialog has been clicked.
         '''
         Gtk.main_quit()
 
     # pylint: disable=unused-argument
-    def _reload_dictionaries(self, value, update_gsettings=False):
+    def _reload_dictionaries(
+            self, value: Any, update_gsettings: bool = False) -> None:
         '''(re)load all dictionaries
 
         Called when a dictionary has been updated or installed.
 
         :param value: ignored
-        :type value: doesn’t matter
         :param update_gsettings: ignored
-        :type update_gsettings: Boolean
         '''
         LOGGER.info('A dictionary has been updated or installed.\n'
                     'ibus-typing-booster will (re)load all dictionaries.\n'
                     'But here in the setup tool there is nothing to do.')
     # pylint: enable=unused-argument
 
-    def on_gsettings_value_changed(self, _settings, key):
+    def on_gsettings_value_changed(
+            self, _settings: Gio.Settings, key: str) -> None:
         '''
         Called when a value in the settings has been changed.
 
         :param settings: The settings object
-        :type settings: Gio.Settings object
         :param key: The key of the setting which has changed
-        :type key: String
         '''
         value = itb_util.variant_to_value(self._gsettings.get_value(key))
         LOGGER.info('Settings changed: key=%s value=%s\n', key, value)
@@ -2142,187 +2150,177 @@ class SetupUI(Gtk.Window):
         LOGGER.error('Unknown key\n')
         return
 
-    def on_about_button_clicked(self, _button):
+    def on_about_button_clicked(self, _button: Gtk.Button) -> None:
         '''
         The “About” button has been clicked
 
         :param _button: The “About” button
-        :type _button: Gtk.Button object
         '''
         itb_util.ItbAboutDialog()
 
-    def on_color_preedit_spellcheck_checkbutton(self, widget):
+    def on_color_preedit_spellcheck_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to do spellchecking on the
         contents of the preedit.
 
         :param widget: The check button clicked
-        :type widget: Gtk.CheckButton
         '''
         self.set_color_preedit_spellcheck(
             widget.get_active(), update_gsettings=True)
 
-    def on_color_preedit_spellcheck_color_set(self, widget):
+    def on_color_preedit_spellcheck_color_set(
+            self, widget: Gtk.ColorButton) -> None:
         '''
         A color has been set to indicate spelling errors in the preedit
 
         :param widget: The color button where a color was set
-        :type widget: Gtk.ColorButton
         '''
         self.set_color_preedit_spellcheck_string(
             widget.get_rgba().to_string(), update_gsettings=True)
 
-    def on_color_inline_completion_checkbutton(self, widget):
+    def on_color_inline_completion_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use color for inline completion
         has been clicked.
 
         :param widget: The check button clicked
-        :type widget: Gtk.CheckButton
         '''
         self.set_color_inline_completion(
             widget.get_active(), update_gsettings=True)
 
-    def on_color_inline_completion_color_set(self, widget):
+    def on_color_inline_completion_color_set(
+            self, widget: Gtk.ColorButton) -> None:
         '''
         A color has been set for the inline completion
 
         :param widget: The color button where a color was set
-        :type widget: Gtk.ColorButton
         '''
         self.set_color_inline_completion_string(
             widget.get_rgba().to_string(), update_gsettings=True)
 
-    def on_color_userdb_checkbutton(self, widget):
+    def on_color_userdb_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use color for candidates from the user
         database has been clicked.
 
         :param widget: The check button clicked
-        :type widget: Gtk.CheckButton
-
         '''
         self.set_color_userdb(widget.get_active(), update_gsettings=True)
 
-    def on_color_userdb_color_set(self, widget):
+    def on_color_userdb_color_set(self, widget: Gtk.ColorButton) -> None:
         '''
         A color has been set for the candidates from the user database.
 
         :param widget: The color button where a color was set
-        :type widget: Gtk.ColorButton
         '''
         self.set_color_userdb_string(
             widget.get_rgba().to_string(), update_gsettings=True)
 
-    def on_color_spellcheck_checkbutton(self, widget):
+    def on_color_spellcheck_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use color for candidates from spellchecking
         has been clicked.
 
         :param widget: The check button clicked
-        :type widget: Gtk.CheckButton
         '''
         self.set_color_spellcheck(widget.get_active(), update_gsettings=True)
 
-    def on_color_spellcheck_color_set(self, widget):
+    def on_color_spellcheck_color_set(self, widget: Gtk.ColorButton) -> None:
         '''
         A color has been set for the candidates from spellchecking
 
         :param widget: The color button where a color was set
-        :type widget: Gtk.ColorButton
         '''
         self.set_color_spellcheck_string(
             widget.get_rgba().to_string(), update_gsettings=True)
 
-    def on_color_dictionary_checkbutton(self, widget):
+    def on_color_dictionary_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use color for candidates from a dictionary
         has been clicked.
 
         :param widget: The check button clicked
-        :type widget: Gtk.CheckButton
         '''
         self.set_color_dictionary(widget.get_active(), update_gsettings=True)
 
-    def on_color_dictionary_color_set(self, widget):
+    def on_color_dictionary_color_set(self, widget: Gtk.ColorButton) -> None:
         '''
         A color has been set for the candidates from a dictionary
 
         :param widget: The color button where a color was set
-        :type widget: Gtk.ColorButton
         '''
         self.set_color_dictionary_string(
             widget.get_rgba().to_string(), update_gsettings=True)
 
-    def on_label_userdb_checkbutton(self, widget):
+    def on_label_userdb_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use a label for candidates from the
         user database has been clicked.
 
         :param widget: The check button clicked
-        :type widget: Gtk.CheckButton
         '''
         self.set_label_userdb(widget.get_active(), update_gsettings=True)
 
-    def on_label_userdb_entry(self, widget, _property_spec):
+    def on_label_userdb_entry(self, widget: Gtk.Entry, _property_spec) -> None:
         '''
         The label for candidates from the user database has been changed.
         '''
         self.set_label_userdb_string(
             widget.get_text(), update_gsettings=True)
 
-    def on_label_spellcheck_checkbutton(self, widget):
+    def on_label_spellcheck_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use a label for candidates from
         spellchecking has been clicked.
 
         :param widget: The check button clicked
-        :type widget: Gtk.CheckButton
         '''
         self.set_label_spellcheck(widget.get_active(), update_gsettings=True)
 
-    def on_label_spellcheck_entry(self, widget, _property_spec):
+    def on_label_spellcheck_entry(
+            self, widget: Gtk.Entry, _property_spec) -> None:
         '''
         The label for candidates from spellchecking has been changed.
         '''
         self.set_label_spellcheck_string(
             widget.get_text(), update_gsettings=True)
 
-    def on_label_dictionary_checkbutton(self, widget):
+    def on_label_dictionary_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use a label for candidates from a dictionary
         has been clicked.
 
         :param widget: The check button clicked
-        :type widget: Gtk.CheckButton
         '''
         self.set_label_dictionary(widget.get_active(), update_gsettings=True)
 
-    def on_label_dictionary_entry(self, widget, _property_spec):
+    def on_label_dictionary_entry(
+            self, widget: Gtk.Entry, _property_spec) -> None:
         '''
         The label for candidates from a dictionary has been changed.
         '''
         self.set_label_dictionary_string(
             widget.get_text(), update_gsettings=True)
 
-    def on_label_busy_checkbutton(self, widget):
+    def on_label_busy_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use a label to indicate when
         ibus-typing-booster is busy.
 
         :param widget: The check button clicked
-        :type widget: Gtk.CheckButton
         '''
         self.set_label_busy(widget.get_active(), update_gsettings=True)
 
-    def on_label_busy_entry(self, widget, _property_spec):
+    def on_label_busy_entry(self, widget: Gtk.Entry, _property_spec) -> None:
         '''
         The label to indicate when ibus-typing-booster is busy
         '''
         self.set_label_busy_string(
             widget.get_text(), update_gsettings=True)
 
-    def on_tab_enable_checkbutton(self, widget):
+    def on_tab_enable_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to show candidates only when
         requested with the tab key or not has been clicked.
@@ -2330,7 +2328,7 @@ class SetupUI(Gtk.Window):
         self.set_tab_enable(
             widget.get_active(), update_gsettings=True)
 
-    def on_inline_completion_checkbutton(self, widget):
+    def on_inline_completion_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to show a completion first inline in the
         preëdit instead of using a combobox to show a candidate list.
@@ -2338,14 +2336,15 @@ class SetupUI(Gtk.Window):
         self.set_inline_completion(
             widget.get_active(), update_gsettings=True)
 
-    def on_auto_capitalize_checkbutton(self, widget):
+    def on_auto_capitalize_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to automatically capitalize after punctation.
         '''
         self.set_auto_capitalize(
             widget.get_active(), update_gsettings=True)
 
-    def on_show_number_of_candidates_checkbutton(self, widget):
+    def on_show_number_of_candidates_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to show the number of candidates
         on top of the lookup table has been clicked.
@@ -2353,7 +2352,8 @@ class SetupUI(Gtk.Window):
         self.set_show_number_of_candidates(
             widget.get_active(), update_gsettings=True)
 
-    def on_show_status_info_in_auxiliary_text_checkbutton(self, widget):
+    def on_show_status_info_in_auxiliary_text_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to show status in the auxiliary text,
         has been clicked.
@@ -2361,7 +2361,8 @@ class SetupUI(Gtk.Window):
         self.set_show_status_info_in_auxiliary_text(
             widget.get_active(), update_gsettings=True)
 
-    def on_preedit_style_only_when_lookup_checkbutton(self, widget):
+    def on_preedit_style_only_when_lookup_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to style the preedit only when
         lookup is enabled has been clicked.
@@ -2369,7 +2370,8 @@ class SetupUI(Gtk.Window):
         self.set_preedit_style_only_when_lookup(
             widget.get_active(), update_gsettings=True)
 
-    def on_auto_select_candidate_checkbutton(self, widget):
+    def on_auto_select_candidate_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to automatically select the best candidate
         has been clicked.
@@ -2377,7 +2379,8 @@ class SetupUI(Gtk.Window):
         self.set_auto_select_candidate(
             widget.get_active(), update_gsettings=True)
 
-    def on_add_space_on_commit_checkbutton(self, widget):
+    def on_add_space_on_commit_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to add a space when committing by
         label or mouse click.
@@ -2385,7 +2388,8 @@ class SetupUI(Gtk.Window):
         self.set_add_space_on_commit(
             widget.get_active(), update_gsettings=True)
 
-    def on_remember_last_used_preedit_ime_checkbutton(self, widget):
+    def on_remember_last_used_preedit_ime_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to remember the last used input method
         for the preëdit has been clicked.
@@ -2393,7 +2397,7 @@ class SetupUI(Gtk.Window):
         self.set_remember_last_used_preedit_ime(
             widget.get_active(), update_gsettings=True)
 
-    def on_emoji_predictions_checkbutton(self, widget):
+    def on_emoji_predictions_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to predict emoji as well or not
         has been clicked.
@@ -2401,7 +2405,7 @@ class SetupUI(Gtk.Window):
         self.set_emoji_prediction_mode(
             widget.get_active(), update_gsettings=True)
 
-    def on_off_the_record_checkbutton(self, widget):
+    def on_off_the_record_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use “Off the record” mode, i.e. whether to
         learn from user data by saving user input to the user database
@@ -2410,7 +2414,8 @@ class SetupUI(Gtk.Window):
         self.set_off_the_record_mode(
             widget.get_active(), update_gsettings=True)
 
-    def on_qt_im_module_workaround_checkbutton(self, widget):
+    def on_qt_im_module_workaround_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use the workaround for the broken
         implementation of forward_key_event() in the Qt 4/5 input
@@ -2419,7 +2424,8 @@ class SetupUI(Gtk.Window):
         self.set_qt_im_module_workaround(
             widget.get_active(), update_gsettings=True)
 
-    def on_arrow_keys_reopen_preedit_checkbutton(self, widget):
+    def on_arrow_keys_reopen_preedit_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether arrow keys are allowed to reopen
         a preëdit, has been clicked.
@@ -2427,14 +2433,16 @@ class SetupUI(Gtk.Window):
         self.set_arrow_keys_reopen_preedit(
             widget.get_active(), update_gsettings=True)
 
-    def on_auto_commit_characters_entry(self, widget, _property_spec):
+    def on_auto_commit_characters_entry(
+            self, widget: Gtk.Entry, _property_spec) -> None:
         '''
         The list of characters triggering an auto commit has been changed.
         '''
         self.set_auto_commit_characters(
             widget.get_text(), update_gsettings=True)
 
-    def on_google_application_credentials_button(self, _widget):
+    def on_google_application_credentials_button(
+            self, _widget: Gtk.Button) -> None:
         '''
         The button to select the full path of the Google application
         credentials .json file has been clicked.
@@ -2460,14 +2468,16 @@ class SetupUI(Gtk.Window):
                 filename, update_gsettings=True)
         self._google_application_credentials_button.set_sensitive(True)
 
-    def on_page_size_adjustment_value_changed(self, _widget):
+    def on_page_size_adjustment_value_changed(
+            self, _widget: Gtk.SpinButton) -> None:
         '''
         The page size of the lookup table has been changed.
         '''
         self.set_page_size(
             self._page_size_adjustment.get_value(), update_gsettings=True)
 
-    def on_lookup_table_orientation_combobox_changed(self, widget):
+    def on_lookup_table_orientation_combobox_changed(
+            self, widget: Gtk.ComboBox) -> None:
         '''
         A change of the lookup table orientation has been requested
         with the combobox
@@ -2479,7 +2489,8 @@ class SetupUI(Gtk.Window):
             self.set_lookup_table_orientation(
                 orientation, update_gsettings=True)
 
-    def on_preedit_underline_combobox_changed(self, widget):
+    def on_preedit_underline_combobox_changed(
+            self, widget: Gtk.ComboBox) -> None:
         '''
         A change of the preedit underline style has been requested
         with the combobox
@@ -2491,7 +2502,8 @@ class SetupUI(Gtk.Window):
             self.set_preedit_underline(
                 underline_mode, update_gsettings=True)
 
-    def on_min_char_complete_adjustment_value_changed(self, _widget):
+    def on_min_char_complete_adjustment_value_changed(
+            self, _widget: Gtk.SpinButton) -> None:
         '''
         The value for the mininum number of characters before
         completion is attempted has been changed.
@@ -2500,7 +2512,8 @@ class SetupUI(Gtk.Window):
             self._min_char_complete_adjustment.get_value(),
             update_gsettings=True)
 
-    def on_debug_level_adjustment_value_changed(self, _widget):
+    def on_debug_level_adjustment_value_changed(
+            self, _widget: Gtk.SpinButton) -> None:
         '''
         The value for the debug level has been changed.
         '''
@@ -2508,17 +2521,19 @@ class SetupUI(Gtk.Window):
             self._debug_level_adjustment.get_value(),
             update_gsettings=True)
 
-    def on_dictionary_to_add_selected(self, _listbox, listbox_row):
+    def on_dictionary_to_add_selected(
+            self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
         '''
         Signal handler for selecting a dictionary to add
 
         :param _listbox: The list box used to select the dictionary to add
-        :type _listbox: Gtk.ListBox object
         :param listbox_row: A row containing a dictionary name
-        :type listbox_row: Gtk.ListBoxRow object
         '''
         index = listbox_row.get_index()
         name = self._dictionaries_add_listbox_dictionary_names[index]
+        if self._dictionaries_add_popover is None:
+            LOGGER.debug('self._dictionaries_add_popover is None')
+            return
         if GTK_VERSION >= (3, 22, 0):
             self._dictionaries_add_popover.popdown()
         self._dictionaries_add_popover.hide()
@@ -2532,7 +2547,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox.select_row(
             self._dictionaries_listbox.get_row_at_index(0))
 
-    def _fill_dictionaries_add_listbox(self, filter_text):
+    def _fill_dictionaries_add_listbox(self, filter_text: str) -> None:
         '''
         Fill the listbox of dictionaries to choose from
 
@@ -2543,6 +2558,9 @@ class SetupUI(Gtk.Window):
         :type filter_text: String
         '''
         self._dictionaries_add_listbox_dictionary_names = []
+        if self._dictionaries_add_popover_scroll is None:
+            LOGGER.debug('self._dictionaries_add_popover_scroll is None')
+            return
         for child in self._dictionaries_add_popover_scroll.get_children():
             self._dictionaries_add_popover_scroll.remove(child)
         self._dictionaries_add_listbox = Gtk.ListBox()
@@ -2600,17 +2618,17 @@ class SetupUI(Gtk.Window):
             self._dictionaries_add_listbox.insert(label, -1)
         self._dictionaries_add_popover.show_all()
 
-    def on_dictionaries_search_entry_changed(self, search_entry):
+    def on_dictionaries_search_entry_changed(
+            self, search_entry: Gtk.SearchEntry) -> None:
         '''
         Signal handler for changed text in the dictionaries search entry
 
         :param search_entry: The search entry
-        :type search_entry: Gtk.SearchEntry object
         '''
         filter_text = search_entry.get_text()
         self._fill_dictionaries_add_listbox(filter_text)
 
-    def on_dictionaries_add_button_clicked(self, *_args):
+    def on_dictionaries_add_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “add” button to add another
         dictionary has been clicked.
@@ -2630,6 +2648,9 @@ class SetupUI(Gtk.Window):
                 message_type=Gtk.MessageType.ERROR)
             return
         self._dictionaries_add_popover = Gtk.Popover()
+        if self._dictionaries_add_popover is None:
+            LOGGER.debug('self._dictionaries_add_popover is None')
+            return
         self._dictionaries_add_popover.set_relative_to(
             self._dictionaries_add_button)
         self._dictionaries_add_popover.set_position(Gtk.PositionType.RIGHT)
@@ -2693,7 +2714,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox_selected_dictionary_name = ''
         self._dictionaries_listbox.unselect_all()
 
-    def on_dictionaries_up_button_clicked(self, *_args):
+    def on_dictionaries_up_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “up” button for a dictionary
         has been clicked.
@@ -2714,10 +2735,13 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox_selected_dictionary_index = index - 1
         self._dictionaries_listbox_selected_dictionary_name = (
             self._dictionary_names[index - 1])
+        if self._dictionaries_listbox is None:
+            LOGGER.debug('self._dictionaries_listbox is None')
+            return
         self._dictionaries_listbox.select_row(
             self._dictionaries_listbox.get_row_at_index(index - 1))
 
-    def on_dictionaries_down_button_clicked(self, *_args):
+    def on_dictionaries_down_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “down” button for a dictionary
         has been clicked.
@@ -2738,10 +2762,13 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox_selected_dictionary_index = index + 1
         self._dictionaries_listbox_selected_dictionary_name = (
             self._dictionary_names[index + 1])
+        if self._dictionaries_listbox is None:
+            LOGGER.debug('self._dictionaries_listbox is None')
+            return
         self._dictionaries_listbox.select_row(
             self._dictionaries_listbox.get_row_at_index(index + 1))
 
-    def on_install_missing_dictionaries(self, *_args):
+    def on_install_missing_dictionaries(self, *_args) -> None:
         '''
         Signal handler called when the “Install missing dictionaries”
         button is clicked.
@@ -2778,7 +2805,7 @@ class SetupUI(Gtk.Window):
                 'dictionaryinstalltimestamp',
                 GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
 
-    def on_dictionaries_default_button_clicked(self, *_args):
+    def on_dictionaries_default_button_clicked(self, *_args) -> None:
         '''Signal handler called when the “Set to default” button for the
         dictionaries is clicked.
 
@@ -2788,14 +2815,13 @@ class SetupUI(Gtk.Window):
         self.set_dictionary_names(itb_util.get_default_dictionaries(
             locale.getlocale(category=locale.LC_CTYPE)[0]))
 
-    def on_dictionary_selected(self, _listbox, listbox_row):
+    def on_dictionary_selected(
+            self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
         '''
         Signal handler called when a dictionary is selected
 
         :param _listbox: The listbox used to select dictionaries
-        :type _listbox: Gtk.ListBox object
         :param listbox_row: A row containing the dictionary name
-        :type listbox_row: Gtk.ListBoxRow object
         '''
         if listbox_row:
             index = listbox_row.get_index()
@@ -2814,18 +2840,20 @@ class SetupUI(Gtk.Window):
             self._dictionaries_up_button.set_sensitive(False)
             self._dictionaries_down_button.set_sensitive(False)
 
-    def on_input_method_to_add_selected(self, _listbox, listbox_row):
+    def on_input_method_to_add_selected(
+            self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
         '''
         Signal handler for selecting an input method to add
 
         :param _listbox: The list box used to select
                               the input method to add
-        :type _listbox: Gtk.ListBox object
         :param listbox_row: A row containing an input method name
-        :type listbox_row: Gtk.ListBoxRow object
         '''
         index = listbox_row.get_index()
         ime = self._input_methods_add_listbox_imes[index]
+        if self._input_methods_add_popover is None:
+            LOGGER.debug('self._input_methods_add_popover is None')
+            return
         if GTK_VERSION >= (3, 22, 0):
             self._input_methods_add_popover.popdown()
         self._input_methods_add_popover.hide()
@@ -2838,7 +2866,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_listbox.select_row(
             self._input_methods_listbox.get_row_at_index(0))
 
-    def _fill_input_methods_add_listbox(self, filter_text):
+    def _fill_input_methods_add_listbox(self, filter_text: str) -> None:
         '''
         Fill the listbox of input methods to choose from
 
@@ -2846,9 +2874,11 @@ class SetupUI(Gtk.Window):
                             listed. Only input methods which contain
                             the filter text as a substring
                             (ignoring case and spaces) are listed.
-        :type filter_text: String
         '''
         self._input_methods_add_listbox_imes = []
+        if self._input_methods_add_popover_scroll is None:
+            LOGGER.debug('self._input_methods_add_popover_scroll is None')
+            return
         for child in self._input_methods_add_popover_scroll.get_children():
             self._input_methods_add_popover_scroll.remove(child)
         self._input_methods_add_listbox = Gtk.ListBox()
@@ -2883,17 +2913,17 @@ class SetupUI(Gtk.Window):
             self._input_methods_add_listbox.insert(label, -1)
         self._input_methods_add_popover.show_all()
 
-    def on_input_methods_search_entry_changed(self, search_entry):
+    def on_input_methods_search_entry_changed(
+            self, search_entry: Gtk.SearchEntry) -> None:
         '''
         Signal handler for changed text in the input methods search entry
 
         :param search_entry: The search entry
-        :type search_entry: Gtk.SearchEntry object
         '''
         filter_text = search_entry.get_text()
         self._fill_input_methods_add_listbox(filter_text)
 
-    def on_input_methods_add_button_clicked(self, *_args):
+    def on_input_methods_add_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “add” button to add another
         input method has been clicked.
@@ -2912,6 +2942,9 @@ class SetupUI(Gtk.Window):
                 message_type=Gtk.MessageType.ERROR)
             return
         self._input_methods_add_popover = Gtk.Popover()
+        if self._input_methods_add_popover is None:
+            LOGGER.debug('self._input_methods_add_popover is None')
+            return
         self._input_methods_add_popover.set_relative_to(
             self._input_methods_add_button)
         self._input_methods_add_popover.set_position(Gtk.PositionType.RIGHT)
@@ -2953,7 +2986,7 @@ class SetupUI(Gtk.Window):
             self._input_methods_add_popover.popup()
         self._input_methods_add_popover.show_all()
 
-    def on_input_methods_remove_button_clicked(self, *_args):
+    def on_input_methods_remove_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “remove” button for
         an input method has been clicked.
@@ -2973,9 +3006,12 @@ class SetupUI(Gtk.Window):
         self.set_current_imes(current_imes, update_gsettings=True)
         self._input_methods_listbox_selected_ime_index = -1
         self._input_methods_listbox_selected_ime_name = ''
+        if self._input_methods_listbox is None:
+            LOGGER.debug('self._input_methods_listbox is None')
+            return
         self._input_methods_listbox.unselect_all()
 
-    def on_input_methods_up_button_clicked(self, *_args):
+    def on_input_methods_up_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “up” button for an input method
         has been clicked.
@@ -2996,10 +3032,13 @@ class SetupUI(Gtk.Window):
         self._input_methods_listbox_selected_ime_index = index - 1
         self._input_methods_listbox_selected_ime_name = (
             self._current_imes[index - 1])
+        if self._input_methods_listbox is None:
+            LOGGER.debug('self._input_methods_listbox is None')
+            return
         self._input_methods_listbox.select_row(
             self._input_methods_listbox.get_row_at_index(index - 1))
 
-    def on_input_methods_down_button_clicked(self, *_args):
+    def on_input_methods_down_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “down” button for an input method
         has been clicked.
@@ -3020,10 +3059,13 @@ class SetupUI(Gtk.Window):
         self._input_methods_listbox_selected_ime_index = index + 1
         self._input_methods_listbox_selected_ime_name = (
             self._current_imes[index + 1])
+        if self._input_methods_listbox is None:
+            LOGGER.debug('self._input_methods_listbox is None')
+            return
         self._input_methods_listbox.select_row(
             self._input_methods_listbox.get_row_at_index(index + 1))
 
-    def on_input_methods_help_button_clicked(self, _widget):
+    def on_input_methods_help_button_clicked(self, _widget) -> None:
         '''
         Show a help window for the input method selected in the
         listbox.
@@ -3031,16 +3073,19 @@ class SetupUI(Gtk.Window):
         if not self._input_methods_listbox_selected_ime_name:
             return
         ime = self._input_methods_listbox_selected_ime_name
-        path = M17N_DB_INFO.get_path(ime)
-        title = M17N_DB_INFO.get_title(ime)
-        description = M17N_DB_INFO.get_description(ime)
-        content = M17N_DB_INFO.get_content(ime)
+        if not M17N_DB_INFO is None:
+            path = M17N_DB_INFO.get_path(ime)
+            title = M17N_DB_INFO.get_title(ime)
+            description = M17N_DB_INFO.get_description(ime)
+            content = M17N_DB_INFO.get_content(ime)
         window_title = ime
         if title:
             window_title += '   ' + title
         if path:
             window_title += '   ' + path
-        window_contents = description
+        window_contents = ''
+        if description:
+            window_contents = description
         if content:
             window_contents += (
                 '\n\n'
@@ -3058,22 +3103,22 @@ class SetupUI(Gtk.Window):
             title=window_title,
             contents=window_contents)
 
-    def on_input_methods_default_button_clicked(self, *_args):
-        '''Signal handler called when the “Set to default” button for the input methods is clicked.
+    def on_input_methods_default_button_clicked(self, *_args) -> None:
+        '''Signal handler called when the “Set to default”
+        button for the input methods is clicked.
 
         Sets the input methods to the default for the current locale.
         '''
         self.set_current_imes(itb_util.get_default_input_methods(
             locale.getlocale(category=locale.LC_CTYPE)[0]))
 
-    def on_input_method_selected(self, _listbox, listbox_row):
+    def on_input_method_selected(
+            self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
         '''
         Signal handler called when an input method is selected
 
         :param _listbox: The listbox used to select input methods
-        :type _listbox: Gtk.ListBox object
         :param listbox_row: A row containing the input method name
-        :type listbox_row: Gtk.ListBoxRow object
         '''
         if listbox_row:
             index = listbox_row.get_index()
@@ -3095,7 +3140,7 @@ class SetupUI(Gtk.Window):
             self._input_methods_down_button.set_sensitive(False)
             self._input_methods_help_button.set_sensitive(False)
 
-    def on_shortcut_clear_clicked(self, _widget):
+    def on_shortcut_clear_clicked(self, _widget) -> None:
         '''
         The button to clear the entry fields for defining
         a custom shortcut has been clicked.
@@ -3104,7 +3149,7 @@ class SetupUI(Gtk.Window):
         self._shortcut_expansion_entry.set_text('')
         self._shortcut_treeview.get_selection().unselect_all()
 
-    def on_shortcut_delete_clicked(self, _widget):
+    def on_shortcut_delete_clicked(self, _widget) -> None:
         '''
         The button to delete a custom shortcut has been clicked.
         '''
@@ -3129,7 +3174,7 @@ class SetupUI(Gtk.Window):
         self._shortcut_expansion_entry.set_text('')
         self._shortcut_treeview.get_selection().unselect_all()
 
-    def on_shortcut_add_clicked(self, _widget):
+    def on_shortcut_add_clicked(self, _widget) -> None:
         '''
         The button to add a custom shortcut has been clicked.
         '''
@@ -3160,7 +3205,7 @@ class SetupUI(Gtk.Window):
             self._shortcut_expansion_entry.set_text('')
             self._shortcut_treeview.get_selection().unselect_all()
 
-    def on_shortcut_selected(self, selection):
+    def on_shortcut_selected(self, selection: Gtk.TreeSelection) -> None:
         '''
         A row in the list of shortcuts has been selected.
         '''
@@ -3172,7 +3217,10 @@ class SetupUI(Gtk.Window):
             self._shortcut_expansion_entry.set_text(shortcut_expansion)
 
     def on_keybindings_treeview_row_activated(
-            self, _treeview, treepath, _treeviewcolumn):
+            self,
+            _treeview: Gtk.TreeView,
+            treepath: Gtk.TreePath,
+            _treeviewcolumn: Gtk.TreeViewColumn) -> None:
         '''
         A row in the treeview listing the key bindings has been activated.
 
@@ -3200,7 +3248,8 @@ class SetupUI(Gtk.Window):
             return
         self._create_and_show_keybindings_edit_popover()
 
-    def on_keybindings_treeview_row_selected(self, selection):
+    def on_keybindings_treeview_row_selected(
+            self, selection: Gtk.TreeSelection) -> None:
         '''
         A row in the treeview listing the key bindings has been selected.
         '''
@@ -3215,26 +3264,29 @@ class SetupUI(Gtk.Window):
             self._keybindings_default_button.set_sensitive(False)
             self._keybindings_edit_button.set_sensitive(False)
 
-    def on_keybindings_edit_listbox_row_selected(self, _listbox, listbox_row):
+    def on_keybindings_edit_listbox_row_selected(
+            self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
         '''
         Signal handler for selecting one of the key bindings
         for a certain command
 
         :param _listbox: The list box used to select a key binding
-        :type _listbox: Gtk.ListBox object
         :param listbox_row: A row containing a key binding
-        :type listbox_row: Gtk.ListBoxRow object
         '''
         if  listbox_row:
             self._keybindings_edit_popover_selected_keybinding = (
                 listbox_row.get_child().get_text().split(' ')[0])
-            self._keybindings_edit_popover_remove_button.set_sensitive(True)
+            if self._keybindings_edit_popover_remove_button:
+                self._keybindings_edit_popover_remove_button.set_sensitive(
+                    True)
         else:
             # all rows have been unselected
             self._keybindings_edit_popover_selected_keybinding = ''
-            self._keybindings_edit_popover_remove_button.set_sensitive(False)
+            if self._keybindings_edit_popover_remove_button:
+                self._keybindings_edit_popover_remove_button.set_sensitive(
+                    False)
 
-    def on_keybindings_edit_popover_add_button_clicked(self, *_args):
+    def on_keybindings_edit_popover_add_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “Add” button to add
         a key binding has been clicked.
@@ -3252,7 +3304,7 @@ class SetupUI(Gtk.Window):
                 self._fill_keybindings_edit_popover_listbox()
                 self.set_keybindings(self._keybindings)
 
-    def on_keybindings_edit_popover_remove_button_clicked(self, *_args):
+    def on_keybindings_edit_popover_remove_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “Remove” button to remove
         a key binding has been clicked.
@@ -3265,7 +3317,8 @@ class SetupUI(Gtk.Window):
             self._fill_keybindings_edit_popover_listbox()
             self.set_keybindings(self._keybindings)
 
-    def on_keybindings_edit_popover_default_button_clicked(self, *_args):
+    def on_keybindings_edit_popover_default_button_clicked(
+            self, *_args) -> None:
         '''
         Signal handler called when the “Default” button to set
         the keybindings to the default has been clicked.
@@ -3279,11 +3332,14 @@ class SetupUI(Gtk.Window):
             self._fill_keybindings_edit_popover_listbox()
             self.set_keybindings(new_keybindings)
 
-    def _fill_keybindings_edit_popover_listbox(self):
+    def _fill_keybindings_edit_popover_listbox(self) -> None:
         '''
         Fill the edit listbox to with the key bindings of the currently
         selected command
         '''
+        if self._keybindings_edit_popover_scroll is None:
+            LOGGER.debug('self._keybindings_edit_popover_scroll is None')
+            return
         for child in self._keybindings_edit_popover_scroll.get_children():
             self._keybindings_edit_popover_scroll.remove(child)
         self._keybindings_edit_popover_listbox = Gtk.ListBox()
@@ -3311,11 +3367,14 @@ class SetupUI(Gtk.Window):
         self._keybindings_edit_popover_remove_button.set_sensitive(False)
         self._keybindings_edit_popover_listbox.show_all()
 
-    def _create_and_show_keybindings_edit_popover(self):
+    def _create_and_show_keybindings_edit_popover(self) -> None:
         '''
         Create and show the popover to edit the key bindings for a command
         '''
         self._keybindings_edit_popover = Gtk.Popover()
+        if self._keybindings_edit_popover is None:
+            LOGGER.debug('self._keybindings_edit_popover is None')
+            return
         self._keybindings_edit_popover.set_relative_to(
             self._keybindings_edit_button)
         self._keybindings_edit_popover.set_position(Gtk.PositionType.RIGHT)
@@ -3398,14 +3457,14 @@ class SetupUI(Gtk.Window):
             self._keybindings_edit_popover.popup()
         self._keybindings_edit_popover.show_all()
 
-    def on_keybindings_edit_button_clicked(self, *_args):
+    def on_keybindings_edit_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “edit” button to edit the
         key bindings for a command has been clicked.
         '''
         self._create_and_show_keybindings_edit_popover()
 
-    def on_keybindings_default_button_clicked(self, *_args):
+    def on_keybindings_default_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “Set to default” button to reset the
         key bindings for a command to the default has been clicked.
@@ -3418,7 +3477,7 @@ class SetupUI(Gtk.Window):
             new_keybindings[command] = default_keybindings[command]
             self.set_keybindings(new_keybindings)
 
-    def on_keybindings_all_default_button_clicked(self, *_args):
+    def on_keybindings_all_default_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “Set all to default” button to reset the
         all key bindings top their defaults has been clicked.
@@ -3438,7 +3497,7 @@ class SetupUI(Gtk.Window):
             self.set_keybindings(default_keybindings)
         self._keybindings_all_default_button.set_sensitive(True)
 
-    def on_learn_from_file_clicked(self, _widget):
+    def on_learn_from_file_clicked(self, _widget: Gtk.Button) -> None:
         '''
         The button to learn from a user supplied text file
         has been clicked.
@@ -3480,7 +3539,7 @@ class SetupUI(Gtk.Window):
             dialog.destroy()
         self._learn_from_file_button.set_sensitive(True)
 
-    def on_delete_learned_data_clicked(self, _widget):
+    def on_delete_learned_data_clicked(self, _widget: Gtk.Button) -> None:
         '''
         The button requesting to delete all data learned from
         user input or text files has been clicked.
@@ -3503,17 +3562,18 @@ class SetupUI(Gtk.Window):
             self.tabsqlitedb.remove_all_phrases()
         self._delete_learned_data_button.set_sensitive(True)
 
-    def set_qt_im_module_workaround(self, mode, update_gsettings=True):
+    def set_qt_im_module_workaround(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether the workaround for the qt im module is used or not
 
         :param mode: Whether to use the workaround for the qt im module or not
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -3527,17 +3587,18 @@ class SetupUI(Gtk.Window):
         else:
             self._qt_im_module_workaround_checkbutton.set_active(mode)
 
-    def set_arrow_keys_reopen_preedit(self, mode, update_gsettings=True):
+    def set_arrow_keys_reopen_preedit(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether the arrow keys are allowed to reopen a preëdit
 
         :param mode: Whether arrow keys can reopen a preëdit
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -3551,17 +3612,18 @@ class SetupUI(Gtk.Window):
         else:
             self._arrow_keys_reopen_preedit_checkbutton.set_active(mode)
 
-    def set_emoji_prediction_mode(self, mode, update_gsettings=True):
+    def set_emoji_prediction_mode(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the emoji prediction mode
 
         :param mode: Whether to switch emoji prediction on or off
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -3575,18 +3637,19 @@ class SetupUI(Gtk.Window):
         else:
             self._emoji_predictions_checkbutton.set_active(mode)
 
-    def set_off_the_record_mode(self, mode, update_gsettings=True):
+    def set_off_the_record_mode(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Off the record” mode
 
         :param mode: Whether to prevent saving input to the
                      user database or not
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -3600,19 +3663,19 @@ class SetupUI(Gtk.Window):
         else:
             self._off_the_record_checkbutton.set_active(mode)
 
-    def set_auto_commit_characters(self, auto_commit_characters,
-                                   update_gsettings=True):
+    def set_auto_commit_characters(
+            self,
+            auto_commit_characters: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the auto commit characters
 
         :param auto_commit_characters: The characters which trigger a commit
                                        with an extra space
-        :type auto_commit_characters: string
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)',
@@ -3628,18 +3691,19 @@ class SetupUI(Gtk.Window):
             self._auto_commit_characters_entry.set_text(
                 self._auto_commit_characters)
 
-    def set_google_application_credentials(self, path, update_gsettings=True):
+    def set_google_application_credentials(
+            self,
+            path: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the path of the Google application credentials file
 
         :param path: Full path of the Google application credentials
                      .json file.
-        :type path: string
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', path, update_gsettings)
@@ -3654,17 +3718,18 @@ class SetupUI(Gtk.Window):
             self._google_application_credentials_button_label.set_text(
                 self._google_application_credentials)
 
-    def set_color_preedit_spellcheck(self, mode, update_gsettings=True):
+    def set_color_preedit_spellcheck(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to do spellchecking on the contents of the preedit
 
         :param mode: Whether to do spellchecking on the contents of the preedit
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -3680,11 +3745,12 @@ class SetupUI(Gtk.Window):
             self._color_preedit_spellcheck_checkbutton.set_active(mode)
 
     def set_color_preedit_spellcheck_string(
-            self, color_string, update_gsettings=True):
+            self,
+            color_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the color to indicate spelling errors in the preedit
 
         :param color_string: The color to indicate spelling errors in the preedit
-        :type color_string: String
                             - Standard name from the X11 rgb.txt
                             - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
                                          or ”#rrrrggggbbbb”
@@ -3695,7 +3761,6 @@ class SetupUI(Gtk.Window):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', color_string, update_gsettings)
@@ -3711,17 +3776,18 @@ class SetupUI(Gtk.Window):
             gdk_rgba.parse(color_string)
             self._color_preedit_spellcheck_rgba_colorbutton.set_rgba(gdk_rgba)
 
-    def set_color_inline_completion(self, mode, update_gsettings=True):
+    def set_color_inline_completion(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use color for inline completion
 
         :param mode: Whether to use color for inline completion
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -3737,11 +3803,12 @@ class SetupUI(Gtk.Window):
             self._color_inline_completion_checkbutton.set_active(mode)
 
     def set_color_inline_completion_string(
-            self, color_string, update_gsettings=True):
+            self,
+            color_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the color for inline completion
 
         :param color_string: The color for inline completion
-        :type color_string: String
                             - Standard name from the X11 rgb.txt
                             - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
                                          or ”#rrrrggggbbbb”
@@ -3752,7 +3819,6 @@ class SetupUI(Gtk.Window):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', color_string, update_gsettings)
@@ -3768,17 +3834,18 @@ class SetupUI(Gtk.Window):
             gdk_rgba.parse(color_string)
             self._color_inline_completion_rgba_colorbutton.set_rgba(gdk_rgba)
 
-    def set_color_userdb(self, mode, update_gsettings=True):
+    def set_color_userdb(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use color for user database suggestions
 
         :param mode: Whether to use color for user database suggestions
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -3793,11 +3860,13 @@ class SetupUI(Gtk.Window):
         else:
             self._color_userdb_checkbutton.set_active(mode)
 
-    def set_color_userdb_string(self, color_string, update_gsettings=True):
+    def set_color_userdb_string(
+            self,
+            color_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the color for user database suggestions
 
         :param color_string: The color for user database suggestions
-        :type color_string: String
                             - Standard name from the X11 rgb.txt
                             - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
                                          or ”#rrrrggggbbbb”
@@ -3808,7 +3877,6 @@ class SetupUI(Gtk.Window):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', color_string, update_gsettings)
@@ -3824,17 +3892,18 @@ class SetupUI(Gtk.Window):
             gdk_rgba.parse(color_string)
             self._color_userdb_rgba_colorbutton.set_rgba(gdk_rgba)
 
-    def set_color_spellcheck(self, mode, update_gsettings=True):
+    def set_color_spellcheck(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use color for spellchecking suggestions
 
         :param mode: Whether to use color for spellchecking suggestions
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -3849,11 +3918,13 @@ class SetupUI(Gtk.Window):
         else:
             self._color_spellcheck_checkbutton.set_active(mode)
 
-    def set_color_spellcheck_string(self, color_string, update_gsettings=True):
+    def set_color_spellcheck_string(
+            self,
+            color_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the color for spellchecking suggestions
 
         :param color_string: The color for spellchecking suggestions
-        :type color_string: String
                             - Standard name from the X11 rgb.txt
                             - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
                                          or ”#rrrrggggbbbb”
@@ -3864,7 +3935,6 @@ class SetupUI(Gtk.Window):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', color_string, update_gsettings)
@@ -3880,17 +3950,18 @@ class SetupUI(Gtk.Window):
             gdk_rgba.parse(color_string)
             self._color_spellcheck_rgba_colorbutton.set_rgba(gdk_rgba)
 
-    def set_color_dictionary(self, mode, update_gsettings=True):
+    def set_color_dictionary(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use color for dictionary suggestions
 
         :param mode: Whether to use color for dictionary suggestions
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -3905,11 +3976,13 @@ class SetupUI(Gtk.Window):
         else:
             self._color_dictionary_checkbutton.set_active(mode)
 
-    def set_color_dictionary_string(self, color_string, update_gsettings=True):
+    def set_color_dictionary_string(
+            self,
+            color_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the color for dictionary suggestions
 
         :param color_string: The color for dictionary suggestions
-        :type color_string: String
                             - Standard name from the X11 rgb.txt
                             - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
                                          or ”#rrrrggggbbbb”
@@ -3920,7 +3993,6 @@ class SetupUI(Gtk.Window):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', color_string, update_gsettings)
@@ -3936,17 +4008,17 @@ class SetupUI(Gtk.Window):
             gdk_rgba.parse(color_string)
             self._color_dictionary_rgba_colorbutton.set_rgba(gdk_rgba)
 
-    def set_label_userdb(self, mode, update_gsettings=True):
+    def set_label_userdb(
+            self, mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use a label for user database
 
         :param mode: Whether to use a label for user database suggestions
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -3960,17 +4032,18 @@ class SetupUI(Gtk.Window):
         else:
             self._label_userdb_checkbutton.set_active(mode)
 
-    def set_label_userdb_string(self, label_string, update_gsettings=True):
+    def set_label_userdb_string(
+            self,
+            label_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the label for user database suggestions
 
         :param label_string: The label for user database suggestions
-        :type label_string: String
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', label_string, update_gsettings)
@@ -3985,17 +4058,18 @@ class SetupUI(Gtk.Window):
             self._label_userdb_entry.set_text(
                 self._label_userdb_string)
 
-    def set_label_spellcheck(self, mode, update_gsettings=True):
+    def set_label_spellcheck(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use a label for spellchecking suggestions
 
         :param mode: Whether to use a label for spellchecking suggestions
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -4009,7 +4083,10 @@ class SetupUI(Gtk.Window):
         else:
             self._label_spellcheck_checkbutton.set_active(mode)
 
-    def set_label_spellcheck_string(self, label_string, update_gsettings=True):
+    def set_label_spellcheck_string(
+            self,
+            label_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the label for spellchecking suggestions
 
         :param label_string: The label for spellchecking suggestions
@@ -4034,17 +4111,18 @@ class SetupUI(Gtk.Window):
             self._label_spellcheck_entry.set_text(
                 self._label_spellcheck_string)
 
-    def set_label_dictionary(self, mode, update_gsettings=True):
+    def set_label_dictionary(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use a label for dictionary suggestions
 
         :param mode: Whether to use a label for dictionary suggestions
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -4058,17 +4136,18 @@ class SetupUI(Gtk.Window):
         else:
             self._label_dictionary_checkbutton.set_active(mode)
 
-    def set_label_dictionary_string(self, label_string, update_gsettings=True):
+    def set_label_dictionary_string(
+            self,
+            label_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the label for dictionary suggestions
 
         :param label_string: The label for dictionary suggestions
-        :type label_string: String
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', label_string, update_gsettings)
@@ -4083,17 +4162,18 @@ class SetupUI(Gtk.Window):
             self._label_dictionary_entry.set_text(
                 self._label_dictionary_string)
 
-    def set_label_busy(self, mode, update_gsettings=True):
+    def set_label_busy(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use a label to indicate busy state
 
         :param mode: Whether to use a label to indicate busy state
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -4107,17 +4187,18 @@ class SetupUI(Gtk.Window):
         else:
             self._label_busy_checkbutton.set_active(mode)
 
-    def set_label_busy_string(self, label_string, update_gsettings=True):
+    def set_label_busy_string(
+            self,
+            label_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the label used to indicate busy state
 
         :param label_string: The label to indicate busy state
-        :type label_string: String
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', label_string, update_gsettings)
@@ -4132,17 +4213,18 @@ class SetupUI(Gtk.Window):
             self._label_busy_entry.set_text(
                 self._label_busy_string)
 
-    def set_tab_enable(self, mode, update_gsettings=True):
+    def set_tab_enable(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Tab enable” mode
 
         :param mode: Whether to show a candidate list only when typing Tab
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -4156,18 +4238,19 @@ class SetupUI(Gtk.Window):
         else:
             self._tab_enable_checkbutton.set_active(mode)
 
-    def set_inline_completion(self, mode, update_gsettings=True):
+    def set_inline_completion(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Use inline completion” mode
 
         :param mode: Whether a completion is first shown inline in the preëdit
                      instead of using a combobox to show a candidate list.
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -4181,17 +4264,18 @@ class SetupUI(Gtk.Window):
         else:
             self._inline_completion_checkbutton.set_active(mode)
 
-    def set_auto_capitalize(self, mode, update_gsettings=True):
+    def set_auto_capitalize(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Auto capitalize” mode
 
         :param mode: Whether to automatically capitalize after punctuation.
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -4205,18 +4289,19 @@ class SetupUI(Gtk.Window):
         else:
             self._inline_completion_checkbutton.set_active(mode)
 
-    def set_remember_last_used_preedit_ime(self, mode, update_gsettings=True):
+    def set_remember_last_used_preedit_ime(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Remember last used preëdit ime” mode
 
         :param mode: Whether to remember the input method used last for
                      the preëdit
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -4230,17 +4315,19 @@ class SetupUI(Gtk.Window):
         else:
             self._remember_last_used_preedit_ime_checkbutton.set_active(mode)
 
-    def set_page_size(self, page_size, update_gsettings=True):
+    def set_page_size(
+            self,
+            page_size: Union[int, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the page size of the lookup table
 
         :param page_size: The page size of the lookup table
-        :type mode: integer >= 1 and <= 9
+                          1 <= page_size <= 9
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', page_size, update_gsettings)
@@ -4255,17 +4342,19 @@ class SetupUI(Gtk.Window):
             else:
                 self._page_size_adjustment.set_value(int(page_size))
 
-    def set_lookup_table_orientation(self, orientation, update_gsettings=True):
+    def set_lookup_table_orientation(
+            self,
+            orientation: Union[int, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the page size of the lookup table
 
         :param orientation: The orientation of the lookup table
-        :type orientation: integer >= 0 and <= 2
+                            0 <= orientation <= 2
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', orientation, update_gsettings)
@@ -4282,11 +4371,14 @@ class SetupUI(Gtk.Window):
                     if self._lookup_table_orientation == item[1]:
                         self._lookup_table_orientation_combobox.set_active(i)
 
-    def set_preedit_underline(self, underline_mode, update_gsettings=True):
+    def set_preedit_underline(
+            self,
+            underline_mode: Union[int, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the underline mode of the preedit
 
         :param underline_mode: The underline mode to be used for the preedit
-        :type underline_mode: integer >= 0 and <= 3
+                              0 <= underline_mode <= 3
                               IBus.AttrUnderline.NONE    = 0,
                               IBus.AttrUnderline.SINGLE  = 1,
                               IBus.AttrUnderline.DOUBLE  = 2,
@@ -4297,7 +4389,6 @@ class SetupUI(Gtk.Window):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', underline_mode, update_gsettings)
@@ -4314,18 +4405,20 @@ class SetupUI(Gtk.Window):
                     if self._preedit_underline == item[1]:
                         self._preedit_underline_combobox.set_active(i)
 
-    def set_min_char_complete(self, min_char_complete, update_gsettings=True):
+    def set_min_char_complete(
+            self,
+            min_char_complete: Union[int, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the minimum number of characters to try completion
 
         :param min_char_complete: The minimum number of characters
                                   to type before completion is tried.
-        :type min_char_complete: integer >= 1 and <= 9
+                                  1 <= min_char_complete <= 9
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', min_char_complete, update_gsettings)
@@ -4341,17 +4434,19 @@ class SetupUI(Gtk.Window):
                 self._min_char_complete_adjustment.set_value(
                     int(min_char_complete))
 
-    def set_debug_level(self, debug_level, update_gsettings=True):
+    def set_debug_level(
+            self,
+            debug_level: Union[int, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the debug level
 
-        :param debug level: The debug level
-        :type debug_level: Integer >= 0 and <= 255
+        :param debug_level: The debug level
+                            0 <= debug_level <= 255
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', debug_level, update_gsettings)
@@ -4364,21 +4459,22 @@ class SetupUI(Gtk.Window):
                     'debuglevel',
                     GLib.Variant.new_int32(debug_level))
             else:
-                self._debug_level.set_value(
+                self._debug_level_adjustment.set_value(
                     int(debug_level))
 
-    def set_show_number_of_candidates(self, mode, update_gsettings=True):
+    def set_show_number_of_candidates(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Show number of candidates” mode
 
         :param mode: Whether to show the number of candidates
                      in the auxiliary text
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -4392,7 +4488,9 @@ class SetupUI(Gtk.Window):
                 GLib.Variant.new_boolean(mode))
 
     def set_show_status_info_in_auxiliary_text(
-            self, mode, update_gsettings=True):
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Show status info in auxiliary text” mode
 
         :param mode: Whether to show status information in the
@@ -4402,13 +4500,11 @@ class SetupUI(Gtk.Window):
                      off-the-record mode are on or off
                      and which input method is currently used for
                      the preëdit text.
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -4424,18 +4520,18 @@ class SetupUI(Gtk.Window):
                 mode)
 
     def set_preedit_style_only_when_lookup(
-            self, mode, update_gsettings=True):
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Use preedit style only if lookup is enabled” mode
 
         :param mode: Whether a preedit style like underlining should
                      be enabled only when lookup is enabled.
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -4449,17 +4545,18 @@ class SetupUI(Gtk.Window):
         else:
             self._preedit_style_only_when_lookup_checkbutton.set_active(mode)
 
-    def set_auto_select_candidate(self, mode, update_gsettings=True):
+    def set_auto_select_candidate(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Automatically select the best candidate” mode
 
         :param mode: Whether to automatically select the best candidate
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -4473,17 +4570,18 @@ class SetupUI(Gtk.Window):
         else:
             self._auto_select_candidate_checkbutton.set_active(mode)
 
-    def set_add_space_on_commit(self, mode, update_gsettings=True):
+    def set_add_space_on_commit(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Add a space when committing by label or mouse” mode
 
         :param mode: Whether to add a space when committing by label or mouse
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
@@ -4497,19 +4595,20 @@ class SetupUI(Gtk.Window):
         else:
             self._add_space_on_commit_checkbutton.set_active(mode)
 
-    def set_current_imes(self, imes, update_gsettings=True):
+    def set_current_imes(
+            self,
+            imes: Union[str, List[str], Any],
+            update_gsettings: bool = True) -> None:
         '''Set current list of input methods
 
         :param imes: List of input methods
-        :type imes: List of strings or string
-                    If a single string is used, it should contain
-                    the names of the input methods separated by commas.
+                     If a single string is used, it should contain
+                     the names of the input methods separated by commas.
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if isinstance(imes, str):
             imes = [x.strip() for x in imes.split(',')]
@@ -4543,20 +4642,21 @@ class SetupUI(Gtk.Window):
             self._input_methods_help_button.set_sensitive(False)
 
 
-    def set_dictionary_names(self, dictionary_names, update_gsettings=True):
+    def set_dictionary_names(
+            self,
+            dictionary_names: Union[str, List[str], Any],
+            update_gsettings: bool = True) -> None:
         '''Set current dictionary names
 
         :param dictionary_names: List of names of dictionaries to use
-        :type dictionary_names: List of strings or string
-                                If a single string is used, it should contain
-                                the names of the dictionaries separated
-                                by commas.
+                                 If a single string is used, it should contain
+                                 the names of the dictionaries separated
+                                 by commas.
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if isinstance(dictionary_names, str):
             dictionary_names = [x.strip() for x in dictionary_names.split(',')]
@@ -4586,20 +4686,21 @@ class SetupUI(Gtk.Window):
             self._dictionaries_up_button.set_sensitive(False)
             self._dictionaries_down_button.set_sensitive(False)
 
-    def set_keybindings(self, keybindings, update_gsettings=True):
+    def set_keybindings(
+            self,
+            keybindings: Union[Dict[str, List[str]], Any],
+            update_gsettings: bool = True) -> None:
         '''Set current key bindings
 
         :param keybindings: The key bindings to use
-        :type keybindings: Dictionary of key bindings for commands.
-                           Commands which do not already
-                           exist in the current key bindings dictionary
-                           will be ignored.
+                            Commands which do not already
+                            exist in the current key bindings dictionary
+                            will be ignored.
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         new_keybindings = {}
         # Get the default settings:
@@ -4643,7 +4744,7 @@ class HelpWindow(Gtk.Window):
     def __init__(self,
                  parent=None,
                  title='',
-                 contents=''):
+                 contents='') -> None:
         Gtk.Window.__init__(self, title=title)
         if parent:
             self.set_parent(parent)
@@ -4678,7 +4779,7 @@ class HelpWindow(Gtk.Window):
         self.vbox.pack_start(self.hbox, False, False, 5)
         self.show_all()
 
-    def on_close_button_clicked(self, _widget):
+    def on_close_button_clicked(self, _widget) -> None:
         '''
         Close the input method help window when the close button is clicked
         '''
@@ -4686,7 +4787,7 @@ class HelpWindow(Gtk.Window):
 
 if __name__ == '__main__':
     if _ARGS.no_debug:
-        log_handler = logging.NullHandler()
+        log_handler_null = logging.NullHandler()
     else:
         if (not os.access(
                 os.path.expanduser('~/.local/share/ibus-typing-booster'),
@@ -4694,7 +4795,7 @@ if __name__ == '__main__':
             os.system('mkdir -p ~/.local/share/ibus-typing-booster')
         logfile = os.path.expanduser(
             '~/.local/share/ibus-typing-booster/setup-debug.log')
-        log_handler = logging.handlers.TimedRotatingFileHandler(
+        log_handler_time_rotate = logging.handlers.TimedRotatingFileHandler(
             logfile,
             when='H',
             interval=6,
@@ -4707,9 +4808,9 @@ if __name__ == '__main__':
             '%(asctime)s %(filename)s '
             'line %(lineno)d %(funcName)s %(levelname)s: '
             '%(message)s')
-        log_handler.setFormatter(log_formatter)
+        log_handler_time_rotate.setFormatter(log_formatter)
         LOGGER.setLevel(logging.DEBUG)
-        LOGGER.addHandler(log_handler)
+        LOGGER.addHandler(log_handler_time_rotate)
         LOGGER.info('********** STARTING **********')
 
     # Workaround for

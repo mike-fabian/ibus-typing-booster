@@ -24,6 +24,10 @@ hunspell dictonaries.
 
 '''
 
+from typing import Dict
+from typing import Tuple
+from typing import List
+from typing import Optional
 import os
 import sys
 import unicodedata
@@ -37,18 +41,18 @@ DEBUG_LEVEL = int(0)
 IMPORT_ENCHANT_SUCCESSFUL = False
 IMPORT_HUNSPELL_SUCCESSFUL = False
 try:
-    import enchant
+    import enchant # type: ignore
     IMPORT_ENCHANT_SUCCESSFUL = True
 except (ImportError,):
     try:
-        import hunspell
+        import hunspell # type: ignore
         IMPORT_HUNSPELL_SUCCESSFUL = True
     except (ImportError,):
         pass
 
 IMPORT_LIBVOIKKO_SUCCESSFUL = False
 try:
-    import libvoikko
+    import libvoikko # type: ignore
     IMPORT_LIBVOIKKO_SUCCESSFUL = True
 except (ImportError,):
     pass
@@ -153,23 +157,23 @@ ACCENT_LANGUAGES = {
 class Dictionary:
     '''A class to hold a hunspell dictionary
     '''
-    def __init__(self, name='en_US'):
+    def __init__(self, name='en_US') -> None:
         if DEBUG_LEVEL > 1:
             LOGGER.debug('Dictionary.__init__(name=%s)\n', name)
         self.name = name
         self.language = self.name.split('_')[0]
         self.dic_path = ''
         self.encoding = 'UTF-8'
-        self.words = []
-        self.word_pairs = []
+        self.words: List[str]= []
+        self.word_pairs: List[Tuple[str, str]] = []
         self.max_word_len = 0 # maximum length of words in this dictionary
         self.enchant_dict = None
         self.pyhunspell_object = None
-        self.voikko = None
+        self.voikko: libvoikko.Voikko = None
         if self.name != 'None':
             self.load_dictionary()
 
-    def load_dictionary(self):
+    def load_dictionary(self) -> None:
         '''Load a hunspell dictionary and instantiate a
         enchant.Dict() or a hunspell.Hunspell() object.
 
@@ -225,14 +229,12 @@ class Dictionary:
                         self.name)
                     self.pyhunspell_object = None
 
-    def spellcheck_enchant(self, word):
+    def spellcheck_enchant(self, word: str) -> bool:
         '''
         Spellcheck a word using enchant
 
         :param word: The word to spellcheck
-        :type word: String
         :return: True if spelling is correct, False if not or unknown
-        :rtype: Boolean
         '''
         if not self.enchant_dict:
             return False
@@ -240,14 +242,12 @@ class Dictionary:
         # Korean, if the input is a Unicode string in NFC.
         return self.enchant_dict.check(unicodedata.normalize('NFC', word))
 
-    def spellcheck_pyhunspell(self, word):
+    def spellcheck_pyhunspell(self, word: str) -> bool:
         '''
         Spellcheck a word using pyhunspell
 
         :param word: The word to spellcheck
-        :type word: String
         :return: True if spelling is correct, False if not or unknown
-        :rtype: Boolean
         '''
         if not self.pyhunspell_object:
             return False
@@ -257,21 +257,19 @@ class Dictionary:
             unicodedata.normalize('NFC', word).encode(
                 self.encoding, 'replace'))
 
-    def spellcheck_voikko(self, word):
+    def spellcheck_voikko(self, word: str) -> bool:
         '''
         Spellcheck a word using voikko
 
         :param word: The word to spellcheck
-        :type word: String
         :return: True if spelling is correct, False if not or unknown
-        :rtype: Boolean
         '''
         if not self.voikko:
             return False
         # voikko works correctly if the input is a Unicode string in NFC.
         return self.voikko.spell(unicodedata.normalize('NFC', word))
 
-    def spellcheck(self, word):
+    def spellcheck(self, word: str) -> bool:
         '''
         Spellcheck a word using enchant, pyhunspell, or voikko
 
@@ -302,7 +300,7 @@ class Dictionary:
             return self.voikko.spell(word)
         return False
 
-    def has_spellchecking(self):
+    def has_spellchecking(self) -> bool:
         '''
         Returns wether this dictionary supports spellchecking or not
 
@@ -327,14 +325,12 @@ class Dictionary:
             return True
         return False
 
-    def spellcheck_suggest_enchant(self, word):
+    def spellcheck_suggest_enchant(self, word: str) -> List[str]:
         '''
         Return spellchecking suggestions for word using enchant
 
         :param word: The word to return spellchecking suggestions for
-        :type word: String
         :return: List of spellchecking suggestions, possibly empty.
-        :rtype: List of strings
         '''
         if not word or not self.enchant_dict:
             return []
@@ -349,14 +345,12 @@ class Dictionary:
             self.enchant_dict.suggest(unicodedata.normalize('NFC', word))
             ]
 
-    def spellcheck_suggest_pyhunspell(self, word):
+    def spellcheck_suggest_pyhunspell(self, word: str) -> List[str]:
         '''
         Return spellchecking suggestions for word using pyhunspell
 
         :param word: The word to return spellchecking suggestions for
-        :type word: String
         :return: List of spellchecking suggestions, possibly empty.
-        :rtype: List of strings
         '''
         if not word or not self.pyhunspell_object:
             return []
@@ -370,14 +364,12 @@ class Dictionary:
                     self.encoding, 'replace'))
             ]
 
-    def spellcheck_suggest_voikko(self, word):
+    def spellcheck_suggest_voikko(self, word: str) -> List[str]:
         '''
         Return spellchecking suggestions for word using voikko
 
         :param word: The word to return spellchecking suggestions for
-        :type word: String
         :return: List of spellchecking suggestions, possibly empty.
-        :rtype: List of strings
         '''
         if not word:
             return []
@@ -388,7 +380,7 @@ class Dictionary:
             self.voikko.suggest(unicodedata.normalize('NFC', word))
             ]
 
-    def spellcheck_suggest(self, word):
+    def spellcheck_suggest(self, word: str) -> List[str]:
         '''
         Return spellchecking suggestions for word using enchant, pyhunspell or voikko
 
@@ -422,10 +414,10 @@ class Hunspell:
     '''A class to suggest completions or corrections
     using a list of Hunspell dictionaries
     '''
-    def __init__(self, dictionary_names=()):
+    def __init__(self, dictionary_names=()) -> None:
         global DEBUG_LEVEL
         try:
-            DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+            DEBUG_LEVEL = int(str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
         except (TypeError, ValueError):
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
@@ -435,12 +427,12 @@ class Hunspell:
                     dictionary_names)
             else:
                 LOGGER.debug('Hunspell.__init__(dictionary_names=())\n')
-        self._suggest_cache = {}
+        self._suggest_cache: Dict[str, List[Tuple[str, int]]] = {}
         self._dictionary_names = dictionary_names
-        self._dictionaries = []
+        self._dictionaries: List[Dictionary] = []
         self.init_dictionaries()
 
-    def init_dictionaries(self):
+    def init_dictionaries(self) -> None:
         '''Initialize the hunspell dictionaries
         '''
         if DEBUG_LEVEL > 1:
@@ -456,14 +448,14 @@ class Hunspell:
         for dictionary_name in self._dictionary_names:
             self._dictionaries.append(Dictionary(name=dictionary_name))
 
-    def get_dictionary_names(self):
+    def get_dictionary_names(self) -> List[str]:
         '''Returns a copy of the list of dictionary names.
 
         It is important to return a copy, we do not want to change
         the private member variable directly.'''
         return self._dictionary_names[:]
 
-    def set_dictionary_names(self, dictionary_names):
+    def set_dictionary_names(self, dictionary_names: List[str]):
         '''Sets the list of dictionary names.
 
         If the new list of dictionary names differs from the existing
@@ -490,13 +482,12 @@ class Hunspell:
             for dictionary in self._dictionaries:
                 LOGGER.debug('%s\n', dictionary.name)
 
-    def spellcheck(self, input_phrase):
+    def spellcheck(self, input_phrase: str) -> bool:
         '''
         Checks if a string is likely to be spelled correctly checking
         multiple dictionaries
 
         :param input_phrase: A string to spellcheck
-        :type input_phrase: String
         :return: True if it is more likely to be spelled correctly,
                  False if it is more likely to be spelled incorrectly.
                  In detail this means:
@@ -506,7 +497,6 @@ class Hunspell:
                      - None of the dictionaries support spellchecking
                      - Contains spaces, spellchecking cannot work
                  else False.
-        :rtype: Boolean
 
         Examples:
 
@@ -548,7 +538,7 @@ class Hunspell:
             return False
         return True
 
-    def suggest(self, input_phrase):
+    def suggest(self, input_phrase: str) -> List[Tuple[str, int]]:
         # pylint: disable=line-too-long
         '''Return completions or corrections for the input phrase
 
@@ -643,7 +633,7 @@ class Hunspell:
         # But enchant and pyhunspell want NFC as input, make a copy in NFC:
         input_phrase_nfc = unicodedata.normalize('NFC', input_phrase)
 
-        suggested_words = {}
+        suggested_words: Dict[str, int] = {}
         for dictionary in self._dictionaries:
             if dictionary.words:
                 if dictionary.word_pairs:

@@ -26,7 +26,7 @@ import re
 import codecs
 import sqlite3
 import time
-from gi.repository import Translit
+from gi.repository import Translit # type: ignore
 
 
 class LangDictTable:

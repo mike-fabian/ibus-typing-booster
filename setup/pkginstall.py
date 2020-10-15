@@ -19,8 +19,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-import gi
-from gi.repository import Gio, GLib
+import gi # type: ignore
+from gi.repository import Gio, GLib # type: ignore
 
 class InstallPkg(object):
     def __init__(self, pkg):

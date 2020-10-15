@@ -5,3 +5,4 @@ ibus-engine-typing-booster
 typing-booster.xml
 typing-booster.xml.in
 version.py
+.mypy_cache/

@@ -25,6 +25,14 @@ This file implements the ibus engine for ibus-typing-booster
 
 # “Wrong continued indentation”: pylint: disable=bad-continuation
 
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Tuple
+from typing import Union
+from typing import Optional
+from typing import Iterable
+from typing import cast
 import os
 import unicodedata
 import re
@@ -32,9 +40,9 @@ import time
 import locale
 import logging
 from gettext import dgettext
-from gi import require_version
+from gi import require_version # type: ignore
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus # type: ignore
 require_version('Gio', '2.0')
 from gi.repository import Gio
 require_version('GLib', '2.0')
@@ -45,8 +53,8 @@ import itb_emoji
 
 IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = False
 try:
-    from google.cloud import speech
-    from google.cloud.speech import enums
+    from google.cloud import speech # type: ignore
+    from google.cloud.speech import enums # type: ignore
     from google.cloud.speech import types
     IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = True
 except (ImportError,):
@@ -85,10 +93,10 @@ INPUT_MODE_FALSE_SYMBOL = '🐌'
 class TypingBoosterEngine(IBus.Engine):
     '''The IBus Engine for ibus-typing-booster'''
 
-    def __init__(self, bus, obj_path, database, unit_test=False):
+    def __init__(self, bus, obj_path, database, unit_test=False) -> None:
         global DEBUG_LEVEL
         try:
-            DEBUG_LEVEL = int(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL'))
+            DEBUG_LEVEL = int(str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
         except (TypeError, ValueError):
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
@@ -109,29 +117,30 @@ class TypingBoosterEngine(IBus.Engine):
         self._current_auxiliary_text = ''
         self._bus = bus
         self.database = database
+        self.emoji_matcher: Optional[itb_emoji.EmojiMatcher] = None
         self._setup_pid = 0
         self._gsettings = Gio.Settings(
             schema='org.freedesktop.ibus.engine.typing-booster')
         self._gsettings.connect('changed', self.on_gsettings_value_changed)
 
-        self._prop_dict = {}
-        self._sub_props_dict = {}
-        self.main_prop_list = []
-        self.emoji_prediction_mode_menu = {}
-        self.emoji_prediction_mode_properties = {}
-        self.off_the_record_mode_menu = {}
-        self.off_the_record_mode_properties = {}
-        self.input_mode_menu = {}
-        self.input_mode_properties = {}
-        self.dictionary_menu = {}
-        self.dictionary_properties = {}
-        self.dictionary_sub_properties_prop_list = []
-        self.preedit_ime_menu = {}
-        self.preedit_ime_properties = {}
-        self.preedit_ime_sub_properties_prop_list = []
-        self._setup_property = None
+        self._prop_dict: Dict[str, IBus.Property] = {}
+        self._sub_props_dict: Dict[str, IBus.PropList] = {}
+        self.main_prop_list: List[IBus.Property] = []
+        self.emoji_prediction_mode_menu: Dict[str, Any] = {}
+        self.emoji_prediction_mode_properties: Dict[str, Any]= {}
+        self.off_the_record_mode_menu: Dict[str, Any] = {}
+        self.off_the_record_mode_properties: Dict[str, Any] = {}
+        self.input_mode_menu: Dict[str, Any] = {}
+        self.input_mode_properties: Dict[str, Any] = {}
+        self.dictionary_menu: Dict[str, Any] = {}
+        self.dictionary_properties: Dict[str, Any] = {}
+        self.dictionary_sub_properties_prop_list: IBus.PropList = []
+        self.preedit_ime_menu: Dict[str, Any] = {}
+        self.preedit_ime_properties: Dict[str, Any] = {}
+        self.preedit_ime_sub_properties_prop_list: IBus.PropList = []
+        self._setup_property: Optional[IBus.Property] = None
 
-        self._current_imes = []
+        self._current_imes: List[str] = []
 
         # Between some events sent to ibus like forward_key_event(),
         # delete_surrounding_text(), commit_text(), a sleep is necessary.
@@ -344,15 +353,15 @@ class TypingBoosterEngine(IBus.Engine):
         if self._google_application_credentials is None:
             self._google_application_credentials = ''
 
-        self._keybindings = {}
-        self._hotkeys = None
+        self._keybindings: Dict[str, List[str]] = {}
+        self._hotkeys: Optional[itb_util.HotKeys] = None
         self._digits_used_in_keybindings = False
         self.set_keybindings(
             itb_util.variant_to_value(
                 self._gsettings.get_value('keybindings')),
             update_gsettings=False)
 
-        self._dictionary_names = []
+        self._dictionary_names: List[str] = []
         dictionary = itb_util.variant_to_value(
             self._gsettings.get_value('dictionary'))
         if dictionary:
@@ -427,16 +436,16 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._commit_happened_after_focus_in = False
 
-        self._prev_key = None
-        self._typed_compose_sequence = [] # A list of key values
-        self._typed_string = [] # A list of msymbols
+        self._prev_key: Optional[itb_util.KeyEvent] = None
+        self._typed_compose_sequence: List[int] = [] # A list of key values
+        self._typed_string: List[str] = [] # A list of msymbols
         self._typed_string_cursor = 0
         self._p_phrase = ''
         self._pp_phrase = ''
         self._ppp_phrase = ''
         self._new_sentence = False
-        self._transliterated_strings = {}
-        self._transliterators = {}
+        self._transliterated_strings: Dict[str, str] = {}
+        self._transliterators: Dict[str, Transliterator] = {}
         self._init_transliterators()
         # self._candidates: Array to hold candidates found in the
         #                   user database, the (hunspell) dictionaries,
@@ -465,9 +474,10 @@ class TypingBoosterEngine(IBus.Engine):
         #                        user database, False if not.
         #          spell_checking: Boolean, True if this candidate was produced
         #                          by spellchecking, False if not.
-        self._candidates = []
+        self._candidates: List[Tuple[str, int, str, bool, bool]] = []
         # a copy of self._candidates in case mode 'orig':
-        self._candidates_case_mode_orig = []
+        self._candidates_case_mode_orig: List[
+            Tuple[str, int, str, bool, bool]] = []
         self._current_case_mode = 'orig'
         # 'orig': candidates have original case.
         # 'capitalize': candidates have been converted to the first character
@@ -595,7 +605,7 @@ class TypingBoosterEngine(IBus.Engine):
             '********** Initialized and ready for input: **********')
         self._clear_input_and_update_ui()
 
-    def _get_new_lookup_table(self):
+    def _get_new_lookup_table(self) -> IBus.LookupTable:
         '''Get a new lookup table'''
         lookup_table = IBus.LookupTable()
         lookup_table.clear()
@@ -612,7 +622,7 @@ class TypingBoosterEngine(IBus.Engine):
             lookup_table.set_label(index, IBus.Text.new_from_string(label))
         return lookup_table
 
-    def _init_transliterators(self):
+    def _init_transliterators(self) -> None:
         '''Initialize the dictionary of m17n-db transliterator objects'''
         self._transliterators = {}
         for ime in self._current_imes:
@@ -632,16 +642,14 @@ class TypingBoosterEngine(IBus.Engine):
                 self._transliterators[ime] = Transliterator('NoIME')
         self._update_transliterated_strings()
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         '''Checks whether the preëdit is empty
 
         Returns True if the preëdit is empty, False if not.
-
-        :rtype: boolean
         '''
         return len(self._typed_string) == 0
 
-    def _clear_input(self):
+    def _clear_input(self) -> None:
         '''Clear all input'''
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
@@ -657,7 +665,7 @@ class TypingBoosterEngine(IBus.Engine):
         self.is_lookup_table_enabled_by_tab = False
         self.is_lookup_table_enabled_by_min_char_complete = False
 
-    def _insert_string_at_cursor(self, string_to_insert):
+    def _insert_string_at_cursor(self, string_to_insert: List[str]) -> None:
         '''Insert typed string at cursor position'''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('string_to_insert=%s', string_to_insert)
@@ -670,20 +678,20 @@ class TypingBoosterEngine(IBus.Engine):
         self._typed_string_cursor += len(string_to_insert)
         self._update_transliterated_strings()
 
-    def _remove_string_before_cursor(self):
+    def _remove_string_before_cursor(self) -> None:
         '''Remove typed string before cursor'''
         if self._typed_string_cursor > 0:
             self._typed_string = self._typed_string[self._typed_string_cursor:]
             self._typed_string_cursor = 0
             self._update_transliterated_strings()
 
-    def _remove_string_after_cursor(self):
+    def _remove_string_after_cursor(self) -> None:
         '''Remove typed string after cursor'''
         if self._typed_string_cursor < len(self._typed_string):
             self._typed_string = self._typed_string[:self._typed_string_cursor]
             self._update_transliterated_strings()
 
-    def _remove_character_before_cursor(self):
+    def _remove_character_before_cursor(self) -> None:
         '''Remove typed character before cursor'''
         if self._typed_string_cursor > 0:
             self._typed_string = (
@@ -692,7 +700,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._typed_string_cursor -= 1
             self._update_transliterated_strings()
 
-    def _remove_character_after_cursor(self):
+    def _remove_character_after_cursor(self) -> None:
         '''Remove typed character after cursor'''
         if self._typed_string_cursor < len(self._typed_string):
             self._typed_string = (
@@ -700,7 +708,7 @@ class TypingBoosterEngine(IBus.Engine):
                 +self._typed_string[self._typed_string_cursor+1:])
             self._update_transliterated_strings()
 
-    def get_caret(self):
+    def get_caret(self) -> int:
         '''
         Get caret position in preëdit string
 
@@ -758,8 +766,11 @@ class TypingBoosterEngine(IBus.Engine):
         return caret
 
     def _append_candidate_to_lookup_table(
-            self, phrase='', user_freq=0, comment='',
-            from_user_db=False, spell_checking=False):
+            self, phrase: str = '',
+            user_freq: int = 0,
+            comment: str = '',
+            from_user_db: bool = False,
+            spell_checking: bool = False) -> None:
         '''append candidate to lookup_table'''
         if not phrase:
             return
@@ -847,7 +858,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._lookup_table.append_candidate(text)
         self._lookup_table.set_cursor_visible(False)
 
-    def _update_candidates(self):
+    def _update_candidates(self) -> None:
         '''Update the list of candidates and fill the lookup table with the
         candidates
         '''
@@ -863,7 +874,7 @@ class TypingBoosterEngine(IBus.Engine):
             # empty input does not pointlessly try to find candidates.
             return
         self._candidates = []
-        phrase_frequencies = {}
+        phrase_frequencies: Dict[str, int] = {}
         self.is_lookup_table_enabled_by_min_char_complete = False
         for ime in self._current_imes:
             if self._transliterated_strings[ime]:
@@ -940,15 +951,15 @@ class TypingBoosterEngine(IBus.Engine):
                 != self._dictionary_names):
                 self.emoji_matcher = itb_emoji.EmojiMatcher(
                     languages=self._dictionary_names)
-            emoji_scores = {}
+            emoji_scores: Dict[str, Tuple[int, str]] = {}
             for ime in self._current_imes:
                 if (self._transliterated_strings[ime]
                         and ((len(self._transliterated_strings[ime])
                               >= self._min_char_complete)
                              or self._tab_enable)):
-                    emoji_candidates = self.emoji_matcher.candidates(
+                    emoji_matcher_candidates = self.emoji_matcher.candidates(
                         self._transliterated_strings[ime])
-                    for cand in emoji_candidates:
+                    for cand in emoji_matcher_candidates:
                         if (cand[0] not in emoji_scores
                                 or cand[2] > emoji_scores[cand[0]][0]):
                             emoji_scores[cand[0]] = (cand[2], cand[1])
@@ -1003,7 +1014,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._case_mode_change(mode=self._current_case_mode)
         return
 
-    def _arrow_down(self):
+    def _arrow_down(self) -> bool:
         '''Process Arrow Down Key Event
         Move Lookup Table cursor down'''
         if not self._lookup_table.cursor_visible:
@@ -1013,7 +1024,7 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _arrow_up(self):
+    def _arrow_up(self) -> bool:
         '''Process Arrow Up Key Event
         Move Lookup Table cursor up'''
         self._lookup_table.set_cursor_visible(True)
@@ -1021,7 +1032,7 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _page_down(self):
+    def _page_down(self) -> bool:
         '''Process Page Down Key Event
         Move Lookup Table page down'''
         self._lookup_table.set_cursor_visible(True)
@@ -1029,7 +1040,7 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _page_up(self):
+    def _page_up(self) -> bool:
         '''Process Page Up Key Event
         move Lookup Table page up'''
         self._lookup_table.set_cursor_visible(True)
@@ -1037,7 +1048,7 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _get_lookup_table_current_page(self):
+    def _get_lookup_table_current_page(self) -> int:
         '''
         Returns the index of the currently visible page of the lookup table.
 
@@ -1050,15 +1061,13 @@ class TypingBoosterEngine(IBus.Engine):
             self._lookup_table.get_page_size())
         return page
 
-    def _set_lookup_table_cursor_pos_in_current_page(self, index):
+    def _set_lookup_table_cursor_pos_in_current_page(self, index: int) -> bool:
         '''Sets the cursor in the lookup table to index in the current page
 
         Returns True if successful, False if not.
 
         :param index: The index in the current page of the lookup table.
                       The topmost candidate has the index 0 and the label “1”.
-        :type index: Integer
-        :rtype: Boolean
         '''
         page_size = self._lookup_table.get_page_size()
         if index < 0 or index >= page_size:
@@ -1070,7 +1079,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._lookup_table.set_cursor_pos(new_pos)
         return True
 
-    def get_string_from_lookup_table_cursor_pos(self):
+    def get_string_from_lookup_table_cursor_pos(self) -> str:
         '''
         Get the candidate at the current cursor position in the lookup
         table.
@@ -1083,7 +1092,7 @@ class TypingBoosterEngine(IBus.Engine):
             return ''
         return self._candidates[index][0]
 
-    def get_string_from_lookup_table_current_page(self, index):
+    def get_string_from_lookup_table_current_page(self, index: int) -> str:
         '''
         Get the candidate at “index” in the currently visible
         page of the lookup table. The topmost candidate
@@ -1093,7 +1102,7 @@ class TypingBoosterEngine(IBus.Engine):
             return ''
         return self.get_string_from_lookup_table_cursor_pos()
 
-    def remove_candidate_from_user_database(self, index):
+    def remove_candidate_from_user_database(self, index: int) -> bool:
         '''Remove the candidate shown at index in the candidate list
         from the user database.
 
@@ -1101,9 +1110,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         :param index: The index in the current page of the lookup table.
                       The topmost candidate has the index 0 and the label “1”.
-        :type index: Integer
         :return: True if successful, False if not.
-        :rtype: Boolean
 
         The removal is done independent of the input phrase, all
         rows in the user database for that phrase are deleted.
@@ -1175,31 +1182,31 @@ class TypingBoosterEngine(IBus.Engine):
             self.database.remove_phrase(phrase=phrase, commit=True)
         return True
 
-    def get_cursor_pos(self):
+    def get_cursor_pos(self) -> int:
         '''get lookup table cursor position'''
         return self._lookup_table.get_cursor_pos()
 
-    def get_lookup_table(self):
+    def get_lookup_table(self) -> IBus.LookupTable:
         '''Get lookup table'''
         return self._lookup_table
 
-    def set_lookup_table(self, lookup_table):
+    def set_lookup_table(self, lookup_table: IBus.LookupTable) -> None:
         '''Set lookup table'''
         self._lookup_table = lookup_table
 
-    def get_p_phrase(self):
+    def get_p_phrase(self) -> str:
         '''Get previous word'''
         return self._p_phrase
 
-    def get_pp_phrase(self):
+    def get_pp_phrase(self) -> str:
         '''Get word before previous word'''
         return self._pp_phrase
 
-    def get_ppp_phrase(self):
+    def get_ppp_phrase(self) -> str:
         '''Get 2nd word before previous word'''
         return self._ppp_phrase
 
-    def push_context(self, phrase):
+    def push_context(self, phrase: str) -> None:
         '''Pushes a word on the context stack which remembers the last three
         words typed.
         '''
@@ -1211,7 +1218,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._pp_phrase = self._p_phrase
         self._p_phrase = phrase
 
-    def clear_context(self):
+    def clear_context(self) -> None:
         '''Clears the context stack which remembers the last two words typed
         '''
         if DEBUG_LEVEL > 1:
@@ -1223,7 +1230,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._p_phrase = ''
         self._new_sentence = False
 
-    def _update_transliterated_strings(self):
+    def _update_transliterated_strings(self) -> None:
         '''Transliterates the current input (list of msymbols) for all current
         input methods and stores the results in a dictionary.
         '''
@@ -1250,29 +1257,28 @@ class TypingBoosterEngine(IBus.Engine):
                 'self._transliterated_strings=%s',
                 self._transliterated_strings)
 
-    def get_current_imes(self):
+    def get_current_imes(self) -> List[str]:
         '''Get current list of input methods
 
         It is important to return a copy, we do not want to change
         the private member variable directly.
-
-        :rtype: List of strings
         '''
         return self._current_imes[:]
 
-    def set_current_imes(self, imes, update_gsettings=True):
+    def set_current_imes(
+            self,
+            imes: Union[str, List[str], Any],
+            update_gsettings: bool = True) -> None:
         '''Set current list of input methods
 
         :param imes: List of input methods
-        :type imes: List of strings or string.
-                    If a single string is used, it should contain
-                    the names of the input methods separated by commas.
+                     If a single string is used, it should contain
+                     the names of the input methods separated by commas.
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if isinstance(imes, str):
             imes = [x.strip() for x in imes.split(',')]
@@ -1311,14 +1317,16 @@ class TypingBoosterEngine(IBus.Engine):
                 'inputmethod',
                 GLib.Variant.new_string(','.join(imes)))
 
-    def set_dictionary_names(self, dictionary_names, update_gsettings=True):
+    def set_dictionary_names(
+            self,
+            dictionary_names: Union[str, List[str], Any],
+            update_gsettings: bool = True) -> None:
         '''Set current dictionary names
 
         :param dictionary_names: List of names of dictionaries to use
-        :type dictionary_names: List of strings or string.
-                                If a single string is used, it should contain
-                                the names of the dictionaries separated
-                                by commas.
+                                 If a single string is used, it should contain
+                                 the names of the dictionaries separated
+                                 by commas.
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
@@ -1360,7 +1368,7 @@ class TypingBoosterEngine(IBus.Engine):
                 'dictionary',
                 GLib.Variant.new_string(','.join(dictionary_names)))
 
-    def get_dictionary_names(self):
+    def get_dictionary_names(self) -> List[str]:
         '''Get current list of dictionary names
 
         :rtype: list of strings
@@ -1369,17 +1377,18 @@ class TypingBoosterEngine(IBus.Engine):
         # the private member variable directly.
         return self._dictionary_names[:]
 
-    def set_keybindings(self, keybindings, update_gsettings=True):
+    def set_keybindings(
+            self,
+            keybindings: Union[Dict[str, List[str]], Any],
+            update_gsettings: bool = True) -> None:
         '''Set current key bindings
 
         :param keybindings: The key bindings to use
-        :type keybindings: Dictionary of key bindings for commands
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         new_keybindings = {}
         # Get the default settings:
@@ -1447,7 +1456,7 @@ class TypingBoosterEngine(IBus.Engine):
                 'keybindings',
                 variant_dict.end())
 
-    def get_keybindings(self):
+    def get_keybindings(self) -> Dict[str, List[str]]:
         '''Get current key bindings
 
         :rtype: Python dictionary of key bindings for commands
@@ -1456,7 +1465,7 @@ class TypingBoosterEngine(IBus.Engine):
         # the private member variable directly.
         return self._keybindings.copy()
 
-    def _update_dictionary_menu_dicts(self):
+    def _update_dictionary_menu_dicts(self) -> None:
         '''
         Update the Python dicts for the highest priority dictionary menu.
         '''
@@ -1488,7 +1497,7 @@ class TypingBoosterEngine(IBus.Engine):
             'Previous: '+ repr(self._keybindings['previous_dictionary']),
             'sub_properties': self.dictionary_properties}
 
-    def _update_preedit_ime_menu_dicts(self):
+    def _update_preedit_ime_menu_dicts(self) -> None:
         '''
         Update the dictionary for the preëdit ime menu.
         '''
@@ -1518,7 +1527,10 @@ class TypingBoosterEngine(IBus.Engine):
             'Previous: '+ repr(self._keybindings['previous_input_method']),
             'sub_properties': self.preedit_ime_properties}
 
-    def _init_or_update_property_menu_dictionary(self, menu, current_mode=0):
+    def _init_or_update_property_menu_dictionary(
+            self,
+            menu: Dict[str, Any],
+            current_mode: int = 0) -> None:
         '''
         Initialize or update the ibus property menu for
         the highest priority dictionary.
@@ -1561,7 +1573,10 @@ class TypingBoosterEngine(IBus.Engine):
             self._prop_dict[key].set_visible(visible)
             self.update_property(self._prop_dict[key]) # important!
 
-    def _init_or_update_property_menu_preedit_ime(self, menu, current_mode=0):
+    def _init_or_update_property_menu_preedit_ime(
+            self,
+            menu: Dict[str, Any],
+            current_mode: int = 0) -> None:
         '''
         Initialize or update the ibus property menu for
         the preëdit input method.
@@ -1605,7 +1620,9 @@ class TypingBoosterEngine(IBus.Engine):
             self.update_property(self._prop_dict[key]) # important!
 
     def _init_or_update_sub_properties_dictionary(
-            self, modes, current_mode=0):
+            self,
+            modes: Dict[str, Any],
+            current_mode: int = 0) -> None:
         '''
         Initialize or update the sub-properties of the property menu
         for the highest priority dictionary.
@@ -1650,7 +1667,9 @@ class TypingBoosterEngine(IBus.Engine):
                 self.update_property(self._prop_dict[mode]) # important!
 
     def _init_or_update_sub_properties_preedit_ime(
-            self, modes, current_mode=0):
+            self,
+            modes: Dict[str, Any],
+            current_mode: int = 0) -> None:
         '''
         Initialize or update the sub-properties of the property menu
         for the preëdit input method.
@@ -1694,7 +1713,10 @@ class TypingBoosterEngine(IBus.Engine):
                 self._prop_dict[mode].set_visible(visible)
                 self.update_property(self._prop_dict[mode]) # important!
 
-    def _init_or_update_property_menu(self, menu, current_mode=0):
+    def _init_or_update_property_menu(
+            self,
+            menu: Dict[str, Any],
+            current_mode: int = 0) -> None:
         '''
         Initialize or update a ibus property menu
         '''
@@ -1735,7 +1757,11 @@ class TypingBoosterEngine(IBus.Engine):
             self._prop_dict[menu_key].set_visible(visible)
             self.update_property(self._prop_dict[menu_key]) # important!
 
-    def _init_or_update_sub_properties(self, menu_key, modes, current_mode=0):
+    def _init_or_update_sub_properties(
+            self,
+            menu_key: str,
+            modes: Dict[str, Any],
+            current_mode: int = 0) -> None:
         '''
         Initialize or update the sub-properties of a property menu entry.
         '''
@@ -1779,7 +1805,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self._prop_dict[mode].set_state(state)
                 self.update_property(self._prop_dict[mode]) # important!
 
-    def _init_properties(self):
+    def _init_properties(self) -> None:
         '''
         Initialize the ibus property menus
         '''
@@ -1820,7 +1846,9 @@ class TypingBoosterEngine(IBus.Engine):
         self.register_properties(self.main_prop_list)
 
     def do_property_activate(
-            self, ibus_property, prop_state=IBus.PropState.UNCHECKED):
+            self,
+            ibus_property: str,
+            prop_state=IBus.PropState.UNCHECKED) -> None:
         '''
         Handle clicks on properties
         '''
@@ -1874,7 +1902,7 @@ class TypingBoosterEngine(IBus.Engine):
                      [ibus_property]['number']))
             return
 
-    def _start_setup(self):
+    def _start_setup(self) -> None:
         '''Start the setup tool if it is not running yet'''
         if self._setup_pid != 0:
             pid, dummy_state = os.waitpid(self._setup_pid, os.P_NOWAIT)
@@ -1886,7 +1914,7 @@ class TypingBoosterEngine(IBus.Engine):
                 return
             self._setup_pid = 0
         setup_cmd = os.path.join(
-            os.getenv('IBUS_TYPING_BOOSTER_LIB_LOCATION'),
+            str(os.getenv('IBUS_TYPING_BOOSTER_LIB_LOCATION')),
             'ibus-setup-typing-booster')
         if DEBUG_LEVEL > 0:
             LOGGER.debug('Starting setup tool: "%s"\n', setup_cmd)
@@ -1895,13 +1923,13 @@ class TypingBoosterEngine(IBus.Engine):
             setup_cmd,
             'ibus-setup-typing-booster')
 
-    def _clear_input_and_update_ui(self):
+    def _clear_input_and_update_ui(self) -> None:
         '''Clear the preëdit and close the lookup table
         '''
         self._clear_input()
         self._update_ui()
 
-    def do_destroy(self):
+    def do_destroy(self) -> None:
         '''Called when this input engine is destroyed
         '''
         if DEBUG_LEVEL > 1:
@@ -1910,7 +1938,7 @@ class TypingBoosterEngine(IBus.Engine):
         self.do_focus_out()
         super().destroy()
 
-    def _update_preedit(self):
+    def _update_preedit(self) -> None:
         '''Update Preedit String in UI'''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('entering function')
@@ -1956,7 +1984,7 @@ class TypingBoosterEngine(IBus.Engine):
             super().update_preedit_text_with_mode(
                 text, self.get_caret(), True, IBus.PreeditFocusMode.COMMIT)
 
-    def _update_aux(self):
+    def _update_aux(self) -> None:
         '''Update auxiliary text'''
         aux_string = ''
         if self._show_number_of_candidates:
@@ -2020,7 +2048,7 @@ class TypingBoosterEngine(IBus.Engine):
         super().update_auxiliary_text(text, visible)
         self._current_auxiliary_text = text
 
-    def _update_lookup_table(self):
+    def _update_lookup_table(self) -> None:
         '''Update the lookup table
 
         Show it if it is not empty and not disabled, otherwise hide it.
@@ -2103,7 +2131,7 @@ class TypingBoosterEngine(IBus.Engine):
             text, caret, True, IBus.PreeditFocusMode.COMMIT)
         return
 
-    def _update_lookup_table_and_aux(self):
+    def _update_lookup_table_and_aux(self) -> None:
         '''Update the lookup table and the auxiliary text'''
         self._update_aux()
         # auto select best candidate if the option
@@ -2117,12 +2145,12 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_lookup_table()
         self._lookup_table_is_invalid = False
 
-    def _update_candidates_and_lookup_table_and_aux(self):
+    def _update_candidates_and_lookup_table_and_aux(self) -> None:
         '''Update the candidates, the lookup table and the auxiliary text'''
         self._update_candidates()
         self._update_lookup_table_and_aux()
 
-    def _update_ui(self):
+    def _update_ui(self) -> None:
         '''Update User Interface'''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('entering function')
@@ -2168,7 +2196,7 @@ class TypingBoosterEngine(IBus.Engine):
         else:
             GLib.idle_add(self._update_candidates_and_lookup_table_and_aux)
 
-    def _lookup_related_candidates(self):
+    def _lookup_related_candidates(self) -> None:
         '''Lookup related (similar) emoji or related words (synonyms,
         hyponyms, hypernyms).
         '''
@@ -2265,7 +2293,9 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_lookup_table_and_aux()
         self._lookup_table_shows_related_candidates = True
 
-    def _case_mode_change(self, mode='next'):
+    def _case_mode_change(
+            self,
+            mode: str = 'next') -> bool:
         '''Change the case of the current candidates and the preedit
 
         Change the case of all the candidates in the current list of
@@ -2319,7 +2349,7 @@ class TypingBoosterEngine(IBus.Engine):
         self.get_lookup_table().set_cursor_visible(cursor_visible)
         return True
 
-    def _has_transliteration(self, msymbol_list):
+    def _has_transliteration(self, msymbol_list: List[str]) -> bool:
         '''Check whether the current input (list of msymbols) has a
         (non-trivial, i.e. not transliterating to itself)
         transliteration in any of the current input methods.
@@ -2336,7 +2366,7 @@ class TypingBoosterEngine(IBus.Engine):
                 '_has_transliteration(%s) == False\n', msymbol_list)
         return False
 
-    def _remove_candidate(self, index):
+    def _remove_candidate(self, index: int) -> bool:
         '''
         Removes the candidate at “index” in the lookup table from the
         user database.
@@ -2359,16 +2389,16 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _commit_candidate(self, index, extra_text=''):
+    def _commit_candidate(
+            self,
+            index: int,
+            extra_text: str = '') -> bool:
         '''
         Commits the candidate at “index” in the lookup table
 
         :return: True if a candidate could be committed, False if not.
-        :rtype: Boolean
         :param index: The index of the candidate to commit in the lookup table
-        :type index: Integer
         :param extra_text:  Additional text append to the commit, usually a space
-        :type extra_text: String
         '''
         if not self.get_lookup_table().get_number_of_candidates():
             return False
@@ -2384,7 +2414,10 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _commit_string(self, commit_phrase, input_phrase=''):
+    def _commit_string(
+            self,
+            commit_phrase: str,
+            input_phrase: str = '') -> None:
         '''Commits a string
 
         Also updates the context and the user database of learned
@@ -2495,7 +2528,9 @@ class TypingBoosterEngine(IBus.Engine):
         # push context after recording in the database is finished:
         self.push_context(stripped_commit_phrase)
 
-    def _reopen_preedit_or_return_false(self, key):
+    def _reopen_preedit_or_return_false(
+            self,
+            key: itb_util.KeyEvent) -> bool:
         '''BackSpace, Delete or arrow left or right has been typed.
 
         If the end of a word has been reached again and if it is
@@ -2618,7 +2653,7 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return self._return_false(key.val, key.code, key.state)
 
-    def get_context(self):
+    def get_context(self) -> None:
         '''Try to get the context from the application using the “surrounding
         text” feature, if possible. If this works, it is much better
         than just using the last two words which were
@@ -2675,20 +2710,20 @@ class TypingBoosterEngine(IBus.Engine):
                 'Updated context from surrounding text=“%s” “%s” “%s”',
                 self._ppp_phrase, self._pp_phrase, self._p_phrase)
 
-    def set_add_space_on_commit(self, mode, update_gsettings=True):
+    def set_add_space_on_commit(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether a space is added when a candidate is committed by 1-9
         or F1-F9 or by mouse click.
 
         :param mode: Whether to add a space when committing by label
                      or mouse click.
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
-
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -2701,7 +2736,8 @@ class TypingBoosterEngine(IBus.Engine):
                 'addspaceoncommit',
                 GLib.Variant.new_boolean(mode))
 
-    def toggle_add_space_on_commit(self, update_gsettings=True):
+    def toggle_add_space_on_commit(
+            self, update_gsettings: bool = True) -> None:
         '''Toggles whether a space is added when a candidate is committed by
         1-9 or F1-F9 or by mouse click.
 
@@ -2710,33 +2746,29 @@ class TypingBoosterEngine(IBus.Engine):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
-
         '''
         self.set_add_space_on_commit(
             not self._add_space_on_commit, update_gsettings)
 
-    def get_add_space_on_commit(self):
+    def get_add_space_on_commit(self) -> bool:
         '''Returns the current value of the flag whether to add a space when a
         candidate is committed by 1-9 or F1-F9 or by mouse click.
-
-        :rtype: boolean
         '''
         return self._add_space_on_commit
 
-    def set_inline_completion(self, mode, update_gsettings=True):
+    def set_inline_completion(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether the best completion is first shown inline in the
         preëdit instead of using a combobox to show a candidate list.
 
         :param mode: Whether to show completions inline
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
-
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -2749,7 +2781,7 @@ class TypingBoosterEngine(IBus.Engine):
                 'inlinecompletion',
                 GLib.Variant.new_boolean(mode))
 
-    def toggle_inline_completion(self, update_gsettings=True):
+    def toggle_inline_completion(self, update_gsettings: bool = True) -> None:
         '''Toggles whether the best completion is first shown inline in the
         preëdit instead of using a combobox to show a candidate list.
 
@@ -2764,7 +2796,7 @@ class TypingBoosterEngine(IBus.Engine):
         self.set_inline_completion(
             not self._inline_completion, update_gsettings)
 
-    def get_inline_completion(self):
+    def get_inline_completion(self) -> bool:
         '''Returns the current value of the flag whether to show a completion
         first inline in the preëdit instead of using a combobox to show a
         candidate list.
@@ -2773,7 +2805,10 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._inline_completion
 
-    def set_auto_capitalize(self, mode, update_gsettings=True):
+    def set_auto_capitalize(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to capitalize automatically after punctuation
 
         :param mode: Whether to automatically capitalize after punctuation.
@@ -2797,7 +2832,7 @@ class TypingBoosterEngine(IBus.Engine):
                 'autocapitalize',
                 GLib.Variant.new_boolean(mode))
 
-    def toggle_auto_capitalize(self, update_gsettings=True):
+    def toggle_auto_capitalize(self, update_gsettings: bool = True) -> None:
         '''Toggles whether to capitalize automatically after punctuation
 
         :param update_gsettings: Whether to write the change to Gsettings.
@@ -2811,26 +2846,25 @@ class TypingBoosterEngine(IBus.Engine):
         self.set_auto_capitalize(
             not self._auto_capitalize, update_gsettings)
 
-    def get_auto_capitalize(self):
+    def get_auto_capitalize(self) -> bool:
         '''Returns the current value of the flag whether to show a completion
         first inline in the preëdit instead of using a combobox to show a
         candidate list.
-
-        :rtype: boolean
         '''
         return self._auto_capitalize
 
-    def set_qt_im_module_workaround(self, mode, update_gsettings=True):
+    def set_qt_im_module_workaround(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether the workaround for the qt im module is used or not
 
         :param mode: Whether to use the workaround for the qt im module or not
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -2843,7 +2877,8 @@ class TypingBoosterEngine(IBus.Engine):
                 'qtimmoduleworkaround',
                 GLib.Variant.new_boolean(mode))
 
-    def toggle_qt_im_module_workaround(self, update_gsettings=True):
+    def toggle_qt_im_module_workaround(
+            self, update_gsettings: bool = True) -> None:
         '''Toggles whether the workaround for the qt im module is used or not
 
         :param update_gsettings: Whether to write the change to Gsettings.
@@ -2851,30 +2886,28 @@ class TypingBoosterEngine(IBus.Engine):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         self.set_qt_im_module_workaround(
             not self._qt_im_module_workaround, update_gsettings)
 
-    def get_qt_im_module_workaround(self):
+    def get_qt_im_module_workaround(self) -> bool:
         '''Returns the current value of the flag to enable
         a workaround for the qt im module
-
-        :rtype: boolean
         '''
         return self._qt_im_module_workaround
 
-    def set_arrow_keys_reopen_preedit(self, mode, update_gsettings=True):
+    def set_arrow_keys_reopen_preedit(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether the arrow keys are allowed to reopen a preëdit
 
         :param mode: Whether arrow keys can reopen a preëdit
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -2887,7 +2920,8 @@ class TypingBoosterEngine(IBus.Engine):
                 'arrowkeysreopenpreedit',
                 GLib.Variant.new_boolean(mode))
 
-    def toggle_arrow_keys_reopen_preedit(self, update_gsettings=True):
+    def toggle_arrow_keys_reopen_preedit(
+            self, update_gsettings: bool = True) -> None:
         '''Toggles whether arrow keys are allowed to reopen a preëdit
 
         :param update_gsettings: Whether to write the change to Gsettings.
@@ -2900,19 +2934,16 @@ class TypingBoosterEngine(IBus.Engine):
         self.set_arrow_keys_reopen_preedit(
             not self._arrow_keys_reopen_preedit, update_gsettings)
 
-    def get_arrow_keys_reopen_preedit(self):
+    def get_arrow_keys_reopen_preedit(self) -> bool:
         '''Returns the current value of the flag whether to
         allow arrow keys to reopen the preëdit
-
-        :rtype: boolean
         '''
         return self._arrow_keys_reopen_preedit
 
-    def set_input_mode(self, mode):
+    def set_input_mode(self, mode: bool) ->  None:
         '''Sets the input mode
 
         :param mode: Whether to switch ibus-typing-booster on or off
-        :type mode: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('(%s)', mode)
@@ -2923,29 +2954,25 @@ class TypingBoosterEngine(IBus.Engine):
             self.input_mode_menu, mode)
         self._clear_input_and_update_ui()
 
-    def toggle_input_mode(self):
+    def toggle_input_mode(self) -> None:
         '''Toggles whether ibus-typing-booster is on or off
         '''
         self.set_input_mode(not self._input_mode)
 
-    def get_input_mode(self):
-        '''Returns the current value of the input mode
-
-        :rtype: boolean
-        '''
+    def get_input_mode(self) -> bool:
+        '''Returns the current value of the input mode'''
         return self._input_mode
 
-    def set_emoji_prediction_mode(self, mode, update_gsettings=True):
+    def set_emoji_prediction_mode(
+            self, mode: bool, update_gsettings: bool = True) -> None:
         '''Sets the emoji prediction mode
 
         :param mode: Whether to switch emoji prediction on or off
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -2968,7 +2995,8 @@ class TypingBoosterEngine(IBus.Engine):
                 'emojipredictions',
                 GLib.Variant.new_boolean(mode))
 
-    def toggle_emoji_prediction_mode(self, update_gsettings=True):
+    def toggle_emoji_prediction_mode(
+            self, update_gsettings: bool = True) -> None:
         '''Toggles whether emoji predictions are shown or not
 
         :param update_gsettings: Whether to write the change to Gsettings.
@@ -2976,30 +3004,27 @@ class TypingBoosterEngine(IBus.Engine):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         self.set_emoji_prediction_mode(
             not self._emoji_predictions, update_gsettings)
 
-    def get_emoji_prediction_mode(self):
-        '''Returns the current value of the emoji prediction mode
-
-        :rtype: boolean
-        '''
+    def get_emoji_prediction_mode(self) -> bool:
+        '''Returns the current value of the emoji prediction mode'''
         return self._emoji_predictions
 
-    def set_off_the_record_mode(self, mode, update_gsettings=True):
+    def set_off_the_record_mode(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Off the record” mode
 
         :param mode: Whether to prevent saving input to the
                      user database or not
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3015,7 +3040,8 @@ class TypingBoosterEngine(IBus.Engine):
                 'offtherecord',
                 GLib.Variant.new_boolean(mode))
 
-    def toggle_off_the_record_mode(self, update_gsettings=True):
+    def toggle_off_the_record_mode(
+            self, update_gsettings: bool = True) -> None:
         '''Toggles whether input is saved to the user database or not
 
         :param update_gsettings: Whether to write the change to Gsettings.
@@ -3023,31 +3049,27 @@ class TypingBoosterEngine(IBus.Engine):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         self.set_off_the_record_mode(
             not self._off_the_record, update_gsettings)
 
-    def get_off_the_record_mode(self):
-        '''Returns the current value of the “off the record” mode
-
-        :rtype: boolean
-        '''
+    def get_off_the_record_mode(self) -> bool:
+        '''Returns the current value of the “off the record” mode'''
         return self._off_the_record
 
-    def set_auto_commit_characters(self, auto_commit_characters,
-                                   update_gsettings=True):
+    def set_auto_commit_characters(
+            self,
+            auto_commit_characters: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the auto commit characters
 
         :param auto_commit_characters: The characters which trigger a commit
                                        with an extra space
-        :type auto_commit_characters: string
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3061,24 +3083,22 @@ class TypingBoosterEngine(IBus.Engine):
                 'autocommitcharacters',
                 GLib.Variant.new_string(auto_commit_characters))
 
-    def get_auto_commit_characters(self):
-        '''Returns the current auto commit characters
-
-        :rtype: string
-        '''
+    def get_auto_commit_characters(self) -> str:
+        '''Returns the current auto commit characters'''
         return self._auto_commit_characters
 
-    def set_color_preedit_spellcheck(self, mode, update_gsettings=True):
+    def set_color_preedit_spellcheck(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether spellchecking is done on the contents of the preedit
 
         :param mode: Whether to do spellchecking on the contents of the preedit
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3091,19 +3111,18 @@ class TypingBoosterEngine(IBus.Engine):
                 'colorpreeditspellcheck',
                 GLib.Variant.new_boolean(mode))
 
-    def get_color_preedit_spellcheck(self):
-        '''Returns the current value of the “color preedit_spellcheck” mode
-
-        :rtype: Boolean
-        '''
+    def get_color_preedit_spellcheck(self) -> bool:
+        '''Returns the current value of the “color preedit_spellcheck” mode'''
         return self._color_preedit_spellcheck
 
     def set_color_preedit_spellcheck_string(
-            self, color_string, update_gsettings=True):
+            self,
+            color_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the color for for preedit spellchecking
 
         :param color_string: The color for preedit spellchecking
-        :type color_string: String
+                            It is a string in one of the following formats:
                             - Standard name from the X11 rgb.txt
                             - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
                                          or ”#rrrrggggbbbb”
@@ -3114,7 +3133,6 @@ class TypingBoosterEngine(IBus.Engine):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3129,24 +3147,23 @@ class TypingBoosterEngine(IBus.Engine):
                 'colorpreeditspellcheckstring',
                 GLib.Variant.new_string(color_string))
 
-    def get_color_preedit_spellcheck_string(self):
+    def get_color_preedit_spellcheck_string(self) -> str:
         '''Returns the current value of the “color preedit spellcheck” string
-
-        :rtype: String
         '''
         return self._color_preedit_spellcheck_string
 
-    def set_color_inline_completion(self, mode, update_gsettings=True):
+    def set_color_inline_completion(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use color for inline completion
 
         :param mode: Whether to use color for inline completion
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3159,19 +3176,18 @@ class TypingBoosterEngine(IBus.Engine):
                 'colorinlinecompletion',
                 GLib.Variant.new_boolean(mode))
 
-    def get_color_inline_completion(self):
-        '''Returns the current value of the “color inline completion” mode
-
-        :rtype: Boolean
-        '''
+    def get_color_inline_completion(self) -> bool:
+        '''Returns the current value of the “color inline completion” mode'''
         return self._color_inline_completion
 
     def set_color_inline_completion_string(
-            self, color_string, update_gsettings=True):
+            self,
+            color_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the color for inline completion
 
         :param color_string: The color for inline completion
-        :type color_string: String
+                            It is a string in one of the following formats:
                             - Standard name from the X11 rgb.txt
                             - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
                                          or ”#rrrrggggbbbb”
@@ -3182,7 +3198,6 @@ class TypingBoosterEngine(IBus.Engine):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3197,24 +3212,22 @@ class TypingBoosterEngine(IBus.Engine):
                 'colorinlinecompletionstring',
                 GLib.Variant.new_string(color_string))
 
-    def get_color_inline_completion_string(self):
-        '''Returns the current value of the “color inline completion” string
-
-        :rtype: String
-        '''
+    def get_color_inline_completion_string(self) -> str:
+        '''Returns the current value of the “color inline completion” string'''
         return self._color_inline_completion_string
 
-    def set_color_userdb(self, mode, update_gsettings=True):
+    def set_color_userdb(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use color for user database suggestions
 
         :param mode: Whether to use color for user database suggestions
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3227,18 +3240,18 @@ class TypingBoosterEngine(IBus.Engine):
                 'coloruserdb',
                 GLib.Variant.new_boolean(mode))
 
-    def get_color_userdb(self):
-        '''Returns the current value of the “color userdb” mode
-
-        :rtype: Boolean
-        '''
+    def get_color_userdb(self) -> bool:
+        '''Returns the current value of the “color userdb” mode'''
         return self._color_userdb
 
-    def set_color_userdb_string(self, color_string, update_gsettings=True):
+    def set_color_userdb_string(
+            self,
+            color_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the color for user database suggestions
 
         :param color_string: The color for user database suggestions
-        :type color_string: String
+                            It is a string in one of the following formats:
                             - Standard name from the X11 rgb.txt
                             - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
                                          or ”#rrrrggggbbbb”
@@ -3264,24 +3277,22 @@ class TypingBoosterEngine(IBus.Engine):
                 'coloruserdbstring',
                 GLib.Variant.new_string(color_string))
 
-    def get_color_userdb_string(self):
-        '''Returns the current value of the “color userdb” string
-
-        :rtype: String
-        '''
+    def get_color_userdb_string(self) -> str:
+        '''Returns the current value of the “color userdb” string'''
         return self._color_userdb_string
 
-    def set_color_spellcheck(self, mode, update_gsettings=True):
+    def set_color_spellcheck(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use color for spellchecking suggestions
 
         :param mode: Whether to use color for spellchecking suggestions
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3294,18 +3305,18 @@ class TypingBoosterEngine(IBus.Engine):
                 'colorspellcheck',
                 GLib.Variant.new_boolean(mode))
 
-    def get_color_spellcheck(self):
-        '''Returns the current value of the “color spellcheck” mode
-
-        :rtype: Boolean
-        '''
+    def get_color_spellcheck(self) -> bool:
+        '''Returns the current value of the “color spellcheck” mode'''
         return self._color_spellcheck
 
-    def set_color_spellcheck_string(self, color_string, update_gsettings=True):
+    def set_color_spellcheck_string(
+            self,
+            color_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the color for spellchecking suggestions
 
         :param color_string: The color for spellchecking suggestions
-        :type color_string: String
+                            It is a string in one of the following formats:
                             - Standard name from the X11 rgb.txt
                             - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
                                          or ”#rrrrggggbbbb”
@@ -3316,7 +3327,6 @@ class TypingBoosterEngine(IBus.Engine):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3331,24 +3341,22 @@ class TypingBoosterEngine(IBus.Engine):
                 'colorspellcheckstring',
                 GLib.Variant.new_string(color_string))
 
-    def get_color_spellcheck_string(self):
-        '''Returns the current value of the “color spellcheck” string
-
-        :rtype: String
-        '''
+    def get_color_spellcheck_string(self) -> str:
+        '''Returns the current value of the “color spellcheck” string'''
         return self._color_spellcheck_string
 
-    def set_color_dictionary(self, mode, update_gsettings=True):
+    def set_color_dictionary(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use color for dictionary suggestions
 
         :param mode: Whether to use color for dictionary suggestions
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3361,18 +3369,18 @@ class TypingBoosterEngine(IBus.Engine):
                 'colordictionary',
                 GLib.Variant.new_boolean(mode))
 
-    def get_color_dictionary(self):
-        '''Returns the current value of the “color dictionary” mode
-
-        :rtype: Boolean
-        '''
+    def get_color_dictionary(self) -> bool:
+        '''Returns the current value of the “color dictionary” mode'''
         return self._color_dictionary
 
-    def set_color_dictionary_string(self, color_string, update_gsettings=True):
+    def set_color_dictionary_string(
+            self,
+            color_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the color for dictionary suggestions
 
         :param color_string: The color for dictionary suggestions
-        :type color_string: String
+                            It is a string in one of the following formats:
                             - Standard name from the X11 rgb.txt
                             - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
                                          or ”#rrrrggggbbbb”
@@ -3383,7 +3391,6 @@ class TypingBoosterEngine(IBus.Engine):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3398,24 +3405,22 @@ class TypingBoosterEngine(IBus.Engine):
                 'colordictionarystring',
                 GLib.Variant.new_string(color_string))
 
-    def get_color_dictionary_string(self):
-        '''Returns the current value of the “color dictionary” string
-
-        :rtype: String
-        '''
+    def get_color_dictionary_string(self) -> str:
+        '''Returns the current value of the “color dictionary” string'''
         return self._color_dictionary_string
 
-    def set_label_userdb(self, mode, update_gsettings=True):
+    def set_label_userdb(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use a label for user database
 
         :param mode: Whether to use a label for user database suggestions
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3428,24 +3433,22 @@ class TypingBoosterEngine(IBus.Engine):
                 'labeluserdb',
                 GLib.Variant.new_boolean(mode))
 
-    def get_label_userdb(self):
-        '''Returns the current value of the “label userdb” mode
-
-        :rtype: Boolean
-        '''
+    def get_label_userdb(self) -> bool:
+        '''Returns the current value of the “label userdb” mode'''
         return self._label_userdb
 
-    def set_label_userdb_string(self, label_string, update_gsettings=True):
+    def set_label_userdb_string(
+            self,
+            label_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the label for user database suggestions
 
         :param label_string: The label for user database suggestions
-        :type label_string: String
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3458,24 +3461,22 @@ class TypingBoosterEngine(IBus.Engine):
                 'labeluserdbstring',
                 GLib.Variant.new_string(label_string))
 
-    def get_label_userdb_string(self):
-        '''Returns the current value of the “label userdb” string
-
-        :rtype: String
-        '''
+    def get_label_userdb_string(self) -> str:
+        '''Returns the current value of the “label userdb” string'''
         return self._label_userdb_string
 
-    def set_label_spellcheck(self, mode, update_gsettings=True):
+    def set_label_spellcheck(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use a label for spellchecking suggestions
 
         :param mode: Whether to use a label for spellchecking suggestions
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3488,24 +3489,22 @@ class TypingBoosterEngine(IBus.Engine):
                 'labelspellcheck',
                 GLib.Variant.new_boolean(mode))
 
-    def get_label_spellcheck(self):
-        '''Returns the current value of the “label spellcheck” mode
-
-        :rtype: Boolean
-        '''
+    def get_label_spellcheck(self) -> bool:
+        '''Returns the current value of the “label spellcheck” mode'''
         return self._label_spellcheck
 
-    def set_label_spellcheck_string(self, label_string, update_gsettings=True):
+    def set_label_spellcheck_string(
+            self,
+            label_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the label for spellchecking suggestions
 
         :param label_string: The label for spellchecking suggestions
-        :type label_string: String
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3518,24 +3517,22 @@ class TypingBoosterEngine(IBus.Engine):
                 'labelspellcheckstring',
                 GLib.Variant.new_string(label_string))
 
-    def get_label_spellcheck_string(self):
-        '''Returns the current value of the “label spellcheck” string
-
-        :rtype: String
-        '''
+    def get_label_spellcheck_string(self) -> str:
+        '''Returns the current value of the “label spellcheck” string'''
         return self._label_spellcheck_string
 
-    def set_label_dictionary(self, mode, update_gsettings=True):
+    def set_label_dictionary(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use a label for dictionary suggestions
 
         :param mode: Whether to use a label for dictionary suggestions
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3548,14 +3545,14 @@ class TypingBoosterEngine(IBus.Engine):
                 'labeldictionary',
                 GLib.Variant.new_boolean(mode))
 
-    def get_label_dictionary(self):
-        '''Returns the current value of the “label dictionary” mode
-
-        :rtype: Boolean
-        '''
+    def get_label_dictionary(self) -> bool:
+        '''Returns the current value of the “label dictionary” mode'''
         return self._label_dictionary
 
-    def set_label_dictionary_string(self, label_string, update_gsettings=True):
+    def set_label_dictionary_string(
+            self,
+            label_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the label for dictionary suggestions
 
         :param label_string: The label for dictionary suggestions
@@ -3578,24 +3575,22 @@ class TypingBoosterEngine(IBus.Engine):
                 'labeldictionarystring',
                 GLib.Variant.new_string(label_string))
 
-    def get_label_dictionary_string(self):
-        '''Returns the current value of the “label dictionary” string
-
-        :rtype: String
-        '''
+    def get_label_dictionary_string(self) -> str:
+        '''Returns the current value of the “label dictionary” string'''
         return self._label_dictionary_string
 
-    def set_label_busy(self, mode, update_gsettings=True):
+    def set_label_busy(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets whether to use a label to indicate busy state
 
         :param mode: Whether to use a label to indicate busy state
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3608,24 +3603,22 @@ class TypingBoosterEngine(IBus.Engine):
                 'labelbusy',
                 GLib.Variant.new_boolean(mode))
 
-    def get_label_busy(self):
-        '''Returns the current value of the “label busy” mode
-
-        :rtype: Boolean
-        '''
+    def get_label_busy(self) -> bool:
+        '''Returns the current value of the “label busy” mode'''
         return self._label_busy
 
-    def set_label_busy_string(self, label_string, update_gsettings=True):
+    def set_label_busy_string(
+            self,
+            label_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the label used to indicate busy state
 
         :param label_string: The label to indicate busy state
-        :type label_string: String
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3638,25 +3631,23 @@ class TypingBoosterEngine(IBus.Engine):
                 'labelbusystring',
                 GLib.Variant.new_string(label_string))
 
-    def get_label_busy_string(self):
-        '''Returns the current value of the “label busy” string
-
-        :rtype: String
-        '''
+    def get_label_busy_string(self) -> str:
+        '''Returns the current value of the “label busy” string'''
         return self._label_busy_string
 
-    def set_google_application_credentials(self, path, update_gsettings=True):
+    def set_google_application_credentials(
+            self,
+            path: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the label used to indicate busy state
 
         :param path: Full path of the Google application
                      credentials .json file.
-        :type path: String
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3669,15 +3660,16 @@ class TypingBoosterEngine(IBus.Engine):
                 'googleapplicationcredentials',
                 GLib.Variant.new_string(path))
 
-    def get_google_application_credentials(self):
+    def get_google_application_credentials(self) -> str:
         '''Returns the current value of the full path to the
         Google application credentials .json file.
-
-        :rtype: String
         '''
         return self._google_application_credentials
 
-    def set_tab_enable(self, mode, update_gsettings=True):
+    def set_tab_enable(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Tab enable” mode
 
         :param mode: Whether to show a candidate list only when typing Tab
@@ -3700,25 +3692,23 @@ class TypingBoosterEngine(IBus.Engine):
                 'tabenable',
                 GLib.Variant.new_boolean(mode))
 
-    def get_tab_enable(self):
-        '''Returns the current value of the “Tab enable” mode
-
-        :rtype: boolean
-        '''
+    def get_tab_enable(self) -> bool:
+        '''Returns the current value of the “Tab enable” mode'''
         return self._tab_enable
 
-    def set_remember_last_used_preedit_ime(self, mode, update_gsettings=True):
+    def set_remember_last_used_preedit_ime(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Remember last used preëdit ime” mode
 
         :param mode: Whether to remember the input method used last for
                      the preëdit
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3731,25 +3721,25 @@ class TypingBoosterEngine(IBus.Engine):
                 'rememberlastusedpreeditime',
                 GLib.Variant.new_boolean(mode))
 
-    def get_remember_last_used_preedit_ime(self):
+    def get_remember_last_used_preedit_ime(self) -> bool:
         '''Returns the current value of the
         “Remember last used preëdit ime” mode
-
-        :rtype: boolean
         '''
         return self._remember_last_used_preedit_ime
 
-    def set_page_size(self, page_size, update_gsettings=True):
+    def set_page_size(
+            self,
+            page_size: Union[int, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the page size of the lookup table
 
         :param page_size: The page size of the lookup table
-        :type mode: integer >= 1 and <= 9
+                          1 <= size <= 9
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3765,14 +3755,14 @@ class TypingBoosterEngine(IBus.Engine):
                     'pagesize',
                     GLib.Variant.new_int32(page_size))
 
-    def get_page_size(self):
-        '''Returns the current page size of the lookup table
-
-        :rtype: integer
-        '''
+    def get_page_size(self) -> int:
+        '''Returns the current page size of the lookup table'''
         return self._page_size
 
-    def set_lookup_table_orientation(self, orientation, update_gsettings=True):
+    def set_lookup_table_orientation(
+            self,
+            orientation: Union[int, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the orientation of the lookup table
 
         :param orientation: The orientation of the lookup table
@@ -3801,18 +3791,18 @@ class TypingBoosterEngine(IBus.Engine):
                     'lookuptableorientation',
                     GLib.Variant.new_int32(orientation))
 
-    def get_lookup_table_orientation(self):
-        '''Returns the current orientation of the lookup table
-
-        :rtype: integer
-        '''
+    def get_lookup_table_orientation(self) -> int:
+        '''Returns the current orientation of the lookup table'''
         return self._lookup_table_orientation
 
-    def set_preedit_underline(self, underline_mode, update_gsettings=True):
+    def set_preedit_underline(
+            self,
+            underline_mode: Union[int, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the underline style for the preedit
 
         :param underline_mode: The underline mode to be used for the preedit
-        :type mode: integer >= 0 and <= 3
+                              0 <= underline_mode <= 3
                               IBus.AttrUnderline.NONE    = 0,
                               IBus.AttrUnderline.SINGLE  = 1,
                               IBus.AttrUnderline.DOUBLE  = 2,
@@ -3823,7 +3813,6 @@ class TypingBoosterEngine(IBus.Engine):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3839,25 +3828,23 @@ class TypingBoosterEngine(IBus.Engine):
                     'preeditunderline',
                     GLib.Variant.new_int32(underline_mode))
 
-    def get_preedit_underline(self):
-        '''Returns the current underline style of the preedit
-
-        :rtype: integer
-        '''
+    def get_preedit_underline(self) -> int:
+        '''Returns the current underline style of the preedit'''
         return self._preedit_underline
 
-    def set_preedit_style_only_when_lookup(self, mode, update_gsettings=True):
+    def set_preedit_style_only_when_lookup(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Use preedit styling only when lookup is enabled” mode
 
         :param mode: Whether preedit styling like underlining should
                      be enabled only when lookup is enabled.
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3870,25 +3857,24 @@ class TypingBoosterEngine(IBus.Engine):
                 'preeditstyleonlywhenlookup',
                 GLib.Variant.new_boolean(mode))
 
-    def get_preedit_style_only_when_lookup(self):
-        '''Returns the current value of the “Tab enable” mode
-
-        :rtype: boolean
-        '''
+    def get_preedit_style_only_when_lookup(self) -> bool:
+        '''Returns the current value of the “Tab enable” mode'''
         return self._preedit_style_only_when_lookup
 
-    def set_min_char_complete(self, min_char_complete, update_gsettings=True):
+    def set_min_char_complete(
+            self,
+            min_char_complete: Union[int, Any],
+            update_gsettings=True) -> None:
         '''Sets the minimum number of characters to try completion
 
         :param min_char_complete: The minimum number of characters
                                   to type before completion is tried.
-        :type min_char_complete: integer >= 1 and <= 9
+                                  1 <= min_char_complete <= 9
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3904,24 +3890,24 @@ class TypingBoosterEngine(IBus.Engine):
                     'mincharcomplete',
                     GLib.Variant.new_int32(min_char_complete))
 
-    def get_min_char_complete(self):
+    def get_min_char_complete(self) -> int:
         '''Returns the current minimum number of characters to try completion
-
-        :rtype: integer
         '''
         return self._min_char_complete
 
-    def set_debug_level(self, debug_level, update_gsettings=True):
+    def set_debug_level(
+            self,
+            debug_level: Union[int, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the debug level
 
         :param debug_level: The debug level
-        :type debug_level: integer >= 0 and <= 255
+                            0 <= debug_level <= 255
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         global DEBUG_LEVEL
         if DEBUG_LEVEL > 1:
@@ -3938,25 +3924,23 @@ class TypingBoosterEngine(IBus.Engine):
                     'debuglevel',
                     GLib.Variant.new_int32(debug_level))
 
-    def get_debug_level(self):
-        '''Returns the current debug level
-
-        :rtype: integer
-        '''
+    def get_debug_level(self) -> int:
+        '''Returns the current debug level'''
         return self._debug_level
 
-    def set_show_number_of_candidates(self, mode, update_gsettings=True):
+    def set_show_number_of_candidates(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Show number of candidates” mode
 
         :param mode: Whether to show the number of candidates
                      in the auxiliary text
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -3970,15 +3954,15 @@ class TypingBoosterEngine(IBus.Engine):
                 'shownumberofcandidates',
                 GLib.Variant.new_boolean(mode))
 
-    def get_show_number_of_candidates(self):
+    def get_show_number_of_candidates(self) -> bool:
         '''Returns the current value of the “Show number of candidates” mode
-
-        :rtype: boolean
         '''
         return self._show_number_of_candidates
 
     def set_show_status_info_in_auxiliary_text(
-            self, mode, update_gsettings=True):
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Show status info in auxiliary text” mode
 
         :param mode: Whether to show status information in the
@@ -3988,13 +3972,11 @@ class TypingBoosterEngine(IBus.Engine):
                      off-the-record mode are on or off
                      and which input method is currently used for
                      the preëdit text.
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -4008,25 +3990,24 @@ class TypingBoosterEngine(IBus.Engine):
                 'showstatusinfoinaux',
                 GLib.Variant.new_boolean(mode))
 
-    def get_show_status_info_in_auxiliary_text(self):
+    def get_show_status_info_in_auxiliary_text(self) -> bool:
         '''Returns the current value of the
         “Show status in auxiliary text” mode
-
-        :rtype: boolean
         '''
         return self._show_status_info_in_auxiliary_text
 
-    def set_auto_select_candidate(self, mode, update_gsettings=True):
+    def set_auto_select_candidate(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the “Automatically select the best candidate” mode
 
         :param mode: Whether to automatically select the best candidate
-        :type mode: boolean
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -4041,15 +4022,13 @@ class TypingBoosterEngine(IBus.Engine):
                 'autoselectcandidate',
                 GLib.Variant.new_boolean(mode))
 
-    def get_auto_select_candidate(self):
+    def get_auto_select_candidate(self) -> bool:
         '''Returns the current value of the
         “Automatically select the best candidate” mode
-
-        :rtype: boolean
         '''
         return self._auto_select_candidate
 
-    def do_candidate_clicked(self, index, button, state):
+    def do_candidate_clicked(self, index: int, button: int, state: int) -> None:
         '''Called when a candidate in the lookup table
         is clicked with the mouse
         '''
@@ -4085,7 +4064,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._lookup_related_candidates()
             return
 
-    def _speech_recognition_error(self, error_message):
+    def _speech_recognition_error(self, error_message: str) -> None:
         '''Show an error message in the auxiliary text when
         something goes wrong with speech recognition.
 
@@ -4105,7 +4084,7 @@ class TypingBoosterEngine(IBus.Engine):
         time.sleep(2)
         self._update_ui()
 
-    def _speech_recognition(self):
+    def _speech_recognition(self) -> None:
         '''
         Listen to microphone, convert to text using Google speech-to-text
         and insert converted text.
@@ -4280,49 +4259,44 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_ui()
         return
 
-    def _command_toggle_input_mode_on_off(self):
+    def _command_toggle_input_mode_on_off(self) -> bool:
         '''Handle hotkey for the command “toggle_input_mode_on_off”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         self.toggle_input_mode()
         return True
 
-    def _command_speech_recognition(self):
+    def _command_speech_recognition(self) -> bool:
         '''Handle hotkey for the command “speech_recognition”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         self._speech_recognition()
         return True
 
-    def _command_next_case_mode(self):
+    def _command_next_case_mode(self) -> bool:
         '''Handle hotkey for the command “next_case_mode”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         self._case_mode_change(mode='next')
         self._update_lookup_table_and_aux()
         return True
 
-    def _command_previous_case_mode(self):
+    def _command_previous_case_mode(self) -> bool:
         '''Handle hotkey for the command “next_case_mode”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         self._case_mode_change(mode='previous')
         self._update_lookup_table_and_aux()
         return True
 
-    def _command_cancel(self):
+    def _command_cancel(self) -> bool:
         '''Handle hotkey for the command “cancel”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         if self.is_empty():
             return False
@@ -4357,11 +4331,10 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_ui()
         return True
 
-    def _command_enable_lookup(self):
+    def _command_enable_lookup(self) -> bool:
         '''Handle hotkey for the command “enable_lookup”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         if ((self._tab_enable
              or (self._min_char_complete > 1
@@ -4376,11 +4349,10 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _command_next_input_method(self):
+    def _command_next_input_method(self) -> bool:
         '''Handle hotkey for the command “next_input_method”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         imes = self.get_current_imes()
         if len(imes) > 1:
@@ -4391,11 +4363,10 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _command_previous_input_method(self):
+    def _command_previous_input_method(self) -> bool:
         '''Handle hotkey for the command “previous_input_method”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         imes = self.get_current_imes()
         if len(imes) > 1:
@@ -4406,11 +4377,10 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _command_next_dictionary(self):
+    def _command_next_dictionary(self) -> bool:
         '''Handle hotkey for the command “next_dictionary”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         names = self.get_dictionary_names()
         if len(names) > 1:
@@ -4422,11 +4392,10 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _command_previous_dictionary(self):
+    def _command_previous_dictionary(self) -> bool:
         '''Handle hotkey for the command “previous_dictionary”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         names = self.get_dictionary_names()
         if len(names) > 1:
@@ -4437,11 +4406,10 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _command_select_next_candidate(self):
+    def _command_select_next_candidate(self) -> bool:
         '''Handle hotkey for the command “select_next_candidate”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         if self.get_lookup_table().get_number_of_candidates():
             dummy = self._arrow_down()
@@ -4449,11 +4417,10 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _command_select_previous_candidate(self):
+    def _command_select_previous_candidate(self) -> bool:
         '''Handle hotkey for the command “select_previous_candidate”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         if self.get_lookup_table().get_number_of_candidates():
             dummy = self._arrow_up()
@@ -4461,11 +4428,10 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _command_lookup_table_page_down(self):
+    def _command_lookup_table_page_down(self) -> bool:
         '''Handle hotkey for the command “lookup_table_page_down”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         if self.get_lookup_table().get_number_of_candidates():
             dummy = self._page_down()
@@ -4473,11 +4439,10 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _command_lookup_table_page_up(self):
+    def _command_lookup_table_page_up(self) -> bool:
         '''Handle hotkey for the command “lookup_table_page_up”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         if self.get_lookup_table().get_number_of_candidates():
             dummy = self._page_up()
@@ -4485,36 +4450,33 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _command_toggle_emoji_prediction(self):
+    def _command_toggle_emoji_prediction(self) -> bool:
         '''Handle hotkey for the command “toggle_emoji_prediction”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         self.toggle_emoji_prediction_mode()
         return True
 
-    def _command_toggle_off_the_record(self):
+    def _command_toggle_off_the_record(self) -> bool:
         '''Handle hotkey for the command “toggle_off_the_record”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         self.toggle_off_the_record_mode()
         return True
 
-    def _command_lookup_related(self):
+    def _command_lookup_related(self) -> bool:
         '''Handle hotkey for the command “lookup_related”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         if not self.is_empty():
             self._lookup_related_candidates()
             return True
         return False
 
-    def _command_toggle_hide_input(self):
+    def _command_toggle_hide_input(self) -> bool:
         '''Handle hotkey for the command “toggle_hide_input”
 
         :return: True if the key was completely handled, False if not.
@@ -4524,7 +4486,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_ui()
         return True
 
-    def _command_setup(self):
+    def _command_setup(self) -> bool:
         '''Handle hotkey for the command “setup”
 
         :return: True if the key was completely handled, False if not.
@@ -4533,7 +4495,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._start_setup()
         return True
 
-    def _command_commit_candidate_1(self):
+    def _command_commit_candidate_1(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_1”
 
         :return: True if the key was completely handled, False if not.
@@ -4541,7 +4503,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._commit_candidate(0, extra_text='')
 
-    def _command_commit_candidate_1_plus_space(self):
+    def _command_commit_candidate_1_plus_space(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_1_plus_space”
 
         :return: True if the key was completely handled, False if not.
@@ -4549,7 +4511,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._commit_candidate(0, extra_text=' ')
 
-    def _command_remove_candidate_1(self):
+    def _command_remove_candidate_1(self) -> bool:
         '''Handle hotkey for the command “remove_candidate_1”
 
         :return: True if the key was completely handled, False if not.
@@ -4557,7 +4519,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._remove_candidate(0)
 
-    def _command_commit_candidate_2(self):
+    def _command_commit_candidate_2(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_2”
 
         :return: True if the key was completely handled, False if not.
@@ -4565,7 +4527,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._commit_candidate(1, extra_text='')
 
-    def _command_commit_candidate_2_plus_space(self):
+    def _command_commit_candidate_2_plus_space(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_2_plus_space”
 
         :return: True if the key was completely handled, False if not.
@@ -4573,7 +4535,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._commit_candidate(1, extra_text=' ')
 
-    def _command_remove_candidate_2(self):
+    def _command_remove_candidate_2(self) -> bool:
         '''Handle hotkey for the command “remove_candidate_2”
 
         :return: True if the key was completely handled, False if not.
@@ -4581,7 +4543,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._remove_candidate(1)
 
-    def _command_commit_candidate_3(self):
+    def _command_commit_candidate_3(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_3”
 
         :return: True if the key was completely handled, False if not.
@@ -4589,7 +4551,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._commit_candidate(2, extra_text='')
 
-    def _command_commit_candidate_3_plus_space(self):
+    def _command_commit_candidate_3_plus_space(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_3_plus_space”
 
         :return: True if the key was completely handled, False if not.
@@ -4597,163 +4559,146 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._commit_candidate(2, extra_text=' ')
 
-    def _command_remove_candidate_3(self):
+    def _command_remove_candidate_3(self) -> bool:
         '''Handle hotkey for the command “remove_candidate_3”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._remove_candidate(2)
 
-    def _command_commit_candidate_4(self):
+    def _command_commit_candidate_4(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_4”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._commit_candidate(3, extra_text='')
 
-    def _command_commit_candidate_4_plus_space(self):
+    def _command_commit_candidate_4_plus_space(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_4_plus_space”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._commit_candidate(3, extra_text=' ')
 
-    def _command_remove_candidate_4(self):
+    def _command_remove_candidate_4(self) -> bool:
         '''Handle hotkey for the command “remove_candidate_4”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._remove_candidate(3)
 
-    def _command_commit_candidate_5(self):
+    def _command_commit_candidate_5(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_5”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._commit_candidate(4, extra_text='')
 
-    def _command_commit_candidate_5_plus_space(self):
+    def _command_commit_candidate_5_plus_space(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_5_plus_space”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._commit_candidate(4, extra_text=' ')
 
-    def _command_remove_candidate_5(self):
+    def _command_remove_candidate_5(self) -> bool:
         '''Handle hotkey for the command “remove_candidate_5”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._remove_candidate(4)
 
-    def _command_commit_candidate_6(self):
+    def _command_commit_candidate_6(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_6”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._commit_candidate(5, extra_text='')
 
-    def _command_commit_candidate_6_plus_space(self):
+    def _command_commit_candidate_6_plus_space(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_6_plus_space”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._commit_candidate(5, extra_text=' ')
 
-    def _command_remove_candidate_6(self):
+    def _command_remove_candidate_6(self) -> bool:
         '''Handle hotkey for the command “remove_candidate_6”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._remove_candidate(5)
 
-    def _command_commit_candidate_7(self):
+    def _command_commit_candidate_7(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_7”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._commit_candidate(6, extra_text='')
 
-    def _command_commit_candidate_7_plus_space(self):
+    def _command_commit_candidate_7_plus_space(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_7_plus_space”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._commit_candidate(6, extra_text=' ')
 
-    def _command_remove_candidate_7(self):
+    def _command_remove_candidate_7(self) -> bool:
         '''Handle hotkey for the command “remove_candidate_7”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._remove_candidate(6)
 
-    def _command_commit_candidate_8(self):
+    def _command_commit_candidate_8(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_8”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._commit_candidate(7, extra_text='')
 
-    def _command_commit_candidate_8_plus_space(self):
+    def _command_commit_candidate_8_plus_space(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_8_plus_space”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._commit_candidate(7, extra_text=' ')
 
-    def _command_remove_candidate_8(self):
+    def _command_remove_candidate_8(self) -> bool:
         '''Handle hotkey for the command “remove_candidate_8”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._remove_candidate(7)
 
-    def _command_commit_candidate_9(self):
+    def _command_commit_candidate_9(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_9”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._commit_candidate(8, extra_text='')
 
-    def _command_commit_candidate_9_plus_space(self):
+    def _command_commit_candidate_9_plus_space(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_9_plus_space”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._commit_candidate(8, extra_text=' ')
 
-    def _command_remove_candidate_9(self):
+    def _command_remove_candidate_9(self) -> bool:
         '''Handle hotkey for the command “remove_candidate_9”
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         '''
         return self._remove_candidate(8)
 
-    def _handle_hotkeys(self, key, commands=()):
+    def _handle_hotkeys(
+            self,
+            key: itb_util.KeyEvent,
+            commands: Iterable[str] = ()) -> bool:
         '''Handle hotkey commands
 
         :return: True if the key was completely handled, False if not.
-        :rtype: Boolean
         :param key: The typed key. If this is a hotkey,
                     execute the command for this hotkey.
         :type key: KeyEvent object
@@ -4778,7 +4723,7 @@ class TypingBoosterEngine(IBus.Engine):
             # setup tool.
             commands = sorted(self._keybindings.keys())
         for command in commands:
-            if (self._prev_key, key, command) in self._hotkeys:
+            if (self._prev_key, key, command) in self._hotkeys: # type: ignore
                 if DEBUG_LEVEL > 1:
                     LOGGER.debug('matched command=%s', command)
                 command_function_name = '_command_%s' % command
@@ -4792,7 +4737,7 @@ class TypingBoosterEngine(IBus.Engine):
                     return True
         return False
 
-    def _return_false(self, keyval, keycode, state):
+    def _return_false(self, keyval: int, keycode: int, state: int) -> bool:
         '''A replacement for “return False” in do_process_key_event()
 
         do_process_key_event should return “True” if a key event has
@@ -4829,7 +4774,7 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _forward_key_event_left(self):
+    def _forward_key_event_left(self) -> None:
         '''Forward an arrow left event to the application.'''
         # Without using a correct ibus key code, this does not work
         # correctly, i.e. self.forward_key_event(IBus.KEY_Left, 0, 0)
@@ -4844,7 +4789,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._keyvals_to_keycodes.ibus_keycode(IBus.KEY_Left),
             0)
 
-    def _handle_compose(self, key):
+    def _handle_compose(self, key: itb_util.KeyEvent) -> bool:
         '''Internal method to handle possible compose keys
 
         :return: True if the key event has been handled, else False
@@ -4921,7 +4866,8 @@ class TypingBoosterEngine(IBus.Engine):
                     IBus.Text.new_from_string(compose_result))
         return True
 
-    def do_process_key_event(self, keyval, keycode, state):
+    def do_process_key_event(
+            self, keyval: int, keycode: int, state: int) -> bool:
         '''Process Key Events
         Key Events include Key Press and Key Release,
         modifier means Key Pressed
@@ -4949,14 +4895,13 @@ class TypingBoosterEngine(IBus.Engine):
         self._prev_key = key
         return result
 
-    def _process_key_event(self, key):
+    def _process_key_event(self, key: itb_util.KeyEvent) -> bool:
         '''Internal method to process key event
 
         :return: True if the key event has been completely handled by
                  ibus-typing-booster and should not be passed through anymore.
                  False if the key event has not been handled completely
                  and is passed through.
-        :rtype: Boolean
         '''
         # Ignore (almost all) key release events
         if key.state & IBus.ModifierType.RELEASE_MASK:
@@ -5335,7 +5280,7 @@ class TypingBoosterEngine(IBus.Engine):
         # returning “False”.
         return self._return_false(key.val, key.code, key.state)
 
-    def do_focus_in(self):
+    def do_focus_in(self) -> None:
         '''Called when a window gets focus while this input engine is enabled
 
         '''
@@ -5348,7 +5293,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_ui()
 
     def _record_in_database_and_push_context(
-            self, commit_phrase='', input_phrase=''):
+            self, commit_phrase: str = '', input_phrase: str = '') -> None:
         '''Record an commit_phrase/input_phrase pair in the user database.
 
         This function does *not* do the actual commit, it assumes that
@@ -5362,11 +5307,8 @@ class TypingBoosterEngine(IBus.Engine):
         :param commit_phrase: The phrase which has been committed already.
                               This parameter can be empty, then it is made
                               equal to what has been in the preedit.
-        :type commit_phrase: String
         :param input_phrase: The typed input. This parameter can be empty,
                              then the transliterated input is used.
-        :type input_phrase: String
-
         '''
         if not input_phrase:
             input_phrase = self._transliterated_strings[
@@ -5398,7 +5340,7 @@ class TypingBoosterEngine(IBus.Engine):
                 pp_phrase=self.get_pp_phrase())
             self.push_context(stripped_commit_phrase)
 
-    def do_focus_out(self):
+    def do_focus_out(self) -> None:
         '''Called when a window looses focus while this input engine is
         enabled
 
@@ -5417,7 +5359,7 @@ class TypingBoosterEngine(IBus.Engine):
         self.clear_context()
         self._clear_input_and_update_ui()
 
-    def do_reset(self):
+    def do_reset(self) -> None:
         '''Called when the mouse pointer is used to move to cursor to a
         different position in the current window.
 
@@ -5427,7 +5369,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('do_reset()\n')
-        if self._prev_key.val in (
+        if self._prev_key is not None and self._prev_key.val in (
                 IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter):
             # The “Return” and “KP_Enter” keys trigger a call to
             # do_reset().  But I don’t want to clear the context, in
@@ -5444,7 +5386,7 @@ class TypingBoosterEngine(IBus.Engine):
         self.clear_context()
         self._clear_input_and_update_ui()
 
-    def do_set_content_type(self, purpose, _hints):
+    def do_set_content_type(self, purpose: int, _hints) -> None:
         '''Called when the input purpose changes
 
         The input purpose is one of these
@@ -5483,7 +5425,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._has_input_purpose:
             self._input_purpose = purpose
 
-    def do_enable(self):
+    def do_enable(self) -> None:
         '''Called when this input engine is enabled'''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('do_enable()\n')
@@ -5492,13 +5434,13 @@ class TypingBoosterEngine(IBus.Engine):
         self.get_surrounding_text()
         self.do_focus_in()
 
-    def do_disable(self):
+    def do_disable(self) -> None:
         '''Called when this input engine is disabled'''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('do_disable()\n')
         self._clear_input_and_update_ui()
 
-    def do_page_up(self):
+    def do_page_up(self) -> bool:
         '''Called when the page up button in the lookup table is clicked with
         the mouse
 
@@ -5508,7 +5450,7 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return True
 
-    def do_page_down(self):
+    def do_page_down(self) -> bool:
         '''Called when the page down button in the lookup table is clicked with
         the mouse
 
@@ -5518,7 +5460,7 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def do_cursor_up(self):
+    def do_cursor_up(self) -> bool:
         '''Called when the mouse wheel is rolled up in the candidate area of
         the lookup table
 
@@ -5527,7 +5469,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_lookup_table_and_aux()
         return res
 
-    def do_cursor_down(self):
+    def do_cursor_down(self) -> bool:
         '''Called when the mouse wheel is rolled down in the candidate area of
         the lookup table
 
@@ -5537,23 +5479,22 @@ class TypingBoosterEngine(IBus.Engine):
         return res
 
     # pylint: disable=unused-argument
-    def _reload_dictionaries(self, value, update_gsettings=False):
+    def _reload_dictionaries(
+            self, value: Any, update_gsettings: bool = False) -> None:
         '''(re)load all dictionaries
 
         Needs to be called when a dictionary has been updated or
         installed.
 
         :param value: ignored
-        :type value: doesn’t matter
         :param update_gsettings: ignored
-        :type update_gsettings: Boolean
         '''
         LOGGER.info('Reloading dictionaries ...')
         self.database.hunspell_obj.init_dictionaries()
         self._clear_input_and_update_ui()
     # pylint: enable=unused-argument
 
-    def on_gsettings_value_changed(self, _settings, key):
+    def on_gsettings_value_changed(self, _settings, key) -> None:
         '''
         Called when a value in the settings has been changed.
 

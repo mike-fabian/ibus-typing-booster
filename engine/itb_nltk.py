@@ -33,11 +33,12 @@ it using:
 
 '''
 
+from typing import List
 import sys
-import nltk
-from nltk.corpus import wordnet
+import nltk # type: ignore
+from nltk.corpus import wordnet # type: ignore
 
-def synonyms(word, keep_original=True):
+def synonyms(word: str, keep_original: bool = True) -> List[str]:
     '''List synonyms for word
 
     :param word: The word for which synonyms should be looked up
@@ -65,7 +66,7 @@ def synonyms(word, keep_original=True):
         result = [word] + result
     return result[:]
 
-def hyponyms(word, keep_original=True):
+def hyponyms(word: str, keep_original: bool = True) -> List[str]:
     '''List hyponyms for word
 
     :param word: The word for which hyponyms should be looked up
@@ -94,7 +95,7 @@ def hyponyms(word, keep_original=True):
         result = [word] + result
     return result[:]
 
-def hypernyms(word, keep_original=True):
+def hypernyms(word: str, keep_original: bool = True) -> List[str]:
     '''List hypernyms for word
 
     :param word: The word for which hyperyms should be looked up
@@ -123,7 +124,7 @@ def hypernyms(word, keep_original=True):
         result = [word] + result
     return result[:]
 
-def related(word, keep_original=True):
+def related(word: str, keep_original: bool = True) -> List[str]:
     '''List all related words (synonyms, hypernyms, and hyponyms)
 
     :param word: The word for which related words should be looked up
@@ -150,7 +151,7 @@ def related(word, keep_original=True):
         result = [word] + result
     return result[:]
 
-def _init():
+def _init() -> None:
     '''Init this module
 
     Try to load the wordnet corpus here to make sure this module is
@@ -164,16 +165,16 @@ def _init():
         print("Unexpected error:", sys.exc_info()[0])
         raise
 
-def _del():
+def _del() -> None:
     '''Cleanup, nothing to do here'''
     return
 
 class __ModuleInitializer:
-    def __init__(self):
+    def __init__(self) -> None:
         _init()
         return
 
-    def __del__(self):
+    def __del__(self) -> None:
         # _del()
         return
 
@@ -181,7 +182,7 @@ __module_init = __ModuleInitializer()
 
 BENCHMARK = True
 
-def main():
+def main() -> None:
     '''
     Used for testing and profiling.
 
