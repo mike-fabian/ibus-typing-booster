@@ -2625,6 +2625,9 @@ def is_ascii(text):
 # Unmapped characters are left untouched. Characters mapped to None
 # are deleted.
 
+# See also: https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf
+# Section 6, Page 30.
+
 TRANS_TABLE = {
     ord('ẞ'): 'SS',
     ord('ß'): 'ss',
@@ -2636,6 +2639,10 @@ TRANS_TABLE = {
     ord('œ'): 'oe',
     ord('Ł'): 'L',
     ord('ł'): 'l',
+    ord('Þ'): 'TH',
+    ord('Ħ'): 'H',
+    ord('Ŋ'): 'N',
+    ord('Ŧ'): 'T',
 }
 
 def remove_accents(text, keep=''):
