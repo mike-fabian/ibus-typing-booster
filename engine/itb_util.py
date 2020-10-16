@@ -3026,7 +3026,7 @@ def get_hunspell_dictionary_wordlist(language):
                 'Unexpected error loading .dic File: %s', dic_path)
             return ('', '', [])
     except Exception:
-        LOGGER.exeption(
+        LOGGER.exception(
             'Unexpected error loading .dic File: %s', dic_path)
         return ('', '', [])
     if not dic_buffer:
