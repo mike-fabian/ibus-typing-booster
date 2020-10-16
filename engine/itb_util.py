@@ -3004,7 +3004,7 @@ def get_hunspell_dictionary_wordlist(language):
         LOGGER.info(
             '%s file missing. Trying to open %s using %s encoding',
             aff_path, dic_path, dictionary_encoding)
-    dic_buffer = ''
+    dic_buffer = []
     try:
         with open(dic_path, encoding=dictionary_encoding) as dic_file:
             dic_buffer = dic_file.readlines()
