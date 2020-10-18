@@ -2710,6 +2710,18 @@ def is_right_to_left_messages():
     if lang in ('ar', 'arc', 'dv', 'fa', 'he', 'ps', 'ur', 'yi'):
         # 'ku' could be Latin script or Arabic script or even Cyrillic
         # or Armenian script
+        #
+        # 'rhg' (Rohingya) could be written in Rohg (RTL),
+        # Arab (RTL), Mymr (LTR), Latn (LTR), Beng (LTR)
+        # There is no glibc locale yet for 'rhg'
+        #
+        # 'man' uses the Nkoo script (RTL)
+        # Ther are several varieties of 'man': 'kao', 'mlq', 'mnk',
+        # 'mwk', 'xkg', 'jad', 'rkm', 'bm', 'bam', 'mku', 'emk', 'msc'
+        # 'mzj', 'jod', 'jud', 'kfo', 'kga', 'mxx', 'dyu', 'bof', 'skq'
+        # There is no glibc locale yet for any of these.
+        #
+        # 'ff', (Fula) is written in Adlm (RTL). There is no glibc locale yet.
         return True
     return False
 
