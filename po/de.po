@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-10-11 17:26+0200\n"
+"POT-Creation-Date: 2020-10-19 09:47+0200\n"
 "PO-Revision-Date: 2020-10-07 13:05+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
@@ -282,27 +282,27 @@ msgstr "Modifikator"
 msgid "regional"
 msgstr "Regional"
 
-#: engine/itb_util.py:3342 engine/itb_util.py:3654
+#: engine/itb_util.py:3360 engine/itb_util.py:3672
 msgid "File not found"
 msgstr "Datei nicht gefunden"
 
-#: engine/itb_util.py:3345 engine/itb_util.py:3657
+#: engine/itb_util.py:3363 engine/itb_util.py:3675
 msgid "Permission error"
 msgstr "Fehler bei den Zugriffsrechten"
 
-#: engine/itb_util.py:3348 engine/itb_util.py:3660
+#: engine/itb_util.py:3366 engine/itb_util.py:3678
 msgid "Unicode decoding error"
 msgstr "Unicode-Dekodierfehler"
 
-#: engine/itb_util.py:3351 engine/itb_util.py:3663
+#: engine/itb_util.py:3369 engine/itb_util.py:3681
 msgid "Unknown error"
 msgstr "Unbekannter Fehler"
 
-#: engine/itb_util.py:3634
+#: engine/itb_util.py:3652
 msgid "Native Keyboard"
 msgstr "Direkte Tastatureingabe"
 
-#: engine/itb_util.py:3636
+#: engine/itb_util.py:3654
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -316,38 +316,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4149
+#: engine/itb_util.py:4167
 msgid "Key input"
 msgstr "Tasteneingabe"
 
-#: engine/itb_util.py:4155
+#: engine/itb_util.py:4173
 msgid "Cancel"
 msgstr "Abbrechen"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4162
+#: engine/itb_util.py:4180
 msgid "Please press a key (or a key combination)"
 msgstr "Bitte drücken Sie eine Taste (oder eine Tastenkombination)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4167
+#: engine/itb_util.py:4185
 msgid "The dialog will be closed when the key is released"
 msgstr "Dieser Dialog wird geschlossen sobald die Taste losgelassen wird"
 
-#: engine/itb_util.py:4199
+#: engine/itb_util.py:4217
 msgid "A completion input method to speedup typing."
 msgstr "Eine vervollständigende Inputmethode zum schnelleren Tippen."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4208
+#: engine/itb_util.py:4226
 msgid "translator-credits"
 msgstr "Mike FABIAN <mfabian@redhat.com>, 2018"
 
-#: engine/itb_util.py:4216
+#: engine/itb_util.py:4234
 msgid "Online documentation:"
 msgstr "Online Dokumentation:"
 
