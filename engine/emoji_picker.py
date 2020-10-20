@@ -137,7 +137,7 @@ def parse_args():
         nargs='?',
         type=str,
         action='store',
-        default='1.0',
+        default='0.0',
         help=('Load only emoji which were added to Unicode '
               + 'not earlier than this Unicode version. '
               + 'default: %(default)s'))

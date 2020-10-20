@@ -310,7 +310,7 @@ class EmojiMatcher():
 
     def __init__(self, languages=('en_US',),
                  unicode_data=True, unicode_data_all=False,
-                 emoji_unicode_min='1.0',
+                 emoji_unicode_min='0.0',
                  emoji_unicode_max='100.0',
                  cldr_data=True, quick=True,
                  variation_selector='emoji',
