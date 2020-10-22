@@ -109,9 +109,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._compose_sequences = itb_util.ComposeSequences()
         self._unit_test = unit_test
         self._input_purpose = 0
-        self._has_input_purpose = False
-        if hasattr(IBus, 'InputPurpose'):
-            self._has_input_purpose = True
+        self._input_hints = 0
         self._lookup_table_is_invalid = False
         self._lookup_table_shows_related_candidates = False
         self._current_auxiliary_text = ''
@@ -4883,9 +4881,9 @@ class TypingBoosterEngine(IBus.Engine):
             return True
 
         if (not self._input_mode
-            or (self._has_input_purpose
-                and self._input_purpose
-                in [IBus.InputPurpose.PASSWORD, IBus.InputPurpose.PIN])):
+            or (self._input_purpose
+                in [itb_util.InputPurpose.PASSWORD,
+                    itb_util.InputPurpose.PIN])):
             return self._return_false(keyval, keycode, state)
 
         if self._handle_hotkeys(key):
@@ -5347,8 +5345,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('do_focus_out()\n')
-        if self._has_input_purpose:
-            self._input_purpose = 0
+        self._input_purpose = 0
         # The preëdit, if there was any, has already been committed
         # automatically because
         # update_preedit_text_with_mode(,,,IBus.PreeditFocusMode.COMMIT)
@@ -5386,44 +5383,27 @@ class TypingBoosterEngine(IBus.Engine):
         self.clear_context()
         self._clear_input_and_update_ui()
 
-    def do_set_content_type(self, purpose: int, _hints) -> None:
-        '''Called when the input purpose changes
-
-        The input purpose is one of these
-
-        IBus.InputPurpose.FREE_FORM
-        IBus.InputPurpose.ALPHA
-        IBus.InputPurpose.DIGITS
-        IBus.InputPurpose.NUMBER
-        IBus.InputPurpose.PHONE
-        IBus.InputPurpose.URL
-        IBus.InputPurpose.EMAIL
-        IBus.InputPurpose.NAME
-        IBus.InputPurpose.PASSWORD
-        IBus.InputPurpose.PIN
-
-        '''
-        purpose_names = {
-            IBus.InputPurpose.FREE_FORM: 'FREE_FORM',
-            IBus.InputPurpose.ALPHA: 'ALPHA',
-            IBus.InputPurpose.DIGITS: 'DIGITS',
-            IBus.InputPurpose.NUMBER: 'NUMBER',
-            IBus.InputPurpose.PHONE: 'PHONE',
-            IBus.InputPurpose.URL: 'URL',
-            IBus.InputPurpose.EMAIL: 'EMAIL',
-            IBus.InputPurpose.NAME: 'NAME',
-            IBus.InputPurpose.PASSWORD: 'PASSWORD',
-            IBus.InputPurpose.PIN: 'PIN',
-        }
-        LOGGER.debug(
-            'do_set_content_type(%s) self._has_input_purpose = %s\n',
-            purpose, self._has_input_purpose)
-        if purpose in purpose_names:
-            LOGGER.debug('purpose_name = %s\n', purpose_names[purpose])
-        else:
-            LOGGER.debug('unknown purpose_name\n')
-        if self._has_input_purpose:
-            self._input_purpose = purpose
+    def do_set_content_type(self, purpose: int, hints: int) -> None:
+        '''Called when the input purpose or hints change'''
+        LOGGER.debug('purpose=%s hints=%s\n', purpose, format(hints, '016b'))
+        self._input_purpose = purpose
+        self._input_hints = hints
+        if DEBUG_LEVEL > 1:
+            if self._input_purpose in list(itb_util.InputPurpose):
+                for input_purpose in list(itb_util.InputPurpose):
+                    if self._input_purpose == input_purpose:
+                        LOGGER.debug(
+                            'self._input_purpose = %s (%s)',
+                            self._input_purpose, str(input_purpose))
+            else:
+                LOGGER.debug(
+                    'self._input_purpose = %s (Unknown)',
+                    self._input_purpose)
+            for hint in list(itb_util.InputHints):
+                if self._input_hints & hint:
+                    LOGGER.debug(
+                        'hint: %s %s',
+                        str(hint), format(int(hint), '016b'))
 
     def do_enable(self) -> None:
         '''Called when this input engine is enabled'''
