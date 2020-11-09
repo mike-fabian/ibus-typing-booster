@@ -28,6 +28,7 @@ from typing import Tuple
 from typing import List
 from typing import Dict
 from typing import Union
+from enum import Enum, Flag
 import sys
 import os
 import re
@@ -3063,6 +3064,224 @@ def get_hunspell_dictionary_wordlist(language: str) -> Tuple[str, str, List[str]
         for x in dic_buffer
     ]
     return (dic_path, dictionary_encoding, word_list)
+
+class InputPurpose(Enum):
+    '''Compatibility class to handle InputPurpose the same way no matter
+    what version of ibus is used.
+
+    For example, older versions of ibus might not have
+    IBus.InputPurpose.TERMINAL and then
+
+        input_purpose == IBus.InputPurpose.TERMINAL
+
+    will produce an exception. But when using this compatibility class
+
+        input_purpose == InputPurpose.TERMINAL
+
+    will just be False but not cause an exception.
+
+    See also:
+
+    https://developer.gnome.org/gtk4/unstable/GtkEntry.html#GtkInputHints
+
+    Examples:
+
+    >>> int(InputPurpose.PASSWORD)
+    8
+
+    >>> 8 == InputPurpose.PASSWORD
+    True
+
+    >>> int(InputPurpose.PIN)
+    9
+
+    >>> InputPurpose.PASSWORD <= InputPurpose.PIN
+    True
+
+    >>> InputPurpose.PASSWORD == Gtk.InputPurpose.PASSWORD
+    True
+
+    >>> InputPurpose.PASSWORD == IBus.InputPurpose.PASSWORD
+    True
+    '''
+    def __new__(cls, attr) -> Any:
+        obj = object.__new__(cls)
+        if hasattr(Gtk, 'InputPurpose') and hasattr(Gtk.InputPurpose, attr):
+            obj._value_ = getattr(Gtk.InputPurpose, attr)
+        else:
+            obj._value_ = -1
+        return obj
+
+    def __int__(self) -> int:
+        return int(self._value_)
+
+    def __eq__(self, other: Any) -> bool:
+        if (self.__class__ is other.__class__
+            or other.__class__ is Gtk.InputPurpose
+            or other.__class__ is IBus.InputPurpose):
+            return int(self) == int(other)
+        if other.__class__ is int or other.__class__ is float:
+            return int(self) == other
+        return NotImplemented
+
+    def __gt__(self, other: Any) -> bool:
+        if (self.__class__ is other.__class__
+            or other.__class__ is Gtk.InputPurpose
+            or other.__class__ is IBus.InputPurpose):
+            return int(self) > int(other)
+        if other.__class__ is int or other.__class__ is float:
+            return int(self) > other
+        return NotImplemented
+
+    def __lt__(self, other: Any) -> bool:
+        if (self.__class__ is other.__class__
+            or other.__class__ is Gtk.InputPurpose
+            or other.__class__ is IBus.InputPurpose):
+            return int(self) < int(other)
+        if other.__class__ is int or other.__class__ is float:
+            return int(self) < other
+        return NotImplemented
+
+    def __ge__(self, other: Any) -> bool:
+        if (self.__class__ is other.__class__
+            or other.__class__ is Gtk.InputPurpose
+            or other.__class__ is IBus.InputPurpose):
+            return int(self) >= int(other)
+        if other.__class__ is int or other.__class__ is float:
+            return int(self) >= other
+        return NotImplemented
+
+    def __le__(self, other: Any) -> bool:
+        if (self.__class__ is other.__class__
+            or other.__class__ is Gtk.InputPurpose
+            or other.__class__ is IBus.InputPurpose):
+            return int(self) <= int(other)
+        if other.__class__ is int or other.__class__ is float:
+            return int(self) <= other
+        return NotImplemented
+
+    FREE_FORM = ('FREE_FORM')
+    ALPHA = ('ALPHA')
+    DIGITS = ('DIGITS')
+    NUMBER = ('NUMBER')
+    PHONE = ('PHONE')
+    URL = ('URL')
+    EMAIL = ('EMAIL')
+    NAME = ('NAME')
+    PASSWORD = ('PASSWORD')
+    PIN = ('PIN')
+    TERMINAL = ('TERMINAL')
+
+class InputHints(Flag):
+    '''Compatibility class to handle InputHints the same way no matter
+    what version of ibus is used.
+
+    For example, older versions of ibus might not have IBus.InputHints.PRIVATE
+    (or maybe even do not have IBus.InputHints at all). Then
+
+        input_hints & IBus.InputHints.PRIVATE
+
+    will produce an exception. But when using this compatibility class
+
+        input_hints & InputHints.PRIVATE
+
+    will just be False but not cause an exception.
+
+    See also:
+
+    https://developer.gnome.org/gtk4/unstable/GtkEntry.html#GtkInputHints
+
+    Examples:
+
+    >>> int(InputHints.SPELLCHECK)
+    1
+
+    >>> InputHints.SPELLCHECK == 1
+    True
+
+    >>> InputHints.SPELLCHECK | 2
+    3
+
+    >>> 2 | InputHints.SPELLCHECK
+    3
+
+    >>> int(InputHints.NO_SPELLCHECK | InputHints.SPELLCHECK)
+    3
+
+    >>> 3 == InputHints.NO_SPELLCHECK | InputHints.SPELLCHECK
+    True
+
+    >>> 3 == InputHints.NO_SPELLCHECK | Gtk.InputHints.SPELLCHECK
+    True
+
+    >>> 3 == InputHints.NO_SPELLCHECK | IBus.InputHints.SPELLCHECK
+    True
+
+    >>> InputHints.SPELLCHECK == IBus.InputHints.SPELLCHECK
+    True
+
+    >>> InputHints.SPELLCHECK == Gtk.InputHints.SPELLCHECK
+    True
+    '''
+    def __new__(cls, attr: str) -> Any:
+        obj = object.__new__(cls)
+        if hasattr(Gtk, 'InputHints') and hasattr(Gtk.InputHints, attr):
+            obj._value_ = getattr(Gtk.InputHints, attr)
+        else:
+            obj._value_ = 0
+        return obj
+
+    def __int__(self) -> int:
+        return int(self._value_)
+
+    def __eq__(self, other: Any) -> bool:
+        if (self.__class__ is other.__class__
+            or other.__class__ is Gtk.InputHints
+            or other.__class__ is IBus.InputHints):
+            return int(self) == int(other)
+        if other.__class__ is int or other.__class__ is float:
+            return int(self) == other
+        return NotImplemented
+
+    def __or__(self, other: Any) -> Any:
+        if self.__class__ is other.__class__:
+            return self.value | other.value
+        if (other.__class__ is Gtk.InputHints
+            or other.__class__ is IBus.InputHints):
+            return int(self) | int(other)
+        if other.__class__ is int:
+            return int(self) | other
+        return NotImplemented
+
+    def __ror__(self, other: Any) -> Any:
+        return self.__or__(other)
+
+    def __and__(self, other: Any) -> Any:
+        if self.__class__ is other.__class__:
+            return self.value & other.value
+        if (other.__class__ is Gtk.InputHints
+            or other.__class__ is IBus.InputHints):
+            return int(self) & int(other)
+        if other.__class__ is int:
+            return int(self) & other
+        return NotImplemented
+
+    def __rand__(self, other: Any) -> Any:
+        return self.__and__(other)
+
+    NONE = ('NONE')
+    SPELLCHECK = ('SPELLCHECK')
+    NO_SPELLCHECK = ('NO_SPELLCHECK')
+    WORD_COMPLETION = ('WORD_COMPLETION')
+    LOWERCASE = ('LOWERCASE')
+    UPPERCASE_CHARS = ('UPPERCASE_CHARS')
+    UPPERCASE_WORDS = ('UPPERCASE_WORDS')
+    UPPERCASE_SENTENCES = ('UPPERCASE_SENTENCES')
+    INHIBIT_OSK = ('INHIBIT_OSK')
+    VERTICAL_WRITING = ('VERTICAL_WRITING')
+    EMOJI = ('EMOJI')
+    NO_EMOJI = ('NO_EMOJI')
+    PRIVATE = ('PRIVATE')
 
 class ComposeSequences:
     '''Class to handle compose sequences.
