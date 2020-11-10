@@ -19,6 +19,33 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.10.1" date="2020-11-10" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.10.1</url>
+      <issues>
+        <issue>
+          Use IBus.InputHints.{UPPERCASE_CHARS,UPPERCASE_WORDS,LOWERCASE}
+        </issue>
+        <issue>
+          Add utility to manually test input purpose and input
+        </issue>
+        <issue>
+          Improve handling of input purpose and input hints
+        </issue>
+        <issue>
+          Add compatibility enum classes InputPurpose and InputHints
+        </issue>
+        <issue>
+          Add type hints
+        </issue>
+        <issue>
+          Change default for emoji_unicode_min to 0.0 (fixes emoji
+          omitted from browsing in emoji-picker)
+        </issue>
+      </issues>
+    </release>
     <release version="2.10.0" date="2020-10-19" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

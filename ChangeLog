@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 10 Nov 2020 Released 2.10.1
+* Use IBus.InputHints.{UPPERCASE_CHARS,UPPERCASE_WORDS,LOWERCASE}
+* Add utility to manually test input purpose and input
+* Improve handling of input purpose and input hints
+* Add compatibility enum classes InputPurpose and InputHints
+* Add type hints
+* Change default for emoji_unicode_min to 0.0 (fixes emoji omitted from browsing in emoji-picker)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 19 Oct 2020 Released 2.10.0
 * Add option to automatically capitalize after punctuation (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/96)
 * Don't record in user database when stripped_input_phrase or stripped_commit_phrase are emty
