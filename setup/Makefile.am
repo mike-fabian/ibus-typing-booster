@@ -39,6 +39,7 @@ setup_typing_booster_PYTHON = \
 	main.py \
 	version.py \
 	pkginstall.py \
+	test_input_purpose.py \
 	$(NULL)
 
 setup_typing_booster_built_files = \
