@@ -5225,8 +5225,15 @@ class TypingBoosterEngine(IBus.Engine):
                 # first key typed, we will try to complete something now
                 # get the context if possible
                 self.get_context()
-                if self._auto_capitalize and self._new_sentence:
-                    self._current_case_mode = 'capitalize'
+                if self._auto_capitalize:
+                    if self._new_sentence:
+                        self._current_case_mode = 'capitalize'
+                    if (self._input_hints & itb_util.InputHints.UPPERCASE_WORDS):
+                            self._current_case_mode = 'capitalize'
+                    if (self._input_hints & itb_util.InputHints.UPPERCASE_CHARS):
+                        self._current_case_mode = 'upper'
+                    if (self._input_hints & itb_util.InputHints.LOWERCASE):
+                        self._current_case_mode = 'lower'
             if (key.msymbol in ('G- ',)
                 and not self._has_transliteration([key.msymbol])):
                 insert_msymbol = ' '
