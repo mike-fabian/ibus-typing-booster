@@ -21,13 +21,12 @@
 Utility functions used in ibus-typing-booster
 '''
 
-# “Wrong continued indentation”: pylint: disable=bad-continuation
-
 from typing import Any
 from typing import Tuple
 from typing import List
 from typing import Dict
 from typing import Union
+from typing import Optional
 from enum import Enum, Flag
 import sys
 import os
@@ -2637,6 +2636,7 @@ TRANS_TABLE = {
 }
 
 def remove_accents(text: str, keep: str = '') -> str:
+    # pylint: disable=line-too-long
     '''Removes accents from the text
 
     Using “from unidecode import unidecode” is maybe more
@@ -2646,7 +2646,8 @@ def remove_accents(text: str, keep: str = '') -> str:
 
     :param text: The text to change
     :param keep: A string of characters which should be kept unchanged
-    :return: The text with some or all accents removed in NORMALIZATION_FORM_INTERNAL
+    :return: The text with some or all accents removed
+             in NORMALIZATION_FORM_INTERNAL
 
     Examples:
 
@@ -2666,6 +2667,7 @@ def remove_accents(text: str, keep: str = '') -> str:
     'alkoholförgiftning'
 
     '''
+    # pylint: enable=line-too-long
     if not keep:
         result = ''.join([
             x for x in unicodedata.normalize('NFKD', text)
@@ -2936,7 +2938,8 @@ def find_hunspell_dictionary(language: str) -> Tuple[str, str]:
         'No file %s.dic found in %s', language, dirnames)
     return ('', '')
 
-def get_hunspell_dictionary_wordlist(language: str) -> Tuple[str, str, List[str]]:
+def get_hunspell_dictionary_wordlist(
+        language: str) -> Tuple[str, str, List[str]]:
     '''
     Open the hunspell dictionary file for a language
 
@@ -3366,6 +3369,8 @@ class ComposeSequences:
         self._dead_keys = {
             # See also /usr/include/X11/keysymdef.h and
             # ibus/src/ibusenginesimple.c
+            #
+            # pylint: disable=line-too-long
             IBus.KEY_dead_abovecomma: '\u0313', # COMBINING COMMA ABOVE
             IBus.KEY_dead_abovedot: '\u0307', # COMBINING DOT ABOVE
             IBus.KEY_dead_abovereversedcomma: '\u0314', # COMBINING REVERSED COMMA ABOVE
@@ -3429,6 +3434,8 @@ class ComposeSequences:
             # IBus.KEY_dead_O: 'お', # FIXME
             IBus.KEY_dead_small_schwa: '\u1DEA ', # COMBINING LATIN SMALL LETTER SCHWA
             # IBus.KEY_dead_capital_schwa: '', # FIXME
+            #
+            # pylint: enable=line-too-long
         }
         self._compose_sequences = {}
         compose_file_paths = []
@@ -3496,8 +3503,9 @@ class ComposeSequences:
                     keyvals.append(eval('IBus.KEY_' + name))
                 except AttributeError:
                     LOGGER.error(
-                        'Invalid compose sequence. keysym "%s" does not exist.'
-                        % name)
+                        'Invalid compose sequence. '
+                        'keysym "%s" does not exist.',
+                        name)
                     return
         if not keyvals:
             return
@@ -3511,7 +3519,7 @@ class ComposeSequences:
             compose_sequences = compose_sequences[keyval]
         last_compose_sequences[last_keyval] = result
 
-    def _xorg_locale_path(self) -> str:
+    def _xorg_locale_path(self) -> str: # pylint: disable=no-self-use
         '''Returns the name of the system directory for compose files.
 
         Usually this is “/usr/share/X11/locale”.
@@ -3620,7 +3628,7 @@ class ComposeSequences:
         return representation
 
     def _compose_dead_key_sequence(
-            self, keyvals: List[int]) -> Union[str, None]:
+            self, keyvals: List[int]) -> Optional[str]:
         # pylint: disable=line-too-long
         '''
         Interprets a list of key values as a dead key sequence
@@ -3721,7 +3729,7 @@ class ComposeSequences:
                 combining_sequence = character + combining_sequence
         return unicodedata.normalize('NFC', combining_sequence)
 
-    def compose(self, keyvals: List[int]) -> Union[str, None]:
+    def compose(self, keyvals: List[int]) -> Optional[str]:
         # pylint: disable=line-too-long
         '''
         Interprets a list of key values as a compose sequence
