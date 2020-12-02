@@ -22,6 +22,26 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.10.2" date="2020-12-17" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.10.2</url>
+      <issues>
+        <issue>
+          Add vi-telex to the default input methods for vi_VN locale
+        </issue>
+        <issue>
+          Enable Unicode 13.1 Emoji in emoji-picker by default
+        </issue>
+        <issue>
+          Update emoji data to Unicode 13.1
+        </issue>
+        <issue>
+          Translation update from Weblate for zh_CN
+        </issue>
+      </issues>
+    </release>
     <release version="2.10.1" date="2020-11-10" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
