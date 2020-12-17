@@ -398,7 +398,7 @@ LOCALE_DEFAULTS = {
     'ur_PK': {'inputmethods': ['NoIME'], 'dictionaries': ['ur_PK']},
     'uz_UZ': {'inputmethods': ['NoIME'], 'dictionaries': ['uz_UZ']},
     've_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['ve_ZA']},
-    'vi_VN': {'inputmethods': ['NoIME'], 'dictionaries': ['vi_VN']},
+    'vi_VN': {'inputmethods': ['NoIME', 'vi-telex'], 'dictionaries': ['vi_VN']},
     'wa_BE': {'inputmethods': ['NoIME'], 'dictionaries': ['wa_BE']},
     'xh_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['xh_ZA']},
     'yi_US': {'inputmethods': ['NoIME', 'yi-yivo'],
