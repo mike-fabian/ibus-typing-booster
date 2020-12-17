@@ -136,7 +136,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['de_CH'])
         self.assertEqual(
             mq.similar('🤐', match_limit = 3),
-            [('🤐', 'Smiley mit Reissverschlussmund [🤐, Gesicht, Mund, Reissverschluss, Smiley mit Reissverschlussmund]', 5), ('😅', 'Lachender Smiley mit kaltem Schweiss [Gesicht]', 1), ('🥸', 'Gesicht mit Maske [Gesicht]', 1)])
+            [('🤐', 'Smiley mit Reissverschlussmund [🤐, Gesicht, Mund, Reissverschluss, Smiley mit Reissverschlussmund]', 5), ('😅', 'Lachender Smiley mit kaltem Schweiss [Gesicht]', 1), ('😃', 'grinsendes Gesicht mit grossen Augen [Gesicht]', 1)])
 
     def test_similar_show_keywords_option_en_US(self):
         mq = itb_emoji.EmojiMatcher(
