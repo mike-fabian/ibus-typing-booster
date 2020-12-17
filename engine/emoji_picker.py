@@ -152,6 +152,7 @@ def parse_args() -> Any:
         ('20190305', '12.0'),
         ('20190507', '12.1'),
         ('20200701', '13.0'),
+        ('20200915', '13.1'),
     )
     current_date = time.strftime('%Y%m%d')
     current_unicode_version = '13.0'
