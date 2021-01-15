@@ -1,6 +1,6 @@
-# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019, 2020.
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020.
-# Mike FABIAN <mfabian@redhat.com>, 2019. #zanata, 2020.
+# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019, 2020, 2021.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2021.
+# Mike FABIAN <mfabian@redhat.com>, 2019. #zanata, 2020, 2021.
 # Anonymous <noreply@weblate.org>, 2019, 2020.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 msgid ""
@@ -9,16 +9,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-11-11 12:13+0100\n"
-"PO-Revision-Date: 2020-10-11 18:00+0000\n"
+"PO-Revision-Date: 2021-01-15 10:36+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Japanese <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ja/>\n"
+"Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.2.2\n"
+"X-Generator: Weblate 4.4.2\n"
 
 #: engine/emoji_picker.py:199
 msgid "Emoji Picker"
@@ -609,7 +609,7 @@ msgstr ""
 #. debug information may also be shown graphically.
 #: setup/main.py:666
 msgid "Debug level:"
-msgstr ""
+msgstr "デバッグレベル:"
 
 #: setup/main.py:668
 msgid ""
