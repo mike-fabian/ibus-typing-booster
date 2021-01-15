@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-11-11 12:13+0100\n"
+"POT-Creation-Date: 2020-12-17 20:12+0100\n"
 "PO-Revision-Date: 2020-11-30 15:25+0000\n"
 "Last-Translator: Han Bao <hankelbao@outlook.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
@@ -22,31 +22,31 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.3.2\n"
 
-#: engine/emoji_picker.py:199
+#: engine/emoji_picker.py:200
 msgid "Emoji Picker"
 msgstr "Emoji 选择器"
 
-#: engine/emoji_picker.py:316
+#: engine/emoji_picker.py:317
 msgid "Clear recently used"
 msgstr "清除最近使用的"
 
-#: engine/emoji_picker.py:322 setup/main.py:176
+#: engine/emoji_picker.py:323 setup/main.py:176
 msgid "About"
 msgstr "关于"
 
-#: engine/emoji_picker.py:327
+#: engine/emoji_picker.py:328
 msgid "Quit"
 msgstr "退出"
 
-#: engine/emoji_picker.py:337
+#: engine/emoji_picker.py:338
 msgid "Search for emoji"
 msgstr "搜索 Emoji"
 
-#: engine/emoji_picker.py:349
+#: engine/emoji_picker.py:350
 msgid "Set the font to display emoji"
 msgstr "设置显示 Emoji 的默认字体"
 
-#: engine/emoji_picker.py:357
+#: engine/emoji_picker.py:358
 msgid "Set font size"
 msgstr "设置字体大小"
 
@@ -58,74 +58,74 @@ msgstr "设置字体大小"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:378
+#: engine/emoji_picker.py:379
 msgid "Fallback"
 msgstr "启用用于 Emoji 的回落字体"
 
-#: engine/emoji_picker.py:380
+#: engine/emoji_picker.py:381
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr "是否当当所选的字体不能显示 Emoji 时使用回落字体以替代。"
 
-#: engine/emoji_picker.py:450
+#: engine/emoji_picker.py:451
 msgid "Recently used"
 msgstr "最近使用"
 
-#: engine/emoji_picker.py:629
+#: engine/emoji_picker.py:630
 msgid "Categories"
 msgstr "分类"
 
-#: engine/emoji_picker.py:630
+#: engine/emoji_picker.py:631
 msgid "Unicode categories"
 msgstr "Unicode分类"
 
-#: engine/emoji_picker.py:631
+#: engine/emoji_picker.py:632
 msgid "Keywords"
 msgstr "关键词"
 
-#: engine/emoji_picker.py:671
+#: engine/emoji_picker.py:672
 msgid "Fonts used to render this emoji:"
 msgstr "用于渲染该 Emoji 的字体："
 
-#: engine/emoji_picker.py:688
+#: engine/emoji_picker.py:689
 msgid "Unicode Version:"
 msgstr "Unicode 版本："
 
-#: engine/emoji_picker.py:710 engine/emoji_picker.py:1824
+#: engine/emoji_picker.py:711 engine/emoji_picker.py:1825
 msgid "Left click to copy"
 msgstr "按下左键以复制"
 
-#: engine/emoji_picker.py:713
+#: engine/emoji_picker.py:714
 msgid "Long press or middle click for skin tones"
 msgstr "长按或中键以更改皮肤"
 
-#: engine/emoji_picker.py:714
+#: engine/emoji_picker.py:715
 msgid "Right click for info"
 msgstr "按下右键以获得详细信息"
 
-#: engine/emoji_picker.py:1202
+#: engine/emoji_picker.py:1203
 msgid "Search Results"
 msgstr "搜索结果"
 
-#: engine/emoji_picker.py:1206
+#: engine/emoji_picker.py:1207
 msgid "Search produced empty result."
 msgstr "搜索生成的空结果。"
 
-#: engine/emoji_picker.py:1479 engine/emoji_picker.py:1606
+#: engine/emoji_picker.py:1480 engine/emoji_picker.py:1607
 msgid "Copied to clipboard!"
 msgstr "已复制到剪贴板！"
 
-#: engine/emoji_picker.py:1934
+#: engine/emoji_picker.py:1935
 msgid "Lookup on emojipedia"
 msgstr "在emojipedia查找"
 
-#: engine/emoji_picker.py:2059 engine/emoji_picker.py:2060
-#: engine/emoji_picker.py:2061 setup/main.py:1226
+#: engine/emoji_picker.py:2060 engine/emoji_picker.py:2061
+#: engine/emoji_picker.py:2062 setup/main.py:1226
 msgid "System default"
 msgstr "系统默认"
 
-#: engine/emoji_picker.py:2195
+#: engine/emoji_picker.py:2196
 msgid "Set Font"
 msgstr "设置字体"
 
@@ -302,7 +302,9 @@ msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
 "So no transliteration or composing is done here."
-msgstr "直接进行键盘输入。这其实并不是一个输入法，他将直接使用来自当前键盘布局的输入，同时不会做任何其他的更改，例如换字或合成。"
+msgstr ""
+"直接进行键盘输入。这其实并不是一个输入法，他将直接使用来自当前键盘布局的输"
+"入，同时不会做任何其他的更改，例如换字或合成。"
 
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
@@ -429,8 +431,10 @@ msgid ""
 "a commit the suggestions are hidden again until the next key bound to this "
 "command is typed."
 msgstr ""
-"如果这个选项被选择了，建议（候选词）默认将不会被显示。为了显示出建议列表，您将必须键入一个字符。显示建议列表的该字符可以在设置>快捷键映射中修改。默认情况"
-"下该字符是Tab。在你在候选词中选择后，建议列表将再次隐藏，直到下一个和这个命令相关的键被输入。"
+"如果这个选项被选择了，建议（候选词）默认将不会被显示。为了显示出建议列表，您"
+"将必须键入一个字符。显示建议列表的该字符可以在设置>快捷键映射中修改。默认情况"
+"下该字符是Tab。在你在候选词中选择后，建议列表将再次隐藏，直到下一个和这个命令"
+"相关的键被输入。"
 
 #. Translators: Whether the best completion is first shown
 #. inline in the preedit instead of showing a full
@@ -450,8 +454,9 @@ msgid ""
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
-"该选项讲决定是非最佳补全项将在预编辑中第一次在行中显示，或是展开显示整个候选词列表。这个行中候选次可以通过输入Tab然后和往常一样确认：比如输入空格或者C"
-"ontrol+空格。再次输入Tab会移动到下一个候选词上并打开整个候选词列表。"
+"该选项讲决定是非最佳补全项将在预编辑中第一次在行中显示，或是展开显示整个候选"
+"词列表。这个行中候选次可以通过输入Tab然后和往常一样确认：比如输入空格或者"
+"Control+空格。再次输入Tab会移动到下一个候选词上并打开整个候选词列表。"
 
 #. Translators: Whether to automatically capitalize after
 #. punctuation.
@@ -484,8 +489,10 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
-"通过选择最佳的备选词，你所输入的内容会被自动更正成最佳备选词。如果这个选项被关闭，你将只能手动选择一个备选词：适用快捷键映射来选择下一个候选词。如果这个选"
-"项被勾选，同时你不希望候选词被自动选择，你可以使用“取消”指令的键盘快捷键来取消选择所有候选词。"
+"通过选择最佳的备选词，你所输入的内容会被自动更正成最佳备选词。如果这个选项被"
+"关闭，你将只能手动选择一个备选词：适用快捷键映射来选择下一个候选词。如果这个"
+"选项被勾选，同时你不希望候选词被自动选择，你可以使用“取消”指令的键盘快捷键来"
+"取消选择所有候选词。"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
@@ -517,8 +524,9 @@ msgid ""
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
 msgstr ""
-"如果多个输入法正在被同时使用，只有其中一个可以被用于预编辑。预编辑的输入法可以通过菜单或快捷键进行修改。如果这个选项被启用，所述修改将被记忆（不会被会话重"
-"启抹除）。"
+"如果多个输入法正在被同时使用，只有其中一个可以被用于预编辑。预编辑的输入法可"
+"以通过菜单或快捷键进行修改。如果这个选项被启用，所述修改将被记忆（不会被会话"
+"重启抹除）。"
 
 #: setup/main.py:479
 msgid ""
@@ -528,8 +536,10 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
-"该选项决定Unicode符号以及Emoji是否应该在预测中包括。Emoji是像☺♨⛵这样包括图形的符号；Unicde符号是其他符号，比如像∀∑∯这样的数学"
-"符号，←↑↔这样的箭头，€₹₺这样的货币符号，⠥⠩这样的图案，或者其他的一些符号。这些本质上不是Emoji但是依然十分有用。"
+"该选项决定Unicode符号以及Emoji是否应该在预测中包括。Emoji是像☺♨⛵这样包括图形"
+"的符号；Unicde符号是其他符号，比如像∀∑∯这样的数学符号，←↑↔这样的箭头，€₹₺这样"
+"的货币符号，⠥⠩这样的图案，或者其他的一些符号。这些本质上不是Emoji但是依然十分"
+"有用。"
 
 #: setup/main.py:507
 msgid ""
@@ -539,7 +549,8 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
-"当“脱离记录”模式被打开时，该系统不会学习用户输入。当学习系统被打开时，通常而言输入预测将比只用字典的输入预测好很多。因此，该选项应被谨慎使用。一个比较典"
+"当“脱离记录”模式被打开时，该系统不会学习用户输入。当学习系统被打开时，通常而"
+"言输入预测将比只用字典的输入预测好很多。因此，该选项应被谨慎使用。一个比较典"
 "型的例子是：为了避免个人隐私信息被记录，可暂时性地使用此选项。"
 
 #. Translators: Use a workaround for bugs in the input
@@ -561,8 +572,10 @@ msgid ""
 "of Qt4 will not work well when this workaround is enabled and input via XIM "
 "into X11 programs like xterm will not work well either."
 msgstr ""
-"使用解决方法来解决Qt4以及Qt5中输入法模块的错误。 注意，尽管这种解决方法可以使它在使用Qt输入模块时更好地工作，但在使用XIM时却会引起问题：即启用"
-"此替代方法后，Qt4的XIM模块将无法正常工作，并且通过XIM输入Xterm之类的X11程序也将无法正常工作。"
+"使用解决方法来解决Qt4以及Qt5中输入法模块的错误。 注意，尽管这种解决方法可以使"
+"它在使用Qt输入模块时更好地工作，但在使用XIM时却会引起问题：即启用此替代方法"
+"后，Qt4的XIM模块将无法正常工作，并且通过XIM输入Xterm之类的X11程序也将无法正常"
+"工作。"
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it
@@ -584,8 +597,9 @@ msgid ""
 "how well it works depends on repetition speed of the arrow keys and system "
 "load. Because it is buggy, this option is off by default."
 msgstr ""
-"使用箭头键移动光标到达单词边界后，是否允许重新打开预编辑。 启用此选项对于更正已提交的单词很有用。 "
-"但这目前尚不完善，其工作方式取决于箭头键的重复速度和系统负载。 因为目前bug比较严重，所以此选项默认为关闭。"
+"使用箭头键移动光标到达单词边界后，是否允许重新打开预编辑。 启用此选项对于更正"
+"已提交的单词很有用。 但这目前尚不完善，其工作方式取决于箭头键的重复速度和系统"
+"负载。 因为目前bug比较严重，所以此选项默认为关闭。"
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -615,9 +629,12 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
-"此列表中的字符会导致预编辑被自动提交，并且后跟一个空格。 例如，如果“。” 是自动提交字符，可以省去句子结尾后手动输入空格的麻烦。 "
-"您可以自由编辑此列表，一个合理的值可能是“。，;：？！）”。 您不应将输入法所需的字符添加到该列表，例如，如果您使用Latin-Pre（t-latn-"
-"pre），则添加“。”将是一个坏主意。 到该列表，因为它会阻止您键入“ .s”以获取“ṡ”。 您还可以通过使列表为空（默认设置）来完全禁用此功能。"
+"此列表中的字符会导致预编辑被自动提交，并且后跟一个空格。 例如，如果“。” 是自"
+"动提交字符，可以省去句子结尾后手动输入空格的麻烦。 您可以自由编辑此列表，一个"
+"合理的值可能是“。，;：？！）”。 您不应将输入法所需的字符添加到该列表，例如，"
+"如果您使用Latin-Pre（t-latn-pre），则添加“。”将是一个坏主意。 到该列表，因为"
+"它会阻止您键入“ .s”以获取“ṡ”。 您还可以通过使列表为空（默认设置）来完全禁用此"
+"功能。"
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
@@ -641,7 +658,8 @@ msgstr "调试级别："
 msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
-msgstr "当大于0时，调试信息可以打印到日志文件，并且调试信息也可以图形方式显示。"
+msgstr ""
+"当大于0时，调试信息可以打印到日志文件，并且调试信息也可以图形方式显示。"
 
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-11-11 12:13+0100\n"
+"POT-Creation-Date: 2020-12-17 20:12+0100\n"
 "PO-Revision-Date: 2020-10-11 10:24+0000\n"
 "Last-Translator: Geert Warrink <geert.warrink@onsnet.nu>\n"
 "Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
@@ -20,31 +20,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.2.2\n"
 
-#: engine/emoji_picker.py:199
+#: engine/emoji_picker.py:200
 msgid "Emoji Picker"
 msgstr "Emoji-kiezer"
 
-#: engine/emoji_picker.py:316
+#: engine/emoji_picker.py:317
 msgid "Clear recently used"
 msgstr "Recent gebruikte emoji wissen"
 
-#: engine/emoji_picker.py:322 setup/main.py:176
+#: engine/emoji_picker.py:323 setup/main.py:176
 msgid "About"
 msgstr "Over"
 
-#: engine/emoji_picker.py:327
+#: engine/emoji_picker.py:328
 msgid "Quit"
 msgstr "Afsluiten"
 
-#: engine/emoji_picker.py:337
+#: engine/emoji_picker.py:338
 msgid "Search for emoji"
 msgstr "Zoeken naar emoji"
 
-#: engine/emoji_picker.py:349
+#: engine/emoji_picker.py:350
 msgid "Set the font to display emoji"
 msgstr "Stel een emoji-lettertype in"
 
-#: engine/emoji_picker.py:357
+#: engine/emoji_picker.py:358
 msgid "Set font size"
 msgstr "Stel de lettergrootte in"
 
@@ -56,11 +56,11 @@ msgstr "Stel de lettergrootte in"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:378
+#: engine/emoji_picker.py:379
 msgid "Fallback"
 msgstr "Terugval"
 
-#: engine/emoji_picker.py:380
+#: engine/emoji_picker.py:381
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -68,64 +68,64 @@ msgstr ""
 "Of het terugvallettertype gebruikt moet worden voor emoji of emoji-zinnen "
 "die niet kunnen worden getoond door het hoofdlettertype."
 
-#: engine/emoji_picker.py:450
+#: engine/emoji_picker.py:451
 msgid "Recently used"
 msgstr "Recent gebruikt"
 
-#: engine/emoji_picker.py:629
+#: engine/emoji_picker.py:630
 msgid "Categories"
 msgstr "Categorieën"
 
-#: engine/emoji_picker.py:630
+#: engine/emoji_picker.py:631
 msgid "Unicode categories"
 msgstr "Unicode-categorieën"
 
-#: engine/emoji_picker.py:631
+#: engine/emoji_picker.py:632
 msgid "Keywords"
 msgstr "Trefwoorden"
 
-#: engine/emoji_picker.py:671
+#: engine/emoji_picker.py:672
 msgid "Fonts used to render this emoji:"
 msgstr "Gebruikte lettertypen voor deze emoji:"
 
-#: engine/emoji_picker.py:688
+#: engine/emoji_picker.py:689
 msgid "Unicode Version:"
 msgstr "Unicode-versie:"
 
-#: engine/emoji_picker.py:710 engine/emoji_picker.py:1824
+#: engine/emoji_picker.py:711 engine/emoji_picker.py:1825
 msgid "Left click to copy"
 msgstr "Klik met de linkermuisknop om te kopiëren"
 
-#: engine/emoji_picker.py:713
+#: engine/emoji_picker.py:714
 msgid "Long press or middle click for skin tones"
 msgstr "Houd ingedrukt of klik met het scrollwiel om een huidskleur te kiezen"
 
-#: engine/emoji_picker.py:714
+#: engine/emoji_picker.py:715
 msgid "Right click for info"
 msgstr "Klik met de rechtermuisknop voor informatie"
 
-#: engine/emoji_picker.py:1202
+#: engine/emoji_picker.py:1203
 msgid "Search Results"
 msgstr "Zoekresultaten"
 
-#: engine/emoji_picker.py:1206
+#: engine/emoji_picker.py:1207
 msgid "Search produced empty result."
 msgstr "Geen resultaten gevonden."
 
-#: engine/emoji_picker.py:1479 engine/emoji_picker.py:1606
+#: engine/emoji_picker.py:1480 engine/emoji_picker.py:1607
 msgid "Copied to clipboard!"
 msgstr "Gekopieerd naar het klembord!"
 
-#: engine/emoji_picker.py:1934
+#: engine/emoji_picker.py:1935
 msgid "Lookup on emojipedia"
 msgstr "Opzoeken op emojipedia"
 
-#: engine/emoji_picker.py:2059 engine/emoji_picker.py:2060
-#: engine/emoji_picker.py:2061 setup/main.py:1226
+#: engine/emoji_picker.py:2060 engine/emoji_picker.py:2061
+#: engine/emoji_picker.py:2062 setup/main.py:1226
 msgid "System default"
 msgstr "Systeemstandaard"
 
-#: engine/emoji_picker.py:2195
+#: engine/emoji_picker.py:2196
 msgid "Set Font"
 msgstr "Lettertype instellen"
 
