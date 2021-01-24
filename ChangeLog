@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 24 Jan 2021 Released 2.10.3
+* Update emoji annotations from CLDR
+* Translation update from Weblate for zh_CN (100% complete now)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 17 Dec 2020 Released 2.10.2
 * Add vi-telex to the default input methods for vi_VN locale
 * Enable Unicode 13.1 Emoji in emoji-picker by default
