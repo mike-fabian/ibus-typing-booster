@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-12-17 20:12+0100\n"
-"PO-Revision-Date: 2021-01-24 07:37+0000\n"
+"PO-Revision-Date: 2021-01-28 17:40+0000\n"
 "Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_CN/>\n"
@@ -228,7 +228,7 @@ msgstr "Google 语音转文本出错。详情请见 debug.log。"
 #: engine/itb_emoji.py:789 engine/itb_emoji.py:790 engine/itb_emoji.py:791
 #: engine/itb_emoji.py:1005
 msgid "people"
-msgstr "人类"
+msgstr "人物"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
@@ -994,7 +994,7 @@ msgstr "使用用户数据库联想词颜色"
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
-msgstr "选择是否对查找表中来自用户数据库的候选词使用自定义颜色。"
+msgstr "选择是否对候选词表中来自用户数据库的候选词使用自定义颜色。"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1008,7 +1008,7 @@ msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
-msgstr "指定用于查找表中来自用户数据库的候选词的自定义颜色。此设置只在“使用用户数据库联想词颜色”启用时有用。"
+msgstr "指定用于候选词表中来自用户数据库的候选词的自定义颜色。此设置只在“使用用户数据库联想词颜色”启用时有用。"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
@@ -1020,7 +1020,7 @@ msgstr "使用拼写检查联想词颜色"
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
-msgstr "选择是否对查找表中来自拼写检查的候选词使用自定义颜色。"
+msgstr "选择是否对候选词表中来自拼写检查的候选词使用自定义颜色。"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1034,7 +1034,7 @@ msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
-msgstr "指定用于查找表中来自拼写检查的候选词的自定义颜色。此设置只在“使用拼写检查联想词颜色”启用时有用。"
+msgstr "指定用于候选词表中来自拼写检查的候选词的自定义颜色。此设置只在“使用拼写检查联想词颜色”启用时有用。"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
@@ -1047,7 +1047,7 @@ msgstr "使用词典联想词颜色"
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
-msgstr "选择是否对查找表中来自词典的候选词使用自定义颜色。"
+msgstr "选择是否对候选词表中来自词典的候选词使用自定义颜色。"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1061,7 +1061,7 @@ msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
-msgstr "指定用于查找表中来自词典的候选词的自定义颜色。此设置只在“使用词典联想词颜色”启用时有用。"
+msgstr "指定用于候选词表中来自词典的候选词的自定义颜色。此设置只在“使用词典联想词颜色”启用时有用。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
@@ -1074,7 +1074,7 @@ msgstr "使用用户数据库联想词标签"
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
-msgstr "选择是否对查找表中来自用户数据库的候选词使用标签。"
+msgstr "选择是否对候选词表中来自用户数据库的候选词使用标签。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
@@ -1087,7 +1087,7 @@ msgstr "使用拼写检查联想词标签"
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
-msgstr "选择是否对查找表中来自拼写检查的候选词使用标签。"
+msgstr "选择是否对候选词表中来自拼写检查的候选词使用标签。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
@@ -1100,7 +1100,7 @@ msgstr "使用词典联想词标签"
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
-msgstr "选择是否对查找表中来自词典的候选词使用标签。"
+msgstr "选择是否对候选词表中来自词典的候选词使用标签。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
