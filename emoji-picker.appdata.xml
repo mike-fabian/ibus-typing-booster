@@ -22,6 +22,23 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.10.4" date="2021-02-02" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.10.4</url>
+      <issues>
+        <issue>
+          Use “from unittest import mock” instead of just “import mock”.
+        </issue>
+        <issue>
+          Update emoji annotations from CLDR
+        </issue>
+        <issue>
+          Translation update from Weblate for zh_CN (still 100% complete)
+        </issue>
+      </issues>
+    </release>
     <release version="2.10.3" date="2021-01-24" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

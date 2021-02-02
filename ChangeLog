@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 02 Feb 2021 Released 2.10.4
+* Use “from unittest import mock” instead of just “import mock”.
+* Update emoji annotations from CLDR
+* Translation update from Weblate for zh_CN (still 100% complete)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 24 Jan 2021 Released 2.10.3
 * Update emoji annotations from CLDR
 * Translation update from Weblate for zh_CN (100% complete now)
