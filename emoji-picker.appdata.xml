@@ -21,6 +21,36 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.10.5" date="2021-02-17" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.10.5</url>
+      <issues>
+        <issue>
+          Run the voikko tests only for libvoikko version >= 4.3
+        </issue>
+        <issue>
+          Adapt voikko test cases to the newest voikko version
+          libvoikko-4.3-3, python3-libvoikko-4.3-3, voikko-fi-2.4-3
+        </issue>
+        <issue>
+          Log a warning when language is “fi” and “import libvoikko”
+          failed
+        </issue>
+        <issue>
+          Return an empty list [] in spellcheck_suggest_voikko() when
+          libvoikko was not imported
+        </issue>
+        <issue>
+          Remove icon in emoji-picker.appdata.xml (to avoid warnings
+          from appstream-util and appstreamcli).
+        </issue>
+        <issue url="https://unicode-org.atlassian.net/browse/CLDR-2698">
+          Update emoji annotations from CLDR, switching “no” and “nb”.
+        </issue>
+      </issues>
+    </release>
     <release version="2.10.4" date="2021-02-02" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

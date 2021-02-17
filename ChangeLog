@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 17 Feb 2021 Released 2.10.5
+* Run the voikko tests only for libvoikko version >= 4.3
+* Adapt voikko test cases to the newest voikko version libvoikko-4.3-3, python3-libvoikko-4.3-3, voikko-fi-2.4-3
+* Log a warning when language is “fi” and “import libvoikko” failed
+* Return an empty list [] in spellcheck_suggest_voikko() when libvoikko was not imported
+* Update emoji annotations from CLDR, switching “no” and “nb”, see: https://unicode-org.atlassian.net/browse/CLDR-2698
+* Remove icon in emoji-picker.appdata.xml
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 02 Feb 2021 Released 2.10.4
 * Use “from unittest import mock” instead of just “import mock”.
 * Update emoji annotations from CLDR
