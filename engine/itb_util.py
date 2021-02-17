@@ -1233,6 +1233,8 @@ CLDR_ANNOTATION_FILES = {
     'nn_NO',
     'nnh',
     'nnh_CM',
+    'no',
+    'no_NO',
     'nus',
     'nus_SS',
     'nyn',
@@ -2431,6 +2433,15 @@ def expand_languages(languages: List[str]) -> List[str]:
     >>> expand_languages(['zh_Hant', 'zh_CN', 'zh_TW', 'zh_SG', 'zh_HK', 'zh_MO'])
     ['zh_Hant', 'zh_CN', 'zh', 'zh_TW', 'zh_Hant', 'zh_SG', 'zh', 'zh_HK', 'zh_Hant', 'zh_MO', 'zh_Hant', 'en']
 
+    >>> expand_languages(['nb_NO'])
+    ['nb_NO', 'no', 'nb', 'en']
+
+    >>> expand_languages(['nn_NO'])
+    ['nn_NO', 'nn', 'en']
+
+    >>> expand_languages(['no_NO'])
+    ['no_NO', 'nb', 'no', 'en']
+
     >>> expand_languages(['en_GB', 'en'])
     ['en_GB', 'en_001', 'en', 'en', 'en_001']
 
@@ -2447,6 +2458,10 @@ def expand_languages(languages: List[str]) -> List[str]:
             expanded_languages.append('zh_Hant')
         if language[:2] == 'en':
             expanded_languages.append('en_001')
+        if language[:2] == 'nb':
+            expanded_languages.append('no')
+        if language[:2] == 'no':
+            expanded_languages.append('nb')
         if (language not in ('zh_TW', 'zh_HK', 'zh_MO', 'zh_Hant')
                 and language.split('_')[:1] != [language]):
             expanded_languages += language.split('_')[:1]
