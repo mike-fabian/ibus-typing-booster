@@ -375,7 +375,7 @@ class Dictionary:
         :param word: The word to return spellchecking suggestions for
         :return: List of spellchecking suggestions, possibly empty.
         '''
-        if not word:
+        if not word or not self.voikko:
             return []
         return [
             unicodedata.normalize(
