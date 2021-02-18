@@ -199,8 +199,12 @@ class Dictionary:
             if self.name.split('_')[0] == 'fi':
                 self.enchant_dict = None
                 self.pyhunspell_object = None
-                if IMPORT_LIBVOIKKO_SUCCESSFUL:
-                    self.voikko = libvoikko.Voikko('fi')
+                self.voikko = None
+                if not IMPORT_LIBVOIKKO_SUCCESSFUL:
+                    LOGGER.warning(
+                        'Language is “fi” but “import libvoikko” failed.')
+                    return
+                self.voikko = libvoikko.Voikko('fi')
                 return
             if IMPORT_ENCHANT_SUCCESSFUL:
                 try:
