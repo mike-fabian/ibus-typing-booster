@@ -199,6 +199,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(
             h.suggest('kisssa'),
             [('kissa', -1),
+             ('Kiassa', -1),
              ('kissaa', -1),
              ('kisassa', -1),
              ('kisussa', -1)])
@@ -259,7 +260,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         d = hunspell_suggest.Dictionary('fi_FI')
         self.assertEqual(
             d.spellcheck_suggest_voikko('kisssa'),
-            ['kissa', 'kissaa', 'kisassa', 'kisussa'])
+            ['kissa', 'kissaa', 'kisassa', 'kisussa', 'Kiassa'])
 
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('sv_SE')[0],
