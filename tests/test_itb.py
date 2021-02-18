@@ -75,6 +75,12 @@ try:
 except (ImportError,):
     pass
 
+def get_libvoikko_version():
+    if IMPORT_LIBVOIKKO_SUCCESSFUL:
+        return libvoikko.Voikko.getVersion()
+    else:
+        return '0'
+
 @unittest.skipIf(Gdk.Display.open('') is None, 'Display cannot be opened.')
 class ItbTestCase(unittest.TestCase):
     '''
@@ -1457,8 +1463,8 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, 'aṳ')
 
     @unittest.skipUnless(
-        IMPORT_LIBVOIKKO_SUCCESSFUL,
-        "Skipping because this test requires python3-libvoikko to work.")
+        get_libvoikko_version() >= '4.3',
+        "Skipping, requires python3-libvoikko version >= 4.3.")
     def test_voikko(self):
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)
@@ -1472,14 +1478,15 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(self.engine._candidates, [
             ('kissa', -1, '', False, True),
+            ('Kiassa', -1, '', False, True),
             ('kissaa', -1, '', False, True),
             ('kisassa', -1, '', False, True),
             ('kisussa', -1, '', False, True)
         ])
 
     @unittest.skipUnless(
-        IMPORT_LIBVOIKKO_SUCCESSFUL,
-        "Skipping because this test requires python3-libvoikko to work.")
+        get_libvoikko_version() >= '4.3',
+        "Skipping, requires python3-libvoikko version >= 4.3.")
     def test_voikko_en_GB_fi_FI(self):
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)
@@ -1494,6 +1501,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine._candidates, [
             ('kiss', -1, '', False, True),
             ('kissa', -1, '', False, True),
+            ('Kiassa', -1, '', False, True),
             ('kissaa', -1, '', False, True),
             ('kisassa', -1, '', False, True),
             ('kisussa', -1, '', False, True)

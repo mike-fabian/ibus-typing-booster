@@ -52,6 +52,12 @@ try:
 except (ImportError,):
     pass
 
+def get_libvoikko_version():
+    if IMPORT_LIBVOIKKO_SUCCESSFUL:
+        return libvoikko.Voikko.getVersion()
+    else:
+        return '0'
+
 class HunspellSuggestTestCase(unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
@@ -190,8 +196,8 @@ class HunspellSuggestTestCase(unittest.TestCase):
              ('kissamaiseksi',0)])
 
     @unittest.skipUnless(
-        IMPORT_LIBVOIKKO_SUCCESSFUL,
-        "Skipping because this test requires python3-libvoikko to work.")
+        get_libvoikko_version() >= '4.3',
+        "Skipping, requires python3-libvoikko version >= 4.3.")
     def test_fi_FI_voikko(self):
         d = hunspell_suggest.Dictionary('fi_FI')
         self.assertEqual(d.has_spellchecking(), True)
@@ -244,8 +250,8 @@ class HunspellSuggestTestCase(unittest.TestCase):
             ['camel', 'Camel'])
 
     @unittest.skipUnless(
-        IMPORT_LIBVOIKKO_SUCCESSFUL,
-        "Skipping because this test requires python3-libvoikko to work.")
+        get_libvoikko_version() >= '4.3',
+        "Skipping, requires python3-libvoikko version >= 4.3.")
     def test_fi_FI_spellcheck_voikko(self):
         d = hunspell_suggest.Dictionary('fi_FI')
         self.assertEqual(d.spellcheck_voikko('kissa'), True)
@@ -254,8 +260,8 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(d.spellcheck_voikko('Päivia'), False)
 
     @unittest.skipUnless(
-        IMPORT_LIBVOIKKO_SUCCESSFUL,
-        "Skipping because this test requires python3-libvoikko to work.")
+        get_libvoikko_version() >= '4.3',
+        "Skipping, requires python3-libvoikko version >= 4.3.")
     def test_fi_FI_spellcheck_suggest_voikko(self):
         d = hunspell_suggest.Dictionary('fi_FI')
         self.assertEqual(
