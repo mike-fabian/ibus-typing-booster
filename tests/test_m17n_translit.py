@@ -86,7 +86,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('. ')), '। ')
 
     def test_hi_inscript2(self):
-        trans = Transliterator('hi-inscript2')
+        trans = self.get_transliterator_or_skip('hi-inscript2')
         self.assertEqual(trans.transliterate([]), '')
         # Hindi-Inscript2 uses the AltGr key a lot, 'G-4' is the
         # MSymbol name for AltGr-4 and it transliterates to something
@@ -98,7 +98,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(['3', 'G-3']), '३G-3')
 
     def test_mr_inscript2(self):
-        trans = Transliterator('mr-inscript2')
+        trans = self.get_transliterator_or_skip('mr-inscript2')
         # In mr-inscript2, 'G-1' transliterates to U+200D ZERO WIDTH
         # JOINER ('\xe2\x80\x8d' in UTF-8 encoding):
         self.assertEqual(
