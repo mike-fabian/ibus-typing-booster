@@ -1,13 +1,13 @@
 # Marco Aurélio Krause <ouesten@me.com>, 2016. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
-# Rafael Fontenelle <rafaelff@gnome.org>, 2019, 2020.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2019, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2020-12-17 20:12+0100\n"
-"PO-Revision-Date: 2020-08-10 06:16+0000\n"
+"PO-Revision-Date: 2021-03-08 02:01+0000\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/pt_BR/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.5.1\n"
 
 #: engine/emoji_picker.py:200
 msgid "Emoji Picker"
@@ -459,11 +459,11 @@ msgstr ""
 #. punctuation.
 #: setup/main.py:379
 msgid "Auto capitalize"
-msgstr ""
+msgstr "Maiúsculo automático"
 
 #: setup/main.py:381
 msgid "Automatically capitalize after punctuation."
-msgstr ""
+msgstr "Muda automaticamente a letra para maiúscula após a pontuação."
 
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
