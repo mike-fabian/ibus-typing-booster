@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2020-12-17 20:12+0100\n"
+"POT-Creation-Date: 2021-02-17 15:10+0100\n"
 "PO-Revision-Date: 2021-01-28 17:40+0000\n"
 "Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
@@ -67,7 +67,8 @@ msgstr "启用用于 Emoji 的回落字体"
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
-msgstr "当 Emoji 表情或表情组合的部分无法使用所选字体显示时，是否使用回落字体来显示。"
+msgstr ""
+"当 Emoji 表情或表情组合的部分无法使用所选字体显示时，是否使用回落字体来显示。"
 
 #: engine/emoji_picker.py:451
 msgid "Recently used"
@@ -278,64 +279,66 @@ msgstr "修饰符"
 msgid "regional"
 msgstr "地区"
 
-#: engine/itb_util.py:3562 engine/itb_util.py:3869
+#: engine/itb_util.py:3577 engine/itb_util.py:3884
 msgid "File not found"
 msgstr "文件未找到"
 
-#: engine/itb_util.py:3565 engine/itb_util.py:3872
+#: engine/itb_util.py:3580 engine/itb_util.py:3887
 msgid "Permission error"
 msgstr "权限错误"
 
-#: engine/itb_util.py:3568 engine/itb_util.py:3875
+#: engine/itb_util.py:3583 engine/itb_util.py:3890
 msgid "Unicode decoding error"
 msgstr "Unicode 解码出错"
 
-#: engine/itb_util.py:3571 engine/itb_util.py:3878
+#: engine/itb_util.py:3586 engine/itb_util.py:3893
 msgid "Unknown error"
 msgstr "未知错误"
 
-#: engine/itb_util.py:3849
+#: engine/itb_util.py:3864
 msgid "Native Keyboard"
 msgstr "原生键盘"
 
-#: engine/itb_util.py:3851
+#: engine/itb_util.py:3866
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
 "So no transliteration or composing is done here."
-msgstr "键盘直接输入。这其实并不是输入法，它将直接使用当前键盘布局的输入，同时不会做任何更改，例如转写或组词。"
+msgstr ""
+"键盘直接输入。这其实并不是输入法，它将直接使用当前键盘布局的输入，同时不会做"
+"任何更改，例如转写或组词。"
 
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4348
+#: engine/itb_util.py:4363
 msgid "Key input"
 msgstr "输入的键盘码"
 
-#: engine/itb_util.py:4354
+#: engine/itb_util.py:4369
 msgid "Cancel"
 msgstr "取消"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4361
+#: engine/itb_util.py:4376
 msgid "Please press a key (or a key combination)"
 msgstr "请按下一个键盘按键（或者按键组合）"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4366
+#: engine/itb_util.py:4381
 msgid "The dialog will be closed when the key is released"
 msgstr "当按键被按下，这个对话框将会自动关闭"
 
-#: engine/itb_util.py:4398
+#: engine/itb_util.py:4413
 msgid "A completion input method to speedup typing."
 msgstr "一个用于补全的输入法，它将会提升你的打字速度。"
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4407
+#: engine/itb_util.py:4422
 msgid "translator-credits"
 msgstr ""
 "lexuge <LEXUGEyky@outlook.com>, 2017\n"
@@ -345,7 +348,7 @@ msgstr ""
 "Hankel Bao <hankelbao@outlook.com>, 2020\n"
 "Dingzhong Chen <wsxy162@gmail.com>, 2021"
 
-#: engine/itb_util.py:4415
+#: engine/itb_util.py:4430
 msgid "Online documentation:"
 msgstr "线上文档："
 
@@ -431,8 +434,9 @@ msgid ""
 "a commit the suggestions are hidden again until the next key bound to this "
 "command is typed."
 msgstr ""
-"如果勾选此选项，则默认不显示联想候选词。您必须先按下按键才可以显示联想词列表。此按键可以在快捷键绑定中修改。默认情况下该快捷键为 "
-"Tab。在你上屏候选词后，联想词列表将再次隐藏，直到下次快捷键再次按下。"
+"如果勾选此选项，则默认不显示联想候选词。您必须先按下按键才可以显示联想词列"
+"表。此按键可以在快捷键绑定中修改。默认情况下该快捷键为 Tab。在你上屏候选词"
+"后，联想词列表将再次隐藏，直到下次快捷键再次按下。"
 
 #. Translators: Whether the best completion is first shown
 #. inline in the preedit instead of showing a full
@@ -452,8 +456,9 @@ msgid ""
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
-"是否首先在行中显示预编辑中的最佳补全词，而非显示完整的候选词列表。行中候选词可以通过按下 Tab 键选择然后按照往常方式上屏，比如按下空格键或者 "
-"Control+空格键。再次按下 Tab 键移到下一个候选词并打开完整的候选词列表。"
+"是否首先在行中显示预编辑中的最佳补全词，而非显示完整的候选词列表。行中候选词"
+"可以通过按下 Tab 键选择然后按照往常方式上屏，比如按下空格键或者 Control+空格"
+"键。再次按下 Tab 键移到下一个候选词并打开完整的候选词列表。"
 
 #. Translators: Whether to automatically capitalize after
 #. punctuation.
@@ -486,8 +491,10 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
-"通过选择最佳的候选词，你所输入的内容会自动更正成最佳候选词。如果这个选项关闭，你必须通过“选择下一个候选词”所绑定的快捷键来手动选择。如果这个选项启用，但"
-"你不希望自动选择候选词，你可以使用“取消”命令绑定的的快捷键取消选择所有的候选词。"
+"通过选择最佳的候选词，你所输入的内容会自动更正成最佳候选词。如果这个选项关"
+"闭，你必须通过“选择下一个候选词”所绑定的快捷键来手动选择。如果这个选项启用，"
+"但你不希望自动选择候选词，你可以使用“取消”命令绑定的的快捷键取消选择所有的候"
+"选词。"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
@@ -519,8 +526,9 @@ msgid ""
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
 msgstr ""
-"如果同时添加了多个输入法，预编辑只能使用其中的一个。预编辑要用哪一个输入法，可以通过菜单或者快捷键更改。如果此选项启用，即使会话重启，也会记住更改使用的输"
-"入法。"
+"如果同时添加了多个输入法，预编辑只能使用其中的一个。预编辑要用哪一个输入法，"
+"可以通过菜单或者快捷键更改。如果此选项启用，即使会话重启，也会记住更改使用的"
+"输入法。"
 
 #: setup/main.py:479
 msgid ""
@@ -530,9 +538,10 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
-"是否要在预测中包含 Unicode 符号和 Emoji 表情。Emoji 是像 ☺♨⛵ 之类的象形符号，Unicode "
-"符号则是其他符号，如数学符号（∀∑∯…）、箭头（←↑↔…）、货币符号（€₹₺…）、盲文图案（⠥⠩…），还有其他一些符号。这些符号在技术上不算作 "
-"Emoji 但依然十分有用。"
+"是否要在预测中包含 Unicode 符号和 Emoji 表情。Emoji 是像 ☺♨⛵ 之类的象形符号，"
+"Unicode 符号则是其他符号，如数学符号（∀∑∯…）、箭头（←↑↔…）、货币符号（€₹₺"
+"…）、盲文图案（⠥⠩…），还有其他一些符号。这些符号在技术上不算作 Emoji 但依然十"
+"分有用。"
 
 #: setup/main.py:507
 msgid ""
@@ -542,7 +551,8 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
-"当开启“停止记录”模式时，输入法不会学习用户的输入。当学习功能开启时，通常而言输入预测会比只启用词典的好很多。因此，该选项应谨慎使用。只有当用户想要避免个"
+"当开启“停止记录”模式时，输入法不会学习用户的输入。当学习功能开启时，通常而言"
+"输入预测会比只启用词典的好很多。因此，该选项应谨慎使用。只有当用户想要避免个"
 "人的私密输入被保存到磁盘时，暂时使用此选项才有意义。"
 
 #. Translators: Use a workaround for bugs in the input
@@ -564,8 +574,10 @@ msgid ""
 "of Qt4 will not work well when this workaround is enabled and input via XIM "
 "into X11 programs like xterm will not work well either."
 msgstr ""
-"使用一个应变方法来解决存在于 Qt4 和 Qt5 输入法模块中的缺陷。注意，尽管此应变方法使它在使用 Qt 输入法模块时更好地工作，但在使用 XIM "
-"时却会引起问题。即启用此应变方法后，Qt4 的 XIM 模块不能正常工作，同时输入经由 XIM 进入 X11 的程序如 xterm 也不能正常工作。"
+"使用一个应变方法来解决存在于 Qt4 和 Qt5 输入法模块中的缺陷。注意，尽管此应变"
+"方法使它在使用 Qt 输入法模块时更好地工作，但在使用 XIM 时却会引起问题。即启用"
+"此应变方法后，Qt4 的 XIM 模块不能正常工作，同时输入经由 XIM 进入 X11 的程序"
+"如 xterm 也不能正常工作。"
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it
@@ -587,8 +599,9 @@ msgid ""
 "how well it works depends on repetition speed of the arrow keys and system "
 "load. Because it is buggy, this option is off by default."
 msgstr ""
-"使用方向键移动光标到达单词边界后，是否允许重新打开预编辑。启用此选项对于更正已上屏的单词很有用。但该功能目前还不完善，是否有效取决于方向键的点击速度和系统"
-"负载。因为此功能问题太多，默认关闭此选项。"
+"使用方向键移动光标到达单词边界后，是否允许重新打开预编辑。启用此选项对于更正"
+"已上屏的单词很有用。但该功能目前还不完善，是否有效取决于方向键的点击速度和系"
+"统负载。因为此功能问题太多，默认关闭此选项。"
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -618,9 +631,11 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
-"输入此列表中的字符将会自动上屏预编辑内容，并且后跟一个空格。例如，如果“.”是个自动上屏字符，可以省去句子结尾处手动输入空格的麻烦。你可以自由地编辑此列表"
-"，合理值可以是“.,;:?!)”。你不应该将输入法所需的字符添加到该列表，比如你使用 Latin-Pre（t-latn-"
-"pre），则添加“.”到列表不是个好事，因为它会阻止你输入“.s”来获取“ṡ”。你也可以通过留空此列表来禁用此功能（默认为此）。"
+"输入此列表中的字符将会自动上屏预编辑内容，并且后跟一个空格。例如，如果“.”是个"
+"自动上屏字符，可以省去句子结尾处手动输入空格的麻烦。你可以自由地编辑此列表，"
+"合理值可以是“.,;:?!)”。你不应该将输入法所需的字符添加到该列表，比如你使用 "
+"Latin-Pre（t-latn-pre），则添加“.”到列表不是个好事，因为它会阻止你输入“.s”来"
+"获取“ṡ”。你也可以通过留空此列表来禁用此功能（默认为此）。"
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
@@ -644,7 +659,8 @@ msgstr "调试级别："
 msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
-msgstr "当大于 0 时，调试信息可以打印到日志文件，并且调试信息也可以图形方式显示。"
+msgstr ""
+"当大于 0 时，调试信息可以打印到日志文件，并且调试信息也可以图形方式显示。"
 
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
@@ -843,7 +859,8 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
-"以辅助文本显示“Emoji 预测”和“停止记录”模式是开启还是关闭，还有当前预编辑中正在使用哪个输入法。辅助文本以可选文本行形式显示在候选词列表的顶部。"
+"以辅助文本显示“Emoji 预测”和“停止记录”模式是开启还是关闭，还有当前预编辑中正"
+"在使用哪个输入法。辅助文本以可选文本行形式显示在候选词列表的顶部。"
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
@@ -926,7 +943,8 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
-"如果启用此选项，只在查找功能启用时使用预编辑样式，如下划线。查找功能会在使用“以按键启用联想”时禁用，或者用户输入还未“触发补全所需的最小字符数”。"
+"如果启用此选项，只在查找功能启用时使用预编辑样式，如下划线。查找功能会在使"
+"用“以按键启用联想”时禁用，或者用户输入还未“触发补全所需的最小字符数”。"
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and
@@ -941,7 +959,9 @@ msgid ""
 "Here you can choose whether spellchecking is done on the contents of the "
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
-msgstr "选择是否对预编辑的内容进行拼写检查，并在预编辑包含拼写错误时使用自定义颜色指示。"
+msgstr ""
+"选择是否对预编辑的内容进行拼写检查，并在预编辑包含拼写错误时使用自定义颜色指"
+"示。"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -955,7 +975,8 @@ msgid ""
 "Here you can specify which color to use for the preedit when the preedit "
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
-msgstr "指定用于预编辑中包含拼写错误时的颜色。此设置只在预编辑拼写检查启用时有用。"
+msgstr ""
+"指定用于预编辑中包含拼写错误时的颜色。此设置只在预编辑拼写检查启用时有用。"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
@@ -981,7 +1002,9 @@ msgid ""
 "Here you can specify which color to use for inline completion. This setting "
 "only has an effect if the use of color for inline completion is enabled and "
 "inline completion is enabled."
-msgstr "指定用于行中补全的颜色。此设置只在“行中补全”和“使用行中补全颜色”都启用时有用。"
+msgstr ""
+"指定用于行中补全的颜色。此设置只在“行中补全”和“使用行中补全颜色”都启用时有"
+"用。"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
@@ -1008,7 +1031,9 @@ msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
-msgstr "指定用于候选词表中来自用户数据库的候选词的自定义颜色。此设置只在“使用用户数据库联想词颜色”启用时有用。"
+msgstr ""
+"指定用于候选词表中来自用户数据库的候选词的自定义颜色。此设置只在“使用用户数据"
+"库联想词颜色”启用时有用。"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
@@ -1034,7 +1059,9 @@ msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
-msgstr "指定用于候选词表中来自拼写检查的候选词的自定义颜色。此设置只在“使用拼写检查联想词颜色”启用时有用。"
+msgstr ""
+"指定用于候选词表中来自拼写检查的候选词的自定义颜色。此设置只在“使用拼写检查联"
+"想词颜色”启用时有用。"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
@@ -1061,7 +1088,9 @@ msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
-msgstr "指定用于候选词表中来自词典的候选词的自定义颜色。此设置只在“使用词典联想词颜色”启用时有用。"
+msgstr ""
+"指定用于候选词表中来自词典的候选词的自定义颜色。此设置只在“使用词典联想词颜"
+"色”启用时有用。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
@@ -1231,5 +1260,5 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
-"Ibus-typing-booster "
-"是个预测型输入法，从上下文和部分输入中预测完整的单词。用户可以从候选词列表中选择所要的单词，从而提升打字速度和拼写能力。"
+"Ibus-typing-booster 是个预测型输入法，从上下文和部分输入中预测完整的单词。用"
+"户可以从候选词列表中选择所要的单词，从而提升打字速度和拼写能力。"
