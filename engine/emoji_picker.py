@@ -2271,7 +2271,6 @@ if __name__ == '__main__':
 
     LOCALEDIR = os.getenv("IBUS_LOCALEDIR")
     gettext.bindtextdomain(DOMAINNAME, LOCALEDIR)
-    gettext.bind_textdomain_codeset(DOMAINNAME, "UTF-8")
 
     if _ARGS.version:
         print(version.get_version())
