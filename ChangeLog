@@ -1,4 +1,18 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 11 Mar 2021 Released 2.11.0
+* Use sensitivity feature of buttons in the setup tool tab where shortcuts are defined
+* Don’t let dialog action area of setup tool expand.
+* Improve the setup tool to make it possible to enter multi-line expansions of shortcuts (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/158)
+* Elide extremely long candidates in the lookup table in the middle. See: https://github.com/mike-fabian/ibus-typing-booster/issues/158
+* If a candidate contains newlines, replace the newlines with arrows in the lookup table. See: https://github.com/mike-fabian/ibus-typing-booster/issues/158
+* If a commit string contains new-lines, commit it in several chunks and forward Return between the chunks. See: https://github.com/mike-fabian/ibus-typing-booster/issues/158#issuecomment-794233274
+* Remove deprecated bind_textdomain_codeset(DOMAINNAME, "UTF-8")
+* Update emoji annotations from CLDR
+* Put the remote icon back in emoji-picker.appdata.xml, it was a false positive by appstreamcli
+* Translation update from Weblate (pt_PT updated, 100% complete now)
+* Skip the inscript2 test cases if these transliterations are not available.
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 17 Feb 2021 Released 2.10.5
 * Run the voikko tests only for libvoikko version >= 4.3
 * Adapt voikko test cases to the newest voikko version libvoikko-4.3-3, python3-libvoikko-4.3-3, voikko-fi-2.4-3
