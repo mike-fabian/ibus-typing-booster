@@ -967,13 +967,19 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.attach(
             self._shortcut_expansion_label, 0, 2, 3, 1)
 
-        self._shortcut_expansion_entry = Gtk.Entry()
-        self._shortcut_expansion_entry.set_visible(True)
-        self._shortcut_expansion_entry.set_can_focus(True)
-        self._shortcut_expansion_entry.set_hexpand(False)
-        self._shortcut_expansion_entry.set_vexpand(False)
+        self._shortcut_expansion_scroll = Gtk.ScrolledWindow()
+        self._shortcut_expansion_scroll.set_can_focus(False)
+        self._shortcut_expansion_scroll.set_hexpand(False)
+        self._shortcut_expansion_scroll.set_vexpand(True)
+        self._shortcut_expansion_scroll.set_shadow_type(Gtk.ShadowType.IN)
+        self._shortcut_expansion_textview = Gtk.TextView()
+        self._shortcut_expansion_textview.set_visible(True)
+        self._shortcut_expansion_textview.set_can_focus(True)
+        self._shortcut_expansion_textview.set_hexpand(False)
+        self._shortcut_expansion_textview.set_vexpand(False)
+        self._shortcut_expansion_scroll.add(self._shortcut_expansion_textview)
         self._custom_shortcuts_grid.attach(
-            self._shortcut_expansion_entry, 0, 3, 3, 1)
+            self._shortcut_expansion_scroll, 0, 3, 3, 3)
 
         self._shortcut_clear_button = Gtk.Button(
             label=_('Clear input'))
@@ -981,7 +987,7 @@ class SetupUI(Gtk.Window):
         self._shortcut_clear_button.set_hexpand(False)
         self._shortcut_clear_button.set_vexpand(False)
         self._custom_shortcuts_grid.attach(
-            self._shortcut_clear_button, 0, 4, 1, 1)
+            self._shortcut_clear_button, 0, 7, 1, 1)
         self._shortcut_clear_button.connect(
             'clicked', self.on_shortcut_clear_clicked)
 
@@ -991,7 +997,7 @@ class SetupUI(Gtk.Window):
         self._shortcut_delete_button.set_hexpand(False)
         self._shortcut_delete_button.set_vexpand(False)
         self._custom_shortcuts_grid.attach(
-            self._shortcut_delete_button, 1, 4, 1, 1)
+            self._shortcut_delete_button, 1, 7, 1, 1)
         self._shortcut_delete_button.connect(
             'clicked', self.on_shortcut_delete_clicked)
 
@@ -1001,7 +1007,7 @@ class SetupUI(Gtk.Window):
         self._shortcut_add_button.set_hexpand(False)
         self._shortcut_add_button.set_vexpand(False)
         self._custom_shortcuts_grid.attach(
-            self._shortcut_add_button, 2, 4, 1, 1)
+            self._shortcut_add_button, 2, 7, 1, 1)
         self._shortcut_add_button.connect(
             'clicked', self.on_shortcut_add_clicked)
 
@@ -1009,7 +1015,7 @@ class SetupUI(Gtk.Window):
         self._shortcut_treeview_scroll.set_can_focus(False)
         self._shortcut_treeview_scroll.set_hexpand(False)
         self._shortcut_treeview_scroll.set_vexpand(True)
-        #self._shortcut_treeview_scroll.set_shadow_type(in)
+        self._shortcut_treeview_scroll.set_shadow_type(Gtk.ShadowType.IN)
         self._shortcut_treeview = Gtk.TreeView()
         self._shortcut_treeview_model = Gtk.ListStore(str, str)
         self._shortcut_treeview.set_model(self._shortcut_treeview_model)
@@ -1034,7 +1040,7 @@ class SetupUI(Gtk.Window):
             'changed', self.on_shortcut_selected)
         self._shortcut_treeview_scroll.add(self._shortcut_treeview)
         self._custom_shortcuts_grid.attach(
-            self._shortcut_treeview_scroll, 0, 5, 3, 10)
+            self._shortcut_treeview_scroll, 0, 8, 3, 10)
 
         self._keybindings_label = Gtk.Label()
         self._keybindings_label.set_text(
@@ -1051,7 +1057,7 @@ class SetupUI(Gtk.Window):
         self._keybindings_treeview_scroll.set_can_focus(False)
         self._keybindings_treeview_scroll.set_hexpand(False)
         self._keybindings_treeview_scroll.set_vexpand(True)
-        #self._keybindings_treeview_scroll.set_shadow_type(in)
+        self._keybindings_treeview_scroll.set_shadow_type(Gtk.ShadowType.IN)
         self._keybindings_treeview = Gtk.TreeView()
         self._keybindings_treeview_model = Gtk.ListStore(str, str)
         self._keybindings_treeview.set_model(self._keybindings_treeview_model)
@@ -3146,7 +3152,8 @@ class SetupUI(Gtk.Window):
         a custom shortcut has been clicked.
         '''
         self._shortcut_entry.set_text('')
-        self._shortcut_expansion_entry.set_text('')
+        expansion_buffer = self._shortcut_expansion_textview.get_buffer()
+        expansion_buffer.set_text('')
         self._shortcut_treeview.get_selection().unselect_all()
 
     def on_shortcut_delete_clicked(self, _widget) -> None:
@@ -3154,8 +3161,12 @@ class SetupUI(Gtk.Window):
         The button to delete a custom shortcut has been clicked.
         '''
         shortcut = self._shortcut_entry.get_text().strip()
+        expansion_buffer = self._shortcut_expansion_textview.get_buffer()
         shortcut_expansion = (
-            self._shortcut_expansion_entry.get_text().strip())
+            expansion_buffer.get_text(
+                expansion_buffer.get_start_iter(),
+                expansion_buffer.get_end_iter(),
+                False).strip())
         if shortcut and shortcut_expansion:
             model = self._shortcut_treeview_model
             iterator = model.get_iter_first()
@@ -3171,7 +3182,7 @@ class SetupUI(Gtk.Window):
                 else:
                     iterator = model.iter_next(iterator)
         self._shortcut_entry.set_text('')
-        self._shortcut_expansion_entry.set_text('')
+        expansion_buffer.set_text('')
         self._shortcut_treeview.get_selection().unselect_all()
 
     def on_shortcut_add_clicked(self, _widget) -> None:
@@ -3180,8 +3191,12 @@ class SetupUI(Gtk.Window):
         '''
         self._shortcut_treeview.get_selection().unselect_all()
         shortcut = self._shortcut_entry.get_text().strip()
+        expansion_buffer = self._shortcut_expansion_textview.get_buffer()
         shortcut_expansion = (
-            self._shortcut_expansion_entry.get_text().strip())
+            expansion_buffer.get_text(
+                expansion_buffer.get_start_iter(),
+                expansion_buffer.get_end_iter(),
+                False).strip())
         if shortcut and shortcut_expansion:
             model = self._shortcut_treeview_model
             iterator = model.get_iter_first()
@@ -3202,7 +3217,7 @@ class SetupUI(Gtk.Window):
                     user_freq_increment=itb_util.SHORTCUT_USER_FREQ)
                 model.append((shortcut, shortcut_expansion))
             self._shortcut_entry.set_text('')
-            self._shortcut_expansion_entry.set_text('')
+            expansion_buffer.set_text('')
             self._shortcut_treeview.get_selection().unselect_all()
 
     def on_shortcut_selected(self, selection: Gtk.TreeSelection) -> None:
@@ -3214,7 +3229,8 @@ class SetupUI(Gtk.Window):
             shortcut = model[iterator][0]
             shortcut_expansion = model[iterator][1]
             self._shortcut_entry.set_text(shortcut)
-            self._shortcut_expansion_entry.set_text(shortcut_expansion)
+            expansion_buffer = self._shortcut_expansion_textview.get_buffer()
+            expansion_buffer.set_text(shortcut_expansion)
 
     def on_keybindings_treeview_row_activated(
             self,
