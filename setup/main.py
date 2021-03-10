@@ -172,7 +172,7 @@ class SetupUI(Gtk.Window):
         self._dialog_action_area.set_hexpand(True)
         self._dialog_action_area.set_vexpand(False)
         self._dialog_action_area.set_layout(Gtk.ButtonBoxStyle.EDGE)
-        self._main_container.pack_end(self._dialog_action_area, True, True, 0)
+        self._main_container.pack_end(self._dialog_action_area, False, False, 0)
         self._about_button = Gtk.Button(label=_('About'))
         self._about_button.connect('clicked', self.on_about_button_clicked)
         self._dialog_action_area.add(self._about_button)
