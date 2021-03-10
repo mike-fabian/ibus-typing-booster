@@ -837,6 +837,18 @@ class TypingBoosterEngine(IBus.Engine):
             if self._color_dictionary:
                 attrs.append(IBus.attr_foreground_new(
                     self._color_dictionary_argb, 0, len(phrase)))
+        # If a candidate contains newlines, replace them with an arrow
+        # indicating the new line. Rendering the real newlines in the
+        # lookup table looks terrible. On non-Gnome desktops, all
+        # entries in the lookup table always have the same height. So when one
+        # entry uses 3 lines in the lookup table, all other
+        # entries use 3 lines as well. In Gnome this works somewhat
+        # better, only the entry which really uses multiple lines
+        # uses extra space in the lookup table. But this still looks
+        # terrible. When one uses custom shortcuts to expand to whole
+        # paragraphs, this uses far too much space in the lookup
+        # table.
+        phrase = phrase.replace('\n', '↩')
         if DEBUG_LEVEL > 1:
             # Show frequency information for debugging
             phrase += ' ' + str(user_freq)
