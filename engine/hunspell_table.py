@@ -806,6 +806,13 @@ class TypingBoosterEngine(IBus.Engine):
         # Without the embedding, similar problems happen when “comment”
         # is right-to-left but “phrase” is not.
         phrase = itb_util.bidi_embed(phrase)
+        # If a candidate is extremely long, it will make the lookup
+        # table too wide maybe wider than the available screen space
+        # and then you cannot see the whole candidate anyway. So it is
+        # better to elide extremely long candidates. Maybe best to
+        # elide them in the middle?:
+        if len(phrase) > 80:
+            phrase = phrase[:40] + '…' + phrase[-40:]
         attrs = IBus.AttrList()
         if comment:
             phrase += ' ' + itb_util.bidi_embed(comment)
