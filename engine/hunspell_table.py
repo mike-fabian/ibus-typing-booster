@@ -2493,8 +2493,25 @@ class TypingBoosterEngine(IBus.Engine):
                             'surrounding_text = '
                             '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
                             text, cursor_pos, anchor_pos)
-        super().commit_text(
-            IBus.Text.new_from_string(commit_phrase))
+        if self._qt_im_module_workaround:
+            super().commit_text(
+                IBus.Text.new_from_string(commit_phrase))
+        else:
+            for commit_line in commit_phrase.splitlines(keepends=True):
+                if not commit_line.endswith('\n'):
+                    super().commit_text(
+                        IBus.Text.new_from_string(commit_line))
+                    continue
+                super().commit_text(
+                    IBus.Text.new_from_string(commit_line[:-1]))
+                self.forward_key_event(
+                    IBus.KEY_Return,
+                    self._keyvals_to_keycodes.ibus_keycode(IBus.KEY_Return),
+                    0)
+                # The sleep is needed because this is racy, without the
+                # sleep it is likely that all the commits come first
+                # followed by all the forwarded Return keys:
+                time.sleep(self._ibus_event_sleep_seconds)
         self._clear_input_and_update_ui()
         self._commit_happened_after_focus_in = True
         if self._off_the_record or self._hide_input:
