@@ -957,6 +957,9 @@ class SetupUI(Gtk.Window):
         self._shortcut_entry.set_vexpand(False)
         self._custom_shortcuts_grid.attach(
             self._shortcut_entry, 0, 1, 3, 1)
+        self._shortcut_entry.set_text('')
+        self._shortcut_entry.connect(
+            'notify::text', self.on_shortcut_entry)
 
         self._shortcut_expansion_label = Gtk.Label()
         self._shortcut_expansion_label.set_text(
@@ -972,7 +975,10 @@ class SetupUI(Gtk.Window):
         self._shortcut_expansion_scroll.set_hexpand(False)
         self._shortcut_expansion_scroll.set_vexpand(True)
         self._shortcut_expansion_scroll.set_shadow_type(Gtk.ShadowType.IN)
+        self._shortcut_expansion_textview_buffer = Gtk.TextBuffer()
         self._shortcut_expansion_textview = Gtk.TextView()
+        self._shortcut_expansion_textview.set_buffer(
+            self._shortcut_expansion_textview_buffer)
         self._shortcut_expansion_textview.set_visible(True)
         self._shortcut_expansion_textview.set_can_focus(True)
         self._shortcut_expansion_textview.set_hexpand(False)
@@ -980,6 +986,8 @@ class SetupUI(Gtk.Window):
         self._shortcut_expansion_scroll.add(self._shortcut_expansion_textview)
         self._custom_shortcuts_grid.attach(
             self._shortcut_expansion_scroll, 0, 3, 3, 3)
+        self._shortcut_expansion_textview_buffer.connect(
+            'notify::text', self.on_shortcut_expansion_textview_buffer)
 
         self._shortcut_clear_button = Gtk.Button(
             label=_('Clear input'))
@@ -990,6 +998,7 @@ class SetupUI(Gtk.Window):
             self._shortcut_clear_button, 0, 7, 1, 1)
         self._shortcut_clear_button.connect(
             'clicked', self.on_shortcut_clear_clicked)
+        self._shortcut_clear_button.set_sensitive(False)
 
         self._shortcut_delete_button = Gtk.Button(
             label=_('Delete shortcut'))
@@ -1000,6 +1009,7 @@ class SetupUI(Gtk.Window):
             self._shortcut_delete_button, 1, 7, 1, 1)
         self._shortcut_delete_button.connect(
             'clicked', self.on_shortcut_delete_clicked)
+        self._shortcut_delete_button.set_sensitive(False)
 
         self._shortcut_add_button = Gtk.Button(
             label=_('Add shortcut'))
@@ -1010,6 +1020,7 @@ class SetupUI(Gtk.Window):
             self._shortcut_add_button, 2, 7, 1, 1)
         self._shortcut_add_button.connect(
             'clicked', self.on_shortcut_add_clicked)
+        self._shortcut_add_button.set_sensitive(False)
 
         self._shortcut_treeview_scroll = Gtk.ScrolledWindow()
         self._shortcut_treeview_scroll.set_can_focus(False)
@@ -3145,6 +3156,43 @@ class SetupUI(Gtk.Window):
             self._input_methods_up_button.set_sensitive(False)
             self._input_methods_down_button.set_sensitive(False)
             self._input_methods_help_button.set_sensitive(False)
+
+    def _set_shortcut_button_sensitivity(self) -> None:
+        '''Adjust the sensitivity values of the “Clear”, “Delete”, and “Add”
+        buttons.
+        '''
+        shortcut = self._shortcut_entry.get_text()
+        buffer = self._shortcut_expansion_textview.get_buffer()
+        expansion = buffer.get_text(buffer.get_start_iter(),
+                                    buffer.get_end_iter(),
+                                    False)
+        LOGGER.debug('shortcut=“%s” expansion=“%s”', shortcut, expansion)
+        if shortcut.strip() and expansion.strip():
+            self._shortcut_clear_button.set_sensitive(True)
+            self._shortcut_delete_button.set_sensitive(True)
+            self._shortcut_add_button.set_sensitive(True)
+        elif shortcut or expansion:
+            self._shortcut_clear_button.set_sensitive(True)
+            self._shortcut_delete_button.set_sensitive(False)
+            self._shortcut_add_button.set_sensitive(False)
+        else:
+            self._shortcut_clear_button.set_sensitive(False)
+            self._shortcut_delete_button.set_sensitive(False)
+            self._shortcut_add_button.set_sensitive(False)
+
+    def on_shortcut_entry(
+            self, _widget: Gtk.Entry, _property_spec) -> None:
+        '''
+        The contents of the shortcut entry line has changed
+        '''
+        self._set_shortcut_button_sensitivity()
+
+    def on_shortcut_expansion_textview_buffer(
+            self, _buffer: Gtk.TextBuffer, _param_spec: Any) -> None:
+        '''
+        The contents of the buffer of the shortcut expansion textview changed
+        '''
+        self._set_shortcut_button_sensitivity()
 
     def on_shortcut_clear_clicked(self, _widget) -> None:
         '''
