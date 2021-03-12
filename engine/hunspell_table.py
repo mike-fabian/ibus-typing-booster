@@ -2471,7 +2471,8 @@ class TypingBoosterEngine(IBus.Engine):
             self._new_sentence = False
             if pattern_new_sentence.search(commit_phrase):
                 self._new_sentence = True
-        if self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT:
+        if (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
+            and self._input_purpose not in [itb_util.InputPurpose.TERMINAL]):
             # If a single character ending a sentence is committed
             # (possibly followed by whitespace) remove trailing white
             # space before the committed string. For example if
@@ -2578,8 +2579,8 @@ class TypingBoosterEngine(IBus.Engine):
         :rtype: Boolean
 
         '''
-        if not (self.client_capabilities
-                & IBus.Capabilite.SURROUNDING_TEXT):
+        if (not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
+            or self._input_purpose in [itb_util.InputPurpose.TERMINAL]):
             return self._return_false(key.val, key.code, key.state)
         surrounding_text = self.get_surrounding_text()
         text = surrounding_text[0].get_text()
@@ -2699,7 +2700,8 @@ class TypingBoosterEngine(IBus.Engine):
         applications.
 
         '''
-        if not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT:
+        if (not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
+            or self._input_purpose in [itb_util.InputPurpose.TERMINAL]):
             # If getting the surrounding text is not supported, leave
             # the context as it is, i.e. rely on remembering what was
             # typed last.
@@ -4271,7 +4273,8 @@ class TypingBoosterEngine(IBus.Engine):
             # or if the text left of the cursor is empty.
             # If surrounding text cannot be used, uppercase the
             # first letter unconditionally:
-            if not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT:
+            if (not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
+                or self._input_purpose in [itb_util.InputPurpose.TERMINAL]):
                 transcript = transcript[0].upper() + transcript[1:]
             else:
                 surrounding_text = self.get_surrounding_text()
