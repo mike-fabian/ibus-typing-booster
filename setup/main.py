@@ -1033,20 +1033,22 @@ class SetupUI(Gtk.Window):
         current_shortcuts = self.tabsqlitedb.list_user_shortcuts()
         for i, shortcut in enumerate(current_shortcuts):
             self._shortcut_treeview_model.append(shortcut)
-        self._shortcut_treeview.append_column(
-            Gtk.TreeViewColumn(
-                # Translators: Column heading of the table listing the
-                # existing shortcuts
-                _('Shortcut'),
-                Gtk.CellRendererText(),
-                text=0))
-        self._shortcut_treeview.append_column(
-            Gtk.TreeViewColumn(
-                # Translators: Column heading of the table listing the
-                # existing shortcuts
-                _('Shortcut expansion'),
-                Gtk.CellRendererText(),
-                text=1))
+        shortcut_treeview_column_0 = Gtk.TreeViewColumn(
+            # Translators: Column heading of the table listing the
+            # existing shortcuts
+            _('Shortcut'),
+            Gtk.CellRendererText(),
+            text=0)
+        shortcut_treeview_column_0.set_sort_column_id(0)
+        self._shortcut_treeview.append_column(shortcut_treeview_column_0)
+        shortcut_treeview_column_1 = Gtk.TreeViewColumn(
+            # Translators: Column heading of the table listing the
+            # existing shortcuts
+            _('Shortcut expansion'),
+            Gtk.CellRendererText(),
+            text=1)
+        shortcut_treeview_column_1.set_sort_column_id(1)
+        self._shortcut_treeview.append_column(shortcut_treeview_column_1)
         self._shortcut_treeview.get_selection().connect(
             'changed', self.on_shortcut_selected)
         self._shortcut_treeview_scroll.add(self._shortcut_treeview)
