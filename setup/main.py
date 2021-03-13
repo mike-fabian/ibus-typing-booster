@@ -1077,20 +1077,22 @@ class SetupUI(Gtk.Window):
         for command in sorted(self._keybindings):
             self._keybindings_treeview_model.append(
                 (command, repr(self._keybindings[command])))
-        self._keybindings_treeview.append_column(
-            Gtk.TreeViewColumn(
-                # Translators: Column heading of the table listing the
-                # existing key bindings
-                _('Command'),
-                Gtk.CellRendererText(),
-                text=0))
-        self._keybindings_treeview.append_column(
-            Gtk.TreeViewColumn(
-                # Translators: Column heading of the table listing the
-                # existing key bindings
-                _('Key bindings'),
-                Gtk.CellRendererText(),
-                text=1))
+        keybindings_treeview_column_0 = Gtk.TreeViewColumn(
+            # Translators: Column heading of the table listing the
+            # existing key bindings
+            _('Command'),
+            Gtk.CellRendererText(),
+            text=0)
+        keybindings_treeview_column_0.set_sort_column_id(0)
+        self._keybindings_treeview.append_column(keybindings_treeview_column_0)
+        keybindings_treeview_column_1 = Gtk.TreeViewColumn(
+            # Translators: Column heading of the table listing the
+            # existing key bindings
+            _('Key bindings'),
+            Gtk.CellRendererText(),
+            text=1)
+        keybindings_treeview_column_1.set_sort_column_id(1)
+        self._keybindings_treeview.append_column(keybindings_treeview_column_1)
         self._keybindings_treeview.get_selection().connect(
             'changed', self.on_keybindings_treeview_row_selected)
         self._keybindings_treeview.connect(
