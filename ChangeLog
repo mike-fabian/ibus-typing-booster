@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 14 Mar 2021 Released 2.11.2
+* Improve the handling of typing digits into the preedit (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/164)
+* Make the keybindings treeview also sortable by clicking the column headers
+* Make custom shortcut treeview sortable by clicking on the column headers (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/163)
+* Don’t use surrounding text if InputPurpose.TERMINAL is set
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 11 Mar 2021 Released 2.11.0
 * Use sensitivity feature of buttons in the setup tool tab where shortcuts are defined
 * Don’t let dialog action area of setup tool expand.

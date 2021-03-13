@@ -19,6 +19,28 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.11.2" date="2021-03-14" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.11.2</url>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/164">
+          Improve the handling of typing digits into the preedit
+        </issue>
+        <issue>
+          Make the keybindings treeview also sortable by clicking the
+          column headers
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/163">
+          Make custom shortcut treeview sortable by clicking on the
+          column headers
+        </issue>
+        <issue>
+          Don’t use surrounding text if InputPurpose.TERMINAL is set
+        </issue>
+      </issues>
+    </release>
     <release version="2.11.0" date="2021-03-11" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
