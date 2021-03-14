@@ -353,7 +353,8 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._keybindings: Dict[str, List[str]] = {}
         self._hotkeys: Optional[itb_util.HotKeys] = None
-        self._digits_used_in_keybindings = False
+        self._normal_digits_used_in_keybindings = False
+        self._keypad_digits_used_in_keybindings = False
         self.set_keybindings(
             itb_util.variant_to_value(
                 self._gsettings.get_value('keybindings')),
@@ -1414,16 +1415,19 @@ class TypingBoosterEngine(IBus.Engine):
         # Update the default settings with the possibly changed settings:
         itb_util.dict_update_existing_keys(new_keybindings, keybindings)
         self._keybindings = new_keybindings
-        # Update self._digits_used_in_keybindings:
-        self._digits_used_in_keybindings = False
+        # Update useage of digits in keybindings:
+        self._normal_digits_used_in_keybindings = False
+        self._keypad_digits_used_in_keybindings = False
         for command in keybindings:
             for keybinding in keybindings[command]:
                 if (keybinding
                     in ('0', '1', '2', '3', '4',
-                        '5', '6', '7', '8', '9',
-                        'KP_0', 'KP_1', 'KP_2', 'KP_3', 'KP_4',
+                        '5', '6', '7', '8', '9')):
+                    self._normal_digits_used_in_keybindings = True
+                if (keybinding
+                    in ('KP_0', 'KP_1', 'KP_2', 'KP_3', 'KP_4',
                         'KP_5', 'KP_6', 'KP_7', 'KP_8', 'KP_9')):
-                    self._digits_used_in_keybindings = True
+                    self._keypad_digits_used_in_keybindings = True
         # Update hotkeys:
         self._hotkeys = itb_util.HotKeys(self._keybindings)
         # If there is no key binding to toggle ibus-typing-booster
@@ -4967,11 +4971,23 @@ class TypingBoosterEngine(IBus.Engine):
                            IBus.KEY_Delete, IBus.KEY_KP_Delete,
                            IBus.KEY_Right, IBus.KEY_KP_Right):
                 return self._reopen_preedit_or_return_false(key)
-            if key.val >= 32 and not key.control:
-                if (self._digits_used_in_keybindings
-                    and not self._tab_enable
-                    and key.msymbol
-                    in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
+            if (key.val >= 32 and not key.control
+                and not self._tab_enable
+                and key.msymbol
+                in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
+                # if key.msymbol is for example 'G-4', then for example
+                # with hi-inscript2 it is transliterated to ₹ INDIAN RUPEE SIGN.
+                # Such things can be added to the preedit, no need to commit them
+                # immediately here.
+                if ((key.val in
+                     (IBus.KEY_0, IBus.KEY_1, IBus.KEY_2, IBus.KEY_3, IBus.KEY_4,
+                      IBus.KEY_5, IBus.KEY_6, IBus.KEY_7, IBus.KEY_8, IBus.KEY_9)
+                     and self._normal_digits_used_in_keybindings)
+                    or
+                    (key.val in
+                     (IBus.KP_0, IBus.KP_1, IBus.KP_2, IBus.KP_3, IBus.KP_4,
+                      IBus.KP_5, IBus.KP_6, IBus.KP_7, IBus.KP_8, IBus.KP_9)
+                     and self._keypad_digits_used_in_keybindings)):
                     # If digits are used as keys to select candidates
                     # it is not possibly to type them while the preëdit
                     # is non-empty and candidates are displayed.
