@@ -22,6 +22,21 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.11.4" date="2021-04-29" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.11.3</url>
+      <issues>
+        <issue url="https://bugzilla.redhat.com/show_bug.cgi?id=1711646">
+          In main.py “import factory” only when the --xml option is not used
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/167">
+          Limit the “capitalize” case mode used in auto-capitalization
+          to the first index in a string
+        </issue>
+      </issues>
+    </release>
     <release version="2.11.2" date="2021-03-14" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

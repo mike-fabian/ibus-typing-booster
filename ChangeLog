@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 29 Apr 2021 Released 2.11.4
+* In main.py “import factory” only when the --xml option is not used (Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=1711646)
+* Limit the “capitalize” case mode used in auto-capitalization to the first index in a strin
+g (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/167)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 14 Mar 2021 Released 2.11.2
 * Improve the handling of typing digits into the preedit (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/164)
 * Make the keybindings treeview also sortable by clicking the column headers
