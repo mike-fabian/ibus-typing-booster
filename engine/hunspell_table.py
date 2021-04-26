@@ -495,7 +495,8 @@ class TypingBoosterEngine(IBus.Engine):
             'capitalize': {
                 'next': 'upper',
                 'previous': 'lower',
-                'function': getattr(str, 'capitalize')},
+                'function': lambda x: getattr(
+                    str, 'capitalize')(x[:1]) + x[1:]},
             'title': {
                 'next': 'upper',
                 'previous': 'capitalize',
@@ -2353,7 +2354,7 @@ class TypingBoosterEngine(IBus.Engine):
         else:
             self._current_case_mode = mode
         new_candidates = []
-        for cand in self._candidates:
+        for cand in self._candidates_case_mode_orig:
             new_candidates.append(
                 (self._case_modes[self._current_case_mode]['function'](
                     cand[0]),
