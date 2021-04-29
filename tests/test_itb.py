@@ -1133,6 +1133,134 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'Cerulean ')
 
+    def test_toggle_case_for_multiple_words(self):
+        self.engine.set_current_imes(
+            ['NoIME', 't-latn-post'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, IBus.ModifierType.MOD5_MASK)
+        self.engine.do_process_key_event(IBus.KEY_G, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'in Germany')
+        # there should be no candidates now:
+        self.assertEqual(self.engine._candidates, [])
+        # Shift_L goes to 'capitalize':
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        # If there are not candidates, the case mode change is not
+        # done, i.e. we still have the unchanged text in the preedit:
+        # (I guess I should change this? Maybe the casem mode change
+        # is useful even if it changes only the preedit? Anyway, just
+        # testing the current implementation for the moment)
+        self.assertEqual(self.engine.mock_preedit_text, 'in Germany')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'in Germany ')
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, IBus.ModifierType.MOD5_MASK)
+        self.engine.do_process_key_event(IBus.KEY_G, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'in Germany')
+        # there should be a candidate now:
+        self.assertEqual(self.engine._candidates[0][0], 'in Germany')
+        # Shift_L goes to 'capitalize':
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        # Now the first letter of the preedit should be capitalized
+        # and the rest unchanged:
+        self.assertEqual(self.engine.mock_preedit_text, 'In Germany')
+        self.assertEqual(self.engine._candidates[0][0], 'In Germany')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'in Germany In Germany ')
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, IBus.ModifierType.MOD5_MASK)
+        self.engine.do_process_key_event(IBus.KEY_G, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
+        # there should be a candidate now:
+        self.assertEqual(self.engine._candidates[0][0], 'in Germany')
+        # Shift_L goes to 'capitalize':
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        # The next Shift_L goes to 'upper':
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'IN GERMANY')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'in Germany In Germany IN GERMANY ')
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, IBus.ModifierType.MOD5_MASK)
+        self.engine.do_process_key_event(IBus.KEY_G, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
+        # there should be a candidate now:
+        self.assertEqual(self.engine._candidates[0][0], 'in Germany')
+        # Shift_L goes to 'capitalize':
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        # The next Shift_L goes to 'upper':
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        # Shift_R goes back to 'capitalize':
+        self.engine.do_process_key_event(IBus.KEY_Shift_R, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_R, 0, IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'In Germany')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'in Germany In Germany IN GERMANY In Germany ')
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, IBus.ModifierType.MOD5_MASK)
+        self.engine.do_process_key_event(IBus.KEY_G, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
+        # there should be a candidate now:
+        self.assertEqual(self.engine._candidates[0][0], 'in Germany')
+        # Shift_R goes to 'previous' from 'orig', i.e. to 'lower':
+        self.engine.do_process_key_event(IBus.KEY_Shift_R, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_R, 0, IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'in germany')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'in Germany In Germany IN GERMANY In Germany in germany ')
+
     def test_sinhala_wijesekera(self):
         self.engine.set_current_imes(
             ['si-wijesekera', 'NoIME'], update_gsettings=False)
