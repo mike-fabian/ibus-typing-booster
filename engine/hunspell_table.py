@@ -32,7 +32,6 @@ from typing import Tuple
 from typing import Union
 from typing import Optional
 from typing import Iterable
-from typing import cast
 import os
 import unicodedata
 import re

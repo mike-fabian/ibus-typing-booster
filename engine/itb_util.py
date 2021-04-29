@@ -25,7 +25,6 @@ from typing import Any
 from typing import Tuple
 from typing import List
 from typing import Dict
-from typing import Union
 from typing import Optional
 from enum import Enum, Flag
 import sys
@@ -47,7 +46,6 @@ require_version('Gdk', '3.0')
 from gi.repository import Gdk
 require_version('Gtk', '3.0')
 from gi.repository import Gtk
-from gi.repository import GObject
 
 import version
 

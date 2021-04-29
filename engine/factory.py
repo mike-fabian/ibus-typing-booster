@@ -21,7 +21,6 @@
 
 from typing import Dict
 from typing import Optional
-from typing import Union
 import re
 import os
 import logging

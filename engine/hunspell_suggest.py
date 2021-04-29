@@ -27,7 +27,6 @@ hunspell dictonaries.
 from typing import Dict
 from typing import Tuple
 from typing import List
-from typing import Optional
 import os
 import sys
 import unicodedata
