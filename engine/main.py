@@ -30,6 +30,7 @@ from signal import signal, SIGTERM, SIGINT
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
+require_version('GLib', '2.0')
 from gi.repository import GLib
 
 import factory
