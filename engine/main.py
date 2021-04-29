@@ -229,84 +229,89 @@ def indent(element: Any, level: int = 0) -> None:
         if level and (not element.tail or not element.tail.strip()):
             element.tail = i
 
+def write_xml() -> None:
+    '''
+    Writes the XML to describe the engine(s) to standard output.
+    '''
+    egs = Element('engines')
+
+    for language in ('t',):
+        _engine = SubElement(egs, 'engine')
+
+        _name = SubElement(_engine, 'name')
+        _name.text = 'typing-booster'
+
+        _longname = SubElement(_engine, 'longname')
+        _longname.text = 'Typing Booster'
+
+        _language = SubElement(_engine, 'language')
+        _language.text = language
+
+        _license = SubElement(_engine, 'license')
+        _license.text = 'GPL'
+
+        _author = SubElement(_engine, 'author')
+        _author.text = (
+            'Mike FABIAN <mfabian@redhat.com>'
+            + ', Anish Patil <anish.developer@gmail.com>')
+
+        _icon = SubElement(_engine, 'icon')
+        _icon.text = os.path.join(ICON_DIR, 'ibus-typing-booster.svg')
+
+        _layout = SubElement(_engine, 'layout')
+        _layout.text = 'default'
+
+        _desc = SubElement(_engine, 'description')
+        _desc.text = 'A completion input method to speedup typing.'
+
+        _symbol = SubElement(_engine, 'symbol')
+        _symbol.text = '🚀'
+
+        _setup = SubElement(_engine, 'setup')
+        _setup.text = SETUP_TOOL
+
+        _icon_prop_key = SubElement(_engine, 'icon_prop_key')
+        _icon_prop_key.text = 'InputMode'
+
+    # now format the xmlout pretty
+    indent(egs)
+    egsout = tostring(egs, encoding='utf8', method='xml').decode('utf-8')
+    patt = re.compile(r'<\?.*\?>\n')
+    egsout = patt.sub('', egsout)
+    sys.stdout.buffer.write((egsout+'\n').encode('utf-8'))
+
 def main():
     '''Main program'''
-    if not _ARGS.xml:
-        if _ARGS.no_debug:
-            log_handler = logging.NullHandler()
-        else:
-            if not os.access(
-                    os.path.expanduser('~/.local/share/ibus-typing-booster'),
-                    os.F_OK):
-                os.system('mkdir -p ~/.local/share/ibus-typing-booster')
-            logfile = os.path.expanduser(
-                '~/.local/share/ibus-typing-booster/debug.log')
-            log_handler = logging.handlers.TimedRotatingFileHandler(
-                logfile,
-                when='midnight',
-                interval=1,
-                backupCount=7,
-                encoding='UTF-8',
-                delay=False,
-                utc=False,
-                atTime=None)
-        log_formatter = logging.Formatter(
-            '%(asctime)s %(filename)s '
-            'line %(lineno)d %(funcName)s %(levelname)s: '
-            '%(message)s')
-        log_handler.setFormatter(log_formatter)
-        LOGGER.setLevel(logging.DEBUG)
-        LOGGER.addHandler(log_handler)
-        LOGGER.info('********** STARTING **********')
-
     if _ARGS.xml:
-        egs = Element('engines')
-
-        for language in ('t',):
-            _engine = SubElement(egs, 'engine')
-
-            _name = SubElement(_engine, 'name')
-            _name.text = 'typing-booster'
-
-            _longname = SubElement(_engine, 'longname')
-            _longname.text = 'Typing Booster'
-
-            _language = SubElement(_engine, 'language')
-            _language.text = language
-
-            _license = SubElement(_engine, 'license')
-            _license.text = 'GPL'
-
-            _author = SubElement(_engine, 'author')
-            _author.text = (
-                'Mike FABIAN <mfabian@redhat.com>'
-                + ', Anish Patil <anish.developer@gmail.com>')
-
-            _icon = SubElement(_engine, 'icon')
-            _icon.text = os.path.join(ICON_DIR, 'ibus-typing-booster.svg')
-
-            _layout = SubElement(_engine, 'layout')
-            _layout.text = 'default'
-
-            _desc = SubElement(_engine, 'description')
-            _desc.text = 'A completion input method to speedup typing.'
-
-            _symbol = SubElement(_engine, 'symbol')
-            _symbol.text = '🚀'
-
-            _setup = SubElement(_engine, 'setup')
-            _setup.text = SETUP_TOOL
-
-            _icon_prop_key = SubElement(_engine, 'icon_prop_key')
-            _icon_prop_key.text = 'InputMode'
-
-        # now format the xmlout pretty
-        indent(egs)
-        egsout = tostring(egs, encoding='utf8', method='xml').decode('utf-8')
-        patt = re.compile(r'<\?.*\?>\n')
-        egsout = patt.sub('', egsout)
-        sys.stdout.buffer.write((egsout+'\n').encode('utf-8'))
+        write_xml()
         return 0
+
+    if _ARGS.no_debug:
+        log_handler = logging.NullHandler()
+    else:
+        if not os.access(
+                os.path.expanduser('~/.local/share/ibus-typing-booster'),
+                os.F_OK):
+            os.system('mkdir -p ~/.local/share/ibus-typing-booster')
+        logfile = os.path.expanduser(
+            '~/.local/share/ibus-typing-booster/debug.log')
+        log_handler = logging.handlers.TimedRotatingFileHandler(
+            logfile,
+            when='midnight',
+            interval=1,
+            backupCount=7,
+            encoding='UTF-8',
+            delay=False,
+            utc=False,
+            atTime=None)
+    log_formatter = logging.Formatter(
+        '%(asctime)s %(filename)s '
+        'line %(lineno)d %(funcName)s %(levelname)s: '
+        '%(message)s')
+    log_handler.setFormatter(log_formatter)
+    LOGGER.setLevel(logging.DEBUG)
+    LOGGER.addHandler(log_handler)
+    LOGGER.info('********** STARTING **********')
 
     if _ARGS.daemon:
         if os.fork():
