@@ -33,7 +33,6 @@ from gi.repository import IBus # type: ignore
 require_version('GLib', '2.0')
 from gi.repository import GLib
 
-import factory
 import version
 
 LOGGER = logging.getLogger('ibus-typing-booster')
@@ -106,6 +105,27 @@ if _ARGS.profile:
     import pstats
     import io
     _PROFILE = cProfile.Profile()
+
+if _ARGS.xml:
+    from xml.etree.ElementTree import Element, SubElement, tostring
+else:
+    # Avoid importing factory when the --xml option is used because
+    # factory imports other stuff which imports Gtk and that needs a
+    # display.
+    #
+    # But by moving the import of factory here, it is possible to
+    # use the --xml option in an environment where there is no
+    # display without getting an error message like this:
+    #
+    #    $ env -u DISPLAY python3 main.py --xml
+    #    Unable to init server: Could not connect: Connection refused
+    #
+    # The --xml option is used by “ibus write-cache” which is used
+    # during rpm updates and then there is often no display and
+    # the above error message appears.
+    #
+    # See: https://bugzilla.redhat.com/show_bug.cgi?id=1711646
+    import factory
 
 class IMApp:
     def __init__(self, exec_by_ibus) -> None:
@@ -240,8 +260,6 @@ def main():
         LOGGER.info('********** STARTING **********')
 
     if _ARGS.xml:
-        from xml.etree.ElementTree import Element, SubElement, tostring
-
         egs = Element('engines')
 
         for language in ('t',):
