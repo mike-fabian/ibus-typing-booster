@@ -149,7 +149,6 @@ class IMApp:
                         + "Anish Patil <anish.developer@gmail.com>"),
                 homepage="http://mike-fabian.github.io/ibus-typing-booster",
                 textdomain="ibus-typing-booster")
-            # now we get IME info from self.__factory.db
             name = 'typing-booster'
             longname = 'Typing Booster'
             description = 'A completion input method to speedup typing.'
