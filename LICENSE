@@ -20,7 +20,17 @@ The original file name is emoji_u1f680.svg.
 The .png versions of this icon are generated from that .svg file.
 
 The Google “Noto Color Emoji” font is licensed under the Apache
-License Version 2.0. This licnense is included along with
+License Version 2.0. This license is included along with
 ibus-typing-booster in the APACHE-LICENSE-2.0 file. You can also get
 it here: <https://www.apache.org/licenses/LICENSE-2.0>
+----------------------------------------------------------------------
+
+Some code used for speech to text is taken from
+
+https://github.com/GoogleCloudPlatform/python-docs-samples/
+
+https://github.com/GoogleCloudPlatform/python-docs-samples/blob/master/LICENSE
+
+GoogleCloudPlatform/python-docs-samples is licensed under the
+Apache License 2.0
 ----------------------------------------------------------------------
