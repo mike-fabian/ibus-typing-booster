@@ -3123,7 +3123,7 @@ class InputPurpose(Enum):
     def __new__(cls, attr) -> Any:
         obj = object.__new__(cls)
         if hasattr(Gtk, 'InputPurpose') and hasattr(Gtk.InputPurpose, attr):
-            obj._value_ = getattr(Gtk.InputPurpose, attr)
+            obj._value_ = int(getattr(Gtk.InputPurpose, attr))
         else:
             obj._value_ = -1
         return obj
@@ -3242,7 +3242,7 @@ class InputHints(Flag):
     def __new__(cls, attr: str) -> Any:
         obj = object.__new__(cls)
         if hasattr(Gtk, 'InputHints') and hasattr(Gtk.InputHints, attr):
-            obj._value_ = getattr(Gtk.InputHints, attr)
+            obj._value_ = int(getattr(Gtk.InputHints, attr))
         else:
             obj._value_ = 0
         return obj
