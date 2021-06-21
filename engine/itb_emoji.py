@@ -41,7 +41,7 @@ import json
 import unicodedata
 import html
 import logging
-from distutils.version import LooseVersion
+from packaging import version
 from difflib import SequenceMatcher
 import gettext
 import itb_util
@@ -1962,10 +1962,10 @@ class EmojiMatcher():
                     variation_selector=self._variation_selector)
                 unicode_version = self.unicode_version(emoji)
                 if (unicode_version
-                        and (LooseVersion(unicode_version)
-                             < LooseVersion(self._emoji_unicode_min)
-                             or LooseVersion(unicode_version)
-                             > LooseVersion(self._emoji_unicode_max))):
+                        and (version.parse(unicode_version)
+                             < version.parse(self._emoji_unicode_min)
+                             or version.parse(unicode_version)
+                             > version.parse(self._emoji_unicode_max))):
                     continue
                 if len(emoji) > 1:
                     has_skin_tone_modifier = False
