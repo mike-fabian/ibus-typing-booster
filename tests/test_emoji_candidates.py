@@ -24,9 +24,9 @@ This file implements test cases for emoji candidates
 import sys
 import unittest
 
-from gi import require_version
+from gi import require_version # type: ignore
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus # type: ignore
 
 sys.path.insert(0, "../engine")
 import itb_util
@@ -42,11 +42,11 @@ itb_emoji.DOMAINNAME = ''
 IMPORT_ENCHANT_SUCCESSFUL = False
 IMPORT_HUNSPELL_SUCCESSFUL = False
 try:
-    import enchant
+    import enchant # type: ignore
     IMPORT_ENCHANT_SUCCESSFUL = True
 except (ImportError,):
     try:
-        import hunspell
+        import hunspell # type: ignore
         IMPORT_HUNSPELL_SUCCESSFUL = True
     except (ImportError,):
         pass

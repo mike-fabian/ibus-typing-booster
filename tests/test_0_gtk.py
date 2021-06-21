@@ -35,13 +35,13 @@ import signal
 import sys
 import unittest
 
-from gi import require_version as gi_require_version
+from gi import require_version as gi_require_version # type: ignore
 gi_require_version('GLib', '2.0')
 gi_require_version('Gdk', '3.0')
 gi_require_version('Gio', '2.0')
 gi_require_version('Gtk', '3.0')
 gi_require_version('IBus', '1.0')
-from gi.repository import GLib
+from gi.repository import GLib # type: ignore
 from gi.repository import Gdk
 from gi.repository import Gio
 from gi.repository import Gtk

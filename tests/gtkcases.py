@@ -13,9 +13,9 @@
 # 'preedit', 'lookup', 'commit' can choose the type of either 'string' or 'keys'
 # 'string' type is a string sequence which does not need modifiers
 
-from gi import require_version as gi_require_version
+from gi import require_version as gi_require_version # type: ignore
 gi_require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus # type: ignore
 
 TestCases = {
     #'init': [IBus.KEY_j, 0, IBus.ModifierType.CONTROL_MASK],

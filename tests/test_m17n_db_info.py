@@ -25,9 +25,9 @@ import sys
 import os
 import unittest
 
-from gi import require_version
+from gi import require_version # type: ignore
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus # type: ignore
 
 sys.path.insert(0, "../engine")
 import itb_util

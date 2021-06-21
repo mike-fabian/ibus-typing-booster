@@ -33,9 +33,9 @@ import subprocess
 import importlib
 from unittest import mock
 
-from gi import require_version
+from gi import require_version # type: ignore
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus # type: ignore
 require_version('Gdk', '3.0')
 from gi.repository import Gdk
 
@@ -59,18 +59,18 @@ sys.path.pop(0)
 IMPORT_ENCHANT_SUCCESSFUL = False
 IMPORT_HUNSPELL_SUCCESSFUL = False
 try:
-    import enchant
+    import enchant # type: ignore
     IMPORT_ENCHANT_SUCCESSFUL = True
 except (ImportError,):
     try:
-        import hunspell
+        import hunspell # type: ignore
         IMPORT_HUNSPELL_SUCCESSFUL = True
     except (ImportError,):
         pass
 
 IMPORT_LIBVOIKKO_SUCCESSFUL = False
 try:
-    import libvoikko
+    import libvoikko # type: ignore
     IMPORT_LIBVOIKKO_SUCCESSFUL = True
 except (ImportError,):
     pass
