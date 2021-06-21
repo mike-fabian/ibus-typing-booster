@@ -58,6 +58,34 @@ def get_libvoikko_version():
     else:
         return '0'
 
+def enchant_sanity_test(language: str = '', word: str = '') -> bool:
+    '''Checks whether python3-enchant returns some suggestions given a
+    language and a word.
+
+    :param language: The language of the dictionary to try
+    :param word: The word to give to enchant to ask for suggestions
+
+    This is used as a sanity check whether python3-enchant works at all.
+    For example, if a Czech dictionary is opened like
+
+        d = enchant.Dict('cs_CZ')
+
+    and then something like
+
+        retval = d.suggest('Praha')
+
+    returns an empty list instead of a list of some words, then
+    something is seriously wrong with python3-enchant and it is better
+    to skip the test case which relies on python3-enchant working for
+    that language.
+    '''
+    if not (language and word):
+        return False
+    d = enchant.Dict(language)
+    if d.suggest(word):
+        return True
+    return  False
+
 class HunspellSuggestTestCase(unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
@@ -77,6 +105,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('de_DE')[0],
         'Skipping because no German hunspell dictionary could be found.')
+    @unittest.skipUnless(
+        enchant_sanity_test(language='cs_CZ', word='Praha'),
+        'Skipping because python3-enchant seems broken for cs_CZ.')
     def test_de_DE_cs_CZ_enchant(self):
         h = hunspell_suggest.Hunspell(['de_DE', 'cs_CZ'])
         self.assertEqual(
