@@ -19,6 +19,30 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.11.5" date="2021-06-21" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.11.5</url>
+      <issues>
+        <issue url="https://bugzilla.redhat.com/show_bug.cgi?id=1970626">
+          Ensure enum.Flag's obj._value_ is an integer (Makes it work
+          for Python 3.10, thanks to Miro Hrončok)
+        </issue>
+        <issue url="https://www.python.org/dev/peps/pep-0632/">
+          Use version.parse from packaging instead of LooseVersion
+          from distutils.version (Fixes “DeprecationWarning: The
+          distutils package is deprecated and slated for removal in
+          Python 3.12. Use setuptools or check PEP 632 for potential
+          alternatives”)
+        </issue>
+        <issue>
+          Update py-compile to the version from automake-1.16 (To fix
+          DeprecationWarning: the imp module is deprecated in favour
+          of importlib and slated for removal in Python 3.12;)
+        </issue>
+      </issues>
+    </release>
     <release version="2.11.4" date="2021-04-29" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

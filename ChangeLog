@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 21 Jun 2021 Released 2.11.5
+* Ensure enum.Flag's obj._value_ is an integer (Makes it work for Python 3.10) (Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=1970626)
+* Use version.parse from packaging instead of LooseVersion from distutils.version (To fix a deprecation warning, see: https://www.python.org/dev/peps/pep-0632/)
+* Update py-compile to the version from automake-1.16 (To fix DeprecationWarning: the imp module is deprecated in favour of importlib and slated for removal in Python 3.12;)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 29 Apr 2021 Released 2.11.4
 * In main.py “import factory” only when the --xml option is not used (Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=1711646)
 * Limit the “capitalize” case mode used in auto-capitalization to the first index in a strin
