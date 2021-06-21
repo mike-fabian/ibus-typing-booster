@@ -71,6 +71,12 @@ class HunspellSuggestTestCase(unittest.TestCase):
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('cs_CZ')[0],
+        'Skipping because no Czech hunspell dictionary could be found.')
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('de_DE')[0],
+        'Skipping because no German hunspell dictionary could be found.')
     def test_de_DE_cs_CZ_enchant(self):
         h = hunspell_suggest.Hunspell(['de_DE', 'cs_CZ'])
         self.assertEqual(
@@ -102,6 +108,12 @@ class HunspellSuggestTestCase(unittest.TestCase):
     @unittest.skipUnless(
         IMPORT_HUNSPELL_SUCCESSFUL and not IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-pyhunspell to work.")
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('cs_CZ')[0],
+        'Skipping because no Czech hunspell dictionary could be found.')
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('de_DE')[0],
+        'Skipping because no German hunspell dictionary could be found.')
     def test_de_DE_cs_CZ_pyhunspell(self):
         h = hunspell_suggest.Hunspell(['de_DE', 'cs_CZ'])
         self.assertEqual(
@@ -130,6 +142,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
             h.suggest('filosofičtějš')[0],
             ('filosofic\u030Cte\u030Cjs\u030Ci\u0301', 0))
 
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('it_IT')[0],
+        'Skipping because no Italian hunspell dictionary could be found.')
     def test_it_IT(self):
         h = hunspell_suggest.Hunspell(['it_IT'])
         self.assertEqual(
@@ -140,6 +155,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
              ('principiarti', -1),
              ('principiasti', -1)])
 
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('es_ES')[0],
+        'Skipping because no Spanish hunspell dictionary could be found.')
     def test_es_ES(self):
         h = hunspell_suggest.Hunspell(['es_ES'])
         self.assertEqual(
@@ -155,6 +173,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
             h.suggest('tenéis')[0],
             ('tene\u0301is', 0))
 
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        'Skipping because no US English hunspell dictionary could be found.')
     def test_en_US(self):
         h = hunspell_suggest.Hunspell(['en_US'])
         self.assertEqual(
@@ -168,6 +189,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
              ('came l', -1),
              ('camels', -1)])
 
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
+        'Skipping because no French hunspell dictionary could be found.')
     def test_fr_FR(self):
         h = hunspell_suggest.Hunspell(['fr_FR'])
         self.assertEqual(
@@ -218,6 +242,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        'Skipping because no US English hunspell dictionary could be found.')
     def test_en_US_spellcheck_enchant(self):
         d = hunspell_suggest.Dictionary('en_US')
         self.assertEqual(d.spellcheck_enchant('winter'), True)
@@ -226,6 +253,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        'Skipping because no US English hunspell dictionary could be found.')
     def test_en_US_spellcheck_suggest_enchant(self):
         d = hunspell_suggest.Dictionary('en_US')
         self.assertEqual(
@@ -235,6 +265,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
     @unittest.skipUnless(
         IMPORT_HUNSPELL_SUCCESSFUL and not IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-pyhunspell to work.")
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        'Skipping because no US English hunspell dictionary could be found.')
     def test_en_US_spellcheck_pyhunspell(self):
         d = hunspell_suggest.Dictionary('en_US')
         self.assertEqual(d.spellcheck_pyhunspell('winter'), True)
@@ -243,6 +276,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
     @unittest.skipUnless(
         IMPORT_HUNSPELL_SUCCESSFUL and not IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-pyhunspell to work.")
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        'Skipping because no US English hunspell dictionary could be found.')
     def test_en_US_spellcheck_suggest_pyhunspell(self):
         d = hunspell_suggest.Dictionary('en_US')
         self.assertEqual(
