@@ -165,9 +165,6 @@ class MockLookupTable:
     def get_candidate(self, index):
         return self.mock_candidates[index]
 
-    def get_number_of_candidates(self):
-        return len(self.mock_candidates)
-
 class MockPropList:
     def append(self, property):
         pass
