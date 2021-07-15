@@ -168,7 +168,7 @@ LOCALE_DEFAULTS = {
     # as the default. Parag Nemade says the as translator for Fedora a long
     # time back used as-phonetic. We have no later data from the
     # community.
-    'as_IN': {'inputmethods': ['as-phonetic', 'NoIME'],
+    'as_IN': {'inputmethods': ['as-inscript2', 'NoIME'],
               'dictionaries': ['as_IN', 'en_GB']},
     'ast_ES': {'inputmethods': ['NoIME'], 'dictionaries': ['ast_ES']},
     'az_AZ': {'inputmethods': ['NoIME'], 'dictionaries': ['az_AZ']},
@@ -178,6 +178,8 @@ LOCALE_DEFAULTS = {
     'bn_IN': {'inputmethods': ['bn-inscript2', 'NoIME'],
               'dictionaries': ['bn_IN', 'en_GB']},
     'br_FR': {'inputmethods': ['NoIME'], 'dictionaries': ['br_FR']},
+    'brx_IN': {'inputmethods': ['brx-inscript2', 'NoIME'],
+               'dictionaries': ['en_GB']},
     'bs_BA': {'inputmethods': ['NoIME'], 'dictionaries': ['bs_BA']},
     'ca_AD': {'inputmethods': ['NoIME'], 'dictionaries': ['ca_AD']},
     'ca_ES': {'inputmethods': ['NoIME'], 'dictionaries': ['ca_ES']},
@@ -195,6 +197,8 @@ LOCALE_DEFAULTS = {
     'de_DE': {'inputmethods':['NoIME'], 'dictionaries': ['de_DE']},
     'de_LI': {'inputmethods': ['NoIME'], 'dictionaries': ['de_LI']},
     'de_LU': {'inputmethods': ['NoIME'], 'dictionaries': ['de_LU']},
+    'doi_IN': {'inputmethods': ['doi-inscript2', 'NoIME'],
+               'dictionaries': ['en_GB']},
     'dsb_DE': {'inputmethods': ['NoIME'], 'dictionaries': ['dsb_DE']},
     'el_CY': {'inputmethods': ['NoIME'], 'dictionaries': ['el_CY']},
     'el_GR': {'inputmethods': ['NoIME'], 'dictionaries': ['el_GR']},
@@ -286,10 +290,12 @@ LOCALE_DEFAULTS = {
     # libgnome-desktop/default-input-sources.h has "m17n:kn:kgp" as
     # the default for kn_IN. According to Parag Nemade this probably came
     # from the translation community.
-    'kn_IN': {'inputmethods': ['kn-kgp', 'NoIME'],
+    'kn_IN': {'inputmethods': ['kn-inscript2', 'NoIME'],
               'dictionaries': ['kn_IN', 'en_GB']},
     'ko_KR': {'inputmethods': ['ko-han2', 'NoIME'],
               'dictionaries': ['ko_KR', 'en_GB']},
+    'kok_IN' : {'inputmethods': ['kok-inscript2', 'NoIME'],
+                'dictionaries': ['en_GB']},
     'ku_SY': {'inputmethods': ['NoIME'], 'dictionaries': ['ku_SY']},
     'ku_TR': {'inputmethods': ['NoIME'], 'dictionaries': ['ku_TR']},
     'ky_KG': {'inputmethods': ['NoIME'], 'dictionaries': ['ky_KG']},
@@ -306,6 +312,8 @@ LOCALE_DEFAULTS = {
     'ml_IN': {'inputmethods': ['ml-inscript2', 'NoIME'],
               'dictionaries': ['ml_IN', 'en_GB']},
     'mn_MN': {'inputmethods': ['NoIME'], 'dictionaries': ['mn_MN']},
+    'mni_IN': {'inputmethods': ['mni-inscript2-beng', 'NoIME'],
+               'dictionaries': ['en_GB']},
     'mos_BF': {'inputmethods': ['NoIME'], 'dictionaries': ['mos_BF']},
     'mr_IN': {'inputmethods': ['mr-inscript2', 'NoIME'],
               'dictionaries': ['mr_IN', 'en_GB']},
@@ -315,7 +323,7 @@ LOCALE_DEFAULTS = {
     'nb_NO': {'inputmethods': ['NoIME'], 'dictionaries': ['nb_NO']},
     'nds_DE': {'inputmethods': ['NoIME'], 'dictionaries': ['nds_DE']},
     'nds_NL': {'inputmethods': ['NoIME'], 'dictionaries': ['nds_NL']},
-    'ne_IN': {'inputmethods': ['ne-rom', 'NoIME'],
+    'ne_IN': {'inputmethods': ['ne-inscript2', 'NoIME'],
               'dictionaries': ['ne_IN', 'en_GB']},
     'ne_NP': {'inputmethods': ['ne-rom', 'NoIME'],
               'dictionaries': ['ne_NP', 'en_GB']},
@@ -344,7 +352,13 @@ LOCALE_DEFAULTS = {
     'ru_RU': {'inputmethods': ['NoIME'], 'dictionaries': ['ru_RU']},
     'ru_UA': {'inputmethods': ['NoIME'], 'dictionaries': ['ru_UA']},
     'rw_RW': {'inputmethods': ['NoIME'], 'dictionaries': ['rw_RW']},
+    'sa_IN': {'inputmethods': ['sa-inscript2', 'NoIME'],
+              'dictionaries': ['en_GB']},
+    'sat_IN': {'inputmethods': ['sat-inscript2-deva', 'NoIME'],
+               'dictionaries': ['en_GB']},
     'sc_IT': {'inputmethods': ['NoIME'], 'dictionaries': ['sc_IT']},
+    'sd_IN': {'inputmethods': ['sd-inscript2', 'NoIME'],
+               'dictionaries': ['en_GB']},
     'se_FI': {'inputmethods': ['NoIME'], 'dictionaries': ['se_FI']},
     'se_NO': {'inputmethods': ['NoIME'], 'dictionaries': ['se_NO']},
     'se_SE': {'inputmethods': ['NoIME'], 'dictionaries': ['se_SE']},
@@ -375,7 +389,7 @@ LOCALE_DEFAULTS = {
     # libgnome-desktop/default-input-sources.h has "m17n:ta:tamil99"
     # as the default for ta_IN. According to Parag Nemade this probably came
     # from the translation community.
-    'ta_IN': {'inputmethods': ['ta-tamil99', 'NoIME'],
+    'ta_IN': {'inputmethods': ['ta-inscript2', 'NoIME'],
               'dictionaries': ['ta_IN', 'en_GB']},
     'te_IN': {'inputmethods': ['te-inscript2', 'NoIME'],
               'dictionaries': ['te_IN', 'en_GB']},
