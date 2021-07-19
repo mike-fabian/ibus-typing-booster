@@ -23,8 +23,6 @@
 This file implements the ibus engine for ibus-typing-booster
 '''
 
-# “Wrong continued indentation”: pylint: disable=bad-continuation
-
 from typing import Any
 from typing import Dict
 from typing import List
@@ -95,7 +93,8 @@ class TypingBoosterEngine(IBus.Engine):
     def __init__(self, bus, obj_path, database, unit_test=False) -> None:
         global DEBUG_LEVEL
         try:
-            DEBUG_LEVEL = int(str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
+            DEBUG_LEVEL = int(str(os.getenv(
+                'IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
         except (TypeError, ValueError):
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
@@ -1188,7 +1187,8 @@ class TypingBoosterEngine(IBus.Engine):
             if stripped_phrase:
                 if DEBUG_LEVEL > 1:
                     LOGGER.debug('Removing “%s”', stripped_phrase)
-                self.database.remove_phrase(phrase=stripped_phrase, commit=True)
+                self.database.remove_phrase(phrase=stripped_phrase,
+                                            commit=True)
             # Try to remove the whole candidate as well from the database.
             # Probably this won’t do anything, just to make sure that it
             # is really removed even if the prefix also ended up in the
@@ -2419,7 +2419,8 @@ class TypingBoosterEngine(IBus.Engine):
 
         :return: True if a candidate could be committed, False if not.
         :param index: The index of the candidate to commit in the lookup table
-        :param extra_text:  Additional text append to the commit, usually a space
+        :param extra_text: Additional text append to the commit,
+                           usually a space
         '''
         if not self.get_lookup_table().get_number_of_candidates():
             return False
@@ -4067,7 +4068,8 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._auto_select_candidate
 
-    def do_candidate_clicked(self, index: int, button: int, state: int) -> None:
+    def do_candidate_clicked(
+            self, index: int, button: int, state: int) -> None:
         '''Called when a candidate in the lookup table
         is clicked with the mouse
         '''
@@ -4974,18 +4976,20 @@ class TypingBoosterEngine(IBus.Engine):
                 and not self._tab_enable
                 and key.msymbol
                 in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
-                # if key.msymbol is for example 'G-4', then for example
-                # with hi-inscript2 it is transliterated to ₹ INDIAN RUPEE SIGN.
-                # Such things can be added to the preedit, no need to commit them
-                # immediately here.
+                # if key.msymbol is for example 'G-4', then for
+                # example with hi-inscript2 it is transliterated to ₹
+                # INDIAN RUPEE SIGN.  Such things can be added to the
+                # preedit, no need to commit them immediately here.
                 if ((key.val in
-                     (IBus.KEY_0, IBus.KEY_1, IBus.KEY_2, IBus.KEY_3, IBus.KEY_4,
-                      IBus.KEY_5, IBus.KEY_6, IBus.KEY_7, IBus.KEY_8, IBus.KEY_9)
+                     (IBus.KEY_0, IBus.KEY_1, IBus.KEY_2, IBus.KEY_3,
+                      IBus.KEY_4, IBus.KEY_5, IBus.KEY_6, IBus.KEY_7,
+                      IBus.KEY_8, IBus.KEY_9)
                      and self._normal_digits_used_in_keybindings)
                     or
                     (key.val in
-                     (IBus.KP_0, IBus.KP_1, IBus.KP_2, IBus.KP_3, IBus.KP_4,
-                      IBus.KP_5, IBus.KP_6, IBus.KP_7, IBus.KP_8, IBus.KP_9)
+                     (IBus.KP_0, IBus.KP_1, IBus.KP_2, IBus.KP_3,
+                      IBus.KP_4, IBus.KP_5, IBus.KP_6, IBus.KP_7,
+                      IBus.KP_8, IBus.KP_9)
                      and self._keypad_digits_used_in_keybindings)):
                     # If digits are used as keys to select candidates
                     # it is not possibly to type them while the preëdit
@@ -5190,7 +5194,8 @@ class TypingBoosterEngine(IBus.Engine):
                         self._typed_string[self._typed_string_cursor:]))
                 if self._current_case_mode == 'upper':
                     input_phrase_right = self._case_modes[
-                        self._current_case_mode]['function'](input_phrase_right)
+                        self._current_case_mode]['function'](
+                            input_phrase_right)
                 if input_phrase_left:
                     self._commit_string(
                         input_phrase_left, input_phrase=input_phrase_left)
@@ -5282,11 +5287,11 @@ class TypingBoosterEngine(IBus.Engine):
                 if self._auto_capitalize:
                     if self._new_sentence:
                         self._current_case_mode = 'capitalize'
-                    if (self._input_hints & itb_util.InputHints.UPPERCASE_WORDS):
-                            self._current_case_mode = 'capitalize'
-                    if (self._input_hints & itb_util.InputHints.UPPERCASE_CHARS):
+                    if self._input_hints & itb_util.InputHints.UPPERCASE_WORDS:
+                        self._current_case_mode = 'capitalize'
+                    if self._input_hints & itb_util.InputHints.UPPERCASE_CHARS:
                         self._current_case_mode = 'upper'
-                    if (self._input_hints & itb_util.InputHints.LOWERCASE):
+                    if self._input_hints & itb_util.InputHints.LOWERCASE:
                         self._current_case_mode = 'lower'
             if (key.msymbol in ('G- ',)
                 and not self._has_transliteration([key.msymbol])):

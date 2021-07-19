@@ -23,8 +23,6 @@
 The setup tool for ibus typing booster.
 '''
 
-# “Wrong continued indentation”: pylint: disable=bad-continuation
-
 from typing import Tuple
 from typing import List
 from typing import Dict
@@ -64,7 +62,7 @@ from gi.repository import Pango
 require_version('IBus', '1.0')
 from gi.repository import IBus
 from pkginstall import InstallPkg
-from i18n import DOMAINNAME, _, init as i18n_init
+from i18n import _, init as i18n_init
 
 IMPORT_LANGTABLE_SUCCESSFUL = False
 try:
@@ -75,7 +73,9 @@ except (ImportError,):
 
 IMPORT_LIBVOIKKO_SUCCESSFUL = False
 try:
+    # pylint: disable=unused-import
     import libvoikko # type: ignore
+    # pylint: enable=unused-import
     IMPORT_LIBVOIKKO_SUCCESSFUL = True
 except (ImportError,):
     pass
@@ -138,7 +138,7 @@ class SetupUI(Gtk.Window):
 
         self._gsettings = Gio.Settings(
             schema='org.freedesktop.ibus.engine.typing-booster')
-        self._gsettings.connect('changed', self.on_gsettings_value_changed)
+        self._gsettings.connect('changed', self._on_gsettings_value_changed)
         self.set_title('🚀 ' + _('Preferences for ibus-typing-booster'))
         # https://tronche.com/gui/x/icccm/sec-4.html#WM_CLASS
         # gnome-shell seems to use the first argument of set_wmclass()
@@ -154,8 +154,8 @@ class SetupUI(Gtk.Window):
         self.set_wmclass(
             'ibus-setup-typing-booster', 'Typing Booster Preferences')
 
-        self.connect('destroy-event', self.on_destroy_event)
-        self.connect('delete-event', self.on_delete_event)
+        self.connect('destroy-event', self._on_destroy_event)
+        self.connect('delete-event', self._on_delete_event)
 
         self._main_container = Gtk.VBox()
         self.add(self._main_container)
@@ -172,15 +172,16 @@ class SetupUI(Gtk.Window):
         self._dialog_action_area.set_hexpand(True)
         self._dialog_action_area.set_vexpand(False)
         self._dialog_action_area.set_layout(Gtk.ButtonBoxStyle.EDGE)
-        self._main_container.pack_end(self._dialog_action_area, False, False, 0)
+        self._main_container.pack_end(
+            self._dialog_action_area, False, False, 0)
         self._about_button = Gtk.Button(label=_('About'))
-        self._about_button.connect('clicked', self.on_about_button_clicked)
+        self._about_button.connect('clicked', self._on_about_button_clicked)
         self._dialog_action_area.add(self._about_button)
         self._close_button = Gtk.Button()
         self._close_button_label = Gtk.Label()
         self._close_button_label.set_text_with_mnemonic(_('_Close'))
         self._close_button.add(self._close_button_label)
-        self._close_button.connect('clicked', self.on_close_clicked)
+        self._close_button.connect('clicked', self._on_close_clicked)
         self._dialog_action_area.add(self._close_button)
 
         grid_border_width = 10
@@ -336,7 +337,7 @@ class SetupUI(Gtk.Window):
               + 'are hidden again until the next key bound to '
               + 'this command is typed.'))
         self._tab_enable_checkbutton.connect(
-            'clicked', self.on_tab_enable_checkbutton)
+            'clicked', self._on_tab_enable_checkbutton)
         self._options_grid.attach(
             self._tab_enable_checkbutton, 0, 0, 2, 1)
         self._tab_enable = itb_util.variant_to_value(
@@ -363,7 +364,7 @@ class SetupUI(Gtk.Window):
               + 'moves to the next candidate and opens the full '
               + 'candidate list.'))
         self._inline_completion_checkbutton.connect(
-            'clicked', self.on_inline_completion_checkbutton)
+            'clicked', self._on_inline_completion_checkbutton)
         self._options_grid.attach(
             self._inline_completion_checkbutton, 0, 1, 2, 1)
         self._inline_completion = itb_util.variant_to_value(
@@ -380,7 +381,7 @@ class SetupUI(Gtk.Window):
         self._auto_capitalize_checkbutton.set_tooltip_text(
             _('Automatically capitalize after punctuation.'))
         self._auto_capitalize_checkbutton.connect(
-            'clicked', self.on_auto_capitalize_checkbutton)
+            'clicked', self._on_auto_capitalize_checkbutton)
         self._options_grid.attach(
             self._auto_capitalize_checkbutton, 0, 2, 2, 1)
         self._auto_capitalize = itb_util.variant_to_value(
@@ -410,7 +411,7 @@ class SetupUI(Gtk.Window):
               'for the “cancel” command which will deselect all '
               'candidates.'))
         self._auto_select_candidate_checkbutton.connect(
-            'clicked', self.on_auto_select_candidate_checkbutton)
+            'clicked', self._on_auto_select_candidate_checkbutton)
         self._options_grid.attach(
             self._auto_select_candidate_checkbutton, 0, 3, 2, 1)
         self._auto_select_candidate = itb_util.variant_to_value(
@@ -430,7 +431,7 @@ class SetupUI(Gtk.Window):
               + 'list is committed by clicking it '
               + 'with the mouse.'))
         self._add_space_on_commit_checkbutton.connect(
-            'clicked', self.on_add_space_on_commit_checkbutton)
+            'clicked', self._on_add_space_on_commit_checkbutton)
         self._options_grid.attach(
             self._add_space_on_commit_checkbutton, 0, 4, 2, 1)
         self._add_space_on_commit = itb_util.variant_to_value(
@@ -456,7 +457,7 @@ class SetupUI(Gtk.Window):
               + 'If this option is enabled, such a change is '
               + 'remembered even if the session is restarted.'))
         self._remember_last_used_preedit_ime_checkbutton.connect(
-            'clicked', self.on_remember_last_used_preedit_ime_checkbutton)
+            'clicked', self._on_remember_last_used_preedit_ime_checkbutton)
         self._options_grid.attach(
             self._remember_last_used_preedit_ime_checkbutton, 0, 5, 2, 1)
         self._remember_last_used_preedit_ime = itb_util.variant_to_value(
@@ -484,7 +485,7 @@ class SetupUI(Gtk.Window):
               + 'other symbols. These are technically not emoji but '
               + 'nevertheless useful symbols.'))
         self._emoji_predictions_checkbutton.connect(
-            'clicked', self.on_emoji_predictions_checkbutton)
+            'clicked', self._on_emoji_predictions_checkbutton)
         self._options_grid.attach(
             self._emoji_predictions_checkbutton, 0, 6, 2, 1)
         self._emoji_predictions = itb_util.variant_to_value(
@@ -513,7 +514,7 @@ class SetupUI(Gtk.Window):
               + 'input to disk it might make sense to use this '
               + 'option temporarily.'))
         self._off_the_record_checkbutton.connect(
-            'clicked', self.on_off_the_record_checkbutton)
+            'clicked', self._on_off_the_record_checkbutton)
         self._options_grid.attach(
             self._off_the_record_checkbutton, 0, 7, 2, 1)
         self._off_the_record = itb_util.variant_to_value(
@@ -542,7 +543,7 @@ class SetupUI(Gtk.Window):
               + 'enabled and input via XIM into X11 programs '
               + 'like xterm will not work well either.'))
         self._qt_im_module_workaround_checkbutton.connect(
-            'clicked', self.on_qt_im_module_workaround_checkbutton)
+            'clicked', self._on_qt_im_module_workaround_checkbutton)
         self._options_grid.attach(
             self._qt_im_module_workaround_checkbutton, 0, 8, 2, 1)
         self._qt_im_module_workaround = itb_util.variant_to_value(
@@ -572,7 +573,7 @@ class SetupUI(Gtk.Window):
               + 'keys and system load. Because it is buggy, '
               + 'this option is off by default.'))
         self._arrow_keys_reopen_preedit_checkbutton.connect(
-            'clicked', self.on_arrow_keys_reopen_preedit_checkbutton)
+            'clicked', self._on_arrow_keys_reopen_preedit_checkbutton)
         self._options_grid.attach(
             self._arrow_keys_reopen_preedit_checkbutton, 0, 9, 2, 1)
         self._arrow_keys_reopen_preedit = itb_util.variant_to_value(
@@ -626,7 +627,7 @@ class SetupUI(Gtk.Window):
         self._auto_commit_characters_entry.set_text(
             self._auto_commit_characters)
         self._auto_commit_characters_entry.connect(
-            'notify::text', self.on_auto_commit_characters_entry)
+            'notify::text', self._on_auto_commit_characters_entry)
 
         self._min_chars_completion_label = Gtk.Label()
         self._min_chars_completion_label.set_text(
@@ -656,7 +657,7 @@ class SetupUI(Gtk.Window):
             self._min_char_complete_adjustment.set_value(1)
         self._min_char_complete_adjustment.connect(
             'value-changed',
-            self.on_min_char_complete_adjustment_value_changed)
+            self._on_min_char_complete_adjustment_value_changed)
 
         self._debug_level_label = Gtk.Label()
         self._debug_level_label.set_text(
@@ -688,7 +689,7 @@ class SetupUI(Gtk.Window):
             self._debug_level_adjustment.set_value(0)
         self._debug_level_adjustment.connect(
             'value-changed',
-            self.on_debug_level_adjustment_value_changed)
+            self._on_debug_level_adjustment_value_changed)
 
         self._learn_from_file_button = Gtk.Button(
             # Translators: A button used to popup a file selector to
@@ -700,7 +701,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.attach(
             self._learn_from_file_button, 0, 13, 2, 1)
         self._learn_from_file_button.connect(
-            'clicked', self.on_learn_from_file_clicked)
+            'clicked', self._on_learn_from_file_clicked)
 
         self._delete_learned_data_button = Gtk.Button(
             # Translators: A button used to delete all personal
@@ -712,7 +713,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.attach(
             self._delete_learned_data_button, 0, 14, 2, 1)
         self._delete_learned_data_button.connect(
-            'clicked', self.on_delete_learned_data_clicked)
+            'clicked', self._on_delete_learned_data_clicked)
 
         self._dictionaries_label = Gtk.Label()
         self._dictionaries_label.set_text(
@@ -749,7 +750,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_add_button.set_tooltip_text(
             _('Add a dictionary'))
         self._dictionaries_add_button.connect(
-            'clicked', self.on_dictionaries_add_button_clicked)
+            'clicked', self._on_dictionaries_add_button_clicked)
         self._dictionaries_remove_button = Gtk.Button()
         self._dictionaries_remove_button_label = Gtk.Label()
         self._dictionaries_remove_button_label.set_text(
@@ -760,7 +761,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_remove_button.set_tooltip_text(
             _('Remove a dictionary'))
         self._dictionaries_remove_button.connect(
-            'clicked', self.on_dictionaries_remove_button_clicked)
+            'clicked', self._on_dictionaries_remove_button_clicked)
         self._dictionaries_remove_button.set_sensitive(False)
         self._dictionaries_up_button = Gtk.Button()
         self._dictionaries_up_button_label = Gtk.Label()
@@ -771,7 +772,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_up_button.set_tooltip_text(
             _('Move dictionary up'))
         self._dictionaries_up_button.connect(
-            'clicked', self.on_dictionaries_up_button_clicked)
+            'clicked', self._on_dictionaries_up_button_clicked)
         self._dictionaries_up_button.set_sensitive(False)
         self._dictionaries_down_button = Gtk.Button()
         self._dictionaries_down_button_label = Gtk.Label()
@@ -783,7 +784,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_down_button.set_tooltip_text(
             _('Move dictionary down'))
         self._dictionaries_down_button.connect(
-            'clicked', self.on_dictionaries_down_button_clicked)
+            'clicked', self._on_dictionaries_down_button_clicked)
         self._dictionaries_down_button.set_sensitive(False)
         self._dictionaries_install_missing_button = Gtk.Button(
             # Translators: A button used to try to install the
@@ -793,7 +794,7 @@ class SetupUI(Gtk.Window):
             _('Install the dictionaries which are '
               + 'setup here but not installed'))
         self._dictionaries_install_missing_button.connect(
-            'clicked', self.on_install_missing_dictionaries)
+            'clicked', self._on_install_missing_dictionaries)
         self._dictionaries_default_button = Gtk.Button()
         self._dictionaries_default_button_label = Gtk.Label()
         self._dictionaries_default_button_label.set_text(
@@ -807,7 +808,7 @@ class SetupUI(Gtk.Window):
             + ' LC_CTYPE=%s'
             % '.'.join(locale.getlocale(category=locale.LC_CTYPE)))
         self._dictionaries_default_button.connect(
-            'clicked', self.on_dictionaries_default_button_clicked)
+            'clicked', self._on_dictionaries_default_button_clicked)
         self._dictionaries_default_button.set_sensitive(True)
         self._dictionaries_action_area.add(self._dictionaries_add_button)
         self._dictionaries_action_area.add(self._dictionaries_remove_button)
@@ -862,7 +863,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_add_button.set_tooltip_text(
             _('Add an input method'))
         self._input_methods_add_button.connect(
-            'clicked', self.on_input_methods_add_button_clicked)
+            'clicked', self._on_input_methods_add_button_clicked)
         self._input_methods_add_button.set_sensitive(False)
         self._input_methods_remove_button = Gtk.Button()
         self._input_methods_remove_button_label = Gtk.Label()
@@ -874,7 +875,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_remove_button.set_tooltip_text(
             _('Remove an input method'))
         self._input_methods_remove_button.connect(
-            'clicked', self.on_input_methods_remove_button_clicked)
+            'clicked', self._on_input_methods_remove_button_clicked)
         self._input_methods_remove_button.set_sensitive(False)
         self._input_methods_up_button = Gtk.Button()
         self._input_methods_up_button_label = Gtk.Label()
@@ -886,7 +887,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_up_button.set_tooltip_text(
             _('Move input method up'))
         self._input_methods_up_button.connect(
-            'clicked', self.on_input_methods_up_button_clicked)
+            'clicked', self._on_input_methods_up_button_clicked)
         self._input_methods_up_button.set_sensitive(False)
         self._input_methods_down_button = Gtk.Button()
         self._input_methods_down_button_label = Gtk.Label()
@@ -898,7 +899,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_down_button.set_tooltip_text(
             _('Move input method down'))
         self._input_methods_down_button.connect(
-            'clicked', self.on_input_methods_down_button_clicked)
+            'clicked', self._on_input_methods_down_button_clicked)
         self._input_methods_down_button.set_sensitive(False)
         self._input_methods_help_button = Gtk.Button(
             # Translators: A button to display some help showing how
@@ -909,7 +910,7 @@ class SetupUI(Gtk.Window):
             _('Display some help showing how to use the '
               + 'input method selected above.'))
         self._input_methods_help_button.connect(
-            'clicked', self.on_input_methods_help_button_clicked)
+            'clicked', self._on_input_methods_help_button_clicked)
         self._input_methods_help_button.set_sensitive(False)
         self._input_methods_default_button = Gtk.Button()
         self._input_methods_default_button_label = Gtk.Label()
@@ -924,7 +925,7 @@ class SetupUI(Gtk.Window):
             + ' LC_CTYPE=%s'
             % '.'.join(locale.getlocale(category=locale.LC_CTYPE)))
         self._input_methods_default_button.connect(
-            'clicked', self.on_input_methods_default_button_clicked)
+            'clicked', self._on_input_methods_default_button_clicked)
         self._input_methods_default_button.set_sensitive(True)
         self._input_methods_action_area.add(self._input_methods_add_button)
         self._input_methods_action_area.add(self._input_methods_remove_button)
@@ -959,7 +960,7 @@ class SetupUI(Gtk.Window):
             self._shortcut_entry, 0, 1, 3, 1)
         self._shortcut_entry.set_text('')
         self._shortcut_entry.connect(
-            'notify::text', self.on_shortcut_entry)
+            'notify::text', self._on_shortcut_entry)
 
         self._shortcut_expansion_label = Gtk.Label()
         self._shortcut_expansion_label.set_text(
@@ -987,7 +988,7 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.attach(
             self._shortcut_expansion_scroll, 0, 3, 3, 3)
         self._shortcut_expansion_textview_buffer.connect(
-            'notify::text', self.on_shortcut_expansion_textview_buffer)
+            'notify::text', self._on_shortcut_expansion_textview_buffer)
 
         self._shortcut_clear_button = Gtk.Button(
             label=_('Clear input'))
@@ -997,7 +998,7 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.attach(
             self._shortcut_clear_button, 0, 7, 1, 1)
         self._shortcut_clear_button.connect(
-            'clicked', self.on_shortcut_clear_clicked)
+            'clicked', self._on_shortcut_clear_clicked)
         self._shortcut_clear_button.set_sensitive(False)
 
         self._shortcut_delete_button = Gtk.Button(
@@ -1008,7 +1009,7 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.attach(
             self._shortcut_delete_button, 1, 7, 1, 1)
         self._shortcut_delete_button.connect(
-            'clicked', self.on_shortcut_delete_clicked)
+            'clicked', self._on_shortcut_delete_clicked)
         self._shortcut_delete_button.set_sensitive(False)
 
         self._shortcut_add_button = Gtk.Button(
@@ -1019,7 +1020,7 @@ class SetupUI(Gtk.Window):
         self._custom_shortcuts_grid.attach(
             self._shortcut_add_button, 2, 7, 1, 1)
         self._shortcut_add_button.connect(
-            'clicked', self.on_shortcut_add_clicked)
+            'clicked', self._on_shortcut_add_clicked)
         self._shortcut_add_button.set_sensitive(False)
 
         self._shortcut_treeview_scroll = Gtk.ScrolledWindow()
@@ -1050,7 +1051,7 @@ class SetupUI(Gtk.Window):
         shortcut_treeview_column_1.set_sort_column_id(1)
         self._shortcut_treeview.append_column(shortcut_treeview_column_1)
         self._shortcut_treeview.get_selection().connect(
-            'changed', self.on_shortcut_selected)
+            'changed', self._on_shortcut_selected)
         self._shortcut_treeview_scroll.add(self._shortcut_treeview)
         self._custom_shortcuts_grid.attach(
             self._shortcut_treeview_scroll, 0, 8, 3, 10)
@@ -1094,9 +1095,9 @@ class SetupUI(Gtk.Window):
         keybindings_treeview_column_1.set_sort_column_id(1)
         self._keybindings_treeview.append_column(keybindings_treeview_column_1)
         self._keybindings_treeview.get_selection().connect(
-            'changed', self.on_keybindings_treeview_row_selected)
+            'changed', self._on_keybindings_treeview_row_selected)
         self._keybindings_treeview.connect(
-            'row-activated', self.on_keybindings_treeview_row_activated)
+            'row-activated', self._on_keybindings_treeview_row_activated)
         self._keybindings_treeview_scroll.add(self._keybindings_treeview)
         self._keybindings_vbox.pack_start(
             self._keybindings_label, False, False, 0)
@@ -1117,7 +1118,7 @@ class SetupUI(Gtk.Window):
             _('Edit the key bindings for the selected command'))
         self._keybindings_edit_button.set_sensitive(False)
         self._keybindings_edit_button.connect(
-            'clicked', self.on_keybindings_edit_button_clicked)
+            'clicked', self._on_keybindings_edit_button_clicked)
         self._keybindings_default_button = Gtk.Button()
         self._keybindings_default_button_label = Gtk.Label()
         self._keybindings_default_button_label.set_text(
@@ -1128,7 +1129,7 @@ class SetupUI(Gtk.Window):
             _('Set default key bindings for the selected command'))
         self._keybindings_default_button.set_sensitive(False)
         self._keybindings_default_button.connect(
-            'clicked', self.on_keybindings_default_button_clicked)
+            'clicked', self._on_keybindings_default_button_clicked)
         self._keybindings_all_default_button = Gtk.Button()
         self._keybindings_all_default_button_label = Gtk.Label()
         self._keybindings_all_default_button_label.set_text(
@@ -1139,7 +1140,7 @@ class SetupUI(Gtk.Window):
             _('Set default key bindings for all commands'))
         self._keybindings_all_default_button.set_sensitive(True)
         self._keybindings_all_default_button.connect(
-            'clicked', self.on_keybindings_all_default_button_clicked)
+            'clicked', self._on_keybindings_all_default_button_clicked)
         self._keybindings_action_area.add(self._keybindings_edit_button)
         self._keybindings_action_area.add(self._keybindings_default_button)
         self._keybindings_action_area.add(self._keybindings_all_default_button)
@@ -1161,7 +1162,7 @@ class SetupUI(Gtk.Window):
             _('Display how many candidates there are and which '
               + 'one is selected on top of the list of candidates.'))
         self._show_number_of_candidates_checkbutton.connect(
-            'clicked', self.on_show_number_of_candidates_checkbutton)
+            'clicked', self._on_show_number_of_candidates_checkbutton)
         self._appearance_grid.attach(
             self._show_number_of_candidates_checkbutton, 0, 0, 1, 1)
         self._show_number_of_candidates = itb_util.variant_to_value(
@@ -1187,7 +1188,7 @@ class SetupUI(Gtk.Window):
               + 'optional line of text displayed above the '
               + 'candidate list.'))
         self._show_status_info_in_auxiliary_text_checkbutton.connect(
-            'clicked', self.on_show_status_info_in_auxiliary_text_checkbutton)
+            'clicked', self._on_show_status_info_in_auxiliary_text_checkbutton)
         self._appearance_grid.attach(
             self._show_status_info_in_auxiliary_text_checkbutton, 1, 0, 1, 1)
         self._show_status_info_in_auxiliary_text = itb_util.variant_to_value(
@@ -1223,7 +1224,7 @@ class SetupUI(Gtk.Window):
         else:
             self._page_size_adjustment.set_value(6)
         self._page_size_adjustment.connect(
-            'value-changed', self.on_page_size_adjustment_value_changed)
+            'value-changed', self._on_page_size_adjustment_value_changed)
 
         self._lookup_table_orientation_label = Gtk.Label()
         self._lookup_table_orientation_label.set_text(
@@ -1263,7 +1264,7 @@ class SetupUI(Gtk.Window):
             self._lookup_table_orientation_combobox, 1, 2, 1, 1)
         self._lookup_table_orientation_combobox.connect(
             "changed",
-            self.on_lookup_table_orientation_combobox_changed)
+            self._on_lookup_table_orientation_combobox_changed)
 
         self._preedit_underline_label = Gtk.Label()
         self._preedit_underline_label.set_text(
@@ -1312,7 +1313,7 @@ class SetupUI(Gtk.Window):
             self._preedit_underline_combobox, 1, 3, 1, 1)
         self._preedit_underline_combobox.connect(
             "changed",
-            self.on_preedit_underline_combobox_changed)
+            self._on_preedit_underline_combobox_changed)
 
         self._preedit_style_only_when_lookup_checkbutton = Gtk.CheckButton(
             # Translators: Checkbox to choose whether a preedit style
@@ -1330,7 +1331,7 @@ class SetupUI(Gtk.Window):
               + 'because one uses the option to require a minimum '
               + 'number of characters before a lookup is done.'))
         self._preedit_style_only_when_lookup_checkbutton.connect(
-            'clicked', self.on_preedit_style_only_when_lookup_checkbutton)
+            'clicked', self._on_preedit_style_only_when_lookup_checkbutton)
         self._appearance_grid.attach(
             self._preedit_style_only_when_lookup_checkbutton, 0, 4, 2, 1)
         self._preedit_style_only_when_lookup = itb_util.variant_to_value(
@@ -1362,7 +1363,7 @@ class SetupUI(Gtk.Window):
         self._color_preedit_spellcheck_checkbutton.set_active(
             self._color_preedit_spellcheck)
         self._color_preedit_spellcheck_checkbutton.connect(
-            'clicked', self.on_color_preedit_spellcheck_checkbutton)
+            'clicked', self._on_color_preedit_spellcheck_checkbutton)
         self._color_preedit_spellcheck_rgba_colorbutton = Gtk.ColorButton()
         margin = 0
         self._color_preedit_spellcheck_rgba_colorbutton.set_margin_start(
@@ -1395,7 +1396,7 @@ class SetupUI(Gtk.Window):
         self._color_preedit_spellcheck_rgba_colorbutton.set_sensitive(
             self._color_preedit_spellcheck)
         self._color_preedit_spellcheck_rgba_colorbutton.connect(
-            'color-set', self.on_color_preedit_spellcheck_color_set)
+            'color-set', self._on_color_preedit_spellcheck_color_set)
 
         self._color_inline_completion_checkbutton = Gtk.CheckButton(
             # Translators: A checkbox where one can choose whether a
@@ -1415,7 +1416,7 @@ class SetupUI(Gtk.Window):
         self._color_inline_completion_checkbutton.set_active(
             self._color_inline_completion)
         self._color_inline_completion_checkbutton.connect(
-            'clicked', self.on_color_inline_completion_checkbutton)
+            'clicked', self._on_color_inline_completion_checkbutton)
         self._color_inline_completion_rgba_colorbutton = Gtk.ColorButton()
         margin = 0
         self._color_inline_completion_rgba_colorbutton.set_margin_start(
@@ -1448,7 +1449,7 @@ class SetupUI(Gtk.Window):
         self._color_inline_completion_rgba_colorbutton.set_sensitive(
             self._color_inline_completion)
         self._color_inline_completion_rgba_colorbutton.connect(
-            'color-set', self.on_color_inline_completion_color_set)
+            'color-set', self._on_color_inline_completion_color_set)
 
         self._color_userdb_checkbutton = Gtk.CheckButton(
             # Translators: A checkbox where one can choose whether a
@@ -1469,7 +1470,7 @@ class SetupUI(Gtk.Window):
             self._color_userdb = False
         self._color_userdb_checkbutton.set_active(self._color_userdb)
         self._color_userdb_checkbutton.connect(
-            'clicked', self.on_color_userdb_checkbutton)
+            'clicked', self._on_color_userdb_checkbutton)
         self._color_userdb_rgba_colorbutton = Gtk.ColorButton()
         margin = 0
         self._color_userdb_rgba_colorbutton.set_margin_start(margin)
@@ -1499,7 +1500,7 @@ class SetupUI(Gtk.Window):
         self._color_userdb_rgba_colorbutton.set_sensitive(
             self._color_userdb)
         self._color_userdb_rgba_colorbutton.connect(
-            'color-set', self.on_color_userdb_color_set)
+            'color-set', self._on_color_userdb_color_set)
 
         self._color_spellcheck_checkbutton = Gtk.CheckButton(
             # Translators: A checkbox where one can choose whether a
@@ -1519,7 +1520,7 @@ class SetupUI(Gtk.Window):
             self._color_spellcheck = False
         self._color_spellcheck_checkbutton.set_active(self._color_spellcheck)
         self._color_spellcheck_checkbutton.connect(
-            'clicked', self.on_color_spellcheck_checkbutton)
+            'clicked', self._on_color_spellcheck_checkbutton)
         self._color_spellcheck_rgba_colorbutton = Gtk.ColorButton()
         margin = 0
         self._color_spellcheck_rgba_colorbutton.set_margin_start(margin)
@@ -1549,7 +1550,7 @@ class SetupUI(Gtk.Window):
         self._color_spellcheck_rgba_colorbutton.set_sensitive(
             self._color_spellcheck)
         self._color_spellcheck_rgba_colorbutton.connect(
-            'color-set', self.on_color_spellcheck_color_set)
+            'color-set', self._on_color_spellcheck_color_set)
 
         self._color_dictionary_checkbutton = Gtk.CheckButton(
             # Translators: A checkbox where one can choose whether a
@@ -1570,7 +1571,7 @@ class SetupUI(Gtk.Window):
             self._color_dictionary = False
         self._color_dictionary_checkbutton.set_active(self._color_dictionary)
         self._color_dictionary_checkbutton.connect(
-            'clicked', self.on_color_dictionary_checkbutton)
+            'clicked', self._on_color_dictionary_checkbutton)
         self._color_dictionary_rgba_colorbutton = Gtk.ColorButton()
         margin = 0
         self._color_dictionary_rgba_colorbutton.set_margin_start(margin)
@@ -1600,7 +1601,7 @@ class SetupUI(Gtk.Window):
         self._color_dictionary_rgba_colorbutton.set_sensitive(
             self._color_dictionary)
         self._color_dictionary_rgba_colorbutton.connect(
-            'color-set', self.on_color_dictionary_color_set)
+            'color-set', self._on_color_dictionary_color_set)
 
         self._label_userdb_checkbutton = Gtk.CheckButton(
             # Translators: A checkbox where one can choose whether a
@@ -1621,7 +1622,7 @@ class SetupUI(Gtk.Window):
             self._label_userdb = False
         self._label_userdb_checkbutton.set_active(self._label_userdb)
         self._label_userdb_checkbutton.connect(
-            'clicked', self.on_label_userdb_checkbutton)
+            'clicked', self._on_label_userdb_checkbutton)
         self._label_userdb_entry = Gtk.Entry()
         self._label_userdb_entry.set_visible(True)
         self._label_userdb_entry.set_can_focus(True)
@@ -1636,7 +1637,7 @@ class SetupUI(Gtk.Window):
         self._label_userdb_entry.set_text(
             self._label_userdb_string)
         self._label_userdb_entry.connect(
-            'notify::text', self.on_label_userdb_entry)
+            'notify::text', self._on_label_userdb_entry)
 
         self._label_spellcheck_checkbutton = Gtk.CheckButton(
             # Translators: A checkbox where one can choose whether a
@@ -1657,7 +1658,7 @@ class SetupUI(Gtk.Window):
             self._label_spellcheck = False
         self._label_spellcheck_checkbutton.set_active(self._label_spellcheck)
         self._label_spellcheck_checkbutton.connect(
-            'clicked', self.on_label_spellcheck_checkbutton)
+            'clicked', self._on_label_spellcheck_checkbutton)
         self._label_spellcheck_entry = Gtk.Entry()
         self._label_spellcheck_entry.set_visible(True)
         self._label_spellcheck_entry.set_can_focus(True)
@@ -1672,7 +1673,7 @@ class SetupUI(Gtk.Window):
         self._label_spellcheck_entry.set_text(
             self._label_spellcheck_string)
         self._label_spellcheck_entry.connect(
-            'notify::text', self.on_label_spellcheck_entry)
+            'notify::text', self._on_label_spellcheck_entry)
 
         self._label_dictionary_checkbutton = Gtk.CheckButton(
             # Translators: A checkbox where one can choose whether a
@@ -1693,7 +1694,7 @@ class SetupUI(Gtk.Window):
             self._label_dictionary = False
         self._label_dictionary_checkbutton.set_active(self._label_dictionary)
         self._label_dictionary_checkbutton.connect(
-            'clicked', self.on_label_dictionary_checkbutton)
+            'clicked', self._on_label_dictionary_checkbutton)
         self._label_dictionary_entry = Gtk.Entry()
         self._label_dictionary_entry.set_visible(True)
         self._label_dictionary_entry.set_can_focus(True)
@@ -1708,7 +1709,7 @@ class SetupUI(Gtk.Window):
         self._label_dictionary_entry.set_text(
             self._label_dictionary_string)
         self._label_dictionary_entry.connect(
-            'notify::text', self.on_label_dictionary_entry)
+            'notify::text', self._on_label_dictionary_entry)
 
         self._label_busy_checkbutton = Gtk.CheckButton(
             # Translators: A checkbox where one can choose whether a
@@ -1727,7 +1728,7 @@ class SetupUI(Gtk.Window):
             self._label_busy = True
         self._label_busy_checkbutton.set_active(self._label_busy)
         self._label_busy_checkbutton.connect(
-            'clicked', self.on_label_busy_checkbutton)
+            'clicked', self._on_label_busy_checkbutton)
         self._label_busy_entry = Gtk.Entry()
         self._label_busy_entry.set_visible(True)
         self._label_busy_entry.set_can_focus(True)
@@ -1742,7 +1743,7 @@ class SetupUI(Gtk.Window):
         self._label_busy_entry.set_text(
             self._label_busy_string)
         self._label_busy_entry.connect(
-            'notify::text', self.on_label_busy_entry)
+            'notify::text', self._on_label_busy_entry)
 
         self._google_application_credentials_label = Gtk.Label()
         self._google_application_credentials_label.set_text(
@@ -1776,7 +1777,7 @@ class SetupUI(Gtk.Window):
         self._speech_recognition_grid.attach(
             self._google_application_credentials_button, 1, 0, 1, 1)
         self._google_application_credentials_button.connect(
-            'clicked', self.on_google_application_credentials_button)
+            'clicked', self._on_google_application_credentials_button)
 
         self.show_all()
 
@@ -1861,7 +1862,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox.set_selection_mode(Gtk.SelectionMode.SINGLE)
         self._dictionaries_listbox.set_activate_on_single_click(True)
         self._dictionaries_listbox.connect(
-            'row-selected', self.on_dictionary_selected)
+            'row-selected', self._on_dictionary_selected)
         self._dictionary_names = []
         dictionary = itb_util.variant_to_value(
             self._gsettings.get_value('dictionary'))
@@ -1887,9 +1888,11 @@ class SetupUI(Gtk.Window):
                 + 'dictionaries.\n'
                 + 'Trying to set: %s\n' %self._dictionary_names
                 + 'Really setting: %s\n'
-                %self._dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
+                %self._dictionary_names[
+                    :itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
             self._dictionary_names = (
-                self._dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
+                self._dictionary_names[
+                    :itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
             # Save reduced list of dictionaries back to settings:
             self._gsettings.set_value(
                 'dictionary',
@@ -1899,7 +1902,8 @@ class SetupUI(Gtk.Window):
             for name in self._dictionary_names:
                 label = Gtk.Label()
                 (text,
-                 missing_dictionary) = self._fill_dictionaries_listbox_row(name)
+                 missing_dictionary) = self._fill_dictionaries_listbox_row(
+                     name)
                 if missing_dictionary:
                     missing_dictionaries = True
                 label.set_text(html.escape(text))
@@ -1964,7 +1968,7 @@ class SetupUI(Gtk.Window):
             Gtk.SelectionMode.SINGLE)
         self._input_methods_listbox.set_activate_on_single_click(True)
         self._input_methods_listbox.connect(
-            'row-selected', self.on_input_method_selected)
+            'row-selected', self._on_input_method_selected)
         self._current_imes = []
         inputmethod = itb_util.variant_to_value(
             self._gsettings.get_value('inputmethod'))
@@ -1990,7 +1994,8 @@ class SetupUI(Gtk.Window):
                 + 'input methods.\n'
                 + 'Trying to set: %s\n' %self._current_imes
                 + 'Really setting: %s\n'
-                % self._current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
+                % self._current_imes[
+                    :itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
             self._current_imes = (
                 self._current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
             # Save reduced list of input methods back to settings:
@@ -2073,19 +2078,19 @@ class SetupUI(Gtk.Window):
         else:
             return False
 
-    def on_delete_event(self, *_args) -> None:
+    def _on_delete_event(self, *_args) -> None:
         '''
         The window has been deleted, probably by the window manager.
         '''
         Gtk.main_quit()
 
-    def on_destroy_event(self, *_args) -> None:
+    def _on_destroy_event(self, *_args) -> None:
         '''
         The window has been destroyed.
         '''
         Gtk.main_quit()
 
-    def on_close_clicked(self, *_args) -> None:
+    def _on_close_clicked(self, *_args) -> None:
         '''
         The button to close the dialog has been clicked.
         '''
@@ -2106,7 +2111,7 @@ class SetupUI(Gtk.Window):
                     'But here in the setup tool there is nothing to do.')
     # pylint: enable=unused-argument
 
-    def on_gsettings_value_changed(
+    def _on_gsettings_value_changed(
             self, _settings: Gio.Settings, key: str) -> None:
         '''
         Called when a value in the settings has been changed.
@@ -2171,7 +2176,7 @@ class SetupUI(Gtk.Window):
         LOGGER.error('Unknown key\n')
         return
 
-    def on_about_button_clicked(self, _button: Gtk.Button) -> None:
+    def _on_about_button_clicked(self, _button: Gtk.Button) -> None:
         '''
         The “About” button has been clicked
 
@@ -2179,7 +2184,7 @@ class SetupUI(Gtk.Window):
         '''
         itb_util.ItbAboutDialog()
 
-    def on_color_preedit_spellcheck_checkbutton(
+    def _on_color_preedit_spellcheck_checkbutton(
             self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to do spellchecking on the
@@ -2190,7 +2195,7 @@ class SetupUI(Gtk.Window):
         self.set_color_preedit_spellcheck(
             widget.get_active(), update_gsettings=True)
 
-    def on_color_preedit_spellcheck_color_set(
+    def _on_color_preedit_spellcheck_color_set(
             self, widget: Gtk.ColorButton) -> None:
         '''
         A color has been set to indicate spelling errors in the preedit
@@ -2200,7 +2205,7 @@ class SetupUI(Gtk.Window):
         self.set_color_preedit_spellcheck_string(
             widget.get_rgba().to_string(), update_gsettings=True)
 
-    def on_color_inline_completion_checkbutton(
+    def _on_color_inline_completion_checkbutton(
             self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use color for inline completion
@@ -2211,7 +2216,7 @@ class SetupUI(Gtk.Window):
         self.set_color_inline_completion(
             widget.get_active(), update_gsettings=True)
 
-    def on_color_inline_completion_color_set(
+    def _on_color_inline_completion_color_set(
             self, widget: Gtk.ColorButton) -> None:
         '''
         A color has been set for the inline completion
@@ -2221,7 +2226,7 @@ class SetupUI(Gtk.Window):
         self.set_color_inline_completion_string(
             widget.get_rgba().to_string(), update_gsettings=True)
 
-    def on_color_userdb_checkbutton(self, widget: Gtk.CheckButton) -> None:
+    def _on_color_userdb_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use color for candidates from the user
         database has been clicked.
@@ -2230,7 +2235,7 @@ class SetupUI(Gtk.Window):
         '''
         self.set_color_userdb(widget.get_active(), update_gsettings=True)
 
-    def on_color_userdb_color_set(self, widget: Gtk.ColorButton) -> None:
+    def _on_color_userdb_color_set(self, widget: Gtk.ColorButton) -> None:
         '''
         A color has been set for the candidates from the user database.
 
@@ -2239,7 +2244,8 @@ class SetupUI(Gtk.Window):
         self.set_color_userdb_string(
             widget.get_rgba().to_string(), update_gsettings=True)
 
-    def on_color_spellcheck_checkbutton(self, widget: Gtk.CheckButton) -> None:
+    def _on_color_spellcheck_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use color for candidates from spellchecking
         has been clicked.
@@ -2248,7 +2254,7 @@ class SetupUI(Gtk.Window):
         '''
         self.set_color_spellcheck(widget.get_active(), update_gsettings=True)
 
-    def on_color_spellcheck_color_set(self, widget: Gtk.ColorButton) -> None:
+    def _on_color_spellcheck_color_set(self, widget: Gtk.ColorButton) -> None:
         '''
         A color has been set for the candidates from spellchecking
 
@@ -2257,7 +2263,8 @@ class SetupUI(Gtk.Window):
         self.set_color_spellcheck_string(
             widget.get_rgba().to_string(), update_gsettings=True)
 
-    def on_color_dictionary_checkbutton(self, widget: Gtk.CheckButton) -> None:
+    def _on_color_dictionary_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use color for candidates from a dictionary
         has been clicked.
@@ -2266,7 +2273,7 @@ class SetupUI(Gtk.Window):
         '''
         self.set_color_dictionary(widget.get_active(), update_gsettings=True)
 
-    def on_color_dictionary_color_set(self, widget: Gtk.ColorButton) -> None:
+    def _on_color_dictionary_color_set(self, widget: Gtk.ColorButton) -> None:
         '''
         A color has been set for the candidates from a dictionary
 
@@ -2275,7 +2282,7 @@ class SetupUI(Gtk.Window):
         self.set_color_dictionary_string(
             widget.get_rgba().to_string(), update_gsettings=True)
 
-    def on_label_userdb_checkbutton(self, widget: Gtk.CheckButton) -> None:
+    def _on_label_userdb_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use a label for candidates from the
         user database has been clicked.
@@ -2284,14 +2291,16 @@ class SetupUI(Gtk.Window):
         '''
         self.set_label_userdb(widget.get_active(), update_gsettings=True)
 
-    def on_label_userdb_entry(self, widget: Gtk.Entry, _property_spec) -> None:
+    def _on_label_userdb_entry(
+            self, widget: Gtk.Entry, _property_spec) -> None:
         '''
         The label for candidates from the user database has been changed.
         '''
         self.set_label_userdb_string(
             widget.get_text(), update_gsettings=True)
 
-    def on_label_spellcheck_checkbutton(self, widget: Gtk.CheckButton) -> None:
+    def _on_label_spellcheck_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use a label for candidates from
         spellchecking has been clicked.
@@ -2300,7 +2309,7 @@ class SetupUI(Gtk.Window):
         '''
         self.set_label_spellcheck(widget.get_active(), update_gsettings=True)
 
-    def on_label_spellcheck_entry(
+    def _on_label_spellcheck_entry(
             self, widget: Gtk.Entry, _property_spec) -> None:
         '''
         The label for candidates from spellchecking has been changed.
@@ -2308,7 +2317,8 @@ class SetupUI(Gtk.Window):
         self.set_label_spellcheck_string(
             widget.get_text(), update_gsettings=True)
 
-    def on_label_dictionary_checkbutton(self, widget: Gtk.CheckButton) -> None:
+    def _on_label_dictionary_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use a label for candidates from a dictionary
         has been clicked.
@@ -2317,7 +2327,7 @@ class SetupUI(Gtk.Window):
         '''
         self.set_label_dictionary(widget.get_active(), update_gsettings=True)
 
-    def on_label_dictionary_entry(
+    def _on_label_dictionary_entry(
             self, widget: Gtk.Entry, _property_spec) -> None:
         '''
         The label for candidates from a dictionary has been changed.
@@ -2325,7 +2335,7 @@ class SetupUI(Gtk.Window):
         self.set_label_dictionary_string(
             widget.get_text(), update_gsettings=True)
 
-    def on_label_busy_checkbutton(self, widget: Gtk.CheckButton) -> None:
+    def _on_label_busy_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use a label to indicate when
         ibus-typing-booster is busy.
@@ -2334,14 +2344,14 @@ class SetupUI(Gtk.Window):
         '''
         self.set_label_busy(widget.get_active(), update_gsettings=True)
 
-    def on_label_busy_entry(self, widget: Gtk.Entry, _property_spec) -> None:
+    def _on_label_busy_entry(self, widget: Gtk.Entry, _property_spec) -> None:
         '''
         The label to indicate when ibus-typing-booster is busy
         '''
         self.set_label_busy_string(
             widget.get_text(), update_gsettings=True)
 
-    def on_tab_enable_checkbutton(self, widget: Gtk.CheckButton) -> None:
+    def _on_tab_enable_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to show candidates only when
         requested with the tab key or not has been clicked.
@@ -2349,7 +2359,8 @@ class SetupUI(Gtk.Window):
         self.set_tab_enable(
             widget.get_active(), update_gsettings=True)
 
-    def on_inline_completion_checkbutton(self, widget: Gtk.CheckButton) -> None:
+    def _on_inline_completion_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to show a completion first inline in the
         preëdit instead of using a combobox to show a candidate list.
@@ -2357,14 +2368,14 @@ class SetupUI(Gtk.Window):
         self.set_inline_completion(
             widget.get_active(), update_gsettings=True)
 
-    def on_auto_capitalize_checkbutton(self, widget: Gtk.CheckButton) -> None:
+    def _on_auto_capitalize_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to automatically capitalize after punctation.
         '''
         self.set_auto_capitalize(
             widget.get_active(), update_gsettings=True)
 
-    def on_show_number_of_candidates_checkbutton(
+    def _on_show_number_of_candidates_checkbutton(
             self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to show the number of candidates
@@ -2373,7 +2384,7 @@ class SetupUI(Gtk.Window):
         self.set_show_number_of_candidates(
             widget.get_active(), update_gsettings=True)
 
-    def on_show_status_info_in_auxiliary_text_checkbutton(
+    def _on_show_status_info_in_auxiliary_text_checkbutton(
             self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to show status in the auxiliary text,
@@ -2382,7 +2393,7 @@ class SetupUI(Gtk.Window):
         self.set_show_status_info_in_auxiliary_text(
             widget.get_active(), update_gsettings=True)
 
-    def on_preedit_style_only_when_lookup_checkbutton(
+    def _on_preedit_style_only_when_lookup_checkbutton(
             self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to style the preedit only when
@@ -2391,7 +2402,7 @@ class SetupUI(Gtk.Window):
         self.set_preedit_style_only_when_lookup(
             widget.get_active(), update_gsettings=True)
 
-    def on_auto_select_candidate_checkbutton(
+    def _on_auto_select_candidate_checkbutton(
             self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to automatically select the best candidate
@@ -2400,7 +2411,7 @@ class SetupUI(Gtk.Window):
         self.set_auto_select_candidate(
             widget.get_active(), update_gsettings=True)
 
-    def on_add_space_on_commit_checkbutton(
+    def _on_add_space_on_commit_checkbutton(
             self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to add a space when committing by
@@ -2409,7 +2420,7 @@ class SetupUI(Gtk.Window):
         self.set_add_space_on_commit(
             widget.get_active(), update_gsettings=True)
 
-    def on_remember_last_used_preedit_ime_checkbutton(
+    def _on_remember_last_used_preedit_ime_checkbutton(
             self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to remember the last used input method
@@ -2418,7 +2429,8 @@ class SetupUI(Gtk.Window):
         self.set_remember_last_used_preedit_ime(
             widget.get_active(), update_gsettings=True)
 
-    def on_emoji_predictions_checkbutton(self, widget: Gtk.CheckButton) -> None:
+    def _on_emoji_predictions_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to predict emoji as well or not
         has been clicked.
@@ -2426,7 +2438,7 @@ class SetupUI(Gtk.Window):
         self.set_emoji_prediction_mode(
             widget.get_active(), update_gsettings=True)
 
-    def on_off_the_record_checkbutton(self, widget: Gtk.CheckButton) -> None:
+    def _on_off_the_record_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use “Off the record” mode, i.e. whether to
         learn from user data by saving user input to the user database
@@ -2435,7 +2447,7 @@ class SetupUI(Gtk.Window):
         self.set_off_the_record_mode(
             widget.get_active(), update_gsettings=True)
 
-    def on_qt_im_module_workaround_checkbutton(
+    def _on_qt_im_module_workaround_checkbutton(
             self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to use the workaround for the broken
@@ -2445,7 +2457,7 @@ class SetupUI(Gtk.Window):
         self.set_qt_im_module_workaround(
             widget.get_active(), update_gsettings=True)
 
-    def on_arrow_keys_reopen_preedit_checkbutton(
+    def _on_arrow_keys_reopen_preedit_checkbutton(
             self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether arrow keys are allowed to reopen
@@ -2454,7 +2466,7 @@ class SetupUI(Gtk.Window):
         self.set_arrow_keys_reopen_preedit(
             widget.get_active(), update_gsettings=True)
 
-    def on_auto_commit_characters_entry(
+    def _on_auto_commit_characters_entry(
             self, widget: Gtk.Entry, _property_spec) -> None:
         '''
         The list of characters triggering an auto commit has been changed.
@@ -2462,7 +2474,7 @@ class SetupUI(Gtk.Window):
         self.set_auto_commit_characters(
             widget.get_text(), update_gsettings=True)
 
-    def on_google_application_credentials_button(
+    def _on_google_application_credentials_button(
             self, _widget: Gtk.Button) -> None:
         '''
         The button to select the full path of the Google application
@@ -2489,7 +2501,7 @@ class SetupUI(Gtk.Window):
                 filename, update_gsettings=True)
         self._google_application_credentials_button.set_sensitive(True)
 
-    def on_page_size_adjustment_value_changed(
+    def _on_page_size_adjustment_value_changed(
             self, _widget: Gtk.SpinButton) -> None:
         '''
         The page size of the lookup table has been changed.
@@ -2497,7 +2509,7 @@ class SetupUI(Gtk.Window):
         self.set_page_size(
             self._page_size_adjustment.get_value(), update_gsettings=True)
 
-    def on_lookup_table_orientation_combobox_changed(
+    def _on_lookup_table_orientation_combobox_changed(
             self, widget: Gtk.ComboBox) -> None:
         '''
         A change of the lookup table orientation has been requested
@@ -2510,7 +2522,7 @@ class SetupUI(Gtk.Window):
             self.set_lookup_table_orientation(
                 orientation, update_gsettings=True)
 
-    def on_preedit_underline_combobox_changed(
+    def _on_preedit_underline_combobox_changed(
             self, widget: Gtk.ComboBox) -> None:
         '''
         A change of the preedit underline style has been requested
@@ -2523,7 +2535,7 @@ class SetupUI(Gtk.Window):
             self.set_preedit_underline(
                 underline_mode, update_gsettings=True)
 
-    def on_min_char_complete_adjustment_value_changed(
+    def _on_min_char_complete_adjustment_value_changed(
             self, _widget: Gtk.SpinButton) -> None:
         '''
         The value for the mininum number of characters before
@@ -2533,7 +2545,7 @@ class SetupUI(Gtk.Window):
             self._min_char_complete_adjustment.get_value(),
             update_gsettings=True)
 
-    def on_debug_level_adjustment_value_changed(
+    def _on_debug_level_adjustment_value_changed(
             self, _widget: Gtk.SpinButton) -> None:
         '''
         The value for the debug level has been changed.
@@ -2542,7 +2554,7 @@ class SetupUI(Gtk.Window):
             self._debug_level_adjustment.get_value(),
             update_gsettings=True)
 
-    def on_dictionary_to_add_selected(
+    def _on_dictionary_to_add_selected(
             self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
         '''
         Signal handler for selecting a dictionary to add
@@ -2593,7 +2605,7 @@ class SetupUI(Gtk.Window):
             Gtk.SelectionMode.SINGLE)
         self._dictionaries_add_listbox.set_activate_on_single_click(True)
         self._dictionaries_add_listbox.connect(
-            'row-selected', self.on_dictionary_to_add_selected)
+            'row-selected', self._on_dictionary_to_add_selected)
         rows = []
         for name in sorted(itb_util.SUPPORTED_DICTIONARIES):
             if name in self._dictionary_names:
@@ -2639,7 +2651,7 @@ class SetupUI(Gtk.Window):
             self._dictionaries_add_listbox.insert(label, -1)
         self._dictionaries_add_popover.show_all()
 
-    def on_dictionaries_search_entry_changed(
+    def _on_dictionaries_search_entry_changed(
             self, search_entry: Gtk.SearchEntry) -> None:
         '''
         Signal handler for changed text in the dictionaries search entry
@@ -2649,7 +2661,7 @@ class SetupUI(Gtk.Window):
         filter_text = search_entry.get_text()
         self._fill_dictionaries_add_listbox(filter_text)
 
-    def on_dictionaries_add_button_clicked(self, *_args) -> None:
+    def _on_dictionaries_add_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “add” button to add another
         dictionary has been clicked.
@@ -2697,7 +2709,7 @@ class SetupUI(Gtk.Window):
         dictionaries_add_popover_search_entry.set_hexpand(False)
         dictionaries_add_popover_search_entry.set_vexpand(False)
         dictionaries_add_popover_search_entry.connect(
-            'search-changed', self.on_dictionaries_search_entry_changed)
+            'search-changed', self._on_dictionaries_search_entry_changed)
         dictionaries_add_popover_vbox.pack_start(
             dictionaries_add_popover_search_entry, False, False, 0)
         self._dictionaries_add_popover_scroll = Gtk.ScrolledWindow()
@@ -2713,7 +2725,7 @@ class SetupUI(Gtk.Window):
             self._dictionaries_add_popover.popup()
         self._dictionaries_add_popover.show_all()
 
-    def on_dictionaries_remove_button_clicked(self, *_args):
+    def _on_dictionaries_remove_button_clicked(self, *_args):
         '''
         Signal handler called when the “remove” button for
         an input method has been clicked.
@@ -2735,7 +2747,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox_selected_dictionary_name = ''
         self._dictionaries_listbox.unselect_all()
 
-    def on_dictionaries_up_button_clicked(self, *_args) -> None:
+    def _on_dictionaries_up_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “up” button for a dictionary
         has been clicked.
@@ -2762,7 +2774,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox.select_row(
             self._dictionaries_listbox.get_row_at_index(index - 1))
 
-    def on_dictionaries_down_button_clicked(self, *_args) -> None:
+    def _on_dictionaries_down_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “down” button for a dictionary
         has been clicked.
@@ -2789,7 +2801,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox.select_row(
             self._dictionaries_listbox.get_row_at_index(index + 1))
 
-    def on_install_missing_dictionaries(self, *_args) -> None:
+    def _on_install_missing_dictionaries(self, *_args) -> None:
         '''
         Signal handler called when the “Install missing dictionaries”
         button is clicked.
@@ -2826,7 +2838,7 @@ class SetupUI(Gtk.Window):
                 'dictionaryinstalltimestamp',
                 GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
 
-    def on_dictionaries_default_button_clicked(self, *_args) -> None:
+    def _on_dictionaries_default_button_clicked(self, *_args) -> None:
         '''Signal handler called when the “Set to default” button for the
         dictionaries is clicked.
 
@@ -2836,7 +2848,7 @@ class SetupUI(Gtk.Window):
         self.set_dictionary_names(itb_util.get_default_dictionaries(
             locale.getlocale(category=locale.LC_CTYPE)[0]))
 
-    def on_dictionary_selected(
+    def _on_dictionary_selected(
             self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
         '''
         Signal handler called when a dictionary is selected
@@ -2861,7 +2873,7 @@ class SetupUI(Gtk.Window):
             self._dictionaries_up_button.set_sensitive(False)
             self._dictionaries_down_button.set_sensitive(False)
 
-    def on_input_method_to_add_selected(
+    def _on_input_method_to_add_selected(
             self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
         '''
         Signal handler for selecting an input method to add
@@ -2911,7 +2923,7 @@ class SetupUI(Gtk.Window):
             Gtk.SelectionMode.SINGLE)
         self._input_methods_add_listbox.set_activate_on_single_click(True)
         self._input_methods_add_listbox.connect(
-            'row-selected', self.on_input_method_to_add_selected)
+            'row-selected', self._on_input_method_to_add_selected)
         rows = []
         for ime in M17N_DB_INFO.get_imes():
             if ime in self._current_imes:
@@ -2934,7 +2946,7 @@ class SetupUI(Gtk.Window):
             self._input_methods_add_listbox.insert(label, -1)
         self._input_methods_add_popover.show_all()
 
-    def on_input_methods_search_entry_changed(
+    def _on_input_methods_search_entry_changed(
             self, search_entry: Gtk.SearchEntry) -> None:
         '''
         Signal handler for changed text in the input methods search entry
@@ -2944,7 +2956,7 @@ class SetupUI(Gtk.Window):
         filter_text = search_entry.get_text()
         self._fill_input_methods_add_listbox(filter_text)
 
-    def on_input_methods_add_button_clicked(self, *_args) -> None:
+    def _on_input_methods_add_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “add” button to add another
         input method has been clicked.
@@ -2991,7 +3003,7 @@ class SetupUI(Gtk.Window):
         input_methods_add_popover_search_entry.set_hexpand(False)
         input_methods_add_popover_search_entry.set_vexpand(False)
         input_methods_add_popover_search_entry.connect(
-            'search-changed', self.on_input_methods_search_entry_changed)
+            'search-changed', self._on_input_methods_search_entry_changed)
         input_methods_add_popover_vbox.pack_start(
             input_methods_add_popover_search_entry, False, False, 0)
         self._input_methods_add_popover_scroll = Gtk.ScrolledWindow()
@@ -3007,7 +3019,7 @@ class SetupUI(Gtk.Window):
             self._input_methods_add_popover.popup()
         self._input_methods_add_popover.show_all()
 
-    def on_input_methods_remove_button_clicked(self, *_args) -> None:
+    def _on_input_methods_remove_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “remove” button for
         an input method has been clicked.
@@ -3032,7 +3044,7 @@ class SetupUI(Gtk.Window):
             return
         self._input_methods_listbox.unselect_all()
 
-    def on_input_methods_up_button_clicked(self, *_args) -> None:
+    def _on_input_methods_up_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “up” button for an input method
         has been clicked.
@@ -3059,7 +3071,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_listbox.select_row(
             self._input_methods_listbox.get_row_at_index(index - 1))
 
-    def on_input_methods_down_button_clicked(self, *_args) -> None:
+    def _on_input_methods_down_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “down” button for an input method
         has been clicked.
@@ -3086,7 +3098,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_listbox.select_row(
             self._input_methods_listbox.get_row_at_index(index + 1))
 
-    def on_input_methods_help_button_clicked(self, _widget) -> None:
+    def _on_input_methods_help_button_clicked(self, _widget) -> None:
         '''
         Show a help window for the input method selected in the
         listbox.
@@ -3124,7 +3136,7 @@ class SetupUI(Gtk.Window):
             title=window_title,
             contents=window_contents)
 
-    def on_input_methods_default_button_clicked(self, *_args) -> None:
+    def _on_input_methods_default_button_clicked(self, *_args) -> None:
         '''Signal handler called when the “Set to default”
         button for the input methods is clicked.
 
@@ -3133,7 +3145,7 @@ class SetupUI(Gtk.Window):
         self.set_current_imes(itb_util.get_default_input_methods(
             locale.getlocale(category=locale.LC_CTYPE)[0]))
 
-    def on_input_method_selected(
+    def _on_input_method_selected(
             self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
         '''
         Signal handler called when an input method is selected
@@ -3184,21 +3196,21 @@ class SetupUI(Gtk.Window):
             self._shortcut_delete_button.set_sensitive(False)
             self._shortcut_add_button.set_sensitive(False)
 
-    def on_shortcut_entry(
+    def _on_shortcut_entry(
             self, _widget: Gtk.Entry, _property_spec) -> None:
         '''
         The contents of the shortcut entry line has changed
         '''
         self._set_shortcut_button_sensitivity()
 
-    def on_shortcut_expansion_textview_buffer(
+    def _on_shortcut_expansion_textview_buffer(
             self, _buffer: Gtk.TextBuffer, _param_spec: Any) -> None:
         '''
         The contents of the buffer of the shortcut expansion textview changed
         '''
         self._set_shortcut_button_sensitivity()
 
-    def on_shortcut_clear_clicked(self, _widget) -> None:
+    def _on_shortcut_clear_clicked(self, _widget) -> None:
         '''
         The button to clear the entry fields for defining
         a custom shortcut has been clicked.
@@ -3208,7 +3220,7 @@ class SetupUI(Gtk.Window):
         expansion_buffer.set_text('')
         self._shortcut_treeview.get_selection().unselect_all()
 
-    def on_shortcut_delete_clicked(self, _widget) -> None:
+    def _on_shortcut_delete_clicked(self, _widget) -> None:
         '''
         The button to delete a custom shortcut has been clicked.
         '''
@@ -3237,7 +3249,7 @@ class SetupUI(Gtk.Window):
         expansion_buffer.set_text('')
         self._shortcut_treeview.get_selection().unselect_all()
 
-    def on_shortcut_add_clicked(self, _widget) -> None:
+    def _on_shortcut_add_clicked(self, _widget) -> None:
         '''
         The button to add a custom shortcut has been clicked.
         '''
@@ -3272,7 +3284,7 @@ class SetupUI(Gtk.Window):
             expansion_buffer.set_text('')
             self._shortcut_treeview.get_selection().unselect_all()
 
-    def on_shortcut_selected(self, selection: Gtk.TreeSelection) -> None:
+    def _on_shortcut_selected(self, selection: Gtk.TreeSelection) -> None:
         '''
         A row in the list of shortcuts has been selected.
         '''
@@ -3284,7 +3296,7 @@ class SetupUI(Gtk.Window):
             expansion_buffer = self._shortcut_expansion_textview.get_buffer()
             expansion_buffer.set_text(shortcut_expansion)
 
-    def on_keybindings_treeview_row_activated(
+    def _on_keybindings_treeview_row_activated(
             self,
             _treeview: Gtk.TreeView,
             treepath: Gtk.TreePath,
@@ -3316,7 +3328,7 @@ class SetupUI(Gtk.Window):
             return
         self._create_and_show_keybindings_edit_popover()
 
-    def on_keybindings_treeview_row_selected(
+    def _on_keybindings_treeview_row_selected(
             self, selection: Gtk.TreeSelection) -> None:
         '''
         A row in the treeview listing the key bindings has been selected.
@@ -3332,7 +3344,7 @@ class SetupUI(Gtk.Window):
             self._keybindings_default_button.set_sensitive(False)
             self._keybindings_edit_button.set_sensitive(False)
 
-    def on_keybindings_edit_listbox_row_selected(
+    def _on_keybindings_edit_listbox_row_selected(
             self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
         '''
         Signal handler for selecting one of the key bindings
@@ -3354,7 +3366,7 @@ class SetupUI(Gtk.Window):
                 self._keybindings_edit_popover_remove_button.set_sensitive(
                     False)
 
-    def on_keybindings_edit_popover_add_button_clicked(self, *_args) -> None:
+    def _on_keybindings_edit_popover_add_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “Add” button to add
         a key binding has been clicked.
@@ -3372,7 +3384,8 @@ class SetupUI(Gtk.Window):
                 self._fill_keybindings_edit_popover_listbox()
                 self.set_keybindings(self._keybindings)
 
-    def on_keybindings_edit_popover_remove_button_clicked(self, *_args) -> None:
+    def _on_keybindings_edit_popover_remove_button_clicked(
+            self, *_args) -> None:
         '''
         Signal handler called when the “Remove” button to remove
         a key binding has been clicked.
@@ -3385,7 +3398,7 @@ class SetupUI(Gtk.Window):
             self._fill_keybindings_edit_popover_listbox()
             self.set_keybindings(self._keybindings)
 
-    def on_keybindings_edit_popover_default_button_clicked(
+    def _on_keybindings_edit_popover_default_button_clicked(
             self, *_args) -> None:
         '''
         Signal handler called when the “Default” button to set
@@ -3420,8 +3433,9 @@ class SetupUI(Gtk.Window):
         self._keybindings_edit_popover_listbox.set_activate_on_single_click(
             True)
         self._keybindings_edit_popover_listbox.connect(
-            'row-selected', self.on_keybindings_edit_listbox_row_selected)
-        for keybinding in self._keybindings[self._keybindings_selected_command]:
+            'row-selected', self._on_keybindings_edit_listbox_row_selected)
+        for keybinding in self._keybindings[
+                self._keybindings_selected_command]:
             label = Gtk.Label()
             label.set_text(html.escape(keybinding))
             label.set_use_markup(True)
@@ -3487,7 +3501,7 @@ class SetupUI(Gtk.Window):
         self._keybindings_edit_popover_add_button.set_tooltip_text(
             _('Add a key binding'))
         self._keybindings_edit_popover_add_button.connect(
-            'clicked', self.on_keybindings_edit_popover_add_button_clicked)
+            'clicked', self._on_keybindings_edit_popover_add_button_clicked)
         self._keybindings_edit_popover_add_button.set_sensitive(True)
         self._keybindings_edit_popover_remove_button = Gtk.Button()
         keybindings_edit_popover_remove_button_label = Gtk.Label()
@@ -3499,7 +3513,7 @@ class SetupUI(Gtk.Window):
         self._keybindings_edit_popover_remove_button.set_tooltip_text(
             _('Remove selected key binding'))
         self._keybindings_edit_popover_remove_button.connect(
-            'clicked', self.on_keybindings_edit_popover_remove_button_clicked)
+            'clicked', self._on_keybindings_edit_popover_remove_button_clicked)
         self._keybindings_edit_popover_remove_button.set_sensitive(False)
         self._keybindings_edit_popover_default_button = Gtk.Button()
         keybindings_edit_popover_default_button_label = Gtk.Label()
@@ -3511,7 +3525,8 @@ class SetupUI(Gtk.Window):
         self._keybindings_edit_popover_default_button.set_tooltip_text(
             _('Set default key bindings for the selected command'))
         self._keybindings_edit_popover_default_button.connect(
-            'clicked', self.on_keybindings_edit_popover_default_button_clicked)
+            'clicked',
+            self._on_keybindings_edit_popover_default_button_clicked)
         self._keybindings_edit_popover_default_button.set_sensitive(True)
         keybindings_edit_popover_button_box.add(
             self._keybindings_edit_popover_add_button)
@@ -3525,14 +3540,14 @@ class SetupUI(Gtk.Window):
             self._keybindings_edit_popover.popup()
         self._keybindings_edit_popover.show_all()
 
-    def on_keybindings_edit_button_clicked(self, *_args) -> None:
+    def _on_keybindings_edit_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “edit” button to edit the
         key bindings for a command has been clicked.
         '''
         self._create_and_show_keybindings_edit_popover()
 
-    def on_keybindings_default_button_clicked(self, *_args) -> None:
+    def _on_keybindings_default_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “Set to default” button to reset the
         key bindings for a command to the default has been clicked.
@@ -3545,7 +3560,7 @@ class SetupUI(Gtk.Window):
             new_keybindings[command] = default_keybindings[command]
             self.set_keybindings(new_keybindings)
 
-    def on_keybindings_all_default_button_clicked(self, *_args) -> None:
+    def _on_keybindings_all_default_button_clicked(self, *_args) -> None:
         '''
         Signal handler called when the “Set all to default” button to reset the
         all key bindings top their defaults has been clicked.
@@ -3565,7 +3580,7 @@ class SetupUI(Gtk.Window):
             self.set_keybindings(default_keybindings)
         self._keybindings_all_default_button.set_sensitive(True)
 
-    def on_learn_from_file_clicked(self, _widget: Gtk.Button) -> None:
+    def _on_learn_from_file_clicked(self, _widget: Gtk.Button) -> None:
         '''
         The button to learn from a user supplied text file
         has been clicked.
@@ -3607,7 +3622,7 @@ class SetupUI(Gtk.Window):
             dialog.destroy()
         self._learn_from_file_button.set_sensitive(True)
 
-    def on_delete_learned_data_clicked(self, _widget: Gtk.Button) -> None:
+    def _on_delete_learned_data_clicked(self, _widget: Gtk.Button) -> None:
         '''
         The button requesting to delete all data learned from
         user input or text files has been clicked.
@@ -3818,7 +3833,7 @@ class SetupUI(Gtk.Window):
             update_gsettings: bool = True) -> None:
         '''Sets the color to indicate spelling errors in the preedit
 
-        :param color_string: The color to indicate spelling errors in the preedit
+        :param color_string: Color to indicate spelling errors in the preedit
                             - Standard name from the X11 rgb.txt
                             - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
                                          or ”#rrrrggggbbbb”
@@ -4739,7 +4754,8 @@ class SetupUI(Gtk.Window):
                 + 'Trying to set: %s\n' %dictionary_names
                 + 'Really setting: %s\n'
                 % dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
-            dictionary_names = dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES]
+            dictionary_names = dictionary_names[
+                :itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES]
         self._dictionary_names = dictionary_names
         self._fill_dictionaries_listbox()
         if update_gsettings:
@@ -4841,13 +4857,13 @@ class HelpWindow(Gtk.Window):
         self.close_button_label = Gtk.Label()
         self.close_button_label.set_text_with_mnemonic(_('_Close'))
         self.close_button.add(self.close_button_label)
-        self.close_button.connect("clicked", self.on_close_button_clicked)
+        self.close_button.connect("clicked", self._on_close_button_clicked)
         self.hbox = Gtk.HBox(spacing=0)
         self.hbox.pack_end(self.close_button, False, False, 0)
         self.vbox.pack_start(self.hbox, False, False, 5)
         self.show_all()
 
-    def on_close_button_clicked(self, _widget) -> None:
+    def _on_close_button_clicked(self, _widget) -> None:
         '''
         Close the input method help window when the close button is clicked
         '''
