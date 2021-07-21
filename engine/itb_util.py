@@ -3466,13 +3466,74 @@ class ComposeSequences:
         }
         self._compose_sequences = {}
         compose_file_paths = []
-        compose_file_paths.append(self._locale_compose_file())
-        compose_file_paths.append(os.path.expanduser('~/.config/ibus/Compose'))
-        # For the meaning of XCOMPOSEFILE, see
-        # https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html
+        # Gtk reads compose files like this:
+        #
+        # https://developer.gnome.org/gtk3/stable/GtkIMContextSimple.html
+        # explains how Gtk reads compose files:
+        #
+        #     GtkIMContextSimple reads additional compose sequences
+        #     from the first of the following files that is found:
+        #     ~/.config/gtk-3.0/Compose, ~/.XCompose,
+        #     /usr/share/X11/locale/$locale/Compose (for locales that
+        #     have a nontrivial Compose file).
+        #
+        # The compose support in Gtk can be tested for example with
+        #
+        #     GTK_IM_MODULE=gtk-im-context-simple gedit
+        #
+        # ibus-typing-booster reads compose files as follows, which is
+        # slightly different from Gtk:
         user_compose_file = os.environ.get(
             'XCOMPOSEFILE') or os.path.expanduser('~/.XCompose')
-        compose_file_paths.append(user_compose_file)
+        if (os.path.isfile(user_compose_file)
+            and os.access(user_compose_file, os.R_OK)):
+            # A user compose file either pointed to by XCOMPOSEFILE
+            # (see
+            # https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html)
+            # or ~/.XCompose has been found and is readable.  **Only**
+            # this compose file is added to the list of compose file
+            # to read, allowing the user to avoid loading the system
+            # compose files. This way it is possible for the user to
+            # avoid compose sequences in the system compose files if
+            # he doesn’t want them.  The user compose file may contain
+            # “include” statements though to enable the user to
+            # include other compose files as desired.
+            compose_file_paths.append(user_compose_file)
+        else:
+            # No user compose file could be found or it was not
+            # readable.  Fill the list of compose files to read with
+            # the system compose files, first the locale specific
+            # compose file from Xorg, then the file from Gtk and then
+            # the file from ibus:
+            compose_file_paths.append(self._locale_compose_file())
+            compose_file_paths.append(os.path.expanduser('~/.config/gtk-3.0/Compose'))
+            compose_file_paths.append(os.path.expanduser('~/.config/ibus/Compose'))
+        # Now read all compose files on the list. If some of the compose files read
+        # contain different definitions of compose sequences, the definition
+        # read last wins.
+        #
+        # All the compose files read may contain include statements including other
+        # compose files.
+        #
+        # There are 3 substitutions that can be made in the file name of the include
+        # instruction (only %H and %L are mentioned in
+        # https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html but
+        # “man xcompose” on Fedora 34 also mentions %S):
+        #
+        # %H  expands to the user's home directory (the $HOME environment variable)
+        # %L  expands to the name of the locale specific Compose file (i.e.,
+        #     "/usr/share/X11/locale/<localename>/Compose")
+        # %S  expands to the name of the system directory for Compose files (i.e.,
+        #     "/usr/share/X11/locale")
+        #
+        # For example, to include the locale specific default compose file one
+        # can use (let’s assume the current locale is en_US.UTF-8):
+        #
+        #     include "%S/en_US.UTF-8/Compose"
+        #
+        # or, shorter:
+        #
+        #     include "%L"
         for path in compose_file_paths:
             self._read_compose_file(path)
 
