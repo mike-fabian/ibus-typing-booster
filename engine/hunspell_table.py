@@ -358,6 +358,15 @@ class TypingBoosterEngine(IBus.Engine):
                 self._gsettings.get_value('keybindings')),
             update_gsettings=False)
 
+        self._remember_input_mode = itb_util.variant_to_value(
+            self._gsettings.get_value('rememberinputmode'))
+        if (self._keybindings['toggle_input_mode_on_off']
+            and self._remember_input_mode):
+            self._input_mode = itb_util.variant_to_value(
+                self._gsettings.get_value('inputmode'))
+        else:
+            self.set_input_mode(True, update_gsettings=True)
+
         self._dictionary_names: List[str] = []
         dictionary = itb_util.variant_to_value(
             self._gsettings.get_value('dictionary'))
@@ -1435,7 +1444,7 @@ class TypingBoosterEngine(IBus.Engine):
         # “On” always. I.e. the input mode needs to be set
         # to True in that case:
         if not self._keybindings['toggle_input_mode_on_off']:
-            self._input_mode = True
+            self.set_input_mode(True, update_gsettings=True)
         # Some property menus have tooltips which show hints for the
         # key bindings. These may need to be updated if the key
         # bindings have changed.
@@ -2980,7 +2989,8 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._arrow_keys_reopen_preedit
 
-    def set_input_mode(self, mode: bool) ->  None:
+    def set_input_mode(
+            self, mode: bool, update_gsettings: bool = True) ->  None:
         '''Sets the input mode
 
         :param mode: Whether to switch ibus-typing-booster on or off
@@ -2990,14 +3000,19 @@ class TypingBoosterEngine(IBus.Engine):
         if mode == self._input_mode:
             return
         self._input_mode = mode
-        self._init_or_update_property_menu(
-            self.input_mode_menu, mode)
+        if self._prop_dict and self.input_mode_menu:
+            self._init_or_update_property_menu(
+                self.input_mode_menu, mode)
         self._clear_input_and_update_ui()
+        if update_gsettings:
+            self._gsettings.set_value(
+                'inputmode',
+                GLib.Variant.new_boolean(mode))
 
-    def toggle_input_mode(self) -> None:
+    def toggle_input_mode(self, update_gsettings: bool = True) -> None:
         '''Toggles whether ibus-typing-booster is on or off
         '''
-        self.set_input_mode(not self._input_mode)
+        self.set_input_mode(not self._input_mode, update_gsettings)
 
     def get_input_mode(self) -> bool:
         '''Returns the current value of the input mode'''
@@ -3766,6 +3781,34 @@ class TypingBoosterEngine(IBus.Engine):
         “Remember last used preëdit ime” mode
         '''
         return self._remember_last_used_preedit_ime
+
+    def set_remember_input_mode(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the “Remember input mode” mode
+
+        :param mode: Whether to remember the input mode (on/off)
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._remember_input_mode:
+            return
+        self._remember_input_mode = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'rememberinputmode',
+                GLib.Variant.new_boolean(mode))
+
+    def get_remember_input_mode(self) -> bool:
+        '''Returns the current value of the ”Remember input mode" mode.'''
+        return self._remember_input_mode
 
     def set_page_size(
             self,
@@ -5566,6 +5609,8 @@ class TypingBoosterEngine(IBus.Engine):
             'tabenable': self.set_tab_enable,
             'rememberlastusedpreeditime':
             self.set_remember_last_used_preedit_ime,
+            'rememberinputmode': self.set_remember_input_mode,
+            'inputmode': self.set_input_mode,
             'pagesize': self.set_page_size,
             'lookuptableorientation': self.set_lookup_table_orientation,
             'preeditunderline': self.set_preedit_underline,

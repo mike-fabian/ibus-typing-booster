@@ -477,6 +477,30 @@ class SetupUI(Gtk.Window):
             self._remember_last_used_preedit_ime_checkbutton,
             0, _options_grid_row, 2, 1)
 
+        self._remember_input_mode_checkbutton = Gtk.CheckButton(
+            # Translators: If more then one input method is used at
+            # the same time, one of them is used for the preedit.
+            # Which input method is used for the preedit can be
+            # changed via the menu or via shortcut keys. If this
+            # option is enabled, such a change is remembered even if
+            # the session is restarted.
+            label=_('Remember input mode'))
+        self._remember_input_mode_checkbutton.set_tooltip_text(
+            _('If this option is enabled, the last used input mode  (on/off) '
+              'is remembered even if the session is restarted.'))
+        self._remember_input_mode_checkbutton.connect(
+            'clicked', self._on_remember_input_mode_checkbutton)
+        self._remember_input_mode = itb_util.variant_to_value(
+            self._gsettings.get_value('rememberinputmode'))
+        if self._remember_input_mode is None:
+            self._remember_input_mode = False
+        if  self._remember_input_mode is True:
+            self._remember_input_mode_checkbutton.set_active(True)
+        _options_grid_row += 1
+        self._options_grid.attach(
+            self._remember_input_mode_checkbutton,
+            0, _options_grid_row, 2, 1)
+
         self._emoji_predictions_checkbutton = Gtk.CheckButton(
             # Translators: Whether Unicode symbols and emoji should be
             # included in the predictions. Emoji are pictographs like
@@ -1828,6 +1852,9 @@ class SetupUI(Gtk.Window):
 
         self._notebook.set_current_page(0) # Has to be after show_all()
 
+        if not self._keybindings['toggle_input_mode_on_off']:
+            self._remember_input_mode_checkbutton.hide()
+
     def _fill_dictionaries_listbox_row(self, name: str) -> Tuple[str, bool]:
         '''
         Formats the text of a line in the listbox of configured dictionaries
@@ -2180,6 +2207,7 @@ class SetupUI(Gtk.Window):
             'autocapitalize': self.set_auto_capitalize,
             'rememberlastusedpreeditime':
             self.set_remember_last_used_preedit_ime,
+            'rememberinputmode': self.set_remember_input_mode,
             'pagesize': self.set_page_size,
             'lookuptableorientation': self.set_lookup_table_orientation,
             'preeditunderline': self.set_preedit_underline,
@@ -2472,6 +2500,12 @@ class SetupUI(Gtk.Window):
         for the preëdit has been clicked.
         '''
         self.set_remember_last_used_preedit_ime(
+            widget.get_active(), update_gsettings=True)
+
+    def _on_remember_input_mode_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
+        '''The checkbutton whether to remember the last used input mode.'''
+        self.set_remember_input_mode(
             widget.get_active(), update_gsettings=True)
 
     def _on_emoji_predictions_checkbutton(
@@ -4443,6 +4477,31 @@ class SetupUI(Gtk.Window):
         else:
             self._remember_last_used_preedit_ime_checkbutton.set_active(mode)
 
+    def set_remember_input_mode(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the “Remember input mode” mode
+
+        :param mode: Whether to remember the input mode used last
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._remember_input_mode:
+            return
+        self._remember_input_mode = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'rememberinputmode',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._remember_input_mode_checkbutton.set_active(mode)
+
     def set_page_size(
             self,
             page_size: Union[int, Any],
@@ -4847,6 +4906,13 @@ class SetupUI(Gtk.Window):
                     model.set_value(iterator, 1,
                                     repr(self._keybindings[command]))
             iterator = model.iter_next(iterator)
+        # Show the checkbutton in the options tab to choose whether to
+        # remember the input mode only when there is a keybinding to
+        # toggle the input mode:
+        if self._keybindings['toggle_input_mode_on_off']:
+            self._remember_input_mode_checkbutton.show()
+        else:
+            self._remember_input_mode_checkbutton.hide()
         if update_gsettings:
             variant_dict = GLib.VariantDict(GLib.Variant('a{sv}', {}))
             for command in sorted(self._keybindings):
