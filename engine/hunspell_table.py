@@ -48,6 +48,13 @@ from m17n_translit import Transliterator
 import itb_util
 import itb_emoji
 
+IMPORT_SIMPLEAUDIO_SUCCESSFUL = False
+try:
+    import simpleaudio # type: ignore
+    IMPORT_SIMPLEAUDIO_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_SIMPLEAUDIO_SUCCESSFUL = False
+
 IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = False
 try:
     from google.cloud import speech # type: ignore
@@ -366,6 +373,30 @@ class TypingBoosterEngine(IBus.Engine):
                 self._gsettings.get_value('inputmode'))
         else:
             self.set_input_mode(True, update_gsettings=True)
+
+        self._error_sound_object: Optional[simpleaudio.WaveObject] = None
+        path = '/usr/share/ibus-typing-booster/data/coin9.wav'
+        if not IMPORT_SIMPLEAUDIO_SUCCESSFUL:
+            LOGGER.info(
+                'No error sound because python3-simpleaudio is not available.')
+        else:
+            if not os.path.isfile(path):
+                LOGGER.info('Error sound file %s does not exist.', path)
+            elif not os.access(path, os.R_OK):
+                LOGGER.info('Error sound file %s not readable.', path)
+            else:
+                try:
+                    LOGGER.info(
+                        'Trying to initialize error sound from %s', path)
+                    self._error_sound_object = (
+                        simpleaudio.WaveObject.from_wave_file(path))
+                    LOGGER.info('Error sound initialized.')
+                except (FileNotFoundError, PermissionError):
+                    LOGGER.exception(
+                        'Initializing error sound object failed.')
+                except:
+                    LOGGER.exception(
+                        'Initializing error sound object failed.')
 
         self._dictionary_names: List[str] = []
         dictionary = itb_util.variant_to_value(
@@ -4942,6 +4973,11 @@ class TypingBoosterEngine(IBus.Engine):
         self._typed_compose_sequence = []
         self._update_transliterated_strings()
         self._update_preedit()
+        if not compose_result:
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Finished compose sequence is empty.')
+            if self._error_sound_object:
+                dummy = self._error_sound_object.play()
         if compose_result:
             if self.get_input_mode():
                 self._insert_string_at_cursor(list(compose_result))
