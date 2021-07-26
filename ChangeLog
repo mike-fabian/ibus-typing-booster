@@ -1,4 +1,15 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 27 Jul 2021 Released 2.12.0
+* Translation update from Weblate (de, nl, pl, tr, uk all updated to 100%)
+* Use the dead keys added recently to ibus as soon as they become available by an ibus update (see: https://github.com/ibus/ibus/commit/3e2609e68c9107ce7c65e2d5876bfdc9f0f8c854)
+* Make Compose preedit less intrusive, show compose key only in the middle of the sequence or when it is the only key so far
+* Use · U+00B7 MIDDLE DOT instead of ⎄ U+2384 COMPOSITION SYMBOL to display Multi_key in pre-edit.
+* Add an option to play a sound on error (for example invalid compose sequence)
+* Don’t include the system compose files unconditionally if a user compose file exists (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/170)
+* Add option to choose whether to start up in direct input mode (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/169)
+* Change default input methods for Indian locales to inscript2
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 21 Jun 2021 Released 2.11.5
 * Ensure enum.Flag's obj._value_ is an integer (Makes it work for Python 3.10) (Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=1970626)
 * Use version.parse from packaging instead of LooseVersion from distutils.version (To fix a deprecation warning, see: https://www.python.org/dev/peps/pep-0632/)
