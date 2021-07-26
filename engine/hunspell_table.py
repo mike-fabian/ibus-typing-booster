@@ -2969,7 +2969,6 @@ class TypingBoosterEngine(IBus.Engine):
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         self.set_arrow_keys_reopen_preedit(
             not self._arrow_keys_reopen_preedit, update_gsettings)
