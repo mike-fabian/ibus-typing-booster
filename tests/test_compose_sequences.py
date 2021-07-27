@@ -51,7 +51,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_asciitilde,
                  IBus.KEY_dead_circumflex,
                  IBus.KEY_A]),
-            '·~^A')
+            '~^A')
         self.assertEqual(
             self._compose_sequences.preedit_representation(
                 [IBus.KEY_Multi_key,
@@ -59,7 +59,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_Multi_key,
                  IBus.KEY_dead_circumflex,
                  IBus.KEY_A]),
-            '·~·^A')
+            '~·^A')
         self.assertEqual(
             self._compose_sequences.preedit_representation(
                 [0x2276]),
@@ -67,11 +67,11 @@ class ComposeSequencesTestCase(unittest.TestCase):
         self.assertEqual(
             self._compose_sequences.preedit_representation(
                 [IBus.KEY_Multi_key, 0x2276]),
-            '·≶')
+            '≶')
         self.assertEqual(
             self._compose_sequences.preedit_representation(
                 [IBus.KEY_Multi_key, 0x093C]),
-            '·़')
+            '़')
         self.assertEqual(
             self._compose_sequences.preedit_representation(
                 [IBus.KEY_a, IBus.KEY_dead_belowdiaeresis]),

@@ -3704,9 +3704,11 @@ class ComposeSequences:
 
         >>> c = ComposeSequences()
         >>> c.preedit_representation([IBus.KEY_Multi_key, IBus.KEY_asciitilde, IBus.KEY_dead_circumflex])
-        '·~^'
+        '~^'
         >>> c.preedit_representation([IBus.KEY_Multi_key, IBus.KEY_asciitilde, IBus.KEY_Multi_key, IBus.KEY_dead_circumflex])
-        '·~·^'
+        '~·^'
+        >>> c.preedit_representation([IBus.KEY_Multi_key])
+        '·'
         '''
         # pylint: enable=line-too-long
         representation = ''
@@ -3719,6 +3721,14 @@ class ComposeSequences:
                     representation += ibus_keyval_to_unicode
                 else:
                     representation += chr(keyval)
+        if (len(representation) > 1
+            and
+            representation[0]
+            == self._preedit_representations[IBus.KEY_Multi_key]):
+            # Suppress the representation of the Multi_key at the
+            # start of a sequence but only if more characters have
+            # already been added to the sequence:
+            return representation[1:]
         return representation
 
     def _compose_dead_key_sequence(
