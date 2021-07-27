@@ -375,28 +375,13 @@ class TypingBoosterEngine(IBus.Engine):
             self.set_input_mode(True, update_gsettings=True)
 
         self._error_sound_object: Optional[simpleaudio.WaveObject] = None
-        path = '/usr/share/ibus-typing-booster/data/coin9.wav'
-        if not IMPORT_SIMPLEAUDIO_SUCCESSFUL:
-            LOGGER.info(
-                'No error sound because python3-simpleaudio is not available.')
-        else:
-            if not os.path.isfile(path):
-                LOGGER.info('Error sound file %s does not exist.', path)
-            elif not os.access(path, os.R_OK):
-                LOGGER.info('Error sound file %s not readable.', path)
-            else:
-                try:
-                    LOGGER.info(
-                        'Trying to initialize error sound from %s', path)
-                    self._error_sound_object = (
-                        simpleaudio.WaveObject.from_wave_file(path))
-                    LOGGER.info('Error sound initialized.')
-                except (FileNotFoundError, PermissionError):
-                    LOGGER.exception(
-                        'Initializing error sound object failed.')
-                except:
-                    LOGGER.exception(
-                        'Initializing error sound object failed.')
+        self._error_sound_file = ''
+        self._error_sound = itb_util.variant_to_value(
+            self._gsettings.get_value('errorsound'))
+        self.set_error_sound_file(
+            itb_util.variant_to_value(
+                self._gsettings.get_value('errorsoundfile')),
+            update_gsettings=False)
 
         self._dictionary_names: List[str] = []
         dictionary = itb_util.variant_to_value(
@@ -4042,6 +4027,85 @@ class TypingBoosterEngine(IBus.Engine):
         '''Returns the current debug level'''
         return self._debug_level
 
+    def set_error_sound(
+            self, error_sound: bool, update_gsettings: bool = True) -> None:
+        '''Sets whether a sound is played on error or not
+
+        :param error_sound: True if a sound is played on error, False if not
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', error_sound, update_gsettings)
+        if error_sound == self._error_sound:
+            return
+        self._error_sound = error_sound
+        if update_gsettings:
+            self._gsettings.set_value(
+                'errorsound',
+                GLib.Variant.new_boolean(error_sound))
+
+    def get_error_sound(self) -> bool:
+        '''Returns whether a sound is played on error or not'''
+        return self._error_sound
+
+    def set_error_sound_file(
+            self, path: Union[str, Any], update_gsettings: bool = True) -> None:
+        '''Sets the path of the .wav file containing the sound
+        to play on error.
+
+        :param path: The path of the .wav file containing the error sound
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the dconf key changed
+                                 to avoid endless loops when the dconf
+                                 key is changed twice in a short time.
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', path, update_gsettings)
+        if not isinstance(path, str):
+            return
+        if path == self._error_sound_file:
+            return
+        self._error_sound_file = path
+        if update_gsettings:
+            self._gsettings.set_value(
+                "errorsoundfile",
+                GLib.Variant.new_string(path))
+        path = os.path.expanduser(path)
+        if not IMPORT_SIMPLEAUDIO_SUCCESSFUL:
+            LOGGER.info(
+                'No error sound because python3-simpleaudio is not available.')
+        else:
+            if not os.path.isfile(path):
+                LOGGER.info('Error sound file %s does not exist.', path)
+            elif not os.access(path, os.R_OK):
+                LOGGER.info('Error sound file %s not readable.', path)
+            else:
+                try:
+                    LOGGER.info(
+                        'Trying to initialize error sound from %s', path)
+                    self._error_sound_object = (
+                        simpleaudio.WaveObject.from_wave_file(path))
+                    LOGGER.info('Error sound initialized.')
+                except (FileNotFoundError, PermissionError):
+                    LOGGER.exception(
+                        'Initializing error sound object failed.')
+                except:
+                    LOGGER.exception(
+                        'Initializing error sound object failed.')
+
+    def get_error_sound_file(self) -> str:
+        '''
+        Return the path of the .wav file containing the error sound.
+        '''
+        return self._error_sound_file
+
     def set_show_number_of_candidates(
             self,
             mode: Union[bool, Any],
@@ -4976,7 +5040,7 @@ class TypingBoosterEngine(IBus.Engine):
         if not compose_result:
             if DEBUG_LEVEL > 1:
                 LOGGER.debug('Finished compose sequence is empty.')
-            if self._error_sound_object:
+            if self._error_sound and self._error_sound_object:
                 dummy = self._error_sound_object.play()
         if compose_result:
             if self.get_input_mode():
@@ -5654,6 +5718,8 @@ class TypingBoosterEngine(IBus.Engine):
             self.set_preedit_style_only_when_lookup,
             'mincharcomplete': self.set_min_char_complete,
             'debuglevel': self.set_debug_level,
+            'errorsound': self.set_error_sound,
+            'errorsoundfile': self.set_error_sound_file,
             'shownumberofcandidates': self.set_show_number_of_candidates,
             'showstatusinfoinaux': self.set_show_status_info_in_auxiliary_text,
             'autoselectcandidate': self.set_auto_select_candidate,

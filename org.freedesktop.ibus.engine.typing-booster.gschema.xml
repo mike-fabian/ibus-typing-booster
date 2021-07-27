@@ -338,6 +338,12 @@
         have been typed.
       </description>
     </key>
+    <key name="errorsound" type="b">
+      <default>false</default>
+    </key>
+    <key name="errorsoundfile" type="s">
+      <default>'/usr/share/ibus-typing-booster/data/coin9.wav'</default>
+    </key>
     <key name="debuglevel" type="i">
       <default>0</default>
       <summary>Debug level</summary>

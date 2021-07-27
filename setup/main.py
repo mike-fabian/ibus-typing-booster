@@ -80,6 +80,13 @@ try:
 except (ImportError,):
     pass
 
+IMPORT_SIMPLEAUDIO_SUCCESSFUL = False
+try:
+    import simpleaudio # type: ignore
+    IMPORT_SIMPLEAUDIO_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_SIMPLEAUDIO_SUCCESSFUL = False
+
 sys.path = [sys.path[0]+'/../engine'] + sys.path
 from m17n_translit import Transliterator # type: ignore
 import tabsqlitedb
@@ -698,6 +705,47 @@ class SetupUI(Gtk.Window):
             self._min_chars_completion_label, 0, _options_grid_row, 1, 1)
         self._options_grid.attach(
             self._min_char_complete_adjustment, 1, _options_grid_row, 1, 1)
+
+        self._error_sound_checkbutton = Gtk.CheckButton(
+            # Translators: A checkbox where one can choose whether a
+            # sound is played on error
+            label=_('Play sound file on error'))
+        self._error_sound_checkbutton.set_tooltip_text(
+            _('Here you can choose whether a sound file is played '
+              'if an error occurs. '
+              'If the simpleaudio module for Python3 is not installled, '
+              'this option does nothing.'))
+        self._error_sound_checkbutton.set_hexpand(False)
+        self._error_sound_checkbutton.set_vexpand(False)
+        self._error_sound = itb_util.variant_to_value(
+            self._gsettings.get_value('errorsound'))
+        self._error_sound_checkbutton.set_active(self._error_sound)
+        self._error_sound_checkbutton.connect(
+            'clicked', self._on_error_sound_checkbutton)
+        self._error_sound_file_button = Gtk.Button()
+        self._error_sound_file_button_box = Gtk.HBox()
+        self._error_sound_file_button_label = Gtk.Label()
+        self._error_sound_file = itb_util.variant_to_value(
+            self._gsettings.get_value('errorsoundfile'))
+        self._error_sound_file_button_label.set_text(
+            self._error_sound_file)
+        self._error_sound_file_button_label.set_use_markup(True)
+        self._error_sound_file_button_label.set_max_width_chars(
+            40)
+        self._error_sound_file_button_label.set_line_wrap(False)
+        self._error_sound_file_button_label.set_ellipsize(
+            Pango.EllipsizeMode.START)
+        self._error_sound_file_button_box.pack_start(
+            self._error_sound_file_button_label, False, False, 0)
+        self._error_sound_file_button.add(
+            self._error_sound_file_button_box)
+        self._error_sound_file_button.connect(
+            'clicked', self._on_error_sound_file_button)
+        _options_grid_row += 1
+        self._options_grid.attach(
+            self._error_sound_checkbutton, 0, _options_grid_row, 1, 1)
+        self._options_grid.attach(
+            self._error_sound_file_button, 1, _options_grid_row, 1, 1)
 
         self._debug_level_label = Gtk.Label()
         self._debug_level_label.set_text(
@@ -2214,6 +2262,8 @@ class SetupUI(Gtk.Window):
             'preeditstyleonlywhenlookup':
             self.set_preedit_style_only_when_lookup,
             'mincharcomplete': self.set_min_char_complete,
+            'errorsound': self.set_error_sound,
+            'errorsoundfile': self.set_error_sound_file,
             'debuglevel': self.set_debug_level,
             'shownumberofcandidates': self.set_show_number_of_candidates,
             'showstatusinfoinaux': self.set_show_status_info_in_auxiliary_text,
@@ -2623,6 +2673,42 @@ class SetupUI(Gtk.Window):
         self.set_min_char_complete(
             self._min_char_complete_adjustment.get_value(),
             update_gsettings=True)
+
+    def _on_error_sound_checkbutton(self, widget: Gtk.CheckButton) -> None:
+        '''
+        The checkbutton whether to play a sound file on error.
+
+        :param widget: The check button clicked
+        '''
+        self.set_error_sound(widget.get_active(), update_gsettings=True)
+
+    def _on_error_sound_file_button(
+            self, _widget: Gtk.Button) -> None:
+        '''
+        The button to select the .wav sound file to be played on error.
+        '''
+        self._error_sound_file_button.set_sensitive(False)
+        filename = ''
+        chooser = Gtk.FileChooserDialog(
+            title=_('Select .wav sound file:'),
+            parent=self,
+            action=Gtk.FileChooserAction.OPEN)
+        chooser.add_button(_('_Cancel'), Gtk.ResponseType.CANCEL)
+        chooser.add_button(_('_OK'), Gtk.ResponseType.OK)
+        chooser.set_current_folder(os.path.dirname(
+            self._error_sound_file))
+        response = chooser.run()
+        if response == Gtk.ResponseType.OK:
+            filename = chooser.get_filename()
+        chooser.destroy()
+        while Gtk.events_pending():
+            Gtk.main_iteration()
+        if filename:
+            self._error_sound_file_button_label.set_text(
+                filename)
+            self.set_error_sound_file(
+                filename, update_gsettings=True)
+        self._error_sound_file_button.set_sensitive(True)
 
     def _on_debug_level_adjustment_value_changed(
             self, _widget: Gtk.SpinButton) -> None:
@@ -4620,6 +4706,76 @@ class SetupUI(Gtk.Window):
             else:
                 self._min_char_complete_adjustment.set_value(
                     int(min_char_complete))
+
+    def set_error_sound(
+            self,
+            error_sound: bool,
+            update_gsettings: bool = True) -> None:
+        '''Sets the whether to play a sound on error.
+
+        :param error_sound: Whether to play a sound on error
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', error_sound, update_gsettings)
+        self._error_sound = error_sound
+        if update_gsettings:
+            self._gsettings.set_value(
+                'errorsound',
+                GLib.Variant.new_boolean(error_sound))
+        else:
+            self._error_sound_checkbutton.set_active(error_sound)
+
+    def set_error_sound_file(
+            self,
+            path: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the path of file containing the sound to play on error.
+
+        :param path: Full path of the .wav file containing the error sound.
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', path, update_gsettings)
+        if not isinstance(path, str):
+            return
+        self._error_sound_file = path
+        if update_gsettings:
+            self._gsettings.set_value(
+                'errorsoundfile',
+                GLib.Variant.new_string(path))
+        else:
+            self._error_sound_file_button_label.set_text(path)
+        path = os.path.expanduser(path)
+        if not IMPORT_SIMPLEAUDIO_SUCCESSFUL:
+            LOGGER.info(
+                'No error sound because python3-simpleaudio is not available.')
+        else:
+            if not os.path.isfile(path):
+                LOGGER.info('Error sound file %s does not exist.', path)
+            elif not os.access(path, os.R_OK):
+                LOGGER.info('Error sound file %s not readable.', path)
+            else:
+                try:
+                    LOGGER.info(
+                        'Trying to initialize and play error sound from %s', path)
+                    dummy = (
+                        simpleaudio.WaveObject.from_wave_file(path).play())
+                    LOGGER.info('Error sound could be initialized.')
+                except (FileNotFoundError, PermissionError):
+                    LOGGER.exception(
+                        'Initializing error sound object failed.')
+                except:
+                    LOGGER.exception(
+                        'Initializing error sound object failed.')
 
     def set_debug_level(
             self,
