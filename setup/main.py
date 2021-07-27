@@ -112,8 +112,8 @@ def parse_args() -> Any:
         action='store_true',
         default=False,
         help=('Do not write log file '
-              + '~/.local/share/ibus-typing-booster/setup-debug.log, '
-              + 'default: %(default)s'))
+              '~/.local/share/ibus-typing-booster/setup-debug.log, '
+              'default: %(default)s'))
     return parser.parse_args()
 
 _ARGS = parse_args()
@@ -338,13 +338,13 @@ class SetupUI(Gtk.Window):
             label=_('Enable suggestions by key (Default is the Tab key)'))
         self._tab_enable_checkbutton.set_tooltip_text(
             _('If this option is on, suggestions are not '
-              + 'shown by default. Typing a key is then '
-              + 'necessary to show the list of suggestions. '
-              + 'The key to use for this can be changed in '
-              + 'the key bindings settings. By default it is '
-              + 'the Tab key. After a commit the suggestions '
-              + 'are hidden again until the next key bound to '
-              + 'this command is typed.'))
+              'shown by default. Typing a key is then '
+              'necessary to show the list of suggestions. '
+              'The key to use for this can be changed in '
+              'the key bindings settings. By default it is '
+              'the Tab key. After a commit the suggestions '
+              'are hidden again until the next key bound to '
+              'this command is typed.'))
         self._tab_enable_checkbutton.connect(
             'clicked', self._on_tab_enable_checkbutton)
         self._tab_enable = itb_util.variant_to_value(
@@ -367,12 +367,12 @@ class SetupUI(Gtk.Window):
             label=_('Use inline completion'))
         self._inline_completion_checkbutton.set_tooltip_text(
             _('Whether the best completion is first shown inline '
-              + 'in the preedit instead of showing a full candidate '
-              + 'list. The inline candidate can be selected by typing '
-              + 'Tab and then committed as usual, for example by '
-              + 'typing Space or Control+Space. Typing Tab again '
-              + 'moves to the next candidate and opens the full '
-              + 'candidate list.'))
+              'in the preedit instead of showing a full candidate '
+              'list. The inline candidate can be selected by typing '
+              'Tab and then committed as usual, for example by '
+              'typing Space or Control+Space. Typing Tab again '
+              'moves to the next candidate and opens the full '
+              'candidate list.'))
         self._inline_completion_checkbutton.connect(
             'clicked', self._on_inline_completion_checkbutton)
         self._inline_completion = itb_util.variant_to_value(
@@ -442,8 +442,8 @@ class SetupUI(Gtk.Window):
             label=_('Add a space when committing by mouse click'))
         self._add_space_on_commit_checkbutton.set_tooltip_text(
             _('Add a space if a candidate from the candidate '
-              + 'list is committed by clicking it '
-              + 'with the mouse.'))
+              'list is committed by clicking it '
+              'with the mouse.'))
         self._add_space_on_commit_checkbutton.connect(
             'clicked', self._on_add_space_on_commit_checkbutton)
         self._add_space_on_commit = itb_util.variant_to_value(
@@ -466,11 +466,11 @@ class SetupUI(Gtk.Window):
             label=_('Remember last used preedit input method'))
         self._remember_last_used_preedit_ime_checkbutton.set_tooltip_text(
             _('If more then one input method is used at the same '
-              + 'time, one of them is used for the preedit. '
-              + 'Which input method is used for the preedit can '
-              + 'be changed via the menu or via shortcut keys. '
-              + 'If this option is enabled, such a change is '
-              + 'remembered even if the session is restarted.'))
+              'time, one of them is used for the preedit. '
+              'Which input method is used for the preedit can '
+              'be changed via the menu or via shortcut keys. '
+              'If this option is enabled, such a change is '
+              'remembered even if the session is restarted.'))
         self._remember_last_used_preedit_ime_checkbutton.connect(
             'clicked', self._on_remember_last_used_preedit_ime_checkbutton)
         self._remember_last_used_preedit_ime = itb_util.variant_to_value(
@@ -519,12 +519,12 @@ class SetupUI(Gtk.Window):
             label=_('Unicode symbols and emoji predictions'))
         self._emoji_predictions_checkbutton.set_tooltip_text(
             _('Whether Unicode symbols and emoji should be '
-              + 'included in the predictions. Emoji are pictographs '
-              + 'like ☺♨⛵…. Unicode symbols are other symbols like '
-              + 'mathematical symbols (∀∑∯…), arrows (←↑↔…), currency '
-              + 'symbols (€₹₺…), braille patterns (⠥⠩…), and many '
-              + 'other symbols. These are technically not emoji but '
-              + 'nevertheless useful symbols.'))
+              'included in the predictions. Emoji are pictographs '
+              'like ☺♨⛵…. Unicode symbols are other symbols like '
+              'mathematical symbols (∀∑∯…), arrows (←↑↔…), currency '
+              'symbols (€₹₺…), braille patterns (⠥⠩…), and many '
+              'other symbols. These are technically not emoji but '
+              'nevertheless useful symbols.'))
         self._emoji_predictions_checkbutton.connect(
             'clicked', self._on_emoji_predictions_checkbutton)
         self._emoji_predictions = itb_util.variant_to_value(
@@ -548,13 +548,13 @@ class SetupUI(Gtk.Window):
             label=_('Off the record mode'))
         self._off_the_record_checkbutton.set_tooltip_text(
             _('While “Off the record” mode is on, learning from '
-              + 'user input is disabled. If learned user input is '
-              + 'available, predictions are usually much better '
-              + 'than predictions using only dictionaries. '
-              + 'Therefore, one should use this option sparingly. '
-              + 'Only if one wants to avoid saving secret user '
-              + 'input to disk it might make sense to use this '
-              + 'option temporarily.'))
+              'user input is disabled. If learned user input is '
+              'available, predictions are usually much better '
+              'than predictions using only dictionaries. '
+              'Therefore, one should use this option sparingly. '
+              'Only if one wants to avoid saving secret user '
+              'input to disk it might make sense to use this '
+              'option temporarily.'))
         self._off_the_record_checkbutton.connect(
             'clicked', self._on_off_the_record_checkbutton)
         self._off_the_record = itb_util.variant_to_value(
@@ -578,13 +578,13 @@ class SetupUI(Gtk.Window):
             label=_('Use a workaround for a bug in Qt im module'))
         self._qt_im_module_workaround_checkbutton.set_tooltip_text(
             _('Use a workaround for bugs in the input method '
-              + 'modules of Qt4 and Qt5. Attention, although '
-              + 'this workaround makes it work better when the '
-              + 'Qt input modules are used, it causes problems '
-              + 'when XIM is used. I.e. the XIM module of Qt4 '
-              + 'will not work well when this workaround is '
-              + 'enabled and input via XIM into X11 programs '
-              + 'like xterm will not work well either.'))
+              'modules of Qt4 and Qt5. Attention, although '
+              'this workaround makes it work better when the '
+              'Qt input modules are used, it causes problems '
+              'when XIM is used. I.e. the XIM module of Qt4 '
+              'will not work well when this workaround is '
+              'enabled and input via XIM into X11 programs '
+              'like xterm will not work well either.'))
         self._qt_im_module_workaround_checkbutton.connect(
             'clicked', self._on_qt_im_module_workaround_checkbutton)
         self._qt_im_module_workaround = itb_util.variant_to_value(
@@ -610,13 +610,13 @@ class SetupUI(Gtk.Window):
             label=_('Arrow keys can reopen a preedit'))
         self._arrow_keys_reopen_preedit_checkbutton.set_tooltip_text(
             _('Whether it is allowed to reopen a preedit when '
-              + 'the cursor reaches a word boundary after moving '
-              + 'it with the arrow keys. Enabling this option is '
-              + 'useful to correct already committed words. But it '
-              + 'is quite buggy at the moment and how well it '
-              + 'works depends on repetition speed of the arrow '
-              + 'keys and system load. Because it is buggy, '
-              + 'this option is off by default.'))
+              'the cursor reaches a word boundary after moving '
+              'it with the arrow keys. Enabling this option is '
+              'useful to correct already committed words. But it '
+              'is quite buggy at the moment and how well it '
+              'works depends on repetition speed of the arrow '
+              'keys and system load. Because it is buggy, '
+              'this option is off by default.'))
         self._arrow_keys_reopen_preedit_checkbutton.connect(
             'clicked', self._on_arrow_keys_reopen_preedit_checkbutton)
         self._arrow_keys_reopen_preedit = itb_util.variant_to_value(
@@ -647,19 +647,19 @@ class SetupUI(Gtk.Window):
             _('Auto commit characters:'))
         self._auto_commit_characters_label.set_tooltip_text(
             _('The characters in this list cause the preedit '
-              + 'to be committed automatically, followed by '
-              + 'a space.  For example, if “.” is an auto '
-              + 'commit character, this saves you typing a '
-              + 'space manually after the end of a sentence. '
-              + 'You can freely edit this list, a reasonable '
-              + 'value might be “.,;:?!)”. You should not add '
-              + 'characters to that list which are needed by '
-              + 'your input method, for example if you use '
-              + 'Latin-Pre (t-latn-pre) it would be a bad idea '
-              + 'to add “.” to that list because it would prevent '
-              + 'you from typing “.s” to get “ṡ”. You can also '
-              + 'disable this feature completely by making the '
-              + 'list empty (which is the default).'))
+              'to be committed automatically, followed by '
+              'a space.  For example, if “.” is an auto '
+              'commit character, this saves you typing a '
+              'space manually after the end of a sentence. '
+              'You can freely edit this list, a reasonable '
+              'value might be “.,;:?!)”. You should not add '
+              'characters to that list which are needed by '
+              'your input method, for example if you use '
+              'Latin-Pre (t-latn-pre) it would be a bad idea '
+              'to add “.” to that list because it would prevent '
+              'you from typing “.s” to get “ṡ”. You can also '
+              'disable this feature completely by making the '
+              'list empty (which is the default).'))
         self._auto_commit_characters_label.set_xalign(0)
         self._auto_commit_characters_entry = Gtk.Entry()
         self._auto_commit_characters = itb_util.variant_to_value(
@@ -683,7 +683,7 @@ class SetupUI(Gtk.Window):
             _('Minimum number of chars for completion:'))
         self._min_chars_completion_label.set_tooltip_text(
             _('Show no suggestions when less than this number '
-              + 'of characters have been typed.'))
+              'of characters have been typed.'))
         self._min_chars_completion_label.set_xalign(0)
         self._min_char_complete_adjustment = Gtk.SpinButton()
         self._min_char_complete_adjustment.set_visible(True)
@@ -755,8 +755,8 @@ class SetupUI(Gtk.Window):
             _('Debug level:'))
         self._debug_level_label.set_tooltip_text(
             _('When greater than 0, debug information may be '
-              + 'printed to the log file and debug information '
-              + 'may also be shown graphically.'))
+              'printed to the log file and debug information '
+              'may also be shown graphically.'))
         self._debug_level_label.set_xalign(0)
         self._debug_level_adjustment = Gtk.SpinButton()
         self._debug_level_adjustment.set_visible(True)
@@ -798,7 +798,7 @@ class SetupUI(Gtk.Window):
             label=_('Delete learned data'))
         self._delete_learned_data_button.set_tooltip_text(
             _('Delete all personal language data learned from '
-              + 'typing or from reading files'))
+              'typing or from reading files'))
         self._delete_learned_data_button.connect(
             'clicked', self._on_delete_learned_data_clicked)
         _options_grid_row += 1
@@ -882,7 +882,7 @@ class SetupUI(Gtk.Window):
             label=_('Install missing dictionaries'))
         self._dictionaries_install_missing_button.set_tooltip_text(
             _('Install the dictionaries which are '
-              + 'setup here but not installed'))
+              'setup here but not installed'))
         self._dictionaries_install_missing_button.connect(
             'clicked', self._on_install_missing_dictionaries)
         self._dictionaries_default_button = Gtk.Button()
@@ -998,7 +998,7 @@ class SetupUI(Gtk.Window):
             label=_('Input Method Help'))
         self._input_methods_help_button.set_tooltip_text(
             _('Display some help showing how to use the '
-              + 'input method selected above.'))
+              'input method selected above.'))
         self._input_methods_help_button.connect(
             'clicked', self._on_input_methods_help_button_clicked)
         self._input_methods_help_button.set_sensitive(False)
@@ -1252,7 +1252,7 @@ class SetupUI(Gtk.Window):
             label=_('Display total number of candidates'))
         self._show_number_of_candidates_checkbutton.set_tooltip_text(
             _('Display how many candidates there are and which '
-              + 'one is selected on top of the list of candidates.'))
+              'one is selected on top of the list of candidates.'))
         self._show_number_of_candidates_checkbutton.connect(
             'clicked', self._on_show_number_of_candidates_checkbutton)
         self._show_number_of_candidates = itb_util.variant_to_value(
@@ -1272,11 +1272,11 @@ class SetupUI(Gtk.Window):
             label=_('Show status info in auxiliary text'))
         self._show_status_info_in_auxiliary_text_checkbutton.set_tooltip_text(
             _('Show in the auxiliary text whether “Emoji prediction”  '
-              + 'mode and “Off the record”  mode are on or off '
-              + 'and show which input method is currently used '
-              + 'for the preedit. The auxiliary text is an '
-              + 'optional line of text displayed above the '
-              + 'candidate list.'))
+              'mode and “Off the record”  mode are on or off '
+              'and show which input method is currently used '
+              'for the preedit. The auxiliary text is an '
+              'optional line of text displayed above the '
+              'candidate list.'))
         self._show_status_info_in_auxiliary_text_checkbutton.connect(
             'clicked', self._on_show_status_info_in_auxiliary_text_checkbutton)
         self._show_status_info_in_auxiliary_text = itb_util.variant_to_value(
@@ -1301,7 +1301,7 @@ class SetupUI(Gtk.Window):
         self._page_size_label.set_text(_('Candidate window page size:'))
         self._page_size_label.set_tooltip_text(
             _('How many suggestion candidates to show in '
-              + 'one page of the candidate list.'))
+              'one page of the candidate list.'))
         self._page_size_label.set_xalign(0)
         self._page_size_adjustment = Gtk.SpinButton()
         self._page_size_adjustment.set_visible(True)
@@ -1329,7 +1329,7 @@ class SetupUI(Gtk.Window):
             _('Candidate window orientation'))
         self._lookup_table_orientation_label.set_tooltip_text(
             _('Whether the candidate window should be '
-              + 'drawn horizontally or vertically.'))
+              'drawn horizontally or vertically.'))
         self._lookup_table_orientation_label.set_xalign(0)
         self._lookup_table_orientation_combobox = Gtk.ComboBox()
         self._lookup_table_orientation_store = Gtk.ListStore(str, int)
@@ -1423,11 +1423,11 @@ class SetupUI(Gtk.Window):
             label=_('Use preedit style only if lookup is enabled'))
         self._preedit_style_only_when_lookup_checkbutton.set_tooltip_text(
             _('If this option is on, a preedit style like underlining '
-              + 'will only be used if lookup is enabled. '
-              + 'The lookup can be disabled because one uses the option '
-              + 'to enable lookup only when a key is pressed or '
-              + 'because one uses the option to require a minimum '
-              + 'number of characters before a lookup is done.'))
+              'will only be used if lookup is enabled. '
+              'The lookup can be disabled because one uses the option '
+              'to enable lookup only when a key is pressed or '
+              'because one uses the option to require a minimum '
+              'number of characters before a lookup is done.'))
         self._preedit_style_only_when_lookup_checkbutton.connect(
             'clicked', self._on_preedit_style_only_when_lookup_checkbutton)
         self._preedit_style_only_when_lookup = itb_util.variant_to_value(
@@ -1507,7 +1507,7 @@ class SetupUI(Gtk.Window):
             label=_('Use color for inline completion'))
         self._color_inline_completion_checkbutton.set_tooltip_text(
             _('Here you can choose whether a custom color '
-              + 'is used for a suggestion shown inline.'))
+              'is used for a suggestion shown inline.'))
         self._color_inline_completion_checkbutton.set_hexpand(False)
         self._color_inline_completion_checkbutton.set_vexpand(False)
         self._color_inline_completion = itb_util.variant_to_value(
@@ -1537,9 +1537,9 @@ class SetupUI(Gtk.Window):
             _('Choose color for inline completion'))
         self._color_inline_completion_rgba_colorbutton.set_tooltip_text(
             _('Here you can specify which color to use for '
-              + 'inline completion. This setting only has an '
-              + 'effect if the use of color for inline completion '
-              + 'is enabled and inline completion is enabled.'))
+              'inline completion. This setting only has an '
+              'effect if the use of color for inline completion '
+              'is enabled and inline completion is enabled.'))
         self._color_inline_completion_string = itb_util.variant_to_value(
             self._gsettings.get_value('colorinlinecompletionstring'))
         gdk_rgba = Gdk.RGBA()
@@ -1564,8 +1564,8 @@ class SetupUI(Gtk.Window):
             label=_('Use color for user database suggestions'))
         self._color_userdb_checkbutton.set_tooltip_text(
             _('Here you can choose whether a custom color is used '
-              + 'for candidates in the lookup table which come '
-              + 'from the user database.'))
+              'for candidates in the lookup table which come '
+              'from the user database.'))
         self._color_userdb_checkbutton.set_hexpand(False)
         self._color_userdb_checkbutton.set_vexpand(False)
         self._color_userdb = itb_util.variant_to_value(
@@ -1590,10 +1590,10 @@ class SetupUI(Gtk.Window):
             _('Choose color for user database suggestions'))
         self._color_userdb_rgba_colorbutton.set_tooltip_text(
             _('Here you can specify which color to use for '
-              + 'candidates in the lookup table which come '
-              + 'from the user database. This setting only '
-              + 'has an effect if the use of color for '
-              + 'candidates from the user database is enabled.'))
+              'candidates in the lookup table which come '
+              'from the user database. This setting only '
+              'has an effect if the use of color for '
+              'candidates from the user database is enabled.'))
         self._color_userdb_string = itb_util.variant_to_value(
             self._gsettings.get_value('coloruserdbstring'))
         gdk_rgba = Gdk.RGBA()
@@ -1615,8 +1615,8 @@ class SetupUI(Gtk.Window):
             label=_('Use color for spellchecking suggestions'))
         self._color_spellcheck_checkbutton.set_tooltip_text(
             _('Here you can choose whether a custom color '
-              + 'is used for candidates in the lookup table '
-              + 'which come from spellchecking.'))
+              'is used for candidates in the lookup table '
+              'which come from spellchecking.'))
         self._color_spellcheck_checkbutton.set_hexpand(False)
         self._color_spellcheck_checkbutton.set_vexpand(False)
         self._color_spellcheck = itb_util.variant_to_value(
@@ -1641,10 +1641,10 @@ class SetupUI(Gtk.Window):
             _('Choose color for spellchecking suggestions'))
         self._color_spellcheck_rgba_colorbutton.set_tooltip_text(
             _('Here you can specify which color to use for '
-              + 'candidates in the lookup table which come '
-              + 'from spellchecking. This setting only has '
-              + 'an effect if the use of color for candidates '
-              + 'from spellchecking is enabled.'))
+              'candidates in the lookup table which come '
+              'from spellchecking. This setting only has '
+              'an effect if the use of color for candidates '
+              'from spellchecking is enabled.'))
         self._color_spellcheck_string = itb_util.variant_to_value(
             self._gsettings.get_value('colorspellcheckstring'))
         gdk_rgba = Gdk.RGBA()
@@ -1669,8 +1669,8 @@ class SetupUI(Gtk.Window):
             label=_('Use color for dictionary suggestions'))
         self._color_dictionary_checkbutton.set_tooltip_text(
             _('Here you can choose whether a custom color is '
-              + 'used for candidates in the lookup table '
-              + 'which come from a dictionary.'))
+              'used for candidates in the lookup table '
+              'which come from a dictionary.'))
         self._color_dictionary_checkbutton.set_hexpand(False)
         self._color_dictionary_checkbutton.set_vexpand(False)
         self._color_dictionary = itb_util.variant_to_value(
@@ -1695,10 +1695,10 @@ class SetupUI(Gtk.Window):
             _('Choose color for dictionary suggestions'))
         self._color_dictionary_rgba_colorbutton.set_tooltip_text(
             _('Here you can specify which color to use for '
-              + 'candidates in the lookup table which come '
-              + 'from a dictionary. This setting only has '
-              + 'an effect if the use of color for candidates '
-              + 'from a dictionary is enabled.'))
+              'candidates in the lookup table which come '
+              'from a dictionary. This setting only has '
+              'an effect if the use of color for candidates '
+              'from a dictionary is enabled.'))
         self._color_dictionary_string = itb_util.variant_to_value(
             self._gsettings.get_value('colordictionarystring'))
         gdk_rgba = Gdk.RGBA()
@@ -1723,8 +1723,8 @@ class SetupUI(Gtk.Window):
             label=_('Use label for user database suggestions'))
         self._label_userdb_checkbutton.set_tooltip_text(
             _('Here you can choose whether a label is used '
-              + 'for candidates in the lookup table which '
-              + 'come from the user database.'))
+              'for candidates in the lookup table which '
+              'come from the user database.'))
         self._label_userdb_checkbutton.set_hexpand(False)
         self._label_userdb_checkbutton.set_vexpand(False)
         self._label_userdb = itb_util.variant_to_value(
@@ -1760,8 +1760,8 @@ class SetupUI(Gtk.Window):
             label=_('Use label for spellchecking suggestions'))
         self._label_spellcheck_checkbutton.set_tooltip_text(
             _('Here you can choose whether a label is used '
-              + 'for candidates in the lookup table which '
-              + 'come from spellchecking.'))
+              'for candidates in the lookup table which '
+              'come from spellchecking.'))
         self._label_spellcheck_checkbutton.set_hexpand(False)
         self._label_spellcheck_checkbutton.set_vexpand(False)
         self._label_spellcheck = itb_util.variant_to_value(
@@ -1797,8 +1797,8 @@ class SetupUI(Gtk.Window):
             label=_('Use label for dictionary suggestions'))
         self._label_dictionary_checkbutton.set_tooltip_text(
             _('Here you can choose whether a label is used '
-              + 'for candidates in the lookup table which '
-              + 'come from a dictionary.'))
+              'for candidates in the lookup table which '
+              'come from a dictionary.'))
         self._label_dictionary_checkbutton.set_hexpand(False)
         self._label_dictionary_checkbutton.set_vexpand(False)
         self._label_dictionary = itb_util.variant_to_value(
@@ -1833,7 +1833,7 @@ class SetupUI(Gtk.Window):
             label=_('Use a label to indicate busy state'))
         self._label_busy_checkbutton.set_tooltip_text(
             _('Here you can choose whether a label is used '
-              + 'to indicate when ibus-typing-booster is busy.'))
+              'to indicate when ibus-typing-booster is busy.'))
         self._label_busy_checkbutton.set_hexpand(False)
         self._label_busy_checkbutton.set_vexpand(False)
         self._label_busy = itb_util.variant_to_value(
@@ -3287,14 +3287,14 @@ class SetupUI(Gtk.Window):
         if content:
             window_contents += (
                 '\n\n'
-                + '##############################'
-                + '##############################'
-                + '\n'
-                + 'Complete file implementing the '
-                + 'input method follows here:\n'
-                + '##############################'
-                + '##############################'
-                + '\n'
+                '##############################'
+                '##############################'
+                '\n'
+                'Complete file implementing the '
+                'input method follows here:\n'
+                '##############################'
+                '##############################'
+                '\n'
                 + content)
         HelpWindow(
             parent=self,
@@ -3738,7 +3738,7 @@ class SetupUI(Gtk.Window):
             # to their defaults. This cannot be reversed so the user
             # should be really sure he wants to do that.
             _('Do you really want to set the key bindings for '
-              + 'all commands to their defaults?'))
+              'all commands to their defaults?'))
         if response == Gtk.ResponseType.OK:
             default_keybindings = itb_util.variant_to_value(
                 self._gsettings.get_default_value('keybindings'))
@@ -3805,7 +3805,7 @@ class SetupUI(Gtk.Window):
             # input. Deleting this learned data cannot be reversed. So
             # the user should be really sure he really wants to do that.
             _('Do you really want to delete all language '
-              + 'data learned from typing or reading files?'))
+              'data learned from typing or reading files?'))
         if response == Gtk.ResponseType.OK:
             self.tabsqlitedb.remove_all_phrases()
         self._delete_learned_data_button.set_sensitive(True)
