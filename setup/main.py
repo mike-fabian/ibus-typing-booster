@@ -493,7 +493,7 @@ class SetupUI(Gtk.Window):
             # the session is restarted.
             label=_('Remember input mode'))
         self._remember_input_mode_checkbutton.set_tooltip_text(
-            _('If this option is enabled, the last used input mode  (on/off) '
+            _('If this option is enabled, the last used input mode (on/off) '
               'is remembered even if the session is restarted.'))
         self._remember_input_mode_checkbutton.connect(
             'clicked', self._on_remember_input_mode_checkbutton)
