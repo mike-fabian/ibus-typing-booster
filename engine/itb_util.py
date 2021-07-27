@@ -3374,15 +3374,6 @@ class ComposeSequences:
             IBus.KEY_dead_stroke: '/',
             IBus.KEY_dead_tilde: '~',
             IBus.KEY_dead_voiced_sound: '゛',
-            # Extra dead elements for German T3 layout: (in
-            # /usr/include/X11/keysymdef.h but they don’t exist in
-            # ibus.
-            #
-            # IBus.KEY_dead_lowline: '_',
-            # IBus.KEY_dead_aboveverticalline: '\u00A0\u030D',
-            # IBus.KEY_dead_belowverticalline: '\u00A0\u0329',
-            # IBus.KEY_dead_longsolidusoverlay: '\u00A0\u0338',
-            #
             # Dead vowels for universal syllable entry:
             IBus.KEY_dead_a: 'ぁ',
             IBus.KEY_dead_A: 'あ',
@@ -3397,6 +3388,36 @@ class ComposeSequences:
             IBus.KEY_dead_small_schwa: 'ə',
             IBus.KEY_dead_capital_schwa: 'Ə',
         }
+        # Extra dead elements for German T3 layout: (in
+        # /usr/include/X11/keysymdef.h but they don’t exist in
+        # ibus.
+        #
+        # They have been added recently (on 2021-07-26):
+        #
+        # pylint: disable=line-too-long
+        #
+        # https://github.com/ibus/ibus/commit/3e2609e68c9107ce7c65e2d5876bfdc9f0f8c854
+        #
+        # pylint: enable=line-too-long
+        #
+        # IBus.KEY_dead_lowline: '_',
+        # IBus.KEY_dead_aboveverticalline: '\u00A0\u030D',
+        # IBus.KEY_dead_belowverticalline: '\u00A0\u0329',
+        # IBus.KEY_dead_longsolidusoverlay: '\u00A0\u0338',
+        #
+        # Add them automatically as soon as they start to exist:
+        if hasattr(IBus, 'KEY_dead_lowline'):
+            self._preedit_representations[
+                getattr(IBus, 'KEY_dead_lowline')] = '_'
+        if hasattr(IBus, 'KEY_dead_aboveverticalline'):
+            self._preedit_representations[
+                getattr(IBus, 'KEY_dead_aboveverticalline')] = '\u00A0\u030D'
+        if hasattr(IBus, 'KEY_dead_belowverticalline'):
+            self._preedit_representations[
+                getattr(IBus, 'KEY_dead_belowverticalline')] = '\u00A0\u0329'
+        if hasattr(IBus, 'KEY_dead_longsolidusoverlay'):
+            self._preedit_representations[
+                getattr(IBus, 'KEY_dead_longsolidusoverlay')] = '\u00A0\u0338'
         self._dead_keys = {
             # See also /usr/include/X11/keysymdef.h and
             # ibus/src/ibusenginesimple.c
@@ -3443,15 +3464,6 @@ class ComposeSequences:
             IBus.KEY_dead_tilde: '\u0303', # COMBINING TILDE
             # IBus.KEY_dead_voiced_sound: '゛', # FIXME
             #
-            # Extra dead elements for German T3 layout: (in
-            # /usr/include/X11/keysymdef.h but they don’t exist in
-            # ibus.
-            #
-            # IBus.KEY_dead_lowline: '\u0332', # COMBINING LOW LINE
-            # IBus.KEY_dead_aboveverticalline: '\u030D', # COMBINING VERTICAL LINE ABOVE
-            # IBus.KEY_dead_belowverticalline: '\u0329', # COMBINING VERTICAL LINE BELOW
-            # IBus.KEY_dead_longsolidusoverlay: '\u0338', # COMBINING LONG SOLIDUS OVERLAY
-            #
             # Dead vowels for universal syllable entry:
             # IBus.KEY_dead_a: 'ぁ', # FIXME
             # IBus.KEY_dead_A: 'あ', # FIXME
@@ -3468,6 +3480,36 @@ class ComposeSequences:
             #
             # pylint: enable=line-too-long
         }
+        # Extra dead elements for German T3 layout: (in
+        # /usr/include/X11/keysymdef.h but they don’t exist in
+        # ibus.
+        #
+        # They have been added recently (on 2021-07-26):
+        #
+        # pylint: disable=line-too-long
+        #
+        # https://github.com/ibus/ibus/commit/3e2609e68c9107ce7c65e2d5876bfdc9f0f8c854
+        #
+        # IBus.KEY_dead_lowline: '\u0332', # COMBINING LOW LINE
+        # IBus.KEY_dead_aboveverticalline: '\u030D', # COMBINING VERTICAL LINE ABOVE
+        # IBus.KEY_dead_belowverticalline: '\u0329', # COMBINING VERTICAL LINE BELOW
+        # IBus.KEY_dead_longsolidusoverlay: '\u0338', # COMBINING LONG SOLIDUS OVERLAY
+        #
+        # pylint: enable=line-too-long
+        #
+        # Add them automatically as soon as they start to exist:
+        if hasattr(IBus, 'KEY_dead_lowline'):
+            self._dead_keys[
+                getattr(IBus, 'KEY_dead_lowline')] = '\u0332'
+        if hasattr(IBus, 'KEY_dead_aboveverticalline'):
+            self._dead_keys[
+                getattr(IBus, 'KEY_dead_aboveverticalline')] = '\u030D'
+        if hasattr(IBus, 'KEY_dead_belowverticalline'):
+            self._dead_keys[
+                getattr(IBus, 'KEY_dead_belowverticalline')] = '\u0329'
+        if hasattr(IBus, 'KEY_dead_longsolidusoverlay'):
+            self._dead_keys[
+                getattr(IBus, 'KEY_dead_longsolidusoverlay')] = '\u0338'
         self._compose_sequences = {}
         compose_file_paths = []
         # Gtk reads compose files like this:
