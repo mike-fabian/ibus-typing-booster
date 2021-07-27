@@ -3,22 +3,23 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Oguz Ersen <oguzersen@protonmail.com>, 2019.
 # Oğuz Ersen <oguzersen@protonmail.com>, 2019, 2020.
+# Mike FABIAN <mfabian@redhat.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-07-27 10:37+0200\n"
-"PO-Revision-Date: 2020-10-07 14:33+0000\n"
-"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
-"Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/tr/>\n"
+"PO-Revision-Date: 2021-07-27 08:46+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.2.2\n"
+"X-Generator: Weblate 4.7.2\n"
 
 #: engine/emoji_picker.py:200
 msgid "Emoji Picker"
@@ -686,7 +687,7 @@ msgstr "Bu sayıdan daha az karakter yazıldığında öneri gösterme."
 #. sound is played on error
 #: setup/main.py:712
 msgid "Play sound file on error"
-msgstr ""
+msgstr "Hata durumunda ses dosyası oynat"
 
 #: setup/main.py:714
 msgid ""
@@ -694,6 +695,9 @@ msgid ""
 "the simpleaudio module for Python3 is not installled, this option does "
 "nothing."
 msgstr ""
+"Burada bir hata oluştuğunda bir ses dosyasının çalınıp çalınmayacağını "
+"seçebilirsiniz. Python3 için simpleaudio modülü kurulu değilse, bu seçenek "
+"hiçbir şey yapmaz."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -1263,7 +1267,7 @@ msgstr "Bu uygulamanın başka bir örneği zaten çalışıyor."
 
 #: setup/main.py:2693
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr ".wav ses dosyasını seçin:"
 
 #: setup/main.py:2865
 msgid "Add dictionary"
