@@ -3,27 +3,27 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the ibus-typing-booster package.
 # Translators:
-# Mike FABIAN <mfabian@redhat.com>, 2012, 2019, 2020.
-# Mike FABIAN <mfabian@redhat.com>, 2016. #zanata, 2019, 2020.
-# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019, 2020.
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020.
-# Mike FABIAN <mfabian@redhat.com>, 2019. #zanata, 2020.
+# Mike FABIAN <mfabian@redhat.com>, 2012, 2019, 2020, 2021.
+# Mike FABIAN <mfabian@redhat.com>, 2016. #zanata, 2019, 2020, 2021.
+# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019, 2020, 2021.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2021.
+# Mike FABIAN <mfabian@redhat.com>, 2019. #zanata, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-07-27 10:06+0200\n"
-"PO-Revision-Date: 2020-10-07 13:05+0000\n"
+"PO-Revision-Date: 2021-07-27 08:20+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.2.2\n"
+"X-Generator: Weblate 4.7.2\n"
 
 #: engine/emoji_picker.py:200
 msgid "Emoji Picker"
@@ -552,16 +552,16 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:494
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remember input mode"
-msgstr "Eingabemethode entfernen"
+msgstr "Merken des zuletzt benutzten Eingabemodes"
 
 #: setup/main.py:496
 msgid ""
 "If this option is enabled, the last used input mode  (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
+"Wenn diese Option eingeschaltet ist, wird der zuletzt benutzte Eingabemodes ("
+"an/aus)  gemerkt und nach einem Neustart restauriert."
 
 #: setup/main.py:521
 msgid ""
@@ -703,7 +703,7 @@ msgstr ""
 #. sound is played on error
 #: setup/main.py:712
 msgid "Play sound file on error"
-msgstr ""
+msgstr "Sounddatei bei Fehler abspielen"
 
 #: setup/main.py:714
 msgid ""
@@ -711,6 +711,9 @@ msgid ""
 "the simpleaudio module for Python3 is not installled, this option does "
 "nothing."
 msgstr ""
+"Hier kann man wählen, ob eine Sounddatei abgespielt wird, wenn ein Fehler "
+"passiert. Wenn das simpleaudio-Modul für Python3 nicht installiert ist, tut "
+"diese Option nichts."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -1296,7 +1299,7 @@ msgstr "Eine Instanz dieses Programms läuft schon."
 
 #: setup/main.py:2693
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr ".wav Sounddatei auswählen:"
 
 #: setup/main.py:2865
 msgid "Add dictionary"
