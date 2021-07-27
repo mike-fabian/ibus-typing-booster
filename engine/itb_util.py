@@ -3333,7 +3333,11 @@ class ComposeSequences:
             # mark itself as a mark, rather than using it in its
             # normal way in text (that is, applied as an accent to a
             # base letter or in other combinations).
-            IBus.KEY_Multi_key: '⎄',
+            #
+            # Sadly the official character ⎄ U+2384 COMPOSITION SYMBOL
+            # is a bit too distracting so we use · U+00B7 MIDDLE DOT
+            # to represent the Multi_key in the preedit:
+            IBus.KEY_Multi_key: '·',
             IBus.KEY_dead_abovecomma: '᾿',
             IBus.KEY_dead_abovedot: '˙',
             IBus.KEY_dead_abovereversedcomma: '῾',
@@ -3700,7 +3704,9 @@ class ComposeSequences:
 
         >>> c = ComposeSequences()
         >>> c.preedit_representation([IBus.KEY_Multi_key, IBus.KEY_asciitilde, IBus.KEY_dead_circumflex])
-        '⎄~^'
+        '·~^'
+        >>> c.preedit_representation([IBus.KEY_Multi_key, IBus.KEY_asciitilde, IBus.KEY_Multi_key, IBus.KEY_dead_circumflex])
+        '·~·^'
         '''
         # pylint: enable=line-too-long
         representation = ''
