@@ -4973,7 +4973,6 @@ class TypingBoosterEngine(IBus.Engine):
         '''Internal method to handle possible compose keys
 
         :return: True if the key event has been handled, else False
-        ;rtype: Boolean
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('KeyEvent object: %s', key)
