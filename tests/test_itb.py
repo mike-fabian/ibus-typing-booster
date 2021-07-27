@@ -1467,6 +1467,56 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_S, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'ẞ')
 
+    def test_start_compose_when_candidate_selected(self):
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        # Use off the record mode to avoid the learning so
+        # we can type the same string twice and get the same
+        # candidate on the second try:
+        self.engine.set_off_the_record_mode(True)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.assertEqual('tastin', self.engine.mock_preedit_text)
+        self.assertEqual('tasting', self.engine._candidates[0][0])
+        # Tab should select the first candidate, i.e. “tasting” now:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        # Typing an “s” should then replace the typed string
+        # in the preedit with the selection, move the cursor to the
+        # end and then add the “s”:
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.assertEqual('tastings', self.engine.mock_preedit_text)
+        # Commit with space:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual('', self.engine.mock_preedit_text)
+        self.assertEqual([], self.engine._candidates)
+        self.assertEqual('tastings ', self.engine.mock_committed_text)
+        # Repeat the same typing of “tastin”:
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.assertEqual('tastin', self.engine.mock_preedit_text)
+        self.assertEqual('tasting', self.engine._candidates[0][0])
+        # Tab should select the first candidate, i.e. “tasting” now:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        # Now type “ß” using compose, this should also replace the
+        # typed string in the preedit with the selection, move the
+        # cursor to the end and then add the “ß”:
+        self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
+        self.assertEqual('tasting·', self.engine.mock_preedit_text)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.assertEqual('tastings', self.engine.mock_preedit_text)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.assertEqual('tastingß', self.engine.mock_preedit_text)
+
     def test_compose_sequences_containing_code_points(self):
         self.engine.set_current_imes(
             ['t-latn-pre', 'NoIME'], update_gsettings=False)

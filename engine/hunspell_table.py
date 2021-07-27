@@ -4986,6 +4986,17 @@ class TypingBoosterEngine(IBus.Engine):
             if DEBUG_LEVEL > 1:
                 LOGGER.debug('Not in a compose sequence.')
             return False
+        if (not self._typed_compose_sequence
+            and not self._is_candidate_auto_selected
+            and self.get_lookup_table().get_number_of_candidates()
+            and self.get_lookup_table().cursor_visible):
+            # A new compose sequence has just started *and*
+            # something is *manually* selected in the lookup
+            # table, replace the typed string with the selection
+            # and move the cursor to the end:
+            self._typed_string = list(
+                self.get_string_from_lookup_table_cursor_pos())
+            self._typed_string_cursor = len(self._typed_string)
         if (key.val in
             (IBus.KEY_Shift_R,
              IBus.KEY_Shift_L,
