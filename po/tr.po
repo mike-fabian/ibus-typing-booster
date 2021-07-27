@@ -2,7 +2,7 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Oguz Ersen <oguzersen@protonmail.com>, 2019.
-# Oğuz Ersen <oguzersen@protonmail.com>, 2019, 2020.
+# Oğuz Ersen <oguzersen@protonmail.com>, 2019, 2020, 2021.
 # Mike FABIAN <mfabian@redhat.com>, 2021.
 msgid ""
 msgstr ""
@@ -10,8 +10,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-07-27 10:37+0200\n"
-"PO-Revision-Date: 2021-07-27 08:46+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"PO-Revision-Date: 2021-07-27 11:52+0000\n"
+"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/tr/>\n"
 "Language: tr\n"
@@ -542,16 +542,16 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:494
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remember input mode"
-msgstr "Giriş yöntemi kaldır"
+msgstr "Giriş modunu hatırla"
 
 #: setup/main.py:496
 msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
+"Bu seçenek etkinleştirilirse, oturum yeniden başlatılsa bile son kullanılan "
+"giriş modu (açık/kapalı) hatırlanır."
 
 #: setup/main.py:521
 msgid ""
