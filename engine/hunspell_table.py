@@ -5040,7 +5040,9 @@ class TypingBoosterEngine(IBus.Engine):
         if not compose_result:
             if DEBUG_LEVEL > 1:
                 LOGGER.debug('Finished compose sequence is empty.')
-            if self._error_sound and self._error_sound_object:
+            if (self._error_sound
+                and self._error_sound_object
+                and key.val not in (IBus.KEY_BackSpace,)):
                 dummy = self._error_sound_object.play()
         if compose_result:
             if self.get_input_mode():
