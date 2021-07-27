@@ -25,7 +25,7 @@ if [ ${SETUP_RETVAL} != 0 ] ; then
 fi
 
 cd $SCRIPT_DIR/tests
-echo "Checking $SCRIPT_DIR/setup"
+echo "Checking $SCRIPT_DIR/tests"
 mypy ../engine/{tabsqlitedb,itb_util,itb_emoji}.py test_*.py
 SETUP_RETVAL=$?
 if [ ${SETUP_RETVAL} != 0 ] ; then
