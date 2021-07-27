@@ -1,26 +1,26 @@
-# Piotr Drąg <piotrdrag@gmail.com>, 2016. #zanata, 2020.
+# Piotr Drąg <piotrdrag@gmail.com>, 2016. #zanata, 2020, 2021.
 # Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019.
-# Piotr Drąg <piotrdrag@gmail.com>, 2017. #zanata, 2020.
+# Piotr Drąg <piotrdrag@gmail.com>, 2017. #zanata, 2020, 2021.
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
-# Piotr Drąg <piotrdrag@gmail.com>, 2018. #zanata, 2020.
-# Piotr Drąg <piotrdrag@gmail.com>, 2019. #zanata, 2020.
+# Piotr Drąg <piotrdrag@gmail.com>, 2018. #zanata, 2020, 2021.
+# Piotr Drąg <piotrdrag@gmail.com>, 2019. #zanata, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-07-27 10:37+0200\n"
-"PO-Revision-Date: 2020-10-07 14:32+0000\n"
+"PO-Revision-Date: 2021-07-27 11:19+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/pl/>\n"
+"Language-Team: Polish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.2.2\n"
+"X-Generator: Weblate 4.7.2\n"
 
 #: engine/emoji_picker.py:200
 msgid "Emoji Picker"
@@ -552,16 +552,16 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:494
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remember input mode"
-msgstr "Usuń metodę wprowadzania"
+msgstr "Pamiętanie trybu wprowadzania"
 
 #: setup/main.py:496
 msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
+"Jeśli ta opcja jest włączona, to ostatnio używany tryb wprowadzania (włą"
+"czony/wyłączony) jest pamiętany nawet po ponownym uruchomieniu sesji."
 
 #: setup/main.py:521
 msgid ""
@@ -571,8 +571,8 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
-"Czy przewidywania mają zawierać symbole i emoji unikodu. Emoji to "
-"piktogramy, takie jak ☺♨⛵ itp., a symbole unikodu to inne symbole, na "
+"Czy przewidywania mają zawierać symbole i emoji unikodu. Emoji to "
+"piktogramy, takie jak ☺♨⛵ itp., a symbole unikodu to inne symbole, na "
 "przykład matematyczne (∀∑∯…), strzałki (←↑↔…), symbole walut (€₹₺…), alfabet "
 "Braille’a (⠥⠩…) i wiele innych. Z technicznego punktu widzenia te symbole "
 "nie są emoji, ale nadal są przydatne."
@@ -696,7 +696,7 @@ msgstr "Bez wyświetlania sugestii, kiedy wpisano mniej niż tę liczbę znaków
 #. sound is played on error
 #: setup/main.py:712
 msgid "Play sound file on error"
-msgstr ""
+msgstr "Odtwarzanie pliku z dźwiękiem po błędzie"
 
 #: setup/main.py:714
 msgid ""
@@ -704,6 +704,9 @@ msgid ""
 "the simpleaudio module for Python3 is not installled, this option does "
 "nothing."
 msgstr ""
+"Tutaj można wybrać, czy po wystąpieniu błędu odtwarzany jest plik z "
+"dźwiękiem. Ta opcja nic nie robi, jeśli nie jest zainstalowany moduł "
+"simpleaudio języka Python 3."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -1279,7 +1282,7 @@ msgstr "Inna kopia tej aplikacji jest już uruchomiona."
 
 #: setup/main.py:2693
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr "Wybór pliku .wav z dźwiękiem:"
 
 #: setup/main.py:2865
 msgid "Add dictionary"
