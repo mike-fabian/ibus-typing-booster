@@ -3451,32 +3451,40 @@ class ComposeSequences:
             IBus.KEY_dead_hook: '\u0309', # COMBINING HOOK ABOVE
             IBus.KEY_dead_horn: '\u031B', # COMBINING HORN
             IBus.KEY_dead_invertedbreve: '\u0311', # COMBINING INVERTED BREVE
-            # IBus.KEY_dead_iota: '', # FIXME
+            IBus.KEY_dead_iota: '\u0345', # U+0345 COMBINING GREEK YPOGEGRAMMENI (old-name: GREEK NON-SPACING IOTA BELOW)
             IBus.KEY_dead_macron: '\u0304', # COMBINING MACRON
             IBus.KEY_dead_ogonek: '\u0328', # COMBINING OGONEK
             # dead_perispomeni is an alias for dead_tilde
             IBus.KEY_dead_perispomeni: '\u0303', # COMBINING TILDE
             # dead_psili is an alias for dead_abovecomma
             IBus.KEY_dead_psili: '\u0313', # COMBINING COMMA ABOVE
-            # IBus.KEY_dead_semivoiced_sound: '', # FIXME
-            IBus.KEY_dead_stroke: '\u0336', # COMBINING LONG STROKE OVERLAY
-            # FIXME: 0335;COMBINING SHORT STROKE OVERLAY ???
+            IBus.KEY_dead_semivoiced_sound: '\u309A', # COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK
+            IBus.KEY_dead_stroke: '\u0335', # COMBINING SHORT STROKE OVERLAY
+            # U+0336 COMBINING LONG STROKE OVERLAY might be reasonable as well
+            # but gtk uses U+0335 for dead_stroke, see
+            # https://gitlab.gnome.org/GNOME/gtk/-/blob/master/gtk/gtkcomposetable.c#L1528
             IBus.KEY_dead_tilde: '\u0303', # COMBINING TILDE
-            # IBus.KEY_dead_voiced_sound: '゛', # FIXME
+            IBus.KEY_dead_voiced_sound: '\u0399', # COMBINING KATAKANA-HIRAGANA VOICED SOUND MARK
             #
             # Dead vowels for universal syllable entry:
-            # IBus.KEY_dead_a: 'ぁ', # FIXME
-            # IBus.KEY_dead_A: 'あ', # FIXME
-            # IBus.KEY_dead_i: 'ぃ', # FIXME
-            # IBus.KEY_dead_I: 'い', # FIXME
-            # IBus.KEY_dead_u: 'ぅ', # FIXME
-            # IBus.KEY_dead_U: 'う', # FIXME
-            # IBus.KEY_dead_e: 'ぇ', # FIXME
-            # IBus.KEY_dead_E: 'え', # FIXME
-            # IBus.KEY_dead_o: 'ぉ', # FIXME
-            # IBus.KEY_dead_O: 'お', # FIXME
+            IBus.KEY_dead_a: '\u0363', # COMBINING LATIN SMALL LETTER A
+            IBus.KEY_dead_A: '\u0363', # COMBINING LATIN SMALL LETTER A
+            IBus.KEY_dead_i: '\u0365', # COMBINING LATIN SMALL LETTER I
+            IBus.KEY_dead_I: '\u0365', # COMBINING LATIN SMALL LETTER I
+            IBus.KEY_dead_u: '\u0367', # COMBINING LATIN SMALL LETTER U
+            IBus.KEY_dead_U: '\u0367', # COMBINING LATIN SMALL LETTER U
+            IBus.KEY_dead_e: '\u0364', # COMBINING LATIN SMALL LETTER E
+            IBus.KEY_dead_E: '\u0364', # COMBINING LATIN SMALL LETTER E
+            IBus.KEY_dead_o: '\u0366', # COMBINING LATIN SMALL LETTER O
+            IBus.KEY_dead_O: '\u0366', # COMBINING LATIN SMALL LETTER O
             IBus.KEY_dead_small_schwa: '\u1DEA ', # COMBINING LATIN SMALL LETTER SCHWA
-            # IBus.KEY_dead_capital_schwa: '', # FIXME
+            IBus.KEY_dead_capital_schwa: '\u1DEA', # COMBINING LATIN SMALL LETTER SCHWA
+            #
+            # I don’t know how to make a distinction between upper and
+            # lower case for the “dead vowels of the universal syllable entry”.
+            #
+            # But I follow Gtk now, see:
+            # https://gitlab.gnome.org/GNOME/gtk/-/blob/master/gtk/gtkcomposetable.c#L1528
             #
             # pylint: enable=line-too-long
         }
