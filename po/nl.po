@@ -2,23 +2,23 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Mike FABIAN <mfabian@redhat.com>, 2019.
-# Geert Warrink <geert.warrink@onsnet.nu>, 2020.
+# Geert Warrink <geert.warrink@onsnet.nu>, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-07-27 10:37+0200\n"
-"PO-Revision-Date: 2020-10-11 10:24+0000\n"
+"PO-Revision-Date: 2021-07-27 11:52+0000\n"
 "Last-Translator: Geert Warrink <geert.warrink@onsnet.nu>\n"
-"Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/nl/>\n"
+"Language-Team: Dutch <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.2.2\n"
+"X-Generator: Weblate 4.7.2\n"
 
 #: engine/emoji_picker.py:200
 msgid "Emoji Picker"
@@ -542,16 +542,16 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:494
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remember input mode"
-msgstr "Invoermethode verwijderen"
+msgstr "Onthoud invoermodus"
 
 #: setup/main.py:496
 msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
+"Als deze optie is ingeschakeld, wordt de laatst gebruikte invoermodus (aan/"
+"uit) onthouden, zelfs als de sessie opnieuw wordt gestart."
 
 #: setup/main.py:521
 msgid ""
@@ -683,7 +683,7 @@ msgstr "Geen suggesties tonen als niet minimaal dit aantal tekens is getypt."
 #. sound is played on error
 #: setup/main.py:712
 msgid "Play sound file on error"
-msgstr ""
+msgstr "Geluidsbestand afspelen bij fout"
 
 #: setup/main.py:714
 msgid ""
@@ -691,6 +691,9 @@ msgid ""
 "the simpleaudio module for Python3 is not installled, this option does "
 "nothing."
 msgstr ""
+"Hier kun je kiezen of er een geluidsbestand wordt afgespeeld als er een fout "
+"optreedt. Als de simpleaudio-module voor Python3 niet is geïnstalleerd, doet "
+"deze optie niets."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -1264,7 +1267,7 @@ msgstr "Er draait al een proces van ibus-typing-booster."
 
 #: setup/main.py:2693
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr "Selecteer .wav-geluidsbestand:"
 
 #: setup/main.py:2865
 msgid "Add dictionary"
