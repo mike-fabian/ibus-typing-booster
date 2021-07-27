@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2021-07-27 10:06+0200\n"
+"POT-Creation-Date: 2021-07-27 10:37+0200\n"
 "PO-Revision-Date: 2019-12-20 00:16+0000\n"
 "Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
 "Language-Team: Portuguese <https://translate.stg.fedoraproject.org/projects/"
@@ -520,7 +520,7 @@ msgstr "Modo de entrada"
 
 #: setup/main.py:496
 msgid ""
-"If this option is enabled, the last used input mode  (on/off) is remembered "
+"If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
 
