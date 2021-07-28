@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2021-07-27 14:14+0200\n"
+"POT-Creation-Date: 2021-07-28 15:31+0200\n"
 "PO-Revision-Date: 2021-07-27 08:46+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
@@ -282,27 +282,27 @@ msgstr "Modifikator"
 msgid "regional"
 msgstr "Regional"
 
-#: engine/itb_util.py:3696 engine/itb_util.py:4015
+#: engine/itb_util.py:3704 engine/itb_util.py:4023
 msgid "File not found"
 msgstr "Datei nicht gefunden"
 
-#: engine/itb_util.py:3699 engine/itb_util.py:4018
+#: engine/itb_util.py:3707 engine/itb_util.py:4026
 msgid "Permission error"
 msgstr "Fehler bei den Zugriffsrechten"
 
-#: engine/itb_util.py:3702 engine/itb_util.py:4021
+#: engine/itb_util.py:3710 engine/itb_util.py:4029
 msgid "Unicode decoding error"
 msgstr "Unicode-Dekodierfehler"
 
-#: engine/itb_util.py:3705 engine/itb_util.py:4024
+#: engine/itb_util.py:3713 engine/itb_util.py:4032
 msgid "Unknown error"
 msgstr "Unbekannter Fehler"
 
-#: engine/itb_util.py:3995
+#: engine/itb_util.py:4003
 msgid "Native Keyboard"
 msgstr "Direkte Tastatureingabe"
 
-#: engine/itb_util.py:3997
+#: engine/itb_util.py:4005
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -316,38 +316,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4494
+#: engine/itb_util.py:4502
 msgid "Key input"
 msgstr "Tasteneingabe"
 
-#: engine/itb_util.py:4500
+#: engine/itb_util.py:4508
 msgid "Cancel"
 msgstr "Abbrechen"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4507
+#: engine/itb_util.py:4515
 msgid "Please press a key (or a key combination)"
 msgstr "Bitte drücken Sie eine Taste (oder eine Tastenkombination)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4512
+#: engine/itb_util.py:4520
 msgid "The dialog will be closed when the key is released"
 msgstr "Dieser Dialog wird geschlossen sobald die Taste losgelassen wird"
 
-#: engine/itb_util.py:4544
+#: engine/itb_util.py:4552
 msgid "A completion input method to speedup typing."
 msgstr "Eine vervollständigende Inputmethode zum schnelleren Tippen."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4553
+#: engine/itb_util.py:4561
 msgid "translator-credits"
 msgstr "Mike FABIAN <mfabian@redhat.com>, 2018"
 
-#: engine/itb_util.py:4561
+#: engine/itb_util.py:4569
 msgid "Online documentation:"
 msgstr "Online Dokumentation:"
 
@@ -706,9 +706,14 @@ msgid "Play sound file on error"
 msgstr "Sounddatei bei Fehler abspielen"
 
 #: setup/main.py:714
+#, fuzzy
+#| msgid ""
+#| "Here you can choose whether a sound file is played if an error occurs. If "
+#| "the simpleaudio module for Python3 is not installled, this option does "
+#| "nothing."
 msgid ""
 "Here you can choose whether a sound file is played if an error occurs. If "
-"the simpleaudio module for Python3 is not installled, this option does "
+"the simpleaudio module for Python3 is not installed, this option does "
 "nothing."
 msgstr ""
 "Hier kann man wählen, ob eine Sounddatei abgespielt wird, wenn ein Fehler "

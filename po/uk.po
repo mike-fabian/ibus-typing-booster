@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2021-07-27 14:14+0200\n"
+"POT-Creation-Date: 2021-07-28 15:31+0200\n"
 "PO-Revision-Date: 2021-07-27 11:52+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/ibus-"
@@ -282,27 +282,27 @@ msgstr "модифікатор"
 msgid "regional"
 msgstr "регіональні"
 
-#: engine/itb_util.py:3696 engine/itb_util.py:4015
+#: engine/itb_util.py:3704 engine/itb_util.py:4023
 msgid "File not found"
 msgstr "Файл не знайдено"
 
-#: engine/itb_util.py:3699 engine/itb_util.py:4018
+#: engine/itb_util.py:3707 engine/itb_util.py:4026
 msgid "Permission error"
 msgstr "Помилка доступу"
 
-#: engine/itb_util.py:3702 engine/itb_util.py:4021
+#: engine/itb_util.py:3710 engine/itb_util.py:4029
 msgid "Unicode decoding error"
 msgstr "Помилка декодування Unicode"
 
-#: engine/itb_util.py:3705 engine/itb_util.py:4024
+#: engine/itb_util.py:3713 engine/itb_util.py:4032
 msgid "Unknown error"
 msgstr "Невідома помилка"
 
-#: engine/itb_util.py:3995
+#: engine/itb_util.py:4003
 msgid "Native Keyboard"
 msgstr "Природна клавіатура"
 
-#: engine/itb_util.py:3997
+#: engine/itb_util.py:4005
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -316,40 +316,40 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4494
+#: engine/itb_util.py:4502
 msgid "Key input"
 msgstr "Введення з клавіатури"
 
-#: engine/itb_util.py:4500
+#: engine/itb_util.py:4508
 msgid "Cancel"
 msgstr "Скасувати"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4507
+#: engine/itb_util.py:4515
 msgid "Please press a key (or a key combination)"
 msgstr "Будь ласка, натисніть клавішу (або комбінацію клавіш)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4512
+#: engine/itb_util.py:4520
 msgid "The dialog will be closed when the key is released"
 msgstr "Вікно буде закрито, коли ви відпустите клавіші"
 
-#: engine/itb_util.py:4544
+#: engine/itb_util.py:4552
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Спосіб введення із автоматичним доповненням, який пришвидшує введення "
 "текстів."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4553
+#: engine/itb_util.py:4561
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>"
 
-#: engine/itb_util.py:4561
+#: engine/itb_util.py:4569
 msgid "Online documentation:"
 msgstr "Документація у інтернеті:"
 
@@ -707,9 +707,14 @@ msgid "Play sound file on error"
 msgstr "Відтворювати звук при помилці"
 
 #: setup/main.py:714
+#, fuzzy
+#| msgid ""
+#| "Here you can choose whether a sound file is played if an error occurs. If "
+#| "the simpleaudio module for Python3 is not installled, this option does "
+#| "nothing."
 msgid ""
 "Here you can choose whether a sound file is played if an error occurs. If "
-"the simpleaudio module for Python3 is not installled, this option does "
+"the simpleaudio module for Python3 is not installed, this option does "
 "nothing."
 msgstr ""
 "Тут ви можете вибрати, чи відтворюватиме програма звуковий файл, якщо "
