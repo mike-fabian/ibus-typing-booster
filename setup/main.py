@@ -713,7 +713,7 @@ class SetupUI(Gtk.Window):
         self._error_sound_checkbutton.set_tooltip_text(
             _('Here you can choose whether a sound file is played '
               'if an error occurs. '
-              'If the simpleaudio module for Python3 is not installled, '
+              'If the simpleaudio module for Python3 is not installed, '
               'this option does nothing.'))
         self._error_sound_checkbutton.set_hexpand(False)
         self._error_sound_checkbutton.set_vexpand(False)
