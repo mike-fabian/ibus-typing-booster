@@ -22,6 +22,32 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.12.1" date="2021-07-28" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.12.1</url>
+      <issues>
+        <issue>
+          Translation update from Weblate (de, nl, pl, tr, uk all
+          updated to 100%)
+        </issue>
+        <issue>
+          Fix typo in translatable message (Thanks to Yuri Chornoivan)
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/175">
+          github-issues#175: Starting a compose sequence while a
+          candidate is selected should append to the selection
+        </issue>
+        <issue>
+          Add a few more combining chars for dead keys to the list
+          (Thanks to Matthias Clasen)
+        </issue>
+        <issue>
+          Reduce grid row spacing from 10 to 5 in the setup tool
+        </issue>
+      </issues>
+    </release>
     <release version="2.12.0" date="2021-07-27" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

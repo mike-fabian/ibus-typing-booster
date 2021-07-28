@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 28 Jul 2021 Released 2.12.1
+* Starting a compose sequence while a candidate is selected should append to the selection (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/175)
+* Translation update from Weblate (de, nl, pl, tr, uk all updated to 100%)
+* Fix typo in translatable message (Thanks to Yuri Chornoivan)
+* Add a few more combining chars for dead keys to the list (Thanks to Matthias Clasen)
+* Reduce grid row spacing from 10 to 5 in the setup tool
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 27 Jul 2021 Released 2.12.0
 * Translation update from Weblate (de, nl, pl, tr, uk all updated to 100%)
 * Use the dead keys added recently to ibus as soon as they become available by an ibus update (see: https://github.com/ibus/ibus/commit/3e2609e68c9107ce7c65e2d5876bfdc9f0f8c854)
