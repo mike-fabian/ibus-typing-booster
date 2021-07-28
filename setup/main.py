@@ -192,7 +192,7 @@ class SetupUI(Gtk.Window):
         self._dialog_action_area.add(self._close_button)
 
         grid_border_width = 10
-        grid_row_spacing = 10
+        grid_row_spacing = 5
         grid_column_spacing = 10
 
         self._dictionaries_and_input_methods_vbox = Gtk.VBox()
