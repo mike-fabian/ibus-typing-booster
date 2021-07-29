@@ -4479,8 +4479,18 @@ class TypingBoosterEngine(IBus.Engine):
 
         :return: True if the key was completely handled, False if not.
         '''
-        if self.is_empty():
+        if self.is_empty() and not self._typed_compose_sequence:
             return False
+        if self._typed_compose_sequence:
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Compose sequence cancelled.')
+            self._typed_compose_sequence = []
+            self._update_transliterated_strings()
+            if self.get_input_mode():
+                self._update_ui()
+            else:
+                self._update_preedit()
+            return True
         if self.get_lookup_table().cursor_visible:
             # A candidate is selected in the lookup table.
             # Deselect it and show the first page of the candidate
@@ -4987,6 +4997,8 @@ class TypingBoosterEngine(IBus.Engine):
             if DEBUG_LEVEL > 1:
                 LOGGER.debug('Not in a compose sequence.')
             return False
+        if self._handle_hotkeys(key, commands=['cancel']):
+            return True
         if (not self._typed_compose_sequence
             and not self._is_candidate_auto_selected
             and self.get_lookup_table().get_number_of_candidates()
