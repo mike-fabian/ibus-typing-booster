@@ -2008,6 +2008,7 @@ class TypingBoosterEngine(IBus.Engine):
                     self._preedit_underline, 0, len(_str)))
                 if (self._color_preedit_spellcheck
                     and len(_str) >= 4
+                    and not self._typed_compose_sequence
                     and not self.database.hunspell_obj.spellcheck(_str)):
                     attrs.append(IBus.attr_foreground_new(
                         self._color_preedit_spellcheck_argb, 0, len(_str)))
