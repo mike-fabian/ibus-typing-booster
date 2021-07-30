@@ -1467,6 +1467,78 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_S, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'ẞ')
 
+    def test_compose_do_not_throw_away_invalid_sequences(self):
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_G, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.assertEqual('Gr', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
+        self.assertEqual('Gr·', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        self.engine.do_process_key_event(IBus.KEY_quotedbl, 0, 0)
+        self.assertEqual('Gr"', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        # Now typing “slash” should not add anything to the compose
+        # sequence because “<Multi_key> <quotedbl> <slash>” is an
+        # invalid sequence, the slash should be ignored (maybe with an
+        # error beep) and the preedit stay the same (The original
+        # X11 behaviour would be to throw the whole compose sequence
+        # silently away and produce nothing):
+        self.engine.do_process_key_event(IBus.KEY_slash, 0, 0)
+        self.assertEqual('Gr"', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        # Now complete the compose sequence by typing a valid
+        # continuation:
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.assertEqual('Grö', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        # Start a new compose sequence
+        self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
+        self.assertEqual('Grö·', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.assertEqual('Grös', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        # Invalid continuation, error beep, no change:
+        self.engine.do_process_key_event(IBus.KEY_x, 0, 0)
+        self.assertEqual('Grös', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        # Valid continuation:
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.assertEqual('Größ', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        # Finish the word and commit with space:
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual('', self.engine.mock_preedit_text)
+        self.assertEqual('Größe ', self.engine.mock_committed_text)
+        # Start a new compose sequence
+        self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
+        self.assertEqual('·', self.engine.mock_preedit_text)
+        self.assertEqual('Größe ', self.engine.mock_committed_text)
+        self.engine.do_process_key_event(IBus.KEY_minus, 0, 0)
+        self.assertEqual('-', self.engine.mock_preedit_text)
+        self.assertEqual('Größe ', self.engine.mock_committed_text)
+        self.engine.do_process_key_event(IBus.KEY_minus, 0, 0)
+        self.assertEqual('--', self.engine.mock_preedit_text)
+        self.assertEqual('Größe ', self.engine.mock_committed_text)
+        # Invalid continuation, error beep, no change:
+        self.engine.do_process_key_event(IBus.KEY_x, 0, 0)
+        self.assertEqual('--', self.engine.mock_preedit_text)
+        self.assertEqual('Größe ', self.engine.mock_committed_text)
+        # Finish the sequence with a valid continuation:
+        self.engine.do_process_key_event(IBus.KEY_minus, 0, 0)
+        self.assertEqual('—', self.engine.mock_preedit_text)
+        self.assertEqual('Größe ', self.engine.mock_committed_text)
+        # commit with arrow right:
+        self.engine.do_process_key_event(IBus.KEY_Right, 0, 0)
+        self.assertEqual('', self.engine.mock_preedit_text)
+        self.assertEqual('Größe —', self.engine.mock_committed_text)
+
     def test_start_compose_when_candidate_selected(self):
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)

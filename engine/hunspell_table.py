@@ -5034,9 +5034,15 @@ class TypingBoosterEngine(IBus.Engine):
                              IBus.keyval_name(key.val))
             return True
         if key.val in (IBus.KEY_BackSpace,):
-            self._typed_compose_sequence = self._typed_compose_sequence[:-1]
+            self._typed_compose_sequence.pop()
         else:
             self._typed_compose_sequence.append(key.val)
+        if not self._typed_compose_sequence:
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Editing made the compose sequence empty.')
+            self._update_transliterated_strings()
+            self._update_ui()
+            return True
         compose_result = self._compose_sequences.compose(
             self._typed_compose_sequence)
         if DEBUG_LEVEL > 1:
@@ -5052,28 +5058,74 @@ class TypingBoosterEngine(IBus.Engine):
         super().update_auxiliary_text(
             self._current_auxiliary_text, False)
         if not isinstance(compose_result, str):
+            # compose sequence is unfinished
             self._update_transliterated_strings()
             self._update_preedit()
+            return True
+        if not compose_result:
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug(
+                    'Last key made compose sequence invalid, remove it.')
+            self._typed_compose_sequence.pop()
+            self._update_transliterated_strings()
+            self._update_preedit()
+            if (key.val in (IBus.KEY_space, IBus.KEY_Tab,
+                            IBus.KEY_Return, IBus.KEY_KP_Enter,
+                            IBus.KEY_Right, IBus.KEY_KP_Right,
+                            IBus.KEY_Delete, IBus.KEY_KP_Delete,
+                            IBus.KEY_Left, IBus.KEY_KP_Left,
+                            IBus.KEY_BackSpace,
+                            IBus.KEY_Down, IBus.KEY_KP_Down,
+                            IBus.KEY_Up, IBus.KEY_KP_Up,
+                            IBus.KEY_Page_Down,
+                            IBus.KEY_KP_Page_Down,
+                            IBus.KEY_KP_Next,
+                            IBus.KEY_Page_Up,
+                            IBus.KEY_KP_Page_Up,
+                            IBus.KEY_KP_Prior)):
+                # The key which made the compose sequence invalid
+                # might usually (i.e. outside of compose sequences)
+                # trigger a commit in ibus-typing-booster.
+                #
+                # For all these keys it seems a good idea to me to
+                # accept the current compose preedit representation
+                # as the final result of the compose sequence
+                # and continue, passing the key through.
+                preedit_representation = (
+                    self._compose_sequences.preedit_representation(
+                        self._typed_compose_sequence))
+                self._typed_compose_sequence = []
+                self._update_transliterated_strings()
+                self._update_preedit()
+                if self.get_input_mode():
+                    # When not in direct input mode insert the current
+                    # compose preedit representation into the typed
+                    # string and return False to let processing of the
+                    # key continue.
+                    # (Even if the the currently typed string is not empty!)
+                    self._insert_string_at_cursor(list(preedit_representation))
+                    self._update_ui()
+                    return False
+                # When in direct input mode commit immediately and
+                # return False to let processing of the key
+                # continue:
+                super().commit_text(
+                    IBus.Text.new_from_string(preedit_representation))
+                return False
+            if self._error_sound and self._error_sound_object:
+                dummy = self._error_sound_object.play()
             return True
         if DEBUG_LEVEL > 1:
             LOGGER.debug('Compose sequence finished.')
         self._typed_compose_sequence = []
         self._update_transliterated_strings()
         self._update_preedit()
-        if not compose_result:
-            if DEBUG_LEVEL > 1:
-                LOGGER.debug('Finished compose sequence is empty.')
-            if (self._error_sound
-                and self._error_sound_object
-                and key.val not in (IBus.KEY_BackSpace,)):
-                dummy = self._error_sound_object.play()
-        if compose_result:
-            if self.get_input_mode():
-                self._insert_string_at_cursor(list(compose_result))
-                self._update_ui()
-            else:
-                super().commit_text(
-                    IBus.Text.new_from_string(compose_result))
+        if self.get_input_mode():
+            self._insert_string_at_cursor(list(compose_result))
+            self._update_ui()
+            return True
+        super().commit_text(
+            IBus.Text.new_from_string(compose_result))
         return True
 
     def do_process_key_event(
