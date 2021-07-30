@@ -1475,7 +1475,8 @@ class ItbTestCase(unittest.TestCase):
         # Use off the record mode to avoid the learning so
         # we can type the same string twice and get the same
         # candidate on the second try:
-        self.engine.set_off_the_record_mode(True)
+        self.engine.set_off_the_record_mode(
+            True, update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
