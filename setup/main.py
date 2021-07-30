@@ -1557,6 +1557,60 @@ class SetupUI(Gtk.Window):
             self._color_inline_completion_rgba_colorbutton,
             1, _appearance_grid_row, 1, 1)
 
+        self._color_compose_preview_checkbutton = Gtk.CheckButton(
+            # Translators: A checkbox where one can choose whether a
+            # custom color is used for the compose preview.
+            label=_('Use color for compose preview'))
+        self._color_compose_preview_checkbutton.set_tooltip_text(
+            _('Here you can choose whether a custom color '
+              'is used for the compose preview.'))
+        self._color_compose_preview_checkbutton.set_hexpand(False)
+        self._color_compose_preview_checkbutton.set_vexpand(False)
+        self._color_compose_preview = itb_util.variant_to_value(
+            self._gsettings.get_value('colorcomposepreview'))
+        if self._color_compose_preview is None:
+            self._color_compose_preview = True
+        self._color_compose_preview_checkbutton.set_active(
+            self._color_compose_preview)
+        self._color_compose_preview_checkbutton.connect(
+            'clicked', self._on_color_compose_preview_checkbutton)
+        self._color_compose_preview_rgba_colorbutton = Gtk.ColorButton()
+        margin = 0
+        self._color_compose_preview_rgba_colorbutton.set_margin_start(
+            margin)
+        self._color_compose_preview_rgba_colorbutton.set_margin_end(
+            margin)
+        self._color_compose_preview_rgba_colorbutton.set_margin_top(
+            margin)
+        self._color_compose_preview_rgba_colorbutton.set_margin_bottom(
+            margin)
+        self._color_compose_preview_rgba_colorbutton.set_hexpand(False)
+        self._color_compose_preview_rgba_colorbutton.set_vexpand(False)
+        self._color_compose_preview_rgba_colorbutton.set_title(
+            # Translators: Used in the title bar of the colour chooser
+            # dialog window where one can choose a custom colour for
+            # the compose preview.
+            _('Choose color for compose preview'))
+        self._color_compose_preview_rgba_colorbutton.set_tooltip_text(
+            _('Here you can specify which color to use for '
+              'the compose preview.'))
+        self._color_compose_preview_string = itb_util.variant_to_value(
+            self._gsettings.get_value('colorcomposepreviewstring'))
+        gdk_rgba = Gdk.RGBA()
+        gdk_rgba.parse(self._color_compose_preview_string)
+        self._color_compose_preview_rgba_colorbutton.set_rgba(gdk_rgba)
+        self._color_compose_preview_rgba_colorbutton.set_sensitive(
+            self._color_compose_preview)
+        self._color_compose_preview_rgba_colorbutton.connect(
+            'color-set', self._on_color_compose_preview_color_set)
+        _appearance_grid_row += 1
+        self._appearance_grid.attach(
+            self._color_compose_preview_checkbutton,
+            0, _appearance_grid_row, 1, 1)
+        self._appearance_grid.attach(
+            self._color_compose_preview_rgba_colorbutton,
+            1, _appearance_grid_row, 1, 1)
+
         self._color_userdb_checkbutton = Gtk.CheckButton(
             # Translators: A checkbox where one can choose whether a
             # custom color is used for suggestions coming from the
@@ -2274,6 +2328,8 @@ class SetupUI(Gtk.Window):
             'colorinlinecompletion': self.set_color_inline_completion,
             'colorinlinecompletionstring':
             self.set_color_inline_completion_string,
+            'colorcomposepreview': self.set_color_compose_preview,
+            'colorcomposepreviewstring': self.set_color_compose_preview_string,
             'coloruserdb': self.set_color_userdb,
             'coloruserdbstring': self.set_color_userdb_string,
             'colorspellcheck': self.set_color_spellcheck,
@@ -2347,6 +2403,27 @@ class SetupUI(Gtk.Window):
         :param widget: The color button where a color was set
         '''
         self.set_color_inline_completion_string(
+            widget.get_rgba().to_string(), update_gsettings=True)
+
+    def _on_color_compose_preview_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
+        '''
+        The checkbutton whether to use color for the compose preview
+        has been clicked.
+
+        :param widget: The check button clicked
+        '''
+        self.set_color_compose_preview(
+            widget.get_active(), update_gsettings=True)
+
+    def _on_color_compose_preview_color_set(
+            self, widget: Gtk.ColorButton) -> None:
+        '''
+        A color has been set for the compose preview
+
+        :param widget: The color button where a color was set
+        '''
+        self.set_color_compose_preview_string(
             widget.get_rgba().to_string(), update_gsettings=True)
 
     def _on_color_userdb_checkbutton(self, widget: Gtk.CheckButton) -> None:
@@ -4081,6 +4158,64 @@ class SetupUI(Gtk.Window):
             gdk_rgba = Gdk.RGBA()
             gdk_rgba.parse(color_string)
             self._color_inline_completion_rgba_colorbutton.set_rgba(gdk_rgba)
+
+    def set_color_compose_preview(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets whether to use color for the compose preview
+
+        :param mode: Whether to use color for the compose preview
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._color_compose_preview:
+            return
+        self._color_compose_preview = mode
+        self._color_compose_preview_rgba_colorbutton.set_sensitive(mode)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorcomposepreview',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._color_compose_preview_checkbutton.set_active(mode)
+
+    def set_color_compose_preview_string(
+            self,
+            color_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the color for the compose preview
+
+        :param color_string: The color for the compose preview
+                            - Standard name from the X11 rgb.txt
+                            - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                         or ”#rrrrggggbbbb”
+                            - RGB color: “rgb(r,g,b)”
+                            - RGBA color: “rgba(r,g,b,a)”
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', color_string, update_gsettings)
+        if color_string == self._color_compose_preview_string:
+            return
+        self._color_compose_preview_string = color_string
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorcomposepreviewstring',
+                GLib.Variant.new_string(color_string))
+        else:
+            gdk_rgba = Gdk.RGBA()
+            gdk_rgba.parse(color_string)
+            self._color_compose_preview_rgba_colorbutton.set_rgba(gdk_rgba)
 
     def set_color_userdb(
             self,

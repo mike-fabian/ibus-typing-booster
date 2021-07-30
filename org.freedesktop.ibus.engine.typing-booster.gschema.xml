@@ -2,6 +2,22 @@
 <schemalist>
   <schema path="/org/freedesktop/ibus/engine/typing-booster/"
           id="org.freedesktop.ibus.engine.typing-booster">
+    <key name="colorcomposepreview" type="b">
+      <default>true</default>
+      <summary>Use color for compose preview</summary>
+      <description>
+        Here you can choose whether a custom color is used for
+        the compose preview.
+      </description>
+    </key>
+    <key name="colorcomposepreviewstring" type="s">
+      <default>'rgb(127,127,127)'</default>
+      <summary>Choose color for compose preview</summary>
+      <description>
+        Here you can specify which color to use for
+        the compose preview.
+      </description>
+    </key>
     <key name="colorpreeditspellcheck" type="b">
       <default>false</default>
       <summary>Preedit spellchecking</summary>

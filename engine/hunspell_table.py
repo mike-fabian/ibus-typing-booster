@@ -286,6 +286,16 @@ class TypingBoosterEngine(IBus.Engine):
         self._color_inline_completion_argb = itb_util.color_string_to_argb(
             self._color_inline_completion_string)
 
+        self._color_compose_preview = itb_util.variant_to_value(
+            self._gsettings.get_value('colorcomposepreview'))
+        if self._color_compose_preview is None:
+            self._color_compose_preview = True
+
+        self._color_compose_preview_string = itb_util.variant_to_value(
+            self._gsettings.get_value('colorcomposepreviewstring'))
+        self._color_compose_preview_argb = itb_util.color_string_to_argb(
+            self._color_compose_preview_string)
+
         self._color_userdb = itb_util.variant_to_value(
             self._gsettings.get_value('coloruserdb'))
         if self._color_userdb is None:
@@ -467,6 +477,8 @@ class TypingBoosterEngine(IBus.Engine):
         self._ppp_phrase = ''
         self._new_sentence = False
         self._transliterated_strings: Dict[str, str] = {}
+        self._transliterated_strings_before_compose: Dict[str, str] = {}
+        self._transliterated_strings_compose_part = ''
         self._transliterators: Dict[str, Transliterator] = {}
         self._init_transliterators()
         # self._candidates: Array to hold candidates found in the
@@ -1278,13 +1290,18 @@ class TypingBoosterEngine(IBus.Engine):
         input methods and stores the results in a dictionary.
         '''
         self._transliterated_strings = {}
+        if self._typed_compose_sequence:
+            self._transliterated_strings_compose_part = (
+                self._compose_sequences.preedit_representation(
+                    self._typed_compose_sequence))
         for ime in self._current_imes:
             if self._typed_compose_sequence:
-                self._transliterated_strings[ime] = (
+                self._transliterated_strings_before_compose[ime] = (
                     self._transliterators[ime].transliterate(
-                        self._typed_string[:self._typed_string_cursor])
-                    + self._compose_sequences.preedit_representation(
-                        self._typed_compose_sequence)
+                        self._typed_string[:self._typed_string_cursor]))
+                self._transliterated_strings[ime] = (
+                    self._transliterated_strings_before_compose[ime]
+                    + self._transliterated_strings_compose_part
                     + self._transliterators[ime].transliterate(
                         self._typed_string[self._typed_string_cursor:]))
             else:
@@ -2006,10 +2023,20 @@ class TypingBoosterEngine(IBus.Engine):
                 or self.is_lookup_table_enabled_by_min_char_complete):
                 attrs.append(IBus.attr_underline_new(
                     self._preedit_underline, 0, len(_str)))
-                if (self._color_preedit_spellcheck
-                    and len(_str) >= 4
-                    and not self._typed_compose_sequence
-                    and not self.database.hunspell_obj.spellcheck(_str)):
+                if self._typed_compose_sequence:
+                    if self._color_compose_preview:
+                        ime = self.get_current_imes()[0]
+                        length_before_compose = len(
+                            self._transliterated_strings_before_compose[ime])
+                        length_compose = len(
+                            self._transliterated_strings_compose_part)
+                        attrs.append(IBus.attr_foreground_new(
+                            self._color_compose_preview_argb,
+                            length_before_compose,
+                            length_before_compose + length_compose))
+                elif (self._color_preedit_spellcheck
+                      and len(_str) >= 4
+                      and not self.database.hunspell_obj.spellcheck(_str)):
                     attrs.append(IBus.attr_foreground_new(
                         self._color_preedit_spellcheck_argb, 0, len(_str)))
             else:
@@ -3287,6 +3314,70 @@ class TypingBoosterEngine(IBus.Engine):
     def get_color_inline_completion_string(self) -> str:
         '''Returns the current value of the “color inline completion” string'''
         return self._color_inline_completion_string
+
+    def set_color_compose_preview(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets whether to use color for the compose preview
+
+        :param mode: Whether to use color for the compose preview
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._color_compose_preview:
+            return
+        self._color_compose_preview = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorcomposepreview',
+                GLib.Variant.new_boolean(mode))
+
+    def get_color_compose_preview(self) -> bool:
+        '''Returns the current value of the “color compose preview” mode'''
+        return self._color_compose_preview
+
+    def set_color_compose_preview_string(
+            self,
+            color_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the color for the compose preview
+
+        :param color_string: The color for the compose preview
+                            It is a string in one of the following formats:
+                            - Standard name from the X11 rgb.txt
+                            - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                         or ”#rrrrggggbbbb”
+                            - RGB color: “rgb(r,g,b)”
+                            - RGBA color: “rgba(r,g,b,a)”
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', color_string, update_gsettings)
+        if color_string == self._color_compose_preview_string:
+            return
+        self._color_compose_preview_string = color_string
+        self._color_compose_preview_argb = itb_util.color_string_to_argb(
+            self._color_compose_preview_string)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorcomposepreviewstring',
+                GLib.Variant.new_string(color_string))
+
+    def get_color_compose_preview_string(self) -> str:
+        '''Returns the current value of the “color compose preview” string'''
+        return self._color_compose_preview_string
 
     def set_color_userdb(
             self,
@@ -5806,6 +5897,8 @@ class TypingBoosterEngine(IBus.Engine):
             'colorinlinecompletion': self.set_color_inline_completion,
             'colorinlinecompletionstring':
             self.set_color_inline_completion_string,
+            'colorcomposepreview': self.set_color_compose_preview,
+            'colorcomposepreviewstring': self.set_color_compose_preview_string,
             'coloruserdb': self.set_color_userdb,
             'coloruserdbstring': self.set_color_userdb_string,
             'colorspellcheck': self.set_color_spellcheck,
