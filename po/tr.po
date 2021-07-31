@@ -10,10 +10,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-07-31 17:45+0200\n"
-"PO-Revision-Date: 2021-07-28 13:42+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/tr/>\n"
+"PO-Revision-Date: 2021-07-31 17:10+0000\n"
+"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
+"Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1076,34 +1076,28 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
 #: setup/main.py:1563
-#, fuzzy
-#| msgid "Use color for inline completion"
 msgid "Use color for compose preview"
-msgstr "Satır içi tamamlama için renk kullan"
+msgstr "Birleştirme ön izlemesi için renk kullan"
 
 #: setup/main.py:1565
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for a suggestion shown "
-#| "inline."
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
-"Burada, satır içi gösterilen bir öneri için özel bir rengin kullanılıp "
+"Burada, birleştirme ön izlemesi için özel bir rengin kullanılıp "
 "kullanılmayacağını seçebilirsiniz."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
 #: setup/main.py:1593
-#, fuzzy
-#| msgid "Choose color for inline completion"
 msgid "Choose color for compose preview"
-msgstr "Satır içi tamamlama için renk seç"
+msgstr "Birleştirme ön izlemesi için renk seç"
 
 #: setup/main.py:1595
 msgid "Here you can specify which color to use for the compose preview."
 msgstr ""
+"Burada, birleştirme ön izlemesi için hangi rengin kullanılacağını "
+"belirleyebilirsiniz."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
