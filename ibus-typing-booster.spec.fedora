@@ -1,8 +1,8 @@
 Name:       ibus-typing-booster
-Version:    2.9.4
+Version:    2.13.0
 Release:    1%{?dist}
 Summary:    A completion input method
-License:    GPLv3+, ASL 2.0
+License:    GPLv3+ and ASL 2.0
 URL:        https://mike-fabian.github.io/ibus-typing-booster/
 Source0:    https://github.com/mike-fabian/ibus-typing-booster/releases/download/%{version}/ibus-typing-booster-%{version}.tar.gz
 Requires:   ibus >= 1.5.3
@@ -10,6 +10,8 @@ Requires:   m17n-lib
 %{?__python3:Requires: %{__python3}}
 Requires:   python3-dbus
 Requires:   python3-distro
+# Because of “from packing import version”:
+Requires:   python3-packaging
 Requires:   python3-enchant
 Requires:   python3-pyxdg
 %if 0%{?fedora} >= 24 || 0%{?rhel} > 7
@@ -23,6 +25,8 @@ Recommends: gdouros-symbola-fonts
 # makes it possible to search for full language and territory names
 # and not just locale codes:
 Recommends: langtable
+# To play a sound on error:
+Recommends: python3-simpleaudio
 %endif
 %if 0%{?fedora} >= 26 || 0%{?rhel} > 7
 # Save some space in the binary rpm by requiring the Fedora
@@ -42,11 +46,17 @@ BuildRequires:  python34-devel
 BuildRequires:  m17n-lib
 BuildRequires:  m17n-db-extras
 BuildRequires:  python3-enchant
+# Because of “from packing import version”:
+BuildRequires:   python3-packaging
+%if 0%{?fedora} && 0%{?fedora} >= 34
 BuildRequires:  python3-libvoikko
+BuildRequires:  voikko-fi
+%endif
+%if 0%{?fedora}
 BuildRequires:  appstream
+%endif
 BuildRequires:  libappstream-glib
 BuildRequires:  desktop-file-utils
-BuildRequires:  python3-mock
 BuildRequires:  python3-gobject
 BuildRequires:  python3-gobject-base
 BuildRequires:  hunspell-cs
@@ -69,8 +79,9 @@ BuildRequires:  glibc-langpack-pt
 BuildRequires:  glibc-langpack-am
 BuildRequires:  glibc-langpack-de
 BuildRequires:  glibc-langpack-ar
+BuildRequires: make
 # A window manger is needed for the GUI test
-BuildRequires:  i3
+# BuildRequires:  i3
 BuildArch:  noarch
 
 %description
@@ -100,11 +111,11 @@ Unicode symbols.
 %build
 export PYTHON=%{__python3}
 %configure --disable-static --disable-additional --enable-installed-tests
-make %{?_smp_mflags}
+%make_build
 
 %install 
 export PYTHON=%{__python3}
-make install DESTDIR=${RPM_BUILD_ROOT} NO_INDEX=true  INSTALL="install -p"   pkgconfigdir=%{_datadir}/pkgconfig
+%make_install NO_INDEX=true  pkgconfigdir=%{_datadir}/pkgconfig
 %py_byte_compile %{python3} /usr/share/ibus-typing-booster/engine
 %py_byte_compile %{python3} /usr/share/ibus-typing-booster/setup
 %if 0%{?fedora} >= 26 || 0%{?rhel} > 7
@@ -129,7 +140,9 @@ make install DESTDIR=${RPM_BUILD_ROOT} NO_INDEX=true  INSTALL="install -p"   pkg
 
 %check
 export LC_ALL=C.UTF-8
-appstreamcli validate --pedantic --explain --no-net %{buildroot}/%{_datadir}/metainfo/*.appdata.xml
+%if 0%{?fedora}
+  #appstreamcli validate --pedantic --no-net %{buildroot}/%{_datadir}/metainfo/*.appdata.xml
+%endif
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.appdata.xml
 desktop-file-validate \
     $RPM_BUILD_ROOT%{_datadir}/applications/ibus-setup-typing-booster.desktop
@@ -192,11 +205,7 @@ if [ $rc != 0 ] ; then
     exit $rc
 fi
 
-%post
-[ -x %{_bindir}/ibus ] && \
-  %{_bindir}/ibus write-cache --system &>/dev/null || :
-
-%postun
+%posttrans
 [ -x %{_bindir}/ibus ] && \
   %{_bindir}/ibus write-cache --system &>/dev/null || :
 
@@ -230,13 +239,222 @@ fi
 %{_datadir}/applications/emoji-picker.desktop
 
 %changelog
+* Sat Jul 31 2021 Mike FABIAN <mfabian@redhat.com> - 2.13.0-1
+- Update to 2.13.0
+- Translation update from Weblate (de, uk updated to 100%)
+- Use colour for the compose part of preedit
+  (Resolves: Use colour for the compose part of preedit)
+- When a compose sequence becomes invalid, don’t throw it away
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/180)
+- Cancelling a compose sequence should not beep
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/179)
+- Don’t spell check the preedit while a compose sequence is in progress
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/181)
+
+* Wed Jul 28 2021 Mike FABIAN <mfabian@redhat.com> - 2.12.1-1
+- Update to 2.12.1
+- Starting a compose sequence while a candidate is selected should
+  append to the selection
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/175)
+- Translation update from Weblate (de, nl, pl, tr, uk all updated to 100%)
+- Fix typo in translatable message (Thanks to Yuri Chornoivan)
+- Add a few more combining chars for dead keys to the list (Thanks to Matthias Clasen)
+- Reduce grid row spacing from 10 to 5 in the setup tool
+
+* Tue Jul 27 2021 Mike FABIAN <mfabian@redhat.com> - 2.12.0-1
+- Use the dead keys added recently to ibus as soon as they become available
+  by an ibus update
+  (see: https://github.com/ibus/ibus/commit/3e2609e68c9107ce7c65e2d5876bfdc9f0f8c854)
+- Make Compose preedit less intrusive, show compose key only in
+  the middle of the sequence or when it is the only key so far
+- Use · U+00B7 MIDDLE DOT instead of ⎄ U+2384 COMPOSITION SYMBOL to display
+  Multi_key in pre-edit.
+- Add an option to play a sound on error (for example invalid compose sequence)
+- Don’t include the system compose files unconditionally if a user compose file exists
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/170)
+- Add option to choose whether to start up in direct input mode
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/169)
+- Change default input methods for Indian locales to inscript2
+
+* Mon Jul 26 2021 Mike FABIAN <mfabian@redhat.com> - 2.11.5-3
+- Fix license tag
+
+* Thu Jul 08 2021 Mike FABIAN <mfabian@redhat.com> - 2.11.5-2
+- Resolves: rhbz#1978361
+  (itb_emoji.py:44:<module>:ModuleNotFoundError: No module named 'packaging')
+
+* Mon Jun 21 2021 Mike FABIAN <mfabian@redhat.com> - 2.11.5-1
+- Update to 2.11.5
+- Resolves: rhbz#1970626 Ensure enum.Flag's obj._value_ is an integer
+  Thanks to Miro Hrončok!
+- Use version.parse from packaging instead of LooseVersion from distutils.version
+  (To fix a deprecation warning, see: https://www.python.org/dev/peps/pep-0632/)
+- Update py-compile to the version from automake-1.16
+  (To fix DeprecationWarning: the imp module is deprecated in favour of
+  importlib and slated for removal in Python 3.12;)
+
+* Thu Apr 29 2021 Mike FABIAN <mfabian@redhat.com> - 2.11.4-1
+- Update to 2.11.4
+- In main.py “import factory” only when the --xml option is not used
+  Resolves: rhbz#1711646
+- Limit the “capitalize” case mode used in auto-capitalization to the
+  first index in a string
+  Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/167
+
+* Wed Apr 21 2021 Takao Fujiwara <tfujiwar@redhat.com> - 2.11.2-4
+- Resolves: #1948197 Change post to posttrans
+
+* Mon Apr 19 2021 Mike FABIAN <mfabian@redhat.com> - 2.11.2-3
+- Remove post and postun (Related: rhbz#1948197)
+
+* Sun Mar 14 2021 Mike FABIAN <mfabian@redhat.com> - 2.11.2-1
+- Update to 2.11.2
+- Improve the handling of typing digits into the preedit
+  Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/164
+- Make the keybindings treeview also sortable by clicking the column headers
+- Make custom shortcut treeview sortable by clicking on the column headers
+- Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/163
+- Don’t use surrounding text if InputPurpose.TERMINAL is set
+
+* Thu Mar 11 2021 Mike FABIAN <mfabian@redhat.com> - 2.11.0-1
+- Update to 2.11.0
+- Use sensitivity feature of buttons in the setup tool tab where shortcuts are defined
+- Don’t let dialog action area of setup tool expand.
+- Improve the setup tool to make it possible to enter multi-line expansions of shortcuts
+- Resolves https://github.com/mike-fabian/ibus-typing-booster/issues/158
+- Elide extremely long candidates in the lookup table in the middle.
+- If a candidate contains newlines, replace the newlines with arrows in the lookup table.
+- If a commit string contains new-lines, commit it in several chunks
+  and forward Return between the chunks.
+- Update emoji annotations from CLDR
+- Put the remote icon back in emoji-picker.appdata.xml, it was a
+  false positive by appstreamcli
+- Translation update from Weblate (pt_PT updated, 100% complete now)
+- Skip the inscript2 test cases if these transliterations are not available.
+
+* Mon Feb 22 2021 Mike FABIAN <mfabian@redhat.com> - 2.10.5-3
+- Remove gnome-desktop-testing and ibus-desktop-testing from the requires
+  of the ibus-typing-booster-tests subpackage
+
+* Fri Feb 19 2021 Mike FABIAN <mfabian@redhat.com> - 2.10.5-2
+- Use the voikko build requires only for Fedora. They are only
+  needed to run the voikko test cases during build.
+
+* Wed Feb 17 2021 Mike FABIAN <mfabian@redhat.com> - 2.10.5-1
+- Update to 2.10.5
+- Run the voikko tests only for libvoikko version >= 4.3
+- Adapt voikko test cases to the newest voikko version
+  libvoikko-4.3-3, python3-libvoikko-4.3-3, voikko-fi-2.4-3
+- Log a warning when language is “fi” and “import libvoikko” failed
+- Return an empty list [] in spellcheck_suggest_voikko() when libvoikko was not imported
+- Update emoji annotations from CLDR, switching “no” and “nb”
+  See: https://unicode-org.atlassian.net/browse/CLDR-2698
+- Remove icon in emoji-picker.appdata.xml (to avoid warnings
+  from appstream-util and appstreamcli).
+
+* Wed Feb 17 2021 Mike FABIAN <mfabian@redhat.com> - 2.10.4-2
+- Use “BuildRequires:  appstream” only on Fedora
+
+* Tue Feb 02 2021 Mike FABIAN <mfabian@redhat.com> - 2.10.4-1
+- Update to 2.10.4
+- Use “from unittest import mock” instead of just “import mock”.
+- Update emoji annotations from CLDR
+- Translation update from Weblate for zh_CN (still 100% complete)
+
+* Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2.10.3-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
+* Sun Jan 24 2021 Mike FABIAN <mfabian@redhat.com> - 2.10.3-1
+- Update to 2.10.3
+- Update emoji annotations from CLDR
+- Translation update from Weblate for ja, zh_CN
+  (zh_CN is 100% complete now)
+
+* Thu Dec 17 2020 Mike FABIAN <mfabian@redhat.com> - 2.10.2-1
+- Update to 2.10.2
+- Add vi-telex to the default input methods for vi_VN locale
+- Enable Unicode 13.1 Emoji in emoji-picker by default
+- Update emoji data to Unicode 13.1
+- Translation update from Weblate for zh_CN
+
+* Tue Nov 10 2020 Mike FABIAN <mfabian@redhat.com> - 2.10.1-1
+- Update to 2.10.1
+- Use IBus.InputHints.{UPPERCASE_CHARS,UPPERCASE_WORDS,LOWERCASE}
+- Add utility to manually test input purpose and input
+- Improve handling of input purpose and input hints
+- Add compatibility enum classes InputPurpose and InputHints
+- Add type hints
+- Change default for emoji_unicode_min to 0.0
+  (fixes emoji omitted from browsing in emoji-picker)
+
+* Mon Oct 19 2020 Mike FABIAN <mfabian@redhat.com> - 2.10.0-1
+- Update to 2.10.0
+- Add option to automatically capitalize after punctuation
+  (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/96)
+- Don't record in user database when stripped_input_phrase or
+  stripped_commit_phrase are emty
+- When interactively deleting a candidate from the user database,
+  remove all case modes
+- Add 4 more characters ÞĦŊŦ to get special treatment in remove_accents()
+- Translation updates from Weblate for ca, es, fr, it, ja, nl, sv
+
+* Thu Oct 08 2020 Mike FABIAN <mfabian@redhat.com> - 2.9.9-1
+- Update to 2.9.9
+- Fix typo in variable name in do_reset()
+- KP_Delete should be handled the same way as Delete
+- Translation update form Weblate for de, he, pl, tr, uk
+
+* Tue Oct 06 2020 Mike FABIAN <mfabian@redhat.com> - 2.9.8-1
+- Update to 2.9.8
+- Prevent also Delete from reopening a preedit when the option
+  “Arrow keys can reopen a preedit” is off
+- When the input is empty, Escape should be passed through,
+  not inserted into the preedit
+- Fix itb_util.tokenize(): if the input is only whitespace,
+  the return should be an empty list
+- Don’t clear context after typing Return, KP_Enter, ISO_Enter
+- Improve behaviour of case modes
+- Update emoji annotations from CLDR
+
+* Mon Sep 07 2020 Mike FABIAN <mfabian@redhat.com> - 2.9.7-1
+- Update to 2.9.7
+- Add commands “next_case_mode” and “previous_case_mode”
+  with configurable key bindings
+- Better hot key handling for modifier keys like Shift_L, …
+- Use labels 1, 2, 3, … for the lookup table instead of 1., 2., 3., …
+- Update emoji annotations from CLDR
+
+* Thu Aug 27 2020 Mike FABIAN <mfabian@redhat.com> - 2.9.6-1
+- Update to 2.9.6
+- Make translations of 'Edit key bindings for command “%s”' work
+- Don't hide emoji-picker.desktop from AppStream (by Gunnar Hjalmarsson)
+- Translation update from Weblate for pt_BR, sv (100%)
+
+* Wed Aug 05 2020 Mike FABIAN <mfabian@redhat.com> - 2.9.5-1
+- Update to 2.9.5
+- Treat characters 'ÅåÄäÖö' as special when matching in the Swedish dictionary
+  (Resolves: http ://github.com/mike-fabian/ibus-typing-booster/issues/126)
+- Update emoji annotations from CLDR
+- AppStream tweaks by Gunnar Hjalmarsson
+- Translation update from Weblate for ca, de, es, sv
+
+* Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.9.4-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+
+* Thu Jul 16 2020 Mike FABIAN <mfabian@redhat.com> - 2.9.4-2
+- Fix build on rawhide and f31
+
 * Tue Jul 14 2020 Mike FABIAN <mfabian@redhat.com> - 2.9.4-1
 - Update to 2.9.4
 - Add emoji-picker.appdata.xml
 - Fix warnings and errors in typing-booster.appdata.xml
 - Update emoji annotations from CLDR
-- Support %S expansion in include statements in compose files
+- Support %%S expansion in include statements in compose files
 - Translation update from Weblate for fr, he, hu, zh_CN
+
+* Mon Jul 13 2020 Tom Stellard <tstellar@redhat.com> - 2.9.3-2
+- Use make macros
+- https://fedoraproject.org/wiki/Changes/UseMakeBuildInstallMacro
 
 * Mon Jun 22 2020 Mike FABIAN <mfabian@redhat.com> - 2.9.3-1
 - Update to 2.9.3
