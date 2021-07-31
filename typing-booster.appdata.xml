@@ -19,6 +19,29 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.13.0" date="2021-07-31" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.13.0</url>
+      <issues>
+        <issue>
+          Translation update from Weblate (de, tr, uk updated to 100%)
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/182">
+          Use colour for the compose part of preedit
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/180">
+          When a compose sequence becomes invalid, don’t throw it away
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/179">
+          Cancelling a compose sequence should not beep
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/181">
+          Don’t spell check the preedit while a compose sequence is in progress
+        </issue>
+      </issues>
+    </release>
     <release version="2.12.1" date="2021-07-28" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

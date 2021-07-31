@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 31 Jul 2021 Released 2.13.0
+* Translation update from Weblate (de, tr, uk updated to 100%)
+* Use colour for the compose part of preedit (Resolves: Use colour for the compose part of preedit)
+* When a compose sequence becomes invalid, don’t throw it away (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/180)
+* Cancelling a compose sequence should not beep (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/179)
+* Don’t spell check the preedit while a compose sequence is in progress (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/181)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 28 Jul 2021 Released 2.12.1
 * Starting a compose sequence while a candidate is selected should append to the selection (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/175)
 * Translation update from Weblate (de, nl, pl, tr, uk all updated to 100%)
