@@ -14,10 +14,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-07-31 17:45+0200\n"
-"PO-Revision-Date: 2021-07-28 13:42+0000\n"
+"PO-Revision-Date: 2021-07-31 16:07+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1106,34 +1106,27 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
 #: setup/main.py:1563
-#, fuzzy
-#| msgid "Use color for inline completion"
 msgid "Use color for compose preview"
-msgstr "Farbe für Inline Vervollständigung verwenden"
+msgstr "Farbe für Composevorschau verwenden"
 
 #: setup/main.py:1565
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for a suggestion shown "
-#| "inline."
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
-"Hier kann man wählen ob eine Benutzerdefinierte Farbe verwendet wird wenn "
-"eine Vervollständigung inline angezeigt wird."
+"Hier kann man wählen ob eine Benutzerdefinierte Farbe für die "
+"Composevorschau verwendet wird."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
 #: setup/main.py:1593
-#, fuzzy
-#| msgid "Choose color for inline completion"
 msgid "Choose color for compose preview"
-msgstr "Farbe für Inline Vervollständigung auswählen"
+msgstr "Farbe für Composevorschau auswählen"
 
 #: setup/main.py:1595
 msgid "Here you can specify which color to use for the compose preview."
 msgstr ""
+"Hier kann man wählen welche Farbe für die Composevorschau verwendet wird."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
