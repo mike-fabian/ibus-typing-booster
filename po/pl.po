@@ -10,10 +10,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-07-31 17:45+0200\n"
-"PO-Revision-Date: 2021-07-28 13:40+0000\n"
+"PO-Revision-Date: 2021-07-31 19:00+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/pl/>\n"
+"Language-Team: Polish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1090,34 +1090,26 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
 #: setup/main.py:1563
-#, fuzzy
-#| msgid "Use color for inline completion"
 msgid "Use color for compose preview"
-msgstr "Używanie koloru do uzupełniania w wierszu"
+msgstr "Używanie koloru w podglądzie składania"
 
 #: setup/main.py:1565
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for a suggestion shown "
-#| "inline."
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
-"Tutaj można wybrać, czy niestandardowy kolor jest używany dla sugestii "
-"wyświetlanej w wierszu."
+"Tutaj można wybrać, czy niestandardowy kolor jest używany w podglądzie "
+"składania."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
 #: setup/main.py:1593
-#, fuzzy
-#| msgid "Choose color for inline completion"
 msgid "Choose color for compose preview"
-msgstr "Wybór koloru do uzupełniania w wierszu"
+msgstr "Wybór koloru w podglądzie składania"
 
 #: setup/main.py:1595
 msgid "Here you can specify which color to use for the compose preview."
-msgstr ""
+msgstr "Tutaj można podać kolor używany w podglądzie składania."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
