@@ -118,6 +118,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._input_hints = 0
         self._lookup_table_is_invalid = False
         self._lookup_table_shows_related_candidates = False
+        self._lookup_table_shows_compose_completions = False
         self._current_auxiliary_text = ''
         self._bus = bus
         self.database = database
@@ -725,6 +726,9 @@ class TypingBoosterEngine(IBus.Engine):
             self._transliterated_strings[ime] = ''
         self.is_lookup_table_enabled_by_tab = False
         self.is_lookup_table_enabled_by_min_char_complete = False
+        self._lookup_table_is_invalid = False
+        self._lookup_table_shows_related_candidates = False
+        self._lookup_table_shows_compose_completions = False
 
     def _insert_string_at_cursor(self, string_to_insert: List[str]) -> None:
         '''Insert typed string at cursor position'''
@@ -2163,7 +2167,7 @@ class TypingBoosterEngine(IBus.Engine):
         # difference but gnome-shell in f18 will display
         # an empty suggestion popup if the number of candidates
         # is zero!
-        if (self.is_empty()
+        if ((self.is_empty() and not self._typed_compose_sequence)
             or self._hide_input
             or self.get_lookup_table().get_number_of_candidates() == 0
             or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
@@ -2515,10 +2519,26 @@ class TypingBoosterEngine(IBus.Engine):
             and 0 <= index < self._page_size):
             return False
         phrase = self.get_string_from_lookup_table_current_page(index)
-        if phrase:
-            self._commit_string(phrase + extra_text)
+        if not phrase:
+            return False
+        if self._lookup_table_shows_compose_completions:
+            self._lookup_table_shows_compose_completions = False
+            self._candidates = []
+            self.get_lookup_table().clear()
+            self.get_lookup_table().set_cursor_visible(False)
+            self._update_lookup_table_and_aux()
+            self._typed_compose_sequence = []
+            self._update_transliterated_strings()
+            self._update_preedit()
+            if self.get_input_mode():
+                self._insert_string_at_cursor(list(phrase))
+                self._update_ui()
+                return True
+            super().commit_text(
+                IBus.Text.new_from_string(phrase))
             return True
-        return False
+        self._commit_string(phrase + extra_text)
+        return True
 
     def _commit_string(
             self,
@@ -4431,6 +4451,27 @@ class TypingBoosterEngine(IBus.Engine):
         if not self._set_lookup_table_cursor_pos_in_current_page(index):
             return
         self._lookup_table.set_cursor_visible(True)
+
+        if self._lookup_table_shows_compose_completions:
+            if button == 1:
+                phrase = self.get_string_from_lookup_table_cursor_pos()
+                self._lookup_table_shows_compose_completions = False
+                self._candidates = []
+                self.get_lookup_table().clear()
+                self.get_lookup_table().set_cursor_visible(False)
+                self._update_lookup_table_and_aux()
+                self._typed_compose_sequence = []
+                self._update_transliterated_strings()
+                if phrase:
+                    if self.get_input_mode():
+                        self._insert_string_at_cursor(list(phrase))
+                        self._update_ui()
+                        return
+                    self._update_preedit()
+                    super().commit_text(
+                        IBus.Text.new_from_string(phrase))
+            return
+
         if button == 1 and (state & IBus.ModifierType.CONTROL_MASK):
             self.remove_candidate_from_user_database(index)
             self._update_ui()
@@ -4695,6 +4736,22 @@ class TypingBoosterEngine(IBus.Engine):
         if self.is_empty() and not self._typed_compose_sequence:
             return False
         if self._typed_compose_sequence:
+            if self._lookup_table_shows_compose_completions:
+                if self.get_lookup_table().cursor_visible:
+                    # A candidate is selected in the lookup table.
+                    # Deselect it and show the first page of the candidate
+                    # list:
+                    self.get_lookup_table().set_cursor_visible(False)
+                    self.get_lookup_table().set_cursor_pos(0)
+                    self._update_lookup_table_and_aux()
+                    return True
+                self._lookup_table_shows_compose_completions = False
+                self.get_lookup_table().clear()
+                self.get_lookup_table().set_cursor_visible(False)
+                self._update_lookup_table_and_aux()
+                self._update_preedit()
+                self._candidates = []
+                return True
             if DEBUG_LEVEL > 1:
                 LOGGER.debug('Compose sequence cancelled.')
             self._typed_compose_sequence = []
@@ -4740,6 +4797,38 @@ class TypingBoosterEngine(IBus.Engine):
 
         :return: True if the key was completely handled, False if not.
         '''
+        if self._typed_compose_sequence:
+            if self._lookup_table_shows_compose_completions:
+                return False
+            compose_completions = (
+                self._compose_sequences.find_compose_completions(
+                    self._typed_compose_sequence,
+                    self._keyvals_to_keycodes.keyvals()))
+            self._candidates = []
+            self.get_lookup_table().clear()
+            self.get_lookup_table().set_cursor_visible(False)
+            for compose_completion in compose_completions:
+                compose_result = self._compose_sequences.compose(
+                    self._typed_compose_sequence + compose_completion)
+                if compose_result:
+                    self._candidates.append(
+                        (compose_result, 0, '', False, False))
+                    text_for_lookup_table = (
+                        self._compose_sequences.lookup_representation(
+                            compose_completion))
+                    text_for_lookup_table += '   \t' + compose_result
+                    if len(compose_result) < 6:
+                        for char in compose_result:
+                            text_for_lookup_table += ' U+%04X' %ord(char)
+                    if len(compose_result) == 1:
+                        text_for_lookup_table += ' ' + unicodedata.name(
+                            compose_result).lower()
+                    self._append_candidate_to_lookup_table(
+                        phrase=text_for_lookup_table)
+            self._update_lookup_table_and_aux()
+            self._lookup_table_shows_compose_completions = True
+            return True
+
         if ((self._tab_enable
              or (self._min_char_complete > 1
                  and
@@ -5126,10 +5215,25 @@ class TypingBoosterEngine(IBus.Engine):
             # in the same order as the commands are displayed in the
             # setup tool.
             commands = sorted(self._keybindings.keys())
+        hotkey_removed_from_compose_sequence = False
         for command in commands:
             if (self._prev_key, key, command) in self._hotkeys: # type: ignore
                 if DEBUG_LEVEL > 1:
                     LOGGER.debug('matched command=%s', command)
+                if (self._typed_compose_sequence
+                    and not hotkey_removed_from_compose_sequence):
+                    compose_result = self._compose_sequences.compose(
+                        self._typed_compose_sequence)
+                    if compose_result != '':
+                        # If the hotkey did not make the compose sequence invalid,
+                        # the hotkey is apparently part of a valid compose sequence.
+                        # That has priority so it cannot be used as a hotkey in
+                        # that case
+                        return False
+                    self._typed_compose_sequence.pop()
+                    self._update_transliterated_strings()
+                    self._update_preedit()
+                    hotkey_removed_from_compose_sequence = True
                 command_function_name = '_command_%s' % command
                 try:
                     command_function = getattr(self, command_function_name)
@@ -5215,8 +5319,6 @@ class TypingBoosterEngine(IBus.Engine):
             if DEBUG_LEVEL > 1:
                 LOGGER.debug('Not in a compose sequence.')
             return False
-        if self._handle_hotkeys(key, commands=['cancel']):
-            return True
         if (not self._typed_compose_sequence
             and not self._is_candidate_auto_selected
             and self.get_lookup_table().get_number_of_candidates()
@@ -5258,6 +5360,7 @@ class TypingBoosterEngine(IBus.Engine):
         if not self._typed_compose_sequence:
             if DEBUG_LEVEL > 1:
                 LOGGER.debug('Editing made the compose sequence empty.')
+            self._lookup_table_shows_compose_completions = False
             self._update_transliterated_strings()
             self._update_ui()
             return True
@@ -5271,6 +5374,55 @@ class TypingBoosterEngine(IBus.Engine):
                 [IBus.keyval_name(val)
                  for val in self._typed_compose_sequence],
                 repr(compose_result))
+        if self._handle_hotkeys(
+                key, commands=['cancel',
+                               'enable_lookup',
+                               'select_next_candidate',
+                               'select_previous_candidate',
+                               'lookup_table_page_down',
+                               'lookup_table_page_up',
+                               'commit_candidate_1',
+                               'commit_candidate_1_plus_space',
+                               'commit_candidate_2',
+                               'commit_candidate_2_plus_space',
+                               'commit_candidate_3',
+                               'commit_candidate_3_plus_space',
+                               'commit_candidate_4',
+                               'commit_candidate_4_plus_space',
+                               'commit_candidate_5',
+                               'commit_candidate_5_plus_space',
+                               'commit_candidate_6',
+                               'commit_candidate_6_plus_space',
+                               'commit_candidate_7',
+                               'commit_candidate_7_plus_space',
+                               'commit_candidate_8',
+                               'commit_candidate_8_plus_space',
+                               'commit_candidate_9',
+                               'commit_candidate_9_plus_space']):
+            return True
+        if (self._lookup_table_shows_compose_completions
+            and self.get_lookup_table().cursor_visible):
+            # something is manually selected in the compose lookup table
+            self._lookup_table_shows_compose_completions = False
+            compose_result = self.get_string_from_lookup_table_cursor_pos()
+            self._candidates = []
+            self.get_lookup_table().clear()
+            self.get_lookup_table().set_cursor_visible(False)
+            self._update_lookup_table_and_aux()
+            self._typed_compose_sequence = []
+            self._update_transliterated_strings()
+            self._update_preedit()
+            if self.get_input_mode():
+                self._insert_string_at_cursor(list(compose_result))
+                self._update_ui()
+                return False
+            super().commit_text(
+                IBus.Text.new_from_string(compose_result))
+            return False
+        self._lookup_table_shows_compose_completions = False
+        self._candidates = []
+        self.get_lookup_table().clear()
+        self.get_lookup_table().set_cursor_visible(False)
         self.hide_lookup_table()
         self._current_auxiliary_text = IBus.Text.new_from_string('')
         super().update_auxiliary_text(
@@ -5821,8 +5973,16 @@ class TypingBoosterEngine(IBus.Engine):
 
         '''
         if DEBUG_LEVEL > 1:
-            LOGGER.debug('do_focus_in()\n')
+            LOGGER.debug('entering function\n')
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
+        if DEBUG_LEVEL > 2:
+            for keyval in self._keyvals_to_keycodes.keyvals():
+                name = IBus.keyval_name(keyval)
+                if (name.startswith('dead_')
+                    or name == 'Multi_key'):
+                    LOGGER.debug('Available compose key: %s', name)
+                if name in ('a', 'Greek_alpha', 'Cyrillic_ef'):
+                    LOGGER.debug('Available key: %s', name)
         self.register_properties(self.main_prop_list)
         self.clear_context()
         self._commit_happened_after_focus_in = False

@@ -25,7 +25,9 @@ from typing import Any
 from typing import Tuple
 from typing import List
 from typing import Dict
+from typing import Set
 from typing import Optional
+from typing import Union
 from enum import Enum, Flag
 import sys
 import os
@@ -3759,6 +3761,24 @@ class ComposeSequences:
         '~·^'
         >>> c.preedit_representation([IBus.KEY_Multi_key])
         '·'
+        >>> c.preedit_representation([IBus.KEY_dead_macron])
+        '¯'
+        >>> c.preedit_representation([0x01EB])
+        'ǫ'
+        >>> c.preedit_representation([IBus.KEY_dead_macron, 0x01EB])
+        '¯ǫ'
+        >>> c.preedit_representation([IBus.KEY_1])
+        '1'
+        >>> c.preedit_representation([IBus.KEY_KP_1]) == c.preedit_representation([IBus.KEY_1])
+        True
+        >>> c.preedit_representation([IBus.KEY_slash])
+        '/'
+        >>> c.preedit_representation([IBus.KEY_KP_Divide]) == c.preedit_representation([IBus.KEY_slash])
+        True
+        >>> c.preedit_representation([IBus.KEY_space])
+        ' '
+        >>> c.preedit_representation([IBus.KEY_nobreakspace])
+        ' '
         '''
         # pylint: enable=line-too-long
         representation = ''
@@ -3951,6 +3971,290 @@ class ComposeSequences:
                 return compose_sequences[keyval]
             compose_sequences = compose_sequences[keyval]
         return None
+
+    def lookup_representation(self, keyvals: List[int]) -> str:
+        # pylint: disable=line-too-long
+        '''Returns a string representation of a compose sequence
+
+        :param keyvals: The compose sequence as a list of key values
+
+        Useful to display a compose sequence in short and human
+        readable form in a lookup table to show possible compose
+        completions.
+
+        Actually I would really like to use
+        self.preedit_representation() for this, why introduce yet
+        another function which does “almost” the same?
+
+        The reasons for making a difference between preedit and lookup
+        representation are:
+
+        1) <space> and <nobreakspace>:
+           Using ' ' as the preedit representation for
+           <space> and ' ' for <nobreakspace> is perfectly fine.
+           One knows which key one has just typed and one can also
+           see that something happened in the preedit because
+           the preedit is usually underlined. And such whitespace with
+           an underline is visible feedback in the preedit.
+           But in the lookup table it would be invisible.
+           (By the way, the is <KP_Space> for? It exists in the
+           system Compose file).
+
+        2) <tilde> and <dead_tilde> and similar pairs:
+           These are not the same thing in a compose sequence
+           If the user has typed one of these, it is no problem if they are
+           displayed the same way in the preedit, the user knows which key
+           she pressed and then it represents that key well enough. But
+           if it is shown in a lookup table to show possible completions,
+           the user needs to know which key to press next, <tilde> or <dead_tilde>.
+           Some keyboard layouts actually have both!
+           (Alexander Graf suggested to make that differerence in the lookup
+           table *only if* the current keyboard layout actually has both.
+           I am thinking about that, I am not sure whether this is a good idea.)
+
+        3) In the preedit representation, <1> and <KP_1> are both represented
+           as '1', <slash> and <KP_Divide> are both represented as '/'.
+           Again no problem if the user has just typed this, but a problem
+           if one needs to know what to type next *exactly*. For example,
+           the system Compose file contains:
+
+           <Multi_key> <slash> <o>     : "ø"
+           <Multi_key> <o> <slash>     : "ø"
+           <Multi_key> <KP_Divide> <o> : "ø"
+
+           but *not*:
+
+           <Multi_key> <o> <KP_Divide> : "ø"
+
+           So if the user has typed <Multi_key> <o>, the next key
+           to complete the sequence can be <slash> but *not* <KP_Divide>!
+
+           Similar situation for 1 and KP_1 and all other pairs of keys
+           which have equivalents on the “normal” key area and the keypad.
+
+           I tend to consider this bugs in the Compose file.
+
+           Maybe I could avoid this by not displaying completions involving
+           KP_something *at all*. Because most of these cases (maybe all cases?)
+           the sequences can by typed in two different orders using the “normal”
+           key area but only in one specific order using the keypad. I.e.
+           showing the completions involving keypad keys adds only very
+           little value. Therefore, I decided to omit them for the moment
+           by calling self.find_compose_completions()
+           with omit_sequences_involving_keypad=True.
+           As long as I do this, 3) doesn’t matter.
+
+        Examples:
+
+        >>> c = ComposeSequences()
+        >>> sequence = [IBus.KEY_Multi_key, IBus.KEY_dead_tilde, IBus.KEY_a]
+        >>> c.lookup_representation(sequence)
+        '· 💀~ a'
+
+        >>> sequence = [IBus.KEY_Multi_key, IBus.KEY_dead_tilde, IBus.KEY_space]
+        >>> c.lookup_representation(sequence)
+        '· 💀~ ␠'
+
+        >>> c.lookup_representation([IBus.KEY_nobreakspace])
+        'nobreakspace'
+
+        >>> c.lookup_representation([IBus.KEY_1])
+        '1'
+
+        >>> c.lookup_representation([IBus.KEY_KP_1])
+        'KP_1'
+        >>> c.lookup_representation([IBus.KEY_KP_Divide])
+        'KP_Divide'
+
+        >>> c.lookup_representation([IBus.KEY_dead_macron])
+        '💀¯'
+        >>> c.lookup_representation([IBus.KEY_dead_macron, IBus.KEY_dead_ogonek])
+        '💀¯ 💀˛'
+        >>> c.lookup_representation([IBus.KEY_dead_macron, IBus.KEY_dead_ogonek, IBus.KEY_o])
+        '💀¯ 💀˛ o'
+        >>> c.lookup_representation([0x01EB])
+        'ǫ'
+        >>> c.lookup_representation([IBus.KEY_dead_macron, 0x01EB])
+        '💀¯ ǫ'
+
+        '''
+        # pylint: enable=line-too-long
+        representation = ''
+        for keyval in keyvals:
+            keyval_name = IBus.keyval_name(keyval)
+            keyval_unicode = IBus.keyval_to_unicode(keyval)
+            if representation:
+                representation += ' '
+            if keyval_name == 'Multi_key':
+                representation += self._preedit_representations[keyval]
+            elif keyval_name.startswith('dead_'):
+                representation += '💀' + self._preedit_representations[keyval]
+            elif keyval_name.startswith('KP_'):
+                representation += IBus.keyval_name(keyval)
+            elif keyval_name == 'space':
+                representation += '␠'
+            elif keyval_unicode and keyval_unicode.isspace():
+                representation += IBus.keyval_name(keyval)
+            elif keyval_unicode:
+                representation += keyval_unicode
+            else:
+                representation += chr(keyval)
+        return representation
+
+    def _lookup_representations(
+            self, keyval_sequences: List[List[int]]) -> List[str]:
+        # pylint: disable=line-too-long
+        '''Returns a list of string representations (for lookup tables) of
+        compose sequences given as lists of key values
+
+        This is only for testing self.find_compose_completions().
+
+        :param keyval_sequences: A List containing lists of key values
+
+        Examples:
+
+        >>> c = ComposeSequences()
+        >>> sequence1 = [IBus.KEY_Multi_key, IBus.KEY_minus]
+        >>> sequence2 = [IBus.KEY_Multi_key, IBus.KEY_period]
+        >>> keyval_sequences = [sequence1, sequence2]
+        >>> c._lookup_representations(keyval_sequences)
+        ['· -', '· .']
+
+        '''
+        # pylint: enable=line-too-long
+        representations = []
+        for keyval_sequence in keyval_sequences:
+            representations.append(
+                self.lookup_representation(keyval_sequence))
+        return representations
+
+    def list_compose_sequences(
+            self,
+            compose_sequences: Dict[int, Union[Dict, str]],
+            partial_sequence: List[int] = [],
+            available_keyvals: Optional[Set[int]] = None,
+            omit_sequences_involving_keypad = True) -> List[List[int]]:
+        '''Lists all possible compose sequences in a dictionary
+
+        Returns a list of possible sequences, each sequence is a list
+        of key values
+
+        :param compose_sequences: The compose_sequences dictionary
+                                  to check for possible sequences
+        :param available_keyvals: The key values available to type
+                                  compose sequences. Sequences from
+                                  the compose_sequences dictionary
+                                  which require key values not in this
+                                  Set are not listed.
+                                  If this parameter is None, *All*
+                                  sequences in the compose_sequences
+                                  dictionary are listed.
+        :param omit_sequences_involving_keypad: Omit all sequences
+                                                containing any
+                                                keys on the keypad.
+        '''
+        possible_sequences: List[List[int]] = []
+        for keyval in compose_sequences:
+            if available_keyvals and keyval not in available_keyvals:
+                continue
+            if (omit_sequences_involving_keypad
+                and IBus.keyval_name(keyval).startswith('KP_')):
+                continue
+            new_partial_sequence = partial_sequence + [keyval]
+            value = compose_sequences[keyval]
+            if isinstance(value, str):
+                possible_sequences.append(new_partial_sequence)
+            else:
+                new_compose_sequence = value
+                possible_sequences += self.list_compose_sequences(
+                    new_compose_sequence,
+                    partial_sequence = new_partial_sequence,
+                    available_keyvals = available_keyvals)
+        return possible_sequences
+
+    def find_compose_completions(
+            self,
+            keyvals: List[int],
+            available_keyvals: Optional[Set[int]] = None,
+            omit_sequences_involving_keypad = True) -> List[List[int]]:
+        # pylint: disable=line-too-long
+        '''Lists all possible compose sequences in the dictionary starting
+        with keyvals using only available_keyvals to complete a
+        sequence.
+
+        Only the dictionary created from the Compose files read is
+        considered, “automatic dead key sequences” are *not* included
+        in the possible completions.
+
+        :param kevals: The key values which started the compose sequence
+        :param available_keyvals: The key values available to complete the
+                                  compose sequence
+
+        Examples:
+
+        >>> c = ComposeSequences()
+        >>> keyvals = [IBus.KEY_Multi_key, IBus.KEY_minus, IBus.KEY_minus]
+        >>> available_keyvals = None
+        >>> completions = c.find_compose_completions(keyvals, available_keyvals)
+        >>> completions
+        [[32], [45], [46]]
+        >>> c._lookup_representations(completions)
+        ['␠', '-', '.']
+
+        >>> available_keyvals = set((IBus.KEY_Multi_key, IBus.KEY_minus, IBus.KEY_period))
+        >>> completions = c.find_compose_completions(keyvals, available_keyvals)
+        >>> c._lookup_representations(completions)
+        ['-', '.']
+
+        >>> keyvals = [IBus.KEY_Multi_key]
+        >>> available_keyvals = set((IBus.KEY_macron, IBus.KEY_a, IBus.KEY_e, IBus.KEY_x))
+        >>> completions = c.find_compose_completions(keyvals, available_keyvals)
+        >>> completions
+        [[97, 97], [97, 101], [101, 101], [120, 120], [175, 97], [175, 101]]
+
+        >>> c._lookup_representations(completions)
+        ['a a', 'a e', 'e e', 'x x', '¯ a', '¯ e']
+
+        As automatic dead key sequences should not be included,
+        ['x'] should not appear as a possible completion here:
+
+        >>> keyvals = [IBus.KEY_dead_grave]
+        >>> available_keyvals = [IBus.KEY_a, IBus.KEY_x]
+        >>> completions = c.find_compose_completions(keyvals, available_keyvals)
+        >>> c._lookup_representations(completions)
+        ['a']
+
+        >>> keyvals = [IBus.KEY_Multi_key, IBus.KEY_asciicircum]
+        >>> available_keyvals = [IBus.KEY_3, IBus.KEY_KP_3]
+        >>> completions = c.find_compose_completions(keyvals, available_keyvals)
+        >>> c._lookup_representations(completions)
+        ['3']
+        >>> completions = c.find_compose_completions(keyvals, available_keyvals, omit_sequences_involving_keypad=False)
+        >>> c._lookup_representations(completions)
+        ['3', 'KP_3']
+        '''
+        # pylint: enable=line-too-long
+        if not keyvals:
+            return []
+        compose_sequences = self._compose_sequences
+        for keyval in keyvals:
+            if keyval not in compose_sequences:
+                # No completion possible, it’s invalid:
+                return []
+            compose_sequences = compose_sequences[keyval]
+            if isinstance(compose_sequences, str):
+                # It is already complete:
+                return []
+        sequences = self.list_compose_sequences(
+            compose_sequences,
+            partial_sequence = [],
+            available_keyvals = available_keyvals,
+            omit_sequences_involving_keypad = omit_sequences_involving_keypad)
+        return sorted(sequences,
+                      key=lambda x: (
+                          len(x),
+                          x
+                      ))
 
 class M17nDbInfo:
     '''Class to find and store information about the available input
@@ -4220,6 +4524,10 @@ class KeyvalsToKeycodes:
                                keyval, IBus.keyval_name(keyval))
                 self.keyvals_to_keycodes[keyval] = (
                     self._standard_us_layout_keyvals_to_keycodes[keyval])
+
+    def keyvals(self) -> Set[int]:
+        '''Returns the Set of keyvals available on the keyboard layout'''
+        return set(self.keyvals_to_keycodes.keys())
 
     def keycodes(self, keyval: int) -> List[int]:
         '''Returns a list of key codes of the hardware keys which can generate
