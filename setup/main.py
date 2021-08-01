@@ -2859,7 +2859,7 @@ class SetupUI(Gtk.Window):
                 filter_match = True
             if IMPORT_LANGTABLE_SUCCESSFUL:
                 query_languages = [
-                    locale.getlocale(category=locale.LC_MESSAGES)[0], 'en']
+                    locale.getlocale(category=locale.LC_MESSAGES)[0], name, 'en']
                 for query_language in query_languages:
                     if query_language:
                         language_description = itb_util.remove_accents(
