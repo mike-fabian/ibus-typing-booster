@@ -2852,32 +2852,22 @@ class SetupUI(Gtk.Window):
         for name in sorted(itb_util.SUPPORTED_DICTIONARIES):
             if name in self._dictionary_names:
                 continue
-            filter_match = False
-            filter_text = itb_util.remove_accents(filter_text.lower())
-            filter_words = filter_text.split()
-            if filter_text.replace(' ', '') in name.replace(' ', '').lower():
-                filter_match = True
+            filter_words = itb_util.remove_accents(filter_text.lower()).split()
+            text_to_match = name.replace(' ', '').lower()
             if IMPORT_LANGTABLE_SUCCESSFUL:
                 query_languages = [
                     locale.getlocale(category=locale.LC_MESSAGES)[0],
                     name, 'en']
                 for query_language in query_languages:
                     if query_language:
-                        language_description = itb_util.remove_accents(
+                        text_to_match += itb_util.remove_accents(
                             langtable.language_name(
                                 languageId=name,
                                 languageIdQuery=query_language)).lower()
-                        all_words_match = True
-                        for filter_word in filter_words:
-                            LOGGER.info(
-                                'filter_word %s language_description %s',
-                                filter_word, language_description)
-                            if filter_word not in language_description:
-                                LOGGER.info(
-                                    'filter word not in language description')
-                                all_words_match = False
-                        if all_words_match:
-                            filter_match = True
+            filter_match = True
+            for filter_word in filter_words:
+                if filter_word not in text_to_match:
+                    filter_match = False
             if filter_match:
                 self._dictionaries_add_listbox_dictionary_names.append(name)
                 rows.append(self._fill_dictionaries_listbox_row(name)[0])
@@ -3170,37 +3160,51 @@ class SetupUI(Gtk.Window):
         for ime in M17N_DB_INFO.get_imes():
             if ime in self._current_imes:
                 continue
-            filter_match = False
-            filter_text = itb_util.remove_accents(filter_text.lower())
-            filter_words = filter_text.split()
-            filter_text = filter_text.replace(' ', '')
+            filter_words = itb_util.remove_accents(filter_text.lower()).split()
             row = self._fill_input_methods_listbox_row(ime)
-            if filter_text in row.replace(' ', '').lower():
-                filter_match = True
+            text_to_match = row.replace(' ', '').lower()
             ime_language = ime.split('-')[0]
-            if ime_language == 't' and filter_text in 'other':
-                filter_match = True
-            elif IMPORT_LANGTABLE_SUCCESSFUL:
+            if ime_language == 't':
+                text_to_match += (
+                    'Others, Miscellaneous, Various, Diverse'
+                    # Translators: This is a string is never displayed
+                    # anywhere, it is only for searching.
+                    #
+                    # It should contain words which could mean
+                    # something like “Other” or “Various”.  When
+                    # something is entered into search field to find
+                    # input methods, and this something matches
+                    # anything in the original English string *or* its
+                    # translation, all m17n input methods which are
+                    # not for a single language but for multiple
+                    # languages or for some other special purpose are
+                    # listed. For example input methods like these:
+                    #
+                    # • t-latn-pre: Prefix input method for Latin based languages
+                    # • t-latn-post: Postfix input method for Latin based languages
+                    # • t-rfc1345: Generic input method using RFC1345 mnemonics.
+                    # • t-unicode: for Unicode characters by typing character code
+                    #
+                    # The translation does not need to have the same
+                    # number of words as the original English, any
+                    # number of words is fine. It doesn’t matter if the words
+                    # are seperated by punctuation or white space.
+                    + _('Others, Miscellaneous, Various, Diverse')
+                    ).lower()
+            if IMPORT_LANGTABLE_SUCCESSFUL:
                 query_languages = [
                     locale.getlocale(category=locale.LC_MESSAGES)[0],
                     ime_language, 'en']
                 for query_language in query_languages:
                     if query_language:
-                        language_description = itb_util.remove_accents(
+                        text_to_match += itb_util.remove_accents(
                             langtable.language_name(
                                 languageId=ime_language,
                                 languageIdQuery=query_language)).lower()
-                        all_words_match = True
-                        for filter_word in filter_words:
-                            LOGGER.info(
-                                'filter_word %s language_description %s',
-                                filter_word, language_description)
-                            if filter_word not in language_description:
-                                LOGGER.info(
-                                    'filter word not in language description')
-                                all_words_match = False
-                        if all_words_match:
-                            filter_match = True
+            filter_match = True
+            for filter_word in filter_words:
+                if filter_word not in text_to_match:
+                    filter_match = False
             if filter_match:
                 self._input_methods_add_listbox_imes.append(ime)
                 rows.append(row)
