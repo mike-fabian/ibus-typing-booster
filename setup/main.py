@@ -3170,9 +3170,38 @@ class SetupUI(Gtk.Window):
         for ime in M17N_DB_INFO.get_imes():
             if ime in self._current_imes:
                 continue
+            filter_match = False
+            filter_text = itb_util.remove_accents(filter_text.lower())
+            filter_words = filter_text.split()
+            filter_text = filter_text.replace(' ', '')
             row = self._fill_input_methods_listbox_row(ime)
-            if (filter_text.replace(' ', '').lower()
-                    in row.replace(' ', '').lower()):
+            if filter_text in row.replace(' ', '').lower():
+                filter_match = True
+            ime_language = ime.split('-')[0]
+            if ime_language == 't' and filter_text in 'other':
+                filter_match = True
+            elif IMPORT_LANGTABLE_SUCCESSFUL:
+                query_languages = [
+                    locale.getlocale(category=locale.LC_MESSAGES)[0],
+                    ime_language, 'en']
+                for query_language in query_languages:
+                    if query_language:
+                        language_description = itb_util.remove_accents(
+                            langtable.language_name(
+                                languageId=ime_language,
+                                languageIdQuery=query_language)).lower()
+                        all_words_match = True
+                        for filter_word in filter_words:
+                            LOGGER.info(
+                                'filter_word %s language_description %s',
+                                filter_word, language_description)
+                            if filter_word not in language_description:
+                                LOGGER.info(
+                                    'filter word not in language description')
+                                all_words_match = False
+                        if all_words_match:
+                            filter_match = True
+            if filter_match:
                 self._input_methods_add_listbox_imes.append(ime)
                 rows.append(row)
         for row in rows:
