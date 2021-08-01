@@ -61,7 +61,7 @@ require_version('Pango', '1.0')
 from gi.repository import Pango
 require_version('IBus', '1.0')
 from gi.repository import IBus
-from pkginstall import InstallPkg
+from pkginstall import InstallPackages
 from i18n import _, init as i18n_init
 
 IMPORT_LANGTABLE_SUCCESSFUL = False
@@ -3070,8 +3070,7 @@ class SetupUI(Gtk.Window):
                     else:
                         missing_dictionary_packages.add(
                             'hunspell-' + name.split('_')[0])
-        for package in missing_dictionary_packages:
-            InstallPkg(package)
+        InstallPackages(missing_dictionary_packages)
         self._fill_dictionaries_listbox()
         if missing_dictionary_packages:
             # Write a timestamp to dconf to trigger the callback

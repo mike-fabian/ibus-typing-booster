@@ -19,11 +19,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+from typing import Set
 import gi # type: ignore
 from gi.repository import Gio, GLib # type: ignore
 
-class InstallPkg(object):
-    def __init__(self, pkg):
+class InstallPackages(object):
+    def __init__(self, packages: Set[str] = set()) -> None:
         bus_type = Gio.BusType.SESSION
         flags = 0
         iface_info = None
@@ -47,6 +48,6 @@ class InstallPkg(object):
             # InstallPackageNames does not return before either the
             # dictionary is really installed or the user cancels:
             proxy.set_default_timeout(0x7fffffff) # timeout in milliseconds
-            proxy.InstallPackageNames("(uass)", 0, [pkg], "show-confirm-search,hide-finished")
+            proxy.InstallPackageNames("(uass)", 0, packages, "show-confirm-search,hide-finished")
         except GLib.GError as exception:
             print("GError: " + str(exception))
