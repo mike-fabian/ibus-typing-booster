@@ -2859,7 +2859,8 @@ class SetupUI(Gtk.Window):
                 filter_match = True
             if IMPORT_LANGTABLE_SUCCESSFUL:
                 query_languages = [
-                    locale.getlocale(category=locale.LC_MESSAGES)[0], name, 'en']
+                    locale.getlocale(category=locale.LC_MESSAGES)[0],
+                    name, 'en']
                 for query_language in query_languages:
                     if query_language:
                         language_description = itb_util.remove_accents(
@@ -4930,7 +4931,8 @@ class SetupUI(Gtk.Window):
             else:
                 try:
                     LOGGER.info(
-                        'Trying to initialize and play error sound from %s', path)
+                        'Trying to initialize and play error sound from %s',
+                        path)
                     dummy = (
                         simpleaudio.WaveObject.from_wave_file(path).play())
                     LOGGER.info('Error sound could be initialized.')
