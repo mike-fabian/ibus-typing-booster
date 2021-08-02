@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2021-07-31 17:45+0200\n"
+"POT-Creation-Date: 2021-08-02 13:19+0200\n"
 "PO-Revision-Date: 2020-10-11 18:00+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: French <https://translate.fedoraproject.org/projects/ibus-"
@@ -363,7 +363,7 @@ msgstr "Documentation en ligne :"
 msgid "Preferences"
 msgstr "Préférences"
 
-#: setup/main.py:189 setup/main.py:5260
+#: setup/main.py:189 setup/main.py:5294
 msgid "_Close"
 msgstr "_Fermer"
 
@@ -788,7 +788,7 @@ msgstr "Installer les dictionnaires manquants"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Installe les dictionnaires configurés mais non installés"
 
-#: setup/main.py:891 setup/main.py:1008 setup/main.py:1215 setup/main.py:3763
+#: setup/main.py:891 setup/main.py:1008 setup/main.py:1215 setup/main.py:3796
 msgid "Set to default"
 msgstr "Réinitialiser"
 
@@ -890,7 +890,7 @@ msgstr "Modifier"
 msgid "Edit the key bindings for the selected command"
 msgstr "Modifier les raccourcis clavier pour la commande sélectionnée"
 
-#: setup/main.py:1219 setup/main.py:3768
+#: setup/main.py:1219 setup/main.py:3801
 msgid "Set default key bindings for the selected command"
 msgstr ""
 "Remettre le raccourcis clavier par défaut pour la commande sélectionnée"
@@ -1319,11 +1319,11 @@ msgstr "Emoji"
 msgid "Are you sure?"
 msgstr "Confirmez-vous ?"
 
-#: setup/main.py:2216 setup/main.py:2695 setup/main.py:2773 setup/main.py:3836
+#: setup/main.py:2216 setup/main.py:2695 setup/main.py:2773 setup/main.py:3869
 msgid "_Cancel"
 msgstr "A_nnuler"
 
-#: setup/main.py:2217 setup/main.py:2696 setup/main.py:2774 setup/main.py:3837
+#: setup/main.py:2217 setup/main.py:2696 setup/main.py:2774 setup/main.py:3870
 msgid "_OK"
 msgstr "_Valider"
 
@@ -1335,24 +1335,50 @@ msgstr "Une autre instance de cette application est déjà en cours d’exécuti
 msgid "Select .wav sound file:"
 msgstr ""
 
-#: setup/main.py:2942
+#: setup/main.py:2933
 msgid "Add dictionary"
 msgstr "Ajouter un dictionnaire"
 
-#: setup/main.py:3236
+#. Translators: This is a string is never displayed
+#. anywhere, it is only for searching.
+#.
+#. It should contain words which could mean
+#. something like “Other” or “Various”.  When
+#. something is entered into search field to find
+#. input methods, and this something matches
+#. anything in the original English string *or* its
+#. translation, all m17n input methods which are
+#. not for a single language but for multiple
+#. languages or for some other special purpose are
+#. listed. For example input methods like these:
+#.
+#. • t-latn-pre: Prefix input method for Latin based languages
+#. • t-latn-post: Postfix input method for Latin based languages
+#. • t-rfc1345: Generic input method using RFC1345 mnemonics.
+#. • t-unicode: for Unicode characters by typing character code
+#.
+#. The translation does not need to have the same
+#. number of words as the original English, any
+#. number of words is fine. It doesn’t matter if the words
+#. are seperated by punctuation or white space.
+#: setup/main.py:3192
+msgid "Others, Miscellaneous, Various, Diverse"
+msgstr ""
+
+#: setup/main.py:3269
 msgid "Add input method"
 msgstr "Ajouter une méthode de saisie"
 
-#: setup/main.py:3716
+#: setup/main.py:3749
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Modifier le raccourcis clavier pour la commande \"%s\""
 
-#: setup/main.py:3744
+#: setup/main.py:3777
 msgid "Add a key binding"
 msgstr "Ajouter un raccourcis claviers"
 
-#: setup/main.py:3756
+#: setup/main.py:3789
 msgid "Remove selected key binding"
 msgstr "Supprimer le raccourcis clavier sélectionné"
 
@@ -1361,7 +1387,7 @@ msgstr "Supprimer le raccourcis clavier sélectionné"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:3817
+#: setup/main.py:3850
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1369,16 +1395,16 @@ msgstr ""
 "Voulez-vous vraiment redéfinir les raccourcis claviers pour toutes les "
 "commandes ?"
 
-#: setup/main.py:3833
+#: setup/main.py:3866
 msgid "Open File ..."
 msgstr "Ouvrir le fichier…"
 
-#: setup/main.py:3852
+#: setup/main.py:3885
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Apprentissage réussi depuis le fichier %(filename)s."
 
-#: setup/main.py:3861
+#: setup/main.py:3894
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Échec de l’apprentissage depuis le fichier %(filename)s."
@@ -1393,7 +1419,7 @@ msgstr "Échec de l’apprentissage depuis le fichier %(filename)s."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:3884
+#: setup/main.py:3917
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1401,7 +1427,7 @@ msgstr ""
 "Voulez-vous vraiment supprimer toutes les données linguistiques apprises par "
 "saisie au clavier ou lecture de fichiers ?"
 
-#: setup/main.py:5317
+#: setup/main.py:5351
 msgid "ibus is not running."
 msgstr "Ibus n’est pas lancé."
 
