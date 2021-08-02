@@ -2675,7 +2675,6 @@ class TypingBoosterEngine(IBus.Engine):
         if (key.shift
             or key.control
             or key.mod1
-            or key.mod2
             or key.mod3
             or key.mod4
             or key.mod5
@@ -2702,10 +2701,15 @@ class TypingBoosterEngine(IBus.Engine):
             # Maybe better don’t try to reopen the preëdit at all if
             # any modifier key is on.
             #
-            # *Except* for CapsLock. CapsLock causes no problems at
-            # all for reopening the preëdit, so we don’t want to check
-            # for key.modifier which would include key.lock but check
-            # for the modifiers which cause problems individually.
+            # *Except* for CapsLock and NumLock. CapsLock and NumLock
+            # cause no problems at all for reopening the preëdit, so
+            # we don’t want to check for key.modifier which would
+            # include key.lock (CapsLock) and key.mod2 (NumLock) but
+            # check for the modifiers which cause problems
+            # individually.
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug(
+                    'Not reopening the preedit because a modifier is set.')
             return self._return_false(key.val, key.code, key.state)
         if key.val in (IBus.KEY_BackSpace, IBus.KEY_Left, IBus.KEY_KP_Left):
             pattern = re.compile(
