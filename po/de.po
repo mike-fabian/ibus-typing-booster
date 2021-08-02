@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2021-08-02 13:19+0200\n"
+"POT-Creation-Date: 2021-08-02 13:52+0200\n"
 "PO-Revision-Date: 2021-07-31 16:07+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
@@ -355,7 +355,7 @@ msgstr "Online Dokumentation:"
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: setup/main.py:189 setup/main.py:5294
+#: setup/main.py:189 setup/main.py:5298
 msgid "_Close"
 msgstr "S_chließen"
 
@@ -790,7 +790,7 @@ msgstr ""
 "Installiere die Wörterbuchpakete die hier ausgewählt aber nicht installiert "
 "sind"
 
-#: setup/main.py:891 setup/main.py:1008 setup/main.py:1215 setup/main.py:3796
+#: setup/main.py:891 setup/main.py:1008 setup/main.py:1215 setup/main.py:3800
 msgid "Set to default"
 msgstr "Auf Standard setzen"
 
@@ -893,7 +893,7 @@ msgstr "Editieren"
 msgid "Edit the key bindings for the selected command"
 msgstr "Editieren der Tastenbelegungen für den ausgewählten Befehl"
 
-#: setup/main.py:1219 setup/main.py:3801
+#: setup/main.py:1219 setup/main.py:3805
 msgid "Set default key bindings for the selected command"
 msgstr ""
 "Zurücksetzen der Tastenbelegungen für den ausgewählten Befehl auf die "
@@ -1310,11 +1310,11 @@ msgstr "Emoji"
 msgid "Are you sure?"
 msgstr "Sind Sie sicher?"
 
-#: setup/main.py:2216 setup/main.py:2695 setup/main.py:2773 setup/main.py:3869
+#: setup/main.py:2216 setup/main.py:2695 setup/main.py:2773 setup/main.py:3873
 msgid "_Cancel"
 msgstr "_Abbrechen"
 
-#: setup/main.py:2217 setup/main.py:2696 setup/main.py:2774 setup/main.py:3870
+#: setup/main.py:2217 setup/main.py:2696 setup/main.py:2774 setup/main.py:3874
 msgid "_OK"
 msgstr "_OK"
 
@@ -1343,33 +1343,37 @@ msgstr "Wörterbuch hinzufügen"
 #. languages or for some other special purpose are
 #. listed. For example input methods like these:
 #.
-#. • t-latn-pre: Prefix input method for Latin based languages
-#. • t-latn-post: Postfix input method for Latin based languages
-#. • t-rfc1345: Generic input method using RFC1345 mnemonics.
-#. • t-unicode: for Unicode characters by typing character code
+#. • t-latn-pre:  Prefix input method for
+#. Latin based languages
+#. • t-latn-post: Postfix input method for
+#. Latin based languages
+#. • t-rfc1345:   Generic input method using
+#. RFC1345 mnemonics.
+#. • t-unicode:   For Unicode characters by typing
+#. character code
 #.
 #. The translation does not need to have the same
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: setup/main.py:3192
+#: setup/main.py:3196
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: setup/main.py:3269
+#: setup/main.py:3273
 msgid "Add input method"
 msgstr "Eingabemethode hinzufügen"
 
-#: setup/main.py:3749
+#: setup/main.py:3753
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Editieren der Tastenbelegungen für den Befehl „%s“"
 
-#: setup/main.py:3777
+#: setup/main.py:3781
 msgid "Add a key binding"
 msgstr "Tastenbelegung hinzufügen"
 
-#: setup/main.py:3789
+#: setup/main.py:3793
 msgid "Remove selected key binding"
 msgstr "Ausgewählte Tastenbelegung entfernen"
 
@@ -1378,7 +1382,7 @@ msgstr "Ausgewählte Tastenbelegung entfernen"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:3850
+#: setup/main.py:3854
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1386,16 +1390,16 @@ msgstr ""
 "Wollen Sie wirklich die Tastenbelegungen für alle Befehle auf die "
 "Voreinstellungen zurücksetzen?"
 
-#: setup/main.py:3866
+#: setup/main.py:3870
 msgid "Open File ..."
 msgstr "Öffne Datei ..."
 
-#: setup/main.py:3885
+#: setup/main.py:3889
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Das Lernen aus der Datei %(filename)s war erfolgreich."
 
-#: setup/main.py:3894
+#: setup/main.py:3898
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Fehler beim Lernen aus der Datei %(filename)s."
@@ -1410,7 +1414,7 @@ msgstr "Fehler beim Lernen aus der Datei %(filename)s."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:3917
+#: setup/main.py:3921
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1418,7 +1422,7 @@ msgstr ""
 "Wollen Sie wirklich alle Sprachdaten löschen, die aus den Usereingaben oder "
 "aus Dateien gelernt wurden?"
 
-#: setup/main.py:5351
+#: setup/main.py:5355
 msgid "ibus is not running."
 msgstr "Ibus läuft nicht."
 

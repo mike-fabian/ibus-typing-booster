@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2021-08-02 13:19+0200\n"
+"POT-Creation-Date: 2021-08-02 13:52+0200\n"
 "PO-Revision-Date: 2021-07-31 17:10+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
@@ -353,7 +353,7 @@ msgstr "Çevrim içi belgeler:"
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: setup/main.py:189 setup/main.py:5294
+#: setup/main.py:189 setup/main.py:5298
 msgid "_Close"
 msgstr "_Kapat"
 
@@ -769,7 +769,7 @@ msgstr "Eksik sözlükleri kur"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Burada ayarlanan ancak kurulu olmayan sözlükleri kur"
 
-#: setup/main.py:891 setup/main.py:1008 setup/main.py:1215 setup/main.py:3796
+#: setup/main.py:891 setup/main.py:1008 setup/main.py:1215 setup/main.py:3800
 msgid "Set to default"
 msgstr "Öntanımlıya ayarla"
 
@@ -871,7 +871,7 @@ msgstr "Düzenle"
 msgid "Edit the key bindings for the selected command"
 msgstr "Seçili komut için tuş atamalarını düzenle"
 
-#: setup/main.py:1219 setup/main.py:3801
+#: setup/main.py:1219 setup/main.py:3805
 msgid "Set default key bindings for the selected command"
 msgstr "Seçili komut için öntanımlı tuş atamalarını ayarla"
 
@@ -1279,11 +1279,11 @@ msgstr "Emoji"
 msgid "Are you sure?"
 msgstr "Emin misiniz?"
 
-#: setup/main.py:2216 setup/main.py:2695 setup/main.py:2773 setup/main.py:3869
+#: setup/main.py:2216 setup/main.py:2695 setup/main.py:2773 setup/main.py:3873
 msgid "_Cancel"
 msgstr "_İptal"
 
-#: setup/main.py:2217 setup/main.py:2696 setup/main.py:2774 setup/main.py:3870
+#: setup/main.py:2217 setup/main.py:2696 setup/main.py:2774 setup/main.py:3874
 msgid "_OK"
 msgstr "_Tamam"
 
@@ -1312,33 +1312,37 @@ msgstr "Sözlük ekle"
 #. languages or for some other special purpose are
 #. listed. For example input methods like these:
 #.
-#. • t-latn-pre: Prefix input method for Latin based languages
-#. • t-latn-post: Postfix input method for Latin based languages
-#. • t-rfc1345: Generic input method using RFC1345 mnemonics.
-#. • t-unicode: for Unicode characters by typing character code
+#. • t-latn-pre:  Prefix input method for
+#. Latin based languages
+#. • t-latn-post: Postfix input method for
+#. Latin based languages
+#. • t-rfc1345:   Generic input method using
+#. RFC1345 mnemonics.
+#. • t-unicode:   For Unicode characters by typing
+#. character code
 #.
 #. The translation does not need to have the same
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: setup/main.py:3192
+#: setup/main.py:3196
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: setup/main.py:3269
+#: setup/main.py:3273
 msgid "Add input method"
 msgstr "Giriş yöntemi ekle"
 
-#: setup/main.py:3749
+#: setup/main.py:3753
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "“%s” komutu için atanan tuşları düzenle"
 
-#: setup/main.py:3777
+#: setup/main.py:3781
 msgid "Add a key binding"
 msgstr "Tuş ataması ekle"
 
-#: setup/main.py:3789
+#: setup/main.py:3793
 msgid "Remove selected key binding"
 msgstr "Seçilen tuş atamalarını kaldır"
 
@@ -1347,7 +1351,7 @@ msgstr "Seçilen tuş atamalarını kaldır"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:3850
+#: setup/main.py:3854
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1355,16 +1359,16 @@ msgstr ""
 "Tüm komutların tuş atamalarını öntanımlılarına ayarlamayı gerçekten istiyor "
 "musunuz?"
 
-#: setup/main.py:3866
+#: setup/main.py:3870
 msgid "Open File ..."
 msgstr "Dosya Aç ..."
 
-#: setup/main.py:3885
+#: setup/main.py:3889
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "%(filename)s dosyasından başarıyla öğrenildi."
 
-#: setup/main.py:3894
+#: setup/main.py:3898
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "%(filename)s dosyasından öğrenme başarısız oldu."
@@ -1379,7 +1383,7 @@ msgstr "%(filename)s dosyasından öğrenme başarısız oldu."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:3917
+#: setup/main.py:3921
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1387,7 +1391,7 @@ msgstr ""
 "Yazmaktan veya dosyaları okumaktan öğrenilen tüm dil verilerini silmeyi "
 "gerçekten istiyor musunuz?"
 
-#: setup/main.py:5351
+#: setup/main.py:5355
 msgid "ibus is not running."
 msgstr "ibus çalışmıyor."
 
