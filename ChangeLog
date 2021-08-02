@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 02 Aug 2021 Released 2.13.1
+* Translation update from Weblate (de, nl, pl, tr, uk updated to 100%)
+* Don’t skip reopening a preëdit when NumLock is on (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/178)
+* Make searching for the “Others” input methods possible in the language of the current locale (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/190)
+* Don’t loop over the missing dictionaries when installing, install all in one go (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/189)
+* When adding an input method, searching for localized language names, endonyms, and English language should work (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/188)
+* When adding a dictionary, searching for the language endonym should always work (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/187)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 31 Jul 2021 Released 2.13.0
 * Translation update from Weblate (de, tr, uk updated to 100%)
 * Use colour for the compose part of preedit (Resolves: Use colour for the compose part of preedit)

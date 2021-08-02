@@ -19,6 +19,37 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.13.1" date="2021-08-02" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.13.1</url>
+      <issues>
+        <issue>
+          Translation update from Weblate (de, nl, pl, tr, uk updated to 100%)
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/178">
+          github-issues#178: Don’t skip reopening a preëdit when NumLock is on
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/190">
+          github-issues#190: Make searching for the “Others” input
+          methods possible in the language of the current locale.
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/189">
+          github-issues#189: Don’t loop over the missing dictionaries
+          when installing, install all in one go
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/188">
+          github-issues#188: When adding an input method, searching
+          for localized language names, endonyms, and English language
+          names should work
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/187">
+          github-issues#187: When adding a dictionary, searching for
+          the language endonym should always work
+        </issue>
+      </issues>
+    </release>
     <release version="2.13.0" date="2021-07-31" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
