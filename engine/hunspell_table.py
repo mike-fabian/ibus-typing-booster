@@ -2637,19 +2637,33 @@ class TypingBoosterEngine(IBus.Engine):
         :rtype: Boolean
 
         '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('KeyEvent object: %s', key)
+            LOGGER.debug('self._arrow_keys_reopen_preedit=%s',
+                         self._arrow_keys_reopen_preedit)
         if (not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
             or self._input_purpose in [itb_util.InputPurpose.TERMINAL]):
             return self._return_false(key.val, key.code, key.state)
         surrounding_text = self.get_surrounding_text()
+        if not surrounding_text:
+            LOGGER.debug(
+                'Surrounding text object is None. Should never happen.')
+            return self._return_false(key.val, key.code, key.state)
         text = surrounding_text[0].get_text()
         cursor_pos = surrounding_text[1]
-        dummy_anchor_pos = surrounding_text[2]
-        if not surrounding_text:
-            return self._return_false(key.val, key.code, key.state)
+        anchor_pos = surrounding_text[2]
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                'Getting context: surrounding_text = '
+                '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
+                repr(text), cursor_pos, anchor_pos)
         if not self._commit_happened_after_focus_in:
             # Before the first commit or cursor movement, the
             # surrounding text is probably from the previously
             # focused window (bug!), don’t use it.
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug(
+                    'Skipping context from surrounding_text, no commit yet.')
             return self._return_false(key.val, key.code, key.state)
         if (not self._arrow_keys_reopen_preedit
                 and key.val in (IBus.KEY_Left, IBus.KEY_KP_Left,

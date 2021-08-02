@@ -4349,24 +4349,30 @@ class KeyEvent:
 
     def __str__(self) -> str:
         return (
-            "val=%s code=%s state=0x%08x name='%s' unicode='%s' msymbol='%s' "
-            % (self.val,
-               self.code,
-               self.state,
-               self.name,
-               self.unicode,
-               self.msymbol)
-            + "shift=%s lock=%s control=%s super=%s hyper=%s meta=%s "
-            % (self.shift,
-               self.lock,
-               self.control,
-               self.super,
-               self.hyper,
-               self.meta)
-            + "mod1=%s mod5=%s release=%s\n"
-            % (self.mod1,
-               self.mod5,
-               self.release))
+            'val=%s ' % self.val
+            + 'code=%s ' % self.code
+            + 'state=0x%08x ' % self.state
+            + 'name=“%s” ' % self.name
+            + 'unicode=“%s” ' % self.unicode
+            + 'msymbol=“%s” ' % self.msymbol
+            + 'shift=%s ' % self.shift
+            + 'lock=%s ' % self.lock
+            + 'control=%s ' % self.control
+            + 'super=%s ' % self.super
+            + 'hyper=%s ' % self.hyper
+            + 'meta=%s ' % self.meta
+            + 'mod1=%s ' % self.mod1
+            + 'mod2=%s ' % self.mod2
+            + 'mod3=%s ' % self.mod3
+            + 'mod4=%s ' % self.mod4
+            + 'mod5=%s ' % self.mod5
+            + 'button1=%s ' % self.button1
+            + 'button2=%s ' % self.button2
+            + 'button3=%s ' % self.button3
+            + 'button4=%s ' % self.button4
+            + 'button5=%s ' % self.button5
+            + 'release=%s ' % self.release
+            + 'modifier=%s\n' % self.modifier)
 
 def keyevent_to_keybinding(keyevent: KeyEvent) -> str:
     keybinding = ''
