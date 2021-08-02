@@ -2853,17 +2853,17 @@ class SetupUI(Gtk.Window):
             if name in self._dictionary_names:
                 continue
             filter_words = itb_util.remove_accents(filter_text.lower()).split()
-            text_to_match = name.replace(' ', '').lower()
+            text_to_match = name.replace(' ', '')
             if IMPORT_LANGTABLE_SUCCESSFUL:
                 query_languages = [
                     locale.getlocale(category=locale.LC_MESSAGES)[0],
                     name, 'en']
                 for query_language in query_languages:
                     if query_language:
-                        text_to_match += itb_util.remove_accents(
-                            langtable.language_name(
-                                languageId=name,
-                                languageIdQuery=query_language)).lower()
+                        text_to_match += langtable.language_name(
+                            languageId=name,
+                            languageIdQuery=query_language)
+            text_to_match = itb_util.remove_accents(text_to_match).lower()
             filter_match = True
             for filter_word in filter_words:
                 if filter_word not in text_to_match:
@@ -3162,7 +3162,7 @@ class SetupUI(Gtk.Window):
                 continue
             filter_words = itb_util.remove_accents(filter_text.lower()).split()
             row = self._fill_input_methods_listbox_row(ime)
-            text_to_match = row.replace(' ', '').lower()
+            text_to_match = row.replace(' ', '')
             ime_language = ime.split('-')[0]
             if ime_language == 't':
                 text_to_match += (
@@ -3194,17 +3194,17 @@ class SetupUI(Gtk.Window):
                     # number of words is fine. It doesn’t matter if the words
                     # are seperated by punctuation or white space.
                     + _('Others, Miscellaneous, Various, Diverse')
-                    ).lower()
+                    )
             if IMPORT_LANGTABLE_SUCCESSFUL:
                 query_languages = [
                     locale.getlocale(category=locale.LC_MESSAGES)[0],
                     ime_language, 'en']
                 for query_language in query_languages:
                     if query_language:
-                        text_to_match += itb_util.remove_accents(
-                            langtable.language_name(
-                                languageId=ime_language,
-                                languageIdQuery=query_language)).lower()
+                        text_to_match += langtable.language_name(
+                            languageId=ime_language,
+                            languageIdQuery=query_language)
+            text_to_match = itb_util.remove_accents(text_to_match).lower()
             filter_match = True
             for filter_word in filter_words:
                 if filter_word not in text_to_match:
