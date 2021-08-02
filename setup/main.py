@@ -3180,10 +3180,14 @@ class SetupUI(Gtk.Window):
                     # languages or for some other special purpose are
                     # listed. For example input methods like these:
                     #
-                    # • t-latn-pre: Prefix input method for Latin based languages
-                    # • t-latn-post: Postfix input method for Latin based languages
-                    # • t-rfc1345: Generic input method using RFC1345 mnemonics.
-                    # • t-unicode: for Unicode characters by typing character code
+                    # • t-latn-pre:  Prefix input method for
+                    #                Latin based languages
+                    # • t-latn-post: Postfix input method for
+                    #                Latin based languages
+                    # • t-rfc1345:   Generic input method using
+                    #                RFC1345 mnemonics.
+                    # • t-unicode:   For Unicode characters by typing
+                    #                character code
                     #
                     # The translation does not need to have the same
                     # number of words as the original English, any
