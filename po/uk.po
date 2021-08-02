@@ -11,10 +11,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-08-02 13:52+0200\n"
-"PO-Revision-Date: 2021-07-31 16:08+0000\n"
+"PO-Revision-Date: 2021-08-02 12:02+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/uk/>\n"
+"Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1350,7 +1350,7 @@ msgstr "Додати словник"
 #. are seperated by punctuation or white space.
 #: setup/main.py:3196
 msgid "Others, Miscellaneous, Various, Diverse"
-msgstr ""
+msgstr "Інші, Різні, Різноманітні, Нетипові"
 
 #: setup/main.py:3273
 msgid "Add input method"
