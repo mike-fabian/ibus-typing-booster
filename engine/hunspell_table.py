@@ -643,6 +643,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._set_surrounding_text_anchor_pos: Optional[int] = None
         self._set_surrounding_text_event = threading.Event()
         self._set_surrounding_text_event.clear()
+        self._surrounding_text_old: Optional[Tuple[IBus.Text, int, int]] = None
 
         LOGGER.info(
             '********** Initialized and ready for input: **********')
@@ -2629,57 +2630,46 @@ class TypingBoosterEngine(IBus.Engine):
         # push context after recording in the database is finished:
         self.push_context(stripped_commit_phrase)
 
-    def _reopen_preedit_or_return_false(
-            self,
-            key: itb_util.KeyEvent) -> bool:
+    def _maybe_reopen_preedit(
+            self, key: itb_util.KeyEvent) -> bool:
         '''BackSpace, Delete or arrow left or right has been typed.
 
         If the end of a word has been reached again and if it is
         possible to get that word back into preëdit, do that and
         return True.
 
-        If not end of a word has been reached or it is impossible to
-        get the word back into preëdit, use _return_false(key.val,
-        key.code, key.state) to pass the key to the application.
-
-        :rtype: Boolean
+        If no end of a word has been reached or it is impossible to
+        get the word back into preëdit, return False.
 
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('KeyEvent object: %s', key)
             LOGGER.debug('self._arrow_keys_reopen_preedit=%s',
                          self._arrow_keys_reopen_preedit)
-        if (not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
-            or self._input_purpose in [itb_util.InputPurpose.TERMINAL]):
-            return self._return_false(key.val, key.code, key.state)
-        surrounding_text = self.get_surrounding_text()
-        if not surrounding_text:
-            LOGGER.debug(
-                'Surrounding text object is None. Should never happen.')
-            return self._return_false(key.val, key.code, key.state)
-        text = surrounding_text[0].get_text()
-        cursor_pos = surrounding_text[1]
-        anchor_pos = surrounding_text[2]
-        if DEBUG_LEVEL > 1:
-            LOGGER.debug(
-                'Getting context: surrounding_text = '
-                '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
-                repr(text), cursor_pos, anchor_pos)
-        if not self._commit_happened_after_focus_in:
-            # Before the first commit or cursor movement, the
-            # surrounding text is probably from the previously
-            # focused window (bug!), don’t use it.
+        if not self._arrow_keys_reopen_preedit:
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('self._arrow_keys_reopen_preedit not set. '
+                             'Do not reopen preedit.')
+            return False
+        if not self.is_empty():
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('There is input already, no need to reopen.')
+            return False
+        if self._prev_key is not None and self._prev_key.val != key.val:
             if DEBUG_LEVEL > 1:
                 LOGGER.debug(
-                    'Skipping context from surrounding_text, no commit yet.')
-            return self._return_false(key.val, key.code, key.state)
-        if (not self._arrow_keys_reopen_preedit
-                and key.val in (IBus.KEY_Left, IBus.KEY_KP_Left,
-                                IBus.KEY_Right, IBus.KEY_KP_Right,
-                                IBus.KEY_BackSpace,
-                                IBus.KEY_Delete, IBus.KEY_KP_Delete)):
-            # using arrows key to reopen the preëdit is disabled
-            return self._return_false(key.val, key.code, key.state)
+                    'Previous key not set or not equal to the just released '
+                    'key. Better do not try to reopen the preedit.')
+            return False
+        if (key.val not in (IBus.KEY_Left, IBus.KEY_KP_Left,
+                            IBus.KEY_Right, IBus.KEY_KP_Right,
+                            IBus.KEY_BackSpace,
+                            IBus.KEY_Delete, IBus.KEY_KP_Delete)):
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug(
+                    'Release key was not in list of keys allowed to '
+                    'reopen a preedit. Do not try to reopen the preedit.')
+            return False
         if (key.shift
             or key.control
             or key.mod1
@@ -2718,59 +2708,138 @@ class TypingBoosterEngine(IBus.Engine):
             if DEBUG_LEVEL > 1:
                 LOGGER.debug(
                     'Not reopening the preedit because a modifier is set.')
-            return self._return_false(key.val, key.code, key.state)
+            return False
+        if (not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
+            or self._input_purpose in [itb_util.InputPurpose.TERMINAL]):
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Surrounding text is not supported. '
+                             'No way to repopen preedit.')
+            return False
+        if not self._commit_happened_after_focus_in:
+            # Before the first commit or cursor movement, the
+            # surrounding text is probably from the previously
+            # focused window (bug!), don’t use it.
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('No commit happend yet since focus_in(). '
+                             'The surrounding_text is probably wrong. '
+                             'Do not try to reopen the preedit.')
+            return False
+        if not self._surrounding_text_old:
+            LOGGER.debug(
+                'Old surrounding text object is None. Should never happen.')
+            return False
+        text_old = self._surrounding_text_old[0].get_text()
+        cursor_pos_old = self._surrounding_text_old[1]
+        anchor_pos_old = self._surrounding_text_old[2]
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('Old surrounding_text = ["%s", %s, %s]',
+                         text_old, cursor_pos_old, anchor_pos_old)
+        if not text_old:
+            LOGGER.debug(
+                'Old surrounding text is empty. Cannot reopen preedit.')
+            return False
+        if cursor_pos_old != anchor_pos_old:
+            LOGGER.debug('cursor_pos_old=%s anchor_pos_old=%s differ.',
+                         cursor_pos_old, anchor_pos_old)
+            LOGGER.debug('Cannot reopen preedit.')
+            return False
+        surrounding_text = self.get_surrounding_text() # Redundant?
+        surrounding_text = self.get_surrounding_text() # Redundant?
+        self._set_surrounding_text_event.wait(timeout=0.1)
+        if not self._set_surrounding_text_event.is_set():
+            LOGGER.debug(
+                'Surrounding text has not been set since last key event. '
+                'Something is wrong with the timing. Do not try to reopen '
+                'the preedit.')
+            return False
+        surrounding_text = self.get_surrounding_text()
+        if not surrounding_text:
+            LOGGER.debug(
+                'New surrounding text object is None. Should never happen.')
+            return False
+        text = surrounding_text[0].get_text()
+        cursor_pos = surrounding_text[1]
+        anchor_pos = surrounding_text[2]
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('New surrounding_text = ["%s", %s, %s]',
+                         text, cursor_pos, anchor_pos)
+        if not text:
+            LOGGER.debug(
+                'New surrounding text is empty. Cannot reopen preedit.')
+            return False
+        if cursor_pos != anchor_pos:
+            LOGGER.debug('cursor_pos=%s anchor_pos=%s differ.',
+                         cursor_pos, anchor_pos)
+            LOGGER.debug('Cannot reopen preedit.')
+            return False
         if key.val in (IBus.KEY_BackSpace, IBus.KEY_Left, IBus.KEY_KP_Left):
-            pattern = re.compile(
-                r'(^|.*[\s]+)(?P<token>[\S]+)[\s]$')
+            if cursor_pos != cursor_pos_old - 1:
+                LOGGER.debug('Cursor has not moved one column left, '
+                             'cannot reopen preedit.')
+                return False
+            pattern = re.compile(r'^($|[\s]+.*)')
+            match = pattern.match(text[cursor_pos:])
+            if not match:
+                if DEBUG_LEVEL > 1:
+                    LOGGER.debug(
+                        'No whitespace or end of line or buffer '
+                        'to the right of cursor.')
+                return False
+            pattern = re.compile(r'(^|.*[\s]+)(?P<token>[\S]+)$')
             match = pattern.match(text[:cursor_pos])
             if not match:
-                return self._return_false(key.val, key.code, key.state)
-            # The pattern has matched, i.e. left of the cursor is
-            # a single whitespace and left of that a token was
-            # found.
+                if DEBUG_LEVEL > 1:
+                    LOGGER.debug('Could not match token left of cursor.')
+                return False
             token = match.group('token')
-            # Delete the whitespace and the token from the
-            # application.
-            if key.val in (IBus.KEY_BackSpace,):
-                self.delete_surrounding_text(-1-len(token), 1+len(token))
-            else:
-                self.forward_key_event(key.val, key.code, key.state)
-                # The sleep is needed because this is racy, without the
-                # sleep it works unreliably.
-                time.sleep(self._ibus_event_sleep_seconds)
-                self.delete_surrounding_text(-len(token), len(token))
-            # get the context to the left of the token:
+            # Delete the token, get new context and put it into preedit again:
+            self.delete_surrounding_text(-len(token), len(token))
             self.get_context()
-            # put the token into the preedit again
             self._insert_string_at_cursor(list(token))
-            # update the candidates.
             self._update_ui()
             return True
         if key.val in (IBus.KEY_Delete, IBus.KEY_KP_Delete,
                        IBus.KEY_Right, IBus.KEY_KP_Right):
-            pattern = re.compile(
-                r'^[\s](?P<token>[\S]+)($|[\s]+.*)')
+            if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right):
+                if cursor_pos <= cursor_pos_old:
+                    # Movement to the right might be more than one
+                    # column, for example when Right is pressed and
+                    # while “hello” is in preedit and the
+                    # preedit-cursor is behind the “o”, then the old
+                    # surrounding text cursor should be before the “h”
+                    # and the new surrounding text cursor should one
+                    # after the “h” (plus 1 column if it wasn’t
+                    # already at the end of the buffer).
+                    LOGGER.debug(
+                        'Cursor has not moved right, cannot reopen preedit.')
+                    return False
+            if key.val in (IBus.KEY_Delete, IBus.KEY_KP_Delete):
+                if cursor_pos != cursor_pos_old:
+                    LOGGER.debug('Unexpected cursor movemend on Delete key, '
+                                 'cannot reopen preedit.')
+            pattern = re.compile(r'(^|.*[\s]+)$')
+            match = pattern.match(text[:cursor_pos])
+            if not match:
+                if DEBUG_LEVEL > 1:
+                    LOGGER.debug(
+                        'No whitespace or beginning of line or buffer '
+                        'to the left of cursor.')
+                return False
+            pattern = re.compile(r'^(?P<token>[\S]+)($|[\s]+.*)')
             match = pattern.match(text[cursor_pos:])
             if not match:
-                return self._return_false(key.val, key.code, key.state)
+                if DEBUG_LEVEL > 1:
+                    LOGGER.debug('Could not match token right of cursor.')
+                return False
             token = match.group('token')
-            if key.val in (IBus.KEY_Delete, IBus.KEY_KP_Delete):
-                self.delete_surrounding_text(0, len(token) + 1)
-            else:
-                self.forward_key_event(key.val, key.code, key.state)
-                # The sleep is needed because this is racy, without the
-                # sleep it works unreliably.
-                time.sleep(self._ibus_event_sleep_seconds)
-                self.delete_surrounding_text(0, len(token))
-            # get the context to the left of the token:
+            # Delete the token, get new context and put it into preedit again:
+            self.delete_surrounding_text(0, len(token))
             self.get_context()
-            # put the token into the preedit again
             self._insert_string_at_cursor(list(token))
             self._typed_string_cursor = 0
-            # update the candidates.
             self._update_ui()
             return True
-        return self._return_false(key.val, key.code, key.state)
+        return False
 
     def get_context(self) -> None:
         '''Try to get the context from the application using the “surrounding
@@ -5272,6 +5341,8 @@ class TypingBoosterEngine(IBus.Engine):
 
         result = self._process_key_event(key)
         self._prev_key = key
+        self._set_surrounding_text_event.clear()
+        self._surrounding_text_old = self.get_surrounding_text()
         return result
 
     def _process_key_event(self, key: itb_util.KeyEvent) -> bool:
@@ -5284,6 +5355,9 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         # Ignore (almost all) key release events
         if key.state & IBus.ModifierType.RELEASE_MASK:
+            if self._maybe_reopen_preedit(key):
+                if DEBUG_LEVEL > 1:
+                    LOGGER.debug('Preedit reopened successfully.')
             return self._return_false(key.val, key.code, key.state)
 
         if self.is_empty():
@@ -5304,11 +5378,6 @@ class TypingBoosterEngine(IBus.Engine):
                 # checked here because AltGr+Space is the key binding to
                 # insert a literal space into the preëdit):
                 return self._return_false(key.val, key.code, key.state)
-            if key.val in (IBus.KEY_BackSpace,
-                           IBus.KEY_Left, IBus.KEY_KP_Left,
-                           IBus.KEY_Delete, IBus.KEY_KP_Delete,
-                           IBus.KEY_Right, IBus.KEY_KP_Right):
-                return self._reopen_preedit_or_return_false(key)
             if (key.val >= 32 and not key.control
                 and not self._tab_enable
                 and key.msymbol
@@ -5626,15 +5695,6 @@ class TypingBoosterEngine(IBus.Engine):
                 # are necessary in that case.
                 for dummy_char in commit_string:
                     self._forward_key_event_left()
-                # The sleep is needed because this is racy, without the
-                # sleep it works unreliably.
-                time.sleep(self._ibus_event_sleep_seconds)
-                if self._reopen_preedit_or_return_false(key):
-                    return True
-            if key.val in (IBus.KEY_Right, IBus.KEY_KP_Right,
-                           IBus.KEY_Delete, IBus.KEY_KP_Delete):
-                if self._reopen_preedit_or_return_false(key):
-                    return True
             # Forward the key event which triggered the commit here
             # and return True instead of trying to pass that key event
             # to the application by returning False. Doing it by
@@ -5810,6 +5870,10 @@ class TypingBoosterEngine(IBus.Engine):
         Also called when certain keys are pressed:
 
             Return, KP_Enter, ISO_Enter, Up, Down, (and others?)
+
+        Even some key sequences like space + Left and space + Right
+        seem to call this.
+
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('do_reset()\n')
@@ -5949,10 +6013,10 @@ class TypingBoosterEngine(IBus.Engine):
         if DEBUG_LEVEL > 1:
             LOGGER.debug('text=“%s” cursor_pos=%s anchor_pos=%s',
                          text.get_text(), cursor_pos, anchor_pos)
-            self._set_surrounding_text_text = text.get_text()
-            self._set_surrounding_text_cursor_pos = cursor_pos
-            self._set_surrounding_text_anchor_pos = anchor_pos
-            self._set_surrounding_text_event.set()
+        self._set_surrounding_text_text = text.get_text()
+        self._set_surrounding_text_cursor_pos = cursor_pos
+        self._set_surrounding_text_anchor_pos = anchor_pos
+        self._set_surrounding_text_event.set()
 
     def on_gsettings_value_changed(self, _settings, key) -> None:
         '''
