@@ -19,6 +19,62 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.14.0" date="2021-08-12" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.14.0</url>
+      <issues>
+        <issue>
+          Translation update from Weblate (de, nl, pl, sv, tr, uk updated to 100%)
+        </issue>
+        <issue>
+          Update emoji annotations from CLDR
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/209">
+          github-issues#209: Improve code to determine the default
+          dictionaries and input methods for the current locale
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/210">
+          github-issues#210: Improve behaviour of key combinations
+          which normally select text when a preëdit is open
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/208">
+          github-issues#208: Show possible compose completions on
+          request
+        </issue>
+        <issue>
+          When setting self._input_mode to False (direct input), set
+          self._hide_input to False as well
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/204">
+          github-issues#204: Never mix context from surrounding text
+          with remembered context
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/200">
+          github-issues#200: Rename the option “Use a workaround for a bug in Qt im
+          module” to “Avoid using the forward_key_event() function”
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/199">
+          github-issues#199: Handle End, Home, KP_End, KP_Home also as
+          commit trigger keys. For normal preedits *and* for compose
+          preedits.
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/198">
+          github-issues#198: Improve typing space or Tab when the
+          cursor is not at the end of the preedit
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/196">
+          github-issues#196: Completly new implementation of reopening
+          the preedit on arrow-keys, BackSpace and Delete. Should be
+          much more reliable.
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/178">
+          github-issues#178: Special handling of Left and BackSpace
+          when a candidate is manually selected
+        </issue>
+      </issues>
+    </release>
     <release version="2.13.1" date="2021-08-02" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

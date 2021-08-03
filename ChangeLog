@@ -1,4 +1,20 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 12 Aug 2021 Released 2.14.0
+* Translation update from Weblate (de, nl, pl, sv, tr, uk updated to 100%)
+* Update emoji annotations from CLDR
+* Improve code to determine the default dictionaries and input methods for the current local
+e (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/209)
+* Improve behaviour of key combinations which normally select text when a preëdit is open (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/210)
+* Show possible compose completions on request (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/208)
+* When setting self._input_mode to False (direct input), set self._hide_input to False as well
+* Never mix context from surrounding text with remembered context (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/204)
+* Rename the option “Use a workaround for a bug in Qt im module” to “Avoid using the forward_key_event() function” (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/200)
+* Handle End, Home, KP_End, KP_Home also as commit trigger keys. For normal preedits *and* for compose preedits. (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/199)
+* Improve typing space or Tab when the cursor is not at the end of the preedit (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/198)
+* Completly new implementation of reopening the preedit on arrow-keys, BackSpace and Delete. Should be much more reliable. (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/196)
+* Special handling of Left and BackSpace when a candidate is manually selected (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/178)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 02 Aug 2021 Released 2.13.1
 * Translation update from Weblate (de, nl, pl, tr, uk updated to 100%)
 * Don’t skip reopening a preëdit when NumLock is on (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/178)
