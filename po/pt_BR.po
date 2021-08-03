@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2021-08-02 13:52+0200\n"
+"POT-Creation-Date: 2021-08-03 09:09+0200\n"
 "PO-Revision-Date: 2021-03-08 02:01+0000\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.fedoraproject.org/"
@@ -191,32 +191,32 @@ msgstr "Configuração"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferências para o ibus-typing-booster"
 
-#: engine/hunspell_table.py:4368
+#: engine/hunspell_table.py:4386
 msgid "Failed to import Google speech-to-text."
 msgstr "Falha ao importar Google speech-to-text."
 
-#: engine/hunspell_table.py:4371
+#: engine/hunspell_table.py:4389
 msgid "Failed to import pyaudio."
 msgstr "Falha ao importar pyaudio."
 
-#: engine/hunspell_table.py:4374
+#: engine/hunspell_table.py:4392
 msgid "Failed to import queue."
 msgstr "Falha ao importar a fila."
 
-#: engine/hunspell_table.py:4379
+#: engine/hunspell_table.py:4397
 msgid "No supported language for speech recognition."
 msgstr "Nenhum idioma suportado para reconhecimento de fala."
 
-#: engine/hunspell_table.py:4383
+#: engine/hunspell_table.py:4401
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Arquivo “credenciais de aplicativos do Google” “%s” não encontrado."
 
-#: engine/hunspell_table.py:4395
+#: engine/hunspell_table.py:4413
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Falha ao iniciar Google speech-to-text. Veja debug.log."
 
-#: engine/hunspell_table.py:4502
+#: engine/hunspell_table.py:4520
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Erro de Google speech-to-text. Veja debug.log."
 
@@ -308,38 +308,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4502
+#: engine/itb_util.py:4508
 msgid "Key input"
 msgstr "Entrada de teclado"
 
-#: engine/itb_util.py:4508
+#: engine/itb_util.py:4514
 msgid "Cancel"
 msgstr "Cancelar"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4515
+#: engine/itb_util.py:4521
 msgid "Please press a key (or a key combination)"
 msgstr "Por favor, pressione um tecla (ou uma combinação de teclas)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4520
+#: engine/itb_util.py:4526
 msgid "The dialog will be closed when the key is released"
 msgstr "O diálogo será fechado quando a chave é liberada"
 
-#: engine/itb_util.py:4552
+#: engine/itb_util.py:4558
 msgid "A completion input method to speedup typing."
 msgstr "Um método de autocomplemento de entrada para acelerar a digitação."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4561
+#: engine/itb_util.py:4567
 msgid "translator-credits"
 msgstr "Rafael Fontenelle <rafaelff@gnome.org>"
 
-#: engine/itb_util.py:4569
+#: engine/itb_util.py:4575
 msgid "Online documentation:"
 msgstr "Documentação online:"
 
