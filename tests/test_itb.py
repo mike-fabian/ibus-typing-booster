@@ -1539,6 +1539,53 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual('', self.engine.mock_preedit_text)
         self.assertEqual('Größe —', self.engine.mock_committed_text)
 
+    def test_backspace_left_when_candidate_manually_selected(self):
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_C, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_d, 0, 0)
+        self.assertEqual('Cassand', self.engine.mock_preedit_text)
+        self.assertEqual(7, self.engine.mock_preedit_text_cursor_pos)
+        self.assertEqual('Cassandra', self.engine._candidates[0][0])
+        # Tab should select the first candidate, i.e. “Cassandra” now:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        # When Backspace is typed, “Cassandra” is put into the preedit
+        # and then the Backspace is applied, leaving “Cassandr”:
+        self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
+        self.assertEqual('Cassandr', self.engine.mock_preedit_text)
+        self.assertEqual(8, self.engine.mock_preedit_text_cursor_pos)
+        self.assertEqual('Cassandra', self.engine._candidates[0][0])
+        # Tab should again select the first candidate, which should
+        # still be “Cassandra” now:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        # When Control+Left is typed, “Cassandra” is put into the
+        # preedit and then the Control+Left is applied, moving
+        # the cursor to the beginning of the preedit:
+        self.engine.do_process_key_event(
+            IBus.KEY_Left, 0, IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual('Cassandra', self.engine.mock_preedit_text)
+        self.assertEqual(0, self.engine.mock_preedit_text_cursor_pos)
+        self.assertEqual('Cassandra', self.engine._candidates[0][0])
+        # Tab should select again the first candidate, which should
+        # still be “Cassandra” now:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        # When Left (without Control!) is typed, “Cassandra” is put
+        # into the preedit and then the Left is applied,
+        # moving the cursor one character left from the end of the
+        # candidate which had been selected:
+        self.engine.do_process_key_event(
+            IBus.KEY_Left, 0, 0)
+        self.assertEqual('Cassandra', self.engine.mock_preedit_text)
+        self.assertEqual(8, self.engine.mock_preedit_text_cursor_pos)
+        self.assertEqual('Cassandra', self.engine._candidates[0][0])
+
     def test_start_compose_when_candidate_selected(self):
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)

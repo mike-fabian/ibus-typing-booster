@@ -5477,6 +5477,50 @@ class TypingBoosterEngine(IBus.Engine):
                         self._current_case_mode = 'orig'
                     self._update_ui()
                     return True
+            if (self.get_lookup_table().cursor_visible
+                and not self._is_candidate_auto_selected):
+                # something is manually selected in the lookup table
+                if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left,
+                               IBus.KEY_BackSpace):
+                    # Left and BackSpace are a bit special compared to
+                    # the other keys which might trigger a commit: If
+                    # these keys are pressed while something is
+                    # manually selected in the lookup table and that
+                    # selection would be committed and the key passed
+                    # through, the cursor would end up within the word
+                    # just committed. And then it would be useful to
+                    # put that word into preedit again. But that is
+                    # difficult to do and surrounding text is not
+                    # reliable so it is better to not commit it in the
+                    # first place, just replace the typed string with
+                    # the selection, move the cursor to the end, and
+                    # then handle the key:
+                    self._typed_string = list(
+                        self.get_string_from_lookup_table_cursor_pos())
+                    self._typed_string_cursor = len(self._typed_string)
+                    self._update_transliterated_strings()
+                if (key.val in (IBus.KEY_Left, IBus.KEY_KP_Left)
+                    and self._typed_string_cursor > 0):
+                    if key.control:
+                        # Move cursor to the beginning of the typed string
+                        self._typed_string_cursor = 0
+                    else:
+                        self._typed_string_cursor -= 1
+                    self._update_ui()
+                    return True
+                if (key.val in (IBus.KEY_BackSpace,)
+                    and self._typed_string_cursor > 0):
+                    self.is_lookup_table_enabled_by_tab = False
+                    self.is_lookup_table_enabled_by_min_char_complete = False
+                    if key.control:
+                        self._remove_string_before_cursor()
+                    else:
+                        self._remove_character_before_cursor()
+                    if self.is_empty():
+                        self._new_sentence = False
+                        self._current_case_mode = 'orig'
+                    self._update_ui()
+                    return True
             # This key does not only a cursor movement in the preëdit,
             # it really triggers a commit.
             if DEBUG_LEVEL > 1:
