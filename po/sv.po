@@ -2,7 +2,7 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Åke Engelbrektson <eson@svenskasprakfiler.se>, 2020.
-# Göran Uddeborg <goeran@uddeborg.se>, 2020.
+# Göran Uddeborg <goeran@uddeborg.se>, 2020, 2021.
 # Mike FABIAN <mfabian@redhat.com>, 2020.
 msgid ""
 msgstr ""
@@ -10,16 +10,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-08-03 09:09+0200\n"
-"PO-Revision-Date: 2020-10-11 17:43+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Swedish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/sv/>\n"
+"PO-Revision-Date: 2021-08-05 21:56+0000\n"
+"Last-Translator: Göran Uddeborg <goeran@uddeborg.se>\n"
+"Language-Team: Swedish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.2.2\n"
+"X-Generator: Weblate 4.7.2\n"
 
 #: engine/emoji_picker.py:200
 msgid "Emoji Picker"
@@ -541,16 +541,16 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:494
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remember input mode"
-msgstr "Ta bort en inmatningsmetod"
+msgstr "Kom ihåg inmatningsläget"
 
 #: setup/main.py:496
 msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
+"Om denna flagga aktiveras koms det senast aktiverade inmatningsläget (på/av) "
+"ihåg även om sessionen startas om."
 
 #: setup/main.py:521
 msgid ""
@@ -686,7 +686,7 @@ msgstr "Visa inga förslag när mindre än detta antal tecken har skrivits."
 #. sound is played on error
 #: setup/main.py:712
 msgid "Play sound file on error"
-msgstr ""
+msgstr "Spela en ljudfil vid fel"
 
 #: setup/main.py:714
 msgid ""
@@ -694,6 +694,8 @@ msgid ""
 "the simpleaudio module for Python3 is not installed, this option does "
 "nothing."
 msgstr ""
+"Här kan man välja huruvida en ljudfil spelas om ett fel uppstår. Om modulen "
+"simpleaudio för Python3 inte är installerad gör denna flagga ingenting."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -1073,34 +1075,28 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
 #: setup/main.py:1563
-#, fuzzy
-#| msgid "Use color for inline completion"
 msgid "Use color for compose preview"
-msgstr "Använd färg för inline-komplettering"
+msgstr "Använd färg för sammansättningsförhandsvisning"
 
 #: setup/main.py:1565
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for a suggestion shown "
-#| "inline."
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
-"Här kan du välja huruvida en anpassad färg används för ett förslag som visas "
-"inline."
+"Här kan du välja huruvida en anpassad färg används för förhandsvisningen av "
+"sammansättningen."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
 #: setup/main.py:1593
-#, fuzzy
-#| msgid "Choose color for inline completion"
 msgid "Choose color for compose preview"
-msgstr "Välj färg för slutförd infogning"
+msgstr "Välj färg för förhandsvisning av sammansättningen"
 
 #: setup/main.py:1595
 msgid "Here you can specify which color to use for the compose preview."
 msgstr ""
+"Här kan man ange vilken färg som skall användas för förhandsvisningen av "
+"sammansättningar."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
@@ -1299,7 +1295,7 @@ msgstr "En annan instans av programmet körs redan."
 
 #: setup/main.py:2770
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr "Välj en .wav-ljudfil:"
 
 #: setup/main.py:2933
 msgid "Add dictionary"
@@ -1333,7 +1329,7 @@ msgstr "Lägg till ordbok"
 #. are seperated by punctuation or white space.
 #: setup/main.py:3196
 msgid "Others, Miscellaneous, Various, Diverse"
-msgstr ""
+msgstr "Annat, Andra, Olika, Diverse, Övrigt, Övriga"
 
 #: setup/main.py:3273
 msgid "Add input method"
