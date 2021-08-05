@@ -36,6 +36,7 @@ import re
 import time
 import locale
 import logging
+import threading
 from gettext import dgettext
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
@@ -635,6 +636,13 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_dictionary_menu_dicts()
         self._update_preedit_ime_menu_dicts()
         self._init_properties()
+
+        self.connect('set-surrounding-text', self.on_set_surrounding_text)
+        self._set_surrounding_text_text: Optional[str] = None
+        self._set_surrounding_text_cursor_pos: Optional[int] = None
+        self._set_surrounding_text_anchor_pos: Optional[int] = None
+        self._set_surrounding_text_event = threading.Event()
+        self._set_surrounding_text_event.clear()
 
         LOGGER.info(
             '********** Initialized and ready for input: **********')
@@ -5912,6 +5920,39 @@ class TypingBoosterEngine(IBus.Engine):
         self.database.hunspell_obj.init_dictionaries()
         self._clear_input_and_update_ui()
     # pylint: enable=unused-argument
+
+    def on_set_surrounding_text(self,
+                                _engine: IBus.Engine,
+                                text: IBus.Text,
+                                cursor_pos: int,
+                                anchor_pos: int) -> None:
+        '''Called when the surrounding text has changed.
+
+        Useful especially in debugging for stuff like this:
+
+        self._set_surrounding_text_event.clear()
+        ... some stuff ...
+        # Now check whether at  least one set-surrounding-text signal
+        # has occured:
+        self._set_surrounding_text_event.is_set()
+
+        or:
+
+        self._set_surrounding_text_event.clear()
+        ... some stuff ...
+        # If at least one set-surrounding-text signal
+        # has already occured, continue immediately, else
+        # wait for such a signal to occur but continue after
+        # a timeout:
+        self._set_surrounding_text_event.wait(timeout=0.1)
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('text=“%s” cursor_pos=%s anchor_pos=%s',
+                         text.get_text(), cursor_pos, anchor_pos)
+            self._set_surrounding_text_text = text.get_text()
+            self._set_surrounding_text_cursor_pos = cursor_pos
+            self._set_surrounding_text_anchor_pos = anchor_pos
+            self._set_surrounding_text_event.set()
 
     def on_gsettings_value_changed(self, _settings, key) -> None:
         '''
