@@ -18,6 +18,7 @@
  Define some mock classes for the unittests.
 '''
 
+from typing import Any
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
@@ -89,6 +90,12 @@ class MockEngine:
         pass
 
     def hide_lookup_table(self):
+        pass
+
+    def get_surrounding_text(self):
+        pass
+
+    def connect(self, signal: str, callback_function: Any):
         pass
 
 class MockLookupTable:
