@@ -5501,12 +5501,21 @@ class TypingBoosterEngine(IBus.Engine):
             if (not self.get_lookup_table().cursor_visible
                 or self._is_candidate_auto_selected):
                 # Nothing is *manually* selected in the lookup table,
-                # the edit keys like Right, Left, BackSpace, and
+                # the edit keys like space, Tab, Right, Left, BackSpace, and
                 # Delete edit the preëdit (If something is selected in
                 # the lookup table, they should cause a commit,
                 # especially when inline completion is used and the
                 # first candidate is selected, editing the preëdit is
                 # confusing):
+                if (key.val in (IBus.KEY_space, IBus.KEY_Tab)
+                    and
+                    0 < self._typed_string_cursor < len(self._typed_string)):
+                    if key.val == IBus.KEY_Tab:
+                        self._insert_string_at_cursor(['\t'])
+                    else:
+                        self._insert_string_at_cursor([' '])
+                    self._update_ui()
+                    return True
                 if (key.val in (IBus.KEY_Right, IBus.KEY_KP_Right)
                     and (self._typed_string_cursor
                          < len(self._typed_string))):
@@ -5624,6 +5633,18 @@ class TypingBoosterEngine(IBus.Engine):
                 # something is selected in the lookup table, commit
                 # the selected phrase
                 commit_string = self.get_string_from_lookup_table_cursor_pos()
+            elif (key.val in (IBus.KEY_space, IBus.KEY_Tab)
+                  and self._typed_string_cursor == 0):
+                # “space” or “Tab” is typed while the cursor is at the
+                # beginning of the preedit. Commit the space or Tab.
+                # The preedit and lookup table should more one column
+                # to the right.
+                if key.val == IBus.KEY_Tab:
+                    super().commit_text(IBus.Text.new_from_string('\n'))
+                else:
+                    super().commit_text(IBus.Text.new_from_string(' '))
+                self._update_ui()
+                return True
             elif (key.val in (IBus.KEY_Return, IBus.KEY_KP_Enter)
                   and (self._typed_string_cursor
                        < len(self._typed_string))):
