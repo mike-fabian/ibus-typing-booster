@@ -660,6 +660,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._set_surrounding_text_event = threading.Event()
         self._set_surrounding_text_event.clear()
         self._surrounding_text_old: Optional[Tuple[IBus.Text, int, int]] = None
+        self._is_context_from_surrounding_text = False
 
         LOGGER.info(
             '********** Initialized and ready for input: **********')
@@ -1294,6 +1295,7 @@ class TypingBoosterEngine(IBus.Engine):
             LOGGER.debug(
                 'context=“%s” “%s” “%s” push=“%s”',
                 self._ppp_phrase, self._pp_phrase, self._p_phrase, phrase)
+        self._is_context_from_surrounding_text = False
         self._ppp_phrase = self._pp_phrase
         self._pp_phrase = self._p_phrase
         self._p_phrase = phrase
@@ -2119,10 +2121,14 @@ class TypingBoosterEngine(IBus.Engine):
             0,
             len(aux_string)))
         if DEBUG_LEVEL > 0:
-            context = (
-                'Context: ' + self.get_ppp_phrase()
-                + ' ' + self.get_pp_phrase()
-                + ' ' + self.get_p_phrase())
+            context = 'Context '
+            if self._is_context_from_surrounding_text:
+                context += '🟢 '
+            else:
+                context += '🔴 '
+            context += (self.get_ppp_phrase()
+                        + ' ' + self.get_pp_phrase()
+                        + ' ' + self.get_p_phrase())
             aux_string += context
             attrs.append(IBus.attr_foreground_new(
                 itb_util.color_string_to_argb('DeepPink'),
@@ -2869,6 +2875,7 @@ class TypingBoosterEngine(IBus.Engine):
         applications.
 
         '''
+        self._is_context_from_surrounding_text = False
         if (not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
             or self._input_purpose in [itb_util.InputPurpose.TERMINAL]):
             # If getting the surrounding text is not supported, leave
@@ -2914,6 +2921,7 @@ class TypingBoosterEngine(IBus.Engine):
             LOGGER.debug(
                 'Updated context from surrounding text=“%s” “%s” “%s”',
                 self._ppp_phrase, self._pp_phrase, self._p_phrase)
+        self._is_context_from_surrounding_text = True
 
     def set_add_space_on_commit(
             self,
