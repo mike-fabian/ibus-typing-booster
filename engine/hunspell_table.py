@@ -231,10 +231,10 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._input_mode = True
 
-        self._qt_im_module_workaround = itb_util.variant_to_value(
-            self._gsettings.get_value('qtimmoduleworkaround'))
-        if self._qt_im_module_workaround is None:
-            self._qt_im_module_workaround = False # default
+        self._avoid_forward_key_event = itb_util.variant_to_value(
+            self._gsettings.get_value('avoidforwardkeyevent'))
+        if self._avoid_forward_key_event is None:
+            self._avoid_forward_key_event = False # default
 
         self._arrow_keys_reopen_preedit = itb_util.variant_to_value(
             self._gsettings.get_value('arrowkeysreopenpreedit'))
@@ -2596,7 +2596,7 @@ class TypingBoosterEngine(IBus.Engine):
                             'surrounding_text = '
                             '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
                             text, cursor_pos, anchor_pos)
-        if self._qt_im_module_workaround:
+        if self._avoid_forward_key_event:
             super().commit_text(
                 IBus.Text.new_from_string(commit_phrase))
         else:
@@ -3058,13 +3058,13 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._auto_capitalize
 
-    def set_qt_im_module_workaround(
+    def set_avoid_forward_key_event(
             self,
             mode: Union[bool, Any],
             update_gsettings: bool = True) -> None:
-        '''Sets whether the workaround for the qt im module is used or not
+        '''Sets whether to avoid forward_key_event() or not
 
-        :param mode: Whether to use the workaround for the qt im module or not
+        :param mode: Whether to avoid forward_key_event() or not
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
@@ -3074,17 +3074,17 @@ class TypingBoosterEngine(IBus.Engine):
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._qt_im_module_workaround:
+        if mode == self._avoid_forward_key_event:
             return
-        self._qt_im_module_workaround = mode
+        self._avoid_forward_key_event = mode
         if update_gsettings:
             self._gsettings.set_value(
-                'qtimmoduleworkaround',
+                'avoidforwardkeyevent',
                 GLib.Variant.new_boolean(mode))
 
-    def toggle_qt_im_module_workaround(
+    def toggle_avoid_forward_key_event(
             self, update_gsettings: bool = True) -> None:
-        '''Toggles whether the workaround for the qt im module is used or not
+        '''Toggles whether to avoid forward_key_event() or not
 
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
@@ -3092,14 +3092,12 @@ class TypingBoosterEngine(IBus.Engine):
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        self.set_qt_im_module_workaround(
-            not self._qt_im_module_workaround, update_gsettings)
+        self.set_avoid_forward_key_event(
+            not self._avoid_forward_key_event, update_gsettings)
 
-    def get_qt_im_module_workaround(self) -> bool:
-        '''Returns the current value of the flag to enable
-        a workaround for the qt im module
-        '''
-        return self._qt_im_module_workaround
+    def get_avoid_forward_key_event(self) -> bool:
+        '''Returns whether forward_key_event() is avoided or not'''
+        return self._avoid_forward_key_event
 
     def set_arrow_keys_reopen_preedit(
             self,
@@ -5149,17 +5147,22 @@ class TypingBoosterEngine(IBus.Engine):
         MockEngine as well which then gets the key and can test its
         effects.
 
-        Unfortunately, “forward_key_event()” does not work in Qt5
-        applications because the ibus module in Qt5 does not implement
-        “forward_key_event()”. Therefore, always using
-        “forward_key_event()” instead of “return False” in
+        Unfortunately, “forward_key_event()” does not work in some environments:
+
+        - Qt4 when using the input module and not XIM
+        - older versions of Qt5
+        - older versions of Wayland
+
+        Always using “forward_key_event()” instead of “return False” in
         “do_process_key_event()” would break ibus-typing-booster
-        completely for all Qt5 applictions.
+        completely for environments where forward_key_event() is not implemented
+        or has a broken implementation.
 
         To work around this problem and make unit testing possible
-        without breaking Qt5 applications, we use this helper function
-        which uses “forward_key_event()” when unit testing and “return
-        False” during normal usage.
+        without causing problems in environments with a broken
+        forward_key_event(), we use this helper function which uses
+        “forward_key_event()” when unit testing and “return False”
+        during normal usage.
 
         '''
         if self._unit_test:
@@ -5708,11 +5711,12 @@ class TypingBoosterEngine(IBus.Engine):
                     self._forward_key_event_left()
             # Forward the key event which triggered the commit here
             # and return True instead of trying to pass that key event
-            # to the application by returning False. Doing it by
-            # returning false works correctly in GTK applications
-            # and Qt applications when using the ibus module of Qt.
-            # But not when using XIM, i.e. not when using Qt with the XIM
-            # module and not in X11 applications like xterm.
+            # to the application by returning False.
+            #
+            # Alhough doing it by returning false works correctly in
+            # most cases, it does *not* work when using XIM, i.e. *not*
+            # when using Qt with the XIM module and *not* in X11
+            # applications like xterm.
             #
             # When “return False” is used, the key event which
             # triggered the commit here arrives *before* the committed
@@ -5721,7 +5725,10 @@ class TypingBoosterEngine(IBus.Engine):
             # first and the applications receives “ word”. No amount
             # of sleep before the “return False” can fix this. See:
             # https://bugzilla.redhat.com/show_bug.cgi?id=1291238
-            if self._qt_im_module_workaround:
+            #
+            # Therefore, forward_key_event() should be preferred
+            # unless the option to avoid it is set:
+            if self._avoid_forward_key_event:
                 return self._return_false(key.val, key.code, key.state)
             self.forward_key_event(key.val, key.code, key.state)
             return True
@@ -6044,7 +6051,7 @@ class TypingBoosterEngine(IBus.Engine):
             'inputmethod': self.set_current_imes,
             'dictionary':  self.set_dictionary_names,
             'dictionaryinstalltimestamp': self._reload_dictionaries,
-            'qtimmoduleworkaround': self.set_qt_im_module_workaround,
+            'avoidforwardkeyevent': self.set_avoid_forward_key_event,
             'addspaceoncommit': self.set_add_space_on_commit,
             'inlinecompletion': self.set_inline_completion,
             'autocapitalize': self.set_auto_capitalize,

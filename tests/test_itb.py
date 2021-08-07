@@ -176,8 +176,8 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_current_imes())
         self.orig_dictionary_names = (
             self.engine.get_dictionary_names())
-        self.orig_qt_im_module_workaround = (
-            self.engine.get_qt_im_module_workaround())
+        self.orig_avoid_forward_key_event = (
+            self.engine.get_avoid_forward_key_event())
         self.orig_keybindings = (
             self.engine.get_keybindings())
 
@@ -227,8 +227,8 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_dictionary_names(
             self.orig_dictionary_names,
             update_gsettings=False)
-        self.engine.set_qt_im_module_workaround(
-            self.orig_qt_im_module_workaround,
+        self.engine.set_avoid_forward_key_event(
+            self.orig_avoid_forward_key_event,
             update_gsettings=False)
         self.engine.set_keybindings(
             self.orig_keybindings,
@@ -261,7 +261,7 @@ class ItbTestCase(unittest.TestCase):
             ['NoIME'], update_gsettings=False)
         self.engine.set_dictionary_names(
             ['en_US'], update_gsettings=False)
-        self.engine.set_qt_im_module_workaround(
+        self.engine.set_avoid_forward_key_event(
             False, update_gsettings=False)
         self.engine.set_keybindings({
             'cancel': ['Escape'],

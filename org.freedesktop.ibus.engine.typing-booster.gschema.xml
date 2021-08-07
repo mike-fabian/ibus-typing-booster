@@ -182,16 +182,13 @@
         enabled.
       </description>
     </key>
-    <key name="qtimmoduleworkaround" type="b">
+    <key name="avoidforwardkeyevent" type="b">
       <default>false</default>
-      <summary>Use a workaround for a bug in Qt im module</summary>
+      <summary>Avoid using the forward_key_event() function</summary>
       <description>
-        Use a workaround for bugs in the input method modules of Qt4
-        and Qt5. Attention, although this workaround makes it work
-        better when the Qt input modules are used, it causes problems
-        when XIM is used. I.e. the XIM module of Qt4 will not work
-        well when this workaround is enabled and input via XIM into
-        X11 programs like xterm will not work well either.
+        Use a workaround if the forward_key_event() function is broken.
+        Enable this option only if absolutely necessary, 
+        it can also cause problems, especially when XIM is used.
       </description>
     </key>
     <key name="arrowkeysreopenpreedit" type="b">

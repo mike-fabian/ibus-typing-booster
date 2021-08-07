@@ -567,35 +567,53 @@ class SetupUI(Gtk.Window):
         self._options_grid.attach(
             self._off_the_record_checkbutton, 0, _options_grid_row, 2, 1)
 
-        self._qt_im_module_workaround_checkbutton = Gtk.CheckButton(
-            # Translators: Use a workaround for bugs in the input
-            # method modules of Qt4 and Qt5. Attention, although this
-            # workaround makes it work better when the Qt input
-            # modules are used, it causes problems when XIM is
+        self._avoid_forward_key_event_checkbutton = Gtk.CheckButton(
+            # Translators: Avoid the function forward_key_event() in
+            # case it is not implemented or has a broken
+            # implementation.  This workaround was necessary for older
+            # versions of Qt5 and for Qt4 and some older versions of
+            # Wayland.  *But* it causes problems when XIM is
             # used. I.e. the XIM module of Qt4 will not work well when
             # this workaround is enabled and input via XIM into X11
-            # programs like xterm will not work well either.
-            label=_('Use a workaround for a bug in Qt im module'))
-        self._qt_im_module_workaround_checkbutton.set_tooltip_text(
-            _('Use a workaround for bugs in the input method '
-              'modules of Qt4 and Qt5. Attention, although '
-              'this workaround makes it work better when the '
-              'Qt input modules are used, it causes problems '
-              'when XIM is used. I.e. the XIM module of Qt4 '
-              'will not work well when this workaround is '
-              'enabled and input via XIM into X11 programs '
-              'like xterm will not work well either.'))
-        self._qt_im_module_workaround_checkbutton.connect(
-            'clicked', self._on_qt_im_module_workaround_checkbutton)
-        self._qt_im_module_workaround = itb_util.variant_to_value(
-            self._gsettings.get_value('qtimmoduleworkaround'))
-        if self._qt_im_module_workaround is None:
-            self._qt_im_module_workaround = False
-        if self._qt_im_module_workaround is True:
-            self._qt_im_module_workaround_checkbutton.set_active(True)
+            # programs like xterm will not work well either.  So this
+            # option should be used only when absolutely necessary.
+            #
+            # “forward_key_event()” is the name of a function in the
+            # ibus API and should probably not be translated, therefore
+            # I didn’t put it into the translatable string but used %s.
+            label=_('Avoid using the %s function') % 'forward_key_event()')
+        self._avoid_forward_key_event_checkbutton.set_tooltip_text(
+            # Translators: Avoid the function forward_key_event() in
+            # case it is not implemented or has a broken
+            # implementation.  This workaround was necessary for older
+            # versions of Qt5 and for Qt4 and some older versions of
+            # Wayland.  *But* it causes problems when XIM is
+            # used. I.e. the XIM module of Qt4 will not work well when
+            # this workaround is enabled and input via XIM into X11
+            # programs like xterm will not work well either.  So this
+            # option should be used only when absolutely necessary.
+            #
+            # “forward_key_event()” is the name of a function in the
+            # ibus API and should probably not be translated, therefore
+            # I didn’t put it into the translatable string but used %s.
+            #
+            # This is a tooltip shown when the mouse hovers over that
+            # option.
+            _('Use a workaround if the %s function is broken. '
+              'Enable this option only if absolutely necessary, '
+              'it can also cause problems, especially when XIM is used.')
+            % 'forward_key_event()')
+        self._avoid_forward_key_event_checkbutton.connect(
+            'clicked', self._on_avoid_forward_key_event_checkbutton)
+        self._avoid_forward_key_event = itb_util.variant_to_value(
+            self._gsettings.get_value('avoidforwardkeyevent'))
+        if self._avoid_forward_key_event is None:
+            self._avoid_forward_key_event = False
+        if self._avoid_forward_key_event is True:
+            self._avoid_forward_key_event_checkbutton.set_active(True)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._qt_im_module_workaround_checkbutton,
+            self._avoid_forward_key_event_checkbutton,
             0, _options_grid_row, 2, 1)
 
         self._arrow_keys_reopen_preedit_checkbutton = Gtk.CheckButton(
@@ -2296,7 +2314,7 @@ class SetupUI(Gtk.Window):
         value = itb_util.variant_to_value(self._gsettings.get_value(key))
         LOGGER.info('Settings changed: key=%s value=%s\n', key, value)
         set_functions = {
-            'qtimmoduleworkaround': self.set_qt_im_module_workaround,
+            'avoidforwardkeyevent': self.set_avoid_forward_key_event,
             'addspaceoncommit': self.set_add_space_on_commit,
             'arrowkeysreopenpreedit': self.set_arrow_keys_reopen_preedit,
             'emojipredictions': self.set_emoji_prediction_mode,
@@ -2653,14 +2671,12 @@ class SetupUI(Gtk.Window):
         self.set_off_the_record_mode(
             widget.get_active(), update_gsettings=True)
 
-    def _on_qt_im_module_workaround_checkbutton(
+    def _on_avoid_forward_key_event_checkbutton(
             self, widget: Gtk.CheckButton) -> None:
         '''
-        The checkbutton whether to use the workaround for the broken
-        implementation of forward_key_event() in the Qt 4/5 input
-        module, has been clicked.
+        The checkbutton whether to avoid forward_key_event() has been clicked.
         '''
-        self.set_qt_im_module_workaround(
+        self.set_avoid_forward_key_event(
             widget.get_active(), update_gsettings=True)
 
     def _on_arrow_keys_reopen_preedit_checkbutton(
@@ -3924,13 +3940,13 @@ class SetupUI(Gtk.Window):
             self.tabsqlitedb.remove_all_phrases()
         self._delete_learned_data_button.set_sensitive(True)
 
-    def set_qt_im_module_workaround(
+    def set_avoid_forward_key_event(
             self,
             mode: Union[bool, Any],
             update_gsettings: bool = True) -> None:
-        '''Sets whether the workaround for the qt im module is used or not
+        '''Sets whether to avoid forward_key_event() or not
 
-        :param mode: Whether to use the workaround for the qt im module or not
+        :param mode: Whether to avoid forward_key_event() or not
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
@@ -3939,15 +3955,15 @@ class SetupUI(Gtk.Window):
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._qt_im_module_workaround:
+        if mode == self._avoid_forward_key_event:
             return
-        self._qt_im_module_workaround = mode
+        self._avoid_forward_key_event = mode
         if update_gsettings:
             self._gsettings.set_value(
-                'qtimmoduleworkaround',
+                'avoidforwardkeyevent',
                 GLib.Variant.new_boolean(mode))
         else:
-            self._qt_im_module_workaround_checkbutton.set_active(mode)
+            self._avoid_forward_key_event_checkbutton.set_active(mode)
 
     def set_arrow_keys_reopen_preedit(
             self,
