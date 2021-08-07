@@ -14,10 +14,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-08-07 18:47+0200\n"
-"PO-Revision-Date: 2021-08-07 16:46+0000\n"
+"PO-Revision-Date: 2021-08-07 18:23+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -625,18 +625,14 @@ msgstr "Vermeide die %s Funktion zu benutzen"
 #. ibus API and should probably not be translated, therefore
 #. I didn’t put it into the translatable string but used %s.
 #: setup/main.py:599
-#, fuzzy, python-format
-#| msgid ""
-#| "Use a workaround if the %s function is broken. Enable this option only if "
-#| "absolutely necessary, it can also cause problems, especially whe XIM is "
-#| "used."
+#, python-format
 msgid ""
 "Use a workaround if the %s function is broken. Enable this option only if "
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
 "Benutze eine Notlösung wenn die Funktion %s kaputt ist. Diese Option sollte "
-"nur eingeschaltet werden, wenn es unbeding notwendig ist, es kann auch "
+"nur eingeschaltet werden, wenn es unbedingt notwendig ist, es kann auch "
 "Probleme verursachen, besonders wenn XIM benutzt wird."
 
 #. Translators: Whether it is allowed to reopen a preedit
