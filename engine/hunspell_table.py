@@ -2895,8 +2895,8 @@ class TypingBoosterEngine(IBus.Engine):
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'Getting context: surrounding_text = '
-                '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
-                repr(text), cursor_pos, anchor_pos)
+                '[text = “%s”, cursor_pos = %s, anchor_pos = %s]',
+                text, cursor_pos, anchor_pos)
         if not self._commit_happened_after_focus_in:
             # Before the first commit or cursor movement, the
             # surrounding text is probably from the previously
@@ -2911,6 +2911,9 @@ class TypingBoosterEngine(IBus.Engine):
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'Found from surrounding text: tokens=%s', repr(tokens))
+        self._p_phrase = ''
+        self._pp_phrase = ''
+        self._ppp_phrase = ''
         if tokens:
             self._p_phrase = tokens[-1]
         if len(tokens) > 1:
@@ -5907,8 +5910,18 @@ class TypingBoosterEngine(IBus.Engine):
                 IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter):
             # The “Return” and “KP_Enter” keys trigger a call to
             # do_reset().  But I don’t want to clear the context, in
-            # that case, Usually this just means that one continues to
+            # that case. Usually this just means that one continues to
             # write in the next line and the context is still valid.
+            # This helps if the context is only remembered and not
+            # from surrounding text.
+            #
+            # However, if surrounding text is used to get the context,
+            # this usually does not help because at least in Gtk
+            # surrounding text seems to fetch only the current line.
+            # That means that after typing Return in a Gtk application
+            # (like Gedit for example), the context determined from
+            # surrounding text is empty because the surrounding text
+            # contains nothing from the previous line.
             return
         # The preëdit, if there was any, has already been committed
         # automatically because
