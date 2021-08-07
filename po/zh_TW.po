@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2021-08-07 18:15+0200\n"
+"POT-Creation-Date: 2021-08-07 18:47+0200\n"
 "PO-Revision-Date: 2020-08-30 15:29+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Traditional) <https://translate.fedoraproject.org/"
@@ -577,7 +577,8 @@ msgstr ""
 #, python-format
 msgid ""
 "Use a workaround if the %s function is broken. Enable this option only if "
-"absolutely necessary, it can also cause problems, especially whe XIM is used."
+"absolutely necessary, it can also cause problems, especially when XIM is "
+"used."
 msgstr ""
 
 #. Translators: Whether it is allowed to reopen a preedit
