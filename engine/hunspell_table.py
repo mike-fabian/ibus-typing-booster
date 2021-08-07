@@ -637,6 +637,22 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_preedit_ime_menu_dicts()
         self._init_properties()
 
+        self._commit_trigger_keys = (IBus.KEY_space, IBus.KEY_Tab,
+                                     IBus.KEY_Return, IBus.KEY_KP_Enter,
+                                     IBus.KEY_Right, IBus.KEY_KP_Right,
+                                     IBus.KEY_Delete, IBus.KEY_KP_Delete,
+                                     IBus.KEY_Left, IBus.KEY_KP_Left,
+                                     IBus.KEY_BackSpace,
+                                     IBus.KEY_End, IBus.KEY_KP_End,
+                                     IBus.KEY_Home, IBus.KEY_KP_Home,
+                                     IBus.KEY_Down, IBus.KEY_KP_Down,
+                                     IBus.KEY_Up, IBus.KEY_KP_Up,
+                                     IBus.KEY_Page_Down,
+                                     IBus.KEY_KP_Page_Down,
+                                     IBus.KEY_KP_Next,
+                                     IBus.KEY_Page_Up,
+                                     IBus.KEY_KP_Page_Up,
+                                     IBus.KEY_KP_Prior)
         self.connect('set-surrounding-text', self.on_set_surrounding_text)
         self._set_surrounding_text_text: Optional[str] = None
         self._set_surrounding_text_cursor_pos: Optional[int] = None
@@ -5255,22 +5271,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._typed_compose_sequence.pop()
             self._update_transliterated_strings()
             self._update_preedit()
-            if (key.val in (IBus.KEY_space, IBus.KEY_Tab,
-                            IBus.KEY_Return, IBus.KEY_KP_Enter,
-                            IBus.KEY_Right, IBus.KEY_KP_Right,
-                            IBus.KEY_Delete, IBus.KEY_KP_Delete,
-                            IBus.KEY_Left, IBus.KEY_KP_Left,
-                            IBus.KEY_BackSpace,
-                            IBus.KEY_End, IBus.KEY_KP_End,
-                            IBus.KEY_Home, IBus.KEY_KP_Home,
-                            IBus.KEY_Down, IBus.KEY_KP_Down,
-                            IBus.KEY_Up, IBus.KEY_KP_Up,
-                            IBus.KEY_Page_Down,
-                            IBus.KEY_KP_Page_Down,
-                            IBus.KEY_KP_Next,
-                            IBus.KEY_Page_Up,
-                            IBus.KEY_KP_Page_Up,
-                            IBus.KEY_KP_Prior)):
+            if key.val in self._commit_trigger_keys:
                 # The key which made the compose sequence invalid
                 # might usually (i.e. outside of compose sequences)
                 # trigger a commit in ibus-typing-booster.
@@ -5433,22 +5434,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         # These keys may trigger a commit:
         if (key.msymbol not in ('G- ',)
-            and (key.val in (IBus.KEY_space, IBus.KEY_Tab,
-                             IBus.KEY_Return, IBus.KEY_KP_Enter,
-                             IBus.KEY_Right, IBus.KEY_KP_Right,
-                             IBus.KEY_Delete, IBus.KEY_KP_Delete,
-                             IBus.KEY_Left, IBus.KEY_KP_Left,
-                             IBus.KEY_BackSpace,
-                             IBus.KEY_End, IBus.KEY_KP_End,
-                             IBus.KEY_Home, IBus.KEY_KP_Home,
-                             IBus.KEY_Down, IBus.KEY_KP_Down,
-                             IBus.KEY_Up, IBus.KEY_KP_Up,
-                             IBus.KEY_Page_Down,
-                             IBus.KEY_KP_Page_Down,
-                             IBus.KEY_KP_Next,
-                             IBus.KEY_Page_Up,
-                             IBus.KEY_KP_Page_Up,
-                             IBus.KEY_KP_Prior)
+            and (key.val in self._commit_trigger_keys
                  or (len(key.msymbol) == 1
                      and (key.control
                           or key.mod1 # mod1: Usually Alt
