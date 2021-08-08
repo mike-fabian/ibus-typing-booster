@@ -3164,6 +3164,8 @@ class TypingBoosterEngine(IBus.Engine):
         if mode == self._input_mode:
             return
         self._input_mode = mode
+        if not self._input_mode:
+            self._hide_input = False
         if self._prop_dict and self.input_mode_menu:
             self._init_or_update_property_menu(
                 self.input_mode_menu, mode)
