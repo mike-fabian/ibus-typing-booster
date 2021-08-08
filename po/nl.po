@@ -9,10 +9,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-08-07 18:47+0200\n"
-"PO-Revision-Date: 2021-08-02 12:20+0000\n"
+"PO-Revision-Date: 2021-08-08 16:16+0000\n"
 "Last-Translator: Geert Warrink <geert.warrink@onsnet.nu>\n"
-"Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/nl/>\n"
+"Language-Team: Dutch <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -596,7 +596,7 @@ msgstr ""
 #: setup/main.py:584
 #, python-format
 msgid "Avoid using the %s function"
-msgstr ""
+msgstr "Vermijd het gebruik van de %s functie"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -618,6 +618,9 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
+"Gebruik een tijdelijke oplossing als de functie %s niet werkt. Schakel deze "
+"optie alleen in als dit absoluut noodzakelijk is, het kan ook problemen "
+"veroorzaken, vooral wanneer XIM wordt gebruikt."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it
