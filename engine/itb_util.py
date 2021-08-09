@@ -298,6 +298,8 @@ LOCALE_DEFAULTS = {
               'dictionaries': ['ko_KR', 'en_GB']},
     'kok_IN' : {'inputmethods': ['kok-inscript2', 'NoIME'],
                 'dictionaries': ['en_GB']},
+    'ks_IN': {'inputmethods': ['ks-inscript2-deva', 'NoIME'],
+              'dictionaries': ['en_GB']},
     'ku_SY': {'inputmethods': ['NoIME'], 'dictionaries': ['ku_SY']},
     'ku_TR': {'inputmethods': ['NoIME'], 'dictionaries': ['ku_TR']},
     'ky_KG': {'inputmethods': ['NoIME'], 'dictionaries': ['ky_KG']},
