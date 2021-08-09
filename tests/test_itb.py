@@ -1467,6 +1467,121 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_S, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'ẞ')
 
+    def test_compose_completions(self):
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
+        self.assertEqual('·', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        self.engine.do_process_key_event(IBus.KEY_minus, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_minus, 0, 0)
+        self.assertEqual('--', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        self.engine.do_process_key_event(IBus.KEY_x, 0, 0)
+        # Beep! No other change.
+        self.assertEqual('--', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        self.assertEqual(0, len(self.engine._candidates))
+        # Request completions:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(3, len(self.engine._candidates))
+        self.engine.do_process_key_event(IBus.KEY_x, 0, 0)
+        # Beep! Completion lookup cancelled:
+        self.assertEqual(0, len(self.engine._candidates))
+        # Request completion:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(3, len(self.engine._candidates))
+        self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
+        # Completion lookup cancelled (no Beep):
+        self.assertEqual(0, len(self.engine._candidates))
+        # Request completion:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(3, len(self.engine._candidates))
+        candidates = []
+        for candidate in self.engine._candidates:
+            candidates.append(candidate[0])
+        self.assertEqual(['­', '—', '–'], candidates)
+        # Commit to preedit:
+        self.engine.do_process_key_event(IBus.KEY_3, 0, 0)
+        self.assertEqual('–', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        self.assertEqual(0, len(self.engine._candidates))
+        # Really commit:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual('', self.engine.mock_preedit_text)
+        self.assertEqual('– ', self.engine.mock_committed_text)
+        self.assertEqual(0, len(self.engine._candidates))
+        # Start new compose sequence
+        self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
+        self.assertEqual('·', self.engine.mock_preedit_text)
+        self.assertEqual('– ', self.engine.mock_committed_text)
+        self.engine.do_process_key_event(IBus.KEY_minus, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_minus, 0, 0)
+        self.assertEqual('--', self.engine.mock_preedit_text)
+        self.assertEqual('– ', self.engine.mock_committed_text)
+        self.assertEqual(0, len(self.engine._candidates))
+        # Request completion:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(3, len(self.engine._candidates))
+        candidates = []
+        for candidate in self.engine._candidates:
+            candidates.append(candidate[0])
+        self.assertEqual(['­', '—', '–'], candidates)
+        # Select first candidate:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        # Cancel selection:
+        self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
+        # Lookup table still there:
+        self.assertEqual(3, len(self.engine._candidates))
+        # Cancel lookup:
+        self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
+        # Lookup table gone:
+        self.assertEqual(0, len(self.engine._candidates))
+        # Request completion:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(3, len(self.engine._candidates))
+        candidates = []
+        for candidate in self.engine._candidates:
+            candidates.append(candidate[0])
+        self.assertEqual(['­', '—', '–'], candidates)
+        # Select second candidate:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_x, 0, 0)
+        # As a candidate is selected, x commits to preedit and
+        # appends:
+        self.assertEqual('—x', self.engine.mock_preedit_text)
+        self.assertEqual('– ', self.engine.mock_committed_text)
+        # There are probably some candidates now, '—x' might show
+        # completions.
+        # Commit with space now:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual('', self.engine.mock_preedit_text)
+        self.assertEqual('– —x ', self.engine.mock_committed_text)
+        self.assertEqual(0, len(self.engine._candidates))
+        # Start new compose sequence
+        self.engine.do_process_key_event(IBus.KEY_dead_grave, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_dead_circumflex, 0, 0)
+        self.assertEqual('`^', self.engine.mock_preedit_text)
+        self.assertEqual('– —x ', self.engine.mock_committed_text)
+        # Request completion:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertTrue(0 < len(self.engine._candidates))
+        candidates = []
+        for candidate in self.engine._candidates:
+            candidates.append(candidate[0])
+        self.assertTrue('ầ' in candidates)
+        # Finish the sequence:
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual('ầ', self.engine.mock_preedit_text)
+        self.assertEqual('– —x ', self.engine.mock_committed_text)
+        # Commit with space now:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual('', self.engine.mock_preedit_text)
+        self.assertEqual('– —x ầ ', self.engine.mock_committed_text)
+
     def test_compose_do_not_throw_away_invalid_sequences(self):
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)
