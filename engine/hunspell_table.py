@@ -638,22 +638,20 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_preedit_ime_menu_dicts()
         self._init_properties()
 
-        self._commit_trigger_keys = (IBus.KEY_space, IBus.KEY_Tab,
-                                     IBus.KEY_Return, IBus.KEY_KP_Enter,
-                                     IBus.KEY_Right, IBus.KEY_KP_Right,
-                                     IBus.KEY_Delete, IBus.KEY_KP_Delete,
-                                     IBus.KEY_Left, IBus.KEY_KP_Left,
-                                     IBus.KEY_BackSpace,
-                                     IBus.KEY_End, IBus.KEY_KP_End,
-                                     IBus.KEY_Home, IBus.KEY_KP_Home,
-                                     IBus.KEY_Down, IBus.KEY_KP_Down,
-                                     IBus.KEY_Up, IBus.KEY_KP_Up,
-                                     IBus.KEY_Page_Down,
-                                     IBus.KEY_KP_Page_Down,
-                                     IBus.KEY_KP_Next,
-                                     IBus.KEY_Page_Up,
-                                     IBus.KEY_KP_Page_Up,
-                                     IBus.KEY_KP_Prior)
+        self._keys_which_select_with_shift = (
+            IBus.KEY_Right, IBus.KEY_KP_Right,
+            IBus.KEY_Left, IBus.KEY_KP_Left,
+            IBus.KEY_End, IBus.KEY_KP_End,
+            IBus.KEY_Home, IBus.KEY_KP_Home,
+            IBus.KEY_Down, IBus.KEY_KP_Down,
+            IBus.KEY_Up, IBus.KEY_KP_Up,
+            IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down, IBus.KEY_KP_Next,
+            IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up, IBus.KEY_KP_Prior)
+        self._commit_trigger_keys = self._keys_which_select_with_shift + (
+            IBus.KEY_space, IBus.KEY_Tab,
+            IBus.KEY_Return, IBus.KEY_KP_Enter,
+            IBus.KEY_Delete, IBus.KEY_KP_Delete,
+            IBus.KEY_BackSpace)
         self.connect('set-surrounding-text', self.on_set_surrounding_text)
         self._set_surrounding_text_text: Optional[str] = None
         self._set_surrounding_text_cursor_pos: Optional[int] = None
@@ -5656,15 +5654,17 @@ class TypingBoosterEngine(IBus.Engine):
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/107
             if self.is_empty():
                 return self._return_false(key.val, key.code, key.state)
-            if (not self.get_lookup_table().cursor_visible
-                or self._is_candidate_auto_selected):
+            if (not key.shift and (not self.get_lookup_table().cursor_visible
+                                   or self._is_candidate_auto_selected)):
                 # Nothing is *manually* selected in the lookup table,
                 # the edit keys like space, Tab, Right, Left, BackSpace, and
                 # Delete edit the preëdit (If something is selected in
                 # the lookup table, they should cause a commit,
                 # especially when inline completion is used and the
                 # first candidate is selected, editing the preëdit is
-                # confusing):
+                # confusing). But only do this if Shift is not used!
+                # With Shift many of these keys should commit instead
+                # and select some text.
                 if (key.val in (IBus.KEY_space, IBus.KEY_Tab)
                     and
                     0 < self._typed_string_cursor < len(self._typed_string)):
@@ -5721,9 +5721,11 @@ class TypingBoosterEngine(IBus.Engine):
                         self._current_case_mode = 'orig'
                     self._update_ui()
                     return True
-            if (self.get_lookup_table().cursor_visible
-                and not self._is_candidate_auto_selected):
+            if (not key.shift and (self.get_lookup_table().cursor_visible
+                                   and not self._is_candidate_auto_selected)):
                 # something is manually selected in the lookup table
+                # and Shift is not used (When Shift is used, continue
+                # to trigger a commit):
                 if key.val in (IBus.KEY_Left, IBus.KEY_KP_Left,
                                IBus.KEY_BackSpace):
                     # Left and BackSpace are a bit special compared to
@@ -5745,6 +5747,8 @@ class TypingBoosterEngine(IBus.Engine):
                     self._update_transliterated_strings()
                 if (key.val in (IBus.KEY_Left, IBus.KEY_KP_Left)
                     and self._typed_string_cursor > 0):
+                    self.is_lookup_table_enabled_by_tab = False
+                    self.is_lookup_table_enabled_by_min_char_complete = False
                     if key.control:
                         # Move cursor to the beginning of the typed string
                         self._typed_string_cursor = 0
@@ -5794,9 +5798,10 @@ class TypingBoosterEngine(IBus.Engine):
             elif (key.val in (IBus.KEY_space, IBus.KEY_Tab)
                   and self._typed_string_cursor == 0):
                 # “space” or “Tab” is typed while the cursor is at the
-                # beginning of the preedit. Commit the space or Tab.
-                # The preedit and lookup table should more one column
-                # to the right.
+                # beginning of the preedit *and* nothing is selected
+                # in the lookup table. Commit the space or Tab.  The
+                # preedit and lookup table should move one column to
+                # the right.
                 if key.val == IBus.KEY_Tab:
                     super().commit_text(IBus.Text.new_from_string('\n'))
                 else:
@@ -5848,32 +5853,38 @@ class TypingBoosterEngine(IBus.Engine):
                 if DEBUG_LEVEL > 0:
                     LOGGER.error('commit string unexpectedly empty.')
                 return self._return_false(key.val, key.code, key.state)
-            forward_arrow_left_events_ok = False
-            if not self.get_lookup_table().cursor_visible:
-                forward_arrow_left_events_ok = True
+            # Remember whether a candidate is selected and where the
+            # caret is now because after self._commit_string() this
+            # information is gone:
+            candidate_was_selected = False
+            if self.get_lookup_table().cursor_visible:
+                candidate_was_selected = True
+            caret_was = self.get_caret()
             self._commit_string(commit_string, input_phrase=input_phrase)
-            if (key.val
-                in (IBus.KEY_Left, IBus.KEY_KP_Left, IBus.KEY_BackSpace)
-                and forward_arrow_left_events_ok):
-                # After committing, the cursor is at the right
-                # side of the committed string. When the string
-                # has been committed because arrow-left or
-                # control-arrow-left or backspace reached the left
-                # side of the preëdit, the cursor has to be moved
-                # to the left side of the string. This should be
-                # done in a way which works even when surrounding
-                # text is not supported. We can do it by
-                # forwarding as many arrow-left events to the
-                # application as the committed string has
-                # characters.
-                #
-                # Note that when a candidate is selected, the cursor
-                # is the selected candidated is committed and the then
-                # it is correct that the cursor is at the right side
-                # of the committed candidate, so no left key events
-                # are necessary in that case.
-                for dummy_char in commit_string:
-                    self._forward_key_event_left()
+            if not candidate_was_selected:
+                # cursor needs to be corrected leftwards:
+                if key.shift and key.val in self._keys_which_select_with_shift:
+                    for dummy_char in commit_string[caret_was:]:
+                        self._forward_key_event_left()
+                elif (key.val in (IBus.KEY_Left, IBus.KEY_KP_Left,
+                                IBus.KEY_BackSpace)):
+                    # After committing, the cursor is at the right
+                    # side of the committed string. When the string
+                    # has been committed because arrow-left or
+                    # control-arrow-left or backspace reached the left
+                    # side of the preëdit, the cursor has to be moved
+                    # to the left side of the string. We can do it by
+                    # forwarding as many arrow-left events to the
+                    # application as the committed string has
+                    # characters.
+                    #
+                    # Note that when a candidate is selected, the cursor
+                    # is the selected candidated is committed and the then
+                    # it is correct that the cursor is at the right side
+                    # of the committed candidate, so no left key events
+                    # are necessary in that case.
+                    for dummy_char in commit_string:
+                        self._forward_key_event_left()
             # Forward the key event which triggered the commit here
             # and return True instead of trying to pass that key event
             # to the application by returning False.
