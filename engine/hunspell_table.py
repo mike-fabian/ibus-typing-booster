@@ -48,6 +48,7 @@ from gi.repository import GLib
 from m17n_translit import Transliterator
 import itb_util
 import itb_emoji
+import itb_version
 
 IMPORT_SIMPLEAUDIO_SUCCESSFUL = False
 try:
@@ -662,7 +663,8 @@ class TypingBoosterEngine(IBus.Engine):
         self._is_context_from_surrounding_text = False
 
         LOGGER.info(
-            '********** Initialized and ready for input: **********')
+            '*** ibus-typing-booster %s initialized, ready for input: ***',
+            itb_version.get_version())
         self._clear_input_and_update_ui()
 
     def _get_new_lookup_table(self) -> IBus.LookupTable:

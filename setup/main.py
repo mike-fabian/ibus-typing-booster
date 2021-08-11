@@ -92,6 +92,7 @@ from m17n_translit import Transliterator # type: ignore
 import tabsqlitedb
 import itb_util
 import itb_emoji
+import itb_version
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -5351,7 +5352,8 @@ if __name__ == '__main__':
         log_handler_time_rotate.setFormatter(log_formatter)
         LOGGER.setLevel(logging.DEBUG)
         LOGGER.addHandler(log_handler_time_rotate)
-        LOGGER.info('********** STARTING **********')
+        LOGGER.info('*** ibus-typing-booster %s setup starting ***',
+                    itb_version.get_version())
 
     # Workaround for
     # https://bugzilla.gnome.org/show_bug.cgi?id=622084
