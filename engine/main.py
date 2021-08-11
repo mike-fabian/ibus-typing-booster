@@ -33,7 +33,7 @@ from gi.repository import IBus # type: ignore
 require_version('GLib', '2.0')
 from gi.repository import GLib
 
-import version
+import itb_version
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -49,7 +49,7 @@ try:
         'icons')
 except:
     ICON_DIR = os.path.join(
-        version.get_prefix(), 'share/ibus-typing-booster/icons')
+        itb_version.get_prefix(), 'share/ibus-typing-booster/icons')
 
 try:
     SETUP_TOOL = os.path.join(
@@ -57,7 +57,7 @@ try:
         'ibus-setup-typing-booster')
 except:
     SETUP_TOOL = os.path.join(
-        version.get_prefix(),
+        itb_version.get_prefix(),
         'libexec/ibus-setup-typing-booster')
 
 def parse_args() -> Any:
@@ -143,7 +143,7 @@ class IMApp:
             self.__component = IBus.Component(
                 name="org.freedesktop.IBus.IbusTypingBooster",
                 description="Typing Booster Component",
-                version=version.get_version(),
+                version=itb_version.get_version(),
                 license="GPL",
                 author=("Mike FABIAN <mfabian@redhat.com>, "
                         + "Anish Patil <anish.developer@gmail.com>"),

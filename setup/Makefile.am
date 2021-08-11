@@ -37,7 +37,7 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 setup_typing_booster_PYTHON = \
 	i18n.py \
 	main.py \
-	version.py \
+	itb_version.py \
 	pkginstall.py \
 	test_input_purpose.py \
 	$(NULL)
@@ -63,7 +63,7 @@ CLEANFILES = \
 	$(NULL)
 
 EXTRA_DIST = \
-	version.py.in \
+	itb_version.py.in \
 	$(setup_typing_booster_built_in_files) \
 	$(desktop_in_in_files) \
 	$(NULL)

@@ -4,5 +4,5 @@ emoji-picker.desktop
 ibus-engine-typing-booster
 typing-booster.xml
 typing-booster.xml.in
-version.py
+itb_version.py
 .mypy_cache/

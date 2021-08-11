@@ -46,7 +46,7 @@ engine_table_PYTHON = \
 	itb_pango.py \
 	m17n_translit.py \
 	emoji_picker.py \
-	version.py \
+	itb_version.py \
 	$(NULL)
 engine_table_DATA = \
 	$(NULL)
@@ -60,7 +60,7 @@ engine_DATA = typing-booster.xml
 enginedir = $(datadir)/ibus/component
 
 EXTRA_DIST = \
-	version.py.in \
+	itb_version.py.in \
 	ibus-engine-typing-booster.in \
 	typing-booster.xml.in \
 	emoji-picker.in \

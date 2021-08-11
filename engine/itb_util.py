@@ -49,7 +49,7 @@ from gi.repository import Gdk
 require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
-import version
+import itb_version
 
 IMPORT_DISTRO_SUCCESSFUL = False
 try:
@@ -4860,10 +4860,10 @@ class ItbAboutDialog(Gtk.AboutDialog):
         # have nice icons for ibus-typing-booster.
         self.set_logo_icon_name('')
         self.set_title(
-            '🚀 ibus-typing-booster %s' %version.get_version())
+            '🚀 ibus-typing-booster %s' % itb_version.get_version())
         self.set_program_name(
             '🚀 ibus-typing-booster')
-        self.set_version(version.get_version())
+        self.set_version(itb_version.get_version())
         self.set_comments(
             _('A completion input method to speedup typing.'))
         self.set_copyright(

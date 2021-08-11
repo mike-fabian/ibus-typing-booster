@@ -58,7 +58,7 @@ require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from gi.repository import GObject
 import itb_emoji
-import version
+import itb_version
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -2273,7 +2273,7 @@ if __name__ == '__main__':
     gettext.bindtextdomain(DOMAINNAME, LOCALEDIR)
 
     if _ARGS.version:
-        print(version.get_version())
+        print(itb_version.get_version())
         sys.exit(0)
 
     EMOJI_PICKER_UI = EmojiPickerUI(
