@@ -1467,6 +1467,37 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_S, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'ẞ')
 
+    def test_keys_which_select_with_shift(self):
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_g, 0, 0)
+        self.assertFalse(self.engine.get_lookup_table().cursor_visible)
+        self.assertEqual('testing', self.engine.mock_preedit_text)
+        self.assertEqual(7, self.engine.mock_preedit_text_cursor_pos)
+        self.assertEqual('', self.engine.mock_committed_text)
+        self.assertEqual(0, self.engine.mock_committed_text_cursor_pos)
+        self.engine.do_process_key_event(IBus.KEY_Left, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_Left, 0, 0)
+        self.assertFalse(self.engine.get_lookup_table().cursor_visible)
+        self.assertEqual('testing', self.engine.mock_preedit_text)
+        self.assertEqual(5, self.engine.mock_preedit_text_cursor_pos)
+        self.assertEqual('', self.engine.mock_committed_text)
+        self.assertEqual(0, self.engine.mock_committed_text_cursor_pos)
+        self.engine.do_process_key_event(IBus.KEY_Left, 0, IBus.ModifierType.SHIFT_MASK)
+        self.assertFalse(self.engine.get_lookup_table().cursor_visible)
+        self.assertEqual('', self.engine.mock_preedit_text)
+        self.assertEqual(0, self.engine.mock_preedit_text_cursor_pos)
+        self.assertEqual('testing', self.engine.mock_committed_text)
+        self.assertEqual(4, self.engine.mock_committed_text_cursor_pos)
+
     def test_compose_completions(self):
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)
