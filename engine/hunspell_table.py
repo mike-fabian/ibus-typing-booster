@@ -34,7 +34,6 @@ import os
 import unicodedata
 import re
 import time
-import locale
 import logging
 import threading
 from gettext import dgettext
@@ -410,7 +409,7 @@ class TypingBoosterEngine(IBus.Engine):
             # dictionaries for the current effective value of
             # LC_CTYPE and save it to Gsettings:
             self._dictionary_names = itb_util.get_default_dictionaries(
-                locale.getlocale(category=locale.LC_CTYPE)[0])
+                itb_util.get_effective_lc_ctype())
             self._gsettings.set_value(
                 'dictionary',
                 GLib.Variant.new_string(','.join(self._dictionary_names)))
@@ -454,7 +453,7 @@ class TypingBoosterEngine(IBus.Engine):
             # of input methods for the current effective value of LC_CTYPE
             # and save it to Gsettings:
             self._current_imes = itb_util.get_default_input_methods(
-                locale.getlocale(category=locale.LC_CTYPE)[0])
+                itb_util.get_effective_lc_ctype())
             self._gsettings.set_value(
                 'inputmethod',
                 GLib.Variant.new_string(','.join(self._current_imes)))

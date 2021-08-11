@@ -32,6 +32,7 @@ from enum import Enum, Flag
 import sys
 import os
 import re
+import collections
 import unicodedata
 import locale
 import logging
@@ -136,10 +137,11 @@ LOCALE_DEFAULTS = {
     # time. In that case, no previous settings can be found from dconf
     # and a reasonable default should be used depending on the current
     # locale.
+    'af': {'inputmethods': ['NoIME'], 'dictionaries': ['af_ZA']},
     'af_NA': {'inputmethods': ['NoIME'], 'dictionaries': ['af_NA']},
-    'af_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['af_ZA']},
-    'ak_GH': {'inputmethods': ['NoIME'], 'dictionaries': ['ak_GH']},
-    'am_ET': {'inputmethods': ['am-sera'], 'dictionaries': ['am_ET']},
+    'ak': {'inputmethods': ['NoIME'], 'dictionaries': ['ak_GH']},
+    'am': {'inputmethods': ['am-sera'], 'dictionaries': ['am_ET']},
+    'ar': {'inputmethods': ['NoIME'], 'dictionaries': ['ar_SA']},
     'ar_AE': {'inputmethods': ['NoIME'], 'dictionaries': ['ar_AE']},
     'ar_BH': {'inputmethods': ['NoIME'], 'dictionaries': ['ar_BH']},
     'ar_DJ': {'inputmethods': ['NoIME'], 'dictionaries': ['ar_DJ']},
@@ -170,40 +172,42 @@ LOCALE_DEFAULTS = {
     # as the default. Parag Nemade says the as translator for Fedora a long
     # time back used as-phonetic. We have no later data from the
     # community.
-    'as_IN': {'inputmethods': ['as-inscript2', 'NoIME'],
-              'dictionaries': ['as_IN', 'en_GB']},
-    'ast_ES': {'inputmethods': ['NoIME'], 'dictionaries': ['ast_ES']},
-    'az_AZ': {'inputmethods': ['NoIME'], 'dictionaries': ['az_AZ']},
-    'be_BY': {'inputmethods': ['NoIME'], 'dictionaries': ['be_BY']},
-    'ber_MA': {'inputmethods': ['NoIME'], 'dictionaries': ['ber_MA']},
-    'bg_BG': {'inputmethods': ['NoIME'], 'dictionaries': ['bg_BG']},
-    'bn_IN': {'inputmethods': ['bn-inscript2', 'NoIME'],
-              'dictionaries': ['bn_IN', 'en_GB']},
-    'br_FR': {'inputmethods': ['NoIME'], 'dictionaries': ['br_FR']},
-    'brx_IN': {'inputmethods': ['brx-inscript2', 'NoIME'],
-               'dictionaries': ['en_GB']},
-    'bs_BA': {'inputmethods': ['NoIME'], 'dictionaries': ['bs_BA']},
+    'as': {'inputmethods': ['as-inscript2', 'NoIME'],
+           'dictionaries': ['as_IN', 'en_GB']},
+    'ast': {'inputmethods': ['NoIME'], 'dictionaries': ['ast_ES']},
+    'az': {'inputmethods': ['NoIME'], 'dictionaries': ['az_AZ']},
+    'be': {'inputmethods': ['NoIME'], 'dictionaries': ['be_BY']},
+    'ber': {'inputmethods': ['NoIME'], 'dictionaries': ['ber_MA']},
+    'bg': {'inputmethods': ['NoIME'], 'dictionaries': ['bg_BG']},
+    'bn': {'inputmethods': ['bn-inscript2', 'NoIME'],
+           'dictionaries': ['bn_IN', 'en_GB']},
+    'br': {'inputmethods': ['NoIME'], 'dictionaries': ['br_FR']},
+    'brx': {'inputmethods': ['brx-inscript2-deva', 'NoIME'],
+            'dictionaries': ['en_GB']},
+    'bs': {'inputmethods': ['NoIME'], 'dictionaries': ['bs_BA']},
+    'ca': {'inputmethods': ['NoIME'], 'dictionaries': ['ca_ES']},
     'ca_AD': {'inputmethods': ['NoIME'], 'dictionaries': ['ca_AD']},
-    'ca_ES': {'inputmethods': ['NoIME'], 'dictionaries': ['ca_ES']},
     'ca_FR': {'inputmethods': ['NoIME'], 'dictionaries': ['ca_FR']},
     'ca_IT': {'inputmethods': ['NoIME'], 'dictionaries': ['ca_IT']},
-    'cop_EG': {'inputmethods': ['NoIME'], 'dictionaries': ['cop_EG']},
-    'cs_CZ': {'inputmethods': ['NoIME'], 'dictionaries': ['cs_CZ']},
-    'csb_PL': {'inputmethods': ['NoIME'], 'dictionaries': ['csb_PL']},
-    'cv_RU': {'inputmethods': ['NoIME'], 'dictionaries': ['cv_RU']},
-    'cy_GB': {'inputmethods': ['NoIME'], 'dictionaries': ['cy_GB']},
-    'da_DK': {'inputmethods': ['NoIME'], 'dictionaries': ['da_DK']},
+    'cop': {'inputmethods': ['NoIME'], 'dictionaries': ['cop_EG']},
+    'cs': {'inputmethods': ['NoIME'], 'dictionaries': ['cs_CZ']},
+    'csb': {'inputmethods': ['NoIME'], 'dictionaries': ['csb_PL']},
+    'cv': {'inputmethods': ['NoIME'], 'dictionaries': ['cv_RU']},
+    'cy': {'inputmethods': ['NoIME'], 'dictionaries': ['cy_GB']},
+    'da': {'inputmethods': ['NoIME'], 'dictionaries': ['da_DK']},
+    'de': {'inputmethods':['NoIME'], 'dictionaries': ['de_DE']},
     'de_AT': {'inputmethods': ['NoIME'], 'dictionaries': ['de_AT']},
     'de_BE': {'inputmethods': ['NoIME'], 'dictionaries': ['de_BE']},
     'de_CH': {'inputmethods': ['NoIME'], 'dictionaries': ['de_CH']},
-    'de_DE': {'inputmethods':['NoIME'], 'dictionaries': ['de_DE']},
     'de_LI': {'inputmethods': ['NoIME'], 'dictionaries': ['de_LI']},
     'de_LU': {'inputmethods': ['NoIME'], 'dictionaries': ['de_LU']},
-    'doi_IN': {'inputmethods': ['doi-inscript2', 'NoIME'],
-               'dictionaries': ['en_GB']},
-    'dsb_DE': {'inputmethods': ['NoIME'], 'dictionaries': ['dsb_DE']},
+    'doi': {'inputmethods': ['doi-inscript2-deva', 'NoIME'],
+            'dictionaries': ['en_GB']},
+    'dsb': {'inputmethods': ['NoIME'], 'dictionaries': ['dsb_DE']},
+    'el': {'inputmethods': ['NoIME'], 'dictionaries': ['el_GR']},
+    'en': {'inputmethods': ['NoIME'], 'dictionaries': ['en_US']},
+    'en_US': {'inputmethods': ['NoIME'], 'dictionaries': ['en_US']},
     'el_CY': {'inputmethods': ['NoIME'], 'dictionaries': ['el_CY']},
-    'el_GR': {'inputmethods': ['NoIME'], 'dictionaries': ['el_GR']},
     'en_AG': {'inputmethods': ['NoIME'], 'dictionaries': ['en_AG']},
     'en_AU': {'inputmethods': ['NoIME'], 'dictionaries': ['en_AU']},
     'en_BS': {'inputmethods': ['NoIME'], 'dictionaries': ['en_BS']},
@@ -224,11 +228,11 @@ LOCALE_DEFAULTS = {
     'en_PH': {'inputmethods': ['NoIME'], 'dictionaries': ['en_PH']},
     'en_SG': {'inputmethods': ['NoIME'], 'dictionaries': ['en_SG']},
     'en_TT': {'inputmethods': ['NoIME'], 'dictionaries': ['en_TT']},
-    'en_US': {'inputmethods': ['NoIME'], 'dictionaries': ['en_US']},
     'en_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['en_ZA']},
     'en_ZM': {'inputmethods': ['NoIME'], 'dictionaries': ['en_ZM']},
     'en_ZW': {'inputmethods': ['NoIME'], 'dictionaries': ['en_ZW']},
     'eo': {'inputmethods': ['NoIME'], 'dictionaries': ['eo']},
+    'es_': {'inputmethods': ['NoIME'], 'dictionaries': ['es_ES']},
     'es_AR': {'inputmethods': ['NoIME'], 'dictionaries': ['es_AR']},
     'es_BO': {'inputmethods': ['NoIME'], 'dictionaries': ['es_BO']},
     'es_CL': {'inputmethods': ['NoIME'], 'dictionaries': ['es_CL']},
@@ -250,176 +254,184 @@ LOCALE_DEFAULTS = {
     'es_US': {'inputmethods': ['NoIME'], 'dictionaries': ['es_US']},
     'es_UY': {'inputmethods': ['NoIME'], 'dictionaries': ['es_UY']},
     'es_VE': {'inputmethods': ['NoIME'], 'dictionaries': ['es_VE']},
-    'et_EE': {'inputmethods': ['NoIME'], 'dictionaries': ['et_EE']},
-    'eu_ES': {'inputmethods': ['NoIME'], 'dictionaries': ['eu_ES']},
-    'fa_IR': {'inputmethods': ['NoIME'], 'dictionaries': ['fa_IR']},
-    'fil_PH': {'inputmethods': ['NoIME'], 'dictionaries': ['fil_PH']},
+    'et': {'inputmethods': ['NoIME'], 'dictionaries': ['et_EE']},
+    'eu': {'inputmethods': ['NoIME'], 'dictionaries': ['eu_ES']},
+    'fa': {'inputmethods': ['NoIME'], 'dictionaries': ['fa_IR']},
+    'fil': {'inputmethods': ['NoIME'], 'dictionaries': ['fil_PH']},
     'fj': {'inputmethods': ['NoIME'], 'dictionaries': ['fj']},
-    'fo_FO': {'inputmethods': ['NoIME'], 'dictionaries': ['fo_FO']},
+    'fo': {'inputmethods': ['NoIME'], 'dictionaries': ['fo_FO']},
+    'fr': {'inputmethods': ['NoIME'], 'dictionaries': ['fr_FR']},
     'fr_BE': {'inputmethods': ['NoIME'], 'dictionaries': ['fr_BE']},
     'fr_CA': {'inputmethods': ['NoIME'], 'dictionaries': ['fr_CA']},
     'fr_CH': {'inputmethods': ['NoIME'], 'dictionaries': ['fr_CH']},
-    'fr_FR': {'inputmethods': ['NoIME'], 'dictionaries': ['fr_FR']},
     'fr_LU': {'inputmethods': ['NoIME'], 'dictionaries': ['fr_LU']},
     'fr_MC': {'inputmethods': ['NoIME'], 'dictionaries': ['fr_MC']},
-    'fur_IT': {'inputmethods': ['NoIME'], 'dictionaries': ['fur_IT']},
+    'fur': {'inputmethods': ['NoIME'], 'dictionaries': ['fur_IT']},
+    'fy': {'inputmethods': ['NoIME'], 'dictionaries': ['fy_NL']},
     'fy_DE': {'inputmethods': ['NoIME'], 'dictionaries': ['fy_DE']},
-    'fy_NL': {'inputmethods': ['NoIME'], 'dictionaries': ['fy_NL']},
-    'ga_IE': {'inputmethods': ['NoIME'], 'dictionaries': ['ga_IE']},
-    'gd_GB': {'inputmethods': ['NoIME'], 'dictionaries': ['gd_GB']},
-    'gl_ES': {'inputmethods': ['NoIME'], 'dictionaries': ['gl_ES']},
+    'ga': {'inputmethods': ['NoIME'], 'dictionaries': ['ga_IE']},
+    'gd': {'inputmethods': ['NoIME'], 'dictionaries': ['gd_GB']},
+    'gl': {'inputmethods': ['NoIME'], 'dictionaries': ['gl_ES']},
     'grc': {'inputmethods': ['NoIME'], 'dictionaries': ['grc']},
-    'gu_IN': {'inputmethods': ['gu-inscript2', 'NoIME'],
-              'dictionaries': ['gu_IN', 'en_GB']},
-    'gv_GB': {'inputmethods': ['NoIME'], 'dictionaries': ['gv_GB']},
+    'gu': {'inputmethods': ['gu-inscript2', 'NoIME'],
+           'dictionaries': ['gu_IN', 'en_GB']},
+    'gv': {'inputmethods': ['NoIME'], 'dictionaries': ['gv_GB']},
     'haw': {'inputmethods': ['NoIME'], 'dictionaries': ['haw']},
-    'he_IL': {'inputmethods': ['NoIME'], 'dictionaries': ['he_IL']},
-    'hi_IN': {'inputmethods': ['hi-inscript2', 'NoIME'],
-              'dictionaries': ['hi_IN', 'en_GB']},
-    'hil_PH': {'inputmethods': ['NoIME'], 'dictionaries': ['hil_PH']},
-    'hr_HR': {'inputmethods': ['NoIME'], 'dictionaries': ['hr_HR']},
-    'hsb_DE': {'inputmethods': ['NoIME'], 'dictionaries': ['hsb_DE']},
-    'ht_HT': {'inputmethods': ['NoIME'], 'dictionaries': ['ht_HT']},
-    'hu_HU': {'inputmethods': ['NoIME'], 'dictionaries': ['hu_HU']},
-    'hy_AM': {'inputmethods': ['NoIME'], 'dictionaries': ['hy_AM']},
+    'he': {'inputmethods': ['NoIME'], 'dictionaries': ['he_IL']},
+    'hi': {'inputmethods': ['hi-inscript2', 'NoIME'],
+           'dictionaries': ['hi_IN', 'en_GB']},
+    'hil': {'inputmethods': ['NoIME'], 'dictionaries': ['hil_PH']},
+    'hr': {'inputmethods': ['NoIME'], 'dictionaries': ['hr_HR']},
+    'hsb': {'inputmethods': ['NoIME'], 'dictionaries': ['hsb_DE']},
+    'ht': {'inputmethods': ['NoIME'], 'dictionaries': ['ht_HT']},
+    'hu': {'inputmethods': ['NoIME'], 'dictionaries': ['hu_HU']},
+    'hy': {'inputmethods': ['NoIME'], 'dictionaries': ['hy_AM']},
     'ia': {'inputmethods': ['NoIME'], 'dictionaries': ['ia']},
-    'id_ID': {'inputmethods': ['NoIME'], 'dictionaries': ['id_ID']},
-    'is_IS': {'inputmethods': ['NoIME'], 'dictionaries': ['is_IS']},
+    'id': {'inputmethods': ['NoIME'], 'dictionaries': ['id_ID']},
+    'is': {'inputmethods': ['NoIME'], 'dictionaries': ['is_IS']},
+    'it': {'inputmethods': ['NoIME'], 'dictionaries': ['it_IT']},
     'it_CH': {'inputmethods': ['NoIME'], 'dictionaries': ['it_CH']},
-    'it_IT': {'inputmethods': ['NoIME'], 'dictionaries': ['it_IT']},
-    'kk_KZ': {'inputmethods': ['NoIME'], 'dictionaries': ['kk_KZ']},
-    'km_KH': {'inputmethods': ['NoIME'], 'dictionaries': ['km_KH']},
+    'kk': {'inputmethods': ['NoIME'], 'dictionaries': ['kk_KZ']},
+    'km': {'inputmethods': ['NoIME'], 'dictionaries': ['km_KH']},
     # libgnome-desktop/default-input-sources.h has "m17n:kn:kgp" as
     # the default for kn_IN. According to Parag Nemade this probably came
     # from the translation community.
-    'kn_IN': {'inputmethods': ['kn-inscript2', 'NoIME'],
-              'dictionaries': ['kn_IN', 'en_GB']},
-    'ko_KR': {'inputmethods': ['ko-han2', 'NoIME'],
-              'dictionaries': ['ko_KR', 'en_GB']},
-    'kok_IN' : {'inputmethods': ['kok-inscript2', 'NoIME'],
+    'kn': {'inputmethods': ['kn-inscript2', 'NoIME'],
+           'dictionaries': ['kn_IN', 'en_GB']},
+    'ko_': {'inputmethods': ['ko-han2', 'NoIME'],
+            'dictionaries': ['ko_KR', 'en_GB']},
+    'kok' : {'inputmethods': ['kok-inscript2-deva', 'NoIME'],
+             'dictionaries': ['en_GB']},
+    'ks': {'inputmethods': ['ks-kbd', 'NoIME'], 'dictionaries': ['en_GB']},
+    'ks_Deva': {'inputmethods': ['ks-inscript2-deva', 'NoIME'],
                 'dictionaries': ['en_GB']},
-    'ks_IN': {'inputmethods': ['ks-inscript2-deva', 'NoIME'],
-              'dictionaries': ['en_GB']},
+    'ku': {'inputmethods': ['NoIME'], 'dictionaries': ['ku_TR']},
     'ku_SY': {'inputmethods': ['NoIME'], 'dictionaries': ['ku_SY']},
-    'ku_TR': {'inputmethods': ['NoIME'], 'dictionaries': ['ku_TR']},
-    'ky_KG': {'inputmethods': ['NoIME'], 'dictionaries': ['ky_KG']},
+    'ky': {'inputmethods': ['NoIME'], 'dictionaries': ['ky_KG']},
     'la': {'inputmethods': ['NoIME'], 'dictionaries': ['la']},
-    'lb_LU': {'inputmethods': ['NoIME'], 'dictionaries': ['lb_LU']},
-    'ln_CD': {'inputmethods': ['NoIME'], 'dictionaries': ['ln_CD']},
-    'lt_LT': {'inputmethods': ['NoIME'], 'dictionaries': ['lt_LT']},
-    'lv_LV': {'inputmethods': ['NoIME'], 'dictionaries': ['lv_LV']},
-    'mai_IN': {'inputmethods': ['mai-inscript2', 'NoIME'],
-               'dictionaries': ['mai_IN', 'en_GB']},
+    'lb': {'inputmethods': ['NoIME'], 'dictionaries': ['lb_LU']},
+    'ln': {'inputmethods': ['NoIME'], 'dictionaries': ['ln_CD']},
+    'lt': {'inputmethods': ['NoIME'], 'dictionaries': ['lt_LT']},
+    'lv': {'inputmethods': ['NoIME'], 'dictionaries': ['lv_LV']},
+    'mai': {'inputmethods': ['mai-inscript2', 'NoIME'],
+            'dictionaries': ['mai_IN', 'en_GB']},
     'mg': {'inputmethods': ['NoIME'], 'dictionaries': ['mg']},
-    'mi_NZ': {'inputmethods': ['NoIME'], 'dictionaries': ['mi_NZ']},
-    'mk_MK': {'inputmethods': ['NoIME'], 'dictionaries': ['mk_MK']},
-    'ml_IN': {'inputmethods': ['ml-inscript2', 'NoIME'],
-              'dictionaries': ['ml_IN', 'en_GB']},
-    'mn_MN': {'inputmethods': ['NoIME'], 'dictionaries': ['mn_MN']},
-    'mni_IN': {'inputmethods': ['mni-inscript2-beng', 'NoIME'],
-               'dictionaries': ['en_GB']},
-    'mos_BF': {'inputmethods': ['NoIME'], 'dictionaries': ['mos_BF']},
-    'mr_IN': {'inputmethods': ['mr-inscript2', 'NoIME'],
-              'dictionaries': ['mr_IN', 'en_GB']},
+    'mi': {'inputmethods': ['NoIME'], 'dictionaries': ['mi_NZ']},
+    'mk': {'inputmethods': ['NoIME'], 'dictionaries': ['mk_MK']},
+    'ml': {'inputmethods': ['ml-inscript2', 'NoIME'],
+           'dictionaries': ['ml_IN', 'en_GB']},
+    'mn': {'inputmethods': ['NoIME'], 'dictionaries': ['mn_MN']},
+    'mni': {'inputmethods': ['mni-inscript2-beng', 'NoIME'],
+            'dictionaries': ['en_GB']},
+    'mni_Mtei': {'inputmethods': ['mni-inscript2-mtei', 'NoIME'],
+                 'dictionaries': ['en_GB']},
+    'mos': {'inputmethods': ['NoIME'], 'dictionaries': ['mos_BF']},
+    'mr': {'inputmethods': ['mr-inscript2', 'NoIME'],
+           'dictionaries': ['mr_IN', 'en_GB']},
+    'ms': {'inputmethods': ['NoIME'], 'dictionaries': ['ms_MY']},
     'ms_BN': {'inputmethods': ['NoIME'], 'dictionaries': ['ms_BN']},
-    'ms_MY': {'inputmethods': ['NoIME'], 'dictionaries': ['ms_MY']},
-    'mt_MT': {'inputmethods': ['NoIME'], 'dictionaries': ['mt_MT']},
-    'nb_NO': {'inputmethods': ['NoIME'], 'dictionaries': ['nb_NO']},
-    'nds_DE': {'inputmethods': ['NoIME'], 'dictionaries': ['nds_DE']},
+    'mt': {'inputmethods': ['NoIME'], 'dictionaries': ['mt_MT']},
+    'nb': {'inputmethods': ['NoIME'], 'dictionaries': ['nb_NO']},
+    'no': {'inputmethods': ['NoIME'], 'dictionaries': ['nb_NO']},
+    'nds': {'inputmethods': ['NoIME'], 'dictionaries': ['nds_DE']},
     'nds_NL': {'inputmethods': ['NoIME'], 'dictionaries': ['nds_NL']},
-    'ne_IN': {'inputmethods': ['ne-inscript2', 'NoIME'],
+    'ne': {'inputmethods': ['ne-rom', 'NoIME'],
+           'dictionaries': ['ne_NP', 'en_GB']},
+    'ne_IN': {'inputmethods': ['ne-inscript2-deva', 'NoIME'],
               'dictionaries': ['ne_IN', 'en_GB']},
-    'ne_NP': {'inputmethods': ['ne-rom', 'NoIME'],
-              'dictionaries': ['ne_NP', 'en_GB']},
+    'nl': {'inputmethods': ['NoIME'], 'dictionaries': ['nl_NL']},
     'nl_AW': {'inputmethods': ['NoIME'], 'dictionaries': ['nl_AW']},
     'nl_BE': {'inputmethods': ['NoIME'], 'dictionaries': ['nl_BE']},
-    'nl_NL': {'inputmethods': ['NoIME'], 'dictionaries': ['nl_NL']},
-    'nn_NO': {'inputmethods': ['NoIME'], 'dictionaries': ['nn_NO']},
-    'nr_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['nr_ZA']},
-    'nso_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['nso_ZA']},
-    'ny_MW': {'inputmethods': ['NoIME'], 'dictionaries': ['ny_MW']},
-    'oc_FR': {'inputmethods': ['NoIME'], 'dictionaries': ['oc_FR']},
-    'om_ET': {'inputmethods': ['NoIME'], 'dictionaries': ['om_ET']},
+    'nn': {'inputmethods': ['NoIME'], 'dictionaries': ['nn_NO']},
+    'nr': {'inputmethods': ['NoIME'], 'dictionaries': ['nr_ZA']},
+    'nso': {'inputmethods': ['NoIME'], 'dictionaries': ['nso_ZA']},
+    'ny': {'inputmethods': ['NoIME'], 'dictionaries': ['ny_MW']},
+    'oc': {'inputmethods': ['NoIME'], 'dictionaries': ['oc_FR']},
+    'om': {'inputmethods': ['NoIME'], 'dictionaries': ['om_ET']},
     'om_KE': {'inputmethods': ['NoIME'], 'dictionaries': ['om_KE']},
-    'or_IN': {'inputmethods': ['or-inscript2', 'NoIME'],
-              'dictionaries': ['or_IN', 'en_GB']},
-    'pa_IN': {'inputmethods': ['pa-inscript2', 'NoIME'],
-              'dictionaries': ['pa_IN', 'en_GB']},
-    'pl_PL': {'inputmethods': ['NoIME'], 'dictionaries': ['pl_PL']},
+    'or': {'inputmethods': ['or-inscript2', 'NoIME'],
+           'dictionaries': ['or_IN', 'en_GB']},
+    'pa': {'inputmethods': ['pa-inscript2-guru', 'NoIME'],
+           'dictionaries': ['pa_IN', 'en_GB']},
+    'pa_PK': {'inputmethods': ['NoIME'], 'dictionaries': ['en_GB']},
+    'pl': {'inputmethods': ['NoIME'], 'dictionaries': ['pl_PL']},
     'plt': {'inputmethods': ['NoIME'], 'dictionaries': ['plt']},
+    'pt': {'inputmethods': ['NoIME'], 'dictionaries': ['pt_PT']},
     'pt_AO': {'inputmethods': ['NoIME'], 'dictionaries': ['pt_AO']},
     'pt_BR': {'inputmethods': ['NoIME'], 'dictionaries': ['pt_BR']},
     'pt_PT': {'inputmethods': ['NoIME'], 'dictionaries': ['pt_PT']},
-    'qu_EC': {'inputmethods': ['NoIME'], 'dictionaries': ['qu_EC']},
-    'quh_BO': {'inputmethods': ['NoIME'], 'dictionaries': ['quh_BO']},
-    'ro_RO': {'inputmethods': ['NoIME'], 'dictionaries': ['ro_RO']},
-    'ru_RU': {'inputmethods': ['NoIME'], 'dictionaries': ['ru_RU']},
+    'qu': {'inputmethods': ['NoIME'], 'dictionaries': ['qu_EC']},
+    'quh': {'inputmethods': ['NoIME'], 'dictionaries': ['quh_BO']},
+    'ro': {'inputmethods': ['NoIME'], 'dictionaries': ['ro_RO']},
+    'ru': {'inputmethods': ['NoIME'], 'dictionaries': ['ru_RU']},
     'ru_UA': {'inputmethods': ['NoIME'], 'dictionaries': ['ru_UA']},
-    'rw_RW': {'inputmethods': ['NoIME'], 'dictionaries': ['rw_RW']},
-    'sa_IN': {'inputmethods': ['sa-inscript2', 'NoIME'],
-              'dictionaries': ['en_GB']},
-    'sat_IN': {'inputmethods': ['sat-inscript2-deva', 'NoIME'],
-               'dictionaries': ['en_GB']},
-    'sc_IT': {'inputmethods': ['NoIME'], 'dictionaries': ['sc_IT']},
-    'sd_IN': {'inputmethods': ['sd-inscript2', 'NoIME'],
-               'dictionaries': ['en_GB']},
+    'rw': {'inputmethods': ['NoIME'], 'dictionaries': ['rw_RW']},
+    'sa': {'inputmethods': ['sa-inscript2', 'NoIME'],
+           'dictionaries': ['en_GB']},
+    'sat': {'inputmethods': ['sat-inscript2-deva', 'NoIME'],
+            'dictionaries': ['en_GB']},
+    'sc': {'inputmethods': ['NoIME'], 'dictionaries': ['sc_IT']},
+    'sd': {'inputmethods': ['NoIME'], 'dictionaries': ['en_GB']},
+    'sd_Arab': {'inputmethods': ['NoIME'], 'dictionaries': ['en_GB']},
+    'sd_Deva': {'inputmethods': ['sd-inscript2-deva', 'NoIME'],
+                'dictionaries': ['en_GB']},
+    'se': {'inputmethods': ['NoIME'], 'dictionaries': ['se_SE']},
     'se_FI': {'inputmethods': ['NoIME'], 'dictionaries': ['se_FI']},
     'se_NO': {'inputmethods': ['NoIME'], 'dictionaries': ['se_NO']},
-    'se_SE': {'inputmethods': ['NoIME'], 'dictionaries': ['se_SE']},
+    'sh': {'inputmethods': ['NoIME'], 'dictionaries': ['sh_RS']},
     'sh_ME': {'inputmethods': ['NoIME'], 'dictionaries': ['sh_ME']},
-    'sh_RS': {'inputmethods': ['NoIME'], 'dictionaries': ['sh_RS']},
     'sh_YU': {'inputmethods': ['NoIME'], 'dictionaries': ['sh_YU']},
-    'shs_CA': {'inputmethods': ['NoIME'], 'dictionaries': ['shs_CA']},
-    'si_LK': {'inputmethods': ['si-wijesekera', 'NoIME'],
-              'dictionaries': ['si_LK', 'en_GB']},
-    'sk_SK': {'inputmethods': ['NoIME'], 'dictionaries': ['sk_SK']},
-    'sl_SI': {'inputmethods': ['NoIME'], 'dictionaries': ['sl_SI']},
-    'smj_NO': {'inputmethods': ['NoIME'], 'dictionaries': ['smj_NO']},
+    'shs': {'inputmethods': ['NoIME'], 'dictionaries': ['shs_CA']},
+    'si': {'inputmethods': ['si-wijesekera', 'NoIME'],
+           'dictionaries': ['si_LK', 'en_GB']},
+    'sk': {'inputmethods': ['NoIME'], 'dictionaries': ['sk_SK']},
+    'sl': {'inputmethods': ['NoIME'], 'dictionaries': ['sl_SI']},
+    'smj': {'inputmethods': ['NoIME'], 'dictionaries': ['smj_NO']},
     'smj_SE': {'inputmethods': ['NoIME'], 'dictionaries': ['smj_SE']},
+    'so': {'inputmethods': ['NoIME'], 'dictionaries': ['so_SO']},
     'so_DJ': {'inputmethods': ['NoIME'], 'dictionaries': ['so_DJ']},
     'so_ET': {'inputmethods': ['NoIME'], 'dictionaries': ['so_ET']},
     'so_KE': {'inputmethods': ['NoIME'], 'dictionaries': ['so_KE']},
-    'so_SO': {'inputmethods': ['NoIME'], 'dictionaries': ['so_SO']},
-    'sq_AL': {'inputmethods': ['NoIME'], 'dictionaries': ['sq_AL']},
+    'sq': {'inputmethods': ['NoIME'], 'dictionaries': ['sq_AL']},
+    'sr': {'inputmethods': ['NoIME'], 'dictionaries': ['sr_RS']},
     'sr_ME': {'inputmethods': ['NoIME'], 'dictionaries': ['sr_ME']},
-    'sr_RS': {'inputmethods': ['NoIME'], 'dictionaries': ['sr_RS']},
     'sr_YU': {'inputmethods': ['NoIME'], 'dictionaries': ['sr_YU']},
-    'ss_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['ss_ZA']},
-    'st_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['st_ZA']},
+    'ss': {'inputmethods': ['NoIME'], 'dictionaries': ['ss_ZA']},
+    'st': {'inputmethods': ['NoIME'], 'dictionaries': ['st_ZA']},
+    'sv': {'inputmethods': ['NoIME'], 'dictionaries': ['sv_SE']},
     'sv_FI': {'inputmethods': ['NoIME'], 'dictionaries': ['sv_FI']},
-    'sv_SE': {'inputmethods': ['NoIME'], 'dictionaries': ['sv_SE']},
+    'sw': {'inputmethods': ['NoIME'], 'dictionaries': ['sw_TZ']},
     'sw_KE': {'inputmethods': ['NoIME'], 'dictionaries': ['sw_KE']},
-    'sw_TZ': {'inputmethods': ['NoIME'], 'dictionaries': ['sw_TZ']},
     # libgnome-desktop/default-input-sources.h has "m17n:ta:tamil99"
     # as the default for ta_IN. According to Parag Nemade this probably came
     # from the translation community.
-    'ta_IN': {'inputmethods': ['ta-inscript2', 'NoIME'],
-              'dictionaries': ['ta_IN', 'en_GB']},
-    'te_IN': {'inputmethods': ['te-inscript2', 'NoIME'],
-              'dictionaries': ['te_IN', 'en_GB']},
-    'tet_ID': {'inputmethods': ['NoIME'], 'dictionaries': ['tet_ID']},
+    'ta': {'inputmethods': ['ta-inscript2', 'NoIME'],
+           'dictionaries': ['ta_IN', 'en_GB']},
+    'te': {'inputmethods': ['te-inscript2', 'NoIME'],
+           'dictionaries': ['te_IN', 'en_GB']},
+    'tet': {'inputmethods': ['NoIME'], 'dictionaries': ['tet_ID']},
     'tet_TL': {'inputmethods': ['NoIME'], 'dictionaries': ['tet_TL']},
-    'th_TH': {'inputmethods': ['NoIME'], 'dictionaries': ['th_TH']},
-    'ti_ER': {'inputmethods': ['NoIME'], 'dictionaries': ['ti_ER']},
+    'th': {'inputmethods': ['NoIME'], 'dictionaries': ['th_TH']},
+    'ti': {'inputmethods': ['NoIME'], 'dictionaries': ['ti_ER']},
     'ti_ET': {'inputmethods': ['NoIME'], 'dictionaries': ['ti_ET']},
-    'tk_TM': {'inputmethods': ['NoIME'], 'dictionaries': ['tk_TM']},
-    'tl_PH': {'inputmethods': ['NoIME'], 'dictionaries': ['tl_PH']},
+    'tk': {'inputmethods': ['NoIME'], 'dictionaries': ['tk_TM']},
+    'tl': {'inputmethods': ['NoIME'], 'dictionaries': ['tl_PH']},
+    'tn': {'inputmethods': ['NoIME'], 'dictionaries': ['tn_ZA']},
     'tn_BW': {'inputmethods': ['NoIME'], 'dictionaries': ['tn_BW']},
-    'tn_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['tn_ZA']},
-    'tpi_PG': {'inputmethods': ['NoIME'], 'dictionaries': ['tpi_PG']},
-    'ts_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['ts_ZA']},
-    'uk_UA': {'inputmethods': ['NoIME'], 'dictionaries': ['uk_UA']},
+    'tpi': {'inputmethods': ['NoIME'], 'dictionaries': ['tpi_PG']},
+    'ts': {'inputmethods': ['NoIME'], 'dictionaries': ['ts_ZA']},
+    'uk': {'inputmethods': ['NoIME'], 'dictionaries': ['uk_UA']},
+    'ur': {'inputmethods': ['NoIME'], 'dictionaries': ['ur_PK']},
     'ur_IN': {'inputmethods': ['ur-phonetic', 'NoIME'],
               'dictionaries': ['ur_IN', 'en_GB']},
-    'ur_PK': {'inputmethods': ['NoIME'], 'dictionaries': ['ur_PK']},
-    'uz_UZ': {'inputmethods': ['NoIME'], 'dictionaries': ['uz_UZ']},
-    've_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['ve_ZA']},
-    'vi_VN': {'inputmethods': ['NoIME', 'vi-telex'], 'dictionaries': ['vi_VN']},
-    'wa_BE': {'inputmethods': ['NoIME'], 'dictionaries': ['wa_BE']},
-    'xh_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['xh_ZA']},
-    'yi_US': {'inputmethods': ['NoIME', 'yi-yivo'],
+    'uz': {'inputmethods': ['NoIME'], 'dictionaries': ['uz_UZ']},
+    've': {'inputmethods': ['NoIME'], 'dictionaries': ['ve_ZA']},
+    'vi': {'inputmethods': ['NoIME', 'vi-telex'], 'dictionaries': ['vi_VN']},
+    'wa': {'inputmethods': ['NoIME'], 'dictionaries': ['wa_BE']},
+    'xh': {'inputmethods': ['NoIME'], 'dictionaries': ['xh_ZA']},
+    'yi': {'inputmethods': ['NoIME', 'yi-yivo'],
               'dictionaries': ['yi_US', 'en_US']},
-    'zu_ZA': {'inputmethods': ['NoIME'], 'dictionaries': ['zu_ZA', 'en_GB']},
+    'zu': {'inputmethods': ['NoIME'], 'dictionaries': ['zu_ZA', 'en_GB']},
 }
 
 def get_default_input_methods(locale_string: str) -> List[str]:
@@ -434,14 +446,26 @@ def get_default_input_methods(locale_string: str) -> List[str]:
     >>> get_default_input_methods('te_IN')
     ['te-inscript2', 'NoIME']
 
+    >>> get_default_input_methods('ks_IN.UTF-8@devanagari')
+    ['ks-inscript2-deva', 'NoIME']
+
+    >>> get_default_input_methods('ks_IN.UTF-8')
+    ['ks-kbd', 'NoIME']
+
+    >>> get_default_input_methods('mni_IN.UTF-8')
+    ['mni-inscript2-beng', 'NoIME']
+
+    >>> get_default_input_methods('mni_Mtei') # No locale in glibc for this!
+    ['mni-inscript2-mtei', 'NoIME']
+
     >>> get_default_input_methods('xx_YY')
     ['NoIME']
     '''
-    if locale_string in LOCALE_DEFAULTS:
-        default_input_methods = LOCALE_DEFAULTS[locale_string]['inputmethods']
-    else:
-        default_input_methods = ['NoIME']
-    return default_input_methods
+    language = locale_normalize(locale_string)
+    for lang in expand_languages([language]):
+        if lang in LOCALE_DEFAULTS:
+            return LOCALE_DEFAULTS[lang]['inputmethods']
+    return ['NoIME']
 
 def get_default_dictionaries(locale_string: str) -> List[str]:
     '''
@@ -458,11 +482,11 @@ def get_default_dictionaries(locale_string: str) -> List[str]:
     >>> get_default_dictionaries('xx_YY')
     ['en_US']
     '''
-    if locale_string in LOCALE_DEFAULTS:
-        default_dictionaries = LOCALE_DEFAULTS[locale_string]['dictionaries']
-    else:
-        default_dictionaries = ['en_US']
-    return default_dictionaries
+    language = locale_normalize(locale_string)
+    for lang in expand_languages([language]):
+        if lang in LOCALE_DEFAULTS:
+            return LOCALE_DEFAULTS[lang]['dictionaries']
+    return ['en_US']
 
 HUNSPELL_DICTIONARIES = {
     # List of all locales/languages where hunspell dictionaries exist.
@@ -2426,6 +2450,269 @@ FLAGS = {
     'zu_ZA': '🇿🇦',
 }
 
+def get_effective_lc_ctype() -> str:
+    '''Returns the effective value of LC_CTYPE'''
+    if 'LC_ALL' in os.environ:
+        return os.environ['LC_ALL']
+    elif 'LC_CTYPE' in os.environ:
+        return os.environ['LC_CTYPE']
+    elif 'LANG' in os.environ:
+        return os.environ['LANG']
+    return 'C'
+
+def get_effective_lc_messages() -> str:
+    '''Returns the effective value of LC_MESSAGES'''
+    if 'LC_ALL' in os.environ:
+        return os.environ['LC_ALL']
+    elif 'LC_MESSAGES' in os.environ:
+        return os.environ['LC_MESSAGES']
+    elif 'LANG' in os.environ:
+        return os.environ['LANG']
+    return 'C'
+
+# For the ICU/CLDR locale pattern see: http://userguide.icu-project.org/locale
+# (We ignore the variant code here)
+_cldr_locale_pattern = re.compile(
+    # language must be 2 or 3 lower case letters:
+    '^(?P<language>[a-z]{2,3}'
+    # language is only valid if
+    +'(?=$|@' # locale string ends here or only options follow
+    +'|_[A-Z][a-z]{3}(?=$|@|_[A-Z0-9]{2,3}(?=$|@))' # valid script follows
+    +'|_[A-Z0-9]{2,3}(?=$|@)' # valid territory follows
+    +'))'
+    # script must be 1 upper case letter followed by
+    # 3 lower case letters:
+    +'(?:_(?P<script>[A-Z][a-z]{3})'
+    # script is only valid if
+    +'(?=$|@' # locale string ends here or only options follow
+    +'|_[A-Z0-9]{2,3}(?=$|@)' # valid territory follows
+    +')){0,1}'
+    # territory must be 2 upper case letters or 3 digits:
+    +'(?:_(?P<territory>[A-Z0-9]{2,3})'
+    # territory is only valid if
+    +'(?=$|@' # locale string ends here or only options follow
+    +')){0,1}')
+
+# http://www.unicode.org/iso15924/iso15924-codes.html
+_glibc_script_ids = {
+    'latin': 'Latn',
+    'iqtelif': 'Latn', # Tatar, tt_RU.UTF-8@iqtelif, http://en.wikipedia.org/wiki/User:Ultranet/%C4%B0QTElif
+    'cyrillic': 'Cyrl',
+    'devanagari': 'Deva',
+}
+
+Locale = collections.namedtuple(
+    'Locale',
+    ['language', 'script', 'territory', 'variant', 'encoding'])
+
+def parse_locale(localeId):
+    '''
+    Parses a locale name in glibc or CLDR format and returns
+    language, script, territory, variant, and encoding
+
+    :param localeId: The name of the locale
+    :type localeId: string
+    :return: The parts of the locale: language, script, territory, variant, encoding
+    :rtype: A namedtuple of strings
+            Locale(language=string,
+                   script=string,
+                   territory=string,
+                   variant=string,
+                   encoding=string)
+
+    It replaces glibc names for scripts like “latin”
+    with the iso-15924 script names like “Latn”.
+    I.e. these inputs all give the same result:
+
+        “sr_latin_RS”
+        “sr_Latn_RS”
+        “sr_RS@latin”
+        “sr_RS@Latn”
+
+    Examples:
+
+    >>> parse_locale('de_DE')
+    Locale(language='de', script='', territory='DE', variant='', encoding='')
+
+    >>> parse_locale('de_DE.UTF-8')
+    Locale(language='de', script='', territory='DE', variant='', encoding='UTF-8')
+
+    >>> parse_locale('de_DE.utf8')
+    Locale(language='de', script='', territory='DE', variant='', encoding='utf8')
+
+    >>> parse_locale('de_DE@euro')
+    Locale(language='de', script='', territory='DE', variant='EURO', encoding='')
+
+    >>> parse_locale('de_DE.ISO-8859-15')
+    Locale(language='de', script='', territory='DE', variant='', encoding='ISO-8859-15')
+
+    >>> parse_locale('de_DE.ISO-8859-15@euro')
+    Locale(language='de', script='', territory='DE', variant='EURO', encoding='ISO-8859-15')
+
+    >>> parse_locale('de_DE.iso885915@euro')
+    Locale(language='de', script='', territory='DE', variant='EURO', encoding='iso885915')
+
+    >>> parse_locale('gez_ER.UTF-8@abegede')
+    Locale(language='gez', script='', territory='ER', variant='ABEGEDE', encoding='UTF-8')
+
+    >>> parse_locale('ar_ER.UTF-8@saaho')
+    Locale(language='ar', script='', territory='ER', variant='SAAHO', encoding='UTF-8')
+
+    >>> parse_locale('zh_Hant_TW')
+    Locale(language='zh', script='Hant', territory='TW', variant='', encoding='')
+
+    >>> parse_locale('zh_TW')
+    Locale(language='zh', script='', territory='TW', variant='', encoding='')
+
+    >>> parse_locale('es_419')
+    Locale(language='es', script='', territory='419', variant='', encoding='')
+
+    >>> parse_locale('sr_latin_RS')
+    Locale(language='sr', script='Latn', territory='RS', variant='', encoding='')
+
+    >>> parse_locale('sr_Latn_RS')
+    Locale(language='sr', script='Latn', territory='RS', variant='', encoding='')
+
+    >>> parse_locale('sr_RS@latin')
+    Locale(language='sr', script='Latn', territory='RS', variant='', encoding='')
+
+    >>> parse_locale('sr_RS@Latn')
+    Locale(language='sr', script='Latn', territory='RS', variant='', encoding='')
+
+    >>> parse_locale('sr_RS.UTF-8@latin')
+    Locale(language='sr', script='Latn', territory='RS', variant='', encoding='UTF-8')
+
+    >>> parse_locale('ca_ES')
+    Locale(language='ca', script='', territory='ES', variant='', encoding='')
+
+    >>> parse_locale('ca_ES.UTF-8')
+    Locale(language='ca', script='', territory='ES', variant='', encoding='UTF-8')
+
+    >>> parse_locale('ca_ES_VALENCIA')
+    Locale(language='ca', script='', territory='ES', variant='VALENCIA', encoding='')
+
+    >>> parse_locale('ca_Latn_ES_VALENCIA')
+    Locale(language='ca', script='Latn', territory='ES', variant='VALENCIA', encoding='')
+
+    >>> parse_locale('ca_ES.UTF-8@valencia')
+    Locale(language='ca', script='', territory='ES', variant='VALENCIA', encoding='UTF-8')
+
+    >>> parse_locale('ca_ES@valencia')
+    Locale(language='ca', script='', territory='ES', variant='VALENCIA', encoding='')
+
+    >>> parse_locale('en_US_POSIX')
+    Locale(language='en', script='', territory='US', variant='POSIX', encoding='')
+
+    >>> parse_locale('POSIX')
+    Locale(language='en', script='', territory='US', variant='POSIX', encoding='')
+
+    >>> parse_locale('C')
+    Locale(language='en', script='', territory='US', variant='POSIX', encoding='')
+
+    >>> parse_locale('C.UTF-8')
+    Locale(language='en', script='', territory='US', variant='POSIX', encoding='UTF-8')
+
+    '''
+    language = ''
+    script = ''
+    territory = ''
+    variant = ''
+    encoding = ''
+    if localeId:
+        dot_index = localeId.find('.')
+        at_index = localeId.find('@')
+        if dot_index >= 0 and at_index > dot_index:
+            encoding  = localeId[dot_index + 1:at_index]
+            localeId = localeId[:dot_index] + localeId[at_index:]
+        elif dot_index >= 0:
+            encoding = localeId[dot_index + 1:]
+            localeId = localeId[:dot_index]
+    if localeId:
+        valencia_index = localeId.lower().find('@valencia')
+        if valencia_index < 0:
+            valencia_index = localeId.upper().find('_VALENCIA')
+        if valencia_index >= 0:
+            variant = 'VALENCIA'
+            localeId = localeId[:valencia_index]
+    if localeId:
+        if localeId in ('C', 'POSIX', 'en_US_POSIX'):
+            language = 'en'
+            territory = 'US'
+            variant = 'POSIX'
+            localeId = ''
+    if localeId:
+        for key in _glibc_script_ids:
+            localeId = localeId.replace(key, _glibc_script_ids[key])
+            if localeId.endswith('@' + _glibc_script_ids[key]):
+                script = _glibc_script_ids[key]
+                localeId = localeId.replace('@' + _glibc_script_ids[key], '')
+    if localeId:
+        at_index = localeId.find('@')
+        if at_index >= 0:
+            # If there is still an @ followed by something, it is not
+            # a known script, otherwise it would have been parsed as a
+            # script in the previous section. In that case it is a
+            # variant of the locale.
+            variant = localeId[at_index + 1:].upper()
+            localeId = localeId[:at_index]
+    if localeId:
+        match = _cldr_locale_pattern.match(localeId)
+        if match:
+            language = match.group('language')
+            if match.group('script'):
+                script = match.group('script')
+            if match.group('territory'):
+                territory = match.group('territory')
+        else:
+            LOGGER.info("localeId contains invalid locale id=%s", localeId)
+    return Locale(language=language,
+                  script=script,
+                  territory=territory,
+                  variant=variant,
+                  encoding=encoding)
+
+def locale_normalize(localeId) -> str:
+    '''
+    Returns a normalized version of the locale id string *without* the encoding.
+
+    :param localeId: The original locale id string
+
+    Examples:
+
+    >>> locale_normalize('ks_IN@devanagari')
+    'ks_Deva_IN'
+    >>> locale_normalize('ks_IN.UTF-8@devanagari')
+    'ks_Deva_IN'
+    >>> locale_normalize('tt_RU.UTF-8@iqtelif')
+    'tt_Latn_RU'
+    >>> locale_normalize('de_DE.ISO-8859-15@euro')
+    'de_DE_EURO'
+    >>> locale_normalize('gez_ER.UTF-8@abegede')
+    'gez_ER_ABEGEDE'
+    >>> locale_normalize('ar_ER.UTF-8@saaho')
+    'ar_ER_SAAHO'
+    >>> locale_normalize('es_419')
+    'es_419'
+    >>> locale_normalize('sr_RS.UTF-8@latin')
+    'sr_Latn_RS'
+    >>> locale_normalize('ca_ES.UTF-8@valencia')
+    'ca_ES_VALENCIA'
+    >>> locale_normalize('C.UTF-8')
+    'en_US_POSIX'
+    >>> locale_normalize('')
+    ''
+
+    '''
+    locale = parse_locale(localeId)
+    normalized_locale_id = locale.language
+    if locale.script:
+        normalized_locale_id += '_' + locale.script
+    if locale.territory:
+        normalized_locale_id += '_' + locale.territory
+    if locale.variant:
+        normalized_locale_id += '_' + locale.variant
+    return normalized_locale_id
+
 SPANISH_419_LOCALES = (
     'es_AR', 'es_MX', 'es_BO', 'es_CL', 'es_CO', 'es_CR',
     'es_CU', 'es_DO', 'es_EC', 'es_GT', 'es_HN', 'es_NI',
@@ -2449,6 +2736,15 @@ def expand_languages(languages: List[str]) -> List[str]:
     >>> expand_languages(['zh_Hant', 'zh_CN', 'zh_TW', 'zh_SG', 'zh_HK', 'zh_MO'])
     ['zh_Hant', 'zh_CN', 'zh', 'zh_TW', 'zh_Hant', 'zh_SG', 'zh', 'zh_HK', 'zh_Hant', 'zh_MO', 'zh_Hant', 'en']
 
+    >>> expand_languages(['ks_Deva_IN'])
+    ['ks_Deva_IN', 'ks_Deva', 'ks', 'en']
+
+    >>> expand_languages(['ca_ES_VALENCIA'])
+    ['ca_ES_VALENCIA', 'ca_ES', 'ca', 'en']
+
+    >>> expand_languages(['ca_Latn_ES_VALENCIA'])
+    ['ca_Latn_ES_VALENCIA', 'ca_Latn_ES', 'ca_Latn', 'ca', 'en']
+
     >>> expand_languages(['nb_NO'])
     ['nb_NO', 'no', 'nb', 'en']
 
@@ -2460,6 +2756,15 @@ def expand_languages(languages: List[str]) -> List[str]:
 
     >>> expand_languages(['en_GB', 'en'])
     ['en_GB', 'en_001', 'en', 'en', 'en_001']
+
+    >>> expand_languages(['sr_Latn_RS'])
+    ['sr_Latn_RS', 'sr_Latn', 'sr', 'en']
+
+    >>> expand_languages(['ca_ES_VALENCIA'])
+    ['ca_ES_VALENCIA', 'ca_ES', 'ca', 'en']
+
+    >>> expand_languages(['en_US_POSIX'])
+    ['en_US_POSIX', 'en_001', 'en_US', 'en']
 
     >>> expand_languages([])
     ['en']
@@ -2478,9 +2783,12 @@ def expand_languages(languages: List[str]) -> List[str]:
             expanded_languages.append('no')
         if language[:2] == 'no':
             expanded_languages.append('nb')
+        language_parts = language.split('_')
         if (language not in ('zh_TW', 'zh_HK', 'zh_MO', 'zh_Hant')
-                and language.split('_')[:1] != [language]):
-            expanded_languages += language.split('_')[:1]
+                and language_parts[:1] != [language]):
+            while len(language_parts) > 1:
+                expanded_languages += ['_'.join(language_parts[:-1])]
+                language_parts.pop()
     if 'en' not in expanded_languages:
         expanded_languages.append('en')
     return expanded_languages
@@ -2718,12 +3026,11 @@ def remove_accents(text: str, keep: str = '') -> str:
 def is_right_to_left_messages() -> bool:
     '''
     Check whether the effective LC_MESSAGES locale points to a languages
-    which is usually written  in a right-to-left script.
+    which is usually written in a right-to-left script.
 
     :return: True if right-to-left, False if not.
     '''
-    lc_messages_locale, dummy_lc_messages_encoding = locale.getlocale(
-        category=locale.LC_MESSAGES)
+    lc_messages_locale = get_effective_lc_messages()
     if not lc_messages_locale:
         return False
     lang = lc_messages_locale.split('_')[0]

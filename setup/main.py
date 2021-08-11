@@ -915,7 +915,7 @@ class SetupUI(Gtk.Window):
             # dictionaries to the default for the current locale.
             _('Set dictionaries to the default for the current locale.')
             + ' LC_CTYPE=%s'
-            % '.'.join(locale.getlocale(category=locale.LC_CTYPE)))
+            % itb_util.get_effective_lc_ctype())
         self._dictionaries_default_button.connect(
             'clicked', self._on_dictionaries_default_button_clicked)
         self._dictionaries_default_button.set_sensitive(True)
@@ -1032,7 +1032,7 @@ class SetupUI(Gtk.Window):
             # input methods to the default for the current locale.
             _('Set input methods to the default for the current locale.')
             + ' LC_CTYPE=%s'
-            % '.'.join(locale.getlocale(category=locale.LC_CTYPE)))
+            % itb_util.get_effective_lc_ctype())
         self._input_methods_default_button.connect(
             'clicked', self._on_input_methods_default_button_clicked)
         self._input_methods_default_button.set_sensitive(True)
@@ -1995,8 +1995,7 @@ class SetupUI(Gtk.Window):
         if IMPORT_LANGTABLE_SUCCESSFUL:
             language_description = langtable.language_name(
                 languageId=name,
-                languageIdQuery=locale.getlocale(
-                    category=locale.LC_MESSAGES)[0])
+                languageIdQuery=itb_util.get_effective_lc_messages())
             if not language_description:
                 language_description = langtable.language_name(
                     languageId=name, languageIdQuery='en')
@@ -2068,7 +2067,7 @@ class SetupUI(Gtk.Window):
             # There are no dictionaries set in dconf, get a default list of
             # dictionaries from the current effective value of LC_CTYPE:
             self._dictionary_names = itb_util.get_default_dictionaries(
-                locale.getlocale(category=locale.LC_CTYPE)[0])
+                itb_util.get_effective_lc_ctype())
             # And save the default dictionaries to settings:
             self._gsettings.set_value(
                 'dictionary',
@@ -2175,7 +2174,7 @@ class SetupUI(Gtk.Window):
             # There is no ime set in dconf, get a default list of
             # input methods for the current effective value of LC_CTYPE:
             self._current_imes = itb_util.get_default_input_methods(
-                locale.getlocale(category=locale.LC_CTYPE)[0])
+                itb_util.get_effective_lc_ctype())
             # And save the default input methods to settings:
             self._gsettings.set_value(
                 'inputmethod',
@@ -2873,7 +2872,7 @@ class SetupUI(Gtk.Window):
             text_to_match = name.replace(' ', '')
             if IMPORT_LANGTABLE_SUCCESSFUL:
                 query_languages = [
-                    locale.getlocale(category=locale.LC_MESSAGES)[0],
+                    itb_util.get_effective_lc_messages(),
                     name, 'en']
                 for query_language in query_languages:
                     if query_language:
@@ -3095,7 +3094,7 @@ class SetupUI(Gtk.Window):
 
         '''
         self.set_dictionary_names(itb_util.get_default_dictionaries(
-            locale.getlocale(category=locale.LC_CTYPE)[0]))
+            itb_util.get_effective_lc_ctype()))
 
     def _on_dictionary_selected(
             self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
@@ -3214,7 +3213,7 @@ class SetupUI(Gtk.Window):
                     )
             if IMPORT_LANGTABLE_SUCCESSFUL:
                 query_languages = [
-                    locale.getlocale(category=locale.LC_MESSAGES)[0],
+                    itb_util.get_effective_lc_messages(),
                     ime_language, 'en']
                 for query_language in query_languages:
                     if query_language:
@@ -3439,7 +3438,7 @@ class SetupUI(Gtk.Window):
         Sets the input methods to the default for the current locale.
         '''
         self.set_current_imes(itb_util.get_default_input_methods(
-            locale.getlocale(category=locale.LC_CTYPE)[0]))
+            itb_util.get_effective_lc_ctype()))
 
     def _on_input_method_selected(
             self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
