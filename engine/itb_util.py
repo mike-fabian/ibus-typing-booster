@@ -3872,6 +3872,7 @@ class ComposeSequences:
             # the file from ibus:
             compose_file_paths.append(self._locale_compose_file())
             compose_file_paths.append(os.path.expanduser('~/.config/gtk-3.0/Compose'))
+            compose_file_paths.append(os.path.expanduser('~/.config/gtk-4.0/Compose'))
             compose_file_paths.append(os.path.expanduser('~/.config/ibus/Compose'))
         # Now read all compose files on the list. If some of the compose files read
         # contain different definitions of compose sequences, the definition
