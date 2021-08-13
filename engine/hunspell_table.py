@@ -1571,9 +1571,9 @@ class TypingBoosterEngine(IBus.Engine):
                     'Dictionary.' + str(i)
                 ] = {'number': i,
                      'symbol': current_dictionaries[i]
-                     + ' ' + itb_util.FLAGS.get(current_dictionaries[i], ''),
+                     + ' ' + itb_util.get_flag(current_dictionaries[i]),
                      'label': current_dictionaries[i]
-                     + ' ' + itb_util.FLAGS.get(current_dictionaries[i], ''),
+                     + ' ' + itb_util.get_flag(current_dictionaries[i]),
                      'tooltip': '', # tooltips do not work in sub-properties
                 }
             else:
@@ -2110,7 +2110,7 @@ class TypingBoosterEngine(IBus.Engine):
                     MODE_OFF_SYMBOL + OFF_THE_RECORD_MODE_SYMBOL + ' ')
             names = self.get_dictionary_names()
             dictionary_label = (
-                names[0] + ' ' + itb_util.FLAGS.get(names[0], ''))
+                names[0] + ' ' + itb_util.get_flag(names[0]))
             if dictionary_label:
                 aux_string += dictionary_label
             preedit_ime = self.get_current_imes()[0]
@@ -4573,7 +4573,7 @@ class TypingBoosterEngine(IBus.Engine):
             auxiliary_text_label = (
                 self._label_speech_recognition_string.strip())
         auxiliary_text_label += language_code
-        flag = itb_util.FLAGS.get(language_code.replace('-', '_'), '')
+        flag = itb_util.get_flag(language_code.replace('-', '_'))
         if flag:
             auxiliary_text_label += ' ' + flag
         if (language_code.replace('-', '_')

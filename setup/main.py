@@ -1987,7 +1987,7 @@ class SetupUI(Gtk.Window):
         :param name: Name of the hunspell dictionary
         '''
         missing_dictionary = False
-        flag = itb_util.FLAGS.get(name, '  ')
+        flag = itb_util.get_flag(name)
         row = name + ' ' + flag
         if itb_util.is_right_to_left_messages():
             # Add U+200E LEFT-TO-RIGHT MARK to name and flag:
