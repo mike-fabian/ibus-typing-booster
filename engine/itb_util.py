@@ -351,7 +351,7 @@ LOCALE_DEFAULTS = {
     'om_KE': {'inputmethods': ['NoIME'], 'dictionaries': ['om_KE']},
     'or': {'inputmethods': ['or-inscript2', 'NoIME'],
            'dictionaries': ['or_IN', 'en_GB']},
-    'pa': {'inputmethods': ['pa-inscript2-guru', 'NoIME'],
+    'pa': {'inputmethods': ['pa-inscript2', 'NoIME'],
            'dictionaries': ['pa_IN', 'en_GB']},
     'pa_PK': {'inputmethods': ['NoIME'], 'dictionaries': ['en_GB']},
     'pl': {'inputmethods': ['NoIME'], 'dictionaries': ['pl_PL']},
