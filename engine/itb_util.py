@@ -4208,7 +4208,7 @@ class M17nDbInfo:
         '''
         Returns the list of directories  which contain the m17n input methods.
 
-        There has be one system directory (e.g. /usr/share/m17n) and
+        There has to be one system directory (e.g. /usr/share/m17n) and
         it is possible that there is also a user directory indicated
         by the M17NDIR environment variable. If the environment
         variable M17NDIR is not set, the user directory is '~/.m17nd.'
