@@ -4136,6 +4136,7 @@ class M17nDbInfo:
                 'So no transliteration or composing '
                 'is done here.'),
             'content': '',
+            'icon': '',
             }
         for dirname in self._dirs:
             for mim_path in glob.glob(os.path.join(dirname, '*.mim')):
@@ -4186,6 +4187,19 @@ class M17nDbInfo:
                         ime, mim_path, self._imes[ime]['path'])
                     continue
                 self._imes[ime] = {'path': mim_path}
+                icon_path_long = os.path.join(
+                    dirname, 'icons', lang + '-' + name + '.png')
+                icon_path_short = os.path.join(
+                    dirname, 'icons', name + '.png')
+                if os.path.isfile(icon_path_long):
+                    self._imes[ime]['icon'] = icon_path_long
+                elif os.path.isfile(icon_path_short):
+                    self._imes[ime]['icon'] = icon_path_short
+                if 'icon' not in self._imes[ime]:
+                    LOGGER.warning(
+                        'No icon found for input method: “%s”. '
+                        'Neither file %s nor %s exist.',
+                        ime, icon_path_long, icon_path_short)
                 title_pattern = re.compile(
                     r'\([\s]*title[\s]*"(?P<title>.+?)(?<!\\)"[\s]*\)',
                     re.DOTALL|re.MULTILINE|re.UNICODE)
@@ -4271,6 +4285,17 @@ class M17nDbInfo:
         '''
         if ime in self._imes and 'content' in self._imes[ime]:
             return self._imes[ime]['content']
+        return ''
+
+    def get_icon(self, ime: str) -> str:
+        '''Get the full path of the icon file of the input method.
+
+        :param ime: Name of the input method
+        :return: Path of the icon file of the input method.
+                 Empty string if no icon file has been found.
+        '''
+        if ime in self._imes and 'icon' in self._imes[ime]:
+            return self._imes[ime]['icon']
         return ''
 
     def __str__(self) -> str:
