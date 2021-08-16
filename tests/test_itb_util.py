@@ -23,12 +23,22 @@ This file implements test cases for miscellaneous stuff in itb_util.py.
 
 import sys
 import os
+import logging
 import unittest
 import unicodedata
 
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
+
+LOGGER = logging.getLogger('ibus-typing-booster')
+
+IMPORT_DISTRO_SUCCESSFUL = False
+try:
+    import distro # type: ignore
+    IMPORT_DISTRO_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_DISTRO_SUCCESSFUL = False
 
 sys.path.insert(0, "../engine")
 import itb_util
@@ -43,6 +53,22 @@ class ItbUtilTestCase(unittest.TestCase):
 
     def test_dummy(self):
         self.assertEqual(True, True)
+
+    @unittest.skipUnless(
+        IMPORT_DISTRO_SUCCESSFUL
+        and distro.id() == 'fedora'
+        and distro.version() >= '34',
+        'Skipping, requires new enough m17n-db package, '
+        'might not be available on older distributions.')
+    def test_default_input_methods_available(self):
+        m17n_db_info = itb_util.M17nDbInfo()
+        available_imes = m17n_db_info.get_imes()
+        missing_imes_for_defaults = []
+        for locale in itb_util.LOCALE_DEFAULTS:
+            for ime in itb_util.LOCALE_DEFAULTS[locale]['inputmethods']:
+                if ime not in available_imes:
+                    missing_imes_for_defaults.append(ime)
+        self.assertEqual([], missing_imes_for_defaults)
 
     def test_is_right_to_left_messages(self):
         if 'LC_ALL' in os.environ:
@@ -99,4 +125,7 @@ class ItbUtilTestCase(unittest.TestCase):
             'alkoholförgiftning')
 
 if __name__ == '__main__':
+    LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
+    LOGGER.setLevel(logging.DEBUG)
+    LOGGER.addHandler(LOG_HANDLER)
     unittest.main()
