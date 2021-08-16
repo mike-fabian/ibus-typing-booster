@@ -2205,7 +2205,12 @@ class SetupUI(Gtk.Window):
             label.set_margin_end(margin)
             label.set_margin_top(margin)
             label.set_margin_bottom(margin)
-            self._input_methods_listbox.insert(label, -1)
+            image = Gtk.Image.new_from_file(M17N_DB_INFO.get_icon(ime))
+            image.set_pixel_size(48)
+            hbox = Gtk.HBox()
+            hbox.pack_start(image, False, False, 10)
+            hbox.pack_start(label, False, False, 0)
+            self._input_methods_listbox.insert(hbox, -1)
         self._input_methods_listbox.show_all()
         self._input_methods_add_button.set_sensitive(
             len(self._current_imes) < itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS)
@@ -3173,6 +3178,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_add_listbox.connect(
             'row-selected', self._on_input_method_to_add_selected)
         rows = []
+        images = {}
         for ime in M17N_DB_INFO.get_imes():
             if ime in self._current_imes:
                 continue
@@ -3228,6 +3234,8 @@ class SetupUI(Gtk.Window):
             if filter_match:
                 self._input_methods_add_listbox_imes.append(ime)
                 rows.append(row)
+                images[row] = Gtk.Image.new_from_file(
+                    M17N_DB_INFO.get_icon(ime))
         for row in rows:
             label = Gtk.Label()
             label.set_text(html.escape(row))
@@ -3238,7 +3246,11 @@ class SetupUI(Gtk.Window):
             label.set_margin_end(margin)
             label.set_margin_top(margin)
             label.set_margin_bottom(margin)
-            self._input_methods_add_listbox.insert(label, -1)
+            hbox = Gtk.HBox()
+            images[row].set_pixel_size(48)
+            hbox.pack_start(images[row], False, False, 10)
+            hbox.pack_start(label, False, False, 0)
+            self._input_methods_add_listbox.insert(hbox, -1)
         self._input_methods_add_popover.show_all()
 
     def _on_input_methods_search_entry_changed(

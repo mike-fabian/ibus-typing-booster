@@ -4136,7 +4136,9 @@ class M17nDbInfo:
                 'So no transliteration or composing '
                 'is done here.'),
             'content': '',
-            'icon': '',
+            'icon': os.path.join(
+                itb_version.get_prefix(),
+                'share/icons/hicolor/48x48/apps/ibus-typing-booster.png'),
             }
         for dirname in self._dirs:
             for mim_path in glob.glob(os.path.join(dirname, '*.mim')):
