@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/sh
 # vim:set et sts=4 sw=4
 #
 # ibus-typing-booster - A completion input method for IBus
