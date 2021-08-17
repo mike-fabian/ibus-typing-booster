@@ -19,6 +19,58 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.14.4" date="2021-08-22" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.14.4</url>
+      <issues>
+        <issue>
+          Translation update from Weblate (de, nl, pl, sv, tr, uk updated to 100%, si new)
+        </issue>
+        <issue>
+          Update emoji annotations from CLDR
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/223">
+          github-issues#223: Treat typing space within a preedit
+          similar to typing Return within a preedit
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/227">
+          github-issues#227: When a key triggers a commit while no
+          candidate is selected, the cursor should **always** be
+          corrected leftwards
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/226">
+          github-issues#226: When committing with Return inside a
+          preedit, database recording and pushed context is wrong
+        </issue>
+        <issue>
+          Fix a typo which caused “\n” to be committed where “\t”
+          should have been committed.
+        </issue>
+        <issue>
+          Remove spaces in lookup representation of compose
+          completions
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/224">
+          github-issues#224: If a keypad key makes compose sequence
+          invalid, try sequence with regular keys instead (And the
+          other way round)
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/222">
+          github-issues#222: Make typing Return or KP_Enter inside a
+          preedit more reliable
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/213">
+          github-issues#213: Show input method icons in the setup tool
+          if an icon is available
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/212">
+          github-issues#212: Rename option “Arrow keys can reopen a
+          preedit” to “Enable reopening preedits”
+        </issue>
+      </issues>
+    </release>
     <release version="2.14.0" date="2021-08-12" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

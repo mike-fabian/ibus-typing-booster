@@ -1,4 +1,18 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 22 Aug 2021 Released 2.14.4
+* Translation update from Weblate (de, nl, pl, sv, tr, uk updated to 100%, si new)
+* Update emoji annotations from CLDR
+* Treat typing space within a preedit similar to typing Return within a preedit (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/223)
+* When a key triggers a commit while no candidate is selected, the cursor should **always** be corrected leftwards (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/227)
+* When committing with Return inside a preedit, database recording and pushed context is wrong (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/226)
+* Fix a typo which caused “\n” to be committed where “\t” should have been committed.
+* Remove spaces in lookup representation of compose completions
+* If a keypad key makes compose sequence invalid, try sequence with regular keys instead (And the other way round) (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/224)
+* Make typing Return or KP_Enter inside a preedit more reliable (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/222)
+* Show input method icons in the setup tool if an icon is available (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/213)
+* Rename option “Arrow keys can reopen a preedit” to “Enable reopening preedits (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/212)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 12 Aug 2021 Released 2.14.0
 * Translation update from Weblate (de, nl, pl, sv, tr, uk updated to 100%)
 * Update emoji annotations from CLDR
