@@ -193,15 +193,12 @@
     </key>
     <key name="arrowkeysreopenpreedit" type="b">
       <default>false</default>
-      <summary>Arrow keys can reopen a preedit</summary>
+      <summary>Enable reopening preedits</summary>
       <description>
-        Whether it is allowed to reopen a preedit when the cursor
-        reaches a word boundary after moving it with the arrow
-        keys. Enabling this option is useful to correct already
-        committed words. But it is quite buggy at the moment and how
-        well it works depends on repetition speed of the arrow keys
-        and system load. Because it is buggy, this option is off by
-        default.
+        Whether it is allowed to put a word back into a preedit when
+        the cursor moves to the end or the beginning of a word.
+        Enabling this option is useful to correct already
+        committed words.
       </description>
     </key>
     <key name="emojipredictions" type="b">

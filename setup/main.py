@@ -619,23 +619,15 @@ class SetupUI(Gtk.Window):
 
         self._arrow_keys_reopen_preedit_checkbutton = Gtk.CheckButton(
             # Translators: Whether it is allowed to reopen a preedit
-            # when the cursor reaches a word boundary after moving it
-            # with the arrow keys. Enabling this option is useful to
-            # correct already committed words. But it is quite buggy
-            # at the moment and how well it works depends on
-            # repetition speed of the arrow keys and system
-            # load. Because it is buggy, this option is off by
-            # default.
-            label=_('Arrow keys can reopen a preedit'))
+            # when the cursor reaches a word boundary after moving it.
+            # Enabling this option is useful to correct already
+            # committed words.
+            label=_('Enable reopening preedits'))
         self._arrow_keys_reopen_preedit_checkbutton.set_tooltip_text(
-            _('Whether it is allowed to reopen a preedit when '
-              'the cursor reaches a word boundary after moving '
-              'it with the arrow keys. Enabling this option is '
-              'useful to correct already committed words. But it '
-              'is quite buggy at the moment and how well it '
-              'works depends on repetition speed of the arrow '
-              'keys and system load. Because it is buggy, '
-              'this option is off by default.'))
+            _('Whether it is allowed to put a word back into a preedit when '
+              'the cursor moves to the end or the beginning of a word. '
+              'Enabling this option is useful to correct already '
+              'committed words.'))
         self._arrow_keys_reopen_preedit_checkbutton.connect(
             'clicked', self._on_arrow_keys_reopen_preedit_checkbutton)
         self._arrow_keys_reopen_preedit = itb_util.variant_to_value(
