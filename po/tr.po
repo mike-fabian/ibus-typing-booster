@@ -10,10 +10,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-08-17 18:12+0200\n"
-"PO-Revision-Date: 2021-08-07 19:27+0000\n"
+"PO-Revision-Date: 2021-08-17 17:12+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
-"Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/tr/>\n"
+"Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -83,7 +83,7 @@ msgstr "Unicode kategorileri"
 
 #: engine/emoji_picker.py:632
 msgid "Keywords"
-msgstr "Anahtar kelimeler"
+msgstr "Anahtar sözcükler"
 
 #: engine/emoji_picker.py:672
 msgid "Fonts used to render this emoji:"
@@ -180,11 +180,11 @@ msgstr "En yüksek öncelikli sözlüğü seç"
 
 #: engine/hunspell_table.py:1615
 msgid "Preedit input method"
-msgstr "Ön-düzenleme giriş yöntemi"
+msgstr "Ön düzenleme giriş yöntemi"
 
 #: engine/hunspell_table.py:1616
 msgid "Switch preedit input method"
-msgstr "Ön-düzenleme giriş yöntemini değiştir"
+msgstr "Ön düzenleme giriş yöntemini değiştir"
 
 #: engine/hunspell_table.py:1932
 msgid "Setup"
@@ -455,7 +455,7 @@ msgid ""
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
-"Tüm aday listesini göstermek yerine, en iyi tamamlama seçeneğinin ön-"
+"Tüm aday listesini göstermek yerine, en iyi tamamlama seçeneğinin ön "
 "düzenlemede satır içi olarak gösterilip gösterilmeyeceği. Satır içi aday, "
 "Tab tuşuna basılarak seçilebilir ve daha sonra her zamanki gibi "
 "kullanılabilir, örneğin Space veya Control+Space tuşlarına basarak. Tab "
@@ -521,7 +521,7 @@ msgstr ""
 #. the session is restarted.
 #: setup/main.py:467
 msgid "Remember last used preedit input method"
-msgstr "Son kullanılan ön-düzenleme giriş yöntemini hatırla"
+msgstr "Son kullanılan ön düzenleme giriş yöntemini hatırla"
 
 #: setup/main.py:469
 msgid ""
@@ -530,8 +530,8 @@ msgid ""
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
 msgstr ""
-"Birden fazla giriş yöntemi aynı anda kullanılırsa, bunlardan biri ön-"
-"düzenleme için kullanılır. Ön-düzenleme için hangi giriş yönteminin "
+"Birden fazla giriş yöntemi aynı anda kullanılırsa, bunlardan biri ön "
+"düzenleme için kullanılır. Ön düzenleme için hangi giriş yönteminin "
 "kullanılacağı menüden veya kısayol tuşlarıyla değiştirilebilir. Bu seçenek "
 "etkinse, oturum yeniden başlatılsa bile böyle bir değişiklik hatırlanır."
 
@@ -577,10 +577,10 @@ msgid ""
 msgstr ""
 "“Kayıt dışı” modu açıkken, kullanıcı girişinden öğrenme devre dışı "
 "bırakılır. Öğrenilmiş kullanıcı girişi kullanılabiliyorsa, tahminler "
-"genellikle sadece sözlük kullanan tahminlerden çok daha iyidir. Bu nedenle, "
-"kişi bu seçeneği tedbirli bir şekilde kullanmalıdır. Sadece gizli kullanıcı "
-"girişini diske kaydetmekten kaçınmak isteniyorsa, bu seçeneği geçici olarak "
-"kullanmak mantıklı olabilir."
+"genellikle yalnızca sözlük kullanan tahminlerden çok daha iyidir. Bu "
+"nedenle, kişi bu seçeneği tedbirli bir şekilde kullanmalıdır. Yalnızca gizli "
+"kullanıcı girişini diske kaydetmekten kaçınmak isteniyorsa, bu seçeneği "
+"geçici olarak kullanmak mantıklı olabilir."
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -633,7 +633,7 @@ msgstr ""
 #. committed words.
 #: setup/main.py:625
 msgid "Enable reopening preedits"
-msgstr ""
+msgstr "Ön düzenlemeleri yeniden açmayı etkinleştir"
 
 #: setup/main.py:627
 msgid ""
@@ -641,6 +641,9 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
+"İmleç bir sözcüğün başına veya sonuna hareket ettiğinde sözcüğü ön "
+"düzenlemeye geri koymaya izin verilip verilmeyeceği. Bu seçeneği "
+"etkinleştirmek, zaten seçilmiş olan sözcükleri düzeltmek için kullanışlıdır."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -670,7 +673,7 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
-"Bu listedeki karakterler, ön-düzenlemenin otomatik olarak kullanılmasını ve "
+"Bu listedeki karakterler, ön düzenlemenin otomatik olarak kullanılmasını ve "
 "ardından bir boşluk eklenmesini sağlar.  Örneğin, “.” bir otomatik kullanma "
 "karakteriyse, cümlenin bitiminden sonra elle bir boşluk girmekten "
 "kurtulursunuz. Bu listeyi serbestçe düzenleyebilirsiniz, makul bir değer "
@@ -924,7 +927,7 @@ msgid ""
 "above the candidate list."
 msgstr ""
 "Yardımcı metinde “Emoji tahmini”  modunun ve “Kayıt dışı”  modunun açık veya "
-"kapalı olduğunu ve ön-düzenleme için o anda hangi giriş yönteminin "
+"kapalı olduğunu ve ön düzenleme için o anda hangi giriş yönteminin "
 "kullanıldığını göster. Yardımcı metin, aday listesinin üzerinde görüntülenen "
 "isteğe bağlı bir metin satırıdır."
 
@@ -962,11 +965,11 @@ msgstr "Dikey"
 #. underlining for the preedit.
 #: setup/main.py:1382
 msgid "Preedit underline"
-msgstr "Ön-düzenleme alt çizgisi"
+msgstr "Ön düzenleme alt çizgisi"
 
 #: setup/main.py:1384
 msgid "Which style of underlining to use for the preedit."
-msgstr "Ön-düzenleme için kullanılacak alt çizgi tarzı."
+msgstr "Ön düzenleme için kullanılacak alt çizgi tarzı."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
@@ -1000,7 +1003,7 @@ msgstr "Düşük"
 #. of characters before a lookup is done.
 #: setup/main.py:1434
 msgid "Use preedit style only if lookup is enabled"
-msgstr "Ön-düzenleme tarzını sadece arama etkinse kullan"
+msgstr "Ön düzenleme tarzını yalnızca arama etkinse kullan"
 
 #: setup/main.py:1436
 msgid ""
@@ -1009,11 +1012,11 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
-"Bu seçenek açıksa, alt çizgi gibi bir ön-düzenleme tarzı sadece arama "
-"etkinse kullanılacaktır. Sadece bir tuşa basıldığında aramayı etkinleştirme "
-"seçeneği kullanılıyorsa veya bir arama yapılmadan önce asgari sayıda "
-"karakter gerektirme seçeneği kullanılıyorsa arama devre dışı bırakılmış "
-"olabilir."
+"Bu seçenek açıksa, alt çizgi gibi bir ön düzenleme tarzı yalnızca arama "
+"etkinse kullanılacaktır. Yalnızca bir tuşa basıldığında aramayı "
+"etkinleştirme seçeneği kullanılıyorsa veya bir arama yapılmadan önce asgari "
+"sayıda karakter gerektirme seçeneği kullanılıyorsa arama devre dışı "
+"bırakılmış olabilir."
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and
@@ -1021,7 +1024,7 @@ msgstr ""
 #. might contain a spelling error.
 #: setup/main.py:1460
 msgid "Preedit spellchecking"
-msgstr "Ön-düzenleme yazım denetimi"
+msgstr "Ön düzenleme yazım denetimi"
 
 #: setup/main.py:1462
 msgid ""
@@ -1029,7 +1032,7 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
-"Burada, ön-düzenleme içeriğinde yazım denetiminin yapılıp yapılmayacağını ve "
+"Burada, ön düzenleme içeriğinde yazım denetiminin yapılıp yapılmayacağını ve "
 "ön düzenleme olası bir yazım hatası içerdiğinde belirtmek için özel bir renk "
 "kullanılıp kullanılmayacağını seçebilirsiniz."
 
@@ -1038,7 +1041,7 @@ msgstr ""
 #. the spellchecking in the preedit.
 #: setup/main.py:1492
 msgid "Choose color for preedit spellchecking"
-msgstr "Ön-düzenleme yazım denetimi için renk seç"
+msgstr "Ön düzenleme yazım denetimi için renk seç"
 
 #: setup/main.py:1494
 msgid ""
@@ -1047,7 +1050,7 @@ msgid ""
 "preedit spellchecking is enabled."
 msgstr ""
 "Burada, ön düzenleme olası bir yazım hatası içerdiğinde hangi rengin "
-"kullanılacağını belirtebilirsiniz. Bu ayar sadece ön-düzenleme yazım "
+"kullanılacağını belirtebilirsiniz. Bu ayar yalnızca ön düzenleme yazım "
 "denetimi etkinleştirilmişse etkili olur."
 
 #. Translators: A checkbox where one can choose whether a
@@ -1078,7 +1081,7 @@ msgid ""
 "inline completion is enabled."
 msgstr ""
 "Burada satır içi tamamlama için hangi rengin kullanılacağını "
-"belirleyebilirsiniz. Bu ayarın sadece satır içi tamamlama için renk "
+"belirleyebilirsiniz. Bu ayarın yalnızca satır içi tamamlama için renk "
 "kullanımı ve satır içi tamamlama etkinse bir etkisi olacaktır."
 
 #. Translators: A checkbox where one can choose whether a
@@ -1136,7 +1139,7 @@ msgid ""
 "use of color for candidates from the user database is enabled."
 msgstr ""
 "Burada, arama tablosundaki adaylardan kullanıcı veri tabanından gelenler "
-"için hangi rengin kullanılacağını belirleyebilirsiniz. Bu ayarın, sadece "
+"için hangi rengin kullanılacağını belirleyebilirsiniz. Bu ayarın, yalnızca "
 "kullanıcı veri tabanından gelen adaylar için renk kullanımı etkinse bir "
 "etkisi olacaktır."
 
@@ -1168,7 +1171,7 @@ msgid ""
 "color for candidates from spellchecking is enabled."
 msgstr ""
 "Burada, arama tablosundaki adaylardan yazım denetiminden gelenler için hangi "
-"rengin kullanılacağını belirleyebilirsiniz. Bu ayarın sadece yazım "
+"rengin kullanılacağını belirleyebilirsiniz. Bu ayarın yalnızca yazım "
 "denetiminden gelen adaylar için renk kullanımı etkinse bir etkisi olacaktır."
 
 #. Translators: A checkbox where one can choose whether a
@@ -1200,7 +1203,7 @@ msgid ""
 "color for candidates from a dictionary is enabled."
 msgstr ""
 "Burada, arama tablosundaki adaylardan bir sözlükten gelenler için hangi "
-"rengin kullanılacağını belirleyebilirsiniz. Bu ayarın sadece bir sözlükten "
+"rengin kullanılacağını belirleyebilirsiniz. Bu ayarın yalnızca bir sözlükten "
 "gelen adaylar için renk kullanımı etkinse bir etkisi olacaktır."
 
 #. Translators: A checkbox where one can choose whether a
@@ -1418,8 +1421,8 @@ msgid ""
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
 "ibus-typing-booster, tahmine dayalı bir giriş yöntemidir ve içerik ve kısmi "
-"girişe dayanarak kelimenin tamamı için öngörüde bulunur. Bir kişi, bir öneri "
-"listesinden istediği kelimeyi seçebilir ve yazma hızını ve imlasını "
+"girişe dayanarak sözcüğün tamamı için öngörüde bulunur. Bir kişi, bir öneri "
+"listesinden istediği sözcüğü seçebilir ve yazma hızını ve imlasını "
 "iyileştirebilir."
 
 #~ msgid "Arrow keys can reopen a preedit"
