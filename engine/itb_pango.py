@@ -132,10 +132,10 @@ def get_fonts_used_for_text(font, text, fallback=True):
     [('😀', 'Noto Color Emoji'), (' ', 'DejaVu Sans Mono')]
 
     >>> get_fonts_used_for_text('DejaVu Sans', '日本語 नमस्ते')
-    [('日本語', 'IPAPGothic'), (' ', 'DejaVu Sans'), ('नमस्ते', 'Lohit Hindi')]
+    [('日本語', 'Droid Sans'), (' ', 'DejaVu Sans'), ('नमस्ते', 'Droid Sans')]
 
     >>> get_fonts_used_for_text('DejaVu Sans', '日本語 🕉️')
-    [('日本語', 'IPAPGothic'), (' ', 'DejaVu Sans'), ('🕉️', 'Noto Color Emoji')]
+    [('日本語', 'Droid Sans'), (' ', 'DejaVu Sans'), ('🕉️', 'Noto Color Emoji')]
     '''
     fonts_used = []
     label = libgtk3__gtk_label_new(ctypes.c_char_p(b''))
