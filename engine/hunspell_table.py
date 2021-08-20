@@ -5296,10 +5296,14 @@ class TypingBoosterEngine(IBus.Engine):
         # it could be different on an unusual keyboard layout.
         # It is better to make sure and calculate it correctly
         # for the current layout.
-        self.forward_key_event(
-            IBus.KEY_Left,
-            self._keyvals_to_keycodes.ibus_keycode(IBus.KEY_Left),
-            0)
+        keyval = IBus.KEY_Left
+        keycode = self._keyvals_to_keycodes.keycode(IBus.KEY_Left)
+        ibus_keycode = self._keyvals_to_keycodes.ibus_keycode(IBus.KEY_Left)
+        keystate = 0
+        if DEBUG_LEVEL > 0:
+            LOGGER.debug('keyval=%s keycode=%s ibus_keycode=%s keystate=%s',
+                         keyval, keycode, ibus_keycode, keystate)
+        self.forward_key_event(keyval, ibus_keycode, keystate)
 
     def _handle_compose(self, key: itb_util.KeyEvent) -> bool:
         '''Internal method to handle possible compose keys
