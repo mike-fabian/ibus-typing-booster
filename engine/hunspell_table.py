@@ -5835,17 +5835,17 @@ class TypingBoosterEngine(IBus.Engine):
                     input_phrase_right = self._case_modes[
                         self._current_case_mode]['function'](
                             input_phrase_right)
-                if input_phrase_left:
+                if input_phrase:
                     self._commit_string(
-                        input_phrase_left, input_phrase=input_phrase_left)
-                # The sleep is needed because this is racy, without the
-                # sleep it works unreliably.
+                        input_phrase, input_phrase=input_phrase)
+                # These sleeps between commit() and
+                # forward_key_event() are unfortunately needed because
+                # this is racy, without the sleeps it works
+                # unreliably.
                 time.sleep(self._ibus_event_sleep_seconds)
-                self.forward_key_event(key.val, key.code, key.state)
-                self._commit_string(
-                    input_phrase_right, input_phrase=input_phrase_right)
                 for dummy_char in input_phrase_right:
                     self._forward_key_event_left()
+                self.forward_key_event(key.val, key.code, key.state)
                 return True
             else:
                 # nothing is selected in the lookup table, commit the
