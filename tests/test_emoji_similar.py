@@ -81,8 +81,8 @@ class EmojiSimilarTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
-            mq.similar('🐫', match_limit=5),
-            [('🐫', 'bactrian camel [🐫, bactrian, camel, hump, two humps, two-hump camel]', 6), ('🐪', 'dromedary camel [camel, hump]', 2), ('🐫', 'bactrian camel [🐫, So, nature, bactrian, camel, hump, two-hump camel]', 7), ('🐪', 'dromedary camel [So, nature, hump, camel]', 4), ('\U0001f999', 'llama [So, nature]', 2)])
+            [('🐫', 'bactrian camel [🐫, So, nature, bactrian, camel, hump, two-hump camel]', 7), ('🐪', 'dromedary camel [So, nature, hump, camel]', 4), ('🦙', 'llama [So, nature]', 2), ('🐐', 'goat [So, nature]', 2), ('🦒', 'giraffe face [So, nature]', 2)],
+            mq.similar('🐫', match_limit=5))
 
     def test_similar_camel_it_IT(self):
         mq = itb_emoji.EmojiMatcher(
