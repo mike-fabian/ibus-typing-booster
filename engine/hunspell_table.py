@@ -5286,19 +5286,19 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def _forward_key_event_left(self) -> None:
-        '''Forward an arrow left event to the application.'''
+    def _forward_generated_key_event(self, keyval: int) -> None:
+        '''Forward a generated key event for keyval to the application.'''
         # Without using a correct ibus key code, this does not work
-        # correctly, i.e. self.forward_key_event(IBus.KEY_Left, 0, 0)
-        # does *not* work anymore!
+        # correctly, i.e. something like
+        # self.forward_key_event(IBus.KEY_Left, 0, 0) used to work
+        # (once upon a time) but it does *not* work anymore now!
         #
-        # The ibus key code for IBus.KEY_Left is usually 105, but
-        # it could be different on an unusual keyboard layout.
-        # It is better to make sure and calculate it correctly
-        # for the current layout.
-        keyval = IBus.KEY_Left
-        keycode = self._keyvals_to_keycodes.keycode(IBus.KEY_Left)
-        ibus_keycode = self._keyvals_to_keycodes.ibus_keycode(IBus.KEY_Left)
+        # The ibus key code for IBus.KEY_Left is usually 105, but it
+        # could be different on an unusual keyboard layout.  So do not
+        # hardcode keycodes here, calculate them correctly for the
+        # current layout.
+        keycode = self._keyvals_to_keycodes.keycode(keyval)
+        ibus_keycode = self._keyvals_to_keycodes.ibus_keycode(keyval)
         keystate = 0
         if DEBUG_LEVEL > 0:
             LOGGER.debug('keyval=%s keycode=%s ibus_keycode=%s keystate=%s',
@@ -5844,7 +5844,7 @@ class TypingBoosterEngine(IBus.Engine):
                 # unreliably.
                 time.sleep(self._ibus_event_sleep_seconds)
                 for dummy_char in input_phrase_right:
-                    self._forward_key_event_left()
+                    self._forward_generated_key_event(IBus.KEY_Left)
                 self.forward_key_event(key.val, key.code, key.state)
                 return True
             else:
@@ -5870,7 +5870,7 @@ class TypingBoosterEngine(IBus.Engine):
                 # cursor needs to be corrected leftwards:
                 if key.shift and key.val in self._keys_which_select_with_shift:
                     for dummy_char in commit_string[caret_was:]:
-                        self._forward_key_event_left()
+                        self._forward_generated_key_event(IBus.KEY_Left)
                 elif (key.val in (IBus.KEY_Left, IBus.KEY_KP_Left,
                                 IBus.KEY_BackSpace)):
                     # After committing, the cursor is at the right
@@ -5889,7 +5889,7 @@ class TypingBoosterEngine(IBus.Engine):
                     # of the committed candidate, so no left key events
                     # are necessary in that case.
                     for dummy_char in commit_string:
-                        self._forward_key_event_left()
+                        self._forward_generated_key_event(IBus.KEY_Left)
             # Forward the key event which triggered the commit here
             # and return True instead of trying to pass that key event
             # to the application by returning False.
