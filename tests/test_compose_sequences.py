@@ -22,12 +22,15 @@ This file implements test cases for compose sequences.
 '''
 
 import sys
+import logging
 import locale
 import unittest
 
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
+
+LOGGER = logging.getLogger('ibus-typing-booster')
 
 sys.path.insert(0, "../engine")
 import itb_util
@@ -404,5 +407,178 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_e]),
             '\u0117\u0304') # ė̄
 
+    def test_keypad_fallback(self):
+        self.assertEqual(
+            None,
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_minus, IBus.KEY_minus],
+                keypad_fallback=True))
+        self.assertEqual(
+            None,
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_minus, IBus.KEY_minus],
+                keypad_fallback=False))
+        self.assertEqual(
+            None,
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_KP_Subtract, IBus.KEY_KP_Subtract],
+                keypad_fallback=True))
+        self.assertEqual(
+            '',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_KP_Subtract, IBus.KEY_KP_Subtract],
+                keypad_fallback=False))
+        self.assertEqual(
+            None,
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_minus, IBus.KEY_KP_Subtract],
+                keypad_fallback=True))
+        self.assertEqual(
+            '',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_minus, IBus.KEY_KP_Subtract],
+                keypad_fallback=False))
+        self.assertEqual(
+            None,
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_KP_Subtract, IBus.KEY_minus],
+                keypad_fallback=True))
+        self.assertEqual(
+            '',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_KP_Subtract, IBus.KEY_minus],
+                keypad_fallback=False))
+        self.assertEqual(
+            '—',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_minus, IBus.KEY_minus, IBus.KEY_minus],
+                keypad_fallback=True))
+        self.assertEqual(
+            '—',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_minus, IBus.KEY_minus, IBus.KEY_minus],
+                keypad_fallback=False))
+        self.assertEqual(
+            '—',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_KP_Subtract, IBus.KEY_KP_Subtract, IBus.KEY_KP_Subtract],
+                keypad_fallback=True))
+        self.assertEqual(
+            '',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_KP_Subtract, IBus.KEY_KP_Subtract, IBus.KEY_KP_Subtract],
+                keypad_fallback=False))
+        self.assertEqual(
+            '—',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_minus, IBus.KEY_KP_Subtract, IBus.KEY_KP_Subtract],
+                keypad_fallback=True))
+        self.assertEqual(
+            '',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_minus, IBus.KEY_KP_Subtract, IBus.KEY_KP_Subtract],
+                keypad_fallback=False))
+        self.assertEqual(
+            '—',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_KP_Subtract, IBus.KEY_minus, IBus.KEY_KP_Subtract],
+                keypad_fallback=True))
+        self.assertEqual(
+            '',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_KP_Subtract, IBus.KEY_minus, IBus.KEY_KP_Subtract],
+                keypad_fallback=False))
+        self.assertEqual(
+            '—',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_KP_Subtract, IBus.KEY_KP_Subtract, IBus.KEY_minus],
+                keypad_fallback=True))
+        self.assertEqual(
+            '',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_KP_Subtract, IBus.KEY_KP_Subtract, IBus.KEY_minus],
+                keypad_fallback=False))
+        self.assertEqual(
+            '½',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_1, IBus.KEY_2],
+                keypad_fallback=True))
+        self.assertEqual(
+            '½',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_1, IBus.KEY_2],
+                keypad_fallback=False))
+        self.assertEqual(
+            '½',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_KP_1, IBus.KEY_2],
+                keypad_fallback=True))
+        self.assertEqual(
+            '',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_KP_1, IBus.KEY_2],
+                keypad_fallback=False))
+        self.assertEqual(
+            '½',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_1, IBus.KEY_KP_2],
+                keypad_fallback=True))
+        self.assertEqual(
+            '',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_1, IBus.KEY_KP_2],
+                keypad_fallback=False))
+        self.assertEqual(
+            None,
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_1],
+                keypad_fallback=True))
+        self.assertEqual(
+            None,
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_1],
+                keypad_fallback=False))
+        self.assertEqual(
+            None,
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_KP_1],
+                keypad_fallback=True))
+        self.assertEqual(
+            '',
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_KP_1],
+                keypad_fallback=False))
+
 if __name__ == '__main__':
+    LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
+    LOGGER.setLevel(logging.DEBUG)
+    LOGGER.addHandler(LOG_HANDLER)
     unittest.main()

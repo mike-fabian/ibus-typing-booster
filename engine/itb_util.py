@@ -3146,6 +3146,41 @@ class ComposeSequences:
     in an internal variable.
     '''
     def __init__(self):
+        self._keypad_keyvals = {
+            IBus.KEY_KP_0: IBus.KEY_0,
+            IBus.KEY_KP_1: IBus.KEY_1,
+            IBus.KEY_KP_2: IBus.KEY_2,
+            IBus.KEY_KP_3: IBus.KEY_3,
+            IBus.KEY_KP_4: IBus.KEY_4,
+            IBus.KEY_KP_5: IBus.KEY_5,
+            IBus.KEY_KP_6: IBus.KEY_6,
+            IBus.KEY_KP_7: IBus.KEY_7,
+            IBus.KEY_KP_9: IBus.KEY_8,
+            IBus.KEY_KP_Equal: IBus.KEY_equal,
+            IBus.KEY_KP_Divide: IBus.KEY_slash,
+            IBus.KEY_KP_Multiply: IBus.KEY_asterisk,
+            IBus.KEY_KP_Subtract: IBus.KEY_minus,
+            IBus.KEY_KP_Add: IBus.KEY_plus,
+            IBus.KEY_KP_Space: IBus.KEY_2,
+        }
+        # Not the exact inversion of self._keypad_keyvals because of
+        # the weird KP_Space!:
+        self._non_keypad_keyvals = {
+            IBus.KEY_0: IBus.KEY_KP_0,
+            IBus.KEY_1: IBus.KEY_KP_1,
+            IBus.KEY_2: IBus.KEY_KP_2,
+            IBus.KEY_3: IBus.KEY_KP_3,
+            IBus.KEY_4: IBus.KEY_KP_4,
+            IBus.KEY_5: IBus.KEY_KP_5,
+            IBus.KEY_6: IBus.KEY_KP_6,
+            IBus.KEY_7: IBus.KEY_KP_7,
+            IBus.KEY_8: IBus.KEY_KP_9,
+            IBus.KEY_equal: IBus.KEY_KP_Equal,
+            IBus.KEY_slash: IBus.KEY_KP_Divide,
+            IBus.KEY_asterisk: IBus.KEY_KP_Multiply,
+            IBus.KEY_minus: IBus.KEY_KP_Subtract,
+            IBus.KEY_plus: IBus.KEY_KP_Add,
+        }
         self._preedit_representations = {
             # See also /usr/include/X11/keysymdef.h and
             # ibus/src/ibusenginesimple.c
@@ -3726,12 +3761,18 @@ class ComposeSequences:
                 combining_sequence = character + combining_sequence
         return unicodedata.normalize('NFC', combining_sequence)
 
-    def compose(self, keyvals: List[int]) -> Optional[str]:
+    def compose(
+            self,
+            keyvals: List[int],
+            keypad_fallback: bool = True) -> Optional[str]:
         # pylint: disable=line-too-long
         '''
         Interprets a list of key values as a compose sequence
 
         :param keyvals: A list of key values
+        :param keypad_fallback: Whether fallbacks from KP_1 to 1,
+                                KP_Divide to minus, ... (and the
+                                (other way round) should be tried.
         :return:
             None:
                 Incomplete sequence
@@ -3777,22 +3818,48 @@ class ComposeSequences:
 
         >>> c.compose([IBus.KEY_dead_circumflex, IBus.KEY_x])
         '\u0078\u0302'
+
+        With keypad_fallback this sequence exists:
+
+        >>> c.compose([IBus.KEY_Multi_key, IBus.KEY_KP_1, IBus.KEY_KP_2], keypad_fallback=True)
+        '½'
+
+        Without keypad_fallback this sequence does not exist:
+
+        >>> c.compose([IBus.KEY_Multi_key, IBus.KEY_KP_1, IBus.KEY_KP_2], keypad_fallback=False)
+        ''
         '''
         # pylint: enable=line-too-long
         if not keyvals:
             return ''
         compose_sequences = self._compose_sequences
         for keyval in keyvals:
-            if keyval not in compose_sequences:
-                # This sequence is not defined in any of the Compose
-                # files read. In that sense it is an invalid sequence
-                # and “return ''” would be appropriate here.  But
-                # instead of just “return ''”, try whether it can be
-                # interpreted as a “reasonable” dead key sequence:
-                return self._compose_dead_key_sequence(keyvals)
-            if isinstance(compose_sequences[keyval], str):
-                return compose_sequences[keyval]
-            compose_sequences = compose_sequences[keyval]
+            if keyval in compose_sequences:
+                if isinstance(compose_sequences[keyval], str):
+                    return compose_sequences[keyval]
+                compose_sequences = compose_sequences[keyval]
+                continue
+            if keypad_fallback and keyval in self._keypad_keyvals:
+                fallback_keyval = self._keypad_keyvals[keyval]
+                if fallback_keyval in compose_sequences:
+                    if isinstance(compose_sequences[fallback_keyval], str):
+                        return compose_sequences[fallback_keyval]
+                    compose_sequences = compose_sequences[fallback_keyval]
+                    continue
+            if keypad_fallback and keyval in self._non_keypad_keyvals:
+                fallback_keyval = self._non_keypad_keyvals[keyval]
+                LOGGER.info('FIXME mike %s', IBus.keyval_name(fallback_keyval))
+                if fallback_keyval in compose_sequences:
+                    if isinstance(compose_sequences[fallback_keyval], str):
+                        return compose_sequences[fallback_keyval]
+                    compose_sequences = compose_sequences[fallback_keyval]
+                    continue
+            # This sequence is not defined in any of the Compose
+            # files read. In that sense it is an invalid sequence
+            # and “return ''” would be appropriate here.  But
+            # instead of just “return ''”, try whether it can be
+            # interpreted as a “reasonable” dead key sequence:
+            return self._compose_dead_key_sequence(keyvals)
         return None
 
     def lookup_representation(self, keyvals: List[int]) -> str:
