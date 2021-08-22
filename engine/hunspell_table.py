@@ -5812,10 +5812,12 @@ class TypingBoosterEngine(IBus.Engine):
                 # “space” or “Tab” is typed while the cursor is at the
                 # beginning of the preedit *and* nothing is selected
                 # in the lookup table. Commit the space or Tab.  The
-                # preedit and lookup table should move one column to
-                # the right.
+                # preedit and lookup table should move one or more
+                # columns to the right.
+                # (Tab rarely has this effect here because it is
+                # bound to “select_next_candidate” by default!)
                 if key.val == IBus.KEY_Tab:
-                    super().commit_text(IBus.Text.new_from_string('\n'))
+                    super().commit_text(IBus.Text.new_from_string('\t'))
                 else:
                     super().commit_text(IBus.Text.new_from_string(' '))
                 self._update_ui()
