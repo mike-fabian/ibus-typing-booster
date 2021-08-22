@@ -638,7 +638,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_preedit_ime_menu_dicts()
         self._init_properties()
 
-        self._keys_which_select_with_shift = (
+        keys_which_select_with_shift = (
             IBus.KEY_Right, IBus.KEY_KP_Right,
             IBus.KEY_Left, IBus.KEY_KP_Left,
             IBus.KEY_End, IBus.KEY_KP_End,
@@ -647,7 +647,7 @@ class TypingBoosterEngine(IBus.Engine):
             IBus.KEY_Up, IBus.KEY_KP_Up,
             IBus.KEY_Page_Down, IBus.KEY_KP_Page_Down, IBus.KEY_KP_Next,
             IBus.KEY_Page_Up, IBus.KEY_KP_Page_Up, IBus.KEY_KP_Prior)
-        self._commit_trigger_keys = self._keys_which_select_with_shift + (
+        self._commit_trigger_keys = keys_which_select_with_shift + (
             IBus.KEY_space, IBus.KEY_Tab,
             IBus.KEY_Return, IBus.KEY_KP_Enter,
             IBus.KEY_Delete, IBus.KEY_KP_Delete,
@@ -5898,28 +5898,8 @@ class TypingBoosterEngine(IBus.Engine):
             self._commit_string(commit_string, input_phrase=input_phrase)
             if not candidate_was_selected:
                 # cursor needs to be corrected leftwards:
-                if key.shift and key.val in self._keys_which_select_with_shift:
-                    for dummy_char in commit_string[caret_was:]:
-                        self._forward_generated_key_event(IBus.KEY_Left)
-                elif (key.val in (IBus.KEY_Left, IBus.KEY_KP_Left,
-                                IBus.KEY_BackSpace)):
-                    # After committing, the cursor is at the right
-                    # side of the committed string. When the string
-                    # has been committed because arrow-left or
-                    # control-arrow-left or backspace reached the left
-                    # side of the preëdit, the cursor has to be moved
-                    # to the left side of the string. We can do it by
-                    # forwarding as many arrow-left events to the
-                    # application as the committed string has
-                    # characters.
-                    #
-                    # Note that when a candidate is selected, the cursor
-                    # is the selected candidated is committed and the then
-                    # it is correct that the cursor is at the right side
-                    # of the committed candidate, so no left key events
-                    # are necessary in that case.
-                    for dummy_char in commit_string:
-                        self._forward_generated_key_event(IBus.KEY_Left)
+                for dummy_char in commit_string[caret_was:]:
+                    self._forward_generated_key_event(IBus.KEY_Left)
             # Forward the key event which triggered the commit here
             # and return True instead of trying to pass that key event
             # to the application by returning False.
