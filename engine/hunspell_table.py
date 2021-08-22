@@ -2542,10 +2542,23 @@ class TypingBoosterEngine(IBus.Engine):
     def _commit_string(
             self,
             commit_phrase: str,
-            input_phrase: str = '') -> None:
+            input_phrase: str = '',
+            push_context: bool = True) -> None:
         '''Commits a string
 
-        Also updates the context and the user database of learned
+        :param commit_phrase: The string to commit
+        :param input_phrase: What the use typed to get this string committed
+                             (Might be shorter than commit_phrase if a
+                             completion was selected)
+        :param push_context: Whether to push commit_phrase on the context
+                             stack. Doesn’t matter if surrounding text works
+                             well and the context is always fetched from
+                             surrounding text. But if the fallback of
+                             remembering the context is used, this matters.
+                             The context should only be pushed if the
+                             cursor will end up to the right of commit_phrase.
+
+        May also update the context and the user database of learned
         input.
 
         May remove whitespace before the committed string if
@@ -2625,7 +2638,8 @@ class TypingBoosterEngine(IBus.Engine):
                 p_phrase=self.get_pp_phrase(),
                 pp_phrase=self.get_ppp_phrase())
         # push context after recording in the database is finished:
-        self.push_context(stripped_commit_phrase)
+        if push_context:
+            self.push_context(stripped_commit_phrase)
 
     def _commit_string_fix_sentence_end(self, commit_phrase: str) -> None:
         '''Remove trailing white space before sentence end characters
@@ -5825,13 +5839,13 @@ class TypingBoosterEngine(IBus.Engine):
             elif (key.val in (IBus.KEY_Return, IBus.KEY_KP_Enter)
                   and (self._typed_string_cursor
                        < len(self._typed_string))):
-                # “Return” or “Enter” is used to commit the preëdit
+                # “Return” or “KP_Enter” is used to commit the preëdit
                 # while the cursor is not at the end of the preëdit.
-                # That means the part of the preëdit to the left of
-                # the cursor should be commited first, then the
-                # “Return” or enter should be forwarded to the
-                # application, then the part of the preëdit to the
-                # right of the cursor should be committed.
+                # That means the parts of the preëdit to the left of
+                # and to the right of the cursor should be committed
+                # seperately, the cursor then moved between the two
+                # comitted parts and then the “Return” or “KP_Enter”
+                # should be forwarded to the application.
                 input_phrase_left = (
                     self._transliterators[preedit_ime].transliterate(
                         self._typed_string[:self._typed_string_cursor]))
@@ -5844,9 +5858,16 @@ class TypingBoosterEngine(IBus.Engine):
                     input_phrase_right = self._case_modes[
                         self._current_case_mode]['function'](
                             input_phrase_right)
-                if input_phrase:
+                if input_phrase_left:
                     self._commit_string(
-                        input_phrase, input_phrase=input_phrase)
+                        input_phrase_left, input_phrase=input_phrase_left)
+                # Cursor will end up to the left of input_phrase_right
+                # so don’t push input_phrase_right on the context stack
+                # when committing:
+                if input_phrase_right:
+                    self._commit_string(
+                        input_phrase_right, input_phrase=input_phrase_right,
+                        push_context=False)
                 # These sleeps between commit() and
                 # forward_key_event() are unfortunately needed because
                 # this is racy, without the sleeps it works
