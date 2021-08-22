@@ -3939,11 +3939,11 @@ class ComposeSequences:
         >>> c = ComposeSequences()
         >>> sequence = [IBus.KEY_Multi_key, IBus.KEY_dead_tilde, IBus.KEY_a]
         >>> c.lookup_representation(sequence)
-        '· 💀~ a'
+        '·💀~a'
 
         >>> sequence = [IBus.KEY_Multi_key, IBus.KEY_dead_tilde, IBus.KEY_space]
         >>> c.lookup_representation(sequence)
-        '· 💀~ ␠'
+        '·💀~␠'
 
         >>> c.lookup_representation([IBus.KEY_nobreakspace])
         'nobreakspace'
@@ -3959,13 +3959,13 @@ class ComposeSequences:
         >>> c.lookup_representation([IBus.KEY_dead_macron])
         '💀¯'
         >>> c.lookup_representation([IBus.KEY_dead_macron, IBus.KEY_dead_ogonek])
-        '💀¯ 💀˛'
+        '💀¯💀˛'
         >>> c.lookup_representation([IBus.KEY_dead_macron, IBus.KEY_dead_ogonek, IBus.KEY_o])
-        '💀¯ 💀˛ o'
+        '💀¯💀˛o'
         >>> c.lookup_representation([0x01EB])
         'ǫ'
         >>> c.lookup_representation([IBus.KEY_dead_macron, 0x01EB])
-        '💀¯ ǫ'
+        '💀¯ǫ'
 
         '''
         # pylint: enable=line-too-long
@@ -3973,8 +3973,6 @@ class ComposeSequences:
         for keyval in keyvals:
             keyval_name = IBus.keyval_name(keyval)
             keyval_unicode = IBus.keyval_to_unicode(keyval)
-            if representation:
-                representation += ' '
             if keyval_name == 'Multi_key':
                 representation += self._preedit_representations[keyval]
             elif keyval_name.startswith('dead_'):
@@ -4008,7 +4006,7 @@ class ComposeSequences:
         >>> sequence2 = [IBus.KEY_Multi_key, IBus.KEY_period]
         >>> keyval_sequences = [sequence1, sequence2]
         >>> c._lookup_representations(keyval_sequences)
-        ['· -', '· .']
+        ['·-', '·.']
 
         '''
         # pylint: enable=line-too-long
@@ -4103,7 +4101,7 @@ class ComposeSequences:
         [[97, 97], [97, 101], [101, 101], [120, 120], [175, 97], [175, 101]]
 
         >>> c._lookup_representations(completions)
-        ['a a', 'a e', 'e e', 'x x', '¯ a', '¯ e']
+        ['aa', 'ae', 'ee', 'xx', '¯a', '¯e']
 
         As automatic dead key sequences should not be included,
         ['x'] should not appear as a possible completion here:

@@ -4817,6 +4817,7 @@ class TypingBoosterEngine(IBus.Engine):
                             compose_completion))
                     text_for_lookup_table += '   \t' + compose_result
                     if len(compose_result) < 6:
+                        text_for_lookup_table += '  \t'
                         for char in compose_result:
                             text_for_lookup_table += ' U+%04X' %ord(char)
                     if len(compose_result) == 1:
