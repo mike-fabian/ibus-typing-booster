@@ -2576,48 +2576,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._new_sentence = False
             if itb_util.text_ends_a_sentence(commit_phrase):
                 self._new_sentence = True
-        if (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
-            and self._input_purpose not in [itb_util.InputPurpose.TERMINAL]):
-            # If a single character ending a sentence is committed
-            # (possibly followed by whitespace) remove trailing white
-            # space before the committed string. For example if
-            # commit_phrase is “!”, and the context before is “word ”,
-            # make the result “word!”.  And if the commit_phrase is “!
-            # ” and the context before is “word ” make the result
-            # “word! ”.
-            pattern_sentence_end = re.compile(
-                r'^['
-                + re.escape(itb_util.REMOVE_WHITESPACE_CHARACTERS)
-                + r']+[\s]*$')
-            if pattern_sentence_end.search(commit_phrase):
-                surrounding_text = self.get_surrounding_text()
-                text = surrounding_text[0].get_text()
-                cursor_pos = surrounding_text[1]
-                anchor_pos = surrounding_text[2]
-                if DEBUG_LEVEL > 1:
-                    LOGGER.debug(
-                        'Checking for whitespace before sentence end char. '
-                        'surrounding_text = '
-                        '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
-                        text, cursor_pos, anchor_pos)
-                # The commit_phrase is *not* yet in the surrounding text,
-                # it will show up there only when the next key event is
-                # processed:
-                pattern = re.compile(r'(?P<white_space>[\s]+)$')
-                match = pattern.search(text[:cursor_pos])
-                if match:
-                    nchars = len(match.group('white_space'))
-                    self.delete_surrounding_text(-nchars, nchars)
-                    if DEBUG_LEVEL > 1:
-                        surrounding_text = self.get_surrounding_text()
-                        text = surrounding_text[0].get_text()
-                        cursor_pos = surrounding_text[1]
-                        anchor_pos = surrounding_text[2]
-                        LOGGER.debug(
-                            'Removed whitespace before sentence end char. '
-                            'surrounding_text = '
-                            '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
-                            text, cursor_pos, anchor_pos)
+        self._commit_string_fix_sentence_end(commit_phrase)
         if self._avoid_forward_key_event:
             super().commit_text(
                 IBus.Text.new_from_string(commit_phrase))
@@ -2667,6 +2626,56 @@ class TypingBoosterEngine(IBus.Engine):
                 pp_phrase=self.get_ppp_phrase())
         # push context after recording in the database is finished:
         self.push_context(stripped_commit_phrase)
+
+    def _commit_string_fix_sentence_end(self, commit_phrase: str) -> None:
+        '''Remove trailing white space before sentence end characters
+
+        :param commit_phrase: The text which is going to be committed.
+                              (Not committed yet!)
+
+        If a single character ending a sentence is committed (possibly
+        followed by whitespace) remove trailing white space before the
+        committed string. For example if commit_phrase is “!”, and the
+        context before is “word ”, make the result “word!”.  And if
+        the commit_phrase is “! ” and the context before is “word ”
+        make the result “word! ”.
+
+        '''
+        if (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
+            and self._input_purpose not in [itb_util.InputPurpose.TERMINAL]):
+            pattern_sentence_end = re.compile(
+                r'^['
+                + re.escape(itb_util.REMOVE_WHITESPACE_CHARACTERS)
+                + r']+[\s]*$')
+            if pattern_sentence_end.search(commit_phrase):
+                surrounding_text = self.get_surrounding_text()
+                text = surrounding_text[0].get_text()
+                cursor_pos = surrounding_text[1]
+                anchor_pos = surrounding_text[2]
+                if DEBUG_LEVEL > 1:
+                    LOGGER.debug(
+                        'Checking for whitespace before sentence end char. '
+                        'surrounding_text = '
+                        '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
+                        text, cursor_pos, anchor_pos)
+                # The commit_phrase is *not* yet in the surrounding text,
+                # it will show up there only when the next key event is
+                # processed:
+                pattern = re.compile(r'(?P<white_space>[\s]+)$')
+                match = pattern.search(text[:cursor_pos])
+                if match:
+                    nchars = len(match.group('white_space'))
+                    self.delete_surrounding_text(-nchars, nchars)
+                    if DEBUG_LEVEL > 1:
+                        surrounding_text = self.get_surrounding_text()
+                        text = surrounding_text[0].get_text()
+                        cursor_pos = surrounding_text[1]
+                        anchor_pos = surrounding_text[2]
+                        LOGGER.debug(
+                            'Removed whitespace before sentence end char. '
+                            'surrounding_text = '
+                            '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
+                            text, cursor_pos, anchor_pos)
 
     def _maybe_reopen_preedit(
             self, key: itb_util.KeyEvent) -> bool:
