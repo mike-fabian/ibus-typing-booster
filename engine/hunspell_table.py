@@ -2570,14 +2570,11 @@ class TypingBoosterEngine(IBus.Engine):
                 self.get_current_imes()[0]]
         # commit always in NFC:
         commit_phrase = unicodedata.normalize('NFC', commit_phrase)
-        pattern_non_white_space = re.compile(r'\S')
-        if pattern_non_white_space.search(commit_phrase):
-            pattern_new_sentence = re.compile(
-                r'['
-                + re.escape(itb_util.AUTO_CAPITALIZE_CHARACTERS)
-                + r']+[\s]*$')
+        if not commit_phrase.isspace():
+            # If the commit space contains only white space
+            # leave self._new_sentence as it is!
             self._new_sentence = False
-            if pattern_new_sentence.search(commit_phrase):
+            if itb_util.text_ends_a_sentence(commit_phrase):
                 self._new_sentence = True
         if (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
             and self._input_purpose not in [itb_util.InputPurpose.TERMINAL]):

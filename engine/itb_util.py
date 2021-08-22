@@ -2306,6 +2306,34 @@ def expand_languages(languages: List[str]) -> List[str]:
         expanded_languages.append('en')
     return expanded_languages
 
+def text_ends_a_sentence(text: str = '') -> bool:
+    '''
+    Checks whether text ends a sentence
+
+    :param text: The text to check
+    :return: True if text ends a sentence, False if not.
+
+    Examples:
+
+    >>> text_ends_a_sentence(' ')
+    False
+    >>> text_ends_a_sentence(' hello ')
+    False
+    >>> text_ends_a_sentence(' hello . ')
+    True
+    >>> text_ends_a_sentence('. ')
+    True
+    >>> text_ends_a_sentence(' . ')
+    True
+    '''
+    if text.isspace():
+        return False
+    pattern_new_sentence = re.compile(
+        r'[' + re.escape(AUTO_CAPITALIZE_CHARACTERS) + r']+[\s]*$')
+    if pattern_new_sentence.search(text):
+        return True
+    return False
+
 def lstrip_token(token: str) -> str:
     '''Strips some characters from the left side of a token
 
