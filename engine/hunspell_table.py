@@ -2543,7 +2543,8 @@ class TypingBoosterEngine(IBus.Engine):
             self,
             commit_phrase: str,
             input_phrase: str = '',
-            push_context: bool = True) -> None:
+            push_context: bool = True,
+            fix_sentence_end: bool = True) -> None:
         '''Commits a string
 
         :param commit_phrase: The string to commit
@@ -2557,6 +2558,14 @@ class TypingBoosterEngine(IBus.Engine):
                              remembering the context is used, this matters.
                              The context should only be pushed if the
                              cursor will end up to the right of commit_phrase.
+        :param fix_sentence_end: Whether to try fixing whitespace before
+                                 sentence end characters like “.!?”.
+                                 Better set this to False when calling
+                                 this function several times before
+                                 there was a chance that surrounding text
+                                 was updated (surrounding text is usually
+                                 only updated when a new key event is
+                                 processed).
 
         May also update the context and the user database of learned
         input.
@@ -2565,7 +2574,8 @@ class TypingBoosterEngine(IBus.Engine):
         the committed string ended a sentence.
         '''
         if DEBUG_LEVEL > 1:
-            LOGGER.debug('(%s, %s)', commit_phrase, input_phrase)
+            LOGGER.debug('commit_phrase=“%s” input_phrase=“%s”',
+                         commit_phrase, input_phrase)
         # If the suggestions are only enabled by Tab key, i.e. the
         # lookup table is not shown until Tab has been typed, hide
         # the lookup table again after each commit. That means
@@ -2589,7 +2599,8 @@ class TypingBoosterEngine(IBus.Engine):
             self._new_sentence = False
             if itb_util.text_ends_a_sentence(commit_phrase):
                 self._new_sentence = True
-        self._commit_string_fix_sentence_end(commit_phrase)
+        if fix_sentence_end:
+            self._commit_string_fix_sentence_end(commit_phrase)
         if self._avoid_forward_key_event:
             super().commit_text(
                 IBus.Text.new_from_string(commit_phrase))
@@ -5691,15 +5702,6 @@ class TypingBoosterEngine(IBus.Engine):
                 # confusing). But only do this if Shift is not used!
                 # With Shift many of these keys should commit instead
                 # and select some text.
-                if (key.val in (IBus.KEY_space, IBus.KEY_Tab)
-                    and
-                    0 < self._typed_string_cursor < len(self._typed_string)):
-                    if key.val == IBus.KEY_Tab:
-                        self._insert_string_at_cursor(['\t'])
-                    else:
-                        self._insert_string_at_cursor([' '])
-                    self._update_ui()
-                    return True
                 if (key.val in (IBus.KEY_Right, IBus.KEY_KP_Right)
                     and (self._typed_string_cursor
                          < len(self._typed_string))):
@@ -5827,25 +5829,32 @@ class TypingBoosterEngine(IBus.Engine):
                 # beginning of the preedit *and* nothing is selected
                 # in the lookup table. Commit the space or Tab.  The
                 # preedit and lookup table should move one or more
-                # columns to the right.
-                # (Tab rarely has this effect here because it is
-                # bound to “select_next_candidate” by default!)
+                # columns to the right.  (Tab rarely has this effect
+                # here because it is bound to “select_next_candidate”
+                # by default!)
+                #
+                # As the cursor is still at the beginning of the
+                # preedit, don’t commit the preedit. As reopening a
+                # preedit from surrounding text is always difficult,
+                # better keep it if it makes sense.
                 if key.val == IBus.KEY_Tab:
                     super().commit_text(IBus.Text.new_from_string('\t'))
                 else:
                     super().commit_text(IBus.Text.new_from_string(' '))
                 self._update_ui()
                 return True
-            elif (key.val in (IBus.KEY_Return, IBus.KEY_KP_Enter)
+            elif (key.val in (IBus.KEY_space, IBus.KEY_Tab,
+                              IBus.KEY_Return, IBus.KEY_KP_Enter)
                   and (self._typed_string_cursor
                        < len(self._typed_string))):
-                # “Return” or “KP_Enter” is used to commit the preëdit
-                # while the cursor is not at the end of the preëdit.
-                # That means the parts of the preëdit to the left of
-                # and to the right of the cursor should be committed
-                # seperately, the cursor then moved between the two
-                # comitted parts and then the “Return” or “KP_Enter”
-                # should be forwarded to the application.
+                # “space”, “Tab”, “Return”, or “KP_Enter” is used to
+                # commit the preëdit while the cursor is not at the
+                # end of the preëdit.  That means the parts of the
+                # preëdit to the left of and to the right of the
+                # cursor should be committed seperately, the cursor
+                # then moved between the two comitted parts and then
+                # the key which triggered the commit should be
+                # forwarded to the application.
                 input_phrase_left = (
                     self._transliterators[preedit_ime].transliterate(
                         self._typed_string[:self._typed_string_cursor]))
@@ -5860,14 +5869,16 @@ class TypingBoosterEngine(IBus.Engine):
                             input_phrase_right)
                 if input_phrase_left:
                     self._commit_string(
-                        input_phrase_left, input_phrase=input_phrase_left)
+                        input_phrase_left, input_phrase=input_phrase_left,
+                        fix_sentence_end=False)
                 # Cursor will end up to the left of input_phrase_right
                 # so don’t push input_phrase_right on the context stack
                 # when committing:
                 if input_phrase_right:
                     self._commit_string(
                         input_phrase_right, input_phrase=input_phrase_right,
-                        push_context=False)
+                        push_context=False,
+                        fix_sentence_end=False)
                 # These sleeps between commit() and
                 # forward_key_event() are unfortunately needed because
                 # this is racy, without the sleeps it works
