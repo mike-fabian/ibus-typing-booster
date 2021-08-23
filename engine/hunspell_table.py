@@ -2039,7 +2039,8 @@ class TypingBoosterEngine(IBus.Engine):
         :param text: The current text in the preedit which
                      may need color added
         '''
-        if not self._color_preedit_spellcheck:
+        if (self._typed_compose_sequence
+            or not self._color_preedit_spellcheck):
             return
         stripped_text = itb_util.strip_token(text)
         prefix_length = text.find(stripped_text)
@@ -2050,6 +2051,24 @@ class TypingBoosterEngine(IBus.Engine):
                 self._color_preedit_spellcheck_argb,
                 prefix_length,
                 prefix_length + len(stripped_text)))
+
+    def _add_color_to_attrs_for_compose(self, attrs: IBus.AttrList) -> None:
+        '''May color the compose part of the preedit
+
+        :param attrs: The attribute list of the preedit
+        '''
+        if (not self._typed_compose_sequence
+            or not self._color_compose_preview):
+            return
+        ime = self.get_current_imes()[0]
+        length_before_compose = len(
+            self._transliterated_strings_before_compose[ime])
+        length_compose = len(
+            self._transliterated_strings_compose_part)
+        attrs.append(IBus.attr_foreground_new(
+            self._color_compose_preview_argb,
+            length_before_compose,
+            length_before_compose + length_compose))
 
     def _update_preedit(self) -> None:
         '''Update Preedit String in UI'''
@@ -2073,19 +2092,8 @@ class TypingBoosterEngine(IBus.Engine):
                 or self.is_lookup_table_enabled_by_min_char_complete):
                 attrs.append(IBus.attr_underline_new(
                     self._preedit_underline, 0, len(_str)))
-                if self._typed_compose_sequence:
-                    if self._color_compose_preview:
-                        ime = self.get_current_imes()[0]
-                        length_before_compose = len(
-                            self._transliterated_strings_before_compose[ime])
-                        length_compose = len(
-                            self._transliterated_strings_compose_part)
-                        attrs.append(IBus.attr_foreground_new(
-                            self._color_compose_preview_argb,
-                            length_before_compose,
-                            length_before_compose + length_compose))
-                else:
-                    self._add_color_to_attrs_for_spellcheck(attrs, _str)
+                self._add_color_to_attrs_for_compose(attrs)
+                self._add_color_to_attrs_for_spellcheck(attrs, _str)
             else:
                 # Preedit style “only when lookup is enabled” is
                 # requested and lookup is *not* enabled.  Therefore,
