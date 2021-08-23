@@ -218,7 +218,7 @@ class SetupUI(Gtk.Window):
         self._options_grid.set_row_spacing(grid_row_spacing)
         self._options_grid.set_column_spacing(grid_column_spacing)
         self._options_grid.set_row_homogeneous(False)
-        self._options_grid.set_column_homogeneous(True)
+        self._options_grid.set_column_homogeneous(False)
         self._options_grid.set_hexpand(True)
         self._options_grid.set_vexpand(False)
         self._options_label = Gtk.Label()
@@ -264,7 +264,7 @@ class SetupUI(Gtk.Window):
         self._appearance_grid.set_row_spacing(grid_row_spacing)
         self._appearance_grid.set_column_spacing(grid_column_spacing)
         self._appearance_grid.set_row_homogeneous(False)
-        self._appearance_grid.set_column_homogeneous(True)
+        self._appearance_grid.set_column_homogeneous(False)
         self._appearance_grid.set_hexpand(True)
         self._appearance_grid.set_vexpand(False)
         self._appearance_label = Gtk.Label()
@@ -356,7 +356,7 @@ class SetupUI(Gtk.Window):
             self._tab_enable_checkbutton.set_active(True)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._tab_enable_checkbutton, 0, _options_grid_row, 2, 1)
+            self._tab_enable_checkbutton, 0, _options_grid_row, 1, 1)
 
         self._inline_completion_checkbutton = Gtk.CheckButton(
             # Translators: Whether the best completion is first shown
@@ -384,7 +384,7 @@ class SetupUI(Gtk.Window):
             self._inline_completion_checkbutton.set_active(True)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._inline_completion_checkbutton, 0, _options_grid_row, 2, 1)
+            self._inline_completion_checkbutton, 0, _options_grid_row, 1, 1)
 
         self._auto_capitalize_checkbutton = Gtk.CheckButton(
             # Translators: Whether to automatically capitalize after
@@ -402,7 +402,7 @@ class SetupUI(Gtk.Window):
             self._auto_capitalize_checkbutton.set_active(True)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._auto_capitalize_checkbutton, 0, _options_grid_row, 2, 1)
+            self._auto_capitalize_checkbutton, 0, _options_grid_row, 1, 1)
 
         self._auto_select_candidate_checkbutton = Gtk.CheckButton(
             # Translators: What you type will automatically be
@@ -434,7 +434,7 @@ class SetupUI(Gtk.Window):
         _options_grid_row += 1
         self._options_grid.attach(
             self._auto_select_candidate_checkbutton,
-            0, _options_grid_row, 2, 1)
+            0, _options_grid_row, 1, 1)
 
         self._add_space_on_commit_checkbutton = Gtk.CheckButton(
             # Translators: Add a space if a candidate from the
@@ -455,7 +455,7 @@ class SetupUI(Gtk.Window):
             self._add_space_on_commit_checkbutton.set_active(True)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._add_space_on_commit_checkbutton, 0, _options_grid_row, 2, 1)
+            self._add_space_on_commit_checkbutton, 0, _options_grid_row, 1, 1)
 
         self._remember_last_used_preedit_ime_checkbutton = Gtk.CheckButton(
             # Translators: If more then one input method is used at
@@ -483,7 +483,7 @@ class SetupUI(Gtk.Window):
         _options_grid_row += 1
         self._options_grid.attach(
             self._remember_last_used_preedit_ime_checkbutton,
-            0, _options_grid_row, 2, 1)
+            0, _options_grid_row, 1, 1)
 
         self._remember_input_mode_checkbutton = Gtk.CheckButton(
             # Translators: If more then one input method is used at
@@ -507,7 +507,7 @@ class SetupUI(Gtk.Window):
         _options_grid_row += 1
         self._options_grid.attach(
             self._remember_input_mode_checkbutton,
-            0, _options_grid_row, 2, 1)
+            0, _options_grid_row, 1, 1)
 
         self._emoji_predictions_checkbutton = Gtk.CheckButton(
             # Translators: Whether Unicode symbols and emoji should be
@@ -536,7 +536,7 @@ class SetupUI(Gtk.Window):
             self._emoji_predictions_checkbutton.set_active(True)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._emoji_predictions_checkbutton, 0, _options_grid_row, 2, 1)
+            self._emoji_predictions_checkbutton, 0, _options_grid_row, 1, 1)
 
         self._off_the_record_checkbutton = Gtk.CheckButton(
             # Translators: While “Off the record” mode is on, learning
@@ -566,7 +566,7 @@ class SetupUI(Gtk.Window):
             self._off_the_record_checkbutton.set_active(True)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._off_the_record_checkbutton, 0, _options_grid_row, 2, 1)
+            self._off_the_record_checkbutton, 0, _options_grid_row, 1, 1)
 
         self._avoid_forward_key_event_checkbutton = Gtk.CheckButton(
             # Translators: Avoid the function forward_key_event() in
@@ -615,7 +615,7 @@ class SetupUI(Gtk.Window):
         _options_grid_row += 1
         self._options_grid.attach(
             self._avoid_forward_key_event_checkbutton,
-            0, _options_grid_row, 2, 1)
+            0, _options_grid_row, 1, 1)
 
         self._arrow_keys_reopen_preedit_checkbutton = Gtk.CheckButton(
             # Translators: Whether it is allowed to reopen a preedit
@@ -639,7 +639,7 @@ class SetupUI(Gtk.Window):
         _options_grid_row += 1
         self._options_grid.attach(
             self._arrow_keys_reopen_preedit_checkbutton,
-            0, _options_grid_row, 2, 1)
+            0, _options_grid_row, 1, 1)
 
         self._auto_commit_characters_label = Gtk.Label()
         self._auto_commit_characters_label.set_text(
@@ -797,6 +797,8 @@ class SetupUI(Gtk.Window):
             label=_('Learn from text file'))
         self._learn_from_file_button.set_tooltip_text(
             _('Learn your style by reading a text file'))
+        self._learn_from_file_button.set_hexpand(True)
+        self._learn_from_file_button.set_vexpand(False)
         self._learn_from_file_button.connect(
             'clicked', self._on_learn_from_file_clicked)
         _options_grid_row += 1
@@ -810,6 +812,8 @@ class SetupUI(Gtk.Window):
         self._delete_learned_data_button.set_tooltip_text(
             _('Delete all personal language data learned from '
               'typing or from reading files'))
+        self._delete_learned_data_button.set_hexpand(True)
+        self._delete_learned_data_button.set_vexpand(False)
         self._delete_learned_data_button.connect(
             'clicked', self._on_delete_learned_data_clicked)
         _options_grid_row += 1
