@@ -1,4 +1,15 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 30 Aug 2021 Released 2.14.8
+* Translation update from Weblate (ca, es, it updated)
+* Update emoji annotations from CLDR
+* Add IBus.KEY_KP_Decimal and IBus.KEY_period as a normal/keypad equivalence pair
+* get_string_from_lookup_table_cursor_pos() should return the string in NFC (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/234)
+* If an exception happens when trying to play a sound, catch it.
+* Change default input method for pa from “pa-inscript2” to “pa-inscript2-guru”
+* Make appearance tab narrower if possible (helps especially for the French translations) (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/230)
+* Spellchecking the preëdit should only spellcheck the part of the preedit which is a word (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/229)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 22 Aug 2021 Released 2.14.4
 * Translation update from Weblate (de, nl, pl, sv, tr, uk updated to 100%, si new)
 * Update emoji annotations from CLDR
