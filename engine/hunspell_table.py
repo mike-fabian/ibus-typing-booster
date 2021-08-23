@@ -2031,6 +2031,26 @@ class TypingBoosterEngine(IBus.Engine):
         self.do_focus_out()
         super().destroy()
 
+    def _add_color_to_attrs_for_spellcheck(
+            self, attrs: IBus.AttrList, text: str) -> None:
+        '''May color the preedit if spellchecking fails
+
+        :param attrs: The attribute list of the preedit
+        :param text: The current text in the preedit which
+                     may need color added
+        '''
+        if not self._color_preedit_spellcheck:
+            return
+        stripped_text = itb_util.strip_token(text)
+        prefix_length = text.find(stripped_text)
+        if (len(stripped_text) >= 4
+            and not
+            self.database.hunspell_obj.spellcheck(stripped_text)):
+            attrs.append(IBus.attr_foreground_new(
+                self._color_preedit_spellcheck_argb,
+                prefix_length,
+                prefix_length + len(stripped_text)))
+
     def _update_preedit(self) -> None:
         '''Update Preedit String in UI'''
         if DEBUG_LEVEL > 1:
@@ -2064,11 +2084,8 @@ class TypingBoosterEngine(IBus.Engine):
                             self._color_compose_preview_argb,
                             length_before_compose,
                             length_before_compose + length_compose))
-                elif (self._color_preedit_spellcheck
-                      and len(_str) >= 4
-                      and not self.database.hunspell_obj.spellcheck(_str)):
-                    attrs.append(IBus.attr_foreground_new(
-                        self._color_preedit_spellcheck_argb, 0, len(_str)))
+                else:
+                    self._add_color_to_attrs_for_spellcheck(attrs, _str)
             else:
                 # Preedit style “only when lookup is enabled” is
                 # requested and lookup is *not* enabled.  Therefore,
@@ -2210,11 +2227,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self._preedit_underline,
                 len(typed_string), len(typed_string + completion)))
         else:
-            if (self._color_preedit_spellcheck
-                and len(typed_string) >= 4
-                and not self.database.hunspell_obj.spellcheck(typed_string)):
-                attrs.append(IBus.attr_foreground_new(
-                    self._color_preedit_spellcheck_argb, 0, len(typed_string)))
+            self._add_color_to_attrs_for_spellcheck(attrs, typed_string)
             if self._color_inline_completion:
                 attrs.append(IBus.attr_foreground_new(
                     self._color_inline_completion_argb,
