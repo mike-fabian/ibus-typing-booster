@@ -1,0 +1,18 @@
+<section class="page-header">
+  <h1 class="project-name">
+    {{ $.Site.Params.project_name | default "project_name goes here" | markdownify }}
+  </h1>
+  <h2 class="project-tagline">
+    {{ $.Site.Params.project_tagline | default "project_tagline goes here" | markdownify }}
+  </h2>
+  <nav>
+    {{ $current := . }}
+    {{ range .Site.Menus.nav }}
+      {{ $active := or ($current.IsMenuCurrent "nav" .) ($current.HasMenuCurrent "nav" .) }}
+      {{ $active = or $active (eq .Name $current.Title) }}
+      {{ $active = or $active (and (eq .Name "Blog") (eq $current.Section "post")) }}
+      {{ $active = or $active (and (eq .Name "Tags") (eq $current.Section "tags")) }}
+      <a href="{{ .URL }}" class="btn">{{ .Name }}</a>
+    {{ end }}
+  </nav>
+</section>

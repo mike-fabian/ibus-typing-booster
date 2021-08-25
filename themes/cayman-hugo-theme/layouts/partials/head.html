@@ -1,0 +1,22 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  {{ hugo.Generator }}
+  {{ $summary := trim (.Summary | plainify | htmlUnescape) "\n\r"
+    | default .Title }}
+  <meta name="description" content="{{ $summary }}">
+  <link rel="stylesheet" href="{{ "css/normalize.css" | absURL }}">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  {{ $caymanScss := "scss/cayman.scss" }}
+  {{ $options := (dict "targetPath" "css/cayman.css") }}
+  {{ $caymanCss := resources.Get $caymanScss | resources.ExecuteAsTemplate $caymanScss . | toCSS $options | fingerprint }}
+  <link rel="stylesheet" href="{{ $caymanCss.Permalink }}">
+  <!-- Icon made by Freepik, from Flaticon, licensed by CC 3.0. -->
+  <!-- https://www.flaticon.com/free-icon/island_1530732 -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  {{ partial "katex.html" . }}
+  <title>{{ .Title }} | {{ $.Site.Title }}</title>
+</head>

@@ -1,0 +1,17 @@
+name = "Cayman"
+license = "CC BY 4.0"
+licenselink = "https://creativecommons.org/licenses/by/4.0/"
+description = "Cayman is a clean, responsive theme for Hugo, ported from the original Jekyll Cayman Theme."
+homepage = "https://github.com/zwbetz-gh/cayman-hugo-theme"
+tags = ["blog", "clean", "color configuration"]
+features = ["blog", "clean", "color configuration"]
+min_version = "0.81.0"
+
+[author]
+  name = "Zachary Betz"
+  homepage = "https://zwbetz.com/"
+
+[original]
+  name = "Cayman"
+  homepage = "https://github.com/jasonlong/cayman-theme"
+  repo = "https://github.com/jasonlong/cayman-theme"

@@ -1,0 +1,15 @@
+{{ define "main" }}
+<h1>{{ .Title }}</h1>
+<ul>
+{{ $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{ range $pages.ByPublishDate.Reverse }}
+  <li>
+    {{ $dateFormat := $.Site.Params.dateFormat | default "Jan 2, 2006" }}
+    {{ .PublishDate.Format $dateFormat }}
+    <a href="{{ .Permalink }}">
+      {{ .Title }}
+    </a>
+  </li>        
+{{ end }}
+</ul>
+{{ end }}

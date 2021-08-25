@@ -1,0 +1,21 @@
+{{ define "main" }}
+  <h1>{{ .Title }}</h1>
+  <div>
+    {{ $dateFormat := $.Site.Params.dateFormat | default "Jan 2, 2006" }}
+    <strong>Publish date: </strong>{{ .PublishDate.Format $dateFormat }}
+  </div>
+  {{ $tags := slice }}
+  {{ with .Params.tags }}
+    <div>
+      <strong>Tags: </strong>
+      {{ range . }}
+        {{ $href := print ("tags/" | absLangURL) (. | urlize) "/" }}
+        {{ $element := printf "<a href=\"%s\">%s</a>" $href . }}
+        {{ $tags = $tags | append $element }}
+      {{ end }}
+      {{ delimit $tags ", " }}
+    </div>
+  {{ end }}
+  {{ .Content }}
+  {{ partial "disqus.html" . }}
+{{ end }}

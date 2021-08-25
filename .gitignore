@@ -1,13 +1,1 @@
-/ABOUT-NLS
-Makefile
-Makefile.in
-/aclocal.m4
-/config.log
-/config.rpath
-/config.status
-/configure
-/ibus-typing-booster.spec
-/autom4te.cache/
-compile
-ibus-typing-booster-*.tar.gz
-test-driver
+public/

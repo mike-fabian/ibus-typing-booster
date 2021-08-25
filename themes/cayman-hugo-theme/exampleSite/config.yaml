@@ -1,0 +1,75 @@
+baseURL: https://example.com
+languageCode: en-us
+defaultContentLanguage: en
+title: Cayman
+theme: cayman-hugo-theme
+
+# Google analytics
+googleAnalytics: UA-123456789-1
+
+# Disqus comments
+disqusShortname: yourdiscussshortname
+
+# Syntax highlighting
+pygmentsCodefences: true
+pygmentsStyle: pygments
+
+taxonomies:
+  tag: tags
+
+permalinks:
+  post: /:filename/
+
+params:
+  # Header text, can be markdown
+  project_name: Cayman Hugo Theme
+  project_tagline: A clean, responsive Hugo theme, ported from the original Jekyll Cayman theme
+
+  # Date format for post list and single pages
+  # For more date formats see https://gohugo.io/functions/format/
+  dateFormat: 2006-01-02
+
+  # Footer text, can be markdown
+  footer: Made with [Hugo](https://gohugo.io/). Themed by [Cayman](https://github.com/zwbetz-gh/cayman-hugo-theme). Deployed to [Netlify](https://www.netlify.com/).
+
+  # If true, the CSS/JS for Katex math typesetting are enabled
+  katex: true
+
+  # Breakpoints
+  large_breakpoint: 64em
+  medium_breakpoint: 42em
+
+  # Header colors
+  header_heading_color: "#fff"
+  header_background_color: "#159957"
+  header_background_color_secondary: "#155799"
+
+  # Text colors
+  section_headings_color: "#159957"
+  body_text_color: "#606c71"
+  body_link_color: "#1e6bb8"
+  blockquote_text_color: "#819198"
+
+  # Code colors
+  code_background_color: "#f3f6fa"
+  code_text_color: "#567482"
+
+  # Border colors
+  border_color: "#dce6f0"
+  table_border_color: "#e9ebec"
+  hr_border_color: "#eff0f1"
+
+menu:
+  nav:
+    - name: Blog
+      url: /
+      weight: 1
+    - name: Tags
+      url: /tags/
+      weight: 2
+    - name: About
+      url: /about/
+      weight: 3
+    - name: RSS
+      url: /index.xml
+      weight: 4

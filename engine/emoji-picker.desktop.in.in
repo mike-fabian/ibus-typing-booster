@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Emoji Picker
-Comment=An emoji selection tool
-Exec=${PREFIX}/bin/emoji-picker
-Icon=ibus-typing-booster
-Terminal=false
-Type=Application
-StartupNotify=true
-Categories=GTK;Utility;
