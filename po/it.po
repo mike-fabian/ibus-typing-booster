@@ -4,22 +4,23 @@
 # Alessio C. <alciregi@gmail.com>, 2019.
 # Mike FABIAN <mfabian@redhat.com>, 2019, 2020.
 # Enrico Bella <enric@e.email>, 2020.
+# Nathan <nathan95@live.it>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-08-22 19:32+0200\n"
-"PO-Revision-Date: 2020-10-11 18:00+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Italian <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/it/>\n"
+"PO-Revision-Date: 2021-08-25 09:49+0000\n"
+"Last-Translator: Nathan <nathan95@live.it>\n"
+"Language-Team: Italian <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.2.2\n"
+"X-Generator: Weblate 4.8\n"
 
 #: engine/emoji_picker.py:200
 msgid "Emoji Picker"
@@ -540,10 +541,8 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:495
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remember input mode"
-msgstr "Rimuovi metodo di inserimento"
+msgstr "Ricorda modalità di input"
 
 #: setup/main.py:497
 msgid ""
