@@ -4969,10 +4969,12 @@ class SetupUI(Gtk.Window):
                     LOGGER.info('Error sound could be initialized.')
                 except (FileNotFoundError, PermissionError):
                     LOGGER.exception(
-                        'Initializing error sound object failed.')
+                        'Initializing error sound object failed.'
+                        'File not found or no read permissions.')
                 except:
                     LOGGER.exception(
-                        'Initializing error sound object failed.')
+                        'Initializing error sound object failed '
+                        'for unknown reasons.')
 
     def set_debug_level(
             self,

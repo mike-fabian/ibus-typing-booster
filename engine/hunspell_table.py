@@ -4380,10 +4380,12 @@ class TypingBoosterEngine(IBus.Engine):
                     LOGGER.info('Error sound initialized.')
                 except (FileNotFoundError, PermissionError):
                     LOGGER.exception(
-                        'Initializing error sound object failed.')
+                        'Initializing error sound object failed. '
+                        'File not found or no read permissions.')
                 except:
                     LOGGER.exception(
-                        'Initializing error sound object failed.')
+                        'Initializing error sound object failed '
+                        'for unknown reasons.')
 
     def get_error_sound_file(self) -> str:
         '''
@@ -5358,6 +5360,14 @@ class TypingBoosterEngine(IBus.Engine):
                          keyval, keycode, ibus_keycode, keystate)
         self.forward_key_event(keyval, ibus_keycode, keystate)
 
+    def _play_error_sound(self) -> None:
+        '''Play an error sound if enabled and possible'''
+        if self._error_sound and self._error_sound_object:
+            try:
+                dummy = self._error_sound_object.play()
+            except:
+                LOGGER.exception('Playing error sound failed.')
+
     def _handle_compose(self, key: itb_util.KeyEvent) -> bool:
         '''Internal method to handle possible compose keys
 
@@ -5525,8 +5535,7 @@ class TypingBoosterEngine(IBus.Engine):
                 super().commit_text(
                     IBus.Text.new_from_string(preedit_representation))
                 return False
-            if self._error_sound and self._error_sound_object:
-                dummy = self._error_sound_object.play()
+            self._play_error_sound()
             return True
         if DEBUG_LEVEL > 1:
             LOGGER.debug('Compose sequence finished.')
