@@ -55,43 +55,41 @@ The procedure to add an ibus-typing-booster input method differs slightly depend
 ###### 1_1
 ## When using the Gnome3 desktop
 
-![When using the Gnome3 desktop](/images/user-docs/When-using-the-Gnome3-desktop.gif)
+{{< video label="Adding ibus-typing-booster to the Gnome3 desktop" webm="/videos/user-docs/When-using-the-Gnome3-desktop.webm" >}}
 
 1. First click on the panel menu in the top right corner of the desktop and then click on the “screwdriver and wrench” icon to open the Gnome3 control center.
 
-2. Now the Gnome3 control center has opened. Click on the icon for the “Region & Language” settings. 
+1. Now the Gnome3 control center has opened. Click on the icon for the “Keyboard” settings  (In older versions of Gnome3 this was in the “Region & Language” settings).
 
-3. At the bottom you see a list of input sources which have already been added to the desktop before. In this case there are already: “English (US, with euro on 5)” and “Japanese (Kana Kanji)”. This is just an example of course, the list of already added input methods could look different for you. The first entry, “English (US, with euro on 5)”, is not really an input engine, it is just a keyboard layout. One can see that an entry in the list of input sources is a keyboard layout if it does not have the icon showing two tooth-wheels at the right side.
+1. At the bottom you see a list of input sources which have already been added to the desktop before. In this case there are already: “English (US, with euro on 5)” and “Japanese (Kana Kanji)”. This is just an example of course, the list of already added input methods could look different for you. The first entry, “English (US, with euro on 5)”, is not really an input engine, it is just a keyboard layout. One can see that an entry in the list of input sources is a keyboard layout if it does not have the icon showing two tooth-wheels at the right side.
 
     It is recommended to use a keyboard layout with ibus-typing-booster which has a real “AltGr” key and does not just make the “AltGr” or “Alt” key on the right side of the space bar basically a duplicate of the left “Alt” key. For details, see The [“AltGr” key](#3_1).
 
-    The second entry, “Japanese (Kana Kanji)” is an input engine, it has the icon showing two tooth wheels at the right side.
+    The second entry, “Japanese (Kana Kanji)” is not just a keyboard layout, it is an input engine to type Japanese.
 
     Now click on the “+” button at the lower left to add another input source.
 
-4. Then click on the three vertical dots “⋮” to open the search entry field.
+1. Then click on the three vertical dots “⋮” to open the search entry field.
 
-5. Type the word “booster” into the search entry field. Only “Other” remains. ibus-typing-booster supports many languages, even at the same time. Therefore it is not listed under any specific language but under “Other”.
+1. Type the word “booster” into the search entry field. Only “Other” remains. ibus-typing-booster supports many languages, even at the same time. Therefore it is not listed under any specific language but under “Other”.
 
-6. Click on “Other” and you should find an input method named “Other (Typing Booster)” there. There maybe lots of other input methods shown there, depending on what is installed on your system, but if you have ibus-typing-booster installed, “Other (Typing Booster)” should show up there.
-
-    If you just installed ibus-typing-booster while your current gnome session was still running, you need to restart your gnome session in order to make newly installed input methods appear in the gnome setup.
+1. Click on “Other” and you should find an input method named “Other (Typing Booster)” there. There maybe lots of other input methods shown there, depending on what is installed on your system, but if you have ibus-typing-booster installed, “Other (Typing Booster)” should show up there.
 
     Select “Other (Typing Booster)” and click the “Add” button at the top right.
 
-7. Now you you see the ibus-typing-booster engine listed in the “Region & Language” dialogue of Gnome3.
+    (**Note:** If you just installed ibus-typing-booster while your current gnome session was still running, you will not find ibus-typing-booster yet. In that case you need to restart your gnome session in order to make newly installed input methods appear in the gnome setup.)
 
-    If you select it, a tooth wheel appears at the bottom right of the dialogue, clicking that opens the setup tool of that ibus-typing-booster engine.
+1. Now you you see the ibus-typing-booster engine listed in the “Keyboard” dialogue of Gnome3.
 
-8. Here you see the setup tool of that ibus-typing-booster engine where you can customize ibus-typing-booster according to your preferences.
+    At the right side of the entry “Other (Typing Booster)” there are three vertical dots “⋮”. If you click on these, a menu opens. One of the entries in that menu is “Preferences”. Clicking that opens the setup tool of the ibus-typing-booster engine.
 
-9. Now open some programs where you could type something, for example “gedit” or “gnome-terminal”. And activate the ibus-typing-booster engine you want to use in the input source menu of the Gnome panel as shown in this screenshot.
+1. Now open some programs where you could type something, for example “gedit” or “gnome-terminal”. And activate the ibus-typing-booster engine you want to use in the input source menu of the Gnome panel as shown in this screenshot.
 
     When the input source menu of the Gnome panel is open and an ibus-typing-booster engine is selected, there is a menu entry “Setup” which is an quicker way to open the setup tool than going to the “Region & Language” settings dialogue.
 
     Some options are also directly available in the input source menu of the gnome panel to have quicker access to these often used options than having to open the setup tool. There are also [key and mouse bindings](#3) for these frequently used options which are shown in the input source menu of the gnome panel as well as a reminder.
 
-10. Now type something, for example into gedit and you should see some suggestions for completions.
+1. Now type something, for example into gedit and you should see some suggestions for completions.
 
     At the beginning, the suggestions only come from the hunspell dictionaries and are thus not very good yet. But ibus-typing-booster learns from your typing, it remembers which words you use often in which context. Therefore, the suggestions become much better over time.
 
