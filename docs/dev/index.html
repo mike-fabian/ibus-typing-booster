@@ -1,196 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="generator" content="Hugo 0.69.0" />
-  
-  <meta name="description" content="Ibus-typing-booser is open source and licensed under the GPL version 3.
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=generator content="Hugo 0.69.0"><meta name=description content="Ibus-typing-booser is open source and licensed under the GPL version 3.
 Reporting bugs You can report bugs and suggest improvements in the github issue tracker: https://github.com/mike-fabian/ibus-typing-booster/issues
 Translation You can contribute translations for ibus-typing-booster using the online translation platform weblate: https://translate.fedoraproject.org/projects/ibus-typing-booster/.
 If you cannot use weblate, you can also create a pull request for new or updated translations.
 Mailing list https://lists.fedorahosted.org/admin/lists/ibus-typing-booster.lists.fedorahosted.org/
-Browse git repository You can browse the source code at https://github.">
-  <link rel="stylesheet" href="css/normalize.css">
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-  
-  
-  
-  <link rel="stylesheet" href="../../css/cayman.ea0e967413f3851071cc8ace3621bc4205fe8fa79b2abe3d7bf94ff2841f0d47.css">
-  
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
-
-  <title>🚀 ibus-typing-booster</title>
-
-</head>
-
-<body>
-  <section class="page-header">
-  <h1 class="project-name">
-    🚀 ibus-typing-booster
-  </h1>
-  <h2 class="project-tagline">
-    Faster typing by context sensitive completion.
-  </h2>
-  <nav>
-    
-    
-      
-      
-      
-      
-      <a href="../../" class="btn">overview</a>
-    
-      
-      
-      
-      
-      <a href="../../post/" class="btn">Post</a>
-    
-      
-      
-      
-      
-      <a href="../../docs/" class="btn">Docs</a>
-    
-  </nav>
-</section>
-
-  <section class="main-content">
-    
-  <h1>Developer Documentation</h1>
-  <p>Ibus-typing-booser is open source and licensed under the GPL version 3.</p>
-<h2 id="reporting-bugs">Reporting bugs</h2>
-<p>You can report bugs and suggest improvements in the github issue tracker: <a href="https://github.com/mike-fabian/ibus-typing-booster/issues">https://github.com/mike-fabian/ibus-typing-booster/issues</a></p>
-<h2 id="translation">Translation</h2>
-<p>You can contribute translations for ibus-typing-booster using the online translation platform weblate: <a href="https://translate.fedoraproject.org/projects/ibus-typing-booster/">https://translate.fedoraproject.org/projects/ibus-typing-booster/</a>.</p>
-<p>If you cannot use weblate, you can also create a pull request for new or updated translations.</p>
-<h2 id="mailing-list">Mailing list</h2>
-<p><a href="https://lists.fedorahosted.org/admin/lists/ibus-typing-booster.lists.fedorahosted.org/">https://lists.fedorahosted.org/admin/lists/ibus-typing-booster.lists.fedorahosted.org/</a></p>
-<h2 id="browse-git-repository">Browse git repository</h2>
-<p>You can browse the source code at <a href="https://github.com/mike-fabian/ibus-typing-booster">https://github.com/mike-fabian/ibus-typing-booster</a>.</p>
-<h2 id="anonymous-git-clone">Anonymous git clone</h2>
-<pre><code>$ git clone git://github.com/mike-fabian/ibus-typing-booster.git
-</code></pre><h2 id="authorized-git-clone">Authorized git clone</h2>
-<pre><code>$ git clone git@github.com:mike-fabian/ibus-typing-booster.git
-</code></pre><h2 id="release-tarballs">Release tarballs</h2>
-<p>Release tarballs are available at <a href="https://github.com/mike-fabian/ibus-typing-booster/releases">https://github.com/mike-fabian/ibus-typing-booster/releases</a>.</p>
-<h2 id="building-and-installing-from-source">Building and installing from source</h2>
-<h3 id="required-packages-for-building">Required packages for building</h3>
-<p>To build ibus-typing-booster, you will need at least:</p>
-<ul>
-<li><strong>Fedora:</strong> autoconf, automake, gettext-devel, python3-devel &gt;= 3.3, ibus-devel &gt;= 1.5.3</li>
-<li><strong>openSUSE:</strong> autoconf, automake, python3-devel &gt;= 3.3, ibus-devel &gt;= 1.5.3</li>
-<li><strong>Ubuntu 16.04:</strong> autoconf, automake, python3.5, ibus &gt;= 1.5.3, libibus-1.0-dev &gt;= 1.5.3</li>
-</ul>
-<p>If you build from a git checkout and not from a release tarball, you also need:</p>
-<ul>
-<li><strong>Fedora:</strong> autopoint</li>
-<li><strong>openSUSE:</strong> autopoint</li>
-<li><strong>Ubuntu 16.04:</strong> autopoint</li>
-</ul>
-<p>If you also want to run the test-suite with “make check”, you also need the following packages:</p>
-<ul>
-<li><strong>Fedora:</strong> m17n-lib, m17n-db-extras, python3-enchant or pyhunspell-python3, hunspell-cs, hunspell-de, hunspell-en, hunspell-es, hunspell-it, hunspell-ko</li>
-<li><strong>openSUSE Leap 42.1 and newer:</strong> m17n-lib, m17n-db, python3-pyenchant, myspell-cs_CZ, myspell-de, myspell-de_DE, myspell-en, myspell-en_US, myspell-es, myspell-es_ES, myspell-it_IT, python3-gobject, dbus-1-x11</li>
-<li><strong>Ubuntu 16.04:</strong> libm17n-0, m17n-db, python3-enchant, hunspell-de-de, hunspell-cs, hunspell-es, hunspell-it, hunspell-ko</li>
-</ul>
-<h2 id="building-and-installing-using-the-source">Building and installing using the source</h2>
-<p>When using a git checkout, go to the directory of the checkout and use autogen.sh:</p>
-<pre><code>$ cd ibus-typing-booster
+Browse git repository You can browse the source code at https://github."><link rel=stylesheet href=css/normalize.css><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel=stylesheet type=text/css><link rel=stylesheet href=../../css/cayman.ea0e967413f3851071cc8ace3621bc4205fe8fa79b2abe3d7bf94ff2841f0d47.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css integrity=sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js integrity=sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ crossorigin=anonymous></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js integrity=sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI crossorigin=anonymous onload=renderMathInElement(document.body);></script><title>🚀 ibus-typing-booster</title></head><body><section class=page-header><h1 class=project-name>🚀 ibus-typing-booster</h1><h2 class=project-tagline>Faster typing by context sensitive completion.</h2><nav><a href=../../ class=btn>overview</a>
+<a href=../../post/ class=btn>Post</a>
+<a href=../../docs/ class=btn>Docs</a></nav></section><section class=main-content><h1>Developer Documentation</h1><p>Ibus-typing-booser is open source and licensed under the GPL version 3.</p><h2 id=reporting-bugs>Reporting bugs</h2><p>You can report bugs and suggest improvements in the github issue tracker: <a href=https://github.com/mike-fabian/ibus-typing-booster/issues>https://github.com/mike-fabian/ibus-typing-booster/issues</a></p><h2 id=translation>Translation</h2><p>You can contribute translations for ibus-typing-booster using the online translation platform weblate: <a href=https://translate.fedoraproject.org/projects/ibus-typing-booster/>https://translate.fedoraproject.org/projects/ibus-typing-booster/</a>.</p><p>If you cannot use weblate, you can also create a pull request for new or updated translations.</p><h2 id=mailing-list>Mailing list</h2><p><a href=https://lists.fedorahosted.org/admin/lists/ibus-typing-booster.lists.fedorahosted.org/>https://lists.fedorahosted.org/admin/lists/ibus-typing-booster.lists.fedorahosted.org/</a></p><h2 id=browse-git-repository>Browse git repository</h2><p>You can browse the source code at <a href=https://github.com/mike-fabian/ibus-typing-booster>https://github.com/mike-fabian/ibus-typing-booster</a>.</p><h2 id=anonymous-git-clone>Anonymous git clone</h2><pre><code>$ git clone git://github.com/mike-fabian/ibus-typing-booster.git
+</code></pre><h2 id=authorized-git-clone>Authorized git clone</h2><pre><code>$ git clone git@github.com:mike-fabian/ibus-typing-booster.git
+</code></pre><h2 id=release-tarballs>Release tarballs</h2><p>Release tarballs are available at <a href=https://github.com/mike-fabian/ibus-typing-booster/releases>https://github.com/mike-fabian/ibus-typing-booster/releases</a>.</p><h2 id=building-and-installing-from-source>Building and installing from source</h2><h3 id=required-packages-for-building>Required packages for building</h3><p>To build ibus-typing-booster, you will need at least:</p><ul><li><strong>Fedora:</strong> autoconf, automake, gettext-devel, python3-devel >= 3.3, ibus-devel >= 1.5.3</li><li><strong>openSUSE:</strong> autoconf, automake, python3-devel >= 3.3, ibus-devel >= 1.5.3</li><li><strong>Ubuntu 16.04:</strong> autoconf, automake, python3.5, ibus >= 1.5.3, libibus-1.0-dev >= 1.5.3</li></ul><p>If you build from a git checkout and not from a release tarball, you also need:</p><ul><li><strong>Fedora:</strong> autopoint</li><li><strong>openSUSE:</strong> autopoint</li><li><strong>Ubuntu 16.04:</strong> autopoint</li></ul><p>If you also want to run the test-suite with “make check”, you also need the following packages:</p><ul><li><strong>Fedora:</strong> m17n-lib, m17n-db-extras, python3-enchant or pyhunspell-python3, hunspell-cs, hunspell-de, hunspell-en, hunspell-es, hunspell-it, hunspell-ko</li><li><strong>openSUSE Leap 42.1 and newer:</strong> m17n-lib, m17n-db, python3-pyenchant, myspell-cs_CZ, myspell-de, myspell-de_DE, myspell-en, myspell-en_US, myspell-es, myspell-es_ES, myspell-it_IT, python3-gobject, dbus-1-x11</li><li><strong>Ubuntu 16.04:</strong> libm17n-0, m17n-db, python3-enchant, hunspell-de-de, hunspell-cs, hunspell-es, hunspell-it, hunspell-ko</li></ul><h2 id=building-and-installing-using-the-source>Building and installing using the source</h2><p>When using a git checkout, go to the directory of the checkout and use autogen.sh:</p><pre><code>$ cd ibus-typing-booster
 $ ./autogen.sh
-</code></pre><p><code>autogen.sh</code> automatically runs configure and you can give the same arguments to <code>autogen.sh</code> you can give to configure. See below for the right arguments for your distribution.</p>
-<p>When using the source from a <a href="https://github.com/mike-fabian/ibus-typing-booster/releases">release tarball</a>, unpack the tarball and go into the source directory:</p>
-<pre><code>$ tar xvf ibus-typing-booster-2.7.0.tar.gz
+</code></pre><p><code>autogen.sh</code> automatically runs configure and you can give the same arguments to <code>autogen.sh</code> you can give to configure. See below for the right arguments for your distribution.</p><p>When using the source from a <a href=https://github.com/mike-fabian/ibus-typing-booster/releases>release tarball</a>, unpack the tarball and go into the source directory:</p><pre><code>$ tar xvf ibus-typing-booster-2.7.0.tar.gz
 $ cd ibus-typing-booster-2.7.0
-</code></pre><p>Now continue like this:</p>
-<p><strong>Fedora:</strong></p>
-<pre><code>$ ./configure --prefix=/usr --libexecdir=/usr/libexec/
+</code></pre><p>Now continue like this:</p><p><strong>Fedora:</strong></p><pre><code>$ ./configure --prefix=/usr --libexecdir=/usr/libexec/
 $ make
 $ make check # optional
 $ make install
-</code></pre><p><strong>openSUSE Leap 42.1 and newer:</strong></p>
-<pre><code>$ ./configure --prefix=/usr --libexecdir=/usr/lib/ibus
+</code></pre><p><strong>openSUSE Leap 42.1 and newer:</strong></p><pre><code>$ ./configure --prefix=/usr --libexecdir=/usr/lib/ibus
 $ make
 $ make check # optional
 $ make install
-</code></pre><p><strong>Ubuntu 16.04:</strong></p>
-<pre><code>$ ./configure --prefix=/usr --libexecdir=/usr/lib/ibus
+</code></pre><p><strong>Ubuntu 16.04:</strong></p><pre><code>$ ./configure --prefix=/usr --libexecdir=/usr/lib/ibus
 $ make
 $ make check # optional
 $ make install
-</code></pre><h3 id="required-and-optional-packages-for-running">Required and optional packages for running</h3>
-<p><strong>Note about m17n-lib:</strong> m17n-lib is required to use ibus-typing-booster but unfortunately the latest released version (currently 1.7.0) has a serious bug which causes a crash when using ibus-typing-booster. To fix this bug you need my <a href="http://git.savannah.nongnu.org/cgit/m17n/m17n-lib.git/commit/?id=70126a8fd252ee5c0cb8ab66b72cea39b472121e">patch</a> from the upstream git repository (Patch also discussed <a href="https://lists.nongnu.org/archive/html/m17n-list/2015-08/msg00001.html">here</a> and <a href="https://lists.nongnu.org/archive/html/m17n-list/2015-08/msg00002.html">here</a>). Some distributions like Fedora &gt;= 23 already have this patch, some don’t. For Debian there is <a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=856959">this bugreport</a> requesting to include the patch.</p>
-<p>To run <code>ibus-typing-booster</code>, the following software is required or optional for additional features:</p>
-<h3 id="fedora">Fedora</h3>
-<p><strong>Required:</strong></p>
-<ul>
-<li>ibus &gt;= 1.5.3</li>
-<li>m17n-lib</li>
-<li>m17n-db</li>
-<li>python3 &gt;= 3.3</li>
-<li>python3-dbus</li>
-<li>python3-pyxdg</li>
-</ul>
-<p><strong>Optional:</strong></p>
-<ul>
-<li><strong>python3-enchant</strong> or <strong>pyhunspell-python3</strong>: Needed if you want spell-checking suggestions to work. Both packages work equally well, it doesn’t matter which one you choose.</li>
-<li><strong>hunspell-</strong>*: Hunspell dictionaries for the languages you want to type. If they are not there, ibus-typing-booster will still work but only learn from user input. With the hunspell dictionaries and the above Python modules to use them one will also get spell-checking suggestions and if no good suggestions can be found in the data gathered from user input, the word lists from the hunspell dictionaries will be used as a fallback to offer at least some suggestions.</li>
-<li><strong>gdouros-symbola-fonts</strong> (or any other good font for symbols and emoji): Only needed if you want to input emoji, without a good emoji font you will see lots of boxes or replacement characters when trying to type emoji.</li>
-<li><strong>m17n-db-extras</strong>: for some additional Japanese and Chinese input methods, most users won’t need this, it is only helpful if you want to match emoji by typing their Japanese names in hiragana by using the “ja-anthy” input method.</li>
-<li><strong><a href="https://github.com/miurahr/pykakasi">pykakasi</a></strong>: Only needed if you want to input emoji by typing their Japanese names in romaji (i.e. Latin transliteration). That is an alternative to using the Japanese input method “ja-anthy” from m17n-db-extras to type the names of the emoji in hiragana. There is no “pykakashi” package for Fedora, if you want this feature you need to install it from source.</li>
-<li><strong><a href="https://pypi.python.org/pypi/pinyin">pinyin</a></strong>: A Python module to convert Chinese text into pinyin. This is only needed if you want to type emoji by typing the Chinese names of the emoji in pinyin Latin transliteration. There is no “pinyin” for Fedora, if you want this feature you need to install it from source.</li>
-</ul>
-<h3 id="opensuse">openSUSE</h3>
-<p><strong>Required:</strong></p>
-<ul>
-<li>ibus &gt;= 1.5.3</li>
-<li>m17n-lib</li>
-<li>m17n-db</li>
-<li>python3 &gt;= 3.3</li>
-<li>dbus-1-python3</li>
-<li>python3-pyxdg</li>
-</ul>
-<p><strong>Optional:</strong></p>
-<ul>
-<li><strong>python3-pyenchant</strong>: Needed if you want spell-checking suggestions to work.</li>
-<li><strong>myspell-</strong>*: Hunspell dictionaries for the languages you want to type. If they are not there, ibus-typing-booster will still work but only learn from user input. With the hunspell dictionaries and the above Python modules to use them one will also get spell-checking suggestions and if no good suggestions can be found in the data gathered from user input, the word lists from the hunspell dictionaries will be used as a fallback to offer at least some suggestions.</li>
-<li><strong>gdouros-symbola-fonts</strong> (or any other good font for symbols and emoji): Only needed if you want to input emoji, without a good emoji font you will see lots of boxes or replacement characters when trying to type emoji. The version in openSUSE might be quite old, if it is not for the currently released version of Unicode, better get the latest version of the Symbola font from <a href="http://users.teilar.gr/~g1951d/">upstream</a>.</li>
-<li><strong><a href="https://github.com/miurahr/pykakasi">pykakasi</a></strong>: Only needed if you want to input emoji by typing their Japanese names in romaji (i.e. Latin transliteration). That is an alternative to using the Japanese input method “ja-anthy” from m17n-db-extras to type the names of the emoji in hiragana. There is no “pykakashi” package for Fedora, if you want this feature you need to install it from source.</li>
-<li><strong><a href="https://pypi.python.org/pypi/pinyin">pinyin</a></strong>: A Python module to convert Chinese text into pinyin. This is only needed if you want to type emoji by typing the Chinese names of the emoji in pinyin Latin transliteration. There is no “pinyin” for Fedora, if you want this feature you need to install it from source.</li>
-</ul>
-<h3 id="ubuntu-1604">Ubuntu 16.04</h3>
-<p><strong>Required:</strong></p>
-<ul>
-<li>ibus &gt;= 1.5.3</li>
-<li>libm17n-0</li>
-<li>m17n-db</li>
-<li>python3 &gt;= 3.3</li>
-<li>python3-dbus</li>
-<li>python3-xdg</li>
-</ul>
-<p><strong>Optional:</strong></p>
-<ul>
-<li><strong>python3-enchant</strong> : Needed if you want spell-checking suggestions to work.</li>
-<li><strong>hunspell-</strong>*: Hunspell dictionaries for the languages you want to type. If they are not there, ibus-typing-booster will still work but only learn from user input. With the hunspell dictionaries and the above Python modules to use them one will also get spell-checking suggestions and if no good suggestions can be found in the data gathered from user input, the word lists from the hunspell dictionaries will be used as a fallback to offer at least some suggestions.</li>
-<li><strong>fonts-symbola</strong> (or any other good font for symbols and emoji): Only needed if you want to input emoji, without a good emoji font you will see lots of boxes or replacement characters when trying to type emoji. The version in Ubuntu 16.04 seems to be quite old (for Unicode 7.0), better get the latest version of the Symbola font from <a href="http://users.teilar.gr/~g1951d/">upstream</a>.</li>
-<li><strong><a href="https://github.com/miurahr/pykakasi">pykakasi</a></strong>: Only needed if you want to input emoji by typing their Japanese names in romaji (i.e. Latin transliteration). That is an alternative to using the Japanese input method “ja-anthy” from m17n-db-extras to type the names of the emoji in hiragana. There is no “pykakashi” package for Fedora, if you want this feature you need to install it from source.</li>
-<li><strong><a href="https://pypi.python.org/pypi/pinyin">pinyin</a></strong>: A Python module to convert Chinese text into pinyin. This is only needed if you want to type emoji by typing the Chinese names of the emoji in pinyin Latin transliteration. There is no “pinyin” for Fedora, if you want this feature you need to install it from source.</li>
-</ul>
-
-
-    <footer class="site-footer">
-  <span class="site-footer-credits">
-    Made with <a href="https://gohugo.io/">Hugo</a>. Themed by <a href="https://github.com/zwbetz-gh/cayman-hugo-theme">Cayman</a>.
-  </span>
-</footer>
-
-  </section>
-  
-  
-
-</body>
-</html>
+</code></pre><h3 id=required-and-optional-packages-for-running>Required and optional packages for running</h3><p><strong>Note about m17n-lib:</strong> m17n-lib is required to use ibus-typing-booster but unfortunately the latest released version (currently 1.7.0) has a serious bug which causes a crash when using ibus-typing-booster. To fix this bug you need my <a href="http://git.savannah.nongnu.org/cgit/m17n/m17n-lib.git/commit/?id=70126a8fd252ee5c0cb8ab66b72cea39b472121e">patch</a> from the upstream git repository (Patch also discussed <a href=https://lists.nongnu.org/archive/html/m17n-list/2015-08/msg00001.html>here</a> and <a href=https://lists.nongnu.org/archive/html/m17n-list/2015-08/msg00002.html>here</a>). Some distributions like Fedora >= 23 already have this patch, some don’t. For Debian there is <a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=856959">this bugreport</a> requesting to include the patch.</p><p>To run <code>ibus-typing-booster</code>, the following software is required or optional for additional features:</p><h3 id=fedora>Fedora</h3><p><strong>Required:</strong></p><ul><li>ibus >= 1.5.3</li><li>m17n-lib</li><li>m17n-db</li><li>python3 >= 3.3</li><li>python3-dbus</li><li>python3-pyxdg</li></ul><p><strong>Optional:</strong></p><ul><li><strong>python3-enchant</strong> or <strong>pyhunspell-python3</strong>: Needed if you want spell-checking suggestions to work. Both packages work equally well, it doesn’t matter which one you choose.</li><li><strong>hunspell-</strong>*: Hunspell dictionaries for the languages you want to type. If they are not there, ibus-typing-booster will still work but only learn from user input. With the hunspell dictionaries and the above Python modules to use them one will also get spell-checking suggestions and if no good suggestions can be found in the data gathered from user input, the word lists from the hunspell dictionaries will be used as a fallback to offer at least some suggestions.</li><li><strong>gdouros-symbola-fonts</strong> (or any other good font for symbols and emoji): Only needed if you want to input emoji, without a good emoji font you will see lots of boxes or replacement characters when trying to type emoji.</li><li><strong>m17n-db-extras</strong>: for some additional Japanese and Chinese input methods, most users won’t need this, it is only helpful if you want to match emoji by typing their Japanese names in hiragana by using the “ja-anthy” input method.</li><li><strong><a href=https://github.com/miurahr/pykakasi>pykakasi</a></strong>: Only needed if you want to input emoji by typing their Japanese names in romaji (i.e. Latin transliteration). That is an alternative to using the Japanese input method “ja-anthy” from m17n-db-extras to type the names of the emoji in hiragana. There is no “pykakashi” package for Fedora, if you want this feature you need to install it from source.</li><li><strong><a href=https://pypi.python.org/pypi/pinyin>pinyin</a></strong>: A Python module to convert Chinese text into pinyin. This is only needed if you want to type emoji by typing the Chinese names of the emoji in pinyin Latin transliteration. There is no “pinyin” for Fedora, if you want this feature you need to install it from source.</li></ul><h3 id=opensuse>openSUSE</h3><p><strong>Required:</strong></p><ul><li>ibus >= 1.5.3</li><li>m17n-lib</li><li>m17n-db</li><li>python3 >= 3.3</li><li>dbus-1-python3</li><li>python3-pyxdg</li></ul><p><strong>Optional:</strong></p><ul><li><strong>python3-pyenchant</strong>: Needed if you want spell-checking suggestions to work.</li><li><strong>myspell-</strong>*: Hunspell dictionaries for the languages you want to type. If they are not there, ibus-typing-booster will still work but only learn from user input. With the hunspell dictionaries and the above Python modules to use them one will also get spell-checking suggestions and if no good suggestions can be found in the data gathered from user input, the word lists from the hunspell dictionaries will be used as a fallback to offer at least some suggestions.</li><li><strong>gdouros-symbola-fonts</strong> (or any other good font for symbols and emoji): Only needed if you want to input emoji, without a good emoji font you will see lots of boxes or replacement characters when trying to type emoji. The version in openSUSE might be quite old, if it is not for the currently released version of Unicode, better get the latest version of the Symbola font from <a href=http://users.teilar.gr/~g1951d/>upstream</a>.</li><li><strong><a href=https://github.com/miurahr/pykakasi>pykakasi</a></strong>: Only needed if you want to input emoji by typing their Japanese names in romaji (i.e. Latin transliteration). That is an alternative to using the Japanese input method “ja-anthy” from m17n-db-extras to type the names of the emoji in hiragana. There is no “pykakashi” package for Fedora, if you want this feature you need to install it from source.</li><li><strong><a href=https://pypi.python.org/pypi/pinyin>pinyin</a></strong>: A Python module to convert Chinese text into pinyin. This is only needed if you want to type emoji by typing the Chinese names of the emoji in pinyin Latin transliteration. There is no “pinyin” for Fedora, if you want this feature you need to install it from source.</li></ul><h3 id=ubuntu-1604>Ubuntu 16.04</h3><p><strong>Required:</strong></p><ul><li>ibus >= 1.5.3</li><li>libm17n-0</li><li>m17n-db</li><li>python3 >= 3.3</li><li>python3-dbus</li><li>python3-xdg</li></ul><p><strong>Optional:</strong></p><ul><li><strong>python3-enchant</strong> : Needed if you want spell-checking suggestions to work.</li><li><strong>hunspell-</strong>*: Hunspell dictionaries for the languages you want to type. If they are not there, ibus-typing-booster will still work but only learn from user input. With the hunspell dictionaries and the above Python modules to use them one will also get spell-checking suggestions and if no good suggestions can be found in the data gathered from user input, the word lists from the hunspell dictionaries will be used as a fallback to offer at least some suggestions.</li><li><strong>fonts-symbola</strong> (or any other good font for symbols and emoji): Only needed if you want to input emoji, without a good emoji font you will see lots of boxes or replacement characters when trying to type emoji. The version in Ubuntu 16.04 seems to be quite old (for Unicode 7.0), better get the latest version of the Symbola font from <a href=http://users.teilar.gr/~g1951d/>upstream</a>.</li><li><strong><a href=https://github.com/miurahr/pykakasi>pykakasi</a></strong>: Only needed if you want to input emoji by typing their Japanese names in romaji (i.e. Latin transliteration). That is an alternative to using the Japanese input method “ja-anthy” from m17n-db-extras to type the names of the emoji in hiragana. There is no “pykakashi” package for Fedora, if you want this feature you need to install it from source.</li><li><strong><a href=https://pypi.python.org/pypi/pinyin>pinyin</a></strong>: A Python module to convert Chinese text into pinyin. This is only needed if you want to type emoji by typing the Chinese names of the emoji in pinyin Latin transliteration. There is no “pinyin” for Fedora, if you want this feature you need to install it from source.</li></ul><footer class=site-footer><span class=site-footer-credits>Made with <a href=https://gohugo.io/>Hugo</a>. Themed by <a href=https://github.com/zwbetz-gh/cayman-hugo-theme>Cayman</a>.</span></footer></section></body></html>

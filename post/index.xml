@@ -1,36 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Posts on ibus-typing-booster</title>
-    <link>/post/</link>
-    <description>Recent content in Posts on ibus-typing-booster</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Mon, 28 May 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>All engines are merged into one for ibus-typing-booster &gt;= 2.0.0</title>
-      <link>/post2/</link>
-      <pubDate>Mon, 28 May 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post2/</guid>
-      <description>ibus-typing-booster has supported multiple languages in one engine since version &amp;gt;= 1.4.0, i.e. for quite a long time already. But to set this up it was necessary to use dconf on the command line, one could not do it with the graphical setup tool yet.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on ibus-typing-booster</title><link>/post/</link><description>Recent content in Posts on ibus-typing-booster</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 28 May 2018 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml"/><item><title>All engines are merged into one for ibus-typing-booster >= 2.0.0</title><link>/post2/</link><pubDate>Mon, 28 May 2018 00:00:00 +0000</pubDate><guid>/post2/</guid><description>ibus-typing-booster has supported multiple languages in one engine since version &amp;gt;= 1.4.0, i.e. for quite a long time already. But to set this up it was necessary to use dconf on the command line, one could not do it with the graphical setup tool yet.
 For ibus-typing-booster &amp;gt;= 2.0.0, the setup tool has been improved to make it easy to configure multiple dictionaries and input methods (transliteration methods).
-Until now, there were different engines like “German - DE (Typing Booster)”, “Hindi - HI (Typing Booster)”, for more than 70 different languages.</description>
-    </item>
-    
-    <item>
-      <title>Multilingual input implemented in ibus-typing-booster &gt;= 1.4.0</title>
-      <link>/post1/</link>
-      <pubDate>Wed, 04 May 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/post1/</guid>
-      <description>Since version 1.4.0, ibus-typing-booster supports using more than one input method/transliteration at the same time. I.e. one can use several languages at the same time without having to switch between different language engines of ibus-typing-booster.
-Using the graphical setup tool one can currently only add English as a second language to whatever the main language of that engine is. But that is only a limitation of the setup tool, when doing the setup manually from the command line, up to 10 transliterations (input methods) and an unlimited number of dictionaries can be used at the same time.</description>
-    </item>
-    
-  </channel>
-</rss>
+Until now, there were different engines like “German - DE (Typing Booster)”, “Hindi - HI (Typing Booster)”, for more than 70 different languages.</description></item><item><title>Multilingual input implemented in ibus-typing-booster >= 1.4.0</title><link>/post1/</link><pubDate>Wed, 04 May 2016 00:00:00 +0000</pubDate><guid>/post1/</guid><description>Since version 1.4.0, ibus-typing-booster supports using more than one input method/transliteration at the same time. I.e. one can use several languages at the same time without having to switch between different language engines of ibus-typing-booster.
+Using the graphical setup tool one can currently only add English as a second language to whatever the main language of that engine is. But that is only a limitation of the setup tool, when doing the setup manually from the command line, up to 10 transliterations (input methods) and an unlimited number of dictionaries can be used at the same time.</description></item></channel></rss>
