@@ -1,22 +1,22 @@
 # Mike FABIAN <mfabian@redhat.com>, 2016. #zanata, 2020.
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2020.
-# Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2019, 2020.
+# Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2019, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-08-22 19:32+0200\n"
-"PO-Revision-Date: 2020-10-11 17:43+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Catalan <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ca/>\n"
+"PO-Revision-Date: 2021-08-27 02:04+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
+"Language-Team: Catalan <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.2.2\n"
+"X-Generator: Weblate 4.8\n"
 
 #: engine/emoji_picker.py:200
 msgid "Emoji Picker"
@@ -106,7 +106,7 @@ msgstr "Resultats de la cerca"
 
 #: engine/emoji_picker.py:1207
 msgid "Search produced empty result."
-msgstr ""
+msgstr "La cerca ha produït un resultat buit."
 
 #: engine/emoji_picker.py:1480 engine/emoji_picker.py:1607
 msgid "Copied to clipboard!"
@@ -336,7 +336,7 @@ msgstr "Un mètode d’entrada de compleció per a accelerar l’escriptura."
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:4818
 msgid "translator-credits"
-msgstr ""
+msgstr "Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2019-2021"
 
 #: engine/itb_util.py:4826
 msgid "Online documentation:"
@@ -514,10 +514,8 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:495
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remember input mode"
-msgstr "Suprimeix un mètode d’entrada"
+msgstr "Recorda el mode d’entrada"
 
 #: setup/main.py:497
 msgid ""
@@ -559,7 +557,7 @@ msgstr ""
 #: setup/main.py:585
 #, python-format
 msgid "Avoid using the %s function"
-msgstr ""
+msgstr "Eviteu fer servir la funció %s"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -707,11 +705,11 @@ msgstr "Suprimeix un diccionari"
 
 #: setup/main.py:874
 msgid "Move dictionary up"
-msgstr ""
+msgstr "Mou el diccionari cap amunt"
 
 #: setup/main.py:886
 msgid "Move dictionary down"
-msgstr ""
+msgstr "Mou el diccionari cap avall"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
@@ -750,11 +748,11 @@ msgstr "Suprimeix un mètode d’entrada"
 
 #: setup/main.py:989
 msgid "Move input method up"
-msgstr ""
+msgstr "Mou el mètode d’entrada cap amunt"
 
 #: setup/main.py:1001
 msgid "Move input method down"
-msgstr ""
+msgstr "Mou el mètode d’entrada cap avall"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
@@ -1056,7 +1054,7 @@ msgstr ""
 #. custom color is used for spellchecking suggestions.
 #: setup/main.py:1680
 msgid "Use color for spellchecking suggestions"
-msgstr ""
+msgstr "Utilitza un color per als suggeriments ortogràfics"
 
 #: setup/main.py:1682
 msgid ""
@@ -1069,7 +1067,7 @@ msgstr ""
 #. spellchecking suggestions.
 #: setup/main.py:1706
 msgid "Choose color for spellchecking suggestions"
-msgstr ""
+msgstr "Trieu un color per als suggeriments ortogràfics"
 
 #: setup/main.py:1708
 msgid ""
@@ -1083,7 +1081,7 @@ msgstr ""
 #. dictionary.
 #: setup/main.py:1734
 msgid "Use color for dictionary suggestions"
-msgstr ""
+msgstr "Utilitza un color per als suggeriments del diccionari"
 
 #: setup/main.py:1736
 msgid ""
@@ -1096,7 +1094,7 @@ msgstr ""
 #. suggestions from a dictionary.
 #: setup/main.py:1760
 msgid "Choose color for dictionary suggestions"
-msgstr ""
+msgstr "Trieu un color per als suggeriments del diccionari"
 
 #: setup/main.py:1762
 msgid ""
@@ -1167,7 +1165,7 @@ msgstr ""
 
 #: setup/main.py:1943
 msgid "File not yet set."
-msgstr "Encara no s'ha establert el fitxer."
+msgstr "Encara no s’ha definit el fitxer."
 
 #: setup/main.py:1999
 msgid "Spell checking"
@@ -1195,7 +1193,7 @@ msgstr "Ja s'està executant una altra instància d'aquesta aplicació."
 
 #: setup/main.py:2783
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr "Seleccioneu un fitxer de so .wav:"
 
 #: setup/main.py:2946
 msgid "Add dictionary"
@@ -1233,7 +1231,7 @@ msgstr ""
 
 #: setup/main.py:3293
 msgid "Add input method"
-msgstr "Afegeix un mètode d'entrada"
+msgstr "Afegeix un mètode d’entrada"
 
 #: setup/main.py:3773
 #, python-format
@@ -1293,7 +1291,7 @@ msgstr ""
 
 #: setup/main.py:5376
 msgid "ibus is not running."
-msgstr "L'ibus no s'està executant."
+msgstr "L’ibus no s’està executant."
 
 #: typing-booster.appdata.xml:5
 msgid "Typing Booster"
@@ -1301,7 +1299,7 @@ msgstr "Accelerador mecanogràfic"
 
 #: typing-booster.appdata.xml:6
 msgid "Predictive input method"
-msgstr "Mètode d'entrada predictiu"
+msgstr "Mètode d’entrada predictiu"
 
 #: typing-booster.appdata.xml:8
 msgid ""
