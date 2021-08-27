@@ -1,0 +1,6 @@
+<video playsinline aria-label='{{ .Get "label"}}' style="width: 100%; height: auto;" controls>
+    {{ with .Get "mp4" }}<source src="{{ . }}" type="video/mp4">{{ end }}
+    {{ with .Get "webm" }}<source src="{{ . }}" type="video/webm">{{ end }}
+    {{ with .Get "ogg" }}<source src="{{ . }}" type="video/ogg">{{ end }}
+    <p> Your browser does not support video. </p>
+</video>

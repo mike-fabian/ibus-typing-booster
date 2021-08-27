@@ -27,5 +27,14 @@ your site can be accessed under `localhost:1313`.
 4. All the website configuration like baseURL, menu tabs names & route, color schemes, title and etc are mentioned in `/config.toml`
 5. Our theme used is inside `/themes/cayman-hugo-theme/` dir. If you want to refer sample example to how to use this theme refer `/themes/cayman-hugo-theme/exampleSite/`
 
+## How to add media files in post/website
+All the images, videos, gif, text file used in website should be stored in `/static/<dirname>/<filename>` (eg: /static/videos/file.mp4)
+##### How to use those media file which are inside `/static/`?
+- Image and GIFs: `!["some text"](/images/file.png)`
+- Videos: `{{< video label="some text" mp4="/videos/sample.mp4" >}}` or `{{< video label="some text" webm="/videos/sample.webm" >}}`  (supported file formats mp4, webm, mov, ogg)
+
+Note: Above mentioned `{{< something >}}` syntax is know as [hugo shortcodes](https://gohugo.io/content-management/shortcodes/). 
+There are many [builtin shortcodes available](https://gohugo.io/content-management/shortcodes/#use-hugos-built-in-shortcodes)  like for youtube videos one can use : `{{< youtube id="<your video id>" >}}`
+
 ## Credits
 The theme used is [cayman-hugo-theme](https://themes.gohugo.io/themes/cayman-hugo-theme)
