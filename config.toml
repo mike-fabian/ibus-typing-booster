@@ -20,7 +20,7 @@ pygmentsStyle = "pygments"
 
 [params]
   # Header text, can be markdown
-  project_name = "ibus-typing-booster"
+  project_name = "🚀 ibus-typing-booster"
   project_tagline = "Faster typing by context sensitive completion."
 
   # Date format for post list and single pages
