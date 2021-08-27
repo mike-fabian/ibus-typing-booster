@@ -1173,7 +1173,7 @@ class TypingBoosterEngine(IBus.Engine):
         if index >= len(self._candidates):
             # the index given is out of range
             return ''
-        return self._candidates[index][0]
+        return unicodedata.normalize('NFC', self._candidates[index][0])
 
     def get_string_from_lookup_table_current_page(self, index: int) -> str:
         '''
@@ -5827,7 +5827,7 @@ class TypingBoosterEngine(IBus.Engine):
                         self._current_case_mode = 'orig'
                     self._update_ui()
                     return True
-            # This key does not only a cursor movement in the preëdit,
+            # This key does not only do a cursor movement in the preëdit,
             # it really triggers a commit.
             if DEBUG_LEVEL > 1:
                 LOGGER.debug('_process_key_event() commit triggered.\n')

@@ -1972,5 +1972,69 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'αα')
 
+    def test_appending_to_selected_candidate_with_accents(self):
+        '''Test case for
+        https://github.com/mike-fabian/ibus-typing-booster/issues/234
+        '''
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_GB'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_d, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_p, 0, 0)
+        self.engine.do_process_key_event(0x00E2, 0, 0) # â
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(
+            ['d', 'i', 's', 'c', 'r', 'e', 'p', 'â', 'n', 'c', 'i', 'a'],
+            self.engine._typed_string)
+        self.assertEqual('discrepância', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(
+            [],
+            self.engine._typed_string)
+        self.assertEqual('', self.engine.mock_preedit_text)
+        self.assertEqual('discrepância ', self.engine.mock_committed_text)
+        self.engine.do_process_key_event(IBus.KEY_d, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_p, 0, 0)
+        self.engine.do_process_key_event(0x00E2, 0, 0) # â
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.assertEqual(
+            ['d', 'i', 's', 'c', 'r', 'e', 'p', 'â', 'n', 'c', 'i'],
+            self.engine._typed_string)
+        self.assertEqual('discrepânci', self.engine.mock_preedit_text)
+        self.assertEqual('discrepância ', self.engine.mock_committed_text)
+        self.assertEqual('discrepância',
+                         unicodedata.normalize(
+                             'NFC', self.engine._candidates[0][0]))
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_comma, 0, 0)
+        self.assertEqual(
+            ['d', 'i', 's', 'c', 'r', 'e', 'p', 'â', 'n', 'c', 'i', 'a', ','],
+            self.engine._typed_string)
+        self.assertEqual('discrepância,', self.engine.mock_preedit_text)
+        self.assertEqual('discrepância ', self.engine.mock_committed_text)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(
+            [],
+            self.engine._typed_string)
+        self.assertEqual('', self.engine.mock_preedit_text)
+        self.assertEqual('discrepância discrepância, ', self.engine.mock_committed_text)
+
 if __name__ == '__main__':
     unittest.main()
