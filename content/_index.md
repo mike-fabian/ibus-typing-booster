@@ -17,7 +17,7 @@ Ibus-typing-booster is a completion input method to speedup typing.
 
 The project was started in 2010 for Fedora 15. The original purpose was to make typing of Indic languages easier and faster by providing completion and spell checking suggestions.
 
-Originally it was forked from ibus-table whose developer was ```Yu Yuwei``` acevery@gmail.com, with contributions from ```Caius("kaio")``` chanceme@kaio.net.
+Originally it was forked from ibus-table whose developer was ```Yu Yuwei``` acevery@gmail.com, with contributions from ```Caius("kaio") Chance``` me@kaio.net.
 
 Since then ibus-typing-booster has been improved to support many other languages as well (most languages except Chinese and Japanese are supported).
 
