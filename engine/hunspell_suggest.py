@@ -64,95 +64,6 @@ except (ImportError,):
 # letter of a word until the candidate lookup table pops up.
 MAX_WORDS = 100
 
-# List of languages where accent insensitive matching makes sense:
-ACCENT_LANGUAGES = {
-    'af': '',
-    'ast': '',
-    'az': '',
-    'be': '',
-    'bg': '',
-    'br': '',
-    'bs': '',
-    'ca': '',
-    'cs': '',
-    'csb': '',
-    'cv': '',
-    'cy': '',
-    'da': 'æÆøØåÅ',
-    'de': '',
-    'dsb': '',
-    'el': '',
-    'en': '',
-    'es': '',
-    'eu': '',
-    'fi': 'åÅäÄöÖ',
-    'fo': '',
-    'fr': '',
-    'fur': '',
-    'fy': '',
-    'ga': '',
-    'gd': '',
-    'gl': '',
-    'grc': '',
-    'gv': '',
-    'haw': '',
-    'hr': '',
-    'hsb': '',
-    'ht': '',
-    'hu': '',
-    'ia': '',
-    'is': '',
-    'it': '',
-    'kk': '',
-    'ku': '',
-    'ky': '',
-    'lb': '',
-    'ln': '',
-    'lv': '',
-    'mg': '',
-    'mi': '',
-    'mk': '',
-    'mn': '',
-    'mos': '',
-    'mt': '',
-    'nb': 'æÆøØåÅ',
-    'nds': '',
-    'nl': '',
-    'nn': 'æÆøØåÅ',
-    'nr': '',
-    'nso': '',
-    'ny': '',
-    'oc': '',
-    'pl': '',
-    'plt': '',
-    'pt': '',
-    'qu': '',
-    'quh': '',
-    'ru': '',
-    'sc': '',
-    'se': '',
-    'sh': '',
-    'shs': '',
-    'sk': '',
-    'sl': '',
-    'smj': '',
-    'sq': '',
-    'sr': '',
-    'ss': '',
-    'st': '',
-    'sv': 'åÅäÄöÖ',
-    'tet': '',
-    'tk': '',
-    'tn': '',
-    'ts': '',
-    'uk': '',
-    'uz': '',
-    've': '',
-    'vi': '',
-    'wa': '',
-    'xh': '',
-}
-
 class Dictionary:
     '''A class to hold a hunspell dictionary
     '''
@@ -183,10 +94,10 @@ class Dictionary:
          self.encoding,
          self.words) = itb_util.get_hunspell_dictionary_wordlist(self.name)
         if self.words:
-            if self.language in ACCENT_LANGUAGES:
+            if self.language in itb_util.ACCENT_LANGUAGES:
                 self.word_pairs = [
                     (x, itb_util.remove_accents(
-                        x, keep=ACCENT_LANGUAGES[self.language]))
+                        x, keep=itb_util.ACCENT_LANGUAGES[self.language]))
                     for x in self.words
                 ]
             for word in self.words:
@@ -642,7 +553,7 @@ class Hunspell:
                 if dictionary.word_pairs:
                     input_phrase_no_accents = itb_util.remove_accents(
                         input_phrase,
-                        keep=ACCENT_LANGUAGES[dictionary.language])
+                        keep=itb_util.ACCENT_LANGUAGES[dictionary.language])
                 # If the input phrase is longer than than the maximum
                 # word length in a dictionary, don’t try
                 # complete it, it just wastes time then.
@@ -681,7 +592,8 @@ class Hunspell:
                                 and
                                 itb_util.remove_accents(
                                     suggestion,
-                                    keep=ACCENT_LANGUAGES[dictionary.language])
+                                    keep=itb_util.ACCENT_LANGUAGES[
+                                        dictionary.language])
                                 == input_phrase_no_accents):
                                 suggested_words[suggestion] = 0
                             else:
