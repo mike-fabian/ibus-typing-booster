@@ -427,7 +427,7 @@ missing feature in Wayland.
 
 
 ###### 2_2_1_1
-## Simulate the behaviour of ibus-m17n]
+## Simulate the behaviour of ibus-m17n
 
 {{< video label="Simulating ibus-m17n (hi-itrans)" webm="/videos/user-docs/simulating-ibus-m17n-hi-itrans.webm" >}}
 
