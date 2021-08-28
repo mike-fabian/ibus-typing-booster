@@ -8,8 +8,9 @@ date: 2021-08-28
 1. [Installing ibus-typing-booster](#0)
 1. [Adding ibus-typing-booster to your desktop](#1)
     * [When using the Gnome3 desktop](#1_1)
-    * [When using other desktops than Gnome3](#1_2)
-    * [When using the Unity desktop on Ubuntu](#1_3)
+    * [When using older Gnome3 desktops like in Ubuntu 21.04](#1_2)
+    * [When using other desktops than Gnome3](#1_3)
+    * [When using the Unity desktop on Ubuntu](#1_4)
 1. [Setup](#2)
     * [Basic setup for your language](#2_1)
     * [More advanced options](#2_2)
@@ -75,6 +76,13 @@ well already, although “Ubuntu Software” does not appear to know that
 and still lets me click on “Install” for emoji-picker. But as it was actually
 already installed, it finishes immediately 😀.
 
+**Note**: when using Gnome, don’t forget to log out of your desktop
+and log in again after installing!  On most other desktops one can
+often avoid that by calling `ibus restart` from the command line but
+on Gnome one has to log out and log in again, otherwise one will not
+find ibus-typing-booster when trying to [add it it in the desktop
+settings](#1).
+
 {{< video label="Installing using “Ubuntu Software” on Ubuntu 21.04" webm="/videos/user-docs/installing-using-ubuntu-software-on-ubuntu-21.04.webm" >}}
 
 ###### 1
@@ -90,9 +98,15 @@ The procedure to add an ibus-typing-booster input method differs slightly depend
 
 {{< video label="Adding ibus-typing-booster to the Gnome3 desktop" webm="/videos/user-docs/When-using-the-Gnome3-desktop.webm" >}}
 
+This video shows how to add ibus-typing-booster to recent Gnome3
+desktops, using Gnome3 on Fedora 34 in this example. In older versions
+of Gnome3, the input method setup was in the “Region & Language”
+settings instead of in the “Keyboard” settings, for example [Ubuntu
+21.04 has such an older version of Gnome](#1_2).
+
 1. First click on the panel menu in the top right corner of the desktop and then click on the “screwdriver and wrench” icon to open the Gnome3 control center.
 
-1. Now the Gnome3 control center has opened. Click on the icon for the “Keyboard” settings  (In older versions of Gnome3 this was in the “Region & Language” settings).
+1. Now the Gnome3 control center has opened. Click on the icon for the “Keyboard” settings.
 
 1. At the bottom you see a list of input sources which have already been added to the desktop before. In this case there are already: “English (US, with euro on 5)” and “Japanese (Kana Kanji)”. This is just an example of course, the list of already added input methods could look different for you. The first entry, “English (US, with euro on 5)”, is not really an input engine, it is just a keyboard layout. One can see that an entry in the list of input sources is a keyboard layout if it does not have the icon showing two tooth-wheels at the right side.
 
@@ -128,8 +142,17 @@ The procedure to add an ibus-typing-booster input method differs slightly depend
 
     To switch between ibus-typing-booster and other input methods or a simple keyboard layout, you can use the input sources menu in the Gnome panel or the keyboard shortcut, which is Super+Space by default (can be changed in the gnome-control-center).
 
-
 ###### 1_2
+## When using older Gnome3 desktops like in Ubuntu 21.04
+
+{{< video label="Adding ibus-typing-booster to older Gnome3 desktops like in Ubuntu 21.04" webm="/videos/user-docs/When-using-Ubuntu-21.04.webm" >}}
+
+This video shows how to add ibus-typing-booster to older Gnome3 desktops
+like for example in Ubuntu 21.04 where the input method setup was still
+in the “Region & Language” settings instead of in the “Keyboard” settings.
+For adding ibus-typing-booster in newer versions of Gnome look [here](#1_1).
+
+###### 1_3
 ## When using other desktops than Gnome3
 
 {{< video label="When using other desktops than Gnome3" webm="/videos/user-docs/When-using-other-desktops-than-Gnome3.webm" >}}
@@ -192,7 +215,7 @@ This chapter shows how to add the ibus-typing-booster input method on most deskt
     To switch between ibus-typing-booster and other input methods or a simple keyboard layout, you can use the input methods menu you get by clicking on the system tray icon or you can use the keyboard shortcut, which is Super+Space by default (can be changed using `ibus-setup`).
 
 
-###### 1_3
+###### 1_4
 ## When using the Unity desktop on Ubuntu 16.04
 
 ![When using the Unity desktop on Ubuntu](/images/user-docs/When-using-the-Unity-desktop-on-Ubuntu.gif)
