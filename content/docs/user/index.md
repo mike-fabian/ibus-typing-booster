@@ -5,6 +5,7 @@ date: 2021-08-28
 
 ## Contents
 
+1. [Installing ibus-typing-booster](#0)
 1. [Adding ibus-typing-booster to your desktop](#1)
     * [When using the Gnome3 desktop](#1_1)
     * [When using other desktops than Gnome3](#1_2)
@@ -43,6 +44,38 @@ date: 2021-08-28
 1. [Speech recognition](#7)
 ---------
 
+###### 0
+## Installing ibus-typing-booster
+
+For most distributions, there are binary packages available
+already. Here are some examples for common distributions how you can
+install ibus-typing-booster (and optionally emoji-picker) using
+package managers on the command line:
+
+* Fedora:
+    * `sudo dnf install ibus-typing-booster`
+    * `sudo dnf install emoji-picker` (optional)
+* Debian, Ubuntu:
+    * `sudo apt-get install ibus-typing-booster` (includes emoji-picker already! 😁)
+* openSUSE:
+    * `sudo zypper install ibus-typing-booster` (includes emoji-picker already! 😁)
+
+If your distribution has no binary packages or you are want to have
+the bleeding edge version and install from source, see the [Developer
+Documentation](/docs/dev/). There you can also find information on how
+to report bugs or translate the user interface into your language.
+
+Some distributions also have graphical tools to install software
+(“Gnome Software”, “Ubuntu Software”, ...). The following video shows
+how one can install ibus-typing-booster and emoji-picker on Ubuntu
+21.04 using “Ubuntu Software”. “Ubuntu Software” shows
+ibus-typing-booster and emoji-picker as two entries, but after
+installing ibus-typing-booster, emoji-picker has been installed as
+well already, although “Ubuntu Software” does not appear to know that
+and still lets me click on “Install” for emoji-picker. But as it was actually
+already installed, it finishes immediately 😀.
+
+{{< video label="Installing using “Ubuntu Software” on Ubuntu 21.04" webm="/videos/user-docs/installing-using-ubuntu-software-on-ubuntu-21.04.webm" >}}
 
 ###### 1
 ## Adding ibus-typing-booster to your desktop
