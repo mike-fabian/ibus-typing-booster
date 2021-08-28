@@ -1,6 +1,6 @@
 ---
 title: Developer Documentation
-date: 2018-05-28
+date: 2021-08-28
 ---
 
 Ibus-typing-booser is open source and licensed under the GPL version 3.
