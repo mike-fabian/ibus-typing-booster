@@ -1081,26 +1081,92 @@ want to change these settings.
 
 ###### 4
 ## Multilingual input
-![Multilingual-input.gif](/images/user-docs/Multilingual-input.gif)
-Ibus-typing-booster supports using more than one dictionary and more than one input method/transliteration at the same time.
 
-That makes it possible to write text in more than one language without having to switch languages manually. If one often writes in different languages this can save a lot of input method switching.
+{{< video label="Setup several dictionaries and input methods" webm="/videos/user-docs/setup-several-dictionaries-and-input-methods.webm" >}}
 
-This works not only when the languages use same script (like using English and Spanish at the same time), it works even when the languages use different scripts. For example when using English (Latin script) and Hindi (Devanagari script) at the same time. When using languages with different scripts at the same time, it is sometimes necessary to switch the input method for the preëdit (See the Hindi and English example). But even in such a more complicated case, switching is often not necessary, often one can select a suitable candidate without switching and save a lot of input method switches.
+This video shows how to setup multiple dictionaries and input methods.
 
-1.  This screenshot shows how dictionaries can be added using the “+” button below the list of dictionaries in the “Dictionaries and input methods” tab of the setup tool.
+Ibus-typing-booster supports using more than one dictionary and more
+than one input method/transliteration at the same time.
 
-    The check marks (“✔️”) and the cross marks (“❌”) indicate whether a spellchecking dictionary and/or and emoji dictionary for that language/locale is currently available on your system. If a dictionary is shown with a cross mark (“❌”) as not available, that does not necessarily mean that it is not available at all for your system, maybe you just need to install an additional package.
+That makes it possible to write text in more than one language without
+having to switch languages manually. If one often writes in different
+languages this can save a lot of input method switching.
 
-    For obscure technical reasons, the maximum number of dictionaries you can use at the same time is currently limited to 10. But that should be plenty, one should not overdo it, the more dictionaries one adds, the slower ibus-typing-booster becomes and the prediction quality suffers. So only add the dictionaries you really need.
+This works not only when the languages use same script (like using
+English and Spanish at the same time), it works even when the
+languages use different scripts. For example when using English (Latin
+script) and Hindi (Devanagari script) at the same time. When using
+languages with different scripts at the same time, it is sometimes
+necessary to switch the input method for the preëdit (See the Hindi
+and English example). But even in such a more complicated case,
+switching is often not necessary, often one can select a suitable
+candidate without switching and save a lot of input method switches.
 
-1.  This screenshot shows how input methods can be added to ibus-typing-booster using the “+” button below the list of input methods in the “Dictionaries and input methods” tab of the setup tool.
+This video shows how dictionaries can be added using the “➕” button
+below the list of dictionaries in the “Dictionaries and input methods”
+tab of the setup tool.
 
-    For obsure technical reasons the maximum number of input methods you can currently use at the same time is limited to 10. But that should be plenty.
+The check marks (“✔️”) and the cross marks (“❌”) indicate whether a
+spellchecking dictionary and/or and emoji dictionary for that
+language/locale is currently available on your system. If a dictionary
+is shown with a cross mark (“❌”) as not available, that does not
+necessarily mean that it is not available at all for your system,
+maybe you just need to install an additional package.
 
-    One should only add as many input methods as one really needs, adding more would only slow down the system and reduce the accuracy of the predictions.
+For obscure technical reasons, the maximum number of dictionaries you
+can use at the same time is currently limited to 10. But that should
+be plenty, one should not overdo it, the more dictionaries one adds,
+the slower ibus-typing-booster becomes and the prediction quality
+suffers. So only add the dictionaries you really need.
 
-1.  This screenshot shows how one can try to install missing dictionaries, i.e. dictionaries marked with a cross mark (“❌”) by clicking on the “Install missing dictionaries” button. Because this button has been clicked, one can see a black box with the text “Additional Packages Required” “An application is requesting additional packages.” near the top of the screen, just below the Gnome panel. When clicking that black box, the package manager will try to install packages for the missing dictionaries, if possible. For “fr_FR” (French) this will succeed on Fedora 29 and install the “hunspell-fr” package. For “zh” (Chinese) and “ja_JP” Japanese this will not succeed, there are no hunspell dictionaries for these languages on Fedora 29. That does not mean that adding the “zh” and “ja_JP” dictionaries in the setup tool is pointless, the check mark (“✔️”) is shown after emoji. That means emoji dictionaries for these languages are available and even installed at the moment. So if you want to match emoji in Chinese or Japanese, these dictionaries could still be useful.
+This video also shows how input methods can be added to
+ibus-typing-booster using the “➕” button below the list of input
+methods in the “Dictionaries and input methods” tab of the setup tool.
+
+Just like for the dictionaries, for obsure technical reasons the
+maximum number of input methods you can currently use at the same time
+is limited to 10. But that should be plenty.
+
+One should only add as many input methods as one really needs, adding
+more would only slow down the system and reduce the accuracy of the
+predictions.
+
+Near the end this video also shows how one can try to install missing
+dictionaries, i.e. dictionaries marked with a cross mark (“❌”) by
+clicking on the “Install missing dictionaries” button.
+
+When this button is clicked, one can see a black box with the text
+“Additional Packages Required” “An application is requesting
+additional packages.” appearing near the top of the screen, just below
+the Gnome panel.
+
+When clicking that black box, the package manager will try to install
+packages for the missing dictionaries, if possible. For “fr_FR”
+(French) and “es_ES” (Spanish) this will succeed on Fedora 34 and show
+options to install the “hunspell-fr” and the “hunspell-es”
+package. For “zh” (Chinese) and “ja_JP” Japanese this will not
+succeed, there are no hunspell dictionaries for these languages on
+Fedora 34. That does not mean that adding the “zh” and “ja_JP”
+dictionaries in the setup tool is pointless, the check mark (“✔️”) is
+shown after emoji. That means emoji dictionaries for these languages
+are available and even installed at the moment. So if you want to
+match emoji in Chinese or Japanese, these dictionaries could still be
+useful.
+
+The button “Install missing dictionaries” uses the service offered by
+the “Packagekit” daemon to try to install package. If the
+`packagekitd` is not running, this will not work. The UI shown by
+“Packagekit” differs a bit depending on whether you do this on Gnome,
+XFCE, or something else.  On some distributions, the names for the
+packages containing the needed hunspell dictionaries might be
+different causing this to fail. If this button doesn’t work, there is always
+the option to install dictionaries using the command line, for example on
+Fedora:
+
+```
+sudo dnf install hunspell-es hunspell-fr
+```
 
 
 ###### 4_1
