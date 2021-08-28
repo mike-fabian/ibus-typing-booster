@@ -272,30 +272,76 @@ Ibus-typing-booster has a setup tool which allows to adapt the behaviour a lot t
 
 ###### 2_1
 ## Basic setup for your language
-![hindi locale default settings](/images/user-docs/hindi-locale-default-settings.png)
-The most important setup in ibus-typing-booster is to choose the languages you want to use and how to input them.
 
-ibus-typing-booster works for many languages and it may be necessary to change the default dictionaries and input methods to different ones depending on which languages you want to use.
+{{< video label="Default settings in Hindi locale" webm="/videos/user-docs/hindi-locale-default-settings.webm" >}}
 
-When one uses ibus-typing-booster for the very first time, it checks which locale is set in the environment and initialises its setup with dictionaries and input methods which are useful for this locale.
+This video shows how to set languages and input methods in Typing Booster.
 
-But it is probably a good idea to open the setup tool and look whether these defaults are OK for you. You can open the setup tool by selecting ibus-typing-booster in the input method menu of the panel and then clicking on the “Setup” menu item in the panel.
+The most important setup in Typing booster is to choose **which**
+languages you want to use and **how** to input them.
 
-The screenshot of the setup tool shows the default dictionaries and input methods for the locale “hi_IN.UTF-8” (Hindi in India).
+ibus-typing-booster works for many languages and it may be necessary
+to change the default dictionaries and input methods to different
+ones.
 
-For this locale, one will get the dictionaries “hi_IN” (Hindi) and en_GB (British English) and the input methods “hi-inscript2” and “NoIME” by default. “hi-inscript2” is an input method for Hindi. “NoIME” means no input method at all, that means the characters are used as they come from the current keyboard layout without any transliteration. Adding the British English dictionary and the “NoIME” input method makes it also possible to type English.
+When one uses ibus-typing-booster is started for the very first time,
+it checks which locale is set in the environment and initialises its
+setup with dictionaries and input methods which are useful for this
+locale.
 
-As English is used quite a lot in India, it is probably a good default for the “hi_IN.UTF-8” locale to setup input for both Hindi and British English.
+But it is probably a good idea to open the setup tool and look whether
+these defaults are OK for you. You can open the setup tool by
+selecting ibus-typing-booster in the input method menu of the panel
+and then clicking on the “Setup” menu item in the panel.
 
-But the defaults guessed from the current locale are not always what a user wants. A user might use a “en_US.UTF-8” (American English) locale because he prefers the user interface in English but nevertheless might want to type Hindi. And even when running in the “hi_IN.UTF-8” locale, the defaults might not be optimal for some users. “hi-inscript2” is not the only input method to type Hindi, there are other choices. And maybe one wants to even more different languages and input methods completely unrelated to the current locale.
+At the beginning, this video shows the default dictionaries and input
+methods for the locale “hi_IN.UTF-8” (Hindi in India).
 
-The screenshot shows a list of dictionaries at the top and a list of input methods at the bottom. Under both lists there are buttons to add or remove items, to move items up or down to increase or lower the priority. And there are buttons to set the lists to the default for the current locale. The input method list also has a “help” button to show some help how to use a certain input method.
+For this locale, one will get the dictionaries “hi_IN” (Hindi) and
+en_GB (British English) and the input methods “hi-inscript2” and
+“NoIME” by default. “hi-inscript2” is an input method for
+Hindi. “NoIME” means no input method at all, that means the characters
+are used as they come from the current keyboard layout without any
+transliteration. Having the British English dictionary and the “NoIME”
+input method there as well makes it also possible to type English.
 
-Both lists can hold a maximum of 10 items, i.e. you can have up to 10 dictionaries and 10 input methods. Don’t overdo it though, don’t add more than you really need, adding more dictionaries and input methods than one really needs slows down the system and reduces the accuracy of the word predictions.
+As English is used quite a lot in India, it is probably a good default
+for the “hi_IN.UTF-8” locale to setup input for both Hindi and British
+English.
 
-The list of input methods cannot be made completely empty, as soon as you remove the last input method, the “NoIME” input method is automatically added back because no input at all makes no sense.
+But the defaults guessed from the current locale are not always what a
+user wants. A user might use a “en_US.UTF-8” (American English) locale
+because he prefers the user interface in English but nevertheless
+might want to type Hindi. And even when running in the “hi_IN.UTF-8”
+locale, the defaults might not be optimal for some
+users. “hi-inscript2” is not the only input method to type Hindi,
+there are other choices. And maybe a Hindi user wants to use
+additional other languages and input methods completely unrelated to
+the current locale.
 
-The list of dictionaries can be made empty though. That doesn’t seem particularly useful to me, but apparently there are some users who use ibus-typing-booster mostly as a convenient input method for emoji or special symbols and in that case one doesn’t need a dictionary.
+So the video shows how to add or remove dictionaries and input methods
+and move them up or down to increase or lower the priorities.
+The video also shows how the “Input Method Help” button pops up
+an explanation what an input method does and how to use it.
+
+Near the end, the video shows how the “Set to default” buttons can
+reset the lists of languages and input methods to the defaults
+for the current locale.
+
+Both lists can hold a maximum of 10 items, i.e. you can have up to 10
+dictionaries and 10 input methods. Don’t overdo it though, don’t add
+more than you really need, adding more dictionaries and input methods
+than one really needs slows down the system and reduces the accuracy
+of the word predictions.
+
+The list of input methods cannot be made completely empty, as soon as
+you remove the last input method, the “NoIME” input method is
+automatically added back because no input at all makes no sense.
+
+The list of dictionaries can be made empty though. That doesn’t seem
+particularly useful to me, but apparently there are some users who use
+ibus-typing-booster mostly as a convenient input method for emoji or
+special symbols and in that case one doesn’t need a dictionary.
 
 ###### 2_2
 ## More advanced options
