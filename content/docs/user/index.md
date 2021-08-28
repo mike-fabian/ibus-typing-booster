@@ -352,25 +352,78 @@ This chapter explains more advanced options how to adapt the behaviour and the l
 ## Enable suggestions by a key
 ![enable suggestions by key](/images/user-docs/enable-suggestions-by-key.png)
 
-By default, ibus-typing-booster pops up a list of candidates as soon as you type something and you can choose a candidate to complete the word you have started typing to save some key strokes, fix a spelling error, or select an emoji or special character.
+{{< video label="Enable suggestions by key" webm="/videos/user-docs/enable-suggestions-by-key.webm" >}}
 
-But some users prefer not to have these candidate lists displayed all the time. Maybe they are fast touch typists and usually type without completion support and the frequent pop up of the candidate lists is too visually disturbing. Calculating the candidate lists also takes some time, especially if emoji predictions are enabled. These calculations may actually interfere with the typing for very fast typists.
+This video shows what the options “☑️ Enable suggestions by key” and
+“☑️ Use preedit style only if lookup is enabled” do.
 
-But from time to time even exceptionally fast typists may still want to see candidates to complete a very long word or check the spelling or or input an emoji.
+By default, ibus-typing-booster pops up a list of candidates as soon
+as you type something and you can choose a candidate to complete the
+word you have started typing to save some key strokes, fix a spelling
+error, or select an emoji or special character.
 
-In that case it can be useful to check the option “Enable suggestions by key”.
+But some users prefer **not** to have these candidate lists displayed all
+the time. Maybe they are fast touch typists and usually type without
+completion support and the frequent pop up of the candidate lists is
+too visually disturbing. Calculating the candidate lists also takes
+some time, especially if emoji predictions are enabled. These
+calculations may actually interfere with the typing for very fast
+typists.
 
-If that option is enabled, no candidate list is shown unless a special key is pressed to request a candidate list. By default that special key is Tab but this can be changed by the [customizing the keys](#3_4) bound to the command “enable_lookup”.
+But from time to time even exceptionally fast typists may still want
+to see candidates to complete a very long word or check the spelling
+or or input an emoji.
 
-In the screenshot you can see that this option is enabled. And in the text editor at the bottom of the screen the text “Hello Wor” has been typed. “Wor” is underlined which shows that this is still in preedit but no candidate list with suggestions pops up. Only when the special key, Tab, is pressed the candidate list pops up.
+In that case it can be useful to check the option “☑️ Enable suggestions
+by key”.
 
-There is another option “Minimum number of chars for completion” which is 1 by default. If that option is set to a number greater than 1, then a candidate list appears automatically only when that number of characters has been typed into the preedit. But using the keys bound to the “enable_lookup” command one can still request a candidate list even if fewer characters have been typed.
+If that option is enabled, no candidate list is shown unless a special
+key is pressed to request a candidate list. By default that special
+key is Tab but this can be changed by the [customizing the keys](#3_4)
+bound to the command “enable_lookup”.
 
-Some users using this option to show candidate lists only on request, request candidate lists only very rarely to complete an unusually long and complicated word or to type an emoji. When candidate lists are requested only very infrequently, some users dislike that the preedit, i.e. the currently typed word, is always underlined. It is possible to disable the underlining of the preedit in the “Appearance” tab of the setup tool: There is a combobox where one can choose no underlining for the preedit.
+In the beginning of the video, this option is **not** enabled. When typing
+into the text editor one sees that after each single key typed a suggestion
+list with word completions pops up.
 
-But one does not have to disable the underlining of the preedit always: It is even possible to hide the underline indicating the preedit only as long as no candidate list is requested. To do this, there is the option “Use preedit style only if lookup is enabled” in the Appearances tab of the setup tool. Then the preedit looks like normal text until a candidate list is requested. As soon as the candidate list is requested, the preedit is again styled (usually underlined), this makes it clearer which part of the text has been used to calculate that candidate list.
+Then the option “☑️ Enable suggestions by key” is enabled. Now when
+typing into the text editor, no suggestions pop up unless Tab is pressed.
+So one sees that “Hello Worl” is typed without andy suggestions popping up,
+then Tab is pressed and suggestions containing “World” pop up.
 
-Attention when using Wayland: Currently it is not possible to do any style changes to the preedit on Wayland. On Wayland the preedit is always underlined and always has the same foreground and background colour as normal text, no matter what options to influence the preedit style are chosen in the setup tool of ibus-typing-booster. That is a missing feature in Wayland.
+There is another option “Minimum number of chars for completion” which
+is 1 by default. If that option is set to a number greater than 1,
+then a candidate list appears automatically only when that number of
+characters has been typed into the preedit. But using the keys bound
+to the “enable_lookup” command one can still request a candidate list
+even if fewer characters have been typed.
+
+Some users using this option to show candidate lists only on request,
+request candidate lists only very rarely to complete an unusually long
+and complicated word or to type an emoji. When candidate lists are
+requested only very infrequently, some users dislike that the preedit,
+i.e. the currently typed word, is always underlined. It is possible to
+disable the underlining of the preedit in the “Appearance” tab of the
+setup tool: There is a combobox where one can choose no underlining
+for the preedit.
+
+But one does not have to disable the underlining of the preedit
+completely: It is even possible to hide the underline indicating the
+preedit only as long as no candidate list is requested. To do this,
+there is the option “Use preedit style only if lookup is enabled” in
+the Appearances tab of the setup tool. Then the preedit looks like
+normal text until a candidate list is requested. As soon as the
+candidate list is requested, the preedit is again styled (usually
+underlined), this makes it clearer which part of the text has been
+used to calculate that candidate list. The use of this option
+is also shown near the end of the video.
+
+**Attention when using Wayland**: Currently it is not possible to do any
+style changes to the preedit on Wayland. On Wayland the preedit is
+always underlined and always has the same foreground and background
+colour as normal text, no matter what options to influence the preedit
+style are chosen in the setup tool of ibus-typing-booster. That is a
+missing feature in Wayland.
 
 
 ###### 2_2_1_1
