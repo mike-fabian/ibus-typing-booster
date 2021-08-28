@@ -9,22 +9,22 @@ date: 2018-05-28
     * [When using the Gnome3 desktop](#1_1)
     * [When using other desktops than Gnome3](#1_2)
     * [When using the Unity desktop on Ubuntu](#1_3)
-2. [Setup](#2)
+1. [Setup](#2)
     * [Basic setup for your language](#2_1)
     * [More advanced options](#2_2)
         * [Enable suggestions by a key](#2_2_1)
             * [Simulate the behaviour of ibus-m17n](#2_2_1_1)
         * [Use inline completion](#2_2_2)
         * [Spellchecking](#2_2_3)
-3. [Key and Mouse bindings](#3)
+1. [Key and Mouse bindings](#3)
     * [The “AltGr” key](#3_1)
     * [Table of default key bindings](#3_2)
     * [Mouse bindings](#3_3)
     * [Customizing key bindings](#3_4)
-4. [Multilingual input](#4)
+1. [Multilingual input](#4)
     * [Example using Hindi and English at the same time](#4_1)
     * [Example using Spanish and English at the same time](#4_2)
-5. [Unicode symbols and emoji predictions](#5)
+1. [Unicode symbols and emoji predictions](#5)
     * [Emoji input](#5_1)
     * [Emoji input fuzzy matching](#5_2)
     * [Emoji input using multiple keywords](#5_3)
@@ -39,12 +39,12 @@ date: 2018-05-28
     * [Emoji picker](#5_9)
     * [Emoji fonts](#5_10)
         * [Showing emoji in colour](#5_10_1)
-6. [Using NLTK to find related words](#6)
-7. [Speech recognition](#7)
+1. [Using NLTK to find related words](#6)
+1. [Speech recognition](#7)
 ---------
 
 
-###### 1. 
+###### 1
 ## Adding ibus-typing-booster to your desktop
 
 This section assumes that you have already installed ibus-typing-booster either using binary packages or from source and now want to add an ibus-typing-booster input method to your desktop.
@@ -107,10 +107,10 @@ First start the `ibus-setup` program (For example by typing `ibus-setup &` into 
 
 1. If `ibus-daemon` is not yet running, `ibus-setup` may ask whether you want to start it. In that case click on “Yes”.
 
-2. If `ibus-daemon` was not already running, you probably also want to make it run automatically every time when you log into your desktop. If you are using Fedora you can do that for most desktops and window managers using `imsettings-switch` like this:
+1. If `ibus-daemon` was not already running, you probably also want to make it run automatically every time when you log into your desktop. If you are using Fedora you can do that for most desktops and window managers using `imsettings-switch` like this:
 `imsettings-switch ibus`
 
-3. This will change some settings so that when you log in next time, `ibus-daemon` will be running and the following environment variables will be set:
+1. This will change some settings so that when you log in next time, `ibus-daemon` will be running and the following environment variables will be set:
 
     `export QT_IM_MODULE=ibus`
 
@@ -118,12 +118,12 @@ First start the `ibus-setup` program (For example by typing `ibus-setup &` into 
 
     `export GTK_IM_MODULE=ibus`
 
-4. If you don’t use Fedora and do not have the `imsettings-switch`, there may be some other way to start `ibus-daemon` on your system automatically and to set the above environment variables.
+1. If you don’t use Fedora and do not have the `imsettings-switch`, there may be some other way to start `ibus-daemon` on your system automatically and to set the above environment variables.
 
     Or 
     you can put the above environment variables into your `~/.bashrc` file and start `ibus-daemon` from some X11 startup file or make your windowmanager start it. I am using the “i3” windowmanager at the moment and have added the line `exec ibus-daemon -drx` to my `~/.config/i3/config` file.
 
-5. In the “General” tab of `ibus-setup` you see that the default shortcut key to switch between input methods is “Super+Space” and you can change this and some other options if you like.
+1. In the “General” tab of `ibus-setup` you see that the default shortcut key to switch between input methods is “Super+Space” and you can change this and some other options if you like.
 
     Personally I like the extra property panel. Therefore, I set the “Show property panel” option to “Always” here.
 
@@ -131,7 +131,7 @@ First start the `ibus-setup` program (For example by typing `ibus-setup &` into 
 
     And I usually choose a somewhat bigger font to be able to see the details in the emoji better.
 
-6. Now use the “Input Method” tab of `ibus-setup` to add the ibus-typing-booster engine.
+1. Now use the “Input Method” tab of `ibus-setup` to add the ibus-typing-booster engine.
 
     You see a list of input sources which have already been added to the desktop before. In this case there are already: “English - English (international AltGr dead keys)” and “Japanese (Kana Kanji)”. This is just an example of course, the list of already added input methods could look different for you. The first entry, “English - English (international AltGr dead keys)”, is not really an input engine, it is just a keyboard layout.
 
@@ -141,23 +141,23 @@ First start the `ibus-setup` program (For example by typing `ibus-setup &` into 
 
     Now click on the “Add” button at top right to add another input source.
 
-7. Now either scroll down to the list of languages until you find “other” (usually at the end of the list) or click on the three vertical dots “⋮” to open the search entry field and then search for “other”.
+1. Now either scroll down to the list of languages until you find “other” (usually at the end of the list) or click on the three vertical dots “⋮” to open the search entry field and then search for “other”.
 
-8. ibus-typing-booster supports many languages, even at the same time. Therefore it is not listed under any specific language but under “Other”.
+1. ibus-typing-booster supports many languages, even at the same time. Therefore it is not listed under any specific language but under “Other”.
 
-9. When searching for “other”, it looks as in this screenshot.
+1. When searching for “other”, it looks as in this screenshot.
 
-10. Select “Other” and scroll through the list of methods shown until you find “Typing Booster”. Select “Typing Booster”.
+1. Select “Other” and scroll through the list of methods shown until you find “Typing Booster”. Select “Typing Booster”.
 
     Click the “Add” button.
 
-11. Now the ibus-typing-booster engine has been added to the list of input methods configured and it looks as in this screenshot.
+1. Now the ibus-typing-booster engine has been added to the list of input methods configured and it looks as in this screenshot.
 
     If you select that typing-booster engine, you can click the “Preferences” button to open the setup tool of that typing-booster-engine.
 
-12. Here you see the setup tool of that ibus-typing-booster engine where you can customize ibus-typing-booster according to your preferences.
+1. Here you see the setup tool of that ibus-typing-booster engine where you can customize ibus-typing-booster according to your preferences.
 
-13. Now open some programs where you could type something, for example “gedit” or “gnome-terminal”. And activate the ibus-typing-booster engine you want to use by clicking on the icon for the input methods in the system tray and selecting the ibus-typing-booster engine in the menu which opens.
+1. Now open some programs where you could type something, for example “gedit” or “gnome-terminal”. And activate the ibus-typing-booster engine you want to use by clicking on the icon for the input methods in the system tray and selecting the ibus-typing-booster engine in the menu which opens.
 
     When the input method menu of system tray icon is open and the ibus-typing-booster engine is selected, there is a menu entry “Setup” which is a quicker way to open the setup tool of that ibus-typing-booster engine than doing it with `ibus-setup`.
 
@@ -165,7 +165,7 @@ First start the `ibus-setup` program (For example by typing `ibus-setup &` into 
 
     On the top left of this screenshot you see the “property panel” which shows the current status of some frequently used options which can also be changed by clicking on the “property panel”. The “property panel” also offers a button to open the setup tool of the ibus-typing-booster engine. You can move that “property panel” to around on your desktop to a convenient place.
 
-14. Now type something, for example into gedit and you should see some suggestions for completions.
+1. Now type something, for example into gedit and you should see some suggestions for completions.
 
     At the beginning, the suggestions only come from the hunspell dictionaries and are thus not very good yet. But ibus-typing-booster learns from your typing, it remembers which words you use often in which context. Therefore, the suggestions become much better over time.
 
@@ -185,33 +185,33 @@ These instructions are for ibus-typing-booster 1.5.x. For ibus-typing-booster >=
 
     Close that “Language Support” dialogue again and click on the “Text Entry” icon in the system settings.
 
-2. Some input sources may be already be listed at the left side of this dialogue. In this example we see “English (US, with euro on 5)” which is not really an input engine, it is just a keyboard layout.
+1. Some input sources may be already be listed at the left side of this dialogue. In this example we see “English (US, with euro on 5)” which is not really an input engine, it is just a keyboard layout.
 
     It is recommended to use a keyboard layout with ibus-typing-booster which has a real “AltGr” key and does not just make the “AltGr” or “Alt” key on the right side of the space bar basically a duplicate of the left “Alt” key. For details, see [The “AltGr” key](#3_1).
 
     Now click on the “+” button at the lower left to add another input source.
 
-3. Type the word “booster” into the search entry and you see the currently available language variants of ibus-typing-booster. Select the variant of ibus-typing-booster you want to use and click on “Add”.
+1. Type the word “booster” into the search entry and you see the currently available language variants of ibus-typing-booster. Select the variant of ibus-typing-booster you want to use and click on “Add”.
 
-4. Now you see that an ibus-typing-booster engine has been added to the list of input sources to use.
+1. Now you see that an ibus-typing-booster engine has been added to the list of input sources to use.
 
     If you select it, a n icon showing a wrench and a screwdriver appears at the bottom right of the list, to the left of the icon showing a keyboard. Click the “wrench and screwdriver” icon to open the setup tool of ibus-typing-booster.
 
-5. Here you see the setup tool of that ibus-typing-booster engine where you can customize ibus-typing-booster according to your preferences.
+1. Here you see the setup tool of that ibus-typing-booster engine where you can customize ibus-typing-booster according to your preferences.
 
-6. Now open some programs where you could type something, for example “gedit” or “gnome-terminal”. And activate the ibus-typing-booster engine you want to use in the input source menu of the panel as shown in this screenshot.
+1. Now open some programs where you could type something, for example “gedit” or “gnome-terminal”. And activate the ibus-typing-booster engine you want to use in the input source menu of the panel as shown in this screenshot.
 
     When the input source menu of the panel is open and an ibus-typing-booster engine is selected, there is a menu entry “Setup” which is an quicker way to open the setup tool ibus-typing-booster setup tool than going via the system settings.
 
     Some options of ibus-typing-booster are also directly available in the input source menu of the panel to have quicker access to these often used options than having to open the setup tool. For example the option to switch emoji mode on or off is available in the panel menu. There are also [key and mouse bindings](#3) for these frequently used options which are shown in the input source menu of the panel as well as a reminder.
 
-7. Now type something, for example into gedit and you should see some suggestions for completions.
+1. Now type something, for example into gedit and you should see some suggestions for completions.
 
     At the beginning, the suggestions only come from the hunspell dictionaries and are thus not very good yet. But ibus-typing-booster learns from your typing, it remembers which words you use often in which context. Therefore, the suggestions become much better over time.
 
     To switch between ibus-typing-booster and other input methods or a simple keyboard layout, you can use the input sources menu in the panel or the keyboard shortcut, which is Super+Space by default (can be changed in the “Text Entry” dialogue of the system settings).
 
-8. If you want to enable the ibus property panel or change the font size for the list of candidates, you can do that by starting the ibus-setup program.
+1. If you want to enable the ibus property panel or change the font size for the list of candidates, you can do that by starting the ibus-setup program.
 
     To show the property panel set “Show property panel” to “Always” in ibus-setup.
 
@@ -802,13 +802,13 @@ This works not only when the languages use same script (like using English and S
 
     For obscure technical reasons, the maximum number of dictionaries you can use at the same time is currently limited to 10. But that should be plenty, one should not overdo it, the more dictionaries one adds, the slower ibus-typing-booster becomes and the prediction quality suffers. So only add the dictionaries you really need.
 
-2.  This screenshot shows how input methods can be added to ibus-typing-booster using the “+” button below the list of input methods in the “Dictionaries and input methods” tab of the setup tool.
+1.  This screenshot shows how input methods can be added to ibus-typing-booster using the “+” button below the list of input methods in the “Dictionaries and input methods” tab of the setup tool.
 
     For obsure technical reasons the maximum number of input methods you can currently use at the same time is limited to 10. But that should be plenty.
 
     One should only add as many input methods as one really needs, adding more would only slow down the system and reduce the accuracy of the predictions.
 
-3.  This screenshot shows how one can try to install missing dictionaries, i.e. dictionaries marked with a cross mark (“❌”) by clicking on the “Install missing dictionaries” button. Because this button has been clicked, one can see a black box with the text “Additional Packages Required” “An application is requesting additional packages.” near the top of the screen, just below the Gnome panel. When clicking that black box, the package manager will try to install packages for the missing dictionaries, if possible. For “fr_FR” (French) this will succeed on Fedora 29 and install the “hunspell-fr” package. For “zh” (Chinese) and “ja_JP” Japanese this will not succeed, there are no hunspell dictionaries for these languages on Fedora 29. That does not mean that adding the “zh” and “ja_JP” dictionaries in the setup tool is pointless, the check mark (“✔️”) is shown after emoji. That means emoji dictionaries for these languages are available and even installed at the moment. So if you want to match emoji in Chinese or Japanese, these dictionaries could still be useful.
+1.  This screenshot shows how one can try to install missing dictionaries, i.e. dictionaries marked with a cross mark (“❌”) by clicking on the “Install missing dictionaries” button. Because this button has been clicked, one can see a black box with the text “Additional Packages Required” “An application is requesting additional packages.” near the top of the screen, just below the Gnome panel. When clicking that black box, the package manager will try to install packages for the missing dictionaries, if possible. For “fr_FR” (French) this will succeed on Fedora 29 and install the “hunspell-fr” package. For “zh” (Chinese) and “ja_JP” Japanese this will not succeed, there are no hunspell dictionaries for these languages on Fedora 29. That does not mean that adding the “zh” and “ja_JP” dictionaries in the setup tool is pointless, the check mark (“✔️”) is shown after emoji. That means emoji dictionaries for these languages are available and even installed at the moment. So if you want to match emoji in Chinese or Japanese, these dictionaries could still be useful.
 
 
 ###### 4_1
@@ -824,7 +824,7 @@ If one uses both Hindi and English often, it is possible to setup ibus-typing-bo
 
     There are several input methods available for Hindi: “hi-inscript2”, “hi-inscript”, “hi-phonetic”, “hi-itrans”, “hi-remington”, “hi-typewriter”, and “hi-vedmata”. In this example we use “hi-itrans” but one could also use any of the others or even several at once.
 
-2. If more than one input/transliteration method is enabled, the typed keys will be transliterated with each transliteration method and each transliteration result will be looked up in the enabled dictionaries and in the user database of previous input.
+1. If more than one input/transliteration method is enabled, the typed keys will be transliterated with each transliteration method and each transliteration result will be looked up in the enabled dictionaries and in the user database of previous input.
 
     In this screenshot, Hindi with the “hi-itrans” method and English are used at the same time. One can see that the input “guru” has been typed. The candidate list shows both “गुरु” (which is the transliteration of the input “guru” using the “hi-itrans” method) and the English candidates “guru” and “gurus”. This is because both the transliteration “गुरु” and the direct input “guru” are used at the same time to lookup candidates.
 
@@ -834,7 +834,7 @@ If one uses both Hindi and English often, it is possible to setup ibus-typing-bo
 
     This automatic language detection works even better after ibus-typing-booster has learned from user input for a while. Because ibus-typing-booster remembers the context where the user has typed words. 
 
-3.  This screenshot uses the same setup, Hindi (“hi-itrans”) and English. The same input “guru” has been typed and the matches shown in the candidate list are the same.
+1.  This screenshot uses the same setup, Hindi (“hi-itrans”) and English. The same input “guru” has been typed and the matches shown in the candidate list are the same.
 
     The difference is that the “hi-itrans” transliteration “गुरु” is shown in the preëdit this time (preëdit is the current input, i.e. the underlined text next to the candidate list). And in the status line above the first candidate, one can see “hi-itrans”.
 
@@ -844,7 +844,7 @@ If one uses both Hindi and English often, it is possible to setup ibus-typing-bo
 
     The key bindings to switch the input method for the preëdit are “Control+Down” and “Control+up”. With only two input methods as in the current example, both key bindings behave the same. But there can be more than two input methods and then “Control+Down” moves in one direction through the list of input methods and “Control+Up” in the other direction (see [key and mouse bindings](#3)).
 
-4.  This screenshot shows the options tab of the setup tool and the options for ibus-typing-booster in the input method menu of the gnome panel.
+1.  This screenshot shows the options tab of the setup tool and the options for ibus-typing-booster in the input method menu of the gnome panel.
 
     As an alternative to using the “Control+Down” and “Control+Up” key bindings, the input method for the preëdit can also be switched using the menu in the gnome panel.
 
@@ -855,13 +855,14 @@ If one uses both Hindi and English often, it is possible to setup ibus-typing-bo
 ### Example using Spanish and English at the same time
 
 ![Example-using-Spanish-and-English-at-the-same-time](/images/user-docs/Example-using-Spanish-and-English-at-the-same-time.gif)
+
 1.  This example shows using ibus-typing-booster for Spanish and English at the same time. In the setup tool, dictionaries for Spanish (“es_ES”) and British English (“en_GB”) have been added. And two input methods “t-latn-pre” and “NoIme” (Native Keyboard, i.e. direct keyboard input) have been added. Actually using only “NoIme” would have been enough, both Spanish and English can be typed just fine with direct keyboard input with a suitable keyboard layout. Adding “t-latin-pre” makes it possible to type for example “~n” to get an “ñ”, i.e. using “t-latn-pre” one can type accented Latin charaters even when using a US English keyboard layout for example. But that is completely optional, one can use only “NoIme”, only “t-latn-pre”, or both, depending on what keyboard layout one wants to use and what is most convenient.
 
     The input typed is “Yo soy un h” where the last character, the “h” is still in preëdit (marked by the underline) and we see some suggestions how the word starting with “h” might continue.
 
     The suggestions shown are Spanish words, not English. This is because ibus-typing-booster has already been trained by similar user input before. Therefore, it already knows which word starting with “h” the user usually types following “soy un”. And these are Spanish words. 
 
-2.  This screenshot shows how the user continues to type some English after finishing the Spanish sentence.
+1.  This screenshot shows how the user continues to type some English after finishing the Spanish sentence.
 
     The input typed is now “I am h” and again the last character “h” is still in preëdit and some suggestions for words starting with “h” are shown.
 
@@ -932,6 +933,7 @@ As seen in the screen shot, looking up related emoji for the “Japanese castle�
 ###### 5_5_1
 #### Emoji input using German and English
 ![gnome-emoji-german-english-schloss-europa](/images/user-docs/gnome-emoji-german-english-schloss-europa.png)
+
 1. In this example, the German typing booster is used with English as a second language. Therefore, one can use both the English word “castle” or the German word for castle “Schloss” to find castle emoji.
 
     In the screen shot, the input typed is “Schloss_europa” and the emoji matches shown are 🏰 (U+1F3F0 EUROPEAN CASTLE), 🔒 (U+1F512 LOCK), and 🏯 (U+1F3EF JAPANESE CASTLE).
@@ -939,7 +941,7 @@ As seen in the screen shot, looking up related emoji for the “Japanese castle�
     The German word “Schloss” can mean “castle” as well as “lock”. Therefore, the padlock emoji 🔒 (U+1F512 LOCK) matches as well.
 
 ![gnome-emoji-german-english-geschlossenes-schloss-related](/images/user-docs/gnome-emoji-german-english-geschlossenes-schloss-related.png)
-2.  Let’s look up related emoji by clicking the candidate number 5, “Geschlossenes Schloss” 🔒 (U+1F512 LOCK) with the right mouse button (See Looking up related Emoji).
+1.  Let’s look up related emoji by clicking the candidate number 5, “Geschlossenes Schloss” 🔒 (U+1F512 LOCK) with the right mouse button (See Looking up related Emoji).
 
 We get several variants of padlock emoji, the European castle and some closed mailboxes because “geschlossen” in German can also mean “closed”.
 
@@ -958,7 +960,7 @@ By the way, the related emoji shown in the screen shot have German names and key
 
 ![gnome-emoji-namaste-related](/images/user-docs/gnome-emoji-namaste-related.png)
 
-2.  Of course one can lookup related emoji here as well.
+1.  Of course one can lookup related emoji here as well.
 
     Here we have clicked with the right mouse button on the 🙏 U+1F64F PERSON WITH FOLDED HANDS emoji and get emoji which are related because they share keywords in Hindi.
 
@@ -984,13 +986,13 @@ Then one needs to add the “ja-anthy” input method and the Japanese dictionar
 
 ![gnome-emoji-katatsumuri-preedit-hiragana](/images/user-docs/gnome-emoji-katatsumuri-preedit-hiragana.png)
 
-2.  Here we have switched the input method used in the preëdit to ja-anthy with “Control+Down” or “Control+Up”.
+1.  Here we have switched the input method used in the preëdit to ja-anthy with “Control+Down” or “Control+Up”.
 
     That makes no difference for the matches, still both “katatsumuri” and “かたつむり” are looked up in the dictionaries. Only when committing the preëdit now by typing a space, we would commit the hiragana “かたつむり”.
 
 ![gnome-emoji-katatsumuri-related](/images/user-docs/gnome-emoji-katatsumuri-related.png)
 
-3.  Of course we can lookup related emoji here as well.
+1.  Of course we can lookup related emoji here as well.
 
     Here we have clicked with the right mouse button on the 🐌 (U+1F40C SNAIL) emoji and get emoji which are related because they share keywords in hiragana (They share the keyword “むし” = “mushi” which means insect.
 
@@ -1007,10 +1009,10 @@ Using the emoji input mode of ibus-typing-booster, one cannot only input emoji b
 
 ![gnome-emoji-pop-directional-formatting](/images/user-docs/gnome-emoji-pop-directional-formatting.png)
 
-2.  Here the emoji mode is used to input something like U+202C POP DIRECTIONAL FORMATTING or U+2069 POP DIRECTIONAL ISOLATE. These are formatting characters used in scripts which use right-to-left direction.
+1.  Here the emoji mode is used to input something like U+202C POP DIRECTIONAL FORMATTING or U+2069 POP DIRECTIONAL ISOLATE. These are formatting characters used in scripts which use right-to-left direction.
 
 ![gnome-emoji-radical-turtle](/images/user-docs/gnome-emoji-radical-turtle.png)
-3.  Here the emoji mode is used to input the CJK radical “turtle”. Anything in Unicode except letters is possible.
+1.  Here the emoji mode is used to input the CJK radical “turtle”. Anything in Unicode except letters is possible.
 
 
 ###### 5_7
@@ -1075,7 +1077,7 @@ In Fedora, “emoji-picker” is packaged as sub-package of ibus-typing-booster 
 
 ![gnome-emoji-picker-search](/images/user-docs/gnome-emoji-picker-search.png)
 
-2.  “emoji-picker” also has a “Search” feature where you can type a search string and get matching emoji listed.
+1.  “emoji-picker” also has a “Search” feature where you can type a search string and get matching emoji listed.
 
     Again you can click on one of the matches to put it into the clipboard and paste it elsewhere.
 
@@ -1085,7 +1087,7 @@ In Fedora, “emoji-picker” is packaged as sub-package of ibus-typing-booster 
 
 ![gnome-emoji-picker-skin-tone](/images/user-docs/gnome-emoji-picker-skin-tone.png)
 
-3.  Emoji can also be selected with different skin tones. If the mouse hovers over an emoji for which different skin tones are available, a tooltip says “Long press or middle click for skin tones”. Long pressing such an emoji with the left mouse button or clicking it with the middle mouse button pops up a menu showing all the skin tone variants. One can then click on any variant with the left mouse button to put it into the clipboard and paste it elsewhere.
+1.  Emoji can also be selected with different skin tones. If the mouse hovers over an emoji for which different skin tones are available, a tooltip says “Long press or middle click for skin tones”. Long pressing such an emoji with the left mouse button or clicking it with the middle mouse button pops up a menu showing all the skin tone variants. One can then click on any variant with the left mouse button to put it into the clipboard and paste it elsewhere.
 
     Which skin tone was last used is remembered, i.e. the emoji shown before opening the menu for the skin tones is the emoji with the skin tone variant used last for this emoji.
 
@@ -1115,7 +1117,7 @@ In Fedora, “emoji-picker” is packaged as sub-package of ibus-typing-booster 
 
 ![gnome-emoji-one-grayscale](/images/user-docs/gnome-emoji-one-grayscale.png)
 
-2.  Another good emoji font is the “Emoji One” font which you can get from here: https://github.com/Ranks/emojione/blob/master/assets/fonts/emojione-android.ttf
+1.  Another good emoji font is the “Emoji One” font which you can get from here: https://github.com/Ranks/emojione/blob/master/assets/fonts/emojione-android.ttf
 
     The “Emoji One” font also looks very nice but currently supports fewer emoji sequences than the latest version of “Noto Color Emoji”. For example, the emoji sequence 👷‍♀ (👷 U+1F477 CONSTRUCTION WORKER, U+200D ZERO WIDTH JOINER, ZERO WIDTH JOINER, ♀ U+2640 FEMALE SIGN) will display as several glyphs and not as a single glyph showing a female construction worker. But many emoji sequences do work with this font. And many (but not all) skin tone modifiers work as well with the “Emoji One” font.
 
@@ -1123,7 +1125,7 @@ In Fedora, “emoji-picker” is packaged as sub-package of ibus-typing-booster 
 
 ![gnome-symbola](/images/user-docs/gnome-symbola.png)
 
-3.  A good black and white font for emoji is the [Symbola](http://users.teilar.gr/~g1951d/) font by George Douros. Best use the latest version, at least the version updated for Unicode 9.0.0. On Fedora and openSUSE, this font is in the “gdouros-symbola-fonts” package. Fedora 25 already has the Unicode 9.0.0 version. If you are using Fedora 24, better update that font.
+1.  A good black and white font for emoji is the [Symbola](http://users.teilar.gr/~g1951d/) font by George Douros. Best use the latest version, at least the version updated for Unicode 9.0.0. On Fedora and openSUSE, this font is in the “gdouros-symbola-fonts” package. Fedora 25 already has the Unicode 9.0.0 version. If you are using Fedora 24, better update that font.
 
     But even the latest version of the black and white “Symbola” font does not support any emoji which consist of more than one character. That means emoji sequences like 👷‍♀ (👷 U+1F477 CONSTRUCTION WORKER, U+200D ZERO WIDTH JOINER, ZERO WIDTH JOINER, ♀ U+2640 FEMALE SIGN) will display as several glyphs and not as a single glyph showing a female construction worker. The same problem occurs for the flag sequences, the family emoji and all other emoji sequences. And the skin tones modifiers are shown as seperate characters following the emoji they are modifying as well.
 
@@ -1141,7 +1143,7 @@ Cairo packages for Fedora containing that experimental patch are available [here
 1. One font which can be used to show emoji in colour is “Noto Color Emoji” (“NotoColorEmoji.ttf”). On Fedora, this font is in the “google-noto-emoji-fonts” package. Or you can get it [here](https://www.google.com/get/noto/). 
 
 ![gnome-emoji-one-color](/images/user-docs/gnome-emoji-one-color.png)
-2.  Another font which has emoji in colour is the “Emoji One” font (“emojione-android.ttf”). It is available [here](https://github.com/Ranks/emojione/raw/master/assets/fonts/emojione-android.ttf). If you want a Fedora package you can also get this font from [here](https://copr.fedorainfracloud.org/coprs/hadess/emoji/).
+1.  Another font which has emoji in colour is the “Emoji One” font (“emojione-android.ttf”). It is available [here](https://github.com/Ranks/emojione/raw/master/assets/fonts/emojione-android.ttf). If you want a Fedora package you can also get this font from [here](https://copr.fedorainfracloud.org/coprs/hadess/emoji/).
 
     To make the colour emoji fonts your default emoji fonts, you can use a fontconfig setup file `~/.config/fontconfig/fonts.conf` as in this [example fonts.conf](#) file and edit it a bit.
 
@@ -1213,13 +1215,13 @@ And you need to install the Python3 module of pyaudio. How to do that depends on
 
 ![gnome-set-google-application-credentials-file](/images/user-docs/gnome-set-google-application-credentials-file.png)
 
-2.  Another necessary thing to setup is to specify the location of the “Google application credentials” .json file which you should have downloaded above when [setting up a GCP Console project](https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries).
+1.  Another necessary thing to setup is to specify the location of the “Google application credentials” .json file which you should have downloaded above when [setting up a GCP Console project](https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries).
 
     The screen shot shows that you can do that in the “Speech recognition” tab of the setup tool of ibus-typing-booster.
 
 ![gnome-choose-language-for-speech-recognition](/images/user-docs/gnome-choose-language-for-speech-recognition.png)
 
-3.  The language used for speech recognition is the language of the dictionary with the highest priority in ibus-typing-booster.
+1.  The language used for speech recognition is the language of the dictionary with the highest priority in ibus-typing-booster.
 
     You can see these dictionary priorities by opening the setup tool of ibus-typing-booster and looking at the “Dictionaries and input methods” tab. The dictionary at the top of the list has the highest priority and the language of this dictionary is used for Google Speech-to-Text.
 
