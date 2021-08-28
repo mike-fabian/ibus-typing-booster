@@ -99,16 +99,16 @@ The procedure to add an ibus-typing-booster input method differs slightly depend
 ###### 1_2
 ## When using other desktops than Gnome3
 
-![When using other desktops than Gnome3](/images/user-docs/When-using-other-desktops-than-Gnome3.gif)
+{{< video label="When using other desktops than Gnome3" webm="/videos/user-docs/When-using-other-desktops-than-Gnome3.webm" >}}
 
-This chapter shows how to add the ibus-typing-booster input method on most desktops except Gnome3 and Unity. The screenshots in this chapter are using XFCE, but it is the same procedure on most other desktops and window managers as well, only Gnome3 and Unity are a bit special.
+This chapter shows how to add the ibus-typing-booster input method on most desktops except Gnome3 and Unity. The screenshots in this chapter are using XFCE on Fedora 34, but it is the same procedure on most other desktops and window managers as well, only Gnome3 and Unity are a bit special.
 
-First start the `ibus-setup` program (For example by typing `ibus-setup &` into a terminal.
+1. First start the `ibus-setup` program (For example by typing `ibus-setup &` into a terminal.
 
 1. If `ibus-daemon` is not yet running, `ibus-setup` may ask whether you want to start it. In that case click on “Yes”.
 
 1. If `ibus-daemon` was not already running, you probably also want to make it run automatically every time when you log into your desktop. If you are using Fedora you can do that for most desktops and window managers using `imsettings-switch` like this:
-`imsettings-switch ibus`
+`imsettings-switch ibus`. Or use the graphical tool `im-chooser` and select to use Ibus.
 
 1. This will change some settings so that when you log in next time, `ibus-daemon` will be running and the following environment variables will be set:
 
@@ -120,8 +120,7 @@ First start the `ibus-setup` program (For example by typing `ibus-setup &` into 
 
 1. If you don’t use Fedora and do not have the `imsettings-switch`, there may be some other way to start `ibus-daemon` on your system automatically and to set the above environment variables.
 
-    Or 
-    you can put the above environment variables into your `~/.bashrc` file and start `ibus-daemon` from some X11 startup file or make your windowmanager start it. I am using the “i3” windowmanager at the moment and have added the line `exec ibus-daemon -drx` to my `~/.config/i3/config` file.
+    Or you can put the above environment variables into your `~/.bashrc` file and start `ibus-daemon` from some X11 startup file or make your windowmanager start it. I am using the “i3” windowmanager at the moment and have added the line `exec ibus-daemon -drx` to my `~/.config/i3/config` file.
 
 1. In the “General” tab of `ibus-setup` you see that the default shortcut key to switch between input methods is “Super+Space” and you can change this and some other options if you like.
 
@@ -133,7 +132,7 @@ First start the `ibus-setup` program (For example by typing `ibus-setup &` into 
 
 1. Now use the “Input Method” tab of `ibus-setup` to add the ibus-typing-booster engine.
 
-    You see a list of input sources which have already been added to the desktop before. In this case there are already: “English - English (international AltGr dead keys)” and “Japanese (Kana Kanji)”. This is just an example of course, the list of already added input methods could look different for you. The first entry, “English - English (international AltGr dead keys)”, is not really an input engine, it is just a keyboard layout.
+    You see a list of input sources which have already been added to the desktop before. In this case there are already: “English - English (US, euro on 5)” and “Japanese - Anthy”. This is just an example of course, the list of already added input methods could look different for you. The first entry, “English - English (US, euro on 5)”, is not really an input engine, it is just a keyboard layout.
 
     It is recommended to use a keyboard layout with ibus-typing-booster which has a real “AltGr” key and does not just make the “AltGr” or “Alt” key on the right side of the space bar basically a duplicate of the left “Alt” key. For details, see The [“AltGr” key](#3_1). By the way, in the “Advanced” tab of `ibus-setup` there is an option “Use system keyboard layout”, if this option is selected, ibus-typing-booster will always use the system keyboard layout, otherwise it will use the keyboard layout from the list of input methods which was used last before switching to ibus-typing-booster.
 
@@ -141,29 +140,17 @@ First start the `ibus-setup` program (For example by typing `ibus-setup &` into 
 
     Now click on the “Add” button at top right to add another input source.
 
-1. Now either scroll down to the list of languages until you find “other” (usually at the end of the list) or click on the three vertical dots “⋮” to open the search entry field and then search for “other”.
+1. Click on the three vertical dots “⋮” at the bottom to get the full list of languages. ibus-typing-booster supports many languages, even at the same time. Therefore it is not listed under any specific language but in the “Other” at the very bottom of the list. You could either scroll down to the “Other” section, click on it and then scroll again looking for “🚀 Typing Booster”, or you could use the search entry and search for “booster” for example.
 
-1. ibus-typing-booster supports many languages, even at the same time. Therefore it is not listed under any specific language but under “Other”.
+1. When you find “🚀 Typing Booster”, select it and click the “Add” button.
 
-1. When searching for “other”, it looks as in this screenshot.
+1. Now the ibus-typing-booster engine has been added to the list of input methods configured in `ibus-setup`. If you select that “🚀 Typing Booster” in the list of configured input methods in `ibus-setup`, you can click the “Preferences” button to open the setup tool of the typing-booster engine. There you can customize ibus-typing-booster according to your preferences (You can also open the ibus-typing-booster setup tool later from the menu in the desktop panel).
 
-1. Select “Other” and scroll through the list of methods shown until you find “Typing Booster”. Select “Typing Booster”.
+1. Now open some programs where you could type something, for example “gedit” or “gnome-terminal”. And activate the ibus-typing-booster engine by clicking on the icon for the input methods in the system tray and selecting “Typing booster” there.
 
-    Click the “Add” button.
+1. When the input method menu of system tray icon is open and “Typing booster” is selected, there is a menu entry “Setup” which is a quicker way to open the setup tool of “Typing Booster” then starting `ibus-setup` again. Some options are also directly available in the input method menu of the system tray icon to have quicker access to these often used options. 
 
-1. Now the ibus-typing-booster engine has been added to the list of input methods configured and it looks as in this screenshot.
-
-    If you select that typing-booster engine, you can click the “Preferences” button to open the setup tool of that typing-booster-engine.
-
-1. Here you see the setup tool of that ibus-typing-booster engine where you can customize ibus-typing-booster according to your preferences.
-
-1. Now open some programs where you could type something, for example “gedit” or “gnome-terminal”. And activate the ibus-typing-booster engine you want to use by clicking on the icon for the input methods in the system tray and selecting the ibus-typing-booster engine in the menu which opens.
-
-    When the input method menu of system tray icon is open and the ibus-typing-booster engine is selected, there is a menu entry “Setup” which is a quicker way to open the setup tool of that ibus-typing-booster engine than doing it with `ibus-setup`.
-
-    Some options are also directly available in the input method menu of the system tray icon to have quicker access to these often used options than having to open the setup tool of the ibus-typing-booster engine. There are also [key and mouse bindings](#3) for these frequently used options which are shown in the input method menu of the system tray icon as well as a reminder.
-
-    On the top left of this screenshot you see the “property panel” which shows the current status of some frequently used options which can also be changed by clicking on the “property panel”. The “property panel” also offers a button to open the setup tool of the ibus-typing-booster engine. You can move that “property panel” to around on your desktop to a convenient place.
+1. Near the top right in this video you see the “property panel” which shows the current status of some frequently used options which can also be changed by clicking on the “property panel”. The “property panel” also offers a button to open the setup tool of the ibus-typing-booster engine. You can move that “property panel” to around on your desktop to a convenient place.
 
 1. Now type something, for example into gedit and you should see some suggestions for completions.
 
