@@ -17,6 +17,7 @@ date: 2021-08-28
         * [Enable suggestions by a key](#2_2_1)
             * [Simulate the behaviour of ibus-m17n](#2_2_1_1)
         * [Use inline completion](#2_2_2)
+            * [Inline completion is hard to use on Wayland](#2_2_3)
         * [Spellchecking](#2_2_3)
 1. [Key and Mouse bindings](#3)
     * [The “AltGr” key](#3_1)
@@ -492,32 +493,89 @@ all above options are set, the behaviour looks identical.
 
 ###### 2_2_2
 ## Use inline completion
-![inline completion](/images/user-docs/inline-completion.png)
 
-Very often, the first candidate shown as a suggestion is already the desired one, especially after having used ibus-typing-booster for a while and it has learned what the user types often in what context.
+{{< video label="“Normal” completion versus inline completion" webm="/videos/user-docs/inline-completion.webm" >}}
 
-When one ends up selecting the first candidate most of the time, popping up a candidate list with more candidates all the time is needlessly visually distracting.
+The video above shows how “inline completion” looks like compared to
+“normal” completion.
 
-When the option “Use inline completion” is checked, the first and most likely candidate is shown inline at the writing position without popping up a candidate list. The characters one has already typed are shown in the current foreground colour (black in the screenshot) and are underlined (Unless underlining the preedit has been switched off in the “Apperance” settings). The completion which is suggested is shown without the underline and in a different colour. This colour is gray by default because this works in most cases, it also works when the foreground text colour is white and the background black. The colour to be used for the inline completion can be chosen in the “Appearance” tab. One can also choose not to use a different colour, then the only difference in style between the completion and the already typed characters is the missing underline under the completion.
+Very often, the first candidate shown as a suggestion is already the
+desired one, especially after having used ibus-typing-booster for a
+while and it has learned what the user types often in what context.
 
-This inline completion style looks much nicer than always popping up a candidate list when the predictions are fairly good and the first candidate is often the desired one.
+When one ends up selecting the first candidate most of the time,
+popping up a candidate list with more candidates all the time is
+needlessly visually distracting.
 
-If that first candidate shown inline is what one wants, one can select it by typing any of the keys bound to the “select_next_candidate” command (Tab and arrow down by default).
+When the option “Use inline completion” is checked, the first and most
+likely candidate is shown inline at the writing position without
+popping up a candidate list. The characters one has already typed are
+shown in the current foreground colour (black in the screenshot) and
+are underlined (Unless underlining the preedit has been switched off
+in the “Apperance” settings). The completion which is suggested is
+shown without the underline and in a different colour. This colour is
+gray by default because this works in most cases, it also works when
+the foreground text colour is white and the background black. The
+colour to be used for the inline completion can be chosen in the
+“Appearance” tab. One can also choose not to use a different colour,
+then the only difference in style between the completion and the
+already typed characters is the missing underline under the
+completion.
 
-When the candidate is selected, the style of the completion becomes the same as the style of the already typed characters and the cursor moves to the end of the completion.
+This inline completion style looks much nicer than always popping up a
+candidate list when the predictions are fairly good and the first
+candidate is often the desired one.
 
-Now one could commit it for example by typing space and continue typing the next word of the text.
+If that first candidate shown inline is what one wants, one can select
+it by typing any of the keys bound to the “select_next_candidate”
+command (Tab and arrow down by default).
 
-Or, if that candidate displayed inline happens to be not the desired one, it is still possible to pop up a full candidate list with more candidates by pressing the key bound to the “select_next_candidate” command again. And then walk down the candidate list by continue pressing that key. If nothing appropriate can be found in the whole candiate list, one can use the key bound to the command “cancel” (the Escape key by default) to deselect all candidates and close the candidate list. Then one could type more input characters and hope that better suggestions become available after typing a bit more.
+When the candidate is selected, the style of the completion becomes
+the same as the style of the already typed characters and the cursor
+moves to the end of the completion.
 
-One can also ignore the candidate displayed inline completely and just continue typing more input characters until a better candidate is displayed.
+Now one could commit it for example by typing space and continue
+typing the next word of the text.
 
+Or, if that candidate displayed inline happens to be not the desired
+one, it is still possible to pop up a full candidate list with more
+candidates by pressing the key bound to the “select_next_candidate”
+command (Tab by default) again. And then walk down the candidate list
+by continue pressing that key. If nothing appropriate can be found in
+the whole candiate list, one can use the key bound to the command
+“cancel” (the Escape key by default) to deselect all candidates and
+close the candidate list. Then one could type more input characters
+and hope that better suggestions become available after typing a bit
+more.
+
+One can also ignore the candidate displayed inline completely and just
+continue typing more input characters until a better candidate is
+displayed.
+
+###### 2_2_3
+## Inline completion is hard to use on Wayland
 ![inline-completion-wayland](/images/user-docs/inline-completion-wayland.png)
-Attention when using Wayland: Currently it is not possible to do any style changes to the preedit on Wayland. On Wayland the preedit is always underlined and always has the same foreground and background colour as normal text, no matter what options to influence the preedit style are chosen in the setup tool of ibus-typing-booster. That is a missing feature in Wayland.
 
-This makes the “Use inline completion” option quite hard to use on Wayland. It is possible to use it, but as the characters typed and the suggested completion are displayed in exactly the same style, it is quite hard to see what has been typed and what is the completion. If one looks carefully, one can still see it because the cursor can be seen at the end of the typed characters, everything to the right of the cursor is the suggested completion. If the completion is selected by typing the key bound to the “select_next_candidate” command (Tab by default), then the cursor moves to the end of the completion.
+**Attention when using Wayland**: Currently it is not possible to do any
+style changes to the preedit on Wayland. On Wayland the preedit is
+always underlined and always has the same foreground and background
+colour as normal text, no matter what options to influence the preedit
+style are chosen in the setup tool of ibus-typing-booster. That is a
+missing feature in Wayland.
 
-One can get used to the fact that the difference between the typed text and the inline completion is hard to see on Wayland, but I found this to be quite hard.
+This makes the “Use inline completion” option quite hard to use on
+Wayland. It is possible to use it, but as the characters typed and the
+suggested completion are displayed in exactly the same style, it is
+quite hard to see what has been typed and what is the completion. If
+one looks carefully, one can still see it because the cursor can be
+seen at the end of the typed characters, everything to the right of
+the cursor is the suggested completion. If the completion is selected
+by typing the key bound to the “select_next_candidate” command (Tab by
+default), then the cursor moves to the end of the completion.
+
+One can get used to the fact that the difference between the typed
+text and the inline completion is hard to see on Wayland, but I found
+this to be quite hard.
 
 
 ###### 2_2_3
