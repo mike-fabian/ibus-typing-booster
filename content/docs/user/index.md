@@ -17,7 +17,7 @@ date: 2021-08-28
         * [Enable suggestions by a key](#2_2_1)
             * [Simulate the behaviour of ibus-m17n](#2_2_1_1)
         * [Use inline completion](#2_2_2)
-            * [Inline completion is hard to use on Wayland](#2_2_3)
+            * [Inline completion is hard to use on Wayland](#2_2_2_1)
         * [Spellchecking](#2_2_3)
 1. [Key and Mouse bindings](#3)
     * [The “AltGr” key](#3_1)
@@ -552,7 +552,7 @@ One can also ignore the candidate displayed inline completely and just
 continue typing more input characters until a better candidate is
 displayed.
 
-###### 2_2_3
+###### 2_2_2_1
 ## Inline completion is hard to use on Wayland
 
 {{< video label="Inline completion is hard to use on Wayland" webm="/videos/user-docs/inline-completion-wayland.webm" >}}
