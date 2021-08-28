@@ -554,7 +554,8 @@ displayed.
 
 ###### 2_2_3
 ## Inline completion is hard to use on Wayland
-![inline-completion-wayland](/images/user-docs/inline-completion-wayland.png)
+
+{{< video label="Inline completion is hard to use on Wayland" webm="/videos/user-docs/inline-completion-wayland.webm" >}}
 
 **Attention when using Wayland**: Currently it is not possible to do any
 style changes to the preedit on Wayland. On Wayland the preedit is
