@@ -428,34 +428,67 @@ missing feature in Wayland.
 
 ###### 2_2_1_1
 ## Simulate the behaviour of ibus-m17n]
-The ibus-m17n engines can be used to input many languages using all the input methods from m17n-lib and m17n-db.
 
-ibus-typing-booster can also use the same input methods from m17n-lib and m17n-db. So one can input all the languages in the same way one can with ibus-m17n. But ibus-typing-booster has many additional features like completion using dictionaries, spellchecking, predictions based on previous user input and being able to use several input methods/transliterations at the same time.
+{{< video label="Simulating ibus-m17n (hi-itrans)" webm="/videos/user-docs/simulating-ibus-m17n-hi-itrans.webm" >}}
 
-But what if a user doesn’t need and want all the extra features of ibus-typing-booster at all, just simple type one language with one input method without any extra bells and whistles?
+This video shows how one can emulate ibus-m17n using
+ibus-typing-booster by switching off all the features
+ibus-typing-booster has in addition to ibus-m17n.
 
-One can still use ibus-typing-booster in that case by disabling all of the extra features. Then ibus-typing-booster behaves like any ibus-m17n engine.
+The ibus-m17n engines can be used to input many languages using all
+the input methods from m17n-lib and m17n-db.
 
-The advantage of simulating ibus-m17n using ibus-typing-booster is that there are probably fewer bugs because ibus-typing-booster is more actively maintained.
+ibus-typing-booster can also use the same input methods from m17n-lib
+and m17n-db. So one can input all the languages in the same way one
+can with ibus-m17n. But ibus-typing-booster has many additional
+features like completion using dictionaries, spellchecking,
+predictions based on previous user input and being able to use several
+input methods/transliterations at the same time.
 
-To simulate ibus-m17n with ibus-typing-booster, one can use the following setup options:
+But what if a user doesn’t need and want all the extra features of
+ibus-typing-booster at all, just simple type one language with one
+input method without any extra bells and whistles?
 
-Options tab:
+One can still use ibus-typing-booster in that case by disabling all of
+the extra features. Then ibus-typing-booster behaves like any
+ibus-m17n engine.
 
-Check the option “Enable suggestions by key”
-Check the option “Off the record mode”
-Key bindings tab:
+The advantage of simulating ibus-m17n using ibus-typing-booster is
+that there are probably fewer bugs because ibus-typing-booster is more
+actively maintained.
 
-Remove all keys bound to the command “enable_lookup”
-Dictionaries and input methods tab:
+To simulate ibus-m17n with ibus-typing-booster, one can use the
+following setup options:
 
-Remove all input methods except the one you want to use
-With these settings, no candidate lists will ever pop up because one would need to press a key to enable a suggestion but all such keys have been removed from the “enable_lookup” command. So candidate lists are never shown, just like in ibus-m17n.
+* Dictionaries and input methods tab:
+    * Remove all input methods except the one you want to use
+* Options tab:
+    * Check the option “Enable suggestions by key”
+    * Check the option “Off the record mode”
+* Key bindings tab:
+    * Remove all keys bound to the command “enable_lookup”
+* Appearance tab:
+    * Set “Preedit underline” to “None”
 
-No user input is recorded because of enabling the option “Off the record mode”. Recording user input would be useless because stuff learned from user input is normally used to improve the quality of the suggestions based on previous input. But if there are never any suggestions, there is no need to record user input at all.
+With these settings, no candidate lists will ever pop up because one
+would need to press a key to enable a suggestion but all such keys
+have been removed from the “enable_lookup” command. So candidate lists
+are never shown, just like in ibus-m17n.
 
-Without candidate lists, dictionaries are useless, therefore it doesn’t matter which dictionaries are setup in the “Dictionaries and input methods” tab. One can remove them all or leave them there, it doesn’t matter.
+No user input is recorded because of enabling the option “Off the
+record mode”. Recording user input would be useless because stuff
+learned from user input is normally used to improve the quality of the
+suggestions based on previous input. But if there are never any
+suggestions, there is no need to record user input at all.
 
+Without candidate lists, dictionaries are useless, therefore it
+doesn’t matter which dictionaries are setup in the “Dictionaries and
+input methods” tab. One can remove them all or leave them there, it
+doesn’t matter.
+
+As one can see in the video, setting the above options one after another,
+ibus-typing-booster behaves more and more similar to ibus-m17n, when
+all above options are set, the behaviour looks identical.
 
 ###### 2_2_2
 ## Use inline completion
