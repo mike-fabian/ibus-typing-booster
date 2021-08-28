@@ -582,34 +582,74 @@ this to be quite hard.
 ###### 2_2_3
 ## Spellchecking
 
-![spellchecking-preedit-and-candidate-list](/images/user-docs/spellchecking-preedit-and-candidate-list.png)
+{{< video label="Spellchecking in the preedit and candidate list" webm="/videos/user-docs/spellchecking-preedit-and-candidate-list.webm" >}}
 
-ibus-typing-booster also does spellchecking (Using hunspell for most languages and voikko for Finnish).
+ibus-typing-booster also does spellchecking (Using hunspell for most
+languages and voikko for Finnish).
 
-If a word is typed which might contain a spelling error, the candidate list of suggestions may contain suggestions for spelling corrections, i.e. words which are not just completing the text already typed to something longer or fixing some accents but “seriously” changing the characters already typed, more than just fixing accents, i.e. completely different characters or another order of characters.
+If a word is typed which might contain a spelling error, the candidate
+list of suggestions may contain suggestions for spelling corrections,
+i.e. words which are not just completing the text already typed to
+something longer or fixing some accents but “seriously” changing the
+characters already typed, more than just fixing accents,
+i.e. completely different characters or another order of characters.
 
-Optionally, such spellchecking suggestions can be marked in the candidate list with a symbol or using a different colour in the candidate list. The symbol and color can be chosen.
+Optionally, such spellchecking suggestions can be marked in the
+candidate list with a symbol or using a different colour in the
+candidate list. The symbol and color can be chosen.
 
-One can also choose to mark candidates which are (accent insensitive) completions of the typed word with a symbol and/or colour if they are valid words in one of the dictionaries.
+One can also choose to mark candidates which are (accent insensitive)
+completions of the typed word with a symbol and/or colour if they are
+valid words in one of the dictionaries.
 
-And one can choose to mark candidates which are (accent insensitive) completions of the typed word with a symbol and/or colour if they have been remembered in the user database because the user has typed them before.
+And one can choose to mark candidates which are (accent insensitive)
+completions of the typed word with a symbol and/or colour if they have
+been remembered in the user database because the user has typed them
+before.
 
-All of these markings can help to get the spelling right, for example if one uses a French dictionary and types “egali” and sees “égalité” and “égalisation” marked as “dictionary suggestions” in the candidate list, then one knows that these candidates are valid words in the French dictionary and what one typed was identical to the beginning of these candidates except for differents in accents.
+All of these markings can help to get the spelling right, for example
+if one uses a French dictionary and types “egali” and sees “égalité”
+and “égalisation” marked as “dictionary suggestions” in the candidate
+list, then one knows that these candidates are valid words in the
+French dictionary and what one typed was identical to the beginning of
+these candidates except for differents in accents.
 
-It can also speed up typing not bothering typing the accents at all (because this often requires extra key strokes) and then select the correctly accented word from one of the “dictionary suggestions”.
+It can also speed up typing not bothering typing the accents at all
+(because this often requires extra key strokes) and then select the
+correctly accented word from one of the “dictionary suggestions”.
 
-Colour in the candidate list does not work when using Gnome, only on other desktops colour can be used in the candidate list. Marking spellchecking suggestions with a symbol also works on Gnome. By default, neither colour nor symbols are used for suggestions.
+Colour in the candidate list does not work when using Gnome, only on
+other desktops colour can be used in the candidate list. Marking
+spellchecking suggestions with a symbol also works on Gnome. By
+default, neither colour nor symbols are used for suggestions.
 
 #### Indicating spelling errors in the preedit
-One can choose that the preedit changes colour when the typed word is not a valid word in any of the dictionaries setup in the ”Dictionaries and input methods” tab of the setup tool.
 
-For example, if one uses an English and a French dictionary, and the typed word in the preedit is neither a valid word in English nor in French, then the preedit changes colour. This is also shown in the above screenshot using the default colour red.
+One can choose that the preedit changes colour when the typed word is
+not a valid word in any of the dictionaries setup in the ”Dictionaries
+and input methods” tab of the setup tool.
 
-Dictionaries where spellchecking is not supported are ignored for this colour change. For example, if one uses an English, a French, and a Japanese dictionary at the same time, the preedit still changes colour if the word is neither a valid English nor a valid French word. Whether the typed word is in the Japanese dictionary or not doesn’t matter because the Japanese dictionary does not support spellchecking.
+For example, if one uses an English and a French dictionary, and the
+typed word in the preedit is neither a valid word in English nor in
+French, then the preedit changes colour. This is also shown in the
+above screenshot using the default colour red.
 
-Attention when using Wayland: On Wayland it is not possible to indicate a possible spelling error in the preedit.
+Dictionaries where spellchecking is not supported are ignored for this
+colour change. For example, if one uses an English, a French, and a
+Japanese dictionary at the same time, the preedit still changes colour
+if the word is neither a valid English nor a valid French
+word. Whether the typed word is in the Japanese dictionary or not
+doesn’t matter because the Japanese dictionary does not support
+spellchecking.
 
-Currently it is not possible to do any style changes to the preedit on Wayland. On Wayland the preedit is always underlined and always has the same foreground and background colour as normal text, no matter what options to influence the preedit style are chosen in the setup tool of ibus-typing-booster. That is a missing feature in Wayland.
+**Attention when using Wayland**: On Wayland it is not possible to
+indicate a possible spelling error in the preedit.
+
+Currently it is not possible to do any style changes to the preedit on
+Wayland. On Wayland the preedit is always underlined and always has
+the same foreground and background colour as normal text, no matter
+what options to influence the preedit style are chosen in the setup
+tool of ibus-typing-booster. That is a missing feature in Wayland.
 
 
 ###### 3
