@@ -160,11 +160,13 @@ This chapter shows how to add the ibus-typing-booster input method on most deskt
 
 
 ###### 1_3
-## When using the Unity desktop on Ubuntu
+## When using the Unity desktop on Ubuntu 16.04
 
 ![When using the Unity desktop on Ubuntu](/images/user-docs/When-using-the-Unity-desktop-on-Ubuntu.gif)
 
 This section shows the setup of ibus-typing-booster on the “Unity” desktop of ubuntu-16.04.
+
+<span style="color:red">The information in this chapter is pretty old, maybe I should delete it soon. Current Ubuntu doesn’t use “Unity” anymore. It uses Gnome3 and behaves quite similar to Gnome3 on other distributions. But the “Unity” desktop was quite a bit different.</span>
 
 These instructions are for ibus-typing-booster 1.5.x. For ibus-typing-booster >= 2.0.0, all engines have been merged into one, so you won’t find many different “Typing Booster” engines for many different languages anymore, there is only one single “Typing Booster” engine now which supports all languages. That doesn’t make a big difference in these instructions though, so I hope it is not too confusing that the screenshots in this sections are not up-to-date with ibus-typing-booster >= 2.0.0.
 
