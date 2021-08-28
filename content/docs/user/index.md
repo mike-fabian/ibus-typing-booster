@@ -1055,12 +1055,28 @@ When more than one input method at the same time is used, the following addition
 
 ###### 3_4
 ### Customizing key bindings
-![gnome-key-bindings-customization](/images/user-docs/gnome-key-bindings-customization.png)
-This screenshot shows the “Key bindings” tab of the setup tool of ibus-typing-booster. Here one can change the keybindings for some commands of ibus-typing-booster.
 
-This screenshot shows the default settings. For example, as seen in the screenshot, the Tab key is bound by default to the commands “enable_lookup” and “select_next_candidate”. If one wants to use the Tab key for something else, maybe because the application one is typing into needs the Tab key for something, one could change the settings here and use other keys for “enable_lookup” and “select_next_candidate”.
+{{< video label="Customizing key bindings" webm="/videos/user-docs/key-bindings-customization.webm" >}}
 
-And can also see in the screenshot that some commands are bound by default to Mod5+something. Mod5 is Usually ISO_Level3_Shift and this is mapped to the AltGr key on many keyboard layouts, see also The “AltGr” key. If your keyboard layout does not have that key, you might want to change these settings.
+This video shows how one can change a keybinding.
+
+In the “Key bindings” tab of the setup tool of ibus-typing-booster one
+sees a list of commands and the key combinations bound to execute
+these commands.
+
+As an example, the video shows changing the key binding for the command
+“select_next_candidate”. By default this command is bound to
+`['Tab', 'ISO_Left_Tab', 'Down', 'KP_Down']`.
+
+The video shows how to remove the key `Tab` and add `Control+Tab`
+instead and then, finally use the “Set to default” button to
+go back to the default setting.
+
+And can also see in the screenshot that some commands are bound by
+default to Mod5+something. Mod5 is Usually ISO_Level3_Shift and this
+is mapped to the AltGr key on many keyboard layouts, see also The
+“AltGr” key. If your keyboard layout does not have that key, you might
+want to change these settings.
 
 
 ###### 4
