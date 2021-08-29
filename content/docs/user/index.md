@@ -1638,47 +1638,126 @@ just for this one lookup.
 ###### 5_9
 ### Emoji picker
 
-ibus-typing-booster contains an “emoji-picker” tool which can be used independently from ibus-typing-booster, i.e. even when ibus-typing-booster is not running.
+{{< video label="Emoji picker" webm="/videos/user-docs/emoji-picker.webm" >}}
 
-In Fedora, “emoji-picker” is packaged as sub-package of ibus-typing-booster named “emoji-picker”, so you can install it with:
+ibus-typing-booster contains an “emoji-picker” tool which can be used
+independently from ibus-typing-booster, i.e. even when
+ibus-typing-booster is not running.
+
+In Fedora, “emoji-picker” is packaged as sub-package of
+ibus-typing-booster named “emoji-picker”, so it might not be installed
+but you can install it with:
 
 `$ sudo dnf install emoji-picker`
 
-![gnome-emoji-picker-browse](/images/user-docs/gnome-emoji-picker-browse.png)
+From the command line “emoji-picker” can be started with and optional list
+of languages:
 
-1. Clicking on an emoji shown in “emoji-picker” puts it into the clipboard and you can then paste it somewhere using Control+V or the middle mouse button.
+`$ emoji-picker  -l en:ja:fr:it:hi:ko:zh &`
 
-    Clicking the right mouse button on an emoji shown in “emoji-picker” shows the emoji much bigger and some extra information about that emoji, like the Unicode code point(s), the name and search keywords of the emoji in all chosen languages, the fonts really used to render this emoji, the Unicode version this emoji first appeared in, and a link to lookup this emoji in emojipedia.
+(The `-l` option to specifying some languages is optional, see
+explanation about the options below).
 
-    The fonts really used to render an emoji may differ from the font chosen in the user interface of emoji picker because:
+Clicking with the left mouse button on an emoji shown in
+“emoji-picker” puts it into the clipboard and you can then paste it
+somewhere using Control+V or the middle mouse button.
 
-    * The chosen font may have no glyph for a certain emoji. In that case, if there is any other font installed on the system which has that emoji, a fallback font will be used to render the emoji. The info popover shown on right mouse click will show which font was really used, i.e. it enables one to see which font was used as a fallback.
-    * Some emoji are sequences of several code points and with some fonts (or when there are bugs in the rendering system), it may not be possible to render the sequence correctly and one may see individual parts of the sequence rendered seperately, possibly even different parts of the sequence in different fonts. The info popover shown on right mouse click shows which font was used for which part of the sequence which is helpful to debug such problems.
+Clicking the right mouse button on an emoji shown in “emoji-picker”
+shows the emoji much bigger and some extra information about that
+emoji, like the Unicode code point(s), the name and search keywords of
+the emoji in all chosen languages, the fonts really used to render
+this emoji, the Unicode version this emoji first appeared in, and a
+link to lookup this emoji in emojipedia.
 
-    “emoji-picker” has some command line options to choose the languages, the font and the fontsize. For example, emoji-picker --languages de:en:fr would enable you to use German, English, and French to browse and search for emoji and display the names of the emoji in all of these languages. If the command line option is not used, the languages are taken from the environment variables. The LANGUAGE variable works as well. For example, LANGUAGE=de:en:fr emoji-picker also chooses German, English, and French. And, LANG=de_DE.UTF-8 emoji-picker would choose only German (English is always implicitly added though.)
+The fonts really used to render an emoji may differ from the font
+chosen in the user interface of emoji picker because:
 
-    The command line options to choose a different font or font size can be used like this: emoji-picker --font "Noto Color Emoji" --fontsize 32 The command line font optionis override the font options in the graphical user interface.
+* The chosen font may have no glyph for a certain emoji. In that case,
+  if there is any other font installed on the system which has that
+  emoji, a fallback font will be used to render the emoji (Unless the
+  “☑️ Fallback” option at the top of emoji-picker is switched
+  off!). The info popover shown on right mouse click will show which
+  font was really used, i.e. it enables one to see which font was used
+  as a fallback.
 
-    For more about emoji fonts and colour, see [Emoji fonts]().
+* Some emoji are sequences of several code points and with some fonts
+  (or when there are bugs in the rendering system), it may not be
+  possible to render the sequence correctly and one may see individual
+  parts of the sequence rendered seperately, possibly even different
+  parts of the sequence in different fonts. The info popover shown on
+  right mouse click shows which font was used for which part of the
+  sequence which is helpful to debug such problems.
 
-![gnome-emoji-picker-search](/images/user-docs/gnome-emoji-picker-search.png)
+Emoji can also be selected with different skin tones. If the mouse
+hovers over an emoji for which different skin tones are available, a
+tooltip says “Long press or middle click for skin tones”. Long
+pressing such an emoji with the left mouse button or clicking it with
+the middle mouse button pops up a menu showing all the skin tone
+variants. One can then click on any variant with the left mouse button
+to put it into the clipboard and paste it elsewhere.
 
-1.  “emoji-picker” also has a “Search” feature where you can type a search string and get matching emoji listed.
+Which skin tone was last used is remembered, i.e. the emoji shown
+before opening the menu for the skin tones is the emoji with the skin
+tone variant used last for this emoji.
 
-    Again you can click on one of the matches to put it into the clipboard and paste it elsewhere.
+There is also a “🕒 Recently used” section at the top left of “emoji-picker”.
 
-    And hovering with the mouse over a match shows the emoji bigger and some extra information.
+Clearing the recently used characters resets all emoji to neutral skin
+tone by default.
 
-    The search string can be in any of the languages specified by the environment variables or on the command line.
+“emoji-picker” also has a “Search” feature where you can type a search
+string and get matching emoji listed.
 
-![gnome-emoji-picker-skin-tone](/images/user-docs/gnome-emoji-picker-skin-tone.png)
+The search string can be in any of the languages specified by the
+environment variables or on the command line.
 
-1.  Emoji can also be selected with different skin tones. If the mouse hovers over an emoji for which different skin tones are available, a tooltip says “Long press or middle click for skin tones”. Long pressing such an emoji with the left mouse button or clicking it with the middle mouse button pops up a menu showing all the skin tone variants. One can then click on any variant with the left mouse button to put it into the clipboard and paste it elsewhere.
+In the search results as well you can do the same things as when browsing
+the emoji categories:
 
-    Which skin tone was last used is remembered, i.e. the emoji shown before opening the menu for the skin tones is the emoji with the skin tone variant used last for this emoji.
+* Click on one of the matches to put it into the clipboard and paste it elsewhere.
 
-    Clearing the recently used characters resets all emoji to neutral skin tone by default.
+* Right click on one of the matches to show the emoji bigger with extra information
 
+* Long press left mouse button or click middle mouse button to show skin tones if available for that emoji.
+
+
+“emoji-picker” has some command line options to choose the languages,
+the font and the fontsize. For example,
+
+```
+$ emoji-picker --languages de:en:fr
+```
+
+would enable you to use German, English, and French to browse and
+search for emoji and display the names of the emoji in all of these
+languages. If the command line option is not used, the languages are
+taken from the environment variables. The `LANGUAGE` variable works as
+well. For example,
+
+```
+LANGUAGE=de:en:fr emoji-picker
+```
+
+also chooses German, English, and French. And,
+
+```
+LANG=de_DE.UTF-8 emoji-picker
+```
+
+would choose only German (English is always implicitly added as a
+fallback though.)
+
+The command line options to choose a different font or font size can
+be used like this:
+
+```
+emoji-picker --font "Noto Color Emoji" --fontsize 32
+```
+
+The command line font options override the font options in the
+graphical user interface.
+
+For more about emoji fonts and colour, see [Emoji fonts](#5_10).
 
 ###### 5_10
 ### Emoji fonts
