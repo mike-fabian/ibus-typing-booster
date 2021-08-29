@@ -1343,23 +1343,44 @@ To make all emoji display correctly, you need good fonts which contain all emoji
 ###### 5_1
 ### Emoji input
 
-![gnome-emoji-english-castle](/images/user-docs/gnome-emoji-english-castle.png)
+{{< video label="Typing Emoji in English with Emoji option on" webm="/videos/user-docs/emoji-english-emoji-option-on.webm" >}}
 
-When the emoji option is on (it is off by default), you get emoji displayed in the candidate list automatically when typing something which matches an emoji.
+When the “☑️ Unicode symbols and emoji predictions” option is on (it is
+off by default), you get emoji displayed in the candidate list
+automatically when typing something which matches an emoji.
 
-For example in this screenshot, the user has typed “castle” and the emoji 🏰 (U+1F3F0 EUROPEAN CASTLE) is shown as the last candidate of the first page of the candidate list.
+For example in this video, the user has types “camel”, “Albania”, and
+“castle” and suitable emoji are shown in the candidate list.
 
-If reasonable matches for emoji are found, the first match is shown as the last candidate of the first page of the candidate list. If more than one emoji has matched the input, the other matches can be found by scrolling down to the next page of candidates. If an emoji is selected and committed, it will be remembered just like ibus-typing-booster remembers other words and will be shown with higher priority next time.
+If reasonable matches for emoji are found, the first match is shown as
+the last candidate of the first page of the candidate list (Unless, as
+in the case of “Albania”, the candidate list has only one page, then
+it might not be the last candidate).
 
-The screen shot shows coloured emoji, to make that work see [Showing emoji in colour](#5_10). By default, emoji will be shown in black and white on current linux distributions. 
+If more than one emoji has matched the input and the candidate list
+has more than one page, the other matches can be found by scrolling
+down to the next page of candidates. If an emoji is selected and
+committed, it will be remembered just like ibus-typing-booster
+remembers other words and will be shown with higher priority next
+time.
+
+As having the “☑️ Unicode symbols and emoji predictions” option enabled
+slows down the search for predictions, you might want to look
+at [Quickly toggling emoji mode on and off](#5_8), especially if you
+use emoji only occasionally.
 
 ###### 5_2
 ## Emoji input fuzzy matching
 
 ![gnome-emoji-english-fuzzy-castle](/images/user-docs/gnome-emoji-english-fuzzy-castle.png)
-ibus-typing-booster tries to match the emoji names in a fuzzy way, in many cases you will get a match even if your input contains spelling mistakes.
 
-In this example, the typed input is “casle”, i.e. not spelled correctly. Nevertheless, one gets the match 🏰 (U+1F3F0 EUROPEAN CASTLE).
+Ibus-typing-booster tries to match the emoji names in a fuzzy way, in
+many cases you will get a match even if your input contains spelling
+mistakes.
+
+In this example video, the input “casle” is typed, i.e. it is not
+spelled correctly. Nevertheless, one gets the match 🏰 (U+1F3F0
+EUROPEAN CASTLE).
 
 
 ###### 5_3
