@@ -276,7 +276,7 @@ Ibus-typing-booster has a setup tool which allows to adapt the behaviour a lot t
 
 {{< video label="Default settings in Hindi locale" webm="/videos/user-docs/hindi-locale-default-settings.webm" >}}
 
-This video shows how to set languages and input methods in Typing Booster.
+This video shows how to setup languages and input methods in Typing Booster.
 
 The most important setup in Typing booster is to choose **which**
 languages you want to use and **how** to input them.
@@ -1171,42 +1171,115 @@ sudo dnf install hunspell-es hunspell-fr
 
 ###### 4_1
 ### Example using Hindi and English at the same time
-![Example-using-Hindi-and-English-at-the-same-time](/images/user-docs/Example-using-Hindi-and-English-at-the-same-time.gif)
-If one uses both Hindi and English often, it is possible to setup ibus-typing-booster to use both languages at the same time. Then one can just type in either Hindi or English and ibus-typing-booster will show suitable candidates automatically.
 
-1.  This screenshot shows how to setup ibus-typing-booster to use Hindi and English at the same time.
+{{< video label="Example using Hindi and English at the same time" webm="/videos/user-docs/Example-using-Hindi-and-English-at-the-same-time.webm" >}}
 
-    In the “Dictionaries and input methods” tab of the setup tool one can see that two dictionaries have been added, “hi_IN” for Hindi and “en_GB” for British English.
+This video shows how Hindi and English can be used at the same time in
+ibus-typing-booster.
 
-    And two input methods have been added, “hi-itrans” to type Hindi and “NoIme” (“Native Keyboard”, i.e. direct keyboard input) to type English.
+If one uses both Hindi and English often, it is possible to setup
+ibus-typing-booster to use both languages at the same time. Then one
+can just type in either Hindi or English and ibus-typing-booster will
+show suitable candidates automatically.
 
-    There are several input methods available for Hindi: “hi-inscript2”, “hi-inscript”, “hi-phonetic”, “hi-itrans”, “hi-remington”, “hi-typewriter”, and “hi-vedmata”. In this example we use “hi-itrans” but one could also use any of the others or even several at once.
+In the “Dictionaries and input methods” tab of the setup tool one can
+see that two dictionaries have been added, “hi_IN” for Hindi and
+“en_GB” for British English.  And two input methods have been added,
+“hi-itrans” to type Hindi and “NoIme” (“Native Keyboard”, i.e. direct
+keyboard input) to type English (How to setup dictionaries and input
+methods is described [here](#2_1).).
 
-1. If more than one input/transliteration method is enabled, the typed keys will be transliterated with each transliteration method and each transliteration result will be looked up in the enabled dictionaries and in the user database of previous input.
+There are several input methods available for Hindi: “hi-inscript2”,
+“hi-inscript”, “hi-phonetic”, “hi-itrans”, “hi-remington”,
+“hi-typewriter”, and “hi-vedmata”. In this example we use “hi-itrans”
+but one could also use any of the others or even several at once.
 
-    In this screenshot, Hindi with the “hi-itrans” method and English are used at the same time. One can see that the input “guru” has been typed. The candidate list shows both “गुरु” (which is the transliteration of the input “guru” using the “hi-itrans” method) and the English candidates “guru” and “gurus”. This is because both the transliteration “गुरु” and the direct input “guru” are used at the same time to lookup candidates.
+If more than one input/transliteration method is enabled, the typed
+keys will be transliterated with each transliteration method and each
+transliteration result will be looked up in the enabled dictionaries
+and in the user database of previous input.
 
-    Actually it is quite rare to see candidates from both Hindi and English in a candidate list. The English word “guru” is a loanword from Hindi, it is just the transliteration of the original Hindi word into the Latin Alphabet. Therefore, the “Itrans” method transliterates it back to Hindi and one gets a match in Hindi as well. Most English words do not transliterate to anything meaningful in Hindi and most Hindi input does not match anything in English either. The example “guru” is carefully chosen to show how ibus-typing-booster handles multilingual input.
+In this video, Hindi with the “hi-itrans” method and English are used
+at the same time. One can see in the preedit that the input “guru” has
+been typed. The candidate list shows both “गुरु” (which is the
+transliteration of the input “guru” using the “hi-itrans” method) and
+the English candidates “guru” and “gurus”. This is because both the
+transliteration “गुरु” and the direct input “guru” are used at the same
+time to lookup candidates.
 
-    In practice, as soon as one has typed a few characters, one will most of the time see only candidates from either Hindi or English, not both. I.e. the language one is typing in at the moment is automatically detected because one very rarely gets matches in the other language.
+Actually it is quite rare to see candidates from both Hindi and
+English in a candidate list. The English word “guru” is a loanword
+from Hindi, it is just the transliteration of the original Hindi word
+into the Latin Alphabet. Therefore, the “Itrans” method transliterates
+it back to Hindi and one gets a match in Hindi as well. Most English
+words do not transliterate to anything meaningful in Hindi and most
+Hindi input does not match anything in English either. The example
+“guru” is carefully chosen to show how ibus-typing-booster handles
+multilingual input.
 
-    This automatic language detection works even better after ibus-typing-booster has learned from user input for a while. Because ibus-typing-booster remembers the context where the user has typed words. 
+In practice, as soon as one has typed a few characters, one will most
+of the time see only candidates from either Hindi or English, not
+both. I.e. the language one is typing in at the moment is
+automatically detected because one very rarely gets matches in the
+other language.
 
-1.  This screenshot uses the same setup, Hindi (“hi-itrans”) and English. The same input “guru” has been typed and the matches shown in the candidate list are the same.
+This automatic language detection works even better after
+ibus-typing-booster has learned from user input for a while. Because
+ibus-typing-booster remembers the context where the user has typed
+words.
 
-    The difference is that the “hi-itrans” transliteration “गुरु” is shown in the preëdit this time (preëdit is the current input, i.e. the underlined text next to the candidate list). And in the status line above the first candidate, one can see “hi-itrans”.
+Whether the preëdit (i.e. the current input, i.e. the underlined text
+next to the candidate list) shows Latin alphabet “guru” or Devanagari
+“गुरु” depends on which input method currently has highest priority,
+“NoIme” (which produces Latin alphabet) or “hi-itrans” which produces
+Devanagari.
 
-    The reason for this difference is that for this screenshot, the input method to be used for the preëdit has been switched to “hi-itrans”.
+Switching the priority of the input methods is sometimes necessary
+because one may not want to select any of the displayed candidates but
+commit the preëdit instead by typing a space. For example, if the
+preëdit is currently in English mode (direct input mode) and one types
+a Hindi word, it may happen that one does not get any matches in the
+candidate list, although the word has been typed correctly. This may
+happen if this word can neither be found in the dictionary nor in the
+user database because this word has never been typed before by the
+user. Nevertheless it may be a correct Hindi word of course and the
+user may want to commit it. But if the preëdit is currently in English
+mode, typing space would commit the Latin characters. So one has to
+switch the preëdit to “hi-itrans” first and then commit by typing a
+space.
 
-    Switching the input method for the preëdit is sometimes necessary because one may not want to select any of the displayed candidates but commit the preëdit instead by typing a space. For example, if the preëdit is currently in English mode (direct input mode) and one types a Hindi word, it may happen that one does not get any matches in the candidate list, although the word has been typed correctly. This may happen if this word can neither be found in the dictionary nor in the user database because this word has never been typed before by the user. Nevertheless it may be a correct Hindi word of course and the user may want to commit it. But if the preëdit is currently in English mode, typing space would commit the Latin characters. So one has to switch the preëdit to “hi-itrans” first and then commit by typing a space.
+The default key bindings to switch the input method for the preëdit
+are “Control+Down” and “Control+up”. With only two input methods as in
+the current example, both key bindings behave the same. But there can
+be more than two input methods and then “Control+Down” moves in one
+direction through the list of input methods and “Control+Up” in the
+other direction (see [key and mouse bindings](#3)).
 
-    The key bindings to switch the input method for the preëdit are “Control+Down” and “Control+up”. With only two input methods as in the current example, both key bindings behave the same. But there can be more than two input methods and then “Control+Down” moves in one direction through the list of input methods and “Control+Up” in the other direction (see [key and mouse bindings](#3)).
+As an alternative to using the “Control+Down” and “Control+Up” key
+bindings, the priorities of input methods can also be switched using
+the menu in the gnome panel or using the setup tool.
 
-1.  This screenshot shows the options tab of the setup tool and the options for ibus-typing-booster in the input method menu of the gnome panel.
+In the setup tool, there is an option “☐ Remember last used preëdit
+input method”. If that option is disabled, ibus-typing-booster will
+always start using the input method with the highest priority as set
+in the setup tool for the preëdit when you log in to your desktop and
+use ibus-typing-booster for the first time after the login. In that
+case, changing the input method priorities with the key bindings or
+the Gnome panel has no permanent effect, it will not change the order
+in the setup tool in that case. With this option disabled, only
+changing the priorities directly in the setup tool has a permanent
+effect.
 
-    As an alternative to using the “Control+Down” and “Control+Up” key bindings, the input method for the preëdit can also be switched using the menu in the gnome panel.
-
-    In the setup tool, there is an option “Remember last used preëdit input method”. If that option is disabled, ibus-typing-booster will always start using the input method with the highest priority in the setup tool for the preëdit when you log in to your desktop and use ibus-typing-booster for the first time after the login. In our setup shown in the previous screenshot, the input method with the highest priority is “NoIme”, i.e. direct keyboard input. If the option to remember the last used preëdit input method is enabled, ibus-typing-booster will change the priority in the setup when you switch to a different input method for the preëdit using the key bindings or the Gnome panel. That way, ibus-typing-booster will remember which input method was used last when you logged out of your desktop and start using that the next time you log in.
+But if the option “☑️ Remember last used preëdit input method” is
+enabled, ibus-typing-booster will change the priority in the setup
+when you switch to a different input method for the preëdit using the
+key bindings or the Gnome panel. In the video it can be seen that the
+order of the input methods in the setup tool changes even though the
+“↑” and “↓” buttons in the setup tools have not been clicked but the
+key bindings or the menu in the Gnome panel have been used and this
+had an effect on the order shown in the setup tool because the option
+“☑️ Remember last used preëdit input method” was enabled during the
+video.
 
 
 ###### 4_2
