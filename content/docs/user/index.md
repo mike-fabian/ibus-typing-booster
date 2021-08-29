@@ -1568,18 +1568,38 @@ Anything in Unicode except normal letters is possible.
 ###### 5_7
 ### Unicode code point input
 
-![gnome-emoji-code-point-100](/images/user-docs/gnome-emoji-code-point-100.png)
+{{< video label="Unicode code point input" webm="/videos/user-docs/unicode-code-point-input.webm" >}}
 
-The emoji mode of ibus-typing-booster can also be used to input any character using hexadezimal Unicode code points.
+This example video shows how the “☑️ Unicode symbols and emoji predictions” feature
+of Typing Booster can also be used to input characters using their Unicode code point.
 
-To be able to input hexadecimal numbers without problems, the option “Use digits as select keys” should be switched off in the setup tool. If this option were switched on, typing a digit like “1” would select the candidate with the number one instead of inserting the digit “1” into the preëdit.
+As Unicode code points are hexadecimal numbers, it is first necessary
+to make it possible to input digits at all into the preëdit. By
+default, both the digits on the regular keyboard layout **and** the
+digits on the keypad are bound to commands committing candidates. So
+if you want to be able to type digits into the preëdit, you have to
+remove either the regular digits or the keypad digits from the
+keybindings, whichever you prefer.
 
-If the option “Use digits as select keys” is switched off, one can still use the F1-F9 keys to select candidates (and of course one can select candidates with the mouse).
+You can also remove both from the keybindings if you want, that still
+leaves you with the F1 … F9 keys to commit candidates.
 
-In this example, “100” has been typed and one gets the matches 💯 U+1F4AF HUNDRED POINTS SYMBOL which is an emoji which has been matched because of its alternative name “100” and Ā U+0100 LATIN CAPITAL LETTER A WITH MACRON which has been matched because it has the Unicode code point 100 (hexadezimal).
+The video shows the key bindings tab of the setup tool and one can see
+that there are no KP_1 … KP_9 keys used in the commands to commit
+candidates.  So the keypad with NumLock on can be used to type digits
+into the preëdit.
 
-It is quite rare that typing a Unicode code point matches an emoji as well. There will never be many candidates when typing Unicode code points. 
+First “100” is typed in the video. It matches 💯 U+1F4AF HUNDRED
+POINTS SYMBOL which is an emoji which has been matched because of its
+alternative name “100” **and** Ā U+0100 LATIN CAPITAL LETTER A WITH
+MACRON which has been matched because it has the Unicode code point
+100 (hexadecimal). It is quite rare that typing a Unicode code point
+matches an emoji as well. There will never be many candidates when
+typing Unicode code points.
 
+Then “2019” is typed which matches ’ U+2019 RIGHT SINGLE QUOTATION MARK.
+
+Then “20B9” is typed which matches ₹ U+20B9 INDIAN RUPEE SIGN.
 
 ###### 5_8
 ### Quickly toggling emoji mode on and off
