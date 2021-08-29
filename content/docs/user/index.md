@@ -1534,18 +1534,35 @@ shown with their Japanese names.
 ###### 5_6
 ### Unicode symbol input
 
-Using the emoji input mode of ibus-typing-booster, one cannot only input emoji but other Unicode symbols as well. Actually almost all Unicode characters can be typed this way (Except most letters, because letters can usually typed much faster directly).
+{{< video label="Unicode symbol input" webm="/videos/user-docs/unicode-symbol-input.webm" >}}
 
-![gnome-emoji-integral](/images/user-docs/gnome-emoji-integral.png)
+This video example shows how arbitrary Unicode symbols and characters
+can be input with Typing Booster.
 
-1. This screenshot shows how the emoji mode can be used to input mathematical symbols. You can also combine keywords using “_”, i.e. type something like “volume_integral” to get more specific matches (see [Emoji input using multiple keywords](#5_3)).
+Using the emoji input mode of Typing Booster, one cannot only input
+emoji but other Unicode symbols as well. Actually almost all Unicode
+characters can be typed this way (Except most letters, because letters
+can usually typed much faster directly, allowing to search for normal
+letters this way would make the search needlessly slow).
 
-![gnome-emoji-pop-directional-formatting](/images/user-docs/gnome-emoji-pop-directional-formatting.png)
+In the video, first “integral” is typed and one gets several
+mathematical characters for integrals in the candidate list and can
+scroll down to the next pages for more.
 
-1.  Here the emoji mode is used to input something like U+202C POP DIRECTIONAL FORMATTING or U+2069 POP DIRECTIONAL ISOLATE. These are formatting characters used in scripts which use right-to-left direction.
+If one wants to be more specific, one can also type more than one keyword
+by combining keywords with “_” (see [Emoji input using multiple keywords](#5_3)).
+For example one can type something like “volume_integral” to get more specific matches
+for integral signs related to volume integrals.
 
-![gnome-emoji-radical-turtle](/images/user-docs/gnome-emoji-radical-turtle.png)
-1.  Here the emoji mode is used to input the CJK radical “turtle”. Anything in Unicode except letters is possible.
+Next “pop_direc” is typed which matches U+202C POP DIRECTIONAL
+FORMATTING and U+2069 POP DIRECTIONAL ISOLATE. These are invisible
+formatting characters used in scripts which use right-to-left
+direction, for example in Arabic script.
+
+Finally “radical_turtle” is typed which finds the CJK radicals for
+“turtle”.
+
+Anything in Unicode except normal letters is possible.
 
 
 ###### 5_7
