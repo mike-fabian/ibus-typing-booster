@@ -1372,7 +1372,7 @@ use emoji only occasionally.
 ###### 5_2
 ## Emoji input fuzzy matching
 
-![gnome-emoji-english-fuzzy-castle](/images/user-docs/gnome-emoji-english-fuzzy-castle.png)
+{{< video label="Emoji input fuzzy matchint" webm="/videos/user-docs/emoji-english-fuzzy-castle.webm" >}}
 
 Ibus-typing-booster tries to match the emoji names in a fuzzy way, in
 many cases you will get a match even if your input contains spelling
