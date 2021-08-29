@@ -1604,19 +1604,35 @@ Then “20B9” is typed which matches ₹ U+20B9 INDIAN RUPEE SIGN.
 ###### 5_8
 ### Quickly toggling emoji mode on and off
 
-![open-gnome-emoji-trailing-underscore](/images/user-docs/open-gnome-emoji-trailing-underscore.png)
+{{< video label="Quickly toggling emoji mode on and off" webm="/videos/user-docs/emoji-quick-toggle.webm" >}}
 
- When emoji mode is on, finding the matching candidates can be considerably slower compared to when emoji mode is switched off. Especially if the emoji lookup is done in multiple languages at the same time. In this case, there may be a noticeable delay until the candidate list pops up.
+When “☑️ Unicode symbols and emoji predictions” is enabled, finding
+matching candidates can be considerably slower compared to when emoji
+mode is switched off. Especially if the emoji lookup is done in
+multiple languages at the same time. In this case, there may be a
+noticeable delay until the candidate list pops up.
 
-Therefore, one may want to switch emoji mode off for maximum speed.
+Therefore, “☐ Unicode symbols and emoji predictions” is disabled by default
+to show normal word predictions with maximum speed.
 
-Always opening the setup tool to switch emoji mode on if one occasionally wants to input an emoji would be inconvenient. Therefore, emoji mode can also be toggled with a mouse binding (Control+Button3 anywhere in the candidate list toogles emoji mode between on and off) or with a key binding (AltGr+F6 toggles emoji mode between on and off).
+Always opening the setup tool to switch emoji mode on if one
+occasionally wants to input an emoji would be inconvenient. Therefore,
+emoji mode can also be toggled with a mouse binding (Control+Button3
+anywhere in the candidate list toogles emoji mode between on and off)
+or with a key binding (AltGr+F6 toggles emoji mode between on and
+off).
 
-But there is an even faster way to temporarily switch on emoji mode just for the current lookup.
+But there is an even faster way to temporarily switch on emoji mode
+just for the current lookup.
 
-In this screenshot we can see that emoji mode is off because the box to the left of the smiley above the candidate list is not checked (and one can see that “Unicode symbols and emoji predictions” is not checked in the setup tool either).
+In the example video we can see that even if emoji mode is off (which
+can be seen in the options tab of the setup tool also shown in the
+video) we get emoji matches by appending keywords with “_”.  “camel_”,
+“frog_”, “India_” match emoji even though “☐ Unicode symbols and emoji
+predictions” is disabled.
 
-Nevertheless we get matches for two camel emoji. This is because the input typed is “camel_” which contains a trailing underscore. Trailing and leading underscores temporarily turn on emoji mode just for this one lookup.
+Using these trailing underscores “_” temporarily turns on emoji search
+just for this one lookup.
 
 
 ###### 5_9
