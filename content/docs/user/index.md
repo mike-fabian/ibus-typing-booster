@@ -10,7 +10,7 @@ date: 2021-08-29
     * [When using the Gnome3 desktop](#1_1)
     * [When using older Gnome3 desktops like in Ubuntu 21.04](#1_2)
     * [When using other desktops than Gnome3](#1_3)
-    * [When using the Unity desktop on Ubuntu](#1_4)
+    * [When using the Unity desktop on Ubuntu 16.04](#1_4)
 1. [Setup](#2)
     * [Basic setup for your language](#2_1)
     * [More advanced options](#2_2)
