@@ -1762,39 +1762,55 @@ For more about emoji fonts and colour, see [Emoji fonts](#5_10).
 ###### 5_10
 ### Emoji fonts
 
-![gnome-noto-color-emoji-grayscale](/images/user-docs/gnome-noto-color-emoji-grayscale.png)
+Good fonts to display emoji:
 
-1.  The font which currently works best for emoji on Linux is the “Noto Color Emoji” font. On Fedora, this font is in the “google-noto-emoji-fonts” package, on openSUSE in the “noto-coloremoji-fonts” package. If the version packaged for your distribution is not up-to-date, you can get the most recent version here: https://www.google.com/get/noto/. (Search for “Noto Color Emoji”).
+* “Noto Color Emoji”:
 
-    Without the experimental Cairo patch (See [Showing emoji in colour](#5_10_1)), the “Noto Color Emoji” font will render in grayscale, but even that looks much better already than fonts wich render only in black and white.
+    * On Fedora, this font is in the `google-noto-emoji-fonts` package
 
-    “emoji-picker” will use the “Noto Color Emoji” font by default, if it is installed. To make sure that “Noto Color Emoji” is also your preferred font for emoji in other programs and not only in “emoji-picker”, you can use a fontconfig setup as in this [example fonts.conf](/other-files/fonts.conf) file. file and store the file at `~/.config/fontconfig/fonts.conf`.
+    * On openSUSE in the `noto-coloremoji-fonts` package
 
-    If you do not yet have a `~/.config/fontconfig/fonts`.conf file, create one with the contents as above. If you already have such a file but no “alias” settings exist, add the part defining the aliases. Or if you already have “alias” settings in your `~/.config/fontconfig/fonts.conf` file, edit them.
+    * If the version packaged for your distribution is not up-to-date,
+      you can get the most recent version here:
+      https://www.google.com/get/noto/. (Search for “Noto Color
+      Emoji”).
 
-    “DejaVu Serif”, “DejaVu Sans”, and “DejaVu Sans Mono”, are just examples, put your favorite fonts for Latin and other scripts below the fonts for emoji in the `~/.config/fontconfig/fonts.conf` setup file.
+* “Twemoji”:
 
-    If you don’t give a good emoji font like “Noto Color Emoji” the highest priority in the fontconfig setup, the highest priority font may be a font which already has some emoji. For example, “DejaVu Sans” already has many emoji, but not all. I.e. when “DejaVu Sans” has highest priority and is tried first, all emoji which are available in “DejaVu Sans” are shown using that font and only those which are missing in “DejaVu Sans” are shown using the “Noto Color Emoji” font. That means you will see the some emoji displayed using the “DejaVu Sans” font and some using the “Noto Color Emoji” font which will look very inconsistent. It looks nicer using “Noto Color Emoji” for all emoji which can be achieved by giving “Noto Color Emoji” the highest priority.
+    * Homepage: https://twemoji.twitter.com/
+    
+    * On Fedora, this font is in the `twitter-twemoji-fonts` package.
 
-    The Latin characters in some emoji fonts may not be really suitable to be used as a default Latin font. For example, the “Symbola” font has Latin glyphs with serifs. Nevertheless, putting an emoji font like “Noto Color Emoji”, “Emoji One”, or “Symbola” with top priority into the `~/.config/fontconfig/fonts.conf` setup file does usually not cause any problems.
+* “Symbola”:
 
-    Your desktop, editor, terminal, … will most likely set some other font anyway. For example, the Gnome3 desktop usually sets the “Cantarell” font, i.e. Gnome3 will still use “Cantarell” even if you give the “Symbola” font highest priority in `~/.config/fontconfig/fonts.conf` (You can change the font used for the Gnome3 desktop with `gnome-tweak-tool`. The same is true for most other desktops and programs.
+    * Created by George Douros. The latest version (Version 13.00,
+      released March 25, 2020)is available here:
+      https://dn-works.com/ufas/
 
-![gnome-emoji-one-grayscale](/images/user-docs/gnome-emoji-one-grayscale.png)
+    * Distributions usually have packages old version of this font as
+    the recent versions have a licence which does not allow to include
+    it in distributions: “Free use of UFAS is strictly limited to
+    personal use.”
 
-1.  Another good emoji font is the “Emoji One” font which you can get from here: https://github.com/Ranks/emojione/blob/master/assets/fonts/emojione-android.ttf
+    * “Symbola” is not really an emoji font, it is a black and white
+    font (not even grayscale) and it doesn’t support emoji sequences,
+    i.e. emoji which consist of mor than one character. That means
+    emoji sequences like 👷 (👷 U+1F477 CONSTRUCTION WORKER, U+200D
+    ZERO WIDTH JOINER, ♀ U+2640 FEMALE SIGN) will display as several
+    glyphs and not as a single glyph showing a female construction
+    worker. The same problem occurs for the flag sequences, the family
+    emoji and all other emoji sequences. And the skin tones modifiers
+    are shown as seperate characters following the emoji they are
+    modifying as well.  Nevertheless “Symbola” is a phantastic font
+    and I absolutely recommend to download its latest version and
+    unpack the Symbola.zip file in your `~/.fonts/` directory. It has
+    very beautifully drawn symbols, for example mathematical symbols
+    which are just fine in black and white and which most other fonts
+    don’t have.
 
-    The “Emoji One” font also looks very nice but currently supports fewer emoji sequences than the latest version of “Noto Color Emoji”. For example, the emoji sequence 👷‍♀ (👷 U+1F477 CONSTRUCTION WORKER, U+200D ZERO WIDTH JOINER, ZERO WIDTH JOINER, ♀ U+2640 FEMALE SIGN) will display as several glyphs and not as a single glyph showing a female construction worker. But many emoji sequences do work with this font. And many (but not all) skin tone modifiers work as well with the “Emoji One” font.
+The following video shows the above mentioned fonts used in “emoji-picker”:
 
-    If you want to make “Emoji One” your preferred font for emoji in all programs and not only in “emoji-picker”, you can edit the fontconfig setup from this example [example fonts.conf](/other-files/fonts.conf) file and move the lines containing “Emoji One” above the lines containing “Noto Color Emoji”. And then store the file at `~/.config/fontconfig/fonts.conf`.
-
-![gnome-symbola](/images/user-docs/gnome-symbola.png)
-
-1.  A good black and white font for emoji is the [Symbola](http://users.teilar.gr/~g1951d/) font by George Douros. Best use the latest version, at least the version updated for Unicode 9.0.0. On Fedora and openSUSE, this font is in the “gdouros-symbola-fonts” package. Fedora 25 already has the Unicode 9.0.0 version. If you are using Fedora 24, better update that font.
-
-    But even the latest version of the black and white “Symbola” font does not support any emoji which consist of more than one character. That means emoji sequences like 👷‍♀ (👷 U+1F477 CONSTRUCTION WORKER, U+200D ZERO WIDTH JOINER, ZERO WIDTH JOINER, ♀ U+2640 FEMALE SIGN) will display as several glyphs and not as a single glyph showing a female construction worker. The same problem occurs for the flag sequences, the family emoji and all other emoji sequences. And the skin tones modifiers are shown as seperate characters following the emoji they are modifying as well.
-
-    If you want to make “Symbola” your preferred font for emoji in all programs and not only in “emoji-picker”, you can edit the fontconfig setup from this example [example fonts.conf](/other-files/fonts.conf) file and move the lines containing “Symbola” above the lines containing “Noto Color Emoji”. And then store the file at `~/.config/fontconfig/fonts.conf`. 
+{{< video label="Emoji font selection in emoji-picker" webm="/videos/user-docs/emoji-font-selection-in-emoji-picker.webm" >}}
 
 ###### 5_10_1
 #### <span style="color:red">Historic:</span> Showing emoji in colour
