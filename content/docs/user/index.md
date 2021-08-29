@@ -1,6 +1,6 @@
 ---
 title: User Documentation
-date: 2021-08-28
+date: 2021-08-29
 ---
 
 ## Contents
@@ -1287,21 +1287,49 @@ video.
 
 ![Example-using-Spanish-and-English-at-the-same-time](/images/user-docs/Example-using-Spanish-and-English-at-the-same-time.gif)
 
-1.  This example shows using ibus-typing-booster for Spanish and English at the same time. In the setup tool, dictionaries for Spanish (“es_ES”) and British English (“en_GB”) have been added. And two input methods “t-latn-pre” and “NoIme” (Native Keyboard, i.e. direct keyboard input) have been added. Actually using only “NoIme” would have been enough, both Spanish and English can be typed just fine with direct keyboard input with a suitable keyboard layout. Adding “t-latin-pre” makes it possible to type for example “~n” to get an “ñ”, i.e. using “t-latn-pre” one can type accented Latin charaters even when using a US English keyboard layout for example. But that is completely optional, one can use only “NoIme”, only “t-latn-pre”, or both, depending on what keyboard layout one wants to use and what is most convenient.
+This animated gif shows using ibus-typing-booster for Spanish and
+English at the same time. In the setup tool, dictionaries for Spanish
+(“es_ES”) and British English (“en_GB”) have been added. And two input
+methods “t-latn-pre” and “NoIme” (Native Keyboard, i.e. direct
+keyboard input) have been added. Actually using only “NoIme” would
+have been enough, both Spanish and English can be typed just fine with
+direct keyboard input with a suitable keyboard layout. Adding
+“t-latin-pre” makes it possible to type for example “~n” to get an
+“ñ”, i.e. using “t-latn-pre” one can type accented Latin charaters
+even when using a US English keyboard layout for example. But that is
+completely optional, one can use only “NoIme”, only “t-latn-pre”, or
+both, depending on what keyboard layout one wants to use and what is
+most convenient.
 
-    The input typed is “Yo soy un h” where the last character, the “h” is still in preëdit (marked by the underline) and we see some suggestions how the word starting with “h” might continue.
+When the input typed is “Yo soy un h” where the last character, the
+“h” is still in preëdit (marked by the underline) and we see some
+suggestions how the word starting with “h” might continue.
 
-    The suggestions shown are Spanish words, not English. This is because ibus-typing-booster has already been trained by similar user input before. Therefore, it already knows which word starting with “h” the user usually types following “soy un”. And these are Spanish words. 
+The suggestions shown for this input are Spanish words, not
+English. This is because ibus-typing-booster has already been trained
+by similar user input before. Therefore, it already knows which word
+starting with “h” the user usually types following “soy un”. And these
+are Spanish words.
 
-1.  This screenshot shows how the user continues to type some English after finishing the Spanish sentence.
+In the second line of the editor the user now types some English after
+finishing the Spanish sentence.
 
-    The input typed is now “I am h” and again the last character “h” is still in preëdit and some suggestions for words starting with “h” are shown.
+The input typed is now “I am h” and again the last character “h” is
+still in preëdit and some suggestions for words starting with “h” are
+shown.
 
-    This time, the suggestions for words starting with “h” are English, not Spanish. This is because the words typed before were “I am” and the user apparently types the suggested English words frequently after “I am”.
+This time, the suggestions for words starting with “h” are English,
+not Spanish. This is because the words typed before were “I am” and
+the user apparently types the suggested English words frequently after
+“I am”.
 
-    So ibus-typing-booster can often automatically show candidates from the correct language according to the context. This makes it quite efficient to type multiple languages.
+So ibus-typing-booster can often automatically show candidates from
+the correct language according to the context. This makes it quite
+efficient to type multiple languages.
 
-    One can add as many dictionaries as one likes, but adding more dictionaries than one really needs slows the system down unnessarily and reduces the prediction accuracy.
+One can add as many dictionaries as one likes, but adding more
+dictionaries than one really needs slows the system down unnessarily
+and reduces the prediction accuracy.
 
 
 ###### 5
