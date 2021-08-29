@@ -1388,6 +1388,8 @@ EUROPEAN CASTLE).
 
 {{< video label="Emoji input using multiple keywords" webm="/videos/user-docs/emoji-english-multiple-keywords-castle-japanese.webm" >}}
 
+This video shows how to use multiple keywords to search for emoji.
+
 If typing a single word does not give you the emoji you are looking
 for, you can type as many keywords as you like and concatenate them
 with underscores “_” (Or spaces “ ”. Typing space usually commits the
@@ -1402,17 +1404,30 @@ CASTLE).
 ###### 5_4
 ### Looking up related emoji
 
-![](/images/user-docs/gnome-emoji-english-related-japanese-castle.png)
+{{< video label="Looking up related emoji" webm="/videos/user-docs/related-emoji.webm" >}}
 
-It is also possible to look up related emoji which may not have matched the typed text well but are related to the emoji shown because they share keywords or categories.
+It is also possible to look up related emoji which may not have
+matched the typed text well but are related to the emoji shown because
+they share keywords or categories.
 
-To show related emoji, click an emoji shown in the candidate list with the right mouse button (see Mouse bindings).
+To show related emoji, click an emoji shown in the candidate list with
+the right mouse button (see [Mouse bindings](#3_3)).
 
-Or, if you prefer to use a key binding instead of the mouse: select an emoji in the candidate list by moving up or down in the candidate list using the arrow-up/arrow-down keys or the page-up/page-down keys until the desired emoji is highlighted, then press AltGr+F12.
+Or, if you prefer to use a key binding instead of the mouse: select an
+emoji in the candidate list by moving up or down in the candidate list
+using the arrow-up/arrow-down keys or the page-up/page-down keys until
+the desired emoji is highlighted, then press AltGr+F12.
 
-AltGr+F12 is the key binding to “lookup related stuff”. If you press this while no candidate is selected, a lookup of related stuff for the preëdit is tried. In this case, the preëdit contains the text “castle” which is not an emoji. So no related emoji will be found. But if NLTK is used, related words for “castle” may be shown, see Using NLTK to find related words.
+AltGr+F12 is the default key binding for the command
+“lookup_related”. If you press this while no candidate is selected, a
+lookup of related stuff for the preëdit is tried. In this case, the
+preëdit contains the text “liz” which is not an emoji. So no
+related emoji will be found. But if NLTK is used, related words for
+“liz” may be shown, see [Using NLTK to find related words](#6).
 
-As seen in the screen shot, looking up related emoji for the “Japanese castle” gives us emoji for other types of castles or buildings. The lists of words shown in square brackets are the keywords the shown emoji have in common with the originally selected emoji. By typing the “Escape” key, one can go back to the original list.
+As seen in the screen shot, looking up related emoji for the “lizard”
+gives us emoji for other types of reptiles and related animals. By
+typing the “Escape” key, one can go back to the original list.
 
 
 ###### 5_5
