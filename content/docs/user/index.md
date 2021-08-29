@@ -28,6 +28,16 @@ date: 2021-08-29
     * [Example using Hindi and English at the same time](#4_1)
     * [Example using Spanish and English at the same time](#4_2)
 1. [Compose support (About dead keys and the Compose key)](#5)
+    * [“Dead keys”](#5_1)
+    * [The “Compose” key](#5_2)
+    * [Customizing compose sequences](#5_3)
+    * [Special “Compose” features in Typing Booster](#5_4)
+        * [Why Typing Booster has its own “Compose” implementation](#5_4_1)
+        * [Automatically add “missing” dead key sequences](#5_4_2)
+        * [Fallbacks for “missing” keypad sequences](#5_4_3)
+        * [Do not just discard undefined sequences](#5_4_4)
+        * [Show possible completions of compose sequences](#5_4_5)
+        * [Optional colour for the compose preëdit](#5_4_6)
 1. [Unicode symbols and emoji predictions](#6)
     * [Emoji input](#6_1)
     * [Emoji input fuzzy matching](#6_2)
@@ -1335,7 +1345,285 @@ and reduces the prediction accuracy.
 ###### 5
 ## Compose support (About dead keys and the Compose key)
 
-<span style="color:red">🚧🏗️👷🏽‍♀️ coming soon … ⏳</span>
+“Compose sequences” are sequences of keys containing so
+called “dead keys” or containing the “Compose key” or even both
+and usually one or more “normal” keys.
+
+###### 5_1
+## “Dead keys”
+
+Some keyboard layout have so called [“dead
+keys”](https://en.wikipedia.org/wiki/Dead_key). They are called “dead”
+because in traditional implementations like in the Compose sequence
+implementation of
+[Xorg](https://en.wikipedia.org/wiki/X_Window_System) they seem to do
+nothing at first, i.e. they appear to be “dead”. For example when
+typing a dead “~”, nothing appears to happen but when a base character
+like “a” is typed next, an “ã” appears. Some more examples:
+
+| Dead key sequence | Result |
+| --- | --- |
+| `~` `a` | ã  U+00E3 LATIN SMALL LETTER A WITH TILDE |
+| `~` `^` `a` | ẫ U+1EAB LATIN SMALL LETTER A WITH CIRCUMFLEX AND TILDE |
+| `~` `␠` | ~ U+007E TILDE|
+| `~` `~` | ~ U+007E TILDE |
+| `~` `@` | undefined sequence, i.e. no result |
+
+But on several modern implementations, these keys are not so “dead”
+anymore, the behaviour is improved and something helpful is actually
+displayed while typing such sequences.
+
+* Xorg:
+
+  When using the Compose support of Xorg, for example when typing into
+  an Xorg application like xterm (i.e. **not** a Gtk application)
+  while **not** having configured any input methods systems like IBus,
+  these dead keys are really “dead”, nothing is displayed until the
+  dead key sequence is finished. Any illegal/impossible/undefined
+  sequence is silently discarded, i.e. when typing something like dead
+  `~` `@`, nothing at all happens.
+
+* MacOS:
+
+  Typing a dead `~` shows the `~` and highlights it, when the key for
+  the base characters is pressed, the final character appears
+
+* Gtk, IBus, Typing Booster:
+
+  Similar to MacOS, these 3 implementations show the dead keys,
+  highlight them, let the user correct unfinished sequences with
+  BackSpace, and may do more helpful stuff with undefined sequences
+  then just silently discarding them.
+
+Some keyboard layouts make extensive use of dead keys. For example the
+[British or American international
+layouts](https://en.wikipedia.org/wiki/British_and_American_keyboards#International_or_extended_keyboard_layouts). In
+Linux (or FreeBSD, ...) you can select the American international
+layout by selecting “English (US, international with dead keys)” in
+the setup of your desktop.
+
+The “English (US, international with dead keys)” layout looks like this:
+
+![“English (US, international with dead keys)”](/images/user-docs/800px-KB_US-International.svg.png)
+
+(Picture from [Wikipedia](https://en.wikipedia.org/wiki/British_and_American_keyboards#/media/File:KB_US-International.svg))
+
+The keys marked in red on this layout are “dead” keys.
+
+Of course that “English (US, international with dead keys)” is not the only layout with dead keys, many national layouts use dead keys as well.
+
+###### 5_2
+## The “Compose” key
+
+Wikipedia explains nicely what a [Compose
+key](https://en.wikipedia.org/wiki/Compose_key) is. It is often also
+called “multi key” (because the keysym defined in
+`/usr/include/X11/keysymdef.h` is `XK_Multi_key`).
+
+Some examples for Compose sequences involving a Compose key:
+
+| Compose sequence involving Compose key | Result |
+| --- | --- |
+| `compose` `~` `n` | ñ  U+00F1 LATIN SMALL LETTER N WITH TILDE |
+| `compose` `o` `c` | © U+00A9 COPYRIGHT SIGN |
+| `compose` `1` `2` | ½ U+00BD VULGAR FRACTION ONE HALF |
+| `compose` `-` `-` `-` | — U+2014 EM DASH |
+| `compose` `n` `o` `n` `s` `e` `n` `s` `e` | probably undefined sequence, i.e. no result |
+
+The default Compose key on Xorg seems to be `Shift`+`AltGr`, but it maybe
+on some other key depending on you keyboard layout.
+
+In some desktops, for example in Gnome3, you can also easily choose which key to use
+for Compose in the system settings. The following example video shows
+how to do that in Gnome3 on Fedora 34:
+
+{{< video label="Selecting the Compose key in Gnome3 on Fedora 34" webm="/videos/user-docs/selecting-compose-key-in-gnome3-fedora34.webm" >}}
+
+“Dead key sequences” and “Compose sequences” are basically the same
+thing as far as Xorg, Gtk, IBus, and Typing Booster are concerned.
+
+* Xorg:
+
+  Displays nothing while the sequence is typed, only the final
+  result is displayed. Undefined sequences are silently discarded.
+
+* Gtk, IBus, Typing Booster:
+
+  Try to be more helpful and display a Compose or dead key
+  sequence in progress, allow fixing sequences with BackSpace, do
+  something more useful with undefined sequences and more …
+
+The official [“ISO keyboard symbol for "Compose Character"”](https://en.wikipedia.org/wiki/File:ISOIEC-9995-7-015--ISO-7000-2021--Symbol-for-Compose-Character.svg)
+according to this [Wikipedia article](https://en.wikipedia.org/wiki/Compose_key)
+is ⎄ U+2384 COMPOSITION SYMBOL.
+
+The compose sequence implementations in Gtk, IBus, and Typing Booster
+used to display that symbol, for example when `compose` `~` was typed,
+<span style="text-decoration: underline">`⎄~`</span> was displayed
+indicating the unfinished compose sequence.
+
+Unfortunately some people found `⎄` to big, wide and distracting 😭.
+Therefore, Gtk changed to display `compose` as <span
+style="text-decoration: underline">`·`</span> (· U+00B7 MIDDLE
+DOT). **And**, a leading <span style="text-decoration:
+underline">`·`</span> is only displayed until the next character has
+been typed, then **vanishes!**
+
+Examples how Gtk now displays compose and dead key sequences:
+
+| Typed compose sequence | Display |
+| --- | --- |
+| `compose` | <span style="text-decoration:underline">`·`</span> |
+| `compose` `-` | <span style="text-decoration:underline">`-`</span> |
+| `compose` `-` `-` | <span style="text-decoration:underline">`--`</span> |
+| `compose` `-` `-` `-` | — (sequence finished, — U+2014 EM DASH is displayed) |
+| `dead ~` | <span style="text-decoration:underline">`~`</span> |
+| `dead ~` `compose` | <span style="text-decoration:underline">`~·`</span> |
+| `dead ~` `compose` `b` | <span style="text-decoration:underline">`~·b`</span> |
+| `dead ~` `compose` `b` `a` | ẵ (sequence finished, ẵ LATIN SMALL LETTER A WITH BREVE AND TILDE is displayed. Yes, that sequence actually exists in `/usr/share/X11/locale/en_US.UTF-8/Compose` 😁) |
+
+IBus and Typing Booster then also changed and followed the way Gtk
+displays this to have a consistent user experience across these 3
+compose sequence implementations.
+
+###### 5_3
+## Customizing compose sequences
+
+The [man page for
+compose](https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html)
+(Also available as `man compose` on most distributions) explains from
+which file the default compose sequence definitions are read and how a
+user can override it with his own compose sequence definitions.
+
+This man page says:
+
+> The compose file is searched for in  the following order:
+>
+> - If  the  environment  variable $XCOMPOSEFILE is set, its value is used as the
+>   name of the Compose file.
+>
+> - If the user's home directory has a file named .XCompose, it is  used  as  the
+>   Compose file.
+>
+> - The  system  provided compose file is used by mapping the locale to a compose
+>   file from the list in /usr/share/X11/locale/compose.dir.
+
+For example, when `XCOMPOSEFILE` is not set, `~/.XCompose` does not
+exist either and the current locale is `cs_CZ.UTF-8`, then the system
+default compose sequence definitions are read from
+`/usr/share/X11/locale/cs_CZ.UTF-8/Compose`.  When the current locale
+is something like `xx_YY.UTF-8` where no
+`/usr/share/X11/locale/xx_YY.UTF-8/Compose` file specific to that
+locale exists, the US English one
+`/usr/share/X11/locale/en_US.UTF-8/Compose` is read (These fallbacks
+are defined in `/usr/share/X11/locale/compose.dir`).
+
+
+However, if the users home directory has a file named `~/.XCompose` or
+if the environment variable `XCOMPOSEFILE` is set, **only** that file
+is used **instead** of the system default.
+
+For example, a user Compose file `~/.XCompose` could look like this:
+
+```
+# %H  expands to the user's home directory (the $HOME environment variable)
+# %L  expands to the name of the locale specific Compose file (i.e.,
+#     "/usr/share/X11/locale/<localename>/Compose")
+# %S  expands to the name of the system directory for Compose files (i.e.,
+#     "/usr/share/X11/locale")
+
+include "%L"
+
+<Multi_key> <underscore> <period> <e> : "ė̄" # U+0117 LATIN SMALL LETTER E WITH DOT ABOVE U+0304 COMBINING MACRON
+<Multi_key> <m> <o> <n> <k> <e> <y> <s> : "🙈🙉🙊"
+<Multi_key> <m> <o> <u> <s> <e> : "🐁" # U+1F401 MOUSE
+<Multi_key> <m> <o> <u> <s> <e> : "🐭" # U+1F42D MOUSE FACE
+```
+
+The `include "%L"` includes the system compose file for the current locale,
+the lines below add user defined sequences. If an identical sequence
+are defined again with a different result, the last definition “wins”.
+I.e. of the two lines defining `<Multi_key> <m> <o> <u> <s> <e>`,
+the second line overrides the first one.
+
+As the user definitions are all **below** the `include "%L"` which
+reads the system default, the user definitions override any system
+default sequences in case there is a conflict.
+
+If the `include "%L"` were not there in `~/.XCompose`, **only** the
+user definitions in `~/.XCompose` would be available!
+
+###### 5_4
+## Special “Compose” features in Typing Booster
+
+This section explains some details about the “Compose” implementation
+in Typing Booster which are a bit special.
+
+###### 5_4_1
+## Why Typing Booster has its own “Compose” implementation
+
+Typing Booster needed its own implementation of compose sequences
+because it needs full control about such compose sequences **inside**
+an already open preëdit.
+
+For example, if one wants to type the German word “grün” and starts
+typing “gr”, there is a preëdit displayed as
+
+<span style="text-decoration:underline">`gr|`</span>
+
+where <span
+style="text-decoration:underline">`|`</span> indicates the cursor
+position. Typing Booster then searches for completions. When a compose
+sequence like `compose` `"` `u` is typed in this situation to get an
+“ü”, the current preëdit must not be committed, but the compose
+actually needs to add to the preëdit. That means a kind of preëdit
+inside the preëdit is needed. While that compose sequence is typed it
+displays:
+
+<span style="text-decoration:underline">`gr·|`</span>
+<span style="text-decoration:underline">`gr"|`</span>
+<span style="text-decoration:underline">`grü|`</span>
+
+Now “grü” is still in preëdit and Typing Booster can continue to
+search for completions of “grü”.
+
+One could even go back with Left (arrow-left) in the preëdit and
+insert a compose sequence there. For example, if one types “grn” and
+then Left, the preëdit displays
+
+<span style="text-decoration:underline">`gr|n`</span>
+
+Typing `compose` `"` `u` then displays:
+
+<span style="text-decoration:underline">`gr·|n`</span>
+<span style="text-decoration:underline">`gr"|n`</span>
+<span style="text-decoration:underline">`grü|n`</span>
+
+Now “grün” is in the preëdit and Typing Booster can continue to search
+for completions.
+
+###### 5_4_2
+## Automatically add “missing” dead key sequences
+
+<span style="color:red">🚧🏗️👷🏽‍♀️ under construction</span>
+
+###### 5_4_3
+## Fallbacks for “missing” keypad sequences
+
+<span style="color:red">🚧🏗️👷🏽‍♀️ under construction</span>
+
+###### 5_4_4
+## Do not just discard undefined sequences
+<span style="color:red">🚧🏗️👷🏽‍♀️ under construction</span>
+
+###### 5_4_5
+## Show possible completions of compose sequences
+<span style="color:red">🚧🏗️👷🏽‍♀️ under construction</span>
+
+###### 5_4_6
+## Optional colour for the compose preëdit
+
+<span style="color:red">🚧🏗️👷🏽‍♀️ under construction</span>
 
 ###### 6
 ## Unicode symbols and emoji predictions
