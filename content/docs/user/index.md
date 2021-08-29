@@ -1452,22 +1452,33 @@ lock emoji.
 ###### 5_5_2
 #### Emoji input using Hindi and English
 
-![gnome-emoji-namaste](/images/user-docs/gnome-emoji-namaste.png)
+{{< video label="Emoji input using Hindi and English" webm="/videos/user-docs/emoji-hindi-english.webm" >}}
 
-1.  This screenshot shows another example using Hindi as the main language and English as a second language.
+This example video shows using Hindi and English to lookup emoji.
 
-    The input typed is “namaste”, with the transliteration method “hi-itrans” this is transliterated to “नमस्ते” which is currently shown in the preëdit (For details about multilingual input and how to switch the script shown in the preëdit, see Multilingual input).
+Both languages are configured in the setup tool (See: [Basic setup for
+your language](#2_1))
 
-    Both “namaste” and “नमस्ते” are used to search for matching words and emoji. Only “नमस्ते” matches an emoji which can be seen in the candidate list (🙏 U+1F64F PERSON WITH FOLDED HANDS).
+First “namaste” is typed. The transliteration method “hi-itrans”
+transliterates this to “नमस्ते” which is shown in the preëdit because
+the “hi-itrans” input method is at the highest priority (For details
+about multilingual input and how to switch the script shown in the
+preëdit, see [Multilingual input](#4)).
 
-![gnome-emoji-namaste-related](/images/user-docs/gnome-emoji-namaste-related.png)
+Both “namaste” and “नमस्ते” are then used to search for matching words
+and emoji. Only “नमस्ते” matches an emoji which can be seen in the
+candidate list (🙏 U+1F64F PERSON WITH FOLDED HANDS and skin tone
+variants of this emoji).
 
-1.  Of course one can lookup related emoji here as well.
+Second, “folded_hands” is typed. As the highest priority input method
+is still “hi-itrans”, this is shown as nonsensical Devanagari in the
+preëdit.  But both this nonsensical Devanagari and “folded_hands” are
+used to find matches and “folded_hands” finds 🙏 and skin tone
+variants as well.
 
-    Here we have clicked with the right mouse button on the 🙏 U+1F64F PERSON WITH FOLDED HANDS emoji and get emoji which are related because they share keywords in Hindi.
-
-    And of course, because of the multilingual Hindi+English setup there will be emoji which are related because they share keywords in English further down in the candidate list. 
-
+Typing Control+Down then changes the priority of the input methods and
+puts “NoIME” on top which reveals that “folded_hands” was actually
+typed as this is now shown in the preëdit.
 
 ###### 5_5_3
 #### Emoji input using Japanese
