@@ -27,23 +27,24 @@ date: 2021-08-29
 1. [Multilingual input](#4)
     * [Example using Hindi and English at the same time](#4_1)
     * [Example using Spanish and English at the same time](#4_2)
-1. [Unicode symbols and emoji predictions](#5)
-    * [Emoji input](#5_1)
-    * [Emoji input fuzzy matching](#5_2)
-    * [Emoji input using multiple keywords](#5_3)
-    * [Looking up related emoji](#5_4)
-    * [Multilingual emoji input](#5_5)
-        * [Emoji input using German and English](#5_5_1)
-        * [Emoji input using Hindi and English](#5_5_2)
-        * [Emoji input using Japanese](#5_5_3)
-    * [Unicode symbol input](#5_6)
-    * [Unicode code point input](#5_7)
-    * [Quickly toggling emoji mode on and off](#5_8)
-    * [Emoji picker](#5_9)
-    * [Emoji fonts](#5_10)
-        * [<span style="color:red">Historic:</span> Showing emoji in colour](#5_10_1)
-1. [Using NLTK to find related words](#6)
-1. [Speech recognition](#7)
+1. [Compose support (About dead keys and the Compose key)](#5)
+1. [Unicode symbols and emoji predictions](#6)
+    * [Emoji input](#6_1)
+    * [Emoji input fuzzy matching](#6_2)
+    * [Emoji input using multiple keywords](#6_3)
+    * [Looking up related emoji](#6_4)
+    * [Multilingual emoji input](#6_5)
+        * [Emoji input using German and English](#6_5_1)
+        * [Emoji input using Hindi and English](#6_5_2)
+        * [Emoji input using Japanese](#6_5_3)
+    * [Unicode symbol input](#6_6)
+    * [Unicode code point input](#6_7)
+    * [Quickly toggling emoji mode on and off](#6_8)
+    * [Emoji picker](#6_9)
+    * [Emoji fonts](#6_10)
+        * [<span style="color:red">Historic:</span> Showing emoji in colour](#6_10_1)
+1. [Using NLTK to find related words](#7)
+1. [Speech recognition](#8)
 ---------
 
 ###### 0
@@ -912,7 +913,7 @@ select keys” is enabled.
   <td>
     Bound by default to the command “toggle_emoji_prediction”.
     <br>
-    Toggle the <a href="#5">emoji and Unicode
+    Toggle the <a href="#6">emoji and Unicode
       symbol</a> prediction on/off. This has the same result as using
       the setup tool to change this.
   </td>
@@ -946,8 +947,8 @@ select keys” is enabled.
   <td>
     Bound by default to the command “lookup_related”.
     <br>
-    Shows related <a href="#5">emoji and Unicode symbols</a>
-    or <a href="#6">related words</a>
+    Shows related <a href="#6">emoji and Unicode symbols</a>
+    or <a href="#7">related words</a>
   </td>
 </tr>
 <tr>
@@ -1022,15 +1023,15 @@ When more than one input method at the same time is used, the following addition
 <tr>
   <td>Button 3 click on a candidate</td>
   <td>
-    Show related <a href="#5">emoji and Unicode symbols</a>
-    or <a href="#6">related words</a> (Same as
+    Show related <a href="#6">emoji and Unicode symbols</a>
+    or <a href="#7">related words</a> (Same as
     AltGr+F12).
   </td>
 </tr>
 <tr>
   <td>Control + Button 3 click anywhere in the candidate list</td>
   <td>
-    Toggle the <a href="#5">emoji and Unicode
+    Toggle the <a href="#6">emoji and Unicode
       symbol</a> prediction on/off (Same as AltGr+F6). This has the same
       result as using the setup tool to change this.
   </td>
@@ -1331,8 +1332,12 @@ One can add as many dictionaries as one likes, but adding more
 dictionaries than one really needs slows the system down unnessarily
 and reduces the prediction accuracy.
 
-
 ###### 5
+## Compose support (About dead keys and the Compose key)
+
+<span style="color:red">🚧🏗️👷🏽‍♀️ coming soon … ⏳</span>
+
+###### 6
 ## Unicode symbols and emoji predictions
 
 ibus-typing-booster supports prediction of emoji and Unicode symbols as well (actually almost all Unicode characters except letters can be typed this way). This can be enabled or disabled with the option “Emoji predictions” in the setup tool which is on by default.
@@ -1340,7 +1345,7 @@ ibus-typing-booster supports prediction of emoji and Unicode symbols as well (ac
 To make all emoji display correctly, you need good fonts which contain all emoji, see Emoji fonts for details about available fonts and font setup.
 
 
-###### 5_1
+###### 6_1
 ### Emoji input
 
 {{< video label="Typing Emoji in English with Emoji option on" webm="/videos/user-docs/emoji-english-emoji-option-on.webm" >}}
@@ -1366,10 +1371,10 @@ time.
 
 As having the “☑️ Unicode symbols and emoji predictions” option enabled
 slows down the search for predictions, you might want to look
-at [Quickly toggling emoji mode on and off](#5_8), especially if you
+at [Quickly toggling emoji mode on and off](#6_8), especially if you
 use emoji only occasionally.
 
-###### 5_2
+###### 6_2
 ## Emoji input fuzzy matching
 
 {{< video label="Emoji input fuzzy matching" webm="/videos/user-docs/emoji-english-fuzzy-castle.webm" >}}
@@ -1383,7 +1388,7 @@ spelled correctly. Nevertheless, one gets the match 🏰 (U+1F3F0
 EUROPEAN CASTLE).
 
 
-###### 5_3
+###### 6_3
 ### Emoji input using multiple keywords
 
 {{< video label="Emoji input using multiple keywords" webm="/videos/user-docs/emoji-english-multiple-keywords-castle-japanese.webm" >}}
@@ -1401,7 +1406,7 @@ EUROPEAN CASTLE). If this is not what we wanted we can type
 “castle_japanese” (or “japanese_castle”) to get 🏯 (U+1F3EF JAPANESE
 CASTLE).
 
-###### 5_4
+###### 6_4
 ### Looking up related emoji
 
 {{< video label="Looking up related emoji" webm="/videos/user-docs/related-emoji.webm" >}}
@@ -1423,17 +1428,17 @@ AltGr+F12 is the default key binding for the command
 lookup of related stuff for the preëdit is tried. In this case, the
 preëdit contains the text “liz” which is not an emoji. So no
 related emoji will be found. But if NLTK is used, related words for
-“liz” may be shown, see [Using NLTK to find related words](#6).
+“liz” may be shown, see [Using NLTK to find related words](#7).
 
 As seen in the screen shot, looking up related emoji for the “lizard”
 gives us emoji for other types of reptiles and related animals. By
 typing the “Escape” key, one can go back to the original list.
 
 
-###### 5_5
+###### 6_5
 ### Multilingual emoji input
 
-###### 5_5_1
+###### 6_5_1
 #### Emoji input using German and English
 
 {{< video label="Emoji input using German and English" webm="/videos/user-docs/emoji-german-english.webm" >}}
@@ -1449,7 +1454,7 @@ typing “Schloss” not only matches 🏰 (U+1F3F0 EUROPEAN CASTLE) and 🏯
 (U+1F3EF JAPANESE CASTLE but also 🔓 (U+1F513 OPEN LOCK) and other
 lock emoji.
 
-###### 5_5_2
+###### 6_5_2
 #### Emoji input using Hindi and English
 
 {{< video label="Emoji input using Hindi and English" webm="/videos/user-docs/emoji-hindi-english.webm" >}}
@@ -1480,7 +1485,7 @@ Typing Control+Down then changes the priority of the input methods and
 puts “NoIME” on top which reveals that “folded_hands” was actually
 typed as this is now shown in the preëdit.
 
-###### 5_5_3
+###### 6_5_3
 #### Emoji input using Japanese
 
 {{< video label="Emoji input using Japanese" webm="/videos/user-docs/emoji-japanese.webm" >}}
@@ -1531,7 +1536,7 @@ highest priority in the setup tool. When the Japanese dictionary had
 the highest priority in the setup tool, the related emoji would be
 shown with their Japanese names.
 
-###### 5_6
+###### 6_6
 ### Unicode symbol input
 
 {{< video label="Unicode symbol input" webm="/videos/user-docs/unicode-symbol-input.webm" >}}
@@ -1550,7 +1555,7 @@ mathematical characters for integrals in the candidate list and can
 scroll down to the next pages for more.
 
 If one wants to be more specific, one can also type more than one keyword
-by combining keywords with “_” (see [Emoji input using multiple keywords](#5_3)).
+by combining keywords with “_” (see [Emoji input using multiple keywords](#6_3)).
 For example one can type something like “volume_integral” to get more specific matches
 for integral signs related to volume integrals.
 
@@ -1565,7 +1570,7 @@ Finally “radical_turtle” is typed which finds the CJK radicals for
 Anything in Unicode except normal letters is possible.
 
 
-###### 5_7
+###### 6_7
 ### Unicode code point input
 
 {{< video label="Unicode code point input" webm="/videos/user-docs/unicode-code-point-input.webm" >}}
@@ -1601,7 +1606,7 @@ Then “2019” is typed which matches ’ U+2019 RIGHT SINGLE QUOTATION MARK.
 
 Then “20B9” is typed which matches ₹ U+20B9 INDIAN RUPEE SIGN.
 
-###### 5_8
+###### 6_8
 ### Quickly toggling emoji mode on and off
 
 {{< video label="Quickly toggling emoji mode on and off" webm="/videos/user-docs/emoji-quick-toggle.webm" >}}
@@ -1635,7 +1640,7 @@ Using these trailing underscores “_” temporarily turns on emoji search
 just for this one lookup.
 
 
-###### 5_9
+###### 6_9
 ### Emoji picker
 
 {{< video label="Emoji picker" webm="/videos/user-docs/emoji-picker.webm" >}}
@@ -1757,9 +1762,9 @@ emoji-picker --font "Noto Color Emoji" --fontsize 32
 The command line font options override the font options in the
 graphical user interface.
 
-For more about emoji fonts and colour, see [Emoji fonts](#5_10).
+For more about emoji fonts and colour, see [Emoji fonts](#6_10).
 
-###### 5_10
+###### 6_10
 ### Emoji fonts
 
 Good fonts to display emoji:
@@ -1812,7 +1817,7 @@ The following video shows the above mentioned fonts used in “emoji-picker”:
 
 {{< video label="Emoji font selection in emoji-picker" webm="/videos/user-docs/emoji-font-selection-in-emoji-picker.webm" >}}
 
-###### 5_10_1
+###### 6_10_1
 #### <span style="color:red">Historic:</span> Showing emoji in colour
 
 Once upon a time it was not possible at all to display colourful emoji
@@ -1833,7 +1838,7 @@ the “Noto Color Emoji” the highest priority.
 Luckily these times are long gone and as far as I know all recent
 Linux distributions display nice, colourful emoji by default now.
 
-###### 6
+###### 7
 ## Using NLTK to find related words
 
 ![gnome-castle-word-related](/images/user-docs/gnome-castle-word-related.png)
@@ -1854,7 +1859,7 @@ A download tool for NLTK data as seen in the next screen shot opens, select the 
 
 ![nltk-wordnet-corpus-download](/images/user-docs/nltk-wordnet-corpus-download.png)
 
-###### 7
+###### 8
 ## Speech recognition
 
 ibus-typing-booster supports speech recognition using the [Google Cloud Speech-to-Text](https://cloud.google.com/speech-to-text/) service which [supports 120 languages](https://cloud.google.com/speech-to-text/docs/languages).
