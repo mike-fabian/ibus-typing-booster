@@ -1372,7 +1372,7 @@ use emoji only occasionally.
 ###### 5_2
 ## Emoji input fuzzy matching
 
-{{< video label="Emoji input fuzzy matchint" webm="/videos/user-docs/emoji-english-fuzzy-castle.webm" >}}
+{{< video label="Emoji input fuzzy matching" webm="/videos/user-docs/emoji-english-fuzzy-castle.webm" >}}
 
 Ibus-typing-booster tries to match the emoji names in a fuzzy way, in
 many cases you will get a match even if your input contains spelling
@@ -1386,10 +1386,18 @@ EUROPEAN CASTLE).
 ###### 5_3
 ### Emoji input using multiple keywords
 
-![](/images/user-docs/gnome-emoji-english-multiple-keywords-castle-japanese.png)
-If typing a single word does not give you the emoji you are looking for, you can type as many keywords as you like and concatenate them with underscores “_” (Or spaces “ ”. Typing space usually commits the preëdit, but you can insert literal spaces into the preëdit by typing AltGr+Space).
+{{< video label="Emoji input using multiple keywords" webm="/videos/user-docs/emoji-english-multiple-keywords-castle-japanese.webm" >}}
 
-In a previous example, typing “castle” gave us the match 🏰 (U+1F3F0 EUROPEAN CASTLE). If this is not what we wanted we can type “castle_japanese” (or “japanese_castle”) to get 🏯 (U+1F3EF JAPANESE CASTLE). Even “castlejapanese” and “japanesecastle” work in this case, but separating the search words with underscores or spaces makes it easier for the matching algorithm. 
+If typing a single word does not give you the emoji you are looking
+for, you can type as many keywords as you like and concatenate them
+with underscores “_” (Or spaces “ ”. Typing space usually commits the
+preëdit, but you can insert literal spaces into the preëdit by typing
+AltGr+Space).
+
+In a previous example, typing “castle” gave us the match 🏰 (U+1F3F0
+EUROPEAN CASTLE). If this is not what we wanted we can type
+“castle_japanese” (or “japanese_castle”) to get 🏯 (U+1F3EF JAPANESE
+CASTLE).
 
 ###### 5_4
 ### Looking up related emoji
