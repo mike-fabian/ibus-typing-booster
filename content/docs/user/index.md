@@ -41,7 +41,7 @@ date: 2021-08-29
     * [Quickly toggling emoji mode on and off](#5_8)
     * [Emoji picker](#5_9)
     * [Emoji fonts](#5_10)
-        * [Showing emoji in colour](#5_10_1)
+        * [<span style="color:red">Historic:</span> Showing emoji in colour](#5_10_1)
 1. [Using NLTK to find related words](#6)
 1. [Speech recognition](#7)
 ---------
@@ -1797,24 +1797,25 @@ For more about emoji fonts and colour, see [Emoji fonts](#5_10).
     If you want to make “Symbola” your preferred font for emoji in all programs and not only in “emoji-picker”, you can edit the fontconfig setup from this example [example fonts.conf](/other-files/fonts.conf) file and move the lines containing “Symbola” above the lines containing “Noto Color Emoji”. And then store the file at `~/.config/fontconfig/fonts.conf`. 
 
 ###### 5_10_1
-#### Showing emoji in colour
+#### <span style="color:red">Historic:</span> Showing emoji in colour
 
-To show emoji in colour, an [experimental patch for cairo](http://www.hadess.net/2016/05/blog-backlog-post-1-emoji.html) and a suitable font is needed.
+Once upon a time it was not possible at all to display colourful emoji
+using Linux.  The best one could get using color emoji fonts like
+“Noto Color Emoji” were grayscale emojis which looked like this:
 
-Cairo packages for Fedora containing that experimental patch are available [here](https://copr.fedorainfracloud.org/coprs/hadess/emoji/).
+![gnome-noto-color-emoji-grayscale](/images/user-docs/gnome-noto-color-emoji-grayscale.png)
 
-![gnome-noto-color-emoji-color](/images/user-docs/gnome-noto-color-emoji-color.png)
+Later one could use an experimental patch for Cairo which enabled
+colour display of emojis.
 
-1. One font which can be used to show emoji in colour is “Noto Color Emoji” (“NotoColorEmoji.ttf”). On Fedora, this font is in the “google-noto-emoji-fonts” package. Or you can get it [here](https://www.google.com/get/noto/). 
+On top of that Cairo patch one usually also had to fiddle with the
+fontconfig font setup to give a good colour emoji font highest
+priority, i.e. create a file `~/.config/fontconfig/fonts.conf` with
+contents like [example fonts.conf](/other-files/fonts.conf) to give
+the “Noto Color Emoji” the highest priority.
 
-![gnome-emoji-one-color](/images/user-docs/gnome-emoji-one-color.png)
-1.  Another font which has emoji in colour is the “Emoji One” font (“emojione-android.ttf”). It is available [here](https://github.com/Ranks/emojione/raw/master/assets/fonts/emojione-android.ttf). If you want a Fedora package you can also get this font from [here](https://copr.fedorainfracloud.org/coprs/hadess/emoji/).
-
-    To make the colour emoji fonts your default emoji fonts, you can use a fontconfig setup file `~/.config/fontconfig/fonts.conf` as in this [example fonts.conf](#) file and edit it a bit.
-
-    This [example fonts.conf](/other-files/fonts.conf) file gives “Noto Color Emoji” the highest priority. emoji font. If you prefer the “Emoji One” font, edit that file and put “Emoji One” at the topmost priority. Store the file as `~/.config/fontconfig/fonts.conf`.
-
-    Without the hacks to show emoji in colour, the emoji support in ibus-typing-booster will still work but the emoji will be displayed in grayscale (when using “Noto Color Emoji” or “Emoji One”) or black and white (when using other fonts).
+Luckily these times are long gone and as far as I know all recent
+Linux distributions display nice, colourful emoji by default now.
 
 ###### 6
 ## Using NLTK to find related words
