@@ -1435,20 +1435,19 @@ typing the “Escape” key, one can go back to the original list.
 
 ###### 5_5_1
 #### Emoji input using German and English
-![gnome-emoji-german-english-schloss-europa](/images/user-docs/gnome-emoji-german-english-schloss-europa.png)
 
-1. In this example, the German typing booster is used with English as a second language. Therefore, one can use both the English word “castle” or the German word for castle “Schloss” to find castle emoji.
+{{< video label="Emoji input using German and English" webm="/videos/user-docs/emoji-german-english.webm" >}}
 
-    In the screen shot, the input typed is “Schloss_europa” and the emoji matches shown are 🏰 (U+1F3F0 EUROPEAN CASTLE), 🔒 (U+1F512 LOCK), and 🏯 (U+1F3EF JAPANESE CASTLE).
+In this example video, Typing Booster is used with dictionaries setup for British English
+and German in the setup tool.
 
-    The German word “Schloss” can mean “castle” as well as “lock”. Therefore, the padlock emoji 🔒 (U+1F512 LOCK) matches as well.
+Therefore, one can use both the English word “castle” or the German
+word for castle “Schloss” to find castle emoji.
 
-![gnome-emoji-german-english-geschlossenes-schloss-related](/images/user-docs/gnome-emoji-german-english-geschlossenes-schloss-related.png)
-1.  Let’s look up related emoji by clicking the candidate number 5, “Geschlossenes Schloss” 🔒 (U+1F512 LOCK) with the right mouse button (See Looking up related Emoji).
-
-We get several variants of padlock emoji, the European castle and some closed mailboxes because “geschlossen” in German can also mean “closed”.
-
-By the way, the related emoji shown in the screen shot have German names and keywords. That’s because this example uses German as the main language for ibus-typing-booster with English as a second language (See Multilingual input). When looking up related emoji, they are shown in all languages ibus-typing-booster is setup to use, but they are sorted in the order of preference of the languages. So German is on top because it is the main language. To see emoji whose English keywords are related to the emoji 🔒 (U+1F512 LOCK), one can scroll further down in the candidate list. These are of course labelled in English.
+The German word “Schloss” means “castle” but also “lock”. Therefore,
+typing “Schloss” not only matches 🏰 (U+1F3F0 EUROPEAN CASTLE) and 🏯
+(U+1F3EF JAPANESE CASTLE but also 🔓 (U+1F513 OPEN LOCK) and other
+lock emoji.
 
 ###### 5_5_2
 #### Emoji input using Hindi and English
