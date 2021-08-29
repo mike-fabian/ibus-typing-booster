@@ -1483,33 +1483,53 @@ typed as this is now shown in the preëdit.
 ###### 5_5_3
 #### Emoji input using Japanese
 
-To be able to input emoji using their Japanese names, one first needs to install the packages `m17n-db-extras`, `m17n-lib-anthy` and `anthy` on Fedora. On Fedora 28 one can do this using the command:
+{{< video label="Emoji input using Japanese" webm="/videos/user-docs/emoji-japanese.webm" >}}
+
+This video shows that emoji can be searched using Japanese keywords as
+well.
+
+To be able to input emoji using their Japanese names, one first needs
+to install the packages `m17n-db-extras`, `m17n-lib-anthy` and `anthy`
+on Fedora. On Fedora 34 one can do this using the command:
 
 `sudo dnf install m17n-db-extras m17n-lib-anthy`
 
-This should work on other distributions as well, but the package names may be different. You need the package which contains the `/usr/share/m17n/ja-anthy.mim` file and other packages which are required to make the ja-anthy input method of the m17n library work.
+This should work on other distributions as well, but the package names
+may be different. You need the package which contains the
+`/usr/share/m17n/ja-anthy.mim` file and other packages which are
+required to make the ja-anthy input method of the m17n library work.
 
-Then one needs to add the “ja-anthy” input method and the Japanese dictionary (“ja_JP”) to the setup of ibus typing booster. For details how to add input methods and dictionaries see [Multilingual input](#4).
+Then one needs to add the “ja-anthy” input method and the Japanese
+dictionary (“ja_JP”) to the setup of ibus typing booster. For details
+how to add input methods and dictionaries see [Basic setup for your
+language](#2_1).
 
-![gnome-emoji-katatsumuri](/images/user-docs/gnome-emoji-katatsumuri.png)
+Now one can type emoji keywords using Japanese. For example when
+typing “katasumuri” (which means “snail”), one gets the emoji 🐌
+(U+1F40C SNAIL) listed as a candidate.
 
-1. Now one can type emoji keywords using Japanese. For example when typing “katasumuri” (which means “snail”), one gets the emoji 🐌 (U+1F40C SNAIL) listed as a candidate.
+It is labelled in the candidate list in Japanese hiragana syllables,
+i.e. “かたつむり”. The Latin “katatsumuri” was transliterated by the
+ja-anthy input method to “かたつむり” and this was then looked up in
+the dictionaries. The Latin text “katatsumuri” was of course looked up
+as well but of course produced no match.
 
-    It is labelled in the candidate list in Japanese hiragana syllables, i.e. “かたつむり”. The Latin “katatsumuri” was transliterated by the ja-anthy input method to “かたつむり” and this was then looked up in the dictionaries. The Latin text “katatsumuri” was of course looked up as well but of course produced no match.
+Switching the priority of the input methods with “Control+Down” or
+“Control+Up” toogles the display of the preedit between Latin letters
+“katatsumuri” (when “NoIME” has highest priority) and Hiragana letters
+“かたつむり” (when “ja-anthy” has highest priority).  This makes no
+difference for the matches, still both “katatsumuri” and “かたつむり”
+are looked up in the dictionaries. Only when committing the preëdit
+now by typing a space, it would matter because it would commit the
+Hiragana “かたつむり” or the Latin “katatsumuri” as seen in the moment
+when the space is typed.
 
-![gnome-emoji-katatsumuri-preedit-hiragana](/images/user-docs/gnome-emoji-katatsumuri-preedit-hiragana.png)
-
-1.  Here we have switched the input method used in the preëdit to ja-anthy with “Control+Down” or “Control+Up”.
-
-    That makes no difference for the matches, still both “katatsumuri” and “かたつむり” are looked up in the dictionaries. Only when committing the preëdit now by typing a space, we would commit the hiragana “かたつむり”.
-
-![gnome-emoji-katatsumuri-related](/images/user-docs/gnome-emoji-katatsumuri-related.png)
-
-1.  Of course we can lookup related emoji here as well.
-
-    Here we have clicked with the right mouse button on the 🐌 (U+1F40C SNAIL) emoji and get emoji which are related because they share keywords in hiragana (They share the keyword “むし” = “mushi” which means insect.
-
-    And of course, because of the multilingual Japanese+English setup there will be emoji which are related because they share keywords in English further down in the candidate list.
+Near the end of the video, a right click with the mouse on the snail
+in the candidate list shows related emoji. These related emoji are
+labelled with English names because the British English dictionary has
+highest priority in the setup tool. When the Japanese dictionary had
+the highest priority in the setup tool, the related emoji would be
+shown with their Japanese names.
 
 ###### 5_6
 ### Unicode symbol input
