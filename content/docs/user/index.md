@@ -1,6 +1,6 @@
 ---
 title: User Documentation
-date: 2021-08-29
+date: 2021-08-30
 ---
 
 ## Contents
@@ -1781,6 +1781,8 @@ Typing Booster tries to be helpful and offers a reasonable fallback.
 ###### 5_4_5
 ## Show possible completions of compose sequences
 <span style="color:red">🚧🏗️👷🏽‍♀️ under construction</span>
+
+{{< video label="Show possible completions of compose sequences" webm="/videos/user-docs/show-possible-completions-of-compose-sequences.webm" >}}
 
 ###### 5_4_6
 ## Optional colour for the compose preëdit
