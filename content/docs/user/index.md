@@ -1605,7 +1605,64 @@ for completions.
 ###### 5_4_2
 ## Automatically add “missing” dead key sequences
 
-<span style="color:red">🚧🏗️👷🏽‍♀️ under construction</span>
+To write the character ė̄ (U+0117 LATIN SMALL LETTER E WITH DOT ABOVE
+U+0304 COMBINING MACRON) which is used for writing
+[Samogitian](https://en.wikipedia.org/wiki/Samogitian_dialect#Writing_system)
+it would be perfectly natural to write `dead ¯` `dead ˙` `e` or `dead
+˙` `dead ¯` `e`.
+
+But the Compose implementations in Xorg and IBus accept only dead key sequences
+which are defined in one of the Compose files read. And there
+are no such dead key sequences defined in `/usr/share/X11/locale/en_US.UTF-8/Compose`.
+
+That means to be able to write these perfectly natural and useful
+dead key sequences, one would need to add something like
+
+```
+<dead_macron> <dead_abovedot> <e> : "ė̄ " # U+0117 LATIN SMALL LETTER E WITH DOT ABOVE U+0304 COMBINING MACRON
+<dead_abovedot> <dead_macron> <e> : "ė̄ " # U+0117 LATIN SMALL LETTER E WITH DOT ABOVE U+0304 COMBINING MACRON
+```
+
+to the users `~/.XCompose` file and/or extend the system default file
+`/usr/share/X11/locale/en_US.UTF-8/Compose`.
+
+But the character from Samogitian used as an example here is not the
+only character which could be reasonably written with dead key
+sequences but the sequences are missing in
+`/usr/share/X11/locale/en_US.UTF-8/Compose`.
+
+Adding all such sequences which might make sense for some language
+somewhere in the world would be a tedious, never ending project.
+Hundreds, if not thousands of sequences would need to be added.
+
+So why not interpret **any** dead key sequence which seems reasonable
+but is not defined in the Compose file automatically as a fallback?
+I.e. if the user types something like `dead ¯` `dead ˙` `e` and no
+definition for `<dead_macron> <dead_abovedot> <e>` is found in the
+Compose file(s) read, then interpret this “missing” sequence
+nevertheless and produce something reasonable.
+
+Typing Booster does this, if a sequence like
+
+`dead first` `dead second` … `dead last` `base character`
+
+is typed **and** no definition is found in the Compose file(s),
+**and** the Unicode category of `base character` is either “Ll
+(Letter, Lowercase)” or “Lu (Letter, Uppercase)”, then convert it into
+a combining char sequence like
+
+`base character` `combining char last` … `combining char second` `combining char first`
+
+convert this combining character sequence to [Normalization Form C
+(NFC)](https://unicode.org/reports/tr15/#Norm_Forms) and use that as
+the result of the undefined dead key sequence?
+
+That is very helpful and automatically adds a huge amount of perfectly
+reasonable dead key sequences which are “missing” in the Compose files.
+
+**If** a definition exists in the Compose file(s) read, this definition
+has **always** priority, only if no definition exists this automatic
+fallback is used.
 
 ###### 5_4_3
 ## Fallbacks for “missing” keypad sequences
