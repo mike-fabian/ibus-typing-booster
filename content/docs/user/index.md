@@ -37,6 +37,7 @@ date: 2021-08-30
         * [Fallbacks for “missing” keypad sequences](#5_4_3)
         * [Do not just discard undefined sequences](#5_4_4)
         * [Show possible completions of compose sequences](#5_4_5)
+            * [A peculiarity of Gnome3 and compose completions](#5_4_5_1)
         * [Optional colour for the compose preëdit](#5_4_6)
 1. [Unicode symbols and emoji predictions](#6)
     * [Emoji input](#6_1)
@@ -1780,14 +1781,214 @@ Typing Booster tries to be helpful and offers a reasonable fallback.
 
 ###### 5_4_5
 ## Show possible completions of compose sequences
-<span style="color:red">🚧🏗️👷🏽‍♀️ under construction</span>
 
 {{< video label="Show possible completions of compose sequences" webm="/videos/user-docs/show-possible-completions-of-compose-sequences.webm" >}}
+
+This video shows how possible completions of partially typed compose
+sequences can be displayed by typing a key bound to the command
+“enable_lookup” (by default that is ['Tab', 'ISO_Left_Tab']).
+
+First the keyboard layout “English (US, euro on 5)” is selected, then
+“Typing Booster” (Typing Booster always uses the keyboard layout which
+was used last before switching to Typing Booster!).
+
+Then `compose` `-` is typed.
+
+(Look [here](#5_2) for details about what the compose key is and to see a video showing
+how to choose a compose key in Gnome3).
+
+The compose sequence `compose` `-` is not complete yet.
+Now Tab is typed and a candidate list pops up showing how this incomplete
+compose sequence could be completed. There are 29 possible completions.
+For example, in the first page of possible completions one can see:
+
+```
+(1/29)
+1 ␠     ~       U+007E tilde
+2 (     {       U+007B left curly bracket
+3 )     }       U+007D right curly bracket
+4 +     ±       U+00B1 plus-minus sign
+5 ,     ¬       U+00AC not sign
+6 /     ⌿       U+233F apl functional symbol slash bar
+7 :     ÷       U+00F7 division sign
+8 >     →       U+2192 rightwards arrow
+9 A     Ā       U+0100 latin capital letter a with macron
+```
+
+The first column after the numbers of the candidates show the keys
+which could be typed to continue the compose sequence, the second
+column shows what the result would be and the third column shows
+detailed Unicode information about that result.
+
+So candidate number 4 tells us, that typing `compose` `-` `+` would
+produce a “±”.
+
+One can of course select a candidate as always from such a candidate
+list.  Or cancel the candidate list by typing Escape and continue
+typing.
+
+If something was selected already in the candidate list, indicated by
+the a blue background in Gnome3, the first Escape just cancels that
+selection, the second Escape then closes the candidate list. If
+nothing is selected, Escape closes the candidate list
+immediately. Continuing to type the compose sequence while nothing is
+selected in the candidate list, also closes the candidate list.
+
+Next, in the video, the Page_Down and Page_Up keys are used
+to scroll through the candidate list and see what is available
+as completion for the unfinished compose sequence `compose` `-`.
+
+Then, Escape is typed to cancel the selection and another `-` is typed.
+Now we have the still unfinished compose sequence `compose` `-` `-`.
+
+Another Tab brings up a list of possible completions for this unfinished sequence.
+
+```
+(1/3)
+1 ␠     ­       U+00AD soft hyphen
+2 -     —       U+2014 em dash
+3 .     –       U+2013 en dash
+```
+
+So typing the complete sequences `compose` `-` `-` `space` would give the “soft hyphen”,
+`compose` `-` `-` `-` the “em dash”, `compose` `-` `-` `.` the “en dash”.
+
+In the video, candidate number 2, the “em dash” is selected with the mouse.
+
+Next `compose` `'` is typed followed by Tab. We see that there are 68 possible completions.
+In the video Page_Down and Page_Up are used again to scroll through the completions,
+then the selection is cancelled with Escape, then an `A` is typed to
+complete the compose sequence: `compose` `'` `A` gives “Á”.
+
+Next, in the video, the Greek keyboard layout is chosen in the Gnome
+panel, then “Typing Booster” is chosen again. Typing Booster now uses
+a Greek keyboard layout because that was the last active one.
+
+Again `compose` `'` is typed and then Tab to show the possible completions of the
+unfinished compose sequence.
+
+Now we have 154 possible completions, much more than the 68 when we
+were using the “English (US, euro on 5)” layout! Why is that?
+To avoid always showing many hundreds of completions, Typing Booster
+shows only those which are actually possible to type on the current
+keyboard layout. If the current keyboard layout does not have a certain
+key, completions involving that key are not shown.
+
+Scrolling down to one of the last pages of candidates shows:
+
+```
+(127/154)
+…
+8 💀᾿α  ἄ       U+1F04 greek small letter alpha with psili and oxia
+…
+```
+
+I.e.  it is possible to type a “ἄ” (U+1F04 GREEK SMALL LETTER ALPHA WITH PSILI AND OXIA)
+by typing `compose` `'` `💀᾿` `α`.
+
+The `💀᾿` indicates a “dead psili”. Some keyboard layouts have both a
+dead version of a key **and** also the non-dead version of a key.  For
+example a layout may have a “tilde” **and** also a “dead tilde” key.
+It is necessary to distinguish that and press the correct key, either
+the dead or non-dead key while typing a compose sequence. Therefore,
+the candidates showing the possible compose completions make that
+distiction by showing dead keys with a `💀` prefix.  I.e. `~` is a
+normal tilde, `💀~` is a “dead” tilde.
+
+While the “English (US, euro on 5)” was used, `💀᾿` `α` was not shown
+as a possible completion for `compose` `'` because that keyboard
+layout neither has the dead psili nor the “α”.
+
+Finally, in the video, that candidate number 8, “ἄ” is selected using
+the mouse.
+
+###### 5_4_5_1
+## A peculiarity of Gnome3 and compose completions
+
+This chapter is specific to Gnome3, as far as I know none of the other
+desktops does this weird grouping of keyboard layouts in groups of 3.
+
+You may have noticed that there were more than 2 keyboard layouts in the Gnome panel.
+The Gnome panel showed:
+
+|Input source name | indicator | comment |
+|---|---|---|
+|English (US, euro on 5)     |en₁| keyboard layout|
+|Other (Typing Booster)      |🚀 | input engine|
+|Japanese (Anthy)            |あ | input engine|
+|English (India, with rupee) |en₂| keyboard layout|
+|English (US)                |en₃| keyboard layout|
+|Greek                       |gr | keyboard layout|
+
+So there were 4 keyboard layouts and 2 input engines.
+The first 3 keyboard layouts were all minor variations of
+the “English (US) layout”, they differ very little in which keys are available.
+
+The Greek layout is then the 4th layout.  Gnome3 groups layouts into
+groups of 3, i.e. the first group of layouts contains the 3 US English
+layouts, the second group only the Greek layout.
+
+This grouping of keyboard layouts in Gnome3 has the side effect that
+calling the function `Gdk.Keymap.get_for_display(display)` to find out
+which keys are available on the current layout returns all keys
+available in the current **group** of 3 layouts!
+
+I.e. when “English (US, euro on 5)” is selected, the list of keys used
+to figure out which compose sequences are possible to type with the
+current layout are actually the combined lists of keys of “English
+(US, euro on 5)” **and** “English (India, with rupee)” **and**
+“English (US)”.  Which is not a much bigger list of keys than any of
+these US English layouts on its own as the differences between these 3
+layouts are very small.  I did choose 3 almost identical layouts in
+the first group of 3 on purpose to be able to demonstrate in the video
+in the previous section how showing the compose completions is limited
+to the current layout.
+
+If I had use a setup with only these input sources:
+
+|Input source name | indicator | comment |
+|---|---|---|
+|English (US, euro on 5)     |en | keyboard layout|
+|Other (Typing Booster)      |🚀 | input engine|
+|Japanese (Anthy)            |あ | input engine|
+|Greek                       |gr | keyboard layout|
+
+both “English (US, euro on 5)” and “Greek” would have been in the
+first group of 3 keyboard layouts and no matter whether the “English
+(US, euro on 5)” or the “Greek” was active, the possible compose
+completions shown would have always included all keys from both the
+English and the Greek layout!
 
 ###### 5_4_6
 ## Optional colour for the compose preëdit
 
-<span style="color:red">🚧🏗️👷🏽‍♀️ under construction</span>
+{{< video label="Optional colour for the compose preëdit" webm="/videos/user-docs/optional-color-for-the-compose-preedit.webm" >}}
+
+The video shows how a different colour can be chosen for the compose part of the preëdit.
+
+First the option  “☐ Use color for compose preview” is switched off.
+
+Then “sur” is typed and then two times Left to move the cursor back behind
+the “s”. Then `compose` `o` `e` is typed which produces an “œ” to turn this
+into the French word “sœur”. While typing this, the preëdit changes as follows:
+
+“s” → “su” → “sur” → “s·ur” → “sour” → “sœur”
+
+Then the option “☑️ Use color for compose preview” is switch on again
+and the same typing is repeated. Now the preëdit changes as follows:
+
+“s” → “su” → “sur”
+→ “s<span style="color:#58FF33">·</span>ur”
+→ “s<span style="color:#58ff33">o</span>ur”
+→ “sœur”
+
+Without the colouring of the compose part of the preëdit, it is hard to see
+that “sour” actually still  contains an unfinished compose sequence, **especially**
+because the · (U+00B7 MIDDLE DOT) representing the `compose` key has vanished.
+
+Using colour in the compose part of the preëdit makes it much more obvious
+which part of the preëdit was already there before the compose sequence was
+started and which part is an unfinished compose sequence.
 
 ###### 6
 ## Unicode symbols and emoji predictions
