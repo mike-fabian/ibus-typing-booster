@@ -231,7 +231,10 @@ This chapter shows how to add the ibus-typing-booster input method on most deskt
 ###### 1_4
 ## When using the Unity desktop on Ubuntu 16.04
 
-![When using the Unity desktop on Ubuntu](/images/user-docs/When-using-the-Unity-desktop-on-Ubuntu.gif)
+{{<
+figure src="/images/user-docs/When-using-the-Unity-desktop-on-Ubuntu.gif"
+caption="Setup of Typing Booster on the Unity desktop of Ubuntu 16.04"
+>}}
 
 This section shows the setup of ibus-typing-booster on the “Unity” desktop of ubuntu-16.04.
 
@@ -363,7 +366,6 @@ This chapter explains more advanced options how to adapt the behaviour and the l
 
 ###### 2_2_1
 ## Enable suggestions by a key
-![enable suggestions by key](/images/user-docs/enable-suggestions-by-key.png)
 
 {{< video label="Enable suggestions by key" webm="/videos/user-docs/enable-suggestions-by-key.webm" >}}
 
@@ -1297,7 +1299,10 @@ video.
 ###### 4_2
 ### Example using Spanish and English at the same time
 
-![Example-using-Spanish-and-English-at-the-same-time](/images/user-docs/Example-using-Spanish-and-English-at-the-same-time.gif)
+{{<
+figure src="/images/user-docs/Example-using-Spanish-and-English-at-the-same-time.gif"
+caption="Using Spanish and English at the same time"
+>}}
 
 This animated gif shows using ibus-typing-booster for Spanish and
 English at the same time. In the setup tool, dictionaries for Spanish
@@ -1405,9 +1410,10 @@ the setup of your desktop.
 
 The “English (US, international with dead keys)” layout looks like this:
 
-![“English (US, international with dead keys)”](/images/user-docs/800px-KB_US-International.svg.png)
-
-(Picture from [Wikipedia](https://en.wikipedia.org/wiki/British_and_American_keyboards#/media/File:KB_US-International.svg))
+{{<
+figure src="/images/user-docs/800px-KB_US-International.svg.png"
+caption="English (US, international with dead keys) (picture from [Wikipedia](https://en.wikipedia.org/wiki/British_and_American_keyboards#/media/File:KB_US-International.svg))"
+>}}
 
 The keys marked in red on this layout are “dead” keys.
 
@@ -2477,7 +2483,10 @@ Once upon a time it was not possible at all to display colourful emoji
 using Linux.  The best one could get using color emoji fonts like
 “Noto Color Emoji” were grayscale emojis which looked like this:
 
-![gnome-noto-color-emoji-grayscale](/images/user-docs/gnome-noto-color-emoji-grayscale.png)
+{{<
+figure src="/images/user-docs/gnome-noto-color-emoji-grayscale.png"
+caption="How emoji looked like on Linux before colour became possible"
+>}}
 
 Later one could use an experimental patch for Cairo which enabled
 colour display of emojis.
@@ -2494,7 +2503,10 @@ Linux distributions display nice, colourful emoji by default now.
 ###### 7
 ## Using NLTK to find related words
 
-![gnome-castle-word-related](/images/user-docs/gnome-castle-word-related.png)
+{{<
+figure src="/images/user-docs/gnome-castle-word-related.png"
+caption="Finding related words for “castle” with NLTK"
+>}}
 
 ibus-typing-booster can also find words which are related to any of the candidates displayed. To show related words for a candidate, move up or down in the candidate list using the arrow-up/arrow-down keys or the page-up/page-down keys until the desired emoji is highlighted, then press AltGr+F12 (When AltGr+F12 is pressed before moving in the candidate list, i.e. when no candidate at all is highlighted in the candidate list, the word from the preëdit is used to lookup related words). In the screen shot shown, “castle” was typed followed by AltGr+F12 and synonyms for “castle” are displayed. hypernyms or hyponyms may also be displayed.
 
@@ -2510,7 +2522,10 @@ nltk.download()
 
 A download tool for NLTK data as seen in the next screen shot opens, select the wordnet corpus and click the “Download” button:
 
-![nltk-wordnet-corpus-download](/images/user-docs/nltk-wordnet-corpus-download.png)
+{{<
+figure src="/images/user-docs/nltk-wordnet-corpus-download.png"
+caption="Downloading the Wordnet corpus"
+>}}
 
 ###### 8
 ## Speech recognition
@@ -2547,39 +2562,95 @@ And you need to install the Python3 module of pyaudio. How to do that depends on
 
 `sudo dnf install python3-pyaudio`
 
-![gnome-set-keybinding-for-speech-recognition](/images/user-docs/gnome-set-keybinding-for-speech-recognition.png)
+Finally, after the Google setup and the software installation is done,
+you can enable speech recognition in ibus-typing-booster.
 
-1.  Finally, after the Google setup and the software installation is done, you can enable speech recognition in ibus-typing-booster.
+One necessary thing to set up is setting a key binding for speech
+recognition. By default that key binding is empty, the screen shot
+shows how to set it to something:
 
-    One necessary thing to set up is setting a key binding for speech recognition. By default that key binding is empty, the screen shot shows how to set it to something.
+{{<
+figure src="/images/user-docs/gnome-set-keybinding-for-speech-recognition.png"
+caption="Set a key binding for speech recognition"
+>}}
 
-![gnome-set-google-application-credentials-file](/images/user-docs/gnome-set-google-application-credentials-file.png)
+Another necessary thing to setup is to specify the location of the
+“Google application credentials” .json file which you should have
+downloaded above when [setting up a GCP Console
+project](https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries).
 
-1.  Another necessary thing to setup is to specify the location of the “Google application credentials” .json file which you should have downloaded above when [setting up a GCP Console project](https://cloud.google.com/speech-to-text/docs/quickstart-client-libraries).
+The screen shot shows that you can do that in the “Speech recognition” tab of the setup tool of ibus-typing-booster:
 
-    The screen shot shows that you can do that in the “Speech recognition” tab of the setup tool of ibus-typing-booster.
+{{<
+figure src="/images/user-docs/gnome-set-google-application-credentials-file.png"
+caption="Set the “Google application credentials” .json file"
+>}}
 
-![gnome-choose-language-for-speech-recognition](/images/user-docs/gnome-choose-language-for-speech-recognition.png)
+The language used for speech recognition is the language of the
+dictionary with the highest priority in ibus-typing-booster.
 
-1.  The language used for speech recognition is the language of the dictionary with the highest priority in ibus-typing-booster.
+You can see these dictionary priorities by opening the setup tool of
+ibus-typing-booster and looking at the “Dictionaries and input
+methods” tab. The dictionary at the top of the list has the highest
+priority and the language of this dictionary is used for Google
+Speech-to-Text.
 
-    You can see these dictionary priorities by opening the setup tool of ibus-typing-booster and looking at the “Dictionaries and input methods” tab. The dictionary at the top of the list has the highest priority and the language of this dictionary is used for Google Speech-to-Text.
+Here you can also see for which languages speech recognition is
+officially supported. The official list of languages supported by
+Google Cloud Speech-to-Text is
+[here](https://cloud.google.com/speech-to-text/docs/languages). In the
+ibus-typing-booster setup tool “Dictionaries and input methods” tab, a
+row for a language officially supported by Google Speech-to-Text is
+marked with “Speech recognition ✔️”, a row for a language not
+officially supported by Google Speech-to-Text is marked with “Speech
+recognition ❌”.
 
-    Here you can also see for which languages speech recognition is officially supported. The official list of languages supported by Google Cloud Speech-to-Text is [here](https://cloud.google.com/speech-to-text/docs/languages). In the ibus-typing-booster setup tool “Dictionaries and input methods” tab, a row for a language officially supported by Google Speech-to-Text is marked with “Speech recognition ✔️”, a row for a language not officially supported by Google Speech-to-Text is marked with “Speech recognition ❌”.
+In Googles official list, only “de_DE” is supported among the German
+variants. Therefore, one can see in the screen shot that “de_CH” is
+marked with “Speech recognition ❌”:
 
-    In Googles official list, only “de_DE” is supported among the German variants. Therefore, one can see in the screen shot that “de_CH” is marked with “Speech recognition ❌”.
+{{<
+figure src="/images/user-docs/gnome-choose-language-for-speech-recognition.png"
+caption="Choose the langauge for speech recognition"
+>}}
 
- But, when I tried it, I found that “de”, “de-DE”, “de-AT”, “de-CH”, “de-BE”, “de-LU” all seem to work the same and seem to recognize standard German. When using “de-CH”, it uses “ß” when spelling German words even though “ss” is used in Switzerland instead of “ß”. There seems to be no difference between using Google Speech-to-Text for all these variants of German.
+But, when I tried it, I found that “de”, “de-DE”, “de-AT”, “de-CH”,
+“de-BE”, “de-LU” all seem to work the same and seem to recognize
+standard German. When using “de-CH”, it uses “ß” when spelling German
+words even though “ss” is used in Switzerland instead of “ß”. There
+seems to be no difference between using Google Speech-to-Text for all
+these variants of German.
 
-However, for “en-GB” and “en-US”, there is a difference, the produced text uses British or American spelling depending on which one of these English variants is used.
+However, for “en-GB” and “en-US”, there is a difference, the produced
+text uses British or American spelling depending on which one of these
+English variants is used.
 
-I don’t want to disallow using something like “de-CH” for speech recognition just because it is not on the list of officially supported languages. Therefore, I allow all languages to be used for speech recognition. But when a language is not officially supported, I mark it with “Speech recognition ❌” and you can try whether it works well or not.
+I don’t want to disallow using something like “de-CH” for speech
+recognition just because it is not on the list of officially supported
+languages. Therefore, I allow all languages to be used for speech
+recognition. But when a language is not officially supported, I mark
+it with “Speech recognition ❌” and you can try whether it works well
+or not.
 
-When trying to use a language which is really not supported by Google Speech-to-Text, for example “gsw_CH” (Alemannic German in Switzerland), it seems to fall back to American English, i.e. it behaves as if speech recognition for “en_US” were used.
+When trying to use a language which is really not supported by Google
+Speech-to-Text, for example “gsw_CH” (Alemannic German in
+Switzerland), it seems to fall back to American English, i.e. it
+behaves as if speech recognition for “en_US” were used.
 
-To switch to a different language for speech recognition you don’t always have to open the setup tool, you can also use key bindings to change the highest priority dictionary, see the commands “next_dictionary” and “previous_dictionary” in the key bindings tab of the setup tool.
+To switch to a different language for speech recognition you don’t
+always have to open the setup tool, you can also use key bindings to
+change the highest priority dictionary, see the commands
+“next_dictionary” and “previous_dictionary” in the key bindings tab of
+the setup tool.
 
-And you can also change the highest priority dictionary by using the Gnome panel (or the panel of your favourite desktop) or the ibus floating panel on non-Gnome desktops.
+And you can also change the highest priority dictionary by using the
+Gnome panel (or the panel of your favourite desktop) or the ibus
+floating panel on non-Gnome desktops.
 
-To input using speech recognition, press the key which is bound to the command “speech_recognition”. A popup appears near the writing position showing something like “🎙en_GB 🇬🇧: ”. Now speak something and what Google Speech-to-Text recognizes appears in that popup which then may look like “🎙en_GB 🇬🇧: This is the text I have spoken”. When a pause is detected in the voice recording, the speech recognition is finalized and the result is inserted at the writing position.
-
+To input using speech recognition, press the key which is bound to the
+command “speech_recognition”. A popup appears near the writing
+position showing something like “🎙en_GB 🇬🇧: ”. Now speak something and
+what Google Speech-to-Text recognizes appears in that popup which then
+may look like “🎙en_GB 🇬🇧: This is the text I have spoken”. When a
+pause is detected in the voice recording, the speech recognition is
+finalized and the result is inserted at the writing position.
