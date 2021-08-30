@@ -3189,6 +3189,7 @@ class ComposeSequences:
             IBus.KEY_KP_Multiply: IBus.KEY_asterisk,
             IBus.KEY_KP_Subtract: IBus.KEY_minus,
             IBus.KEY_KP_Add: IBus.KEY_plus,
+            IBus.KEY_KP_Decimal: IBus.KEY_period,
             IBus.KEY_KP_Space: IBus.KEY_2,
         }
         # Not the exact inversion of self._keypad_keyvals because of
@@ -3208,6 +3209,7 @@ class ComposeSequences:
             IBus.KEY_asterisk: IBus.KEY_KP_Multiply,
             IBus.KEY_minus: IBus.KEY_KP_Subtract,
             IBus.KEY_plus: IBus.KEY_KP_Add,
+            IBus.KEY_period: IBus.KEY_KP_Decimal,
         }
         self._preedit_representations = {
             # See also /usr/include/X11/keysymdef.h and
