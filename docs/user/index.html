@@ -585,9 +585,12 @@ then Left, the preëdit displays</p><p><span style=text-decoration:underline><co
 for completions.</p><h6 id=5_4_2>5_4_2</h6><h2 id=automatically-add-missing-dead-key-sequences>Automatically add “missing” dead key sequences</h2><p>To write the character ė̄ (U+0117 LATIN SMALL LETTER E WITH DOT ABOVE
 U+0304 COMBINING MACRON) which is used for writing
 <a href=https://en.wikipedia.org/wiki/Samogitian_dialect#Writing_system>Samogitian</a>
-it would be perfectly natural to write <code>dead ¯</code> <code>dead ˙</code> <code>e</code> or <code>dead ˙</code> <code>dead ¯</code> <code>e</code>.</p><p>But the Compose implementations in Xorg and IBus accept only dead key sequences
-which are defined in one of the Compose files read. And there
-are no such dead key sequences defined in <code>/usr/share/X11/locale/en_US.UTF-8/Compose</code>.</p><p>That means to be able to write these perfectly natural and useful
+it would be perfectly natural to write <code>dead ¯</code> <code>dead ˙</code> <code>e</code> or <code>dead ˙</code> <code>dead ¯</code> <code>e</code>.</p><p>But the Compose implementations in Xorg and IBus accept only dead key
+sequences which are defined in one of the Compose files read. And
+there are no such dead key sequences defined in
+<code>/usr/share/X11/locale/en_US.UTF-8/Compose</code>. Therefore, the Compose
+implementations in Xorg and IBus currently just discard sequences like
+<code>dead ¯</code> <code>dead ˙</code> <code>e</code> as undefined and produce no result at all.</p><p>That means to be able to write these perfectly natural and useful
 dead key sequences, one would need to add something like</p><pre><code>&lt;dead_macron&gt; &lt;dead_abovedot&gt; &lt;e&gt; : &quot;ė̄ &quot; # U+0117 LATIN SMALL LETTER E WITH DOT ABOVE U+0304 COMBINING MACRON
 &lt;dead_abovedot&gt; &lt;dead_macron&gt; &lt;e&gt; : &quot;ė̄ &quot; # U+0117 LATIN SMALL LETTER E WITH DOT ABOVE U+0304 COMBINING MACRON
 </code></pre><p>to the users <code>~/.XCompose</code> file and/or extend the system default file
@@ -609,7 +612,67 @@ a combining char sequence like</p><p><code>base character</code> <code>combining
 the result of the undefined dead key sequence?</p><p>That is very helpful and automatically adds a huge amount of perfectly
 reasonable dead key sequences which are “missing” in the Compose files.</p><p><strong>If</strong> a definition exists in the Compose file(s) read, this definition
 has <strong>always</strong> priority, only if no definition exists this automatic
-fallback is used.</p><h6 id=5_4_3>5_4_3</h6><h2 id=fallbacks-for-missing-keypad-sequences>Fallbacks for “missing” keypad sequences</h2><p><span style=color:red>🚧🏗️👷🏽‍♀️ under construction</span></p><h6 id=5_4_4>5_4_4</h6><h2 id=do-not-just-discard-undefined-sequences>Do not just discard undefined sequences</h2><p><span style=color:red>🚧🏗️👷🏽‍♀️ under construction</span></p><h6 id=5_4_5>5_4_5</h6><h2 id=show-possible-completions-of-compose-sequences>Show possible completions of compose sequences</h2><p><span style=color:red>🚧🏗️👷🏽‍♀️ under construction</span></p><h6 id=5_4_6>5_4_6</h6><h2 id=optional-colour-for-the-compose-preëdit>Optional colour for the compose preëdit</h2><p><span style=color:red>🚧🏗️👷🏽‍♀️ under construction</span></p><h6 id=6>6</h6><h2 id=unicode-symbols-and-emoji-predictions>Unicode symbols and emoji predictions</h2><p>ibus-typing-booster supports prediction of emoji and Unicode symbols as well (actually almost all Unicode characters except letters can be typed this way). This can be enabled or disabled with the option “Emoji predictions” in the setup tool which is on by default.</p><p>To make all emoji display correctly, you need good fonts which contain all emoji, see Emoji fonts for details about available fonts and font setup.</p><h6 id=6_1>6_1</h6><h3 id=emoji-input>Emoji input</h3><video playsinline aria-label="Typing Emoji in English with Emoji option on" style=width:100%;height:auto controls>
+fallback is used.</p><h6 id=5_4_3>5_4_3</h6><h2 id=fallbacks-for-missing-keypad-sequences>Fallbacks for “missing” keypad sequences</h2><p>From a user point of view, it should not matter whether
+a character like <code>0</code>, <code>1</code>, …,<code>9</code>, <code>/</code>, <code>*</code>, <code>-</code>, <code>+</code>, <code>.</code> is typed
+using the “normal” key or the respective key on the keypad/numberpad.</p><p>But in the Xorg Compose file, some compose sequences can be typed
+only using the “normal” key. For example:</p><pre><code>$ grep Ø /usr/share/X11/locale/en_US.UTF-8/Compose
+&lt;dead_stroke&gt; &lt;O&gt;                       : &quot;Ø&quot;   Oslash # LATIN CAPITAL LETTER O WITH STROKE
+&lt;Multi_key&gt; &lt;slash&gt; &lt;O&gt;                 : &quot;Ø&quot;   Oslash # LATIN CAPITAL LETTER O WITH STROKE
+&lt;Multi_key&gt; &lt;O&gt; &lt;slash&gt;                 : &quot;Ø&quot;   Oslash # LATIN CAPITAL LETTER O WITH STROKE
+&lt;Multi_key&gt; &lt;KP_Divide&gt; &lt;O&gt;             : &quot;Ø&quot;   Oslash # LATIN CAPITAL LETTER O WITH STROKE
+</code></pre><p>and:</p><pre><code>$ grep ½ /usr/share/X11/locale/en_US.UTF-8/Compose
+&lt;Multi_key&gt; &lt;1&gt; &lt;2&gt;                     : &quot;½&quot;   onehalf # VULGAR FRACTION ONE HALF
+</code></pre><p>I.e. one can type both orders <code>&lt;Multi_key> &lt;slash> &lt;O></code> <strong>and</strong>
+<code>&lt;Multi_key> &lt;O> &lt;slash></code> to get “Ø” but when using KP_Divide instead
+of slash only the order <code>&lt;Multi_key> &lt;KP_Divide> &lt;O></code> works and
+<code>&lt;Multi_key> &lt;O> &lt;KP_Divide></code> does not work because it is
+undefined. From a user point of view, both “<slash>” and “&lt;KP_Divide>”
+produce a “/”, there should be no difference in behaviour. I think
+that is the motivation for defining <code>&lt;Multi_key> &lt;KP_Divide> &lt;O></code> to
+give the same result as <code>&lt;Multi_key> &lt;slash> &lt;O></code>, it should not
+matter how the “/” is typed. But the reverse order <code>&lt;Multi_key> &lt;O> &lt;KP_Divide></code> has apparently been “forgotten”.</p><p>It is similar when typing “½” using Compose, one can type it with
+<code>compose</code> <code>1</code> <code>2</code> only using the “normal” <code>1</code> and <code>2</code> keys but not
+using those on the keypad.</p><p>This doesn’t really make sense and I tried to make a <a href=https://gitlab.freedesktop.org/xorg/lib/libx11/-/merge_requests/82>merge
+request</a>
+for libX11 upstream to add the apparently missing definitions. But
+this is a quite tedious undertaking, although my merge request tries
+to add 246 “missing” definitions and I tried to find all missing
+sequences, I still forgot to add a few sequences like the alternatives
+to <code>&lt;Multi_key> &lt;1> &lt;2></code> using the keypad keys like <code>&lt;Multi_key> &lt;KP_1> &lt;KP_2></code>, <code>&lt;Multi_key> &lt;KP_1> &lt;2></code>, <code>&lt;Multi_key> &lt;1> &lt;KP_2></code>.</p><p>So I added an automatic fallback to Typing Booster which works like this:</p><p>If something like <code>&lt;Multi_key> &lt;KP_1></code> is typed and no sequence
+starting like that is defined, try whether sequences starting with
+<code>&lt;Multi_key> &lt;1></code> can be found, if yes replace <code>&lt;KP_1></code> with <code>&lt;1></code> and
+continue to interpret the sequence.</p><p>And the other way round: if something like <code>&lt;Multi_key> &lt;1></code> is typed
+and no sequence starting like that is defined, try whether sequences
+starting with <code>&lt;Multi_key> &lt;KP_1></code> can be found, if yes replace <code>&lt;1></code>
+with <code>&lt;KP_1></code> and continue to interpret the sequence.</p><p>My current implementation of these fallbacks does still make a
+difference between typing <code>&lt;Multi_key> &lt;KP_Divide></code> and <code>&lt;Multi_key> &lt;slash></code> for example, because sequences starting <strong>both</strong> ways do
+actually exist in the Compose file, but the number of possible
+continuations is different. <code>&lt;Multi_key> &lt;slash></code> can be completed in
+38 different ways but <code>&lt;Multi_key> &lt;KP_Divide></code> can be completed only
+in 27 different ways:</p><pre><code>$ grep '^&lt;Multi_key&gt; &lt;slash&gt;' /usr/share/X11/locale/en_US.UTF-8/Compose | wc --lines
+38
+$ grep '^&lt;Multi_key&gt; &lt;KP_Divide&gt;' /usr/share/X11/locale/en_US.UTF-8/Compose | wc --lines
+27
+</code></pre><p>I.e. when typing <code>&lt;Multi_key> &lt;KP_Divide></code>, Typing Booster currently does not
+attempt to replace <code>&lt;KP_Divide></code> with <code>&lt;slash></code> because
+sequences starting with <code>&lt;Multi_key> &lt;KP_Divide></code> actually are defined!
+So there are sometimes still subtle diffences between using the “normal”
+and the keypad keys, typing <code>&lt;Multi_key> &lt;KP_Divide></code> offers fewer
+possibilities than typing <code>&lt;Multi_key> &lt;slash></code> does.</p><p>Of course Typing Booster could easily treat “normal” and keypad keys
+as 100% identical <strong>always</strong> in compose sequences. I did not do that
+because I wanted to keep the possibility to define <strong>really
+different</strong> results for sequences involving the “normal” versus the
+keypad keys.</p><p>For example, with my current implementation, it is still possible to
+possible to define something like this</p><pre><code>&lt;Multi_key&gt; &lt;1&gt; &lt;2&gt;                     : &quot;½&quot;
+&lt;Multi_key&gt; &lt;KP_1&gt; &lt;KP_2&gt;               : &quot;1️⃣2️⃣&quot;
+</code></pre><p>i.e. to define different results for a sequence using the “normal”
+keys and for the similar sequence using the keypad keys. Seems a bit
+crazy to me, I cannot imagine why somebody would want to define
+something like that, but there might be reasons for wanting to make
+such differences and I didn’t want to take away that possibility.</p><p>Just as in <a href=#5_4_2>Automatically add “missing” dead key sequences</a>,
+<strong>if</strong> a definition exists in the Compose file(s) read, this
+definition has <strong>always</strong> priority, only if no definition exists
+Typing Booster tries to be helpful and offers a reasonable fallback.</p><h6 id=5_4_4>5_4_4</h6><h2 id=do-not-just-discard-undefined-sequences>Do not just discard undefined sequences</h2><p><span style=color:red>🚧🏗️👷🏽‍♀️ under construction</span></p><h6 id=5_4_5>5_4_5</h6><h2 id=show-possible-completions-of-compose-sequences>Show possible completions of compose sequences</h2><p><span style=color:red>🚧🏗️👷🏽‍♀️ under construction</span></p><h6 id=5_4_6>5_4_6</h6><h2 id=optional-colour-for-the-compose-preëdit>Optional colour for the compose preëdit</h2><p><span style=color:red>🚧🏗️👷🏽‍♀️ under construction</span></p><h6 id=6>6</h6><h2 id=unicode-symbols-and-emoji-predictions>Unicode symbols and emoji predictions</h2><p>ibus-typing-booster supports prediction of emoji and Unicode symbols as well (actually almost all Unicode characters except letters can be typed this way). This can be enabled or disabled with the option “Emoji predictions” in the setup tool which is on by default.</p><p>To make all emoji display correctly, you need good fonts which contain all emoji, see Emoji fonts for details about available fonts and font setup.</p><h6 id=6_1>6_1</h6><h3 id=emoji-input>Emoji input</h3><video playsinline aria-label="Typing Emoji in English with Emoji option on" style=width:100%;height:auto controls>
 <source src=../../videos/user-docs/emoji-english-emoji-option-on.webm type=video/webm><p>Your browser does not support video.</p></video><p>When the “☑️ Unicode symbols and emoji predictions” option is on (it is
 off by default), you get emoji displayed in the candidate list
 automatically when typing something which matches an emoji.</p><p>For example in this video, the user has types “camel”, “Albania”, and
