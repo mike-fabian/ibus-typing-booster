@@ -35,7 +35,7 @@ date: 2021-08-30
         * [Why Typing Booster has its own “Compose” implementation](#5_4_1)
         * [Automatically add “missing” dead key sequences](#5_4_2)
         * [Fallbacks for “missing” keypad sequences](#5_4_3)
-        * [Do not just discard undefined sequences](#5_4_4)
+        * [How undefined sequences are handled](#5_4_4)
         * [Show possible completions of compose sequences](#5_4_5)
             * [A peculiarity of Gnome3 and compose completions](#5_4_5_1)
         * [Optional colour for the compose preëdit](#5_4_6)
@@ -1782,8 +1782,61 @@ definition has **always** priority, only if no definition exists
 Typing Booster tries to be helpful and offers a reasonable fallback.
 
 ###### 5_4_4
-## Do not just discard undefined sequences
-<span style="color:red">🚧🏗️👷🏽‍♀️ under construction</span>
+## How undefined sequences are handled
+
+When an undefined compose or dead key sequence is typed using
+Xorg/libX11, the result is nothing at all, the sequence is just
+silently discarded.  This can be tested by using xterm like this:
+
+```
+$ env XMODIFIERS=@im=none xterm
+```
+
+Setting `XMODIFIERS` to `@im=none` disables input methods like ibus,
+i.e. this makes sure that the Compose implementation in Xorg/libX11 is
+used.
+
+IBus 1.5.24 does the same as Xorg when an undefined compose sequence
+is typed, nothing happens, the sequence is silently discarded.  To
+test the Compose implementation in IBus, make sure that the
+`ibus-daemon` is running, configure a keyboard layout with the needed
+dead keys in `ibus-setup`, then switch to that keyboard layout and
+test for example in `gedit`.
+
+Gtk3 tries to be more helpful and instead of silently discarding  the sequence
+do something more useful.
+The Compose implementation in Gtk3 can be tested by using `gedit` like this:
+
+```
+$ env GTK_IM_MODULE=gtk-im-context-simple gedit
+```
+
+Typing Booster also tries to be more helpful and do something more useful
+than just discarding the undefined sequence.
+
+This table shows some examples for undefined compose sequences and
+what the result is when typing the sequence in the 4 different
+compose implementations:
+
+| Undefined compose sequence | Xorg (libX11 1.7.2) | IBus 1.5.24 | Gtk3 3.24.30  | Typing Booster 2.14.4 |
+|---|---|---|---|---|
+| `dead_circumflex` `@` | nothing | nothing | ^@ | <span style="text-decoration: underline">^</span> <br> (keep `dead_circumflex` in preëdit and beep) |
+| `dead_circumflex` `x` | nothing | nothing | ^x | x̂ <br> (x +  ̂  U+0302 COMBINING CIRCUMFLEX ACCENT) <br> (Because of [automatic dead key fallback](#5_4_2)) |
+| `dead_macron` `dead_abovedot` `e` | nothing | nothing | ¯ ̇e |  ė̄  <br> (ė U+0117 LATIN SMALL LETTER E WITH DOT ABOVE +  ̄  U+0304 COMBINING MACRON) <br> (Because of [automatic dead key fallback](#5_4_2)) |
+| `compose` `-` `-` `x` | nothing | nothing |  nothing | <span style="text-decoration: underline">--</span> <br> (keep `compose` `-` `-` in preëdit and beep) |
+| `compose` `KP_1` `KP_2` | 2 <br> (`compose` `KP_1` produces nothing, then `KP_2` produces “2”)| 2 <br> (`compose` `KP_1` produces nothing, then `KP_2` produces “2”) |  2 <br> (`compose` `KP_1` produces nothing, then `KP_2` produces “2”) | ½ <br> (Because of [fallback for “missing” keypad sequences](#5_4_3) it falls back to the defined sequence `compose` `1` `2`) |
+
+The behaviour of Typing Booster for undefined compose sequences is:
+
+* try [automatic dead key fallback](#5_4_2)
+* try [fallback for “missing” keypad sequences](#5_4_3)
+
+If that didn’t help, discard only the key which made the sequence
+invalid, keep the valid part of the sequence in preëdit, and play an
+error beep.
+
+When hearing the error beep, the user can then type Tab to [show how
+the sequence could be completed](#5_4_5).
 
 ###### 5_4_5
 ## Show possible completions of compose sequences
