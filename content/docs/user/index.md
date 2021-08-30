@@ -1611,9 +1611,12 @@ U+0304 COMBINING MACRON) which is used for writing
 it would be perfectly natural to write `dead ¯` `dead ˙` `e` or `dead
 ˙` `dead ¯` `e`.
 
-But the Compose implementations in Xorg and IBus accept only dead key sequences
-which are defined in one of the Compose files read. And there
-are no such dead key sequences defined in `/usr/share/X11/locale/en_US.UTF-8/Compose`.
+But the Compose implementations in Xorg and IBus accept only dead key
+sequences which are defined in one of the Compose files read. And
+there are no such dead key sequences defined in
+`/usr/share/X11/locale/en_US.UTF-8/Compose`.  Therefore, the Compose
+implementations in Xorg and IBus currently just discard sequences like
+`dead ¯` `dead ˙` `e` as undefined and produce no result at all.
 
 That means to be able to write these perfectly natural and useful
 dead key sequences, one would need to add something like
@@ -1667,7 +1670,109 @@ fallback is used.
 ###### 5_4_3
 ## Fallbacks for “missing” keypad sequences
 
-<span style="color:red">🚧🏗️👷🏽‍♀️ under construction</span>
+From a user point of view, it should not matter whether
+a character like `0`, `1`, …,`9`, `/`, `*`, `-`, `+`, `.` is typed
+using the “normal” key or the respective key on the keypad/numberpad.
+
+But in the Xorg Compose file, some compose sequences can be typed
+only using the “normal” key. For example:
+
+```
+$ grep Ø /usr/share/X11/locale/en_US.UTF-8/Compose
+<dead_stroke> <O>                       : "Ø"   Oslash # LATIN CAPITAL LETTER O WITH STROKE
+<Multi_key> <slash> <O>                 : "Ø"   Oslash # LATIN CAPITAL LETTER O WITH STROKE
+<Multi_key> <O> <slash>                 : "Ø"   Oslash # LATIN CAPITAL LETTER O WITH STROKE
+<Multi_key> <KP_Divide> <O>             : "Ø"   Oslash # LATIN CAPITAL LETTER O WITH STROKE
+```
+and:
+
+```
+$ grep ½ /usr/share/X11/locale/en_US.UTF-8/Compose
+<Multi_key> <1> <2>                     : "½"   onehalf # VULGAR FRACTION ONE HALF
+```
+
+I.e. one can type both orders `<Multi_key> <slash> <O>` **and**
+`<Multi_key> <O> <slash>` to get “Ø” but when using KP_Divide instead
+of slash only the order `<Multi_key> <KP_Divide> <O>` works and
+`<Multi_key> <O> <KP_Divide>` does not work because it is
+undefined. From a user point of view, both “<slash>” and “<KP_Divide>”
+produce a “/”, there should be no difference in behaviour.  I think
+that is the motivation for defining `<Multi_key> <KP_Divide> <O>` to
+give the same result as `<Multi_key> <slash> <O>`, it should not
+matter how the “/” is typed. But the reverse order `<Multi_key> <O>
+<KP_Divide>` has apparently been “forgotten”.
+
+It is similar when typing “½” using Compose, one can type it with
+`compose` `1` `2` only using the “normal” `1` and `2` keys but not
+using those on the keypad.
+
+This doesn’t really make sense and I tried to make a [merge
+request](https://gitlab.freedesktop.org/xorg/lib/libx11/-/merge_requests/82)
+for libX11 upstream to add the apparently missing definitions.  But
+this is a quite tedious undertaking, although my merge request tries
+to add 246 “missing” definitions and I tried to find all missing
+sequences, I still forgot to add a few sequences like the alternatives
+to `<Multi_key> <1> <2>` using the keypad keys like `<Multi_key>
+<KP_1> <KP_2>`, `<Multi_key> <KP_1> <2>`, `<Multi_key> <1> <KP_2>`.
+
+So I added an automatic fallback to Typing Booster which works like this:
+
+If something like `<Multi_key> <KP_1>` is typed and no sequence
+starting like that is defined, try whether sequences starting with
+`<Multi_key> <1>` can be found, if yes replace `<KP_1>` with `<1>` and
+continue to interpret the sequence.
+
+And the other way round: if something like `<Multi_key> <1>` is typed
+and no sequence starting like that is defined, try whether sequences
+starting with `<Multi_key> <KP_1>` can be found, if yes replace `<1>`
+with `<KP_1>` and continue to interpret the sequence.
+
+My current implementation of these fallbacks does still make a
+difference between typing `<Multi_key> <KP_Divide>` and `<Multi_key>
+<slash>` for example, because sequences starting **both** ways do
+actually exist in the Compose file, but the number of possible
+continuations is different.  `<Multi_key> <slash>` can be completed in
+38 different ways but `<Multi_key> <KP_Divide>` can be completed only
+in 27 different ways:
+
+```
+$ grep '^<Multi_key> <slash>' /usr/share/X11/locale/en_US.UTF-8/Compose | wc --lines
+38
+$ grep '^<Multi_key> <KP_Divide>' /usr/share/X11/locale/en_US.UTF-8/Compose | wc --lines
+27
+```
+
+I.e. when typing `<Multi_key> <KP_Divide>`, Typing Booster currently does not
+attempt to replace `<KP_Divide>` with `<slash>` because
+sequences starting with `<Multi_key> <KP_Divide>` actually are defined!
+So there are sometimes still subtle diffences between using the “normal”
+and the keypad keys, typing `<Multi_key> <KP_Divide>` offers fewer
+possibilities than typing `<Multi_key> <slash>` does.
+
+Of course Typing Booster could easily treat “normal” and keypad keys
+as 100% identical **always** in compose sequences. I did not do that
+because I wanted to keep the possibility to define **really
+different** results for sequences involving the “normal” versus the
+keypad keys.
+
+For example, with my current implementation, it is still possible to
+possible to define something like this
+
+```
+<Multi_key> <1> <2>                     : "½"
+<Multi_key> <KP_1> <KP_2>               : "1️⃣2️⃣"
+```
+
+i.e. to define different results for a sequence using the “normal”
+keys and for the similar sequence using the keypad keys. Seems a bit
+crazy to me, I cannot imagine why somebody would want to define
+something like that, but there might be reasons for wanting to make
+such differences and I didn’t want to take away that possibility.
+
+Just as in [Automatically add “missing” dead key sequences](#5_4_2),
+**if** a definition exists in the Compose file(s) read, this
+definition has **always** priority, only if no definition exists
+Typing Booster tries to be helpful and offers a reasonable fallback.
 
 ###### 5_4_4
 ## Do not just discard undefined sequences
