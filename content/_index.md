@@ -35,9 +35,13 @@ Anish Patil anish.developer@gmail.com
 * Almost all input methods supplied by libm17n are supported (including the inscript2 input methods).
 * Several input methods and languages can be used at the same time without switching.
 * Predicts Unicode symbols and emoji as well.
+* Open source (GPL 3)
 
 -------------
 
 # Demo
 
-{{< youtube id="8YsBy2hiV_I" >}}
+{{<
+video label="Demo of Typing Booster and Emoji Picker"
+webm="videos/overview-demo-setup-use-typing-booster-emoji-picker.webm"
+>}}
