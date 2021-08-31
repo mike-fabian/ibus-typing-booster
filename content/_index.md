@@ -2,6 +2,11 @@
 title: 
 ---
 
+{{<
+figure src="images/typing-emoji-and-context-sensitive-completion.png"
+width="1024"
+>}}
+
 # Introduction
 
 Ibus-typing-booster is a completion input method to speedup typing.
