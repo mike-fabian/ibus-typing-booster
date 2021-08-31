@@ -4,7 +4,6 @@ title:
 
 {{<
 figure src="images/typing-emoji-and-context-sensitive-completion.png"
-width="1024"
 >}}
 
 # Introduction
