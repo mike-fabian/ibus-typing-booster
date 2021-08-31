@@ -5,15 +5,15 @@ date: 2021-08-28
 
 Ibus-typing-booser is open source and licensed under the GPL version 3.
 
-## Reporting bugs
+## Reporting bugs 🐞
 You can report bugs and suggest improvements in the github issue tracker: https://github.com/mike-fabian/ibus-typing-booster/issues
 
-## Translation
+## Translation 🇺🇳
 You can contribute translations for ibus-typing-booster using the online translation platform weblate: https://translate.fedoraproject.org/projects/ibus-typing-booster/.
 
 If you cannot use weblate, you can also create a pull request for new or updated translations.
 
-## Mailing list
+## Mailing list 📬
 https://lists.fedorahosted.org/admin/lists/ibus-typing-booster.lists.fedorahosted.org/
 
 ## Browse git repository
@@ -31,7 +31,7 @@ $ git clone git@github.com:mike-fabian/ibus-typing-booster.git
 ## Release tarballs
 Release tarballs are available at https://github.com/mike-fabian/ibus-typing-booster/releases.
 
-## Building and installing from source
+## Building and installing from source 🛠️
 
 ### Required packages for building
 To build ibus-typing-booster, you will need at least:
