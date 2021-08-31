@@ -70,6 +70,10 @@ pygmentsStyle = "pygments"
     name="Documentation"
     url="/docs/"
     weight = 3
+  [[menu.nav]]
+    name="Downloads"
+    url="/downloads/"
+    weight = 4
 
 [markup]
   [markup.goldmark]

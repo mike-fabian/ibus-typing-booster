@@ -2,15 +2,6 @@
 title: 
 ---
 
-| Downloads |
-|-----|------|
-|[Fedora](https://apps.fedoraproject.org/packages/ibus-typing-booster)| [OpenSUSE](https://build.opensuse.org/package/show/M17N/ibus-typing-booster)|
-|[Ubuntu](https://launchpad.net/ubuntu/+source/ibus-typing-booster)|[Debian](https://packages.debian.org/sid/ibus-typing-booster)| 
-|[Arch linux](https://www.archlinux.org/packages/extra/any/ibus-typing-booster)|[FreeBSD port](http://www.freshports.org/textproc/ibus-typing-booster)| 
-|[Repology (Overview for all distros)](https://repology.org/project/ibus-typing-booster/versions)| [Source tarballs](https://github.com/mike-fabian/ibus-typing-booster/releases)|
-
-----------
-
 # Introduction
 
 Ibus-typing-booster is a completion input method to speedup typing.
