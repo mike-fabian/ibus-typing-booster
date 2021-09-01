@@ -694,7 +694,7 @@ Some of these key bindings can be customized in the setup tool, see [Customizing
 </thead>
 <tbody>
 <tr>
-<td>Space</td>
+<td><code>Space</code></td>
 <td>
   Commit the preëdit (or the selected candidate, if any) and send a
   space to the application, i.e. commit the typed string followed by a
@@ -702,21 +702,21 @@ Some of these key bindings can be customized in the setup tool, see [Customizing
 </td>
 </tr>
 <tr>
-<td>Return</td>
+<td><code>Return</code></td>
 <td>
   Commit the preëdit (or the selected candidate, if any) and send a
-  Return to the application.
+  <code>Return</code> to the application.
 </td>
 </tr>
 <tr>
-<td>Enter</td>
+<td><code>KP_Enter</code></td>
 <td>
   Commit the preëdit (or the selected candidate, if any) and send a
-  Enter to the application.
+  <code>KP_Enter</code> to the application.
 </td>
 </tr>
 <tr>
-<td>Tab</td>
+<td><code>Tab</code></td>
 <td>
   Bound by default to the commands “select_next_candidate” and “enable_lookup”.
   <br>
@@ -749,7 +749,7 @@ Some of these key bindings can be customized in the setup tool, see [Customizing
 </td>
 </tr>
 <tr>
-<td>Shift+Tab</td>
+<td><code>Shift+Tab</code></td>
 <td>
   Bound by default to the command “select_previous_candidate”.
   <br>
@@ -757,7 +757,7 @@ Some of these key bindings can be customized in the setup tool, see [Customizing
 </td>
 </tr>
 <tr>
-<td>Escape</td>
+<td><code>Escape</code></td>
 <td>
   Bound by default to the command “cancel”.
   <br>
@@ -786,49 +786,49 @@ Some of these key bindings can be customized in the setup tool, see [Customizing
 </td>
 </tr>
 <tr>
-<td>Left (Arrow left)</td>
+<td><code>Left</code> (Arrow left)</td>
 <td>Move cursor one typed key left in the preëdit text. May trigger a
 commit if the left end of the preëdit is reached.</td>
 </tr>
 <tr>
-<td>Control+Left</td>
+<td><code>Control+Left</code></td>
 <td>Move cursor to the left end of the preëdit text. If the cursor is
 already at the left end of the preëdit text, trigger a commit and send
-a Control+Left to the application.</td>
+a <code>Control+Left</code> to the application.</td>
 </tr>
 <tr>
-<td>Right (Arrow right)</td>
+<td><code>Right</code> (Arrow right)</td>
 <td>Move cursor one typed key right in preëdit text. May trigger a
 commit if the right end of the preëdit is reached.</td>
 </tr>
 <tr>
-<td>Control+Right</td>
+<td><code>Control+Right</code></td>
 <td>Move cursor to the right end of the preëdit text. If the cursor is
 already at the right end of the preëdit text, trigger a commit and
-send a Control+Right to the application.</td>
+send a <code>Control+Right</code> to the application.</td>
 </tr>
 <tr>
-<td>Backspace</td>
+<td><code>BackSpace</code></td>
 <td>Remove the typed key to the left of the cursor in the preëdit
 text.</td>
 </tr>
 <tr>
-<td>Control+Backspace</td>
+<td><code>Control+BackSpace</code></td>
 <td>Remove everything to the left of the cursor in the preëdit
 text.</td>
 </tr>
 <tr>
-<td>Delete</td>
+<td><code>Delete</code></td>
 <td>Remove the typed key to the right of the cursor in the preëdit
 text.</td>
 </tr>
 <tr>
-<td>Control+Delete</td>
+<td><code>Control+Delete</code></td>
 <td>Remove everything to the right of the cursor in the preëdit
 text.</td>
 </tr>
 <tr>
-<td>Down (Arrow down)</td>
+<td><code>Down</code> (Arrow down)</td>
 <td>
   Bound by default to the command “select_next_candidate”.
   <br>
@@ -836,7 +836,7 @@ text.</td>
 </td>
 </tr>
 <tr>
-<td>Up (Arrow up)</td>
+<td><code>Up</code> (Arrow up)</td>
 <td>
   Bound by default to the command “select_previous_candidate”.
   <br>
@@ -844,7 +844,7 @@ text.</td>
 </td>
 </tr>
 <tr>
-<td>Page_Up</td>
+<td><code>Page_Up</code></td>
 <td>
   Bound by default to the command “lookup_table_page_up”.
   <br>
@@ -852,7 +852,7 @@ text.</td>
 </td>
 </tr>
 <tr>
-<td>Page_Down</td>
+<td><code>Page_Down</code></td>
 <td>
   Bound by default to the command “lookup_table_page_down”.
   <br>
@@ -860,11 +860,11 @@ text.</td>
 </td>
 </tr>
 <tr>
-<td>F1</td>
+<td><code>F1</code></td>
 <td>Commit the candidate with the label “1” followed by a space</td>
 </tr>
 <tr>
-<td>F2</td>
+<td><code>F2<code></td>
 <td>Commit the candidate with the label “2” followed by a space</td>
 </tr>
 <tr>
@@ -872,11 +872,11 @@ text.</td>
 <td>...</td>
 </tr>
 <tr>
-<td>F9</td>
+<td><code>F9</code></td>
 <td>Commit the candidate with the label “9” followed by a space</td>
 </tr>
 <tr>
-<td>Control+F1</td>
+<td><code>Control+F1</code></td>
 <td>
   Remove the candidate with the label “1” from the database of learned
   user input (If possible, if this candidate is not learned from user
@@ -884,7 +884,7 @@ text.</td>
 </td>
 </tr>
 <tr>
-<td>Control+F2</td>
+<td><code>Control+F2</code></td>
 <td>
   Remove the candidate with the label “2” from the database of learned
   user input (If possible, if this candidate is not learned from user
@@ -896,7 +896,7 @@ text.</td>
 <td>…</td>
 </tr>
 <tr>
-<td>Control+F9</td>
+<td><code>Control+F9</code></td>
 <td>
   Remove the candidate with the label “9” from the database of learned
   user input (If possible, if this candidate is not learned from user
@@ -904,25 +904,35 @@ text.</td>
 </td>
 </tr>
 <tr>
-<td>1 … 9</td>
-<td>Same as F1 … F9 if the option “Use digits as select keys” is
-enabled. Enabling that option makes selecting candidates a bit easier
-because the number keys 1 … 9 are closer to the fingers then F1 … F9 on
-most keyboards. On the other hand, it makes completing when typing
-numbers impossible and it makes typing strings which are combinations
-of letters and numbers like “A4” more difficult. If digits are used as
-select keys, numbers can only be typed when no candidate list is
-shown. In most cases this means that numbers can only be typed when
-nothing else has been typed yet and the preëdit is empty.</td>
-</tr>
-<tr>
-<td>Control+1 … Control+9</td>
-<td>Same as Control+F1 … Control+F9 if the option “Use digits as
-select keys” is enabled.
+<td><code>1</code> … <code>9</code></td>
+<td>
+  By default, same as <code>F1</code> … <code>F9</code>.
+  <br>
+  Selecting candidates with <code>1</code> … <code>9</code> is a bit easier
+  because the number keys <code>1</code> … <code>9</code>
+  are closer to the fingers then <code>F1</code> … <code>F9</code> on
+  most keyboards. On the other hand, it makes completing when typing
+  numbers impossible and it makes typing strings which are combinations
+  of letters and numbers like “A4” more difficult. If digits are used as
+  select keys, numbers can only be typed when no candidate list is
+  shown. In most cases this means that numbers can only be typed when
+  nothing else has been typed yet and the preëdit is empty.
 </td>
 </tr>
 <tr>
-  <td>AltGr+F6</td>
+<td><code>KP_1</code> … <code>KP_9</code></td>
+<td>
+  By default, same as <code>F1</code> … <code>F9</code>.
+</td>
+</tr>
+<tr>
+<td><code>Control+1</code> … <code>Control+9</code></td>
+<td>
+  By default, same as <code>Control+F1</code> … <code>Control+F9</code>.
+</td>
+</tr>
+<tr>
+  <td><code>AltGr+F6</code></td>
   <td>
     Bound by default to the command “toggle_emoji_prediction”.
     <br>
@@ -932,7 +942,7 @@ select keys” is enabled.
   </td>
 </tr>
 <tr>
-  <td>AltGr+F9</td>
+  <td><code>AltGr+F9</code></td>
   <td>
     Bound by default to the command “toggle_off_the_record”.
     <br>
@@ -948,7 +958,7 @@ select keys” is enabled.
   </td>
 </tr>
 <tr>
-  <td>AltGr+F10</td>
+  <td><code>AltGr+F10</code></td>
   <td>
     Bound by default to the command “setup”.
     <br>
@@ -956,7 +966,7 @@ select keys” is enabled.
   </td>
 </tr>
 <tr>
-  <td>AltGr+F12</td>
+  <td><code>AltGr+F12</code></td>
   <td>
     Bound by default to the command “lookup_related”.
     <br>
@@ -965,7 +975,7 @@ select keys” is enabled.
   </td>
 </tr>
 <tr>
-  <td>AltGr+Space</td>
+  <td><code>AltGr+Space</code></td>
   <td>
     Insert a literal space into the preëdit.
   </td>
@@ -984,7 +994,7 @@ When more than one input method at the same time is used, the following addition
 </thead>
 <tbody>
 <tr>
-<td>Control+Down</td>
+<td><code>Control+Down</code></td>
 <td>
   Bound by default to the command “next_input_method”.
   <br>
@@ -993,7 +1003,7 @@ When more than one input method at the same time is used, the following addition
 </td>
 </tr>
 <tr>
-<td>Control+Up</td>
+<td><code>Control+Up</code></td>
 <td>
   Bound by default to the command “previous_input_method”.
   <br>
@@ -1019,14 +1029,14 @@ When more than one input method at the same time is used, the following addition
 </thead>
 <tbody>
 <tr>
-  <td>Button 1 click on a candidate</td>
+  <td><code>Button1</code> click on a candidate</td>
   <td>
     Commit the candidate clicked on followed by a space (Same as
     F1…F9).
   </td>
 </tr>
 <tr>
-  <td>Control + Button 1 click on a candidate</td>
+  <td><code>Control+Button1</code> click on a candidate</td>
   <td>
     Remove clicked candidate from database of learned user input (If
     possible, if this candidate is not learned from user input,
@@ -1034,7 +1044,7 @@ When more than one input method at the same time is used, the following addition
   </td>
 </tr>
 <tr>
-  <td>Button 3 click on a candidate</td>
+  <td><code>Button3</code> click on a candidate</td>
   <td>
     Show related <a href="#6">emoji and Unicode symbols</a>
     or <a href="#7">related words</a> (Same as
@@ -1042,7 +1052,7 @@ When more than one input method at the same time is used, the following addition
   </td>
 </tr>
 <tr>
-  <td>Control + Button 3 click anywhere in the candidate list</td>
+  <td><code>Control+Button3</code> click anywhere in the candidate list</td>
   <td>
     Toggle the <a href="#6">emoji and Unicode
       symbol</a> prediction on/off (Same as AltGr+F6). This has the same
@@ -1050,7 +1060,7 @@ When more than one input method at the same time is used, the following addition
   </td>
 </tr>
 <tr>
-  <td>Alt + Button 3 click anywhere in the candidate list</td>
+  <td><code>Alt+Button3</code> click anywhere in the candidate list</td>
   <td>
     Toggle the “Off the record” mode (Same as AltGr+F9). This has the
     same result as using the setup tool to change this.
