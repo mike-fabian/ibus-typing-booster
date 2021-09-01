@@ -242,11 +242,11 @@ indicate a possible spelling error in the preedit.</p><p>Currently it is not pos
 Wayland. On Wayland the preedit is always underlined and always has
 the same foreground and background colour as normal text, no matter
 what options to influence the preedit style are chosen in the setup
-tool of ibus-typing-booster. That is a missing feature in Wayland.</p><h6 id=3>3</h6><h2 id=key-and-mouse-bindings>Key and Mouse bindings</h2><h6 id=3_1>3_1</h6><h3 id=the-altgr-key>The “AltGr” key</h3><p>Ibus-typing-booster does not change your keyboard layout, it just uses the keyboard layout which was selected last.</p><p>As some of the default key bindings in the table below use key combinations starting with “AltGr”, it is recommended to use a keyboard layout where the right “Alt” key is really an “AltGr” key and not just a duplicate of the left “Alt” key. If you do not have a real “AltGr” key, you can still use most of the key bindings in the table below but of course not those which start with “AltGr”. In that case, you might want to use the setup tool to <a href=#3_4>customize your key bindings</a>.</p><p>The standard “English (US)” keyboard layout makes the “AltGr” key on the right side of the space bar basically behave as a duplicate of the left “Alt” key. So if you like the US English layout, better use the keyboard layout “English (US, with euro on 5)” instead of the standard one. “English (US, with euro on 5)” is very similar to the standard “English (US)” layout but has a real “AltGr” key.</p><p>Many (but not all) keyboard layouts for other languages different from US English already have a real “AltGr” key.</p><p>You can check whether your keyboard layout has a real “AltGr” key with “xev”, “xev” should show you the keysym “ISO_Level3_Shift” when pressing the “AltGr” (right “Alt”) key and not the keysym “Alt_R”.</p><h6 id=3_2>3_2</h6><h3 id=table-of-default-key-bindings>Table of default key bindings</h3><p>Some of these key bindings can be customized in the setup tool, see <a href=#3_4>Customizing key bindings</a>. The following table explains the defaults.</p><table border=2 cellspacing=10 cellpadding=10><thead><tr><th>Key combination</th><th>Effect</th></tr></thead><tbody><tr><td>Space</td><td>Commit the preëdit (or the selected candidate, if any) and send a
+tool of ibus-typing-booster. That is a missing feature in Wayland.</p><h6 id=3>3</h6><h2 id=key-and-mouse-bindings>Key and Mouse bindings</h2><h6 id=3_1>3_1</h6><h3 id=the-altgr-key>The “AltGr” key</h3><p>Ibus-typing-booster does not change your keyboard layout, it just uses the keyboard layout which was selected last.</p><p>As some of the default key bindings in the table below use key combinations starting with “AltGr”, it is recommended to use a keyboard layout where the right “Alt” key is really an “AltGr” key and not just a duplicate of the left “Alt” key. If you do not have a real “AltGr” key, you can still use most of the key bindings in the table below but of course not those which start with “AltGr”. In that case, you might want to use the setup tool to <a href=#3_4>customize your key bindings</a>.</p><p>The standard “English (US)” keyboard layout makes the “AltGr” key on the right side of the space bar basically behave as a duplicate of the left “Alt” key. So if you like the US English layout, better use the keyboard layout “English (US, with euro on 5)” instead of the standard one. “English (US, with euro on 5)” is very similar to the standard “English (US)” layout but has a real “AltGr” key.</p><p>Many (but not all) keyboard layouts for other languages different from US English already have a real “AltGr” key.</p><p>You can check whether your keyboard layout has a real “AltGr” key with “xev”, “xev” should show you the keysym “ISO_Level3_Shift” when pressing the “AltGr” (right “Alt”) key and not the keysym “Alt_R”.</p><h6 id=3_2>3_2</h6><h3 id=table-of-default-key-bindings>Table of default key bindings</h3><p>Some of these key bindings can be customized in the setup tool, see <a href=#3_4>Customizing key bindings</a>. The following table explains the defaults.</p><table border=2 cellspacing=10 cellpadding=10><thead><tr><th>Key combination</th><th>Effect</th></tr></thead><tbody><tr><td><code>Space</code></td><td>Commit the preëdit (or the selected candidate, if any) and send a
 space to the application, i.e. commit the typed string followed by a
-space.</td></tr><tr><td>Return</td><td>Commit the preëdit (or the selected candidate, if any) and send a
-Return to the application.</td></tr><tr><td>Enter</td><td>Commit the preëdit (or the selected candidate, if any) and send a
-Enter to the application.</td></tr><tr><td>Tab</td><td>Bound by default to the commands “select_next_candidate” and “enable_lookup”.<br><ul><li>If the option “☐ Enable suggestions by Tab key” is <em>not</em>
+space.</td></tr><tr><td><code>Return</code></td><td>Commit the preëdit (or the selected candidate, if any) and send a
+<code>Return</code> to the application.</td></tr><tr><td><code>KP_Enter</code></td><td>Commit the preëdit (or the selected candidate, if any) and send a
+<code>KP_Enter</code> to the application.</td></tr><tr><td><code>Tab</code></td><td>Bound by default to the commands “select_next_candidate” and “enable_lookup”.<br><ul><li>If the option “☐ Enable suggestions by Tab key” is <em>not</em>
 set: “Tab” always just executes “select_next_candidate”
 which selects the next candidate from the candidate list.</li><li>If the option “☑ Enable suggestions by Tab key” is set, no
 candidate list is shown by default:<ul><li>If no candidate list is shown: “enable_lookup” is executed
@@ -256,56 +256,55 @@ shown if no candidates can be found).</li><li>If a candidate list is already sho
 candidate in the list. After each commit and after each
 change of the contents of the preëdit, the candidate list
 will be hidden again until the “enable_lookup” requests it
-again.</li><ul></li></ul></td></tr><tr><td>Shift+Tab</td><td>Bound by default to the command “select_previous_candidate”.<br>Selects the previous candidate in the candidate list.</td></tr><tr><td>Escape</td><td>Bound by default to the command “cancel”.<br><ul><li>When a candidate is selected (no matter whether this is a normal
+again.</li><ul></li></ul></td></tr><tr><td><code>Shift+Tab</code></td><td>Bound by default to the command “select_previous_candidate”.<br>Selects the previous candidate in the candidate list.</td></tr><tr><td><code>Escape</code></td><td>Bound by default to the command “cancel”.<br><ul><li>When a candidate is selected (no matter whether this is a normal
 lookup table or a “related” lookup table): Show the first page
 of that lookup table again with no candidate selected.</li><li>When no candidate is selected:<ul><li>When a lookup table with related candidates is shown or a
 lookup table where upper/lower-case has been changed by
 typing the Shift key is shown: go back to the original
 lookup table.</li><li>When a normal lookup table is shown: close it and clear the
-preëdit.</li></ul></li></ul></td></tr><tr><td>Left (Arrow left)</td><td>Move cursor one typed key left in the preëdit text. May trigger a
-commit if the left end of the preëdit is reached.</td></tr><tr><td>Control+Left</td><td>Move cursor to the left end of the preëdit text. If the cursor is
+preëdit.</li></ul></li></ul></td></tr><tr><td><code>Left</code> (Arrow left)</td><td>Move cursor one typed key left in the preëdit text. May trigger a
+commit if the left end of the preëdit is reached.</td></tr><tr><td><code>Control+Left</code></td><td>Move cursor to the left end of the preëdit text. If the cursor is
 already at the left end of the preëdit text, trigger a commit and send
-a Control+Left to the application.</td></tr><tr><td>Right (Arrow right)</td><td>Move cursor one typed key right in preëdit text. May trigger a
-commit if the right end of the preëdit is reached.</td></tr><tr><td>Control+Right</td><td>Move cursor to the right end of the preëdit text. If the cursor is
+a <code>Control+Left</code> to the application.</td></tr><tr><td><code>Right</code> (Arrow right)</td><td>Move cursor one typed key right in preëdit text. May trigger a
+commit if the right end of the preëdit is reached.</td></tr><tr><td><code>Control+Right</code></td><td>Move cursor to the right end of the preëdit text. If the cursor is
 already at the right end of the preëdit text, trigger a commit and
-send a Control+Right to the application.</td></tr><tr><td>Backspace</td><td>Remove the typed key to the left of the cursor in the preëdit
-text.</td></tr><tr><td>Control+Backspace</td><td>Remove everything to the left of the cursor in the preëdit
-text.</td></tr><tr><td>Delete</td><td>Remove the typed key to the right of the cursor in the preëdit
-text.</td></tr><tr><td>Control+Delete</td><td>Remove everything to the right of the cursor in the preëdit
-text.</td></tr><tr><td>Down (Arrow down)</td><td>Bound by default to the command “select_next_candidate”.<br>Selects the next candidate.</td></tr><tr><td>Up (Arrow up)</td><td>Bound by default to the command “select_previous_candidate”.<br>Selects the previous candidate.</td></tr><tr><td>Page_Up</td><td>Bound by default to the command “lookup_table_page_up”.<br>Shows the previous page of candidates.</td></tr><tr><td>Page_Down</td><td>Bound by default to the command “lookup_table_page_down”.<br>Shows the next page of candidates.</td></tr><tr><td>F1</td><td>Commit the candidate with the label “1” followed by a space</td></tr><tr><td>F2</td><td>Commit the candidate with the label “2” followed by a space</td></tr><tr><td>...</td><td>...</td></tr><tr><td>F9</td><td>Commit the candidate with the label “9” followed by a space</td></tr><tr><td>Control+F1</td><td>Remove the candidate with the label “1” from the database of learned
+send a <code>Control+Right</code> to the application.</td></tr><tr><td><code>BackSpace</code></td><td>Remove the typed key to the left of the cursor in the preëdit
+text.</td></tr><tr><td><code>Control+BackSpace</code></td><td>Remove everything to the left of the cursor in the preëdit
+text.</td></tr><tr><td><code>Delete</code></td><td>Remove the typed key to the right of the cursor in the preëdit
+text.</td></tr><tr><td><code>Control+Delete</code></td><td>Remove everything to the right of the cursor in the preëdit
+text.</td></tr><tr><td><code>Down</code> (Arrow down)</td><td>Bound by default to the command “select_next_candidate”.<br>Selects the next candidate.</td></tr><tr><td><code>Up</code> (Arrow up)</td><td>Bound by default to the command “select_previous_candidate”.<br>Selects the previous candidate.</td></tr><tr><td><code>Page_Up</code></td><td>Bound by default to the command “lookup_table_page_up”.<br>Shows the previous page of candidates.</td></tr><tr><td><code>Page_Down</code></td><td>Bound by default to the command “lookup_table_page_down”.<br>Shows the next page of candidates.</td></tr><tr><td><code>F1</code></td><td>Commit the candidate with the label “1” followed by a space</td></tr><tr><td><code>F2<code></td><td>Commit the candidate with the label “2” followed by a space</td></tr><tr><td>...</td><td>...</td></tr><tr><td><code>F9</code></td><td>Commit the candidate with the label “9” followed by a space</td></tr><tr><td><code>Control+F1</code></td><td>Remove the candidate with the label “1” from the database of learned
 user input (If possible, if this candidate is not learned from user
-input, nothing happens).</td></tr><tr><td>Control+F2</td><td>Remove the candidate with the label “2” from the database of learned
+input, nothing happens).</td></tr><tr><td><code>Control+F2</code></td><td>Remove the candidate with the label “2” from the database of learned
 user input (If possible, if this candidate is not learned from user
-input, nothing happens).</td></tr><tr><td>…</td><td>…</td></tr><tr><td>Control+F9</td><td>Remove the candidate with the label “9” from the database of learned
+input, nothing happens).</td></tr><tr><td>…</td><td>…</td></tr><tr><td><code>Control+F9</code></td><td>Remove the candidate with the label “9” from the database of learned
 user input (If possible, if this candidate is not learned from user
-input, nothing happens).</td></tr><tr><td>1 … 9</td><td>Same as F1 … F9 if the option “Use digits as select keys” is
-enabled. Enabling that option makes selecting candidates a bit easier
-because the number keys 1 … 9 are closer to the fingers then F1 … F9 on
+input, nothing happens).</td></tr><tr><td><code>1</code> … <code>9</code></td><td>By default, same as <code>F1</code> … <code>F9</code>.<br>Selecting candidates with <code>1</code> … <code>9</code> is a bit easier
+because the number keys <code>1</code> … <code>9</code>
+are closer to the fingers then <code>F1</code> … <code>F9</code> on
 most keyboards. On the other hand, it makes completing when typing
 numbers impossible and it makes typing strings which are combinations
 of letters and numbers like “A4” more difficult. If digits are used as
 select keys, numbers can only be typed when no candidate list is
 shown. In most cases this means that numbers can only be typed when
-nothing else has been typed yet and the preëdit is empty.</td></tr><tr><td>Control+1 … Control+9</td><td>Same as Control+F1 … Control+F9 if the option “Use digits as
-select keys” is enabled.</td></tr><tr><td>AltGr+F6</td><td>Bound by default to the command “toggle_emoji_prediction”.<br>Toggle the <a href=#6>emoji and Unicode
+nothing else has been typed yet and the preëdit is empty.</td></tr><tr><td><code>KP_1</code> … <code>KP_9</code></td><td>By default, same as <code>F1</code> … <code>F9</code>.</td></tr><tr><td><code>Control+1</code> … <code>Control+9</code></td><td>By default, same as <code>Control+F1</code> … <code>Control+F9</code>.</td></tr><tr><td><code>AltGr+F6</code></td><td>Bound by default to the command “toggle_emoji_prediction”.<br>Toggle the <a href=#6>emoji and Unicode
 symbol</a> prediction on/off. This has the same result as using
-the setup tool to change this.</td></tr><tr><td>AltGr+F9</td><td>Bound by default to the command “toggle_off_the_record”.<br>Toggle the “Off the record” mode. This has the same result as
+the setup tool to change this.</td></tr><tr><td><code>AltGr+F9</code></td><td>Bound by default to the command “toggle_off_the_record”.<br>Toggle the “Off the record” mode. This has the same result as
 using the setup tool to change this.<br>While “Off the record” mode is on, learning from user input is
 disabled. If learned user input is available, predictions are
 usually much better than predictions using only
 dictionaries. Therefore, one should use this option
 sparingly. Only if one wants to avoid saving secret user input to
-disk it might make sense to use this option temporarily.</td></tr><tr><td>AltGr+F10</td><td>Bound by default to the command “setup”.<br>Opens the setup tool.</td></tr><tr><td>AltGr+F12</td><td>Bound by default to the command “lookup_related”.<br>Shows related <a href=#6>emoji and Unicode symbols</a>
-or <a href=#7>related words</a></td></tr><tr><td>AltGr+Space</td><td>Insert a literal space into the preëdit.</td></tr></tbody></table><p>When more than one input method at the same time is used, the following additional key bindings are available:</p><table border=2 cellspacing=10 cellpadding=10><thead><tr><th>Key combination</th><th>Effect</th></tr></thead><tbody><tr><td>Control+Down</td><td>Bound by default to the command “next_input_method”.<br>Switches the input method used for the preëdit to the next input
-method.</td></tr><tr><td>Control+Up</td><td>Bound by default to the command “previous_input_method”.<br>Switches the input method used for the preëdit to the previous input
-method.</td></tr></tbody></table><h6 id=3_3>3_3</h6><h3 id=mouse-bindings>Mouse bindings</h3><p>These mouse bindings are currently hardcoded and can not yet be customized.</p><table border=2 cellspacing=10 cellpadding=10><thead><tr><th>Mouse event</th><th>Effect</th></tr></thead><tbody><tr><td>Button 1 click on a candidate</td><td>Commit the candidate clicked on followed by a space (Same as
-F1…F9).</td></tr><tr><td>Control + Button 1 click on a candidate</td><td>Remove clicked candidate from database of learned user input (If
+disk it might make sense to use this option temporarily.</td></tr><tr><td><code>AltGr+F10</code></td><td>Bound by default to the command “setup”.<br>Opens the setup tool.</td></tr><tr><td><code>AltGr+F12</code></td><td>Bound by default to the command “lookup_related”.<br>Shows related <a href=#6>emoji and Unicode symbols</a>
+or <a href=#7>related words</a></td></tr><tr><td><code>AltGr+Space</code></td><td>Insert a literal space into the preëdit.</td></tr></tbody></table><p>When more than one input method at the same time is used, the following additional key bindings are available:</p><table border=2 cellspacing=10 cellpadding=10><thead><tr><th>Key combination</th><th>Effect</th></tr></thead><tbody><tr><td><code>Control+Down</code></td><td>Bound by default to the command “next_input_method”.<br>Switches the input method used for the preëdit to the next input
+method.</td></tr><tr><td><code>Control+Up</code></td><td>Bound by default to the command “previous_input_method”.<br>Switches the input method used for the preëdit to the previous input
+method.</td></tr></tbody></table><h6 id=3_3>3_3</h6><h3 id=mouse-bindings>Mouse bindings</h3><p>These mouse bindings are currently hardcoded and can not yet be customized.</p><table border=2 cellspacing=10 cellpadding=10><thead><tr><th>Mouse event</th><th>Effect</th></tr></thead><tbody><tr><td><code>Button1</code> click on a candidate</td><td>Commit the candidate clicked on followed by a space (Same as
+F1…F9).</td></tr><tr><td><code>Control+Button1</code> click on a candidate</td><td>Remove clicked candidate from database of learned user input (If
 possible, if this candidate is not learned from user input,
-nothing happens).</td></tr><tr><td>Button 3 click on a candidate</td><td>Show related <a href=#6>emoji and Unicode symbols</a>
+nothing happens).</td></tr><tr><td><code>Button3</code> click on a candidate</td><td>Show related <a href=#6>emoji and Unicode symbols</a>
 or <a href=#7>related words</a> (Same as
-AltGr+F12).</td></tr><tr><td>Control + Button 3 click anywhere in the candidate list</td><td>Toggle the <a href=#6>emoji and Unicode
+AltGr+F12).</td></tr><tr><td><code>Control+Button3</code> click anywhere in the candidate list</td><td>Toggle the <a href=#6>emoji and Unicode
 symbol</a> prediction on/off (Same as AltGr+F6). This has the same
-result as using the setup tool to change this.</td></tr><tr><td>Alt + Button 3 click anywhere in the candidate list</td><td>Toggle the “Off the record” mode (Same as AltGr+F9). This has the
+result as using the setup tool to change this.</td></tr><tr><td><code>Alt+Button3</code> click anywhere in the candidate list</td><td>Toggle the “Off the record” mode (Same as AltGr+F9). This has the
 same result as using the setup tool to change this.<br>While “Off the record” mode is on, learning from user input is
 disabled. If learned user input is available, predictions are
 usually much better than predictions using only
