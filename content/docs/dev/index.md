@@ -1,5 +1,5 @@
 ---
-title: Developer Documentation
+title: Developer Documentation 👩‍🔧
 date: 2021-08-28
 ---
 
@@ -51,7 +51,8 @@ If you also want to run the test-suite with “make check”, you also need the 
 - **openSUSE Leap 42.1 and newer:** m17n-lib, m17n-db, python3-pyenchant, myspell-cs_CZ, myspell-de, myspell-de_DE, myspell-en, myspell-en_US, myspell-es, myspell-es_ES, myspell-it_IT, python3-gobject, dbus-1-x11
 - **Ubuntu 16.04:** libm17n-0, m17n-db, python3-enchant, hunspell-de-de, hunspell-cs, hunspell-es, hunspell-it, hunspell-ko
 
-## Building and installing using the source
+## Building and installing using the source 🛠️
+
 When using a git checkout, go to the directory of the checkout and use autogen.sh:
 ```
 $ cd ibus-typing-booster
