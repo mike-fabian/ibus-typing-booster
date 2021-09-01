@@ -83,8 +83,8 @@ The following table explains the defaults:
 │Space          │send a Space to the application, i.e. commit the typed     │
 │               │string followed by a space.                                │
 ├───────────────┼───────────────────────────────────────────────────────────┤
-│Return or Enter│Commit the preëdit (or the selected candidate, if any) and │
-│               │send a Return or Enter to the application.                 │
+│Return or      │Commit the preëdit (or the selected candidate, if any) and │
+│KP_Enter       │send a Return or KP_Enter to the application.              │
 ├───────────────┼───────────────────────────────────────────────────────────┤
 │               │Bound by default to the commands "select_next_candidate"   │
 │               │and "enable_lookup".                                       │
