@@ -24,6 +24,7 @@ date: 2021-08-30
     * [Table of default key bindings](#3_2)
     * [Mouse bindings](#3_3)
     * [Customizing key bindings](#3_4)
+        * [Customizing key bindings using digits](#3_5)
 1. [Multilingual input](#4)
     * [Example using Hindi and English at the same time](#4_1)
     * [Example using Spanish and English at the same time](#4_2)
@@ -1102,6 +1103,50 @@ is mapped to the AltGr key on many keyboard layouts, see also The
 “AltGr” key. If your keyboard layout does not have that key, you might
 want to change these settings.
 
+###### 3_5
+## Customizing key bindings using digits
+
+In the [default key bindings](#3_2), the digit keys on the “normal”
+layout (`1`, …, `9`) **and** the digit keys on the keypad (`KP_1`, …,
+`KP_9`) **and** the `F1`, …, `F9` keys are bound to the commands
+`commit_candidate_1_plus_space`, …, `commit_candidate_9_plus_space`.
+
+The digit keys `1`, …, `9` are usually closer to the fingers as the
+`F1`, …, `F9` keys and thus somewhat more convenient to commit
+candidates via their number. But using the digits for that purpose
+makes it impossible to type digits into the preëdit.
+
+That makes typing something like “A4 paper” quite difficult.
+Because when the `A` is typed, some completions starting with “A”
+are shown and the `4` then selects the 4th completion candidate!
+
+To get “A4” one could type something like `A` `space` `BackSpace` `4`,
+the `space` commits “A ”, then the `BackSpace` removes the extra “ ”
+and then the `4` adds a “4” because now there is no preëdit.
+Or type `A` `Right` `4`, the arrow-right commits the preëdit and then
+the `4` adds a “4” because now there is no preëdit.
+
+To be able to type digits at all when digits are bound to commands in
+the key bindings, digits are committed **immediately** when there is
+no preëdit.  But that makes it also impossible to type `2` and get it
+completed to “2021”. As the “2” is committed immediately, no
+completion can be tried.
+
+Being able to type digits into the preëdit is also necessary if
+one wants to use the [Unicode code point input](#6_7) feature.
+
+If one wants to treat digits more like other keys and be able to type
+text containing digits into the preëdit, it is necessary to remove either
+the regular digits or the keypad digits from the keybindings, whichever you prefer.
+
+You can also remove both from the keybindings if you want, that still
+leaves you with the `F1` … `F9` keys to commit candidates.
+
+On can of course also select the desired candidate by typing the keys
+bound to the command “select_next_candidate” (by default `Tab`,
+`ISO_Left_Tab`, `Down`, `KP_Down`) and then `space`. Personally, I use
+that far more often than committing the candidate directly via its
+number.
 
 ###### 4
 ## Multilingual input
@@ -2297,19 +2342,15 @@ Anything in Unicode except normal letters is possible.
 
 {{< video label="Unicode code point input" webm="/videos/user-docs/unicode-code-point-input.webm" >}}
 
-This example video shows how the “☑️ Unicode symbols and emoji predictions” feature
-of Typing Booster can also be used to input characters using their Unicode code point.
+This example video shows how the “☑️ Unicode symbols and emoji
+predictions” feature of Typing Booster can also be used to input
+characters using their Unicode code point.
 
 As Unicode code points are hexadecimal numbers, it is first necessary
 to make it possible to input digits at all into the preëdit. By
 default, both the digits on the regular keyboard layout **and** the
-digits on the keypad are bound to commands committing candidates. So
-if you want to be able to type digits into the preëdit, you have to
-remove either the regular digits or the keypad digits from the
-keybindings, whichever you prefer.
-
-You can also remove both from the keybindings if you want, that still
-leaves you with the F1 … F9 keys to commit candidates.
+digits on the keypad are bound to commands committing candidates.  See
+[Customizing key bindings using digits](#3_5) about changing that.
 
 The video shows the key bindings tab of the setup tool and one can see
 that there are no KP_1 … KP_9 keys used in the commands to commit
