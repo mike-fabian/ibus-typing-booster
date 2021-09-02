@@ -3249,6 +3249,19 @@ class TypingBoosterEngine(IBus.Engine):
         # Toggling input mode off should not throw away the current input
         # but commit it:
         # https://github.com/mike-fabian/ibus-typing-booster/issues/236
+        if (self._typed_compose_sequence
+            and self._lookup_table_shows_compose_completions
+            and self.get_lookup_table().cursor_visible):
+            # something is manually selected in the compose lookup table
+            self._lookup_table_shows_compose_completions = False
+            compose_result = self.get_string_from_lookup_table_cursor_pos()
+            self._candidates = []
+            self.get_lookup_table().clear()
+            self.get_lookup_table().set_cursor_visible(False)
+            self._update_lookup_table_and_aux()
+            self._typed_compose_sequence = []
+            self._insert_string_at_cursor(list(compose_result))
+            self._update_transliterated_strings()
         preedit_ime = self._current_imes[0]
         input_phrase = self._transliterated_strings[preedit_ime]
         input_phrase = self._case_modes[
@@ -5478,6 +5491,7 @@ class TypingBoosterEngine(IBus.Engine):
                 repr(compose_result))
         if self._handle_hotkeys(
                 key, commands=['cancel',
+                               'toggle_input_mode_on_off',
                                'enable_lookup',
                                'select_next_candidate',
                                'select_previous_candidate',
