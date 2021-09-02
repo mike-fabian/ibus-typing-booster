@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2021-08-30 21:43+0200\n"
+"POT-Creation-Date: 2021-09-02 18:38+0200\n"
 "PO-Revision-Date: 2021-08-17 16:48+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/ibus-"
@@ -196,34 +196,34 @@ msgstr "Налаштування"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Параметри для ibus-typing-booster"
 
-#: engine/hunspell_table.py:4584
+#: engine/hunspell_table.py:4633
 msgid "Failed to import Google speech-to-text."
 msgstr "Не вдалося імпортувати систему перетворення звуку на текст Google."
 
-#: engine/hunspell_table.py:4587
+#: engine/hunspell_table.py:4636
 msgid "Failed to import pyaudio."
 msgstr "Не вдалося імпортувати pyaudio."
 
-#: engine/hunspell_table.py:4590
+#: engine/hunspell_table.py:4639
 msgid "Failed to import queue."
 msgstr "Не вдалося імпортувати чергу."
 
-#: engine/hunspell_table.py:4595
+#: engine/hunspell_table.py:4644
 msgid "No supported language for speech recognition."
 msgstr "Немає підтримуваної мови для розпізнавання мовлення."
 
-#: engine/hunspell_table.py:4599
+#: engine/hunspell_table.py:4648
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Не знайдено файла «Реєстраційні дані програми Google» «%s»."
 
-#: engine/hunspell_table.py:4611
+#: engine/hunspell_table.py:4660
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Не вдалося започаткувати роботу системи перетворення мовлення на текст "
 "Google. Див. debug.log."
 
-#: engine/hunspell_table.py:4718
+#: engine/hunspell_table.py:4767
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Помилка системи перетворення мовлення на текст Google. Див. debug.log."
 
@@ -282,27 +282,27 @@ msgstr "модифікатор"
 msgid "regional"
 msgstr "регіональні"
 
-#: engine/itb_util.py:3683 engine/itb_util.py:4337
+#: engine/itb_util.py:3683 engine/itb_util.py:4336
 msgid "File not found"
 msgstr "Файл не знайдено"
 
-#: engine/itb_util.py:3686 engine/itb_util.py:4340
+#: engine/itb_util.py:3686 engine/itb_util.py:4339
 msgid "Permission error"
 msgstr "Помилка доступу"
 
-#: engine/itb_util.py:3689 engine/itb_util.py:4343
+#: engine/itb_util.py:3689 engine/itb_util.py:4342
 msgid "Unicode decoding error"
 msgstr "Помилка декодування Unicode"
 
-#: engine/itb_util.py:3692 engine/itb_util.py:4346
+#: engine/itb_util.py:3692 engine/itb_util.py:4345
 msgid "Unknown error"
 msgstr "Невідома помилка"
 
-#: engine/itb_util.py:4314
+#: engine/itb_util.py:4313
 msgid "Native Keyboard"
 msgstr "Природна клавіатура"
 
-#: engine/itb_util.py:4316
+#: engine/itb_util.py:4315
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -316,40 +316,40 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4850
+#: engine/itb_util.py:4849
 msgid "Key input"
 msgstr "Введення з клавіатури"
 
-#: engine/itb_util.py:4856
+#: engine/itb_util.py:4855
 msgid "Cancel"
 msgstr "Скасувати"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4863
+#: engine/itb_util.py:4862
 msgid "Please press a key (or a key combination)"
 msgstr "Будь ласка, натисніть клавішу (або комбінацію клавіш)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4868
+#: engine/itb_util.py:4867
 msgid "The dialog will be closed when the key is released"
 msgstr "Вікно буде закрито, коли ви відпустите клавіші"
 
-#: engine/itb_util.py:4900
+#: engine/itb_util.py:4899
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Спосіб введення із автоматичним доповненням, який пришвидшує введення "
 "текстів."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4909
+#: engine/itb_util.py:4908
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>"
 
-#: engine/itb_util.py:4917
+#: engine/itb_util.py:4916
 msgid "Online documentation:"
 msgstr "Документація у інтернеті:"
 

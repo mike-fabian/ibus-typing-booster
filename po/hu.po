@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2021-08-30 21:43+0200\n"
+"POT-Creation-Date: 2021-09-02 18:38+0200\n"
 "PO-Revision-Date: 2020-07-08 15:27+0000\n"
 "Last-Translator: Bendegúz Gyönki <gyonkibendeguz@gmail.com>\n"
 "Language-Team: Hungarian <https://translate.fedoraproject.org/projects/ibus-"
@@ -196,34 +196,34 @@ msgstr "Beállítás"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Az ibus-typing-booster beállításai"
 
-#: engine/hunspell_table.py:4584
+#: engine/hunspell_table.py:4633
 msgid "Failed to import Google speech-to-text."
 msgstr "A Google speech-to-text (beszédből szöveg) importálása sikertelen."
 
-#: engine/hunspell_table.py:4587
+#: engine/hunspell_table.py:4636
 msgid "Failed to import pyaudio."
 msgstr "A pyaudio importálása sikertelen."
 
-#: engine/hunspell_table.py:4590
+#: engine/hunspell_table.py:4639
 msgid "Failed to import queue."
 msgstr "A sor importálása sikertelen."
 
-#: engine/hunspell_table.py:4595
+#: engine/hunspell_table.py:4644
 msgid "No supported language for speech recognition."
 msgstr "Nincs támogatott nyelv a beszédfelismeréshez."
 
-#: engine/hunspell_table.py:4599
+#: engine/hunspell_table.py:4648
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "A(z) „%s” „Google alkalmazáshitelesítési” fájl nem található."
 
-#: engine/hunspell_table.py:4611
+#: engine/hunspell_table.py:4660
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "A Google speech-to-text (beszédből szöveg) előkészítése sikertelen. Lásd a "
 "debug.log fájlt."
 
-#: engine/hunspell_table.py:4718
+#: engine/hunspell_table.py:4767
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google speech-to-text (beszédből szöveg) hiba. Lásd a debug.log fájlt."
 
@@ -282,27 +282,27 @@ msgstr "módosító"
 msgid "regional"
 msgstr "regionális"
 
-#: engine/itb_util.py:3683 engine/itb_util.py:4337
+#: engine/itb_util.py:3683 engine/itb_util.py:4336
 msgid "File not found"
 msgstr "A fájl nem található"
 
-#: engine/itb_util.py:3686 engine/itb_util.py:4340
+#: engine/itb_util.py:3686 engine/itb_util.py:4339
 msgid "Permission error"
 msgstr "Jogosultság hiba"
 
-#: engine/itb_util.py:3689 engine/itb_util.py:4343
+#: engine/itb_util.py:3689 engine/itb_util.py:4342
 msgid "Unicode decoding error"
 msgstr "Unicode dekódolási hiba"
 
-#: engine/itb_util.py:3692 engine/itb_util.py:4346
+#: engine/itb_util.py:3692 engine/itb_util.py:4345
 msgid "Unknown error"
 msgstr "Ismeretlen hiba"
 
-#: engine/itb_util.py:4314
+#: engine/itb_util.py:4313
 msgid "Native Keyboard"
 msgstr "Natív billentyűzet"
 
-#: engine/itb_util.py:4316
+#: engine/itb_util.py:4315
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -316,38 +316,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4850
+#: engine/itb_util.py:4849
 msgid "Key input"
 msgstr "Billentyű lenyomása"
 
-#: engine/itb_util.py:4856
+#: engine/itb_util.py:4855
 msgid "Cancel"
 msgstr "Mégse"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4863
+#: engine/itb_util.py:4862
 msgid "Please press a key (or a key combination)"
 msgstr "Nyomjon le egy billentyű (vagy billentyűkombinációt)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4868
+#: engine/itb_util.py:4867
 msgid "The dialog will be closed when the key is released"
 msgstr "A párbeszédablak bezárul, ha felengedi a gombot"
 
-#: engine/itb_util.py:4900
+#: engine/itb_util.py:4899
 msgid "A completion input method to speedup typing."
 msgstr "Egy kiegészítést végző bemeneti mód, hogy gyorsítsa a gépelést."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4909
+#: engine/itb_util.py:4908
 msgid "translator-credits"
 msgstr "Meskó Balázs <mesko.balazs at fsf dot hu>"
 
-#: engine/itb_util.py:4917
+#: engine/itb_util.py:4916
 msgid "Online documentation:"
 msgstr "Online dokumentáció:"
 
