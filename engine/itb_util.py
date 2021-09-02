@@ -3967,7 +3967,6 @@ class ComposeSequences:
                     continue
             if keypad_fallback and keyval in self._non_keypad_keyvals:
                 fallback_keyval = self._non_keypad_keyvals[keyval]
-                LOGGER.info('FIXME mike %s', IBus.keyval_name(fallback_keyval))
                 if fallback_keyval in compose_sequences:
                     if isinstance(compose_sequences[fallback_keyval], str):
                         return compose_sequences[fallback_keyval]
