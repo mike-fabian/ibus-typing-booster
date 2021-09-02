@@ -5343,9 +5343,13 @@ class TypingBoosterEngine(IBus.Engine):
                 except (AttributeError,):
                     LOGGER.exception('There is no function %s',
                                      command_function_name)
+                    if hotkey_removed_from_compose_sequence:
+                        self._typed_compose_sequence.append(key.val)
                     return False
                 if command_function():
                     return True
+        if hotkey_removed_from_compose_sequence:
+            self._typed_compose_sequence.append(key.val)
         return False
 
     def _return_false(self, keyval: int, keycode: int, state: int) -> bool:
