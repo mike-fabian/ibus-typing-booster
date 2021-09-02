@@ -22,6 +22,25 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.14.10" date="2021-09-02" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.14.10</url>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/238">
+          github-issues#238: Fix “Inconsistency when typing digits in Compose”
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/237">
+          github-issues#237: Fix “Toggling input mode on/off does not
+          work when a compose sequence is in progress”
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/236">
+          github-issues#236: Toggling input mode off should not throw
+          away the current input
+        </issue>
+      </issues>
+    </release>
     <release version="2.14.8" date="2021-08-30" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
