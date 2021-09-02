@@ -3240,11 +3240,47 @@ class TypingBoosterEngine(IBus.Engine):
         if self._prop_dict and self.input_mode_menu:
             self._init_or_update_property_menu(
                 self.input_mode_menu, mode)
-        self._clear_input_and_update_ui()
         if update_gsettings:
             self._gsettings.set_value(
                 'inputmode',
                 GLib.Variant.new_boolean(mode))
+        if self.is_empty() and not self._typed_compose_sequence:
+            return
+        # Toggling input mode off should not throw away the current input
+        # but commit it:
+        # https://github.com/mike-fabian/ibus-typing-booster/issues/236
+        preedit_ime = self._current_imes[0]
+        input_phrase = self._transliterated_strings[preedit_ime]
+        input_phrase = self._case_modes[
+            self._current_case_mode]['function'](input_phrase)
+        if (self.get_lookup_table().get_number_of_candidates()
+            and self.get_lookup_table().cursor_visible):
+            # something is selected in the lookup table, commit
+            # the selected phrase
+            commit_string = self.get_string_from_lookup_table_cursor_pos()
+        else:
+            # nothing is selected in the lookup table, commit the
+            # input_phrase
+            commit_string = input_phrase
+        if not commit_string:
+            # This should not happen, we returned already above when
+            # self.is_empty(), if we get here there should
+            # have been something in the preëdit or the lookup table:
+            if DEBUG_LEVEL > 0:
+                LOGGER.error('commit string unexpectedly empty.')
+            return
+        # Remember whether a candidate is selected and where the
+        # caret is now because after self._commit_string() this
+        # information is gone:
+        candidate_was_selected = False
+        if self.get_lookup_table().cursor_visible:
+            candidate_was_selected = True
+        caret_was = self.get_caret()
+        self._commit_string(commit_string, input_phrase=input_phrase)
+        if not candidate_was_selected:
+            # cursor needs to be corrected leftwards:
+            for dummy_char in commit_string[caret_was:]:
+                self._forward_generated_key_event(IBus.KEY_Left)
 
     def toggle_input_mode(self, update_gsettings: bool = True) -> None:
         '''Toggles whether ibus-typing-booster is on or off
