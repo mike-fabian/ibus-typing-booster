@@ -5720,7 +5720,7 @@ class TypingBoosterEngine(IBus.Engine):
                     return True
 
         # These keys may trigger a commit:
-        if (key.msymbol not in ('G- ',)
+        if (key.msymbol not in ('G- ', 'G-_')
             and (key.val in self._commit_trigger_keys
                  or (len(key.msymbol) == 1
                      and (key.control
@@ -5760,7 +5760,10 @@ class TypingBoosterEngine(IBus.Engine):
                 #
                 # 'G- ' (AltGr-Space) is prevented from triggering
                 # a commit here, because it is used to enter spaces
-                # into the preëdit, if possible.
+                # into the preëdit, if possible. Same for 'G-_',
+                # it is prevented from triggering a commit because
+                # it is used to enter underscores into the preedit
+                # for emoji lookup.
                 #
                 # If key.msymbol is a single character and Control,
                 # Alt, Super, Hyper, or Meta is pressed, commit the
@@ -6038,7 +6041,7 @@ class TypingBoosterEngine(IBus.Engine):
                         self._current_case_mode = 'upper'
                     if self._input_hints & itb_util.InputHints.LOWERCASE:
                         self._current_case_mode = 'lower'
-            if (key.msymbol in ('G- ',)
+            if (key.msymbol in ('G- ', 'G-_')
                 and not self._has_transliteration([key.msymbol])):
                 insert_msymbol = ' '
             else:
