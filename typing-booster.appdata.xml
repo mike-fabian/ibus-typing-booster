@@ -19,6 +19,21 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.14.12" date="2021-09-14" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.14.12</url>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/243">
+          github-issues#243: Add 'G-_' to 'G- ' as exceptions which
+          must not trigger commits but insert into the preedit
+        </issue>
+        <issue>
+          Update emoji annotations from CLDR
+        </issue>
+      </issues>
+    </release>
     <release version="2.14.10" date="2021-09-02" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

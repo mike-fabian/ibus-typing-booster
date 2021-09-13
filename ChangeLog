@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 14 Sep 2021 Released 2.14.12
+* Update emoji annotations from CLDR
+* Add 'G-_' to 'G- ' as exceptions which must not trigger commits but insert into the preedit (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/243)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 02 Sep 2021 Released 2.14.10
 * Fix “Inconsistency when typing digits in Compose” (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/238)
 * Fix “Toggling input mode on/off does not work when a compose sequence is in progress” (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/237)
