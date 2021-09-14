@@ -22,11 +22,14 @@ This file implements test cases for finding key codes for key values
 '''
 
 import sys
+import logging
 import unittest
 
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
+
+LOGGER = logging.getLogger('ibus-typing-booster')
 
 sys.path.insert(0, "../engine")
 import itb_util
@@ -49,6 +52,8 @@ itb_emoji.DOMAINNAME = ''
 class EmojiUnicodeVersionTestCase(unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
+        LOGGER.info("itb_emoji.find_cldr_annotation_path('en')->%s",
+                    itb_emoji.find_cldr_annotation_path('en'))
 
     def tearDown(self):
         pass
@@ -83,4 +88,7 @@ class EmojiUnicodeVersionTestCase(unittest.TestCase):
         self.assertEqual(mq.unicode_version('🏳\ufe0f\u200d\u26a7\ufe0f'), '13.0')
 
 if __name__ == '__main__':
+    LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
+    LOGGER.setLevel(logging.DEBUG)
+    LOGGER.addHandler(LOG_HANDLER)
     unittest.main()

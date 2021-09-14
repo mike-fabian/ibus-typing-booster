@@ -22,11 +22,14 @@ This file implements test cases for emoji candidates
 '''
 
 import sys
+import logging
 import unittest
 
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
+
+LOGGER = logging.getLogger('ibus-typing-booster')
 
 sys.path.insert(0, "../engine")
 import itb_util
@@ -61,6 +64,8 @@ except (ImportError,):
 class EmojiCandidatesTestCase(unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
+        LOGGER.info("itb_emoji.find_cldr_annotation_path('en')->%s",
+                    itb_emoji.find_cldr_annotation_path('en'))
 
     def tearDown(self):
         pass
@@ -606,4 +611,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('🐈', 'ネコ “ねこ”'))
 
 if __name__ == '__main__':
+    LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
+    LOGGER.setLevel(logging.DEBUG)
+    LOGGER.addHandler(LOG_HANDLER)
     unittest.main()
