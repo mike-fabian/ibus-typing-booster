@@ -19,12 +19,14 @@ date: 2021-08-30
         * [Use inline completion](#2_2_2)
             * [Inline completion is hard to use on Wayland](#2_2_2_1)
         * [Spellchecking](#2_2_3)
+        * [Toggle input mode on/off (Direct Input Mode)](#2_2_4)
 1. [Key and Mouse bindings](#3)
     * [The “AltGr” key](#3_1)
     * [Table of default key bindings](#3_2)
     * [Mouse bindings](#3_3)
     * [Customizing key bindings](#3_4)
         * [Customizing key bindings using digits](#3_5)
+    * [⚠️ Caveat: Key bindings can only work when there is input focus](#3_6)
 1. [Multilingual input](#4)
     * [Example using Hindi and English at the same time](#4_1)
     * [Example using Spanish and English at the same time](#4_2)
@@ -434,7 +436,7 @@ underlined), this makes it clearer which part of the text has been
 used to calculate that candidate list. The use of this option
 is also shown near the end of the video.
 
-**Attention when using Wayland**: Currently it is not possible to do any
+⚠️ **Attention when using Wayland**: Currently it is not possible to do any
 style changes to the preedit on Wayland. On Wayland the preedit is
 always underlined and always has the same foreground and background
 colour as normal text, no matter what options to influence the preedit
@@ -572,7 +574,7 @@ displayed.
 
 {{< video label="Inline completion is hard to use on Wayland" webm="/videos/user-docs/inline-completion-wayland.webm" >}}
 
-**Attention when using Wayland**: Currently it is not possible to do any
+⚠️ **Attention when using Wayland**: Currently it is not possible to do any
 style changes to the preedit on Wayland. On Wayland the preedit is
 always underlined and always has the same foreground and background
 colour as normal text, no matter what options to influence the preedit
@@ -657,7 +659,7 @@ word. Whether the typed word is in the Japanese dictionary or not
 doesn’t matter because the Japanese dictionary does not support
 spellchecking.
 
-**Attention when using Wayland**: On Wayland it is not possible to
+⚠️ **Attention when using Wayland**: On Wayland it is not possible to
 indicate a possible spelling error in the preedit.
 
 Currently it is not possible to do any style changes to the preedit on
@@ -666,6 +668,73 @@ the same foreground and background colour as normal text, no matter
 what options to influence the preedit style are chosen in the setup
 tool of ibus-typing-booster. That is a missing feature in Wayland.
 
+###### 2_2_4
+## Toggle input mode on/off (Direct Input Mode)
+
+{{<
+video label="Configuring a key to toggle Typing Booster on/off"
+webm="/videos/user-docs/configuring-a-key-for-toggle-input-mode-on-off.webm"
+>}}
+
+This video shows how to configure a key to quickly toggle Typing
+Booster on/off.
+
+It is possible to switch Typing Booster off by switching to another
+input method or a keyboard layout. That can be done using either the
+menu in the panel or the shortcut key to switch input methods which is
+`Super_L`+`Space` by default.
+
+Doing this with the menu in the panel is slow because one has to use the mouse.
+
+But using the `Super_L`+`Space` shortcut to switch off Typing Booster is a
+bit slow as well because:
+
+* It needs two key presses by default
+
+* Even if one changes the default to something which needs only a
+  single key press, when pressing that key combination, a selection
+  menu of input methods and keyboard layouts pops up. Usually there
+  are more then just 2 input methods or keyboard layouts in that
+  menu. Therefore, one may need even more keypresses (`space` or the
+  `Left` or the `Right` arrow keys) to select the desired plain keyboard
+  layout to switch typing booster off.
+
+* By switching to the plain keyboard layout, one looses the [Compose
+  support](#5) of Typing Booster which has [extra features](#5_4).
+
+Therefore, if one wants a really quick way to switch Typing Booster
+off and on again while keeping the currently used keyboard layout and
+the Compose support of Typing Booster, it is useful to configure a
+keybinding for the command `toggle_input_mode_on_off` using the setup
+tool as shown in the video.
+
+By default, the keybinding for `toggle_input_mode_on_off` is empty.
+
+As soon as the keybinding for `toggle_input_mode_on_off` is set to
+something non-empty, a new option “☑️ Remember input mode” appears in
+the “Options” tab of the setup tool. If this option is switched on,
+the current state, i.e. whether Typing Booster is currently on or off,
+is remembered and restored when the desktop is restarted (or when Ibus
+is restarted or the whole computer is rebooted).
+
+Also, when the keybinding for `toggle_input_mode_on_off` is set to
+something non-empty, a new entry in the menu in the panel appears
+where one can switch Typing Booster on or off using the mouse.
+
+The video shows that the icon in the panel changes when Typing Booster
+is switched on or off. A rocket (🚀) indicates that it is on, a snail
+(🐌) indicates that it is off.
+
+⚠️ **Attention**: There is a subtle difference between the IBus
+key binding to switch between input methods (default `Super_L`+`space`)
+and a Typing Booster key binding to switch Typing Booster on/off:
+
+* The IBus key binding works everywhere on the desktop
+
+* The Typing Booster on/off key binding only works when something
+  which can receive input has focus
+
+See also: [⚠️ Caveat: Key bindings can only work when there is input focus](#3_6).
 
 ###### 3
 ## Key and Mouse bindings
@@ -1147,6 +1216,22 @@ bound to the command “select_next_candidate” (by default `Tab`,
 `ISO_Left_Tab`, `Down`, `KP_Down`) and then `space`. Personally, I use
 that far more often than committing the candidate directly via its
 number.
+
+###### 3_6
+## ⚠️ Caveat: Key bindings can only work when there is input focus
+
+Key bindings of Typing Booster only work when
+something where one can actually can type into has focus.
+
+For example, if you type some keys while the focus is on the desktop
+background or while the focus is on a webpage and no input area in
+that webpage has focus, then Typing Booster doesn’t see these key
+events at all! So there is no way Typing Booster can react in any way
+to such key events.
+
+Only when something has focus which can actually receive input Typing
+Booster gets the key events and can react to the key events and do
+something.
 
 ###### 4
 ## Multilingual input
@@ -2653,7 +2738,7 @@ And one has to [install the client library for Python3](https://cloud.google.com
 
 `pip install --upgrade google-cloud-speech`
 
-#### Attention: 
+⚠️ **Attention**: 
 on most Linux distributions today, the above line will install the Python2 version of this client library. But ibus-typing-booster requires Python3, so you probably have to use
 
 `pip3 install --upgrade google-cloud-speech`
