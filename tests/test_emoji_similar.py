@@ -136,22 +136,23 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['de_DE'])
         self.assertEqual(
             mq.similar('🤐', match_limit = 3),
-            [('🤐', 'Gesicht mit Reißverschlussmund [🤐, Gesicht, Gesicht mit Reißverschlussmund, Mund, Reißverschluss]', 5), ('🤔', 'nachdenkendes Gesicht [Gesicht]', 1), ('😐', 'neutrales Gesicht [Gesicht]', 1)])
+            [('🤐', 'Gesicht mit Reißverschlussmund [🤐, Gesicht, Gesicht mit Reißverschlussmund, Mund, Reißverschluss]', 5), ('🫡', 'grüßendes Gesicht [Gesicht]', 1), ('🤔', 'nachdenkendes Gesicht [Gesicht]', 1)])
         mq = itb_emoji.EmojiMatcher(
             languages = ['de_CH'])
+        print(mq.similar('🤐', match_limit = 3))
         self.assertEqual(
             mq.similar('🤐', match_limit = 3),
-            [('🤐', 'Smiley mit Reissverschlussmund [🤐, Gesicht, Mund, Reissverschluss, Smiley mit Reissverschlussmund]', 5), ('😅', 'Lachender Smiley mit kaltem Schweiss [Gesicht]', 1), ('😃', 'grinsendes Gesicht mit grossen Augen [Gesicht]', 1)])
+            [('🤐', 'Smiley mit Reissverschlussmund [🤐, Gesicht, Mund, Reissverschluss, Smiley mit Reissverschlussmund]', 5), ('🫡', 'grüssendes Gesicht [Gesicht]', 1), ('😅', 'Lachender Smiley mit kaltem Schweiss [Gesicht]', 1)])
 
     def test_similar_show_keywords_option_en_US(self):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
         self.assertEqual(
             mq.similar('🐌', match_limit = 3),
-            [('🐌', 'snail [🐌, So, nature, snail]', 4), ('🐚', 'spiral shell [So, nature]', 2), ('🦋', 'butterfly [So, nature]', 2)])
+            [('🐌', 'snail [🐌, So, nature, snail]', 4), ('🪸', 'coral [So, nature]', 2), ('🦋', 'butterfly [So, nature]', 2)])
         self.assertEqual(
             mq.similar('🐌', match_limit = 3, show_keywords=False),
-            [('🐌', 'snail', 4), ('🐚', 'spiral shell', 2), ('🦋', 'butterfly', 2)])
+            [('🐌', 'snail', 4), ('🪸', 'coral', 2), ('🦋', 'butterfly', 2)])
 
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
