@@ -1,6 +1,6 @@
 ---
 title: User Documentation
-date: 2021-08-30
+date: 2021-09-16
 ---
 
 ## Contents
@@ -20,6 +20,7 @@ date: 2021-08-30
             * [Inline completion is hard to use on Wayland](#2_2_2_1)
         * [Spellchecking](#2_2_3)
         * [Toggle input mode on/off (Direct Input Mode)](#2_2_4)
+        * [Reopening preëdits](#2_2_5)
 1. [Key and Mouse bindings](#3)
     * [The “AltGr” key](#3_1)
     * [Table of default key bindings](#3_2)
@@ -735,6 +736,98 @@ and a Typing Booster key binding to switch Typing Booster on/off:
   which can receive input has focus
 
 See also: [⚠️ Caveat: Key bindings can only work when there is input focus](#3_6).
+
+###### 2_2_5
+## Reopening preëdits
+
+{{<
+video label="Demonstration of reopening preëdits"
+webm="/videos/user-docs/reopening-preedits.webm"
+>}}
+
+This video shows that when the option “☑️ Enable reopening preedits” is
+switched on, preëdits can be reopened when the cursor reaches the end
+or the beginning of an already committed word again.
+
+In the video one can see that “Writing some ” is typed. The underline under
+the word “some” which indicates the preëdit has already disappeard because
+the word “some” has been committed by typing the space.
+
+But then the cursor is moved back by typing `Left` (arrow left) and
+reaches the right end of the word “some”. This causes the word “some”
+to be put into preëdit again. Now “some” is underlined again and a
+completion “something” is suggested.
+
+⚠️ **Problems with this feature and why it doesn’t always work at the moment**:
+
+To be able to do this reopening of preëdits, the “surrounding text”
+feature must be available and work well.  “surrounding text” means
+that Typing Booster is able to ask “What text is there near the cursor
+position?” and “What is the cursor position?”. If getting the
+surrounding text shows that there is a word next to the cursor like
+“some” in the above example, then “surrounding text” support enables
+Typing Booster to delete that word from the text and to open a new
+preëdit containing that word an look for completions. If “surrounding
+text” doesn’t work right, reopening preëdits cannot work correctly.
+
+Not all toolkits and applications support “surrounding text” and some
+implementations are incomplete and/or buggy. I try to detect when it
+doesn’t work right and if there seem to be problems then I don’t
+reopen the preëdit.
+
+
+Therefore, the are currently some limitations for reopening of
+preëdits:
+
+* Does never work in Qt4 (no “surrounding text” support).
+
+* Does never work in X11 programs like “xterm” (no “surrounding text”
+  support).
+
+* Does never work in gnome-terminal and xfce4-terminal ([incomplete
+  “surrounding text” implementation in
+  vte](https://gitlab.gnome.org/GNOME/vte/-/issues/214)).  Typing
+  Booster detects these two terminals because they both set
+  `InputPurpose.TERMINAL`. When `InputPurpose.TERMINAL` is set, Typing
+  Booster does not try to reopen preëdits at the moment (2021-09-16).
+
+* Does not seem to work in Gnome Wayland currently (2021-09-16), only
+  Gnome Xorg works.
+
+* There seem to be many bugs even in the “partly working”
+  implementations of “surrounding text”:
+
+  * When a window receives focus, surrounding text seems to return
+  false results in that window until at least one commit happened
+  after receiving focus. To work around problems caused by this, I
+  don’t try to reopen preëdits if not at least one commit has happened
+  after a window received focus.
+
+  * Sometimes, when I compare what “surrounding text” gives me before
+  and after a cursor movement, the difference is weird. For example,
+  when something like `Left` or 'BackSpace` has been typed and the
+  difference between the “surrounding text” before and after that key
+  cannot be explained by the effect of that key, then something must
+  have gone wrong and I do **not** try to reopen the preëdit. If I
+  tried to reopen a preëdit in such a case with wrong information from
+  “surrounding text” it would cause chaotic results, so better to
+  nothing than create a mess. Therefore, sometimes it happens that one
+  types a key like `Left` and reaches the end of a word and no preëdit
+  is opened.
+
+  * Only the keys `Left`, `Right`, `KP_Left`, `KP_Right`, `BackSpace`,
+  `Delete`, `KP_Delete` are might currently reopen preëdits. Other
+  keys which move the cursor like `Up`, `Down`, `Page_Up`, `End`, …,
+  are currently (2021-09-16) not considered for reopening preëdits.
+  At the moment, “surrounding text” support seems too buggy to
+  consider these other keys moving the cursor, the results returned by
+  “surrounding text” when these keys were typed are almost always
+  strange.
+
+  * Positioning the cursor with the mouse currently **never** reopens
+  a preëdit. I cannot get correct “surrounding text” results after mouse
+  movements at the moment (2021-09-16).
+
 
 ###### 3
 ## Key and Mouse bindings
