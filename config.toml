@@ -59,19 +59,19 @@ pygmentsStyle = "pygments"
 
 [menu]
   [[menu.nav]]
-    name = "Overview"
+    name = "💁 Overview"
     url = "/"
     weight = 1
   [[menu.nav]]
-    name = "Blog posts"
+    name = "📜 Blog posts"
     url = "/post/"
     weight = 2
   [[menu.nav]]
-    name="Documentation"
+    name="📖 Documentation"
     url="/docs/"
     weight = 3
   [[menu.nav]]
-    name="Downloads"
+    name="🎁 Downloads"
     url="/downloads/"
     weight = 4
 

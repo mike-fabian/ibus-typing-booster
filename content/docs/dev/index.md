@@ -16,7 +16,8 @@ If you cannot use weblate, you can also create a pull request for new or updated
 ## Mailing list 📬
 https://lists.fedorahosted.org/admin/lists/ibus-typing-booster.lists.fedorahosted.org/
 
-## Browse git repository
+## Browse git repository 🐱
+
 You can browse the source code at https://github.com/mike-fabian/ibus-typing-booster.
 
 ## Anonymous git clone

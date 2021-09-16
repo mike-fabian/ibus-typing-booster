@@ -45,3 +45,15 @@ Anish Patil anish.developer@gmail.com
 video label="Demo of Typing Booster and Emoji Picker"
 webm="videos/overview-demo-setup-use-typing-booster-emoji-picker.webm"
 >}}
+
+-------------
+
+[🐞 Bugs](https://github.com/mike-fabian/ibus-typing-booster/issues)
+|
+[🇺🇳 Translations](https://translate.fedoraproject.org/projects/ibus-typing-booster)
+|
+[🐱 Github](https://github.com/mike-fabian/ibus-typing-booster)
+|
+[📖 Documentation](https://mike-fabian.github.io/ibus-typing-booster/docs/)
+|
+[🎁 Downloads](https://mike-fabian.github.io/ibus-typing-booster/downloads/)
