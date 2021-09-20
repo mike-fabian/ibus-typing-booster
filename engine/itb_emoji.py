@@ -565,7 +565,9 @@ class EmojiMatcher():
         dirnames = (USER_DATADIR, DATADIR,
                     # On Fedora, the “unicode-ucd” package has the
                     # UnicodeData.txt file here:
-                    '/usr/share/unicode/ucd')
+                    '/usr/share/unicode/ucd',
+                    # On Ubuntu 20.04.3 it is here:
+                    '/usr/share/unicode/',)
         basenames = ('UnicodeData.txt',)
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
