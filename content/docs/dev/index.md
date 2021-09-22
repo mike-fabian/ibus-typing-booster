@@ -37,20 +37,20 @@ Release tarballs are available at https://github.com/mike-fabian/ibus-typing-boo
 ### Required packages for building
 To build ibus-typing-booster, you will need at least:
 - **Fedora:** autoconf, automake, gettext-devel, python3-devel >= 3.3, ibus-devel >= 1.5.3
-- **openSUSE:** autoconf, automake, python3-devel >= 3.3, ibus-devel >= 1.5.3
-- **Ubuntu 16.04:** autoconf, automake, python3.5, ibus >= 1.5.3, libibus-1.0-dev >= 1.5.3
+- **openSUSE:** autoconf, automake, python3-devel >= 3.5, ibus-devel >= 1.5.3
+- **Ubuntu 20.04:** autoconf, automake, python3 >= 3.5, ibus >= 1.5.3, libibus-1.0-dev >= 1.5.3, make, gcc
 
 If you build from a git checkout and not from a release tarball, you also need:
 
 - **Fedora:** autopoint
 - **openSUSE:** autopoint
-- **Ubuntu 16.04:** autopoint
+- **Ubuntu 20.04:** autopoint
 
 If you also want to run the test-suite with “make check”, you also need the following packages:
 
 - **Fedora:** m17n-lib, m17n-db-extras, python3-enchant or pyhunspell-python3, hunspell-cs, hunspell-de, hunspell-en, hunspell-es, hunspell-it, hunspell-ko
 - **openSUSE Leap 42.1 and newer:** m17n-lib, m17n-db, python3-pyenchant, myspell-cs_CZ, myspell-de, myspell-de_DE, myspell-en, myspell-en_US, myspell-es, myspell-es_ES, myspell-it_IT, python3-gobject, dbus-1-x11
-- **Ubuntu 16.04:** libm17n-0, m17n-db, python3-enchant, hunspell-de-de, hunspell-cs, hunspell-es, hunspell-it, hunspell-ko
+- **Ubuntu 20.04:** libm17n-0, m17n-db, python3-enchant, hunspell-de-de, hunspell-cs, hunspell-es, hunspell-it, hunspell-ko
 
 ## Building and installing using the source 🛠️
 
@@ -85,7 +85,7 @@ $ make check # optional
 $ make install
 ```
 
-**Ubuntu 16.04:**
+**Ubuntu 20.04:**
 ```
 $ ./configure --prefix=/usr --libexecdir=/usr/lib/ibus
 $ make
@@ -107,6 +107,7 @@ To run `ibus-typing-booster`, the following software is required or optional for
 * python3 >= 3.3
 * python3-dbus
 * python3-pyxdg
+* python3-packaging
 
 **Optional:**
 * **python3-enchant** or **pyhunspell-python3**: Needed if you want spell-checking suggestions to work. Both packages work equally well, it doesn’t matter which one you choose.
@@ -125,6 +126,7 @@ To run `ibus-typing-booster`, the following software is required or optional for
 * python3 >= 3.3
 * dbus-1-python3
 * python3-pyxdg
+* python3-packaging
 
 **Optional:**
 * **python3-pyenchant**: Needed if you want spell-checking suggestions to work.
@@ -133,7 +135,7 @@ To run `ibus-typing-booster`, the following software is required or optional for
 * **[pykakasi](https://github.com/miurahr/pykakasi)**: Only needed if you want to input emoji by typing their Japanese names in romaji (i.e. Latin transliteration). That is an alternative to using the Japanese input method “ja-anthy” from m17n-db-extras to type the names of the emoji in hiragana. There is no “pykakashi” package for Fedora, if you want this feature you need to install it from source.
 * **[pinyin](https://pypi.python.org/pypi/pinyin)**: A Python module to convert Chinese text into pinyin. This is only needed if you want to type emoji by typing the Chinese names of the emoji in pinyin Latin transliteration. There is no “pinyin” for Fedora, if you want this feature you need to install it from source.
 
-### Ubuntu 16.04
+### Ubuntu 20.04
 
 **Required:**
 * ibus >= 1.5.3
@@ -142,6 +144,7 @@ To run `ibus-typing-booster`, the following software is required or optional for
 * python3 >= 3.3
 * python3-dbus
 * python3-xdg
+* python3-packaging
 
 **Optional:**
 * **python3-enchant** : Needed if you want spell-checking suggestions to work.
