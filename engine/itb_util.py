@@ -3521,7 +3521,8 @@ class ComposeSequences:
             and os.access(user_compose_file, os.R_OK)):
             # A user compose file either pointed to by XCOMPOSEFILE
             # (see
-            # https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html)
+            # https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html
+            # https://www.mankier.com/5/Compose)
             # or ~/.XCompose has been found and is readable.  **Only**
             # this compose file is added to the list of compose file
             # to read, allowing the user to avoid loading the system
@@ -3548,10 +3549,14 @@ class ComposeSequences:
         # All the compose files read may contain include statements including other
         # compose files.
         #
-        # There are 3 substitutions that can be made in the file name of the include
-        # instruction (only %H and %L are mentioned in
-        # https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html but
-        # “man xcompose” on Fedora 34 also mentions %S):
+        # There are 3 substitutions that can be made in the file name
+        # of the include instruction (only %H and %L are mentioned in
+        # https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html
+        # but https://www.mankier.com/5/Compose and “man xcompose” on
+        # Fedora 34 also mention %S. %S was added ages ago by Marko Myllynen
+        # to allow rewriting the fi_FI compose file so that it includes en_US
+        # and then defines everything specified in the standard. Marko confirmed
+        # that %S works on F34):
         #
         # %H  expands to the user's home directory (the $HOME environment variable)
         # %L  expands to the name of the locale specific Compose file (i.e.,
@@ -3696,6 +3701,7 @@ class ComposeSequences:
         LOGGER.info('Reading compose file %s', compose_path)
         # For the syntax of the compose files see:
         # https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html
+        # https://www.mankier.com/5/Compose
         include_pattern = re.compile(
             r'^\s*include\s*"(?P<include_path>[^"]+)".*')
         compose_sequence_pattern = re.compile(
