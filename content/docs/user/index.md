@@ -1729,11 +1729,15 @@ compose sequence implementations.
 ###### 5_3
 ## Customizing compose sequences
 
-The [man page for
-compose](https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html)
-(Also available as `man compose` on most distributions) explains from
-which file the default compose sequence definitions are read and how a
-user can override it with his own compose sequence definitions.
+<!--
+https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html
+has similar content but https://www.mankier.com/5/Compose is prettier
+-->
+
+The [man page for compose](https://www.mankier.com/5/Compose) (Also
+available as `man compose` on most distributions) explains from which
+file the default compose sequence definitions are read and how a user
+can override it with his own compose sequence definitions.
 
 This man page says:
 
