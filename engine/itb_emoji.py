@@ -508,8 +508,7 @@ class EmojiMatcher():
             emoji_string = emoji_string.replace('\ufe0f', '')
         if not variation_selector:
             return emoji_string
-        if ('\U0001f1e6' <= emoji_string[0] <= '\U0001f1ff'
-            or emoji_string[0] == '\U0001f3f4'):
+        if ('\U0001f1e6' <= emoji_string[0] <= '\U0001f1ff'):
             # do not insert any variation selectors in flag sequences:
             return emoji_string
         retval = ''
