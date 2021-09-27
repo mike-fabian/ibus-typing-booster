@@ -3617,6 +3617,15 @@ class ComposeSequences:
 
         and both previously stored longer sequences have been deleted.
         I.e. the last stored sequence always wins in case of conflicts.
+
+        It also implements this small syntax extension idea by Matthias Clasen:
+        unwanted compose sequences can be removed by using an empty result
+        string. I.e. if
+
+            <Multi_key> <t> <e> <s> : ""
+
+        comes last, the sequence <Multi_key> <t> <e> <s> and all
+        longer sequences starting exactly like that become undefined.
         '''
         # pylint: enable=line-too-long
         names = re.sub(r'[<>\s]+', ' ', sequence).strip().split()
@@ -3636,6 +3645,16 @@ class ComposeSequences:
         if not keyvals:
             return
         compose_sequences = self._compose_sequences
+        if result == '':
+            for keyval in keyvals:
+                if not keyval in compose_sequences:
+                    return
+                if (isinstance(compose_sequences[keyval], str)
+                    or len(compose_sequences[keyval]) == 1):
+                    del compose_sequences[keyval]
+                    return
+                compose_sequences = compose_sequences[keyval]
+            return
         for keyval in keyvals:
             if (not keyval in compose_sequences
                 or isinstance(compose_sequences[keyval], str)):
@@ -3705,7 +3724,7 @@ class ComposeSequences:
         include_pattern = re.compile(
             r'^\s*include\s*"(?P<include_path>[^"]+)".*')
         compose_sequence_pattern = re.compile(
-            r'^\s*(?P<sequence>(<[a-zA-Z0-9_]+>\s*)+):\s*"(?P<result>(\\"|[^"])+)".*')
+            r'^\s*(?P<sequence>(<[a-zA-Z0-9_]+>\s*)+):\s*"(?P<result>(\\"|[^"])*)".*')
         for line in lines:
             if not line.strip():
                 continue
