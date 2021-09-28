@@ -47,6 +47,157 @@ class ComposeSequencesTestCase(unittest.TestCase):
     def test_dummy(self):
         self.assertEqual(True, True)
 
+    def test_adding_and_deleting_compose_sequences(self):
+        self._compose_sequences._add_compose_sequence(
+            '<Multi_key> <e> <m> <p> <t> <y>', '∅')
+        available_keyvals = None
+        keyvals = [IBus.KEY_Multi_key,
+                   IBus.KEY_e,
+                   IBus.KEY_m,
+                   IBus.KEY_p]
+        completions = self._compose_sequences.find_compose_completions(
+            keyvals, available_keyvals)
+        self.assertEqual(
+            ['ty'], self._compose_sequences._lookup_representations(completions))
+        keyvals = [IBus.KEY_Multi_key,
+                   IBus.KEY_e,
+                   IBus.KEY_m,
+                   IBus.KEY_p,
+                   IBus.KEY_t,
+                   IBus.KEY_y]
+        completions = self._compose_sequences.find_compose_completions(
+            keyvals, available_keyvals)
+        self.assertEqual(
+            [], self._compose_sequences._lookup_representations(completions))
+        self.assertEqual(
+            "∅", self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_e,
+                 IBus.KEY_m,
+                 IBus.KEY_p,
+                 IBus.KEY_t,
+                 IBus.KEY_y]))
+        # Define a shorter compose sequence overriding the previous longer one:
+        self._compose_sequences._add_compose_sequence(
+            '<Multi_key> <e> <m> <p> <t>', '🕳️')
+        available_keyvals = None
+        keyvals = [IBus.KEY_Multi_key,
+                   IBus.KEY_e,
+                   IBus.KEY_m,
+                   IBus.KEY_p]
+        completions = self._compose_sequences.find_compose_completions(
+            keyvals, available_keyvals)
+        self.assertEqual(
+            ['t'], self._compose_sequences._lookup_representations(completions))
+        keyvals = [IBus.KEY_Multi_key,
+                   IBus.KEY_e,
+                   IBus.KEY_m,
+                   IBus.KEY_p,
+                   IBus.KEY_t]
+        completions = self._compose_sequences.find_compose_completions(
+            keyvals, available_keyvals)
+        self.assertEqual(
+            [], self._compose_sequences._lookup_representations(completions))
+        keyvals = [IBus.KEY_Multi_key,
+                   IBus.KEY_e,
+                   IBus.KEY_m,
+                   IBus.KEY_p,
+                   IBus.KEY_t,
+                   IBus.KEY_y]
+        completions = self._compose_sequences.find_compose_completions(
+            keyvals, available_keyvals)
+        self.assertEqual(
+            [], self._compose_sequences._lookup_representations(completions))
+        self.assertEqual(
+            "🕳️",
+            self._compose_sequences.compose(
+            [IBus.KEY_Multi_key,
+             IBus.KEY_e,
+             IBus.KEY_m,
+             IBus.KEY_p,
+             IBus.KEY_t]))
+        # The sequence '<Multi_key> <e> <m> <p> <t> <y> does not exist
+        # anymore now, but '<Multi_key> <e> <m> <p> <t>' already gives a result
+        # and the trailing '<y>' is ignored:
+        self.assertEqual(
+            "🕳️",
+            self._compose_sequences.compose(
+            [IBus.KEY_Multi_key,
+             IBus.KEY_e,
+             IBus.KEY_m,
+             IBus.KEY_p,
+             IBus.KEY_t,
+             IBus.KEY_y]))
+        # Now remove a compose sequence by using an empty replacement text:
+        self._compose_sequences._add_compose_sequence(
+            '<Multi_key> <e> <m> <p> <t> <y>', '')
+        available_keyvals = None
+        keyvals = [IBus.KEY_Multi_key,
+                   IBus.KEY_e,
+                   IBus.KEY_m,
+                   IBus.KEY_p]
+        completions = self._compose_sequences.find_compose_completions(
+            keyvals, available_keyvals)
+        self.assertEqual(
+            [], self._compose_sequences._lookup_representations(completions))
+        keyvals = [IBus.KEY_Multi_key,
+                   IBus.KEY_e,
+                   IBus.KEY_m,
+                   IBus.KEY_p,
+                   IBus.KEY_t]
+        completions = self._compose_sequences.find_compose_completions(
+            keyvals, available_keyvals)
+        self.assertEqual(
+            [], self._compose_sequences._lookup_representations(completions))
+        keyvals = [IBus.KEY_Multi_key,
+                   IBus.KEY_e,
+                   IBus.KEY_m,
+                   IBus.KEY_p,
+                   IBus.KEY_t,
+                   IBus.KEY_y]
+        completions = self._compose_sequences.find_compose_completions(
+            keyvals, available_keyvals)
+        self.assertEqual(
+            [], self._compose_sequences._lookup_representations(completions))
+        # Invalid now, sequence has been deleted (invalid sequence returns
+        # and empty string):
+        self.assertEqual(
+            '',
+            self._compose_sequences.compose(
+            [IBus.KEY_Multi_key,
+             IBus.KEY_e,
+             IBus.KEY_m,
+             IBus.KEY_p,
+             IBus.KEY_t,
+             IBus.KEY_y]))
+        self.assertEqual(
+            '',
+            self._compose_sequences.compose(
+            [IBus.KEY_Multi_key,
+             IBus.KEY_e,
+             IBus.KEY_m,
+             IBus.KEY_p]))
+        # Check that there are still sequences starting with '<Multi_key> <e>'
+        # they should not have been deleted:
+        available_keyvals = None
+        keyvals = [IBus.KEY_Multi_key,
+                   IBus.KEY_e]
+        completions = self._compose_sequences.find_compose_completions(
+            keyvals, available_keyvals)
+        self.assertNotEqual(
+            [], self._compose_sequences._lookup_representations(completions))
+        self.assertEqual(
+            None,
+            self._compose_sequences.compose(
+            [IBus.KEY_Multi_key,
+             IBus.KEY_e]))
+        self.assertEqual(
+            '€',
+            self._compose_sequences.compose(
+            [IBus.KEY_Multi_key,
+             IBus.KEY_e,
+             IBus.KEY_equal]))
+
     def test_preedit_representations(self):
         self.assertEqual(
             self._compose_sequences.preedit_representation(

@@ -3957,6 +3957,11 @@ class ComposeSequences:
         >>> c.compose([IBus.KEY_Multi_key, IBus.KEY_asciitilde, IBus.KEY_dead_circumflex, IBus.KEY_A])
         'Ẫ'
 
+        Complete, valid sequence, with trailing junk (IBus.KEY_B is junk):
+
+        >>> c.compose([IBus.KEY_Multi_key, IBus.KEY_asciitilde, IBus.KEY_dead_circumflex, IBus.KEY_A, IBus.KEY_B])
+        'Ẫ'
+
         Not defined in any Compose file, but nevertheless valid
         because it is interpreted as a “reasonable” dead key sequence:
 
