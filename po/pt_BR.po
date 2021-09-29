@@ -1,5 +1,5 @@
 # Marco Aurélio Krause <ouesten@me.com>, 2016. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2021.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2019, 2020, 2021.
 msgid ""
 msgstr ""
@@ -7,8 +7,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-09-02 18:38+0200\n"
-"PO-Revision-Date: 2021-03-08 02:01+0000\n"
-"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"PO-Revision-Date: 2021-09-29 10:51+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.5.1\n"
+"X-Generator: Weblate 4.8\n"
 
 #: engine/emoji_picker.py:200
 msgid "Emoji Picker"
@@ -690,7 +690,7 @@ msgstr ""
 #. sound is played on error
 #: setup/main.py:723
 msgid "Play sound file on error"
-msgstr ""
+msgstr "Reproduzir arquivo de som ao ocorrer erro"
 
 #: setup/main.py:725
 msgid ""
@@ -698,6 +698,9 @@ msgid ""
 "the simpleaudio module for Python3 is not installed, this option does "
 "nothing."
 msgstr ""
+"Aqui você pode escolher se um arquivo de som é reproduzido se ocorrer um "
+"erro. Se o módulo simpleaudio para Python3 não estiver instalado, esta opção "
+"faz nada."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -1305,7 +1308,7 @@ msgstr "Outra instância deste aplicativo já está em execução."
 
 #: setup/main.py:2787
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr "Selecionar arquivo de som .wav:"
 
 #: setup/main.py:2950
 msgid "Add dictionary"
