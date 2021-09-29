@@ -22,6 +22,29 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.14.13" date="2021-09-29" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.14.13</url>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/244">
+          github-issues#244: Skip emoji tests which rely on the
+          enchant results if enchants results changed
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/245">
+          Make it possible to remove unwanted compose sequences by
+          using an empty replacement text
+        </issue>
+        <issue>
+          The 🏴‍☠️ “pirate flag” needs a U+FE0F after the final
+          character to be fully qualified
+        </issue>
+        <issue>
+          Update data files for Unicode 14.0.0
+        </issue>
+      </issues>
+    </release>
     <release version="2.14.12" date="2021-09-14" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
