@@ -54,6 +54,33 @@ except (ImportError,):
     except (ImportError,):
         pass
 
+def enchant_working_as_expected() -> bool:
+    '''Checks if the behaviour has changed somehow.
+
+    Even if enchant is working, the behaviour might change
+    if enchant is updated to a new version and/or dictionaries
+    are updated.
+
+    This function tries to detect if the behaviour of enchant
+    is different to what I see on my development system and
+    if it is different skip test cases which might fail only
+    because of unexpected enchant behaviour.
+
+    As soon as I see that this causes test cases on my development
+    system to be skipped, I should check carefully and then probably
+    update the test cases.
+    '''
+    if not IMPORT_ENCHANT_SUCCESSFUL:
+        return False
+    d = enchant.Dict('en')
+    if d.check('fery'):
+        return False
+    if (d.suggest('fery') !=
+        ['fer', 'fey', 'fry', 'fiery', 'ferny',
+         'ferry', 'fern', 'fury', 'very', 'fer y']):
+        return False
+    return True
+
 @unittest.skipIf(
     '..' not in itb_emoji.find_cldr_annotation_path('en'),
     'Using external emoji annotations: %s '
@@ -246,6 +273,12 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('mayen')[0][:2],
             ('🇸🇯', 'flag: svalbard & jan mayen'))
 
+    @unittest.skipUnless(
+        IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-enchant to work.")
+    @unittest.skipUnless(
+        enchant_working_as_expected(),
+        'Skipping because of an unexpected change in the enchant behaviour.')
     def test_candidates_persons(self):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
@@ -290,6 +323,12 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('birth')[0][:2],
             ('🎂', 'birthday cake'))
 
+    @unittest.skipUnless(
+        IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-enchant to work.")
+    @unittest.skipUnless(
+        enchant_working_as_expected(),
+        'Skipping because of an unexpected change in the enchant behaviour.')
     def test_candidates_symbols(self):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
@@ -353,6 +392,9 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
+    @unittest.skipUnless(
+        enchant_working_as_expected(),
+        'Skipping because of an unexpected change in the enchant behaviour.')
     def test_candidates_spellchecking(self):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
