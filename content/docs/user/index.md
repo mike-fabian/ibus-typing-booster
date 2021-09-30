@@ -1,6 +1,6 @@
 ---
 title: User Documentation 👩
-date: 2021-09-16
+date: 2021-09-30
 ---
 
 ## Contents
@@ -1776,26 +1776,57 @@ For example, a user Compose file `~/.XCompose` could look like this:
 # %S  expands to the name of the system directory for Compose files (i.e.,
 #     "/usr/share/X11/locale")
 
-include "%L"
+include "/%L"  # The leading / is to make Gtk load the system compose file!
 
 <Multi_key> <underscore> <period> <e> : "ė̄" # U+0117 LATIN SMALL LETTER E WITH DOT ABOVE U+0304 COMBINING MACRON
 <Multi_key> <m> <o> <n> <k> <e> <y> <s> : "🙈🙉🙊"
 <Multi_key> <m> <o> <u> <s> <e> : "🐁" # U+1F401 MOUSE
 <Multi_key> <m> <o> <u> <s> <e> : "🐭" # U+1F42D MOUSE FACE
+# In en_US.UTF-8 locale, the system compose file
+# /usr/share/X11/locale/<localename>/Compose included above contains
+#     <Multi_key> <p> <o> <o>                 : "💩"  U1F4A9 # PILE OF POO
+# One can remove unwanted compose sequences by re-defining them with
+# an empty result:
+<Multi_key> <p> <o> <o> : "" # Remove unwanted compose sequence
 ```
 
-The `include "%L"` includes the system compose file for the current locale,
+The `include "/%L"` includes the system compose file for the current locale,
 the lines below add user defined sequences. If an identical sequence
 are defined again with a different result, the last definition “wins”.
 I.e. of the two lines defining `<Multi_key> <m> <o> <u> <s> <e>`,
 the second line overrides the first one.
 
-As the user definitions are all **below** the `include "%L"` which
+As the user definitions are all **below** the `include "/%L"` which
 reads the system default, the user definitions override any system
 default sequences in case there is a conflict.
 
-If the `include "%L"` were not there in `~/.XCompose`, **only** the
+If the `include "/%L"` were not there in `~/.XCompose`, **only** the
 user definitions in `~/.XCompose` would be available!
+
+💡 **Tiny extensions of the syntax described in [man page for compose](https://www.mankier.com/5/Compose)**:
+
+* Gtk and Typing Booster
+
+  Both Gtk and Typing Booster make it possible to remove unwanted
+  compose sequences by re-defining them as sequences with an empty result
+  like:
+
+  `<Multi_key> <p> <o> <o> : ""`
+
+  That does **not** mean that this sequence still exists and just
+  produces an empty result, the effect is as if the
+  sequence `<Multi_key> <p> <o> <o>` had not been defined at all.
+
+* Only Gtk
+
+  The `include "%L"` statement in Gtk has the special meaning to include
+  the **builtin** compose sequences of Gtk. It does **not** include
+  the system compose file `/usr/share/X11/locale/<localename>/Compose`.
+  If you use the compose support in Gtk and want to use the locale specific
+  system compose file, you can use `include "/%L"`. The leading `/` forces
+  loading the locale specific system compose file.
+  For the compose support in Typing Booster and IBus, the leading `/` makes
+  no difference.
 
 ###### 5_4
 ## Special “Compose” features in Typing Booster
