@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2021-09-02 18:38+0200\n"
+"POT-Creation-Date: 2021-09-29 18:43+0200\n"
 "PO-Revision-Date: 2019-12-20 00:16+0000\n"
 "Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
 "Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/ibus-"
@@ -21,31 +21,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.9.1\n"
 
-#: engine/emoji_picker.py:200
+#: engine/emoji_picker.py:201
 msgid "Emoji Picker"
 msgstr "ଇମୋଜି ବଛାରି"
 
-#: engine/emoji_picker.py:317
+#: engine/emoji_picker.py:318
 msgid "Clear recently used"
 msgstr "ସାମ୍ପ୍ରତିକ ବ୍ୟବହୃତକୁ ସଫା କରନ୍ତୁ"
 
-#: engine/emoji_picker.py:323 setup/main.py:185
+#: engine/emoji_picker.py:324 setup/main.py:185
 msgid "About"
 msgstr "ବିଷୟରେ"
 
-#: engine/emoji_picker.py:328
+#: engine/emoji_picker.py:329
 msgid "Quit"
 msgstr "ବନ୍ଦ"
 
-#: engine/emoji_picker.py:338
+#: engine/emoji_picker.py:339
 msgid "Search for emoji"
 msgstr "ଇମୋଜି ପାଇଁ ଖୋଜନ୍ତୁ"
 
-#: engine/emoji_picker.py:350
+#: engine/emoji_picker.py:351
 msgid "Set the font to display emoji"
 msgstr "ଅକ୍ଷର ଶୈଳୀକୁ  ଇମୋଜୀ ଦର୍ଶାଇବା ପାଇଁ ଧାର୍ଯ୍ୟ କରନ୍ତୁ"
 
-#: engine/emoji_picker.py:358
+#: engine/emoji_picker.py:359
 msgid "Set font size"
 msgstr "ଅକ୍ଷର ଶୈଳୀର ଆକାର ଧାର୍ଯ୍ୟ କରନ୍ତୁ"
 
@@ -57,11 +57,11 @@ msgstr "ଅକ୍ଷର ଶୈଳୀର ଆକାର ଧାର୍ଯ୍ୟ କ�
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:379
+#: engine/emoji_picker.py:380
 msgid "Fallback"
 msgstr "ପୂର୍ବନିର୍ଦ୍ଧାରିତ"
 
-#: engine/emoji_picker.py:381
+#: engine/emoji_picker.py:382
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -69,64 +69,64 @@ msgstr ""
 "ପୂର୍ବନିର୍ଦ୍ଧାରିତ ଫଣ୍ଟକୁ ଇମୋଜୀ କିମ୍ୱା ଇମୋଜୀ ଅନୁକ୍ରମମାନର ଅଂଶମାନଙ୍କ ପାଇଁ ବ୍ୟବହାର କରିବା ଯାହା "
 "ବଛାଯାଇଥିବା ଫଣ୍ଟ ଦ୍ୱାରା ଦର୍ଶାଯାଇ ପାରୁନାହିଁ।"
 
-#: engine/emoji_picker.py:451
+#: engine/emoji_picker.py:452
 msgid "Recently used"
 msgstr "ସାମ୍ପ୍ରତିକ ଭାବେ ବ୍ୟବହୃତ"
 
-#: engine/emoji_picker.py:630
+#: engine/emoji_picker.py:631
 msgid "Categories"
 msgstr "ଶ୍ରେଣୀଭୁକ୍ତମାନ"
 
-#: engine/emoji_picker.py:631
+#: engine/emoji_picker.py:632
 msgid "Unicode categories"
 msgstr "ୟୁନିକୋଡ଼ ଶ୍ରେଣୀଭୁକ୍ତମାନ"
 
-#: engine/emoji_picker.py:632
+#: engine/emoji_picker.py:633
 msgid "Keywords"
 msgstr "ମୁଖ୍ୟଶବ୍ଦମାନ"
 
-#: engine/emoji_picker.py:672
+#: engine/emoji_picker.py:673
 msgid "Fonts used to render this emoji:"
 msgstr "ଏହି ଇମୋଜୀକୁ ପ୍ରତ୍ୟପର୍ଣ କରିବା ପାଇଁ ବ୍ୟବହୃତ ଅକ୍ଷର ଶୈଳୀମାନ:"
 
-#: engine/emoji_picker.py:689
+#: engine/emoji_picker.py:690
 msgid "Unicode Version:"
 msgstr "ୟୁନିକୋଡ଼ ପ୍ରକାରାନ୍ତର:"
 
-#: engine/emoji_picker.py:711 engine/emoji_picker.py:1825
+#: engine/emoji_picker.py:712 engine/emoji_picker.py:1826
 msgid "Left click to copy"
 msgstr "ନକଲ କରିବା ପାଇଁ ବାମକୁ ଚିପନ୍ତୁ"
 
-#: engine/emoji_picker.py:714
+#: engine/emoji_picker.py:715
 msgid "Long press or middle click for skin tones"
 msgstr "ଲମ୍ବା ଦବାନ୍ତୁ କିମ୍ବା ମଝି କ୍ଲିକ କରନ୍ତୁ skin  tone ପାଇଁ"
 
-#: engine/emoji_picker.py:715
+#: engine/emoji_picker.py:716
 msgid "Right click for info"
 msgstr "ତଥ୍ୟ ପାଇଁ ଡ଼ାହାଣକୁ ଚିପନ୍ତୁ"
 
-#: engine/emoji_picker.py:1203
+#: engine/emoji_picker.py:1204
 msgid "Search Results"
 msgstr "ଅନୁସନ୍ଧାନ ଫଳମାନ"
 
-#: engine/emoji_picker.py:1207
+#: engine/emoji_picker.py:1208
 msgid "Search produced empty result."
 msgstr "ଅନୁସନ୍ଧାନ ଶୂନ୍ୟ ଫଳ ପ୍ରକାଶ କରିଛି।"
 
-#: engine/emoji_picker.py:1480 engine/emoji_picker.py:1607
+#: engine/emoji_picker.py:1481 engine/emoji_picker.py:1608
 msgid "Copied to clipboard!"
 msgstr "କ୍ଲିପିବୋର୍ଡ଼କୁ ପ୍ରତିଲିପି କରଣ ସମାପ୍ତ !"
 
-#: engine/emoji_picker.py:1935
+#: engine/emoji_picker.py:1936
 msgid "Lookup on emojipedia"
 msgstr "ଇମୋଜୀପିଡ଼ିଆରେ ଅନୁସନ୍ଧାନ କରନ୍ତୁ"
 
-#: engine/emoji_picker.py:2060 engine/emoji_picker.py:2061
-#: engine/emoji_picker.py:2062 setup/main.py:1356
+#: engine/emoji_picker.py:2061 engine/emoji_picker.py:2062
+#: engine/emoji_picker.py:2063 setup/main.py:1356
 msgid "System default"
 msgstr "ତନ୍ତ୍ର ପୂର୍ବନିଦ୍ଧାରିତ"
 
-#: engine/emoji_picker.py:2196
+#: engine/emoji_picker.py:2197
 msgid "Set Font"
 msgstr "ଅକ୍ଷର ଶୈଳୀ ଧାର୍ଯ୍ୟ କରନ୍ତୁ"
 
@@ -225,80 +225,80 @@ msgstr "ଗୁଗଲ speech-to-text ତ୍ରୁଟି। debug.log ଦେଖନ
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:789 engine/itb_emoji.py:790 engine/itb_emoji.py:791
-#: engine/itb_emoji.py:1005
+#: engine/itb_emoji.py:790 engine/itb_emoji.py:791 engine/itb_emoji.py:792
+#: engine/itb_emoji.py:1006
 msgid "people"
 msgstr "ଲୋକମାନେ"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:792 engine/itb_emoji.py:1001
+#: engine/itb_emoji.py:793 engine/itb_emoji.py:1002
 msgid "nature"
 msgstr "ପ୍ରକୃତି"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:793 engine/itb_emoji.py:997
+#: engine/itb_emoji.py:794 engine/itb_emoji.py:998
 msgid "food"
 msgstr "ଖାଦ୍ୟ"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:794 engine/itb_emoji.py:1011
+#: engine/itb_emoji.py:795 engine/itb_emoji.py:1012
 msgid "travel"
 msgstr "ଭ୍ରମଣ"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:795 engine/itb_emoji.py:804 engine/itb_emoji.py:993
+#: engine/itb_emoji.py:796 engine/itb_emoji.py:805 engine/itb_emoji.py:994
 msgid "activity"
 msgstr "କାର୍ଯ୍ୟକ୍ରମ"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:796 engine/itb_emoji.py:1003
+#: engine/itb_emoji.py:797 engine/itb_emoji.py:1004
 msgid "objects"
 msgstr "ବସ୍ତୁମାନ"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:797 engine/itb_emoji.py:1009
+#: engine/itb_emoji.py:798 engine/itb_emoji.py:1010
 msgid "symbols"
 msgstr "ଚିହ୍ନମାନ"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:798 engine/itb_emoji.py:995
+#: engine/itb_emoji.py:799 engine/itb_emoji.py:996
 msgid "flags"
 msgstr "ଧ୍ବଜାମାନ"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:799 engine/itb_emoji.py:800 engine/itb_emoji.py:999
+#: engine/itb_emoji.py:800 engine/itb_emoji.py:801 engine/itb_emoji.py:1000
 msgid "modifier"
 msgstr "ରୂପାନ୍ତରକାରୀ"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:801 engine/itb_emoji.py:1007
+#: engine/itb_emoji.py:802 engine/itb_emoji.py:1008
 msgid "regional"
 msgstr "ଆଞ୍ଚଳିକ"
 
-#: engine/itb_util.py:3683 engine/itb_util.py:4336
+#: engine/itb_util.py:3707 engine/itb_util.py:4366
 msgid "File not found"
 msgstr "ତଥ୍ୟସମୂହ(ଫାଇଲ) ମିଳିଲା ନାହିଁ"
 
-#: engine/itb_util.py:3686 engine/itb_util.py:4339
+#: engine/itb_util.py:3710 engine/itb_util.py:4369
 msgid "Permission error"
 msgstr "ଅନୁମତି ତ୍ରୁଟି"
 
-#: engine/itb_util.py:3689 engine/itb_util.py:4342
+#: engine/itb_util.py:3713 engine/itb_util.py:4372
 msgid "Unicode decoding error"
 msgstr "ୟୁନିକୋଡ଼ ଅବସଙ୍କେତିକରଣ ତ୍ରୁଟି"
 
-#: engine/itb_util.py:3692 engine/itb_util.py:4345
+#: engine/itb_util.py:3716 engine/itb_util.py:4375
 msgid "Unknown error"
 msgstr "ଅଜ୍ଞାତ ତ୍ରୁଟି"
 
-#: engine/itb_util.py:4313
+#: engine/itb_util.py:4343
 msgid "Native Keyboard"
 msgstr "ଆଞ୍ଚଳିକ କୀବୋର୍ଡ଼"
 
-#: engine/itb_util.py:4315
+#: engine/itb_util.py:4345
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -311,38 +311,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:4849
+#: engine/itb_util.py:4879
 msgid "Key input"
 msgstr "କୀ ନିବେଶ"
 
-#: engine/itb_util.py:4855
+#: engine/itb_util.py:4885
 msgid "Cancel"
 msgstr "ରଦ୍ଦ"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4862
+#: engine/itb_util.py:4892
 msgid "Please press a key (or a key combination)"
 msgstr "ଦୟାକରି ଏକ କୀ ଦବାନ୍ତୁ (କିମ୍ବା ଏକ କୀ ମିଶ୍ରଣ)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:4867
+#: engine/itb_util.py:4897
 msgid "The dialog will be closed when the key is released"
 msgstr "ଡ଼ାଇଲଗ ବନ୍ଦ ହୋଇଯିବ ଯେତେବେଳେ କୀ କୁ ଛଡ଼ାଯିବ"
 
-#: engine/itb_util.py:4899
+#: engine/itb_util.py:4929
 msgid "A completion input method to speedup typing."
 msgstr "ଏକ ସମ୍ପତ୍ତିକରଣ ନିବେଶ ବିଧି ଲେଖାର ଗତିକୁ ବୃଧି କରିବା ପାଇଁ।"
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:4908
+#: engine/itb_util.py:4938
 msgid "translator-credits"
 msgstr "ଅନୁବାଦକାରୀ-ସ୍ବୀକୃତିମାନ"
 
-#: engine/itb_util.py:4916
+#: engine/itb_util.py:4946
 msgid "Online documentation:"
 msgstr "ଅନଲାଇନ ଦସ୍ତାବିଜ଼:"
 
