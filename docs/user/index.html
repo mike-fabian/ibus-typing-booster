@@ -654,20 +654,37 @@ is used <strong>instead</strong> of the system default.</p><p>For example, a use
 # %S  expands to the name of the system directory for Compose files (i.e.,
 #     &quot;/usr/share/X11/locale&quot;)
 
-include &quot;%L&quot;
+include &quot;/%L&quot;  # The leading / is to make Gtk load the system compose file!
 
 &lt;Multi_key&gt; &lt;underscore&gt; &lt;period&gt; &lt;e&gt; : &quot;ė̄&quot; # U+0117 LATIN SMALL LETTER E WITH DOT ABOVE U+0304 COMBINING MACRON
 &lt;Multi_key&gt; &lt;m&gt; &lt;o&gt; &lt;n&gt; &lt;k&gt; &lt;e&gt; &lt;y&gt; &lt;s&gt; : &quot;🙈🙉🙊&quot;
 &lt;Multi_key&gt; &lt;m&gt; &lt;o&gt; &lt;u&gt; &lt;s&gt; &lt;e&gt; : &quot;🐁&quot; # U+1F401 MOUSE
 &lt;Multi_key&gt; &lt;m&gt; &lt;o&gt; &lt;u&gt; &lt;s&gt; &lt;e&gt; : &quot;🐭&quot; # U+1F42D MOUSE FACE
-</code></pre><p>The <code>include "%L"</code> includes the system compose file for the current locale,
+# In en_US.UTF-8 locale, the system compose file
+# /usr/share/X11/locale/&lt;localename&gt;/Compose included above contains
+#     &lt;Multi_key&gt; &lt;p&gt; &lt;o&gt; &lt;o&gt;                 : &quot;💩&quot;  U1F4A9 # PILE OF POO
+# One can remove unwanted compose sequences by re-defining them with
+# an empty result:
+&lt;Multi_key&gt; &lt;p&gt; &lt;o&gt; &lt;o&gt; : &quot;&quot; # Remove unwanted compose sequence
+</code></pre><p>The <code>include "/%L"</code> includes the system compose file for the current locale,
 the lines below add user defined sequences. If an identical sequence
 are defined again with a different result, the last definition “wins”.
 I.e. of the two lines defining <code>&lt;Multi_key> &lt;m> &lt;o> &lt;u> &lt;s> &lt;e></code>,
-the second line overrides the first one.</p><p>As the user definitions are all <strong>below</strong> the <code>include "%L"</code> which
+the second line overrides the first one.</p><p>As the user definitions are all <strong>below</strong> the <code>include "/%L"</code> which
 reads the system default, the user definitions override any system
-default sequences in case there is a conflict.</p><p>If the <code>include "%L"</code> were not there in <code>~/.XCompose</code>, <strong>only</strong> the
-user definitions in <code>~/.XCompose</code> would be available!</p><h6 id=5_4>5_4</h6><h2 id=special-compose-features-in-typing-booster>Special “Compose” features in Typing Booster</h2><p>This section explains some details about the “Compose” implementation
+default sequences in case there is a conflict.</p><p>If the <code>include "/%L"</code> were not there in <code>~/.XCompose</code>, <strong>only</strong> the
+user definitions in <code>~/.XCompose</code> would be available!</p><p>💡 <strong>Tiny extensions of the syntax described in <a href=https://www.mankier.com/5/Compose>man page for compose</a></strong>:</p><ul><li><p>Gtk and Typing Booster</p><p>Both Gtk and Typing Booster make it possible to remove unwanted
+compose sequences by re-defining them as sequences with an empty result
+like:</p><p><code>&lt;Multi_key> &lt;p> &lt;o> &lt;o> : ""</code></p><p>That does <strong>not</strong> mean that this sequence still exists and just
+produces an empty result, the effect is as if the
+sequence <code>&lt;Multi_key> &lt;p> &lt;o> &lt;o></code> had not been defined at all.</p></li><li><p>Only Gtk</p><p>The <code>include "%L"</code> statement in Gtk has the special meaning to include
+the <strong>builtin</strong> compose sequences of Gtk. It does <strong>not</strong> include
+the system compose file <code>/usr/share/X11/locale/&lt;localename>/Compose</code>.
+If you use the compose support in Gtk and want to use the locale specific
+system compose file, you can use <code>include "/%L"</code>. The leading <code>/</code> forces
+loading the locale specific system compose file.
+For the compose support in Typing Booster and IBus, the leading <code>/</code> makes
+no difference.</p></li></ul><h6 id=5_4>5_4</h6><h2 id=special-compose-features-in-typing-booster>Special “Compose” features in Typing Booster</h2><p>This section explains some details about the “Compose” implementation
 in Typing Booster which are a bit special.</p><h6 id=5_4_1>5_4_1</h6><h2 id=why-typing-booster-has-its-own-compose-implementation>Why Typing Booster has its own “Compose” implementation</h2><p>Typing Booster needed its own implementation of compose sequences
 because it needs full control about such compose sequences <strong>inside</strong>
 an already open preëdit.</p><p>For example, if one wants to type the German word “grün” and starts
