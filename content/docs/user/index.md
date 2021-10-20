@@ -5,7 +5,7 @@ date: 2021-09-30
 
 ## Contents
 
-1. [Installing ibus-typing-booster](#0)
+1. [Installing ibus-typing-booster](#1)
 1. [Adding ibus-typing-booster to your desktop](#1)
     * [When using the Gnome3 desktop](#1_1)
     * [When using older Gnome3 desktops like in Ubuntu 21.04](#1_2)
@@ -43,26 +43,27 @@ date: 2021-09-30
         * [Show possible completions of compose sequences](#5_4_5)
             * [A peculiarity of Gnome3 and compose completions](#5_4_5_1)
         * [Optional colour for the compose preëdit](#5_4_6)
-1. [Unicode symbols and emoji predictions](#6)
-    * [Emoji input](#6_1)
-    * [Emoji input fuzzy matching](#6_2)
-    * [Emoji input using multiple keywords](#6_3)
-    * [Looking up related emoji](#6_4)
-    * [Multilingual emoji input](#6_5)
-        * [Emoji input using German and English](#6_5_1)
-        * [Emoji input using Hindi and English](#6_5_2)
-        * [Emoji input using Japanese](#6_5_3)
-    * [Unicode symbol input](#6_6)
-    * [Unicode code point input](#6_7)
-    * [Quickly toggling emoji mode on and off](#6_8)
-    * [Emoji picker](#6_9)
-    * [Emoji fonts](#6_10)
-        * [<span style="color:red">Historic:</span> Showing emoji in colour](#6_10_1)
-1. [Using NLTK to find related words](#7)
-1. [Speech recognition](#8)
+1. [Unicode symbols and emoji predictions](#7)
+    * [Emoji input](#7_1)
+    * [Emoji input fuzzy matching](#7_2)
+    * [Emoji input using multiple keywords](#7_3)
+    * [Looking up related emoji](#7_4)
+    * [Multilingual emoji input](#7_5)
+        * [Emoji input using German and English](#7_5_1)
+        * [Emoji input using Hindi and English](#7_5_2)
+        * [Emoji input using Japanese](#7_5_3)
+    * [Unicode symbol input](#7_6)
+    * [Unicode code point input](#7_7)
+    * [Quickly toggling emoji mode on and off](#7_8)
+    * [Emoji picker](#7_9)
+    * [Emoji fonts](#7_10)
+        * [<span style="color:red">Historic:</span> Showing emoji in colour](#7_10_1)
+1. [The Gnome on-screen keyboard, enabling and using it](#8)
+1. [Using NLTK to find related words](#9)
+1. [Speech recognition](#10)
 ---------
 
-###### 0
+###### 1
 ## Installing ibus-typing-booster
 
 For most distributions, there are binary packages available
@@ -2317,7 +2318,7 @@ Using colour in the compose part of the preëdit makes it much more obvious
 which part of the preëdit was already there before the compose sequence was
 started and which part is an unfinished compose sequence.
 
-###### 6
+###### 7
 ## Unicode symbols and emoji predictions
 
 ibus-typing-booster supports prediction of emoji and Unicode symbols as well (actually almost all Unicode characters except letters can be typed this way). This can be enabled or disabled with the option “Emoji predictions” in the setup tool which is on by default.
@@ -2325,7 +2326,7 @@ ibus-typing-booster supports prediction of emoji and Unicode symbols as well (ac
 To make all emoji display correctly, you need good fonts which contain all emoji, see Emoji fonts for details about available fonts and font setup.
 
 
-###### 6_1
+###### 7_1
 ### Emoji input
 
 {{< video label="Typing Emoji in English with Emoji option on" webm="/videos/user-docs/emoji-english-emoji-option-on.webm" >}}
@@ -2354,7 +2355,7 @@ slows down the search for predictions, you might want to look
 at [Quickly toggling emoji mode on and off](#6_8), especially if you
 use emoji only occasionally.
 
-###### 6_2
+###### 7_2
 ## Emoji input fuzzy matching
 
 {{< video label="Emoji input fuzzy matching" webm="/videos/user-docs/emoji-english-fuzzy-castle.webm" >}}
@@ -2368,7 +2369,7 @@ spelled correctly. Nevertheless, one gets the match 🏰 (U+1F3F0
 EUROPEAN CASTLE).
 
 
-###### 6_3
+###### 7_3
 ### Emoji input using multiple keywords
 
 {{< video label="Emoji input using multiple keywords" webm="/videos/user-docs/emoji-english-multiple-keywords-castle-japanese.webm" >}}
@@ -2386,7 +2387,7 @@ EUROPEAN CASTLE). If this is not what we wanted we can type
 “castle_japanese” (or “japanese_castle”) to get 🏯 (U+1F3EF JAPANESE
 CASTLE).
 
-###### 6_4
+###### 7_4
 ### Looking up related emoji
 
 {{< video label="Looking up related emoji" webm="/videos/user-docs/related-emoji.webm" >}}
@@ -2415,10 +2416,10 @@ gives us emoji for other types of reptiles and related animals. By
 typing the “Escape” key, one can go back to the original list.
 
 
-###### 6_5
+###### 7_5
 ### Multilingual emoji input
 
-###### 6_5_1
+###### 7_5_1
 #### Emoji input using German and English
 
 {{< video label="Emoji input using German and English" webm="/videos/user-docs/emoji-german-english.webm" >}}
@@ -2434,7 +2435,7 @@ typing “Schloss” not only matches 🏰 (U+1F3F0 EUROPEAN CASTLE) and 🏯
 (U+1F3EF JAPANESE CASTLE but also 🔓 (U+1F513 OPEN LOCK) and other
 lock emoji.
 
-###### 6_5_2
+###### 7_5_2
 #### Emoji input using Hindi and English
 
 {{< video label="Emoji input using Hindi and English" webm="/videos/user-docs/emoji-hindi-english.webm" >}}
@@ -2465,7 +2466,7 @@ Typing Control+Down then changes the priority of the input methods and
 puts “NoIME” on top which reveals that “folded_hands” was actually
 typed as this is now shown in the preëdit.
 
-###### 6_5_3
+###### 7_5_3
 #### Emoji input using Japanese
 
 {{< video label="Emoji input using Japanese" webm="/videos/user-docs/emoji-japanese.webm" >}}
@@ -2516,7 +2517,7 @@ highest priority in the setup tool. When the Japanese dictionary had
 the highest priority in the setup tool, the related emoji would be
 shown with their Japanese names.
 
-###### 6_6
+###### 7_6
 ### Unicode symbol input
 
 {{< video label="Unicode symbol input" webm="/videos/user-docs/unicode-symbol-input.webm" >}}
@@ -2550,7 +2551,7 @@ Finally “radical_turtle” is typed which finds the CJK radicals for
 Anything in Unicode except normal letters is possible.
 
 
-###### 6_7
+###### 7_7
 ### Unicode code point input
 
 {{< video label="Unicode code point input" webm="/videos/user-docs/unicode-code-point-input.webm" >}}
@@ -2582,7 +2583,7 @@ Then “2019” is typed which matches ’ U+2019 RIGHT SINGLE QUOTATION MARK.
 
 Then “20B9” is typed which matches ₹ U+20B9 INDIAN RUPEE SIGN.
 
-###### 6_8
+###### 7_8
 ### Quickly toggling emoji mode on and off
 
 {{< video label="Quickly toggling emoji mode on and off" webm="/videos/user-docs/emoji-quick-toggle.webm" >}}
@@ -2616,7 +2617,7 @@ Using these trailing underscores “_” temporarily turns on emoji search
 just for this one lookup.
 
 
-###### 6_9
+###### 7_9
 ### Emoji picker
 
 {{< video label="Emoji picker" webm="/videos/user-docs/emoji-picker.webm" >}}
@@ -2740,7 +2741,7 @@ graphical user interface.
 
 For more about emoji fonts and colour, see [Emoji fonts](#6_10).
 
-###### 6_10
+###### 7_10
 ### Emoji fonts
 
 Good fonts to display emoji:
@@ -2793,7 +2794,7 @@ The following video shows the above mentioned fonts used in “emoji-picker”:
 
 {{< video label="Emoji font selection in emoji-picker" webm="/videos/user-docs/emoji-font-selection-in-emoji-picker.webm" >}}
 
-###### 6_10_1
+###### 7_10_1
 #### <span style="color:red">Historic:</span> Showing emoji in colour
 
 Once upon a time it was not possible at all to display colourful emoji
@@ -2817,7 +2818,101 @@ the “Noto Color Emoji” the highest priority.
 Luckily these times are long gone and as far as I know all recent
 Linux distributions display nice, colourful emoji by default now.
 
-###### 7
+###### 8
+## The Gnome on-screen keyboard, enabling and using it
+
+{{<
+video label="Enabling and using the Gnome on-screen keyboard"
+webm="/videos/user-docs/enabling-and-using-the-gnome-on-screen-keyboard.webm"
+>}}
+
+This video shows how one can enable the Gnome on-screen keyboard and
+use it with ibus-typing-booster.
+
+To enable the Gnome on-screen keyboard, open the Gnome control center
+and select the “Accessibility” tab. Scroll down to the “Typing” section and
+enable the slider “Screen Keyboard”.
+
+If no other accessibility features had already been enabled before, the
+accessibility icon now appears in the Gnome panel. Clicking on that
+accessibility icon pops down a menu where you can see that the “Screen
+Keyboard” is now enabled.
+
+Now focus on some input area, I use gedit in the video.
+
+The on-screen keyboard should now always be visible when the focus is
+on an input area.
+
+If an ibus input method like ibus-typing-booster is enabled, this
+input method is used when clicking the keys on the on-screen keyboard.
+
+Without the on-screen keyboard, Typing Booster pops up lists of
+candidates for completion **or** shows completions inline if the
+option “☑️ Use inline completion” is enabled.
+
+When Typing Booster would pop up a candidate list during normal use
+with a hardware keyboard, this list is shown instead above the keys
+of the on-screen keyboard.
+
+**But** when “☑️ Use inline completion” is enabled, Typing Booster
+often shows the “best” completion inline and does **not** pop up a
+candidate list. Nothing is displayed above the keys of the on-screen
+keyboard in that case because the list of the other completion
+candidates is still hidden. When using a hardware keyboard, one can
+type `Tab` to request the list for the other candidates to be
+shown. But the on-screen keyboard has no Tab key! Changing this to a
+different key in the settings of Typing Booster does not help because
+the on-screen keyboard has so few keys, there is no spare, unneeded
+key one could use instead of `Tab` to request a candidate list.  So
+one should **disable** the option “☐️ Use inline completion” if one
+wants to use Typing Booster with the on-screen keyboard. Unfortunately
+Typing Booster has no way to detect whether an on-screen keyboard is
+visible or not so it cannot switch that option off automatically.
+
+There are currently many other annoying problems and limitations when
+using the on-screen keyboard with input methods:
+
+* Completely broken when using Gnome on Wayland. See: [https://bugzilla.redhat.com/show_bug.cgi?id=2015166](https://bugzilla.redhat.com/show_bug.cgi?id=2015166).
+
+* As can be seen in the video, when a candidate is shown which has
+  more than one word, it is hard to see that it is a single
+  candidate. For example, in the video when `E` is typed, the
+  candidate list shows “English text English E EB EC EM”. The first
+  candidate is actually “English text”, i.e. it is a two word
+  candidate, but that is hard to see. It would be much better if the
+  candidates were rendered into some kind of boxes like those used for
+  the keys of the on-screen keyboard for example.
+  See: [https://bugzilla.redhat.com/show_bug.cgi?id=2015978](https://bugzilla.redhat.com/show_bug.cgi?id=2015978)
+
+* The space above the keys of the on-screen keyboard can only show a
+  small number of candidates. There may be a lot more candidates. But
+  these candidates cannot be accessed. In a “normal” candidate list
+  shown when using a hardware keyboard, one can scroll down to the
+  next page of candidates by either using the `Page_Down` key, click
+  on the arrow down button with the mouse or use the mouse wheel. But
+  none of this is possible with the on-screen keyboard, it has no
+  `Page_Down` key, the mouse wheel does nothing, and there are no
+  arrow-buttons to click to show the next page. I think the on-screen
+  keyboard should add buttons with left and right arrows to the left
+  and the right of the horizontal row of candidates to switch between
+  multiple pages of candidates. When using Typing Booster, one can
+  often avoid having to go to the next page of candidates by being
+  more specific and typing a few keys more so that the wanted
+  candidate finally appears in the first page. But with many input
+  methods, especially with Japanese input methods like ibus-anthy or
+  ibus-kkc, being able to go to the next page of candidates is
+  absolutely essential.
+  See: [https://bugzilla.redhat.com/show_bug.cgi?id=2016001](https://bugzilla.redhat.com/show_bug.cgi?id=2016001)
+
+* The candidate list does not disappear when it should. In a situation
+  when a candidate list disappears when using a hardware keyboard, it
+  should also disappear when using the on-screen keyboard. For
+  example, when a candidate is committed, the candidate list should
+  disappear.  But on the on-screen keyboard the candidate list stays
+  even after a commit happened. See:
+  [https://bugzilla.redhat.com/show_bug.cgi?id=2015149](https://bugzilla.redhat.com/show_bug.cgi?id=2015149)
+
+###### 9
 ## Using NLTK to find related words
 
 {{<
@@ -2844,7 +2939,7 @@ figure src="/images/user-docs/nltk-wordnet-corpus-download.png"
 caption="Downloading the Wordnet corpus"
 >}}
 
-###### 8
+###### 10
 ## Speech recognition
 
 ibus-typing-booster supports speech recognition using the [Google Cloud Speech-to-Text](https://cloud.google.com/speech-to-text/) service which [supports 120 languages](https://cloud.google.com/speech-to-text/docs/languages).
