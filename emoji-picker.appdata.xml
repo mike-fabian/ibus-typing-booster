@@ -22,6 +22,45 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.15.0" date="2021-11-16" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.15.0</url>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/251">
+          github-issues#251: Make matching in the database case
+          insensitive
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/252">
+          github-issues#252: Remove accents for “input_phrase” when
+          learning from a text file
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/251">
+          github-issues#251: Make matching in dictionaries case
+          insensitive.
+        </issue>
+        <issue>
+          When learning data from a text file, don’t put timestamp to
+          “now” for changed and new rows: For new entries use a
+          timestamp in the time range of the existing database. Don’t
+          change the timestamp of existing entries at all
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/239">
+          github-issues#239: Cleanup user database when Typing Booster starts.
+          Also use the sqlite3 “VACUUM” command to rebuild the database
+          file, repacking it into a minimal amount of disk space
+        </issue>
+        <issue>
+          Add tabstatistics.py, command line tool to display some
+          information about the database contents
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/250">
+          github-issues#250: Use python3-pycountry as a fallback to
+          langtable
+        </issue>
+      </issues>
+    </release>
     <release version="2.14.13" date="2021-09-29" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

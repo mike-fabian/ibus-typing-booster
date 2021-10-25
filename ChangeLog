@@ -1,4 +1,15 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 16 Nov 2021 Released 2.15.0
+* Make matching in the database case insensitive (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/251)
+* Remove accents for “input_phrase” when learning from a text file (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/252)
+* Make matching in dictionaries case insensitive (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/251)
+* When learning data from a text file, don’t put timestamp to “now” for changed and new rows: For new entries use a timestamp in the time range of the existing database. Don’t change the timestamp of existing entries at all
+* Cleanup user database when Typing Booster starts (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/239)
+* Also use the sqlite3 “VACUUM” command to rebuild the database file, repacking it into a minimal amount of disk space
+* Add tabstatistics.py, command line tool to display some information about the database contents
+* Use python3-pycountry as a fallback to langtable (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/250)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 29 Sep 2021 Released 2.14.13
 * Skip emoji tests which rely on the enchant results if enchants results change (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/244)
 * Make it possible to remove unwanted compose sequences by using an empty replacement text (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/245)
