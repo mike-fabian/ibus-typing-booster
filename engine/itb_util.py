@@ -80,6 +80,20 @@ try:
 except (ImportError,):
     IMPORT_QUEUE_SUCCESSFUL = False
 
+IMPORT_LANGTABLE_SUCCESSFUL = False
+try:
+    import langtable # type: ignore
+    IMPORT_LANGTABLE_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_LANGTABLE_SUCCESSFUL = False
+
+IMPORT_PYCOUNTRY_SUCCESSFUL = False
+try:
+    import pycountry # type: ignore
+    IMPORT_PYCOUNTRY_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_PYCOUNTRY_SUCCESSFUL = False
+
 LOGGER = logging.getLogger('ibus-typing-booster')
 
 DOMAINNAME = 'ibus-typing-booster'
@@ -2107,13 +2121,12 @@ Locale = collections.namedtuple(
     'Locale',
     ['language', 'script', 'territory', 'variant', 'encoding'])
 
-def parse_locale(localeId):
+def parse_locale(localeId: str):
     '''
     Parses a locale name in glibc or CLDR format and returns
     language, script, territory, variant, and encoding
 
     :param localeId: The name of the locale
-    :type localeId: string
     :return: The parts of the locale: language, script, territory, variant, encoding
     :rtype: A namedtuple of strings
             Locale(language=string,
@@ -2394,6 +2407,172 @@ def expand_languages(languages: List[str]) -> List[str]:
     if 'en' not in expanded_languages:
         expanded_languages.append('en')
     return expanded_languages
+
+def locale_text_to_match(localeId: str) -> str:
+    '''
+    Returns a text which can be matched against typed user input
+    to check whether the user might be looking for this locale
+
+    :param localeId: The name of the locale
+
+    Examples:
+
+    >>> old_lc_all = os.environ.get('LC_ALL')
+    >>> os.environ['LC_ALL'] = 'de_DE.UTF-8'
+
+    When using langtable:
+
+    >> locale_text_to_match('fr_FR')
+    'fr_fr franzosisch (frankreich) francais (france) french (france)'
+
+    >> locale_text_to_match('t')
+    't others, miscellaneous, various, diverse weiteres, sonstiges, verschiedenes, anderes, ubriges'
+
+    When using pycountry
+
+    >> locale_text_to_match('fr_FR')
+    'fr_fr french franzosisch francais france frankreich france'
+
+    >>> if old_lc_all:
+    ...     os.environ['LC_ALL'] = old_lc_all
+    ... else:
+    ...     # unneeded return value assigned to variable
+    ...     _ = os.environ.pop('LC_ALL', None)
+    '''
+    effective_lc_messages = get_effective_lc_messages()
+    text_to_match = localeId.replace(' ', '')
+    if localeId == 't':
+        text_to_match += ' ' + (
+            'Others, Miscellaneous, Various, Diverse'
+            # Translators: This is a string is never displayed
+            # anywhere, it is only for searching.
+            #
+            # It should contain words which could mean
+            # something like “Other” or “Various”.  When
+            # something is entered into search field to find
+            # input methods, and this something matches
+            # anything in the original English string *or* its
+            # translation, all m17n input methods which are
+            # not for a single language but for multiple
+            # languages or for some other special purpose are
+            # listed. For example input methods like these:
+            #
+            # • t-latn-pre:  Prefix input method for
+            #                Latin based languages
+            # • t-latn-post: Postfix input method for
+            #                Latin based languages
+            # • t-rfc1345:   Generic input method using
+            #                RFC1345 mnemonics.
+            # • t-unicode:   For Unicode characters by typing
+            #                character code
+            #
+            # The translation does not need to have the same
+            # number of words as the original English, any
+            # number of words is fine. It doesn’t matter if the words
+            # are seperated by punctuation or white space.
+            + ' ' + _('Others, Miscellaneous, Various, Diverse')
+            )
+    elif IMPORT_LANGTABLE_SUCCESSFUL:
+        query_languages = [effective_lc_messages, localeId, 'en']
+        for query_language in query_languages:
+            if query_language:
+                text_to_match += ' ' + langtable.language_name(
+                    languageId=localeId,
+                    languageIdQuery=query_language)
+    elif IMPORT_PYCOUNTRY_SUCCESSFUL:
+        locale = parse_locale(localeId)
+        if locale.language:
+            language = pycountry.languages.get(alpha_2=locale.language)
+            if not language:
+                language = pycountry.languages.get(alpha_3=locale.language)
+            if not language:
+                language = pycountry.languages.get(
+                    bibliographic=locale.language)
+            if language and language.name:
+                text_to_match += ' ' + language.name
+                gtrans = gettext.translation(
+                    'iso_639-3', fallback=True,
+                    languages=[effective_lc_messages])
+                text_to_match += ' ' + gtrans.gettext(language.name)
+                gtrans = gettext.translation(
+                    'iso_639-3', fallback=True,
+                    languages=[locale.language])
+                text_to_match += ' ' + gtrans.gettext(language.name)
+        if locale.territory:
+            country = pycountry.countries.get(alpha_2=locale.territory)
+            if not country:
+                country = pycountry.countries.get(alpha_3=locale.territory)
+            if country and country.name:
+                text_to_match += ' ' + country.name
+                gtrans = gettext.translation(
+                    'iso_3166', fallback=True,
+                    languages=[effective_lc_messages])
+                text_to_match += ' ' + gtrans.gettext(country.name)
+                gtrans = gettext.translation(
+                    'iso_3166', fallback=True,
+                    languages=[locale.language])
+                text_to_match += ' ' + gtrans.gettext(country.name)
+    return remove_accents(text_to_match).lower()
+
+def locale_language_description(localeId: str) -> str:
+    '''
+    Returns a description of the language of the locale
+
+    :param localeId: The name of the locale
+
+    Examples:
+
+    >>> old_lc_all = os.environ.get('LC_ALL')
+    >>> os.environ['LC_ALL'] = 'de_DE_IN.UTF-8'
+
+    >> locale_language_description('fr_FR')
+    'Französisch (Frankreich)'
+
+    >>> if old_lc_all:
+    ...     os.environ['LC_ALL'] = old_lc_all
+    ... else:
+    ...     # unneeded return value assigned to variable
+    ...     _ = os.environ.pop('LC_ALL', None)
+    '''
+    language_description = ''
+    effective_lc_messages = get_effective_lc_messages()
+    if IMPORT_LANGTABLE_SUCCESSFUL:
+        language_description = langtable.language_name(
+            languageId=localeId,
+            languageIdQuery=effective_lc_messages)
+        if not language_description:
+            language_description = langtable.language_name(
+                languageId=localeId, languageIdQuery='en')
+    elif IMPORT_PYCOUNTRY_SUCCESSFUL:
+        locale = parse_locale(localeId)
+        if locale.language:
+            language = pycountry.languages.get(alpha_2=locale.language)
+            if not language:
+                language = pycountry.languages.get(alpha_3=locale.language)
+            if not language:
+                language = pycountry.languages.get(
+                    bibliographic=locale.language)
+            if language and language.name:
+                gtrans = gettext.translation(
+                    'iso_639-3', fallback=True,
+                    languages=[effective_lc_messages])
+                language_description = gtrans.gettext(language.name)
+        if locale.territory:
+            country = pycountry.countries.get(alpha_2=locale.territory)
+            if not country:
+                country = pycountry.countries.get(alpha_3=locale.territory)
+            if country and country.name:
+                gtrans = gettext.translation(
+                    'iso_3166', fallback=True,
+                    languages=[effective_lc_messages])
+                cname_trans = gtrans.gettext(country.name)
+                language_description += (
+                    ' (' + cname_trans[0].upper() + cname_trans[1:]
+                    + ')')
+    if language_description:
+        language_description = (
+            language_description[0].upper() + language_description[1:])
+    return language_description
 
 def text_ends_a_sentence(text: str = '') -> bool:
     '''

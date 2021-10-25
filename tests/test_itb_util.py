@@ -40,6 +40,20 @@ try:
 except (ImportError,):
     IMPORT_DISTRO_SUCCESSFUL = False
 
+IMPORT_LANGTABLE_SUCCESSFUL = False
+try:
+    import langtable # type: ignore
+    IMPORT_LANGTABLE_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_LANGTABLE_SUCCESSFUL = False
+
+IMPORT_PYCOUNTRY_SUCCESSFUL = False
+try:
+    import pycountry # type: ignore
+    IMPORT_PYCOUNTRY_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_PYCOUNTRY_SUCCESSFUL = False
+
 sys.path.insert(0, "../engine")
 import itb_util
 sys.path.pop(0)
@@ -69,6 +83,36 @@ class ItbUtilTestCase(unittest.TestCase):
                 if ime not in available_imes:
                     missing_imes_for_defaults.append(ime)
         self.assertEqual([], missing_imes_for_defaults)
+
+    @unittest.skipUnless(
+        IMPORT_LANGTABLE_SUCCESSFUL or IMPORT_PYCOUNTRY_SUCCESSFUL,
+        'Skipping, requires langtable or pycountry.')
+    def test_locale_text_to_match(self):
+        if 'LC_ALL' in os.environ:
+            del os.environ['LC_ALL']
+        os.environ['LC_MESSAGES'] = 'de_DE.UTF-8'
+        text_to_match = itb_util.locale_text_to_match('fr_FR')
+        if IMPORT_LANGTABLE_SUCCESSFUL:
+            self.assertEqual(
+                'fr_fr franzosisch (frankreich) francais (france) french (france)',
+                text_to_match)
+        elif IMPORT_PYCOUNTRY_SUCCESSFUL:
+            self.assertEqual(
+                'fr_fr french franzosisch francais france frankreich france',
+                text_to_match)
+
+    @unittest.skipUnless(
+        IMPORT_LANGTABLE_SUCCESSFUL or IMPORT_PYCOUNTRY_SUCCESSFUL,
+        'Skipping, requires langtable or pycountry.')
+    def test_locale_language_description(self):
+        if 'LC_ALL' in os.environ:
+            del os.environ['LC_ALL']
+        os.environ['LC_MESSAGES'] = 'de_DE.UTF-8'
+        language_description = itb_util.locale_language_description('fr_FR')
+        if IMPORT_LANGTABLE_SUCCESSFUL or IMPORT_PYCOUNTRY_SUCCESSFUL:
+            self.assertEqual(
+                'Französisch (Frankreich)',
+                language_description)
 
     def test_is_right_to_left_messages(self):
         if 'LC_ALL' in os.environ:

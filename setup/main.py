@@ -64,13 +64,6 @@ from gi.repository import IBus
 from pkginstall import InstallPackages
 from i18n import _, init as i18n_init
 
-IMPORT_LANGTABLE_SUCCESSFUL = False
-try:
-    import langtable # type: ignore
-    IMPORT_LANGTABLE_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_LANGTABLE_SUCCESSFUL = False
-
 IMPORT_LIBVOIKKO_SUCCESSFUL = False
 try:
     # pylint: disable=unused-import
@@ -1988,17 +1981,9 @@ class SetupUI(Gtk.Window):
         if itb_util.is_right_to_left_messages():
             # Add U+200E LEFT-TO-RIGHT MARK to name and flag:
             row = chr(0x200F) + name + ' ' + chr(0x200F) + flag + ' '
-        if IMPORT_LANGTABLE_SUCCESSFUL:
-            language_description = langtable.language_name(
-                languageId=name,
-                languageIdQuery=itb_util.get_effective_lc_messages())
-            if not language_description:
-                language_description = langtable.language_name(
-                    languageId=name, languageIdQuery='en')
-            if language_description:
-                language_description = (
-                    language_description[0].upper() + language_description[1:])
-                row += ' ' + language_description
+        language_description = itb_util.locale_language_description(name)
+        if language_description:
+            row += ' ' + language_description
         row += ':  '
         row_item = ' ' + _('Spell checking') + ' '
         if name.split('_')[0] != 'fi':
@@ -2845,7 +2830,7 @@ class SetupUI(Gtk.Window):
 
         :param filter_text: The filter text to limit the dictionaries
                             listed. Only dictionaries which contain
-                            the filter text as a substring
+                            all the words from the filter text as substrings
                             (ignoring case and spaces) are listed.
         :type filter_text: String
         '''
@@ -2870,17 +2855,7 @@ class SetupUI(Gtk.Window):
             if name in self._dictionary_names:
                 continue
             filter_words = itb_util.remove_accents(filter_text.lower()).split()
-            text_to_match = name.replace(' ', '')
-            if IMPORT_LANGTABLE_SUCCESSFUL:
-                query_languages = [
-                    itb_util.get_effective_lc_messages(),
-                    name, 'en']
-                for query_language in query_languages:
-                    if query_language:
-                        text_to_match += langtable.language_name(
-                            languageId=name,
-                            languageIdQuery=query_language)
-            text_to_match = itb_util.remove_accents(text_to_match).lower()
+            text_to_match = itb_util.locale_text_to_match(name)
             filter_match = True
             for filter_word in filter_words:
                 if filter_word not in text_to_match:
@@ -3156,6 +3131,12 @@ class SetupUI(Gtk.Window):
                             listed. Only input methods which contain
                             the filter text as a substring
                             (ignoring case and spaces) are listed.
+                            The language part of the input method is
+                            expanded using itb_util.locale_text_to_match()
+                            into the full name of the language, in English,
+                            the endonym, and in the language of the current
+                            locale and all words from filter_text have to
+                            match something in there.
         '''
         self._input_methods_add_listbox_imes = []
         if self._input_methods_add_popover_scroll is None:
@@ -3182,47 +3163,7 @@ class SetupUI(Gtk.Window):
             row = self._fill_input_methods_listbox_row(ime)
             text_to_match = row.replace(' ', '')
             ime_language = ime.split('-')[0]
-            if ime_language == 't':
-                text_to_match += (
-                    'Others, Miscellaneous, Various, Diverse'
-                    # Translators: This is a string is never displayed
-                    # anywhere, it is only for searching.
-                    #
-                    # It should contain words which could mean
-                    # something like “Other” or “Various”.  When
-                    # something is entered into search field to find
-                    # input methods, and this something matches
-                    # anything in the original English string *or* its
-                    # translation, all m17n input methods which are
-                    # not for a single language but for multiple
-                    # languages or for some other special purpose are
-                    # listed. For example input methods like these:
-                    #
-                    # • t-latn-pre:  Prefix input method for
-                    #                Latin based languages
-                    # • t-latn-post: Postfix input method for
-                    #                Latin based languages
-                    # • t-rfc1345:   Generic input method using
-                    #                RFC1345 mnemonics.
-                    # • t-unicode:   For Unicode characters by typing
-                    #                character code
-                    #
-                    # The translation does not need to have the same
-                    # number of words as the original English, any
-                    # number of words is fine. It doesn’t matter if the words
-                    # are seperated by punctuation or white space.
-                    + _('Others, Miscellaneous, Various, Diverse')
-                    )
-            if IMPORT_LANGTABLE_SUCCESSFUL:
-                query_languages = [
-                    itb_util.get_effective_lc_messages(),
-                    ime_language, 'en']
-                for query_language in query_languages:
-                    if query_language:
-                        text_to_match += langtable.language_name(
-                            languageId=ime_language,
-                            languageIdQuery=query_language)
-            text_to_match = itb_util.remove_accents(text_to_match).lower()
+            text_to_match += ' ' + itb_util.locale_text_to_match(ime_language)
             filter_match = True
             for filter_word in filter_words:
                 if filter_word not in text_to_match:
