@@ -87,8 +87,7 @@ class EngineFactory(IBus.Factory):
 
     def do_destroy(self) -> None:
         '''Destructor, which finish some task for IME'''
-        if DEBUG_LEVEL > 1:
-            LOGGER.debug('EngineFactory.do_destroy()\n')
+        LOGGER.info('Syncing user database')
         for _db in self.dbdict:
             self.dbdict[_db].sync_usrdb()
         super(EngineFactory, self).destroy()
