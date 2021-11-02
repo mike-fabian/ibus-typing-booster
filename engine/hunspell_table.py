@@ -661,10 +661,15 @@ class TypingBoosterEngine(IBus.Engine):
         self._surrounding_text_old: Optional[Tuple[IBus.Text, int, int]] = None
         self._is_context_from_surrounding_text = False
 
+        self._clear_input_and_update_ui()
+
         LOGGER.info(
             '*** ibus-typing-booster %s initialized, ready for input: ***',
             itb_version.get_version())
-        self._clear_input_and_update_ui()
+
+        cleanup_database_thread = threading.Thread(
+            target=self.database.cleanup_database)
+        cleanup_database_thread.start()
 
     def _get_new_lookup_table(self) -> IBus.LookupTable:
         '''Get a new lookup table'''

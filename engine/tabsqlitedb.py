@@ -190,6 +190,7 @@ class TabSqliteDb:
                 PRAGMA journal_mode = WAL;
                 PRAGMA journal_size_limit = 1000000;
                 PRAGMA synchronous = NORMAL;
+                PRAGMA auto_vacuum = FULL;
                 ATTACH DATABASE "%s" AS user_db;
             ''' % self.user_db_file)
         except Exception:
@@ -222,6 +223,7 @@ class TabSqliteDb:
                 PRAGMA journal_mode = WAL;
                 PRAGMA journal_size_limit = 1000000;
                 PRAGMA synchronous = NORMAL;
+                PRAGMA auto_vacuum = FULL;
                 ATTACH DATABASE "%s" AS user_db;
             ''' % self.user_db_file)
         self.create_tables()
@@ -651,6 +653,7 @@ class TabSqliteDb:
                 PRAGMA journal_mode = WAL;
                 PRAGMA journal_size_limit = 1000000;
                 PRAGMA synchronous = NORMAL;
+                PRAGMA auto_vacuum = FULL;
             ''')
             database.commit()
 
@@ -965,3 +968,138 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         except Exception:
             LOGGER.exception('Unexpected error dumping database.')
             return
+
+    def cleanup_database(self) -> None:
+        '''
+        Cleanup user database by expiring entries which have not been
+        used for a long time.
+        '''
+        if self.user_db_file == ':memory:':
+            LOGGER.info('Database cleanup not needed for memory database.')
+            return
+        LOGGER.info('Database cleanup starting ...')
+        time_now = time.time()
+         # id, input_phrase, phrase, p_phrase, pp_phrase, user_freq, timestamp
+        rows: List[Tuple[int, str, str, str, str, int, float]] = []
+        try:
+            # SQLite objects created in a thread can only be used in
+            # that same thread.  As the database cleanup is usually
+            # called in a separate thread, get a new connection:
+            database = sqlite3.connect(self.user_db_file)
+            rows = database.execute("SELECT * FROM phrases;").fetchall()
+        except Exception:
+            LOGGER.exception('Exception when accessing database')
+            import traceback
+            traceback.print_exc()
+        if not rows:
+            return
+        rows = sorted(rows,
+                      key = lambda x: (
+                          x[5], # user_freq
+                          x[6], # timestamp
+                          x[0], # id
+                      ))
+        LOGGER.info('Total number of database rows to check=%s ', len(rows))
+        index = len(rows)
+        max_rows = 50000
+        number_delete_above_max = 0
+        rows_kept: List[Tuple[int, str, str, str, str, int, float]] = []
+        for row in rows:
+            user_freq = row[5]
+            if (index > max_rows
+                and user_freq < itb_util.SHORTCUT_USER_FREQ):
+                LOGGER.info('1st pass: deleting %s ', repr(row))
+                number_delete_above_max += 1
+                sqlstr_delete = 'DELETE from phrases WHERE id = :id;'
+                sqlargs_delete = {'id': row[0]}
+                try:
+                    database.execute(sqlstr_delete, sqlargs_delete)
+                except Exception:
+                    LOGGER.exception(
+                        '1st pass: exception deleting row from database.')
+                    import traceback
+                    traceback.print_exc()
+            else:
+                rows_kept.append(row)
+            index -= 1
+        LOGGER.info('1st pass: Number of rows deleted above maximum size='
+                    f'{number_delete_above_max}')
+        # As the first pass above removes rows sorted by count and
+        # then by timestamp, it will never remove rows with a higher
+        # count even if they are extremely old. Therefore, a second
+        # pass uses sorting only by timestamp in order to first decay and
+        # eventually remove some rows which have not been used for a
+        # long time as well, even if they have a higher count.
+        # In this second pass, the 0.1% oldest rows are checked
+        # and:
+        #
+        # - if user_freq == 1 remove the row
+        # - if user_freq > 1 divide user_freq by 2 and update timestamp to “now”
+        #
+        # 0.1% is really not much but I want to be careful not to remove
+        # too much when trying this out.
+        #
+        # sort kept rows by timestamp only instead of user_freq and timestamp:
+        rows_kept = sorted(rows_kept,
+                           key = lambda x: (
+                               x[6], # timestamp
+                               x[0], # id
+                           ))
+        index = len(rows_kept)
+        LOGGER.info('1st pass: Number of rows kept=%s', index)
+        index_decay = int(max_rows * 0.999)
+        LOGGER.info('2nd pass: Index for decay=%s', index_decay)
+        number_of_rows_to_decay = 0
+        number_of_rows_to_delete = 0
+        for row in rows_kept:
+            timestamp = row[6]
+            user_freq = row[5]
+            if (index > index_decay
+                and user_freq < itb_util.SHORTCUT_USER_FREQ):
+                if user_freq == 1:
+                    LOGGER.info('2nd pass: deleting %s ', repr(row))
+                    number_of_rows_to_delete += 1
+                    sqlstr_delete = 'DELETE from phrases WHERE id = :id;'
+                    sqlargs_delete = {'id': row[0]}
+                    try:
+                        database.execute(sqlstr_delete, sqlargs_delete)
+                    except Exception:
+                        LOGGER.exception(
+                            '2nd pass: exception deleting row from database.')
+                        import traceback
+                        traceback.print_exc()
+                else:
+                    LOGGER.info('2nd pass: decaying %s ', repr(row))
+                    number_of_rows_to_decay += 1
+                    sqlstr_update = '''
+                    UPDATE phrases
+                    SET user_freq = :user_freq, timestamp = :timestamp
+                    WHERE id = :id
+                    ;'''
+                    sqlargs_update = {'id': row[0],
+                                      'user_freq': int(user_freq/2),
+                                      'timestamp': time.time()}
+
+                    try:
+                        database.execute(sqlstr_update, sqlargs_update)
+                    except Exception:
+                        LOGGER.exception(
+                            '2nd pass: exception decaying row from database.')
+                        import traceback
+                        traceback.print_exc()
+            index -= 1
+        LOGGER.info('Commit database and execute checkpoint ...')
+        database.commit()
+        database.execute('PRAGMA wal_checkpoint;')
+        LOGGER.info('Rebuild database using VACUUM command ...')
+        database.execute('VACUUM;')
+        LOGGER.info('Number of database rows deleted=%s',
+                     number_delete_above_max + number_of_rows_to_delete)
+        LOGGER.info('Number of database rows decayed=%s',
+                    number_of_rows_to_decay)
+        LOGGER.info('Number of rows before cleanup=%s', len(rows))
+        LOGGER.info('Number of rows remaining=%s',
+                    len(rows_kept) - number_of_rows_to_delete)
+        LOGGER.info('Time for database cleanup=%s seconds',
+                    time.time() - time_now)
+        LOGGER.info('Database cleanup finished.')

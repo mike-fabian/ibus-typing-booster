@@ -165,6 +165,21 @@ class DbContents:
             index -= 1
         print('1st pass: Number of rows to delete above maximum size='
               f'{number_delete_above_max}')
+        # As the first pass above removes rows sorted by count and
+        # then by timestamp, it will never remove rows with a higher
+        # count even if they are extremely old. Therefore, a second
+        # pass uses sorting only by timestamp in order to first decay and
+        # eventually remove some rows which have not been used for a
+        # long time as well, even if they have a higher count.
+        # In this second pass, the 0.1% oldest rows are checked
+        # and:
+        #
+        # - if user_freq == 1 remove the row
+        # - if user_freq > 1 divide user_freq by 2 and update timestamp to “now”
+        #
+        # 0.1% is really not much but I want to be careful not to remove
+        # too much when trying this out.
+        #
         # sort kept rows by timestamp only instead of user_freq and timestamp:
         rows_kept = sorted(rows_kept,
                            key = lambda x: (
@@ -176,7 +191,7 @@ class DbContents:
                 self._print_row(row, prefix='1st pass kept: ')
         index = len(rows_kept)
         print(f'1st pass: Number of rows kept={index}')
-        index_decay = int(self._max_rows * 0.99)
+        index_decay = int(self._max_rows * 0.999)
         print(f'2nd pass: Index for decay={index_decay}')
         number_of_rows_to_decay = 0
         number_of_rows_to_delete = 0
