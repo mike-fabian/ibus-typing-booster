@@ -248,19 +248,6 @@ class TabSqliteDb:
             self.database.commit()
             self.database.execute('PRAGMA wal_checkpoint;')
 
-        # do not call this always on intialization for the moment.
-        # It makes the already slow “python engine/main.py --xml”
-        # to list the engines even slower and may break the listing
-        # of the engines completely if there is a problem with
-        # optimizing the databases. Probably bring this back as an
-        # option later if the code in self.optimize_database() is
-        # improved to do anything useful.
-        #try:
-        #    self.optimize_database()
-        #except:
-        #    print "exception in optimize_database()"
-        #    traceback.print_exc ()
-
         # try create all hunspell-tables in user database
         self.create_indexes(commit=False)
         self.generate_userdb_desc()
@@ -392,32 +379,6 @@ class TabSqliteDb:
                 self.database.commit()
         except Exception:
             LOGGER.exception('Unexpected error adding phrase to database.')
-
-    def optimize_database(self) -> None:
-        '''
-        Optimize the database by copying the contents
-        to temporary tables and back.
-        '''
-        sqlstr = '''
-            CREATE TABLE tmp AS SELECT * FROM %(database)s.phrases;
-            DELETE FROM user_db.phrases;
-            INSERT INTO user_db.phrases SELECT * FROM tmp ORDER BY
-            input_phrase, user_freq DESC, id ASC;
-            DROP TABLE tmp;'''
-        self.database.executescript(sqlstr)
-        self.database.executescript("VACUUM;")
-        self.database.commit()
-
-    def drop_indexes(self) -> None:
-        '''Drop the index in database to reduce it's size'''
-        sqlstr = '''
-            DROP INDEX IF EXISTS user_db.phrases_index_p;
-            DROP INDEX IF EXISTS user_db.phrases_index_i;
-            VACUUM;
-            '''
-
-        self.database.executescript(sqlstr)
-        self.database.commit()
 
     def create_indexes(self, commit: bool = True) -> None:
         '''Create indexes for the database.'''
