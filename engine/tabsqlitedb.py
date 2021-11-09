@@ -474,7 +474,10 @@ class TabSqliteDb:
         SELECT * FROM user_db.phrases
         WHERE input_phrase LIKE "%(quoted_input_phrase)s%%"
         ;''' % {'quoted_input_phrase': quoted_input_phrase}
-        self.database.execute(sqlstr)
+        try:
+            self.database.execute(sqlstr)
+        except Exception:
+            LOGGER.exception('Unexpected error in creating database view.')
         sqlargs = {'p_phrase': p_phrase, 'pp_phrase': pp_phrase}
         sqlstr = (
             'SELECT phrase, sum(user_freq) FROM like_input_phrase_view '
