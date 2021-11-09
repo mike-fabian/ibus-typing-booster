@@ -516,7 +516,7 @@ class Hunspell:
 
         >>> h = Hunspell(['en_US'])
         >>> h.suggest('camel')
-        [('camel', 0), ('camellia', 0), ('camelhair', 0), ('came', -1), ('Camel', -1), ('cameo', -1), ('came l', -1), ('camels', -1)]
+        [('Camel', 0), ('camel', 0), ('Camelot', 0), ('camellia', 0), ('camelhair', 0), ('Camelopardalis', 0), ('came', -1), ('cameo', -1), ('came l', -1), ('camels', -1)]
 
         >>> h = Hunspell(['fr_FR'])
         >>> h.suggest('differemmen')
@@ -528,7 +528,7 @@ class Hunspell:
 
         >>> h = Hunspell(['None', 'en_US'])
         >>> h.suggest('camel')
-        [('camel', 0), ('camellia', 0), ('camelhair', 0), ('came', -1), ('Camel', -1), ('cameo', -1), ('came l', -1), ('camels', -1)]
+        [('Camel', 0), ('camel', 0), ('Camelot', 0), ('camellia', 0), ('camelhair', 0), ('Camelopardalis', 0), ('came', -1), ('cameo', -1), ('came l', -1), ('camels', -1)]
 
         '''
         # pylint: enable=line-too-long

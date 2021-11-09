@@ -211,11 +211,13 @@ class HunspellSuggestTestCase(unittest.TestCase):
         h = hunspell_suggest.Hunspell(['en_US'])
         self.assertEqual(
             h.suggest('camel'),
-            [('camel', 0),
+            [('Camel', 0),
+             ('camel', 0),
+             ('Camelot', 0),
              ('camellia', 0),
              ('camelhair', 0),
+             ('Camelopardalis', 0),
              ('came', -1),
-             ('Camel', -1),
              ('cameo', -1),
              ('came l', -1),
              ('camels', -1)])
@@ -343,6 +345,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(
             h.suggest('östgo'),
             [('östgot', 0),
+             ('Östgöta', 0),
              ('östgöte', 0),
              ('östgotisk', 0),
              ('östgötsk', 0),
@@ -354,12 +357,14 @@ class HunspellSuggestTestCase(unittest.TestCase):
              ('Östgot', -1)])
         self.assertEqual(
             h.suggest('östgö'),
-            [('östgöte', 0),
+            [('Östgöta', 0),
+             ('östgöte', 0),
              ('östgötsk', 0),
              ('östgötska', 0)])
         self.assertEqual(
-            h.suggest('östgöt')[0:4],
-            [('östgöte', 0),
+            h.suggest('östgöt')[0:5],
+            [('Östgöta', 0),
+             ('östgöte', 0),
              ('östgötsk', 0),
              ('östgötska', 0),
              ('östgot', -1)])

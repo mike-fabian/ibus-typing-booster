@@ -25,15 +25,11 @@ TestCases = {
                   'commit': { 'keys': [[IBus.KEY_space, 0, 0]] },
                   'result': { 'string': 'défaut ' }
                 },
-                { 'preedit': { 'string': 'app' },
-                  # This lookup order is French by default.
-                  'lookup': { 'keys': [[IBus.KEY_Tab, 0, 0],
-                                       [IBus.KEY_Tab, 0, 0],
-                                       [IBus.KEY_Tab, 0, 0],
-                                       [IBus.KEY_Tab, 0, 0]]
+                { 'preedit': { 'string': 'applesau' },
+                  'lookup': { 'keys': [[IBus.KEY_Tab, 0, 0]]
                             },
                   'commit': { 'keys': [[IBus.KEY_Return, 0, 0]] },
-                  'result': { 'string': 'apple' }
+                  'result': { 'string': 'applesauce' }
                 },
                 { 'preedit': { 'keys': [[IBus.KEY_Multi_key, 0, 0],
                                         [IBus.KEY_e, 0, 0],

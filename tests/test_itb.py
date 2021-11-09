@@ -485,7 +485,8 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
-        self.assertEqual(self.engine._candidates[0][0], 'camel')
+        self.assertEqual(self.engine._candidates[0][0], 'Camel')
+        self.assertEqual(self.engine._candidates[1][0], 'camel')
         self.assertEqual(self.engine._candidates[5][0], '🐫')
         self.assertEqual(self.engine._candidates[5][2],
                          'bactrian camel')
@@ -523,7 +524,8 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(
             self.engine.get_lookup_table().get_cursor_pos(),
             0)
-        self.assertEqual(self.engine._candidates[0][0], 'camel')
+        self.assertEqual(self.engine._candidates[0][0], 'Camel')
+        self.assertEqual(self.engine._candidates[1][0], 'camel')
         self.assertEqual(self.engine._candidates[5][0], '🐫')
         self.assertEqual(self.engine._candidates[5][2],
                          'bactrian camel')
@@ -533,7 +535,7 @@ class ItbTestCase(unittest.TestCase):
             True)
         self.assertEqual(
             self.engine.get_string_from_lookup_table_cursor_pos(),
-            'camel')
+            'Camel')
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
         self.assertEqual(
             self.engine.get_lookup_table().cursor_visible,
@@ -543,7 +545,7 @@ class ItbTestCase(unittest.TestCase):
             0)
         self.assertEqual(
             self.engine.get_string_from_lookup_table_cursor_pos(),
-            'camel')
+            'Camel')
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
         self.assertEqual(
             self.engine.get_lookup_table().get_number_of_candidates(),
@@ -790,10 +792,11 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
-        self.assertEqual(self.engine._candidates[0][0], 'camel')
+        self.assertEqual(self.engine._candidates[0][0], 'Camel')
+        self.assertEqual(self.engine._candidates[1][0], 'camel')
         self.assertEqual(False, self.engine._candidates[5][0] == '🐫')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
-        self.assertEqual(self.engine.mock_committed_text, 'camel ')
+        self.assertEqual(self.engine.mock_committed_text, 'Camel ')
         # Now again with a leading underscore an emoji should match.
         self.engine.do_process_key_event(IBus.KEY_underscore, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
@@ -801,12 +804,13 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
-        self.assertEqual(self.engine._candidates[0][0], '_camel')
+        self.assertEqual(self.engine._candidates[0][0], '_Camel')
+        self.assertEqual(self.engine._candidates[1][0], '_camel')
         self.assertEqual(self.engine._candidates[5][0], '🐫')
         self.assertEqual(self.engine._candidates[5][2],
                          'bactrian camel')
         self.engine.do_process_key_event(IBus.KEY_F6, 0, 0)
-        self.assertEqual(self.engine.mock_committed_text, 'camel 🐫 ')
+        self.assertEqual(self.engine.mock_committed_text, 'Camel 🐫 ')
 
     def test_selecting_non_existing_candidates(self):
         '''
@@ -1198,7 +1202,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
-        # there should be a candidate now:
+        # there should be candidates now:
         self.assertEqual(self.engine._candidates[0][0], 'in Germany')
         # Shift_L goes to 'capitalize':
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
