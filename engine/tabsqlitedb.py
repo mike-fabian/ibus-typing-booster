@@ -426,9 +426,7 @@ class TabSqliteDb:
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'input_phrase=%s p_phrase=%s pp_phrase=%s',
-                input_phrase.encode('UTF-8'),
-                p_phrase.encode('UTF-8'),
-                pp_phrase.encode('UTF-8'))
+                input_phrase, p_phrase, pp_phrase)
         phrase_frequencies: Dict[str, int] = {}
         if not ' ' in input_phrase:
             # Get suggestions from hunspell dictionaries. But only
