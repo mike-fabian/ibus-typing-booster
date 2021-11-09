@@ -544,8 +544,6 @@ class Hunspell:
         # make sure input_phrase is in the internal normalization form (NFD):
         input_phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
-        # But enchant and pyhunspell want NFC as input, make a copy in NFC:
-        input_phrase_nfc = unicodedata.normalize('NFC', input_phrase)
 
         suggested_words: Dict[str, int] = {}
         for dictionary in self._dictionaries:
