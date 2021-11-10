@@ -878,6 +878,19 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         rows = self.database.execute(
             'SELECT input_phrase, phrase, p_phrase, pp_phrase, '
             + 'user_freq, timestamp FROM phrases;').fetchall()
+        if not rows:
+            return False
+        rows = sorted(rows, key = lambda x: (x[5])) # sort by timestamp
+        time_min = rows[0][5]
+        time_max = rows[-1][5]
+        # timestamp for added entries (timestampof existing entries is kept):
+        time_new = time_min + 0.20 * (time_max - time_min)
+        LOGGER.info('Minimum timestamp in the database=%s',
+                    time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time_min)))
+        LOGGER.info('Maximum timestamp in the database=%s',
+                    time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time_max)))
+        LOGGER.info('New timestamp in the database=%s',
+                    time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time_new)))
         p_token = ''
         pp_token = ''
         database_dict: Dict[Tuple[str, str, str, str], Dict[str, Any]] = {}
@@ -906,14 +919,13 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                 key = (token, token, p_token, pp_token)
                 if key in database_dict:
                     database_dict[key]['user_freq'] += 1
-                    database_dict[key]['timestamp'] = time.time()
                 else:
                     database_dict[key] = {'input_phrase': token,
                                           'phrase': token,
                                           'p_phrase': p_token,
                                           'pp_phrase': pp_token,
                                           'user_freq': 1,
-                                          'timestamp': time.time()}
+                                          'timestamp': time_new}
                 pp_token = p_token
                 p_token = token
         sqlargs = []
