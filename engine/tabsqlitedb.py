@@ -181,18 +181,9 @@ class TabSqliteDb:
                 'Connect to the database %(name)s.',
                 {'name': self.user_db_file})
             self.database = sqlite3.connect(self.user_db_file)
-            self.database.executescript('''
-                PRAGMA encoding = "UTF-8";
-                PRAGMA case_sensitive_like = true;
-                PRAGMA page_size = 4096;
-                PRAGMA cache_size = 20000;
-                PRAGMA temp_store = MEMORY;
-                PRAGMA journal_mode = WAL;
-                PRAGMA journal_size_limit = 1000000;
-                PRAGMA synchronous = NORMAL;
-                PRAGMA auto_vacuum = FULL;
-                ATTACH DATABASE "%s" AS user_db;
-            ''' % self.user_db_file)
+            self.set_database_pragma_options()
+            self.database.executescript(
+                'ATTACH DATABASE "%s" AS user_db;' % self.user_db_file)
         except Exception:
             LOGGER.exception(
                 'Could not open the database %(name)s.',
@@ -214,18 +205,9 @@ class TabSqliteDb:
                 {'name': self.user_db_file})
             self.init_user_db()
             self.database = sqlite3.connect(self.user_db_file)
-            self.database.executescript('''
-                PRAGMA encoding = "UTF-8";
-                PRAGMA case_sensitive_like = true;
-                PRAGMA page_size = 4096;
-                PRAGMA cache_size = 20000;
-                PRAGMA temp_store = MEMORY;
-                PRAGMA journal_mode = WAL;
-                PRAGMA journal_size_limit = 1000000;
-                PRAGMA synchronous = NORMAL;
-                PRAGMA auto_vacuum = FULL;
-                ATTACH DATABASE "%s" AS user_db;
-            ''' % self.user_db_file)
+            self.set_database_pragma_options()
+            self.database.executescript(
+                'ATTACH DATABASE "%s" AS user_db;' % self.user_db_file)
         self.create_tables()
         if self.old_phrases:
             sqlargs = []
@@ -639,23 +621,27 @@ class TabSqliteDb:
         if self.user_db_file == ':memory:':
             return
         if not path.exists(self.user_db_file):
-            database = sqlite3.connect(self.user_db_file)
-            # a database containing the complete German Hunspell
-            # dictionary has less then 6000 pages. 20000 pages
-            # should be enough to cache the complete database
-            # in most cases.
-            database.executescript('''
-                PRAGMA encoding = "UTF-8";
-                PRAGMA case_sensitive_like = true;
-                PRAGMA page_size = 4096;
-                PRAGMA cache_size = 20000;
-                PRAGMA temp_store = MEMORY;
-                PRAGMA journal_mode = WAL;
-                PRAGMA journal_size_limit = 1000000;
-                PRAGMA synchronous = NORMAL;
-                PRAGMA auto_vacuum = FULL;
-            ''')
-            database.commit()
+            self.database = sqlite3.connect(self.user_db_file)
+            self.set_database_pragma_options()
+
+    def set_database_pragma_options(self) -> None:
+        '''Set options for the user database'''
+        # a database containing the complete German Hunspell
+        # dictionary has less then 6000 pages. 20000 pages
+        # should be enough to cache the complete database
+        # in most cases.
+        self.database.executescript('''
+        PRAGMA encoding = "UTF-8";
+        PRAGMA case_sensitive_like = true;
+        PRAGMA page_size = 4096;
+        PRAGMA cache_size = 20000;
+        PRAGMA temp_store = MEMORY;
+        PRAGMA journal_mode = WAL;
+        PRAGMA journal_size_limit = 1000000;
+        PRAGMA synchronous = NORMAL;
+        PRAGMA auto_vacuum = FULL;
+        ''')
+        self.database.commit()
 
     def get_database_desc(self, db_file: str) -> Optional[Dict[str, str]]:
         '''Get the description of the database'''
