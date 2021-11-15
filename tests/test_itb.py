@@ -1214,7 +1214,8 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
         # there should be candidates now:
-        self.assertEqual(self.engine._candidates[0][0], 'in Germany')
+        self.assertEqual(self.engine._candidates[0][0], 'In Germany')
+        self.assertEqual(self.engine._candidates[1][0], 'in Germany')
         # Shift_L goes to 'capitalize':
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
         self.engine.do_process_key_event(
@@ -1238,7 +1239,9 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
         # there should be a candidate now:
-        self.assertEqual(self.engine._candidates[0][0], 'in Germany')
+        self.assertEqual(self.engine._candidates[0][0], 'IN GERMANY')
+        self.assertEqual(self.engine._candidates[1][0], 'In Germany')
+        self.assertEqual(self.engine._candidates[2][0], 'in Germany')
         # Shift_L goes to 'capitalize':
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
         self.engine.do_process_key_event(
@@ -1266,7 +1269,8 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
         # there should be a candidate now:
-        self.assertEqual(self.engine._candidates[0][0], 'in Germany')
+        self.assertEqual(self.engine._candidates[0][0], 'In Germany')
+        self.assertEqual(self.engine._candidates[1][0], 'IN GERMANY')
         # Shift_R goes to 'previous' from 'orig', i.e. to 'lower':
         self.engine.do_process_key_event(IBus.KEY_Shift_R, 0, 0)
         self.engine.do_process_key_event(
