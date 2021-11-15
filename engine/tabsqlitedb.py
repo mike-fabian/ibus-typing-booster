@@ -869,7 +869,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         rows = sorted(rows, key = lambda x: (x[5])) # sort by timestamp
         time_min = rows[0][5]
         time_max = rows[-1][5]
-        # timestamp for added entries (timestampof existing entries is kept):
+        # timestamp for added entries (timestamp of existing entries is kept):
         time_new = time_min + 0.20 * (time_max - time_min)
         LOGGER.info('Minimum timestamp in the database=%s',
                     time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time_min)))
@@ -902,16 +902,18 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             return False
         for line in lines:
             for token in itb_util.tokenize(line):
-                key = (token, token, p_token, pp_token)
+                key = (itb_util.remove_accents(token),
+                       token, p_token, pp_token)
                 if key in database_dict:
                     database_dict[key]['user_freq'] += 1
                 else:
-                    database_dict[key] = {'input_phrase': token,
-                                          'phrase': token,
-                                          'p_phrase': p_token,
-                                          'pp_phrase': pp_token,
-                                          'user_freq': 1,
-                                          'timestamp': time_new}
+                    database_dict[key] = {
+                        'input_phrase': itb_util.remove_accents(token),
+                        'phrase': token,
+                        'p_phrase': p_token,
+                        'pp_phrase': pp_token,
+                        'user_freq': 1,
+                        'timestamp': time_new}
                 pp_token = p_token
                 p_token = token
         sqlargs = []
