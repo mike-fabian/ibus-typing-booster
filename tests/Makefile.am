@@ -49,6 +49,7 @@ test_exec_SCRIPTS = \
 	$(TESTS) \
 	gtkcases.py \
 	mock_engine.py \
+	testutils.py \
 	run_tests \
 	$(NULL)
 test_execdir = $(libexecdir)/installed-tests/ibus-typing-booster
@@ -72,6 +73,7 @@ EXTRA_DIST = \
 	__init__.py \
 	gtkcases.py \
 	mock_engine.py \
+	testutils.py \
 	run_tests.in \
 	$(TESTS) \
 	$(NULL)

@@ -31,6 +31,8 @@ from gi.repository import IBus # type: ignore
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
+import testutils
+
 sys.path.insert(0, "../engine")
 import itb_util
 import itb_emoji
@@ -53,33 +55,6 @@ except (ImportError,):
         IMPORT_HUNSPELL_SUCCESSFUL = True
     except (ImportError,):
         pass
-
-def enchant_working_as_expected() -> bool:
-    '''Checks if the behaviour has changed somehow.
-
-    Even if enchant is working, the behaviour might change
-    if enchant is updated to a new version and/or dictionaries
-    are updated.
-
-    This function tries to detect if the behaviour of enchant
-    is different to what I see on my development system and
-    if it is different skip test cases which might fail only
-    because of unexpected enchant behaviour.
-
-    As soon as I see that this causes test cases on my development
-    system to be skipped, I should check carefully and then probably
-    update the test cases.
-    '''
-    if not IMPORT_ENCHANT_SUCCESSFUL:
-        return False
-    d = enchant.Dict('en')
-    if d.check('fery'):
-        return False
-    if (d.suggest('fery') !=
-        ['fer', 'fey', 'fry', 'fiery', 'ferny',
-         'ferry', 'fern', 'fury', 'very', 'fer y']):
-        return False
-    return True
 
 @unittest.skipIf(
     '..' not in itb_emoji.find_cldr_annotation_path('en'),
@@ -277,11 +252,11 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
-        enchant_working_as_expected(),
+        testutils.enchant_working_as_expected(),
         'Skipping because of an unexpected change in the enchant behaviour.')
     def test_candidates_persons(self):
         mq = itb_emoji.EmojiMatcher(
-            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+            languages = ['en_US'])
         self.assertEqual(
             mq.candidates('family')[0][:2],
             ('👪', 'family'))
@@ -304,9 +279,6 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('man man girl boy')[0][:2],
             ('👨\u200d👧\u200d👦', 'family: man, girl, boy “family man girl boy”'))
         self.assertEqual(
-            mq.candidates('mmgb')[0][:2],
-            ('👨\u200d👨\u200d👧\u200d👦', 'family: man, man, girl, boy “family mmgb”'))
-        self.assertEqual(
             mq.candidates('manmangirlboy')[0][:2],
             ('👨\u200d👨\u200d👧\u200d👦', 'family: man, man, girl, boy'))
         self.assertEqual(
@@ -327,7 +299,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
-        enchant_working_as_expected(),
+        testutils.enchant_working_as_expected(),
         'Skipping because of an unexpected change in the enchant behaviour.')
     def test_candidates_symbols(self):
         mq = itb_emoji.EmojiMatcher(
@@ -340,7 +312,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('⚛\ufe0f', 'atom symbol'))
         self.assertEqual(
             mq.candidates('peacesymbol')[0][:2],
-            ('☮\ufe0f', 'peace symbol'))
+            ('☮\ufe0f', 'peace symbol {Symbol}'))
         self.assertEqual(
             mq.candidates('peace symbol')[0][:2],
             ('☮\ufe0f', 'peace symbol {Symbol}'))
@@ -393,26 +365,26 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
-        enchant_working_as_expected(),
+        testutils.enchant_working_as_expected(),
         'Skipping because of an unexpected change in the enchant behaviour.')
     def test_candidates_spellchecking(self):
         mq = itb_emoji.EmojiMatcher(
-            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+            languages = ['en_US'])
         self.assertEqual(
-            mq.candidates('buterfly')[0][:2],
-            ('\U0001f98b', 'butterfly'))
+            ('\U0001f98b', 'butterfly'),
+            mq.candidates('buterfly')[0][:2])
         self.assertEqual(
-            mq.candidates('badminton')[0][:2],
-            ('🏸', 'badminton racquet and shuttlecock'))
+            ('🏸', 'badminton racquet and shuttlecock'),
+            mq.candidates('badminton')[0][:2])
         self.assertEqual(
-            mq.candidates('badmynton')[0][:2],
-            ('🏸', 'badminton racquet and shuttlecock'))
+            ('🏸', 'badminton racquet and shuttlecock'),
+            mq.candidates('badmynton')[0][:2])
         self.assertEqual(
-            mq.candidates('padminton')[0][:2],
-            ('🏸', 'badminton racquet and shuttlecock'))
+            ('🏸', 'badminton racquet and shuttlecock'),
+            mq.candidates('padminton')[0][:2])
         self.assertEqual(
-            mq.candidates('fery')[0][:2],
-            ('⛴\ufe0f', 'ferry'))
+            ('🦔', 'hedgehog'),
+            mq.candidates('hedgehgo')[0][:2])
 
     def test_candidates_various_unicode_chars(self):
         mq = itb_emoji.EmojiMatcher(

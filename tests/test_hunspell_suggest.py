@@ -28,6 +28,8 @@ from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
 
+import testutils
+
 sys.path.insert(0, "../engine")
 import hunspell_suggest
 import itb_util
@@ -52,40 +54,6 @@ try:
 except (ImportError,):
     pass
 
-def get_libvoikko_version():
-    if IMPORT_LIBVOIKKO_SUCCESSFUL:
-        return libvoikko.Voikko.getVersion()
-    else:
-        return '0'
-
-def enchant_sanity_test(language: str = '', word: str = '') -> bool:
-    '''Checks whether python3-enchant returns some suggestions given a
-    language and a word.
-
-    :param language: The language of the dictionary to try
-    :param word: The word to give to enchant to ask for suggestions
-
-    This is used as a sanity check whether python3-enchant works at all.
-    For example, if a Czech dictionary is opened like
-
-        d = enchant.Dict('cs_CZ')
-
-    and then something like
-
-        retval = d.suggest('Praha')
-
-    returns an empty list instead of a list of some words, then
-    something is seriously wrong with python3-enchant and it is better
-    to skip the test case which relies on python3-enchant working for
-    that language.
-    '''
-    if not (language and word):
-        return False
-    d = enchant.Dict(language)
-    if d.suggest(word):
-        return True
-    return  False
-
 class HunspellSuggestTestCase(unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
@@ -106,7 +74,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         itb_util.get_hunspell_dictionary_wordlist('de_DE')[0],
         'Skipping because no German hunspell dictionary could be found.')
     @unittest.skipUnless(
-        enchant_sanity_test(language='cs_CZ', word='Praha'),
+        testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
         'Skipping because python3-enchant seems broken for cs_CZ.')
     def test_de_DE_cs_CZ_enchant(self):
         h = hunspell_suggest.Hunspell(['de_DE', 'cs_CZ'])
@@ -207,20 +175,53 @@ class HunspellSuggestTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no US English hunspell dictionary could be found.')
+    @unittest.skipUnless(
+        testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
+        'Skipping because python3-enchant seems broken for cs_CZ.')
+    @unittest.skipUnless(
+        testutils.enchant_working_as_expected(),
+        'Skipping because of an unexpected change in the enchant behaviour.')
     def test_en_US(self):
         h = hunspell_suggest.Hunspell(['en_US'])
         self.assertEqual(
-            h.suggest('camel'),
             [('Camel', 0),
              ('camel', 0),
              ('Camelot', 0),
              ('camellia', 0),
              ('camelhair', 0),
              ('Camelopardalis', 0),
+             ('CAM', -1),
+             ('Cal', -1),
+             ('Mel', -1),
+             ('cal', -1),
+             ('cam', -1),
+             ('Carl', -1),
+             ('Gael', -1),
+             ('Jame', -1),
+             ('call', -1),
              ('came', -1),
+             ('come', -1),
+             ('game', -1),
+             ('Jamal', -1),
+             ('Jamel', -1),
+             ('Ocaml', -1),
+             ('cable', -1),
              ('cameo', -1),
-             ('came l', -1),
-             ('camels', -1)])
+             ('calmer', -1),
+             ('camels', -1),
+             ('comely', -1),
+             ('compel', -1),
+             ('gamely', -1),
+             ("Camel's", -1),
+             ('Camilla', -1),
+             ('Camille', -1),
+             ('Carmela', -1),
+             ('Carmelo', -1),
+             ("Jamel's", -1),
+             ("camel's", -1),
+             ('caramel', -1),
+             ('Carmella', -1)],
+            h.suggest('camel'))
 
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
@@ -253,7 +254,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
              ('kissamaiseksi',0)])
 
     @unittest.skipUnless(
-        get_libvoikko_version() >= '4.3',
+        testutils.get_libvoikko_version() >= '4.3',
         "Skipping, requires python3-libvoikko version >= 4.3.")
     def test_fi_FI_voikko(self):
         d = hunspell_suggest.Dictionary('fi_FI')
@@ -289,11 +290,17 @@ class HunspellSuggestTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no US English hunspell dictionary could be found.')
+    @unittest.skipUnless(
+        testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
+        'Skipping because python3-enchant seems broken for cs_CZ.')
+    @unittest.skipUnless(
+        testutils.enchant_working_as_expected(),
+        'Skipping because of an unexpected change in the enchant behaviour.')
     def test_en_US_spellcheck_suggest_enchant(self):
         d = hunspell_suggest.Dictionary('en_US')
         self.assertEqual(
             d.spellcheck_suggest_enchant('kamel'),
-            ['camel', 'Camel'])
+            ['Jamel', 'Camel', 'camel', 'Jamal', 'gamely'])
 
     @unittest.skipUnless(
         IMPORT_HUNSPELL_SUCCESSFUL and not IMPORT_ENCHANT_SUCCESSFUL,
@@ -319,7 +326,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
             ['camel', 'Camel'])
 
     @unittest.skipUnless(
-        get_libvoikko_version() >= '4.3',
+        testutils.get_libvoikko_version() >= '4.3',
         "Skipping, requires python3-libvoikko version >= 4.3.")
     def test_fi_FI_spellcheck_voikko(self):
         d = hunspell_suggest.Dictionary('fi_FI')
@@ -329,7 +336,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(d.spellcheck_voikko('Päivia'), False)
 
     @unittest.skipUnless(
-        get_libvoikko_version() >= '4.3',
+        testutils.get_libvoikko_version() >= '4.3',
         "Skipping, requires python3-libvoikko version >= 4.3.")
     def test_fi_FI_spellcheck_suggest_voikko(self):
         d = hunspell_suggest.Dictionary('fi_FI')

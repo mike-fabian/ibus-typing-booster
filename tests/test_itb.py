@@ -47,6 +47,8 @@ from mock_engine import MockLookupTable
 from mock_engine import MockProperty
 from mock_engine import MockPropList
 
+import testutils
+
 sys.path.insert(0, "../engine")
 # pylint: disable=import-error
 import hunspell_table
@@ -74,12 +76,6 @@ try:
     IMPORT_LIBVOIKKO_SUCCESSFUL = True
 except (ImportError,):
     pass
-
-def get_libvoikko_version():
-    if IMPORT_LIBVOIKKO_SUCCESSFUL:
-        return libvoikko.Voikko.getVersion()
-    else:
-        return '0'
 
 @unittest.skipIf(Gdk.Display.open('') is None, 'Display cannot be opened.')
 class ItbTestCase(unittest.TestCase):
@@ -812,6 +808,15 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_F6, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'Camel 🐫 ')
 
+    @unittest.skipUnless(
+        IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-enchant to work.")
+    @unittest.skipUnless(
+        testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
+        'Skipping because python3-enchant seems broken for cs_CZ.')
+    @unittest.skipUnless(
+        testutils.enchant_working_as_expected(),
+        'Skipping because of an unexpected change in the enchant behaviour.')
     def test_selecting_non_existing_candidates(self):
         '''
         Test case for: https://bugzilla.redhat.com/show_bug.cgi?id=1630349
@@ -833,16 +838,22 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
-        self.assertEqual(self.engine._candidates,
-                         [('Barcelona', 0, '', False, False)])
-        self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
+        self.assertEqual(
+            [('Barcelona', 0, '', False, False),
+             ("Barcelona's", -1, '', False, True),
+             ('Barceloneta', -1, '', False, True)],
+            self.engine._candidates)
+        self.engine.do_process_key_event(IBus.KEY_4, 0, 0)
         # Nothing should be committed:
         self.assertEqual(self.engine.mock_committed_text, '')
-        self.assertEqual(self.engine.mock_preedit_text, 'Barcelona2')
+        self.assertEqual(self.engine.mock_preedit_text, 'Barcelona4')
         self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'Barcelona')
-        self.assertEqual(self.engine._candidates,
-                         [('Barcelona', 0, '', False, False)])
+        self.assertEqual(
+            [('Barcelona', 0, '', False, False),
+             ("Barcelona's", -1, '', False, True),
+             ('Barceloneta', -1, '', False, True)],
+            self.engine._candidates)
         self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'Barcelona ')
         self.assertEqual(self.engine.mock_preedit_text, '')
@@ -1912,7 +1923,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, 'aṳ')
 
     @unittest.skipUnless(
-        get_libvoikko_version() >= '4.3',
+        testutils.get_libvoikko_version() >= '4.3',
         "Skipping, requires python3-libvoikko version >= 4.3.")
     def test_voikko(self):
         self.engine.set_current_imes(
@@ -1934,8 +1945,17 @@ class ItbTestCase(unittest.TestCase):
         ])
 
     @unittest.skipUnless(
-        get_libvoikko_version() >= '4.3',
+        testutils.get_libvoikko_version() >= '4.3',
         "Skipping, requires python3-libvoikko version >= 4.3.")
+    @unittest.skipUnless(
+        IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-enchant to work.")
+    @unittest.skipUnless(
+        testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
+        'Skipping because python3-enchant seems broken for cs_CZ.')
+    @unittest.skipUnless(
+        testutils.enchant_working_as_expected(),
+        'Skipping because of an unexpected change in the enchant behaviour.')
     def test_voikko_en_GB_fi_FI(self):
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)
@@ -1947,14 +1967,25 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
-        self.assertEqual(self.engine._candidates, [
-            ('kiss', -1, '', False, True),
-            ('kissa', -1, '', False, True),
-            ('Kiassa', -1, '', False, True),
-            ('kissaa', -1, '', False, True),
-            ('kisassa', -1, '', False, True),
-            ('kisussa', -1, '', False, True)
-        ])
+        self.assertEqual(
+            [('kiss', -1, '', False, True),
+             ("CSS's", -1, '', False, True),
+             ('kissa', -1, '', False, True),
+             ("Hiss's", -1, '', False, True),
+             ("Jess's", -1, '', False, True),
+             ('Kiassa', -1, '', False, True),
+             ("cuss's", -1, '', False, True),
+             ("hiss's", -1, '', False, True),
+             ("kiss's", -1, '', False, True),
+             ('kissaa', -1, '', False, True),
+             ('kissed', -1, '', False, True),
+             ('kisser', -1, '', False, True),
+             ('kisses', -1, '', False, True),
+             ("miss's", -1, '', False, True),
+             ("piss's", -1, '', False, True),
+             ('kisassa', -1, '', False, True),
+             ('kisussa', -1, '', False, True)],
+            self.engine._candidates)
 
     def test_control_alpha(self):
         '''Test case for
