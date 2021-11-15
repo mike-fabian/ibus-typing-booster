@@ -249,7 +249,7 @@ class TabSqliteDb:
         '''
         if not input_phrase or not phrase:
             return
-        input_phrase = itb_util.remove_accents(input_phrase)
+        input_phrase = itb_util.remove_accents(input_phrase).lower()
         input_phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
         phrase = unicodedata.normalize(
@@ -319,7 +319,7 @@ class TabSqliteDb:
                 user_freq)
         if not input_phrase or not phrase:
             return
-        input_phrase = itb_util.remove_accents(input_phrase)
+        input_phrase = itb_util.remove_accents(input_phrase).lower()
         input_phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
         phrase = unicodedata.normalize(
@@ -433,7 +433,7 @@ class TabSqliteDb:
         # is not in the German hunspell dictionary as a single word but
         # created by suffix and prefix rules, the accent insensitive match
         # in the German hunspell dictionary would not find it either.
-        input_phrase = itb_util.remove_accents(input_phrase)
+        input_phrase = itb_util.remove_accents(input_phrase).lower()
         input_phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
         # Now phrase_frequencies might contain something like this:
@@ -736,7 +736,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             itb_util.NORMALIZATION_FORM_INTERNAL, p_phrase)
         pp_phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, pp_phrase)
-        input_phrase = itb_util.remove_accents(input_phrase)
+        input_phrase = itb_util.remove_accents(input_phrase).lower()
         input_phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
 
@@ -902,13 +902,13 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             return False
         for line in lines:
             for token in itb_util.tokenize(line):
-                key = (itb_util.remove_accents(token),
+                key = (itb_util.remove_accents(token).lower(),
                        token, p_token, pp_token)
                 if key in database_dict:
                     database_dict[key]['user_freq'] += 1
                 else:
                     database_dict[key] = {
-                        'input_phrase': itb_util.remove_accents(token),
+                        'input_phrase': itb_util.remove_accents(token).lower(),
                         'phrase': token,
                         'p_phrase': p_token,
                         'pp_phrase': pp_token,
