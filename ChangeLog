@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 19 Nov 2021 Released 2.15.3
+* Title case all candidates if input_phrase is in title case (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/253)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 16 Nov 2021 Released 2.15.0
 * Make matching in the database case insensitive (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/251)
 * Remove accents for “input_phrase” when learning from a text file (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/252)
