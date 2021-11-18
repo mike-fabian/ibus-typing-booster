@@ -1008,7 +1008,10 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             user_freq = row[5]
             if (index > max_rows
                 and user_freq < itb_util.SHORTCUT_USER_FREQ):
-                LOGGER.info('1st pass: deleting %s ', repr(row))
+                LOGGER.info('1st pass: deleting %s %s',
+                            repr(row),
+                            time.strftime("%Y-%m-%d %H:%M:%S",
+                                          time.gmtime(row[6])))
                 number_delete_above_max += 1
                 sqlstr_delete = 'DELETE from phrases WHERE id = :id;'
                 sqlargs_delete = {'id': row[0]}
@@ -1056,7 +1059,10 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             if (index > index_decay
                 and user_freq < itb_util.SHORTCUT_USER_FREQ):
                 if user_freq == 1:
-                    LOGGER.info('2nd pass: deleting %s ', repr(row))
+                    LOGGER.info('2nd pass: deleting %s %s',
+                                repr(row),
+                                time.strftime("%Y-%m-%d %H:%M:%S",
+                                              time.gmtime(row[6])))
                     number_of_rows_to_delete += 1
                     sqlstr_delete = 'DELETE from phrases WHERE id = :id;'
                     sqlargs_delete = {'id': row[0]}
@@ -1068,7 +1074,10 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                         import traceback
                         traceback.print_exc()
                 else:
-                    LOGGER.info('2nd pass: decaying %s ', repr(row))
+                    LOGGER.info('2nd pass: decaying %s %s',
+                                repr(row),
+                                time.strftime("%Y-%m-%d %H:%M:%S",
+                                              time.gmtime(row[6])))
                     number_of_rows_to_decay += 1
                     sqlstr_update = '''
                     UPDATE phrases
