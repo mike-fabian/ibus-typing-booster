@@ -196,7 +196,6 @@ class DbContents:
         number_of_rows_to_decay = 0
         number_of_rows_to_delete = 0
         for row in rows_kept:
-            timestamp = row[6]
             user_freq = row[5]
             if (index > index_decay
                 and user_freq < itb_util.SHORTCUT_USER_FREQ):
