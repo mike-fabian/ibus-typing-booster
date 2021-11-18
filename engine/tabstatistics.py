@@ -159,7 +159,7 @@ class DbContents:
                 and user_freq < itb_util.SHORTCUT_USER_FREQ):
                 number_delete_above_max += 1
                 if self._verbose:
-                    self._print_row(row, prefix='>max: ')
+                    self._print_row(row, prefix='1st pass delete: ')
             else:
                 rows_kept.append(row)
             index -= 1
