@@ -378,8 +378,8 @@ class TabSqliteDb:
 
     def best_candidates(
             self,
-            phrase_frequencies: Dict[str, int],
-            title=False) -> List[Tuple[str, int]]:
+            phrase_frequencies: Dict[str, float],
+            title=False) -> List[Tuple[str, float]]:
         '''Sorts the phrase_frequencies dictionary and returns the best
         candidates.
 
@@ -408,7 +408,7 @@ class TabSqliteDb:
             self,
             input_phrase: str,
             p_phrase: str = '',
-            pp_phrase: str = '') -> List[Tuple[str, int]]:
+            pp_phrase: str = '') -> List[Tuple[str, float]]:
         '''
         Get phrases from database completing input_phrase.
 
@@ -427,7 +427,7 @@ class TabSqliteDb:
             LOGGER.debug(
                 'input_phrase=%s p_phrase=%s pp_phrase=%s',
                 input_phrase, p_phrase, pp_phrase)
-        phrase_frequencies: Dict[str, int] = {}
+        phrase_frequencies: Dict[str, float] = {}
         if not ' ' in input_phrase:
             # Get suggestions from hunspell dictionaries. But only
             # if input_phrase does not contain spaces. The hunspell
