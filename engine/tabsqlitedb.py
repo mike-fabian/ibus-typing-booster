@@ -994,6 +994,19 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             LOGGER.exception('Unexpected error dumping database.')
             return
 
+    def number_of_rows_in_database(self) -> int:
+        '''
+        Return the current number of rows in the database
+
+        (For debugging)
+        '''
+        try:
+            return len(self.database.execute(
+                "SELECT * FROM phrases;").fetchall())
+        except Exception:
+            LOGGER.exception('Unexpected error getting number of database rows.')
+            return -1
+
     def cleanup_database(self) -> None:
         '''
         Cleanup user database by expiring entries which have not been
