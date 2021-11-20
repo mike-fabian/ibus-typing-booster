@@ -25,6 +25,7 @@ from typing import List
 from typing import Tuple
 from typing import Optional
 from typing import Any
+from typing import Callable
 import os
 import os.path as path
 import codecs
@@ -32,6 +33,7 @@ import unicodedata
 import sqlite3
 import time
 import re
+import gzip
 import logging
 import itb_util
 import hunspell_suggest
@@ -876,15 +878,21 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         :type filename: String
         '''
         if not os.path.isfile(filename):
-            return False
+            filename += '.gz'
+            if not os.path.isfile(filename):
+                return False
+        open_function: Callable = open
+        if filename.endswith('.gz'):
+            open_function = gzip.open
         rows = self.database.execute(
             'SELECT input_phrase, phrase, p_phrase, pp_phrase, '
             + 'user_freq, timestamp FROM phrases;').fetchall()
-        if not rows:
-            return False
         rows = sorted(rows, key = lambda x: (x[5])) # sort by timestamp
-        time_min = rows[0][5]
-        time_max = rows[-1][5]
+        time_min = time.time()
+        time_max = time.time()
+        if rows:
+            time_min = rows[0][5]
+            time_max = rows[-1][5]
         # timestamp for added entries (timestamp of existing entries is kept):
         time_new = time_min + 0.20 * (time_max - time_min)
         LOGGER.info('Minimum timestamp in the database=%s',
@@ -907,7 +915,8 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                                   )])
         lines = []
         try:
-            with codecs.open(filename, encoding='UTF-8') as file_handle:
+            with open_function(
+                    filename, mode='rt', encoding='UTF-8') as file_handle:
                 lines = [
                     unicodedata.normalize(
                         itb_util.NORMALIZATION_FORM_INTERNAL, line)
