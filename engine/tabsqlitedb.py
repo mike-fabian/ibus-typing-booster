@@ -251,15 +251,17 @@ class TabSqliteDb:
         '''
         if not input_phrase or not phrase:
             return
-        input_phrase = itb_util.remove_accents(input_phrase).lower()
         input_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL,
+            itb_util.remove_accents(input_phrase).lower())
         phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
         p_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, p_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL,
+            itb_util.remove_accents(p_phrase).lower())
         pp_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, pp_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL,
+            itb_util.remove_accents(pp_phrase).lower())
         sqlstr = '''
         UPDATE user_db.phrases
         SET user_freq = :user_freq, timestamp = :timestamp
@@ -321,15 +323,17 @@ class TabSqliteDb:
                 user_freq)
         if not input_phrase or not phrase:
             return
-        input_phrase = itb_util.remove_accents(input_phrase).lower()
         input_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL,
+            itb_util.remove_accents(input_phrase).lower())
         phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
         p_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, p_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL,
+            itb_util.remove_accents(p_phrase).lower())
         pp_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, pp_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL,
+            itb_util.remove_accents(pp_phrase).lower())
         select_sqlstr = '''
         SELECT * FROM user_db.phrases
         WHERE input_phrase = :input_phrase
@@ -421,9 +425,11 @@ class TabSqliteDb:
         input_phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
         p_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, p_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL,
+            itb_util.remove_accents(p_phrase).lower())
         pp_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, pp_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL,
+            itb_util.remove_accents(pp_phrase).lower())
         title_case = input_phrase.istitle()
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -751,18 +757,19 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
         p_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, p_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL,
+            itb_util.remove_accents(p_phrase).lower())
         pp_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, pp_phrase)
-        input_phrase = itb_util.remove_accents(input_phrase).lower()
+            itb_util.NORMALIZATION_FORM_INTERNAL,
+            itb_util.remove_accents(pp_phrase).lower())
         input_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
+            itb_util.NORMALIZATION_FORM_INTERNAL,
+            itb_util.remove_accents(input_phrase).lower())
 
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'phrase=%(p)s, input_phrase=%(t)s',
-                {'p': phrase.encode('UTF-8'),
-                 't': input_phrase.encode('UTF-8')})
+                {'p': phrase, 't': input_phrase})
 
         # There should never be more than 1 database row for the same
         # input_phrase *and* phrase. So the following query on
@@ -928,15 +935,17 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         for line in lines:
             for token in itb_util.tokenize(line):
                 key = (itb_util.remove_accents(token).lower(),
-                       token, p_token, pp_token)
+                       token,
+                       itb_util.remove_accents(p_token).lower(),
+                       itb_util.remove_accents(pp_token).lower())
                 if key in database_dict:
                     database_dict[key]['user_freq'] += 1
                 else:
                     database_dict[key] = {
                         'input_phrase': itb_util.remove_accents(token).lower(),
                         'phrase': token,
-                        'p_phrase': p_token,
-                        'pp_phrase': pp_token,
+                        'p_phrase': itb_util.remove_accents(p_token).lower(),
+                        'pp_phrase': itb_util.remove_accents(pp_token).lower(),
                         'user_freq': 1,
                         'timestamp': time_new}
                 pp_token = p_token
