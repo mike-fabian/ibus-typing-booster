@@ -29,6 +29,7 @@ TESTS = \
 	test_keyvals_to_keycodes.py \
 	test_m17n_db_info.py \
 	test_m17n_translit.py \
+	test_tabsqlitedb.py \
 	$(NULL)
 
 check_SCRIPTS = run_tests
@@ -75,6 +76,8 @@ EXTRA_DIST = \
 	mock_engine.py \
 	testutils.py \
 	run_tests.in \
+	chant_d_automne.txt \
+	the_road_not_taken.txt \
 	$(TESTS) \
 	$(NULL)
 
