@@ -483,7 +483,7 @@ class TabSqliteDb:
         sqlargs = {'p_phrase': p_phrase, 'pp_phrase': pp_phrase}
         sqlstr = (
             'SELECT phrase, sum(user_freq) FROM like_input_phrase_view '
-            + 'GROUP BY phrase;')
+            'GROUP BY phrase;')
         try:
             # Get “unigram” data from user_db.
             #
@@ -538,7 +538,7 @@ class TabSqliteDb:
             return self.best_candidates(phrase_frequencies, title=title_case)
         sqlstr = (
             'SELECT phrase, sum(user_freq) FROM like_input_phrase_view '
-            + 'WHERE p_phrase = :p_phrase GROUP BY phrase;')
+            'WHERE p_phrase = :p_phrase GROUP BY phrase;')
         try:
             results_bi = self.database.execute(sqlstr, sqlargs).fetchall()
         except Exception:
@@ -550,7 +550,7 @@ class TabSqliteDb:
         # get the total count of p_phrase to normalize the bigram frequencies:
         sqlstr = (
             'SELECT sum(user_freq) FROM like_input_phrase_view '
-            + 'WHERE p_phrase = :p_phrase;')
+            'WHERE p_phrase = :p_phrase;')
         try:
             count_p_phrase = self.database.execute(
                 sqlstr, sqlargs).fetchall()[0][0]
@@ -574,8 +574,8 @@ class TabSqliteDb:
             # what we have so far:
             return self.best_candidates(phrase_frequencies, title=title_case)
         sqlstr = ('SELECT phrase, sum(user_freq) FROM like_input_phrase_view '
-                  + 'WHERE p_phrase = :p_phrase '
-                  + 'AND pp_phrase = :pp_phrase GROUP BY phrase;')
+                  'WHERE p_phrase = :p_phrase '
+                  'AND pp_phrase = :pp_phrase GROUP BY phrase;')
         try:
             results_tri = self.database.execute(sqlstr, sqlargs).fetchall()
         except Exception:
@@ -588,7 +588,7 @@ class TabSqliteDb:
         # normalize the bigram frequencies:
         sqlstr = (
             'SELECT sum(user_freq) FROM like_input_phrase_view '
-            + 'WHERE p_phrase = :p_phrase AND pp_phrase = :pp_phrase;')
+            'WHERE p_phrase = :p_phrase AND pp_phrase = :pp_phrase;')
         try:
             count_pp_phrase_p_phrase = self.database.execute(
                 sqlstr, sqlargs).fetchall()[0][0]
