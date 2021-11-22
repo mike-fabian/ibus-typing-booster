@@ -19,6 +19,39 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.15.7" date="2021-11-23" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.15.7</url>
+      <issues>
+        <issue>
+           Convert user database context to lower case and accents
+           removed while reading training data
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/256">
+          github-issues#256: Make the context in the database case
+          insensitive and accent insensitive
+        </issue>
+        <issue>
+          Test cases for the sqlite database
+        </issue>
+        <issue>
+          Allow cleanup_database() to cleanup an in memory database
+          when doing unit tests
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/255">
+          github-issues#255: Allow only lower case user shortcuts
+        </issue>
+        <issue>
+          Add function to return number of rows in the database for debugging and testing
+        </issue>
+        <issue>
+          Allow to read training data from file when database is
+          empty, allow reading from .gz files
+        </issue>
+      </issues>
+    </release>
     <release version="2.15.3" date="2021-11-19" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

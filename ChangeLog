@@ -1,4 +1,14 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 22 Nov 2021 Released 2.15.7
+* Convert user database context to lower case and accents removed while reading training data
+* Make the context in the database case insensitive and accent insensitive (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/256)
+* Test cases for the sqlite database
+* Allow cleanup_database() to cleanup an in memory database when doing unit tests
+* Allow only lower case user shortcuts (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/255)
+* Add function to return number of rows in the database for debugging and testing
+* Allow to read training data from file when database is empty, allow reading from .gz files
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 19 Nov 2021 Released 2.15.3
 * Title case all candidates if input_phrase is in title case (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/253)
 
