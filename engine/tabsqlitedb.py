@@ -908,11 +908,19 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         pp_token = ''
         database_dict: Dict[Tuple[str, str, str, str], Dict[str, Any]] = {}
         for row in rows:
+            # itb_util.remove_accents() returns in NORMALIZATION_FORM_INTERNAL.
+            # row[1] (“phrase”) should already be in NORMALIZATION_FORM_INTERNAL
+            # but better convert it again here just to make sure.
+            input_phrase = itb_util.remove_accents(row[0]).lower()
+            phrase = unicodedata.normalize(
+                itb_util.NORMALIZATION_FORM_INTERNAL, row[1])
+            p_phrase = itb_util.remove_accents(row[2]).lower()
+            pp_phrase = itb_util.remove_accents(row[3]).lower()
             database_dict.update([((row[0], row[1], row[2], row[3]),
-                                   {'input_phrase': row[0],
-                                    'phrase': row[1],
-                                    'p_phrase': row[2],
-                                    'pp_phrase': row[3],
+                                   {'input_phrase': input_phrase,
+                                    'phrase': phrase,
+                                    'p_phrase': p_phrase,
+                                    'pp_phrase': pp_phrase,
                                     'user_freq': row[4],
                                     'timestamp': row[5]}
                                   )])
