@@ -199,9 +199,7 @@ class Dictionary:
         Spellcheck a word using enchant, pyhunspell, or voikko
 
         :param word: The word to spellcheck
-        :type word: String
         :return: True if spelling is correct, False if not or unknown
-        :rtype: Boolean
 
         >>> d = Dictionary('en_US')
         >>> d.spellcheck('winter')
@@ -230,7 +228,6 @@ class Dictionary:
         Returns wether this dictionary supports spellchecking or not
 
         :return: True if this dictionary spports spellchecking, False if not
-        :rtype: Boolean
 
         Examples:
 
@@ -310,9 +307,7 @@ class Dictionary:
         Return spellchecking suggestions for word using enchant, pyhunspell or voikko
 
         :param word: The word to return spellchecking suggestions for
-        :type word: String
         :return: List of spellchecking suggestions, possibly empty.
-        :rtype: List of strings
 
         Examples:
 
@@ -468,8 +463,8 @@ class Hunspell:
         '''Return completions or corrections for the input phrase
 
         :param input_phrase: A string to find completions or corrections for
-        :type input_phrase: String
-        :rtype: A list of tuples of the form (<word>, <score>)
+
+        Returns a list of tuples of the form (<word>, <score>)
                 <score> can have these values:
                     0: This is a completion, i.e. input_phrase matches
                        the beginning of <word> (accent insensitive match)

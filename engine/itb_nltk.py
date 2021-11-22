@@ -42,12 +42,10 @@ def synonyms(word: str, keep_original: bool = True) -> List[str]:
     '''List synonyms for word
 
     :param word: The word for which synonyms should be looked up
-    :type word: string
     :param keep_original: Whether the original word should be in
                           the result as well. If the original word
                           is kept in the results, it is put first
                           in the list.
-    :rtype: A list of strings
 
     Examples:
 
@@ -70,12 +68,10 @@ def hyponyms(word: str, keep_original: bool = True) -> List[str]:
     '''List hyponyms for word
 
     :param word: The word for which hyponyms should be looked up
-    :type word: string
     :param keep_original: Whether the original word should be in
                           the result as well. If the original word
                           is kept in the results, it is put first
                           in the list.
-    :rtype: A list of strings
 
     Examples:
 
@@ -99,12 +95,10 @@ def hypernyms(word: str, keep_original: bool = True) -> List[str]:
     '''List hypernyms for word
 
     :param word: The word for which hyperyms should be looked up
-    :type word: string
     :param keep_original: Whether the original word should be in
                           the result as well. If the original word
                           is kept in the results, it is put first
                           in the list.
-    :rtype: A list of strings
 
     Examples:
 
@@ -128,12 +122,10 @@ def related(word: str, keep_original: bool = True) -> List[str]:
     '''List all related words (synonyms, hypernyms, and hyponyms)
 
     :param word: The word for which related words should be looked up
-    :type word: string
     :param keep_original: Whether the original word should be in
                           the result as well. If the original word
                           is kept in the results, it is put first
                           in the list.
-    :rtype: A list of strings
 
     Examples:
 

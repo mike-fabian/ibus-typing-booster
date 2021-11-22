@@ -2832,7 +2832,6 @@ class SetupUI(Gtk.Window):
                             listed. Only dictionaries which contain
                             all the words from the filter text as substrings
                             (ignoring case and spaces) are listed.
-        :type filter_text: String
         '''
         self._dictionaries_add_listbox_dictionary_names = []
         if self._dictionaries_add_popover_scroll is None:
@@ -3549,12 +3548,9 @@ class SetupUI(Gtk.Window):
         A row in the treeview listing the key bindings has been activated.
 
         :param treeview: The treeview listing the key bindings
-        :type treeview: Gtk.TreeView object
         :param treepath: The path to the activated row
-        :type treepath: Gtk.TreePath object
         :param treeviewcolumn: A column in the treeview listing the
                                key bindings
-        :type treeviewcolumn: Gtk.TreeViewColumn object
         '''
         model = self._keybindings_treeview_model
         iterator = model.get_iter(treepath)
@@ -4475,13 +4471,11 @@ class SetupUI(Gtk.Window):
         '''Sets the label for spellchecking suggestions
 
         :param label_string: The label for spellchecking suggestions
-        :type label_string: String
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
-        :type update_gsettings: boolean
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', label_string, update_gsettings)
@@ -5226,16 +5220,13 @@ class HelpWindow(Gtk.Window):
     A window to show help
 
     :param parent: The parent object
-    :type parent: Gtk.Window object
     :param title: Title of the help window
-    :type title: String
     :param contents: Contents of the help window
-    :type contents: String
     '''
     def __init__(self,
-                 parent=None,
-                 title='',
-                 contents='') -> None:
+                 parent: Gtk.Window = None,
+                 title: str = '',
+                 contents: str = '') -> None:
         Gtk.Window.__init__(self, title=title)
         if parent:
             self.set_parent(parent)

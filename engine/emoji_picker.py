@@ -1001,10 +1001,9 @@ class EmojiPickerUI(Gtk.Window):
                 ('', '', self._recently_used_label)):
             self._clear_flowbox()
 
-    def on_clear_recently_used_button_clicked(self, _button) -> None:
+    def on_clear_recently_used_button_clicked(self, _button: Gtk.Button) -> None:
         '''
         :param _button: The “Clear recently used” button
-        :type _button: Gtk.Button object
         '''
         if _ARGS.debug:
             LOGGER.debug('on_clear_recently_used_button_clicked()\n')
@@ -1013,12 +1012,11 @@ class EmojiPickerUI(Gtk.Window):
         self._main_menu_popover.hide()
         self._init_recently_used()
 
-    def _add_to_recently_used(self, emoji) -> None:
+    def _add_to_recently_used(self, emoji: str) -> None:
         '''
         Adds an emoji to the resently used dictionary.
 
         :param emoji: The emoji string
-        :type emoji: String
         '''
         if emoji in self._recently_used_emoji:
             self._recently_used_emoji[emoji]['count'] += 1
@@ -1173,12 +1171,11 @@ class EmojiPickerUI(Gtk.Window):
                 Gtk.main_iteration()
         self._search_bar.handle_event(event_key)
 
-    def on_about_button_clicked(self, _button) -> None:
+    def on_about_button_clicked(self, _button: Gtk.Button) -> None:
         '''
         The “About” button has been clicked
 
         :param _button: The “About” button
-        :type _button: Gtk.Button object
         '''
         if _ARGS.debug:
             LOGGER.debug('on_about_button_clicked()\n')
@@ -1293,13 +1290,12 @@ class EmojiPickerUI(Gtk.Window):
         self._busy_stop()
 
     def on_fontsize_spin_button_grab_focus( # pylint: disable=no-self-use
-            self, spin_button) -> bool:
+            self, spin_button: Gtk.SpinButton) -> bool:
         '''
         Signal handler called when the spin button to change
         the font size grabs focus
 
         :param spin_button: The spin button to change the font size
-        :type spin_button: Gtk.SpinButton object
         '''
         if _ARGS.debug:
             LOGGER.debug(
@@ -1313,12 +1309,11 @@ class EmojiPickerUI(Gtk.Window):
         return True
 
     def on_search_entry_grab_focus( # pylint: disable=no-self-use
-            self, search_entry) -> bool:
+            self, search_entry: Gtk.SearchEntry) -> bool:
         '''
         Signal handler called when the search entry grabs focus
 
         :param search_entry: The search entry
-        :type search_entry: Gtk.SearchEntry object
         '''
         if _ARGS.debug:
             LOGGER.debug(
@@ -1641,9 +1636,7 @@ class EmojiPickerUI(Gtk.Window):
         Signal handler called when the gesture is recognized
 
         :param gesture: The object which received the signal
-        :type gesture: Gtk.GestureLongPress object
         :param event_sequence: the event sequence that the event belongs to
-        :type event_sequence: Gdk.EventSequence structure
         '''
         if _ARGS.debug:
             LOGGER.debug(
@@ -1741,7 +1734,6 @@ class EmojiPickerUI(Gtk.Window):
 
         :param event_box: The event box containing the label with the emoji.
                           The popover will be relative to this event box.
-        :type event_box: Gtk.EventBox object
         '''
         text = event_box.get_child().get_label()
         (emoji, name) = self._parse_emoji_and_name_from_text(text)
@@ -2027,7 +2019,6 @@ class EmojiPickerUI(Gtk.Window):
 
         :param toggle_button: The check button used to select whether
                               fallback fonts should be used.
-        :type adjustment: Gtk.CheckButton object
         '''
         self._fallback = check_button.get_active()
         if _ARGS.debug:
@@ -2041,8 +2032,6 @@ class EmojiPickerUI(Gtk.Window):
     def _list_font_names(self) -> List[str]:
         '''
         Returns a list of font names available on the system
-
-        :rtype: List of strings
         '''
         good_emoji_fonts = [
             'Noto Color Emoji 🎨',

@@ -28,6 +28,7 @@ from typing import Dict
 from typing import Set
 from typing import Optional
 from typing import Union
+from typing import Iterable
 from enum import Enum, Flag
 import sys
 import os
@@ -2334,7 +2335,7 @@ SPANISH_419_LOCALES = (
     'es_PA', 'es_PE', 'es_PR', 'es_PY', 'es_SV', 'es_US',
     'es_UY', 'es_VE',)
 
-def expand_languages(languages: List[str]) -> List[str]:
+def expand_languages(languages: Iterable[str]) -> List[str]:
     # pylint: disable=line-too-long
     '''Expands the given list of languages by including fallbacks.
 
@@ -2970,7 +2971,7 @@ def variant_to_value(variant: GLib.Variant) -> Any:
     return variant
 
 def dict_update_existing_keys(
-        pdict: Dict[Any, Any], other_pdict: Dict[Any, Any]):
+        pdict: Dict[Any, Any], other_pdict: Dict[Any, Any]) -> None:
     '''Update values of existing keys in a Python dict from another Python dict
 
     Using pdict.update(other_pdict) would add keys and values from other_pdict
@@ -2978,9 +2979,7 @@ def dict_update_existing_keys(
     to update only existing keys and ignore new keys.
 
     :param pdict: The Python dict to update
-    :type pdict: Python dict
     :param other_pdict: The Python dict to get the updates from
-    :type other_pdict: Python dict
 
     Examples:
 
@@ -5147,14 +5146,14 @@ class ItbAboutDialog(Gtk.AboutDialog):
         self.show()
 
     def on_close_aboutdialog( # pylint: disable=no-self-use
-            self, _about_dialog, _response) -> None:
+            self,
+            _about_dialog: Gtk.Dialog,
+            _response: Gtk.ResponseType) -> None:
         '''
         The “About” dialog has been closed by the user
 
         :param _about_dialog: The “About” dialog
-        :type _about_dialog: GtkDialog object
         :param _response: The response when the “About” dialog was closed
-        :type _response: Gtk.ResponseType enum
         '''
         self.destroy()
 

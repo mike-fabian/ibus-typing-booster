@@ -308,34 +308,30 @@ def find_cldr_annotation_path(language: str) -> str:
 class EmojiMatcher():
     '''A class to find Emoji which best match a query string'''
 
-    def __init__(self, languages=('en_US',),
-                 unicode_data=True, unicode_data_all=False,
-                 emoji_unicode_min='0.0',
-                 emoji_unicode_max='100.0',
-                 cldr_data=True, quick=True,
-                 variation_selector='emoji',
-                 romaji=True) -> None:
+    def __init__(self, languages: Iterable[str] = ('en_US',),
+                 unicode_data: bool = True,
+                 unicode_data_all: bool = False,
+                 emoji_unicode_min: str = '0.0',
+                 emoji_unicode_max: str = '100.0',
+                 cldr_data: bool = True,
+                 quick: bool = True,
+                 variation_selector: str = 'emoji',
+                 romaji: bool = True) -> None:
         '''
         Initialize the emoji matcher
 
         :param languages: A list of languages to use for matching emoji
-        :type languages: List or tuple of strings
         :param unicode_data: Whether to load the UnicodeData.txt file as well
-        :type unicode_data: Boolean
         :param unicode_data_all: Whether to load *all* of the Unicode
                                  characters from UnicodeData.txt.
                                  If False, most regular letters are omitted.
-        :type unicode_data_all: Boolean
         :param cldr_data: Whether to load data from CLDR as well
-        :type cldr_data: Boolean
         :param quick: Whether to do a quicker but slighly less precise match.
                       Quick matching is about 4 times faster and usually
                       good enough.
-        :type quick: Boolean
         :param romaji: Whether to add Latin transliteration for Japanese.
                        Works only when pykakasi is available, if this is not
                        the case, this option is ignored.
-        :type romaji: Boolean
         '''
         self._languages = languages
         self._gettext_translations: Dict[str, Any] = {}
@@ -1377,14 +1373,12 @@ class EmojiMatcher():
         Find a list of emoji which best match a query string.
 
         :param query_string: A search string
-        :type query_string: string
         :param match_limit: Limit the number of matches to this amount
-        :type match_limit: integer
         :param debug: List or tuple of emojis to print debug information
                       about the matching to stdout.
-        :type debug: List of strings
         :return: List of emoji which best match the query string
-        :rtype: A list of tuples of the form (<emoji>, <name>, <score),
+
+        Returns a list of tuples of the form (<emoji>, <name>, <score),
                 i.e. a list like this:
                 [('🎂', 'birthday cake', 3106), ...]
 
@@ -2059,8 +2053,6 @@ class EmojiMatcher():
         emoji-test.txt.
 
         :param emoji_string: An emoji
-        :type emoji_string: String
-        :rtype: Integer
 
         Examples:
 

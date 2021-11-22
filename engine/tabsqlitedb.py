@@ -721,9 +721,6 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
 
     def list_user_shortcuts(self) -> List[Tuple[str, str]]:
         '''Returns a list of user defined shortcuts from the user database.
-
-        :rtype: List of tuples of strings: [(str, str), ...]
-
         '''
         sqlstr = '''
         SELECT input_phrase, phrase FROM user_db.phrases WHERE user_freq >= :freq
@@ -882,7 +879,6 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         Read data to train the prediction from a text file.
 
         :param filename: Full path of the text file to read.
-        :type filename: String
         '''
         if not os.path.isfile(filename):
             filename += '.gz'
