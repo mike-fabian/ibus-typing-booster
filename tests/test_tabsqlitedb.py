@@ -37,6 +37,13 @@ from gi.repository import IBus # type: ignore
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
+IMPORT_DISTRO_SUCCESSFUL = False
+try:
+    import distro # type: ignore
+    IMPORT_DISTRO_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_DISTRO_SUCCESSFUL = False
+
 sys.path.insert(0, "../engine")
 import itb_util
 import tabsqlitedb
@@ -155,6 +162,11 @@ class TabSqliteDbTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
         'Skipping because no fr_FR hunspell dictionary could be found.')
+    @unittest.skipUnless(
+        IMPORT_DISTRO_SUCCESSFUL
+        and distro.id() == 'fedora',
+        'Skipping on other distros then Fedora, '
+        'French dictionary might be too different on other distributions.')
     def test_english_poem(self) -> None:
         training_file = 'the_road_not_taken.txt'
         self.init_database(
@@ -204,6 +216,11 @@ class TabSqliteDbTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
         'Skipping because no fr_FR hunspell dictionary could be found.')
+    @unittest.skipUnless(
+        IMPORT_DISTRO_SUCCESSFUL
+        and distro.id() == 'fedora',
+        'Skipping on other distros then Fedora, '
+        'French dictionary might be too different on other distributions.')
     def test_french_poem(self) -> None:
         training_file = 'chant_d_automne.txt'
         self.init_database(
@@ -216,7 +233,9 @@ class TabSqliteDbTestCase(unittest.TestCase):
         self.database.hunspell_obj.set_dictionary_names(['fr_FR'])
         stats = self.simulate_typing_file(training_file, verbose=False)
         LOGGER.info('stats=%s', repr(stats))
-        # -7.3% saved when typing the French poem with the fr_FR dictionary:
+        # -7.3% saved on Fedora 35 when typing the French poem with
+        # the fr_FR dictionary. On openSUSE Tumbleweed (2021-11-23)
+        # it is -8.2%.
         self.assertEqual(-7.3, round(stats['percent'], 1))
         self.assertEqual(
             'plonge',
@@ -250,6 +269,11 @@ class TabSqliteDbTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
         'Skipping because no fr_FR hunspell dictionary could be found.')
+    @unittest.skipUnless(
+        IMPORT_DISTRO_SUCCESSFUL
+        and distro.id() == 'fedora',
+        'Skipping on other distros then Fedora, '
+        'French dictionary might be too different on other distributions.')
     def test_french_book(self) -> None:
         training_file = 'victor_hugo_notre_dame_de_paris.txt'
         self.init_database(
