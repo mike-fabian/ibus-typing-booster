@@ -906,7 +906,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'test')
         self.assertEqual(self.engine.mock_committed_text, 'test test. Test ')
-        self.assertEqual(self.engine._candidates[0][0], 'test')
+        self.assertEqual(self.engine._candidates[0][0], 'Test')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text,
