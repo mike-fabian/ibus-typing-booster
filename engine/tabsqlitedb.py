@@ -1007,12 +1007,21 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             LOGGER.exception('Unexpected error getting number of database rows.')
             return -1
 
-    def cleanup_database(self) -> None:
-        '''
-        Cleanup user database by expiring entries which have not been
+    def cleanup_database(self, thread: bool = True) -> None:
+        '''Cleanup user database by expiring entries which have not been
         used for a long time.
+
+        :param thread: Whether this function is called in a different thread or not.
+
+        Usually it is called in a thread started when Typing Booster
+        has just finished starting up and is ready for input.
+
+        But in unittest test cases it may be called with an in memory
+        database without starting a thread. In that case a new
+        database connection is not needed.
+
         '''
-        if self.user_db_file == ':memory:':
+        if thread and self.user_db_file == ':memory:':
             LOGGER.info('Database cleanup not needed for memory database.')
             return
         LOGGER.info('Database cleanup starting ...')
@@ -1020,10 +1029,13 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
          # id, input_phrase, phrase, p_phrase, pp_phrase, user_freq, timestamp
         rows: List[Tuple[int, str, str, str, str, int, float]] = []
         try:
-            # SQLite objects created in a thread can only be used in
-            # that same thread.  As the database cleanup is usually
-            # called in a separate thread, get a new connection:
-            database = sqlite3.connect(self.user_db_file)
+            if thread:
+                # SQLite objects created in a thread can only be used in
+                # that same thread.  As the database cleanup is usually
+                # called in a separate thread, get a new connection:
+                database = sqlite3.connect(self.user_db_file)
+            else:
+                database = self.database
             rows = database.execute("SELECT * FROM phrases;").fetchall()
         except Exception:
             LOGGER.exception('Exception when accessing database')
