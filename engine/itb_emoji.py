@@ -2345,7 +2345,7 @@ def main():
         profile = cProfile.Profile()
         profile.enable()
 
-    failed = False
+    failed = 0
     if False:
         matcher = EmojiMatcher(
             languages=['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE',
@@ -2373,10 +2373,7 @@ def main():
         stats.print_stats('difflib', 25)
         stats.print_stats('enchant', 25)
 
-    if failed:
-        sys.exit(failed)
-    else:
-        sys.exit(0)
+    sys.exit(failed)
 
 if __name__ == "__main__":
     main()

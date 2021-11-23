@@ -326,6 +326,4 @@ class Transliterator:
 if __name__ == "__main__":
     import doctest
     (FAILED, _ATTEMPTED) = doctest.testmod()
-    if FAILED:
-        sys.exit(1)
-    sys.exit(0)
+    sys.exit(FAILED)

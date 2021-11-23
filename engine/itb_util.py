@@ -5241,6 +5241,4 @@ if __name__ == "__main__":
     LOGGER.addHandler(LOG_HANDLER)
     import doctest
     (FAILED, ATTEMPTED) = doctest.testmod()
-    if FAILED:
-        sys.exit(1)
-    sys.exit(0)
+    sys.exit(FAILED)

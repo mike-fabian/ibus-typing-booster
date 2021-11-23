@@ -667,10 +667,7 @@ def main():
         stats.print_stats('hunspell', 25)
         stats.print_stats('enchant', 25)
 
-    if failed:
-        sys.exit(1)
-    else:
-        sys.exit(0)
+    sys.exit(failed)
 
 if __name__ == "__main__":
     main()

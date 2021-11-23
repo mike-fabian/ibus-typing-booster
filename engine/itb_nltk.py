@@ -200,9 +200,7 @@ def main() -> None:
         stats.print_stats('nltk', 25)
         stats.print_stats('wordnet', 25)
 
-    if failed:
-        sys.exit(1)
-    sys.exit(0)
+    sys.exit(failed)
 
 if __name__ == "__main__":
     main()
