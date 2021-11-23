@@ -71,6 +71,13 @@ def parse_args() -> Any:
         help=('Print all rows of the database, '
               'default: %(default)s'))
     parser.add_argument(
+        '-s', '--sort',
+        dest='sort',
+        action='store',
+        default='user_freq',
+        help=('Sort order when printing all rows. Can be "user_freq|time". '
+              'default: %(default)s'))
+    parser.add_argument(
         '-t', '--total-rows',
         dest='total_rows',
         action='store_true',
@@ -344,7 +351,13 @@ class DbContents:
               f'{repr(row[2])} ' # phrase
               )
 
-    def dump(self) -> None:
+    def dump(self, sort: str = 'user_freq') -> None:
+        if sort == 'user_freq':
+            self.sort_by_user_freq_time_ascending()
+        elif sort == 'time':
+            self.sort_by_time_ascending()
+        else:
+            return
         for row in self._original_rows:
             self._print_row(row)
 
@@ -369,7 +382,7 @@ if __name__ == '__main__':
                                 max_rows=_ARGS.max_rows)
         dbcontents.sort_by_user_freq_time_ascending()
         if _ARGS.rows:
-            dbcontents.dump()
+            dbcontents.dump(sort=_ARGS.sort)
         dbcontents.print_savings(_ARGS.period)
         if _ARGS.user_freq_distribution:
             dbcontents.print_user_freq_distribution()
