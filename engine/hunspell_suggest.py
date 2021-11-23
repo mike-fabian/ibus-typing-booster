@@ -309,11 +309,16 @@ class Dictionary:
         :param word: The word to return spellchecking suggestions for
         :return: List of spellchecking suggestions, possibly empty.
 
+        Results can be quite different depending on whether enchant or pyhunspell
+        is used and in case of enchant whether hunspell, aspell,
+        myspell, or ispell are used. So for the doctests, better don’t
+        check the complete list of suggestions returned.
+
         Examples:
 
         >>> d = Dictionary('en_US')
-        >>> d.spellcheck_suggest('kamel')
-        ['camel', 'Camel']
+        >>> 'Camel' in d.spellcheck_suggest('kamel')
+        True
 
         >>> d.spellcheck_suggest('')
         []
@@ -510,8 +515,8 @@ class Hunspell:
         ('tenéis', 0)
 
         >>> h = Hunspell(['en_US'])
-        >>> h.suggest('camel')
-        [('Camel', 0), ('camel', 0), ('Camelot', 0), ('camellia', 0), ('camelhair', 0), ('Camelopardalis', 0), ('came', -1), ('cameo', -1), ('came l', -1), ('camels', -1)]
+        >>> ('Camelot', 0) in h.suggest('camel') # Should work with aspell and hunspell
+        True
 
         >>> h = Hunspell(['fr_FR'])
         >>> h.suggest('differemmen')
@@ -522,9 +527,8 @@ class Hunspell:
         []
 
         >>> h = Hunspell(['None', 'en_US'])
-        >>> h.suggest('camel')
-        [('Camel', 0), ('camel', 0), ('Camelot', 0), ('camellia', 0), ('camelhair', 0), ('Camelopardalis', 0), ('came', -1), ('cameo', -1), ('came l', -1), ('camels', -1)]
-
+        >>> ('Camelot', 0) in h.suggest('camel') # Should work with aspell and hunspell
+        True
         '''
         # pylint: enable=line-too-long
         if input_phrase in self._suggest_cache:

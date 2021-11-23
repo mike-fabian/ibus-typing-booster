@@ -1442,8 +1442,8 @@ class EmojiMatcher():
         >>> mq.candidates('padminton')[0][:2]
         ('🏸', 'badminton racquet and shuttlecock')
 
-        >>> mq.candidates('fery')[0][:2]
-        ('⛴\ufe0f', 'ferry')
+        >>> mq.candidates('hedgehgo')[0][:2]
+        ('🦔', 'hedgehog')
 
         Non-emoji Unicode characters can be matched as well:
 
