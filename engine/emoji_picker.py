@@ -83,11 +83,11 @@ def parse_args() -> Any:
         action='store',
         default='',
         help=('Set a list of languages to be used when browsing '
-              + 'or searching for emoji. For example: '
-              + '"emoji-picker -l de:fr:ja" '
-              + 'would use German, French, and Japanese. '
-              + 'If empty, the locale settings are used to '
-              + 'determine the languages.'))
+              'or searching for emoji. For example: '
+              '"emoji-picker -l de:fr:ja" '
+              'would use German, French, and Japanese. '
+              'If empty, the locale settings are used to '
+              'determine the languages.'))
     parser.add_argument(
         '-f', '--font',
         nargs='?',
@@ -95,9 +95,9 @@ def parse_args() -> Any:
         action='store',
         default=None,
         help=('Set a font to display emoji. '
-              + 'If not specified, the font is read from the config file. '
-              + 'To use the system default font specify "emoji". '
-              + 'default: "%(default)s"'))
+              'If not specified, the font is read from the config file. '
+              'To use the system default font specify "emoji". '
+              'default: "%(default)s"'))
     parser.add_argument(
         '-s', '--fontsize',
         nargs='?',
@@ -105,24 +105,24 @@ def parse_args() -> Any:
         action='store',
         default=None,
         help=('Set a fontsize to display emoji. '
-              + 'If not specified, the fontsize is read from the config file. '
-              + 'If that fails 24 is used as a fall back fontsize. '
-              + 'default: "%(default)s"'))
+              'If not specified, the fontsize is read from the config file. '
+              'If that fails 24 is used as a fall back fontsize. '
+              'default: "%(default)s"'))
     parser.add_argument(
         '-m', '--modal',
         action='store_true',
         default=False,
         help=('Make the window of emoji-picker modal. '
-              + 'default: %(default)s'))
+              'default: %(default)s'))
     parser.add_argument(
         '-a', '--all',
         action='store_true',
         default=False,
         help=('Load all Unicode characters. '
-              + 'Makes all Unicode characters accessible, '
-              + 'even normal letters. '
-              + 'Slows the search down and is usually not needed. '
-              + 'default: %(default)s'))
+              'Makes all Unicode characters accessible, '
+              'even normal letters. '
+              'Slows the search down and is usually not needed. '
+              'default: %(default)s'))
     parser.add_argument(
         '--fallback',
         nargs='?',
@@ -130,12 +130,12 @@ def parse_args() -> Any:
         action='store',
         default=None,
         help=('Whether to use fallback fonts when rendering emoji. '
-              + 'If not 0, pango will use fallback fonts as necessary. '
-              + 'If 0, pango will use only glyphs from '
-              + 'the closest matching font on the system. No fallback '
-              + 'will be done to other fonts on the system that '
-              + 'might contain the glyhps needed to render an emoji. '
-              + 'default: "%(default)s"')
+              'If not 0, pango will use fallback fonts as necessary. '
+              'If 0, pango will use only glyphs from '
+              'the closest matching font on the system. No fallback '
+              'will be done to other fonts on the system that '
+              'might contain the glyhps needed to render an emoji. '
+              'default: "%(default)s"')
         )
     parser.add_argument(
         '--emoji_unicode_min',
@@ -144,8 +144,8 @@ def parse_args() -> Any:
         action='store',
         default='0.0',
         help=('Load only emoji which were added to Unicode '
-              + 'not earlier than this Unicode version. '
-              + 'default: %(default)s'))
+              'not earlier than this Unicode version. '
+              'default: %(default)s'))
     # Guess current Unicode version:
     unicode_versions = (
         ('20180605', '11.0'),
@@ -167,20 +167,20 @@ def parse_args() -> Any:
         action='store',
         default=current_unicode_version,
         help=('Load only emoji which were added to Unicode '
-              + 'not later than this Unicode version. '
-              + 'default: %(default)s'))
+              'not later than this Unicode version. '
+              'default: %(default)s'))
     parser.add_argument(
         '-d', '--debug',
         action='store_true',
         default=False,
         help=('Print some debug output to stdout. '
-              + 'default: %(default)s'))
+              'default: %(default)s'))
     parser.add_argument(
         '--version',
         action='store_true',
         default=False,
         help=('Output version information and exit. '
-              + 'default: %(default)s'))
+              'default: %(default)s'))
     return parser.parse_args()
 
 _ARGS = parse_args()
