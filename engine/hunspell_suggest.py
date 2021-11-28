@@ -671,6 +671,9 @@ def main():
         stats.print_stats('hunspell', 25)
         stats.print_stats('enchant', 25)
 
+    LOGGER.info('itb_util.remove_accents() cache info: %s',
+                itb_util.remove_accents.cache_info())
+
     sys.exit(failed)
 
 if __name__ == "__main__":

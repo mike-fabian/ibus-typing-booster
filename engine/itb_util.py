@@ -33,6 +33,7 @@ from enum import Enum, Flag
 import sys
 import os
 import re
+import functools
 import collections
 import unicodedata
 import locale
@@ -2784,6 +2785,16 @@ TRANS_TABLE = {
     ord('Ŧ'): 'T',
 }
 
+# @functools.cache is available only in Python >= 3.9.
+#
+# Python >= 3.9 is not available on RHEL8, not yet on openSUSE
+# Tumbleweed (2021-22-29), ...
+#
+# But @functools.lru_cache(maxsize=None) is the same and it is
+# available for Python >= 3.2, that means it should be available
+# everywhere.
+
+@functools.lru_cache(maxsize=None)
 def remove_accents(text: str, keep: str = '') -> str:
     # pylint: disable=line-too-long
     '''Removes accents from the text
@@ -5241,4 +5252,5 @@ if __name__ == "__main__":
     LOGGER.addHandler(LOG_HANDLER)
     import doctest
     (FAILED, ATTEMPTED) = doctest.testmod()
+    LOGGER.info('remove_accents() cache info: %s', remove_accents.cache_info())
     sys.exit(FAILED)
