@@ -251,17 +251,11 @@ class TabSqliteDb:
         '''
         if not input_phrase or not phrase:
             return
-        input_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL,
-            itb_util.remove_accents(input_phrase).lower())
+        input_phrase = itb_util.remove_accents(input_phrase.lower())
         phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
-        p_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL,
-            itb_util.remove_accents(p_phrase).lower())
-        pp_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL,
-            itb_util.remove_accents(pp_phrase).lower())
+        p_phrase = itb_util.remove_accents(p_phrase.lower())
+        pp_phrase = itb_util.remove_accents(pp_phrase.lower())
         sqlstr = '''
         UPDATE user_db.phrases
         SET user_freq = :user_freq, timestamp = :timestamp
@@ -323,17 +317,11 @@ class TabSqliteDb:
                 user_freq)
         if not input_phrase or not phrase:
             return
-        input_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL,
-            itb_util.remove_accents(input_phrase).lower())
+        input_phrase = itb_util.remove_accents(input_phrase.lower())
         phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
-        p_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL,
-            itb_util.remove_accents(p_phrase).lower())
-        pp_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL,
-            itb_util.remove_accents(pp_phrase).lower())
+        p_phrase = itb_util.remove_accents(p_phrase.lower())
+        pp_phrase = itb_util.remove_accents(pp_phrase.lower())
         select_sqlstr = '''
         SELECT * FROM user_db.phrases
         WHERE input_phrase = :input_phrase
@@ -424,12 +412,8 @@ class TabSqliteDb:
         '''
         input_phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
-        p_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL,
-            itb_util.remove_accents(p_phrase).lower())
-        pp_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL,
-            itb_util.remove_accents(pp_phrase).lower())
+        p_phrase = itb_util.remove_accents(p_phrase.lower())
+        pp_phrase = itb_util.remove_accents(pp_phrase.lower())
         title_case = input_phrase.istitle()
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -457,9 +441,7 @@ class TabSqliteDb:
         # is not in the German hunspell dictionary as a single word but
         # created by suffix and prefix rules, the accent insensitive match
         # in the German hunspell dictionary would not find it either.
-        input_phrase = itb_util.remove_accents(input_phrase).lower()
-        input_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
+        input_phrase = itb_util.remove_accents(input_phrase.lower())
         # Now phrase_frequencies might contain something like this:
         #
         # {'code': 0, 'communicability': 0, 'cold': 0, 'colour': 0}
@@ -753,15 +735,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             return
         phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
-        p_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL,
-            itb_util.remove_accents(p_phrase).lower())
-        pp_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL,
-            itb_util.remove_accents(pp_phrase).lower())
-        input_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL,
-            itb_util.remove_accents(input_phrase).lower())
+        p_phrase = itb_util.remove_accents(p_phrase.lower())
+        pp_phrase = itb_util.remove_accents(pp_phrase.lower())
+        input_phrase = itb_util.remove_accents(input_phrase.lower())
 
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
@@ -911,11 +887,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             # itb_util.remove_accents() returns in NORMALIZATION_FORM_INTERNAL.
             # row[1] (“phrase”) should already be in NORMALIZATION_FORM_INTERNAL
             # but better convert it again here just to make sure.
-            input_phrase = itb_util.remove_accents(row[0]).lower()
+            input_phrase = itb_util.remove_accents(row[0].lower())
             phrase = unicodedata.normalize(
                 itb_util.NORMALIZATION_FORM_INTERNAL, row[1])
-            p_phrase = itb_util.remove_accents(row[2]).lower()
-            pp_phrase = itb_util.remove_accents(row[3]).lower()
+            p_phrase = itb_util.remove_accents(row[2].lower())
+            pp_phrase = itb_util.remove_accents(row[3].lower())
             database_dict.update([((row[0], row[1], row[2], row[3]),
                                    {'input_phrase': input_phrase,
                                     'phrase': phrase,
@@ -938,18 +914,18 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             return False
         for line in lines:
             for token in itb_util.tokenize(line):
-                key = (itb_util.remove_accents(token).lower(),
+                key = (itb_util.remove_accents(token.lower()),
                        token,
-                       itb_util.remove_accents(p_token).lower(),
-                       itb_util.remove_accents(pp_token).lower())
+                       itb_util.remove_accents(p_token.lower()),
+                       itb_util.remove_accents(pp_token.lower()))
                 if key in database_dict:
                     database_dict[key]['user_freq'] += 1
                 else:
                     database_dict[key] = {
-                        'input_phrase': itb_util.remove_accents(token).lower(),
+                        'input_phrase': itb_util.remove_accents(token.lower()),
                         'phrase': token,
-                        'p_phrase': itb_util.remove_accents(p_token).lower(),
-                        'pp_phrase': itb_util.remove_accents(pp_token).lower(),
+                        'p_phrase': itb_util.remove_accents(p_token.lower()),
+                        'pp_phrase': itb_util.remove_accents(pp_token.lower()),
                         'user_freq': 1,
                         'timestamp': time_new}
                 pp_token = p_token
