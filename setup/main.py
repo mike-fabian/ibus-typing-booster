@@ -41,6 +41,7 @@ from time import strftime
 import dbus # type: ignore
 import dbus.service # type: ignore
 
+# pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
 require_version('Gio', '2.0')
 from gi.repository import Gio # type: ignore
@@ -61,8 +62,7 @@ require_version('Pango', '1.0')
 from gi.repository import Pango
 require_version('IBus', '1.0')
 from gi.repository import IBus
-from pkginstall import InstallPackages
-from i18n import _, init as i18n_init
+# pylint: enable=wrong-import-position
 
 IMPORT_LIBVOIKKO_SUCCESSFUL = False
 try:
@@ -80,12 +80,21 @@ try:
 except (ImportError,):
     IMPORT_SIMPLEAUDIO_SUCCESSFUL = False
 
+# pylint: disable=wrong-import-position
+# pylint: disable=import-error
 sys.path = [sys.path[0]+'/../engine'] + sys.path
 from m17n_translit import Transliterator # type: ignore
 import tabsqlitedb
 import itb_util
 import itb_emoji
 import itb_version
+# pylint: enable=import-error
+# pylint: enable=wrong-import-position
+
+# pylint: disable=wrong-import-position
+from pkginstall import InstallPackages
+from i18n import _, init as i18n_init
+# pylint: enable=wrong-import-position
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -152,14 +161,14 @@ class SetupUI(Gtk.Window):
         #
         # It only works like this when gnome-shell runs under Xorg
         # though, under Wayland things are different.
-        self.set_wmclass(
+        self.set_wmclass( # pylint: disable=no-member
             'ibus-setup-typing-booster', 'Typing Booster Preferences')
 
         self.connect('destroy-event', self._on_destroy_event)
         self.connect('delete-event', self._on_delete_event)
 
         self._main_container = Gtk.VBox()
-        self.add(self._main_container)
+        self.add(self._main_container) # pylint: disable=no-member
         self._notebook = Gtk.Notebook()
         self._notebook.set_visible(True)
         self._notebook.set_can_focus(False)
@@ -1958,7 +1967,7 @@ class SetupUI(Gtk.Window):
         self._google_application_credentials_button.connect(
             'clicked', self._on_google_application_credentials_button)
 
-        self.show_all()
+        self.show_all() # pylint: disable=no-member
 
         self._notebook.set_current_page(0) # Has to be after show_all()
 
@@ -2095,7 +2104,8 @@ class SetupUI(Gtk.Window):
             len(self._dictionary_names)
             < itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES)
 
-    def _fill_input_methods_listbox_row(self, ime: str) -> str:
+    @staticmethod
+    def _fill_input_methods_listbox_row(ime: str) -> str:
         '''
         Formats the text of a line in the listbox of configured input methods
 
@@ -2196,8 +2206,9 @@ class SetupUI(Gtk.Window):
         self._input_methods_add_button.set_sensitive(
             len(self._current_imes) < itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS)
 
+    @staticmethod
     def __run_message_dialog(
-            self, message: str, message_type=Gtk.MessageType.INFO) -> None:
+            message: str, message_type=Gtk.MessageType.INFO) -> None:
         '''Run a dialog to show an error or warning message'''
         dialog = Gtk.MessageDialog(
             flags=Gtk.DialogFlags.MODAL,
@@ -2256,27 +2267,31 @@ class SetupUI(Gtk.Window):
         else:
             return False
 
-    def _on_delete_event(self, *_args) -> None:
+    @staticmethod
+    def _on_delete_event(*_args) -> None:
         '''
         The window has been deleted, probably by the window manager.
         '''
         Gtk.main_quit()
 
-    def _on_destroy_event(self, *_args) -> None:
+    @staticmethod
+    def _on_destroy_event(*_args) -> None:
         '''
         The window has been destroyed.
         '''
         Gtk.main_quit()
 
-    def _on_close_clicked(self, *_args) -> None:
+    @staticmethod
+    def _on_close_clicked(*_args) -> None:
         '''
         The button to close the dialog has been clicked.
         '''
         Gtk.main_quit()
 
     # pylint: disable=unused-argument
+    @staticmethod
     def _reload_dictionaries(
-            self, value: Any, update_gsettings: bool = False) -> None:
+            value: Any, update_gsettings: bool = False) -> None:
         '''(re)load all dictionaries
 
         Called when a dictionary has been updated or installed.
@@ -2359,7 +2374,8 @@ class SetupUI(Gtk.Window):
         LOGGER.error('Unknown key\n')
         return
 
-    def _on_about_button_clicked(self, _button: Gtk.Button) -> None:
+    @staticmethod
+    def _on_about_button_clicked(_button: Gtk.Button) -> None:
         '''
         The “About” button has been clicked
 
@@ -4906,7 +4922,7 @@ class SetupUI(Gtk.Window):
                     LOGGER.exception(
                         'Initializing error sound object failed.'
                         'File not found or no read permissions.')
-                except:
+                except Exception:
                     LOGGER.exception(
                         'Initializing error sound object failed '
                         'for unknown reasons.')

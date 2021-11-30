@@ -37,6 +37,7 @@ import time
 import logging
 import threading
 from gettext import dgettext
+# pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
@@ -44,6 +45,7 @@ require_version('Gio', '2.0')
 from gi.repository import Gio
 require_version('GLib', '2.0')
 from gi.repository import GLib
+# pylint: enable=wrong-import-position
 from m17n_translit import Transliterator
 import itb_util
 import itb_emoji
@@ -162,29 +164,23 @@ class TypingBoosterEngine(IBus.Engine):
             self._gsettings.get_value('mincharcomplete'))
         if self._min_char_complete is None:
             self._min_char_complete = 1 # default
-        if self._min_char_complete < 1:
-            self._min_char_complete = 1 # minimum
-        if self._min_char_complete > 9:
-            self._min_char_complete = 9 # maximum
+        self._min_char_complete = max(self._min_char_complete, 1)
+        self._min_char_complete = min(self._min_char_complete, 9)
 
         self._debug_level = itb_util.variant_to_value(
             self._gsettings.get_value('debuglevel'))
         if self._debug_level is None:
             self._debug_level = 0 # default
-        if self._debug_level < 0:
-            self._debug_level = 0 # minimum
-        if self._debug_level > 255:
-            self._debug_level = 255 # maximum
+        self._debug_level = max(self._debug_level, 0)
+        self._debug_level = min(self._debug_level, 255)
         DEBUG_LEVEL = self._debug_level
 
         self._page_size = itb_util.variant_to_value(
             self._gsettings.get_value('pagesize'))
         if self._page_size is None:
             self._page_size = 6 # reasonable default page size
-        if self._page_size < 1:
-            self._page_size = 1 # minimum page size supported
-        if self._page_size > 9:
-            self._page_size = 9 # maximum page size supported
+        self._page_size = max(self._page_size, 1)
+        self._page_size = min(self._page_size, 9)
 
         self._lookup_table_orientation = itb_util.variant_to_value(
             self._gsettings.get_value('lookuptableorientation'))
@@ -1234,10 +1230,9 @@ class TypingBoosterEngine(IBus.Engine):
                              case_mode_orig_phrase)
                 self.database.remove_phrase(
                     phrase=case_mode_orig_phrase, commit=True)
-        for case_mode in self._case_modes:
+        for _, case_mode_value in self._case_modes.items():
             # delete all case modes of the displayed candidate:
-            phrase = self._case_modes[case_mode]['function'](
-                displayed_phrase)
+            phrase = case_mode_value['function'](displayed_phrase)
             # If the candidate to be removed from the user database starts
             # with characters which are stripped from tokens, we probably
             # want to delete the stripped candidate.  I.e. if the
@@ -4369,7 +4364,9 @@ class TypingBoosterEngine(IBus.Engine):
         return self._error_sound
 
     def set_error_sound_file(
-            self, path: Union[str, Any], update_gsettings: bool = True) -> None:
+            self,
+            path: Union[str, Any],
+            update_gsettings: bool = True) -> None:
         '''Sets the path of the .wav file containing the sound
         to play on error.
 
@@ -4412,7 +4409,7 @@ class TypingBoosterEngine(IBus.Engine):
                     LOGGER.exception(
                         'Initializing error sound object failed. '
                         'File not found or no read permissions.')
-                except:
+                except Exception:
                     LOGGER.exception(
                         'Initializing error sound object failed '
                         'for unknown reasons.')
@@ -5296,9 +5293,10 @@ class TypingBoosterEngine(IBus.Engine):
                     compose_result = self._compose_sequences.compose(
                         self._typed_compose_sequence)
                     if compose_result != '':
-                        # If the hotkey did not make the compose sequence invalid,
-                        # the hotkey is apparently part of a valid compose sequence.
-                        # That has priority so it cannot be used as a hotkey in
+                        # If the hotkey did not make the compose
+                        # sequence invalid, the hotkey is apparently
+                        # part of a valid compose sequence.  That has
+                        # priority so it cannot be used as a hotkey in
                         # that case
                         return False
                     self._typed_compose_sequence.pop()
@@ -5339,16 +5337,17 @@ class TypingBoosterEngine(IBus.Engine):
         MockEngine as well which then gets the key and can test its
         effects.
 
-        Unfortunately, “forward_key_event()” does not work in some environments:
+        Unfortunately, “forward_key_event()” does not work in some
+        environments:
 
         - Qt4 when using the input module and not XIM
         - older versions of Qt5
         - older versions of Wayland
 
-        Always using “forward_key_event()” instead of “return False” in
-        “do_process_key_event()” would break ibus-typing-booster
-        completely for environments where forward_key_event() is not implemented
-        or has a broken implementation.
+        Always using “forward_key_event()” instead of “return False”
+        in “do_process_key_event()” would break ibus-typing-booster
+        completely for environments where forward_key_event() is not
+        implemented or has a broken implementation.
 
         To work around this problem and make unit testing possible
         without causing problems in environments with a broken
@@ -5386,7 +5385,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._error_sound and self._error_sound_object:
             try:
                 dummy = self._error_sound_object.play()
-            except:
+            except Exception:
                 LOGGER.exception('Playing error sound failed.')
 
     def _handle_compose(self, key: itb_util.KeyEvent) -> bool:

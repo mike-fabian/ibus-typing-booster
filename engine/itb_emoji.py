@@ -23,8 +23,6 @@ Unicode characters.
 
 '''
 
-# “Wrong continued indentation”: pylint: disable=bad-continuation
-
 from typing import Any
 from typing import List
 from typing import Tuple
@@ -41,9 +39,9 @@ import json
 import unicodedata
 import html
 import logging
-from packaging import version
 from difflib import SequenceMatcher
 import gettext
+from packaging import version
 import itb_util
 
 DOMAINNAME = 'ibus-typing-booster'
@@ -504,7 +502,7 @@ class EmojiMatcher():
             emoji_string = emoji_string.replace('\ufe0f', '')
         if not variation_selector:
             return emoji_string
-        if ('\U0001f1e6' <= emoji_string[0] <= '\U0001f1ff'):
+        if '\U0001f1e6' <= emoji_string[0] <= '\U0001f1ff':
             # do not insert any variation selectors in flag sequences:
             return emoji_string
         retval = ''
@@ -2335,13 +2333,13 @@ def main():
 
     runs some tests and prints profiling data.
     '''
-    LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
+    log_handler = logging.StreamHandler(stream=sys.stderr)
     LOGGER.setLevel(logging.DEBUG)
-    LOGGER.addHandler(LOG_HANDLER)
+    LOGGER.addHandler(log_handler)
 
     if BENCHMARK:
-        import cProfile
-        import pstats
+        import cProfile # pylint: disable=import-outside-toplevel
+        import pstats # pylint: disable=import-outside-toplevel
         profile = cProfile.Profile()
         profile.enable()
 
@@ -2354,7 +2352,7 @@ def main():
         matcher.debug_loading_data()
         matcher.list_emoji_one_bugs()
     else:
-        import doctest
+        import doctest # pylint: disable=import-outside-toplevel
         # Set the domain name to something invalid to avoid using
         # the translations for the doctest tests. Translations may
         # make the tests fail just because some translations are

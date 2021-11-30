@@ -30,6 +30,9 @@ from typing import List
 import os
 import sys
 import unicodedata
+import logging
+import itb_util
+
 IMPORT_REGEX_SUCCESFUL = False
 try:
     import regex # type: ignore
@@ -41,8 +44,6 @@ try:
 except (ImportError,):
     # Use standard “re” module as a fallback:
     import re
-import logging
-import itb_util
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -303,16 +304,16 @@ class Dictionary:
             ]
 
     def spellcheck_suggest(self, word: str) -> List[str]:
-        '''
-        Return spellchecking suggestions for word using enchant, pyhunspell or voikko
+        '''Return spellchecking suggestions for word using enchant,
+        pyhunspell or voikko
 
         :param word: The word to return spellchecking suggestions for
         :return: List of spellchecking suggestions, possibly empty.
 
-        Results can be quite different depending on whether enchant or pyhunspell
-        is used and in case of enchant whether hunspell, aspell,
-        myspell, or ispell are used. So for the doctests, better don’t
-        check the complete list of suggestions returned.
+        Results can be quite different depending on whether enchant or
+        pyhunspell is used and in case of enchant whether hunspell,
+        aspell, myspell, or ispell are used. So for the doctests,
+        better don’t check the complete list of suggestions returned.
 
         Examples:
 
@@ -326,6 +327,7 @@ class Dictionary:
         >>> d = Dictionary('None')
         >>> d.spellcheck_suggest('kamel')
         []
+
         '''
         if self.enchant_dict:
             return self.spellcheck_suggest_enchant(word)
@@ -342,7 +344,8 @@ class Hunspell:
     def __init__(self, dictionary_names=()) -> None:
         global DEBUG_LEVEL
         try:
-            DEBUG_LEVEL = int(str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
+            DEBUG_LEVEL = int(
+                str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
         except (TypeError, ValueError):
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
@@ -650,17 +653,17 @@ def main():
 
     runs some tests and prints profiling data.
     '''
-    LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
+    log_handler = logging.StreamHandler(stream=sys.stderr)
     LOGGER.setLevel(logging.DEBUG)
-    LOGGER.addHandler(LOG_HANDLER)
+    LOGGER.addHandler(log_handler)
 
     if BENCHMARK:
-        import cProfile
-        import pstats
+        import cProfile # pylint: disable=import-outside-toplevel
+        import pstats # pylint: disable=import-outside-toplevel
         profile = cProfile.Profile()
         profile.enable()
 
-    import doctest
+    import doctest # pylint: disable=import-outside-toplevel
     (failed, dummy_attempted) = doctest.testmod()
 
     if BENCHMARK:
