@@ -1,6 +1,6 @@
 # Zdenek <chmelarz@gmail.com>, 2017. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
-# Pavel Borecki <pavel.borecki@gmail.com>, 2019. #zanata
+# Pavel Borecki <pavel.borecki@gmail.com>, 2019. #zanata, 2021.
 # Josef Hruska <hrusjos@gmail.com>, 2019.
 msgid ""
 msgstr ""
@@ -8,16 +8,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2021-11-22 23:08+0100\n"
-"PO-Revision-Date: 2019-12-14 09:51+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Czech <https://translate.stg.fedoraproject.org/projects/ibus-"
-"typing-booster/app/cs/>\n"
+"PO-Revision-Date: 2021-12-03 23:16+0000\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
+"Language-Team: Czech <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.9.1\n"
 
 #: engine/emoji_picker.py:201
 msgid "Emoji Picker"
@@ -309,7 +309,7 @@ msgstr "oblastní"
 #. are seperated by punctuation or white space.
 #: engine/itb_util.py:2474
 msgid "Others, Miscellaneous, Various, Diverse"
-msgstr ""
+msgstr "Ostatní, rozmanité, různé, odlišné"
 
 #: engine/itb_util.py:3885 engine/itb_util.py:4544
 msgid "File not found"
@@ -497,11 +497,11 @@ msgstr ""
 #. punctuation.
 #: setup/main.py:385
 msgid "Auto capitalize"
-msgstr ""
+msgstr "Automatické velké písmeno"
 
 #: setup/main.py:387
 msgid "Automatically capitalize after punctuation."
-msgstr ""
+msgstr "Automaticky převést na velké písmeno po znaménku konce věty."
 
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
@@ -573,16 +573,16 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:488
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remember input mode"
-msgstr "Odebrat metodu vstupu"
+msgstr "Zapamatovat si metodu vstupu"
 
 #: setup/main.py:490
 msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
+"Pokud je tato volba zapnutá, naposledy použitá vstupní metoda (zap/vyp) je "
+"zapamatována i když je relace restartována."
 
 #: setup/main.py:515
 msgid ""
@@ -628,7 +628,7 @@ msgstr ""
 #: setup/main.py:578
 #, python-format
 msgid "Avoid using the %s function"
-msgstr ""
+msgstr "Vyhnout se použití funkce %s"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -653,6 +653,9 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
+"Použít obejití problému pokud je funkce %s rozbitá. Tuto volbu zapínejte "
+"pouze pokud je to naprosto nezbytné, sama může také způsobovat problémy, "
+"zvláště když je používáno XIM."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it.
@@ -660,7 +663,7 @@ msgstr ""
 #. committed words.
 #: setup/main.py:618
 msgid "Enable reopening preedits"
-msgstr ""
+msgstr "Zapnout opětovné otevírání předúprav"
 
 #: setup/main.py:620
 msgid ""
@@ -857,7 +860,7 @@ msgstr "Sem zadejte zkratku:"
 
 #: setup/main.py:1065
 msgid "Enter shortcut expansion here:"
-msgstr "Sem zadejte zadejte rozšíření zkratky:"
+msgstr "Sem zadejte rozšíření zkratky:"
 
 #: setup/main.py:1092
 msgid "Clear input"
