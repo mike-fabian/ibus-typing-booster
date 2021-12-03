@@ -454,16 +454,16 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             languages = ['fr_FR'])
         self.assertEqual(
             mq.candidates('2019'),
-            [('’', 'U+2019 apostrophe droite', 200)])
+            [('’', 'U+2019 apostrophe droite', 2000)])
         self.assertEqual(
             mq.candidates('41'),
-            [('A', 'U+41 latin capital letter a', 200)])
+            [('A', 'U+41 latin capital letter a', 2000)])
         self.assertEqual(
             mq.candidates('2a'),
-            [('*', 'U+2A astérisque', 200)])
+            [('*', 'U+2A astérisque', 2000)])
         self.assertEqual(
             mq.candidates('1b'),
-            [('\x1b', 'U+1B', 200)])
+            [('\x1b', 'U+1B', 2000)])
 
     def test_candidates_de_DE_versus_de_CH(self):
         # FIXME: This doesn’t work perfectly, when de_CH is the main

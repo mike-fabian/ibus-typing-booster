@@ -1454,16 +1454,16 @@ class EmojiMatcher():
         Unicode code points can be used in the query:
 
         >>> mq.candidates('2019')
-        [('’', 'U+2019 right single quotation mark', 200)]
+        [('’', 'U+2019 right single quotation mark', 2000)]
 
         >>> mq.candidates('41')
-        [('A', 'U+41 latin capital letter a', 200)]
+        [('A', 'U+41 latin capital letter a', 2000)]
 
         >>> mq.candidates('2a')
-        [('*', 'U+2A asterisk', 200)]
+        [('*', 'U+2A asterisk', 2000)]
 
         >>> mq.candidates('1b')
-        [('\\x1b', 'U+1B', 200)]
+        [('\\x1b', 'U+1B', 2000)]
 
         '''
         # pylint: enable=line-too-long
@@ -1580,7 +1580,7 @@ class EmojiMatcher():
                     (char,
                      'U+' + query_string.upper()
                      + name,
-                     good_match_score))
+                     good_match_score * 10))
         except (ValueError,):
             pass
 
