@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2021-11-22 23:08+0100\n"
+"POT-Creation-Date: 2021-11-29 21:31+0100\n"
 "PO-Revision-Date: 2021-08-25 09:49+0000\n"
 "Last-Translator: Nathan <nathan95@live.it>\n"
 "Language-Team: Italian <https://translate.fedoraproject.org/projects/ibus-"
@@ -70,64 +70,64 @@ msgstr ""
 "Usa altri font per mostrare emoji o parti di sequenze di emoji che non "
 "potrebbero essere mostrate con il font selezionato."
 
-#: engine/emoji_picker.py:452
+#: engine/emoji_picker.py:453
 msgid "Recently used"
 msgstr "Usati di recente"
 
-#: engine/emoji_picker.py:631
+#: engine/emoji_picker.py:632
 msgid "Categories"
 msgstr "Categorie"
 
-#: engine/emoji_picker.py:632
+#: engine/emoji_picker.py:633
 msgid "Unicode categories"
 msgstr "Categorie Unicode"
 
-#: engine/emoji_picker.py:633
+#: engine/emoji_picker.py:634
 msgid "Keywords"
 msgstr "Parole chiave"
 
-#: engine/emoji_picker.py:673
+#: engine/emoji_picker.py:674
 msgid "Fonts used to render this emoji:"
 msgstr "Font usato per mostrare questa emoji:"
 
-#: engine/emoji_picker.py:690
+#: engine/emoji_picker.py:691
 msgid "Unicode Version:"
 msgstr "Versione Unicode:"
 
-#: engine/emoji_picker.py:712 engine/emoji_picker.py:1818
+#: engine/emoji_picker.py:713 engine/emoji_picker.py:1823
 msgid "Left click to copy"
 msgstr "Click sinistro per copiare"
 
-#: engine/emoji_picker.py:715
+#: engine/emoji_picker.py:716
 msgid "Long press or middle click for skin tones"
 msgstr "Tieni premuto o usa il tasto centrale per i colori della pelle"
 
-#: engine/emoji_picker.py:716
+#: engine/emoji_picker.py:717
 msgid "Right click for info"
 msgstr "Click destro per le informazioni"
 
-#: engine/emoji_picker.py:1201
+#: engine/emoji_picker.py:1204
 msgid "Search Results"
 msgstr "Risultati della ricerca"
 
-#: engine/emoji_picker.py:1205
+#: engine/emoji_picker.py:1208
 msgid "Search produced empty result."
 msgstr "La ricerca non ha prodotto risultati."
 
-#: engine/emoji_picker.py:1476 engine/emoji_picker.py:1603
+#: engine/emoji_picker.py:1479 engine/emoji_picker.py:1607
 msgid "Copied to clipboard!"
 msgstr "Copiato negli appunti!"
 
-#: engine/emoji_picker.py:1928
+#: engine/emoji_picker.py:1933
 msgid "Lookup on emojipedia"
 msgstr "Interroga l'emojipedia"
 
-#: engine/emoji_picker.py:2050 engine/emoji_picker.py:2051
-#: engine/emoji_picker.py:2052 setup/main.py:1349
+#: engine/emoji_picker.py:2055 engine/emoji_picker.py:2056
+#: engine/emoji_picker.py:2057 setup/main.py:1349
 msgid "System default"
 msgstr "Default di sistema"
 
-#: engine/emoji_picker.py:2186
+#: engine/emoji_picker.py:2191
 msgid "Set Font"
 msgstr "Imposta il Carattere"
 
@@ -305,31 +305,31 @@ msgstr "Regionali"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2474
+#: engine/itb_util.py:2475
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util.py:3885 engine/itb_util.py:4544
+#: engine/itb_util.py:3896 engine/itb_util.py:4555
 msgid "File not found"
 msgstr "File non trovato"
 
-#: engine/itb_util.py:3888 engine/itb_util.py:4547
+#: engine/itb_util.py:3899 engine/itb_util.py:4558
 msgid "Permission error"
 msgstr "Errore di autorizzazione"
 
-#: engine/itb_util.py:3891 engine/itb_util.py:4550
+#: engine/itb_util.py:3902 engine/itb_util.py:4561
 msgid "Unicode decoding error"
 msgstr "Errore decodifica unicode"
 
-#: engine/itb_util.py:3894 engine/itb_util.py:4553
+#: engine/itb_util.py:3905 engine/itb_util.py:4564
 msgid "Unknown error"
 msgstr "Errore sconosciuto"
 
-#: engine/itb_util.py:4521
+#: engine/itb_util.py:4532
 msgid "Native Keyboard"
 msgstr "Tastiera nativa"
 
-#: engine/itb_util.py:4523
+#: engine/itb_util.py:4534
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -342,38 +342,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5057
+#: engine/itb_util.py:5068
 msgid "Key input"
 msgstr "Premi un tasto"
 
-#: engine/itb_util.py:5063
+#: engine/itb_util.py:5074
 msgid "Cancel"
 msgstr "Annulla"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5070
+#: engine/itb_util.py:5081
 msgid "Please press a key (or a key combination)"
 msgstr "Premere un tasto (o una combinazione di tasti)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5075
+#: engine/itb_util.py:5086
 msgid "The dialog will be closed when the key is released"
 msgstr "La finestra verrà chiusa al rilascio del tasto"
 
-#: engine/itb_util.py:5107
+#: engine/itb_util.py:5118
 msgid "A completion input method to speedup typing."
 msgstr "Sistema di completamento per velocizzare la digitazione."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5116
+#: engine/itb_util.py:5127
 msgid "translator-credits"
 msgstr "Alessio C. <alciregi@gmail.com>, 2019."
 
-#: engine/itb_util.py:5124
+#: engine/itb_util.py:5135
 msgid "Online documentation:"
 msgstr "Documentazione online:"
 
