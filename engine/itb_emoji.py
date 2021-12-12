@@ -850,11 +850,11 @@ class EmojiMatcher():
         Loads emoji names, aliases, keywords, and categories from
         the emojione.json file.
         '''
-        dirnames = (USER_DATADIR, DATADIR,
-                    # On Fedora >= 25 there is a “nodejs-emojione-json“
-                    # package which has the “emoji.json” file here:
-                    '/usr/lib/node_modules/emojione/')
-        basenames = ('emojione.json', 'emoji.json')
+        dirnames = (USER_DATADIR, DATADIR)
+                    # The current version of the file
+                    # has the name “emoji.json”, an old
+                    # version was named “emojione.json”
+        basenames = ('emoji.json', 'emojione.json')
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
         if not path:
@@ -867,19 +867,8 @@ class EmojiMatcher():
         with open_function(
                 path, mode='rt', encoding='utf-8') as emoji_one_file:
             emojione = json.load(emoji_one_file)
-        if '1f600' not in emojione:
-            emojione_version = 2
-        else:
-            emojione_version = 3
         for dummy_emojione_key, emojione_value in emojione.items():
-            if emojione_version >= 3:
-                codepoints = emojione_value['code_points']['output']
-            else:
-                codepoints = emojione_value['unicode']
-                # ZWJ emojis are in the 'unicode_alt' field:
-                if ('unicode_alt' in emojione_value
-                        and '200d' in emojione_value['unicode_alt']):
-                    codepoints = emojione_value['unicode_alt']
+            codepoints = emojione_value['code_points']['fully_qualified']
 
             emoji_string = ''.join([
                 chr(int(codepoint, 16)) for codepoint in codepoints.split('-')
@@ -899,14 +888,9 @@ class EmojiMatcher():
             names = [display_name]
             shortname = emojione_value[
                 'shortname'].replace('_', ' ').strip(':')
-            if emojione_version >= 3:
-                aliases = [x.replace('_', ' ').strip(':')
-                           for x in emojione_value['shortname_alternates']]
-                ascii_aliases = emojione_value['ascii']
-            else:
-                aliases = [x.replace('_', ' ').strip(':')
-                           for x in emojione_value['aliases']]
-                ascii_aliases = emojione_value['aliases_ascii']
+            aliases = [x.replace('_', ' ').strip(':')
+                       for x in emojione_value['shortname_alternates']]
+            ascii_aliases = emojione_value['ascii']
             if match_name not in names:
                 names += [match_name]
             if shortname not in names:
@@ -930,10 +914,7 @@ class EmojiMatcher():
                 # remove them:
                 keywords.remove('')
 
-            if emojione_version >= 3:
-                emoji_order = emojione_value['order']
-            else:
-                emoji_order = emojione_value['emoji_order']
+            emoji_order = emojione_value['order']
 
             if emoji_string == '🏳🌈':
                 # The rainbow flag should be a zwj sequence.
@@ -1387,7 +1368,7 @@ class EmojiMatcher():
         If the query string is an emoji itself, similar emoji are returned:
 
         >>> mq.candidates('😺', match_limit=3)
-        [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, grinning]', 9), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, mouth, open, smile]', 6), ('😄', 'smiling face with open mouth and smiling eyes [So, people, face, mouth, open, smile]', 6)]
+        [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, uc6, grinning]', 10), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, mouth, open, smile, uc6]', 7), ('😄', 'smiling face with open mouth and smiling eyes [So, people, face, mouth, open, smile, uc6]', 7)]
 
         It works in different languages:
 
@@ -1463,7 +1444,7 @@ class EmojiMatcher():
         [('*', 'U+2A asterisk', 2000)]
 
         >>> mq.candidates('1b')
-        [('\\x1b', 'U+1B', 2000)]
+        [('\\x1b', 'U+1B', 2000), ('🧔🏻\u200d♂️', 'man: light skin tone, beard', 44), ('🧔🏻\u200d♀️', 'woman: light skin tone, beard', 44), ('🧑🏻\u200d🦲', 'person: light skin tone, bald', 44)]
 
         '''
         # pylint: enable=line-too-long
@@ -1718,7 +1699,7 @@ class EmojiMatcher():
         '''Return the keywords of an emoji
 
         Returns a list of keywords of the emoji in the language requested
-        or and empty list if no keywords can be found in that language.
+        or an empty list if no keywords can be found in that language.
 
         If no language is requested, the list of keywords is returned in
         the first language of this EmojiMatcher for which a list of
@@ -1732,7 +1713,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.keywords('🙂')
-        ['face', 'smile', 'slightly smiling face']
+        ['face', 'smile', 'uc7', 'slightly smiling face']
 
         >>> matcher.keywords('🙂', language='it')
         ['faccina con sorriso accennato', 'mezzo sorriso', 'sorriso', 'sorriso a bocca chiusa']
@@ -1835,7 +1816,7 @@ class EmojiMatcher():
         []
 
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, smiling face]', 8), ('😙', 'kissing face with smiling eyes [So, people, face, smile]', 4), ('😍', 'smiling face with heart-shaped eyes [So, people, face, smile]', 4), ('😋', 'face savouring delicious food [So, people, face, smile]', 4), ('😇', 'smiling face with halo [So, people, face, smile]', 4)]
+        [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, uc1, smiling face]', 9), ('😙', 'kissing face with smiling eyes [So, people, face, smile]', 4), ('😍', 'smiling face with heart-shaped eyes [So, people, face, smile]', 4), ('😋', 'face savouring delicious food [So, people, face, smile]', 4), ('😇', 'smiling face with halo [So, people, face, smile]', 4)]
 
         >>> matcher = EmojiMatcher(languages = ['it_IT'])
         >>> matcher.similar('☺', match_limit = 5)

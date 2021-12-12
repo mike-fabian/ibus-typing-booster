@@ -19,7 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 extradata_DATA = \
-	emojione.json \
+	emoji.json \
 	UnicodeData.txt \
 	emoji-data.txt \
 	emoji-variation-sequences.txt \

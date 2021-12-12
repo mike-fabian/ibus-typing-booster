@@ -73,7 +73,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.similar('☺', match_limit=5),
-            [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, smiling face]', 8), ('😙', 'kissing face with smiling eyes [So, people, face, smile]', 4), ('😍', 'smiling face with heart-shaped eyes [So, people, face, smile]', 4), ('😋', 'face savouring delicious food [So, people, face, smile]', 4), ('😇', 'smiling face with halo [So, people, face, smile]', 4)])
+            [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, uc1, smiling face]', 9), ('😙', 'kissing face with smiling eyes [So, people, face, smile]', 4), ('😍', 'smiling face with heart-shaped eyes [So, people, face, smile]', 4), ('😋', 'face savouring delicious food [So, people, face, smile]', 4), ('😇', 'smiling face with halo [So, people, face, smile]', 4)])
 
     def test_similar_white_smiling_face_it_IT(self):
         mq = itb_emoji.EmojiMatcher(
@@ -86,7 +86,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
-            [('🐫', 'bactrian camel [🐫, So, nature, bactrian, camel, hump, two-hump camel]', 7), ('🐪', 'dromedary camel [So, nature, hump, camel]', 4), ('🦙', 'llama [So, nature]', 2), ('🐐', 'goat [So, nature]', 2), ('🦒', 'giraffe face [So, nature]', 2)],
+            [('🐫', 'bactrian camel [🐫, So, nature, bactrian, camel, hump, uc6, two-hump camel]', 8), ('🐪', 'dromedary camel [So, nature, hump, uc6, camel]', 5), ('🐐', 'goat [So, nature, uc6]', 3), ('🐑', 'sheep [So, nature, uc6]', 3), ('🐘', 'elephant [So, nature, uc6]', 3)],
             mq.similar('🐫', match_limit=5))
 
     def test_similar_camel_it_IT(self):
@@ -139,7 +139,6 @@ class EmojiSimilarTestCase(unittest.TestCase):
             [('🤐', 'Gesicht mit Reißverschlussmund [🤐, Gesicht, Gesicht mit Reißverschlussmund, Mund, Reißverschluss]', 5), ('🫡', 'grüßendes Gesicht [Gesicht]', 1), ('🤔', 'nachdenkendes Gesicht [Gesicht]', 1)])
         mq = itb_emoji.EmojiMatcher(
             languages = ['de_CH'])
-        print(mq.similar('🤐', match_limit = 3))
         self.assertEqual(
             mq.similar('🤐', match_limit = 3),
             [('🤐', 'Smiley mit Reissverschlussmund [🤐, Gesicht, Mund, Reissverschluss, Smiley mit Reissverschlussmund]', 5), ('🫡', 'grüssendes Gesicht [Gesicht]', 1), ('😅', 'Lachender Smiley mit kaltem Schweiss [Gesicht]', 1)])
@@ -149,10 +148,10 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['en_US'])
         self.assertEqual(
             mq.similar('🐌', match_limit = 3),
-            [('🐌', 'snail [🐌, So, nature, snail]', 4), ('🪸', 'coral [So, nature]', 2), ('🦋', 'butterfly [So, nature]', 2)])
+            [('🐌', 'snail [🐌, So, nature, snail, uc6]', 5), ('🐚', 'spiral shell [So, nature, uc6]', 3), ('🐛', 'bug [So, nature, uc6]', 3)])
         self.assertEqual(
             mq.similar('🐌', match_limit = 3, show_keywords=False),
-            [('🐌', 'snail', 4), ('🪸', 'coral', 2), ('🦋', 'butterfly', 2)])
+            [('🐌', 'snail', 5), ('🐚', 'spiral shell', 3), ('🐛', 'bug', 3)])
 
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
