@@ -1212,7 +1212,7 @@ class EmojiMatcher():
             # in any of the enabled dictionaries, add spell checking
             # suggestions to the list (don’t do that it it is spelled
             # correctly in at least one dictionary):
-            if len(word) > 3 and IMPORT_ENCHANT_SUCCESSFUL:
+            if len(word) > 5 and IMPORT_ENCHANT_SUCCESSFUL:
                 spelled_correctly = False
                 for dic in self._enchant_dicts:
                     if dic.check(word) or dic.check(word.title()):
