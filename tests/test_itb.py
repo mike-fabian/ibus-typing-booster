@@ -812,6 +812,9 @@ class ItbTestCase(unittest.TestCase):
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('cs_CZ')[0],
+        'Skipping because no Czech hunspell dictionary could be found.')
+    @unittest.skipUnless(
         testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
         'Skipping because python3-enchant seems broken for cs_CZ.')
     @unittest.skipUnless(

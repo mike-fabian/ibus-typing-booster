@@ -21,6 +21,14 @@
 This file implements a few helper functions for test cases
 '''
 
+import sys
+
+sys.path.insert(0, "../engine")
+# pylint: disable=import-error
+import itb_util
+# pylint: enable=import-error
+sys.path.pop(0)
+
 IMPORT_ENCHANT_SUCCESSFUL = False
 IMPORT_HUNSPELL_SUCCESSFUL = False
 try:
@@ -68,6 +76,8 @@ def enchant_sanity_test(language: str = '', word: str = '') -> bool:
     that language.
     '''
     if not (language and word):
+        return False
+    if not itb_util.get_hunspell_dictionary_wordlist(language)[0]:
         return False
     d = enchant.Dict(language)
     if d.suggest(word):
