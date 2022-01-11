@@ -20,6 +20,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 from typing import Any
+from typing import Union
 import os
 import sys
 import argparse
@@ -279,15 +280,16 @@ def write_xml() -> None:
     egsout = patt.sub('', egsout)
     sys.stdout.buffer.write((egsout+'\n').encode('utf-8'))
 
-def main():
+def main() -> None:
     '''Main program'''
     if _ARGS.xml:
         write_xml()
-        return 0
+        return
 
-    if _ARGS.no_debug:
-        log_handler = logging.NullHandler()
-    else:
+    log_handler: Union[
+        logging.NullHandler, logging.handlers.TimedRotatingFileHandler] = (
+            logging.NullHandler())
+    if not _ARGS.no_debug:
         if not os.access(
                 os.path.expanduser('~/.local/share/ibus-typing-booster'),
                 os.F_OK):
@@ -323,7 +325,7 @@ def main():
         ima.run()
     except KeyboardInterrupt:
         ima.quit()
-    return 0
+    return
 
 if __name__ == "__main__":
     main()
