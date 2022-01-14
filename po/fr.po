@@ -6,7 +6,7 @@
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2018. #zanata, 2019.
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019. #zanata
-# Julien Humbert <julroy67@gmail.com>, 2020.
+# Julien Humbert <julroy67@gmail.com>, 2020, 2022.
 # Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2020.
 msgid ""
 msgstr ""
@@ -14,16 +14,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-01-03 12:26+0100\n"
-"PO-Revision-Date: 2020-10-11 18:00+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: French <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/fr/>\n"
+"PO-Revision-Date: 2022-01-14 07:16+0000\n"
+"Last-Translator: Julien Humbert <julroy67@gmail.com>\n"
+"Language-Team: French <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.2.2\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: engine/emoji_picker.py:201
 msgid "Emoji Picker"
@@ -313,7 +313,7 @@ msgstr "régions"
 #. are seperated by punctuation or white space.
 #: engine/itb_util.py:2475
 msgid "Others, Miscellaneous, Various, Diverse"
-msgstr ""
+msgstr "Autres, Différents, Variés, Divers"
 
 #: engine/itb_util.py:3896 engine/itb_util.py:4555
 msgid "File not found"
@@ -585,16 +585,16 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:497
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remember input mode"
-msgstr "Retirer une méthode de saisie"
+msgstr "Se rappeler du mode de saisie"
 
 #: setup/main.py:499
 msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
+"Si cette option est activée, le dernier mode de saisie utilisé (on/off) est "
+"mémorisé même si la session est redémarrée."
 
 #: setup/main.py:524
 msgid ""
@@ -643,7 +643,7 @@ msgstr ""
 #: setup/main.py:587
 #, python-format
 msgid "Avoid using the %s function"
-msgstr ""
+msgstr "Éviter d’utiliser la fonction %s"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -668,6 +668,9 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
+"Utiliser une solution de remplacement si la fonction %s est cassée. N’"
+"activez cette option que si cela est absolument nécessaire, elle peut causer "
+"des problèmes, notamment lorsque XIM est utilisé."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it.
@@ -675,7 +678,7 @@ msgstr ""
 #. committed words.
 #: setup/main.py:627
 msgid "Enable reopening preedits"
-msgstr ""
+msgstr "Permettre la réouverture des pré-rédactions"
 
 #: setup/main.py:629
 msgid ""
@@ -683,6 +686,9 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
+"Indique s’il est permis de remettre un mot dans une pré-édition lorsque le "
+"curseur se déplace à la fin ou au début d’un mot. L’activation de cette "
+"option est utile pour corriger des mots déjà validés."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -740,7 +746,7 @@ msgstr ""
 #. sound is played on error
 #: setup/main.py:725
 msgid "Play sound file on error"
-msgstr ""
+msgstr "Lecture d’un fichier son en cas d’erreur"
 
 #: setup/main.py:727
 msgid ""
@@ -748,6 +754,9 @@ msgid ""
 "the simpleaudio module for Python3 is not installed, this option does "
 "nothing."
 msgstr ""
+"Vous pouvez choisir ici si un fichier son est joué en cas d’erreur. Si le "
+"module simpleaudio pour Python3 n’est pas installé, cette option ne fait "
+"rien."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -1136,34 +1145,28 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
 #: setup/main.py:1580
-#, fuzzy
-#| msgid "Use color for inline completion"
 msgid "Use color for compose preview"
-msgstr "Utilisation d’une couleur pour le complètement en ligne"
+msgstr "Utilisation d’une couleur pour la prévisualisation de composition"
 
 #: setup/main.py:1582
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for a suggestion shown "
-#| "inline."
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
-"Choisissez ici si une couleur personnalisée est utilisée pour une suggestion "
-"affichée en ligne."
+"Choisissez ici si une couleur personnalisée est utilisée pour la "
+"prévisualisation de composition."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
 #: setup/main.py:1610
-#, fuzzy
-#| msgid "Choose color for inline completion"
 msgid "Choose color for compose preview"
-msgstr "Choisir la couleur pour le complètement en ligne"
+msgstr "Choisir la couleur pour la prévisualisation de composition"
 
 #: setup/main.py:1612
 msgid "Here you can specify which color to use for the compose preview."
 msgstr ""
+"Vous pouvez spécifier ici la couleur à utiliser pour la prévisualisation de "
+"composition."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
@@ -1367,7 +1370,7 @@ msgstr "Une autre instance de cette application est déjà en cours d’exécuti
 
 #: setup/main.py:2788
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr "Sélectionnez le fichier son .wav :"
 
 #: setup/main.py:2940
 msgid "Add dictionary"
