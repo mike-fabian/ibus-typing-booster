@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 21 Jan 2022 Released 2.15.16
+* Ignore MOD3_MASK (“Usually” Scroll Lock) when matching key bindings (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/270)
+* When a Modifier key release matches a hotkey command, return False not True. (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/269)
+* Update emoji annotations from CLDR
+* Update UnicodeData.txt UnicodeData-15.0.0d3.txt
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 17 Jan 2022 Released 2.15.15
 * Translation update from Weblate (fr updated to 100%)
 

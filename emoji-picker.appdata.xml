@@ -22,6 +22,28 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.15.16" date="2022-01-30" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.15.16</url>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/270">
+          github-issues#270: Ignore MOD3_MASK (“Usually” Scroll Lock)
+          when matching key bindings
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/269">
+          github-issues#269: When a Modifier key release matches a
+          hotkey command, return False not True.
+        </issue>
+        <issue>
+          Update emoji annotations from CLDR
+        </issue>
+        <issue>
+          Update UnicodeData.txt UnicodeData-15.0.0d3.txt
+        </issue>
+      </issues>
+    </release>
     <release version="2.15.15" date="2022-01-17" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
