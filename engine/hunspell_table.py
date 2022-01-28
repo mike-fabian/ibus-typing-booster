@@ -5258,7 +5258,7 @@ class TypingBoosterEngine(IBus.Engine):
     def _handle_hotkeys(
             self,
             key: itb_util.KeyEvent,
-            commands: Iterable[str] = ()) -> bool:
+            commands: Iterable[str] = ()) -> Tuple[bool, bool]:
         '''Handle hotkey commands
 
         :return: True if the key was completely handled, False if not.
@@ -5298,7 +5298,7 @@ class TypingBoosterEngine(IBus.Engine):
                         # part of a valid compose sequence.  That has
                         # priority so it cannot be used as a hotkey in
                         # that case
-                        return False
+                        return (False, False)
                     self._typed_compose_sequence.pop()
                     self._update_transliterated_strings()
                     self._update_preedit()
@@ -5311,12 +5311,19 @@ class TypingBoosterEngine(IBus.Engine):
                                      command_function_name)
                     if hotkey_removed_from_compose_sequence:
                         self._typed_compose_sequence.append(key.val)
-                    return False
+                    return (False, False)
                 if command_function():
-                    return True
+                    if key.name in ('Shift_L', 'Shift_R',
+                                    'Control_L', 'Control_R',
+                                    'Alt_L', 'Alt_R',
+                                    'Meta_L', 'Meta_R',
+                                    'Super_L', 'Super_R',
+                                    'ISO_Level3_Shift'):
+                        return (True, False)
+                    return (True, True)
         if hotkey_removed_from_compose_sequence:
             self._typed_compose_sequence.append(key.val)
-        return False
+        return (False, False)
 
     def _return_false(self, keyval: int, keycode: int, state: int) -> bool:
         '''A replacement for “return False” in do_process_key_event()
@@ -5460,7 +5467,7 @@ class TypingBoosterEngine(IBus.Engine):
                 [IBus.keyval_name(val)
                  for val in self._typed_compose_sequence],
                 repr(compose_result))
-        if self._handle_hotkeys(
+        (match, return_value) = self._handle_hotkeys(
                 key, commands=['cancel',
                                'toggle_input_mode_on_off',
                                'enable_lookup',
@@ -5485,8 +5492,9 @@ class TypingBoosterEngine(IBus.Engine):
                                'commit_candidate_8',
                                'commit_candidate_8_plus_space',
                                'commit_candidate_9',
-                               'commit_candidate_9_plus_space']):
-            return True
+                               'commit_candidate_9_plus_space'])
+        if match:
+            return return_value
         if (self._lookup_table_shows_compose_completions
             and self.get_lookup_table().cursor_visible):
             # something is manually selected in the compose lookup table
@@ -5584,8 +5592,10 @@ class TypingBoosterEngine(IBus.Engine):
         if self._handle_compose(key):
             return True
 
-        if self._handle_hotkeys(key, commands=['toggle_input_mode_on_off']):
-            return True
+        (match, return_value) = self._handle_hotkeys(
+            key, commands=['toggle_input_mode_on_off'])
+        if match:
+            return return_value
 
         if (not self._input_mode
             or (self._input_purpose
@@ -5593,8 +5603,9 @@ class TypingBoosterEngine(IBus.Engine):
                     itb_util.InputPurpose.PIN])):
             return self._return_false(keyval, keycode, state)
 
-        if self._handle_hotkeys(key):
-            return True
+        (match, return_value) = self._handle_hotkeys(key)
+        if match:
+            return return_value
 
         result = self._process_key_event(key)
         self._prev_key = key
