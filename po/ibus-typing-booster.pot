@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-01-03 12:26+0100\n"
+"POT-Creation-Date: 2022-01-29 15:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,31 +18,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: engine/emoji_picker.py:201
+#: engine/emoji_picker.py:203
 msgid "Emoji Picker"
 msgstr ""
 
-#: engine/emoji_picker.py:318
+#: engine/emoji_picker.py:320
 msgid "Clear recently used"
 msgstr ""
 
-#: engine/emoji_picker.py:324 setup/main.py:187
+#: engine/emoji_picker.py:326 setup/main.py:187
 msgid "About"
 msgstr ""
 
-#: engine/emoji_picker.py:329
+#: engine/emoji_picker.py:331
 msgid "Quit"
 msgstr ""
 
-#: engine/emoji_picker.py:339
+#: engine/emoji_picker.py:341
 msgid "Search for emoji"
 msgstr ""
 
-#: engine/emoji_picker.py:351
+#: engine/emoji_picker.py:353
 msgid "Set the font to display emoji"
 msgstr ""
 
-#: engine/emoji_picker.py:359
+#: engine/emoji_picker.py:361
 msgid "Set font size"
 msgstr ""
 
@@ -54,92 +54,92 @@ msgstr ""
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:380
+#: engine/emoji_picker.py:382
 msgid "Fallback"
 msgstr ""
 
-#: engine/emoji_picker.py:382
+#: engine/emoji_picker.py:384
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
 
-#: engine/emoji_picker.py:453
+#: engine/emoji_picker.py:455
 msgid "Recently used"
 msgstr ""
 
-#: engine/emoji_picker.py:632
+#: engine/emoji_picker.py:634
 msgid "Categories"
 msgstr ""
 
-#: engine/emoji_picker.py:633
+#: engine/emoji_picker.py:635
 msgid "Unicode categories"
 msgstr ""
 
-#: engine/emoji_picker.py:634
+#: engine/emoji_picker.py:636
 msgid "Keywords"
 msgstr ""
 
-#: engine/emoji_picker.py:674
+#: engine/emoji_picker.py:676
 msgid "Fonts used to render this emoji:"
 msgstr ""
 
-#: engine/emoji_picker.py:691
+#: engine/emoji_picker.py:693
 msgid "Unicode Version:"
 msgstr ""
 
-#: engine/emoji_picker.py:713 engine/emoji_picker.py:1823
+#: engine/emoji_picker.py:715 engine/emoji_picker.py:1825
 msgid "Left click to copy"
 msgstr ""
 
-#: engine/emoji_picker.py:716
+#: engine/emoji_picker.py:718
 msgid "Long press or middle click for skin tones"
 msgstr ""
 
-#: engine/emoji_picker.py:717
+#: engine/emoji_picker.py:719
 msgid "Right click for info"
 msgstr ""
 
-#: engine/emoji_picker.py:1204
+#: engine/emoji_picker.py:1206
 msgid "Search Results"
 msgstr ""
 
-#: engine/emoji_picker.py:1208
+#: engine/emoji_picker.py:1210
 msgid "Search produced empty result."
 msgstr ""
 
-#: engine/emoji_picker.py:1479 engine/emoji_picker.py:1607
+#: engine/emoji_picker.py:1481 engine/emoji_picker.py:1609
 msgid "Copied to clipboard!"
 msgstr ""
 
-#: engine/emoji_picker.py:1933
+#: engine/emoji_picker.py:1935
 msgid "Lookup on emojipedia"
 msgstr ""
 
-#: engine/emoji_picker.py:2055 engine/emoji_picker.py:2056
-#: engine/emoji_picker.py:2057 setup/main.py:1358
+#: engine/emoji_picker.py:2057 engine/emoji_picker.py:2058
+#: engine/emoji_picker.py:2059 setup/main.py:1358
 msgid "System default"
 msgstr ""
 
-#: engine/emoji_picker.py:2191
+#: engine/emoji_picker.py:2193
 msgid "Set Font"
 msgstr ""
 
-#: engine/hunspell_table.py:562 engine/hunspell_table.py:596
-#: engine/hunspell_table.py:617
+#: engine/hunspell_table.py:507 engine/hunspell_table.py:541
+#: engine/hunspell_table.py:562
 msgid "Off"
 msgstr ""
 
-#: engine/hunspell_table.py:567 engine/hunspell_table.py:601
-#: engine/hunspell_table.py:622
+#: engine/hunspell_table.py:512 engine/hunspell_table.py:546
+#: engine/hunspell_table.py:567
 msgid "On"
 msgstr ""
 
-#: engine/hunspell_table.py:586
+#: engine/hunspell_table.py:531
 msgid "Input mode"
 msgstr ""
 
-#: engine/hunspell_table.py:587
+#: engine/hunspell_table.py:532
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr ""
 
@@ -150,7 +150,7 @@ msgstr ""
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:606 engine/hunspell_table.py:608 setup/main.py:522
+#: engine/hunspell_table.py:551 engine/hunspell_table.py:553 setup/main.py:522
 msgid "Unicode symbols and emoji predictions"
 msgstr ""
 
@@ -161,60 +161,60 @@ msgstr ""
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:627 engine/hunspell_table.py:628 setup/main.py:551
+#: engine/hunspell_table.py:572 engine/hunspell_table.py:573 setup/main.py:551
 msgid "Off the record mode"
 msgstr ""
 
-#: engine/hunspell_table.py:1579
+#: engine/hunspell_table.py:1524
 msgid "Highest priority dictionary"
 msgstr ""
 
-#: engine/hunspell_table.py:1580
+#: engine/hunspell_table.py:1525
 msgid "Choose highest priority dictionary"
 msgstr ""
 
-#: engine/hunspell_table.py:1609
+#: engine/hunspell_table.py:1554
 msgid "Preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1610
+#: engine/hunspell_table.py:1555
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1926
+#: engine/hunspell_table.py:1871
 msgid "Setup"
 msgstr ""
 
-#: engine/hunspell_table.py:1929 setup/main.py:152
+#: engine/hunspell_table.py:1874 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr ""
 
-#: engine/hunspell_table.py:4610
+#: engine/hunspell_table.py:4555
 msgid "Failed to import Google speech-to-text."
 msgstr ""
 
-#: engine/hunspell_table.py:4613
+#: engine/hunspell_table.py:4558
 msgid "Failed to import pyaudio."
 msgstr ""
 
-#: engine/hunspell_table.py:4616
+#: engine/hunspell_table.py:4561
 msgid "Failed to import queue."
 msgstr ""
 
-#: engine/hunspell_table.py:4621
+#: engine/hunspell_table.py:4566
 msgid "No supported language for speech recognition."
 msgstr ""
 
-#: engine/hunspell_table.py:4625
+#: engine/hunspell_table.py:4570
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 
-#: engine/hunspell_table.py:4637
+#: engine/hunspell_table.py:4582
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 
-#: engine/hunspell_table.py:4744
+#: engine/hunspell_table.py:4689
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 
@@ -299,31 +299,31 @@ msgstr ""
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2475
+#: engine/itb_util.py:2478
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util.py:3896 engine/itb_util.py:4555
+#: engine/itb_util.py:3899 engine/itb_util.py:4558
 msgid "File not found"
 msgstr ""
 
-#: engine/itb_util.py:3899 engine/itb_util.py:4558
+#: engine/itb_util.py:3902 engine/itb_util.py:4561
 msgid "Permission error"
 msgstr ""
 
-#: engine/itb_util.py:3902 engine/itb_util.py:4561
+#: engine/itb_util.py:3905 engine/itb_util.py:4564
 msgid "Unicode decoding error"
 msgstr ""
 
-#: engine/itb_util.py:3905 engine/itb_util.py:4564
+#: engine/itb_util.py:3908 engine/itb_util.py:4567
 msgid "Unknown error"
 msgstr ""
 
-#: engine/itb_util.py:4532
+#: engine/itb_util.py:4535
 msgid "Native Keyboard"
 msgstr ""
 
-#: engine/itb_util.py:4534
+#: engine/itb_util.py:4537
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -333,38 +333,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5068
+#: engine/itb_util.py:5072
 msgid "Key input"
 msgstr ""
 
-#: engine/itb_util.py:5074
+#: engine/itb_util.py:5078
 msgid "Cancel"
 msgstr ""
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5081
+#: engine/itb_util.py:5085
 msgid "Please press a key (or a key combination)"
 msgstr ""
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5086
+#: engine/itb_util.py:5090
 msgid "The dialog will be closed when the key is released"
 msgstr ""
 
-#: engine/itb_util.py:5118
+#: engine/itb_util.py:5122
 msgid "A completion input method to speedup typing."
 msgstr ""
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5127
+#: engine/itb_util.py:5131
 msgid "translator-credits"
 msgstr ""
 
-#: engine/itb_util.py:5135
+#: engine/itb_util.py:5139
 msgid "Online documentation:"
 msgstr ""
 
@@ -1179,7 +1179,7 @@ msgid ""
 msgstr ""
 
 #. Translators:
-#: setup/main.py:1939 setup/main.py:2710
+#: setup/main.py:1939 setup/main.py:2712
 msgid "Set “Google application credentials” .json file:"
 msgstr ""
 
@@ -1199,31 +1199,31 @@ msgstr ""
 msgid "Emoji"
 msgstr ""
 
-#: setup/main.py:2229
+#: setup/main.py:2230
 msgid "Are you sure?"
 msgstr ""
 
-#: setup/main.py:2231 setup/main.py:2713 setup/main.py:2791 setup/main.py:3850
+#: setup/main.py:2232 setup/main.py:2715 setup/main.py:2793 setup/main.py:3850
 msgid "_Cancel"
 msgstr ""
 
-#: setup/main.py:2232 setup/main.py:2714 setup/main.py:2792 setup/main.py:3851
+#: setup/main.py:2233 setup/main.py:2716 setup/main.py:2794 setup/main.py:3851
 msgid "_OK"
 msgstr ""
 
-#: setup/main.py:2264
+#: setup/main.py:2265
 msgid "Another instance of this app is already running."
 msgstr ""
 
-#: setup/main.py:2788
+#: setup/main.py:2790
 msgid "Select .wav sound file:"
 msgstr ""
 
-#: setup/main.py:2940
+#: setup/main.py:2942
 msgid "Add dictionary"
 msgstr ""
 
-#: setup/main.py:3253
+#: setup/main.py:3256
 msgid "Add input method"
 msgstr ""
 
