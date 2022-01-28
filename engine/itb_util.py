@@ -29,6 +29,8 @@ from typing import Set
 from typing import Optional
 from typing import Union
 from typing import Iterable
+from typing import Callable
+from typing import Generator
 from enum import Enum, Flag
 import sys
 import os
@@ -99,8 +101,8 @@ except (ImportError,):
 LOGGER = logging.getLogger('ibus-typing-booster')
 
 DOMAINNAME = 'ibus-typing-booster'
-_ = lambda a: gettext.dgettext(DOMAINNAME, a)
-N_ = lambda a: a
+_: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
+N_: Callable[[str], str] = lambda a: a
 
 # When matching keybindings, only the bits in the following mask are
 # considered for key.state:
@@ -2124,7 +2126,7 @@ Locale = collections.namedtuple(
     'Locale',
     ['language', 'script', 'territory', 'variant', 'encoding'])
 
-def parse_locale(localeId: str):
+def parse_locale(localeId: str) -> Locale:
     '''
     Parses a locale name in glibc or CLDR format and returns
     language, script, territory, variant, and encoding
@@ -2322,7 +2324,7 @@ def locale_normalize(localeId: str) -> str:
 
     '''
     locale = parse_locale(localeId)
-    normalized_locale_id = locale.language
+    normalized_locale_id: str = locale.language
     if locale.script:
         normalized_locale_id += '_' + locale.script
     if locale.territory:
@@ -3057,7 +3059,7 @@ def distro_id() -> str:
 
     '''
     if IMPORT_DISTRO_SUCCESSFUL:
-        return distro.id()
+        return str(distro.id())
     return ''
 
 def find_hunspell_dictionary(language: str) -> Tuple[str, str]:
@@ -3265,7 +3267,7 @@ class InputPurpose(Enum):
     >>> InputPurpose.PASSWORD == IBus.InputPurpose.PASSWORD
     True
     '''
-    def __new__(cls, attr) -> Any:
+    def __new__(cls, attr: str) -> Any:
         obj = object.__new__(cls)
         if hasattr(Gtk, 'InputPurpose') and hasattr(Gtk.InputPurpose, attr):
             obj._value_ = int(getattr(Gtk.InputPurpose, attr))
@@ -3282,7 +3284,7 @@ class InputPurpose(Enum):
             or other.__class__ is IBus.InputPurpose):
             return int(self) == int(other)
         if other.__class__ is int or other.__class__ is float:
-            return int(self) == other
+            return bool(int(self) == other)
         return NotImplemented
 
     def __gt__(self, other: Any) -> bool:
@@ -3291,34 +3293,34 @@ class InputPurpose(Enum):
             or other.__class__ is IBus.InputPurpose):
             return int(self) > int(other)
         if other.__class__ is int or other.__class__ is float:
-            return int(self) > other
+            return bool(int(self) > other)
         return NotImplemented
 
     def __lt__(self, other: Any) -> bool:
         if (self.__class__ is other.__class__
             or other.__class__ is Gtk.InputPurpose
             or other.__class__ is IBus.InputPurpose):
-            return int(self) < int(other)
+            return bool(int(self) < int(other))
         if other.__class__ is int or other.__class__ is float:
-            return int(self) < other
+            return bool(int(self) < other)
         return NotImplemented
 
     def __ge__(self, other: Any) -> bool:
         if (self.__class__ is other.__class__
             or other.__class__ is Gtk.InputPurpose
             or other.__class__ is IBus.InputPurpose):
-            return int(self) >= int(other)
+            return bool(int(self) >= int(other))
         if other.__class__ is int or other.__class__ is float:
-            return int(self) >= other
+            return bool(int(self) >= other)
         return NotImplemented
 
     def __le__(self, other: Any) -> bool:
         if (self.__class__ is other.__class__
             or other.__class__ is Gtk.InputPurpose
             or other.__class__ is IBus.InputPurpose):
-            return int(self) <= int(other)
+            return bool(int(self) <= int(other))
         if other.__class__ is int or other.__class__ is float:
-            return int(self) <= other
+            return bool(int(self) <= other)
         return NotImplemented
 
     FREE_FORM = ('FREE_FORM')
@@ -3399,9 +3401,9 @@ class InputHints(Flag):
         if (self.__class__ is other.__class__
             or other.__class__ is Gtk.InputHints
             or other.__class__ is IBus.InputHints):
-            return int(self) == int(other)
+            return bool(int(self) == int(other))
         if other.__class__ is int or other.__class__ is float:
-            return int(self) == other
+            return bool(int(self) == other)
         return NotImplemented
 
     def __or__(self, other: Any) -> Any:
@@ -3452,7 +3454,7 @@ class ComposeSequences:
     home directory and stores the compose sequences found there
     in an internal variable.
     '''
-    def __init__(self):
+    def __init__(self) -> None:
         self._keypad_keyvals = {
             IBus.KEY_KP_0: IBus.KEY_0,
             IBus.KEY_KP_1: IBus.KEY_1,
@@ -3686,7 +3688,7 @@ class ComposeSequences:
         if hasattr(IBus, 'KEY_dead_longsolidusoverlay'):
             self._dead_keys[
                 getattr(IBus, 'KEY_dead_longsolidusoverlay')] = '\u0338'
-        self._compose_sequences = {}
+        self._compose_sequences: Dict[int, Any] = {}
         compose_file_paths = []
         # Gtk reads compose files like this:
         #
@@ -4175,21 +4177,21 @@ class ComposeSequences:
         for keyval in keyvals:
             if keyval in compose_sequences:
                 if isinstance(compose_sequences[keyval], str):
-                    return compose_sequences[keyval]
+                    return str(compose_sequences[keyval])
                 compose_sequences = compose_sequences[keyval]
                 continue
             if keypad_fallback and keyval in self._keypad_keyvals:
                 fallback_keyval = self._keypad_keyvals[keyval]
                 if fallback_keyval in compose_sequences:
                     if isinstance(compose_sequences[fallback_keyval], str):
-                        return compose_sequences[fallback_keyval]
+                        return str(compose_sequences[fallback_keyval])
                     compose_sequences = compose_sequences[fallback_keyval]
                     continue
             if keypad_fallback and keyval in self._non_keypad_keyvals:
                 fallback_keyval = self._non_keypad_keyvals[keyval]
                 if fallback_keyval in compose_sequences:
                     if isinstance(compose_sequences[fallback_keyval], str):
-                        return compose_sequences[fallback_keyval]
+                        return str(compose_sequences[fallback_keyval])
                     compose_sequences = compose_sequences[fallback_keyval]
                     continue
             # This sequence is not defined in any of the Compose
@@ -4356,10 +4358,10 @@ class ComposeSequences:
 
     def list_compose_sequences(
             self,
-            compose_sequences: Dict[int, Union[Dict, str]],
+            compose_sequences: Dict[int, Union[Dict[Any, Any], str]],
             partial_sequence: List[int] = [],
             available_keyvals: Optional[Set[int]] = None,
-            omit_sequences_involving_keypad = True) -> List[List[int]]:
+            omit_sequences_involving_keypad: bool = True) -> List[List[int]]:
         '''Lists all possible compose sequences in a dictionary
 
         Returns a list of possible sequences, each sequence is a list
@@ -4402,7 +4404,7 @@ class ComposeSequences:
             self,
             keyvals: List[int],
             available_keyvals: Optional[Set[int]] = None,
-            omit_sequences_involving_keypad = True) -> List[List[int]]:
+            omit_sequences_involving_keypad: bool = True) -> List[List[int]]:
         # pylint: disable=line-too-long
         '''Lists all possible compose sequences in the dictionary starting
         with keyvals using only available_keyvals to complete a
@@ -4706,7 +4708,7 @@ class M17nDbInfo:
     def __str__(self) -> str:
         return repr(self._imes)
 
-def xdg_save_data_path(*resource) -> str:
+def xdg_save_data_path(*resource: str) -> str:
     '''
     Compatibility function for systems which do not have pyxdg.
     (For example openSUSE Leap 42.1)
@@ -5061,14 +5063,14 @@ class HotKeys:
     def __str__(self) -> str:
         return repr(self._hotkeys)
 
-class ItbKeyInputDialog(Gtk.MessageDialog):
+class ItbKeyInputDialog(Gtk.MessageDialog): # type: ignore
     def __init__(
             self,
             # Translators: This is used in the title bar of a dialog window
             # requesting that the user types a key to be used as a new
             # key binding for a command.
-            title=_('Key input'),
-            parent=None) -> None:
+            title: str = _('Key input'),
+            parent: Gtk.Window = None) -> None:
         Gtk.Dialog.__init__(
             self,
             title=title,
@@ -5093,18 +5095,18 @@ class ItbKeyInputDialog(Gtk.MessageDialog):
         self.show()
 
     def on_key_press_event(# pylint: disable=no-self-use
-            self, widget, event) -> bool:
+            self, widget: Gtk.MessageDialog, event: Gdk.EventKey) -> bool:
         widget.e = (event.keyval,
                     event.get_state() & KEYBINDING_STATE_MASK)
         return True
 
     def on_key_release_event(# pylint: disable=no-self-use
-            self, widget, _event) -> bool:
+            self, widget: Gtk.MessageDialog, _event: Gdk.EventKey) -> bool:
         widget.response(Gtk.ResponseType.OK)
         return True
 
-class ItbAboutDialog(Gtk.AboutDialog):
-    def  __init__(self, parent=None) -> None:
+class ItbAboutDialog(Gtk.AboutDialog): # type: ignore
+    def  __init__(self, parent: Gtk.Window = None) -> None:
         Gtk.AboutDialog.__init__(self, parent=parent)
         self.set_modal(True)
         # An empty string in aboutdialog.set_logo_icon_name('')
@@ -5171,8 +5173,8 @@ class ItbAboutDialog(Gtk.AboutDialog):
         self.destroy()
 
 # Audio recording parameters
-AUDIO_RATE = 16000
-AUDIO_CHUNK = int(AUDIO_RATE / 10)  # 100ms
+AUDIO_RATE: int = 16000
+AUDIO_CHUNK: int = int(AUDIO_RATE / 10)  # 100ms
 
 class MicrophoneStream(object):
     '''Opens a recording stream as a generator yielding the audio chunks.
@@ -5186,15 +5188,15 @@ class MicrophoneStream(object):
     GoogleCloudPlatform/python-docs-samples is licensed under the
     Apache License 2.0
     '''
-    def __init__(self, rate, chunk):
+    def __init__(self, rate: int, chunk: int):
         self._rate = rate
         self._chunk = chunk
 
         # Create a thread-safe buffer of audio data
-        self._buff = queue.Queue()
+        self._buff: queue.Queue[Any] = queue.Queue()
         self.closed = True
 
-    def __enter__(self):
+    def __enter__(self) -> Any:
         self._audio_interface = pyaudio.PyAudio()
         self._audio_stream = self._audio_interface.open(
             format=pyaudio.paInt16,
@@ -5212,7 +5214,7 @@ class MicrophoneStream(object):
 
         return self
 
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, type: Any, value: Any, traceback: Any) -> None:
         self._audio_stream.stop_stream()
         self._audio_stream.close()
         self.closed = True
@@ -5221,12 +5223,17 @@ class MicrophoneStream(object):
         self._buff.put(None)
         self._audio_interface.terminate()
 
-    def _fill_buffer(self, in_data, frame_count, time_info, status_flags):
+    def _fill_buffer(
+            self,
+            in_data: Any,
+            frame_count: Any,
+            time_info: Any,
+            status_flags: Any) -> Tuple[None, Any]:
         """Continuously collect data from the audio stream, into the buffer."""
         self._buff.put(in_data)
         return None, pyaudio.paContinue
 
-    def generator(self):
+    def generator(self) -> Iterable[bytes]:
         while not self.closed:
             # Use a blocking get() to ensure there's at least one chunk of
             # data, and stop iteration if the chunk is None, indicating the

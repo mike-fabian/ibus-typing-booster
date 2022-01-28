@@ -18,14 +18,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+from typing import Callable
 import locale
 import gettext
 import os
 
 DOMAINNAME = "ibus-typing-booster"
 
-_ = lambda a: gettext.dgettext(DOMAINNAME, a)
-N_ = lambda a: a
+_: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
+N_: Callable[[str], str] = lambda a: a
 
 def init() -> None:
     localedir = os.getenv("IBUS_LOCALEDIR")

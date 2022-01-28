@@ -21,12 +21,13 @@
 
 from typing import Dict
 from typing import Optional
+from typing import Callable
 import re
 import os
 import logging
 from gettext import dgettext
-_ = lambda a: dgettext("ibus-typing-booster", a)
-N_ = lambda a: a
+_: Callable[[str], str] = lambda a: dgettext("ibus-typing-booster", a)
+N_: Callable[[str], str] = lambda a: a
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
@@ -37,9 +38,9 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 
 DEBUG_LEVEL = int(0)
 
-class EngineFactory(IBus.Factory):
+class EngineFactory(IBus.Factory): # type: ignore
     """Table IM Engine Factory"""
-    def __init__(self, bus) -> None:
+    def __init__(self, bus: IBus.Bus) -> None:
         global DEBUG_LEVEL
         try:
             DEBUG_LEVEL = int(str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))

@@ -137,7 +137,11 @@ def parse_args() -> Any:
 _ARGS = parse_args()
 
 class DbContents:
-    def __init__(self, user_db_file='', max_rows=50000, verbose=False) -> None:
+    def __init__(
+            self,
+            user_db_file: str = '',
+            max_rows: int = 50000,
+            verbose: bool = False) -> None:
         self._max_rows = max_rows
         self._verbose = verbose
         self._time_now = time.time()
@@ -235,7 +239,7 @@ class DbContents:
         print(f'Now timestamp={self._time_now} '
               f'{time.ctime(self._time_now)}')
 
-    def print_savings(self, period='none') -> None:
+    def print_savings(self, period: str = 'none') -> None:
         length_typed: Dict[int, int] = {}
         length_committed: Dict[int, int] = {}
         percent_saved: Dict[int, float] = {}
@@ -339,7 +343,7 @@ class DbContents:
 
     def _print_row(self,
                    row: Tuple[int, str, str, str, str, int, float],
-                   prefix='') -> None:
+                   prefix: str = '') -> None:
         print(f'{prefix}'
               f'{row[0]:7} ' # id
               f'{row[5]:7} ' # user_freq

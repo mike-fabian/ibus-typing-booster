@@ -23,6 +23,7 @@ A test program to test input purpose and hints
 '''
 
 from typing import Dict
+from typing import Any
 import sys
 import signal
 import logging
@@ -37,7 +38,7 @@ import itb_util
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
-class InputPurposeTest(Gtk.Window):
+class InputPurposeTest(Gtk.Window): # type: ignore
     '''
     User interface of the setup tool
     '''
@@ -132,20 +133,20 @@ class InputPurposeTest(Gtk.Window):
 
         self.show_all()
 
-    def on_delete_event(self, *_args) -> None: # pylint: disable=no-self-use
+    def on_delete_event(self, *_args: Any) -> None: # pylint: disable=no-self-use
         '''
         The window has been deleted, probably by the window manager.
         '''
         Gtk.main_quit()
 
-    def on_destroy_event(self, *_args) -> None: # pylint: disable=no-self-use
+    def on_destroy_event(self, *_args: Any) -> None: # pylint: disable=no-self-use
         '''
         The window has been destroyed.
         '''
         Gtk.main_quit()
 
     def on_test_entry( # pylint: disable=no-self-use
-            self, widget: Gtk.Entry, _property_spec) -> None:
+            self, widget: Gtk.Entry, _property_spec: Any) -> None:
         '''
         Called when something in the test entry has changed
         '''

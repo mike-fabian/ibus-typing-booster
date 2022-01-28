@@ -25,8 +25,10 @@ An emoji picker for ibus typing booster.
 from typing import Any
 from typing import List
 from typing import Tuple
+from typing import Iterable
 from typing import Dict
 from typing import Optional
+from typing import Callable
 import sys
 import os
 import re
@@ -67,8 +69,8 @@ GTK_VERSION = (Gtk.get_major_version(),
                Gtk.get_micro_version())
 
 DOMAINNAME = 'ibus-typing-booster'
-_ = lambda a: gettext.dgettext(DOMAINNAME, a)
-N_ = lambda a: a
+_: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
+N_: Callable[[str], str] = lambda a: a
 
 def parse_args() -> Any:
     '''
@@ -185,19 +187,19 @@ def parse_args() -> Any:
 
 _ARGS = parse_args()
 
-class EmojiPickerUI(Gtk.Window):
+class EmojiPickerUI(Gtk.Window): # type: ignore
     '''
     User interface of the emoji picker
     '''
     def __init__(self,
-                 languages=('en_US',),
-                 modal=False,
-                 unicode_data_all=False,
-                 emoji_unicode_min=1.0,
-                 emoji_unicode_max=100.0,
-                 font=None,
-                 fontsize=None,
-                 fallback=None) -> None:
+                 languages: Iterable[str] = ('en_US',),
+                 modal: bool = False,
+                 unicode_data_all: bool = False,
+                 emoji_unicode_min: str = '1.0',
+                 emoji_unicode_max: str = '100.0',
+                 font: Optional[str] = None,
+                 fontsize: Optional[float] = None,
+                 fallback: Optional[bool] = None) -> None:
         Gtk.Window.__init__(self, title='🚀 ' + _('Emoji Picker'))
 
         self.set_name('EmojiPicker')
@@ -634,7 +636,7 @@ class EmojiPickerUI(Gtk.Window):
             N_('Keywords'),
         ]
         if self._gettext_translations[language]:
-            return self._gettext_translations[language].gettext(key)
+            return str(self._gettext_translations[language].gettext(key))
         return key
 
     def _emoji_descriptions(self, emoji: str) -> List[str]:
@@ -974,7 +976,7 @@ class EmojiPickerUI(Gtk.Window):
             self._init_recently_used()
         self._cleanup_recently_used()
 
-    def _cleanup_recently_used(self):
+    def _cleanup_recently_used(self) -> None:
         '''
         Reduces the size of the recently used dictionary
         if it has become too big.
@@ -1095,7 +1097,7 @@ class EmojiPickerUI(Gtk.Window):
         stats.print_stats('itb_emoji', 25)
         LOGGER.info('Profiling info:\n%s', stats_stream.getvalue())
 
-    def on_delete_event(self, *_args) -> None:
+    def on_delete_event(self, *_args: Any) -> None:
         '''
         The window has been deleted, probably by the window manager.
         '''
@@ -1104,7 +1106,7 @@ class EmojiPickerUI(Gtk.Window):
             self._print_profiling_information()
         Gtk.main_quit()
 
-    def on_destroy_event(self, *_args) -> None:
+    def on_destroy_event(self, *_args: Any) -> None:
         '''
         The window has been destroyed.
         '''
@@ -1439,7 +1441,7 @@ class EmojiPickerUI(Gtk.Window):
             self._emoji_selected_popover = None
         return False
 
-    def _emoji_event_box_selected(self, event_box) -> bool:
+    def _emoji_event_box_selected(self, event_box: Gtk.EventBox) -> bool:
         '''
         Called when an event box containing an emoji
         was selected in the flowbox.
@@ -1449,7 +1451,6 @@ class EmojiPickerUI(Gtk.Window):
         has been copied to the clipboard.
 
         :param event_box: The event box which contains the emoji
-        :type event_box: Gtk.EventBox object
         '''
         # Use .get_label() instead of .get_text() to fetch the text
         # from the label widget including any embedded underlines
@@ -1461,7 +1462,8 @@ class EmojiPickerUI(Gtk.Window):
             LOGGER.debug('text = %s\n', text)
         (emoji, name) = self._parse_emoji_and_name_from_text(text)
         if not emoji:
-            return Gdk.EVENT_PROPAGATE
+            # Gdk.EVENT_PROPAGATE is defined as False
+            return bool(Gdk.EVENT_PROPAGATE)
         self._show_concise_emoji_description_in_header_bar(emoji)
         self._set_clipboards(emoji)
         self._add_to_recently_used(emoji)
@@ -2220,7 +2222,7 @@ def get_languages() -> List[str]:
     If not, get it from the environment variables.
     '''
     if _ARGS.languages:
-        return _ARGS.languages.split(':')
+        return list(_ARGS.languages.split(':'))
     environment_variable = os.getenv('LANGUAGE')
     if not environment_variable:
         environment_variable = os.getenv('LC_ALL')

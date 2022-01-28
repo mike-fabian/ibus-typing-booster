@@ -129,7 +129,7 @@ else:
     import factory
 
 class IMApp:
-    def __init__(self, exec_by_ibus) -> None:
+    def __init__(self, exec_by_ibus: bool) -> None:
         if DEBUG_LEVEL > 1:
             LOGGER.debug('IMApp.__init__(exec_by_ibus=%s)\n', exec_by_ibus)
         self.__mainloop = GLib.MainLoop()
@@ -188,7 +188,7 @@ class IMApp:
             LOGGER.debug('IMApp.quit()\n')
         self.__bus_destroy_cb()
 
-    def __bus_destroy_cb(self, bus=None) -> None:
+    def __bus_destroy_cb(self, bus: Any = None) -> None:
         if DEBUG_LEVEL > 1:
             LOGGER.debug('IMApp.__bus_destroy_cb(bus=%s)\n', bus)
         if self.destroyed:

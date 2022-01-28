@@ -27,6 +27,7 @@ hunspell dictonaries.
 from typing import Dict
 from typing import Tuple
 from typing import List
+from typing import Iterable
 import os
 import sys
 import unicodedata
@@ -79,7 +80,7 @@ MAX_WORDS = 100
 class Dictionary:
     '''A class to hold a hunspell dictionary
     '''
-    def __init__(self, name='en_US') -> None:
+    def __init__(self, name: str = 'en_US') -> None:
         if DEBUG_LEVEL > 1:
             LOGGER.debug('Dictionary.__init__(name=%s)\n', name)
         self.name = name
@@ -193,7 +194,7 @@ class Dictionary:
         if not self.voikko:
             return False
         # voikko works correctly if the input is a Unicode string in NFC.
-        return self.voikko.spell(unicodedata.normalize('NFC', word))
+        return bool(self.voikko.spell(unicodedata.normalize('NFC', word)))
 
     def spellcheck(self, word: str) -> bool:
         '''
@@ -221,7 +222,7 @@ class Dictionary:
         if self.pyhunspell_object:
             return self.spellcheck_pyhunspell(word)
         if self.voikko:
-            return self.voikko.spell(word)
+            return bool(self.voikko.spell(word))
         return False
 
     def has_spellchecking(self) -> bool:
@@ -341,7 +342,7 @@ class Hunspell:
     '''A class to suggest completions or corrections
     using a list of Hunspell dictionaries
     '''
-    def __init__(self, dictionary_names=()) -> None:
+    def __init__(self, dictionary_names: Iterable[str] = ()) -> None:
         global DEBUG_LEVEL
         try:
             DEBUG_LEVEL = int(
@@ -356,7 +357,7 @@ class Hunspell:
             else:
                 LOGGER.debug('Hunspell.__init__(dictionary_names=())\n')
         self._suggest_cache: Dict[str, List[Tuple[str, int]]] = {}
-        self._dictionary_names = dictionary_names
+        self._dictionary_names: List[str] = list(dictionary_names)
         self._dictionaries: List[Dictionary] = []
         self.init_dictionaries()
 
@@ -381,9 +382,9 @@ class Hunspell:
 
         It is important to return a copy, we do not want to change
         the private member variable directly.'''
-        return self._dictionary_names[:]
+        return list(self._dictionary_names[:])
 
-    def set_dictionary_names(self, dictionary_names: List[str]):
+    def set_dictionary_names(self, dictionary_names: List[str]) -> None:
         '''Sets the list of dictionary names.
 
         If the new list of dictionary names differs from the existing
@@ -645,7 +646,7 @@ class Hunspell:
 
 BENCHMARK = True
 
-def main():
+def main() -> None:
     '''
     Used for testing and profiling.
 

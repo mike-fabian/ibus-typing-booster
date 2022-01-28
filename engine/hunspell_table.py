@@ -30,6 +30,7 @@ from typing import Tuple
 from typing import Union
 from typing import Optional
 from typing import Iterable
+from typing import Callable
 import os
 import unicodedata
 import re
@@ -73,8 +74,8 @@ __all__ = (
     "TypingBoosterEngine",
 )
 
-_ = lambda a: dgettext("ibus-typing-booster", a)
-N_ = lambda a: a
+_: Callable[[str], str] = lambda a: dgettext("ibus-typing-booster", a)
+N_: Callable[[str], str] = lambda a: a
 
 DEBUG_LEVEL = int(0)
 
@@ -97,10 +98,15 @@ OFF_THE_RECORD_MODE_SYMBOL = '🕵'
 INPUT_MODE_TRUE_SYMBOL = '🚀'
 INPUT_MODE_FALSE_SYMBOL = '🐌'
 
-class TypingBoosterEngine(IBus.Engine):
+class TypingBoosterEngine(IBus.Engine): # type: ignore
     '''The IBus Engine for ibus-typing-booster'''
 
-    def __init__(self, bus, obj_path, database, unit_test=False) -> None:
+    def __init__(
+            self,
+            bus: IBus.Bus,
+            obj_path: str,
+            database: Any, # tabsqlitedb.TabSqliteDb
+            unit_test: bool = False) -> None:
         global DEBUG_LEVEL
         try:
             DEBUG_LEVEL = int(str(os.getenv(
@@ -116,8 +122,8 @@ class TypingBoosterEngine(IBus.Engine):
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         self._compose_sequences = itb_util.ComposeSequences()
         self._unit_test = unit_test
-        self._input_purpose = 0
-        self._input_hints = 0
+        self._input_purpose: int = 0
+        self._input_hints: int = 0
         self._lookup_table_is_invalid = False
         self._lookup_table_shows_related_candidates = False
         self._lookup_table_shows_compose_completions = False
@@ -154,215 +160,154 @@ class TypingBoosterEngine(IBus.Engine):
         # Without the sleep, these events may be processed out of order.
         self._ibus_event_sleep_seconds = 0.1
 
-        self._emoji_predictions = itb_util.variant_to_value(
+        self._emoji_predictions: bool = itb_util.variant_to_value(
             self._gsettings.get_value('emojipredictions'))
-        if self._emoji_predictions is None:
-            self._emoji_predictions = False # default
 
         self.is_lookup_table_enabled_by_min_char_complete = False
-        self._min_char_complete = itb_util.variant_to_value(
+        self._min_char_complete: int = itb_util.variant_to_value(
             self._gsettings.get_value('mincharcomplete'))
-        if self._min_char_complete is None:
-            self._min_char_complete = 1 # default
         self._min_char_complete = max(self._min_char_complete, 1)
         self._min_char_complete = min(self._min_char_complete, 9)
 
-        self._debug_level = itb_util.variant_to_value(
+        self._debug_level: int = itb_util.variant_to_value(
             self._gsettings.get_value('debuglevel'))
-        if self._debug_level is None:
-            self._debug_level = 0 # default
         self._debug_level = max(self._debug_level, 0)
         self._debug_level = min(self._debug_level, 255)
         DEBUG_LEVEL = self._debug_level
 
-        self._page_size = itb_util.variant_to_value(
+        self._page_size: int = itb_util.variant_to_value(
             self._gsettings.get_value('pagesize'))
-        if self._page_size is None:
-            self._page_size = 6 # reasonable default page size
         self._page_size = max(self._page_size, 1)
         self._page_size = min(self._page_size, 9)
 
-        self._lookup_table_orientation = itb_util.variant_to_value(
+        self._lookup_table_orientation: int = itb_util.variant_to_value(
             self._gsettings.get_value('lookuptableorientation'))
-        if self._lookup_table_orientation is None:
-            self._lookup_table_orientation = IBus.Orientation.VERTICAL
 
-        self._preedit_underline = itb_util.variant_to_value(
+        self._preedit_underline: int = itb_util.variant_to_value(
             self._gsettings.get_value('preeditunderline'))
-        if self._preedit_underline is None:
-            self._preedit_underline = IBus.AttrUnderline.SINGLE
 
-        self._preedit_style_only_when_lookup = itb_util.variant_to_value(
+        self._preedit_style_only_when_lookup: bool = itb_util.variant_to_value(
             self._gsettings.get_value('preeditstyleonlywhenlookup'))
-        if self._preedit_style_only_when_lookup is None:
-            self._preedit_style_only_when_lookup = False
 
-        self._show_number_of_candidates = itb_util.variant_to_value(
+        self._show_number_of_candidates: bool = itb_util.variant_to_value(
             self._gsettings.get_value('shownumberofcandidates'))
-        if self._show_number_of_candidates is None:
-            self._show_number_of_candidates = False
 
-        self._show_status_info_in_auxiliary_text = itb_util.variant_to_value(
+        self._show_status_info_in_auxiliary_text: bool = itb_util.variant_to_value(
             self._gsettings.get_value('showstatusinfoinaux'))
-        if self._show_status_info_in_auxiliary_text is None:
-            self._show_status_info_in_auxiliary_text = False
 
         self._is_candidate_auto_selected = False
-        self._auto_select_candidate = itb_util.variant_to_value(
+        self._auto_select_candidate: bool = itb_util.variant_to_value(
             self._gsettings.get_value('autoselectcandidate'))
-        if self._auto_select_candidate is None:
-            self._auto_select_candidate = False
 
         self.is_lookup_table_enabled_by_tab = False
-        self._tab_enable = itb_util.variant_to_value(
+        self._tab_enable: bool = itb_util.variant_to_value(
             self._gsettings.get_value('tabenable'))
-        if self._tab_enable is None:
-            self._tab_enable = False
 
-        self._off_the_record = itb_util.variant_to_value(
+        self._off_the_record: bool = itb_util.variant_to_value(
             self._gsettings.get_value('offtherecord'))
-        if self._off_the_record is None:
-            self._off_the_record = False # default
 
         self._hide_input = False
 
         self._input_mode = True
 
-        self._avoid_forward_key_event = itb_util.variant_to_value(
+        self._avoid_forward_key_event: bool = itb_util.variant_to_value(
             self._gsettings.get_value('avoidforwardkeyevent'))
-        if self._avoid_forward_key_event is None:
-            self._avoid_forward_key_event = False # default
 
-        self._arrow_keys_reopen_preedit = itb_util.variant_to_value(
+        self._arrow_keys_reopen_preedit: bool = itb_util.variant_to_value(
             self._gsettings.get_value('arrowkeysreopenpreedit'))
-        if self._arrow_keys_reopen_preedit is None:
-            self._arrow_keys_reopen_preedit = False # default
 
-        self._auto_commit_characters = itb_util.variant_to_value(
+        self._auto_commit_characters: str = itb_util.variant_to_value(
             self._gsettings.get_value('autocommitcharacters'))
-        if not self._auto_commit_characters:
-            self._auto_commit_characters = '' # default
 
-        self._remember_last_used_preedit_ime = False
-        self._remember_last_used_preedit_ime = itb_util.variant_to_value(
+        self._remember_last_used_preedit_ime: bool = itb_util.variant_to_value(
             self._gsettings.get_value('rememberlastusedpreeditime'))
-        if self._remember_last_used_preedit_ime is None:
-            self._remember_last_used_preedit_ime = False
 
-        self._add_space_on_commit = itb_util.variant_to_value(
+        self._add_space_on_commit: bool = itb_util.variant_to_value(
             self._gsettings.get_value('addspaceoncommit'))
-        if self._add_space_on_commit is None:
-            self._add_space_on_commit = True
 
-        self._inline_completion = itb_util.variant_to_value(
+        self._inline_completion: bool = itb_util.variant_to_value(
             self._gsettings.get_value('inlinecompletion'))
-        if self._inline_completion is None:
-            self._inline_completion = False
 
-        self._auto_capitalize = itb_util.variant_to_value(
+        self._auto_capitalize: bool = itb_util.variant_to_value(
             self._gsettings.get_value('autocapitalize'))
-        if self._auto_capitalize is None:
-            self._auto_capitalize = False
 
-        self._color_preedit_spellcheck = itb_util.variant_to_value(
+        self._color_preedit_spellcheck: bool = itb_util.variant_to_value(
             self._gsettings.get_value('colorpreeditspellcheck'))
-        if self._color_preedit_spellcheck is None:
-            self._color_preedit_spellcheck = True
 
-        self._color_preedit_spellcheck_string = itb_util.variant_to_value(
+        self._color_preedit_spellcheck_string: str = itb_util.variant_to_value(
             self._gsettings.get_value('colorpreeditspellcheckstring'))
         self._color_preedit_spellcheck_argb = itb_util.color_string_to_argb(
             self._color_preedit_spellcheck_string)
 
-        self._color_inline_completion = itb_util.variant_to_value(
+        self._color_inline_completion: bool = itb_util.variant_to_value(
             self._gsettings.get_value('colorinlinecompletion'))
-        if self._color_inline_completion is None:
-            self._color_inline_completion = True
 
-        self._color_inline_completion_string = itb_util.variant_to_value(
+        self._color_inline_completion_string: str = itb_util.variant_to_value(
             self._gsettings.get_value('colorinlinecompletionstring'))
         self._color_inline_completion_argb = itb_util.color_string_to_argb(
             self._color_inline_completion_string)
 
-        self._color_compose_preview = itb_util.variant_to_value(
+        self._color_compose_preview: bool = itb_util.variant_to_value(
             self._gsettings.get_value('colorcomposepreview'))
-        if self._color_compose_preview is None:
-            self._color_compose_preview = True
 
-        self._color_compose_preview_string = itb_util.variant_to_value(
+        self._color_compose_preview_string: str = itb_util.variant_to_value(
             self._gsettings.get_value('colorcomposepreviewstring'))
         self._color_compose_preview_argb = itb_util.color_string_to_argb(
             self._color_compose_preview_string)
 
-        self._color_userdb = itb_util.variant_to_value(
+        self._color_userdb: bool = itb_util.variant_to_value(
             self._gsettings.get_value('coloruserdb'))
-        if self._color_userdb is None:
-            self._color_userdb = True
 
-        self._color_userdb_string = itb_util.variant_to_value(
+        self._color_userdb_string: str = itb_util.variant_to_value(
             self._gsettings.get_value('coloruserdbstring'))
         self._color_userdb_argb = itb_util.color_string_to_argb(
             self._color_userdb_string)
 
-        self._color_spellcheck = itb_util.variant_to_value(
+        self._color_spellcheck: bool = itb_util.variant_to_value(
             self._gsettings.get_value('colorspellcheck'))
-        if self._color_spellcheck is None:
-            self._color_spellcheck = True
 
-        self._color_spellcheck_string = itb_util.variant_to_value(
+        self._color_spellcheck_string: str = itb_util.variant_to_value(
             self._gsettings.get_value('colorspellcheckstring'))
         self._color_spellcheck_argb = itb_util.color_string_to_argb(
             self._color_spellcheck_string)
 
-        self._color_dictionary = itb_util.variant_to_value(
+        self._color_dictionary: bool = itb_util.variant_to_value(
             self._gsettings.get_value('colordictionary'))
-        if self._color_dictionary is None:
-            self._color_dictionary = True
 
-        self._color_dictionary_string = itb_util.variant_to_value(
+        self._color_dictionary_string: str = itb_util.variant_to_value(
             self._gsettings.get_value('colordictionarystring'))
         self._color_dictionary_argb = itb_util.color_string_to_argb(
             self._color_dictionary_string)
 
-        self._label_userdb = itb_util.variant_to_value(
+        self._label_userdb: bool = itb_util.variant_to_value(
             self._gsettings.get_value('labeluserdb'))
-        if self._label_userdb is None:
-            self._label_userdb = True
 
-        self._label_userdb_string = itb_util.variant_to_value(
+        self._label_userdb_string: str = itb_util.variant_to_value(
             self._gsettings.get_value('labeluserdbstring'))
 
-        self._label_spellcheck = itb_util.variant_to_value(
+        self._label_spellcheck: bool = itb_util.variant_to_value(
             self._gsettings.get_value('labelspellcheck'))
-        if self._label_spellcheck is None:
-            self._label_spellcheck = True
 
-        self._label_spellcheck_string = itb_util.variant_to_value(
+        self._label_spellcheck_string: str = itb_util.variant_to_value(
             self._gsettings.get_value('labelspellcheckstring'))
 
-        self._label_dictionary = itb_util.variant_to_value(
+        self._label_dictionary: bool = itb_util.variant_to_value(
             self._gsettings.get_value('labeldictionary'))
-        if self._label_dictionary is None:
-            self._label_dictionary = True
 
-        self._label_dictionary_string = itb_util.variant_to_value(
+        self._label_dictionary_string: str = itb_util.variant_to_value(
             self._gsettings.get_value('labeldictionarystring'))
 
-        self._label_busy = itb_util.variant_to_value(
+        self._label_busy: bool = itb_util.variant_to_value(
             self._gsettings.get_value('labelbusy'))
-        if self._label_busy is None:
-            self._label_busy = True
 
-        self._label_busy_string = itb_util.variant_to_value(
+        self._label_busy_string: str = itb_util.variant_to_value(
             self._gsettings.get_value('labelbusystring'))
 
-        self._label_speech_recognition = True
-        self._label_speech_recognition_string = '🎙️'
+        self._label_speech_recognition: bool = True
+        self._label_speech_recognition_string: str = '🎙️'
 
-        self._google_application_credentials = itb_util.variant_to_value(
+        self._google_application_credentials: str = itb_util.variant_to_value(
             self._gsettings.get_value('googleapplicationcredentials'))
-        if self._google_application_credentials is None:
-            self._google_application_credentials = ''
 
         self._keybindings: Dict[str, List[str]] = {}
         self._hotkeys: Optional[itb_util.HotKeys] = None
@@ -373,7 +318,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self._gsettings.get_value('keybindings')),
             update_gsettings=False)
 
-        self._remember_input_mode = itb_util.variant_to_value(
+        self._remember_input_mode: bool = itb_util.variant_to_value(
             self._gsettings.get_value('rememberinputmode'))
         if (self._keybindings['toggle_input_mode_on_off']
             and self._remember_input_mode):
@@ -384,7 +329,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._error_sound_object: Optional[simpleaudio.WaveObject] = None
         self._error_sound_file = ''
-        self._error_sound = itb_util.variant_to_value(
+        self._error_sound: bool = itb_util.variant_to_value(
             self._gsettings.get_value('errorsound'))
         self.set_error_sound_file(
             itb_util.variant_to_value(
@@ -1141,7 +1086,7 @@ class TypingBoosterEngine(IBus.Engine):
         page, dummy_pos_in_page = divmod(
             self._lookup_table.get_cursor_pos(),
             self._lookup_table.get_page_size())
-        return page
+        return int(page)
 
     def _set_lookup_table_cursor_pos_in_current_page(self, index: int) -> bool:
         '''Sets the cursor in the lookup table to index in the current page
@@ -1266,7 +1211,7 @@ class TypingBoosterEngine(IBus.Engine):
 
     def get_cursor_pos(self) -> int:
         '''get lookup table cursor position'''
-        return self._lookup_table.get_cursor_pos()
+        return int(self._lookup_table.get_cursor_pos())
 
     def get_lookup_table(self) -> IBus.LookupTable:
         '''Get lookup table'''
@@ -1720,7 +1665,7 @@ class TypingBoosterEngine(IBus.Engine):
         else:
             update = True
         number_of_current_dictionaries = len(self.get_dictionary_names())
-        for mode in sorted(modes, key=lambda x: (modes[x]['number'])):
+        for mode in sorted(modes, key=lambda x: (int(modes[x]['number']))):
             visible = modes[mode]['number'] < number_of_current_dictionaries
             if modes[mode]['number'] == int(current_mode):
                 state = IBus.PropState.CHECKED
@@ -1767,7 +1712,7 @@ class TypingBoosterEngine(IBus.Engine):
         else:
             update = True
         number_of_current_imes = len(self.get_current_imes())
-        for mode in sorted(modes, key=lambda x: (modes[x]['number'])):
+        for mode in sorted(modes, key=lambda x: (int(modes[x]['number']))):
             visible = modes[mode]['number'] < number_of_current_imes
             if modes[mode]['number'] == int(current_mode):
                 state = IBus.PropState.CHECKED
@@ -1859,7 +1804,7 @@ class TypingBoosterEngine(IBus.Engine):
             update = True
         visible = bool(menu_key != 'InputMode'
                        or self._keybindings['toggle_input_mode_on_off'])
-        for mode in sorted(modes, key=lambda x: (modes[x]['number'])):
+        for mode in sorted(modes, key=lambda x: (int(modes[x]['number']))):
             if modes[mode]['number'] == int(current_mode):
                 state = IBus.PropState.CHECKED
             else:
@@ -1935,7 +1880,7 @@ class TypingBoosterEngine(IBus.Engine):
     def do_property_activate(
             self,
             ibus_property: str,
-            prop_state=IBus.PropState.UNCHECKED) -> None:
+            prop_state: IBus.PropState = IBus.PropState.UNCHECKED) -> None:
         '''
         Handle clicks on properties
         '''
@@ -2679,7 +2624,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         '''
         if (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
-            and self._input_purpose not in [itb_util.InputPurpose.TERMINAL]):
+            and self._input_purpose not in [itb_util.InputPurpose.TERMINAL.value]):
             pattern_sentence_end = re.compile(
                 r'^['
                 + re.escape(itb_util.REMOVE_WHITESPACE_CHARACTERS)
@@ -2794,7 +2739,7 @@ class TypingBoosterEngine(IBus.Engine):
                     'Not reopening the preedit because a modifier is set.')
             return False
         if (not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
-            or self._input_purpose in [itb_util.InputPurpose.TERMINAL]):
+            or self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
             if DEBUG_LEVEL > 1:
                 LOGGER.debug('Surrounding text is not supported. '
                              'No way to repopen preedit.')
@@ -2939,7 +2884,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         self._is_context_from_surrounding_text = False
         if (not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
-            or self._input_purpose in [itb_util.InputPurpose.TERMINAL]):
+            or self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
             # If getting the surrounding text is not supported, leave
             # the context as it is, i.e. rely on remembering what was
             # typed last.
@@ -4273,7 +4218,7 @@ class TypingBoosterEngine(IBus.Engine):
     def set_min_char_complete(
             self,
             min_char_complete: Union[int, Any],
-            update_gsettings=True) -> None:
+            update_gsettings: bool = True) -> None:
         '''Sets the minimum number of characters to try completion
 
         :param min_char_complete: The minimum number of characters
@@ -4751,7 +4696,8 @@ class TypingBoosterEngine(IBus.Engine):
             # If surrounding text cannot be used, uppercase the
             # first letter unconditionally:
             if (not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
-                or self._input_purpose in [itb_util.InputPurpose.TERMINAL]):
+                or
+                self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
                 transcript = transcript[0].upper() + transcript[1:]
             else:
                 surrounding_text = self.get_surrounding_text()
@@ -5599,8 +5545,8 @@ class TypingBoosterEngine(IBus.Engine):
 
         if (not self._input_mode
             or (self._input_purpose
-                in [itb_util.InputPurpose.PASSWORD,
-                    itb_util.InputPurpose.PIN])):
+                in [itb_util.InputPurpose.PASSWORD.value,
+                    itb_util.InputPurpose.PIN.value])):
             return self._return_false(keyval, keycode, state)
 
         (match, return_value) = self._handle_hotkeys(key)
@@ -6203,7 +6149,8 @@ class TypingBoosterEngine(IBus.Engine):
         self._input_purpose = purpose
         self._input_hints = hints
         if DEBUG_LEVEL > 1:
-            if self._input_purpose in list(itb_util.InputPurpose):
+            if (self._input_purpose
+                in [int(x) for x in list(itb_util.InputPurpose)]):
                 for input_purpose in list(itb_util.InputPurpose):
                     if self._input_purpose == input_purpose:
                         LOGGER.debug(

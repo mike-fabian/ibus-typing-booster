@@ -21,6 +21,8 @@
 '''A module to find out which fonts are used by pango to render a string
 '''
 
+from typing import List
+from typing import Tuple
 import sys
 import ctypes
 
@@ -111,20 +113,17 @@ libpango__pango_layout_get_line_readonly = None
 libpango__pango_font_describe = None
 libpango__pango_font_description_get_family = None
 
-def get_fonts_used_for_text(font, text, fallback=True):
+def get_fonts_used_for_text(
+        font: str, text: str, fallback: bool = True) -> List[Tuple[str, str]]:
     '''Return a list of fonts which were really used to render a text
 
     :param font: The font requested to render the text in
-    :type font: String
     :param text: The text to render
-    :type text: String
     :param fallback: Whether to enable font fallback. If disabled, then
                      glyphs will only be used from the closest matching
                      font on the system. No fallback will be done to other
                      fonts on the system that might contain the glyphs needed
                      for the text.
-    :type fallback: Boolean
-    :rtype: List of strings
 
     Examples:
 
@@ -138,31 +137,31 @@ def get_fonts_used_for_text(font, text, fallback=True):
     [('日本語', 'Droid Sans'), (' ', 'DejaVu Sans'), ('🕉️', 'Noto Color Emoji')]
     '''
     fonts_used = []
-    label = libgtk3__gtk_label_new(ctypes.c_char_p(b''))
-    pango_context_p = libgtk3__gtk_widget_get_pango_context(label)
-    pango_layout_p = libpango__pango_layout_new(pango_context_p)
-    pango_font_description_p = libpango__pango_font_description_from_string(
+    label = libgtk3__gtk_label_new(ctypes.c_char_p(b'')) # type: ignore
+    pango_context_p = libgtk3__gtk_widget_get_pango_context(label) # type: ignore
+    pango_layout_p = libpango__pango_layout_new(pango_context_p) # type: ignore
+    pango_font_description_p = libpango__pango_font_description_from_string( # type: ignore
         ctypes.c_char_p(font.encode('UTF-8', errors='replace')))
-    libpango__pango_layout_set_font_description(
+    libpango__pango_layout_set_font_description( # type: ignore
         pango_layout_p, pango_font_description_p)
-    pango_attr_list_p = libpango__pango_attr_list_new()
-    pango_attr_p = libpango__pango_attr_fallback_new(
+    pango_attr_list_p = libpango__pango_attr_list_new() # type: ignore
+    pango_attr_p = libpango__pango_attr_fallback_new( # type: ignore
         ctypes.c_bool(fallback))
-    libpango__pango_attr_list_insert(
+    libpango__pango_attr_list_insert( # type: ignore
         pango_attr_list_p, pango_attr_p)
-    libpango__pango_layout_set_attributes(
+    libpango__pango_layout_set_attributes( # type: ignore
         pango_layout_p, pango_attr_list_p)
     text_utf8 = text.encode('UTF-8', errors='replace')
-    libpango__pango_layout_set_text(
+    libpango__pango_layout_set_text( # type: ignore
         pango_layout_p,
         ctypes.c_char_p(text_utf8),
         ctypes.c_int(-1))
-    pango_layout_line_p = libpango__pango_layout_get_line_readonly(
+    pango_layout_line_p = libpango__pango_layout_get_line_readonly( # type: ignore
         pango_layout_p, ctypes.c_int(0))
     gs_list = pango_layout_line_p.contents.runs.contents
-    number_of_runs = libglib__g_slist_length(gs_list)
+    number_of_runs = libglib__g_slist_length(gs_list) # type: ignore
     for index in range(0, number_of_runs):
-        gpointer = libglib__g_slist_nth_data(gs_list, ctypes.c_uint(index))
+        gpointer = libglib__g_slist_nth_data(gs_list, ctypes.c_uint(index)) # type: ignore
         pango_glyph_item = ctypes.cast(
             gpointer,
             ctypes.POINTER(libpango__PangoGlyphItem)).contents
@@ -172,17 +171,17 @@ def get_fonts_used_for_text(font, text, fallback=True):
         num_chars = pango_item_p.contents.num_chars
         pango_analysis = pango_item_p.contents.analysis
         pango_font_p = pango_analysis.font
-        font_description_used = libpango__pango_font_describe(pango_font_p)
+        font_description_used = libpango__pango_font_describe(pango_font_p) # type: ignore
         run_text = text_utf8[offset:offset + length].decode(
             'UTF-8', errors='replace')
-        run_family = libpango__pango_font_description_get_family(
+        run_family = libpango__pango_font_description_get_family( # type: ignore
             font_description_used).decode('UTF-8', errors='replace')
         fonts_used.append((run_text, run_family))
-    libpango__pango_attr_list_unref(pango_attr_list_p)
-    libpango__pango_attribute_destroy(pango_attr_p)
+    libpango__pango_attr_list_unref(pango_attr_list_p) # type: ignore
+    libpango__pango_attribute_destroy(pango_attr_p) # type: ignore
     return fonts_used
 
-def _init():
+def _init() -> None:
     global libglib__lib
     libglib__lib = ctypes.CDLL('libglib-2.0.so.0', mode=ctypes.RTLD_GLOBAL)
     global libgtk3__lib
@@ -285,15 +284,15 @@ def _init():
         ctypes.byref(ctypes.c_int(0)),
         ctypes.byref(ctypes.pointer(ctypes.c_char_p(b''))))
 
-def _del():
+def _del() -> None:
     '''Cleanup'''
     pass
 
 class __ModuleInitializer:
-    def __init__(self):
+    def __init__(self) -> None:
         _init()
 
-    def __del__(self):
+    def __del__(self) -> None:
         return
 
 __module_init = __ModuleInitializer()

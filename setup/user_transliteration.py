@@ -19,6 +19,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+from typing import List
+from typing import Dict
+from typing import Optional
 import os
 import os.path as path
 import sys
@@ -34,22 +37,23 @@ class LangDictTable:
         Class that specifies accent rules that needs to be appied for each language
         If user has specified user dictionary then that can be overiden by default mapping
     '''
-    def __init__(self,dict_name,lang_dict=None):
-        self.lang = dict_name
-        self.lang_table = lang_dict
+    def __init__(self, dict_name: str, lang_dict: Optional[Dict[str, str]] = None) -> None:
+        self.lang: str = dict_name
+        self.lang_table: Optional[Dict[str, str]] = lang_dict
 
-    def get_lang_table(self):
+    def get_lang_table(self) -> Dict[str, str]:
         if self.lang_table:
             return self.lang_table
         else:
             return self.get_sys_lang_table()
 
-    def get_sys_lang_table(self):
+    def get_sys_lang_table(self) -> Dict[str, str]:
         if self.lang == 'mr_IN.dic':
             return self.get_mr_table()
+        return {}
 
-    def get_mr_table(self):
-        table = dict({
+    def get_mr_table(self) -> Dict[str, str]:
+        table: Dict[str, str] = dict({
             (u'ā', 'aa'),
             (u'ṭ', 't'),
             (u'ḍ', 'd'),
@@ -79,10 +83,10 @@ class LangDictTable:
 
 class LatinConvert:
     def __init__(self,
-                 user_dict,
-                 hunspell_dict,
-                 aff_file,
-                 dict_name):
+                 user_dict: str,
+                 hunspell_dict: str,
+                 aff_file: str,
+                 dict_name: str) -> None:
         self.user_db = user_dict
         self.hunspell_dict = hunspell_dict
         self.aff_file = aff_file
@@ -90,10 +94,10 @@ class LatinConvert:
         self.conv_table = LangDictTable(dict_name)
         self.lang_table = self.conv_table.get_lang_table()
 
-    def read_hunspell_dict(self):
-        aff_buffer = None
-        encoding = None
-        dict_buffer = None
+    def read_hunspell_dict(self) -> str:
+        aff_buffer = ''
+        encoding = ''
+        dict_buffer = ''
         try:
             aff_buffer = codecs.open(
                 self.aff_file, mode='r', encoding='ISO-8859-1').read().replace('\r\n', '\n')
@@ -111,14 +115,14 @@ class LatinConvert:
                     'enc': encoding, 'aff': self.aff_file})
         try:
             dict_buffer = codecs.open(
-                self.hunspell_dict).read().decode(encoding).replace('\r\n', '\n')
+                self.hunspell_dict, encoding=encoding).read().replace('\r\n', '\n')
         except:
             print("load_dictionary(): loading %(dic)s as %(enc)s encoding failed, fall back to ISO-8859-1." %{
                 'dic': self.hunspell_dict, 'enc': encoding})
             encoding = 'ISO-8859-1'
             try:
                 dict_buffer = codecs.open(
-                    self.hunspell_dict).read().decode(encoding).replace('\r\n', '\n')
+                    self.hunspell_dict, encoding=encoding).read().replace('\r\n', '\n')
             except:
                 print("load_dictionary(): loading %(dic)s as %(enc)s encoding failed, giving up." %{
                     'dic': self.hunspell_dict, 'enc': encoding})
@@ -126,23 +130,22 @@ class LatinConvert:
             dict_buffer = dict_buffer[1:]
         return dict_buffer
 
-    def get_words(self):
+    def get_words(self) -> List[str]:
         buff = self.read_hunspell_dict()
         word_pattern = re.compile(r'^[^\s]+.*?(?=/|$)', re.MULTILINE|re.UNICODE)
-        words = word_pattern.findall(buff)
+        words: List[str] = word_pattern.findall(buff)
         nwords = int(words[0])
         words = words[1:]
         return words
 
-    def trans_word(self,word):
+    def trans_word(self, word: str) -> str:
         try:
-            return self.trans.transliterate(word)[0]
+            return str(self.trans.transliterate(word)[0])
         except:
             print("Error while transliteration")
+            return word
 
-    def remove_accent(self,word):
-        if type(word) != type(u''):
-            word = word.decode('utf-8')
+    def remove_accent(self, word: str) -> str:
         new_word  = []
         # To- Do use list compression
         for char in word:
@@ -154,17 +157,14 @@ class LatinConvert:
                 new_word.append(char)
         return ''.join(new_word)
 
-    def get_converted_words(self):
+    def get_converted_words(self) -> List[str]:
         words = self.get_words()
-        icu_words = list(map(self.trans_word,words))
-        ascii_words = list(map(self.remove_accent,icu_words))
+        icu_words = list(map(self.trans_word, words))
+        ascii_words = list(map(self.remove_accent, icu_words))
         return ascii_words
 
-    def insert_into_db(self):
+    def insert_into_db(self) -> None:
         words = self.get_converted_words()
-        for w in words:
-            if type(w) != type(u''):
-                w = w.decode('UTF-8')
         sql_table_name = "phrases"
         try:
             conn = sqlite3.connect(self.user_db)
@@ -197,7 +197,7 @@ parser.add_argument('-d', '--hunspelldict',
                     help='hunspell file path. For example /usr/share/myspell/mr_IN.dic. A full path can be given or only the basename. When only the basename is given, /usr/share/myspell/ is prepended automatically.')
 args = parser.parse_args()
 
-def main():
+def main() -> None:
     if not args.userdictionary or not args.hunspelldict:
         parser.print_help()
         sys.exit(1)
@@ -205,8 +205,7 @@ def main():
     hunspell_dict = args.hunspelldict
     if user_dict:
         #check whether user dict exists in the path
-        home_path = os.getenv ("HOME")
-        tables_path = path.join (home_path, ".local/share/ibus-typing-booster")
+        tables_path = path.expanduser('~/.local/share/ibus-typing-booster')
         if '/' not in user_dict:
             # if user_dict already contains a '/' full path was given
             # on the command line. If there is no '/', it is only the file

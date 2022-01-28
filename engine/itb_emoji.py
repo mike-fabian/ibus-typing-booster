@@ -45,8 +45,8 @@ from packaging import version
 import itb_util
 
 DOMAINNAME = 'ibus-typing-booster'
-_ = lambda a: gettext.dgettext(DOMAINNAME, a)
-N_ = lambda a: a
+_: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
+N_: Callable[[str], str] = lambda a: a
 
 IMPORT_ENCHANT_SUCCESSFUL = False
 try:
@@ -254,7 +254,7 @@ def _in_range(codepoint: int) -> bool:
 def _find_path_and_open_function(
         dirnames: Iterable[str],
         basenames: Iterable[str],
-        subdir: str = '') -> Tuple[str, Optional[Callable]]:
+        subdir: str = '') -> Tuple[str, Optional[Callable[[Any], Any]]]:
     '''Find the first existing file of a list of basenames and dirnames
 
     For each file in “basenames”, tries whether that file or the
@@ -571,7 +571,7 @@ class EmojiMatcher():
         if open_function is None:
             LOGGER.warning('could not find open function')
             return
-        with open_function(
+        with open_function( # type: ignore
                 path, mode='rt', encoding='utf-8') as unicode_data_file:
             for line in unicode_data_file.readlines():
                 if not line.strip():
@@ -619,7 +619,7 @@ class EmojiMatcher():
         if open_function is None:
             LOGGER.warning('could not find open function')
             return
-        with open_function(
+        with open_function( # type: ignore
                 path, mode='rt', encoding='utf-8') as unicode_emoji_data_file:
             for line in unicode_emoji_data_file.readlines():
                 unicode_version = ''
@@ -665,7 +665,7 @@ class EmojiMatcher():
         if open_function is None:
             LOGGER.warning('could not find open function')
             return
-        with open_function(
+        with open_function( # type: ignore
                 path,
                 mode='rt',
                 encoding='utf-8') as unicode_emoji_sequences_file:
@@ -715,7 +715,7 @@ class EmojiMatcher():
         if open_function is None:
             LOGGER.warning('could not find open function')
             return
-        with open_function(
+        with open_function( # type: ignore
                 path,
                 mode='rt',
                 encoding='utf-8') as unicode_emoji_zwj_sequences_file:
@@ -775,7 +775,7 @@ class EmojiMatcher():
         if open_function is None:
             LOGGER.warning('could not find open function')
             return
-        with open_function(
+        with open_function( # type: ignore
                 path, mode='rt', encoding='utf-8') as unicode_emoji_test_file:
             group = ''
             subgroup = ''
@@ -864,7 +864,7 @@ class EmojiMatcher():
         if open_function is None:
             LOGGER.warning('could not find open function')
             return
-        with open_function(
+        with open_function( # type: ignore
                 path, mode='rt', encoding='utf-8') as emoji_one_file:
             emojione = json.load(emoji_one_file)
         for dummy_emojione_key, emojione_value in emojione.items():
@@ -1036,7 +1036,7 @@ class EmojiMatcher():
                     (emoji_string, language),
                     'categories', translated_categories)
 
-    def _load_cldr_annotation_data(self, language, subdir) -> None:
+    def _load_cldr_annotation_data(self, language: str, subdir: str) -> None:
         '''
         Loads translations of emoji names and keywords.
 
@@ -1056,7 +1056,7 @@ class EmojiMatcher():
         # but only the fallback 'es' was really found):
         language = os.path.basename(
             path).replace('.gz', '').replace('.xml', '')
-        with open_function(
+        with open_function( # type: ignore
                 path, mode='rt', encoding='utf-8') as cldr_annotation_file:
             pattern = re.compile(
                 r'.*<annotation cp="(?P<emojistring>[^"]+)"'
@@ -1217,7 +1217,7 @@ class EmojiMatcher():
             self._matcher.set_seq2(self._string2)
             self._match_cache = {}
 
-    def _match(self, label: str, debug=False) -> int:
+    def _match(self, label: str, debug: bool = False) -> int:
         '''Matches a label from the emoji data against the query string.
 
         The query string must have been already set with
@@ -1611,13 +1611,15 @@ class EmojiMatcher():
             if ((emoji_string, language) in self._emoji_dict
                     and
                     'names' in self._emoji_dict[(emoji_string, language)]):
-                return self._emoji_dict[(emoji_string, language)]['names']
+                return list(
+                    self._emoji_dict[(emoji_string, language)]['names'])
             return []
         for _language in itb_util.expand_languages(self._languages):
             if ((emoji_string, _language) in self._emoji_dict
                     and
                     'names' in self._emoji_dict[(emoji_string, _language)]):
-                return self._emoji_dict[(emoji_string, _language)]['names']
+                return list(
+                    self._emoji_dict[(emoji_string, _language)]['names'])
         return []
 
     def name(self, emoji_string: str, language: str = '') -> str:
@@ -1728,13 +1730,15 @@ class EmojiMatcher():
             if ((emoji_string, language) in self._emoji_dict
                     and
                     'keywords' in self._emoji_dict[(emoji_string, language)]):
-                return self._emoji_dict[(emoji_string, language)]['keywords']
+                return list(
+                    self._emoji_dict[(emoji_string, language)]['keywords'])
             return []
         for _language in itb_util.expand_languages(self._languages):
             if ((emoji_string, _language) in self._emoji_dict
                     and
                     'keywords' in self._emoji_dict[(emoji_string, _language)]):
-                return self._emoji_dict[(emoji_string, _language)]['keywords']
+                return list(
+                    self._emoji_dict[(emoji_string, _language)]['keywords'])
         return []
 
     def categories(self, emoji_string: str, language: str = '') -> List[str]:
@@ -1768,15 +1772,15 @@ class EmojiMatcher():
             if ((emoji_string, language) in self._emoji_dict
                     and 'categories' in
                     self._emoji_dict[(emoji_string, language)]):
-                return self._emoji_dict[
-                    (emoji_string, language)]['categories']
+                return list(
+                    self._emoji_dict[(emoji_string, language)]['categories'])
             return []
         for _language in itb_util.expand_languages(self._languages):
             if ((emoji_string, _language) in self._emoji_dict
                     and 'categories' in
                     self._emoji_dict[(emoji_string, _language)]):
-                return self._emoji_dict[
-                    (emoji_string, _language)]['categories']
+                return list(
+                    self._emoji_dict[(emoji_string, _language)]['categories'])
         return []
 
     def similar(
@@ -2063,7 +2067,7 @@ class EmojiMatcher():
             emoji_string, variation_selector='')
         if (((emoji_string, 'en') in self._emoji_dict)
                 and ('properties' in self._emoji_dict[(emoji_string, 'en')])):
-            return self._emoji_dict[(emoji_string, 'en')]['properties']
+            return list(self._emoji_dict[(emoji_string, 'en')]['properties'])
         return []
 
     def unicode_version(self, emoji_string: str) -> str:
@@ -2078,7 +2082,7 @@ class EmojiMatcher():
             emoji_string, variation_selector='')
         if (((emoji_string, 'en') in self._emoji_dict)
                 and ('uversion' in self._emoji_dict[(emoji_string, 'en')])):
-            return self._emoji_dict[(emoji_string, 'en')]['uversion']
+            return str(self._emoji_dict[(emoji_string, 'en')]['uversion'])
         return ''
 
     def skin_tone_modifier_supported(self, emoji_string: str) -> bool:
@@ -2306,7 +2310,7 @@ class EmojiMatcher():
 
 BENCHMARK = True
 
-def main():
+def main() -> None:
     '''
     Used for testing and profiling.
 

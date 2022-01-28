@@ -83,7 +83,7 @@ except (ImportError,):
 # pylint: disable=wrong-import-position
 # pylint: disable=import-error
 sys.path = [sys.path[0]+'/../engine'] + sys.path
-from m17n_translit import Transliterator # type: ignore
+from m17n_translit import Transliterator
 import tabsqlitedb
 import itb_util
 import itb_emoji
@@ -121,7 +121,7 @@ def parse_args() -> Any:
 
 _ARGS = parse_args()
 
-class SetupUI(Gtk.Window):
+class SetupUI(Gtk.Window): # type: ignore
     '''
     User interface of the setup tool
     '''
@@ -2208,7 +2208,8 @@ class SetupUI(Gtk.Window):
 
     @staticmethod
     def __run_message_dialog(
-            message: str, message_type=Gtk.MessageType.INFO) -> None:
+            message: str,
+            message_type: Gtk.MessageType = Gtk.MessageType.INFO) -> None:
         '''Run a dialog to show an error or warning message'''
         dialog = Gtk.MessageDialog(
             flags=Gtk.DialogFlags.MODAL,
@@ -2268,21 +2269,21 @@ class SetupUI(Gtk.Window):
             return False
 
     @staticmethod
-    def _on_delete_event(*_args) -> None:
+    def _on_delete_event(*_args: Any) -> None:
         '''
         The window has been deleted, probably by the window manager.
         '''
         Gtk.main_quit()
 
     @staticmethod
-    def _on_destroy_event(*_args) -> None:
+    def _on_destroy_event(*_args: Any) -> None:
         '''
         The window has been destroyed.
         '''
         Gtk.main_quit()
 
     @staticmethod
-    def _on_close_clicked(*_args) -> None:
+    def _on_close_clicked(*_args: Any) -> None:
         '''
         The button to close the dialog has been clicked.
         '''
@@ -2512,7 +2513,7 @@ class SetupUI(Gtk.Window):
         self.set_label_userdb(widget.get_active(), update_gsettings=True)
 
     def _on_label_userdb_entry(
-            self, widget: Gtk.Entry, _property_spec) -> None:
+            self, widget: Gtk.Entry, _property_spec: Any) -> None:
         '''
         The label for candidates from the user database has been changed.
         '''
@@ -2530,7 +2531,7 @@ class SetupUI(Gtk.Window):
         self.set_label_spellcheck(widget.get_active(), update_gsettings=True)
 
     def _on_label_spellcheck_entry(
-            self, widget: Gtk.Entry, _property_spec) -> None:
+            self, widget: Gtk.Entry, _property_spec: Any) -> None:
         '''
         The label for candidates from spellchecking has been changed.
         '''
@@ -2548,7 +2549,7 @@ class SetupUI(Gtk.Window):
         self.set_label_dictionary(widget.get_active(), update_gsettings=True)
 
     def _on_label_dictionary_entry(
-            self, widget: Gtk.Entry, _property_spec) -> None:
+            self, widget: Gtk.Entry, _property_spec: Any) -> None:
         '''
         The label for candidates from a dictionary has been changed.
         '''
@@ -2564,7 +2565,8 @@ class SetupUI(Gtk.Window):
         '''
         self.set_label_busy(widget.get_active(), update_gsettings=True)
 
-    def _on_label_busy_entry(self, widget: Gtk.Entry, _property_spec) -> None:
+    def _on_label_busy_entry(
+            self, widget: Gtk.Entry, _property_spec: Any) -> None:
         '''
         The label to indicate when ibus-typing-booster is busy
         '''
@@ -2691,7 +2693,7 @@ class SetupUI(Gtk.Window):
             widget.get_active(), update_gsettings=True)
 
     def _on_auto_commit_characters_entry(
-            self, widget: Gtk.Entry, _property_spec) -> None:
+            self, widget: Gtk.Entry, _property_spec: Any) -> None:
         '''
         The list of characters triggering an auto commit has been changed.
         '''
@@ -2901,7 +2903,7 @@ class SetupUI(Gtk.Window):
         filter_text = search_entry.get_text()
         self._fill_dictionaries_add_listbox(filter_text)
 
-    def _on_dictionaries_add_button_clicked(self, *_args) -> None:
+    def _on_dictionaries_add_button_clicked(self, *_args: Any) -> None:
         '''
         Signal handler called when the “add” button to add another
         dictionary has been clicked.
@@ -2965,7 +2967,7 @@ class SetupUI(Gtk.Window):
             self._dictionaries_add_popover.popup()
         self._dictionaries_add_popover.show_all()
 
-    def _on_dictionaries_remove_button_clicked(self, *_args):
+    def _on_dictionaries_remove_button_clicked(self, *_args: Any) -> None:
         '''
         Signal handler called when the “remove” button for
         an input method has been clicked.
@@ -2985,9 +2987,10 @@ class SetupUI(Gtk.Window):
         self.set_dictionary_names(dictionary_names, update_gsettings=True)
         self._dictionaries_listbox_selected_dictionary_index = -1
         self._dictionaries_listbox_selected_dictionary_name = ''
-        self._dictionaries_listbox.unselect_all()
+        if self._dictionaries_listbox:
+            self._dictionaries_listbox.unselect_all()
 
-    def _on_dictionaries_up_button_clicked(self, *_args) -> None:
+    def _on_dictionaries_up_button_clicked(self, *_args: Any) -> None:
         '''
         Signal handler called when the “up” button for a dictionary
         has been clicked.
@@ -3014,7 +3017,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox.select_row(
             self._dictionaries_listbox.get_row_at_index(index - 1))
 
-    def _on_dictionaries_down_button_clicked(self, *_args) -> None:
+    def _on_dictionaries_down_button_clicked(self, *_args: Any) -> None:
         '''
         Signal handler called when the “down” button for a dictionary
         has been clicked.
@@ -3041,7 +3044,7 @@ class SetupUI(Gtk.Window):
         self._dictionaries_listbox.select_row(
             self._dictionaries_listbox.get_row_at_index(index + 1))
 
-    def _on_install_missing_dictionaries(self, *_args) -> None:
+    def _on_install_missing_dictionaries(self, *_args: Any) -> None:
         '''
         Signal handler called when the “Install missing dictionaries”
         button is clicked.
@@ -3077,7 +3080,7 @@ class SetupUI(Gtk.Window):
                 'dictionaryinstalltimestamp',
                 GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
 
-    def _on_dictionaries_default_button_clicked(self, *_args) -> None:
+    def _on_dictionaries_default_button_clicked(self, *_args: Any) -> None:
         '''Signal handler called when the “Set to default” button for the
         dictionaries is clicked.
 
@@ -3215,7 +3218,7 @@ class SetupUI(Gtk.Window):
         filter_text = search_entry.get_text()
         self._fill_input_methods_add_listbox(filter_text)
 
-    def _on_input_methods_add_button_clicked(self, *_args) -> None:
+    def _on_input_methods_add_button_clicked(self, *_args: Any) -> None:
         '''
         Signal handler called when the “add” button to add another
         input method has been clicked.
@@ -3278,7 +3281,7 @@ class SetupUI(Gtk.Window):
             self._input_methods_add_popover.popup()
         self._input_methods_add_popover.show_all()
 
-    def _on_input_methods_remove_button_clicked(self, *_args) -> None:
+    def _on_input_methods_remove_button_clicked(self, *_args: Any) -> None:
         '''
         Signal handler called when the “remove” button for
         an input method has been clicked.
@@ -3303,7 +3306,7 @@ class SetupUI(Gtk.Window):
             return
         self._input_methods_listbox.unselect_all()
 
-    def _on_input_methods_up_button_clicked(self, *_args) -> None:
+    def _on_input_methods_up_button_clicked(self, *_args: Any) -> None:
         '''
         Signal handler called when the “up” button for an input method
         has been clicked.
@@ -3330,7 +3333,7 @@ class SetupUI(Gtk.Window):
         self._input_methods_listbox.select_row(
             self._input_methods_listbox.get_row_at_index(index - 1))
 
-    def _on_input_methods_down_button_clicked(self, *_args) -> None:
+    def _on_input_methods_down_button_clicked(self, *_args: Any) -> None:
         '''
         Signal handler called when the “down” button for an input method
         has been clicked.
@@ -3357,7 +3360,8 @@ class SetupUI(Gtk.Window):
         self._input_methods_listbox.select_row(
             self._input_methods_listbox.get_row_at_index(index + 1))
 
-    def _on_input_methods_help_button_clicked(self, _widget) -> None:
+    def _on_input_methods_help_button_clicked(
+            self, _button: Gtk.Button) -> None:
         '''
         Show a help window for the input method selected in the
         listbox.
@@ -3395,7 +3399,7 @@ class SetupUI(Gtk.Window):
             title=window_title,
             contents=window_contents)
 
-    def _on_input_methods_default_button_clicked(self, *_args) -> None:
+    def _on_input_methods_default_button_clicked(self, *_args: Any) -> None:
         '''Signal handler called when the “Set to default”
         button for the input methods is clicked.
 
@@ -3456,10 +3460,8 @@ class SetupUI(Gtk.Window):
             self._shortcut_add_button.set_sensitive(False)
 
     def _on_shortcut_entry(
-            self, _widget: Gtk.Entry, _property_spec) -> None:
-        '''
-        The contents of the shortcut entry line has changed
-        '''
+            self, _widget: Gtk.Entry, _property_spec: Any) -> None:
+        '''The contents of the shortcut entry line has changed'''
         self._set_shortcut_button_sensitivity()
 
     def _on_shortcut_expansion_textview_buffer(
@@ -3469,7 +3471,7 @@ class SetupUI(Gtk.Window):
         '''
         self._set_shortcut_button_sensitivity()
 
-    def _on_shortcut_clear_clicked(self, _widget) -> None:
+    def _on_shortcut_clear_clicked(self, _button: Gtk.Button) -> None:
         '''
         The button to clear the entry fields for defining
         a custom shortcut has been clicked.
@@ -3479,7 +3481,7 @@ class SetupUI(Gtk.Window):
         expansion_buffer.set_text('')
         self._shortcut_treeview.get_selection().unselect_all()
 
-    def _on_shortcut_delete_clicked(self, _widget) -> None:
+    def _on_shortcut_delete_clicked(self, _button: Gtk.Button) -> None:
         '''
         The button to delete a custom shortcut has been clicked.
         '''
@@ -3508,10 +3510,8 @@ class SetupUI(Gtk.Window):
         expansion_buffer.set_text('')
         self._shortcut_treeview.get_selection().unselect_all()
 
-    def _on_shortcut_add_clicked(self, _widget) -> None:
-        '''
-        The button to add a custom shortcut has been clicked.
-        '''
+    def _on_shortcut_add_clicked(self, _button: Gtk.Button) -> None:
+        '''The button to add a custom shortcut has been clicked.'''
         self._shortcut_treeview.get_selection().unselect_all()
         shortcut = self._shortcut_entry.get_text().strip().lower()
         expansion_buffer = self._shortcut_expansion_textview.get_buffer()
@@ -3622,7 +3622,7 @@ class SetupUI(Gtk.Window):
                 self._keybindings_edit_popover_remove_button.set_sensitive(
                     False)
 
-    def _on_keybindings_edit_popover_add_button_clicked(self, *_args) -> None:
+    def _on_keybindings_edit_popover_add_button_clicked(self, *_args: Any) -> None:
         '''
         Signal handler called when the “Add” button to add
         a key binding has been clicked.
@@ -3641,7 +3641,7 @@ class SetupUI(Gtk.Window):
                 self.set_keybindings(self._keybindings)
 
     def _on_keybindings_edit_popover_remove_button_clicked(
-            self, *_args) -> None:
+            self, *_args: Any) -> None:
         '''
         Signal handler called when the “Remove” button to remove
         a key binding has been clicked.
@@ -3655,7 +3655,7 @@ class SetupUI(Gtk.Window):
             self.set_keybindings(self._keybindings)
 
     def _on_keybindings_edit_popover_default_button_clicked(
-            self, *_args) -> None:
+            self, *_args: Any) -> None:
         '''
         Signal handler called when the “Default” button to set
         the keybindings to the default has been clicked.
@@ -3796,14 +3796,14 @@ class SetupUI(Gtk.Window):
             self._keybindings_edit_popover.popup()
         self._keybindings_edit_popover.show_all()
 
-    def _on_keybindings_edit_button_clicked(self, *_args) -> None:
+    def _on_keybindings_edit_button_clicked(self, *_args: Any) -> None:
         '''
         Signal handler called when the “edit” button to edit the
         key bindings for a command has been clicked.
         '''
         self._create_and_show_keybindings_edit_popover()
 
-    def _on_keybindings_default_button_clicked(self, *_args) -> None:
+    def _on_keybindings_default_button_clicked(self, *_args: Any) -> None:
         '''
         Signal handler called when the “Set to default” button to reset the
         key bindings for a command to the default has been clicked.
@@ -3816,7 +3816,7 @@ class SetupUI(Gtk.Window):
             new_keybindings[command] = default_keybindings[command]
             self.set_keybindings(new_keybindings)
 
-    def _on_keybindings_all_default_button_clicked(self, *_args) -> None:
+    def _on_keybindings_all_default_button_clicked(self, *_args: Any) -> None:
         '''
         Signal handler called when the “Set all to default” button to reset the
         all key bindings top their defaults has been clicked.
@@ -5231,7 +5231,7 @@ class SetupUI(Gtk.Window):
                 'keybindings',
                 variant_dict.end())
 
-class HelpWindow(Gtk.Window):
+class HelpWindow(Gtk.Window): # type: ignore
     '''
     A window to show help
 
@@ -5277,7 +5277,7 @@ class HelpWindow(Gtk.Window):
         self.vbox.pack_start(self.hbox, False, False, 5)
         self.show_all()
 
-    def _on_close_button_clicked(self, _widget) -> None:
+    def _on_close_button_clicked(self, _button: Gtk.Button) -> None:
         '''
         Close the input method help window when the close button is clicked
         '''

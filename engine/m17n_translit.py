@@ -21,6 +21,8 @@
 '''A module to do transliteration using m17n-lib.
 '''
 
+from typing import Iterable
+from typing import Any
 import sys
 import ctypes
 
@@ -62,29 +64,28 @@ libm17n__Mcoding_utf_8 = None
 
 _utf8_converter = None
 
-def mtext_to_string(mtext_pointer):
+def mtext_to_string(mtext_pointer: Any) -> str:
     '''Return the text contained in an MText object as a Python string
 
     :param mtext_pointer: pointer to the MText object to get the text from
     :type mtext_pointer: pointer to an libm17n MText object
-    :rtype: string
     '''
-    libm17n__mconv_reset_converter(_utf8_converter)
+    libm17n__mconv_reset_converter(_utf8_converter) # type: ignore
     # one Unicode character cannot have more than 6 UTF-8 bytes
     # (actually not more than 4 ...)
-    bufsize = (libm17n__mtext_len(mtext_pointer) + 1) * 6
+    bufsize = (libm17n__mtext_len(mtext_pointer) + 1) * 6 # type: ignore
     conversion_buffer = bytes(bufsize)
-    libm17n__mconv_rebind_buffer(
+    libm17n__mconv_rebind_buffer( # type: ignore
         _utf8_converter,
         ctypes.c_char_p(conversion_buffer),
         ctypes.c_int(bufsize))
-    libm17n__mconv_encode(_utf8_converter, mtext_pointer)
+    libm17n__mconv_encode(_utf8_converter, mtext_pointer) # type: ignore
     # maybe not all of the buffer was really used for the conversion,
     # cut of the unused part:
     conversion_buffer = conversion_buffer[0:conversion_buffer.find(b'\x00')]
     return conversion_buffer.decode('utf-8')
 
-def _init():
+def _init() -> None:
     '''Open libm17n and fill global variables for functions and
     variables from libm17n
     '''
@@ -164,16 +165,15 @@ def _init():
     _utf8_converter = libm17n__mconv_buffer_converter(
         libm17n__Mcoding_utf_8, ctypes.c_char_p(None), ctypes.c_int(0))
 
-def _del():
+def _del() -> None:
     '''Cleanup'''
-    libm17n__lib.m17n_fini()
+    libm17n__lib.m17n_fini() # type: ignore
 
 class __ModuleInitializer:
-    def __init__(self):
+    def __init__(self) -> None:
         _init()
-        return
 
-    def __del__(self):
+    def __del__(self) -> None:
         return
 
 __module_init = __ModuleInitializer()
@@ -258,7 +258,7 @@ class Transliterator:
     'ඩනිෂ්ක නවීන් '
 
     '''
-    def __init__(self, ime):
+    def __init__(self, ime: str) -> None:
         '''Initialize the input method to use for the transliteration
 
         Raises ValueError if something fails.
@@ -269,7 +269,6 @@ class Transliterator:
                     “NoIME” is just a dummy which does not do transliteration
                     at all, it only joins the list of Msymbol names to
                     a string.
-        :type ime: string
         '''
         self._dummy = False
         if ime == 'NoIME':
@@ -277,21 +276,21 @@ class Transliterator:
             return
         language = ime.split('-')[0]
         name = '-'.join(ime.split('-')[1:])
-        self._im = libm17n__minput_open_im(
-            libm17n__msymbol(ctypes.c_char_p(language.encode('utf-8'))),
-            libm17n__msymbol(ctypes.c_char_p(name.encode('utf-8'))),
+        self._im = libm17n__minput_open_im( # type: ignore
+            libm17n__msymbol(ctypes.c_char_p(language.encode('utf-8'))), # type: ignore
+            libm17n__msymbol(ctypes.c_char_p(name.encode('utf-8'))), # type: ignore
             ctypes.c_void_p(None))
         try:
             _im_contents = self._im.contents
         except ValueError: # NULL pointer access
             raise ValueError('minput_open_im() failed')
-        self._ic = libm17n__minput_create_ic(self._im, ctypes.c_void_p(None))
+        self._ic = libm17n__minput_create_ic(self._im, ctypes.c_void_p(None)) # type: ignore
         try:
             _ic_contents = self._ic.contents
         except ValueError: # NULL pointer access
             raise ValueError('minput_create_ic() failed')
 
-    def transliterate(self, msymbol_list):
+    def transliterate(self, msymbol_list: Iterable[str]) -> str:
         '''Transliterate a list of Msymbol names
 
         :param msymbol_list: A list of strings which are interpreted
@@ -307,17 +306,17 @@ class Transliterator:
             raise ValueError('Argument of transliterate() must be a list.')
         if self._dummy:
             return ''.join(msymbol_list)
-        libm17n__minput_reset_ic(self._ic)
+        libm17n__minput_reset_ic(self._ic) # type: ignore
         output = ''
         for symbol in msymbol_list + ['nil']:
-            _symbol = libm17n__msymbol(symbol.encode('utf-8'))
-            retval = libm17n__minput_filter(
+            _symbol = libm17n__msymbol(symbol.encode('utf-8')) # type: ignore
+            retval = libm17n__minput_filter( # type: ignore
                 self._ic, _symbol, ctypes.c_void_p(None))
             if retval == 0:
-                _mt = libm17n__mtext()
-                retval = libm17n__minput_lookup(
+                _mt = libm17n__mtext() # type: ignore
+                retval = libm17n__minput_lookup( # type: ignore
                     self._ic, _symbol, ctypes.c_void_p(None), _mt)
-                if libm17n__mtext_len(_mt) > 0:
+                if libm17n__mtext_len(_mt) > 0: # type: ignore
                     output += mtext_to_string(_mt)
                 if retval and symbol != 'nil':
                     output += symbol

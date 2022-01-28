@@ -68,7 +68,7 @@ class TabSqliteDb:
         user_freq >= 1: The number of times the user has used this phrase
     '''
     # pylint: enable=line-too-long
-    def __init__(self, user_db_file='') -> None:
+    def __init__(self, user_db_file: str = '') -> None:
         global DEBUG_LEVEL
         try:
             DEBUG_LEVEL = int(str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
@@ -373,7 +373,7 @@ class TabSqliteDb:
     def best_candidates(
             self,
             phrase_frequencies: Dict[str, float],
-            title=False) -> List[Tuple[str, float]]:
+            title: bool = False) -> List[Tuple[str, float]]:
         '''Sorts the phrase_frequencies dictionary and returns the best
         candidates.
 
@@ -860,13 +860,13 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             filename += '.gz'
             if not os.path.isfile(filename):
                 return False
-        open_function: Callable = open
+        open_function: Callable[[Any], Any] = open
         if filename.endswith('.gz'):
             open_function = gzip.open
         rows = self.database.execute(
             'SELECT input_phrase, phrase, p_phrase, pp_phrase, '
             + 'user_freq, timestamp FROM phrases;').fetchall()
-        rows = sorted(rows, key = lambda x: (x[5])) # sort by timestamp
+        rows = sorted(rows, key = lambda x: (float(x[5]))) # sort by timestamp
         time_min = time.time()
         time_max = time.time()
         if rows:
@@ -902,7 +902,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                                   )])
         lines = []
         try:
-            with open_function(
+            with open_function( # type: ignore
                     filename, mode='rt', encoding='UTF-8') as file_handle:
                 lines = [
                     unicodedata.normalize(
