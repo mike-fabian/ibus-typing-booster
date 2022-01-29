@@ -37,17 +37,17 @@ import itb_util
 sys.path.pop(0)
 
 class ComposeSequencesTestCase(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         locale.setlocale(locale.LC_CTYPE, 'en_US.UTF-8')
         self._compose_sequences = itb_util.ComposeSequences()
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         pass
 
-    def test_dummy(self):
+    def test_dummy(self) -> None:
         self.assertEqual(True, True)
 
-    def test_adding_and_deleting_compose_sequences(self):
+    def test_adding_and_deleting_compose_sequences(self) -> None:
         self._compose_sequences._add_compose_sequence(
             '<Multi_key> <e> <m> <p> <t> <y>', '∅')
         available_keyvals = None
@@ -198,7 +198,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
              IBus.KEY_e,
              IBus.KEY_equal]))
 
-    def test_preedit_representations(self):
+    def test_preedit_representations(self) -> None:
         self.assertEqual(
             self._compose_sequences.preedit_representation(
                 [IBus.KEY_Multi_key,
@@ -231,7 +231,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
                 [IBus.KEY_a, IBus.KEY_dead_belowdiaeresis]),
             'a\u00A0\u0324')
 
-    def test_compose(self):
+    def test_compose(self) -> None:
         # Valid sequence should return a composed result:
         self.assertEqual(
             self._compose_sequences.compose(
@@ -278,7 +278,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_quotedbl]),
             'ä')
 
-    def test_compose_parse_double_quote_in_result(self):
+    def test_compose_parse_double_quote_in_result(self) -> None:
         # Make sure this sequence from
         # /usr/share/X11/locale/en_US.UTF-8/Compose is parsed
         # correctly:
@@ -290,7 +290,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_space]),
             '"')
 
-    def test_compose_cs_CZ(self):
+    def test_compose_cs_CZ(self) -> None:
         # /usr/share/X11/locale/cs_CZ.UTF-8/Compose overrides some of
         # the compose sequences from
         # /usr/share/X11/locale/en_US.UTF-8/Compose:
@@ -316,7 +316,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_quotedbl]),
             'ä')
 
-    def test_compose_km_KH(self):
+    def test_compose_km_KH(self) -> None:
         locale.setlocale(locale.LC_CTYPE, 'km_KH.UTF-8')
         self._compose_sequences = itb_util.ComposeSequences()
         # This sequence comes from
@@ -341,7 +341,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
                 [0x17FF]),
             'ាំ')
 
-    def test_compose_pt_BR(self):
+    def test_compose_pt_BR(self) -> None:
         # This sequence comes from
         # /usr/share/X11/locale/en_US.UTF-8/Compose and is not
         # overridden in /usr/share/X11/locale/pt_BR.UTF-8/:
@@ -430,7 +430,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_quotedbl]),
             'ä')
 
-    def test_compose_pt_PT(self):
+    def test_compose_pt_PT(self) -> None:
         # These sequences come from
         # /usr/share/X11/locale/en_US.UTF-8/Compose and is not
         # overridden in /usr/share/X11/locale/pt_PT.UTF-8/:
@@ -488,7 +488,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_comma]),
             'Ų')
 
-    def test_compose_am_ET(self):
+    def test_compose_am_ET(self) -> None:
         # These sequences come from
         # /usr/share/X11/locale/en_US.UTF-8/Compose:
         self.assertEqual(
@@ -537,7 +537,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_quotedbl]),
             '')
 
-    def test_reasonable_dead_key_sequences(self):
+    def test_reasonable_dead_key_sequences(self) -> None:
         # “reasonable” dead key sequences are are handled even if they
         # are not defined in any Compose file.
         self.assertEqual(
@@ -558,7 +558,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_e]),
             '\u0117\u0304') # ė̄
 
-    def test_keypad_fallback(self):
+    def test_keypad_fallback(self) -> None:
         self.assertEqual(
             None,
             self._compose_sequences.compose(

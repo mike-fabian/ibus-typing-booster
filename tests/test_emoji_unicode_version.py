@@ -50,25 +50,25 @@ itb_emoji.DOMAINNAME = ''
     'of those included in the ibus-typing-booster source is likely '
     'to create meaningless test failures.')
 class EmojiUnicodeVersionTestCase(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.maxDiff = None
         LOGGER.info("itb_emoji.find_cldr_annotation_path('en')->%s",
                     itb_emoji.find_cldr_annotation_path('en'))
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         pass
 
-    def test_dummy(self):
+    def test_dummy(self) -> None:
         self.assertEqual(True, True)
 
-    def test_unicode_version_emoji_data_file(self):
+    def test_unicode_version_emoji_data_file(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
         self.assertEqual(mq.unicode_version('☺'), '0.6')
         self.assertEqual(mq.unicode_version('🤿'), '12.0')
         self.assertEqual(mq.unicode_version('⚧'), '13.0')
 
-    def test_unicode_version_emoji_sequences_file(self):
+    def test_unicode_version_emoji_sequences_file(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
         self.assertEqual(mq.unicode_version('🇿🇼'), '2.0')
@@ -79,7 +79,7 @@ class EmojiUnicodeVersionTestCase(unittest.TestCase):
             '🏴\U000e0067\U000e0062\U000e0065\U000e006e\U000e0067\U000e007f'),
             '5.0')
 
-    def test_unicode_version_emoji_zwj_sequences_file(self):
+    def test_unicode_version_emoji_zwj_sequences_file(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
         # transgender flag:

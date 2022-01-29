@@ -29,6 +29,10 @@ This file implements the test cases using GTK GUI
 # pylint: disable=wrong-import-order
 # pylint: disable=wrong-import-position
 
+from typing import List
+from typing import Dict
+from typing import Any
+from typing import Optional
 import argparse
 import os
 import signal
@@ -70,13 +74,13 @@ DONE_EXIT = True
 from gtkcases import TestCases
 
 # Need to flush the output against Gtk.main()
-def printflush(sentence):
+def printflush(sentence: str) -> None:
     try:
         print(sentence, flush=True)
     except IOError:
         pass
 
-def printerr(sentence):
+def printerr(sentence: str) -> None:
     try:
         print(sentence, flush=True, file=sys.stderr)
     except IOError:
@@ -90,9 +94,14 @@ def printerr(sentence):
 class SimpleGtkTestCase(unittest.TestCase):
     global DONE_EXIT
     ENGINE_PATH = '/com/redhat/IBus/engines/typing_booster/Test/Engine'
+    _flag: bool = False
+    _gsettings: Optional[Gio.Settings] = None
+    _orig_dictionary: str = ''
+    _orig_tabenable: bool = False
+    _orig_inputmode: bool = True
 
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         cls._flag = False
         IBus.init()
         cls._gsettings = Gio.Settings(
@@ -100,8 +109,8 @@ class SimpleGtkTestCase(unittest.TestCase):
         cls._orig_dictionary = cls._gsettings.get_string('dictionary')
         cls._orig_tabenable = cls._gsettings.get_boolean('tabenable')
         cls._orig_inputmode = cls._gsettings.get_boolean('inputmode')
-        signums = [getattr(signal, s, None) for s in
-                   'SIGINT SIGTERM SIGHUP'.split()]
+        signums: List[Optional[signal.Signals]] = [
+            getattr(signal, s, None) for s in 'SIGINT SIGTERM SIGHUP'.split()]
         for signum in filter(None, signums):
             original_handler = signal.getsignal(signum)
             GLib.unix_signal_add(GLib.PRIORITY_HIGH,
@@ -109,13 +118,14 @@ class SimpleGtkTestCase(unittest.TestCase):
                                  cls.signal_handler,
                                  (signum, original_handler))
     @classmethod
-    def tearDownClass(cls):
-        cls._gsettings.set_string('dictionary', cls._orig_dictionary)
-        cls._gsettings.set_boolean('tabenable', cls._orig_tabenable)
-        cls._gsettings.set_boolean('inputmode', cls._orig_inputmode)
+    def tearDownClass(cls) -> None:
+        if cls._gsettings is not None:
+            cls._gsettings.set_string('dictionary', cls._orig_dictionary)
+            cls._gsettings.set_boolean('tabenable', cls._orig_tabenable)
+            cls._gsettings.set_boolean('inputmode', cls._orig_inputmode)
 
     @classmethod
-    def signal_handler(cls, user_data):
+    def signal_handler(cls, user_data: Any) -> None:
         (signum, original_handler) = user_data
         cls.tearDownClass()
         Gtk.main_quit()
@@ -123,7 +133,7 @@ class SimpleGtkTestCase(unittest.TestCase):
         cls._flag = True
         assert False, 'signal received: ' + str(signum)
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.__id = 0
         self.__rerun = False
         self.__test_index = 0
@@ -132,11 +142,12 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__inserted_text = ''
         self.__commit_done = False
         self.__reset_coming = False
-        self._gsettings.set_string('dictionary', 'fr_FR,en_US')
-        self._gsettings.set_boolean('tabenable', False)
-        self._gsettings.set_boolean('inputmode', True)
+        if self._gsettings is not None:
+            self._gsettings.set_string('dictionary', 'fr_FR,en_US')
+            self._gsettings.set_boolean('tabenable', False)
+            self._gsettings.set_boolean('inputmode', True)
 
-    def register_ibus_engine(self):
+    def register_ibus_engine(self) -> bool:
         self.__bus = IBus.Bus()
         if not self.__bus.is_connected():
             self.fail('ibus-daemon is not running')
@@ -179,9 +190,14 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__bus.request_name('org.freedesktop.IBus.TypingBooster.Test', 0)
         return True
 
-    def __bus_signal_cb(self, connection, sender_name, object_path,
-                        interface_name, signal_name, parameters,
-                        user_data):
+    def __bus_signal_cb(self,
+                        connection: Gio.DBusConnection,
+                        sender_name: str,
+                        object_path: str,
+                        interface_name: str,
+                        signal_name: str,
+                        parameters: GLib.Variant,
+                        user_data: IBus.Bus) -> None:
         if signal_name == 'NameOwnerChanged':
             pass
         if signal_name == 'UpdateLookupTable':
@@ -190,7 +206,8 @@ class SimpleGtkTestCase(unittest.TestCase):
                 return
             self.__lookup_test()
 
-    def __create_engine_cb(self, factory, engine_name):
+    def __create_engine_cb(
+            self, factory: IBus.Factory, engine_name: str) -> Optional[Any]:
         if engine_name != 'testTyping-booster':
             return None
         if (not IMPORT_HUNSPELL_SUCCESSFUL
@@ -222,7 +239,7 @@ class SimpleGtkTestCase(unittest.TestCase):
             self.__bus)
         return self.__engine
 
-    def __engine_focus_in(self, _engine):
+    def __engine_focus_in(self, _engine: IBus.Engine) -> None:
         if self.__test_index == len(TestCases['tests']):
             if DONE_EXIT:
                 Gtk.main_quit()
@@ -234,17 +251,18 @@ class SimpleGtkTestCase(unittest.TestCase):
             self.__rerun = False
             self.__main_test()
 
-    def __engine_focus_out(self, _engine):
+    def __engine_focus_out(self, _engine: IBus.Engine) -> None:
         self.__rerun = True
         self.__test_index = 0
         self.__entry.set_text('')
 
-    def __engine_reset(self, _engine):
+    def __engine_reset(self, _engine: IBus.Engine) -> None:
         if self.__reset_coming:
             self.__reset_coming = False
             self.__main_test()
 
-    def __entry_focus_in_event_cb(self, entry, event):
+    def __entry_focus_in_event_cb(
+            self, entry: Gtk.Entry, event: Gdk.EventFocus) -> bool:
         if self.__test_index == len(TestCases['tests']):
             if DONE_EXIT:
                 Gtk.main_quit()
@@ -253,7 +271,7 @@ class SimpleGtkTestCase(unittest.TestCase):
                                            -1, None, self.__set_engine_cb)
         return False
 
-    def __set_engine_cb(self, _object, res):
+    def __set_engine_cb(self, _object: IBus.Bus, res: Gio.Task) -> None:
         with self.subTest(i=self.__test_index):
             if not self.__bus.set_global_engine_async_finish(res):
                 self.fail('set engine failed.')
@@ -261,8 +279,8 @@ class SimpleGtkTestCase(unittest.TestCase):
         # rerun always happen?
         #self.__main_test()
 
-    def __get_test_condition_length(self, tag):
-        tests = TestCases['tests'][self.__test_index]
+    def __get_test_condition_length(self, tag: str) -> int:
+        tests: Dict[str, Any] = TestCases['tests'][self.__test_index]
         try:
             cases = tests[tag]
         except KeyError:
@@ -270,7 +288,8 @@ class SimpleGtkTestCase(unittest.TestCase):
         case_type = list(cases.keys())[0]
         return len(cases[case_type])
 
-    def __entry_preedit_changed_cb(self, entry, preedit_str):
+    def __entry_preedit_changed_cb(
+            self, entry: Gtk.Entry, preedit_str: str) -> None:
         if len(preedit_str) == 0:
             return
         if self.__test_index == len(TestCases['tests']):
@@ -284,13 +303,13 @@ class SimpleGtkTestCase(unittest.TestCase):
             return
         self.__run_cases('commit')
 
-    def __main_test(self):
+    def __main_test(self) -> None:
         self.__preedit_index = 0
         self.__lookup_index = 0
         self.__commit_done = False
         self.__run_cases('preedit')
 
-    def __lookup_test(self):
+    def __lookup_test(self) -> None:
         lookup_length = self.__get_test_condition_length('lookup')
         # Need to return again even if all the lookup is finished
         # until the final Engine.update_preedit() is called.
@@ -305,8 +324,8 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__lookup_index += 1
         self.__run_cases('commit')
 
-    def __run_cases(self, tag, start=-1, end=-1):
-        tests = TestCases['tests'][self.__test_index]
+    def __run_cases(self, tag: str, start: int = -1, end: int = -1) -> None:
+        tests: Dict[str, Any] = TestCases['tests'][self.__test_index]
         if tests is None:
             return
         try:
@@ -342,13 +361,14 @@ class SimpleGtkTestCase(unittest.TestCase):
                 self.__typing(key[0], key[1], key[2])
                 i += 1
 
-    def __typing(self, keyval, keycode, modifiers):
+    def __typing(self, keyval: int, keycode: int, modifiers: int) -> None:
         self.__engine.emit('process-key-event', keyval, keycode, modifiers)
         modifiers |= IBus.ModifierType.RELEASE_MASK
         self.__engine.emit('process-key-event', keyval, keycode, modifiers)
 
-    def __buffer_inserted_text_cb(self, buffer, position, chars, nchars):
-        tests = TestCases['tests'][self.__test_index]
+    def __buffer_inserted_text_cb(
+            self, buffer: Gtk.EntryBuffer, position: int, chars: str, nchars: int) -> None:
+        tests: Dict[str, Any] = TestCases['tests'][self.__test_index]
         cases = tests['commit']
         case_type = list(cases.keys())[0]
         if case_type == 'keys':
@@ -389,24 +409,24 @@ class SimpleGtkTestCase(unittest.TestCase):
         if not self.__reset_coming:
             self.__main_test()
 
-    def create_window(self):
+    def create_window(self) -> None:
         window = Gtk.Window(type=Gtk.WindowType.TOPLEVEL)
         self.__entry = entry = Gtk.Entry()
         window.connect('destroy', Gtk.main_quit)
         entry.connect('focus-in-event', self.__entry_focus_in_event_cb)
         entry.connect('preedit-changed', self.__entry_preedit_changed_cb)
-        buffer = entry.get_buffer()
+        buffer: Gtk.EntryBuffer = entry.get_buffer()
         buffer.connect('inserted-text', self.__buffer_inserted_text_cb)
         window.add(entry)
         window.show_all()
 
-    def main(self): # pylint: disable=no-self-use
+    def main(self) -> None: # pylint: disable=no-self-use
         # Some ATK relative warnings are called during launching GtkWindow.
         flags = GLib.log_set_always_fatal(GLib.LogLevelFlags.LEVEL_CRITICAL)
         Gtk.main()
         GLib.log_set_always_fatal(flags)
 
-    def test_typing(self):
+    def test_typing(self) -> None:
         if not self.register_ibus_engine():
             sys.exit(-1)
         self.create_window()
@@ -414,7 +434,7 @@ class SimpleGtkTestCase(unittest.TestCase):
         if self._flag:
             self.fail('NG: signal failure')
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument('-k', '--keep', action='store_true',
                         help='keep this GtkWindow after test is done')

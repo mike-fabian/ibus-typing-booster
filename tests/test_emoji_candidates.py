@@ -64,23 +64,23 @@ except (ImportError,):
     'of those included in the ibus-typing-booster source is likely '
     'to create meaningless test failures.')
 class EmojiCandidatesTestCase(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.maxDiff = None
         LOGGER.info("itb_emoji.find_cldr_annotation_path('en')->%s",
                     itb_emoji.find_cldr_annotation_path('en'))
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         pass
 
-    def test_dummy(self):
+    def test_dummy(self) -> None:
         self.assertEqual(True, True)
 
-    def test_candidates_empty_query(self):
+    def test_candidates_empty_query(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['fr_FR'])
         self.assertEqual(mq.candidates(''), [])
 
-    def test_candidates_empty_language_list(self):
+    def test_candidates_empty_language_list(self) -> None:
         '''
         Emoji matching with an empty language list should fall back to English.
         '''
@@ -95,7 +95,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('orangutan', match_limit=1)[0][0],
             '🦧')
 
-    def test_candidates_similar_emoji(self):
+    def test_candidates_similar_emoji(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         # pylint: disable=line-too-long
@@ -105,7 +105,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         )
         # pylint: enable=line-too-long
 
-    def test_candidates_japanese_full_width_low_line(self):
+    def test_candidates_japanese_full_width_low_line(self) -> None:
         # ＿ U+FF3F FULLWIDTH LOW LINE should not disturb the match
         mq = itb_emoji.EmojiMatcher(languages = ['ja_JP'])
         self.assertEqual(
@@ -115,7 +115,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('ネコ＿')[0][:2],
             ('🐈', 'ネコ'))
 
-    def test_candidates_multilingual(self):
+    def test_candidates_multilingual(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
@@ -155,7 +155,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('factory')[0][:2],
             ('🏭', 'factory'))
 
-    def test_candidates_white_space_and_underscores(self):
+    def test_candidates_white_space_and_underscores(self) -> None:
         # Any white space and '_' can be used to separate keywords in the
         # query string:
         mq = itb_emoji.EmojiMatcher(
@@ -170,7 +170,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('smiling face sun glasses')[0][:2],
             ('😎', 'smiling face with sunglasses'))
 
-    def test_candidates_skin_tones(self):
+    def test_candidates_skin_tones(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['ja_JP'])#, 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
@@ -186,7 +186,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('tone5')[0][:2],
             ('🏿', 'emoji modifier fitzpatrick type-6 “tone5”'))
 
-    def test_candidates_some_letters(self):
+    def test_candidates_some_letters(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
@@ -202,7 +202,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('c')[0][:2],
             ('©️', 'copyright sign'))
 
-    def test_candidates_flags(self):
+    def test_candidates_flags(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
         self.assertEqual(
@@ -254,7 +254,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         testutils.enchant_working_as_expected(),
         'Skipping because of an unexpected change in the enchant behaviour.')
-    def test_candidates_persons(self):
+    def test_candidates_persons(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
         self.assertEqual(
@@ -285,7 +285,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('people')[0][:2],
             ('🧑🏾\u200d🤝\u200d🧑🏼', 'people holding hands: medium-dark skin tone, medium-light skin tone “people holding hands medium dark skin tone medium light skin tone”'))
 
-    def test_candidates_birthday_cake(self):
+    def test_candidates_birthday_cake(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
@@ -301,7 +301,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         testutils.enchant_working_as_expected(),
         'Skipping because of an unexpected change in the enchant behaviour.')
-    def test_candidates_symbols(self):
+    def test_candidates_symbols(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
@@ -317,7 +317,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('peace symbol')[0][:2],
             ('☮\ufe0f', 'peace symbol {Symbol}'))
 
-    def test_candidates_animals(self):
+    def test_candidates_animals(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
@@ -333,7 +333,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('nature')[0][:2],
             ('🙈', 'see-no-evil monkey {nature}'))
 
-    def test_candidates_travel(self):
+    def test_candidates_travel(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
@@ -367,7 +367,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         testutils.enchant_working_as_expected(),
         'Skipping because of an unexpected change in the enchant behaviour.')
-    def test_candidates_spellchecking(self):
+    def test_candidates_spellchecking(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
         self.assertEqual(
@@ -386,7 +386,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('🦔', 'hedgehog'),
             mq.candidates('hedgehgo')[0][:2])
 
-    def test_candidates_various_unicode_chars(self):
+    def test_candidates_various_unicode_chars(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
@@ -432,7 +432,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('separator space')[0][:2],
             (' ', 'U+20 space {Space}'))
 
-    def test_candidates_french_text(self):
+    def test_candidates_french_text(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['fr_FR'])
         self.assertEqual(
@@ -442,14 +442,14 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('réflexion')[0][:2],
             ('🤔', 'visage en pleine réflexion'))
 
-    def test_candidates_french_similar(self):
+    def test_candidates_french_similar(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['fr_FR'])
         self.assertEqual(
             mq.candidates('🤔', match_limit = 3),
             [('🤔', 'visage en pleine réflexion [🤔, réflexion, visage, visage en pleine réflexion]', 4), ('🤐', 'visage avec bouche fermeture éclair [visage]', 1), ('🤗', 'visage qui fait un câlin [visage]', 1)])
 
-    def test_candidates_code_point_input(self):
+    def test_candidates_code_point_input(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['fr_FR'])
         self.assertEqual(
@@ -465,7 +465,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('1b'),
             [('\x1b', 'U+1B', 2000), ('🧔🏻\u200d♂️', 'man: light skin tone, beard', 44), ('🧔🏻\u200d♀️', 'woman: light skin tone, beard', 44), ('🧑🏻\u200d🦲', 'person: light skin tone, bald', 44)])
 
-    def test_candidates_de_DE_versus_de_CH(self):
+    def test_candidates_de_DE_versus_de_CH(self) -> None:
         # FIXME: This doesn’t work perfectly, when de_CH is the main
         # language, “Reissverschluss” should be preferred in the
         # results.
@@ -495,7 +495,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin worked.")
-    def test_candidates_pinyin_missing_zh_CN(self):
+    def test_candidates_pinyin_missing_zh_CN(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['zh_CN'])
         self.assertEqual(
@@ -507,7 +507,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin failed.")
-    def test_candidates_pinyin_available_zh_CN(self):
+    def test_candidates_pinyin_available_zh_CN(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['zh_CN'])
         self.assertEqual(
@@ -520,7 +520,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin worked.")
-    def test_candidates_pinyin_missing_zh_TW(self):
+    def test_candidates_pinyin_missing_zh_TW(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['zh_TW'])
         self.assertEqual(
@@ -532,7 +532,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin failed.")
-    def test_candidates_pinyin_available_zh_TW(self):
+    def test_candidates_pinyin_available_zh_TW(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['zh_TW'])
         self.assertEqual(
@@ -545,7 +545,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipIf(
         itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
         "Skipping because import pykakasi worked.")
-    def test_candidates_pykakasi_missing_ja_JP(self):
+    def test_candidates_pykakasi_missing_ja_JP(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['ja_JP'])
         self.assertEqual(
@@ -584,7 +584,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
         "Skipping because import pykakasi failed.")
-    def test_candidates_pykakasi_available_ja_JP(self):
+    def test_candidates_pykakasi_available_ja_JP(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['ja_JP'])
         self.assertEqual(

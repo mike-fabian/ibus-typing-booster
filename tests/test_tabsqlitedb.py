@@ -21,9 +21,11 @@
 This file implements test cases for miscellaneous stuff in tabsqlitedb.py.
 '''
 
+from typing import Iterable
 from typing import Dict
 from typing import Union
 from typing import Callable
+from typing import Any
 import sys
 import os
 import gzip
@@ -50,20 +52,21 @@ import tabsqlitedb
 sys.path.pop(0)
 
 class TabSqliteDbTestCase(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         pass
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         pass
 
     def init_database(
             self,
-            user_db_file=':memory:',
-            dictionary_names=('en_US',)) -> None:
+            user_db_file: str = ':memory:',
+            dictionary_names: Iterable[str] = ('en_US',)) -> None:
         self.database = tabsqlitedb.TabSqliteDb(user_db_file=user_db_file)
-        self.database.hunspell_obj.set_dictionary_names(dictionary_names)
+        self.database.hunspell_obj.set_dictionary_names(
+            list(dictionary_names))
 
-    def read_training_data_from_file(self, filename) -> bool:
+    def read_training_data_from_file(self, filename: str) -> bool:
         if '/' not in filename:
             path = os.path.join(os.path.dirname(__file__), filename)
         path = os.path.expanduser(path)
@@ -75,8 +78,8 @@ class TabSqliteDbTestCase(unittest.TestCase):
 
     def simulate_typing_file(
             self,
-            path,
-            verbose=True) -> Dict[str, Union[int, float]]:
+            path: str,
+            verbose: bool = True) -> Dict[str, Union[int, float]]:
         stats: Dict[str, Union[int, float]] = {
             'typed': 0, 'committed': 0, 'saved': 0, 'percent': 0.0}
         if '/' not in path:
@@ -87,10 +90,10 @@ class TabSqliteDbTestCase(unittest.TestCase):
         if not os.path.isfile(path):
             self.assertFalse(True)
             return stats
-        open_function: Callable = open
+        open_function: Callable[[Any], Any] = open
         if path.endswith('.gz'):
             open_function = gzip.open
-        with open_function(
+        with open_function( # type: ignore
                 path, mode='rt', encoding='UTF-8') as file_handle:
             lines = file_handle.readlines()
         p_token = ''
@@ -142,13 +145,13 @@ class TabSqliteDbTestCase(unittest.TestCase):
         stats['percent'] = total_percent_saved
         return stats
 
-    def test_dummy(self):
+    def test_dummy(self) -> None:
         self.assertEqual(True, True)
 
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no en_US hunspell dictionary could be found.')
-    def test_empty_database_only_dictionary(self):
+    def test_empty_database_only_dictionary(self) -> None:
         self.init_database(
             user_db_file=':memory:', dictionary_names=['en_US'])
         self.assertEqual(

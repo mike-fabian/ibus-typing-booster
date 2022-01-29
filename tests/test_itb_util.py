@@ -59,13 +59,13 @@ import itb_util
 sys.path.pop(0)
 
 class ItbUtilTestCase(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         pass
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         pass
 
-    def test_dummy(self):
+    def test_dummy(self) -> None:
         self.assertEqual(True, True)
 
     @unittest.skipUnless(
@@ -74,7 +74,7 @@ class ItbUtilTestCase(unittest.TestCase):
         and distro.version() >= '34',
         'Skipping, requires new enough m17n-db package, '
         'might not be available on older distributions.')
-    def test_default_input_methods_available(self):
+    def test_default_input_methods_available(self) -> None:
         m17n_db_info = itb_util.M17nDbInfo()
         available_imes = m17n_db_info.get_imes()
         missing_imes_for_defaults = []
@@ -87,7 +87,7 @@ class ItbUtilTestCase(unittest.TestCase):
     @unittest.skipUnless(
         IMPORT_LANGTABLE_SUCCESSFUL or IMPORT_PYCOUNTRY_SUCCESSFUL,
         'Skipping, requires langtable or pycountry.')
-    def test_locale_text_to_match(self):
+    def test_locale_text_to_match(self) -> None:
         if 'LC_ALL' in os.environ:
             del os.environ['LC_ALL']
         os.environ['LC_MESSAGES'] = 'de_DE.UTF-8'
@@ -104,7 +104,7 @@ class ItbUtilTestCase(unittest.TestCase):
     @unittest.skipUnless(
         IMPORT_LANGTABLE_SUCCESSFUL or IMPORT_PYCOUNTRY_SUCCESSFUL,
         'Skipping, requires langtable or pycountry.')
-    def test_locale_language_description(self):
+    def test_locale_language_description(self) -> None:
         if 'LC_ALL' in os.environ:
             del os.environ['LC_ALL']
         os.environ['LC_MESSAGES'] = 'de_DE.UTF-8'
@@ -114,7 +114,7 @@ class ItbUtilTestCase(unittest.TestCase):
                 'Französisch (Frankreich)',
                 language_description)
 
-    def test_is_right_to_left_messages(self):
+    def test_is_right_to_left_messages(self) -> None:
         if 'LC_ALL' in os.environ:
             del os.environ['LC_ALL']
         os.environ['LC_MESSAGES'] = 'de_DE.UTF-8'
@@ -135,7 +135,7 @@ class ItbUtilTestCase(unittest.TestCase):
         os.environ['LC_ALL'] = 'C'
         self.assertEqual(itb_util.is_right_to_left_messages(), False)
 
-    def test_remove_accents(self):
+    def test_remove_accents(self) -> None:
         self.assertEqual(
             itb_util.remove_accents('abcÅøßẞüxyz'),
             'abcAossSSuxyz')

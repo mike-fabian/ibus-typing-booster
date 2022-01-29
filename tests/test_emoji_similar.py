@@ -50,88 +50,88 @@ itb_emoji.DOMAINNAME = ''
     'of those included in the ibus-typing-booster source is likely '
     'to create meaningless test failures.')
 class EmojiSimilarTestCase(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.maxDiff = None
         LOGGER.info("itb_emoji.find_cldr_annotation_path('en')->%s",
                     itb_emoji.find_cldr_annotation_path('en'))
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         pass
 
-    def test_dummy(self):
+    def test_dummy(self) -> None:
         self.assertEqual(True, True)
 
-    def test_similar_query_is_not_an_emoji(self):
+    def test_similar_query_is_not_an_emoji(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.similar('this is not an emoji', match_limit=5),
             [])
 
-    def test_similar_white_smiling_face_en_US(self):
+    def test_similar_white_smiling_face_en_US(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.similar('☺', match_limit=5),
             [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, uc1, smiling face]', 9), ('😙', 'kissing face with smiling eyes [So, people, face, smile]', 4), ('😍', 'smiling face with heart-shaped eyes [So, people, face, smile]', 4), ('😋', 'face savouring delicious food [So, people, face, smile]', 4), ('😇', 'smiling face with halo [So, people, face, smile]', 4)])
 
-    def test_similar_white_smiling_face_it_IT(self):
+    def test_similar_white_smiling_face_it_IT(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['it_IT', 'en_US', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.similar('☺', match_limit=5),
             [('☺️', 'faccina sorridente [☺️, delineata, faccina, rilassata, sorridente]', 5), ('😗', 'faccina che bacia [faccina]', 1), ('😚', 'faccina che bacia con occhi chiusi [faccina]', 1), ('😘', 'faccina che manda un bacio [faccina]', 1), ('😙', 'faccina che bacia con occhi sorridenti [faccina]', 1)])
 
-    def test_similar_camel_en_US(self):
+    def test_similar_camel_en_US(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             [('🐫', 'bactrian camel [🐫, So, nature, bactrian, camel, hump, uc6, two-hump camel]', 8), ('🐪', 'dromedary camel [So, nature, hump, uc6, camel]', 5), ('🐐', 'goat [So, nature, uc6]', 3), ('🐑', 'sheep [So, nature, uc6]', 3), ('🐘', 'elephant [So, nature, uc6]', 3)],
             mq.similar('🐫', match_limit=5))
 
-    def test_similar_camel_it_IT(self):
+    def test_similar_camel_it_IT(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['it_IT', 'en_US','es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.similar('🐫', match_limit=5),
             [('🐫', 'cammello [🐫, animale, cammello, gobba]', 4), ('🐪', 'dromedario [animale, cammello, gobba]', 3), ('🐐', 'capra [animale]', 1), ('🐑', 'pecora [animale]', 1), ('🐘', 'elefante [animale]', 1)])
 
-    def test_similar_camel_de_DE(self):
+    def test_similar_camel_de_DE(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['de_DE', 'it_IT', 'en_US','es_MX', 'es_ES', 'ja_JP'])
         self.assertEqual(
             mq.similar('🐫', match_limit=5),
             [('🐫', 'Kamel [🐫, Kamel, Tier, zweihöckrig]', 4), ('🐪', 'Dromedar [Kamel, Tier]', 2), ('🐐', 'Ziege [Tier]', 1), ('🐑', 'Schaf [Tier]', 1), ('🐘', 'Elefant [Tier]', 1)])
 
-    def test_similar_camel_es_MX(self):
+    def test_similar_camel_es_MX(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['es_MX', 'it_IT', 'de_DE', 'en_US', 'es_ES', 'ja_JP'])
         self.assertEqual(
             mq.similar('🐫', match_limit=5),
             [('🐫', 'camello [🐫, animal, camélido, camello, joroba]', 5), ('🐪', 'dromedario [animal, camélido, joroba]', 3), ('\U0001f999', 'llama [camélido]', 1), ('🐐', 'cabra [animal]', 1), ('🐑', 'oveja [animal]', 1)])
 
-    def test_similar_camel_es_ES(self):
+    def test_similar_camel_es_ES(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         self.assertEqual(
             mq.similar('🐫', match_limit=5),
             [('🐫', 'camello [🐫, bactriano, camello, desierto, dromedario, jorobas]', 6), ('🐪', 'dromedario [camello, desierto, dromedario]', 3), ('🏜️', 'desierto [desierto]', 1), ('🐫', 'cammello [🐫, animale, cammello, gobba]', 4), ('🐪', 'dromedario [animale, cammello, gobba]', 3)])
 
-    def test_similar_euro_sign_es_ES(self):
+    def test_similar_euro_sign_es_ES(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         self.assertEqual(
             mq.similar('€', match_limit=5),
             [('€', 'euro [€, divisa, EUR, euro, moneda]', 5), ('£', 'libra esterlina [divisa, moneda]', 2), ('₽', 'rublo [divisa, moneda]', 2), ('₹', 'rupia india [divisa, moneda]', 2), ('¥', 'yen [divisa, moneda]', 2)])
 
-    def test_similar_surfer_es_ES(self):
+    def test_similar_surfer_es_ES(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         self.assertEqual(
             mq.similar('🏄‍♂', match_limit = 2),
             [('🏄\u200d♂️', 'hombre haciendo surf [🏄\u200d♂️, hombre, hombre haciendo surf, surf, surfero, surfista]', 6), ('🏄🏻\u200d♂️', 'hombre haciendo surf: tono de piel claro [hombre, hombre haciendo surf, surf, surfero, surfista]', 5)])
 
-    def test_similar_de_DE_versus_de_CH(self):
+    def test_similar_de_DE_versus_de_CH(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['de_DE'])
         self.assertEqual(
@@ -143,7 +143,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             mq.similar('🤐', match_limit = 3),
             [('🤐', 'Smiley mit Reissverschlussmund [🤐, Gesicht, Mund, Reissverschluss, Smiley mit Reissverschlussmund]', 5), ('🫡', 'grüssendes Gesicht [Gesicht]', 1), ('😅', 'Lachender Smiley mit kaltem Schweiss [Gesicht]', 1)])
 
-    def test_similar_show_keywords_option_en_US(self):
+    def test_similar_show_keywords_option_en_US(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
         self.assertEqual(
@@ -156,7 +156,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin worked.")
-    def test_similar_horse_racing_pinyin_missing_zh_CN(self):
+    def test_similar_horse_racing_pinyin_missing_zh_CN(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['zh_CN'])
         self.assertEqual(
@@ -166,7 +166,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin failed.")
-    def test_similar_horse_racing_pinyin_available_zh_CN(self):
+    def test_similar_horse_racing_pinyin_available_zh_CN(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['zh_CN'])
         self.assertEqual(
@@ -176,7 +176,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin worked.")
-    def test_similar_horse_racing_pinyin_missing_zh_TW(self):
+    def test_similar_horse_racing_pinyin_missing_zh_TW(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['zh_TW'])
         self.assertEqual(
@@ -186,7 +186,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin failed.")
-    def test_similar_horse_racing_pinyin_available_zh_TW(self):
+    def test_similar_horse_racing_pinyin_available_zh_TW(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['zh_TW'])
         self.assertEqual(
@@ -196,7 +196,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
     @unittest.skipIf(
         itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
         "Skipping because import pykakasi worked.")
-    def test_candidates_pykakasi_missing_ja_JP(self):
+    def test_candidates_pykakasi_missing_ja_JP(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['ja_JP'])
         self.assertEqual(
@@ -212,7 +212,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
         "Skipping because import pykakasi failed.")
-    def test_candidates_pykakasi_available_ja_JP(self):
+    def test_candidates_pykakasi_available_ja_JP(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['ja_JP'])
         self.assertEqual(

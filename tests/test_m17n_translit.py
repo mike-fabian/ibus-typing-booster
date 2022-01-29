@@ -21,6 +21,7 @@
 This file implements test cases for finding key codes for key values
 '''
 
+from typing import Any
 import sys
 import unittest
 
@@ -35,13 +36,13 @@ from m17n_translit import Transliterator
 sys.path.pop(0)
 
 class M17nTranslitTestCase(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         pass
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         pass
 
-    def get_transliterator_or_skip(self, ime):
+    def get_transliterator_or_skip(self, ime: str) -> Any:
         try:
             sys.stderr.write('ime "%s" ... ' %ime)
             trans = Transliterator(ime)
@@ -54,10 +55,10 @@ class M17nTranslitTestCase(unittest.TestCase):
             self.skipTest(error)
         return trans
 
-    def test_dummy(self):
+    def test_dummy(self) -> None:
         self.assertEqual(True, True)
 
-    def test_non_existing_ime(self):
+    def test_non_existing_ime(self) -> None:
         # If initializing the transliterator fails, for example
         # because a non-existing input method was given as the
         # argument, a ValueError is raised:
@@ -69,23 +70,23 @@ class M17nTranslitTestCase(unittest.TestCase):
             # Something unexpected happened:
             self.assertTrue(False)
 
-    def test_ru_translit(self):
+    def test_ru_translit(self) -> None:
         trans = Transliterator('ru-translit')
         self.assertEqual(trans.transliterate(list('y')), 'ы')
         self.assertEqual(trans.transliterate(list('yo')), 'ё')
         self.assertEqual(trans.transliterate(list('yo y')), 'ё ы')
 
-    def test_mr_itrans(self):
+    def test_mr_itrans(self) -> None:
         trans = Transliterator('mr-itrans')
         self.assertEqual(trans.transliterate(list('praviN')), 'प्रविण्')
         self.assertEqual(trans.transliterate(list('namaste')), 'नमस्ते')
 
-    def test_hi_itrans(self):
+    def test_hi_itrans(self) -> None:
         trans = Transliterator('hi-itrans')
         self.assertEqual(trans.transliterate(list('namaste')), 'नमस्ते')
         self.assertEqual(trans.transliterate(list('. ')), '। ')
 
-    def test_hi_inscript2(self):
+    def test_hi_inscript2(self) -> None:
         trans = self.get_transliterator_or_skip('hi-inscript2')
         self.assertEqual(trans.transliterate([]), '')
         # Hindi-Inscript2 uses the AltGr key a lot, 'G-4' is the
@@ -97,7 +98,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         # Therefore, 'G-3' transliterates just as 'G-3':
         self.assertEqual(trans.transliterate(['3', 'G-3']), '३G-3')
 
-    def test_mr_inscript2(self):
+    def test_mr_inscript2(self) -> None:
         trans = self.get_transliterator_or_skip('mr-inscript2')
         # In mr-inscript2, 'G-1' transliterates to U+200D ZERO WIDTH
         # JOINER ('\xe2\x80\x8d' in UTF-8 encoding):
@@ -105,17 +106,17 @@ class M17nTranslitTestCase(unittest.TestCase):
             trans.transliterate(['j', 'd', 'G-1', '/']).encode('utf-8'),
             b'\xe0\xa4\xb0\xe0\xa5\x8d\xe2\x80\x8d\xe0\xa4\xaf')
 
-    def test_t_latn_post(self):
+    def test_t_latn_post(self) -> None:
         trans = Transliterator('t-latn-post')
         self.assertEqual(trans.transliterate(list('gru"n')), 'grün')
 
-    def test_NoIME(self):
+    def test_NoIME(self) -> None:
         trans = Transliterator('NoIME')
         self.assertEqual(
             trans.transliterate(['a', 'b', 'c', 'C-c', 'G-4']),
             'abcC-cG-4')
 
-    def test_si_wijesekera(self):
+    def test_si_wijesekera(self) -> None:
         trans = Transliterator('si-wijesekera')
         self.assertEqual(trans.transliterate(list('a')), '්')
         self.assertEqual(trans.transliterate(list('t')), 'එ')
@@ -123,27 +124,27 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(
             trans.transliterate(list('vksIal kjSka ')), 'ඩනිෂ්ක නවීන් ')
 
-    def test_ja_anthy(self):
+    def test_ja_anthy(self) -> None:
         trans = self.get_transliterator_or_skip('ja-anthy')
         self.assertEqual(
             trans.transliterate(list('chouchou')), 'ちょうちょう')
 
-    def test_zh_py(self):
+    def test_zh_py(self) -> None:
         trans = self.get_transliterator_or_skip('zh-py')
         self.assertEqual(
             trans.transliterate(['n', 'i', 'h', 'a', 'o']), '你好')
 
-    def test_zh_tonepy(self):
+    def test_zh_tonepy(self) -> None:
         trans = self.get_transliterator_or_skip('zh-tonepy')
         self.assertEqual(
             trans.transliterate(['n', 'i', '3', 'h', 'a', 'o', '3']), '你好')
 
-    def test_ko_romaja(self):
+    def test_ko_romaja(self) -> None:
         trans = self.get_transliterator_or_skip('ko-romaja')
         self.assertEqual(
             trans.transliterate(list('annyeonghaseyo')), '안녕하세요')
 
-    def test_si_sayura(self):
+    def test_si_sayura(self) -> None:
         trans = self.get_transliterator_or_skip('si-sayura')
         self.assertEqual(trans.transliterate(list('a')), 'අ')
         self.assertEqual(trans.transliterate(list('a ')), 'අ ')

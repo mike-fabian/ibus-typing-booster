@@ -48,9 +48,9 @@ try:
 except (ImportError,):
     pass
 
-def get_libvoikko_version():
+def get_libvoikko_version() -> str:
     if IMPORT_LIBVOIKKO_SUCCESSFUL:
-        return libvoikko.Voikko.getVersion()
+        return str(libvoikko.Voikko.getVersion())
     else:
         return '0'
 

@@ -34,16 +34,16 @@ import itb_util
 sys.path.pop(0)
 
 class M17nDbInfoTestCase(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self._m17n_db_info = itb_util.M17nDbInfo()
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         pass
 
-    def test_dummy(self):
+    def test_dummy(self) -> None:
         self.assertEqual(True, True)
 
-    def test_NoIME_first(self):
+    def test_NoIME_first(self) -> None:
         # 'NoIME' should be first in the list of input methods to make
         # it appear on top when adding input methods in the setup
         # tool. The list is sorted alphabetically, all other input
@@ -52,14 +52,14 @@ class M17nDbInfoTestCase(unittest.TestCase):
         imes = self._m17n_db_info.get_imes()
         self.assertEqual('NoIME', imes[0])
 
-    def test_t_latin_pre(self):
+    def test_t_latin_pre(self) -> None:
         self.assertEqual(
             'latn-pre.mim',
             os.path.basename(self._m17n_db_info.get_path('t-latn-pre')))
         self.assertEqual(
             'Latin-pre', self._m17n_db_info.get_title('t-latn-pre'))
 
-    def test_t_math_latex(self):
+    def test_t_math_latex(self) -> None:
         self.assertEqual(
             'math-latex.mim',
             os.path.basename(self._m17n_db_info.get_path('t-math-latex')))

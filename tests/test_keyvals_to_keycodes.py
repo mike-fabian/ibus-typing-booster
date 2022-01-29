@@ -36,16 +36,16 @@ sys.path.pop(0)
 
 @unittest.skipIf(Gdk.Display.open('') == None, 'Display cannot be opened.')
 class KeyvalsToKeycodesTestCase(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         pass
 
-    def test_dummy(self):
+    def test_dummy(self) -> None:
         self.assertEqual(True, True)
 
-    def test_left(self):
+    def test_left(self) -> None:
         # This test would fail if the Left key is remapped to a
         # different hardware key, but probably nobody remaps Left
         self.assertEqual(
@@ -53,7 +53,7 @@ class KeyvalsToKeycodesTestCase(unittest.TestCase):
         self.assertEqual(
             105, self._keyvals_to_keycodes.ibus_keycode(IBus.KEY_Left))
 
-    def test_backspace(self):
+    def test_backspace(self) -> None:
         # This test would fail if the BackSpace key is remapped to a
         # different hardware key, but probably nobody remaps BackSpace
         self.assertEqual(
@@ -61,7 +61,7 @@ class KeyvalsToKeycodesTestCase(unittest.TestCase):
         self.assertEqual(
             14, self._keyvals_to_keycodes.ibus_keycode(IBus.KEY_BackSpace))
 
-    def test_a(self):
+    def test_a(self) -> None:
         # Do not test whether 'a' is mapped ot a specific hardware key
         # as this depends on the keyboard layout. But testing whether
         # it is mapped “somewhere” should be OK:
@@ -70,7 +70,7 @@ class KeyvalsToKeycodesTestCase(unittest.TestCase):
         self.assertTrue(
             self._keyvals_to_keycodes.ibus_keycodes(IBus.KEY_a)[0])
 
-    def test_keyval_zero(self):
+    def test_keyval_zero(self) -> None:
         # for the keyval 0, the returned lists of keycodes should
         # be empty and the keycode should be 0:
         self.assertEqual([], self._keyvals_to_keycodes.keycodes(0))
@@ -78,7 +78,7 @@ class KeyvalsToKeycodesTestCase(unittest.TestCase):
         self.assertEqual([], self._keyvals_to_keycodes.ibus_keycodes(0))
         self.assertEqual(0, self._keyvals_to_keycodes.ibus_keycode(0))
 
-    def test_print_stuff_to_test_log(self):
+    def test_print_stuff_to_test_log(self) -> None:
         # Print information about the keval <-> keycode mapping to the
         # test log:
         print(self._keyvals_to_keycodes)
