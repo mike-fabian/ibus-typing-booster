@@ -1218,6 +1218,7 @@ CLDR_ANNOTATION_FILES = {
     'he_IL',
     'hi',
     'hi_IN',
+    'hi_Latn',
     'hr',
     'hr_BA',
     'hr_HR',
