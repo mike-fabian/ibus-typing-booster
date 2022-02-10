@@ -19,6 +19,34 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.15.22" date="2022-02-27" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.15.22</url>
+      <issues>
+        <issue>
+          Translation update from Weblate (ca, de, es, fr, nl, pl, pt,
+          pt_BR, sv, tr, uk, zh_CN, zh_TW updated)
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/272">
+          github-issues#272: Add a “Restore all defaults” button to the setup tool
+        </issue>
+        <issue>
+          Allow capital letters and accents in user shortcuts
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/271">
+          github-issues#271: Make user shortcuts containing punctuation possible
+        </issue>
+        <issue>
+          Do not record stuff to user database when
+          itb_util.InputHints.PRIVATE is set
+        </issue>
+        <issue>
+          Update emoji annotations from CLDR
+        </issue>
+      </issues>
+    </release>
     <release version="2.15.16" date="2022-01-30" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

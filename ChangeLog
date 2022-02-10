@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 27 Feb 2022 Released 2.15.22
+* Translation update from Weblate (ca, de, es, fr, nl, pl, pt, pt_BR, sv, tr, uk, zh_CN, zh_TW updated)
+* Add a “Restore all defaults” button to the setup tool (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/272)
+* Allow capital letters and accents in user shortcuts
+* Make user shortcuts containing punctuation possible (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/271)
+* Do not record stuff to user database when itb_util.InputHints.PRIVATE is set
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 21 Jan 2022 Released 2.15.16
 * Ignore MOD3_MASK (“Usually” Scroll Lock) when matching key bindings (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/270)
 * When a Modifier key release matches a hotkey command, return False not True. (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/269)
