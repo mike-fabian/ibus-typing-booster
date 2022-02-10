@@ -3245,7 +3245,8 @@ class InputPurpose(Enum):
 
     See also:
 
-    https://developer.gnome.org/gtk4/unstable/GtkEntry.html#GtkInputHints
+    https://docs.gtk.org/gtk3/enum.InputPurpose.html
+    https://docs.gtk.org/gtk4/enum.InputPurpose.html
 
     Examples:
 
@@ -3352,7 +3353,8 @@ class InputHints(Flag):
 
     See also:
 
-    https://developer.gnome.org/gtk4/unstable/GtkEntry.html#GtkInputHints
+    https://docs.gtk.org/gtk3/flags.InputHints.html
+    https://docs.gtk.org/gtk4/flags.InputHints.html
 
     Examples:
 
