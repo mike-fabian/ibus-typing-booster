@@ -2579,7 +2579,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 time.sleep(self._ibus_event_sleep_seconds)
         self._clear_input_and_update_ui()
         self._commit_happened_after_focus_in = True
-        if self._off_the_record or self._hide_input:
+        if (self._off_the_record
+            or self._hide_input
+            or self._input_hints & itb_util.InputHints.PRIVATE):
             return
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
         stripped_input_phrase = itb_util.strip_token(input_phrase)
@@ -6076,7 +6078,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         commit_phrase = unicodedata.normalize('NFC', commit_phrase)
         stripped_input_phrase = itb_util.strip_token(input_phrase)
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
-        if not self._off_the_record and not self._hide_input:
+        if (self._off_the_record
+            or self._hide_input
+            or self._input_hints & itb_util.InputHints.PRIVATE):
             self.database.check_phrase_and_update_frequency(
                 input_phrase=stripped_input_phrase,
                 phrase=stripped_commit_phrase,
