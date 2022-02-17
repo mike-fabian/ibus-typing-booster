@@ -933,7 +933,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         LOGGER.exception('Exception when calling select_words')
                 if candidates and prefix:
                     candidates = [(prefix+x[0], x[1]) for x in candidates]
-                for cand in candidates:
+                shortcut_candidates: List[Tuple[str, float]] = []
+                try:
+                    shortcut_candidates = self.database.select_shortcuts(
+                        self._transliterated_strings[ime])
+                except Exception:
+                    LOGGER.exception('Exception when calling select_shortcuts')
+                for cand in candidates + shortcut_candidates:
                     if cand[0] in phrase_frequencies:
                         phrase_frequencies[cand[0]] = max(
                             phrase_frequencies[cand[0]], cand[1])
@@ -2583,13 +2589,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             or self._hide_input
             or self._input_hints & itb_util.InputHints.PRIVATE):
             return
+        if not commit_phrase or not input_phrase:
+            return
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
         stripped_input_phrase = itb_util.strip_token(input_phrase)
-        if not stripped_commit_phrase or not stripped_input_phrase:
-            return
         self.database.check_phrase_and_update_frequency(
-            input_phrase=stripped_input_phrase,
-            phrase=stripped_commit_phrase,
+            input_phrase=input_phrase,
+            phrase=commit_phrase,
             p_phrase=self.get_p_phrase(),
             pp_phrase=self.get_pp_phrase())
         if (self.get_p_phrase()

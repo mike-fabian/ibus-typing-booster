@@ -398,6 +398,42 @@ class TabSqliteDb:
             phrases_title.add(phrase_title)
         return candidates_title
 
+    def select_shortcuts(
+            self,
+            input_phrase: str) -> List[Tuple[str, float]]:
+        '''
+        Get shortcuts from database completing input_phrase.
+
+        Returns a list of matches where each match is a tuple in the
+        form of (phrase, user_freq), i.e. returns something like
+        [(phrase, user_freq), ...]
+        '''
+        input_phrase = unicodedata.normalize(
+            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('input_phrase=%s', input_phrase)
+        phrase_frequencies: Dict[str, float] = {}
+        sqlargs = {'input_phrase': input_phrase + '%',
+                   'user_freq': itb_util.SHORTCUT_USER_FREQ}
+        sqlstr = ('SELECT phrase, sum(user_freq) FROM user_db.phrases '
+                  'WHERE input_phrase LIKE :input_phrase '
+                  'AND user_freq >= :user_freq '
+                  'GROUP BY phrase;')
+        results_shortcuts: List[Tuple[str, int]] = []
+        try:
+            results_shortcuts = self.database.execute(
+                sqlstr, sqlargs).fetchall()
+        except Exception:
+            LOGGER.exception(
+                'Unexpected error fetching user shortcuts from database.')
+        if results_shortcuts:
+            phrase_frequencies.update(results_shortcuts)
+        best_shortcut_candidates = self.best_candidates(phrase_frequencies)
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                'best_shortcut_candidates=%s', best_shortcut_candidates)
+        return best_shortcut_candidates
+
     def select_words(
             self,
             input_phrase: str,
@@ -716,6 +752,77 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             LOGGER.debug('result=%s', result)
         return result
 
+    def check_shortcut_and_update_frequency(
+            self,
+            input_phrase: str = '',
+            phrase: str = '',
+            user_freq_increment: int = 1,
+            commit: bool = True) -> bool:
+        '''
+        Check whether input_phrase and phrase are a user defined shortcut.
+
+        Return True if this was a shortcut, else return False.
+
+        If this is already saved in the database as a shortcut,
+        increase the frequency by 1.
+
+        If no such shortcut is in the database but user_freq_increment
+        is >= itb_util.SHORTCUT_USER_FREQ, add such a shortcut.
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                'input_phrase=%s phrase=%s user_freq_increment=%s commit=%s',
+                input_phrase, phrase, user_freq_increment, commit)
+        if not input_phrase or not phrase:
+            return False
+        phrase = unicodedata.normalize(
+            itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
+        input_phrase = itb_util.remove_accents(input_phrase.lower())
+        sqlargs = {'input_phrase': input_phrase,
+                   'phrase': phrase,
+                   'user_freq': itb_util.SHORTCUT_USER_FREQ,
+                   'timestamp': time.time()}
+        sqlstr = ('SELECT max(user_freq) FROM user_db.phrases '
+                  'WHERE input_phrase = :input_phrase '
+                  'AND phrase = :phrase '
+                  'AND user_freq >= :user_freq '
+                  'GROUP BY phrase;')
+        result =  self.database.execute(sqlstr, sqlargs).fetchall()
+        if result:
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Existing shortcut, increase frequency by 1.')
+            sqlargs['user_freq'] = result[0][0] + 1
+            sqlstr = (
+                'UPDATE user_db.phrases '
+                'SET user_freq = :user_freq, timestamp = :timestamp '
+                'WHERE input_phrase = :input_phrase AND phrase = :phrase ;')
+            try:
+                self.database.execute(sqlstr, sqlargs)
+                if commit:
+                    self.database.commit()
+            except Exception:
+                LOGGER.exception(
+                    'Unexpected error updating shortcut in user_db.')
+            return True
+        if user_freq_increment < itb_util.SHORTCUT_USER_FREQ:
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('It was not a shortcut, return False.')
+            return False
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('New shortcut, add it to the database.')
+        sqlargs['user_freq'] = user_freq_increment
+        sqlstr = (
+            'INSERT INTO user_db.phrases '
+            '(input_phrase, phrase, p_phrase, pp_phrase, user_freq, timestamp)'
+            'VALUES (:input_phrase, :phrase, "", "", :user_freq, :timestamp);')
+        try:
+            self.database.execute(sqlstr, sqlargs)
+            if commit:
+                self.database.commit()
+        except Exception:
+            LOGGER.exception('Unexpected error adding shortcut to database.')
+        return True
+
     def check_phrase_and_update_frequency(
             self,
             input_phrase: str = '',
@@ -729,20 +836,31 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         they are in the database, increase the frequency by 1, if not
         add them.
         '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                'input_phrase=%s phrase=%s p_phrase=%s pp_phrase=%s '
+                'user_freq_increment=%s commit=%s',
+                input_phrase, phrase, p_phrase, pp_phrase,
+                user_freq_increment, commit)
+        # Handle shortcuts before using strip_token to allow
+        # punctuation in shortcuts and shortcut expansions:
+        if self.check_shortcut_and_update_frequency(
+                input_phrase=input_phrase,
+                phrase=phrase,
+                user_freq_increment=user_freq_increment,
+                commit=commit):
+            return
         if not input_phrase:
             input_phrase = phrase
         if not phrase:
             return
+        input_phrase = itb_util.strip_token(input_phrase)
+        phrase = itb_util.strip_token(phrase)
         phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
         p_phrase = itb_util.remove_accents(p_phrase.lower())
         pp_phrase = itb_util.remove_accents(pp_phrase.lower())
         input_phrase = itb_util.remove_accents(input_phrase.lower())
-
-        if DEBUG_LEVEL > 1:
-            LOGGER.debug(
-                'phrase=%(p)s, input_phrase=%(t)s',
-                {'p': phrase, 't': input_phrase})
 
         # There should never be more than 1 database row for the same
         # input_phrase *and* phrase. So the following query on
