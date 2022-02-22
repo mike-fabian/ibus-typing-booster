@@ -86,6 +86,38 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('namaste')), 'नमस्ते')
         self.assertEqual(trans.transliterate(list('. ')), '। ')
 
+    def test_unicode(self) -> None:
+        trans = self.get_transliterator_or_skip('t-unicode')
+        self.assertEqual('', trans.transliterate([]))
+        self.assertEqual(
+            'U+', trans.transliterate(['C-u']))
+        self.assertEqual(
+            'ॲ', trans.transliterate(['C-u', '0', '9', '7', '2', ' ']).strip())
+        self.assertEqual(
+            '☺', trans.transliterate(['C-u', '2', '6', '3', 'a', ' ']).strip())
+        self.assertEqual(
+            '☺', trans.transliterate(['C-u', '2', '6', '3', 'A', ' ']).strip())
+
+    def test_unicode_hi_itrans(self) -> None:
+        '''Unicode input should work not only when the t-unicode input method
+        is selected but for all m17n input methods'''
+        trans = self.get_transliterator_or_skip('hi-itrans')
+        self.assertEqual('', trans.transliterate([]))
+        self.assertEqual(
+            'U+', trans.transliterate(['C-u']))
+        self.assertEqual(
+            'ॲ', trans.transliterate(['C-u', '0', '9', '7', '2', ' ']).strip())
+        self.assertEqual(
+            '☺', trans.transliterate(['C-u', '2', '6', '3', 'a', ' ']).strip())
+        self.assertEqual(
+            '☺', trans.transliterate(['C-u', '2', '6', '3', 'A', ' ']).strip())
+        self.assertEqual(
+            'नमस्ते', trans.transliterate(list('namaste')))
+        self.assertEqual(
+            'नमस्ते ☺',
+            trans.transliterate(
+                list('namaste ') + ['C-u', '2', '6', '3', 'a', ' ']).strip())
+
     def test_hi_inscript2(self) -> None:
         trans = self.get_transliterator_or_skip('hi-inscript2')
         self.assertEqual(trans.transliterate([]), '')
