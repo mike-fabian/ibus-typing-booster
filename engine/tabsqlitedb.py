@@ -777,7 +777,8 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             return False
         phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
-        input_phrase = itb_util.remove_accents(input_phrase.lower())
+        input_phrase = unicodedata.normalize(
+            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
         sqlargs = {'input_phrase': input_phrase,
                    'phrase': phrase,
                    'user_freq': itb_util.SHORTCUT_USER_FREQ,

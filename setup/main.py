@@ -3485,7 +3485,7 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         The button to delete a custom shortcut has been clicked.
         '''
-        shortcut = self._shortcut_entry.get_text().strip().lower()
+        shortcut = self._shortcut_entry.get_text().strip()
         expansion_buffer = self._shortcut_expansion_textview.get_buffer()
         shortcut_expansion = (
             expansion_buffer.get_text(
@@ -3513,8 +3513,7 @@ class SetupUI(Gtk.Window): # type: ignore
     def _on_shortcut_add_clicked(self, _button: Gtk.Button) -> None:
         '''The button to add a custom shortcut has been clicked.'''
         self._shortcut_treeview.get_selection().unselect_all()
-        shortcut = itb_util.remove_accents(
-            self._shortcut_entry.get_text().strip().lower())
+        shortcut = self._shortcut_entry.get_text().strip()
         expansion_buffer = self._shortcut_expansion_textview.get_buffer()
         shortcut_expansion = (
             expansion_buffer.get_text(
