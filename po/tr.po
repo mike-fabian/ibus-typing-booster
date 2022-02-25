@@ -3,23 +3,23 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Oguz Ersen <oguzersen@protonmail.com>, 2019.
 # Oğuz Ersen <oguzersen@protonmail.com>, 2019, 2020, 2021.
-# Mike FABIAN <mfabian@redhat.com>, 2021.
+# Mike FABIAN <mfabian@redhat.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-02-25 19:04+0100\n"
-"PO-Revision-Date: 2021-08-17 17:12+0000\n"
-"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
-"Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/tr/>\n"
+"PO-Revision-Date: 2022-02-25 18:46+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7.2\n"
+"X-Generator: Weblate 4.11\n"
 
 #: engine/emoji_picker.py:203
 msgid "Emoji Picker"
@@ -384,10 +384,8 @@ msgid "Preferences"
 msgstr "Tercihler"
 
 #: setup/main.py:193
-#, fuzzy
-#| msgid "Set all to default"
 msgid "Restore all defaults"
-msgstr "Tümünü öntanımlıya ayarla"
+msgstr "Tüm öntanımlıları geri yükle"
 
 #: setup/main.py:201 setup/main.py:5308
 msgid "_Close"
@@ -1342,14 +1340,8 @@ msgstr "Bu uygulamanın başka bir örneği zaten çalışıyor."
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
 #: setup/main.py:2406
-#, fuzzy
-#| msgid ""
-#| "Do you really want to set the key bindings for all commands to their "
-#| "defaults?"
 msgid "Do you really want to restore all default settings?"
-msgstr ""
-"Tüm komutların tuş atamalarını öntanımlılarına ayarlamayı gerçekten istiyor "
-"musunuz?"
+msgstr "Tüm öntanımlı ayarları gerçekten geri yüklemek istiyor musunuz?"
 
 #: setup/main.py:2826
 msgid "Select .wav sound file:"
