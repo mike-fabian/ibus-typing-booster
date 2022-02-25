@@ -1,5 +1,5 @@
 # Marco Aurélio Krause <ouesten@me.com>, 2016. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2021.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2021, 2022.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2019, 2020, 2021.
 msgid ""
 msgstr ""
@@ -7,7 +7,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-02-25 19:04+0100\n"
-"PO-Revision-Date: 2021-09-29 10:51+0000\n"
+"PO-Revision-Date: 2022-02-25 18:38+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/pt_BR/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.8\n"
+"X-Generator: Weblate 4.11\n"
 
 #: engine/emoji_picker.py:203
 msgid "Emoji Picker"
@@ -378,10 +378,8 @@ msgid "Preferences"
 msgstr "Preferências"
 
 #: setup/main.py:193
-#, fuzzy
-#| msgid "Set all to default"
 msgid "Restore all defaults"
-msgstr "Definir todos com o padrão"
+msgstr "Restaurar o padrão"
 
 #: setup/main.py:201 setup/main.py:5308
 msgid "_Close"
@@ -1346,14 +1344,8 @@ msgstr "Outra instância deste aplicativo já está em execução."
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
 #: setup/main.py:2406
-#, fuzzy
-#| msgid ""
-#| "Do you really want to set the key bindings for all commands to their "
-#| "defaults?"
 msgid "Do you really want to restore all default settings?"
-msgstr ""
-"Deseja realmente definir as associações de teclas de todos os comandos para "
-"o padrão?"
+msgstr "Você realmente deseja restaurar todas as configurações padrão?"
 
 #: setup/main.py:2826
 msgid "Select .wav sound file:"

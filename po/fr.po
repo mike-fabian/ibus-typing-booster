@@ -2,9 +2,9 @@
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2016. #zanata, 2019.
 # José Fournier <jaaf64@zoraldia.com>, 2016. #zanata
 # José Fournier <jaaf64@zoraldia.com>, 2017. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019, 2020.
+# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019, 2020, 2022.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2018. #zanata, 2019.
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2022.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019. #zanata
 # Julien Humbert <julroy67@gmail.com>, 2020, 2022.
 # Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2020.
@@ -14,16 +14,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-02-25 19:04+0100\n"
-"PO-Revision-Date: 2022-01-14 07:16+0000\n"
-"Last-Translator: Julien Humbert <julroy67@gmail.com>\n"
-"Language-Team: French <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/fr/>\n"
+"PO-Revision-Date: 2022-02-25 18:38+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Language-Team: French <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.11\n"
 
 #: engine/emoji_picker.py:203
 msgid "Emoji Picker"
@@ -394,10 +394,8 @@ msgid "Preferences"
 msgstr "Préférences"
 
 #: setup/main.py:193
-#, fuzzy
-#| msgid "Set all to default"
 msgid "Restore all defaults"
-msgstr "Tout réinitialiser"
+msgstr "Restaurer les valeurs par défaut"
 
 #: setup/main.py:201 setup/main.py:5308
 msgid "_Close"
@@ -1378,14 +1376,8 @@ msgstr "Une autre instance de cette application est déjà en cours d’exécuti
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
 #: setup/main.py:2406
-#, fuzzy
-#| msgid ""
-#| "Do you really want to set the key bindings for all commands to their "
-#| "defaults?"
 msgid "Do you really want to restore all default settings?"
-msgstr ""
-"Voulez-vous vraiment redéfinir les raccourcis claviers pour toutes les "
-"commandes ?"
+msgstr "Souhaitez-vous vraiment rétablir tous les paramètres par défaut ?"
 
 #: setup/main.py:2826
 msgid "Select .wav sound file:"

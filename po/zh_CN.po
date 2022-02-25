@@ -1,5 +1,5 @@
 # lexuge <LEXUGEyky@outlook.com>, 2017. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2022.
 # Qiyu Yan <yanqiyu01@gmail.com>, 2019.
 # Anonymous <noreply@weblate.org>, 2019, 2020.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
@@ -12,8 +12,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-02-25 19:04+0100\n"
-"PO-Revision-Date: 2021-01-28 17:40+0000\n"
-"Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
+"PO-Revision-Date: 2022-02-25 18:38+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_CN/>\n"
 "Language: zh_CN\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.4.2\n"
+"X-Generator: Weblate 4.11\n"
 
 #: engine/emoji_picker.py:203
 msgid "Emoji Picker"
@@ -387,10 +387,8 @@ msgid "Preferences"
 msgstr "首选项"
 
 #: setup/main.py:193
-#, fuzzy
-#| msgid "Set all to default"
 msgid "Restore all defaults"
-msgstr "全部设为默认"
+msgstr "全部恢复为默认"
 
 #: setup/main.py:201 setup/main.py:5308
 msgid "_Close"
@@ -1290,12 +1288,8 @@ msgstr "此应用已有另一实例在运行中。"
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
 #: setup/main.py:2406
-#, fuzzy
-#| msgid ""
-#| "Do you really want to set the key bindings for all commands to their "
-#| "defaults?"
 msgid "Do you really want to restore all default settings?"
-msgstr "你真的要将所有命令绑定的快捷键恢复为默认吗？"
+msgstr "你真的要将所有设置恢复为默认吗？"
 
 #: setup/main.py:2826
 msgid "Select .wav sound file:"

@@ -1,5 +1,5 @@
-# Mike FABIAN <mfabian@redhat.com>, 2016. #zanata, 2020.
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2020.
+# Mike FABIAN <mfabian@redhat.com>, 2016. #zanata, 2020, 2022.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2020, 2022.
 # Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2019, 2020, 2021.
 msgid ""
 msgstr ""
@@ -7,16 +7,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-02-25 19:04+0100\n"
-"PO-Revision-Date: 2021-08-27 02:04+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
-"Language-Team: Catalan <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ca/>\n"
+"PO-Revision-Date: 2022-02-25 18:38+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Language-Team: Catalan <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8\n"
+"X-Generator: Weblate 4.11\n"
 
 #: engine/emoji_picker.py:203
 msgid "Emoji Picker"
@@ -377,10 +377,8 @@ msgid "Preferences"
 msgstr "Preferències"
 
 #: setup/main.py:193
-#, fuzzy
-#| msgid "Set all to default"
 msgid "Restore all defaults"
-msgstr "Estableix-les totes als valors per defecte"
+msgstr "Restableix-ho tot al predeterminat"
 
 #: setup/main.py:201 setup/main.py:5308
 msgid "_Close"
@@ -1231,14 +1229,8 @@ msgstr "Ja s'està executant una altra instància d'aquesta aplicació."
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
 #: setup/main.py:2406
-#, fuzzy
-#| msgid ""
-#| "Do you really want to delete all language data learned from typing or "
-#| "reading files?"
 msgid "Do you really want to restore all default settings?"
 msgstr ""
-"Realment voleu suprimir totes les dades lingüístiques apreses a partir de "
-"l'escriptura amb el teclat i de la lectura de fitxers?"
 
 #: setup/main.py:2826
 msgid "Select .wav sound file:"

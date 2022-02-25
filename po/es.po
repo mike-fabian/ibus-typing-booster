@@ -2,7 +2,7 @@
 # Emilio Herrera <ehespinosa57@gmail.com>, 2017. #zanata, 2020.
 # Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2017. #zanata
 # Ismael Venegas Castelló <ismael.vc1337@gmail.com>, 2018. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2022.
 # Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2018. #zanata
 # Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2019, 2020, 2021.
 # Anonymous <noreply@weblate.org>, 2019.
@@ -13,16 +13,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-02-25 19:04+0100\n"
-"PO-Revision-Date: 2021-08-27 02:04+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
-"Language-Team: Spanish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/es/>\n"
+"PO-Revision-Date: 2022-02-25 18:38+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Language-Team: Spanish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8\n"
+"X-Generator: Weblate 4.11\n"
 
 #: engine/emoji_picker.py:203
 msgid "Emoji Picker"
@@ -391,10 +391,8 @@ msgid "Preferences"
 msgstr "Preferencias"
 
 #: setup/main.py:193
-#, fuzzy
-#| msgid "Set all to default"
 msgid "Restore all defaults"
-msgstr "Establecer todo a valores predeterminados"
+msgstr "Restablecer todo a valores predeterminados"
 
 #: setup/main.py:201 setup/main.py:5308
 msgid "_Close"
@@ -747,6 +745,9 @@ msgid ""
 "the simpleaudio module for Python3 is not installed, this option does "
 "nothing."
 msgstr ""
+"Aquí puede usted elegir si se reproduce un archivo de sonido cuando sucede "
+"un error. Si no está instalado el módulo simpleaudio para Python3, esta "
+"opción no hace nada."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -1361,14 +1362,8 @@ msgstr "Ya está ejecutándose otro ejemplar de la aplicación."
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
 #: setup/main.py:2406
-#, fuzzy
-#| msgid ""
-#| "Do you really want to set the key bindings for all commands to their "
-#| "defaults?"
 msgid "Do you really want to restore all default settings?"
-msgstr ""
-"¿Confirma que quiere restablecer los valores predeterminados de los atajos "
-"de todas las órdenes?"
+msgstr "¿Realmente quiere recuperar los ajustes predeterminados?"
 
 #: setup/main.py:2826
 msgid "Select .wav sound file:"
