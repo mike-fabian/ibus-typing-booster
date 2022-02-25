@@ -4682,7 +4682,7 @@ class SetupUI(Gtk.Window): # type: ignore
                 'autocapitalize',
                 GLib.Variant.new_boolean(mode))
         else:
-            self._inline_completion_checkbutton.set_active(mode)
+            self._auto_capitalize_checkbutton.set_active(mode)
 
     def set_remember_last_used_preedit_ime(
             self,
