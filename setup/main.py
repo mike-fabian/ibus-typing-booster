@@ -187,6 +187,15 @@ class SetupUI(Gtk.Window): # type: ignore
         self._about_button = Gtk.Button(label=_('About'))
         self._about_button.connect('clicked', self._on_about_button_clicked)
         self._dialog_action_area.add(self._about_button)
+        self._restore_all_defaults_button = Gtk.Button()
+        self._restore_all_defaults_button_label = Gtk.Label()
+        self._restore_all_defaults_button_label.set_text(
+            _('Restore all defaults'))
+        self._restore_all_defaults_button.add(
+            self._restore_all_defaults_button_label)
+        self._restore_all_defaults_button.connect(
+            'clicked', self._on_restore_all_defaults_button_clicked)
+        self._dialog_action_area.add(self._restore_all_defaults_button)
         self._close_button = Gtk.Button()
         self._close_button_label = Gtk.Label()
         self._close_button_label.set_text_with_mnemonic(_('_Close'))
@@ -2383,6 +2392,41 @@ class SetupUI(Gtk.Window): # type: ignore
         :param _button: The “About” button
         '''
         itb_util.ItbAboutDialog()
+
+    def _on_restore_all_defaults_button_clicked(
+            self, _button: Gtk.Button) -> None:
+        '''
+        Restore all default settings
+        '''
+        self._restore_all_defaults_button.set_sensitive(False)
+        response = self._run_are_you_sure_dialog(
+            # Translators: This is the text in the centre of a small
+            # dialog window, trying to confirm whether the user is
+            # really sure to restore all default settings.
+            _('Do you really want to restore all default settings?'))
+        if response == Gtk.ResponseType.OK:
+            LOGGER.info('Restoring all defaults.')
+            gsettings = Gio.Settings(
+                schema='org.freedesktop.ibus.engine.typing-booster')
+            schema = gsettings.get_property('settings-schema')
+            for key in schema.list_keys():
+                if key in ('googleapplicationcredentials',
+                           'dictionaryinstalltimestamp',
+                           'inputmethod',
+                           'dictionary'):
+                    LOGGER.info('Skipping reset of gsettings key=%s', key)
+                    continue
+                LOGGER.info('Resetting gsettings key=%s', key)
+                gsettings.reset(key)
+            LOGGER.info('Setting input methods to default for current locale:')
+            self.set_current_imes(itb_util.get_default_input_methods(
+                itb_util.get_effective_lc_ctype()), update_gsettings=True)
+            LOGGER.info('Setting dictionaries to default for current locale:')
+            self.set_dictionary_names(itb_util.get_default_dictionaries(
+                itb_util.get_effective_lc_ctype()), update_gsettings=True)
+        else:
+            LOGGER.info('Restore all defaults cancelled.')
+        self._restore_all_defaults_button.set_sensitive(True)
 
     def _on_color_preedit_spellcheck_checkbutton(
             self, widget: Gtk.CheckButton) -> None:
@@ -5103,6 +5147,7 @@ class SetupUI(Gtk.Window): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
+        LOGGER.debug('imes=%s type(imes)=%s', imes, type(imes))
         if isinstance(imes, str):
             imes = [x.strip() for x in imes.split(',')]
         imes = [re.sub(re.escape('noime'), 'NoIME', x.strip(),
@@ -5151,6 +5196,8 @@ class SetupUI(Gtk.Window): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
+        LOGGER.debug('dictionary_names=%s type(dictionary_names)=%s',
+                     dictionary_names, type(dictionary_names))
         if isinstance(dictionary_names, str):
             dictionary_names = [x.strip() for x in dictionary_names.split(',')]
         dictionary_names = [x for x in dictionary_names if x]

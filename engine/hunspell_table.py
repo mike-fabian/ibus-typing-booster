@@ -1319,6 +1319,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
+        LOGGER.debug('imes=%s type(imes)=%s', imes, type(imes))
         if isinstance(imes, str):
             imes = [x.strip() for x in imes.split(',')]
         imes = [re.sub(re.escape('noime'), 'NoIME', x.strip(),
@@ -1372,6 +1373,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
+        LOGGER.debug('dictionary_names=%s type(dictionary_names)=%s',
+                     dictionary_names, type(dictionary_names))
         if isinstance(dictionary_names, str):
             dictionary_names = [x.strip() for x in dictionary_names.split(',')]
         dictionary_names = [x for x in dictionary_names if x]
