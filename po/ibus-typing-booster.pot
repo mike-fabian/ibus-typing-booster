@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-02-25 19:04+0100\n"
+"POT-Creation-Date: 2022-02-27 15:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -165,56 +165,56 @@ msgstr ""
 msgid "Off the record mode"
 msgstr ""
 
-#: engine/hunspell_table.py:1530
+#: engine/hunspell_table.py:1533
 msgid "Highest priority dictionary"
 msgstr ""
 
-#: engine/hunspell_table.py:1531
+#: engine/hunspell_table.py:1534
 msgid "Choose highest priority dictionary"
 msgstr ""
 
-#: engine/hunspell_table.py:1560
+#: engine/hunspell_table.py:1563
 msgid "Preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1561
+#: engine/hunspell_table.py:1564
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1877
+#: engine/hunspell_table.py:1880
 msgid "Setup"
 msgstr ""
 
-#: engine/hunspell_table.py:1880 setup/main.py:152
+#: engine/hunspell_table.py:1883 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr ""
 
-#: engine/hunspell_table.py:4563
+#: engine/hunspell_table.py:4566
 msgid "Failed to import Google speech-to-text."
 msgstr ""
 
-#: engine/hunspell_table.py:4566
+#: engine/hunspell_table.py:4569
 msgid "Failed to import pyaudio."
 msgstr ""
 
-#: engine/hunspell_table.py:4569
+#: engine/hunspell_table.py:4572
 msgid "Failed to import queue."
 msgstr ""
 
-#: engine/hunspell_table.py:4574
+#: engine/hunspell_table.py:4577
 msgid "No supported language for speech recognition."
 msgstr ""
 
-#: engine/hunspell_table.py:4578
+#: engine/hunspell_table.py:4581
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 
-#: engine/hunspell_table.py:4590
+#: engine/hunspell_table.py:4593
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 
-#: engine/hunspell_table.py:4697
+#: engine/hunspell_table.py:4700
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 
@@ -376,7 +376,7 @@ msgstr ""
 msgid "Restore all defaults"
 msgstr ""
 
-#: setup/main.py:201 setup/main.py:5308
+#: setup/main.py:201 setup/main.py:5319
 msgid "_Close"
 msgstr ""
 
@@ -749,7 +749,7 @@ msgstr ""
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr ""
 
-#: setup/main.py:917 setup/main.py:1034 setup/main.py:1241 setup/main.py:3813
+#: setup/main.py:917 setup/main.py:1034 setup/main.py:1241 setup/main.py:3821
 msgid "Set to default"
 msgstr ""
 
@@ -849,7 +849,7 @@ msgstr ""
 msgid "Edit the key bindings for the selected command"
 msgstr ""
 
-#: setup/main.py:1245 setup/main.py:3818
+#: setup/main.py:1245 setup/main.py:3826
 msgid "Set default key bindings for the selected command"
 msgstr ""
 
@@ -1183,7 +1183,7 @@ msgid ""
 msgstr ""
 
 #. Translators:
-#: setup/main.py:1948 setup/main.py:2748
+#: setup/main.py:1948 setup/main.py:2756
 msgid "Set “Google application credentials” .json file:"
 msgstr ""
 
@@ -1207,11 +1207,11 @@ msgstr ""
 msgid "Are you sure?"
 msgstr ""
 
-#: setup/main.py:2241 setup/main.py:2751 setup/main.py:2829 setup/main.py:3886
+#: setup/main.py:2241 setup/main.py:2759 setup/main.py:2837 setup/main.py:3894
 msgid "_Cancel"
 msgstr ""
 
-#: setup/main.py:2242 setup/main.py:2752 setup/main.py:2830 setup/main.py:3887
+#: setup/main.py:2242 setup/main.py:2760 setup/main.py:2838 setup/main.py:3895
 msgid "_OK"
 msgstr ""
 
@@ -1226,28 +1226,28 @@ msgstr ""
 msgid "Do you really want to restore all default settings?"
 msgstr ""
 
-#: setup/main.py:2826
+#: setup/main.py:2834
 msgid "Select .wav sound file:"
 msgstr ""
 
-#: setup/main.py:2978
+#: setup/main.py:2986
 msgid "Add dictionary"
 msgstr ""
 
-#: setup/main.py:3292
+#: setup/main.py:3300
 msgid "Add input method"
 msgstr ""
 
-#: setup/main.py:3766
+#: setup/main.py:3774
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr ""
 
-#: setup/main.py:3794
+#: setup/main.py:3802
 msgid "Add a key binding"
 msgstr ""
 
-#: setup/main.py:3806
+#: setup/main.py:3814
 msgid "Remove selected key binding"
 msgstr ""
 
@@ -1256,22 +1256,22 @@ msgstr ""
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:3867
+#: setup/main.py:3875
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr ""
 
-#: setup/main.py:3883
+#: setup/main.py:3891
 msgid "Open File ..."
 msgstr ""
 
-#: setup/main.py:3902
+#: setup/main.py:3910
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr ""
 
-#: setup/main.py:3911
+#: setup/main.py:3919
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr ""
@@ -1286,13 +1286,13 @@ msgstr ""
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:3934
+#: setup/main.py:3942
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr ""
 
-#: setup/main.py:5366
+#: setup/main.py:5377
 msgid "ibus is not running."
 msgstr ""
 
