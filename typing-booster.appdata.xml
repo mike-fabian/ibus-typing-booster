@@ -19,6 +19,29 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.15.25" date="2022-03-03" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.15.25</url>
+      <issues>
+        <issue>
+          Translation update from Weblate (de, fa, nl, pl, tr, uk updated)
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/279">
+          github-issues#279: Make emoji and unicode symbol trigger key
+          configurable
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/281">
+          github-issues#281: Do not commit if a key triggering a
+          commit is swallowed by transliteration
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/280">
+          github-issues#280: Elide extremly long comments in the
+          lookup table
+        </issue>
+      </issues>
+    </release>
     <release version="2.15.22" date="2022-02-27" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
