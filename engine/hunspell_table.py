@@ -5836,12 +5836,24 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     self._typed_string + [key.msymbol])
             input_phrase = self._case_modes[
                 self._current_case_mode]['function'](input_phrase)
-            # If the transliteration now ends with the commit key, cut
-            # it off because the commit key is passed to the
-            # application later anyway and we do not want to pass it
-            # twice:
-            if key.msymbol and input_phrase.endswith(key.msymbol):
-                input_phrase = input_phrase[:-len(key.msymbol)]
+            if key.msymbol:
+                if input_phrase.endswith(key.msymbol):
+                    # If the transliteration now ends with the commit
+                    # key, cut it off because the commit key is passed
+                    # to the application later anyway and we do not
+                    # want to pass it twice:
+                    input_phrase = input_phrase[:-len(key.msymbol)]
+                else:
+                    # The commit key has been absorbed by the
+                    # transliteration.  Add the key to the input
+                    # instead of committing:
+                    if DEBUG_LEVEL > 1:
+                        LOGGER.debug(
+                            'Insert instead of commit: key.msymbol=“%s”',
+                            key.msymbol)
+                    self._insert_string_at_cursor([key.msymbol])
+                    self._update_ui()
+                    return True
             if (self.get_lookup_table().get_number_of_candidates()
                 and self.get_lookup_table().cursor_visible):
                 # something is selected in the lookup table, commit
