@@ -2080,5 +2080,63 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual('', self.engine.mock_preedit_text)
         self.assertEqual('discrepância discrepância, ', self.engine.mock_committed_text)
 
+    def test_m17n_unicode_improved(self) -> None:
+        '''Test case for for handling space with the improved version
+        of unicode.mim, see:
+        https://github.com/mike-fabian/ibus-typing-booster/issues/281
+        '''
+        dummy_trans = self.get_transliterator_or_skip('t-unicode')
+        self.engine.set_current_imes(
+            ['t-unicode'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_GB'], update_gsettings=False)
+        # Set the key bindings so that digits do not commit:
+        self.engine.set_keybindings({
+            'commit_candidate_1': [],
+            'commit_candidate_1_plus_space': [],
+            'commit_candidate_2': [],
+            'commit_candidate_2_plus_space': [],
+            'commit_candidate_3': [],
+            'commit_candidate_3_plus_space': [],
+            'commit_candidate_4': [],
+            'commit_candidate_4_plus_space': [],
+            'commit_candidate_5': [],
+            'commit_candidate_6_plus_space': [],
+            'commit_candidate_6': [],
+            'commit_candidate_6_plus_space': [],
+            'commit_candidate_7': [],
+            'commit_candidate_7_plus_space': [],
+            'commit_candidate_8': [],
+            'commit_candidate_8_plus_space': [],
+            'commit_candidate_9': [],
+            'commit_candidate_9_plus_space': [],
+        }, update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_u, 0,
+                                         IBus.ModifierType.CONTROL_MASK)
+        self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_9, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_7, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
+        if self.engine.mock_preedit_text != 'U+0972':
+            # The original version of unicode.mim already commits
+            # after 4 hex digits, i.e. we already get ॲ committed
+            # here.
+            self.skipTest(
+                'The improved version of unicode.mim is not installed.')
+        # With the improved version we need a space to convert the
+        # code point to the Unicode charater and the result should not
+        # be committed but just added to the preedit:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'ॲ')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # We can add more stuff to the preedit:
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'ॲa')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # And finally commit:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'ॲa ')
+
 if __name__ == '__main__':
     unittest.main()
