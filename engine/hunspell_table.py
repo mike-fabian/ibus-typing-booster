@@ -826,6 +826,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if len(phrase) > 80:
             phrase = phrase[:40] + '…' + phrase[-40:]
         attrs = IBus.AttrList()
+        if len(comment) > 80:
+            comment = comment[:40] + '…' + comment[-40:]
         if comment:
             phrase += ' ' + itb_util.bidi_embed(comment)
         if spell_checking: # spell checking suggestion
