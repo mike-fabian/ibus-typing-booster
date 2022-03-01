@@ -148,6 +148,8 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_emoji_prediction_mode())
         self.orig_off_the_record_mode = (
             self.engine.get_off_the_record_mode())
+        self.orig_emoji_trigger_characters = (
+            self.engine.get_emoji_trigger_characters())
         self.orig_auto_commit_characters = (
             self.engine.get_auto_commit_characters())
         self.orig_tab_enable = (
@@ -185,6 +187,9 @@ class ItbTestCase(unittest.TestCase):
             update_gsettings=False)
         self.engine.set_off_the_record_mode(
             self.orig_off_the_record_mode,
+            update_gsettings=False)
+        self.engine.set_emoji_trigger_characters(
+            self.orig_emoji_trigger_characters,
             update_gsettings=False)
         self.engine.set_auto_commit_characters(
             self.orig_auto_commit_characters,
@@ -237,6 +242,8 @@ class ItbTestCase(unittest.TestCase):
             False, update_gsettings=False)
         self.engine.set_off_the_record_mode(
             False, update_gsettings=False)
+        self.engine.set_emoji_trigger_characters(
+            '_', update_gsettings=False)
         self.engine.set_auto_commit_characters(
             '', update_gsettings=False)
         self.engine.set_tab_enable(

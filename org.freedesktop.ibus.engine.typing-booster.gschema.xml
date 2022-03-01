@@ -225,6 +225,15 @@
         to disk it might make sense to use this option temporarily.
       </description>
     </key>
+    <key name="emojitriggercharacters" type="s">
+      <default>'_'</default>
+      <summary>Emoji trigger characters</summary>
+      <description>
+        The characters in this list trigger an emoji and Unicode
+        symbol lookup even if the option “Unicode symbols and emoji
+        predictions” is off.
+      </description>
+    </key>
     <key name="autocommitcharacters" type="s">
       <default>''</default>
       <summary>Auto commit characters</summary>

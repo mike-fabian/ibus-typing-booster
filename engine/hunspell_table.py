@@ -216,6 +216,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._arrow_keys_reopen_preedit: bool = itb_util.variant_to_value(
             self._gsettings.get_value('arrowkeysreopenpreedit'))
 
+        self._emoji_trigger_characters: str = itb_util.variant_to_value(
+            self._gsettings.get_value('emojitriggercharacters'))
+
         self._auto_commit_characters: str = itb_util.variant_to_value(
             self._gsettings.get_value('autocommitcharacters'))
 
@@ -976,11 +979,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 phrase_candidates = self.database.best_candidates(
                     phrase_frequencies)
         if (self._emoji_predictions
-            or self._typed_string[0] in (' ', '_')
-            or self._typed_string[-1] in (' ', '_')):
+            or self._typed_string[0] in self._emoji_trigger_characters
+            or self._typed_string[-1] in self._emoji_trigger_characters):
             # If emoji mode is off and the emoji predictions are
-            # triggered here because the typed string starts with a '
-            # ' or a '_', the emoji matcher might not have been
+            # triggered here because the typed string starts with an
+            # emoji trigger character, the emoji matcher might not have been
             # initialized yet.  Make sure it is initialized now:
             if (not self.emoji_matcher
                 or
@@ -995,7 +998,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                               >= self._min_char_complete)
                              or self._tab_enable)):
                     emoji_matcher_candidates = self.emoji_matcher.candidates(
-                        self._transliterated_strings[ime])
+                        self._transliterated_strings[ime],
+                        trigger_characters=self._emoji_trigger_characters)
                     for cand in emoji_matcher_candidates:
                         if (cand[0] not in emoji_scores
                                 or cand[2] > emoji_scores[cand[0]][0]):
@@ -3337,6 +3341,36 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
     def get_off_the_record_mode(self) -> bool:
         '''Returns the current value of the “off the record” mode'''
         return self._off_the_record
+
+    def set_emoji_trigger_characters(
+            self,
+            emoji_trigger_characters: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the emoji trigger characters
+
+        :param emoji_trigger_characters: The characters which trigger an
+                                         emoji and Unicode symbol lookup
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)',
+                emoji_trigger_characters, update_gsettings)
+        if emoji_trigger_characters == self._emoji_trigger_characters:
+            return
+        self._emoji_trigger_characters = emoji_trigger_characters
+        if update_gsettings:
+            self._gsettings.set_value(
+                'emojitriggercharacters',
+                GLib.Variant.new_string(emoji_trigger_characters))
+
+    def get_emoji_trigger_characters(self) -> str:
+        '''Returns the current emoji trigger characters'''
+        return self._emoji_trigger_characters
 
     def set_auto_commit_characters(
             self,
@@ -6316,6 +6350,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'arrowkeysreopenpreedit': self.set_arrow_keys_reopen_preedit,
             'emojipredictions': self.set_emoji_prediction_mode,
             'offtherecord': self.set_off_the_record_mode,
+            'emojitriggercharacters': self.set_emoji_trigger_characters,
             'autocommitcharacters': self.set_auto_commit_characters,
             'tabenable': self.set_tab_enable,
             'rememberlastusedpreeditime':

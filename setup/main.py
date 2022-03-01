@@ -652,6 +652,32 @@ class SetupUI(Gtk.Window): # type: ignore
             self._arrow_keys_reopen_preedit_checkbutton,
             0, _options_grid_row, 1, 1)
 
+        self._emoji_trigger_characters_label = Gtk.Label()
+        self._emoji_trigger_characters_label.set_text(
+            # Translators: The characters in this list trigger an
+            # emoji and Unicode symbol lookup even if the option
+            # “Unicode symbols and emoji predictions” is off.
+            _('Emoji trigger characters:'))
+        self._emoji_trigger_characters_label.set_tooltip_text(
+            _('The characters in this list trigger an emoji and Unicode '
+              'symbol lookup even if the option '
+              '“Unicode symbols and emoji predictions” is off.'))
+        self._emoji_trigger_characters_label.set_xalign(0)
+        self._emoji_trigger_characters_entry = Gtk.Entry()
+        self._emoji_trigger_characters = itb_util.variant_to_value(
+            self._gsettings.get_value('emojitriggercharacters'))
+        if not self._emoji_trigger_characters:
+            self._emoji_trigger_characters = ''
+        self._emoji_trigger_characters_entry.set_text(
+            self._emoji_trigger_characters)
+        self._emoji_trigger_characters_entry.connect(
+            'notify::text', self._on_emoji_trigger_characters_entry)
+        _options_grid_row += 1
+        self._options_grid.attach(
+            self._emoji_trigger_characters_label, 0, _options_grid_row, 1, 1)
+        self._options_grid.attach(
+            self._emoji_trigger_characters_entry, 1, _options_grid_row, 1, 1)
+
         self._auto_commit_characters_label = Gtk.Label()
         self._auto_commit_characters_label.set_text(
             # Translators: The characters in this list cause the
@@ -2330,6 +2356,7 @@ class SetupUI(Gtk.Window): # type: ignore
             'arrowkeysreopenpreedit': self.set_arrow_keys_reopen_preedit,
             'emojipredictions': self.set_emoji_prediction_mode,
             'offtherecord': self.set_off_the_record_mode,
+            'emojitriggercharacters': self.set_emoji_trigger_characters,
             'autocommitcharacters': self.set_auto_commit_characters,
             'googleapplicationcredentials':
             self.set_google_application_credentials,
@@ -2735,6 +2762,14 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         self.set_arrow_keys_reopen_preedit(
             widget.get_active(), update_gsettings=True)
+
+    def _on_emoji_trigger_characters_entry(
+            self, widget: Gtk.Entry, _property_spec: Any) -> None:
+        '''
+        The list of characters triggering emoji and Unicode symbol lookup
+        '''
+        self.set_emoji_trigger_characters(
+            widget.get_text(), update_gsettings=True)
 
     def _on_auto_commit_characters_entry(
             self, widget: Gtk.Entry, _property_spec: Any) -> None:
@@ -4045,6 +4080,34 @@ class SetupUI(Gtk.Window): # type: ignore
                 GLib.Variant.new_boolean(mode))
         else:
             self._off_the_record_checkbutton.set_active(mode)
+
+    def set_emoji_trigger_characters(
+            self,
+            emoji_trigger_characters: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the emoji trigger characters
+
+        :param emoji_trigger_characters: The characters which trigger a commit
+                                         with an extra space
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)',
+            emoji_trigger_characters, update_gsettings)
+        if emoji_trigger_characters == self._emoji_trigger_characters:
+            return
+        self._emoji_trigger_characters = emoji_trigger_characters
+        if update_gsettings:
+            self._gsettings.set_value(
+                'emojitriggercharacters',
+                GLib.Variant.new_string(emoji_trigger_characters))
+        else:
+            self._emoji_trigger_characters_entry.set_text(
+                self._emoji_trigger_characters)
 
     def set_auto_commit_characters(
             self,

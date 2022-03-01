@@ -1346,6 +1346,7 @@ class EmojiMatcher():
             self,
             query_string: str,
             match_limit: int = 20,
+            trigger_characters: str  = '',
             debug: Iterable[str] = tuple()) -> List[Tuple[str, str, int]]:
         # pylint: disable=line-too-long
         '''
@@ -1448,6 +1449,12 @@ class EmojiMatcher():
 
         '''
         # pylint: enable=line-too-long
+        # Remove the trigger characters from the beginning and end of
+        # the query string:
+        if query_string[:1] and query_string[:1] in trigger_characters:
+            query_string = query_string[1:]
+        if query_string[-1:] and query_string[-1:] in trigger_characters:
+            query_string = query_string[:-1]
         if not query_string:
             return []
         # self._emoji_dict contains only emoji or sequences without
