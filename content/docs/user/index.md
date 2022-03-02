@@ -2352,7 +2352,7 @@ time.
 
 As having the “☑️ Unicode symbols and emoji predictions” option enabled
 slows down the search for predictions, you might want to look
-at [Quickly toggling emoji mode on and off](#6_8), especially if you
+at [Quickly toggling emoji mode on and off](#7_8), especially if you
 use emoji only occasionally.
 
 ###### 7_2
