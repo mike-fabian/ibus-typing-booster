@@ -2607,15 +2607,28 @@ off).
 But there is an even faster way to temporarily switch on emoji mode
 just for the current lookup.
 
-In the example video we can see that even if emoji mode is off (which
-can be seen in the options tab of the setup tool also shown in the
-video) we get emoji matches by appending keywords with “_”.  “camel_”,
-“frog_”, “India_” match emoji even though “☐ Unicode symbols and emoji
-predictions” is disabled.
+In the example video we can see that there is an option:
 
-Using these trailing underscores “_” temporarily turns on emoji search
-just for this one lookup.
+“Emoji trigger characters:  [_:      ]”
 
+By default, the value for this option contains only the underscore “_”,
+for this video I have added a colon “:”.
+
+Even if emoji mode is off (which can be seen in the options tab of the
+setup tool also shown in the video) we get emoji matches by starting
+or ending keywords with “_” or “:”.
+
+As can be seen in the video, “camel_”, “:frog”, “_India”, “:castle”,
+“rocket:”, “:cat_heart” match emoji even though “☐ Unicode symbols and
+emoji predictions” is disabled
+
+⚠️ **Attention when using Wayland**: If you want to use several
+keywords like in “:cat_heart” always use the underscore to concatenate
+the keywords like “cat” and “heart”.
+
+Using these “Emoji trigger characters” at the beginning or end of the
+search input temporarily turns on emoji search just for this one
+lookup.
 
 ###### 7_9
 ### Emoji picker
