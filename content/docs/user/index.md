@@ -2622,9 +2622,10 @@ As can be seen in the video, “camel_”, “:frog”, “_India”, “:castle
 “rocket:”, “:cat_heart” match emoji even though “☐ Unicode symbols and
 emoji predictions” is disabled
 
-⚠️ **Attention when using Wayland**: If you want to use several
-keywords like in “:cat_heart” always use the underscore to concatenate
-the keywords like “cat” and “heart”.
+⚠️ **Concatenating keywords**: If you want to use several keywords like in
+“:cat_heart” always use the underscore to concatenate the keywords
+like “cat” and “heart”. This is not changed by configuring the “Emoji
+trigger characters”.
 
 Using these “Emoji trigger characters” at the beginning or end of the
 search input temporarily turns on emoji search just for this one
