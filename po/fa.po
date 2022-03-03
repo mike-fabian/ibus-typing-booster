@@ -2,19 +2,23 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Ahmad Haghighi <haghighi.ahmad@gmail.com>, 2019.
+# Mike FABIAN <mfabian@redhat.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-03-01 19:01+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-03-03 12:45+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Language-Team: Persian <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/fa/>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.11\n"
 
 #: engine/emoji_picker.py:203
 msgid "Emoji Picker"
@@ -26,11 +30,11 @@ msgstr ""
 
 #: engine/emoji_picker.py:326 setup/main.py:187
 msgid "About"
-msgstr ""
+msgstr "درباره"
 
 #: engine/emoji_picker.py:331
 msgid "Quit"
-msgstr ""
+msgstr "ترک"
 
 #: engine/emoji_picker.py:341
 msgid "Search for emoji"
@@ -126,7 +130,7 @@ msgstr ""
 #: engine/hunspell_table.py:510 engine/hunspell_table.py:544
 #: engine/hunspell_table.py:565
 msgid "Off"
-msgstr ""
+msgstr "خاموش"
 
 #: engine/hunspell_table.py:515 engine/hunspell_table.py:549
 #: engine/hunspell_table.py:570
@@ -337,7 +341,7 @@ msgstr ""
 
 #: engine/itb_util.py:5081
 msgid "Cancel"
-msgstr ""
+msgstr "لغو کردن"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
@@ -368,7 +372,7 @@ msgstr ""
 
 #: setup/main.py:129
 msgid "Preferences"
-msgstr ""
+msgstr "ترجیحات"
 
 #: setup/main.py:193
 msgid "Restore all defaults"
@@ -376,7 +380,7 @@ msgstr ""
 
 #: setup/main.py:201 setup/main.py:5382
 msgid "_Close"
-msgstr ""
+msgstr "_بستن"
 
 #. Translators: This is the label of a tab in the setup
 #. tool. Here the user can setup the dictionaries for the
@@ -850,11 +854,11 @@ msgstr ""
 #. existing key bindings
 #: setup/main.py:1226
 msgid "Command"
-msgstr ""
+msgstr "فرمان"
 
 #: setup/main.py:1256
 msgid "Edit"
-msgstr ""
+msgstr "ویرایش"
 
 #: setup/main.py:1260
 msgid "Edit the key bindings for the selected command"
@@ -927,11 +931,11 @@ msgstr ""
 
 #: setup/main.py:1389
 msgid "Horizontal"
-msgstr ""
+msgstr "افقی"
 
 #: setup/main.py:1391
 msgid "Vertical"
-msgstr ""
+msgstr "عمودی"
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
@@ -947,7 +951,7 @@ msgstr ""
 #. at all for the preedit.
 #: setup/main.py:1432
 msgid "None"
-msgstr ""
+msgstr "هیچ‌کدام"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
@@ -1220,11 +1224,11 @@ msgstr ""
 
 #: setup/main.py:2267 setup/main.py:2794 setup/main.py:2872 setup/main.py:3929
 msgid "_Cancel"
-msgstr ""
+msgstr "_انصراف"
 
 #: setup/main.py:2268 setup/main.py:2795 setup/main.py:2873 setup/main.py:3930
 msgid "_OK"
-msgstr ""
+msgstr "_تأیید"
 
 #: setup/main.py:2300
 msgid "Another instance of this app is already running."
