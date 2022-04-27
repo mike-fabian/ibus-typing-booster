@@ -2859,7 +2859,7 @@ def is_right_to_left_messages() -> bool:
     if not lc_messages_locale:
         return False
     lang = lc_messages_locale.split('_')[0]
-    if lang in ('ar', 'arc', 'dv', 'fa', 'he', 'ps', 'ur', 'yi'):
+    if lang in ('ar', 'arc', 'dv', 'fa', 'he', 'ps', 'syr', 'ur', 'yi'):
         # 'ku' could be Latin script or Arabic script or even Cyrillic
         # or Armenian script
         #
