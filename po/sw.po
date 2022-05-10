@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-03-01 19:01+0100\n"
-"PO-Revision-Date: 2022-05-09 18:43+0000\n"
+"PO-Revision-Date: 2022-05-10 06:04+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
 "Language-Team: Swahili <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/sw/>\n"
@@ -65,8 +65,8 @@ msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
-"Tumia fonti ya akiba kwa emoji mmoja au kwa emoji iko ndani ya mfuatano wa "
-"emoji na haiwezekana kuonyeshwa na fonti umechagua."
+"Tumia fonti ya akiba kwa emoji au sehumu za emoji zisizoweza kuonyeshwa na "
+"fonti lilyochaguliwa."
 
 #: engine/emoji_picker.py:455
 msgid "Recently used"
@@ -78,43 +78,43 @@ msgstr "Kategoria"
 
 #: engine/emoji_picker.py:635
 msgid "Unicode categories"
-msgstr "Kategoria za msimbosare"
+msgstr "Kategoria za unikodi"
 
 #: engine/emoji_picker.py:636
 msgid "Keywords"
-msgstr "Makidokezo"
+msgstr "Vidokezo"
 
 #: engine/emoji_picker.py:676
 msgid "Fonts used to render this emoji:"
-msgstr "Fonti imetumiwa kuonyesha emoji hii:"
+msgstr "Fonti iliyotumika kuonyesha emoji hii:"
 
 #: engine/emoji_picker.py:693
 msgid "Unicode Version:"
-msgstr "Toleo Ya Msimbosare"
+msgstr "Toleo La Unikodi:"
 
 #: engine/emoji_picker.py:715 engine/emoji_picker.py:1825
 msgid "Left click to copy"
-msgstr "Bofyo kushoto kunakili"
+msgstr "Bofya kushoto kunakili"
 
 #: engine/emoji_picker.py:718
 msgid "Long press or middle click for skin tones"
-msgstr "Finya urefu au bofa katikati kwa marangi ya ngozi"
+msgstr "Bofya kwa muda au kitufe cha katikati kubadili rangi ya ngozi"
 
 #: engine/emoji_picker.py:719
 msgid "Right click for info"
-msgstr "Bofa kulia kwa taarifa"
+msgstr "Bofya kulia kwa habari zaidi"
 
 #: engine/emoji_picker.py:1206
 msgid "Search Results"
-msgstr "Matokeo ya Utafuto"
+msgstr "Matokeo"
 
 #: engine/emoji_picker.py:1210
 msgid "Search produced empty result."
-msgstr "Tokeo tupu ya utafuto."
+msgstr "Matokeo hayajapatikana."
 
 #: engine/emoji_picker.py:1481 engine/emoji_picker.py:1609
 msgid "Copied to clipboard!"
-msgstr "Imenakili kwa ubao nakili!"
+msgstr "Imenakiliwa kwa ubao nakili!"
 
 #: engine/emoji_picker.py:1935
 msgid "Lookup on emojipedia"
@@ -123,7 +123,7 @@ msgstr "Tafuta kwa emojipedia"
 #: engine/emoji_picker.py:2057 engine/emoji_picker.py:2058
 #: engine/emoji_picker.py:2059 setup/main.py:1393
 msgid "System default"
-msgstr "Chaguo-msingi wa mfumo"
+msgstr "Chaguo-msingi la mfumo"
 
 #: engine/emoji_picker.py:2193
 msgid "Set Font"
@@ -141,7 +141,7 @@ msgstr "Wezesha"
 
 #: engine/hunspell_table.py:534
 msgid "Input mode"
-msgstr "Hali-tumizi ya ingizo"
+msgstr "Hali ya kuingiza"
 
 #: engine/hunspell_table.py:535
 msgid "Here you can switch ibus-typing-booster on or off."
@@ -156,7 +156,7 @@ msgstr "Hapa, unaweza kuwezesha au kuzima msaidizi-wa-kuchapa-mbio-wa-ibus."
 #. nevertheless useful symbols.
 #: engine/hunspell_table.py:554 engine/hunspell_table.py:556 setup/main.py:531
 msgid "Unicode symbols and emoji predictions"
-msgstr "Alama za msimbosare na aguzi za emoji"
+msgstr "Alama za unikodi na emoji zilizotabiriwa"
 
 #. Translators: While “Off the record” mode is on, learning
 #. from user input is disabled. If learned user input is
@@ -167,27 +167,27 @@ msgstr "Alama za msimbosare na aguzi za emoji"
 #. sense to use this option temporarily.
 #: engine/hunspell_table.py:575 engine/hunspell_table.py:576 setup/main.py:560
 msgid "Off the record mode"
-msgstr "Hali-tumizi ya kutumia kamusi tu kuongeza mbio ya kuchapa"
+msgstr "Tumia kamusi pekee kuongeza mbio ya kuchapa"
 
 #: engine/hunspell_table.py:1539
 msgid "Highest priority dictionary"
-msgstr "Kamusi ya aula kuu"
+msgstr "Kamusi yenye kipaumbele"
 
 #: engine/hunspell_table.py:1540
 msgid "Choose highest priority dictionary"
-msgstr "Chagua kamusi in aula ya kwanza"
+msgstr "Chagua kamusi yenye kipaumbele"
 
 #: engine/hunspell_table.py:1569
 msgid "Preedit input method"
-msgstr "Hariri mbeleni hali-tumizi ya ingizo"
+msgstr "Jinsi ya kuhariri mbeleni hali ya kuingiza"
 
 #: engine/hunspell_table.py:1570
 msgid "Switch preedit input method"
-msgstr "Badili hariri mbeleni hali-tumizi ya ingizo"
+msgstr "Badili jinsi ya kuhariri mbeleni hali-tumizi ya ingizo"
 
 #: engine/hunspell_table.py:1886
 msgid "Setup"
-msgstr "Usanidi"
+msgstr "Mipangilio"
 
 #: engine/hunspell_table.py:1889 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
