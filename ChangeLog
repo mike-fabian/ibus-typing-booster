@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 11 May 2022 Release 2.15.27
+* If an emoji is duplicated as a text candidate, use only the emoji candidate and increase its score (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/289)
+* Update emoji annotations from CLDR
+* Translation update from Weblate (sv updated to 100%, sw updated to 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 03 Mar 2022 Released 2.15.25
 * Translation update from Weblate (de, fa, nl, pl, tr, uk updated)
 * Make emoji and unicode symbol trigger key configurable (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/279)
