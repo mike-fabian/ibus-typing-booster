@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-03-01 19:01+0100\n"
-"PO-Revision-Date: 2022-05-11 10:31+0000\n"
+"PO-Revision-Date: 2022-05-11 15:18+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
 "Language-Team: Swahili <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/sw/>\n"
@@ -928,28 +928,30 @@ msgstr "Hariri vitufe teule vya amri iliyochaguliwa"
 
 #: setup/main.py:1271 setup/main.py:3861
 msgid "Set default key bindings for the selected command"
-msgstr ""
+msgstr "Weka chaguo-msingi la vitufe teule vya amri iliyochaguliwa"
 
 #: setup/main.py:1278
 msgid "Set all to default"
-msgstr ""
+msgstr "Weka chaguo-msingi pote"
 
 #: setup/main.py:1282
 msgid "Set default key bindings for all commands"
-msgstr ""
+msgstr "Weka chaguo-msingi la vitufe teule vya amri zote"
 
 #. Translators: Checkbox to choose whether to display how
 #. many candidates there are and which one is selected on
 #. top of the list of candidates.
 #: setup/main.py:1304
 msgid "Display total number of candidates"
-msgstr ""
+msgstr "Onyesha idadi ya mapendekezo"
 
 #: setup/main.py:1306
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
 msgstr ""
+"Onyesha idadi kamili ya mapendekezo, na pia pendekezo bora mwanzoni mwa "
+"orodha."
 
 #. Translators: Checkbox to choose whether to show above
 #. the candidate list whether “Emoji prediction” mode and
@@ -959,7 +961,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1324
 msgid "Show status info in auxiliary text"
-msgstr ""
+msgstr "Onyesha maelezo ya hali katika maandishi ya ziada"
 
 #: setup/main.py:1326
 msgid ""
@@ -968,70 +970,75 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
+"Onyesha katika maelezo ya ziada ikiwa hali za \"Utabiri wa Emoji\" na \"Tumia"
+" kamusi pekee kuongeza kasi ya kuchapa\" zimewezeshwa au zimezimwa. Onyesha "
+"pia mbinu ya kuingizia inayotumika kwa sasa. Maelezo haya ya ziada ni mstari "
+"wa maandishi utakaoonekana juu ya orodha ya mapendekezo."
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
 #: setup/main.py:1353
 msgid "Candidate window page size:"
-msgstr ""
+msgstr "Idadi ya mapendekezo katika ukurasa:"
 
 #: setup/main.py:1355
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr ""
+"Idadi ya mapendekezo kuonyesha katika ukurasa mmoja wa orodha ya mapendekezo."
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
 #: setup/main.py:1381
 msgid "Candidate window orientation"
-msgstr ""
+msgstr "Mwelekeo wa kisanduku cha mapendekezo"
 
 #: setup/main.py:1383
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
-msgstr ""
+msgstr "Chagua ikiwa mapendekezo yaonyeshwe kwa mlalo au kwa wima."
 
 #: setup/main.py:1389
 msgid "Horizontal"
-msgstr ""
+msgstr "Mlalo"
 
 #: setup/main.py:1391
 msgid "Vertical"
-msgstr ""
+msgstr "Wima"
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
 #: setup/main.py:1423
 msgid "Preedit underline"
-msgstr ""
+msgstr "Piga mstari kinachohaririwa"
 
 #: setup/main.py:1425
 msgid "Which style of underlining to use for the preedit."
-msgstr ""
+msgstr "Aina ya mstari kupiga neno linalohaririwa."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
 #: setup/main.py:1432
 msgid "None"
-msgstr ""
+msgstr "Hapana"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
 #: setup/main.py:1436
 msgid "Single"
-msgstr ""
+msgstr "Mmoja"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
 #: setup/main.py:1440
 msgid "Double"
-msgstr ""
+msgstr "Miwili"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
 #: setup/main.py:1444
 msgid "Low"
-msgstr ""
+msgstr "Chini"
 
 #. Translators: Checkbox to choose whether a preedit style
 #. like underlining will only be used if lookup is
@@ -1041,7 +1048,7 @@ msgstr ""
 #. of characters before a lookup is done.
 #: setup/main.py:1475
 msgid "Use preedit style only if lookup is enabled"
-msgstr ""
+msgstr "Tumia mbinu ya kuhariri ikiwa tu hali ya msako imewezeshwa"
 
 #: setup/main.py:1477
 msgid ""
@@ -1050,6 +1057,10 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
+"Ukiwezesha chaguo hili, mbinu ya kuhariri kama vile kupiga mstari itatumika "
+"ikiwa tu hali ya msako imewezeshwa pia. Huenda hali ya msako ikawa imezimwa "
+"ili kuhakikisha kitufe kimebofywa au idadi fulani ya alama imeingizwa kabla "
+"ya kufanya msako."
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and
@@ -1057,7 +1068,7 @@ msgstr ""
 #. might contain a spelling error.
 #: setup/main.py:1501
 msgid "Preedit spellchecking"
-msgstr ""
+msgstr "Ukaguzi wa kinachohaririwa"
 
 #: setup/main.py:1503
 msgid ""
@@ -1065,13 +1076,15 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"Chagua ikiwa ungependa kinachohaririwa kikaguliwe, na pia rangi maalum "
+"itakayotumika kuashiria makosa ya tahajia."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
 #: setup/main.py:1533
 msgid "Choose color for preedit spellchecking"
-msgstr ""
+msgstr "Chagua rangi maalum ya ukaguzi wa kinachoharirirwa"
 
 #: setup/main.py:1535
 msgid ""
@@ -1079,25 +1092,30 @@ msgid ""
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
+"Chagua rangi itakayotumika kuashiria ikiwa huenda kinachohaririwa kina "
+"makosa ya tahajia. Chaguo hili litatumika iwapo tu ukaguzi wa "
+"kinachohaririwa umewezeshwa."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
 #: setup/main.py:1559
 msgid "Use color for inline completion"
-msgstr ""
+msgstr "Tumia rangi neno linapojalizwa"
 
 #: setup/main.py:1561
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
 msgstr ""
+"Chagua ikiwa ungependa rangi maalum ionyeshwe neno linapojalizwa na "
+"pendekezo."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
 #: setup/main.py:1589
 msgid "Choose color for inline completion"
-msgstr ""
+msgstr "Chagua rangi ya neno linalojalizwa"
 
 #: setup/main.py:1591
 msgid ""
@@ -1105,48 +1123,52 @@ msgid ""
 "only has an effect if the use of color for inline completion is enabled and "
 "inline completion is enabled."
 msgstr ""
+"Chagua rangi itakayotumika neno linapojalizwa. Chaguo hili litatumika iwapo "
+"tu umewezesha kupigwa rangi kwa neno linalojalizwa."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
 #: setup/main.py:1615
 msgid "Use color for compose preview"
-msgstr ""
+msgstr "Tumia rangi unapohakiki utungaji"
 
 #: setup/main.py:1617
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
-msgstr ""
+msgstr "Chagua ikiwa ungependa rangi maalum itumike katika uhakiki wa utungaji."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
 #: setup/main.py:1645
 msgid "Choose color for compose preview"
-msgstr ""
+msgstr "Chagua rangi ya uhakiki wa utungaji"
 
 #: setup/main.py:1647
 msgid "Here you can specify which color to use for the compose preview."
-msgstr ""
+msgstr "Chagua rangi itakayotumika katika uhakiki wa utungaji."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
 #: setup/main.py:1670
 msgid "Use color for user database suggestions"
-msgstr ""
+msgstr "Tumia rangi kwa mapendekezo yatokanayo na hifadhidata ya watumizi"
 
 #: setup/main.py:1672
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
 msgstr ""
+"Chagua ikiwa ungependa kutumia rangi maalum kwa mapendekezo katika orodha "
+"yatokayo kwa hifadhidata ya watumizi."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
 #: setup/main.py:1696
 msgid "Choose color for user database suggestions"
-msgstr ""
+msgstr "Chagua rangi ya mapendekezo yatokanayo na hifadhidata ya watumizi"
 
 #: setup/main.py:1698
 msgid ""
@@ -1154,12 +1176,15 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
 msgstr ""
+"Chagua rangi itakayotumika kwa mapendekezo katika orodha yatokayo kwenye "
+"hifafhidata ya watumizi. Chaguo hili hutumika iwapo tu kupiga rangi "
+"mapendekezo yatokanayo na hifadhidata ya watumizi kumewezeshwa."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
 #: setup/main.py:1721
 msgid "Use color for spellchecking suggestions"
-msgstr ""
+msgstr "Tumia rangi kwa mapendekezo ya ukaguzi wa tahajia"
 
 #: setup/main.py:1723
 msgid ""
@@ -1309,24 +1334,24 @@ msgstr ""
 
 #: setup/main.py:3021
 msgid "Add dictionary"
-msgstr ""
+msgstr "Ongeza kamusi"
 
 #: setup/main.py:3335
 msgid "Add input method"
-msgstr ""
+msgstr "Ongeza mbinu ya kuingiza"
 
 #: setup/main.py:3809
 #, python-format
 msgid "Edit key bindings for command “%s”"
-msgstr ""
+msgstr "Hariri vitufe teule vya amri “%s”"
 
 #: setup/main.py:3837
 msgid "Add a key binding"
-msgstr ""
+msgstr "Ongeza kitufe teule"
 
 #: setup/main.py:3849
 msgid "Remove selected key binding"
-msgstr ""
+msgstr "Ondoa kitufe teule kilichochaguliwa"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1338,20 +1363,21 @@ msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr ""
+"Je, kweli ungependa kurudisha vitufe teule vya amri zote kwa chaguo-msingi?"
 
 #: setup/main.py:3926
 msgid "Open File ..."
-msgstr ""
+msgstr "Fungua Faili ..."
 
 #: setup/main.py:3945
 #, python-format
 msgid "Learned successfully from file %(filename)s."
-msgstr ""
+msgstr "Imefaulu kujifunza kutokana na faili %(filename)s."
 
 #: setup/main.py:3954
 #, python-format
 msgid "Learning from file %(filename)s failed."
-msgstr ""
+msgstr "Imeshindwa kujifunza kutokana na faili %(filename)s."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1368,18 +1394,20 @@ msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr ""
+"Je, kweli ungependa kufuta habari zote za lugha zilizofahamika ulipoandika "
+"au kwa kusoma faili?"
 
 #: setup/main.py:5440
 msgid "ibus is not running."
-msgstr ""
+msgstr "ibus haifanyi kazi."
 
 #: typing-booster.appdata.xml:5
 msgid "Typing Booster"
-msgstr ""
+msgstr "Kiongezi Kasi cha Uandishi"
 
 #: typing-booster.appdata.xml:6
 msgid "Predictive input method"
-msgstr ""
+msgstr "Mbinu ya kutabiri kinachoingizwa"
 
 #: typing-booster.appdata.xml:8
 msgid ""
@@ -1387,3 +1415,7 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+"Kiongezi-kasi cha uandishi cha Ibus ni mbinu ya kutabiri kinachoandikwa na "
+"kukijaliza kutegemea muktadha au sehemu ya neno. Kinakuwezesha kuchagua neno "
+"uandikalo kutoka kwa orodha ya mapendekezo, na hivyo kuongeza kasi ya "
+"kuandika."
