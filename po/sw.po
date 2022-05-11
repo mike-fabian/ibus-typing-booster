@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-03-01 19:01+0100\n"
-"PO-Revision-Date: 2022-05-11 15:18+0000\n"
+"PO-Revision-Date: 2022-05-11 15:43+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
 "Language-Team: Swahili <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/sw/>\n"
@@ -1191,13 +1191,15 @@ msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
 msgstr ""
+"Chagua ikiwa ungependa kutumia rangi maalum kwa mapendekezo katika orodha "
+"yatokanayo na ukaguzi wa tahajia."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
 #: setup/main.py:1747
 msgid "Choose color for spellchecking suggestions"
-msgstr ""
+msgstr "Chagua rangi ya kuashiria mapendekezo ya tahajia"
 
 #: setup/main.py:1749
 msgid ""
@@ -1205,13 +1207,16 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
 msgstr ""
+"Chagua rangi itakayotumika kwa mapendekezo katika orodha yanayotokana na "
+"ukaguzi wa tahajia. Chaguo hili hutumika iwapo tu kupiga rangi mapendekezo "
+"yatokanayo na ukaguzi wa tahajia kumewezeshwa."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
 #: setup/main.py:1775
 msgid "Use color for dictionary suggestions"
-msgstr ""
+msgstr "Tumia rangi kwa mapendekezo yatokayo kwa kamusi"
 
 #: setup/main.py:1777
 msgid ""
