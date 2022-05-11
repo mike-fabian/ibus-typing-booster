@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-03-01 19:01+0100\n"
-"PO-Revision-Date: 2022-05-10 06:04+0000\n"
+"PO-Revision-Date: 2022-05-11 10:31+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
 "Language-Team: Swahili <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/sw/>\n"
@@ -308,7 +308,7 @@ msgstr "mkoani"
 #. are seperated by punctuation or white space.
 #: engine/itb_util.py:2479
 msgid "Others, Miscellaneous, Various, Diverse"
-msgstr ""
+msgstr "Mengineo, mbalimbali, ya ziada"
 
 #: engine/itb_util.py:3902 engine/itb_util.py:4561
 msgid "File not found"
@@ -336,58 +336,58 @@ msgid ""
 "whatever comes from the current keyboard layout without any further changes. "
 "So no transliteration or composing is done here."
 msgstr ""
+"Ingiza moja kwa moja kutoka kwenye kibodi, bila kufanya utafsiri au utungaji "
+"wowote."
 
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
 #: engine/itb_util.py:5075
 msgid "Key input"
-msgstr ""
+msgstr "Chagua kitufe"
 
 #: engine/itb_util.py:5081
 msgid "Cancel"
-msgstr ""
+msgstr "Futa"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
 #: engine/itb_util.py:5088
 msgid "Please press a key (or a key combination)"
-msgstr ""
+msgstr "Tafadhali bofya kitufe (au mchanganyiko wa vitufe)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
 #: engine/itb_util.py:5093
 msgid "The dialog will be closed when the key is released"
-msgstr ""
+msgstr "Kisanduku hiki kitajifunga baada ya kuachilia kitufe"
 
 #: engine/itb_util.py:5125
 msgid "A completion input method to speedup typing."
-msgstr ""
+msgstr "Mbinu ya kuharakisha uingizaji kwa kujaliza."
 
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:5134
 msgid "translator-credits"
-msgstr ""
+msgstr "watafsiri"
 
 #: engine/itb_util.py:5142
 msgid "Online documentation:"
-msgstr ""
+msgstr "Maelezo ya mtandaoni:"
 
 #: setup/main.py:129
 msgid "Preferences"
-msgstr ""
+msgstr "Mapendeleo"
 
 #: setup/main.py:193
-#, fuzzy
-#| msgid "System default"
 msgid "Restore all defaults"
-msgstr "Chaguo-msingi wa mfumo"
+msgstr "Rejesha pote chaguo-msingi la mfumo"
 
 #: setup/main.py:201 setup/main.py:5382
 msgid "_Close"
-msgstr ""
+msgstr "_Funga"
 
 #. Translators: This is the label of a tab in the setup
 #. tool. Here the user can setup the dictionaries for the
@@ -396,14 +396,14 @@ msgstr ""
 #. in.
 #: setup/main.py:223
 msgid "Dictionaries and input methods"
-msgstr ""
+msgstr "Kamusi na njia za kuingiza"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence the
 #. behaviour of ibus-typing-booster.
 #: setup/main.py:239
 msgid "Options"
-msgstr ""
+msgstr "Vichaguzi"
 
 #. Translators: This is a label of a tab in the setup tool.
 #. Here the user can create custom shortcuts. For example if
@@ -412,7 +412,7 @@ msgstr ""
 #. candidate, he can define such a custom shortcut here.
 #: setup/main.py:255
 msgid "Custom shortcuts"
-msgstr ""
+msgstr "Njia za mkato maalum"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can customize the key bindings to execute
@@ -423,7 +423,7 @@ msgstr ""
 #. existing key bindings
 #: setup/main.py:269 setup/main.py:1234
 msgid "Key bindings"
-msgstr ""
+msgstr "Vitufe teule"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence how
@@ -436,14 +436,14 @@ msgstr ""
 #. diffent types of candidates should be marked with labels.
 #: setup/main.py:291
 msgid "Appearance"
-msgstr ""
+msgstr "Mwonekano"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
 #: setup/main.py:307 setup/main.py:2055
 msgid "Speech recognition"
-msgstr ""
+msgstr "Ufahamu wa sauti"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -453,7 +453,7 @@ msgstr ""
 #. again until the next key bound to this command is typed.
 #: setup/main.py:350
 msgid "Enable suggestions by key (Default is the Tab key)"
-msgstr ""
+msgstr "Wezesha mapendekezo kupitia kitufe (Chaguo-msingi ni kitufe cha Tab)"
 
 #: setup/main.py:352
 msgid ""
@@ -463,6 +463,10 @@ msgid ""
 "a commit the suggestions are hidden again until the next key bound to this "
 "command is typed."
 msgstr ""
+"Ukiwezesha chaguo hili, utahitaji kubofya kitufe ili kuonyesha mapendekezo. "
+"Unaweza kuchagua kitufe hiki katika mipangilio ya vitufe teule. Chaguo-"
+"msingi ni kitufe cha Tab. Baada ya kutimiza, mapendeleo yatafichika hadi "
+"utakapobofya kitufe-teule kipya."
 
 #. Translators: Whether the best completion is first shown
 #. inline in the preedit instead of showing a full
@@ -472,7 +476,7 @@ msgstr ""
 #. the next candidate and opens the full candidate list.
 #: setup/main.py:379
 msgid "Use inline completion"
-msgstr ""
+msgstr "Onyesha pendekezo bora katika mstari"
 
 #: setup/main.py:381
 msgid ""
@@ -482,16 +486,21 @@ msgid ""
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
+"Baini kama pendekezo bora litaonyeshwe katika mstari au katika orodha nzima "
+"ya mapendeleo. Unaweza kuchagua pendekezo lililoonyeshwa mstarini kwa "
+"kubofya Tab, na kisha kutimiza, kwa mfano kufumia kitufe cha nafasi. "
+"Ukibofya Tab kwa mara ya pili, utasonga kwenye pendekezo lijalo na kufungua "
+"orodha nzima ya mapendekezo."
 
 #. Translators: Whether to automatically capitalize after
 #. punctuation.
 #: setup/main.py:403
 msgid "Auto capitalize"
-msgstr ""
+msgstr "Weka herufi kubwa kiotomatiki"
 
 #: setup/main.py:405
 msgid "Automatically capitalize after punctuation."
-msgstr ""
+msgstr "Weka herufi kubwa kiotomatiki baada ya uakifisho."
 
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
@@ -503,7 +512,7 @@ msgstr ""
 #. command which will deselect all candidates.
 #: setup/main.py:427
 msgid "Automatically select the best candidate"
-msgstr ""
+msgstr "Chagua pendekezo bora kiotomatiki"
 
 #: setup/main.py:429
 msgid ""
@@ -514,19 +523,26 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
+"Uandikacho kitakamilishwa kwa kuchagua pendekezo bora kiotomatiki. Bila "
+"kuwezesha chaguo hili, utahitaji kutumia kitufe teule cha kuchagulia "
+"pendekezo lijalo. Ikiwa chaguo hili limewezeshwa lakini ungependa kukana "
+"pendekezo lililochaguliwa, unaweza kutumia kitufe teule chenye maana ya "
+"\"sitisha\" kuondoa mapendekezo yote."
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
 #. with the mouse.
 #: setup/main.py:454
 msgid "Add a space when committing by mouse click"
-msgstr ""
+msgstr "Weka nafasi baada ya kuchagua kwa kutumia kiteuzi"
 
 #: setup/main.py:456
 msgid ""
 "Add a space if a candidate from the candidate list is committed by clicking "
 "it with the mouse."
 msgstr ""
+"Weka nafasi ikiwa pendekezo kutoka katika orodha ya mapendekezo "
+"litachaguliwa kwa kubofya kiteuzi."
 
 #. Translators: If more then one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -536,7 +552,7 @@ msgstr ""
 #. the session is restarted.
 #: setup/main.py:478
 msgid "Remember last used preedit input method"
-msgstr ""
+msgstr "Kumbuka mbinu ya kuhariri ya hivi karibuni"
 
 #: setup/main.py:480
 msgid ""
@@ -545,6 +561,10 @@ msgid ""
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
 msgstr ""
+"Ikiwa mbinu mbili au zaidi za kuingiza zimetumika kwa pamoja, moja yazo "
+"itatumika kuhariri. Unaweza kubadili mbinu ya kuhariri kwa kutumia menyu au "
+"vitufe vya njia-mkato. Ukiwezesha chaguo hilo, mabadiliko yako yatahifadhiwa "
+"na kurejeshwa hata katika kipindi kipya."
 
 #. Translators: If more then one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -553,16 +573,16 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:506
-#, fuzzy
-#| msgid "Input mode"
 msgid "Remember input mode"
-msgstr "Hali-tumizi ya ingizo"
+msgstr "Kumbuka mbinu ya kuingiza"
 
 #: setup/main.py:508
 msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
+"Ukiwezesha chaguo hili, mbinu ya kuingiza iliyotumika hivi karibuni (washa/"
+"zima) itakumbukwa hata katika kipindi kipya."
 
 #: setup/main.py:533
 msgid ""
@@ -572,6 +592,10 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
+"Baini kama alama za unikodi zijumlishwe katika mapendekezo. Emoji ni vipicha "
+"kama vile ☺♨⛵…. Alama za unikodi kama vile za hisabati (∀∑∯…), mishale "
+"(←↑↔…), fedha (€₹₺…), breli (⠥⠩…) na kadhalika kihalisi si emoji, lakini "
+"huweza kufaa katika matumizi."
 
 #: setup/main.py:562
 msgid ""
@@ -581,6 +605,12 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
+"Ikiwa umechagua \"Tumia kamusi pekee kuongeza mbio ya kuchapa\", kujifunza "
+"kutokana na kinachoingizwa kutasitishwa. Kujifunza kutokana na "
+"kinachoingizwa huboresha sana mapendeleo kuliko kutimia kamusi pekee. Kwa "
+"hiyo, tumia chaguo hili kwa makini. Labda iwapo tu usingependa kuhifadhi "
+"maandishi ya siri ndiposa itafaa kuwezesha chaguo hili, na tena kwa muda "
+"mfupi tu."
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -598,7 +628,7 @@ msgstr ""
 #: setup/main.py:596
 #, python-format
 msgid "Avoid using the %s function"
-msgstr ""
+msgstr "Epuka kutumia mbinu ya %s"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -623,6 +653,9 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
+"Tumia suluhu mbadala ikiwa mbinu ya %s imetokeza shida. Wezesha chaguo hili "
+"iwapo tu umelazimika kabisa, kwa kuwa linaweza kusababisha matatizo zaidi "
+"hasa ikiwa XIM inatumika."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it.
@@ -630,7 +663,7 @@ msgstr ""
 #. committed words.
 #: setup/main.py:636
 msgid "Enable reopening preedits"
-msgstr ""
+msgstr "Wezesha kufunguliwa tena kwa vilivyohaririwa"
 
 #: setup/main.py:638
 msgid ""
@@ -638,19 +671,25 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
+"Baini ikiwa inaruhusiwa kuhariri tena neno iwapo mshale umesongezwa mwanzoni "
+"au mwishoni mwa neno. Kuwezesha chaguo hili husaidia kurekebisha maneno "
+"yaliyohifadhiwa."
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
 #. “Unicode symbols and emoji predictions” is off.
 #: setup/main.py:660
 msgid "Emoji trigger characters:"
-msgstr ""
+msgstr "Alama zinazoashiria emoji:"
 
 #: setup/main.py:662
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
 msgstr ""
+"Alama katika orodha hii huanzisha msako wa alama za emoji na Unikodi, hata "
+"iwapo chaguo la \"Wezesha mapendekezo ya alama za Unikodi na emoji\" "
+"halijawezeshwa."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -666,7 +705,7 @@ msgstr ""
 #. (which is the default).
 #: setup/main.py:695
 msgid "Auto commit characters:"
-msgstr ""
+msgstr "Hifadhi alama kiotomatiki:"
 
 #: setup/main.py:697
 msgid ""
@@ -680,23 +719,30 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
+"Alama katika orodha hii husababisha kinachohaririwa kuhifadhiwa kiotomatiki, "
+"kisha huongeza nafasi mwishoni. Kwa mfano, kuhusisha \".\" katika orodha hii "
+"kutakuokoa wakati wa kutia nafasi mwishoni mwa sentensi. Pendekezo moja ni "
+"orodha “.,;:?!)”. Usihusishe kamwe alama zinazohitajika na mbinu "
+"iliyochaguliwa ya kuingiza, kwa mfano usihusishe \".\" unapotumia Latin-Pre "
+"(t-latn-pre) ili usizuiwe kuingiza “.s” kupata “ṡ”.  Unaweza kuzima chaguo "
+"hili kwa kufuta orodha ya alama."
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
 #: setup/main.py:731
 msgid "Minimum number of chars for completion:"
-msgstr ""
+msgstr "Idadi ya chini ya alama kuwezesha kujaliza:"
 
 #: setup/main.py:733
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
-msgstr ""
+msgstr "Usionyeshe mapendekezo iwapo alama chini ya idadi hii zimeingizwa."
 
 #. Translators: A checkbox where one can choose whether a
 #. sound is played on error
 #: setup/main.py:760
 msgid "Play sound file on error"
-msgstr ""
+msgstr "Cheza sauti hitilafu itukiapo"
 
 #: setup/main.py:762
 msgid ""
@@ -704,174 +750,181 @@ msgid ""
 "the simpleaudio module for Python3 is not installed, this option does "
 "nothing."
 msgstr ""
+"Chagua ikiwa sauti itachezwa hitilafu itukiapo. Ikiwa moduli ya simpleaudio "
+"ya Python3 haipo, chaguo hili halitafanya chochote."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
 #. debug information may also be shown graphically.
 #: setup/main.py:803
 msgid "Debug level:"
-msgstr ""
+msgstr "Kiwango cha utatuzi:"
 
 #: setup/main.py:805
 msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
 msgstr ""
+"Ikiwa zaidi ya 0, habari ya utatuzi huweza kuandikwa katika faili ya "
+"kumbukumbu, na hata kuonyeshwa katika mchoro wa grafu."
 
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
 #. reading that text file.
 #: setup/main.py:834
 msgid "Learn from text file"
-msgstr ""
+msgstr "Jifunze kutokana na faili yenye maandishi"
 
 #: setup/main.py:836
 msgid "Learn your style by reading a text file"
-msgstr ""
+msgstr "Jifunze mtindo wako kwa kusoma faili yenye maandishi"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
 #: setup/main.py:848
 msgid "Delete learned data"
-msgstr ""
+msgstr "Futa yaliyofunzika"
 
 #: setup/main.py:850
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
+"Futa ujuzi wote wa kibinafsi wa lugha uliotambulika kutokana na uingizaji na "
+"usomaji wa faili"
 
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:865
 msgid "Use dictionaries for the following languages:"
-msgstr ""
+msgstr "Tumia kamusi kwa lugha zifuatazo:"
 
 #: setup/main.py:893
 msgid "Add a dictionary"
-msgstr ""
+msgstr "Ongeza kamusi"
 
 #: setup/main.py:904
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "Ondoa kamusi"
 
 #: setup/main.py:915
 msgid "Move dictionary up"
-msgstr ""
+msgstr "Songesha juu kamusi"
 
 #: setup/main.py:927
 msgid "Move dictionary down"
-msgstr ""
+msgstr "Songesha chini kamusi"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
 #: setup/main.py:934
 msgid "Install missing dictionaries"
-msgstr ""
+msgstr "Sakinisha kamusi zilizokosekana"
 
 #: setup/main.py:936
 msgid "Install the dictionaries which are setup here but not installed"
-msgstr ""
+msgstr "Sakinisha kamusi zilizochaguliwa hapa lakini bado hazijasakinishwa"
 
 #: setup/main.py:943 setup/main.py:1060 setup/main.py:1267 setup/main.py:3856
 msgid "Set to default"
-msgstr ""
+msgstr "Weka kama chaguo-msingi"
 
 #. Translators: Tooltip for a button used to set the list of
 #. dictionaries to the default for the current locale.
 #: setup/main.py:949
 msgid "Set dictionaries to the default for the current locale."
-msgstr ""
+msgstr "Weka kamusi katika chaguo-msingi la eneo ulipo."
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:978
 msgid "Use the following input methods:"
-msgstr ""
+msgstr "Tumia mbinu za kuingiza zifuatazo:"
 
 #: setup/main.py:1006
 msgid "Add an input method"
-msgstr ""
+msgstr "Ongeza njia ya kuingiza"
 
 #: setup/main.py:1018
 msgid "Remove an input method"
-msgstr ""
+msgstr "Ondoa njia ya kuingiza"
 
 #: setup/main.py:1030
 msgid "Move input method up"
-msgstr ""
+msgstr "Songesha juu njia ya kuingiza"
 
 #: setup/main.py:1042
 msgid "Move input method down"
-msgstr ""
+msgstr "Songesha chini njia ya kuingiza"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
 #: setup/main.py:1050
 msgid "Input Method Help"
-msgstr ""
+msgstr "Msaada wa Njia za Kuinguza"
 
 #: setup/main.py:1052
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
+"Pata msaada wa jinsi ya kutumia mbinu za kuingiza zilizochaguliwa hapo juu."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
 #: setup/main.py:1066
 msgid "Set input methods to the default for the current locale."
-msgstr ""
+msgstr "Weka mbinu za kuingiza kuwa chaguo-msingi la eneo ulipo."
 
 #: setup/main.py:1089
 msgid "Enter shortcut here:"
-msgstr ""
+msgstr "Tia njia-mkato hapa:"
 
 #: setup/main.py:1109
 msgid "Enter shortcut expansion here:"
-msgstr ""
+msgstr "Tia upanuzi wa njia-mkato hapa:"
 
 #: setup/main.py:1136
 msgid "Clear input"
-msgstr ""
+msgstr "Futa kilichoandikwa"
 
 #: setup/main.py:1147
 msgid "Delete shortcut"
-msgstr ""
+msgstr "Futa njia-mkato"
 
 #: setup/main.py:1158
 msgid "Add shortcut"
-msgstr ""
+msgstr "Hifadhi njia-mkato"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
 #: setup/main.py:1182
 msgid "Shortcut"
-msgstr ""
+msgstr "Njia-mkato"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
 #: setup/main.py:1190
 msgid "Shortcut expansion"
-msgstr ""
+msgstr "Upanuzi wa njia-mkato"
 
 #: setup/main.py:1203
 msgid "Current key bindings:"
-msgstr ""
+msgstr "Vitufe teule vya sasa:"
 
 #. Translators: Column heading of the table listing the
 #. existing key bindings
 #: setup/main.py:1226
 msgid "Command"
-msgstr ""
+msgstr "Amri"
 
 #: setup/main.py:1256
 msgid "Edit"
-msgstr ""
+msgstr "Hariri"
 
 #: setup/main.py:1260
 msgid "Edit the key bindings for the selected command"
-msgstr ""
+msgstr "Hariri vitufe teule vya amri iliyochaguliwa"
 
 #: setup/main.py:1271 setup/main.py:3861
 msgid "Set default key bindings for the selected command"
