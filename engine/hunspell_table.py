@@ -992,6 +992,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self.emoji_matcher = itb_emoji.EmojiMatcher(
                     languages=self._dictionary_names)
             emoji_scores: Dict[str, Tuple[int, str]] = {}
+            emoji_max_score: int = 0
             for ime in self._current_imes:
                 if (self._transliterated_strings[ime]
                         and ((len(self._transliterated_strings[ime])
@@ -1001,17 +1002,25 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         self._transliterated_strings[ime],
                         trigger_characters=self._emoji_trigger_characters)
                     for cand in emoji_matcher_candidates:
+                        emoji_max_score = max(emoji_max_score, cand[2])
                         if (cand[0] not in emoji_scores
                                 or cand[2] > emoji_scores[cand[0]][0]):
                             emoji_scores[cand[0]] = (cand[2], cand[1])
-            phrase_candidates_emoji_name = []
+            phrase_candidates_emoji_name: List[Tuple[
+                str, int, str, bool, bool]] = []
             for cand in phrase_candidates:
+                # If this candidate is duplicated in the emoji candidates,
+                # don’t use this as a text candidate but increase the score
+                # of the emoji candidate:
+                emoji = ''
                 if cand[0] in emoji_scores:
-                    phrase_candidates_emoji_name.append((
-                        cand[0], cand[1], emoji_scores[cand[0]][1],
-                        cand[1] > 0, cand[1] < 0))
-                    # avoid duplicates in the lookup table:
-                    del emoji_scores[cand[0]]
+                    emoji = cand[0]
+                elif (cand[0][0] in self._emoji_trigger_characters
+                    and cand[0][1:] in emoji_scores):
+                    emoji = cand[0][1:]
+                if emoji:
+                    emoji_scores[emoji] = (emoji_max_score + cand[1],
+                                           emoji_scores[emoji][1])
                 else:
                     phrase_candidates_emoji_name.append((
                         cand[0], cand[1], self.emoji_matcher.name(cand[0]),
