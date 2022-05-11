@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-03-01 19:01+0100\n"
+"POT-Creation-Date: 2022-05-11 17:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -165,56 +165,56 @@ msgstr ""
 msgid "Off the record mode"
 msgstr ""
 
-#: engine/hunspell_table.py:1539
+#: engine/hunspell_table.py:1548
 msgid "Highest priority dictionary"
 msgstr ""
 
-#: engine/hunspell_table.py:1540
+#: engine/hunspell_table.py:1549
 msgid "Choose highest priority dictionary"
 msgstr ""
 
-#: engine/hunspell_table.py:1569
+#: engine/hunspell_table.py:1578
 msgid "Preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1570
+#: engine/hunspell_table.py:1579
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1886
+#: engine/hunspell_table.py:1895
 msgid "Setup"
 msgstr ""
 
-#: engine/hunspell_table.py:1889 setup/main.py:152
+#: engine/hunspell_table.py:1898 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr ""
 
-#: engine/hunspell_table.py:4602
+#: engine/hunspell_table.py:4611
 msgid "Failed to import Google speech-to-text."
 msgstr ""
 
-#: engine/hunspell_table.py:4605
+#: engine/hunspell_table.py:4614
 msgid "Failed to import pyaudio."
 msgstr ""
 
-#: engine/hunspell_table.py:4608
+#: engine/hunspell_table.py:4617
 msgid "Failed to import queue."
 msgstr ""
 
-#: engine/hunspell_table.py:4613
+#: engine/hunspell_table.py:4622
 msgid "No supported language for speech recognition."
 msgstr ""
 
-#: engine/hunspell_table.py:4617
+#: engine/hunspell_table.py:4626
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 
-#: engine/hunspell_table.py:4629
+#: engine/hunspell_table.py:4638
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 
-#: engine/hunspell_table.py:4736
+#: engine/hunspell_table.py:4745
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 
