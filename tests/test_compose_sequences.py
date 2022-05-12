@@ -22,6 +22,7 @@ This file implements test cases for compose sequences.
 '''
 
 import sys
+import os
 import logging
 import locale
 import unittest
@@ -509,6 +510,16 @@ class ComposeSequencesTestCase(unittest.TestCase):
         # all compose sequences from the am_ET.UTF-8 compose file):
         locale.setlocale(locale.LC_CTYPE, 'am_ET.UTF-8')
         self._compose_sequences = itb_util.ComposeSequences()
+        if (self._compose_sequences._locale_compose_file()
+            != '/usr/share/X11/locale/am_ET.UTF-8/Compose'):
+            self.skipTest(
+                '/usr/share/X11/locale/am_ET.UTF-8/Compose not available')
+        if self._compose_sequences.compose([0xFE75, 0x1200]) != '':
+            self.skipTest(
+                'New Compose file updated by '
+                'Benno Schulenberg <bensberg@telfort.nl> '
+                'is installed, see: '
+                'https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/488b156fe2cc8aca6946a49236ec7b7698fceda4')
         self.assertEqual(
             self._compose_sequences.compose(
                 [IBus.KEY_u,
