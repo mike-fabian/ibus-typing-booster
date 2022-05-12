@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-03-01 19:01+0100\n"
-"PO-Revision-Date: 2022-05-11 15:43+0000\n"
+"PO-Revision-Date: 2022-05-12 07:00+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
 "Language-Team: Swahili <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/sw/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.12.2\n"
 
 #: engine/emoji_picker.py:203
 msgid "Emoji Picker"
@@ -1223,13 +1223,15 @@ msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
 msgstr ""
+"Chagua ikiwa ungependa kutumia rangi maalum kwa mapendekezo katika orodha "
+"yatokayo kwa kamusi."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
 #: setup/main.py:1801
 msgid "Choose color for dictionary suggestions"
-msgstr ""
+msgstr "Chagua rangi ya mapendekezo yatokayo kwa kamusi"
 
 #: setup/main.py:1803
 msgid ""
@@ -1237,105 +1239,116 @@ msgid ""
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
 msgstr ""
+"Chagua rangi itakayotumika kwa mapendekezo katika orodha yatokayo kwa "
+"kamusi. Chaguo hili litatumika iwapo tu kupiga rangi mapendekezo yatokayo "
+"kwa kamusi kumewezeshwa."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
 #: setup/main.py:1829
 msgid "Use label for user database suggestions"
-msgstr ""
+msgstr "Tumia lebo kwa mapendekezo yatokayo kwa hifadhidata ya watumizi"
 
 #: setup/main.py:1831
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
 msgstr ""
+"Chagua ikiwa ungependa kutia lebo mapendekezo yatokayo kwa hifadhidata ya "
+"watumizi."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
 #: setup/main.py:1866
 msgid "Use label for spellchecking suggestions"
-msgstr ""
+msgstr "Tumia lebo kwa mapendekezo yatokanayo na ukaguzi wa tahajia"
 
 #: setup/main.py:1868
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
 msgstr ""
+"Chagua ikiwa ungependa kutia lebo mapendekezo katika orodha yatokanayo na "
+"ukaguzi wa tahajia."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:1903
 msgid "Use label for dictionary suggestions"
-msgstr ""
+msgstr "Tumia lebo kwa mapendekezo yatokayo kwa kamusi"
 
 #: setup/main.py:1905
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
+"Chagua ikiwa ungependa kutia lebo mapendekezo katika orodha yatokayo "
+"kamusini."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
 #: setup/main.py:1939
 msgid "Use a label to indicate busy state"
-msgstr ""
+msgstr "Tumia lebo kuashiria hali ya kushughulikia mengine"
 
 #: setup/main.py:1941
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
+"Chagua ikiwa ungependa kutumia lebo kuashiria iwapo kiongeza-kasi cha "
+"kuandika cha ibus kinashughulikia mengine."
 
 #. Translators:
 #: setup/main.py:1974 setup/main.py:2791
 msgid "Set “Google application credentials” .json file:"
-msgstr ""
+msgstr "Teua faili ya \"nywila za programu ya Google\".json:"
 
 #: setup/main.py:1976
 msgid "Full path of the “Google application credentials” .json file."
-msgstr ""
+msgstr "Njia kamili ya faili ya \"nywila za programu ya Google\".json."
 
 #: setup/main.py:1984
 msgid "File not yet set."
-msgstr ""
+msgstr "Faili bado haijateuliwa."
 
 #: setup/main.py:2032
 msgid "Spell checking"
-msgstr ""
+msgstr "Ukaguzi wa tahajia"
 
 #: setup/main.py:2048
 msgid "Emoji"
-msgstr ""
+msgstr "Emoji"
 
 #: setup/main.py:2265
 msgid "Are you sure?"
-msgstr ""
+msgstr "Je, una uhahika?"
 
 #: setup/main.py:2267 setup/main.py:2794 setup/main.py:2872 setup/main.py:3929
 msgid "_Cancel"
-msgstr ""
+msgstr "_Futa"
 
 #: setup/main.py:2268 setup/main.py:2795 setup/main.py:2873 setup/main.py:3930
 msgid "_OK"
-msgstr ""
+msgstr "_NDIO"
 
 #: setup/main.py:2300
 msgid "Another instance of this app is already running."
-msgstr ""
+msgstr "Kuna kipindi cha programu hii ambacho kingali kinatumika."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
 #: setup/main.py:2433
 msgid "Do you really want to restore all default settings?"
-msgstr ""
+msgstr "Je, kweli ungependa kurudisha mipangilio yote kwa chaguo-msingi?"
 
 #: setup/main.py:2869
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr "Chagua faili ya sauti ya .wav:"
 
 #: setup/main.py:3021
 msgid "Add dictionary"
