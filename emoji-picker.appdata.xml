@@ -22,6 +22,60 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.16.0" date="2022-06-07" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.16.0</url>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/266">
+          github-issues#266: Make it possible to use inline completion
+          without automatic fallback to a candidate list.
+
+          Now the inline completion option has 3 values:
+
+          • No
+
+          • Yes, with fallback to popup
+
+          • Yes, without fallback to popup
+
+          When choosing “Yes, with fallback”, the behaviour is as it
+          used to be when the old checkbox was on: the completion is
+          shown inline if this is possible without changing the
+          already typed string in the preedit, if this is not
+          possible, a popup candidate list is automatically shown
+          instead as a fallback.
+
+          When choosing “Yes without fallback to popup”, a popup
+          candidate list is never shown automatically as a fallback
+          but only when explicitely requested by typing the key bound
+          to the command “select_next_candidate” (By default this is
+          the Tab key).
+
+          When updating to the new release with this new option, the
+          value of the old checkbox gets lost. I.e. no matter whether
+          the user had the inline completion option checked or not
+          checked before the update, after the update the value for
+          “inline completion” reverts to the default “No”. So if one
+          was using “inline completion” before the update, one has to
+          switch it on again after the update.
+        </issue>
+        <issue>
+          Fix itb_emoji.find_cldr_annotation_path() (It always found a
+          match even when the fallback went through all the way to
+          'en', therefore all dictionaries were shown as supporting
+          emoji in the setup tool)
+        </issue>
+        <issue>
+          Update emoji annotations from CLDR (oc.xml is new)
+        </issue>
+        <issue>
+          Translation update from Weblate (de (100%), jp (36.9%), nl
+          (100%), pl (100%), tr (100%), uk (100%) updated)
+        </issue>
+      </issues>
+    </release>
     <release version="2.15.27" date="2022-05-11" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 07 Jun 2022 Release 2.16.0
+* Make it possible to use inline completion without automatic fallback to a candidate list (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/266)
+* Update emoji annotations from CLDR (oc.xml is new)
+* Translation update from Weblate (de (100%), jp (36.9%), nl (100%), pl (100%), tr (100%), uk (100%) updated)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 11 May 2022 Release 2.15.27
 * If an emoji is duplicated as a text candidate, use only the emoji candidate and increase its score (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/289)
 * Update emoji annotations from CLDR
