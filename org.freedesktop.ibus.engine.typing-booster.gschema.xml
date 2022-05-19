@@ -296,8 +296,8 @@
         candidate with the mouse.
       </description>
     </key>
-    <key name="inlinecompletion" type="b">
-      <default>false</default>
+    <key name="inlinecompletion" type="i">
+      <default>0</default>
       <summary>Use inline completion</summary>
       <description>
         Whether the best completion is first shown inline in the

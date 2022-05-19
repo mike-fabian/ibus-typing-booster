@@ -369,15 +369,16 @@ class SetupUI(Gtk.Window): # type: ignore
         self._options_grid.attach(
             self._tab_enable_checkbutton, 0, _options_grid_row, 1, 1)
 
-        self._inline_completion_checkbutton = Gtk.CheckButton(
+        self._inline_completion_label = Gtk.Label()
+        self._inline_completion_label.set_text(
             # Translators: Whether the best completion is first shown
             # inline in the preedit instead of showing a full
             # candidate list. The inline candidate can be selected by
             # typing Tab and then committed as usual, for example by
             # typing Space or Control+Space. Typing Tab again moves to
             # the next candidate and opens the full candidate list.
-            label=_('Use inline completion'))
-        self._inline_completion_checkbutton.set_tooltip_text(
+            _('Use inline completion'))
+        self._inline_completion_label.set_tooltip_text(
             _('Whether the best completion is first shown inline '
               'in the preedit instead of showing a full candidate '
               'list. The inline candidate can be selected by typing '
@@ -385,17 +386,36 @@ class SetupUI(Gtk.Window): # type: ignore
               'typing Space or Control+Space. Typing Tab again '
               'moves to the next candidate and opens the full '
               'candidate list.'))
-        self._inline_completion_checkbutton.connect(
-            'clicked', self._on_inline_completion_checkbutton)
+        self._inline_completion_label.set_xalign(0)
+        self._inline_completion_combobox = Gtk.ComboBox()
+        self._inline_completion_store = Gtk.ListStore(str, int)
+        self._inline_completion_store.append(
+            [_('No'), 0])
+        self._inline_completion_store.append(
+            [_('Yes, with fallback to popup'), 1])
+        self._inline_completion_store.append(
+            [_('Yes, without fallback to popup'), 2])
+        self._inline_completion_combobox.set_model(
+            self._inline_completion_store)
+        renderer_text = Gtk.CellRendererText()
+        self._inline_completion_combobox.pack_start(
+            renderer_text, True)
+        self._inline_completion_combobox.add_attribute(
+            renderer_text, "text", 0)
         self._inline_completion = itb_util.variant_to_value(
             self._gsettings.get_value('inlinecompletion'))
         if self._inline_completion is None:
-            self._inline_completion = False
-        if  self._inline_completion is True:
-            self._inline_completion_checkbutton.set_active(True)
+            self._inline_completion = 0
+        for i, item in enumerate(self._inline_completion_store):
+            if self._inline_completion == item[1]:
+                self._inline_completion_combobox.set_active(i)
+        self._inline_completion_combobox.connect(
+            'changed', self._on_inline_completion_combobox_changed)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._inline_completion_checkbutton, 0, _options_grid_row, 1, 1)
+            self._inline_completion_label, 0, _options_grid_row, 1, 1)
+        self._options_grid.attach(
+            self._inline_completion_combobox, 1, _options_grid_row, 1, 1)
 
         self._auto_capitalize_checkbutton = Gtk.CheckButton(
             # Translators: Whether to automatically capitalize after
@@ -2652,14 +2672,18 @@ class SetupUI(Gtk.Window): # type: ignore
         self.set_tab_enable(
             widget.get_active(), update_gsettings=True)
 
-    def _on_inline_completion_checkbutton(
-            self, widget: Gtk.CheckButton) -> None:
+    def _on_inline_completion_combobox_changed(
+            self, widget: Gtk.ComboBox) -> None:
         '''
-        The checkbutton whether to show a completion first inline in the
-        preëdit instead of using a combobox to show a candidate list.
+        A change of the inline completion mode has been requested
+        with the combobox.
         '''
-        self.set_inline_completion(
-            widget.get_active(), update_gsettings=True)
+        tree_iter = widget.get_active_iter()
+        if tree_iter is not None:
+            model = widget.get_model()
+            mode = model[tree_iter][1]
+            self.set_inline_completion(
+                mode, update_gsettings=True)
 
     def _on_auto_capitalize_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
@@ -4742,7 +4766,7 @@ class SetupUI(Gtk.Window): # type: ignore
 
     def set_inline_completion(
             self,
-            mode: Union[bool, Any],
+            mode: Union[int, Any],
             update_gsettings: bool = True) -> None:
         '''Sets the “Use inline completion” mode
 
@@ -4762,9 +4786,9 @@ class SetupUI(Gtk.Window): # type: ignore
         if update_gsettings:
             self._gsettings.set_value(
                 'inlinecompletion',
-                GLib.Variant.new_boolean(mode))
+                GLib.Variant.new_int32(mode))
         else:
-            self._inline_completion_checkbutton.set_active(mode)
+            self._inline_completion_checkbutton.set_active(bool(mode))
 
     def set_auto_capitalize(
             self,

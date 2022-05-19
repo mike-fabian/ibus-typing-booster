@@ -228,7 +228,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._add_space_on_commit: bool = itb_util.variant_to_value(
             self._gsettings.get_value('addspaceoncommit'))
 
-        self._inline_completion: bool = itb_util.variant_to_value(
+        self._inline_completion: int = itb_util.variant_to_value(
             self._gsettings.get_value('inlinecompletion'))
 
         self._auto_capitalize: bool = itb_util.variant_to_value(
@@ -2180,7 +2180,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # The first candidate is not a direct completion of the
             # typed string. Trying to show that inline gets very
             # confusing.  Don’t do that, show standard lookup table:
-            self.update_lookup_table(self.get_lookup_table(), True)
+            if self._inline_completion < 2 or self.get_lookup_table().cursor_visible:
+                # Show standard lookup table as a fallback:
+                self.update_lookup_table(self.get_lookup_table(), True)
+            else:
+                # self._inline_completion == 2 means do not fall back
+                # to the standard lookup table:
+                self.hide_lookup_table()
+                text = IBus.Text.new_from_string('')
+                super().update_auxiliary_text(text, False)
             self._update_preedit()
             return
         # Show only the first candidate, inline in the preëdit, hide
@@ -3007,7 +3015,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
     def set_inline_completion(
             self,
-            mode: Union[bool, Any],
+            mode: Union[int, Any],
             update_gsettings: bool = True) -> None:
         '''Sets whether the best completion is first shown inline in the
         preëdit instead of using a combobox to show a candidate list.
@@ -3028,22 +3036,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if update_gsettings:
             self._gsettings.set_value(
                 'inlinecompletion',
-                GLib.Variant.new_boolean(mode))
+                GLib.Variant.new_int32(mode))
 
-    def toggle_inline_completion(self, update_gsettings: bool = True) -> None:
-        '''Toggles whether the best completion is first shown inline in the
-        preëdit instead of using a combobox to show a candidate list.
-
-        :param update_gsettings: Whether to write the change to Gsettings.
-                                 Set this to False if this method is
-                                 called because the Gsettings key changed
-                                 to avoid endless loops when the Gsettings
-                                 key is changed twice in a short time.
-        '''
-        self.set_inline_completion(
-            not self._inline_completion, update_gsettings)
-
-    def get_inline_completion(self) -> bool:
+    def get_inline_completion(self) -> int:
         '''Returns the current value of the flag whether to show a completion
         first inline in the preëdit instead of using a combobox to show a
         candidate list.
