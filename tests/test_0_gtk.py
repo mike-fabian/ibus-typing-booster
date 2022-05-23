@@ -99,6 +99,7 @@ class SimpleGtkTestCase(unittest.TestCase):
     _orig_dictionary: str = ''
     _orig_tabenable: bool = False
     _orig_inputmode: bool = True
+    _orig_inline_completion: int = 0
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -109,6 +110,7 @@ class SimpleGtkTestCase(unittest.TestCase):
         cls._orig_dictionary = cls._gsettings.get_string('dictionary')
         cls._orig_tabenable = cls._gsettings.get_boolean('tabenable')
         cls._orig_inputmode = cls._gsettings.get_boolean('inputmode')
+        cls._orig_inline_completion = cls._gsettings.get_int('inlinecompletion')
         signums: List[Optional[signal.Signals]] = [
             getattr(signal, s, None) for s in 'SIGINT SIGTERM SIGHUP'.split()]
         for signum in filter(None, signums):
@@ -123,6 +125,7 @@ class SimpleGtkTestCase(unittest.TestCase):
             cls._gsettings.set_string('dictionary', cls._orig_dictionary)
             cls._gsettings.set_boolean('tabenable', cls._orig_tabenable)
             cls._gsettings.set_boolean('inputmode', cls._orig_inputmode)
+            cls._gsettings.set_int('inlinecompletion', cls._orig_inline_completion)
 
     @classmethod
     def signal_handler(cls, user_data: Any) -> None:
@@ -146,6 +149,7 @@ class SimpleGtkTestCase(unittest.TestCase):
             self._gsettings.set_string('dictionary', 'fr_FR,en_US')
             self._gsettings.set_boolean('tabenable', False)
             self._gsettings.set_boolean('inputmode', True)
+            self._gsettings.set_int('inlinecompletion', 0)
 
     def register_ibus_engine(self) -> bool:
         self.__bus = IBus.Bus()
