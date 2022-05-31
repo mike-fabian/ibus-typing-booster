@@ -3087,9 +3087,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             not self._auto_capitalize, update_gsettings)
 
     def get_auto_capitalize(self) -> bool:
-        '''Returns the current value of the flag whether to show a completion
-        first inline in the preëdit instead of using a combobox to show a
-        candidate list.
+        '''Returns the current value of the flag whether to automatically
+        capitalize after punctuation
         '''
         return self._auto_capitalize
 
