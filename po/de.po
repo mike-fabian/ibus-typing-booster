@@ -14,16 +14,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-05-31 14:26+0200\n"
-"PO-Revision-Date: 2022-03-01 18:28+0000\n"
+"PO-Revision-Date: 2022-06-01 08:18+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 4.12.2\n"
 
 #: engine/emoji_picker.py:203
 msgid "Emoji Picker"
@@ -502,18 +502,16 @@ msgstr ""
 "Kandidatenliste."
 
 #: setup/main.py:393
-#, fuzzy
-#| msgid "None"
 msgid "No"
-msgstr "Keine"
+msgstr "Nein"
 
 #: setup/main.py:395
 msgid "Yes, with fallback to popup"
-msgstr ""
+msgstr "Ja, mit Fallback auf Popup"
 
 #: setup/main.py:397
 msgid "Yes, without fallback to popup"
-msgstr ""
+msgstr "Ja, ohne Fallback auf Popup"
 
 #. Translators: Whether to automatically capitalize after
 #. punctuation.
