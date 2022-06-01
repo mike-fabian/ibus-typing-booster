@@ -295,11 +295,15 @@ def find_cldr_annotation_path(language: str) -> str:
     :param language: The language to search the annotation file for
     '''
     dirnames = CLDR_ANNOTATION_DIRNAMES
+    locale = itb_util.parse_locale(language)
+    acceptable_match = locale.language
+    if locale.script:
+        acceptable_match += '_' + locale.script
     for _language in itb_util.expand_languages([language]):
         basenames = (_language + '.xml',)
         (path, dummy_open_function) = _find_path_and_open_function(
             dirnames, basenames, subdir='annotations')
-        if path:
+        if path and os.path.basename(path).startswith(acceptable_match):
             return path
     return ''
 
