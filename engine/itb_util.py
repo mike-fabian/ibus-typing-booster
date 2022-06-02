@@ -1388,6 +1388,7 @@ CLDR_ANNOTATION_FILES = {
     'nus_SS',
     'nyn',
     'nyn_UG',
+    'oc',
     'om',
     'om_ET',
     'om_KE',
