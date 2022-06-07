@@ -2162,6 +2162,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._update_preedit()
             return
         if (not self._inline_completion
+            or self._typed_compose_sequence
             or self.get_lookup_table().get_cursor_pos() != 0):
             # Show standard lookup table:
             self.update_lookup_table(self.get_lookup_table(), True)
