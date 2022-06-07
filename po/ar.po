@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-05-31 14:26+0200\n"
+"POT-Creation-Date: 2022-06-02 10:07+0200\n"
 "PO-Revision-Date: 2020-03-24 16:38+0000\n"
 "Last-Translator: Ahmed M. Farrag <a.m.farrag@gmail.com>\n"
 "Language-Team: Arabic <https://translate.fedoraproject.org/projects/ibus-"
@@ -225,56 +225,56 @@ msgstr "وقع خطأ في محرك غوغل لتحويل الكام لنصوص.
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:784 engine/itb_emoji.py:785 engine/itb_emoji.py:786
-#: engine/itb_emoji.py:981
+#: engine/itb_emoji.py:788 engine/itb_emoji.py:789 engine/itb_emoji.py:790
+#: engine/itb_emoji.py:985
 msgid "people"
 msgstr "أشخاص"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:787 engine/itb_emoji.py:977
+#: engine/itb_emoji.py:791 engine/itb_emoji.py:981
 msgid "nature"
 msgstr "طبيعة"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:788 engine/itb_emoji.py:973
+#: engine/itb_emoji.py:792 engine/itb_emoji.py:977
 msgid "food"
 msgstr "مأكولات"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:789 engine/itb_emoji.py:987
+#: engine/itb_emoji.py:793 engine/itb_emoji.py:991
 msgid "travel"
 msgstr "سفر"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:790 engine/itb_emoji.py:799 engine/itb_emoji.py:969
+#: engine/itb_emoji.py:794 engine/itb_emoji.py:803 engine/itb_emoji.py:973
 msgid "activity"
 msgstr "أنشطة"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:791 engine/itb_emoji.py:979
+#: engine/itb_emoji.py:795 engine/itb_emoji.py:983
 msgid "objects"
 msgstr "أشياء"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:792 engine/itb_emoji.py:985
+#: engine/itb_emoji.py:796 engine/itb_emoji.py:989
 msgid "symbols"
 msgstr "رموز"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:793 engine/itb_emoji.py:971
+#: engine/itb_emoji.py:797 engine/itb_emoji.py:975
 msgid "flags"
 msgstr "أعلام"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:794 engine/itb_emoji.py:795 engine/itb_emoji.py:975
+#: engine/itb_emoji.py:798 engine/itb_emoji.py:799 engine/itb_emoji.py:979
 msgid "modifier"
 msgstr "معدِّلات"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:796 engine/itb_emoji.py:983
+#: engine/itb_emoji.py:800 engine/itb_emoji.py:987
 msgid "regional"
 msgstr "مناطق"
 
@@ -304,31 +304,31 @@ msgstr "مناطق"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2479
+#: engine/itb_util.py:2480
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util.py:3902 engine/itb_util.py:4561
+#: engine/itb_util.py:3903 engine/itb_util.py:4562
 msgid "File not found"
 msgstr "الملف غير موجود"
 
-#: engine/itb_util.py:3905 engine/itb_util.py:4564
+#: engine/itb_util.py:3906 engine/itb_util.py:4565
 msgid "Permission error"
 msgstr "خطأ في الأذونات"
 
-#: engine/itb_util.py:3908 engine/itb_util.py:4567
+#: engine/itb_util.py:3909 engine/itb_util.py:4568
 msgid "Unicode decoding error"
 msgstr "خطأ في فك ترميز يونيكود"
 
-#: engine/itb_util.py:3911 engine/itb_util.py:4570
+#: engine/itb_util.py:3912 engine/itb_util.py:4571
 msgid "Unknown error"
 msgstr "خطأ غير معروف"
 
-#: engine/itb_util.py:4538
+#: engine/itb_util.py:4539
 msgid "Native Keyboard"
 msgstr "لوحة المفاتيح الأساسية"
 
-#: engine/itb_util.py:4540
+#: engine/itb_util.py:4541
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -341,38 +341,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5075
+#: engine/itb_util.py:5076
 msgid "Key input"
 msgstr "اضغط المفتاح"
 
-#: engine/itb_util.py:5081
+#: engine/itb_util.py:5082
 msgid "Cancel"
 msgstr "إلغاء"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5088
+#: engine/itb_util.py:5089
 msgid "Please press a key (or a key combination)"
 msgstr "رجاءً، اضغط على مفتاح (أو مجموعة مفاتيح)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5093
+#: engine/itb_util.py:5094
 msgid "The dialog will be closed when the key is released"
 msgstr "سيُغلق صندوق الحوار بعد إفلات المفتاح"
 
-#: engine/itb_util.py:5125
+#: engine/itb_util.py:5126
 msgid "A completion input method to speedup typing."
 msgstr "أسلوب إدخال مُكمِل لتسريع الكتابة."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5134
+#: engine/itb_util.py:5135
 msgid "translator-credits"
 msgstr "أحمد فراج <afarrag@fedoraproject.org>، 2019"
 
-#: engine/itb_util.py:5142
+#: engine/itb_util.py:5143
 msgid "Online documentation:"
 msgstr "دليل الاستخدام على الإنترنت:"
 
