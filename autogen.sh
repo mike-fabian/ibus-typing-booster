@@ -2,9 +2,5 @@
 set -e
 set -x
 
-autopoint
-aclocal -I m4
-# autoheader
-automake --add-missing --copy
-autoconf
+autoreconf -fiv
 ./configure --enable-maintainer-mode $*

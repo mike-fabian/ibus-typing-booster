@@ -1,8 +1,9 @@
 # vim:set noet ts=4
 #
-# ibus-indic-table - The Tables engine for IBus
+# ibus-typing-booster - A completion input method for IBus
 #
 # Copyright (c) 2011-2012 Anish Patil <anish.developer@gmail.com>
+# Copyright (c) 2022 Mike FABIAN <mfabian@redhat.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

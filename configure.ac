@@ -31,10 +31,10 @@ m4_define(ibus_maybe_datestamp,
 m4_define([ibus_version],
     ibus_major_version.ibus_minor_version.ibus_micro_version[]ibus_maybe_datestamp)
 
-AC_INIT([package_name], [ibus_version], [https://github.com/mike-fabian/ibus-typing-booster/issues], [package_name])
+AC_INIT([package_name],[ibus_version],[https://github.com/mike-fabian/ibus-typing-booster/issues],[package_name])
 AM_INIT_AUTOMAKE([1.10])
 AM_MAINTAINER_MODE
-# AC_GNU_SOURCE
+# AC_USE_SYSTEM_EXTENSIONS
 
 # AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -55,8 +55,7 @@ AM_GNU_GETTEXT_VERSION(0.16.1)
 
 # ARGUMENTS
 AC_ARG_ENABLE([additional],
-    [AC_HELP_STRING([--disable-additional],
-        [Dont generate additional Engine])], ,
+    [AS_HELP_STRING([--disable-additional],[Dont generate additional Engine])], ,
     [enable_additional=yes])
 
 AM_CONDITIONAL([IBUS_EUROPEAN_TABLE_BUILD_ADDITIONAL],[test x"$enable_additional" = x"yes"])
