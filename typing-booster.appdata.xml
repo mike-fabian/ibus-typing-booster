@@ -12,6 +12,7 @@
       improve one’s typing speed and spelling.
     </p>
   </description>
+  <icon type="remote" width="64" height="64">https://raw.githubusercontent.com/mike-fabian/ibus-typing-booster/master/icons/64x64/ibus-typing-booster.png</icon>
   <project_license>GPL-3.0+</project_license>
   <developer_name>Mike FABIAN</developer_name>
   <update_contact>mfabian@redhat.com</update_contact>
