@@ -1,4 +1,15 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 16 Jun 2022 Release 2.16.1
+* Avoid using forward_key_event() in Gtk4 immodule automatically by checking for IBUS_CAP_SYNC_PROCESS_KEY (new, will start working for ibus >= 1.5.27)
+* Udate the “Use inline completion” combobox in the setup tool when the gsettings value changes (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/313)
+* Add client detection code by Takao Fujiwara (will start working for ibus >= 1.5.27)
+* If libvoikko.Voikko('fi') fails when initializing a Finnish dictionary, continue without voikko
+* Always show standard lookup table for compose completions, never try inline completions (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/307)
+* Update configure.ac for latest autoconf 2.71 (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/309)
+* Update emoji annotations from CLDR (small fix for en.xml)
+* Translation update from Weblate (fr updated)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 07 Jun 2022 Release 2.16.0
 * Make it possible to use inline completion without automatic fallback to a candidate list (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/266)
 * Update emoji annotations from CLDR (oc.xml is new)
