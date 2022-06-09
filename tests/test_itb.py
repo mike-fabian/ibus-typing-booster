@@ -1941,6 +1941,9 @@ class ItbTestCase(unittest.TestCase):
     @unittest.skipUnless(
         testutils.get_libvoikko_version() >= '4.3',
         "Skipping, requires python3-libvoikko version >= 4.3.")
+    @unittest.skipIf(
+        testutils.init_libvoikko_error(),
+        "Skipping, %s" % testutils.init_libvoikko_error())
     def test_voikko(self) -> None:
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)
@@ -1963,6 +1966,9 @@ class ItbTestCase(unittest.TestCase):
     @unittest.skipUnless(
         testutils.get_libvoikko_version() >= '4.3',
         "Skipping, requires python3-libvoikko version >= 4.3.")
+    @unittest.skipIf(
+        testutils.init_libvoikko_error(),
+        "Skipping, %s" % testutils.init_libvoikko_error())
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")

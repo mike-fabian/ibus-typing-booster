@@ -243,6 +243,8 @@ class HunspellSuggestTestCase(unittest.TestCase):
 
     def test_fi_FI_dictionary_file(self) -> None:
         # dictionary file is included in ibus-typing-booster
+        #
+        # This should work with and without voikko
         h = hunspell_suggest.Hunspell(['fi_FI'])
         self.assertEqual(
             h.suggest('kissa'),
@@ -256,6 +258,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
     @unittest.skipUnless(
         testutils.get_libvoikko_version() >= '4.3',
         "Skipping, requires python3-libvoikko version >= 4.3.")
+    @unittest.skipIf(
+        testutils.init_libvoikko_error(),
+        "Skipping, %s" % testutils.init_libvoikko_error())
     def test_fi_FI_voikko(self) -> None:
         d = hunspell_suggest.Dictionary('fi_FI')
         self.assertEqual(d.has_spellchecking(), True)
@@ -328,6 +333,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
     @unittest.skipUnless(
         testutils.get_libvoikko_version() >= '4.3',
         "Skipping, requires python3-libvoikko version >= 4.3.")
+    @unittest.skipIf(
+        testutils.init_libvoikko_error(),
+        "Skipping, %s" % testutils.init_libvoikko_error())
     def test_fi_FI_spellcheck_voikko(self) -> None:
         d = hunspell_suggest.Dictionary('fi_FI')
         self.assertEqual(d.spellcheck_voikko('kissa'), True)
@@ -338,6 +346,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
     @unittest.skipUnless(
         testutils.get_libvoikko_version() >= '4.3',
         "Skipping, requires python3-libvoikko version >= 4.3.")
+    @unittest.skipIf(
+        testutils.init_libvoikko_error(),
+        "Skipping, %s" % testutils.init_libvoikko_error())
     def test_fi_FI_spellcheck_suggest_voikko(self) -> None:
         d = hunspell_suggest.Dictionary('fi_FI')
         self.assertEqual(

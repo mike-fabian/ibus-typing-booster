@@ -51,8 +51,18 @@ except (ImportError,):
 def get_libvoikko_version() -> str:
     if IMPORT_LIBVOIKKO_SUCCESSFUL:
         return str(libvoikko.Voikko.getVersion())
-    else:
-        return '0'
+    return '0'
+
+def init_libvoikko_error() -> str:
+    if IMPORT_LIBVOIKKO_SUCCESSFUL:
+        try:
+            voikko = libvoikko.Voikko('fi')
+            if voikko:
+                return ''
+            return 'Intialization of Voikko failed: object empty'
+        except (libvoikko.VoikkoException,) as error:
+            return str(error)
+    return 'import libvoikko failed.'
 
 def enchant_sanity_test(language: str = '', word: str = '') -> bool:
     '''Checks whether python3-enchant returns some suggestions given a
