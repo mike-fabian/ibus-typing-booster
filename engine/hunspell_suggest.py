@@ -127,7 +127,11 @@ class Dictionary:
                     LOGGER.warning(
                         'Language is “fi” but “import libvoikko” failed.')
                     return
-                self.voikko = libvoikko.Voikko('fi')
+                try:
+                    self.voikko = libvoikko.Voikko('fi')
+                except (libvoikko.VoikkoException,) as error:
+                    LOGGER.warning(error)
+                    self.voikko = None
                 return
             if IMPORT_ENCHANT_SUCCESSFUL:
                 try:
