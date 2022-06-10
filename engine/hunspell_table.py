@@ -98,16 +98,10 @@ OFF_THE_RECORD_MODE_SYMBOL = '🕵'
 INPUT_MODE_TRUE_SYMBOL = '🚀'
 INPUT_MODE_FALSE_SYMBOL = '🐌'
 
+IBUS_VERSION = (IBus.MAJOR_VERSION, IBus.MINOR_VERSION, IBus.MICRO_VERSION)
+
 class TypingBoosterEngine(IBus.Engine): # type: ignore
     '''The IBus Engine for ibus-typing-booster'''
-
-    def __ibus_check_version(self, v: str) -> None:
-        major = IBus.MAJOR_VERSION
-        minor = IBus.MINOR_VERSION
-        micro = IBus.MICRO_VERSION
-        if (major, minor, micro) < tuple(map(int, (v.split('.')))):
-            raise ValueError('Required ibus %s but version of ibus is ' \
-                             '%d.%d.%d' % (v, major, minor, micro))
 
     def __init__(
             self,
@@ -125,14 +119,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.debug(
                 'TypingBoosterEngine.__init__(bus=%s, obj_path=%s, db=%s)',
                 bus, obj_path, database)
-        try:
-            # Will be 1.5.27
-            self.__ibus_check_version('1.5.26')
+        if IBUS_VERSION >= (1, 5, 27):
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('call super().__init__() for ibus >= 1.5.27')
             super().__init__(
                 connection=bus.get_connection(),
                 object_path=obj_path,
                 has_focus_id=True)
-        except ValueError as e:
+        else:
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('call super().__init__() for ibus < 1.5.27')
             super().__init__(
                 connection=bus.get_connection(),
                 object_path=obj_path)
@@ -170,6 +166,32 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.preedit_ime_properties: Dict[str, Any] = {}
         self.preedit_ime_sub_properties_prop_list: IBus.PropList = []
         self._setup_property: Optional[IBus.Property] = None
+        # Possible values for self._im_client and examples of programs
+        # where these values occur:
+        # '': unknown
+        # 'fake':    focus is on desktop background or other programs where no
+        #            input is possible
+        # 'xim':     old X11 programs like xterm, emacs, ...
+        #            Gtk3 programs in a Gnome Xorg session when GTK_IM_MODULE
+        #            is unset also use xim
+        # 'gtk-im:<client-name>':  Gtk2 input module is used
+        # 'gtk3-im:<client-name>:': Gtk3 input module is used
+        # 'gtk4-im:<client-name>': Gtk4 input module is used
+        #
+        #                In case of the Gtk input modules, the name of the
+        #                client is also shown after the “:”, for example
+        #                like 'gtk3-im:firefox', 'gtk4-im:gnome-text-editor', …
+        #
+        # 'gnome-shell': Entries handled by gnome-shell
+        #                (like the command line dialog opened with Alt+F2
+        #                or the search field when pressing the Super key.)
+        #                When GTK_IM_MODULE is unset in a Gnome Wayland session
+        #                all programs which would show 'gtk3-im' or 'gtk4-im'
+        #                with GTK_IM_MODULE=ibus then show 'gnome-shell'
+        #                instead.
+        # 'Qt':      Qt4 programs like keepassx-2.0.3 …
+        # 'QIBusInputContext': Qt5 programs like keepassxc-2.7.1, anki-2.1.15
+        #                      telegram-desktop-3.7.3, …
         self._im_client: str = ''
 
         self._current_imes: List[str] = []
@@ -5366,6 +5388,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         - Qt4 when using the input module and not XIM
         - older versions of Qt5
         - older versions of Wayland
+        - Gtk4
 
         Always using “forward_key_event()” instead of “return False”
         in “do_process_key_event()” would break ibus-typing-booster
@@ -6100,15 +6123,22 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         return self._return_false(key.val, key.code, key.state)
 
     def do_focus_in(self) -> None:
+        '''
+        Called for ibus < 1.5.27 when a window gets focus while
+        this input engine is enabled
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('entering do_focus_in()\n')
         self.do_focus_in_id('', '')
 
     def do_focus_in_id(self, object_path: str, client: str) -> None:
-        '''Called when a window gets focus while this input engine is enabled
-
         '''
-        self._im_client = client
+        Called for ibus >= 1.5.27 when a window gets focus while
+        this input engine is enabled
+        '''
         if DEBUG_LEVEL > 1:
-            LOGGER.debug('entering function\n')
+            LOGGER.debug('object_path=%s client=%s\n', object_path, client)
+        self._im_client = client
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         if DEBUG_LEVEL > 2:
             for keyval in self._keyvals_to_keycodes.keyvals():
@@ -6174,16 +6204,22 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self.push_context(stripped_commit_phrase)
 
     def do_focus_out(self) -> None:
+        '''
+        Called for ibus < 1.5.27 when a window loses focus while
+        this input engine is enabled
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('entering do_focus_out()\n')
         self.do_focus_out_id('')
 
     def do_focus_out_id(self, object_path: str) -> None:
-        '''Called when a window looses focus while this input engine is
-        enabled
-
         '''
-        self._im_client = ''
+        Called for ibus >= 1.5.27 when a window loses focus while
+        this input engine is enabled
+        '''
         if DEBUG_LEVEL > 1:
-            LOGGER.debug('do_focus_out()\n')
+            LOGGER.debug('object_path=%s\n', object_path)
+        self._im_client = ''
         self._input_purpose = 0
         # The preëdit, if there was any, has already been committed
         # automatically because
