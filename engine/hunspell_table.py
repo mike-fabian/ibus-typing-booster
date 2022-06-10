@@ -119,19 +119,19 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.debug(
                 'TypingBoosterEngine.__init__(bus=%s, obj_path=%s, db=%s)',
                 bus, obj_path, database)
-        if IBUS_VERSION >= (1, 5, 27):
-            if DEBUG_LEVEL > 1:
-                LOGGER.debug('call super().__init__() for ibus >= 1.5.27')
+        LOGGER.info('ibus version = %s', '.'.join(map(str, IBUS_VERSION)))
+        try:
             super().__init__(
                 connection=bus.get_connection(),
                 object_path=obj_path,
                 has_focus_id=True)
-        else:
-            if DEBUG_LEVEL > 1:
-                LOGGER.debug('call super().__init__() for ibus < 1.5.27')
+            LOGGER.info('This ibus version has focus id.')
+        except TypeError as error:
             super().__init__(
                 connection=bus.get_connection(),
                 object_path=obj_path)
+            LOGGER.info('This ibus version does *not* have focus id: %s: %s',
+                        error.__class__.__name__, error)
 
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         self._compose_sequences = itb_util.ComposeSequences()
