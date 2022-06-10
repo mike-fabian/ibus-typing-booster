@@ -101,6 +101,14 @@ INPUT_MODE_FALSE_SYMBOL = '🐌'
 class TypingBoosterEngine(IBus.Engine): # type: ignore
     '''The IBus Engine for ibus-typing-booster'''
 
+    def __ibus_check_version(self, v: str) -> None:
+        major = IBus.MAJOR_VERSION
+        minor = IBus.MINOR_VERSION
+        micro = IBus.MICRO_VERSION
+        if (major, minor, micro) < tuple(map(int, (v.split('.')))):
+            raise ValueError('Required ibus %s but version of ibus is ' \
+                             '%d.%d.%d' % (v, major, minor, micro))
+
     def __init__(
             self,
             bus: IBus.Bus,
@@ -117,8 +125,18 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.debug(
                 'TypingBoosterEngine.__init__(bus=%s, obj_path=%s, db=%s)',
                 bus, obj_path, database)
-        super().__init__(
-            connection=bus.get_connection(), object_path=obj_path)
+        try:
+            # Will be 1.5.27
+            self.__ibus_check_version('1.5.26')
+            super().__init__(
+                connection=bus.get_connection(),
+                object_path=obj_path,
+                has_focus_id=True)
+        except ValueError as e:
+            super().__init__(
+                connection=bus.get_connection(),
+                object_path=obj_path)
+
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         self._compose_sequences = itb_util.ComposeSequences()
         self._unit_test = unit_test
@@ -152,6 +170,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.preedit_ime_properties: Dict[str, Any] = {}
         self.preedit_ime_sub_properties_prop_list: IBus.PropList = []
         self._setup_property: Optional[IBus.Property] = None
+        self._im_client: str = ''
 
         self._current_imes: List[str] = []
 
@@ -6004,7 +6023,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             #
             # Therefore, forward_key_event() should be preferred
             # unless the option to avoid it is set:
-            if self._avoid_forward_key_event:
+            if (self._im_client.startswith('gtk4-im')
+                or self._avoid_forward_key_event):
                 return self._return_false(key.val, key.code, key.state)
             self.forward_key_event(key.val, key.code, key.state)
             return True
@@ -6080,9 +6100,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         return self._return_false(key.val, key.code, key.state)
 
     def do_focus_in(self) -> None:
+        self.do_focus_in_id('', '')
+
+    def do_focus_in_id(self, object_path: str, client: str) -> None:
         '''Called when a window gets focus while this input engine is enabled
 
         '''
+        self._im_client = client
         if DEBUG_LEVEL > 1:
             LOGGER.debug('entering function\n')
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
@@ -6150,10 +6174,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self.push_context(stripped_commit_phrase)
 
     def do_focus_out(self) -> None:
+        self.do_focus_out_id('')
+
+    def do_focus_out_id(self, object_path: str) -> None:
         '''Called when a window looses focus while this input engine is
         enabled
 
         '''
+        self._im_client = ''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('do_focus_out()\n')
         self._input_purpose = 0
