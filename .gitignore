@@ -6,6 +6,7 @@ Makefile.in
 /config.rpath
 /config.status
 /configure
+/configure~
 /ibus-typing-booster.spec
 /autom4te.cache/
 compile
