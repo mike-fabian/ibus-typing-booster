@@ -40,7 +40,7 @@ AM_MAINTAINER_MODE
 AC_CONFIG_MACRO_DIR([m4])
 
 #check python
-AM_PATH_PYTHON([3.3])
+AM_PATH_PYTHON([3.6])
 
 # check for ibus
 PKG_CHECK_MODULES([IBUS],[ibus-1.0 >= 1.1.0])
