@@ -233,8 +233,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._show_number_of_candidates: bool = itb_util.variant_to_value(
             self._gsettings.get_value('shownumberofcandidates'))
 
-        self._show_status_info_in_auxiliary_text: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('showstatusinfoinaux'))
+        self._show_status_info_in_auxiliary_text: bool = (
+            itb_util.variant_to_value(
+                self._gsettings.get_value('showstatusinfoinaux')))
 
         self._is_candidate_auto_selected = False
         self._auto_select_candidate: bool = itb_util.variant_to_value(
@@ -2222,7 +2223,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # The first candidate is not a direct completion of the
             # typed string. Trying to show that inline gets very
             # confusing.  Don’t do that, show standard lookup table:
-            if self._inline_completion < 2 or self.get_lookup_table().cursor_visible:
+            if (self._inline_completion < 2
+                or self.get_lookup_table().cursor_visible):
                 # Show standard lookup table as a fallback:
                 self.update_lookup_table(self.get_lookup_table(), True)
             else:
@@ -2700,7 +2702,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         '''
         if (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
-            and self._input_purpose not in [itb_util.InputPurpose.TERMINAL.value]):
+            and
+            self._input_purpose not in [itb_util.InputPurpose.TERMINAL.value]):
             pattern_sentence_end = re.compile(
                 r'^['
                 + re.escape(itb_util.REMOVE_WHITESPACE_CHARACTERS)

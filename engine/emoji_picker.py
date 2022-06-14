@@ -1084,7 +1084,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                     + ', '.join(keywords))
                 break
 
-    def _print_profiling_information(self) -> None:
+    @staticmethod
+    def _print_profiling_information() -> None:
         '''
         Print some profiling information to the log.
         '''
@@ -1634,8 +1635,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             label.set_use_markup(True)
         GLib.timeout_add(500, self._skin_tone_selected_popover_popdown)
 
+    @staticmethod
     def on_flowbox_event_box_long_press_begin(
-            self,
             gesture: Gtk.GestureLongPress,
             event_sequence: Gdk.EventSequence) -> None:
         '''
@@ -1645,12 +1646,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         :param event_sequence: the event sequence that the event belongs to
         '''
         if _ARGS.debug:
-            LOGGER.debug(
-                'on_flowbox_event_box_long_press_begin() %s %s\n',
-                repr(gesture), repr(event_sequence))
+            LOGGER.debug('%s %s\n', repr(gesture), repr(event_sequence))
 
+    @staticmethod
     def on_flowbox_event_box_long_press_cancel(
-            self,
             gesture: Gtk.GestureLongPress,
             event_sequence: Gdk.EventSequence) -> None:
         '''
@@ -1661,11 +1660,11 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         '''
         if _ARGS.debug:
             LOGGER.debug(
-                'on_flowbox_event_box_long_press_cancel() %s %s\n',
-                repr(gesture), repr(event_sequence))
+                '%s %s\n', repr(gesture), repr(event_sequence))
 
+    @staticmethod
     def on_flowbox_event_box_long_press_cancelled(
-            self, gesture: Gtk.GestureLongPress) -> None:
+            gesture: Gtk.GestureLongPress) -> None:
         '''
         Signal handler called whenever a press moved too far, or was
         released before “pressed” happened.
@@ -1673,9 +1672,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         :param gesture: The object which received the signal
         '''
         if _ARGS.debug:
-            LOGGER.debug(
-                'on_flowbox_event_box_long_press_cancelled() %s\n',
-                repr(gesture))
+            LOGGER.debug('%s\n', repr(gesture))
 
     def on_flowbox_event_box_long_press_pressed(
             self,
