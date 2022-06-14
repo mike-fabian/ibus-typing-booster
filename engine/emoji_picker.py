@@ -650,10 +650,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         '''
         descriptions = []
         descriptions.append(
-            ' '.join(['U+%X' %ord(character) for character in emoji]))
+            ' '.join([f'U+{ord(character):04X}' for character in emoji]))
         for language in itb_util.expand_languages(self._languages):
             names = self._emoji_matcher.names(emoji, language=language)
-            description = '<b>%s</b>' %language
+            description = f'<b>{language}</b>'
             description_empty = True
             if names:
                 description += '\n' + html.escape(', '.join(names))
@@ -680,12 +680,12 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             fonts_description += '\n'
             code_points = ''
             for char in text:
-                code_points += ' U+%X' %ord(char)
+                code_points += f' U+{ord(char):04X}'
             fonts_description += (
-                '<span font="%s" fallback="%s" >'
-                %(self._font, str(self._fallback).lower())
+                f'<span font="{self._font}" '
+                f'fallback="{str(self._fallback).lower()}" >'
                 + text + '</span>'
-                + '<span fallback="true">%s</span>' % code_points)
+                + f'<span fallback="true">{code_points}</span>')
             fonts_description += ': ' + font_family
         descriptions.append(fonts_description)
         if self._emoji_matcher.unicode_version(emoji):
@@ -694,9 +694,9 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 + self._emoji_matcher.unicode_version(emoji))
         if _ARGS.debug:
             descriptions.append(
-                'emoji_order = %s' %self._emoji_matcher.emoji_order(emoji))
+                f'emoji_order = {self._emoji_matcher.emoji_order(emoji)}')
             descriptions.append(
-                'cldr_order = %s' %self._emoji_matcher.cldr_order(emoji))
+                f'cldr_order = {self._emoji_matcher.cldr_order(emoji)}')
             descriptions.append(
                 'Emoji properties from unicode.org:' + '\n'
                 + ', '.join(self._emoji_matcher.properties(emoji)))
@@ -803,15 +803,14 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             gtk_label = Gtk.Label()
             # Make font for emoji large using pango markup
             text = (
-                '<span font="%s %s" fallback="%s">'
-                %(self._font, self._fontsize, str(self._fallback).lower())
+                f'<span font="{self._font} {self._fontsize}" '
+                f'fallback="{str(self._fallback).lower()}">'
                 + html.escape(emoji)
                 + '</span>')
             if itb_emoji.is_invisible(emoji):
                 text += (
-                    '<span fallback="false" font="%s">'
-                    %(self._fontsize / 2)
-                    + ' U+%X ' %ord(emoji)
+                    f'<span fallback="false" font="{self._fontsize / 2}">'
+                    f' U+{ord(emoji):04X} '
                     + self._emoji_matcher.name(emoji)
                     + '</span>')
             gtk_label.set_text(text)
@@ -1228,12 +1227,11 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             label = Gtk.Label()
             # Make font for emoji large using pango markup
             label.set_text(
-                '<span font="%s %s" fallback="%s">'
-                %(self._font, self._fontsize, str(self._fallback).lower())
+                f'<span font="{self._font} {self._fontsize}" '
+                f'fallback="{str(self._fallback).lower()}">'
                 + html.escape(emoji)
                 + '</span>'
-                + '<span font="%s">'
-                %(self._fontsize / 2)
+                + f'<span font="{self._fontsize / 2}">'
                 + ' ' + html.escape(name)
                 + '</span>')
             label.set_use_markup(True)
@@ -1543,14 +1541,13 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             if emoji:
                 emoji = self._variation_selector_normalize_for_font(emoji)
                 new_text = (
-                    '<span font="%s %s" fallback="%s">'
-                    %(self._font, self._fontsize, str(self._fallback).lower())
+                    f'<span font="{self._font} {self._fontsize}" '
+                    f'fallback="{str(self._fallback).lower()}">'
                     + html.escape(emoji)
                     + '</span>')
                 if name:
                     new_text += (
-                        '<span fallback="true" font="%s">'
-                        %(self._fontsize / 2)
+                        f'<span fallback="true" font="{self._fontsize / 2}">'
                         + html.escape(name)
                         + '</span>')
                 label.set_text(new_text)
@@ -1627,8 +1624,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             # in a search results flowbox and we do *not* want
             # to replace the emoji.
             new_text = (
-                '<span font="%s %s" fallback="%s">'
-                %(self._font, self._fontsize, str(self._fallback).lower())
+                f'<span font="{self._font} {self._fontsize}" '
+                f'fallback="{str(self._fallback).lower()}">'
                 + html.escape(emoji)
                 + '</span>')
             label.set_text(new_text)
@@ -1799,8 +1796,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         for skin_tone_variant in skin_tone_variants:
             label = Gtk.Label()
             label.set_text(
-                '<span font="%s %s" fallback="%s">'
-                %(self._font, self._fontsize, str(self._fallback).lower())
+                f'<span font="{self._font} {self._fontsize}" '
+                f'fallback="{str(self._fallback).lower()}">'
                 + html.escape(skin_tone_variant)
                 + '</span>')
             label.set_use_markup(True)
@@ -1907,8 +1904,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         label.set_vexpand(False)
         label.set_halign(Gtk.Align.START)
         label.set_markup(
-            '<span font="%s %s" fallback="%s">'
-            %(self._font, self._fontsize * 3, str(self._fallback).lower())
+            f'<span font="{self._font} {self._fontsize * 3}" '
+            f'fallback="{str(self._fallback).lower()}">'
             + html.escape(emoji)
             + '</span>')
         emoji_info_popover_listbox.insert(label, -1)

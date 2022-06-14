@@ -1823,10 +1823,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         for prop in sub_properties_dict:
             if sub_properties_dict[prop]['number'] == int(current_mode):
                 symbol = sub_properties_dict[prop]['symbol']
-                label = '%s' % menu['label']
-                tooltip = '%(tooltip)s\n%(shortcut_hint)s' % {
-                    'tooltip': menu['tooltip'],
-                    'shortcut_hint': menu['shortcut_hint']}
+                label = menu['label']
+                tooltip = f'{menu["tooltip"]}\n{menu["shortcut_hint"]}'
         visible = bool(menu_key != 'InputMode'
                        or self._keybindings['toggle_input_mode_on_off'])
         self._init_or_update_sub_properties(
@@ -2122,9 +2120,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Update auxiliary text'''
         aux_string = ''
         if self._show_number_of_candidates:
-            aux_string = '(%d / %d) ' % (
-                self.get_lookup_table().get_cursor_pos() + 1,
-                self.get_lookup_table().get_number_of_candidates())
+            aux_string = (
+                f'({self.get_lookup_table().get_cursor_pos() + 1} / '
+                f'{self.get_lookup_table().get_number_of_candidates()}) ')
         if self._show_status_info_in_auxiliary_text:
             if self._emoji_predictions:
                 aux_string += (
@@ -4940,7 +4938,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     if len(compose_result) < 6:
                         text_for_lookup_table += '  \t'
                         for char in compose_result:
-                            text_for_lookup_table += ' U+%04X' %ord(char)
+                            text_for_lookup_table += f' U+{ord(char):04X}'
                     if len(compose_result) == 1:
                         text_for_lookup_table += ' ' + unicodedata.name(
                             compose_result).lower()
@@ -5344,7 +5342,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     self._update_transliterated_strings()
                     self._update_preedit()
                     hotkey_removed_from_compose_sequence = True
-                command_function_name = '_command_%s' % command
+                command_function_name = f'_command_{command}'
                 try:
                     command_function = getattr(self, command_function_name)
                 except (AttributeError,):
