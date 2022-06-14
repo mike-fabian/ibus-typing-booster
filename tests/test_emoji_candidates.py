@@ -430,7 +430,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             (' ', 'U+2029 paragraph separator {Paragraph}'))
         self.assertEqual(
             mq.candidates('separator space')[0][:2],
-            (' ', 'U+20 space {Space}'))
+            (' ', 'U+0020 space {Space}'))
 
     def test_candidates_french_text(self) -> None:
         mq = itb_emoji.EmojiMatcher(
