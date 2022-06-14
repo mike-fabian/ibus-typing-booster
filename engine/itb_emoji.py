@@ -1231,8 +1231,9 @@ class EmojiMatcher():
         self._set_seq1(label)
         total_score = 0
         if debug:
-            print('string1 = “%s” string2 = “%s” string2_word_list = “%s”'
-                  %(self._string1, self._string2, self._string2_word_list))
+            print(f'string1 = “{self._string1}” '
+                  f'string2 = “{self._string2}” '
+                  f'string2_word_list = “{self._string2_word_list}”')
         if (self._string1, self._string2) in self._match_cache:
             # Many keywords are of course shared by many emoji,
             # therefore the query string is often matched against
@@ -1240,7 +1241,7 @@ class EmojiMatcher():
             # matches speeds it up quite a bit.
             total_score = self._match_cache[(self._string1, self._string2)]
             if debug:
-                print('Cached, total_score = %s' %total_score)
+                print(f'Cached, total_score = {total_score}')
             return total_score
         # Does the complete query string match exactly?
         if self._string1 == self._string2:
@@ -1255,13 +1256,13 @@ class EmojiMatcher():
                 if self._string2_number_of_words == 1:
                     total_score += 300
                     if debug:
-                        print('Spell check exact match, word = “%s”, '
-                              %word + 'total_score += 300')
+                        print(f'Spell check exact match, word = “{word}”, '
+                              'total_score += 300')
                 else:
                     total_score += 200
                     if debug:
-                        print('Exact match from word_list, word = “%s”, '
-                              %word + 'total_score += 200')
+                        print(f'Exact match from word_list, word = “{word}”, '
+                              'total_score += 200')
         # Does a word in the query string match the beginning of a word in
         # the label?
         tmp = self._string1
@@ -1280,9 +1281,8 @@ class EmojiMatcher():
             # and speeds up matching the remaining words
             tmp = tmp[:match_start] + tmp[match_start + len(word):]
             if debug:
-                print('Substring match from word_list, word = “%s”, '
-                      %word
-                      + 'total_score = %s' %total_score)
+                print(f'Substring match from word_list, word = “{word}”, '
+                      f'total_score = {total_score}')
         # Does a word in the query string match the label if spaces in
         # the label are ignored?
         tmp = self._string1.replace(' ', '')
@@ -1300,8 +1300,8 @@ class EmojiMatcher():
             tmp = tmp[:match_start] + tmp[match_start + len(word):]
             if debug:
                 print('Space insensitive substring match from word_list, '
-                      + 'word = “%s”, ' %word
-                      + 'total_score = %s' %total_score)
+                      f'word = “{word}”, '
+                      f'total_score = {total_score}')
         if self._quick:
             self._match_cache[(self._string1, self._string2)] = total_score
             return total_score
@@ -1309,7 +1309,7 @@ class EmojiMatcher():
         # the total_score by up to 500 approximately. It improves
         # the matching a little bit but it is very slow.
         if debug:
-            print('seq1 = “%s” seq2 = “%s”' %(self._seq1, self._seq2))
+            print(f'seq1 = “{self._seq1}” seq2 = “{self._seq2}”')
         for tag, i1, i2, j1, j2 in self._matcher.get_opcodes():
             score = 0
             if tag in ('replace', 'delete', 'insert'):
@@ -1338,11 +1338,9 @@ class EmojiMatcher():
             total_score += score
             if debug:
                 print(
-                    '{:7} a[{:2}:{:2}] --> b[{:2}:{:2}]'.format(
-                        tag, i1, i2, j1, j2)
-                    + '{:3} {:3} {!r} --> {!r}'.format(
-                        score, total_score,
-                        self._seq1[i1:i2], self._seq2[j1:j2]))
+                    f'{tag:7} a[{i1:2}:{i2:2}] --> b[{j1:2}:{j2:2}]'
+                    f'{score:3} {total_score:3} '
+                    f'{repr(self._seq1[i1:i2])} --> {repr(self._seq2[j1:j2])}')
         self._match_cache[(self._string1, self._string2)] = total_score
         return total_score
 
@@ -1486,7 +1484,7 @@ class EmojiMatcher():
             if emoji_key[0] in debug:
                 debug_match = True
                 print('===================================')
-                print('Debug match for “%s”' %emoji_key[0])
+                print(f'Debug match for “{emoji_key[0]}”')
                 print('===================================')
             else:
                 debug_match = False
@@ -1531,8 +1529,8 @@ class EmojiMatcher():
                         and is_invisible(emoji_key[0])):
                     # Add the code point to the display name of
                     # “invisible” characters:
-                    display_name = ('U+%X' %ord(emoji_key[0])
-                                    + ' ' + display_name)
+                    display_name = (f'U+{ord(emoji_key[0]):04X} '
+                                    + display_name)
                 # If the match was good because something else
                 # but the main name had a good match, show it in
                 # the display name to make the user understand why
@@ -1890,8 +1888,8 @@ class EmojiMatcher():
                     and is_invisible(similar_string)):
                 # Add the code point to the display name of
                 # “invisible” characters:
-                similar_name = ('U+%X' %ord(similar_string)
-                                + ' ' + similar_name)
+                similar_name = (f'U+{ord(similar_string):04X} '
+                                + similar_name)
             scores_key = (
                 similar_string, language, similar_name)
             if similar_string == emoji_string:
@@ -2275,9 +2273,9 @@ class EmojiMatcher():
         '''To debug whether the data has been loaded correctly'''
         count = 0
         for key, value in sorted(self._emoji_dict.items()):
-            print("key=%s value=%s" %(key, sorted(value.items())))
+            print(f'key={key} value={sorted(value.items())}')
             count += 1
-        print('count=%s' %count)
+        print(f'count={count}')
 
     def list_emoji_one_bugs(self) -> None:
         '''
@@ -2293,31 +2291,30 @@ class EmojiMatcher():
                         in self._emoji_dict):
                     if ('Emoji_Modifier_Base'
                             not in self.properties(emoji_key[0])):
-                        print('emoji “%s” (U+%X) has skintones in emojione '
-                              %(emoji_key[0], ord(emoji_key[0]))
-                              + 'but not the Emoji_Modifier_Base '
-                              + 'property in emoji-data.txt.')
+                        print('emoji '
+                              f'“{emoji_key[0]}” (U+{ord(emoji_key[0]):04X}) '
+                              'has skintones in emojione '
+                              'but not the Emoji_Modifier_Base '
+                              'property in emoji-data.txt.')
                 if 'Emoji_Modifier_Base' in self.properties(emoji_key[0]):
                     if ('emoji_order' not in self._emoji_dict[
                             (emoji_key[0] + SKIN_TONE_MODIFIERS[0], 'en')]):
-                        print('emoji “%s” (U+%X) '
-                              %(emoji_key[0], ord(emoji_key[0]))
-                              + 'has the property Emoji_Modifier_Base '
-                              + 'in emoji-data.txt but no skin tones '
-                              + 'in emojione.')
+                        print('emoji '
+                              f'“{emoji_key[0]}” (U+{ord(emoji_key[0]):04X}) '
+                              'has the property Emoji_Modifier_Base '
+                              'in emoji-data.txt but no skin tones '
+                              'in emojione.')
                 if 'Emoji_ZWJ_Sequence' in self.properties(emoji_key[0]):
                     if ('emoji_order'
                             not in self._emoji_dict[(emoji_key[0], 'en')]):
-                        print('ZWJ sequence “%s” '
-                              %emoji_key[0]
-                              + 'from unicode.org missing in emojione')
+                        print(f'ZWJ sequence “{emoji_key[0]}” '
+                              'from unicode.org missing in emojione')
                 else:
                     if (('emoji_order'
                          in self._emoji_dict[(emoji_key[0], 'en')])
                             and '\u200d' in emoji_key[0]):
-                        print('ZWJ sequence “%s” '
-                              %emoji_key[0]
-                              + 'in emojione but not in unicode.org')
+                        print(f'ZWJ sequence “{emoji_key[0]}” '
+                              'in emojione but not in unicode.org')
 
 BENCHMARK = True
 

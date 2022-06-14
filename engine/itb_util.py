@@ -4882,9 +4882,10 @@ class KeyvalsToKeycodes:
     def __str__(self) -> str:
         return_string = ''
         for keyval in sorted(self.keyvals_to_keycodes):
-            return_string += 'keyval: %s name: %s keycodes: %s\n' % (
-                keyval, IBus.keyval_name(keyval),
-                self.keyvals_to_keycodes[keyval])
+            return_string += (
+                f'keyval: {keyval} '
+                f'name: {IBus.keyval_name(keyval)} '
+                f'keycodes: {self.keyvals_to_keycodes[keyval]}\n')
         return return_string
 
 class KeyEvent:
@@ -4950,30 +4951,30 @@ class KeyEvent:
 
     def __str__(self) -> str:
         return (
-            'val=%s ' % self.val
-            + 'code=%s ' % self.code
-            + 'state=0x%08x ' % self.state
-            + 'name=“%s” ' % self.name
-            + 'unicode=“%s” ' % self.unicode
-            + 'msymbol=“%s” ' % self.msymbol
-            + 'shift=%s ' % self.shift
-            + 'lock=%s ' % self.lock
-            + 'control=%s ' % self.control
-            + 'super=%s ' % self.super
-            + 'hyper=%s ' % self.hyper
-            + 'meta=%s ' % self.meta
-            + 'mod1=%s ' % self.mod1
-            + 'mod2=%s ' % self.mod2
-            + 'mod3=%s ' % self.mod3
-            + 'mod4=%s ' % self.mod4
-            + 'mod5=%s ' % self.mod5
-            + 'button1=%s ' % self.button1
-            + 'button2=%s ' % self.button2
-            + 'button3=%s ' % self.button3
-            + 'button4=%s ' % self.button4
-            + 'button5=%s ' % self.button5
-            + 'release=%s ' % self.release
-            + 'modifier=%s\n' % self.modifier)
+            f'val={self.val} '
+            f'code={self.code} '
+            f'state=0x{self.state:08x} '
+            f'name=“{self.name}” '
+            f'unicode=“{self.unicode}” '
+            f'msymbol=“{self.msymbol}” '
+            f'shift={self.shift} '
+            f'lock={self.lock} '
+            f'control={self.control} '
+            f'super={self.super} '
+            f'hyper={self.hyper} '
+            f'meta={self.meta} '
+            f'mod1={self.mod1} '
+            f'mod2={self.mod2} '
+            f'mod3={self.mod3} '
+            f'mod4={self.mod4} '
+            f'mod5={self.mod5} '
+            f'button1={self.button1} '
+            f'button2={self.button2} '
+            f'button3={self.button3} '
+            f'button4={self.button4} '
+            f'button5={self.button5} '
+            f'release={self.release} '
+            f'modifier={self.modifier}\n')
 
 def keyevent_to_keybinding(keyevent: KeyEvent) -> str:
     '''Calculates a keybinding string from a key event.'''
@@ -5164,7 +5165,7 @@ class ItbAboutDialog(Gtk.AboutDialog): # type: ignore
         # have nice icons for ibus-typing-booster.
         self.set_logo_icon_name('')
         self.set_title(
-            '🚀 ibus-typing-booster %s' % itb_version.get_version())
+            f'🚀 ibus-typing-booster {itb_version.get_version()}')
         self.set_program_name(
             '🚀 ibus-typing-booster')
         self.set_version(itb_version.get_version())
