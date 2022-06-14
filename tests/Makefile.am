@@ -52,6 +52,8 @@ test_exec_SCRIPTS = \
 	mock_engine.py \
 	testutils.py \
 	run_tests \
+	chant_d_automne.txt \
+	the_road_not_taken.txt \
 	$(NULL)
 test_execdir = $(libexecdir)/installed-tests/ibus-typing-booster
 
