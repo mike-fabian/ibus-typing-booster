@@ -130,34 +130,37 @@ class Dictionary:
                 try:
                     self.voikko = libvoikko.Voikko('fi')
                 except (libvoikko.VoikkoException,) as error:
-                    LOGGER.warning(error)
+                    LOGGER.warning('Init of voikko failed: %s: %s',
+                                   error.__class__.__name__, error)
                     self.voikko = None
                 return
             if IMPORT_ENCHANT_SUCCESSFUL:
                 try:
                     self.enchant_dict = enchant.Dict(self.name)
-                except enchant.errors.DictNotFoundError:
+                except enchant.errors.DictNotFoundError as error:
                     LOGGER.exception(
-                        'Error initializing enchant for %s', self.name)
+                        'Error initializing enchant for %s: %s: %s',
+                        self.name, error.__class__.__name__, error)
                     self.enchant_dict = None
-                except Exception:
+                except Exception as error:
                     LOGGER.exception(
-                        'Unknown error initializing enchant for %s',
-                        self.name)
+                        'Unexpected error initializing enchant for %s: %s: %s',
+                        self.name, error.__class__.__name__, error)
                     self.enchant_dict = None
             elif IMPORT_HUNSPELL_SUCCESSFUL and self.dic_path:
                 aff_path = self.dic_path.replace('.dic', '.aff')
                 try:
                     self.pyhunspell_object = hunspell.HunSpell(
                         self.dic_path, aff_path)
-                except hunspell.HunSpellError:
+                except hunspell.HunSpellError as error:
                     LOGGER.debug(
-                        'Error initializing hunspell for %s', self.name)
+                        'Error initializing hunspell for %s: %s: %s',
+                        self.name, error.__class__.__name__, error)
                     self.pyhunspell_object = None
-                except Exception:
+                except Exception as error:
                     LOGGER.debug(
-                        'Unknown error initializing hunspell for %s',
-                        self.name)
+                        'Unexpected error initializing hunspell for %s: %s: %s',
+                        self.name, error.__class__.__name__, error)
                     self.pyhunspell_object = None
 
     def spellcheck_enchant(self, word: str) -> bool:

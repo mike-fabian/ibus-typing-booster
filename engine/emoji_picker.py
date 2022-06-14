@@ -884,10 +884,13 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                           mode='r',
                           encoding='UTF-8') as options_file:
                     options_dict = eval(options_file.read())
-            except (PermissionError, SyntaxError, IndentationError):
-                LOGGER.exception('Error when reading options')
-            except Exception as dummy_exception:
-                LOGGER.exception('Unknown error when reading options')
+            except (PermissionError, SyntaxError, IndentationError) as error:
+                LOGGER.exception('Error when reading options: %s: %s',
+                                 error.__class__.__name__, error)
+            except Exception as error:
+                LOGGER.exception(
+                    'Unexpected error when reading options: %s: %s',
+                    error.__class__.__name__, error)
             else: # no exception occured
                 if _ARGS.debug:
                     LOGGER.debug(
@@ -947,12 +950,13 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                           mode='r',
                           encoding='UTF-8') as recently_used_file:
                     recently_used_emoji = eval(recently_used_file.read())
-            except (PermissionError, SyntaxError, IndentationError):
-                import traceback
-                traceback.print_exc()
-            except Exception as dummy_exception:
-                import traceback
-                traceback.print_exc()
+            except (PermissionError, SyntaxError, IndentationError) as error:
+                LOGGER.exception('Error reading recently used emoji: %s: %s',
+                                 error.__class__.__name__, error)
+            except Exception as error:
+                LOGGER.exception(
+                    'Unexpected error reading recently used emoji: %s: %s',
+                    error.__class__.__name__, error)
             else: # no exception occured
                 if _ARGS.debug:
                     LOGGER.debug(

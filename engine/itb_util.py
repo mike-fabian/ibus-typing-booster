@@ -3130,11 +3130,13 @@ def get_hunspell_dictionary_wordlist(
                       encoding='ISO-8859-1',
                       errors='ignore') as aff_file:
                 aff_buffer = aff_file.read().replace('\r\n', '\n')
-        except (FileNotFoundError, PermissionError):
-            LOGGER.exception('Error loading .aff File: %s', aff_path)
-        except Exception:
+        except (FileNotFoundError, PermissionError) as error:
+            LOGGER.exception('Error loading .aff File %s: %s: %s',
+                             aff_path, error.__class__.__name__, error)
+        except Exception as error:
             LOGGER.exception(
-                'Unexpected error loading .aff File: %s', aff_path)
+                'Unexpected error loading .aff File %s: %s: %s',
+                             aff_path, error.__class__.__name__, error)
         if aff_buffer:
             encoding_pattern = re.compile(
                 r'^[\s]*SET[\s]+(?P<encoding>[-a-zA-Z0-9_]+)[\s]*$',
@@ -3156,26 +3158,29 @@ def get_hunspell_dictionary_wordlist(
     try:
         with open(dic_path, encoding=dictionary_encoding) as dic_file:
             dic_buffer = dic_file.readlines()
-    except (UnicodeDecodeError, FileNotFoundError, PermissionError):
+    except (UnicodeDecodeError, FileNotFoundError, PermissionError) as error:
         LOGGER.exception(
-            'loading %s as %s encoding failed, fall back to ISO-8859-1.',
-            dic_path, dictionary_encoding)
+            'loading %s as %s encoding failed, '
+            'fall back to ISO-8859-1. %s: %s',
+            dic_path, dictionary_encoding, error.__class__.__name__, error)
         dictionary_encoding = 'ISO-8859-1'
         try:
             with open(dic_path, encoding=dictionary_encoding) as dic_file:
                 dic_buffer = dic_file.readlines()
-        except (UnicodeDecodeError, FileNotFoundError, PermissionError):
+        except (UnicodeDecodeError, FileNotFoundError, PermissionError) as error:
             LOGGER.exception(
-                'loading %s as %s encoding failed, giving up.',
-                dic_path, dictionary_encoding)
+                'loading %s as %s encoding failed, giving up. %s: %s',
+                dic_path, dictionary_encoding, error.__class__.__name__, error)
             return ('', '', [])
-        except Exception:
+        except Exception as error:
             LOGGER.exception(
-                'Unexpected error loading .dic File: %s', dic_path)
+                'Unexpected error loading .dic File %s: %s: %s',
+                dic_path, error.__class__.__name__, error)
             return ('', '', [])
-    except Exception:
+    except Exception as error:
         LOGGER.exception(
-            'Unexpected error loading .dic File: %s', dic_path)
+            'Unexpected error loading .dic File %s: %s: %s',
+            dic_path, error.__class__.__name__, error)
         return ('', '', [])
     if not dic_buffer:
         return ('', '', [])
@@ -3832,11 +3837,11 @@ class ComposeSequences:
             else:
                 try:
                     keyvals.append(eval('IBus.KEY_' + name))
-                except AttributeError:
+                except AttributeError as error:
                     LOGGER.error(
                         'Invalid compose sequence. '
-                        'keysym "%s" does not exist.',
-                        name)
+                        'keysym "%s" does not exist. %s: %s',
+                        name, error.__class__.__name__, error)
                     return
         if not keyvals:
             return
@@ -3898,18 +3903,22 @@ class ComposeSequences:
                       encoding='UTF-8',
                       errors='ignore') as compose_file:
                 lines = compose_file.readlines()
-        except FileNotFoundError:
-            LOGGER.exception('Errror loading %s: %s',
-                             compose_path, _('File not found'))
-        except PermissionError:
-            LOGGER.exception('Error loading %s: %s',
-                             compose_path, _('Permission error'))
-        except UnicodeDecodeError:
-            LOGGER.exception('Error loading %s: %s',
-                             compose_path, _('Unicode decoding error'))
-        except Exception:
-            LOGGER.exception('Unexpected error loading %s: %s',
-                             compose_path, _('Unknown error'))
+        except FileNotFoundError as error:
+            LOGGER.exception('Error loading %s: %s: %s: %s',
+                             compose_path, _('File not found'),
+                             error.__class__.__name__, error)
+        except PermissionError as error:
+            LOGGER.exception('Error loading %s: %s: %s: %s',
+                             compose_path, _('Permission error'),
+                             error.__class__.__name__, error)
+        except UnicodeDecodeError as error:
+            LOGGER.exception('Error loading %s: %s: %s: %s',
+                             compose_path, _('Unicode decoding error'),
+                             error.__class__.__name__, error)
+        except Exception as error:
+            LOGGER.exception('Unexpected error loading %s: %s: %s: %s',
+                             compose_path, _('Unknown error'),
+                             error.__class__.__name__, error)
         if not lines:
             LOGGER.warning('File %s has no content', compose_path)
             return
@@ -4557,18 +4566,22 @@ class M17nDbInfo:
                               encoding='UTF-8',
                               errors='ignore') as ime_file:
                         full_contents = ime_file.read()
-                except FileNotFoundError:
-                    LOGGER.exception('Errror loading %s: %s',
-                                     mim_path, _('File not found'))
-                except PermissionError:
-                    LOGGER.exception('Error loading %s: %s',
-                                     mim_path, _('Permission error'))
-                except UnicodeDecodeError:
-                    LOGGER.exception('Error loading %s: %s',
-                                     mim_path, _('Unicode decoding error'))
-                except Exception:
-                    LOGGER.exception('Unexpected error loading %s: %s',
-                                     mim_path, _('Unknown error'))
+                except FileNotFoundError as error:
+                    LOGGER.exception('Error loading %s: %s: %s: %s',
+                                     mim_path, _('File not found'),
+                                     error.__class__.__name__, error)
+                except PermissionError as error:
+                    LOGGER.exception('Error loading %s: %s: %s: %s',
+                                     mim_path, _('Permission error'),
+                                     error.__class__.__name__, error)
+                except UnicodeDecodeError as error:
+                    LOGGER.exception('Error loading %s: %s: %s: %s',
+                                     mim_path, _('Unicode decoding error'),
+                                     error.__class__.__name__, error)
+                except Exception as error:
+                    LOGGER.exception('Unexpected error loading %s: %s: %s: %s',
+                                     mim_path, _('Unknown error'),
+                                     error.__class__.__name__, error)
                 if not full_contents:
                     LOGGER.warning('File %s has no content', mim_path)
                     continue

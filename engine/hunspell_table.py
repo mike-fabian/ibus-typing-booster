@@ -978,16 +978,20 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                             stripped_transliterated_string,
                             p_phrase=self._p_phrase,
                             pp_phrase=self._pp_phrase)
-                    except Exception:
-                        LOGGER.exception('Exception when calling select_words')
+                    except Exception as error:
+                        LOGGER.exception(
+                            'Exception when calling select_words: %s: %s',
+                            error.__class__.__name__, error)
                 if candidates and prefix:
                     candidates = [(prefix+x[0], x[1]) for x in candidates]
                 shortcut_candidates: List[Tuple[str, float]] = []
                 try:
                     shortcut_candidates = self.database.select_shortcuts(
                         self._transliterated_strings[ime])
-                except Exception:
-                    LOGGER.exception('Exception when calling select_shortcuts')
+                except Exception as error:
+                    LOGGER.exception(
+                        'Exception when calling select_shortcuts: %s: %s',
+                        error.__class__.__name__, error)
                 for cand in candidates + shortcut_candidates:
                     if cand[0] in phrase_frequencies:
                         phrase_frequencies[cand[0]] = max(
@@ -4447,14 +4451,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     self._error_sound_object = (
                         simpleaudio.WaveObject.from_wave_file(path))
                     LOGGER.info('Error sound initialized.')
-                except (FileNotFoundError, PermissionError):
+                except (FileNotFoundError, PermissionError) as error:
                     LOGGER.exception(
-                        'Initializing error sound object failed. '
-                        'File not found or no read permissions.')
-                except Exception:
+                        'Initializing error sound object failed: %s: %s ',
+                        error.__class__.__name__, error)
+                except Exception as error:
                     LOGGER.exception(
-                        'Initializing error sound object failed '
-                        'for unknown reasons.')
+                        'Initializing error sound object failed: %s: %s',
+                        error.__class__.__name__, error)
 
     def get_error_sound_file(self) -> str:
         '''
@@ -4672,9 +4676,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._google_application_credentials)
         try:
             client = speech.SpeechClient()
-        except Exception:
+        except Exception as error:
             LOGGER.exception(
-                'Exception when intializing Google speech-to-text')
+                'Exception when intializing Google speech-to-text: %s: %s',
+                error.__class__.__name__, error)
             self._speech_recognition_error(
                 _('Failed to init Google speech-to-text. See debug.log.'))
             return
@@ -4780,8 +4785,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         True)
                     if result.is_final:
                         break
-            except Exception:
-                LOGGER.exception('Google speech-to-text error')
+            except Exception as error:
+                LOGGER.exception('Google speech-to-text error: %s: %s',
+                                 error.__class__.__name__, error)
                 self._speech_recognition_error(
                     _('Google speech-to-text error. See debug.log.'))
                 return
@@ -5436,8 +5442,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._error_sound and self._error_sound_object:
             try:
                 dummy = self._error_sound_object.play()
-            except Exception:
-                LOGGER.exception('Playing error sound failed.')
+            except Exception as error:
+                LOGGER.exception('Playing error sound failed: %s: %s',
+                                 error.__class__.__name__, error)
 
     def _handle_compose(self, key: itb_util.KeyEvent) -> bool:
         '''Internal method to handle possible compose keys
