@@ -65,6 +65,7 @@ def synonyms(word: str, keep_original: bool = True) -> List[str]:
     return result[:]
 
 def hyponyms(word: str, keep_original: bool = True) -> List[str]:
+    # pylint: disable=line-too-long
     '''List hyponyms for word
 
     :param word: The word for which hyponyms should be looked up
@@ -81,6 +82,7 @@ def hyponyms(word: str, keep_original: bool = True) -> List[str]:
     >>> hyponyms('hat', keep_original = False)
     ['Panama', 'Panama hat', 'Stetson', 'bearskin', 'beaver', 'boater', 'bonnet', 'bowler', 'bowler hat', 'busby', 'campaign hat', 'cavalier hat', 'cocked hat', 'cowboy hat', 'deerstalker', 'derby', 'derby hat', 'dress hat', 'dunce cap', "dunce's cap", 'fedora', 'felt hat', "fool's cap", 'fur hat', 'high hat', 'homburg', 'leghorn', 'millinery', 'opera hat', 'plug hat', 'poke bonnet', 'sailor', 'shako', 'shovel hat', 'silk hat', 'skimmer', 'slouch hat', 'snap-brim hat', 'sombrero', "sou'wester", 'stovepipe', 'straw hat', 'sun hat', 'sunhat', 'ten-gallon hat', 'tirolean', 'titfer', 'top hat', 'topper', 'toque', 'trilby', 'tyrolean', "woman's hat"]
     '''
+    # pylint: enable=line-too-long
     result = sorted(set(lemma.name().replace('_', ' ')
                         for synset in wordnet.synsets(word)
                         for hyponym in synset.hyponyms()
@@ -119,6 +121,7 @@ def hypernyms(word: str, keep_original: bool = True) -> List[str]:
     return result[:]
 
 def related(word: str, keep_original: bool = True) -> List[str]:
+    # pylint: disable=line-too-long
     '''List all related words (synonyms, hypernyms, and hyponyms)
 
     :param word: The word for which related words should be looked up
@@ -132,6 +135,7 @@ def related(word: str, keep_original: bool = True) -> List[str]:
     >>> related('fedora')
     ['fedora', 'Stetson', 'felt hat', 'homburg', 'trilby', 'chapeau', 'hat', 'lid']
     '''
+    # pylint: enable=line-too-long
     result = (
         synonyms(word, keep_original=False)
         + hypernyms(word, keep_original=False)
@@ -151,11 +155,13 @@ def _init() -> None:
     '''
     try:
         wordnet.synsets('car')
-    except (LookupError,):
-        raise LookupError
-    except:
-        print("Unexpected error:", sys.exc_info()[0])
-        raise
+    except (LookupError,) as error:
+        print(f'{error.__class__.__name__}: {error}')
+        raise LookupError from error
+    except Exception as error:
+        print(f'Unexpected error: {error.__class__.__name__}: {error} '
+              f'{sys.exc_info()[0]}')
+        raise Exception from error
 
 def _del() -> None:
     '''Cleanup, nothing to do here'''
@@ -164,7 +170,6 @@ def _del() -> None:
 class __ModuleInitializer:
     def __init__(self) -> None:
         _init()
-        return
 
     def __del__(self) -> None:
         # _del()

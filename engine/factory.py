@@ -43,17 +43,18 @@ class EngineFactory(IBus.Factory): # type: ignore
     def __init__(self, bus: IBus.Bus) -> None:
         global DEBUG_LEVEL
         try:
-            DEBUG_LEVEL = int(str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
+            DEBUG_LEVEL = int(
+                str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
         except (TypeError, ValueError):
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
             LOGGER.debug('EngineFactory.__init__(bus=%s)\n', bus)
-        self.db: Optional[tabsqlitedb.TabSqliteDb] = None
-        self.dbdict: Dict[str, tabsqlitedb.TabSqliteDb] = {}
+        self.database: Optional[tabsqlitedb.TabSqliteDb] = None
+        self.database_dict: Dict[str, tabsqlitedb.TabSqliteDb] = {}
         self.enginedict: Dict[str, hunspell_table.TypingBoosterEngine] = {}
         self.bus = bus
         #engine.Engine.CONFIG_RELOADED(bus)
-        super(EngineFactory, self).__init__(
+        super().__init__(
             connection=bus.get_connection(), object_path=IBus.PATH_FACTORY)
         self.engine_id = 0
 
@@ -67,28 +68,30 @@ class EngineFactory(IBus.Factory): # type: ignore
         engine_path = engine_base_path % re.sub(
             r'[^a-zA-Z0-9_/]', '_', engine_name)
         try:
-            if engine_name in self.dbdict:
-                self.db = self.dbdict[engine_name]
+            if engine_name in self.database_dict:
+                self.database = self.database_dict[engine_name]
             else:
-                self.db = tabsqlitedb.TabSqliteDb()
-                self.dbdict[engine_name] = self.db
+                self.database = tabsqlitedb.TabSqliteDb()
+                self.database_dict[engine_name] = self.database
             if engine_name in self.enginedict:
                 engine = self.enginedict[engine_name]
             else:
                 engine = hunspell_table.TypingBoosterEngine(
-                    self.bus, engine_path + str(self.engine_id), self.db)
+                    self.bus, engine_path + str(self.engine_id), self.database)
                 self.enginedict[engine_name] = engine
                 self.engine_id += 1
             return engine
-        except:
-            print("failed to create engine %s" %engine_name)
+        except Exception as error:
+            print(f'failed to create engine {engine_name}: '
+                  f'{error.__class__.__name__}: {error}')
             import traceback
             traceback.print_exc()
-            raise Exception("Cannot create engine %s" % engine_name)
+            raise Exception from error
 
     def do_destroy(self) -> None:
         '''Destructor, which finish some task for IME'''
-        LOGGER.info('Syncing user database')
-        for _db in self.dbdict:
-            self.dbdict[_db].sync_usrdb()
-        super(EngineFactory, self).destroy()
+        LOGGER.info('Syncing user database(s)')
+        for key, database in self.database_dict.items():
+            LOGGER.info('Syncing %s %s', key, database)
+            database.sync_usrdb()
+        super().destroy()

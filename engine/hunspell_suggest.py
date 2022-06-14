@@ -159,7 +159,8 @@ class Dictionary:
                     self.pyhunspell_object = None
                 except Exception as error:
                     LOGGER.debug(
-                        'Unexpected error initializing hunspell for %s: %s: %s',
+                        'Unexpected error initializing hunspell for '
+                        '%s: %s: %s',
                         self.name, error.__class__.__name__, error)
                     self.pyhunspell_object = None
 

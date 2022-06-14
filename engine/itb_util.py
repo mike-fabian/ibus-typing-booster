@@ -2034,8 +2034,9 @@ def get_flag(lookup_text: str) -> str:
     >>> get_flag('GB')
     '🇬🇧'
 
-    There is no Yugoslavia anymore, nevertheless returning '🇾🇺' is fine, a white
-    flag with question mark is shown in the “Noto Color Emoji” font.
+    There is no Yugoslavia anymore, nevertheless returning '🇾🇺' is
+    fine, a white flag with question mark is shown in the “Noto Color
+    Emoji” font.
 
     >>> get_flag('YU')
     '🇾🇺'
@@ -2077,9 +2078,9 @@ def get_effective_lc_ctype() -> str:
     '''Returns the effective value of LC_CTYPE'''
     if 'LC_ALL' in os.environ:
         return os.environ['LC_ALL']
-    elif 'LC_CTYPE' in os.environ:
+    if 'LC_CTYPE' in os.environ:
         return os.environ['LC_CTYPE']
-    elif 'LANG' in os.environ:
+    if 'LANG' in os.environ:
         return os.environ['LANG']
     return 'C'
 
@@ -2087,9 +2088,9 @@ def get_effective_lc_messages() -> str:
     '''Returns the effective value of LC_MESSAGES'''
     if 'LC_ALL' in os.environ:
         return os.environ['LC_ALL']
-    elif 'LC_MESSAGES' in os.environ:
+    if 'LC_MESSAGES' in os.environ:
         return os.environ['LC_MESSAGES']
-    elif 'LANG' in os.environ:
+    if 'LANG' in os.environ:
         return os.environ['LANG']
     return 'C'
 
@@ -2119,7 +2120,9 @@ _cldr_locale_pattern = re.compile(
 # http://www.unicode.org/iso15924/iso15924-codes.html
 _glibc_script_ids = {
     'latin': 'Latn',
-    'iqtelif': 'Latn', # Tatar, tt_RU.UTF-8@iqtelif, http://en.wikipedia.org/wiki/User:Ultranet/%C4%B0QTElif
+    # Tatar, tt_RU.UTF-8@iqtelif
+    # see: http://en.wikipedia.org/wiki/User:Ultranet/%C4%B0QTElif
+    'iqtelif': 'Latn',
     'cyrillic': 'Cyrl',
     'devanagari': 'Deva',
 }
@@ -2129,12 +2132,14 @@ Locale = collections.namedtuple(
     ['language', 'script', 'territory', 'variant', 'encoding'])
 
 def parse_locale(localeId: str) -> Locale:
+    # pylint: disable=line-too-long
     '''
     Parses a locale name in glibc or CLDR format and returns
     language, script, territory, variant, and encoding
 
     :param localeId: The name of the locale
-    :return: The parts of the locale: language, script, territory, variant, encoding
+    :return: The parts of the locale:
+             language, script, territory, variant, encoding
     :rtype: A namedtuple of strings
             Locale(language=string,
                    script=string,
@@ -2235,6 +2240,7 @@ def parse_locale(localeId: str) -> Locale:
     Locale(language='en', script='', territory='US', variant='POSIX', encoding='UTF-8')
 
     '''
+    # pylint: enable=line-too-long
     language = ''
     script = ''
     territory = ''
@@ -2243,7 +2249,7 @@ def parse_locale(localeId: str) -> Locale:
     if localeId:
         dot_index = localeId.find('.')
         at_index = localeId.find('@')
-        if dot_index >= 0 and at_index > dot_index:
+        if 0 <= dot_index < at_index:
             encoding  = localeId[dot_index + 1:at_index]
             localeId = localeId[:dot_index] + localeId[at_index:]
         elif dot_index >= 0:
@@ -2263,11 +2269,11 @@ def parse_locale(localeId: str) -> Locale:
             variant = 'POSIX'
             localeId = ''
     if localeId:
-        for key in _glibc_script_ids:
-            localeId = localeId.replace(key, _glibc_script_ids[key])
-            if localeId.endswith('@' + _glibc_script_ids[key]):
-                script = _glibc_script_ids[key]
-                localeId = localeId.replace('@' + _glibc_script_ids[key], '')
+        for key, script_id_iso in _glibc_script_ids.items():
+            localeId = localeId.replace(key, script_id_iso)
+            if localeId.endswith('@' + script_id_iso):
+                script = script_id_iso
+                localeId = localeId.replace('@' + script_id_iso, '')
     if localeId:
         at_index = localeId.find('@')
         if at_index >= 0:
@@ -2295,7 +2301,8 @@ def parse_locale(localeId: str) -> Locale:
 
 def locale_normalize(localeId: str) -> str:
     '''
-    Returns a normalized version of the locale id string *without* the encoding.
+    Returns a normalized version of the locale id string
+    *without* the encoding.
 
     :param localeId: The original locale id string
 
@@ -2416,6 +2423,7 @@ def expand_languages(languages: Iterable[str]) -> List[str]:
     return expanded_languages
 
 def locale_text_to_match(localeId: str) -> str:
+    # pylint: disable=line-too-long
     '''
     Returns a text which can be matched against typed user input
     to check whether the user might be looking for this locale
@@ -2446,6 +2454,7 @@ def locale_text_to_match(localeId: str) -> str:
     ...     # unneeded return value assigned to variable
     ...     _ = os.environ.pop('LC_ALL', None)
     '''
+    # pylint: enable=line-too-long
     effective_lc_messages = get_effective_lc_messages()
     text_to_match = localeId.replace(' ', '')
     if localeId == 't':
@@ -2879,6 +2888,7 @@ def is_right_to_left_messages() -> bool:
     return False
 
 def is_right_to_left(text: str) -> bool:
+    # pylint: disable=bidirectional-unicode
     '''Check whether a text is right-to-left text or not
 
     :param text: The text to check
@@ -2910,6 +2920,7 @@ def is_right_to_left(text: str) -> bool:
     >>> is_right_to_left('⁨a⁩⁨﷼⁩﷼')
     True
     '''
+    # pylint: enable=bidirectional-unicode
     skip = False
     for char in text:
         bidi_cat = unicodedata.bidirectional(char)
@@ -2925,6 +2936,7 @@ def is_right_to_left(text: str) -> bool:
     return False
 
 def bidi_embed(text: str) -> str:
+    # pylint: disable=bidirectional-unicode
     '''Embed the text using explicit directional embedding
 
     Returns “RLE + text + PDF” if the text is right-to-left,
@@ -2942,6 +2954,7 @@ def bidi_embed(text: str) -> str:
     >>> bidi_embed('﷼')
     '‫﷼‬'
     '''
+    # pylint: enable=bidirectional-unicode
     if is_right_to_left(text):
         return chr(0x202B) + text + chr(0x202C) # RLE + text + PDF
     return chr(0x202A) + text + chr(0x202C) # LRE + text + PDF
@@ -3167,7 +3180,9 @@ def get_hunspell_dictionary_wordlist(
         try:
             with open(dic_path, encoding=dictionary_encoding) as dic_file:
                 dic_buffer = dic_file.readlines()
-        except (UnicodeDecodeError, FileNotFoundError, PermissionError) as error:
+        except (UnicodeDecodeError,
+                FileNotFoundError,
+                PermissionError) as error:
             LOGGER.exception(
                 'loading %s as %s encoding failed, giving up. %s: %s',
                 dic_path, dictionary_encoding, error.__class__.__name__, error)
@@ -3740,33 +3755,38 @@ class ComposeSequences:
             # compose file from Xorg, then the file from Gtk and then
             # the file from ibus:
             compose_file_paths.append(self._locale_compose_file())
-            compose_file_paths.append(os.path.expanduser('~/.config/gtk-3.0/Compose'))
-            compose_file_paths.append(os.path.expanduser('~/.config/gtk-4.0/Compose'))
-            compose_file_paths.append(os.path.expanduser('~/.config/ibus/Compose'))
-        # Now read all compose files on the list. If some of the compose files read
-        # contain different definitions of compose sequences, the definition
-        # read last wins.
+            compose_file_paths.append(
+                os.path.expanduser('~/.config/gtk-3.0/Compose'))
+            compose_file_paths.append(
+                os.path.expanduser('~/.config/gtk-4.0/Compose'))
+            compose_file_paths.append(
+                os.path.expanduser('~/.config/ibus/Compose'))
+        # Now read all compose files on the list. If some of the
+        # compose files read contain different definitions of compose
+        # sequences, the definition read last wins.
         #
-        # All the compose files read may contain include statements including other
-        # compose files.
+        # All the compose files read may contain include statements
+        # including other compose files.
         #
         # There are 3 substitutions that can be made in the file name
         # of the include instruction (only %H and %L are mentioned in
         # https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html
         # but https://www.mankier.com/5/Compose and “man xcompose” on
-        # Fedora 34 also mention %S. %S was added ages ago by Marko Myllynen
-        # to allow rewriting the fi_FI compose file so that it includes en_US
-        # and then defines everything specified in the standard. Marko confirmed
-        # that %S works on F34):
+        # Fedora 34 also mention %S. %S was added ages ago by Marko
+        # Myllynen to allow rewriting the fi_FI compose file so that
+        # it includes en_US and then defines everything specified in
+        # the standard.  Marko confirmed that %S works on F34):
         #
-        # %H  expands to the user's home directory (the $HOME environment variable)
-        # %L  expands to the name of the locale specific Compose file (i.e.,
-        #     "/usr/share/X11/locale/<localename>/Compose")
-        # %S  expands to the name of the system directory for Compose files (i.e.,
-        #     "/usr/share/X11/locale")
+        # %H  expands to the user's home directory
+        #     (the $HOME environment variable)
+        # %L  expands to the name of the locale specific Compose file
+        #     (i.e. "/usr/share/X11/locale/<localename>/Compose")
+        # %S  expands to the name of the system directory for Compose files
+        #     (i.e. "/usr/share/X11/locale")
         #
-        # For example, to include the locale specific default compose file one
-        # can use (let’s assume the current locale is en_US.UTF-8):
+        # For example, to include the locale specific default compose
+        # file one can use (let’s assume the current locale is
+        # en_US.UTF-8):
         #
         #     include "%S/en_US.UTF-8/Compose"
         #
@@ -3929,7 +3949,8 @@ class ComposeSequences:
         include_pattern = re.compile(
             r'^\s*include\s*"(?P<include_path>[^"]+)".*')
         compose_sequence_pattern = re.compile(
-            r'^\s*(?P<sequence>(<[a-zA-Z0-9_]+>\s*)+):\s*"(?P<result>(\\"|[^"])*)".*')
+            r'^\s*(?P<sequence>(<[a-zA-Z0-9_]+>\s*)+):'
+            r'\s*"(?P<result>(\\"|[^"])*)".*')
         for line in lines:
             if not line.strip():
                 continue
@@ -4785,17 +4806,16 @@ class KeyvalsToKeycodes:
         # that function. Until I figure out what the problem really
         # is, fall back to the standard us layout for the most
         # important key values:
-        self._standard_us_layout_keyvals_to_keycodes = {
+        self._std_us_keyvals_to_keycodes = {
             IBus.KEY_Left: [113],
             IBus.KEY_BackSpace: [22],
             IBus.KEY_a: [38],
         }
-        for keyval in self._standard_us_layout_keyvals_to_keycodes:
+        for keyval, keycodes in self._std_us_keyvals_to_keycodes.items():
             if keyval not in self.keyvals_to_keycodes:
                 LOGGER.warning('No keycodes found: keyval: %s name: %s',
                                keyval, IBus.keyval_name(keyval))
-                self.keyvals_to_keycodes[keyval] = (
-                    self._standard_us_layout_keyvals_to_keycodes[keyval])
+                self.keyvals_to_keycodes[keyval] = keycodes
 
     def keyvals(self) -> Set[int]:
         '''Returns the Set of keyvals available on the keyboard layout'''
@@ -4956,6 +4976,7 @@ class KeyEvent:
             + 'modifier=%s\n' % self.modifier)
 
 def keyevent_to_keybinding(keyevent: KeyEvent) -> str:
+    '''Calculates a keybinding string from a key event.'''
     keybinding = ''
     if keyevent.shift:
         keybinding += 'Shift+'
@@ -4983,6 +5004,7 @@ def keyevent_to_keybinding(keyevent: KeyEvent) -> str:
     return keybinding
 
 def keybinding_to_keyevent(keybinding: str) -> KeyEvent:
+    '''Returns a key event object created from a key binding string.'''
     name = keybinding.split('+')[-1]
     keyval = IBus.keyval_from_name(name)
     state = 0
@@ -5081,6 +5103,10 @@ class HotKeys:
         return repr(self._hotkeys)
 
 class ItbKeyInputDialog(Gtk.MessageDialog): # type: ignore
+    '''
+    A dialog to enter a key or a key combination to be used as a
+    key binding for a command.
+    '''
     def __init__(
             self,
             # Translators: This is used in the title bar of a dialog window
@@ -5088,7 +5114,7 @@ class ItbKeyInputDialog(Gtk.MessageDialog): # type: ignore
             # key binding for a command.
             title: str = _('Key input'),
             parent: Gtk.Window = None) -> None:
-        Gtk.Dialog.__init__(
+        Gtk.MessageDialog.__init__(
             self,
             title=title,
             parent=parent)
@@ -5111,18 +5137,25 @@ class ItbKeyInputDialog(Gtk.MessageDialog): # type: ignore
             self.set_transient_for(parent.get_toplevel())
         self.show()
 
-    def on_key_press_event(# pylint: disable=no-self-use
-            self, widget: Gtk.MessageDialog, event: Gdk.EventKey) -> bool:
+    @staticmethod
+    def on_key_press_event(
+            widget: Gtk.MessageDialog, event: Gdk.EventKey) -> bool:
+        '''Called when a key is pressed'''
         widget.e = (event.keyval,
                     event.get_state() & KEYBINDING_STATE_MASK)
         return True
 
-    def on_key_release_event(# pylint: disable=no-self-use
-            self, widget: Gtk.MessageDialog, _event: Gdk.EventKey) -> bool:
+    @staticmethod
+    def on_key_release_event(
+            widget: Gtk.MessageDialog, _event: Gdk.EventKey) -> bool:
+        '''Called when a key is released'''
         widget.response(Gtk.ResponseType.OK)
         return True
 
 class ItbAboutDialog(Gtk.AboutDialog): # type: ignore
+    '''
+    The “About” dialog for Typing Booster
+    '''
     def  __init__(self, parent: Gtk.Window = None) -> None:
         Gtk.AboutDialog.__init__(self, parent=parent)
         self.set_modal(True)
@@ -5193,7 +5226,7 @@ class ItbAboutDialog(Gtk.AboutDialog): # type: ignore
 AUDIO_RATE: int = 16000
 AUDIO_CHUNK: int = int(AUDIO_RATE / 10)  # 100ms
 
-class MicrophoneStream(object):
+class MicrophoneStream():
     '''Opens a recording stream as a generator yielding the audio chunks.
 
     This code is from:
