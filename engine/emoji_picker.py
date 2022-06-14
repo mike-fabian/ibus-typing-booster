@@ -538,9 +538,9 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         if _ARGS.debug:
             LOGGER.debug(
                 'natural_width_search_entry = %s '
-                %natural_width_search_entry
-                + 'natural_width_search_bar = %s\n'
-                %natural_width_search_bar)
+                'natural_width_search_bar = %s\n',
+                natural_width_search_entry,
+                natural_width_search_bar)
         self._browse_paned.set_position(natural_width_search_bar)
 
         self._selection_clipboard = Gtk.Clipboard.get(
@@ -1372,10 +1372,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             return
         if _ARGS.debug:
             LOGGER.debug(
-                'on_label_selected(): model[iterator] = %s\n'
-                %model[iterator][:]
-                + 'self._currently_selected_label = %s\n'
-                %repr(self._currently_selected_label))
+                'model[iterator] = %s\n'
+                'self._currently_selected_label = %s\n',
+                model[iterator][:],
+                repr(self._currently_selected_label))
         self._search_bar.set_search_mode(False)
         self._browse_treeview.grab_focus()
         language = model[iterator][1]
@@ -1703,10 +1703,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         '''
         if _ARGS.debug:
             LOGGER.debug(
-                'on_flowbox_event_box_button_release() '
-                + 'event_button.type=%s ' %event_button.type
-                + 'event_button.window=%s ' %event_button.window
-                + 'event_button.button=%s\n' %event_button.button)
+                'event_button.type=%s '
+                'event_button.window=%s '
+                'event_button.button=%s\n',
+                event_button.type, event_button.window, event_button.button)
         if event_button.button == 1:
             # Call self._emoji_event_box_selected() in the release
             # event because here we know that it has not been a long
@@ -1974,10 +1974,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         '''
         if _ARGS.debug:
             LOGGER.debug(
-                'on_flowbox_event_box_button_press() '
-                + 'event_button.type=%s ' %event_button.type
-                + 'event_button.window=%s ' %event_button.window
-                + 'event_button.button=%s\n' %event_button.button)
+                'event_button.type=%s '
+                'event_button.window=%s '
+                'event_button.button=%s\n',
+                event_button.type, event_button.window, event_button.button)
         if event_button.type != Gdk.EventType.BUTTON_PRESS:
             # ignore double and triple clicks i.e. ignore
             # Gdk.EventType.2BUTTON_PRESS and

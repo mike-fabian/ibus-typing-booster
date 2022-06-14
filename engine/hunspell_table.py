@@ -402,12 +402,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if (len(self._dictionary_names)
             > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES):
             LOGGER.warning(
-                'Trying to set more than the allowed maximum of %s '
-                %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
-                + 'dictionaries.\n'
-                + 'Trying to set: %s\n' %self._dictionary_names
-                + 'Really setting: %s\n'
-                %self._dictionary_names[
+                'Trying to set more than the allowed maximum of '
+                '%s dictionaries.\n'
+                'Trying to set: %s\n'
+                'Really setting: %s\n',
+                itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES,
+                self._dictionary_names,
+                self._dictionary_names[
                     :itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
             self._dictionary_names = self._dictionary_names[
                 :itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES]
@@ -445,12 +446,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 GLib.Variant.new_string(','.join(self._current_imes)))
         if len(self._current_imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
             LOGGER.warning(
-                'Trying to set more than the allowed maximum of %s '
-                %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
-                + 'input methods.\n'
-                + 'Trying to set: %s\n' %self._current_imes
-                + 'Really setting: %s\n'
-                %self._current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
+                'Trying to set more than the allowed maximum of '
+                '%s input methods.\n'
+                'Trying to set: %s\n'
+                'Really setting: %s\n',
+                itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS,
+                self._current_imes,
+                self._current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
             self._current_imes = (
                 self._current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
 
@@ -1386,12 +1388,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return
         if len(imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
             LOGGER.error(
-                'Trying to set more than the allowed maximum of %s '
-                %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
-                + 'input methods.\n'
-                + 'Trying to set: %s\n' %imes
-                + 'Really setting: %s\n'
-                %imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
+                'Trying to set more than the allowed maximum of '
+                '%s input methods.\n'
+                'Trying to set: %s\n'
+                'Really setting: %s\n',
+                itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS,
+                imes,
+                imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
             imes = imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS]
         if set(imes) != set(self._current_imes):
             # Input methods have been added or removed from the list
@@ -1439,12 +1442,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return
         if len(dictionary_names) > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
             LOGGER.error(
-                'Trying to set more than the allowed maximum of %s '
-                %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
-                + 'dictionaries.\n'
-                + 'Trying to set: %s\n' %dictionary_names
-                + 'Really setting: %s\n'
-                %dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
+                'Trying to set more than the allowed maximum of '
+                '%s dictionaries.\n'
+                'Trying to set: %s\n'
+                'Really setting: %s\n',
+                itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES,
+                dictionary_names,
+                dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
             dictionary_names = (
                 dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
         self._dictionary_names = dictionary_names
