@@ -3727,7 +3727,8 @@ class SetupUI(Gtk.Window): # type: ignore
                 self._keybindings_edit_popover_remove_button.set_sensitive(
                     False)
 
-    def _on_keybindings_edit_popover_add_button_clicked(self, *_args: Any) -> None:
+    def _on_keybindings_edit_popover_add_button_clicked(
+            self, *_args: Any) -> None:
         '''
         Signal handler called when the “Add” button to add
         a key binding has been clicked.
