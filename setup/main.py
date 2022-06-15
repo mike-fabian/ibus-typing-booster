@@ -1104,21 +1104,25 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_methods_add_popover_scroll = None
         self._fill_input_methods_listbox()
 
+        _shortcuts_grid_row = -1
+
         self._shortcut_label = Gtk.Label()
         self._shortcut_label.set_text(_('Enter shortcut here:'))
         self._shortcut_label.set_hexpand(False)
         self._shortcut_label.set_vexpand(False)
         self._shortcut_label.set_xalign(0)
+        _shortcuts_grid_row += 1
         self._custom_shortcuts_grid.attach(
-            self._shortcut_label, 0, 0, 3, 1)
+            self._shortcut_label, 0, _shortcuts_grid_row, 3, 1)
 
         self._shortcut_entry = Gtk.Entry()
         self._shortcut_entry.set_visible(True)
         self._shortcut_entry.set_can_focus(True)
         self._shortcut_entry.set_hexpand(False)
         self._shortcut_entry.set_vexpand(False)
+        _shortcuts_grid_row += 1
         self._custom_shortcuts_grid.attach(
-            self._shortcut_entry, 0, 1, 3, 1)
+            self._shortcut_entry, 0, _shortcuts_grid_row, 3, 1)
         self._shortcut_entry.set_text('')
         self._shortcut_entry.connect(
             'notify::text', self._on_shortcut_entry)
@@ -1129,8 +1133,9 @@ class SetupUI(Gtk.Window): # type: ignore
         self._shortcut_expansion_label.set_hexpand(False)
         self._shortcut_expansion_label.set_vexpand(False)
         self._shortcut_expansion_label.set_xalign(0)
+        _shortcuts_grid_row += 1
         self._custom_shortcuts_grid.attach(
-            self._shortcut_expansion_label, 0, 2, 3, 1)
+            self._shortcut_expansion_label, 0, _shortcuts_grid_row, 3, 1)
 
         self._shortcut_expansion_scroll = Gtk.ScrolledWindow()
         self._shortcut_expansion_scroll.set_can_focus(False)
@@ -1146,10 +1151,12 @@ class SetupUI(Gtk.Window): # type: ignore
         self._shortcut_expansion_textview.set_hexpand(False)
         self._shortcut_expansion_textview.set_vexpand(False)
         self._shortcut_expansion_scroll.add(self._shortcut_expansion_textview)
+        _shortcuts_grid_row += 1
         self._custom_shortcuts_grid.attach(
-            self._shortcut_expansion_scroll, 0, 3, 3, 3)
+            self._shortcut_expansion_scroll, 0, _shortcuts_grid_row, 3, 3)
         self._shortcut_expansion_textview_buffer.connect(
             'notify::text', self._on_shortcut_expansion_textview_buffer)
+        _shortcuts_grid_row += 4
 
         self._shortcut_clear_button = Gtk.Button(
             label=_('Clear input'))
@@ -1157,7 +1164,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._shortcut_clear_button.set_hexpand(False)
         self._shortcut_clear_button.set_vexpand(False)
         self._custom_shortcuts_grid.attach(
-            self._shortcut_clear_button, 0, 7, 1, 1)
+            self._shortcut_clear_button, 0, _shortcuts_grid_row, 1, 1)
         self._shortcut_clear_button.connect(
             'clicked', self._on_shortcut_clear_clicked)
         self._shortcut_clear_button.set_sensitive(False)
@@ -1168,7 +1175,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._shortcut_delete_button.set_hexpand(False)
         self._shortcut_delete_button.set_vexpand(False)
         self._custom_shortcuts_grid.attach(
-            self._shortcut_delete_button, 1, 7, 1, 1)
+            self._shortcut_delete_button, 1, _shortcuts_grid_row, 1, 1)
         self._shortcut_delete_button.connect(
             'clicked', self._on_shortcut_delete_clicked)
         self._shortcut_delete_button.set_sensitive(False)
@@ -1179,7 +1186,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._shortcut_add_button.set_hexpand(False)
         self._shortcut_add_button.set_vexpand(False)
         self._custom_shortcuts_grid.attach(
-            self._shortcut_add_button, 2, 7, 1, 1)
+            self._shortcut_add_button, 2, _shortcuts_grid_row, 1, 1)
         self._shortcut_add_button.connect(
             'clicked', self._on_shortcut_add_clicked)
         self._shortcut_add_button.set_sensitive(False)
@@ -1214,8 +1221,9 @@ class SetupUI(Gtk.Window): # type: ignore
         self._shortcut_treeview.get_selection().connect(
             'changed', self._on_shortcut_selected)
         self._shortcut_treeview_scroll.add(self._shortcut_treeview)
+        _shortcuts_grid_row += 1
         self._custom_shortcuts_grid.attach(
-            self._shortcut_treeview_scroll, 0, 8, 3, 10)
+            self._shortcut_treeview_scroll, 0, _shortcuts_grid_row, 3, 10)
 
         self._keybindings_label = Gtk.Label()
         self._keybindings_label.set_text(
