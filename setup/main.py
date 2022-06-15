@@ -4791,7 +4791,9 @@ class SetupUI(Gtk.Window): # type: ignore
                 'inlinecompletion',
                 GLib.Variant.new_int32(mode))
         else:
-            self._inline_completion_checkbutton.set_active(bool(mode))
+            for i, item in enumerate(self._inline_completion_store):
+                if self._inline_completion == item[1]:
+                    self._inline_completion_combobox.set_active(i)
 
     def set_auto_capitalize(
             self,
