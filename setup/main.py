@@ -613,7 +613,8 @@ class SetupUI(Gtk.Window): # type: ignore
             # “forward_key_event()” is the name of a function in the
             # ibus API and should probably not be translated, therefore
             # I didn’t put it into the translatable string but used %s.
-            label=_('Avoid using the %s function') % 'forward_key_event()')
+            label=_('Avoid using the %s function')
+            % 'forward_key_event()') # pylint: disable=consider-using-f-string
         self._avoid_forward_key_event_checkbutton.set_tooltip_text(
             # Translators: Avoid the function forward_key_event() in
             # case it is not implemented or has a broken
@@ -634,7 +635,7 @@ class SetupUI(Gtk.Window): # type: ignore
             _('Use a workaround if the %s function is broken. '
               'Enable this option only if absolutely necessary, '
               'it can also cause problems, especially when XIM is used.')
-            % 'forward_key_event()')
+            % 'forward_key_event()') # pylint: disable=consider-using-f-string
         self._avoid_forward_key_event_checkbutton.connect(
             'clicked', self._on_avoid_forward_key_event_checkbutton)
         self._avoid_forward_key_event = itb_util.variant_to_value(
@@ -967,8 +968,7 @@ class SetupUI(Gtk.Window): # type: ignore
             # Translators: Tooltip for a button used to set the list of
             # dictionaries to the default for the current locale.
             _('Set dictionaries to the default for the current locale.')
-            + ' LC_CTYPE=%s'
-            % itb_util.get_effective_lc_ctype())
+            + f' LC_CTYPE={itb_util.get_effective_lc_ctype()}')
         self._dictionaries_default_button.connect(
             'clicked', self._on_dictionaries_default_button_clicked)
         self._dictionaries_default_button.set_sensitive(True)
@@ -1084,8 +1084,7 @@ class SetupUI(Gtk.Window): # type: ignore
             # Translators: Tooltip for a button used to set the list of
             # input methods to the default for the current locale.
             _('Set input methods to the default for the current locale.')
-            + ' LC_CTYPE=%s'
-            % itb_util.get_effective_lc_ctype())
+            + f' LC_CTYPE={itb_util.get_effective_lc_ctype()}')
         self._input_methods_default_button.connect(
             'clicked', self._on_input_methods_default_button_clicked)
         self._input_methods_default_button.set_sensitive(True)
@@ -2120,12 +2119,13 @@ class SetupUI(Gtk.Window): # type: ignore
         if (len(self._dictionary_names)
             > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES):
             LOGGER.error(
-                'Trying to set more than the allowed maximum of %s '
-                %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
-                + 'dictionaries.\n'
-                + 'Trying to set: %s\n' %self._dictionary_names
-                + 'Really setting: %s\n'
-                %self._dictionary_names[
+                'Trying to set more than the allowed maximum of '
+                '%s dictionaries.\n'
+                'Trying to set: %s\n'
+                'Really setting: %s\n',
+                itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES,
+                self._dictionary_names,
+                self._dictionary_names[
                     :itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
             self._dictionary_names = (
                 self._dictionary_names[
@@ -2227,12 +2227,13 @@ class SetupUI(Gtk.Window): # type: ignore
                 GLib.Variant.new_string(','.join(self._current_imes)))
         if len(self._current_imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
             LOGGER.error(
-                'Trying to set more than the allowed maximum of %s '
-                %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
-                + 'input methods.\n'
-                + 'Trying to set: %s\n' %self._current_imes
-                + 'Really setting: %s\n'
-                % self._current_imes[
+                'Trying to set more than the allowed maximum of '
+                '%s input methods.\n'
+                'Trying to set: %s\n'
+                'Really setting: %s\n',
+                itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS,
+                self._current_imes,
+                self._current_imes[
                     :itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
             self._current_imes = (
                 self._current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
@@ -3021,8 +3022,8 @@ class SetupUI(Gtk.Window): # type: ignore
             # in order not to create extra work for the translators to
             # translate a message which should never be displayed anyway.
             self.__run_message_dialog(
-                'The maximum number of dictionaries is %s.'
-                %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES,
+                'The maximum number of dictionaries '
+                f'is {itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES}.',
                 message_type=Gtk.MessageType.ERROR)
             return
         self._dictionaries_add_popover = Gtk.Popover()
@@ -3335,8 +3336,8 @@ class SetupUI(Gtk.Window): # type: ignore
             # in order not to create extra work for the translators to
             # translate a message which should never be displayed anyway.
             self.__run_message_dialog(
-                'The maximum number of input methods is %s.'
-                %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS,
+                'The maximum number of input methods '
+                f'is {itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS}.',
                 message_type=Gtk.MessageType.ERROR)
             return
         self._input_methods_add_popover = Gtk.Popover()
@@ -3681,9 +3682,10 @@ class SetupUI(Gtk.Window): # type: ignore
             # been called already and this should have set
             # self._keybindings_selected_command
             LOGGER.error(
-                'Unexpected error, command = "%s" ' % command
-                + 'self._keybindings_selected_command = "%s"\n'
-                % self._keybindings_selected_command)
+                'Unexpected error, command = "%s" '
+                'self._keybindings_selected_command = "%s"\n',
+                command,
+                self._keybindings_selected_command)
             return
         self._create_and_show_keybindings_edit_popover()
 
@@ -5244,12 +5246,13 @@ class SetupUI(Gtk.Window): # type: ignore
             return
         if len(imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
             LOGGER.error(
-                'Trying to set more than the allowed maximum of %s '
-                %itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
-                + 'input methods.\n'
-                + 'Trying to set: %s\n' %imes
-                + 'Really setting: %s\n'
-                % imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
+                'Trying to set more than the allowed maximum of '
+                '%s input methods.\n'
+                'Trying to set: %s\n'
+                'Really setting: %s\n',
+                itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS,
+                imes,
+                imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
             imes = imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS]
         self._current_imes = imes
         self._fill_input_methods_listbox()
@@ -5292,12 +5295,13 @@ class SetupUI(Gtk.Window): # type: ignore
             return
         if len(dictionary_names) > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
             LOGGER.error(
-                'Trying to set more than the allowed maximum of %s '
-                %itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
-                + 'dictionaries.\n'
-                + 'Trying to set: %s\n' %dictionary_names
-                + 'Really setting: %s\n'
-                % dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
+                'Trying to set more than the allowed maximum of '
+                '%s dictionaries.\n'
+                'Trying to set: %s\n'
+                'Really setting: %s\n',
+                itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES,
+                dictionary_names,
+                dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
             dictionary_names = dictionary_names[
                 :itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES]
         self._dictionary_names = dictionary_names
