@@ -6058,8 +6058,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             #
             # Therefore, forward_key_event() should be preferred
             # unless the option to avoid it is set:
-            if (self._im_client.startswith('gtk4-im')
-                or self._avoid_forward_key_event):
+            if (self._avoid_forward_key_event
+                or
+                (hasattr(IBus.Capabilite, 'SYNC_PROCESS_KEY')
+                 and
+                 self.client_capabilities & IBus.Capabilite.SYNC_PROCESS_KEY)):
                 return self._return_false(key.val, key.code, key.state)
             self.forward_key_event(key.val, key.code, key.state)
             return True
