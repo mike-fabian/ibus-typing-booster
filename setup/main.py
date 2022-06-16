@@ -1191,6 +1191,18 @@ class SetupUI(Gtk.Window): # type: ignore
             'clicked', self._on_shortcut_add_clicked)
         self._shortcut_add_button.set_sensitive(False)
 
+        self._shortcut_search_entry = Gtk.SearchEntry()
+        self._shortcut_search_entry.set_can_focus(True)
+        self._shortcut_search_entry.set_visible(True)
+        self._shortcut_search_entry.set_halign(Gtk.Align.FILL)
+        self._shortcut_search_entry.set_hexpand(False)
+        self._shortcut_search_entry.set_vexpand(False)
+        self._shortcut_search_entry.connect(
+            'search-changed', self._on_shortcut_search_entry_changed)
+        _shortcuts_grid_row += 1
+        self._custom_shortcuts_grid.attach(
+            self._shortcut_search_entry, 0, _shortcuts_grid_row, 3, 1)
+
         self._shortcut_treeview_scroll = Gtk.ScrolledWindow()
         self._shortcut_treeview_scroll.set_can_focus(False)
         self._shortcut_treeview_scroll.set_hexpand(False)
@@ -1199,9 +1211,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._shortcut_treeview = Gtk.TreeView()
         self._shortcut_treeview_model = Gtk.ListStore(str, str)
         self._shortcut_treeview.set_model(self._shortcut_treeview_model)
-        current_shortcuts = self.tabsqlitedb.list_user_shortcuts()
-        for i, shortcut in enumerate(current_shortcuts):
-            self._shortcut_treeview_model.append(shortcut)
+        self._fill_shortcut_treeview_model('')
         shortcut_treeview_column_0 = Gtk.TreeViewColumn(
             # Translators: Column heading of the table listing the
             # existing shortcuts
@@ -2961,7 +2971,7 @@ class SetupUI(Gtk.Window): # type: ignore
         :param filter_text: The filter text to limit the dictionaries
                             listed. Only dictionaries which contain
                             all the words from the filter text as substrings
-                            (ignoring case and spaces) are listed.
+                            (ignoring case and accents) are listed.
         '''
         self._dictionaries_add_listbox_dictionary_names = []
         if self._dictionaries_add_popover_scroll is None:
@@ -3260,7 +3270,7 @@ class SetupUI(Gtk.Window): # type: ignore
         :param filter_text: The filter text to limit the input methods
                             listed. Only input methods which contain
                             the filter text as a substring
-                            (ignoring case and spaces) are listed.
+                            (ignoring case and accents) are listed.
                             The language part of the input method is
                             expanded using itb_util.locale_text_to_match()
                             into the full name of the language, in English,
@@ -3592,6 +3602,8 @@ class SetupUI(Gtk.Window): # type: ignore
         expansion_buffer = self._shortcut_expansion_textview.get_buffer()
         expansion_buffer.set_text('')
         self._shortcut_treeview.get_selection().unselect_all()
+        self._shortcut_search_entry.set_text('')
+        self._fill_shortcut_treeview_model('')
 
     def _on_shortcut_delete_clicked(self, _button: Gtk.Button) -> None:
         '''
@@ -3621,6 +3633,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._shortcut_entry.set_text('')
         expansion_buffer.set_text('')
         self._shortcut_treeview.get_selection().unselect_all()
+        self._shortcut_search_entry.set_text('')
+        self._fill_shortcut_treeview_model('')
 
     def _on_shortcut_add_clicked(self, _button: Gtk.Button) -> None:
         '''The button to add a custom shortcut has been clicked.'''
@@ -3654,6 +3668,44 @@ class SetupUI(Gtk.Window): # type: ignore
             self._shortcut_entry.set_text('')
             expansion_buffer.set_text('')
             self._shortcut_treeview.get_selection().unselect_all()
+            self._shortcut_search_entry.set_text('')
+            self._fill_shortcut_treeview_model('')
+
+    def _fill_shortcut_treeview_model(self, filter_text: str) -> None:
+        '''
+        Fill the model of the shortcuts treeview
+
+        :param filter_text: The filter text to limit the shortcuts
+                            listed. Only shortcuts which contain
+                            all the words from the filter text as substrings
+                            (ignoring case and accents) are listed.
+
+        '''
+        self._shortcut_treeview_model.clear()
+        current_shortcuts: List[Tuple[str, str]] = (
+            self.tabsqlitedb.list_user_shortcuts())
+        filter_words = itb_util.remove_accents(filter_text.lower()).split()
+        for shortcut in current_shortcuts:
+            filter_match = True
+            for filter_word in filter_words:
+                if (filter_word
+                    not in itb_util.remove_accents(shortcut[0]).lower()
+                    and
+                    filter_word
+                    not in itb_util.remove_accents(shortcut[1]).lower()):
+                    filter_match = False
+            if filter_match:
+                self._shortcut_treeview_model.append(shortcut)
+
+    def _on_shortcut_search_entry_changed(
+            self, search_entry: Gtk.SearchEntry) -> None:
+        '''
+        Signal handler for changed text in the shortcut search entry
+
+        :param search_entry: The search entry
+        '''
+        filter_text = search_entry.get_text()
+        self._fill_shortcut_treeview_model(filter_text)
 
     def _on_shortcut_selected(self, selection: Gtk.TreeSelection) -> None:
         '''
