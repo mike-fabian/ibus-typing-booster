@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 20 Jun 2022 Release 2.16.3
+* Add search entry for already defined custom shortcuts (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/312)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 16 Jun 2022 Release 2.16.1
 * Avoid using forward_key_event() in Gtk4 immodule automatically by checking for IBUS_CAP_SYNC_PROCESS_KEY (new, will start working for ibus >= 1.5.27)
 * Udate the “Use inline completion” combobox in the setup tool when the gsettings value changes (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/313)

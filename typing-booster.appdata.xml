@@ -20,6 +20,18 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.16.3" date="2022-06-20" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.16.3</url>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/312">
+          github-issues#312: Add search entry for already defined
+          custom shortcuts
+        </issue>
+      </issues>
+    </release>
     <release version="2.16.1" date="2022-06-16" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
@@ -32,7 +44,7 @@
           (new, will start working for ibus >= 1.5.27)
         </issue>
         <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/313">
-          githug-issues#313: Udate the “Use inline completion”
+          github-issues#313: Update the “Use inline completion”
           combobox in the setup tool when the gsettings value changes
         </issue>
         <issue>
