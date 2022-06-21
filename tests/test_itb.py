@@ -158,6 +158,8 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_inline_completion())
         self.orig_auto_capitalize = (
             self.engine.get_auto_capitalize())
+        self.orig_auto_select_candidate = (
+            self.engine.get_auto_select_candidate())
         self.orig_remember_last_used_preedit_ime = (
             self.engine.get_remember_last_used_preedit_ime())
         self.orig_page_size = (
@@ -202,6 +204,9 @@ class ItbTestCase(unittest.TestCase):
             update_gsettings=False)
         self.engine.set_auto_capitalize(
             self.orig_auto_capitalize,
+            update_gsettings=False)
+        self.engine.set_auto_select_candidate(
+            self.orig_auto_select_candidate,
             update_gsettings=False)
         self.engine.set_remember_last_used_preedit_ime(
             self.orig_remember_last_used_preedit_ime,
@@ -251,6 +256,8 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_inline_completion(
             0, update_gsettings=False)
         self.engine.set_auto_capitalize(
+            False, update_gsettings=False)
+        self.engine.set_auto_select_candidate(
             False, update_gsettings=False)
         self.engine.set_remember_last_used_preedit_ime(
             False, update_gsettings=False)
