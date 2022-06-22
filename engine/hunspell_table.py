@@ -2286,6 +2286,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._update_aux()
         # auto select best candidate if the option
         # self._auto_select_candidate is on:
+        self._is_candidate_auto_selected = False
         if (self._lookup_table_is_invalid
             and self._auto_select_candidate
             and self.get_lookup_table().get_number_of_candidates()
