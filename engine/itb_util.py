@@ -596,6 +596,149 @@ def get_default_dictionaries(locale_string: str) -> List[str]:
             return LOCALE_DEFAULTS[lang]['dictionaries']
     return ['en_US']
 
+def input_methods_str_to_list(imes_str: str) -> List[str]:
+    '''Converts a list of input methods from a comma separated string
+    to a list of strings.
+
+    :param imes_str: Input methods as a comma separated string
+
+    Examples:
+
+    If the input is not empty but contains nothing which could be an
+    input method, the default input method ['NoIME'] is returned:
+
+    >>> input_methods_str_to_list(',,')
+    ['NoIME']
+
+    If the input is empty, the default list of input methods for
+    the current locale is returned:
+
+    >>> old_lc_all = os.environ.get('LC_ALL')
+    >>> os.environ['LC_ALL'] = 'hi_IN.UTF-8'
+    >>> input_methods_str_to_list('')
+    ['hi-inscript2', 'NoIME']
+
+    >>> if old_lc_all:
+    ...     os.environ['LC_ALL'] = old_lc_all
+    ... else:
+    ...     # unneeded return value assigned to variable
+    ...     _ = os.environ.pop('LC_ALL', None)
+
+    If the input has more than the maximum number of allowed input
+    methods, the list is reduced to the maximum (currently 10):
+
+    >>> input_methods_str_to_list('0, 1,2,3 ,4,5,6,7,8,9,10,11,12')
+    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+
+    If the input contains duplicates, the duplicates are removed:
+
+    >>> input_methods_str_to_list('a ,a,b , c , a ,d,e,f')
+    ['a', 'b', 'c', 'd', 'e', 'f']
+
+    Non-standard spellings of the special input method ['NoIME']
+    are converted to the standard spelling:
+
+    >>> input_methods_str_to_list('nOiMe')
+    ['NoIME']
+    '''
+    if imes_str == '':
+        return get_default_input_methods(get_effective_lc_ctype())
+    imes: List[str] = []
+    for ime in  [re.sub(re.escape('noime'), 'NoIME', x.strip(),
+                        flags=re.IGNORECASE)
+                 for x in imes_str.split(',') if x]:
+        if ime not in imes:
+            imes.append(ime)
+    if len(imes) > MAXIMUM_NUMBER_OF_INPUT_METHODS:
+        LOGGER.error(
+            'More than the allowed maximum of %s input methods.\n'
+            'Trying to use: %s\n'
+            'Really using: %s\n',
+            MAXIMUM_NUMBER_OF_INPUT_METHODS,
+            imes,
+            imes[:MAXIMUM_NUMBER_OF_INPUT_METHODS])
+        imes = imes[:MAXIMUM_NUMBER_OF_INPUT_METHODS]
+    if imes:
+        return imes
+    return ['NoIME']
+
+def dictionaries_str_to_list(dictionaries_str: str) -> List[str]:
+    # pylint: disable=line-too-long
+    '''
+    Converts a list of dictionaries from a comma separated string to
+    a list of strings.
+
+    ;param dictionaries_str: Dictionaries as a comma separated string
+
+    Examples:
+
+    If the input is not empty but contains nothing which could be a
+    dictionary, the default dictionary ['en_US'] is returned:
+
+    >>> dictionaries_str_to_list(',')
+    ['en_US']
+
+    If the input is empty, the default list of dictionaries for
+    the current locale is returned:
+
+    >>> old_lc_all = os.environ.get('LC_ALL')
+    >>> os.environ['LC_ALL'] = 'hi_IN.UTF-8'
+    >>> dictionaries_str_to_list('')
+    ['hi_IN', 'en_GB']
+
+    >>> if old_lc_all:
+    ...     os.environ['LC_ALL'] = old_lc_all
+    ... else:
+    ...     # unneeded return value assigned to variable
+    ...     _ = os.environ.pop('LC_ALL', None)
+
+    If the input has more than the maximum number of allowed dictionaries
+    the list is reduced to the maximum (currently 10):
+
+    >>> dictionaries_str_to_list('en_AG,en_AU,en_BW,en_CA,en_DK,en_GB,en_HK,en_IE,en_IL,en_IN,en_NG,en_NZ,en_PH,en_SC,en_SG,en_US,en_ZA,en_ZM,en_ZW')
+    ['en_AG', 'en_AU', 'en_BW', 'en_CA', 'en_DK', 'en_GB', 'en_HK', 'en_IE', 'en_IL', 'en_IN']
+
+    If the input contains duplicates, the duplicates are removed:
+
+    >>> dictionaries_str_to_list('en_US.UTF-8,en_US,en.UTF-8,en,C')
+    ['en_US', 'en', 'en_US_POSIX']
+
+    Non-standard spellings of the special dictionary ['None']
+    are converted to the standard spelling:
+
+    >>> dictionaries_str_to_list('nOnE')
+    ['None']
+
+    >>> dictionaries_str_to_list('a,en_GB')
+    ['en_GB']
+    >>> dictionaries_str_to_list('xxxx')
+    ['en_US']
+    '''
+    # pylint: enable=line-too-long
+    if dictionaries_str == '':
+        return get_default_dictionaries(get_effective_lc_ctype())
+    dictionaries: List[str] = []
+    for dictionary in [re.sub(re.escape('none'), 'None', x.strip(),
+                              flags=re.IGNORECASE)
+                       for x in dictionaries_str.split(',') if x]:
+        if dictionary != 'None':
+            dictionary = locale_normalize(dictionary)
+        if dictionary and dictionary not in dictionaries:
+            dictionaries.append(dictionary)
+    if len(dictionaries) > MAXIMUM_NUMBER_OF_DICTIONARIES:
+        LOGGER.error(
+            'More than the allowed maximum of %s dictionaries.\n'
+            'Trying to use: %s\n'
+            'Really using: %s\n',
+            MAXIMUM_NUMBER_OF_DICTIONARIES,
+            dictionaries,
+            dictionaries[:MAXIMUM_NUMBER_OF_DICTIONARIES])
+        dictionaries = dictionaries[:MAXIMUM_NUMBER_OF_DICTIONARIES]
+    if dictionaries:
+        return dictionaries
+    return ['en_US']
+
 HUNSPELL_DICTIONARIES = {
     # List of all locales/languages where hunspell dictionaries exist.
     # They do not necessary need to be installed on the system at the
@@ -2328,9 +2471,18 @@ def locale_normalize(localeId: str) -> str:
     'ca_ES_VALENCIA'
     >>> locale_normalize('C.UTF-8')
     'en_US_POSIX'
+    >>> locale_normalize('xxx')
+    'xxx'
     >>> locale_normalize('')
     ''
 
+    An empty string is returned if the input cannot be
+    a valid locale id:
+
+    >>> locale_normalize('x')
+    ''
+    >>> locale_normalize('xxxx')
+    ''
     '''
     locale = parse_locale(localeId)
     normalized_locale_id: str = locale.language
