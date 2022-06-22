@@ -435,7 +435,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._options_grid.attach(
             self._auto_capitalize_checkbutton, 0, _options_grid_row, 1, 1)
 
-        self._auto_select_candidate_checkbutton = Gtk.CheckButton(
+        self._auto_select_candidate_label = Gtk.Label()
+        self._auto_select_candidate_label.set_text(
             # Translators: What you type will automatically be
             # corrected to the best candidate by selecting the best
             # candidate automatically. If this option is off you have
@@ -444,8 +445,8 @@ class SetupUI(Gtk.Window): # type: ignore
             # you do not want to use the automatically selected
             # candidate, you can use the key binding for the “cancel”
             # command which will deselect all candidates.
-            label=_('Automatically select the best candidate'))
-        self._auto_select_candidate_checkbutton.set_tooltip_text(
+            _('Automatically select the best candidate'))
+        self._auto_select_candidate_label.set_tooltip_text(
             _('What you type will automatically be corrected to the best '
               'candidate by selecting the best candidate automatically. If '
               'this option is off you have to select a candidate manually '
@@ -454,18 +455,36 @@ class SetupUI(Gtk.Window): # type: ignore
               'automatically selected candidate, you can use the key binding '
               'for the “cancel” command which will deselect all '
               'candidates.'))
-        self._auto_select_candidate_checkbutton.connect(
-            'clicked', self._on_auto_select_candidate_checkbutton)
+        self._auto_select_candidate_label.set_xalign(0)
+        self._auto_select_candidate_combobox = Gtk.ComboBox()
+        self._auto_select_candidate_store = Gtk.ListStore(str, int)
+        self._auto_select_candidate_store.append(
+            [_('No'), 0])
+        self._auto_select_candidate_store.append(
+            [_('Yes, but only when extremely likely'), 1])
+        self._auto_select_candidate_store.append(
+            [_('Yes, always'), 2])
+        self._auto_select_candidate_combobox.set_model(
+            self._auto_select_candidate_store)
+        renderer_text = Gtk.CellRendererText()
+        self._auto_select_candidate_combobox.pack_start(
+            renderer_text, True)
+        self._auto_select_candidate_combobox.add_attribute(
+            renderer_text, "text", 0)
         self._auto_select_candidate = itb_util.variant_to_value(
             self._gsettings.get_value('autoselectcandidate'))
         if self._auto_select_candidate is None:
-            self._auto_select_candidate = False
-        if self._auto_select_candidate is True:
-            self._auto_select_candidate_checkbutton.set_active(True)
+            self._auto_select_candidate = 0
+        for i, item in enumerate(self._auto_select_candidate_store):
+            if self._auto_select_candidate == item[1]:
+                self._auto_select_candidate_combobox.set_active(i)
+        self._auto_select_candidate_combobox.connect(
+            'changed', self._on_auto_select_candidate_combobox_changed)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._auto_select_candidate_checkbutton,
-            0, _options_grid_row, 1, 1)
+            self._auto_select_candidate_label, 0, _options_grid_row, 1, 1)
+        self._options_grid.attach(
+            self._auto_select_candidate_combobox, 1, _options_grid_row, 1, 1)
 
         self._add_space_on_commit_checkbutton = Gtk.CheckButton(
             # Translators: Add a space if a candidate from the
@@ -2681,14 +2700,18 @@ class SetupUI(Gtk.Window): # type: ignore
         self.set_preedit_style_only_when_lookup(
             widget.get_active(), update_gsettings=True)
 
-    def _on_auto_select_candidate_checkbutton(
-            self, widget: Gtk.CheckButton) -> None:
+    def _on_auto_select_candidate_combobox_changed(
+            self, widget: Gtk.ComboBox) -> None:
         '''
-        The checkbutton whether to automatically select the best candidate
-        has been clicked.
+        A change of the auto select mode has been requested
+        with the combobox.
         '''
-        self.set_auto_select_candidate(
-            widget.get_active(), update_gsettings=True)
+        tree_iter = widget.get_active_iter()
+        if tree_iter is not None:
+            model = widget.get_model()
+            mode = model[tree_iter][1]
+            self.set_auto_select_candidate(
+                mode, update_gsettings=True)
 
     def _on_add_space_on_commit_checkbutton(
             self, widget: Gtk.CheckButton) -> None:
@@ -5177,7 +5200,7 @@ class SetupUI(Gtk.Window): # type: ignore
 
     def set_auto_select_candidate(
             self,
-            mode: Union[bool, Any],
+            mode: Union[int, Any],
             update_gsettings: bool = True) -> None:
         '''Sets the “Automatically select the best candidate” mode
 
@@ -5196,9 +5219,11 @@ class SetupUI(Gtk.Window): # type: ignore
         if update_gsettings:
             self._gsettings.set_value(
                 'autoselectcandidate',
-                GLib.Variant.new_boolean(mode))
+                GLib.Variant.new_int32(mode))
         else:
-            self._auto_select_candidate_checkbutton.set_active(mode)
+            for i, item in enumerate(self._auto_select_candidate_store):
+                if self._auto_select_candidate == item[1]:
+                    self._auto_select_candidate_combobox.set_active(i)
 
     def set_add_space_on_commit(
             self,

@@ -100,7 +100,7 @@ class SimpleGtkTestCase(unittest.TestCase):
     _orig_tabenable: bool = False
     _orig_inputmode: bool = True
     _orig_inline_completion: int = 0
-    _orig_auto_select_candidate: bool = False
+    _orig_auto_select_candidate: int = 0
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -155,7 +155,7 @@ class SimpleGtkTestCase(unittest.TestCase):
             self._gsettings.set_boolean('tabenable', False)
             self._gsettings.set_boolean('inputmode', True)
             self._gsettings.set_int('inlinecompletion', 0)
-            self._gsettings.set_boolean('autoselectcandidate', False)
+            self._gsettings.set_boolean('autoselectcandidate', 0)
 
     def register_ibus_engine(self) -> bool:
         self.__bus = IBus.Bus()

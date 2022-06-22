@@ -404,8 +404,8 @@
         the latter keys are farther away from the fingers.
       </description>
     </key>
-    <key name="autoselectcandidate" type="b">
-      <default>false</default>
+    <key name="autoselectcandidate" type="i">
+      <default>0</default>
       <summary>Automatically select the best candidate</summary>
       <description>
         What you type will automatically be corrected to the best

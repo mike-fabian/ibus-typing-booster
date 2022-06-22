@@ -261,7 +261,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_auto_capitalize(
             False, update_gsettings=False)
         self.engine.set_auto_select_candidate(
-            False, update_gsettings=False)
+            0, update_gsettings=False)
         self.engine.set_remember_last_used_preedit_ime(
             False, update_gsettings=False)
         self.engine.set_page_size(

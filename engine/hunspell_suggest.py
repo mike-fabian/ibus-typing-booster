@@ -475,6 +475,67 @@ class Hunspell:
             return False
         return True
 
+    def spellcheck_single_dictionary(self, words: Iterable[str] = ()) -> bool:
+        '''
+        Checks whether there is at least one dictionary where all words
+        in the input list spellcheck as True.
+
+        :param words: A list or tuple of words to spellcheck
+        :return: - False if at least one input word is empty
+                 - True if there is at least one dictionary where all
+                   words in the input list spellcheck as True, else False.
+
+        Examples:
+
+        >>> h = Hunspell(['en_US', 'fr_FR'])
+
+        All 3 words spellcheck True in the French dictionary:
+
+        >>> h.spellcheck_single_dictionary(('Je', 'suis', 'arrivé'))
+        True
+
+        Not a correct French sentence but all 3 words spellcheck True
+        in the French dictionary:
+
+        >>> h.spellcheck_single_dictionary(('Je', 'suis', 'arrive'))
+        True
+
+
+        Not all 3 words spellcheck True in the French dictionary and
+        not all 3 words spellcheck True in the English dictionary either:
+
+        >>> h.spellcheck_single_dictionary(('Je', 'suis', 'arrived'))
+        False
+
+        All 3 words spellcheck True in the English dictionary:
+
+        >>> h.spellcheck_single_dictionary(('I', 'have', 'arrived'))
+        True
+
+        Unfortunately these 3 words spellcheck True in the French dictionary
+        ('have' is a form of the verb 'haver', 'I' is the name of the letter):
+
+        >>> h.spellcheck_single_dictionary(('I', 'have', 'arrivé'))
+        True
+
+        If the input contains empty words the result is False:
+
+        >>> h.spellcheck_single_dictionary(('I', 'have', ''))
+        False
+        '''
+        if not words:
+            return False
+        for word in words:
+            if not word:
+                return False
+        for dictionary in self._dictionaries:
+            spellcheck_total = True
+            for word in words:
+                spellcheck_total &= dictionary.spellcheck(word)
+            if spellcheck_total:
+                return True
+        return False
+
     def suggest(self, input_phrase: str) -> List[Tuple[str, int]]:
         # pylint: disable=line-too-long
         '''Return completions or corrections for the input phrase

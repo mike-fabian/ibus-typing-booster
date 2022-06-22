@@ -239,7 +239,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._gsettings.get_value('showstatusinfoinaux')))
 
         self._is_candidate_auto_selected = False
-        self._auto_select_candidate: bool = itb_util.variant_to_value(
+        self._auto_select_candidate: int = itb_util.variant_to_value(
             self._gsettings.get_value('autoselectcandidate'))
 
         self.is_lookup_table_enabled_by_tab = False
@@ -2243,11 +2243,34 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # self._auto_select_candidate is on:
         self._is_candidate_auto_selected = False
         if (self._lookup_table_is_invalid
-            and self._auto_select_candidate
             and self.get_lookup_table().get_number_of_candidates()
             and not self._lookup_table.cursor_visible):
-            self._lookup_table.set_cursor_visible(True)
-            self._is_candidate_auto_selected = True
+            if self._auto_select_candidate == 2:
+                # auto select: Yes, always
+                self._lookup_table.set_cursor_visible(True)
+                self._is_candidate_auto_selected = True
+            elif self._auto_select_candidate == 1:
+                # auto select: Yes, but only when extremely likely
+                first_candidate = ''
+                user_freq = 0
+                typed_string = ''
+                if self._candidates:
+                    first_candidate = self._candidates[0][0]
+                    user_freq = self._candidates[0][1]
+                typed_string = unicodedata.normalize(
+                    'NFC',
+                    self._transliterated_strings[self.get_current_imes()[0]])
+                spellcheck_single_dictionary = (
+                    self.database.hunspell_obj.spellcheck_single_dictionary(
+                        (self._p_phrase, self._pp_phrase, first_candidate)))
+                if (spellcheck_single_dictionary
+                    and typed_string
+                    and typed_string != first_candidate
+                    and itb_util.remove_accents(first_candidate)
+                    == itb_util.remove_accents(typed_string)
+                    and user_freq > 0.2):
+                    self._lookup_table.set_cursor_visible(True)
+                    self._is_candidate_auto_selected = True
         self._update_lookup_table()
         self._lookup_table_is_invalid = False
 
@@ -4508,7 +4531,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
     def set_auto_select_candidate(
             self,
-            mode: Union[bool, Any],
+            mode: Union[int, Any],
             update_gsettings: bool = True) -> None:
         '''Sets the “Automatically select the best candidate” mode
 
@@ -4530,9 +4553,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if update_gsettings:
             self._gsettings.set_value(
                 'autoselectcandidate',
-                GLib.Variant.new_boolean(mode))
+                GLib.Variant.new_int32(mode))
 
-    def get_auto_select_candidate(self) -> bool:
+    def get_auto_select_candidate(self) -> int:
         '''Returns the current value of the
         “Automatically select the best candidate” mode
         '''
