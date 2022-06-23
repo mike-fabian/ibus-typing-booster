@@ -52,6 +52,7 @@ date: 2021-09-30
         * [Emoji input using German and English](#7_5_1)
         * [Emoji input using Hindi and English](#7_5_2)
         * [Emoji input using Japanese](#7_5_3)
+        * [Emoji input using Japanese or Chinese phonetics](#7_5_4)
     * [Unicode symbol input](#7_6)
     * [Unicode code point input](#7_7)
     * [Quickly toggling emoji mode on and off](#7_8)
@@ -2476,7 +2477,7 @@ well.
 
 To be able to input emoji using their Japanese names, one first needs
 to install the packages `m17n-db-extras`, `m17n-lib-anthy` and `anthy`
-on Fedora. On Fedora 34 one can do this using the command:
+on Fedora. On Fedora 36 one can do this using the command:
 
 `sudo dnf install m17n-db-extras m17n-lib-anthy`
 
@@ -2516,6 +2517,87 @@ labelled with English names because the British English dictionary has
 highest priority in the setup tool. When the Japanese dictionary had
 the highest priority in the setup tool, the related emoji would be
 shown with their Japanese names.
+
+###### 7_5_4
+#### Emoji input using Japanese or Chinese phonetics
+
+The chapter [Emoji input using Japanese](#7_5_3) described how one
+can search for emoji using the Japanese input method “ja-anthy”. But
+this has a few disadvantages:
+
+- the packages containing “ja-anthy” may be missing on your distribution
+- One can only type hiragana easily using “ja-anthy” in Typing Booster.
+
+⚠️ **Sidenote**: It is not completely impossible to convert hiragana to
+kanji with “ja-anthy” in Typing Booster. But I don’t want to describe
+how to do this in detail here because it is very difficult and not really
+useful in practice.
+
+When it is not easy to type katakana or kanji, some emoji which have names
+or keywords in katakana or kanji can not be found easily.
+
+For example the snail emoji in Japanese has the keywords:
+
+> 🐌 かたつむり | でんでん虫 | 虫
+
+It is still quite easy to find this snail emoji even if one can only
+type hiragana because one of the keywords of this snail emoji is
+かたつむり which is completely in hiragana. Typing the other two keywords
+でんでん虫 or 虫 is already quite difficult with “ja-anthy” in Typing Booster.
+
+But many emoji have no keywords written purely in hiragana at all,
+for example the “woman police officer”:
+
+> 👮‍♀️ お巡りさん | 女性 | 女性警察官 | 警官 | 警察 | 警察官
+
+The situation is very similar in Chinese, it is very hard to type Chinese
+with Typing Booster.
+
+So it would be nice if one could just enter the phonetic transcription of Japanese or
+Chinese to Latin letters to search for such emoji keywords.
+
+To make this phonetic transcription emoji search available, one can install
+the Python modules “pykakasi” for Japanese and “pinyin” for Chinese.
+
+These are not available as packages in Fedora 36 but they can easily
+be installed using “pip install” like this:
+
+For Japanese:
+
+```
+pip install --user pykakasi
+```
+
+For Chinese:
+
+```
+pip install --user pinyin
+```
+
+If these Python modules are installed, Typing Booster and Emoji Picker
+will use them automatically if Japanese or Chinese emoji dictionaries
+are used.
+
+In Japanese, the keywords for the “woman police officer” are then automatically expanded
+to:
+
+> 👮‍♀️ お巡りさん, おめぐりさん, 女性, じょせい, 女性警察官, じょせいけいさつかん, 警官, けいかん, 警察, けいさつ, 警察官, けいさつかん, omegurisan, josei, joseikeisatsukan, keikan, keisatsu, keisatsukan
+
+And in Chinese they are expanded to:
+
+> 👮‍♀️ 女, nv̌, 女警察, nv̌jǐngchá, 警官, jǐngguān, 警察, jǐngchá
+
+As these expansions now contain Latin transliterations, searching emoji
+via their Latin transliteration of Japanese or Chinese now works as well.
+
+As the search is accent insensitive, it is enough to type “nvjingcha”
+to find the “woman police officer” in Chinese, one does not need to include
+the tone marks, i.e. one does not need to type “nv̌jǐngchá”.
+
+{{<
+video label="Emoji input using Japanese or Chinese phonetics"
+webm="/videos/user-docs/emoji-japanese-chinese-phonetics.webm"
+>}}
 
 ###### 7_6
 ### Unicode symbol input
