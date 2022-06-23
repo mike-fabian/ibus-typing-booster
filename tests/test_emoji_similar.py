@@ -216,14 +216,15 @@ class EmojiSimilarTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['ja_JP'])
         self.assertEqual(
-            mq.similar('🐤', match_limit=5),
-            [('🐤', 'ひよこ [🐤, ひな, ひよこ, 動物, どうぶつ, 横を向いているひよこ, よこをむいているひよこ, 顔, かお, 鳥, とり, hina, hiyoko, doubutsu, yokowomuiteiruhiyoko, kao, tori]', 17), ('🐣', '卵からかえったひよこ [ひな, ひよこ, 動物, どうぶつ, 顔, かお, 鳥, とり, hina, hiyoko, doubutsu, kao, tori]', 13), ('🐥', '前を向いているひよこ [ひな, ひよこ, 動物, どうぶつ, 鳥, とり, hina, hiyoko, doubutsu, tori]', 10), ('🐦', '鳥 [動物, どうぶつ, 顔, かお, 鳥, とり, doubutsu, kao, tori]', 9), ('🐔', 'にわとり [動物, どうぶつ, 顔, かお, 鳥, とり, doubutsu, kao, tori]', 9)])
+            [('🐤', 'ひよこ [🐤, ひな, ひよこ, 動物, どうぶつ, 横を向いているひよこ, よこをむいているひよこ, 顔, かお, 鳥, とり, hina, hiyoko, doubutsu, yokowomuiteiruhiyoko, kao, tori]', 17), ('🐣', '卵からかえったひよこ [ひな, ひよこ, 動物, どうぶつ, 顔, かお, 鳥, とり, hina, hiyoko, doubutsu, kao, tori]', 13), ('🐥', '前を向いているひよこ [ひな, ひよこ, 動物, どうぶつ, 鳥, とり, hina, hiyoko, doubutsu, tori]', 10), ('🐦', '鳥 [動物, どうぶつ, 顔, かお, 鳥, とり, doubutsu, kao, tori]', 9), ('🐔', 'にわとり [動物, どうぶつ, 顔, かお, 鳥, とり, doubutsu, kao, tori]', 9)],
+            mq.similar('🐤', match_limit=5))
         self.assertEqual(
-            mq.similar('🐌', match_limit=5),
-            [('🐌', 'かたつむり [🐌, かたつむり, でんでん虫, でんでんむし, 虫, むし, katatsumuri, dendenmushi, mushi]', 9), ('🦋', 'チョウ [虫, むし, mushi]', 3), ('🐛', '毛虫 [虫, むし, mushi]', 3), ('🐜', 'アリ [虫, むし, mushi]', 3), ('🐝', 'ミツバチ [虫, むし, mushi]', 3)])
+            [('🐌', 'かたつむり [🐌, かたつむり, でんでん虫, でんでんむし, 虫, むし, katatsumuri, dendenmushi, mushi]', 9), ('🦋', 'チョウ [虫, むし, mushi]', 3), ('🐛', '毛虫 [虫, むし, mushi]', 3), ('🐜', 'アリ [虫, むし, mushi]', 3), ('🐝', 'ミツバチ [虫, むし, mushi]', 3)],
+            mq.similar('🐌', match_limit=5))
         self.assertEqual(
-            mq.similar('😱', match_limit=5),
-            [('😱', '恐怖 [😱, がーん, ががん, ショック, しょっく, 叫び, さけび, 恐怖, きょうふ, 顔, かお, gaan, shokku, sakebi, kyoufu, kao]', 16), ('🙀', '絶望する猫 [がーん, ががん, ショック, しょっく, 顔, かお, gaan, shokku, kao]', 9), ('😨', '青ざめ [がーん, ががん, 顔, かお, gaan, kao]', 6), ('🤯', '頭爆発 [ショック, しょっく, 顔, かお, shokku, kao]', 6), ('😭', '大泣き [顔, かお, kao]', 3)])
+            [('😱', '恐怖 [😱, がーん, ショック, しょっく, 叫び, さけび, 恐怖, きょうふ, 顔, かお, gaan, shokku, sakebi, kyoufu, kao]', 15), ('🙀', '絶望する猫 [がーん, ショック, しょっく, 顔, かお, gaan, shokku, kao]', 8), ('🤯', '頭爆発 [ショック, しょっく, 顔, かお, shokku, kao]', 6), ('😨', '青ざめ [がーん, 顔, かお, gaan, kao]', 5), ('😭', '大泣き [顔, かお, kao]', 3)],
+            mq.similar('😱', match_limit=5))
+
 
 if __name__ == '__main__':
     LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
