@@ -217,48 +217,49 @@ def is_invisible(text: str) -> bool:
             invisible = False
     return invisible
 
-def kakasi_convert(text: str, target: str='orig') -> str:
-    '''
-    Convert Japanese text to hiragana, katakana, or romaji
+if IMPORT_PYKAKASI_SUCCESSFUL:
+    def kakasi_convert(text: str, target: str='orig') -> str:
+        '''
+        Convert Japanese text to hiragana, katakana, or romaji
 
-    :param text: The text to be converted
-    :param target: The target to be converted to, can be:
-                   'orig':     return original text, no conversion
-                   'hira':     convert to hiragana
-                   'kana':     convert to katakana
-                   'hepburn':  convert to Hepburn romanization
-                   'kunrei':   convert to Kunrei romanization
-                   'passport': convert to Passport romanization
+        :param text: The text to be converted
+        :param target: The target to be converted to, can be:
+                       'orig':     return original text, no conversion
+                       'hira':     convert to hiragana
+                       'kana':     convert to katakana
+                       'hepburn':  convert to Hepburn romanization
+                       'kunrei':   convert to Kunrei romanization
+                       'passport': convert to Passport romanization
 
-    Examples:
+        Examples:
 
-    >>> kakasi_convert('かな漢字')
-    'かな漢字'
+        >>> kakasi_convert('かな漢字')
+        'かな漢字'
 
-    >>> kakasi_convert('かな漢字', target='hira')
-    'かなかんじ'
+        >>> kakasi_convert('かな漢字', target='hira')
+        'かなかんじ'
 
-    >>> kakasi_convert('かな, foobar, 漢字,', target='hira')
-    'かな, foobar, かんじ,'
+        >>> kakasi_convert('かな, foobar, 漢字,', target='hira')
+        'かな, foobar, かんじ,'
 
-    >>> kakasi_convert('かな漢字', target='kana')
-    'カナカンジ'
+        >>> kakasi_convert('かな漢字', target='kana')
+        'カナカンジ'
 
-    >>> kakasi_convert('かな漢字', target='hepburn')
-    'kanakanji'
+        >>> kakasi_convert('かな漢字', target='hepburn')
+        'kanakanji'
 
-    >>> kakasi_convert('かな漢字', target='kunrei')
-    'kanakanzi'
+        >>> kakasi_convert('かな漢字', target='kunrei')
+        'kanakanzi'
 
-    >>> kakasi_convert('かな漢字', target='passport')
-    'kanakanji'
-    '''
-    if not IMPORT_PYKAKASI_SUCCESSFUL or target == 'orig':
-        return text
-    result = ''
-    for item in KAKASI_INSTANCE.convert(text):
-        result += item[target]
-    return result
+        >>> kakasi_convert('かな漢字', target='passport')
+        'kanakanji'
+        '''
+        if not IMPORT_PYKAKASI_SUCCESSFUL or target == 'orig':
+            return text
+        result = ''
+        for item in KAKASI_INSTANCE.convert(text):
+            result += item[target]
+        return result
 
 def _in_range(codepoint: int) -> bool:
     '''Checks whether the codepoint is in one of the valid ranges
