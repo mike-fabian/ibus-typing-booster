@@ -633,7 +633,7 @@ def input_methods_str_to_list(imes_str: str) -> List[str]:
 
     If the input contains duplicates, the duplicates are removed:
 
-    >>> input_methods_str_to_list('a ,a,b , c , a ,d,e,f')
+    >>> input_methods_str_to_list('a ,a,b , c ,, a ,d,e,f, ')
     ['a', 'b', 'c', 'd', 'e', 'f']
 
     Non-standard spellings of the special input method ['NoIME']
@@ -647,7 +647,7 @@ def input_methods_str_to_list(imes_str: str) -> List[str]:
     imes: List[str] = []
     for ime in  [re.sub(re.escape('noime'), 'NoIME', x.strip(),
                         flags=re.IGNORECASE)
-                 for x in imes_str.split(',') if x]:
+                 for x in imes_str.split(',') if x.strip()]:
         if ime not in imes:
             imes.append(ime)
     if len(imes) > MAXIMUM_NUMBER_OF_INPUT_METHODS:
@@ -721,7 +721,7 @@ def dictionaries_str_to_list(dictionaries_str: str) -> List[str]:
     dictionaries: List[str] = []
     for dictionary in [re.sub(re.escape('none'), 'None', x.strip(),
                               flags=re.IGNORECASE)
-                       for x in dictionaries_str.split(',') if x]:
+                       for x in dictionaries_str.split(',') if x.strip()]:
         if dictionary != 'None':
             dictionary = locale_normalize(dictionary)
         if dictionary and dictionary not in dictionaries:

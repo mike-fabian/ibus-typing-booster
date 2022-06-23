@@ -2120,35 +2120,10 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dictionary_names = []
         dictionary = itb_util.variant_to_value(
             self._gsettings.get_value('dictionary'))
-        if dictionary:
-            names = [x.strip() for x in dictionary.split(',')]
-            for name in names:
-                if name:
-                    self._dictionary_names.append(name)
-        if self._dictionary_names == []:
-            # There are no dictionaries set in dconf, get a default list of
-            # dictionaries from the current effective value of LC_CTYPE:
-            self._dictionary_names = itb_util.get_default_dictionaries(
-                itb_util.get_effective_lc_ctype())
-            # And save the default dictionaries to settings:
-            self._gsettings.set_value(
-                'dictionary',
-                GLib.Variant.new_string(','.join(self._dictionary_names)))
-        if (len(self._dictionary_names)
-            > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES):
-            LOGGER.error(
-                'Trying to set more than the allowed maximum of '
-                '%s dictionaries.\n'
-                'Trying to set: %s\n'
-                'Really setting: %s\n',
-                itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES,
-                self._dictionary_names,
-                self._dictionary_names[
-                    :itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
-            self._dictionary_names = (
-                self._dictionary_names[
-                    :itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
-            # Save reduced list of dictionaries back to settings:
+        self._dictionary_names = itb_util.dictionaries_str_to_list(dictionary)
+        if ','.join(self._dictionary_names) != dictionary:
+            # Value changed due to normalization or getting the locale
+            # defaults, save it back to settings:
             self._gsettings.set_value(
                 'dictionary',
                 GLib.Variant.new_string(','.join(self._dictionary_names)))
@@ -2228,34 +2203,10 @@ class SetupUI(Gtk.Window): # type: ignore
         self._current_imes = []
         inputmethod = itb_util.variant_to_value(
             self._gsettings.get_value('inputmethod'))
-        if inputmethod:
-            inputmethods = [re.sub(re.escape('noime'), 'NoIME', x.strip(),
-                                   flags=re.IGNORECASE)
-                            for x in inputmethod.split(',') if x]
-            for ime in inputmethods:
-                self._current_imes.append(ime)
-        if self._current_imes == []:
-            # There is no ime set in dconf, get a default list of
-            # input methods for the current effective value of LC_CTYPE:
-            self._current_imes = itb_util.get_default_input_methods(
-                itb_util.get_effective_lc_ctype())
-            # And save the default input methods to settings:
-            self._gsettings.set_value(
-                'inputmethod',
-                GLib.Variant.new_string(','.join(self._current_imes)))
-        if len(self._current_imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
-            LOGGER.error(
-                'Trying to set more than the allowed maximum of '
-                '%s input methods.\n'
-                'Trying to set: %s\n'
-                'Really setting: %s\n',
-                itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS,
-                self._current_imes,
-                self._current_imes[
-                    :itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
-            self._current_imes = (
-                self._current_imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
-            # Save reduced list of input methods back to settings:
+        self._current_imes = itb_util.input_methods_str_to_list(inputmethod)
+        if ','.join(self._current_imes) != inputmethod:
+            # Value changed due to normalization or getting the locale
+            # defaults, save it back to settings:
             self._gsettings.set_value(
                 'inputmethod',
                 GLib.Variant.new_string(','.join(self._current_imes)))
@@ -2477,19 +2428,11 @@ class SetupUI(Gtk.Window): # type: ignore
             schema = gsettings.get_property('settings-schema')
             for key in schema.list_keys():
                 if key in ('googleapplicationcredentials',
-                           'dictionaryinstalltimestamp',
-                           'inputmethod',
-                           'dictionary'):
+                           'dictionaryinstalltimestamp'):
                     LOGGER.info('Skipping reset of gsettings key=%s', key)
                     continue
                 LOGGER.info('Resetting gsettings key=%s', key)
                 gsettings.reset(key)
-            LOGGER.info('Setting input methods to default for current locale:')
-            self.set_current_imes(itb_util.get_default_input_methods(
-                itb_util.get_effective_lc_ctype()), update_gsettings=True)
-            LOGGER.info('Setting dictionaries to default for current locale:')
-            self.set_dictionary_names(itb_util.get_default_dictionaries(
-                itb_util.get_effective_lc_ctype()), update_gsettings=True)
         else:
             LOGGER.info('Restore all defaults cancelled.')
         self._restore_all_defaults_button.set_sensitive(True)
@@ -3209,8 +3152,7 @@ class SetupUI(Gtk.Window): # type: ignore
         Sets the dictionaries to the default for the current locale.
 
         '''
-        self.set_dictionary_names(itb_util.get_default_dictionaries(
-            itb_util.get_effective_lc_ctype()))
+        self.set_dictionary_names(itb_util.dictionaries_str_to_list(''))
 
     def _on_dictionary_selected(
             self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
@@ -3527,8 +3469,7 @@ class SetupUI(Gtk.Window): # type: ignore
 
         Sets the input methods to the default for the current locale.
         '''
-        self.set_current_imes(itb_util.get_default_input_methods(
-            itb_util.get_effective_lc_ctype()))
+        self.set_current_imes(itb_util.input_methods_str_to_list(''))
 
     def _on_input_method_selected(
             self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
@@ -5293,30 +5234,20 @@ class SetupUI(Gtk.Window): # type: ignore
         :param imes: List of input methods
                      If a single string is used, it should contain
                      the names of the input methods separated by commas.
+                     If the string is empty, the default input
+                     methods for the current locale are set.
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        LOGGER.debug('imes=%s type(imes)=%s', imes, type(imes))
+        LOGGER.debug('imes=“%s” type(imes)=%s update_gsettings=%s',
+                     imes, type(imes), update_gsettings)
         if isinstance(imes, str):
-            imes = [x.strip() for x in imes.split(',')]
-        imes = [re.sub(re.escape('noime'), 'NoIME', x.strip(),
-                       flags=re.IGNORECASE)
-                for x in imes if x]
+            imes = itb_util.input_methods_str_to_list(imes)
         if imes == self._current_imes: # nothing to do
             return
-        if len(imes) > itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
-            LOGGER.error(
-                'Trying to set more than the allowed maximum of '
-                '%s input methods.\n'
-                'Trying to set: %s\n'
-                'Really setting: %s\n',
-                itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS,
-                imes,
-                imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS])
-            imes = imes[:itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS]
         self._current_imes = imes
         self._fill_input_methods_listbox()
         if update_gsettings:
@@ -5343,6 +5274,8 @@ class SetupUI(Gtk.Window): # type: ignore
                                  If a single string is used, it should contain
                                  the names of the dictionaries separated
                                  by commas.
+                                 If the string is empty, the default
+                                 dictionaries for the current locale are set.
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
@@ -5352,21 +5285,10 @@ class SetupUI(Gtk.Window): # type: ignore
         LOGGER.debug('dictionary_names=%s type(dictionary_names)=%s',
                      dictionary_names, type(dictionary_names))
         if isinstance(dictionary_names, str):
-            dictionary_names = [x.strip() for x in dictionary_names.split(',')]
-        dictionary_names = [x for x in dictionary_names if x]
+            dictionary_names = itb_util.dictionaries_str_to_list(
+                dictionary_names)
         if dictionary_names == self._dictionary_names: # nothing to do
             return
-        if len(dictionary_names) > itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES:
-            LOGGER.error(
-                'Trying to set more than the allowed maximum of '
-                '%s dictionaries.\n'
-                'Trying to set: %s\n'
-                'Really setting: %s\n',
-                itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES,
-                dictionary_names,
-                dictionary_names[:itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES])
-            dictionary_names = dictionary_names[
-                :itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES]
         self._dictionary_names = dictionary_names
         self._fill_dictionaries_listbox()
         if update_gsettings:
