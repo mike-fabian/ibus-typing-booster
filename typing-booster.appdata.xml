@@ -20,6 +20,34 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.16.5" date="2022-06-23" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.16.5</url>
+      <issues>
+        <issue>
+          Use new pykakasi API instead of the deprecated v1.2 API.
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/321">
+          github-issues#321: Fix typo in LOCALE_DEFAULTS for
+          Korean. The default values for Korean were not applied
+          because of this typo.
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/318">
+          github-issues#318: Improve and simplify setting input
+          methods and dictionaries using new helper functions
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/319">
+          github-issues#319: self._is_candidate_auto_selected should
+          only be true if no manual keys to select were pressed
+        </issue>
+        <issue>
+          Translation update from Weblate (it updated 93.6% (205 of
+          219 strings))
+        </issue>
+      </issues>
+    </release>
     <release version="2.16.3" date="2022-06-20" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

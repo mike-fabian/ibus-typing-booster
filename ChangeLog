@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 23 Jun 2022 Release 2.16.5
+* Fix typo in LOCALE_DEFAULTS for Korean (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/321)
+* Improve and simplify setting input methods and dictionaries using new helper functions (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/318)
+* self._is_candidate_auto_selected should only be true if no manual keys to select were pressed (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/319)
+* Translation update from Weblate (it updated 93.6% (205 of 219 strings))
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 20 Jun 2022 Release 2.16.3
 * Add search entry for already defined custom shortcuts (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/312)
 
