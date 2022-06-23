@@ -57,18 +57,11 @@ except (ImportError,):
 
 IMPORT_PYKAKASI_SUCCESSFUL = False
 try:
-    from pykakasi import kakasi # type: ignore
+    import pykakasi
     IMPORT_PYKAKASI_SUCCESSFUL = True
-    KAKASI_INSTANCE = kakasi()
-    KAKASI_INSTANCE.setMode('H', 'a') # default: Hiragana no conversion
-    KAKASI_INSTANCE.setMode('K', 'a') # default: Katakana no conversion
-    KAKASI_INSTANCE.setMode('J', 'a') # default: Japanese no conversion
-    KAKASI_INSTANCE.setMode('r', 'Hepburn') # default: use Hepburn Roman table
-    KAKASI_INSTANCE.setMode('C', True) # add space default: no Separator
-    KAKASI_INSTANCE.setMode('c', False) # capitalize default: no Capitalize
+    KAKASI_INSTANCE = pykakasi.kakasi()
 except (ImportError,):
     IMPORT_PYKAKASI_SUCCESSFUL = False
-    KAKASI_INSTANCE = None
 
 IMPORT_PINYIN_SUCCESSFUL = False
 try:
@@ -223,6 +216,49 @@ def is_invisible(text: str) -> bool:
                 not in ('Cc', 'Cf', 'Zl', 'Zp', 'Zs')):
             invisible = False
     return invisible
+
+def kakasi_convert(text: str, target: str='orig') -> str:
+    '''
+    Convert Japanese text to hiragana, katakana, or romaji
+
+    :param text: The text to be converted
+    :param target: The target to be converted to, can be:
+                   'orig':     return original text, no conversion
+                   'hira':     convert to hiragana
+                   'kana':     convert to katakana
+                   'hepburn':  convert to Hepburn romanization
+                   'kunrei':   convert to Kunrei romanization
+                   'passport': convert to Passport romanization
+
+    Examples:
+
+    >>> kakasi_convert('かな漢字')
+    'かな漢字'
+
+    >>> kakasi_convert('かな漢字', target='hira')
+    'かなかんじ'
+
+    >>> kakasi_convert('かな, foobar, 漢字,', target='hira')
+    'かな, foobar, かんじ,'
+
+    >>> kakasi_convert('かな漢字', target='kana')
+    'カナカンジ'
+
+    >>> kakasi_convert('かな漢字', target='hepburn')
+    'kanakanji'
+
+    >>> kakasi_convert('かな漢字', target='kunrei')
+    'kanakanzi'
+
+    >>> kakasi_convert('かな漢字', target='passport')
+    'kanakanji'
+    '''
+    if not IMPORT_PYKAKASI_SUCCESSFUL or target == 'orig':
+        return text
+    result = ''
+    for item in KAKASI_INSTANCE.convert(text):
+        result += item[target]
+    return result
 
 def _in_range(codepoint: int) -> bool:
     '''Checks whether the codepoint is in one of the valid ranges
@@ -991,13 +1027,6 @@ class EmojiMatcher():
             N_('travel'),
         ]
 
-        if (IMPORT_PYKAKASI_SUCCESSFUL
-                and 'ja' in itb_util.expand_languages(self._languages)):
-            KAKASI_INSTANCE.setMode('H', 'H')
-            KAKASI_INSTANCE.setMode('K', 'H')
-            KAKASI_INSTANCE.setMode('J', 'H')
-            kakasi_converter = KAKASI_INSTANCE.getConverter()
-
         for language in itb_util.expand_languages(self._languages):
             if self._gettext_translations[language]:
                 translated_categories = []
@@ -1008,30 +1037,17 @@ class EmojiMatcher():
                         translated_category)
                     if language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
                         translated_category_hiragana = (
-                            kakasi_converter.do(
-                                translated_category))
+                            kakasi_convert(
+                                translated_category, target='hira'))
                         if (translated_category_hiragana
                                 != translated_category):
                             translated_categories.append(
                                 translated_category_hiragana)
                         if self._romaji:
-                            KAKASI_INSTANCE.setMode('H', 'a')
-                            KAKASI_INSTANCE.setMode('K', 'a')
-                            KAKASI_INSTANCE.setMode('J', 'a')
-                            # default: use Hepburn Roman table
-                            KAKASI_INSTANCE.setMode('r', 'Hepburn')
-                            # add space default: no Separator
-                            KAKASI_INSTANCE.setMode('C', True)
-                            # capitalize default: no Capitalize
-                            KAKASI_INSTANCE.setMode('c', False)
-                            kakasi_converter = KAKASI_INSTANCE.getConverter()
                             translated_category_romaji = (
-                                kakasi_converter.do(
-                                    translated_category)).lower()
-                            KAKASI_INSTANCE.setMode('H', 'H')
-                            KAKASI_INSTANCE.setMode('K', 'H')
-                            KAKASI_INSTANCE.setMode('J', 'H')
-                            kakasi_converter = KAKASI_INSTANCE.getConverter()
+                                kakasi_convert(
+                                    translated_category,
+                                    target='hepburn')).lower()
                             if (translated_category_romaji
                                     != translated_category):
                                 translated_categories.append(
@@ -1088,33 +1104,19 @@ class EmojiMatcher():
                                  pinyin.get(content)]
                             )
                         elif language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
-                            KAKASI_INSTANCE.setMode('H', 'H')
-                            KAKASI_INSTANCE.setMode('K', 'H')
-                            KAKASI_INSTANCE.setMode('J', 'H')
-                            kakasi_converter = KAKASI_INSTANCE.getConverter()
                             self._add_to_emoji_dict(
                                 (emoji_string, language),
                                 'names',
                                 [content,
-                                 kakasi_converter.do(content)]
+                                 kakasi_convert(content, target='hira')]
                             )
                             if self._romaji:
-                                KAKASI_INSTANCE.setMode('H', 'a')
-                                KAKASI_INSTANCE.setMode('K', 'a')
-                                KAKASI_INSTANCE.setMode('J', 'a')
-                                # default: use Hepburn Roman table
-                                KAKASI_INSTANCE.setMode('r', 'Hepburn')
-                                # add space default: no Separator
-                                KAKASI_INSTANCE.setMode('C', True)
-                                # capitalize default: no Capitalize
-                                KAKASI_INSTANCE.setMode('c', False)
-                                kakasi_converter = (
-                                    KAKASI_INSTANCE.getConverter())
                                 self._add_to_emoji_dict(
                                     (emoji_string, language),
                                     'names',
                                     [content,
-                                     kakasi_converter.do(content).lower()]
+                                     kakasi_convert(content,
+                                                    target='hepburn').lower()]
                                 )
                         else:
                             self._add_to_emoji_dict(
@@ -1134,34 +1136,20 @@ class EmojiMatcher():
                                     [keyword, keyword_pinyin]
                                 )
                         elif language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
-                            KAKASI_INSTANCE.setMode('H', 'H')
-                            KAKASI_INSTANCE.setMode('K', 'H')
-                            KAKASI_INSTANCE.setMode('J', 'H')
-                            kakasi_converter = KAKASI_INSTANCE.getConverter()
                             for content_part in content.split('|'):
                                 keyword = content_part.strip()
-                                keyword_hiragana = kakasi_converter.do(keyword)
+                                keyword_hiragana = kakasi_convert(
+                                    keyword, target='hira')
                                 self._add_to_emoji_dict(
                                     (emoji_string, language),
                                     'keywords',
                                     [keyword, keyword_hiragana]
                                 )
                             if self._romaji:
-                                KAKASI_INSTANCE.setMode('H', 'a')
-                                KAKASI_INSTANCE.setMode('K', 'a')
-                                KAKASI_INSTANCE.setMode('J', 'a')
-                                # default: use Hepburn Roman table
-                                KAKASI_INSTANCE.setMode('r', 'Hepburn')
-                                # add space default: no Separator
-                                KAKASI_INSTANCE.setMode('C', True)
-                                # capitalize default: no Capitalize
-                                KAKASI_INSTANCE.setMode('c', False)
-                                kakasi_converter = (
-                                    KAKASI_INSTANCE.getConverter())
                                 for content_part in content.split('|'):
                                     keyword = content_part.strip()
-                                    keyword_romaji = kakasi_converter.do(
-                                        keyword).lower()
+                                    keyword_romaji = kakasi_convert(
+                                        keyword, target='hepburn').lower()
                                     self._add_to_emoji_dict(
                                         (emoji_string, language),
                                         'keywords',
