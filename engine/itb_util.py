@@ -406,8 +406,8 @@ LOCALE_DEFAULTS = {
     # from the translation community.
     'kn': {'inputmethods': ['kn-inscript2', 'NoIME'],
            'dictionaries': ['kn_IN', 'en_GB']},
-    'ko_': {'inputmethods': ['ko-han2', 'NoIME'],
-            'dictionaries': ['ko_KR', 'en_GB']},
+    'ko': {'inputmethods': ['ko-han2', 'NoIME'],
+           'dictionaries': ['ko_KR', 'en_GB']},
     'kok' : {'inputmethods': ['kok-inscript2-deva', 'NoIME'],
              'dictionaries': ['en_GB']},
     'ks': {'inputmethods': ['ks-kbd', 'NoIME'], 'dictionaries': ['en_GB']},
