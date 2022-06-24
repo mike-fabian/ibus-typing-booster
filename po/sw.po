@@ -9,16 +9,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-06-23 15:05+0200\n"
-"PO-Revision-Date: 2022-05-12 07:00+0000\n"
+"PO-Revision-Date: 2022-06-24 12:08+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
-"Language-Team: Swahili <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/sw/>\n"
+"Language-Team: Swahili <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/sw/>\n"
 "Language: sw\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.2\n"
+"X-Generator: Weblate 4.13\n"
 
 #: engine/emoji_picker.py:203
 msgid "Emoji Picker"
@@ -493,18 +493,16 @@ msgstr ""
 "orodha nzima ya mapendekezo."
 
 #: setup/main.py:393
-#, fuzzy
-#| msgid "None"
 msgid "No"
 msgstr "Hapana"
 
 #: setup/main.py:395
 msgid "Yes, with fallback to popup"
-msgstr ""
+msgstr "Ndio, na njia mbadala kwa ibukizi"
 
 #: setup/main.py:397
 msgid "Yes, without fallback to popup"
-msgstr ""
+msgstr "Ndio, bila njia mbadala kwa ibukizi"
 
 #. Translators: Whether to automatically capitalize after
 #. punctuation.
