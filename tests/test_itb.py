@@ -277,6 +277,7 @@ class ItbTestCase(unittest.TestCase):
             False, update_gsettings=False)
         self.engine.set_keybindings({
             'cancel': ['Escape'],
+            'commit': [],
             'commit_candidate_1': [],
             'commit_candidate_1_plus_space': ['1', 'KP_1', 'F1'],
             'commit_candidate_2': [],
@@ -299,8 +300,10 @@ class ItbTestCase(unittest.TestCase):
             'lookup_related': ['Mod5+F12'],
             'lookup_table_page_down': ['Page_Down', 'KP_Page_Down', 'KP_Next'],
             'lookup_table_page_up': ['Page_Up', 'KP_Page_Up', 'KP_Prior'],
+            'next_case_mode': ['Shift_L'],
             'next_dictionary': ['Mod1+Down', 'Mod1+KP_Down'],
             'next_input_method': ['Control+Down', 'Control+KP_Down'],
+            'previous_case_mode': ['Shift_R'],
             'previous_dictionary': ['Mod1+Up', 'Mod1+KP_Up'],
             'previous_input_method': ['Control+Up', 'Control+KP_Up'],
             'select_next_candidate':
@@ -427,6 +430,39 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine._candidates[0][0], 'cerulean')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'cerulean ')
+
+    def test_commit_command_keybinding(self) -> None:
+        '''Test binding a key to the “commit” command
+        https://github.com/mike-fabian/ibus-typing-booster/issues/320
+        '''
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'test')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # committing with space adds a space by default
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'test ')
+        # Now set the option to commit by space
+        self.engine.set_keybindings({
+            'commit': ['space'],
+        }, update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'test')
+        self.assertEqual(self.engine.mock_committed_text, 'test ')
+        # Now committing with space should not add a space anymore:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'test test')
 
     def test_commit_with_arrows(self) -> None:
         self.engine.set_current_imes(

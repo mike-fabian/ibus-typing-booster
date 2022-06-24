@@ -3163,31 +3163,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         return self._arrow_keys_reopen_preedit
 
-    def set_input_mode(
-            self, mode: bool, update_gsettings: bool = True) ->  None:
-        '''Sets the input mode
+    def _commit_current_input(self) -> None:
+        '''Commits the current state:
 
-        :param mode: Whether to switch ibus-typing-booster on or off
+        - If nothing is selected in the lookup table, commit the preedit
+        - If something is manually selected in the compose lookup table,
+          insert it in the preedit, update the preedit and then commit it.
+        - If something is selected in the regular (not compose) lookup
+          table, commit the selection.
         '''
-        if DEBUG_LEVEL > 1:
-            LOGGER.debug('(%s)', mode)
-        if mode == self._input_mode:
-            return
-        self._input_mode = mode
-        if not self._input_mode:
-            self._hide_input = False
-        if self._prop_dict and self.input_mode_menu:
-            self._init_or_update_property_menu(
-                self.input_mode_menu, mode)
-        if update_gsettings:
-            self._gsettings.set_value(
-                'inputmode',
-                GLib.Variant.new_boolean(mode))
-        if self.is_empty() and not self._typed_compose_sequence:
-            return
-        # Toggling input mode off should not throw away the current input
-        # but commit it:
-        # https://github.com/mike-fabian/ibus-typing-booster/issues/236
         if (self._typed_compose_sequence
             and self._lookup_table_shows_compose_completions
             and self.get_lookup_table().cursor_visible):
@@ -3233,6 +3217,33 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # cursor needs to be corrected leftwards:
             for dummy_char in commit_string[caret_was:]:
                 self._forward_generated_key_event(IBus.KEY_Left)
+
+    def set_input_mode(
+            self, mode: bool, update_gsettings: bool = True) ->  None:
+        '''Sets the input mode
+
+        :param mode: Whether to switch ibus-typing-booster on or off
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('(%s)', mode)
+        if mode == self._input_mode:
+            return
+        self._input_mode = mode
+        if not self._input_mode:
+            self._hide_input = False
+        if self._prop_dict and self.input_mode_menu:
+            self._init_or_update_property_menu(
+                self.input_mode_menu, mode)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'inputmode',
+                GLib.Variant.new_boolean(mode))
+        if self.is_empty() and not self._typed_compose_sequence:
+            return
+        # Toggling input mode off should not throw away the current input
+        # but commit it:
+        # https://github.com/mike-fabian/ibus-typing-booster/issues/236
+        self._commit_current_input()
 
     def toggle_input_mode(self, update_gsettings: bool = True) -> None:
         '''Toggles whether ibus-typing-booster is on or off
@@ -5056,6 +5067,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._start_setup()
         return True
 
+    def _command_commit(self) -> bool:
+        '''Handle hotkey for the command “commit”
+
+        :return: True if the key was completely handled, False if not.
+        '''
+        if self.is_empty() and not self._typed_compose_sequence:
+            return False
+        self._commit_current_input()
+        return True
+
     def _command_commit_candidate_1(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_1”
 
@@ -5461,6 +5482,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 repr(compose_result))
         (match, return_value) = self._handle_hotkeys(
                 key, commands=['cancel',
+                               'commit',
                                'toggle_input_mode_on_off',
                                'enable_lookup',
                                'select_next_candidate',

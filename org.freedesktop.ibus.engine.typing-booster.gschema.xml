@@ -450,6 +450,7 @@
       <default>
         {
         'cancel': &lt;['Escape']&gt;,
+        'commit': &lt;@as []&gt;,
         'commit_candidate_1': &lt;@as []&gt;,
         'commit_candidate_1_plus_space': &lt;['1', 'KP_1', 'F1']&gt;,
         'commit_candidate_2': &lt;@as []&gt;,
