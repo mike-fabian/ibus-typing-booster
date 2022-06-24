@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 27 Jun 2022 Release 2.16.7
+* When the lookup table is hidden because of inline completion, ignore commands to commit candidates by their index (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/325)
+* Add a command 'commit' with configurable key bindings (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/320)
+* Translation update from Weblate (sw updated to 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 23 Jun 2022 Release 2.16.5
 * Fix typo in LOCALE_DEFAULTS for Korean (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/321)
 * Improve and simplify setting input methods and dictionaries using new helper functions (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/318)
