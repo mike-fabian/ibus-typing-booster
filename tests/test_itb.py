@@ -29,6 +29,7 @@ from typing import Any
 from typing import Optional
 import os
 import sys
+import logging
 import unicodedata
 import unittest
 import subprocess
@@ -40,6 +41,8 @@ require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
 require_version('Gdk', '3.0')
 from gi.repository import Gdk
+
+LOGGER = logging.getLogger('ibus-typing-booster')
 
 # Get more verbose output in the test log:
 os.environ['IBUS_TYPING_BOOSTER_DEBUG_LEVEL'] = '255'
@@ -2195,4 +2198,9 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'ॲa ')
 
 if __name__ == '__main__':
+    LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
+    LOGGER.setLevel(logging.DEBUG)
+    # Activate this to see a lot of logging when running the tests
+    # manually:
+    # LOGGER.addHandler(LOG_HANDLER)
     unittest.main()
