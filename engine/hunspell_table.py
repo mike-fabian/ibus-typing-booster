@@ -139,6 +139,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._input_purpose: int = 0
         self._input_hints: int = 0
         self._lookup_table_is_invalid = False
+        self._lookup_table_hidden = False
         self._lookup_table_shows_related_candidates = False
         self._lookup_table_shows_compose_completions = False
         self._current_auxiliary_text = ''
@@ -679,6 +680,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.is_lookup_table_enabled_by_tab = False
         self.is_lookup_table_enabled_by_min_char_complete = False
         self._lookup_table_is_invalid = False
+        self._lookup_table_hidden = False
         self._lookup_table_shows_related_candidates = False
         self._lookup_table_shows_compose_completions = False
 
@@ -2137,6 +2139,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         Show it if it is not empty and not disabled, otherwise hide it.
         '''
+        self._lookup_table_hidden = False
         # Also make sure to hide lookup table if there are
         # no candidates to display. On f17, this makes no
         # difference but gnome-shell in f18 will display
@@ -2147,6 +2150,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             or self.get_lookup_table().get_number_of_candidates() == 0
             or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
             self.hide_lookup_table()
+            self._lookup_table_hidden = True
             self._update_preedit()
             return
         if (not self._inline_completion
@@ -2154,6 +2158,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             or self.get_lookup_table().get_cursor_pos() != 0):
             # Show standard lookup table:
             self.update_lookup_table(self.get_lookup_table(), True)
+            self._lookup_table_hidden = False
             self._update_preedit()
             return
         # There is at least one candidate the lookup table cursor
@@ -2173,10 +2178,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 or self.get_lookup_table().cursor_visible):
                 # Show standard lookup table as a fallback:
                 self.update_lookup_table(self.get_lookup_table(), True)
+                self._lookup_table_hidden = False
             else:
                 # self._inline_completion == 2 means do not fall back
                 # to the standard lookup table:
                 self.hide_lookup_table()
+                self._lookup_table_hidden = True
                 text = IBus.Text.new_from_string('')
                 super().update_auxiliary_text(text, False)
             self._update_preedit()
@@ -2185,6 +2192,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # the lookup table and the auxiliary text:
         completion = first_candidate[len(typed_string):]
         self.hide_lookup_table()
+        self._lookup_table_hidden = True
         text = IBus.Text.new_from_string('')
         super().update_auxiliary_text(text, False)
         text = IBus.Text.new_from_string(typed_string + completion)
@@ -2260,6 +2268,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self.get_lookup_table().clear()
             self.get_lookup_table().set_cursor_visible(False)
             self.hide_lookup_table()
+            self._lookup_table_hidden = True
             self._current_auxiliary_text = IBus.Text.new_from_string('')
             super().update_auxiliary_text(
                 self._current_auxiliary_text, False)
@@ -2272,6 +2281,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.get_lookup_table().clear()
         self.get_lookup_table().set_cursor_visible(False)
         self.hide_lookup_table()
+        self._lookup_table_hidden = True
         if self._label_busy and self._label_busy_string.strip():
             # Show a label in the auxiliary text to indicate that the
             # lookup table is being updated (by default an hourglass
@@ -2315,6 +2325,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # found:
         if self.get_lookup_table().get_number_of_candidates():
             self.hide_lookup_table()
+            self._lookup_table_hidden = True
         if self._label_busy and self._label_busy_string.strip():
             # Show a label in the auxiliary text to indicate that the
             # lookup table is being updated (by default an hourglass
@@ -2373,6 +2384,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     IBus.Text.new_from_string(''), False)
             if self.get_lookup_table().get_number_of_candidates():
                 self.update_lookup_table(self.get_lookup_table(), True)
+                self._lookup_table_hidden = False
             return
         self._candidates = []
         self.get_lookup_table().clear()
@@ -2489,7 +2501,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :param extra_text: Additional text append to the commit,
                            usually a space
         '''
-        if not self.get_lookup_table().get_number_of_candidates():
+        if (not self.get_lookup_table().get_number_of_candidates()
+            or self._lookup_table_hidden):
             return False
         candidate_number = (
             self._get_lookup_table_current_page() * self._page_size + index)
@@ -5533,6 +5546,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.get_lookup_table().clear()
         self.get_lookup_table().set_cursor_visible(False)
         self.hide_lookup_table()
+        self._lookup_table_hidden = True
         self._current_auxiliary_text = IBus.Text.new_from_string('')
         super().update_auxiliary_text(
             self._current_auxiliary_text, False)

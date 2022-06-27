@@ -1008,6 +1008,41 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text,
                          'test test. Test test . Test , hello ')
 
+    def test_no_commit_by_index_when_using_inline_completion(self) -> None:
+        '''Test to avoid committing by index when using inline completion
+        https://github.com/mike-fabian/ibus-typing-booster/issues/325
+        '''
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        # Switch on inline completion without fallback to popup:
+        self.engine.set_inline_completion(2, update_gsettings=False)
+        self.assertEqual(2, self.engine.get_inline_completion())
+        self.engine.do_process_key_event(IBus.KEY_A, 0, 0)
+        self.assertEqual(True, self.engine._lookup_table_hidden)
+        self.assertEqual(self.engine._candidates[0][0], 'A')
+        self.assertEqual(True, len(self.engine._candidates) >= 3)
+        self.engine.do_process_key_event(IBus.KEY_4, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine.mock_preedit_text, 'A4')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, 'A4 ')
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.engine.do_process_key_event(IBus.KEY_w, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(True, self.engine._lookup_table_hidden)
+        self.assertEqual(self.engine._candidates[0][0], 'winter')
+        self.assertEqual(True, len(self.engine._candidates) >= 3)
+        self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, 'A4 ')
+        self.assertEqual(self.engine.mock_preedit_text, 'wint1')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, 'A4 wint1 ')
+        self.assertEqual(self.engine.mock_preedit_text, '')
+
     def test_add_space_on_commit(self) -> None:
         '''Test new option to avoid adding spaces when committing by label
         (1-9 or F1-F9 key) or by mouse click.  See:
