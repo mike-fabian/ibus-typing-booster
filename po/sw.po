@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-06-23 15:05+0200\n"
+"POT-Creation-Date: 2022-06-27 14:26+0200\n"
 "PO-Revision-Date: 2022-06-24 12:08+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
-"Language-Team: Swahili <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/sw/>\n"
+"Language-Team: Swahili <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/sw/>\n"
 "Language: sw\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -129,21 +129,21 @@ msgstr "Chaguo-msingi la mfumo"
 msgid "Set Font"
 msgstr "Chagua Fonti"
 
-#: engine/hunspell_table.py:514 engine/hunspell_table.py:548
-#: engine/hunspell_table.py:569
+#: engine/hunspell_table.py:515 engine/hunspell_table.py:549
+#: engine/hunspell_table.py:570
 msgid "Off"
 msgstr "Zima"
 
-#: engine/hunspell_table.py:519 engine/hunspell_table.py:553
-#: engine/hunspell_table.py:574
+#: engine/hunspell_table.py:520 engine/hunspell_table.py:554
+#: engine/hunspell_table.py:575
 msgid "On"
 msgstr "Wezesha"
 
-#: engine/hunspell_table.py:538
+#: engine/hunspell_table.py:539
 msgid "Input mode"
 msgstr "Hali ya kuingiza"
 
-#: engine/hunspell_table.py:539
+#: engine/hunspell_table.py:540
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Hapa, unaweza kuwezesha au kuzima msaidizi-wa-kuchapa-mbio-wa-ibus."
 
@@ -154,7 +154,7 @@ msgstr "Hapa, unaweza kuwezesha au kuzima msaidizi-wa-kuchapa-mbio-wa-ibus."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:558 engine/hunspell_table.py:560 setup/main.py:551
+#: engine/hunspell_table.py:559 engine/hunspell_table.py:561 setup/main.py:551
 msgid "Unicode symbols and emoji predictions"
 msgstr "Alama za unikodi na emoji zilizotabiriwa"
 
@@ -165,63 +165,63 @@ msgstr "Alama za unikodi na emoji zilizotabiriwa"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:579 engine/hunspell_table.py:580 setup/main.py:580
+#: engine/hunspell_table.py:580 engine/hunspell_table.py:581 setup/main.py:580
 msgid "Off the record mode"
 msgstr "Tumia kamusi pekee kuongeza mbio ya kuchapa"
 
-#: engine/hunspell_table.py:1538
+#: engine/hunspell_table.py:1540
 msgid "Highest priority dictionary"
 msgstr "Kamusi yenye kipaumbele"
 
-#: engine/hunspell_table.py:1539
+#: engine/hunspell_table.py:1541
 msgid "Choose highest priority dictionary"
 msgstr "Chagua kamusi yenye kipaumbele"
 
-#: engine/hunspell_table.py:1568
+#: engine/hunspell_table.py:1570
 msgid "Preedit input method"
 msgstr "Jinsi ya kuhariri mbeleni hali ya kuingiza"
 
-#: engine/hunspell_table.py:1569
+#: engine/hunspell_table.py:1571
 msgid "Switch preedit input method"
 msgstr "Badili jinsi ya kuhariri mbeleni hali-tumizi ya ingizo"
 
-#: engine/hunspell_table.py:1883
+#: engine/hunspell_table.py:1885
 msgid "Setup"
 msgstr "Mipangilio"
 
-#: engine/hunspell_table.py:1886 setup/main.py:152
+#: engine/hunspell_table.py:1888 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr "Pendekezo ya msaidizi-wa-kuchapa-mbio-wa-ibus"
 
-#: engine/hunspell_table.py:4597
+#: engine/hunspell_table.py:4621
 msgid "Failed to import Google speech-to-text."
 msgstr ""
 "Haiwezekana kuwezesha programmu ya Google ya utamboaji otomatiki wa usemi."
 
-#: engine/hunspell_table.py:4600
+#: engine/hunspell_table.py:4624
 msgid "Failed to import pyaudio."
 msgstr "Haiwezekana kutumia programmu pyaudio."
 
-#: engine/hunspell_table.py:4603
+#: engine/hunspell_table.py:4627
 msgid "Failed to import queue."
 msgstr "Haiwezekana kuleta foleni."
 
-#: engine/hunspell_table.py:4608
+#: engine/hunspell_table.py:4632
 msgid "No supported language for speech recognition."
 msgstr "Hakuna lugha ina utamboaji wa usemi."
 
-#: engine/hunspell_table.py:4612
+#: engine/hunspell_table.py:4636
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Faili “%s” ya “programmu ya Google ya utambolisho“ haionekana."
 
-#: engine/hunspell_table.py:4625
+#: engine/hunspell_table.py:4649
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Haiwezekana kuanza programmu ya Google ya utamboaji wa usemi. Angalia faili "
 "ya batli ya eua."
 
-#: engine/hunspell_table.py:4733
+#: engine/hunspell_table.py:4757
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Kosa ya Google utambaoji wa usemi. Angalia faili ya batli ya eua."
 
