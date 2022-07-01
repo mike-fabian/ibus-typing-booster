@@ -2102,7 +2102,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             0,
             len(aux_string)))
         if DEBUG_LEVEL > 0:
-            context = 'Context '
+            client = f'Client={self._im_client}'
+            aux_string += client
+            attrs.append(IBus.attr_foreground_new(
+                itb_util.color_string_to_argb('Purple'),
+                len(aux_string)-len(client),
+                len(aux_string)))
+        if DEBUG_LEVEL > 1:
+            context = ' Context '
             if self._is_context_from_surrounding_text:
                 context += '🟢 '
             else:
