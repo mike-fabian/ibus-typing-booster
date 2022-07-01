@@ -5386,7 +5386,7 @@ class MicrophoneStream():
 
     https://github.com/GoogleCloudPlatform/python-docs-samples/blob/master/speech/cloud-client/transcribe_streaming_mic.py
 
-    https://github.com/GoogleCloudPlatform/python-docs-samples/blob/master/LICENSE
+    https://github.com/GoogleCloudPlatform/python-docs-samples/blob/main/LICENSE
 
     GoogleCloudPlatform/python-docs-samples is licensed under the
     Apache License 2.0
