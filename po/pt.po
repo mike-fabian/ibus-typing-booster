@@ -12,8 +12,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-07-04 18:57+0200\n"
-"PO-Revision-Date: 2022-07-06 07:45+0000\n"
-"Last-Translator: Paul S <psads.g@gmail.com>\n"
+"PO-Revision-Date: 2022-07-06 07:50+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Portuguese <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/pt/>\n"
 "Language: pt\n"
@@ -370,7 +370,9 @@ msgstr ""
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:5334
 msgid "translator-credits"
-msgstr "Manuela Silva"
+msgstr ""
+"Manuela Silva\n"
+"Paul S <psads.g@gmail.com>, 2022"
 
 #: engine/itb_util.py:5342
 msgid "Online documentation:"
