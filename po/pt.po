@@ -5,26 +5,27 @@
 # Manuela Silva <mmsrs@sky.com>, 2019.
 # Anonymous <noreply@weblate.org>, 2019.
 # Mike FABIAN <mfabian@redhat.com>, 2022.
+# Paul S <psads.g@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-07-04 18:57+0200\n"
-"PO-Revision-Date: 2022-02-25 18:38+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Portuguese <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/pt/>\n"
+"PO-Revision-Date: 2022-07-06 07:45+0000\n"
+"Last-Translator: Paul S <psads.g@gmail.com>\n"
+"Language-Team: Portuguese <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 4.13\n"
 
 #: engine/emoji_picker.py:203
 msgid "Emoji Picker"
-msgstr ""
+msgstr "Emoji Seletor"
 
 #: engine/emoji_picker.py:320
 msgid "Clear recently used"
@@ -44,11 +45,11 @@ msgstr "Pesquisar por emoji"
 
 #: engine/emoji_picker.py:353
 msgid "Set the font to display emoji"
-msgstr ""
+msgstr "Definir a fonte para mostrar emoji"
 
 #: engine/emoji_picker.py:361
 msgid "Set font size"
-msgstr ""
+msgstr "Definir o tamanho da fonte"
 
 #. Translators: This is a checkbox which enables or disables
 #. the pango font fallback. If font fallback is off, only the
@@ -60,13 +61,15 @@ msgstr ""
 #. selected font.
 #: engine/emoji_picker.py:382
 msgid "Fallback"
-msgstr ""
+msgstr "Alternativa"
 
 #: engine/emoji_picker.py:384
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
+"Se deve ser usada fonte substituta para emoji ou partes de sequências de "
+"emoji que não podem ser exibidas usando a fonte selecionada."
 
 #: engine/emoji_picker.py:455
 msgid "Recently used"
@@ -86,7 +89,7 @@ msgstr "Palavras-chave"
 
 #: engine/emoji_picker.py:676
 msgid "Fonts used to render this emoji:"
-msgstr ""
+msgstr "Fontes usadas para mostrar este emoji:"
 
 #: engine/emoji_picker.py:693
 msgid "Unicode Version:"
@@ -99,10 +102,11 @@ msgstr "Clique esquerdo para copiar"
 #: engine/emoji_picker.py:718
 msgid "Long press or middle click for skin tones"
 msgstr ""
+"Pressione longamente ou clique no botão do meio do rato para tons de pele"
 
 #: engine/emoji_picker.py:719
 msgid "Right click for info"
-msgstr ""
+msgstr "Clique no botão direito do rato para informação"
 
 #: engine/emoji_picker.py:1210
 msgid "Search Results"
@@ -110,7 +114,7 @@ msgstr "Resultados da Pesquisa"
 
 #: engine/emoji_picker.py:1214
 msgid "Search produced empty result."
-msgstr ""
+msgstr "A pesquisa não produziu resultados."
 
 #: engine/emoji_picker.py:1484 engine/emoji_picker.py:1611
 msgid "Copied to clipboard!"
@@ -118,7 +122,7 @@ msgstr "Copiado para a área de transferência!"
 
 #: engine/emoji_picker.py:1933
 msgid "Lookup on emojipedia"
-msgstr ""
+msgstr "Procure na emojipedia"
 
 #: engine/emoji_picker.py:2055 engine/emoji_picker.py:2056
 #: engine/emoji_picker.py:2057 setup/main.py:1449
@@ -127,17 +131,17 @@ msgstr "Predefinição do sistema"
 
 #: engine/emoji_picker.py:2191
 msgid "Set Font"
-msgstr ""
+msgstr "Definir a fonte"
 
 #: engine/hunspell_table.py:515 engine/hunspell_table.py:549
 #: engine/hunspell_table.py:570
 msgid "Off"
-msgstr ""
+msgstr "Desligado"
 
 #: engine/hunspell_table.py:520 engine/hunspell_table.py:554
 #: engine/hunspell_table.py:575
 msgid "On"
-msgstr ""
+msgstr "Ligado"
 
 #: engine/hunspell_table.py:539
 msgid "Input mode"
@@ -145,7 +149,7 @@ msgstr "Modo de entrada"
 
 #: engine/hunspell_table.py:540
 msgid "Here you can switch ibus-typing-booster on or off."
-msgstr ""
+msgstr "Pode ligar or desligar o ibus-typing-booster aqui."
 
 #. Translators: Whether Unicode symbols and emoji should be
 #. included in the predictions. Emoji are pictographs like
@@ -156,7 +160,7 @@ msgstr ""
 #. nevertheless useful symbols.
 #: engine/hunspell_table.py:559 engine/hunspell_table.py:561 setup/main.py:570
 msgid "Unicode symbols and emoji predictions"
-msgstr ""
+msgstr "Previsão de símbolos unicode e emoji"
 
 #. Translators: While “Off the record” mode is on, learning
 #. from user input is disabled. If learned user input is
@@ -191,7 +195,7 @@ msgstr "Configurar"
 
 #: engine/hunspell_table.py:1888 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
-msgstr ""
+msgstr "Preferências para o ibus-typing-booster"
 
 #: engine/hunspell_table.py:4651
 msgid "Failed to import Google speech-to-text."
@@ -199,7 +203,7 @@ msgstr ""
 
 #: engine/hunspell_table.py:4654
 msgid "Failed to import pyaudio."
-msgstr ""
+msgstr "Falhou a importar pyaudio."
 
 #: engine/hunspell_table.py:4657
 msgid "Failed to import queue."
@@ -207,7 +211,7 @@ msgstr ""
 
 #: engine/hunspell_table.py:4662
 msgid "No supported language for speech recognition."
-msgstr ""
+msgstr "Nenhuma língua suportada para reconhecimento de fala."
 
 #: engine/hunspell_table.py:4666
 #, python-format
@@ -269,7 +273,7 @@ msgstr ""
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:835 engine/itb_emoji.py:836 engine/itb_emoji.py:1016
 msgid "modifier"
-msgstr ""
+msgstr "modificador"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
@@ -305,7 +309,7 @@ msgstr "regional"
 #. are seperated by punctuation or white space.
 #: engine/itb_util.py:2641
 msgid "Others, Miscellaneous, Various, Diverse"
-msgstr ""
+msgstr "Outras, Miscelâneas, Várias, Diversas"
 
 #: engine/itb_util.py:4080 engine/itb_util.py:4744
 msgid "File not found"
