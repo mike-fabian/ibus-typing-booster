@@ -5,7 +5,7 @@ date: 2021-09-30
 
 ## Contents
 
-1. [Installing ibus-typing-booster](#1)
+1. [Installing ibus-typing-booster](#0)
 1. [Adding ibus-typing-booster to your desktop](#1)
     * [When using the Gnome3 desktop](#1_1)
     * [When using older Gnome3 desktops like in Ubuntu 21.04](#1_2)
@@ -64,7 +64,7 @@ date: 2021-09-30
 1. [Speech recognition](#10)
 ---------
 
-###### 1
+###### 0
 ## Installing ibus-typing-booster
 
 For most distributions, there are binary packages available
