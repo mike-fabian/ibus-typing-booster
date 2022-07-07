@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-07-04 18:57+0200\n"
-"PO-Revision-Date: 2022-07-07 10:31+0000\n"
+"PO-Revision-Date: 2022-07-07 19:13+0000\n"
 "Last-Translator: Paul S <psads.g@gmail.com>\n"
 "Language-Team: Portuguese <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/pt/>\n"
@@ -183,11 +183,11 @@ msgstr "Escolha o dicionário de prioridade alta"
 
 #: engine/hunspell_table.py:1570
 msgid "Preedit input method"
-msgstr ""
+msgstr "Método de entrada de pré-edição"
 
 #: engine/hunspell_table.py:1571
 msgid "Switch preedit input method"
-msgstr ""
+msgstr "Mudar o método de entrada de pré-edição"
 
 #: engine/hunspell_table.py:1885
 msgid "Setup"
@@ -199,15 +199,15 @@ msgstr "Preferências para o ibus-typing-booster"
 
 #: engine/hunspell_table.py:4651
 msgid "Failed to import Google speech-to-text."
-msgstr ""
+msgstr "Falha ao importar a conversão de fala para texto do Google."
 
 #: engine/hunspell_table.py:4654
 msgid "Failed to import pyaudio."
-msgstr "Falhou a importar pyaudio."
+msgstr "Falha a importar pyaudio."
 
 #: engine/hunspell_table.py:4657
 msgid "Failed to import queue."
-msgstr ""
+msgstr "Falha ao importar a fila."
 
 #: engine/hunspell_table.py:4662
 msgid "No supported language for speech recognition."
@@ -216,15 +216,16 @@ msgstr "Nenhuma língua suportada para reconhecimento de fala."
 #: engine/hunspell_table.py:4666
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
-msgstr ""
+msgstr "Ficheiro “Google application credentials” “%s” não encontrado."
 
 #: engine/hunspell_table.py:4679
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
+"Falha ao iniciar a conversão de fala em texto do Google. Consulte debug.log."
 
 #: engine/hunspell_table.py:4787
 msgid "Google speech-to-text error. See debug.log."
-msgstr ""
+msgstr "Erro de conversão de fala em texto do Google. Consulte debug.log."
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
@@ -267,7 +268,7 @@ msgstr "símbolos"
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:834 engine/itb_emoji.py:1012
 msgid "flags"
-msgstr ""
+msgstr "sinalizadores"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
@@ -321,15 +322,15 @@ msgstr "Erro de permissão"
 
 #: engine/itb_util.py:4088 engine/itb_util.py:4752
 msgid "Unicode decoding error"
-msgstr ""
+msgstr "Erro de descodificação unicode"
 
 #: engine/itb_util.py:4092 engine/itb_util.py:4756
 msgid "Unknown error"
-msgstr ""
+msgstr "Erro desconhecido"
 
 #: engine/itb_util.py:4721
 msgid "Native Keyboard"
-msgstr ""
+msgstr "Teclado nativo"
 
 #: engine/itb_util.py:4723
 msgid ""
@@ -337,13 +338,16 @@ msgid ""
 "whatever comes from the current keyboard layout without any further changes. "
 "So no transliteration or composing is done here."
 msgstr ""
+"Entrada direta do teclado. Este não é realmente um método de entrada, ele "
+"usa diretamente o que vem do layout atual do teclado sem outras alterações. "
+"Portanto, nenhuma transliteração ou composição é feita aqui."
 
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
 #: engine/itb_util.py:5268
 msgid "Key input"
-msgstr ""
+msgstr "Input de teclado"
 
 #: engine/itb_util.py:5274
 msgid "Cancel"
@@ -354,18 +358,19 @@ msgstr "Cancelar"
 #. command.
 #: engine/itb_util.py:5281
 msgid "Please press a key (or a key combination)"
-msgstr ""
+msgstr "Por favor prima uma tecla (ou uma combinação de teclas)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
 #: engine/itb_util.py:5286
 msgid "The dialog will be closed when the key is released"
-msgstr ""
+msgstr "A caixa de diálogo será fechada quando a tecla for solta"
 
 #: engine/itb_util.py:5325
 msgid "A completion input method to speedup typing."
 msgstr ""
+"Um método de introdução de dados de completamento para acelerar a digitação."
 
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:5334
@@ -413,7 +418,7 @@ msgstr "Opções"
 #. candidate, he can define such a custom shortcut here.
 #: setup/main.py:255
 msgid "Custom shortcuts"
-msgstr ""
+msgstr "Atalhos personalizados"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can customize the key bindings to execute
@@ -424,7 +429,7 @@ msgstr ""
 #. existing key bindings
 #: setup/main.py:269 setup/main.py:1290
 msgid "Key bindings"
-msgstr ""
+msgstr "Combinações de teclas"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence how
@@ -444,7 +449,7 @@ msgstr "Aparência"
 #. recognition.
 #: setup/main.py:307 setup/main.py:2111
 msgid "Speech recognition"
-msgstr ""
+msgstr "Reconhecimento de voz"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -454,7 +459,7 @@ msgstr ""
 #. again until the next key bound to this command is typed.
 #: setup/main.py:350
 msgid "Enable suggestions by key (Default is the Tab key)"
-msgstr ""
+msgstr "Ativar sugestões por teclado (o padrão é a tecla Tab)"
 
 #: setup/main.py:352
 msgid ""
@@ -473,7 +478,7 @@ msgstr ""
 #. the next candidate and opens the full candidate list.
 #: setup/main.py:380
 msgid "Use inline completion"
-msgstr ""
+msgstr "Usar o completamento em linha"
 
 #: setup/main.py:382
 msgid ""
@@ -486,7 +491,7 @@ msgstr ""
 
 #: setup/main.py:393 setup/main.py:462
 msgid "No"
-msgstr ""
+msgstr "Não"
 
 #: setup/main.py:395
 msgid "Yes, with fallback to popup"
@@ -500,11 +505,11 @@ msgstr ""
 #. punctuation.
 #: setup/main.py:423
 msgid "Auto capitalize"
-msgstr ""
+msgstr "Colocação automática de maiúscula"
 
 #: setup/main.py:425
 msgid "Automatically capitalize after punctuation."
-msgstr ""
+msgstr "Começa palavras com letra maiúscula após pontuação."
 
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
@@ -516,7 +521,7 @@ msgstr ""
 #. command which will deselect all candidates.
 #: setup/main.py:448
 msgid "Automatically select the best candidate"
-msgstr ""
+msgstr "Seleciona automaticamente o melhor candidato"
 
 #: setup/main.py:450
 msgid ""
@@ -530,18 +535,18 @@ msgstr ""
 
 #: setup/main.py:464
 msgid "Yes, but only when extremely likely"
-msgstr ""
+msgstr "Sim, mas apenas quando extremamente provável"
 
 #: setup/main.py:466
 msgid "Yes, always"
-msgstr ""
+msgstr "Sim, sempre"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
 #. with the mouse.
 #: setup/main.py:493
 msgid "Add a space when committing by mouse click"
-msgstr ""
+msgstr "Adiciona um espaço ao confirmar com clique do rato"
 
 #: setup/main.py:495
 msgid ""
@@ -557,7 +562,7 @@ msgstr ""
 #. the session is restarted.
 #: setup/main.py:517
 msgid "Remember last used preedit input method"
-msgstr ""
+msgstr "Lembrar o último método de entrada de pré-edição usado"
 
 #: setup/main.py:519
 msgid ""
@@ -574,10 +579,8 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:545
-#, fuzzy
-#| msgid "Input mode"
 msgid "Remember input mode"
-msgstr "Modo de entrada"
+msgstr "Lembrar modo de entrada"
 
 #: setup/main.py:547
 msgid ""
@@ -619,7 +622,7 @@ msgstr ""
 #: setup/main.py:635
 #, python-format
 msgid "Avoid using the %s function"
-msgstr ""
+msgstr "Evita usar a função %s"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -651,7 +654,7 @@ msgstr ""
 #. committed words.
 #: setup/main.py:676
 msgid "Enable reopening preedits"
-msgstr ""
+msgstr "Ativar reabertura de pré-edits"
 
 #: setup/main.py:678
 msgid ""
@@ -1078,7 +1081,7 @@ msgstr ""
 #. custom color is used for the compose preview.
 #: setup/main.py:1671
 msgid "Use color for compose preview"
-msgstr ""
+msgstr "Usar cor para pré-visualização da composição"
 
 #: setup/main.py:1673
 msgid ""
@@ -1167,7 +1170,7 @@ msgstr ""
 #. suggestions from a dictionary.
 #: setup/main.py:1857
 msgid "Choose color for dictionary suggestions"
-msgstr ""
+msgstr "Escolha a cor para sugestões de dicionário"
 
 #: setup/main.py:1859
 msgid ""
@@ -1181,7 +1184,7 @@ msgstr ""
 #. database in the candidate list.
 #: setup/main.py:1885
 msgid "Use label for user database suggestions"
-msgstr ""
+msgstr "Usar rótulo para sugestões de base de dados de utilizador"
 
 #: setup/main.py:1887
 msgid ""
@@ -1219,7 +1222,7 @@ msgstr ""
 #. label is used to show when ibus-typing-booster is busy.
 #: setup/main.py:1995
 msgid "Use a label to indicate busy state"
-msgstr ""
+msgstr "Usar uma etiqueta para indicar o estado de ocupado"
 
 #: setup/main.py:1997
 msgid ""
@@ -1242,43 +1245,42 @@ msgstr ""
 
 #: setup/main.py:2088
 msgid "Spell checking"
-msgstr ""
+msgstr "Verificação ortográfica"
 
 #: setup/main.py:2104
 msgid "Emoji"
-msgstr ""
+msgstr "Emoji"
 
 #: setup/main.py:2274
 msgid "Are you sure?"
-msgstr ""
+msgstr "Tem certeza?"
 
 #: setup/main.py:2276 setup/main.py:2803 setup/main.py:2881 setup/main.py:3980
 msgid "_Cancel"
-msgstr ""
+msgstr "_Cancelar"
 
 #: setup/main.py:2277 setup/main.py:2804 setup/main.py:2882 setup/main.py:3981
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: setup/main.py:2309
 msgid "Another instance of this app is already running."
-msgstr ""
+msgstr "Outra instância deste programa já está em execução."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
 #: setup/main.py:2442
 msgid "Do you really want to restore all default settings?"
-msgstr ""
+msgstr "Deseja mesmo restaurar todas as configurações padrão?"
 
 #: setup/main.py:2878
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr "Selecionar ficheiro de áudio .wav:"
 
 #: setup/main.py:3030
-#, fuzzy
 msgid "Add dictionary"
-msgstr "Adicionar um dicionário"
+msgstr "Adicionar dicionário"
 
 #: setup/main.py:3343
 msgid "Add input method"
@@ -1291,7 +1293,7 @@ msgstr ""
 
 #: setup/main.py:3888
 msgid "Add a key binding"
-msgstr ""
+msgstr "Adicionar combinação de teclas"
 
 #: setup/main.py:3900
 msgid "Remove selected key binding"
@@ -1310,7 +1312,7 @@ msgstr ""
 
 #: setup/main.py:3977
 msgid "Open File ..."
-msgstr ""
+msgstr "Abre ficheiro ..."
 
 #: setup/main.py:3996
 #, python-format
@@ -1337,10 +1339,11 @@ msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr ""
+"Quer mesmo apagar todos os dados aprendidos ao digitar ou ler ficheiros?"
 
 #: setup/main.py:5478
 msgid "ibus is not running."
-msgstr ""
+msgstr "ibus não está a correr."
 
 #: typing-booster.appdata.xml:5
 msgid "Typing Booster"
@@ -1348,7 +1351,7 @@ msgstr ""
 
 #: typing-booster.appdata.xml:6
 msgid "Predictive input method"
-msgstr ""
+msgstr "Método de entrada preditivo"
 
 #: typing-booster.appdata.xml:8
 msgid ""
