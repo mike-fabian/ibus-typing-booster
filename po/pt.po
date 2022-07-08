@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-07-04 18:57+0200\n"
-"PO-Revision-Date: 2022-07-07 19:13+0000\n"
+"PO-Revision-Date: 2022-07-08 20:35+0000\n"
 "Last-Translator: Paul S <psads.g@gmail.com>\n"
 "Language-Team: Portuguese <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/pt/>\n"
@@ -812,7 +812,7 @@ msgstr ""
 #. ibus-typing-booster.
 #: setup/main.py:1017
 msgid "Use the following input methods:"
-msgstr ""
+msgstr "Use os seguintes métodos de entrada:"
 
 #: setup/main.py:1045
 msgid "Add an input method"
@@ -877,7 +877,7 @@ msgstr ""
 #. existing shortcuts
 #: setup/main.py:1245
 msgid "Shortcut expansion"
-msgstr ""
+msgstr "Expansão do atalho"
 
 #: setup/main.py:1259
 msgid "Current key bindings:"
@@ -914,7 +914,7 @@ msgstr ""
 #. top of the list of candidates.
 #: setup/main.py:1360
 msgid "Display total number of candidates"
-msgstr ""
+msgstr "Mostrar o número total de candidatos"
 
 #: setup/main.py:1362
 msgid ""
@@ -944,7 +944,7 @@ msgstr ""
 #. candidates to show in one page of the candidate list.
 #: setup/main.py:1409
 msgid "Candidate window page size:"
-msgstr ""
+msgstr "Tamanho da página da janela do candidato:"
 
 #: setup/main.py:1411
 msgid ""
@@ -984,13 +984,13 @@ msgstr ""
 #. at all for the preedit.
 #: setup/main.py:1488
 msgid "None"
-msgstr ""
+msgstr "Nenhum"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
 #: setup/main.py:1492
 msgid "Single"
-msgstr ""
+msgstr "Único"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
@@ -1028,7 +1028,7 @@ msgstr ""
 #. might contain a spelling error.
 #: setup/main.py:1557
 msgid "Preedit spellchecking"
-msgstr ""
+msgstr "Verificação ortográfica da pré-edição"
 
 #: setup/main.py:1559
 msgid ""
@@ -1055,20 +1055,22 @@ msgstr ""
 #. custom color is used for suggestions shown inline.
 #: setup/main.py:1615
 msgid "Use color for inline completion"
-msgstr ""
+msgstr "Usar cores para completamento em linha"
 
 #: setup/main.py:1617
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
 msgstr ""
+"Aqui pode-se escolher se uma cor personalizada é usada para uma sugestão "
+"mostrada em linha."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
 #: setup/main.py:1645
 msgid "Choose color for inline completion"
-msgstr ""
+msgstr "Escolher a cor para completamento em linha"
 
 #: setup/main.py:1647
 msgid ""
@@ -1093,18 +1095,19 @@ msgstr ""
 #. the compose preview.
 #: setup/main.py:1701
 msgid "Choose color for compose preview"
-msgstr ""
+msgstr "Usar cor para pré-visualização da composição"
 
 #: setup/main.py:1703
 msgid "Here you can specify which color to use for the compose preview."
 msgstr ""
+"Aqui pode-se especificar que cor usar para a pré-visualização da composição."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
 #: setup/main.py:1726
 msgid "Use color for user database suggestions"
-msgstr ""
+msgstr "Usar rótulo para sugestões de base de dados de utilizador"
 
 #: setup/main.py:1728
 msgid ""
@@ -1117,7 +1120,7 @@ msgstr ""
 #. suggestions from the user database.
 #: setup/main.py:1752
 msgid "Choose color for user database suggestions"
-msgstr ""
+msgstr "Escolher cor para sugestões da base de dados do utilizador"
 
 #: setup/main.py:1754
 msgid ""
@@ -1143,7 +1146,7 @@ msgstr ""
 #. spellchecking suggestions.
 #: setup/main.py:1803
 msgid "Choose color for spellchecking suggestions"
-msgstr ""
+msgstr "Escolher a cor para sugestões de verificação ortográfica"
 
 #: setup/main.py:1805
 msgid ""
@@ -1157,7 +1160,7 @@ msgstr ""
 #. dictionary.
 #: setup/main.py:1831
 msgid "Use color for dictionary suggestions"
-msgstr ""
+msgstr "Escolha a cor para sugestões de dicionário"
 
 #: setup/main.py:1833
 msgid ""
@@ -1210,7 +1213,7 @@ msgstr ""
 #. dictionary in the candidate list.
 #: setup/main.py:1959
 msgid "Use label for dictionary suggestions"
-msgstr ""
+msgstr "Use rótulo para sugestões de dicionário"
 
 #: setup/main.py:1961
 msgid ""
@@ -1233,15 +1236,15 @@ msgstr ""
 #. Translators:
 #: setup/main.py:2030 setup/main.py:2800
 msgid "Set “Google application credentials” .json file:"
-msgstr ""
+msgstr "Definir o ficheiro “Google application credentials” .json:"
 
 #: setup/main.py:2032
 msgid "Full path of the “Google application credentials” .json file."
-msgstr ""
+msgstr "Caminho completo do ficheiro “Google application credentials” .json."
 
 #: setup/main.py:2040
 msgid "File not yet set."
-msgstr ""
+msgstr "Ficheiro ainda não definido."
 
 #: setup/main.py:2088
 msgid "Spell checking"
@@ -1289,7 +1292,7 @@ msgstr ""
 #: setup/main.py:3860
 #, python-format
 msgid "Edit key bindings for command “%s”"
-msgstr ""
+msgstr "Editar as combinações de teclas para o comando “%s”"
 
 #: setup/main.py:3888
 msgid "Add a key binding"
@@ -1297,7 +1300,7 @@ msgstr "Adicionar combinação de teclas"
 
 #: setup/main.py:3900
 msgid "Remove selected key binding"
-msgstr ""
+msgstr "Remover a combinação de teclas selecionada"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1309,6 +1312,8 @@ msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr ""
+"Quer realmente definir os atalhos de teclado de todos os comandos para os "
+"seus valores de defeito?"
 
 #: setup/main.py:3977
 msgid "Open File ..."
@@ -1317,12 +1322,12 @@ msgstr "Abre ficheiro ..."
 #: setup/main.py:3996
 #, python-format
 msgid "Learned successfully from file %(filename)s."
-msgstr ""
+msgstr "Aprendeu com sucesso a partir do ficheiro %(filename)s."
 
 #: setup/main.py:4005
 #, python-format
 msgid "Learning from file %(filename)s failed."
-msgstr ""
+msgstr "Aprendizagem a partir do ficheiro %(filename)s falhou."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1343,11 +1348,11 @@ msgstr ""
 
 #: setup/main.py:5478
 msgid "ibus is not running."
-msgstr "ibus não está a correr."
+msgstr "O ibus não está a correr."
 
 #: typing-booster.appdata.xml:5
 msgid "Typing Booster"
-msgstr ""
+msgstr "Acelerador de digitação"
 
 #: typing-booster.appdata.xml:6
 msgid "Predictive input method"
@@ -1359,3 +1364,7 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+"O Ibus-typing-booster é um método de entrada preditivo que prevê palavras "
+"completas com base no contexto e na entrada parcial. Pode-se então "
+"simplesmente selecionar a palavra desejada numa lista de sugestões e "
+"melhorar a velocidade de digitação e a ortografia."
