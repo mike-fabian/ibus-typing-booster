@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-07-04 18:57+0200\n"
-"PO-Revision-Date: 2022-07-11 10:59+0000\n"
+"PO-Revision-Date: 2022-07-11 19:10+0000\n"
 "Last-Translator: Paul S <psads.g@gmail.com>\n"
 "Language-Team: Portuguese <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/pt/>\n"
@@ -636,6 +636,13 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
+"Enquanto o modo \"Off the record\" está ligado, a aprendizagem a partir do "
+"input do utilizador é desactivada. Se o input do utilizador aprendido "
+"estiver disponível, as previsões são normalmente muito melhores do que as "
+"previsões que utilizam apenas dicionários. Por conseguinte, deve-se utilizar "
+"esta opção com parcimónia. Só se se quiser evitar guardar em disco o input "
+"secreto do utilizador, pode fazer sentido utilizar esta opção "
+"temporariamente."
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -678,6 +685,9 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
+"Utilizar uma alternativa se a função %s for quebrada. Activar esta opção "
+"apenas se for absolutamente necessário, também pode causar problemas, "
+"especialmente quando o XIM é utilizado."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it.
@@ -741,6 +751,16 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
+"Os caracteres desta lista fazem com que a pré-edição seja submetida "
+"automaticamente, seguida de um espaço.  Por exemplo, se \"...\" for um "
+"caracter auto submetido, isto poupa-lhe a digitação manual de um espaço após "
+"o fim de uma frase. Pode editar livremente esta lista, um valor razoável "
+"poderá ser \".,;:?!\". Não deve adicionar caracteres a essa lista que são "
+"necessários pelo seu método de entrada, por exemplo, se usar o Latim-Pre (t"
+"-latn-pre) seria uma má ideia adicionar \".\" a essa lista porque isso o "
+"impediria de digitar \".s\" para obter \"ṡ\". Também pode desactivar esta "
+"funcionalidade completamente, tornando a lista vazia (que é o que está por "
+"defeito)."
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
@@ -893,7 +913,7 @@ msgstr ""
 #. input methods to the default for the current locale.
 #: setup/main.py:1105
 msgid "Set input methods to the default for the current locale."
-msgstr ""
+msgstr "Definir os dicionários para os de defeito da localidade atual."
 
 #: setup/main.py:1129
 msgid "Enter shortcut here:"
@@ -1009,6 +1029,8 @@ msgstr ""
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
 msgstr ""
+"Se a janela de candidatos deve ser desenhada horizontalmente ou "
+"verticalmente."
 
 #: setup/main.py:1445
 msgid "Horizontal"
@@ -1026,7 +1048,7 @@ msgstr ""
 
 #: setup/main.py:1481
 msgid "Which style of underlining to use for the preedit."
-msgstr ""
+msgstr "Que estilo de sublinhado a utilizar para a pré-edição."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
@@ -1098,6 +1120,9 @@ msgid ""
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
+"Aqui pode especificar qual a cor a utilizar para a pré-edição quando a pré-"
+"edição contiver um erro ortográfico. Esta configuração só tem efeito se a "
+"verificação ortográfica da pré-edição estiver activada."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
@@ -1178,6 +1203,10 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
 msgstr ""
+"Aqui pode especificar qual a cor a utilizar para os candidatos na tabela de "
+"pesquisa que vêm da verificação ortográfica. Esta definição só tem efeito se "
+"a utilização de cor para os candidatos a partir da verificação ortográfica "
+"estiver activada."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
@@ -1190,6 +1219,8 @@ msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
 msgstr ""
+"Aqui pode escolher se é utilizada uma cor personalizada para os candidatos "
+"na tabela de pesquisa que vêm da verificação ortográfica."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1235,6 +1266,10 @@ msgid ""
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
 msgstr ""
+"Aqui pode especificar qual a cor a utilizar para os candidatos na tabela de "
+"pesquisa que vêm da verificação ortográfica. Esta definição só tem efeito se "
+"a utilização de cor para os candidatos a partir da verificação ortográfica "
+"estiver activada."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
@@ -1254,7 +1289,7 @@ msgstr ""
 #. in the candidate list.
 #: setup/main.py:1922
 msgid "Use label for spellchecking suggestions"
-msgstr ""
+msgstr "Escolher a cor para sugestões de verificação ortográfica"
 
 #: setup/main.py:1924
 msgid ""
@@ -1274,6 +1309,8 @@ msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
+"Aqui pode escolher se é utilizado um rótulo para os candidatos na tabela de "
+"pesquisa que vêm de um dicionário."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
