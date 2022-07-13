@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-07-04 18:57+0200\n"
-"PO-Revision-Date: 2022-07-11 19:10+0000\n"
+"PO-Revision-Date: 2022-07-13 09:12+0000\n"
 "Last-Translator: Paul S <psads.g@gmail.com>\n"
 "Language-Team: Portuguese <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/pt/>\n"
@@ -886,22 +886,22 @@ msgstr "Adicionar um método de entrada"
 
 #: setup/main.py:1057
 msgid "Remove an input method"
-msgstr ""
+msgstr "Remover um método de entrada"
 
 #: setup/main.py:1069
 msgid "Move input method up"
-msgstr ""
+msgstr "Mover método de entrada para cima"
 
 #: setup/main.py:1081
 msgid "Move input method down"
-msgstr ""
+msgstr "Mover método de entrada para baixo"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
 #: setup/main.py:1089
 msgid "Input Method Help"
-msgstr ""
+msgstr "Ajuda para o método de entrada"
 
 #: setup/main.py:1091
 msgid "Display some help showing how to use the input method selected above."
@@ -921,11 +921,11 @@ msgstr "Introduza o atalho aqui:"
 
 #: setup/main.py:1151
 msgid "Enter shortcut expansion here:"
-msgstr ""
+msgstr "Introduza aqui a expansão do atalho:"
 
 #: setup/main.py:1181
 msgid "Clear input"
-msgstr ""
+msgstr "Limpar entrada"
 
 #: setup/main.py:1192
 msgid "Delete shortcut"
@@ -933,7 +933,7 @@ msgstr "Apagar atalho"
 
 #: setup/main.py:1203
 msgid "Add shortcut"
-msgstr ""
+msgstr "Adicionar atalho"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -963,11 +963,11 @@ msgstr "Editar"
 
 #: setup/main.py:1316
 msgid "Edit the key bindings for the selected command"
-msgstr ""
+msgstr "Editar a configuração de teclas para o comando seleccionado"
 
 #: setup/main.py:1327 setup/main.py:3912
 msgid "Set default key bindings for the selected command"
-msgstr ""
+msgstr "Definir atalhos de teclado padrão para o comando selecionado"
 
 #: setup/main.py:1334
 msgid "Set all to default"
@@ -975,7 +975,7 @@ msgstr "Definir tudo para predefinição"
 
 #: setup/main.py:1338
 msgid "Set default key bindings for all commands"
-msgstr ""
+msgstr "Definir atalhos de teclado padrão para todos os comandos"
 
 #. Translators: Checkbox to choose whether to display how
 #. many candidates there are and which one is selected on
@@ -989,6 +989,8 @@ msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
 msgstr ""
+"Mostra quantos candidatos e qual é selecionado no topo da lista de "
+"candidatos."
 
 #. Translators: Checkbox to choose whether to show above
 #. the candidate list whether “Emoji prediction” mode and
@@ -998,7 +1000,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1380
 msgid "Show status info in auxiliary text"
-msgstr ""
+msgstr "Mostrar informações de status em texto auxiliar"
 
 #: setup/main.py:1382
 msgid ""
@@ -1007,6 +1009,10 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
+"Mostrar no texto auxiliar se os modos \"Emoji prediction\" e \"Off the "
+"record\" estão ligados ou desligados e mostrar que método de entrada é "
+"correntemente utilizado para a pré-edição. O texto auxiliar é uma linha de "
+"texto opcional mostrada acima da lista de candidatos."
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
@@ -1018,12 +1024,14 @@ msgstr "Tamanho da página da janela do candidato:"
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr ""
+"Quantos candidatos de sugestão devem ser mostrados numa página da lista de "
+"candidatos."
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
 #: setup/main.py:1437
 msgid "Candidate window orientation"
-msgstr ""
+msgstr "Orientação da janela de candidatos"
 
 #: setup/main.py:1439
 msgid ""
@@ -1044,7 +1052,7 @@ msgstr "Vertical"
 #. underlining for the preedit.
 #: setup/main.py:1479
 msgid "Preedit underline"
-msgstr ""
+msgstr "Sublinhado de pré-edição"
 
 #: setup/main.py:1481
 msgid "Which style of underlining to use for the preedit."
@@ -1072,7 +1080,7 @@ msgstr "Duplo"
 #. underline for the preedit.
 #: setup/main.py:1500
 msgid "Low"
-msgstr ""
+msgstr "Baixo"
 
 #. Translators: Checkbox to choose whether a preedit style
 #. like underlining will only be used if lookup is
@@ -1082,7 +1090,7 @@ msgstr ""
 #. of characters before a lookup is done.
 #: setup/main.py:1531
 msgid "Use preedit style only if lookup is enabled"
-msgstr ""
+msgstr "Usar o estilo de pré-edição apenas se a pesquisa estiver activada"
 
 #: setup/main.py:1533
 msgid ""
@@ -1091,6 +1099,11 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
+"Se esta opção estiver ativada, um estilo de pré-edição como sublinhado só "
+"será usado se a pesquisa estiver ativada. A pesquisa pode ser desativada "
+"porque se usa a opção de ativar a pesquisa somente quando uma tecla é "
+"pressionada ou porque se usa a opção de exigir um número mínimo de "
+"caracteres antes que uma pesquisa seja feita."
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and
@@ -1106,13 +1119,16 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"Aqui pode-se escolher se a verificação ortográfica é feita no conteúdo da "
+"pré-edição e uma cor personalizada é usada para indicar quando a pré-edição "
+"pode conter um erro de ortografia."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
 #: setup/main.py:1589
 msgid "Choose color for preedit spellchecking"
-msgstr ""
+msgstr "Escolher a cor para a verificação ortográfica de pré-edição"
 
 #: setup/main.py:1591
 msgid ""
@@ -1151,6 +1167,9 @@ msgid ""
 "only has an effect if the use of color for inline completion is enabled and "
 "inline completion is enabled."
 msgstr ""
+"Aqui pode-se especificar qual cor usar para completar em linha. Essa "
+"configuração só tem efeito se o uso de cores para preenchimento em linha "
+"estiver ativado e o preenchimento em linha estiver ativado."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
@@ -1189,6 +1208,8 @@ msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
 msgstr ""
+"Aqui pode-se escolher se é utilizada uma cor personalizada para os "
+"candidatos na tabela de pesquisa que vêm da base de dados do utilizador."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1252,6 +1273,8 @@ msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
 msgstr ""
+"Aqui pode-se escolher se é utilizada uma cor personalizada para os "
+"candidatos na tabela de pesquisa que vêm de um dicionário."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1283,6 +1306,8 @@ msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
 msgstr ""
+"Aqui pode-se escolher se é utilizada um rótulo para os candidatos na tabela "
+"de pesquisa que provêm da base de dados do utilizador."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
@@ -1296,6 +1321,8 @@ msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
 msgstr ""
+"Aqui pode-se escolher se é utilizada um rótulo para os candidatos na tabela "
+"de pesquisa que provêm da verificação ortográfica."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
@@ -1323,6 +1350,8 @@ msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
+"Aqui pode-se escolher se um rótulo é utilizado para indicar quando o ibus-"
+"typing-booster está ocupado."
 
 #. Translators:
 #: setup/main.py:2030 setup/main.py:2800
@@ -1378,7 +1407,7 @@ msgstr "Adicionar dicionário"
 
 #: setup/main.py:3343
 msgid "Add input method"
-msgstr ""
+msgstr "Adicionar um método de entrada"
 
 #: setup/main.py:3860
 #, python-format
