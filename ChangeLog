@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 13 Jul 2022 Release 2.17.1
+* Translation update from Weblate (pt updated to 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 07 Jul 2022 Release 2.17.0
 * Improve “Automatically select the best candidate” (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/285)
 * Translation update from Weblate (de (100%), pl (100%), pt (30.3%), tr (100%), uk (100%))
