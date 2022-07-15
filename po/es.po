@@ -1,5 +1,5 @@
 # Ismael Venegas Castelló <ismael.vc1337@gmail.com>, 2018.
-# Emilio Herrera <ehespinosa57@gmail.com>, 2017. #zanata, 2020.
+# Emilio Herrera <ehespinosa57@gmail.com>, 2017. #zanata, 2020, 2022.
 # Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2017. #zanata
 # Ismael Venegas Castelló <ismael.vc1337@gmail.com>, 2018. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2022.
@@ -13,16 +13,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-07-15 11:45+0200\n"
-"PO-Revision-Date: 2022-02-25 18:38+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Spanish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/es/>\n"
+"PO-Revision-Date: 2022-07-15 16:33+0000\n"
+"Last-Translator: Emilio Herrera <ehespinosa57@gmail.com>\n"
+"Language-Team: Spanish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 4.13\n"
 
 #: engine/emoji_picker.py:203
 msgid "Emoji Picker"
@@ -311,7 +311,7 @@ msgstr "regiones"
 #. are seperated by punctuation or white space.
 #: engine/itb_util.py:2641
 msgid "Others, Miscellaneous, Various, Diverse"
-msgstr ""
+msgstr "Otros, Mezclas, Varios, Diverso"
 
 #: engine/itb_util.py:4080 engine/itb_util.py:4744
 msgid "File not found"
@@ -504,14 +504,12 @@ msgstr ""
 "cambiará al candidato siguiente y abrirá la lista de candidatos."
 
 #: setup/main.py:393 setup/main.py:462
-#, fuzzy
-#| msgid "None"
 msgid "No"
-msgstr "Ninguno"
+msgstr "No"
 
 #: setup/main.py:395
 msgid "Yes, with fallback to popup"
-msgstr ""
+msgstr "Si, con respaldo a la ventana emergente"
 
 #: setup/main.py:397
 msgid "Yes, without fallback to popup"
