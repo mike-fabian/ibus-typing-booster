@@ -343,6 +343,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._label_dictionary_string: str = itb_util.variant_to_value(
             self._gsettings.get_value('labeldictionarystring'))
 
+        self._flag_dictionary: bool = itb_util.variant_to_value(
+            self._gsettings.get_value('flagdictionary'))
+
         self._label_busy: bool = itb_util.variant_to_value(
             self._gsettings.get_value('labelbusy'))
 
@@ -794,6 +797,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if not phrase:
             return
         phrase = unicodedata.normalize('NFC', phrase)
+        dictionary_matches: List[str] = (
+            self.database.hunspell_obj.spellcheck_match_list(phrase))
         # U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR make
         # the line spacing in the lookup table huge, which looks ugly.
         # Remove them to make the lookup table look better.
@@ -839,34 +844,61 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             comment = comment[:40] + '…' + comment[-40:]
         if comment:
             phrase += ' ' + itb_util.bidi_embed(comment)
+        color_used = False
+        label_spellcheck_string = self._label_spellcheck_string.strip()
+        label_userdb_string = self._label_userdb_string.strip()
+        label_dictionary_string = self._label_dictionary_string.strip()
         if spell_checking: # spell checking suggestion
-            if (self._label_spellcheck
-                and self._label_spellcheck_string.strip()):
-                phrase = phrase + ' ' + self._label_spellcheck_string.strip()
+            if self._label_spellcheck and label_spellcheck_string:
+                phrase += ' ' + label_spellcheck_string
             if self._color_spellcheck:
                 attrs.append(IBus.attr_foreground_new(
                     self._color_spellcheck_argb, 0, len(phrase)))
+                color_used = True
         elif from_user_db:
             # This was found in the user database.  So it is
             # possible to delete it with a key binding or
             # mouse-click, if the user desires. Mark it
             # differently to show that it is deletable:
-            if (self._label_userdb
-                and self._label_userdb_string.strip()):
-                phrase = phrase + ' ' + self._label_userdb_string.strip()
+            if self._label_userdb and label_userdb_string:
+                phrase += ' ' + label_userdb_string
             if self._color_userdb:
                 attrs.append(IBus.attr_foreground_new(
                     self._color_userdb_argb, 0, len(phrase)))
-        else:
+                color_used = True
+        if dictionary_matches:
             # This is a (possibly accent insensitive) match in a
             # hunspell dictionary or an emoji matched by
             # EmojiMatcher.
-            if (self._label_dictionary
-                and self._label_dictionary_string.strip()):
-                phrase = phrase + ' ' + self._label_dictionary_string.strip()
-            if self._color_dictionary:
+            if self._label_dictionary:
+                if not (phrase.endswith(' ')
+                        or
+                        (label_spellcheck_string
+                         and phrase.endswith(label_spellcheck_string))
+                        or
+                        (label_userdb_string
+                         and phrase.endswith(label_userdb_string))):
+                    phrase += ' '
+                if label_dictionary_string:
+                    phrase += label_dictionary_string
+            if self._flag_dictionary:
+                if not (phrase.endswith(' ')
+                        or
+                        (label_spellcheck_string
+                         and phrase.endswith(label_spellcheck_string))
+                        or
+                        (label_userdb_string
+                         and phrase.endswith(label_userdb_string))
+                        or
+                        (label_dictionary_string
+                         and phrase.endswith(label_dictionary_string))):
+                    phrase += ' '
+                for dictionary in dictionary_matches:
+                    phrase += itb_util.get_flag(dictionary)
+            if self._color_dictionary and not color_used:
                 attrs.append(IBus.attr_foreground_new(
                     self._color_dictionary_argb, 0, len(phrase)))
+                color_used = True
         # If a candidate contains newlines, replace them with an arrow
         # indicating the new line. Rendering the real newlines in the
         # lookup table looks terrible. On non-Gnome desktops, all
@@ -4004,6 +4036,35 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Returns the current value of the “label dictionary” string'''
         return self._label_dictionary_string
 
+    def set_flag_dictionary(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets whether to add flags to dictionary matches
+
+        :param mode: Whether to add flags to suggestions matching
+                     in dictionaries
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._flag_dictionary:
+            return
+        self._flag_dictionary = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'flagdictionary',
+                GLib.Variant.new_boolean(mode))
+
+    def get_flag_dictionary(self) -> bool:
+        '''Returns the current value of the “flag dictionary” mode'''
+        return self._flag_dictionary
+
     def set_label_busy(
             self,
             mode: Union[bool, Any],
@@ -6479,6 +6540,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'labelspellcheckstring': self.set_label_spellcheck_string,
             'labeldictionary': self.set_label_dictionary,
             'labeldictionarystring': self.set_label_dictionary_string,
+            'flagdictionary': self.set_flag_dictionary,
             'labelbusy': self.set_label_busy,
             'labelbusystring': self.set_label_busy_string,
             'keybindings': self.set_keybindings,

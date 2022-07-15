@@ -1994,6 +1994,27 @@ class SetupUI(Gtk.Window): # type: ignore
         self._appearance_grid.attach(
             self._label_dictionary_entry, 1, _appearance_grid_row, 1, 1)
 
+        self._flag_dictionary_checkbutton = Gtk.CheckButton(
+            # Translators: A checkbox where one can choose whether a
+            # flags are added to mark suggestions coming from a
+            # dictionary in the candidate list.
+            label=_('Use flags for dictionary suggestions'))
+        self._flag_dictionary_checkbutton.set_tooltip_text(
+            _('Here you can choose whether flags are used for candidates in '
+              'the lookup table which come from a dictionary.'))
+        self._flag_dictionary_checkbutton.set_hexpand(False)
+        self._flag_dictionary_checkbutton.set_vexpand(False)
+        self._flag_dictionary = itb_util.variant_to_value(
+            self._gsettings.get_value('flagdictionary'))
+        if self._flag_dictionary is None:
+            self._flag_dictionary = False
+        self._flag_dictionary_checkbutton.set_active(self._flag_dictionary)
+        self._flag_dictionary_checkbutton.connect(
+            'clicked', self._on_flag_dictionary_checkbutton)
+        _appearance_grid_row += 1
+        self._appearance_grid.attach(
+            self._flag_dictionary_checkbutton, 0, _appearance_grid_row, 2, 1)
+
         self._label_busy_checkbutton = Gtk.CheckButton(
             # Translators: A checkbox where one can choose whether a
             # label is used to show when ibus-typing-booster is busy.
@@ -2414,6 +2435,7 @@ class SetupUI(Gtk.Window): # type: ignore
             'labelspellcheckstring': self.set_label_spellcheck_string,
             'labeldictionary': self.set_label_dictionary,
             'labeldictionarystring': self.set_label_dictionary_string,
+            'flagdictionary': self.set_flag_dictionary,
             'labelbusy': self.set_label_busy,
             'labelbusystring': self.set_label_busy_string,
             'inputmethod': self.set_current_imes,
@@ -2634,6 +2656,16 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         self.set_label_dictionary_string(
             widget.get_text(), update_gsettings=True)
+
+    def _on_flag_dictionary_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
+        '''
+        The checkbutton whether to use flags for candidates from a dictionary
+        has been clicked.
+
+        :param widget: The check button clicked
+        '''
+        self.set_flag_dictionary(widget.get_active(), update_gsettings=True)
 
     def _on_label_busy_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
@@ -4729,6 +4761,31 @@ class SetupUI(Gtk.Window): # type: ignore
         else:
             self._label_dictionary_entry.set_text(
                 self._label_dictionary_string)
+
+    def set_flag_dictionary(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets whether to use flags for dictionary suggestions
+
+        :param mode: Whether to use flags for dictionary suggestions
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._flag_dictionary:
+            return
+        self._flag_dictionary = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'flagdictionary',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._flag_dictionary_checkbutton.set_active(mode)
 
     def set_label_busy(
             self,

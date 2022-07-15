@@ -164,6 +164,14 @@
         a dictionary is enabled.
       </description>
     </key>
+    <key name="flagdictionary" type="b">
+      <default>false</default>
+      <summary>Use flags for dictionary suggestions</summary>
+      <description>
+        Here you can choose whether flags are used for candidates in
+        the lookup table which come from a dictionary.
+      </description>
+    </key>
     <key name="labelbusy" type="b">
       <default>true</default>
       <summary>Use a label to indicate busy state</summary>

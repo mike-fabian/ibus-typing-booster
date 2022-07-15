@@ -475,6 +475,34 @@ class Hunspell:
             return False
         return True
 
+    def spellcheck_match_list(self, input_phrase: str) -> List[str]:
+        '''
+        Returns a list of dictionaries where input_phrase can be found
+
+        :param input_phrase: The word to be spellchecked
+        :return: A list of dictionary names which accept input phrase
+                 as a valid word.
+
+        Examples:
+
+        >>> h = Hunspell(['en_US', 'None', 'it_IT', 'fr_FR'])
+        >>> h.spellcheck_match_list('arrive')
+        ['en_US', 'fr_FR']
+        >>> h.spellcheck_match_list('arrivé')
+        ['fr_FR']
+        >>> h.spellcheck_match_list('ragazzo')
+        ['it_IT']
+        >>> h.spellcheck_match_list(' \t')
+        []
+        '''
+        match_list = []
+        if not input_phrase.strip():
+            return []
+        for dictionary in self._dictionaries:
+            if dictionary.spellcheck(input_phrase):
+                match_list.append(dictionary.name)
+        return match_list
+
     def spellcheck_single_dictionary(self, words: Iterable[str] = ()) -> bool:
         '''
         Checks whether there is at least one dictionary where all words
