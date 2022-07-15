@@ -20,6 +20,25 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.18.0" date="2022-07-18" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.18.0</url>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/343">
+          github-issues#343: Optionally show flags in the candidate
+          list for dictionary matches
+        </issue>
+        <issue>
+          Update emoji annotations from CLDR
+        </issue>
+        <issue>
+          Translation update from Weblate (de (100%), es (93.7%), pl
+          (100%), tr (100%),uk (100%))
+        </issue>
+      </issues>
+    </release>
     <release version="2.17.1" date="2022-07-13" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
