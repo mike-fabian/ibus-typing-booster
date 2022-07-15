@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-07-04 18:57+0200\n"
+"POT-Creation-Date: 2022-07-15 11:45+0200\n"
 "PO-Revision-Date: 2020-07-08 15:27+0000\n"
 "Last-Translator: Bendegúz Gyönki <gyonkibendeguz@gmail.com>\n"
 "Language-Team: Hungarian <https://translate.fedoraproject.org/projects/ibus-"
@@ -132,21 +132,21 @@ msgstr "Rendszer alapértelmezése"
 msgid "Set Font"
 msgstr "Betűkészlet beállítása"
 
-#: engine/hunspell_table.py:515 engine/hunspell_table.py:549
-#: engine/hunspell_table.py:570
+#: engine/hunspell_table.py:518 engine/hunspell_table.py:552
+#: engine/hunspell_table.py:573
 msgid "Off"
 msgstr "Ki"
 
-#: engine/hunspell_table.py:520 engine/hunspell_table.py:554
-#: engine/hunspell_table.py:575
+#: engine/hunspell_table.py:523 engine/hunspell_table.py:557
+#: engine/hunspell_table.py:578
 msgid "On"
 msgstr "Be"
 
-#: engine/hunspell_table.py:539
+#: engine/hunspell_table.py:542
 msgid "Input mode"
 msgstr "Bemeneti mód"
 
-#: engine/hunspell_table.py:540
+#: engine/hunspell_table.py:543
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Itt be- és kikapcsolhatja az ibus-typing-boostert."
 
@@ -157,7 +157,7 @@ msgstr "Itt be- és kikapcsolhatja az ibus-typing-boostert."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:559 engine/hunspell_table.py:561 setup/main.py:570
+#: engine/hunspell_table.py:562 engine/hunspell_table.py:564 setup/main.py:570
 msgid "Unicode symbols and emoji predictions"
 msgstr "Unicode szimbólumok és emodzsi javaslatok"
 
@@ -168,62 +168,62 @@ msgstr "Unicode szimbólumok és emodzsi javaslatok"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:580 engine/hunspell_table.py:581 setup/main.py:599
+#: engine/hunspell_table.py:583 engine/hunspell_table.py:584 setup/main.py:599
 msgid "Off the record mode"
 msgstr "Tanulásmentes mód"
 
-#: engine/hunspell_table.py:1540
+#: engine/hunspell_table.py:1572
 msgid "Highest priority dictionary"
 msgstr "Legnagyobb prioritású szótár"
 
-#: engine/hunspell_table.py:1541
+#: engine/hunspell_table.py:1573
 msgid "Choose highest priority dictionary"
 msgstr "Válassza ki a legnagyobb prioritású szótárt"
 
-#: engine/hunspell_table.py:1570
+#: engine/hunspell_table.py:1602
 msgid "Preedit input method"
 msgstr "Előszerkesztési bemeneti mód"
 
-#: engine/hunspell_table.py:1571
+#: engine/hunspell_table.py:1603
 msgid "Switch preedit input method"
 msgstr "Előszerkesztési bemeneti mód váltása"
 
-#: engine/hunspell_table.py:1885
+#: engine/hunspell_table.py:1917
 msgid "Setup"
 msgstr "Beállítás"
 
-#: engine/hunspell_table.py:1888 setup/main.py:152
+#: engine/hunspell_table.py:1920 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr "Az ibus-typing-booster beállításai"
 
-#: engine/hunspell_table.py:4651
+#: engine/hunspell_table.py:4712
 msgid "Failed to import Google speech-to-text."
 msgstr "A Google speech-to-text (beszédből szöveg) importálása sikertelen."
 
-#: engine/hunspell_table.py:4654
+#: engine/hunspell_table.py:4715
 msgid "Failed to import pyaudio."
 msgstr "A pyaudio importálása sikertelen."
 
-#: engine/hunspell_table.py:4657
+#: engine/hunspell_table.py:4718
 msgid "Failed to import queue."
 msgstr "A sor importálása sikertelen."
 
-#: engine/hunspell_table.py:4662
+#: engine/hunspell_table.py:4723
 msgid "No supported language for speech recognition."
 msgstr "Nincs támogatott nyelv a beszédfelismeréshez."
 
-#: engine/hunspell_table.py:4666
+#: engine/hunspell_table.py:4727
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "A(z) „%s” „Google alkalmazáshitelesítési” fájl nem található."
 
-#: engine/hunspell_table.py:4679
+#: engine/hunspell_table.py:4740
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "A Google speech-to-text (beszédből szöveg) előkészítése sikertelen. Lásd a "
 "debug.log fájlt."
 
-#: engine/hunspell_table.py:4787
+#: engine/hunspell_table.py:4848
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google speech-to-text (beszédből szöveg) hiba. Lásd a debug.log fájlt."
 
@@ -391,7 +391,7 @@ msgstr "Beállítások"
 msgid "Restore all defaults"
 msgstr "Összes beállítása az alapértelmezettre"
 
-#: setup/main.py:201 setup/main.py:5420
+#: setup/main.py:201 setup/main.py:5477
 msgid "_Close"
 msgstr "_Bezárás"
 
@@ -447,7 +447,7 @@ msgstr "Megjelenés"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:307 setup/main.py:2111
+#: setup/main.py:307 setup/main.py:2132
 msgid "Speech recognition"
 msgstr "Beszédfelismerés"
 
@@ -804,7 +804,7 @@ msgstr "Hiányzó szótárak telepítése"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Az itt beállított, de nem telepített szótárak telepítése"
 
-#: setup/main.py:983 setup/main.py:1099 setup/main.py:1323 setup/main.py:3907
+#: setup/main.py:983 setup/main.py:1099 setup/main.py:1323 setup/main.py:3939
 msgid "Set to default"
 msgstr "Beállítás az alapértelmezettre"
 
@@ -904,7 +904,7 @@ msgstr "Szerkesztés"
 msgid "Edit the key bindings for the selected command"
 msgstr "A kiválasztott parancs gyorsbillentyűjének szerkesztése"
 
-#: setup/main.py:1327 setup/main.py:3912
+#: setup/main.py:1327 setup/main.py:3944
 msgid "Set default key bindings for the selected command"
 msgstr "A kiválasztott parancs gyorsbillentyűjének megadása"
 
@@ -1226,83 +1226,96 @@ msgid ""
 msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
+#. flags are added to mark suggestions coming from a
+#. dictionary in the candidate list.
+#: setup/main.py:1996
+msgid "Use flags for dictionary suggestions"
+msgstr ""
+
+#: setup/main.py:1998
+msgid ""
+"Here you can choose whether flags are used for candidates in the lookup "
+"table which come from a dictionary."
+msgstr ""
+
+#. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
-#: setup/main.py:1995
+#: setup/main.py:2016
 msgid "Use a label to indicate busy state"
 msgstr ""
 
-#: setup/main.py:1997
+#: setup/main.py:2018
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
 
 #. Translators:
-#: setup/main.py:2030 setup/main.py:2800
+#: setup/main.py:2051 setup/main.py:2832
 msgid "Set “Google application credentials” .json file:"
 msgstr ""
 
-#: setup/main.py:2032
+#: setup/main.py:2053
 msgid "Full path of the “Google application credentials” .json file."
 msgstr ""
 
-#: setup/main.py:2040
+#: setup/main.py:2061
 msgid "File not yet set."
 msgstr ""
 
-#: setup/main.py:2088
+#: setup/main.py:2109
 msgid "Spell checking"
 msgstr ""
 
-#: setup/main.py:2104
+#: setup/main.py:2125
 msgid "Emoji"
 msgstr ""
 
-#: setup/main.py:2274
+#: setup/main.py:2295
 msgid "Are you sure?"
 msgstr ""
 
-#: setup/main.py:2276 setup/main.py:2803 setup/main.py:2881 setup/main.py:3980
+#: setup/main.py:2297 setup/main.py:2835 setup/main.py:2913 setup/main.py:4012
 msgid "_Cancel"
 msgstr ""
 
-#: setup/main.py:2277 setup/main.py:2804 setup/main.py:2882 setup/main.py:3981
+#: setup/main.py:2298 setup/main.py:2836 setup/main.py:2914 setup/main.py:4013
 msgid "_OK"
 msgstr ""
 
-#: setup/main.py:2309
+#: setup/main.py:2330
 msgid "Another instance of this app is already running."
 msgstr ""
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:2442
+#: setup/main.py:2464
 msgid "Do you really want to restore all default settings?"
 msgstr ""
 
-#: setup/main.py:2878
+#: setup/main.py:2910
 msgid "Select .wav sound file:"
 msgstr ""
 
-#: setup/main.py:3030
+#: setup/main.py:3062
 msgid "Add dictionary"
 msgstr "Szótár hozzáadása"
 
-#: setup/main.py:3343
+#: setup/main.py:3375
 msgid "Add input method"
 msgstr "Bemeneti mód hozzáadása"
 
-#: setup/main.py:3860
+#: setup/main.py:3892
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr ""
 
-#: setup/main.py:3888
+#: setup/main.py:3920
 msgid "Add a key binding"
 msgstr ""
 
-#: setup/main.py:3900
+#: setup/main.py:3932
 msgid "Remove selected key binding"
 msgstr ""
 
@@ -1311,22 +1324,22 @@ msgstr ""
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:3961
+#: setup/main.py:3993
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr ""
 
-#: setup/main.py:3977
+#: setup/main.py:4009
 msgid "Open File ..."
 msgstr ""
 
-#: setup/main.py:3996
+#: setup/main.py:4028
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr ""
 
-#: setup/main.py:4005
+#: setup/main.py:4037
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr ""
@@ -1341,13 +1354,13 @@ msgstr ""
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:4028
+#: setup/main.py:4060
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr ""
 
-#: setup/main.py:5478
+#: setup/main.py:5535
 msgid "ibus is not running."
 msgstr ""
 
