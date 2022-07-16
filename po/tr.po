@@ -11,10 +11,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-07-15 11:45+0200\n"
-"PO-Revision-Date: 2022-07-05 16:08+0000\n"
+"PO-Revision-Date: 2022-07-16 07:30+0000\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
-"Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/tr/>\n"
+"Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1325,22 +1325,16 @@ msgstr ""
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:1996
-#, fuzzy
-#| msgid "Use label for dictionary suggestions"
 msgid "Use flags for dictionary suggestions"
-msgstr "Sözlük önerileri için etiket kullan"
+msgstr "Sözlük önerileri için bayrakları kullan"
 
 #: setup/main.py:1998
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a label is used for candidates in the lookup "
-#| "table which come from a dictionary."
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
-"Burada, arama tablosundaki adaylardan bir sözlükten gelenler için bir etiket "
-"kullanılıp kullanılmayacağını seçebilirsiniz."
+"Burada, arama tablosundaki adaylardan bir sözlükten gelenler için "
+"bayrakların kullanılıp kullanılmayacağını seçebilirsiniz."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
