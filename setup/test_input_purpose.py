@@ -50,7 +50,9 @@ class InputPurposeTest(Gtk.Window): # type: ignore
         self.connect('destroy-event', self.on_destroy_event)
         self.connect('delete-event', self.on_delete_event)
 
-        self._main_container = Gtk.VBox()
+        self._main_container = Gtk.Box()
+        self._main_container.set_orientation(Gtk.Orientation.VERTICAL)
+        self._main_container.set_spacing(0)
         self.add(self._main_container)
 
         margin = 5
@@ -74,8 +76,7 @@ class InputPurposeTest(Gtk.Window): # type: ignore
         self._input_purpose_combobox.connect(
             'changed', self.on_input_purpose_combobox_changed)
 
-        self._main_container.pack_start(
-            self._input_purpose_combobox, False, False, 0)
+        self._main_container.add(self._input_purpose_combobox)
 
         self._input_hints = itb_util.InputHints.NONE
 
@@ -94,8 +95,7 @@ class InputPurposeTest(Gtk.Window): # type: ignore
             self._input_hints_checkbuttons[hint.name].set_vexpand(False)
             self._input_hints_checkbuttons[hint.name].connect(
                 'clicked', self.on_checkbutton, hint)
-            self._main_container.pack_start(
-                self._input_hints_checkbuttons[hint.name], False, False, 0)
+            self._main_container.add(self._input_hints_checkbuttons[hint.name])
 
         self._test_entry = Gtk.Entry()
         self._test_entry.set_margin_start(margin)
@@ -110,7 +110,7 @@ class InputPurposeTest(Gtk.Window): # type: ignore
         self._test_entry.set_input_hints(self._input_hints)
         self._test_entry.connect('notify::text', self.on_test_entry)
 
-        self._main_container.pack_start(self._test_entry, False, False, 0)
+        self._main_container.add(self._test_entry)
 
         self._test_text_view = Gtk.TextView()
         margin = 10
@@ -129,7 +129,7 @@ class InputPurposeTest(Gtk.Window): # type: ignore
         self._test_text_view_buffer.connect(
             'changed', self.on_test_text_view_buffer_changed)
 
-        self._main_container.pack_start(self._test_text_view, True, True, 0)
+        self._main_container.add(self._test_text_view)
 
         self.show_all()
 

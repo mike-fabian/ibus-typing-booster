@@ -167,7 +167,9 @@ class SetupUI(Gtk.Window): # type: ignore
         self.connect('destroy-event', self._on_destroy_event)
         self.connect('delete-event', self._on_delete_event)
 
-        self._main_container = Gtk.VBox()
+        self._main_container = Gtk.Box()
+        self._main_container.set_orientation(Gtk.Orientation.VERTICAL)
+        self._main_container.set_spacing(0)
         self.add(self._main_container) # pylint: disable=no-member
         self._notebook = Gtk.Notebook()
         self._notebook.set_visible(True)
@@ -175,15 +177,14 @@ class SetupUI(Gtk.Window): # type: ignore
         self._notebook.set_scrollable(True)
         self._notebook.set_hexpand(True)
         self._notebook.set_vexpand(True)
-        self._main_container.pack_start(self._notebook, True, True, 0)
+        self._main_container.add(self._notebook)
         self._dialog_action_area = Gtk.ButtonBox()
         self._dialog_action_area.set_visible(True)
         self._dialog_action_area.set_can_focus(False)
         self._dialog_action_area.set_hexpand(True)
         self._dialog_action_area.set_vexpand(False)
         self._dialog_action_area.set_layout(Gtk.ButtonBoxStyle.EDGE)
-        self._main_container.pack_end(
-            self._dialog_action_area, False, False, 0)
+        self._main_container.add(self._dialog_action_area)
         self._about_button = Gtk.Button(label=_('About'))
         self._about_button.connect('clicked', self._on_about_button_clicked)
         self._dialog_action_area.add(self._about_button)
@@ -207,7 +208,10 @@ class SetupUI(Gtk.Window): # type: ignore
         grid_row_spacing = 5
         grid_column_spacing = 10
 
-        self._dictionaries_and_input_methods_vbox = Gtk.VBox()
+        self._dictionaries_and_input_methods_vbox = Gtk.Box()
+        self._dictionaries_and_input_methods_vbox.set_orientation(
+            Gtk.Orientation.VERTICAL)
+        self._dictionaries_and_input_methods_vbox.set_spacing(0)
         margin = 10
         self._dictionaries_and_input_methods_vbox.set_margin_start(margin)
         self._dictionaries_and_input_methods_vbox.set_margin_end(margin)
@@ -254,7 +258,9 @@ class SetupUI(Gtk.Window): # type: ignore
         # candidate, he can define such a custom shortcut here.
         self._custom_shortcuts_label.set_text(_('Custom shortcuts'))
 
-        self._keybindings_vbox = Gtk.VBox()
+        self._keybindings_vbox = Gtk.Box()
+        self._keybindings_vbox.set_orientation(Gtk.Orientation.VERTICAL)
+        self._keybindings_vbox.set_spacing(0)
         margin = 10
         self._keybindings_vbox.set_margin_start(margin)
         self._keybindings_vbox.set_margin_end(margin)
@@ -811,7 +817,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._error_sound_checkbutton.connect(
             'clicked', self._on_error_sound_checkbutton)
         self._error_sound_file_button = Gtk.Button()
-        self._error_sound_file_button_box = Gtk.HBox()
+        self._error_sound_file_button_box = Gtk.Box()
         self._error_sound_file_button_label = Gtk.Label()
         self._error_sound_file = itb_util.variant_to_value(
             self._gsettings.get_value('errorsoundfile'))
@@ -823,10 +829,9 @@ class SetupUI(Gtk.Window): # type: ignore
         self._error_sound_file_button_label.set_line_wrap(False)
         self._error_sound_file_button_label.set_ellipsize(
             Pango.EllipsizeMode.START)
-        self._error_sound_file_button_box.pack_start(
-            self._error_sound_file_button_label, False, False, 0)
-        self._error_sound_file_button.add(
-            self._error_sound_file_button_box)
+        self._error_sound_file_button_box.add(
+            self._error_sound_file_button_label)
+        self._error_sound_file_button.add(self._error_sound_file_button_box)
         self._error_sound_file_button.connect(
             'clicked', self._on_error_sound_file_button)
         _options_grid_row += 1
@@ -912,16 +917,16 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dictionaries_label.set_hexpand(False)
         self._dictionaries_label.set_vexpand(False)
         self._dictionaries_label.set_xalign(0)
-        self._dictionaries_and_input_methods_vbox.pack_start(
-            self._dictionaries_label, False, False, 0)
+        self._dictionaries_and_input_methods_vbox.add(
+            self._dictionaries_label)
         self._dictionaries_scroll = Gtk.ScrolledWindow()
-        self._dictionaries_and_input_methods_vbox.pack_start(
-            self._dictionaries_scroll, True, True, 0)
+        self._dictionaries_and_input_methods_vbox.add(
+            self._dictionaries_scroll)
         self._dictionaries_action_area = Gtk.ButtonBox()
         self._dictionaries_action_area.set_can_focus(False)
         self._dictionaries_action_area.set_layout(Gtk.ButtonBoxStyle.START)
-        self._dictionaries_and_input_methods_vbox.pack_start(
-            self._dictionaries_action_area, False, False, 0)
+        self._dictionaries_and_input_methods_vbox.add(
+            self._dictionaries_action_area)
         self._dictionaries_add_button = Gtk.Button()
         self._dictionaries_add_button_label = Gtk.Label()
         self._dictionaries_add_button_label.set_text(
@@ -1024,16 +1029,16 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_methods_label.set_hexpand(False)
         self._input_methods_label.set_vexpand(False)
         self._input_methods_label.set_xalign(0)
-        self._dictionaries_and_input_methods_vbox.pack_start(
-            self._input_methods_label, False, False, 0)
+        self._dictionaries_and_input_methods_vbox.add(
+            self._input_methods_label)
         self._input_methods_scroll = Gtk.ScrolledWindow()
-        self._dictionaries_and_input_methods_vbox.pack_start(
-            self._input_methods_scroll, True, True, 0)
+        self._dictionaries_and_input_methods_vbox.add(
+            self._input_methods_scroll)
         self._input_methods_action_area = Gtk.ButtonBox()
         self._input_methods_action_area.set_can_focus(False)
         self._input_methods_action_area.set_layout(Gtk.ButtonBoxStyle.START)
-        self._dictionaries_and_input_methods_vbox.pack_start(
-            self._input_methods_action_area, False, False, 0)
+        self._dictionaries_and_input_methods_vbox.add(
+            self._input_methods_action_area)
         self._input_methods_add_button = Gtk.Button()
         self._input_methods_add_button_label = Gtk.Label()
         self._input_methods_add_button_label.set_text(
@@ -1297,15 +1302,15 @@ class SetupUI(Gtk.Window): # type: ignore
         self._keybindings_treeview.connect(
             'row-activated', self._on_keybindings_treeview_row_activated)
         self._keybindings_treeview_scroll.add(self._keybindings_treeview)
-        self._keybindings_vbox.pack_start(
-            self._keybindings_label, False, False, 0)
-        self._keybindings_vbox.pack_start(
-            self._keybindings_treeview_scroll, True, True, 0)
+        self._keybindings_vbox.add(
+            self._keybindings_label)
+        self._keybindings_vbox.add(
+            self._keybindings_treeview_scroll)
         self._keybindings_action_area = Gtk.ButtonBox()
         self._keybindings_action_area.set_can_focus(False)
         self._keybindings_action_area.set_layout(Gtk.ButtonBoxStyle.START)
-        self._keybindings_vbox.pack_start(
-            self._keybindings_action_area, False, False, 0)
+        self._keybindings_vbox.add(
+            self._keybindings_action_area)
         self._keybindings_edit_button = Gtk.Button()
         self._keybindings_edit_button_label = Gtk.Label()
         self._keybindings_edit_button_label.set_text(
@@ -2039,7 +2044,7 @@ class SetupUI(Gtk.Window): # type: ignore
         if not self._google_application_credentials:
             self._google_application_credentials = _('File not yet set.')
         self._google_application_credentials_button = Gtk.Button()
-        self._google_application_credentials_button_box = Gtk.HBox()
+        self._google_application_credentials_button_box = Gtk.Box()
         self._google_application_credentials_button_label = Gtk.Label()
         self._google_application_credentials_button_label.set_text(
             self._google_application_credentials)
@@ -2049,8 +2054,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._google_application_credentials_button_label.set_line_wrap(False)
         self._google_application_credentials_button_label.set_ellipsize(
             Pango.EllipsizeMode.START)
-        self._google_application_credentials_button_box.pack_start(
-            self._google_application_credentials_button_label, False, False, 0)
+        self._google_application_credentials_button_box.add(
+            self._google_application_credentials_button_label)
         self._google_application_credentials_button.add(
             self._google_application_credentials_button_box)
         self._speech_recognition_grid.attach(
@@ -2242,9 +2247,11 @@ class SetupUI(Gtk.Window): # type: ignore
             label.set_margin_bottom(margin)
             image = Gtk.Image.new_from_file(M17N_DB_INFO.get_icon(ime))
             image.set_pixel_size(48)
-            hbox = Gtk.HBox()
-            hbox.pack_start(image, False, False, 10)
-            hbox.pack_start(label, False, False, 0)
+            hbox = Gtk.Box()
+            hbox.set_orientation(Gtk.Orientation.HORIZONTAL)
+            hbox.set_spacing(10)
+            hbox.add(image)
+            hbox.add(label)
             self._input_methods_listbox.insert(hbox, -1)
         self._input_methods_listbox.show_all()
         self._input_methods_add_button.set_sensitive(
@@ -3019,7 +3026,9 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dictionaries_add_popover.set_position(Gtk.PositionType.RIGHT)
         self._dictionaries_add_popover.set_vexpand(True)
         self._dictionaries_add_popover.set_hexpand(True)
-        dictionaries_add_popover_vbox = Gtk.VBox()
+        dictionaries_add_popover_vbox = Gtk.Box()
+        dictionaries_add_popover_vbox.set_orientation(
+            Gtk.Orientation.VERTICAL)
         margin = 12
         dictionaries_add_popover_vbox.set_margin_start(margin)
         dictionaries_add_popover_vbox.set_margin_end(margin)
@@ -3030,8 +3039,8 @@ class SetupUI(Gtk.Window): # type: ignore
         dictionaries_add_popover_label.set_text(_('Add dictionary'))
         dictionaries_add_popover_label.set_visible(True)
         dictionaries_add_popover_label.set_halign(Gtk.Align.FILL)
-        dictionaries_add_popover_vbox.pack_start(
-            dictionaries_add_popover_label, False, False, 0)
+        dictionaries_add_popover_vbox.add(
+            dictionaries_add_popover_label)
         dictionaries_add_popover_search_entry = Gtk.SearchEntry()
         dictionaries_add_popover_search_entry.set_can_focus(True)
         dictionaries_add_popover_search_entry.set_visible(True)
@@ -3040,16 +3049,16 @@ class SetupUI(Gtk.Window): # type: ignore
         dictionaries_add_popover_search_entry.set_vexpand(False)
         dictionaries_add_popover_search_entry.connect(
             'search-changed', self._on_dictionaries_search_entry_changed)
-        dictionaries_add_popover_vbox.pack_start(
-            dictionaries_add_popover_search_entry, False, False, 0)
+        dictionaries_add_popover_vbox.add(
+            dictionaries_add_popover_search_entry)
         self._dictionaries_add_popover_scroll = Gtk.ScrolledWindow()
         self._dictionaries_add_popover_scroll.set_hexpand(True)
         self._dictionaries_add_popover_scroll.set_vexpand(True)
         self._dictionaries_add_popover_scroll.set_kinetic_scrolling(False)
         self._dictionaries_add_popover_scroll.set_overlay_scrolling(True)
         self._fill_dictionaries_add_listbox('')
-        dictionaries_add_popover_vbox.pack_start(
-            self._dictionaries_add_popover_scroll, True, True, 0)
+        dictionaries_add_popover_vbox.add(
+            self._dictionaries_add_popover_scroll)
         self._dictionaries_add_popover.add(dictionaries_add_popover_vbox)
         if GTK_VERSION >= (3, 22, 0):
             self._dictionaries_add_popover.popup()
@@ -3288,10 +3297,12 @@ class SetupUI(Gtk.Window): # type: ignore
             label.set_margin_end(margin)
             label.set_margin_top(margin)
             label.set_margin_bottom(margin)
-            hbox = Gtk.HBox()
+            hbox = Gtk.Box()
+            hbox.set_orientation(Gtk.Orientation.HORIZONTAL)
+            hbox.set_spacing(10)
             images[row].set_pixel_size(48)
-            hbox.pack_start(images[row], False, False, 10)
-            hbox.pack_start(label, False, False, 0)
+            hbox.add(images[row])
+            hbox.add(label)
             self._input_methods_add_listbox.insert(hbox, -1)
         self._input_methods_add_popover.show_all()
 
@@ -3332,7 +3343,9 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_methods_add_popover.set_position(Gtk.PositionType.RIGHT)
         self._input_methods_add_popover.set_vexpand(True)
         self._input_methods_add_popover.set_hexpand(True)
-        input_methods_add_popover_vbox = Gtk.VBox()
+        input_methods_add_popover_vbox = Gtk.Box()
+        input_methods_add_popover_vbox.set_orientation(
+            Gtk.Orientation.VERTICAL)
         margin = 12
         input_methods_add_popover_vbox.set_margin_start(margin)
         input_methods_add_popover_vbox.set_margin_end(margin)
@@ -3343,8 +3356,8 @@ class SetupUI(Gtk.Window): # type: ignore
         input_methods_add_popover_label.set_text(_('Add input method'))
         input_methods_add_popover_label.set_visible(True)
         input_methods_add_popover_label.set_halign(Gtk.Align.FILL)
-        input_methods_add_popover_vbox.pack_start(
-            input_methods_add_popover_label, False, False, 0)
+        input_methods_add_popover_vbox.add(
+            input_methods_add_popover_label)
         input_methods_add_popover_search_entry = Gtk.SearchEntry()
         input_methods_add_popover_search_entry.set_can_focus(True)
         input_methods_add_popover_search_entry.set_visible(True)
@@ -3353,16 +3366,16 @@ class SetupUI(Gtk.Window): # type: ignore
         input_methods_add_popover_search_entry.set_vexpand(False)
         input_methods_add_popover_search_entry.connect(
             'search-changed', self._on_input_methods_search_entry_changed)
-        input_methods_add_popover_vbox.pack_start(
-            input_methods_add_popover_search_entry, False, False, 0)
+        input_methods_add_popover_vbox.add(
+            input_methods_add_popover_search_entry)
         self._input_methods_add_popover_scroll = Gtk.ScrolledWindow()
         self._input_methods_add_popover_scroll.set_hexpand(True)
         self._input_methods_add_popover_scroll.set_vexpand(True)
         self._input_methods_add_popover_scroll.set_kinetic_scrolling(False)
         self._input_methods_add_popover_scroll.set_overlay_scrolling(True)
         self._fill_input_methods_add_listbox('')
-        input_methods_add_popover_vbox.pack_start(
-            self._input_methods_add_popover_scroll, True, True, 0)
+        input_methods_add_popover_vbox.add(
+            self._input_methods_add_popover_scroll)
         self._input_methods_add_popover.add(input_methods_add_popover_vbox)
         if GTK_VERSION >= (3, 22, 0):
             self._input_methods_add_popover.popup()
@@ -3848,7 +3861,9 @@ class SetupUI(Gtk.Window): # type: ignore
         self._keybindings_edit_popover.set_position(Gtk.PositionType.RIGHT)
         self._keybindings_edit_popover.set_vexpand(True)
         self._keybindings_edit_popover.set_hexpand(True)
-        keybindings_edit_popover_vbox = Gtk.VBox()
+        keybindings_edit_popover_vbox = Gtk.Box()
+        keybindings_edit_popover_vbox.set_orientation(
+            Gtk.Orientation.VERTICAL)
         margin = 12
         keybindings_edit_popover_vbox.set_margin_start(margin)
         keybindings_edit_popover_vbox.set_margin_end(margin)
@@ -3862,21 +3877,21 @@ class SetupUI(Gtk.Window): # type: ignore
         keybindings_edit_popover_label.set_use_markup(True)
         keybindings_edit_popover_label.set_visible(True)
         keybindings_edit_popover_label.set_halign(Gtk.Align.FILL)
-        keybindings_edit_popover_vbox.pack_start(
-            keybindings_edit_popover_label, False, False, 0)
+        keybindings_edit_popover_vbox.add(
+            keybindings_edit_popover_label)
         self._keybindings_edit_popover_scroll = Gtk.ScrolledWindow()
         self._keybindings_edit_popover_scroll.set_hexpand(True)
         self._keybindings_edit_popover_scroll.set_vexpand(True)
         self._keybindings_edit_popover_scroll.set_kinetic_scrolling(False)
         self._keybindings_edit_popover_scroll.set_overlay_scrolling(True)
-        keybindings_edit_popover_vbox.pack_start(
-            self._keybindings_edit_popover_scroll, True, True, 0)
+        keybindings_edit_popover_vbox.add(
+            self._keybindings_edit_popover_scroll)
         keybindings_edit_popover_button_box = Gtk.ButtonBox()
         keybindings_edit_popover_button_box.set_can_focus(False)
         keybindings_edit_popover_button_box.set_layout(
             Gtk.ButtonBoxStyle.START)
-        keybindings_edit_popover_vbox.pack_start(
-            keybindings_edit_popover_button_box, False, False, 0)
+        keybindings_edit_popover_vbox.add(
+            keybindings_edit_popover_button_box)
         self._keybindings_edit_popover_add_button = Gtk.Button()
         keybindings_edit_popover_add_button_label = Gtk.Label()
         keybindings_edit_popover_add_button_label.set_text(
@@ -5400,7 +5415,9 @@ class HelpWindow(Gtk.Window): # type: ignore
             self.set_modal(True)
         self.set_destroy_with_parent(False)
         self.set_default_size(600, 500)
-        self.vbox = Gtk.VBox(spacing=0)
+        self.vbox = Gtk.Box()
+        self.vbox.set_orientation(Gtk.Orientation.VERTICAL)
+        self.vbox.set_spacing(0)
         self.add(self.vbox)
         self.text_buffer = Gtk.TextBuffer()
         self.text_buffer.insert_at_cursor(contents)
@@ -5419,9 +5436,13 @@ class HelpWindow(Gtk.Window): # type: ignore
         self.close_button_label = Gtk.Label()
         self.close_button_label.set_text_with_mnemonic(_('_Close'))
         self.close_button.add(self.close_button_label)
+        self.close_button.set_hexpand(True)
+        self.close_button.set_halign(Gtk.Align.END)
         self.close_button.connect("clicked", self._on_close_button_clicked)
-        self.hbox = Gtk.HBox(spacing=0)
-        self.hbox.pack_end(self.close_button, False, False, 0)
+        self.hbox = Gtk.Box(spacing=0)
+        self.hbox.set_orientation(Gtk.Orientation.HORIZONTAL)
+        self.hbox.set_spacing(0)
+        self.hbox.add(self.close_button)
         self.vbox.pack_start(self.hbox, False, False, 5)
         self.show_all()
 

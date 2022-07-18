@@ -303,7 +303,9 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._skin_tone_popover: Optional[Gtk.Popover] = None
         self._skin_tone_selected_popover: Optional[Gtk.Popover] = None
 
-        self._main_container = Gtk.VBox()
+        self._main_container = Gtk.Box()
+        self._main_container.set_orientation(Gtk.Orientation.VERTICAL)
+        self._main_container.set_spacing(0)
         self.add(self._main_container) # pylint: disable=no-member
         self._header_bar = Gtk.HeaderBar()
         self._header_bar.set_hexpand(True)
@@ -315,23 +317,23 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._main_menu_popover = Gtk.Popover()
         self._main_menu_popover.set_relative_to(self._main_menu_button)
         self._main_menu_popover.set_position(Gtk.PositionType.BOTTOM)
-        self._main_menu_popover_vbox = Gtk.VBox()
+        self._main_menu_popover_vbox = Gtk.Box()
+        self._main_menu_popover_vbox.set_orientation(Gtk.Orientation.VERTICAL)
+        self._main_menu_popover_vbox.set_spacing(0)
         self._main_menu_clear_recently_used_button = Gtk.Button(
             label=_('Clear recently used'))
         self._main_menu_clear_recently_used_button.connect(
             'clicked', self.on_clear_recently_used_button_clicked)
-        self._main_menu_popover_vbox.pack_start(
-            self._main_menu_clear_recently_used_button, False, False, 0)
+        self._main_menu_popover_vbox.add(
+            self._main_menu_clear_recently_used_button)
         if not self._modal:
             self._main_menu_about_button = Gtk.Button(label=_('About'))
             self._main_menu_about_button.connect(
                 'clicked', self.on_about_button_clicked)
-            self._main_menu_popover_vbox.pack_start(
-                self._main_menu_about_button, False, False, 0)
+            self._main_menu_popover_vbox.add(self._main_menu_about_button)
         self._main_menu_quit_button = Gtk.Button(label=_('Quit'))
         self._main_menu_quit_button.connect('clicked', self.on_delete_event)
-        self._main_menu_popover_vbox.pack_start(
-            self._main_menu_quit_button, False, False, 0)
+        self._main_menu_popover_vbox.add(self._main_menu_quit_button)
         self._main_menu_popover.add(self._main_menu_popover_vbox)
         self._main_menu_button.connect(
             'clicked', self.on_main_menu_button_clicked)
@@ -410,7 +412,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             'grab-focus', self.on_search_entry_grab_focus)
 
         self._browse_paned = Gtk.HPaned()
-        self._main_container.pack_start(self._browse_paned, True, True, 0)
+        self._main_container.add(self._browse_paned)
         self._browse_paned.set_wide_handle(True)
         self._browse_paned.set_hexpand(True)
         self._browse_paned.set_vexpand(True)
@@ -436,13 +438,18 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._long_press_gestures: List[
             Tuple[Any, Tuple[Any, Any, Any, Any]]] = []
 
-        self._left_pane = Gtk.VBox()
+        self._left_pane = Gtk.Box()
+        self._left_pane.set_orientation(Gtk.Orientation.VERTICAL)
+        self._left_pane.set_spacing(0)
         self._left_pane.set_homogeneous(False)
-        self._left_pane.pack_start(self._search_bar, False, False, 0)
-        self._left_pane.pack_start(self._browse_treeview_scroll, True, True, 0)
+        self._left_pane.add(self._search_bar)
+        self._left_pane.add(self._browse_treeview_scroll)
 
-        self._right_pane = Gtk.VBox()
-        self._right_pane.pack_start(self._flowbox_scroll, True, True, 0)
+        self._right_pane = Gtk.Box()
+        self._right_pane.set_orientation(Gtk.Orientation.VERTICAL)
+        self._right_pane.set_spacing(0)
+        self._right_pane.set_homogeneous(False)
+        self._right_pane.add(self._flowbox_scroll)
 
         self._browse_paned.pack1(
             self._left_pane, resize=True, shrink=True)
@@ -1882,7 +1889,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             rectangle.width = self._fontsize * 1.5
             rectangle.height = self._fontsize * 1.5
             self._emoji_info_popover.set_pointing_to(rectangle)
-        emoji_info_popover_vbox = Gtk.VBox()
+        emoji_info_popover_vbox = Gtk.Box()
+        emoji_info_popover_vbox.set_orientation(Gtk.Orientation.VERTICAL)
         emoji_info_popover_vbox.set_vexpand(False)
         emoji_info_popover_vbox.set_hexpand(False)
         margin = 0
@@ -1892,12 +1900,11 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         emoji_info_popover_vbox.set_margin_bottom(margin)
         emoji_info_popover_vbox.set_spacing(margin)
         emoji_info_popover_scroll = Gtk.ScrolledWindow()
-        emoji_info_popover_vbox.pack_start(
-            emoji_info_popover_scroll, True, True, 0)
+        emoji_info_popover_vbox.add(emoji_info_popover_scroll)
         emoji_info_popover_listbox = Gtk.ListBox()
         emoji_info_popover_listbox.set_visible(True)
         emoji_info_popover_listbox.set_can_focus(False)
-        emoji_info_popover_listbox.set_vexpand(False)
+        emoji_info_popover_listbox.set_vexpand(True)
         emoji_info_popover_listbox.set_hexpand(False)
         emoji_info_popover_listbox.set_selection_mode(
             Gtk.SelectionMode.NONE)
@@ -1907,6 +1914,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         label.set_hexpand(False)
         label.set_vexpand(False)
         label.set_halign(Gtk.Align.START)
+        label.set_valign(Gtk.Align.START)
         label.set_markup(
             f'<span font="{self._font} {self._fontsize * 3}" '
             f'fallback="{str(self._fallback).lower()}">'
@@ -1924,6 +1932,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             label_description.set_hexpand(False)
             label_description.set_vexpand(False)
             label_description.set_halign(Gtk.Align.START)
+            label_description.set_valign(Gtk.Align.START)
             label_description.set_line_wrap(True)
             label_description.set_markup(description)
             emoji_info_popover_listbox.insert(label_description, -1)
@@ -2180,7 +2189,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._font_popover.set_relative_to(self._font_button)
         self._font_popover.set_position(Gtk.PositionType.BOTTOM)
         self._font_popover.set_vexpand(True)
-        font_popover_vbox = Gtk.VBox()
+        font_popover_vbox = Gtk.Box()
+        font_popover_vbox.set_orientation(Gtk.Orientation.VERTICAL)
         margin = 12
         font_popover_vbox.set_margin_start(margin)
         font_popover_vbox.set_margin_end(margin)
@@ -2191,8 +2201,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         font_popover_label.set_text(_('Set Font'))
         font_popover_label.set_visible(True)
         font_popover_label.set_halign(Gtk.Align.FILL)
-        font_popover_vbox.pack_start(
-            font_popover_label, False, False, 0)
+        font_popover_vbox.add(font_popover_label)
         font_popover_search_entry = Gtk.SearchEntry()
         font_popover_search_entry.set_can_focus(True)
         font_popover_search_entry.set_visible(True)
@@ -2201,12 +2210,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         font_popover_search_entry.set_vexpand(False)
         font_popover_search_entry.connect(
             'search_changed', self.on_font_search_entry_search_changed)
-        font_popover_vbox.pack_start(
-            font_popover_search_entry, False, False, 0)
+        font_popover_vbox.add(font_popover_search_entry)
         self._font_popover_scroll = Gtk.ScrolledWindow()
         self._fill_listbox_font('')
-        font_popover_vbox.pack_start(
-            self._font_popover_scroll, True, True, 0)
+        font_popover_vbox.add(self._font_popover_scroll)
         self._font_popover.add(font_popover_vbox)
         if GTK_VERSION >= (3, 22, 0):
             self._font_popover.popup()
