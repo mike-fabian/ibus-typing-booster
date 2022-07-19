@@ -20,6 +20,25 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
   <releases>
+    <release version="2.18.4" date="2022-07-26" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.18.4</url>
+      <issues>
+        <issue>
+          Get program name of focused window if do_focus_id doesn’t
+          provide that already
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/350">
+          github-issues#350: Show lookup table *always* when display
+          of related emoji or words is requested
+        </issue>
+        <issue>
+          Translation update from Weblate (nl updated to 100%)
+        </issue>
+      </issues>
+    </release>
     <release version="2.18.0" date="2022-07-18" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
