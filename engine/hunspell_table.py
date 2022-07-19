@@ -2194,6 +2194,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return
         if (not self._inline_completion
             or self._typed_compose_sequence
+            or self._lookup_table_shows_related_candidates
             or self.get_lookup_table().get_cursor_pos() != 0):
             # Show standard lookup table:
             self.update_lookup_table(self.get_lookup_table(), True)
@@ -2455,8 +2456,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._candidates.append((cand[0], cand[2], cand[1], False, False))
             self._append_candidate_to_lookup_table(
                 phrase=cand[0], user_freq=cand[2], comment=cand[1])
-        self._update_lookup_table_and_aux()
         self._lookup_table_shows_related_candidates = True
+        self._update_lookup_table_and_aux()
 
     def _case_mode_change(
             self,
