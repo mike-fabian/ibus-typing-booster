@@ -454,8 +454,9 @@ class TabSqliteDb:
         form of (phrase, user_freq), i.e. returns something like
         [(phrase, user_freq), ...]
         '''
-        input_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
+        if input_phrase:
+            input_phrase = unicodedata.normalize(
+                itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
         p_phrase = itb_util.remove_accents(p_phrase.lower())
         pp_phrase = itb_util.remove_accents(pp_phrase.lower())
         title_case = input_phrase.istitle()
@@ -464,7 +465,7 @@ class TabSqliteDb:
                 'input_phrase=%s p_phrase=%s pp_phrase=%s',
                 input_phrase, p_phrase, pp_phrase)
         phrase_frequencies: Dict[str, float] = {}
-        if not ' ' in input_phrase:
+        if input_phrase and not ' ' in input_phrase:
             # Get suggestions from hunspell dictionaries. But only
             # if input_phrase does not contain spaces. The hunspell
             # dictionaries contain only single words, not sentences.
@@ -485,7 +486,8 @@ class TabSqliteDb:
         # is not in the German hunspell dictionary as a single word but
         # created by suffix and prefix rules, the accent insensitive match
         # in the German hunspell dictionary would not find it either.
-        input_phrase = itb_util.remove_accents(input_phrase.lower())
+        if input_phrase:
+            input_phrase = itb_util.remove_accents(input_phrase.lower())
         # Now phrase_frequencies might contain something like this:
         #
         # {'code': 0, 'communicability': 0, 'cold': 0, 'colour': 0}
@@ -500,8 +502,10 @@ class TabSqliteDb:
         # the parameter substitution of the sqlite3 python interface.
         # But unfortunately that does not work when creating views,
         # (“OperationalError: parameters are not allowed in views”).
-        quoted_input_phrase = input_phrase.replace(
-            '\x00', '').replace('"', '""')
+        quoted_input_phrase = ''
+        if input_phrase:
+            quoted_input_phrase = input_phrase.replace(
+                '\x00', '').replace('"', '""')
         self.database.execute('DROP VIEW IF EXISTS like_input_phrase_view;')
         sqlstr = '''
         CREATE TEMPORARY VIEW IF NOT EXISTS like_input_phrase_view AS
