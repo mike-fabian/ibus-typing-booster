@@ -9,16 +9,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-07-18 19:19+0200\n"
-"PO-Revision-Date: 2022-06-01 10:53+0000\n"
+"PO-Revision-Date: 2022-07-22 08:05+0000\n"
 "Last-Translator: Geert Warrink <geert.warrink@onsnet.nu>\n"
-"Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/nl/>\n"
+"Language-Team: Dutch <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.2\n"
+"X-Generator: Weblate 4.13\n"
 
 #: engine/emoji_picker.py:203
 msgid "Emoji Picker"
@@ -547,11 +547,11 @@ msgstr ""
 
 #: setup/main.py:470
 msgid "Yes, but only when extremely likely"
-msgstr ""
+msgstr "Ja, maar alleen als het zeer waarschijnlijk is"
 
 #: setup/main.py:472
 msgid "Yes, always"
-msgstr ""
+msgstr "Ja, altijd"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
@@ -1326,22 +1326,16 @@ msgstr ""
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2001
-#, fuzzy
-#| msgid "Use label for dictionary suggestions"
 msgid "Use flags for dictionary suggestions"
-msgstr "Label gebruiken voor woordenboeksuggesties"
+msgstr "Vlaggen gebruiken voor woordenboeksuggesties"
 
 #: setup/main.py:2003
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a label is used for candidates in the lookup "
-#| "table which come from a dictionary."
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
-"Hier kun je aangeven of je een label wilt gebruiken in de tabel voor "
-"woordenboeksuggesties."
+"Hier kun je aangeven of vlaggen worden gebruikt voor kandidaten in de tabel "
+"voor woordenboeksuggesties."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
