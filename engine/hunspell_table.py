@@ -167,32 +167,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.preedit_ime_properties: Dict[str, Any] = {}
         self.preedit_ime_sub_properties_prop_list: IBus.PropList = []
         self._setup_property: Optional[IBus.Property] = None
-        # Possible values for self._im_client and examples of programs
-        # where these values occur:
-        # '': unknown
-        # 'fake':    focus is on desktop background or other programs where no
-        #            input is possible
-        # 'xim':     old X11 programs like xterm, emacs, ...
-        #            Gtk3 programs in a Gnome Xorg session when GTK_IM_MODULE
-        #            is unset also use xim
-        # 'gtk-im:<client-name>':  Gtk2 input module is used
-        # 'gtk3-im:<client-name>:': Gtk3 input module is used
-        # 'gtk4-im:<client-name>': Gtk4 input module is used
-        #
-        #                In case of the Gtk input modules, the name of the
-        #                client is also shown after the “:”, for example
-        #                like 'gtk3-im:firefox', 'gtk4-im:gnome-text-editor', …
-        #
-        # 'gnome-shell': Entries handled by gnome-shell
-        #                (like the command line dialog opened with Alt+F2
-        #                or the search field when pressing the Super key.)
-        #                When GTK_IM_MODULE is unset in a Gnome Wayland session
-        #                all programs which would show 'gtk3-im' or 'gtk4-im'
-        #                with GTK_IM_MODULE=ibus then show 'gnome-shell'
-        #                instead.
-        # 'Qt':      Qt4 programs like keepassx-2.0.3 …
-        # 'QIBusInputContext': Qt5 programs like keepassxc-2.7.1, anki-2.1.15
-        #                      telegram-desktop-3.7.3, …
         self._im_client: str = ''
 
         self._current_imes: List[str] = []
@@ -6216,13 +6190,47 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.do_focus_in_id('', '')
 
     def do_focus_in_id(self, object_path: str, client: str) -> None:
-        '''
-        Called for ibus >= 1.5.27 when a window gets focus while
+        '''Called for ibus >= 1.5.27 when a window gets focus while
         this input engine is enabled
+
+        :param object_path: Example:
+                            '/org/freedesktop/IBus/InputContext_23'
+        :param client: Possible values and examples where these values occur:
+                       '': unknown
+                       'fake': focus where input is impossible
+                               (e.g. desktop background)
+                       'xim': XIM
+                             (Gtk3 programs in a Gnome Xorg session
+                              when GTK_IM_MODULE is unset also use xim)
+                       'gtk-im:<program-name>':  Gtk2 input module
+                       'gtk3-im:<program-name>': Gtk3 input module
+                       'gtk4-im:<program-name>': Gtk4 input module
+                       'gnome-shell': Entries handled by gnome-shell
+                                      (like the command line dialog
+                                      opened with Alt+F2 or the search
+                                      field when pressing the Super
+                                      key.) When GTK_IM_MODULE is
+                                      unset in a Gnome Wayland session
+                                      all programs which would show
+                                      'gtk3-im' or 'gtk4-im' with
+                                      GTK_IM_MODULE=ibus then show
+                                      'gnome-shell' instead.
+                       'Qt':      Qt4 input module
+                       'QIBusInputContext': Qt5 input module
+
+                       In case of the Gtk input modules, the name of the
+                       client is also shown after the “:”, for example
+                       like 'gtk3-im:firefox', 'gtk4-im:gnome-text-editor', …
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('object_path=%s client=%s\n', object_path, client)
         self._im_client = client
+        if ':' not in self._im_client:
+            (program_name, _window_title) = itb_util.get_active_window()
+            if program_name:
+                self._im_client += ':' + program_name
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('self._im_client=%s\n', self._im_client)
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         if DEBUG_LEVEL > 2:
             for keyval in self._keyvals_to_keycodes.keyvals():
