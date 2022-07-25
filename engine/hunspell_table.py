@@ -49,6 +49,7 @@ from gi.repository import GLib
 # pylint: enable=wrong-import-position
 from m17n_translit import Transliterator
 import itb_util
+import itb_active_window
 import itb_emoji
 import itb_version
 
@@ -6226,7 +6227,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.debug('object_path=%s client=%s\n', object_path, client)
         self._im_client = client
         if ':' not in self._im_client:
-            (program_name, _window_title) = itb_util.get_active_window()
+            (program_name,
+             _window_title) = itb_active_window.get_active_window()
             if program_name:
                 self._im_client += ':' + program_name
             if DEBUG_LEVEL > 1:
