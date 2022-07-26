@@ -4691,8 +4691,25 @@ class M17nDbInfo:
         system_dir = ''
         m17n_db_binary = shutil.which('m17n-db')
         if m17n_db_binary:
-            result = subprocess.run([m17n_db_binary], stdout=subprocess.PIPE)
-            system_dir = result.stdout.strip().decode('UTF-8')
+            try:
+                result = subprocess.run(
+                    [m17n_db_binary],
+                    encoding='utf-8', check=True, capture_output=True)
+                system_dir = result.stdout.strip()
+                LOGGER.info('FIXME %s', system_dir)
+            except FileNotFoundError as error:
+                LOGGER.exception(
+                    'Exception when calling %s: %s: %s',
+                    m17n_db_binary, error.__class__.__name__, error)
+            except subprocess.CalledProcessError as error:
+                LOGGER.exception(
+                    'Exception when calling %s: %s: %s stderr: %s',
+                    m17n_db_binary,
+                    error.__class__.__name__, error, error.stderr)
+            except Exception as error:
+                LOGGER.exception(
+                    'Exception when calling %s: %s: %s',
+                    m17n_db_binary, error.__class__.__name__, error)
         if not os.path.isdir(system_dir):
             dirnames = (
                 '/usr/share/m17n',
