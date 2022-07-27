@@ -322,7 +322,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.candidates('animal')[0][:2],
-            ('🐵', 'cara de mono [animal]'))
+            ('🦍', 'gorilla [animal]'))
         self.assertEqual(
             mq.candidates('dromedary animal')[0][:2],
             ('🐪', 'dromedary camel'))
