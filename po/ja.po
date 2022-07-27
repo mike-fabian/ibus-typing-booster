@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-07-18 19:19+0200\n"
+"POT-Creation-Date: 2022-07-26 02:47+0200\n"
 "PO-Revision-Date: 2022-06-01 08:18+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Japanese <https://translate.fedoraproject.org/projects/ibus-"
@@ -127,21 +127,21 @@ msgstr "システムのデフォルト"
 msgid "Set Font"
 msgstr "フォントの選択"
 
-#: engine/hunspell_table.py:518 engine/hunspell_table.py:552
-#: engine/hunspell_table.py:573
+#: engine/hunspell_table.py:493 engine/hunspell_table.py:527
+#: engine/hunspell_table.py:548
 msgid "Off"
 msgstr "オフ"
 
-#: engine/hunspell_table.py:523 engine/hunspell_table.py:557
-#: engine/hunspell_table.py:578
+#: engine/hunspell_table.py:498 engine/hunspell_table.py:532
+#: engine/hunspell_table.py:553
 msgid "On"
 msgstr "オン"
 
-#: engine/hunspell_table.py:542
+#: engine/hunspell_table.py:517
 msgid "Input mode"
 msgstr "入力モード"
 
-#: engine/hunspell_table.py:543
+#: engine/hunspell_table.py:518
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr ""
 
@@ -152,7 +152,7 @@ msgstr ""
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:562 engine/hunspell_table.py:564 setup/main.py:576
+#: engine/hunspell_table.py:537 engine/hunspell_table.py:539 setup/main.py:576
 msgid "Unicode symbols and emoji predictions"
 msgstr ""
 
@@ -163,60 +163,60 @@ msgstr ""
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:583 engine/hunspell_table.py:584 setup/main.py:605
+#: engine/hunspell_table.py:558 engine/hunspell_table.py:559 setup/main.py:605
 msgid "Off the record mode"
 msgstr ""
 
-#: engine/hunspell_table.py:1572
+#: engine/hunspell_table.py:1547
 msgid "Highest priority dictionary"
 msgstr ""
 
-#: engine/hunspell_table.py:1573
+#: engine/hunspell_table.py:1548
 msgid "Choose highest priority dictionary"
 msgstr ""
 
-#: engine/hunspell_table.py:1602
+#: engine/hunspell_table.py:1577
 msgid "Preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1603
+#: engine/hunspell_table.py:1578
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1917
+#: engine/hunspell_table.py:1892
 msgid "Setup"
 msgstr "設定"
 
-#: engine/hunspell_table.py:1920 setup/main.py:152
+#: engine/hunspell_table.py:1895 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster の設定"
 
-#: engine/hunspell_table.py:4712
+#: engine/hunspell_table.py:4688
 msgid "Failed to import Google speech-to-text."
 msgstr ""
 
-#: engine/hunspell_table.py:4715
+#: engine/hunspell_table.py:4691
 msgid "Failed to import pyaudio."
 msgstr ""
 
-#: engine/hunspell_table.py:4718
+#: engine/hunspell_table.py:4694
 msgid "Failed to import queue."
 msgstr ""
 
-#: engine/hunspell_table.py:4723
+#: engine/hunspell_table.py:4699
 msgid "No supported language for speech recognition."
 msgstr ""
 
-#: engine/hunspell_table.py:4727
+#: engine/hunspell_table.py:4703
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 
-#: engine/hunspell_table.py:4740
+#: engine/hunspell_table.py:4716
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 
-#: engine/hunspell_table.py:4848
+#: engine/hunspell_table.py:4824
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 
@@ -305,27 +305,27 @@ msgstr "地方指示子"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util.py:4080 engine/itb_util.py:4744
+#: engine/itb_util.py:4080 engine/itb_util.py:4761
 msgid "File not found"
 msgstr "ファイルが見つかりません"
 
-#: engine/itb_util.py:4084 engine/itb_util.py:4748
+#: engine/itb_util.py:4084 engine/itb_util.py:4765
 msgid "Permission error"
 msgstr "パーミッションエラーです"
 
-#: engine/itb_util.py:4088 engine/itb_util.py:4752
+#: engine/itb_util.py:4088 engine/itb_util.py:4769
 msgid "Unicode decoding error"
 msgstr ""
 
-#: engine/itb_util.py:4092 engine/itb_util.py:4756
+#: engine/itb_util.py:4092 engine/itb_util.py:4773
 msgid "Unknown error"
 msgstr "不明なエラー"
 
-#: engine/itb_util.py:4721
+#: engine/itb_util.py:4738
 msgid "Native Keyboard"
 msgstr ""
 
-#: engine/itb_util.py:4723
+#: engine/itb_util.py:4740
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -335,38 +335,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5268
+#: engine/itb_util.py:5285
 msgid "Key input"
 msgstr "キーの入力"
 
-#: engine/itb_util.py:5274
+#: engine/itb_util.py:5291
 msgid "Cancel"
 msgstr "キャンセル"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5281
+#: engine/itb_util.py:5298
 msgid "Please press a key (or a key combination)"
 msgstr "キーを入力してください"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5286
+#: engine/itb_util.py:5303
 msgid "The dialog will be closed when the key is released"
 msgstr "このダイアログはキーリリース時に閉じられます"
 
-#: engine/itb_util.py:5325
+#: engine/itb_util.py:5342
 msgid "A completion input method to speedup typing."
 msgstr ""
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5334
+#: engine/itb_util.py:5351
 msgid "translator-credits"
 msgstr ""
 
-#: engine/itb_util.py:5342
+#: engine/itb_util.py:5359
 msgid "Online documentation:"
 msgstr "オンラインドキュメント："
 
