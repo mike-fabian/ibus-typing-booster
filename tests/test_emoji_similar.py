@@ -147,11 +147,11 @@ class EmojiSimilarTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
         self.assertEqual(
-            mq.similar('🐌', match_limit = 3),
-            [('🐌', 'snail [🐌, So, nature, snail, uc6]', 5), ('🐚', 'spiral shell [So, nature, uc6]', 3), ('🐛', 'bug [So, nature, uc6]', 3)])
+            [('🐌', 'snail [🐌, So, nature, snail, uc6]', 5), ('🐛', 'bug [So, nature, uc6]', 3), ('🐚', 'spiral shell [So, nature, uc6]', 3)],
+            mq.similar('🐌', match_limit = 3))
         self.assertEqual(
-            mq.similar('🐌', match_limit = 3, show_keywords=False),
-            [('🐌', 'snail', 5), ('🐚', 'spiral shell', 3), ('🐛', 'bug', 3)])
+            [('🐌', 'snail', 5), ('🐛', 'bug', 3), ('🐚', 'spiral shell', 3)],
+            mq.similar('🐌', match_limit = 3, show_keywords=False))
 
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
