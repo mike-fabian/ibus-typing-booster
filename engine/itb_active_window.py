@@ -19,17 +19,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 '''Module to track the name of the program in the currently focused window
 
-Tries AT-SPI first:
+On Wayland desktops:
+    Tries AT-SPI first and falls back to xprop
+On X11 desktops:
+    Uses only xprop
+
+AT-SPI:
 
 https://en.wikipedia.org/wiki/Assistive_Technology_Service_Provider_Interface
 
-- AT-SPI seems to work reasonably well in Gnome Wayland and in some
-  other cases.
+- AT-SPI seems to work reasonably well in Gnome Wayland, KDE (Plasma)
+  Wayland, and in some other cases. It even works in most X11 desktops, even
+  in i3 (But as getting the active window via AT-SPI can sometimes fail,
+  it is better to use xprop for that on X11 desktops, xprop is very reliable
+  on X11 desktops).
 
-- But even in a Gnome Wayland session AT-SPI doesn‘t work for some old X11
-  programs like xterm, urxvt, ...
-
-- AT-SPI does not work at all in KDE (Plasma) Wayland.
+- Even in a Gnome Wayland or KDE (Plasma) Wayland session AT-SPI
+  doesn‘t work for some old X11 programs like xterm, urxvt, ...
+  But the fallback to xprop works in these cases.
 
 - To make AT-SPI work with Firefox and google-chrome,
   GNOME_ACCESSIBILITY=1 needs to be set in the environment.
@@ -39,10 +46,6 @@ https://en.wikipedia.org/wiki/Assistive_Technology_Service_Provider_Interface
 
 - To make AT-SPI work with Qt4, QT_ACCESSIBILITY=1 needs to be set
   in the environment
-
-If nothing can be found using AT-SPI, fall back to using xprop and see
-whether that works. That fallback should make it work for old X11
-programs like xterm, urxvt, ..., also in a Gnome Wayland session.
 
 In some cases, the name returned by AT-SPI may slightly differ
 from from the name acquired by ibus with or by xprop.
@@ -62,6 +65,7 @@ the information from that active window is fetched correctly
 Then focus different windows and see whether the log output
 seen in the terminal shows correctly which window is currently active
 (This works only with AT-SPI).
+
 '''
 
 from typing import Any
@@ -237,10 +241,6 @@ def get_active_window_xprop() -> Tuple[str, str]:
     '''
     program_name = ''
     window_title = ''
-    #if 'XDG_SESSION_TYPE' not in os.environ:
-    #    return (program_name, window_title)
-    #if os.environ['XDG_SESSION_TYPE'] != 'x11':
-    #    return (program_name, window_title)
     if 'DISPLAY' not in os.environ or not os.environ['DISPLAY']:
         return (program_name, window_title)
     xprop_binary = shutil.which('xprop')
@@ -304,7 +304,10 @@ def get_active_window() -> Tuple[str, str]:
     Tries AT-SPI first, if that doesn’t work falls back to xprop.
 
     '''
-    (program_name, window_title) = get_active_window_atspi()
+    (program_name, window_title) = ('', '')
+    if ('XDG_SESSION_TYPE' in os.environ
+        and os.environ['XDG_SESSION_TYPE'].lower() == 'wayland'):
+        (program_name, window_title) = get_active_window_atspi()
     if program_name:
         LOGGER.debug(
             'Got active window from AT-SPI: %s', (program_name, window_title))
