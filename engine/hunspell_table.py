@@ -2115,7 +2115,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 itb_util.color_string_to_argb('Purple'),
                 len(aux_string)-len(client),
                 len(aux_string)))
-        if DEBUG_LEVEL > 1:
+        if DEBUG_LEVEL > 2:
             context = ''
             if self._is_context_from_surrounding_text:
                 context += '🟢'
