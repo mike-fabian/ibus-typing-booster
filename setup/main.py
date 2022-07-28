@@ -3669,10 +3669,10 @@ class SetupUI(Gtk.Window): # type: ignore
                 LOGGER.info(
                     'defining shortcut: “%s” -> “%s”',
                     shortcut, shortcut_expansion)
-                self.tabsqlitedb.check_phrase_and_update_frequency(
+                self.tabsqlitedb.define_user_shortcut(
                     input_phrase=shortcut,
                     phrase=shortcut_expansion,
-                    user_freq_increment=itb_util.SHORTCUT_USER_FREQ)
+                    user_freq=itb_util.SHORTCUT_USER_FREQ)
                 model.append((shortcut, shortcut_expansion))
             self._shortcut_entry.set_text('')
             expansion_buffer.set_text('')
