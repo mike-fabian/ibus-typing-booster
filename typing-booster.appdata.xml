@@ -12,6 +12,20 @@
       improve one’s typing speed and spelling.
     </p>
   </description>
+  <screenshots>
+    <screenshot type="default">
+      <image type="source" width="956" height="233" xml:lang="en">
+      https://mike-fabian.github.io/ibus-typing-booster/images/typing-emoji-and-context-sensitive-completion.png
+      </image>
+      <caption>Typing Booster screenshot</caption>
+    </screenshot>
+    <screenshot>
+      <video container="webm" codec="vp9" xml:lang="en">
+        https://mike-fabian.github.io/ibus-typing-booster/videos/overview-demo-setup-use-typing-booster-emoji-picker.webm
+      </video>
+      <caption>Typing booster demo video</caption>
+    </screenshot>
+  </screenshots>
   <icon type="remote" width="64" height="64">https://raw.githubusercontent.com/mike-fabian/ibus-typing-booster/main/icons/64x64/ibus-typing-booster.png</icon>
   <project_license>GPL-3.0+</project_license>
   <developer_name>Mike FABIAN</developer_name>

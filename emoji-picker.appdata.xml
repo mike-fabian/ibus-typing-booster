@@ -10,6 +10,14 @@
       code from Ibus-typing-booster.
     </p>
   </description>
+  <screenshots>
+    <screenshot>
+      <image type="source" xml:lang="en">
+        https://mike-fabian.github.io/ibus-typing-booster/images/emoji-picker.png
+      </image>
+      <caption>Emoji Picker screenshot</caption>
+    </screenshot>
+  </screenshots>
   <categories>
     <category>Utility</category>
   </categories>
