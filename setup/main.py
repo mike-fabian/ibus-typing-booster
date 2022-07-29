@@ -3690,7 +3690,13 @@ class SetupUI(Gtk.Window): # type: ignore
                             (ignoring case and accents) are listed.
 
         '''
+        # Clearing the model seems to cause a selection changed event for
+        # each item cleared, unselect_all() is apparently not enough to avoid this.
+        # But it can be avoided by set_mode(Gtk.SelectionMode.NONE)
+        self._shortcut_treeview.get_selection().unselect_all()
+        self._shortcut_treeview.get_selection().set_mode(Gtk.SelectionMode.NONE)
         self._shortcut_treeview_model.clear()
+        self._shortcut_treeview.get_selection().set_mode(Gtk.SelectionMode.SINGLE)
         current_shortcuts: List[Tuple[str, str]] = (
             self.tabsqlitedb.list_user_shortcuts())
         filter_words = itb_util.remove_accents(filter_text.lower()).split()
