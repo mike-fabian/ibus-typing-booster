@@ -39,11 +39,17 @@ Anish Patil anish.developer@gmail.com
 
 -------------
 
-# Demo
+# Demo video of Typing Booster and Emoji Picker
 
 {{<
 video label="Demo of Typing Booster and Emoji Picker"
 webm="videos/overview-demo-setup-use-typing-booster-emoji-picker.webm"
+>}}
+
+# Emoji Picker screenshot
+
+{{<
+figure src="images/emoji-picker.png"
 >}}
 
 -------------

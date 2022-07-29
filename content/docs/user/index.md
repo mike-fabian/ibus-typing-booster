@@ -2716,7 +2716,15 @@ lookup.
 ###### 7_9
 ### Emoji picker
 
-{{< video label="Emoji picker" webm="/videos/user-docs/emoji-picker.webm" >}}
+{{<
+figure src="images/emoji-picker.png"
+caption="Screenshot of Emoji Picker"
+>}}
+
+{{<
+video label="Emoji picker" webm="/videos/user-docs/emoji-picker.webm"
+caption="Video showing Emoji Picker"
+>}}
 
 ibus-typing-booster contains an “emoji-picker” tool which can be used
 independently from ibus-typing-booster, i.e. even when
