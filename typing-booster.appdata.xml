@@ -343,7 +343,7 @@
       </description>
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.15.14</url>
       <issues>
-        <issue url=" https://github.com/mike-fabian/ibus-typing-booster/issues/262">
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/262">
           github-issues#262: Update emojione.json file to new version
           emoji.json
         </issue>

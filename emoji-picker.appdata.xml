@@ -90,12 +90,12 @@
         <p>Bug fixes and enhancements</p>
       </description>
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.16.7</url>
-      <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/325">
-        github-issues#325: When the lookup table is hidden because
-        of inline completion, ignore commands to commit candidates
-        by their index
-      </issue>
       <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/325">
+          github-issues#325: When the lookup table is hidden because
+          of inline completion, ignore commands to commit candidates
+          by their index
+        </issue>
         <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/320">
           github-issues#320: Add a command 'commit' with configurable key bindings
         </issue>
@@ -345,7 +345,7 @@
       </description>
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.15.14</url>
       <issues>
-        <issue url=" https://github.com/mike-fabian/ibus-typing-booster/issues/262">
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/262">
           github-issues#262: Update emojione.json file to new version
           emoji.json
         </issue>
