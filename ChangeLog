@@ -1,4 +1,14 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 30 Jul 2022 Release 2.18.6
+* Avoid selection changed events when clearing the shortcut treeview (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/355)
+* Correctly remember how often user shortcuts were used (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/353)
+* Update emoji data files for current Unicode 15.0 DRAFT
+* Update UnicodeData.txt to https://www.unicode.org/Public/15.0.0/ucd/UnicodeData-15.0.0d6.txt
+* Update emoji annotations from CLDR
+* Use AT-SPI first to get the active window only on wayland, on X11 use xprop immediately
+* Translation update from Weblate (sv updated to 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 26 Jul 2022 Release 2.18.4
 * Get program name of focused window if do_focus_id doesn’t provide that already
 * Show lookup table *always* when display of related emoji or words is requested (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/350)
