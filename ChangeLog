@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 31 Jul 2022 Release 2.18.7
+* Use the environment variable DICPATH as well when searching for dicitonaries (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/357)
+* Translation update from Weblate (sw updated to 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 30 Jul 2022 Release 2.18.6
 * Avoid selection changed events when clearing the shortcut treeview (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/355)
 * Correctly remember how often user shortcuts were used (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/353)
