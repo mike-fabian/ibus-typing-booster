@@ -9,10 +9,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-07-26 02:47+0200\n"
-"PO-Revision-Date: 2022-06-24 12:08+0000\n"
+"PO-Revision-Date: 2022-07-31 19:57+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
-"Language-Team: Swahili <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/sw/>\n"
+"Language-Team: Swahili <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/sw/>\n"
 "Language: sw\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -543,11 +543,11 @@ msgstr ""
 
 #: setup/main.py:470
 msgid "Yes, but only when extremely likely"
-msgstr ""
+msgstr "Ndio, lakini iwapo tu pendekezo lina uwezekano mkubwa"
 
 #: setup/main.py:472
 msgid "Yes, always"
-msgstr ""
+msgstr "Ndio, kila mara"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
@@ -1313,22 +1313,16 @@ msgstr ""
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2001
-#, fuzzy
-#| msgid "Use label for dictionary suggestions"
 msgid "Use flags for dictionary suggestions"
-msgstr "Tumia lebo kwa mapendekezo yatokayo kwa kamusi"
+msgstr "Tumia alama kuashiria mapendekezo yatokayo kwa kamusi"
 
 #: setup/main.py:2003
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a label is used for candidates in the lookup "
-#| "table which come from a dictionary."
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
-"Chagua ikiwa ungependa kutia lebo mapendekezo katika orodha yatokayo "
-"kamusini."
+"Chagua ikiwa ungependa kutia alama au lebo itakayoashiria mapendekezo kwenye "
+"orodha yatokayo kamusini."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
