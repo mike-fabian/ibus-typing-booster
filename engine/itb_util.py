@@ -3240,9 +3240,14 @@ def find_hunspell_dictionary(language: str) -> Tuple[str, str]:
     '''
     datadir = os.path.join(os.path.dirname(__file__), '../data')
     user_datadir = xdg_save_data_path('ibus-typing-booster/data')
-    dirnames = [
-        user_datadir,
-        datadir,
+    dicpaths = []
+    dicpath_string = os.environ.get('DICPATH')
+    if dicpath_string:
+        dicpaths = [os.path.expanduser(path)
+                    for path in dicpath_string.split(':') if path]
+    dirnames = [user_datadir, datadir]
+    dirnames += dicpaths
+    dirnames += [
         '/usr/share/hunspell',
         '/usr/share/myspell',
         '/usr/share/myspell/dicts',
