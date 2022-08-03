@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-07-26 02:47+0200\n"
+"POT-Creation-Date: 2022-08-03 14:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -299,31 +299,31 @@ msgstr ""
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2641
+#: engine/itb_util.py:2638
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util.py:4080 engine/itb_util.py:4761
+#: engine/itb_util.py:4082 engine/itb_util.py:4763
 msgid "File not found"
 msgstr ""
 
-#: engine/itb_util.py:4084 engine/itb_util.py:4765
+#: engine/itb_util.py:4086 engine/itb_util.py:4767
 msgid "Permission error"
 msgstr ""
 
-#: engine/itb_util.py:4088 engine/itb_util.py:4769
+#: engine/itb_util.py:4090 engine/itb_util.py:4771
 msgid "Unicode decoding error"
 msgstr ""
 
-#: engine/itb_util.py:4092 engine/itb_util.py:4773
+#: engine/itb_util.py:4094 engine/itb_util.py:4775
 msgid "Unknown error"
 msgstr ""
 
-#: engine/itb_util.py:4738
+#: engine/itb_util.py:4740
 msgid "Native Keyboard"
 msgstr ""
 
-#: engine/itb_util.py:4740
+#: engine/itb_util.py:4742
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -333,38 +333,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5285
+#: engine/itb_util.py:5287
 msgid "Key input"
 msgstr ""
 
-#: engine/itb_util.py:5291
+#: engine/itb_util.py:5293
 msgid "Cancel"
 msgstr ""
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5298
+#: engine/itb_util.py:5300
 msgid "Please press a key (or a key combination)"
 msgstr ""
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5303
+#: engine/itb_util.py:5305
 msgid "The dialog will be closed when the key is released"
 msgstr ""
 
-#: engine/itb_util.py:5342
+#: engine/itb_util.py:5344
 msgid "A completion input method to speedup typing."
 msgstr ""
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5351
+#: engine/itb_util.py:5353
 msgid "translator-credits"
 msgstr ""
 
-#: engine/itb_util.py:5359
+#: engine/itb_util.py:5361
 msgid "Online documentation:"
 msgstr ""
 
@@ -376,7 +376,7 @@ msgstr ""
 msgid "Restore all defaults"
 msgstr ""
 
-#: setup/main.py:202 setup/main.py:5494
+#: setup/main.py:202 setup/main.py:5500
 msgid "_Close"
 msgstr ""
 
@@ -782,7 +782,7 @@ msgstr ""
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr ""
 
-#: setup/main.py:988 setup/main.py:1104 setup/main.py:1328 setup/main.py:3954
+#: setup/main.py:988 setup/main.py:1104 setup/main.py:1328 setup/main.py:3960
 msgid "Set to default"
 msgstr ""
 
@@ -882,7 +882,7 @@ msgstr ""
 msgid "Edit the key bindings for the selected command"
 msgstr ""
 
-#: setup/main.py:1332 setup/main.py:3959
+#: setup/main.py:1332 setup/main.py:3965
 msgid "Set default key bindings for the selected command"
 msgstr ""
 
@@ -1253,11 +1253,11 @@ msgstr ""
 msgid "Are you sure?"
 msgstr ""
 
-#: setup/main.py:2304 setup/main.py:2842 setup/main.py:2920 setup/main.py:4027
+#: setup/main.py:2304 setup/main.py:2842 setup/main.py:2920 setup/main.py:4033
 msgid "_Cancel"
 msgstr ""
 
-#: setup/main.py:2305 setup/main.py:2843 setup/main.py:2921 setup/main.py:4028
+#: setup/main.py:2305 setup/main.py:2843 setup/main.py:2921 setup/main.py:4034
 msgid "_OK"
 msgstr ""
 
@@ -1284,16 +1284,16 @@ msgstr ""
 msgid "Add input method"
 msgstr ""
 
-#: setup/main.py:3907
+#: setup/main.py:3913
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr ""
 
-#: setup/main.py:3935
+#: setup/main.py:3941
 msgid "Add a key binding"
 msgstr ""
 
-#: setup/main.py:3947
+#: setup/main.py:3953
 msgid "Remove selected key binding"
 msgstr ""
 
@@ -1302,22 +1302,22 @@ msgstr ""
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:4008
+#: setup/main.py:4014
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr ""
 
-#: setup/main.py:4024
+#: setup/main.py:4030
 msgid "Open File ..."
 msgstr ""
 
-#: setup/main.py:4043
+#: setup/main.py:4049
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr ""
 
-#: setup/main.py:4052
+#: setup/main.py:4058
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr ""
@@ -1332,25 +1332,25 @@ msgstr ""
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:4075
+#: setup/main.py:4081
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr ""
 
-#: setup/main.py:5556
+#: setup/main.py:5562
 msgid "ibus is not running."
 msgstr ""
 
-#: typing-booster.appdata.xml:5
+#: typing-booster.appdata.xml:6
 msgid "Typing Booster"
 msgstr ""
 
-#: typing-booster.appdata.xml:6
+#: typing-booster.appdata.xml:7
 msgid "Predictive input method"
 msgstr ""
 
-#: typing-booster.appdata.xml:8
+#: typing-booster.appdata.xml:9
 msgid ""
 "Ibus-typing-booster is a predictive input method and predicts complete words "
 "based on context and partial input. One can then simply select the desired "
