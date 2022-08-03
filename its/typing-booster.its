@@ -5,7 +5,6 @@
   <its:translateRule selector="/component/name |
                                /component/summary |
                                /component/description |
-                               /component/screenshots/screenshot/caption |
                                /component/agreement/agreement_section/name |
                                /component/agreement/agreement_section/description"
                      translate="yes"/>
