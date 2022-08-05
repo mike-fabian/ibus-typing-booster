@@ -38,7 +38,7 @@
   <update_contact>mfabian@redhat.com</update_contact>
   <url type="homepage">https://mike-fabian.github.io/ibus-typing-booster/</url>
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
-  <url type="help">https://mike-fabian.github.io/ibus-typing-booster/documentation.html</url>
+  <url type="help">https://mike-fabian.github.io/ibus-typing-booster/docs/user/</url>
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
