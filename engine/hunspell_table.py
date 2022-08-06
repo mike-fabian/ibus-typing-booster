@@ -372,6 +372,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 GLib.Variant.new_string(','.join(self._dictionary_names)))
         self.database.hunspell_obj.set_dictionary_names(
             self._dictionary_names[:])
+        self._dictionary_flags: Dict[str, str] = itb_util.get_flags(
+            self._dictionary_names)
 
         if  self._emoji_predictions:
             if DEBUG_LEVEL > 1:
@@ -869,7 +871,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                          and phrase.endswith(label_dictionary_string))):
                     phrase += ' '
                 for dictionary in dictionary_matches:
-                    phrase += itb_util.get_flag(dictionary)
+                    phrase += self._dictionary_flags.get(dictionary, '')
             if self._color_dictionary and not color_used:
                 attrs.append(IBus.attr_foreground_new(
                     self._color_dictionary_argb, 0, len(phrase)))
@@ -1406,6 +1408,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return
         self._dictionary_names = dictionary_names
         self.database.hunspell_obj.set_dictionary_names(dictionary_names)
+        self._dictionary_flags = itb_util.get_flags(self._dictionary_names)
         self._update_dictionary_menu_dicts()
         self._init_or_update_property_menu_dictionary(
             self.dictionary_menu, current_mode=0)

@@ -2214,6 +2214,30 @@ def get_flag(lookup_text: str) -> str:
         return FLAGS[locale.language]
     return FLAGS['None']
 
+def get_flags(dictionaries: List[str]) -> Dict[str, str]:
+    '''
+    Examples:
+
+    >>> get_flags(['de_DE', 'fr_FR', 'eo'])
+    {'de_DE': '🇩🇪', 'fr_FR': '🇫🇷', 'eo': '🌍'}
+    >>> get_flags(['fr_FR', 'de_DE', 'fy_DE', 'eo', 'de', '150'])
+    {'fr_FR': '🇫🇷fr_FR', 'de_DE': '🇩🇪de_DE', 'fy_DE': '🇩🇪fy_DE', 'eo': '🌍eo', 'de': '🌍de', '150': '🌍150'}
+    '''
+    flags: Dict[str, str] = {}
+    flags_seen: Set[str] = set()
+    duplicate_flags = False
+    for dictionary in dictionaries:
+        new_flag = get_flag(dictionary)
+        flags[dictionary] = new_flag
+        if new_flag in flags_seen:
+            duplicate_flags = True
+        flags_seen.add(new_flag)
+    if duplicate_flags:
+        for key, flag in flags.items():
+            if not flag.endswith(key):
+                flags[key] += key
+    return flags
+
 def get_effective_lc_ctype() -> str:
     '''Returns the effective value of LC_CTYPE'''
     if 'LC_ALL' in os.environ:
