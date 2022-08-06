@@ -4010,7 +4010,7 @@ class ComposeSequences:
                 keyvals.append(int(name[1:], 16))
             else:
                 try:
-                    keyvals.append(eval('IBus.KEY_' + name))
+                    keyvals.append(getattr(IBus, f'KEY_{name}'))
                 except AttributeError as error:
                     LOGGER.error(
                         'Invalid compose sequence. '

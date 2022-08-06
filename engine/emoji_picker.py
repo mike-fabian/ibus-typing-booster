@@ -32,6 +32,7 @@ from typing import Callable
 import sys
 import os
 import re
+import ast
 import signal
 import argparse
 import locale
@@ -890,7 +891,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 with open(self._options_file,
                           mode='r',
                           encoding='UTF-8') as options_file:
-                    options_dict = eval(options_file.read())
+                    options_dict = ast.literal_eval(options_file.read())
             except (PermissionError, SyntaxError, IndentationError) as error:
                 LOGGER.exception('Error when reading options: %s: %s',
                                  error.__class__.__name__, error)
@@ -956,7 +957,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 with open(self._recently_used_emoji_file,
                           mode='r',
                           encoding='UTF-8') as recently_used_file:
-                    recently_used_emoji = eval(recently_used_file.read())
+                    recently_used_emoji = ast.literal_eval(
+                        recently_used_file.read())
             except (PermissionError, SyntaxError, IndentationError) as error:
                 LOGGER.exception('Error reading recently used emoji: %s: %s',
                                  error.__class__.__name__, error)
