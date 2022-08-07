@@ -34,6 +34,8 @@ from typing import Callable
 import os
 import unicodedata
 import re
+import fnmatch
+import ast
 import time
 import logging
 import threading
@@ -315,8 +317,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._label_dictionary: bool = itb_util.variant_to_value(
             self._gsettings.get_value('labeldictionary'))
 
-        self._label_dictionary_string: str = itb_util.variant_to_value(
-            self._gsettings.get_value('labeldictionarystring'))
+        self._label_dictionary_string: str = ''
+        self._label_dictionary_dict: Dict[str, str] = {}
+        self.set_label_dictionary_string(
+            itb_util.variant_to_value(
+                self._gsettings.get_value('labeldictionarystring')),
+            update_gsettings=False)
 
         self._flag_dictionary: bool = itb_util.variant_to_value(
             self._gsettings.get_value('flagdictionary'))
@@ -856,7 +862,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         (label_userdb_string
                          and phrase.endswith(label_userdb_string))):
                     phrase += ' '
-                if label_dictionary_string:
+                if self._label_dictionary_dict:
+                    for dictionary in dictionary_matches:
+                        if dictionary in self._label_dictionary_dict:
+                            phrase += self._label_dictionary_dict[dictionary]
+                        else:
+                            for key in sorted(self._label_dictionary_dict,
+                                              reverse=True):
+                                if fnmatch.fnmatchcase(dictionary, key):
+                                    phrase += self._label_dictionary_dict[key]
+                                    break
+                elif label_dictionary_string:
                     phrase += label_dictionary_string
             if self._flag_dictionary:
                 if not (phrase.endswith(' ')
@@ -4006,6 +4022,19 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if label_string == self._label_dictionary_string:
             return
         self._label_dictionary_string = label_string
+        self._label_dictionary_dict = {}
+        if label_string.startswith('{'):
+            try:
+                self._label_dictionary_dict = ast.literal_eval(label_string)
+                if not isinstance(self._label_dictionary_dict, dict):
+                    self._label_dictionary_dict = {}
+            except (SyntaxError, ValueError) as error:
+                LOGGER.exception(
+                    'Cannot parse label_string as dict: %s: %s',
+                    error.__class__.__name__, error)
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('self._label_dictionary_dict=%s',
+                         repr(self._label_dictionary_dict))
         if update_gsettings:
             self._gsettings.set_value(
                 'labeldictionarystring',
