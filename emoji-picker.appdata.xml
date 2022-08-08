@@ -27,6 +27,9 @@
   </categories>
   <launchable type="desktop-id">emoji-picker.desktop</launchable>
   <icon type="remote" width="64" height="64">https://raw.githubusercontent.com/mike-fabian/ibus-typing-booster/main/icons/64x64/ibus-typing-booster.png</icon>
+  <icon type="remote" width="128" height="128">https://raw.githubusercontent.com/mike-fabian/ibus-typing-booster/main/icons/128x128/ibus-typing-booster.png</icon>
+  <icon type="remote" width="256" height="256">https://raw.githubusercontent.com/mike-fabian/ibus-typing-booster/main/icons/256x256/ibus-typing-booster.png</icon>
+  <icon type="remote">https://raw.githubusercontent.com/mike-fabian/ibus-typing-booster/main/icons/ibus-typing-booster.svg</icon>
   <project_license>GPL-3.0+</project_license>
   <developer_name>Mike FABIAN</developer_name>
   <update_contact>mfabian@redhat.com</update_contact>
