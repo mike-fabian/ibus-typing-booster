@@ -4722,7 +4722,7 @@ class M17nDbInfo:
                     [m17n_db_binary],
                     encoding='utf-8', check=True, capture_output=True)
                 system_dir = result.stdout.strip()
-                LOGGER.info('FIXME %s', system_dir)
+                LOGGER.info('%s printed: %s', m17n_db_binary, system_dir)
             except FileNotFoundError as error:
                 LOGGER.exception(
                     'Exception when calling %s: %s: %s',
