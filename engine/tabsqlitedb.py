@@ -451,6 +451,65 @@ class TabSqliteDb:
                 'best_shortcut_candidates=%s', best_shortcut_candidates)
         return best_shortcut_candidates
 
+    def select_words_empty_input(
+            self,
+            p_phrase: str,
+            pp_phrase: str) -> List[Tuple[str, float]]:
+        '''Get phrases from database which occured previously with
+        any input after the given context
+
+        Returns a list of matches where each match is a tuple in the
+        form of (phrase, user_freq), i.e. returns something like
+        [(phrase, user_freq), ...]
+
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                'p_phrase=%s pp_phrase=%s', p_phrase, pp_phrase)
+        phrase_frequencies: Dict[str, float] = {}
+        if not p_phrase or not pp_phrase:
+            return self.best_candidates(phrase_frequencies)
+        p_phrase = itb_util.remove_accents(p_phrase.lower())
+        pp_phrase = itb_util.remove_accents(pp_phrase.lower())
+        sqlargs = {'p_phrase': p_phrase, 'pp_phrase': pp_phrase}
+        sqlstr = ('SELECT phrase, sum(user_freq) FROM user_db.phrases '
+                  'WHERE p_phrase = :p_phrase '
+                  'AND pp_phrase = :pp_phrase GROUP BY phrase;')
+        results = None
+        try:
+            results = self.database.execute(sqlstr, sqlargs).fetchall()
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.exception(
+                'Unexpected error getting phrases for empty input '
+                'with given context from user_db: %s: %s',
+                error.__class__.__name__, error)
+            results = None
+        if not results:
+            return self.best_candidates(phrase_frequencies)
+        sqlstr = (
+            'SELECT sum(user_freq) FROM user_db.phrases '
+            'WHERE p_phrase = :p_phrase AND pp_phrase = :pp_phrase;')
+        count_pp_phrase_p_phrase = 0
+        try:
+            count_pp_phrase_p_phrase = self.database.execute(
+                sqlstr, sqlargs).fetchall()[0][0]
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.exception(
+                'Unexpected error getting total count for empty input '
+                'with given context from user_db: %s: %s',
+                 error.__class__.__name__, error)
+            count_pp_phrase_p_phrase = 0
+        if not count_pp_phrase_p_phrase:
+            return self.best_candidates(phrase_frequencies)
+        for result in results:
+            phrase_frequencies.update(
+                [(result[0], result[1]/float(count_pp_phrase_p_phrase))])
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                'Best candidates for empty input with given context=%s',
+                self.best_candidates(phrase_frequencies))
+        return self.best_candidates(phrase_frequencies)
+
     def select_words(
             self,
             input_phrase: str,
@@ -463,18 +522,19 @@ class TabSqliteDb:
         form of (phrase, user_freq), i.e. returns something like
         [(phrase, user_freq), ...]
         '''
-        if input_phrase:
-            input_phrase = unicodedata.normalize(
-                itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
-        p_phrase = itb_util.remove_accents(p_phrase.lower())
-        pp_phrase = itb_util.remove_accents(pp_phrase.lower())
-        title_case = input_phrase.istitle()
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'input_phrase=%s p_phrase=%s pp_phrase=%s',
                 input_phrase, p_phrase, pp_phrase)
+        if not input_phrase:
+            return self.select_words_empty_input(p_phrase, pp_phrase)
         phrase_frequencies: Dict[str, float] = {}
-        if input_phrase and not ' ' in input_phrase:
+        input_phrase = unicodedata.normalize(
+            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
+        p_phrase = itb_util.remove_accents(p_phrase.lower())
+        pp_phrase = itb_util.remove_accents(pp_phrase.lower())
+        title_case = input_phrase.istitle()
+        if not ' ' in input_phrase:
             # Get suggestions from hunspell dictionaries. But only
             # if input_phrase does not contain spaces. The hunspell
             # dictionaries contain only single words, not sentences.
@@ -494,8 +554,7 @@ class TabSqliteDb:
         # is not in the German hunspell dictionary as a single word but
         # created by suffix and prefix rules, the accent insensitive match
         # in the German hunspell dictionary would not find it either.
-        if input_phrase:
-            input_phrase = itb_util.remove_accents(input_phrase.lower())
+        input_phrase = itb_util.remove_accents(input_phrase.lower())
         # Now phrase_frequencies might contain something like this:
         #
         # {'code': 0, 'communicability': 0, 'cold': 0, 'colour': 0}
@@ -511,9 +570,8 @@ class TabSqliteDb:
         # But unfortunately that does not work when creating views,
         # (“OperationalError: parameters are not allowed in views”).
         quoted_input_phrase = ''
-        if input_phrase:
-            quoted_input_phrase = input_phrase.replace(
-                '\x00', '').replace('"', '""')
+        quoted_input_phrase = input_phrase.replace(
+            '\x00', '').replace('"', '""')
         self.database.execute('DROP VIEW IF EXISTS like_input_phrase_view;')
         sqlstr = f'''
         CREATE TEMPORARY VIEW IF NOT EXISTS like_input_phrase_view AS

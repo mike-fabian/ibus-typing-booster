@@ -771,10 +771,10 @@ class SetupUI(Gtk.Window): # type: ignore
         self._min_char_complete_adjustment.set_visible(True)
         self._min_char_complete_adjustment.set_can_focus(True)
         self._min_char_complete_adjustment.set_increments(1.0, 1.0)
-        self._min_char_complete_adjustment.set_range(1.0, 9.0)
+        self._min_char_complete_adjustment.set_range(0.0, 9.0)
         self._min_char_complete = itb_util.variant_to_value(
             self._gsettings.get_value('mincharcomplete'))
-        if self._min_char_complete:
+        if self._min_char_complete is not None:
             self._min_char_complete_adjustment.set_value(
                 int(self._min_char_complete))
         else:
@@ -5307,7 +5307,7 @@ class SetupUI(Gtk.Window): # type: ignore
             '(%s, update_gsettings = %s)', min_char_complete, update_gsettings)
         if min_char_complete == self._min_char_complete:
             return
-        if 1 <= min_char_complete <= 9:
+        if 0 <= min_char_complete <= 9:
             self._min_char_complete = min_char_complete
             if update_gsettings:
                 self._gsettings.set_value(

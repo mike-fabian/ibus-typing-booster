@@ -192,7 +192,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.is_lookup_table_enabled_by_min_char_complete = False
         self._min_char_complete: int = itb_util.variant_to_value(
             self._gsettings.get_value('mincharcomplete'))
-        self._min_char_complete = max(self._min_char_complete, 1)
+        self._min_char_complete = max(self._min_char_complete, 0)
         self._min_char_complete = min(self._min_char_complete, 9)
 
         self._debug_level: int = itb_util.variant_to_value(
@@ -2187,7 +2187,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # difference but gnome-shell in f18 will display
         # an empty suggestion popup if the number of candidates
         # is zero!
-        if ((self.is_empty() and not self._typed_compose_sequence)
+        if ((self.is_empty()
+             and self._min_char_complete != 0
+             and not self._typed_compose_sequence)
             or self._hide_input
             or self.get_lookup_table().get_number_of_candidates() == 0
             or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
@@ -2315,6 +2317,65 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Update the candidates, the lookup table and the auxiliary text'''
         self._update_candidates()
         self._update_lookup_table_and_aux()
+
+    def _update_ui_empty_input_try_completion(self) -> None:
+        '''
+        '''
+        LOGGER.debug('entering function')
+        self._update_preedit()
+        if not self.is_empty():
+            return
+        if (self._min_char_complete != 0
+            or self._hide_input
+            or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
+            # If the lookup table would be hidden anyway, there is no
+            # point in updating the candidates, save some time by making
+            # sure the lookup table and the auxiliary text are really
+            # empty and hidden and return immediately:
+            self.get_lookup_table().clear()
+            self.get_lookup_table().set_cursor_visible(False)
+            self.hide_lookup_table()
+            self._lookup_table_hidden = True
+            self._current_auxiliary_text = IBus.Text.new_from_string('')
+            super().update_auxiliary_text(
+                self._current_auxiliary_text, False)
+            return
+        self.is_lookup_table_enabled_by_tab = False
+        self._lookup_table_shows_related_candidates = False
+        phrase_candidates = self.database.select_words(
+            '', p_phrase=self.get_p_phrase(), pp_phrase=self.get_pp_phrase())
+        if not phrase_candidates:
+            return
+        self._lookup_table_is_invalid = True
+        # Don’t show the lookup table if it is invalid anway
+        self.get_lookup_table().clear()
+        self.get_lookup_table().set_cursor_visible(False)
+        self.hide_lookup_table()
+        self._lookup_table_hidden = True
+        if self._label_busy and self._label_busy_string.strip():
+            # Show a label in the auxiliary text to indicate that the
+            # lookup table is being updated (by default an hourglass
+            # with moving sand):
+            super().update_auxiliary_text(
+                IBus.Text.new_from_string(
+                    self._label_busy_string.strip()), True)
+        else:
+            super().update_auxiliary_text(
+                IBus.Text.new_from_string(''), False)
+        self._candidates = []
+        for cand in phrase_candidates:
+            self._candidates.append((cand[0], cand[1], '', True, False))
+        for cand in self._candidates:
+            self._append_candidate_to_lookup_table(
+                phrase=cand[0], user_freq=cand[1], comment=cand[2],
+                from_user_db=cand[3], spell_checking=cand[4])
+        self._candidates_case_mode_orig = self._candidates.copy()
+        if self._current_case_mode != 'orig':
+            self._case_mode_change(mode=self._current_case_mode)
+        if self._unit_test:
+            self._update_lookup_table_and_aux()
+        else:
+            GLib.idle_add(self._update_lookup_table_and_aux)
 
     def _update_ui(self) -> None:
         '''Update User Interface'''
@@ -2605,7 +2666,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             super().commit_text(
                 IBus.Text.new_from_string(phrase))
             return True
-        self._commit_string(phrase + extra_text)
+        if self.is_empty():
+            self._commit_string(phrase + extra_text, input_phrase=phrase)
+        else:
+            # _commit_string() will calculate input_phrase:
+            self._commit_string(phrase + extra_text)
+        if extra_text == ' ':
+            self._update_ui_empty_input_try_completion()
         return True
 
     def _commit_string(
@@ -4406,7 +4473,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         :param min_char_complete: The minimum number of characters
                                   to type before completion is tried.
-                                  1 <= min_char_complete <= 9
+                                  0 <= min_char_complete <= 9
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
@@ -4419,7 +4486,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 min_char_complete, update_gsettings)
         if min_char_complete == self._min_char_complete:
             return
-        if 1 <= min_char_complete <= 9:
+        if 0 <= min_char_complete <= 9:
             self._min_char_complete = min_char_complete
             self._clear_input_and_update_ui()
             if update_gsettings:
@@ -4944,7 +5011,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         :return: True if the key was completely handled, False if not.
         '''
-        if self.is_empty() and not self._typed_compose_sequence:
+        if (self.is_empty()
+            and self._min_char_complete != 0
+            and not self._typed_compose_sequence):
             return False
         if self._typed_compose_sequence:
             if self._lookup_table_shows_compose_completions:
@@ -5855,10 +5924,18 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     LOGGER.debug('Preedit reopened successfully.')
             return self._return_false(key.val, key.code, key.state)
 
-        if self.is_empty():
+        if self.is_empty() and not self._lookup_table.cursor_visible:
             if DEBUG_LEVEL > 1:
                 LOGGER.debug(
                     'self.is_empty(): KeyEvent object: %s', key)
+            self._update_preedit()
+            self.get_lookup_table().clear()
+            self.get_lookup_table().set_cursor_visible(False)
+            self.hide_lookup_table()
+            self._lookup_table_hidden = True
+            self._current_auxiliary_text = IBus.Text.new_from_string('')
+            super().update_auxiliary_text(
+                self._current_auxiliary_text, False)
             # This is the first character typed since the last commit
             # there is nothing in the preëdit yet.
             if key.val < 32 or key.val == IBus.KEY_Escape:
@@ -5981,7 +6058,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # this would also trigger a commit unless 'C-a' is
                 # transliterated to something).  See:
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/107
-            if self.is_empty():
+            if self.is_empty() and not self._lookup_table.cursor_visible:
                 return self._return_false(key.val, key.code, key.state)
             if (not key.shift and (not self.get_lookup_table().cursor_visible
                                    or self._is_candidate_auto_selected)):
@@ -6210,6 +6287,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if self.get_lookup_table().cursor_visible:
                 candidate_was_selected = True
             caret_was = self.get_caret()
+            if not input_phrase:
+                input_phrase = commit_string
             self._commit_string(commit_string, input_phrase=input_phrase)
             # These sleeps between commit() and
             # forward_key_event() are unfortunately needed because
@@ -6220,6 +6299,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # cursor needs to be corrected leftwards:
                 for dummy_char in commit_string[caret_was:]:
                     self._forward_generated_key_event(IBus.KEY_Left)
+            if (key.val in (IBus.KEY_space, IBus.KEY_Tab)
+                and not (key.control
+                         or key.mod1
+                         or key.super
+                         or key.hyper
+                         or key.meta)):
+                self._update_ui_empty_input_try_completion()
             return self._commit_or_forward_key_event_or_return_false(key)
 
         if key.unicode:
