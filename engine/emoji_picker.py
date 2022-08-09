@@ -227,19 +227,6 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             Gdk.Screen.get_default(),
             style_provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
-
-        # https://tronche.com/gui/x/icccm/sec-4.html#WM_CLASS
-        # gnome-shell seems to use the first argument of set_wmclass()
-        # to find the .desktop file.  If the .desktop file can be
-        # found, the name shown by gnome-shell in the top bar comes
-        # from that .desktop file and the icon to show is also read
-        # from that .desktop file. If the .desktop file cannot be
-        # found, the second argument of set_wmclass() is shown by
-        # gnome-shell in the top bar.
-        #
-        # It only works like this when gnome-shell runs under Xorg
-        # though, under Wayland things are different.
-        self.set_wmclass('emoji-picker', 'Emoji Picker') # pylint: disable=no-member
         self.set_default_size(700, 400)
         self._modal = modal
         self.set_modal(self._modal)
