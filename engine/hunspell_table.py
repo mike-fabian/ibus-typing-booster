@@ -123,18 +123,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 'TypingBoosterEngine.__init__(bus=%s, obj_path=%s, db=%s)',
                 bus, obj_path, database)
         LOGGER.info('ibus version = %s', '.'.join(map(str, IBUS_VERSION)))
-        try:
+        if hasattr(IBus.Engine.props, 'has_focus_id'):
             super().__init__(
                 connection=bus.get_connection(),
                 object_path=obj_path,
                 has_focus_id=True)
             LOGGER.info('This ibus version has focus id.')
-        except TypeError as error:
+        else:
             super().__init__(
                 connection=bus.get_connection(),
                 object_path=obj_path)
-            LOGGER.info('This ibus version does *not* have focus id: %s: %s',
-                        error.__class__.__name__, error)
+            LOGGER.info('This ibus version does *not* have focus id.')
 
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         self._compose_sequences = itb_util.ComposeSequences()

@@ -25,6 +25,7 @@ require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
 
 class MockEngine:
+    props = None
     def __init__(
             self,
             engine_name: str = '',
