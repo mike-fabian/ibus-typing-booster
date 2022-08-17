@@ -177,6 +177,7 @@ class M17nTranslitTestCase(unittest.TestCase):
             trans.transliterate(list('annyeonghaseyo')), '안녕하세요')
 
     def test_si_sayura(self) -> None:
+        # pylint: disable=line-too-long
         trans = self.get_transliterator_or_skip('si-sayura')
         self.assertEqual(trans.transliterate(list('a')), 'අ')
         self.assertEqual(trans.transliterate(list('a ')), 'අ ')
@@ -331,6 +332,215 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('E')), 'එ')
         self.assertEqual(trans.transliterate(list('takWsHN')), 'තාක්‍ෂණ')
         self.assertEqual(trans.transliterate(list('takwsHN')), 'තාක්ෂණ')
+        # pylint: enable=line-too-long
+
+    def test_bn_national_jatiya(self) -> None:
+        '''
+        Test my new bn-national-jatiya.mim input method
+        '''
+        # pylint: disable=line-too-long
+        trans = self.get_transliterator_or_skip('bn-national-jatiya')
+        self.assertEqual(trans.transliterate(['G-0']), '৹') # U+09F9 BENGALI CURRENCY DENOMINATOR SIXTEEN
+        self.assertEqual(trans.transliterate(['0']), '০') # U+09E6 BENGALI DIGIT ZERO
+        self.assertEqual(trans.transliterate(['G-1']), '৴') # U+09F4 BENGALI CURRENCY NUMERATOR ONE
+        self.assertEqual(trans.transliterate(['1']), '১')   # U+09E7 BENGALI DIGIT ONE
+        self.assertEqual(trans.transliterate(['G-2']), '৵') # U+09F5 BENGALI CURRENCY NUMERATOR TWO
+        self.assertEqual(trans.transliterate(['2']), '২')  # U+09E8 BENGALI DIGIT TWO
+        self.assertEqual(trans.transliterate(['G-3']), '৶') # U+09F6 BENGALI CURRENCY NUMERATOR THREE
+        self.assertEqual(trans.transliterate(['3']), '৩')  # U+09E9 BENGALI DIGIT THREE
+        self.assertEqual(trans.transliterate(['G-4']), '৳') # U+09F3 BENGALI RUPEE SIGN
+        self.assertEqual(trans.transliterate(['4']), '৪')  # U+09EA BENGALI DIGIT FOUR
+        self.assertEqual(trans.transliterate(['G-5']), '৷') # U+09F7 BENGALI CURRENCY NUMERATOR FOUR
+        self.assertEqual(trans.transliterate(['5']), '৫')  # U+09EB BENGALI DIGIT FIVE
+        self.assertEqual(trans.transliterate(['G-6']), '৸') # U+09F8 BENGALI CURRENCY NUMERATOR ONE LESS THAN THE DENOMINATOR
+        self.assertEqual(trans.transliterate(['6']), '৬')  # U+09EC BENGALI DIGIT SIX
+        self.assertEqual(trans.transliterate(['G-7']), 'ं') # U+0902 DEVANAGARI SIGN ANUSVARA (Only in /usr/share/X11/xkb/symbols/bn)
+        self.assertEqual(trans.transliterate(['7']), '৭')  # U+09ED BENGALI DIGIT SEVEN
+        self.assertEqual(trans.transliterate(['G-8']), '') # Nothing
+        self.assertEqual(trans.transliterate(['8']), '৮')  # U+09EE BENGALI DIGIT EIGHT
+        self.assertEqual(trans.transliterate(['G-9']), '') # Nothing
+        self.assertEqual(trans.transliterate(['9']), '৯')  # U+09EF BENGALI DIGIT NINE
+        self.assertEqual(trans.transliterate(['G-A']), 'ৠ') # U+09E0 BENGALI LETTER VOCALIC RR
+        self.assertEqual(trans.transliterate(['A']), 'ৗ')  # U+09D7 BENGALI AU LENGTH MARK
+        self.assertEqual(trans.transliterate(['G-&']), '') # Nothing
+        self.assertEqual(trans.transliterate(['&']), '&')  # U+0026 AMPERSAND
+        self.assertEqual(trans.transliterate(["G-'"]), '') # Nothing
+        self.assertEqual(trans.transliterate(["'"]), "'")  # U+0027 APOSTROPHE
+        self.assertEqual(trans.transliterate(['G-*']), '') # Nothing
+        self.assertEqual(trans.transliterate(['*']), '*')  # U+002A ASTERISK
+        self.assertEqual(trans.transliterate(['G-@']), '') # Nothing
+        self.assertEqual(trans.transliterate(['@']), '@')  # U+0040 COMMERCIAL AT
+        self.assertEqual(trans.transliterate(['G-B']), '') # Nothing
+        self.assertEqual(trans.transliterate(['B']), 'ণ')  # U+09A3 BENGALI LETTER NNA
+        self.assertEqual(trans.transliterate(['G-\\']), '') # Nothing
+        self.assertEqual(trans.transliterate(['\\']), '\\')  # U+005C REVERSE SOLIDUS
+        self.assertEqual(trans.transliterate(['G-|']), '') # Nothing
+        self.assertEqual(trans.transliterate(['|']), '|')  # U+007C VERTICAL LINE
+        self.assertEqual(trans.transliterate(['G-{']), '') # Nothing
+        self.assertEqual(trans.transliterate(['{']), '{')  # U+007B LEFT CURLY BRACKET
+        self.assertEqual(trans.transliterate(['G-}']), '') # Nothing
+        self.assertEqual(trans.transliterate(['}']), '}')  # U+007D RIGHT CURLY BRACKET
+        self.assertEqual(trans.transliterate(['G-[']), '') # Nothing
+        self.assertEqual(trans.transliterate(['[']), '[')  # U+005B LEFT SQUARE BRACKET
+        self.assertEqual(trans.transliterate(['G-]']), '') # Nothing
+        self.assertEqual(trans.transliterate([']']), ']')  # U+005D RIGHT SQUARE BRACKET
+        self.assertEqual(trans.transliterate(['G-C']), 'ঐ') # U+0990 BENGALI LETTER AI
+        self.assertEqual(trans.transliterate(['C']), 'ৈ')  # U+09C8 BENGALI VOWEL SIGN AI
+        self.assertEqual(trans.transliterate(['G-^']), 'ৎ') # U+09CE BENGALI LETTER KHANDA TA
+        self.assertEqual(trans.transliterate(['^']), '^')  # U+005E CIRCUMFLEX ACCENT
+        self.assertEqual(trans.transliterate(['G-:']), '') # Nothing
+        self.assertEqual(trans.transliterate([':']), ':')  # U+003A COLON
+        self.assertEqual(trans.transliterate(['G-,']), '') # Nothing
+        self.assertEqual(trans.transliterate([',']), ',')  # U+002C COMMA
+        self.assertEqual(trans.transliterate(['G-D']), 'ঈ') # U+0988 BENGALI LETTER II
+        self.assertEqual(trans.transliterate(['D']), 'ী')  # U+09C0 BENGALI VOWEL SIGN II
+        self.assertEqual(trans.transliterate(['G-$']), '৲') # U+09F2 BENGALI RUPEE MARK
+        self.assertEqual(trans.transliterate(['$']), '$')  # U+0024 DOLLAR SIGN
+        self.assertEqual(trans.transliterate(['G-E']), '') # Nothing
+        self.assertEqual(trans.transliterate(['E']), 'ঢ')  # U+09A2 BENGALI LETTER DDHA
+        self.assertEqual(trans.transliterate(['G-=']), '‍') # U+200D ZERO WIDTH JOINER (Only in /usr/share/X11/xkb/symbols/bn)
+        self.assertEqual(trans.transliterate(['=']), '=')  # U+003D EQUALS SIGN
+        self.assertEqual(trans.transliterate(['G-!']), '') # Nothing
+        self.assertEqual(trans.transliterate(['!']), '!')  # U+0021 EXCLAMATION MARK
+        self.assertEqual(trans.transliterate(['G-F']), 'ৱ') # U+09F1 BENGALI LETTER RA WITH LOWER DIAGONAL
+        self.assertEqual(trans.transliterate(['F']), 'ভ')  # U+09AD BENGALI LETTER BHA
+        self.assertEqual(trans.transliterate(['G-G']), '') # Nothing
+        self.assertEqual(trans.transliterate(['G']), '।')  # U+0964 DEVANAGARI DANDA
+        self.assertEqual(trans.transliterate(['G-`']), '‌') # U+200C ZERO WIDTH NON-JOINER (Only in OpenBangla National_Jatiya.json)
+        self.assertEqual(trans.transliterate(['`']), '‌')   # U+200C ZERO WIDTH NON-JOINER (Only in OpenBangla National_Jatiya.json)
+        self.assertEqual(trans.transliterate(['G->']), '') # Nothing
+        self.assertEqual(trans.transliterate(['>']), '>')  # U+003E GREATER-THAN SIGN
+        self.assertEqual(trans.transliterate(['G-H']), '') # Nothing
+        self.assertEqual(trans.transliterate(['H']), 'অ')  # U+0985 BENGALI LETTER A
+        self.assertEqual(trans.transliterate(['G-#']), '') # Nothing
+        self.assertEqual(trans.transliterate(['#']), '#')  # U+0023 NUMBER SIGN
+        self.assertEqual(trans.transliterate(['G-I']), '') # Nothing
+        self.assertEqual(trans.transliterate(['I']), 'ঞ')  # U+099E BENGALI LETTER NYA
+        self.assertEqual(trans.transliterate(['G-J']), '') # Nothing
+        self.assertEqual(trans.transliterate(['J']), 'খ')  # U+0996 BENGALI LETTER KHA
+        self.assertEqual(trans.transliterate(['G-K']), '') # Nothing
+        self.assertEqual(trans.transliterate(['K']), 'থ')  # U+09A5 BENGALI LETTER THA
+        self.assertEqual(trans.transliterate(['G-L']), 'ৡ') # U+09E1 BENGALI LETTER VOCALIC LL
+        self.assertEqual(trans.transliterate(['L']), 'ধ')  # U+09A7 BENGALI LETTER DHA
+        self.assertEqual(trans.transliterate(['G-<']), '') # Nothing
+        self.assertEqual(trans.transliterate(['<']), '<')  # U+003C LESS-THAN SIGN
+        self.assertEqual(trans.transliterate(['G-M']), '') # Nothing
+        self.assertEqual(trans.transliterate(['M']), 'শ')  # U+09B6 BENGALI LETTER SHA
+        self.assertEqual(trans.transliterate(['G--']),  '‌') # U+200C ZERO WIDTH NON-JOINER (Only in /usr/share/X11/xkb/symbols/bn)
+        self.assertEqual(trans.transliterate(['-']), '-')  # U+002D HYPHEN-MINUS
+        self.assertEqual(trans.transliterate(['G-N']), '') # Nothing
+        self.assertEqual(trans.transliterate(['N']), 'ষ')  # U+09B7 BENGALI LETTER SSA
+        self.assertEqual(trans.transliterate(['G-O']), '') # Nothing
+        self.assertEqual(trans.transliterate(['O']), 'ঘ')  # U+0998 BENGALI LETTER GHA
+        self.assertEqual(trans.transliterate(['G-P']), '') # Nothing
+        self.assertEqual(trans.transliterate(['P']), 'ঢ়')  # U+09DD BENGALI LETTER RHA
+        self.assertEqual(trans.transliterate(['G-(']), '') # Nothing
+        self.assertEqual(trans.transliterate(['(']), '(')  # U+0028 LEFT PARENTHESIS
+        self.assertEqual(trans.transliterate(['G-)']), '') # Nothing
+        self.assertEqual(trans.transliterate([')']), ')')  # U+0029 RIGHT PARENTHESIS
+        self.assertEqual(trans.transliterate(['G-%']), '') # Nothing
+        self.assertEqual(trans.transliterate(['%']), '%')  # U+0025 PERCENT SIGN
+        self.assertEqual(trans.transliterate(['G-.']), '়') # U+09BC BENGALI SIGN NUKTA (Only in /usr/share/X11/xkb/symbols/bn)
+        self.assertEqual(trans.transliterate(['.']), '.')  # U+002E FULL STOP
+        self.assertEqual(trans.transliterate(['G-+']), '') # Nothing
+        self.assertEqual(trans.transliterate(['+']), '+')  # U+002B PLUS SIGN
+        self.assertEqual(trans.transliterate(['G-Q']), 'ৣ') # U+09E3 BENGALI VOWEL SIGN VOCALIC LL
+        self.assertEqual(trans.transliterate(['Q']), 'ং')  # U+0982 BENGALI SIGN ANUSVARA
+        self.assertEqual(trans.transliterate(['G-?']), '') # Nothing
+        self.assertEqual(trans.transliterate(['?']), '?')  # U+003F QUESTION MARK
+        self.assertEqual(trans.transliterate(['G-"']), '') # Nothing
+        self.assertEqual(trans.transliterate(['"']), '"') # U+0022 QUOTATION MARK
+        self.assertEqual(trans.transliterate(['G-R']), '') # Nothing
+        self.assertEqual(trans.transliterate(['R']), 'ফ')  # U+09AB BENGALI LETTER PHA
+        self.assertEqual(trans.transliterate(['G-S']), 'ঊ') # U+098A BENGALI LETTER UU
+        self.assertEqual(trans.transliterate(['S']), 'ূ')  # U+09C2 BENGALI VOWEL SIGN UU
+        self.assertEqual(trans.transliterate(['G-;']), '') # Nothing
+        self.assertEqual(trans.transliterate([';']), ';')  # U+003B SEMICOLON
+        self.assertEqual(trans.transliterate(['G-/']), '') # Nothing
+        self.assertEqual(trans.transliterate(['/']), '/')  # U+002F SOLIDUS
+        self.assertEqual(trans.transliterate(['G-T']), '') # Nothing
+        self.assertEqual(trans.transliterate(['T']), 'ঠ')  # U+09A0 BENGALI LETTER TTHA
+        self.assertEqual(trans.transliterate(['G-~']), '‍') # U+200D ZERO WIDTH JOINER (Only in OpenBangla National_Jatiya.json)
+        self.assertEqual(trans.transliterate(['~']), '‍')   # U+200D ZERO WIDTH JOINER (Only in OpenBangla National_Jatiya.json)
+        self.assertEqual(trans.transliterate(['G-U']), '') # Nothing
+        self.assertEqual(trans.transliterate(['U']), 'ঝ')  # U+099D BENGALI LETTER JHA
+        self.assertEqual(trans.transliterate(['G-_']), '') # Nothing
+        self.assertEqual(trans.transliterate(['_']), '_')  # U+005F LOW LINE
+        self.assertEqual(trans.transliterate(['G-V']), '') # Nothing
+        self.assertEqual(trans.transliterate(['V']), 'ল')  # U+09B2 BENGALI LETTER LA
+        self.assertEqual(trans.transliterate(['G-W']), '') # Nothing
+        self.assertEqual(trans.transliterate(['W']), 'য়')  # U+09DF BENGALI LETTER YYA
+        self.assertEqual(trans.transliterate(['G-X']), 'ঔ') # U+0994 BENGALI LETTER AU
+        self.assertEqual(trans.transliterate(['X']), 'ৌ')  # U+09CC BENGALI VOWEL SIGN AU
+        self.assertEqual(trans.transliterate(['G-Y']), '') # Nothing
+        self.assertEqual(trans.transliterate(['Y']), 'ছ')  # U+099B BENGALI LETTER CHA
+        self.assertEqual(trans.transliterate(['G-Z']), '') # Nothing
+        self.assertEqual(trans.transliterate(['Z']), 'ঃ')  # U+0983 BENGALI SIGN VISARGA
+        self.assertEqual(trans.transliterate(['G-a']), 'ঋ') # U+098B BENGALI LETTER VOCALIC R
+        self.assertEqual(trans.transliterate(['a']), 'ৃ')  # U+09C3 BENGALI VOWEL SIGN VOCALIC R
+        self.assertEqual(trans.transliterate(['G-b']), '') # Nothing
+        self.assertEqual(trans.transliterate(['b']), 'ন')  # U+09A8 BENGALI LETTER NA
+        self.assertEqual(trans.transliterate(['G-c']), 'এ') # U+098F BENGALI LETTER E
+        self.assertEqual(trans.transliterate(['c']), 'ে')  # U+09C7 BENGALI VOWEL SIGN E
+        self.assertEqual(trans.transliterate(['G-d']), 'ই') # U+0987 BENGALI LETTER I
+        self.assertEqual(trans.transliterate(['d']), 'ি')  # U+09BF BENGALI VOWEL SIGN I
+        self.assertEqual(trans.transliterate(['G-e']), 'ৄ') # U+09C4 BENGALI VOWEL SIGN VOCALIC RR
+        self.assertEqual(trans.transliterate(['e']), 'ড')  # U+09A1 BENGALI LETTER DDA
+        self.assertEqual(trans.transliterate(['G-f']), 'ৰ') # U+09F0 BENGALI LETTER RA WITH MIDDLE DIAGONAL
+        self.assertEqual(trans.transliterate(['f']), 'ব')  # U+09AC BENGALI LETTER BA
+        self.assertEqual(trans.transliterate(['G-g']), '॥') # U+0965 DEVANAGARI DOUBLE DANDA
+        self.assertEqual(trans.transliterate(['G-h']), 'আ') # U+0986 BENGALI LETTER AA
+        self.assertEqual(trans.transliterate(['h']), 'া')  # U+09BE BENGALI VOWEL SIGN AA
+        self.assertEqual(trans.transliterate(['G-i']), 'ঽ') # U+09BD BENGALI SIGN AVAGRAHA
+        self.assertEqual(trans.transliterate(['i']), 'হ')  # U+09B9 BENGALI LETTER HA
+        self.assertEqual(trans.transliterate(['G-j']), '঻') # U+09BB script bengali, not assigned (Only in /usr/share/X11/xkb/symbols/bn)
+        self.assertEqual(trans.transliterate(['j']), 'ক')  # U+0995 BENGALI LETTER KA
+        self.assertEqual(trans.transliterate(['G-k']), 'ৎ') # U+09CE BENGALI LETTER KHANDA TA (Only in /usr/share/X11/xkb/symbols/bn)
+        self.assertEqual(trans.transliterate(['k']), 'ত')  # U+09A4 BENGALI LETTER TA
+        self.assertEqual(trans.transliterate(['G-l']), 'ঌ') # U+098C BENGALI LETTER VOCALIC L
+        self.assertEqual(trans.transliterate(['l']), 'দ')  # U+09A6 BENGALI LETTER DA
+        self.assertEqual(trans.transliterate(['G-m']), '') # Nothing
+        self.assertEqual(trans.transliterate(['m']), 'ম')  # U+09AE BENGALI LETTER MA
+        self.assertEqual(trans.transliterate(['G-n']), '') # Nothing
+        self.assertEqual(trans.transliterate(['n']), 'স')  # U+09B8 BENGALI LETTER SA
+        self.assertEqual(trans.transliterate(['G-o']), '') # Nothing
+        self.assertEqual(trans.transliterate(['o']), 'গ')  # U+0997 BENGALI LETTER GA
+        self.assertEqual(trans.transliterate(['G-p']), '') # Nothing
+        self.assertEqual(trans.transliterate(['p']), 'ড়')  # U+09DC BENGALI LETTER RRA
+        self.assertEqual(trans.transliterate(['G-q']), 'ৢ') # U+09E2 BENGALI VOWEL SIGN VOCALIC L
+        self.assertEqual(trans.transliterate(['q']), 'ঙ')  # U+0999 BENGALI LETTER NGA
+        self.assertEqual(trans.transliterate(['G-r']), '') # Nothing
+        self.assertEqual(trans.transliterate(['r']), 'প')  # U+09AA BENGALI LETTER PA
+        self.assertEqual(trans.transliterate(['G-s']), 'উ') # U+0989 BENGALI LETTER U
+        self.assertEqual(trans.transliterate(['s']), 'ু')   # U+09C1 BENGALI VOWEL SIGN U
+        self.assertEqual(trans.transliterate(['G-t']), '') # Nothing
+        self.assertEqual(trans.transliterate(['t']), 'ট')  # U+099F BENGALI LETTER TTA
+        self.assertEqual(trans.transliterate(['G-u']), '') # Nothing
+        self.assertEqual(trans.transliterate(['u']), 'জ')  # U+099C BENGALI LETTER JA
+        self.assertEqual(trans.transliterate(['G-v']), '') # Nothing
+        self.assertEqual(trans.transliterate(['v']), 'র')  # U+09B0 BENGALI LETTER RA
+        self.assertEqual(trans.transliterate(['G-w']), '') # Nothing
+        self.assertEqual(trans.transliterate(['w']), 'য')  # U+09AF BENGALI LETTER YA
+        self.assertEqual(trans.transliterate(['G-x']), 'ও') # U+0993 BENGALI LETTER O
+        self.assertEqual(trans.transliterate(['x']), 'ো')  # U+09CB BENGALI VOWEL SIGN O
+        self.assertEqual(trans.transliterate(['G-y']), '') # Nothing
+        self.assertEqual(trans.transliterate(['y']), 'চ')  # U+099A BENGALI LETTER CA
+        self.assertEqual(trans.transliterate(['G-z']), '৺') # U+09FA BENGALI ISSHAR
+        self.assertEqual(trans.transliterate(['z']), 'ঁ')  # U+0981 BENGALI SIGN CANDRABINDU
+        # dead key:
+        self.assertEqual(trans.transliterate(['g']), '্')  # U+09CD BENGALI SIGN VIRAMABENGALI SIGN VIRAMA
+        self.assertEqual(trans.transliterate(list('gh')), 'আ')  # + া U+09BE BENGALI VOWEL SIGN AA = আ U+0986 BENGALI LETTER AA
+        self.assertEqual(trans.transliterate(list('gd')), 'ই') # + ি U+09BF BENGALI VOWEL SIGN I = ই U+0987 BENGALI LETTER I
+        self.assertEqual(trans.transliterate(list('gD')), 'ঈ') # + ী U+09C0 BENGALI VOWEL SIGN II = ঈ U+0988 BENGALI LETTER II
+        self.assertEqual(trans.transliterate(list('gs')), 'উ') # + ু U+09C1 BENGALI VOWEL SIGN U = উ U+0989 BENGALI LETTER U
+        self.assertEqual(trans.transliterate(list('gS')), 'ঊ') # + ূ U+09C2 BENGALI VOWEL SIGN UU = ঊ U+098A BENGALI LETTER UU
+        self.assertEqual(trans.transliterate(list('ga')), 'ঋ') # + ৃ U+09C3 BENGALI VOWEL SIGN VOCALIC R = ঋ U+098B BENGALI LETTER VOCALIC R
+        self.assertEqual(trans.transliterate(list('gc')), 'এ') # + ে U+09C7 BENGALI VOWEL SIGN E = এ U+098F BENGALI LETTER E
+        self.assertEqual(trans.transliterate(list('gC')), 'ঐ') # + ৈ U+09C8 BENGALI VOWEL SIGN AI = ঐ U+0990 BENGALI LETTER AI
+        self.assertEqual(trans.transliterate(list('gx')), 'ও') # + ো U+09CB BENGALI VOWEL SIGN O = ও U+0993 BENGALI LETTER O
+        self.assertEqual(trans.transliterate(list('gX')), 'ঔ') # + ৌ U+09CC BENGALI VOWEL SIGN AU = ঔ U+0994 BENGALI LETTER AU
+        self.assertEqual(trans.transliterate(list('gG')), '॥') # + । U+0964 DEVANAGARI DANDA = ॥ U+0965 DEVANAGARI DOUBLE DANDA
+        # pylint: enable=line-too-long
 
 if __name__ == '__main__':
     unittest.main()
