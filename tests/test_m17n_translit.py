@@ -389,6 +389,10 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(['*', 'C']), '*ঐ')  # U+0990 BENGALI LETTER AI
         self.assertEqual(trans.transliterate([' ', 'C']), ' ঐ')  # U+0990 BENGALI LETTER AI
         self.assertEqual(trans.transliterate(['j', 'C']), 'কৈ')  # ক U+0995 BENGALI LETTER KA + ৈ U+09C8 BENGALI VOWEL SIGN AI
+        self.assertEqual(trans.transliterate(['G-^', 'C']), 'ৎঐ')  # ৎ U+09CE BENGALI LETTER KHANDA TA + ঐ U+0990 BENGALI LETTER A
+        self.assertEqual(trans.transliterate(['p', 'C']), 'ড়ৈ')  # ড় U+09DC BENGALI LETTER RRA + ৈ U+09C8 BENGALI VOWEL SIGN AI
+        self.assertEqual(trans.transliterate(['P', 'C']), 'ঢ়ৈ')  # ঢ় U+09DD BENGALI LETTER RHA + ৈ U+09C8 BENGALI VOWEL SIGN AI
+        self.assertEqual(trans.transliterate(['W', 'C']), 'য়ৈ')  # য় U+09DF BENGALI LETTER YYA + ৈ U+09C8 BENGALI VOWEL SIGN AI
         self.assertEqual(trans.transliterate(['G-^']), 'ৎ') # U+09CE BENGALI LETTER KHANDA TA
         self.assertEqual(trans.transliterate(['^']), '^')  # U+005E CIRCUMFLEX ACCENT
         self.assertEqual(trans.transliterate(['G-:']), '') # Nothing
