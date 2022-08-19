@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-07-26 02:47+0200\n"
+"POT-Creation-Date: 2022-08-07 11:58+0200\n"
 "PO-Revision-Date: 2021-12-03 23:16+0000\n"
 "Last-Translator: Josef Hruska <hrusjos@gmail.com>\n"
 "Language-Team: Czech <https://translate.fedoraproject.org/projects/ibus-"
@@ -19,32 +19,32 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Weblate 4.9.1\n"
 
-#: engine/emoji_picker.py:203
+#: engine/emoji_picker.py:204
 msgid "Emoji Picker"
 msgstr "Výběr emodži"
 
-#: engine/emoji_picker.py:324
+#: engine/emoji_picker.py:325
 msgid "Clear recently used"
 msgstr "Vyčistit nedávno použité"
 
-#: engine/emoji_picker.py:330 setup/main.py:188
+#: engine/emoji_picker.py:331 setup/main.py:188
 msgid "About"
 msgstr "O aplikaci"
 
 # auto translated by TM merge from project: virt-top, version: master, DocId: virt-top
-#: engine/emoji_picker.py:334
+#: engine/emoji_picker.py:335
 msgid "Quit"
 msgstr "Ukončit"
 
-#: engine/emoji_picker.py:343
+#: engine/emoji_picker.py:344
 msgid "Search for emoji"
 msgstr "Hledat emodži"
 
-#: engine/emoji_picker.py:355
+#: engine/emoji_picker.py:356
 msgid "Set the font to display emoji"
 msgstr "Nastavit písmo pro zobrazení emodži"
 
-#: engine/emoji_picker.py:363
+#: engine/emoji_picker.py:364
 msgid "Set font size"
 msgstr "Nastavit velikost písma"
 
@@ -56,11 +56,11 @@ msgstr "Nastavit velikost písma"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:384
+#: engine/emoji_picker.py:385
 msgid "Fallback"
 msgstr "Náhradní varianta"
 
-#: engine/emoji_picker.py:386
+#: engine/emoji_picker.py:387
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -68,84 +68,84 @@ msgstr ""
 "Zda pro emotikony nebo ty jejich části, které není možné zobrazit zvoleným "
 "písmem použít náhradní řešení v podobě textového zobrazení."
 
-#: engine/emoji_picker.py:462
+#: engine/emoji_picker.py:463
 msgid "Recently used"
 msgstr "Nedávno použité"
 
 # auto translated by TM merge from project: fedora-software, version: master, DocId: template/django
-#: engine/emoji_picker.py:641
+#: engine/emoji_picker.py:642
 msgid "Categories"
 msgstr "Kategorie"
 
-#: engine/emoji_picker.py:642
+#: engine/emoji_picker.py:643
 msgid "Unicode categories"
 msgstr "Unicode kategorie"
 
-#: engine/emoji_picker.py:643
+#: engine/emoji_picker.py:644
 msgid "Keywords"
 msgstr "Klíčová slova"
 
-#: engine/emoji_picker.py:683
+#: engine/emoji_picker.py:684
 msgid "Fonts used to render this emoji:"
 msgstr "Písma použitá pro vykreslení této emotikony:"
 
-#: engine/emoji_picker.py:700
+#: engine/emoji_picker.py:701
 msgid "Unicode Version:"
 msgstr "Verze unicode:"
 
-#: engine/emoji_picker.py:722 engine/emoji_picker.py:1830
+#: engine/emoji_picker.py:723 engine/emoji_picker.py:1832
 msgid "Left click to copy"
 msgstr "Zkopírujete kliknutím levým tlačítkem"
 
-#: engine/emoji_picker.py:725
+#: engine/emoji_picker.py:726
 msgid "Long press or middle click for skin tones"
 msgstr "Dlouhý stisk nebo klik prostředním tlačítkem pro tóny vzhledu"
 
-#: engine/emoji_picker.py:726
+#: engine/emoji_picker.py:727
 msgid "Right click for info"
 msgstr "Pro informace klikněte pravým tlačítkem"
 
 # auto translated by TM merge from project: anaconda, version: f25, DocId: main
-#: engine/emoji_picker.py:1217
+#: engine/emoji_picker.py:1219
 msgid "Search Results"
 msgstr "Výsledky hledání"
 
-#: engine/emoji_picker.py:1221
+#: engine/emoji_picker.py:1223
 msgid "Search produced empty result."
 msgstr "Hledání nic nenašlo."
 
-#: engine/emoji_picker.py:1491 engine/emoji_picker.py:1618
+#: engine/emoji_picker.py:1493 engine/emoji_picker.py:1620
 msgid "Copied to clipboard!"
 msgstr "Zkopírováno do schránky!"
 
-#: engine/emoji_picker.py:1942
+#: engine/emoji_picker.py:1944
 msgid "Lookup on emojipedia"
 msgstr "Vyhledat na emojipedia"
 
-#: engine/emoji_picker.py:2064 engine/emoji_picker.py:2065
-#: engine/emoji_picker.py:2066 setup/main.py:1454
+#: engine/emoji_picker.py:2066 engine/emoji_picker.py:2067
+#: engine/emoji_picker.py:2068 setup/main.py:1454
 msgid "System default"
 msgstr "Systémové výchozí"
 
-#: engine/emoji_picker.py:2201
+#: engine/emoji_picker.py:2203
 msgid "Set Font"
 msgstr "Nastavit písmo"
 
-#: engine/hunspell_table.py:493 engine/hunspell_table.py:527
-#: engine/hunspell_table.py:548
+#: engine/hunspell_table.py:501 engine/hunspell_table.py:535
+#: engine/hunspell_table.py:556
 msgid "Off"
 msgstr "Vypnuto"
 
-#: engine/hunspell_table.py:498 engine/hunspell_table.py:532
-#: engine/hunspell_table.py:553
+#: engine/hunspell_table.py:506 engine/hunspell_table.py:540
+#: engine/hunspell_table.py:561
 msgid "On"
 msgstr "Zapnuto"
 
-#: engine/hunspell_table.py:517
+#: engine/hunspell_table.py:525
 msgid "Input mode"
 msgstr "Režim vstupu"
 
-#: engine/hunspell_table.py:518
+#: engine/hunspell_table.py:526
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Zde je možné ibus-typing-booster vypnout nebo zapnout."
 
@@ -156,7 +156,7 @@ msgstr "Zde je možné ibus-typing-booster vypnout nebo zapnout."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:537 engine/hunspell_table.py:539 setup/main.py:576
+#: engine/hunspell_table.py:545 engine/hunspell_table.py:547 setup/main.py:576
 msgid "Unicode symbols and emoji predictions"
 msgstr "Predikce unicode symbolů a emotikon"
 
@@ -167,62 +167,62 @@ msgstr "Predikce unicode symbolů a emotikon"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:558 engine/hunspell_table.py:559 setup/main.py:605
+#: engine/hunspell_table.py:566 engine/hunspell_table.py:567 setup/main.py:605
 msgid "Off the record mode"
 msgstr "Režim mimo záznam"
 
-#: engine/hunspell_table.py:1547
+#: engine/hunspell_table.py:1566
 msgid "Highest priority dictionary"
 msgstr "Nejprioritnější slovník"
 
-#: engine/hunspell_table.py:1548
+#: engine/hunspell_table.py:1567
 msgid "Choose highest priority dictionary"
 msgstr "Zvolte nejprioritnější slovník"
 
-#: engine/hunspell_table.py:1577
+#: engine/hunspell_table.py:1596
 msgid "Preedit input method"
 msgstr "Metoda vstupu před editací"
 
-#: engine/hunspell_table.py:1578
+#: engine/hunspell_table.py:1597
 msgid "Switch preedit input method"
 msgstr "Přepnout metodu vstupu před editací"
 
 # auto translated by TM merge from project: ibus-table, version: master, DocId: ibus-table
-#: engine/hunspell_table.py:1892
+#: engine/hunspell_table.py:1911
 msgid "Setup"
 msgstr "Nastavení"
 
-#: engine/hunspell_table.py:1895 setup/main.py:152
+#: engine/hunspell_table.py:1914 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr "Předvolby pro ibus-typing-booster"
 
-#: engine/hunspell_table.py:4688
+#: engine/hunspell_table.py:4720
 msgid "Failed to import Google speech-to-text."
 msgstr "Nepodařilo se importovat Google speech-to-text."
 
-#: engine/hunspell_table.py:4691
+#: engine/hunspell_table.py:4723
 msgid "Failed to import pyaudio."
 msgstr "Nepodařilo se importovat pyaudio."
 
-#: engine/hunspell_table.py:4694
+#: engine/hunspell_table.py:4726
 msgid "Failed to import queue."
 msgstr "Nepodařilo se importovat frontu."
 
-#: engine/hunspell_table.py:4699
+#: engine/hunspell_table.py:4731
 msgid "No supported language for speech recognition."
 msgstr "Žádný jazyk podporovaný pro rozpoznávání řeči."
 
-#: engine/hunspell_table.py:4703
+#: engine/hunspell_table.py:4735
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Nenalezen soubor „%s“ s „přihlašovacími údaji do Google“."
 
-#: engine/hunspell_table.py:4716
+#: engine/hunspell_table.py:4748
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Nepodařilo se inicializovat Google řeč na text. Viz záznam ladících událostí."
 
-#: engine/hunspell_table.py:4824
+#: engine/hunspell_table.py:4856
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Chyba Google řeč na text. Viz záznam ladících událostí."
 
@@ -307,31 +307,31 @@ msgstr "oblastní"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2641
+#: engine/itb_util.py:2662
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Ostatní, rozmanité, různé, odlišné"
 
-#: engine/itb_util.py:4080 engine/itb_util.py:4761
+#: engine/itb_util.py:4106 engine/itb_util.py:4787
 msgid "File not found"
 msgstr "Soubor nenalezen"
 
-#: engine/itb_util.py:4084 engine/itb_util.py:4765
+#: engine/itb_util.py:4110 engine/itb_util.py:4791
 msgid "Permission error"
 msgstr "Chyba oprávnění"
 
-#: engine/itb_util.py:4088 engine/itb_util.py:4769
+#: engine/itb_util.py:4114 engine/itb_util.py:4795
 msgid "Unicode decoding error"
 msgstr "Chyba dekódování unicode"
 
-#: engine/itb_util.py:4092 engine/itb_util.py:4773
+#: engine/itb_util.py:4118 engine/itb_util.py:4799
 msgid "Unknown error"
 msgstr "Neznámá chyba"
 
-#: engine/itb_util.py:4738
+#: engine/itb_util.py:4764
 msgid "Native Keyboard"
 msgstr "Nativní klávesnice"
 
-#: engine/itb_util.py:4740
+#: engine/itb_util.py:4766
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -344,39 +344,39 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5285
+#: engine/itb_util.py:5311
 msgid "Key input"
 msgstr "Vstup klávesy"
 
-#: engine/itb_util.py:5291
+#: engine/itb_util.py:5317
 msgid "Cancel"
 msgstr "Storno"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5298
+#: engine/itb_util.py:5324
 msgid "Please press a key (or a key combination)"
 msgstr "Stiskněte klávesu (nebo jejich kombinaci)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5303
+#: engine/itb_util.py:5329
 msgid "The dialog will be closed when the key is released"
 msgstr "Po uvolnění klávesy bude dialog zavřen"
 
-#: engine/itb_util.py:5342
+#: engine/itb_util.py:5368
 msgid "A completion input method to speedup typing."
 msgstr "Dokončovací metoda vstupu pro zrychlení psaní."
 
 # auto translated by TM merge from project: ibus, version: head, DocId: ibus10
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5351
+#: engine/itb_util.py:5377
 msgid "translator-credits"
 msgstr "Poděkování překladatelům"
 
-#: engine/itb_util.py:5359
+#: engine/itb_util.py:5385
 msgid "Online documentation:"
 msgstr "Dokumentace na Internetu:"
 
@@ -390,7 +390,7 @@ msgstr "Předvolby"
 msgid "Restore all defaults"
 msgstr "Nastavit vše na výchozí"
 
-#: setup/main.py:202 setup/main.py:5494
+#: setup/main.py:202 setup/main.py:5500
 msgid "_Close"
 msgstr "_Zavřít"
 
@@ -847,7 +847,7 @@ msgstr "Nainstalovat chybějící slovníky"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Nainstalovat slovníky, které jsou zde nastavené, ale nenainstalované"
 
-#: setup/main.py:988 setup/main.py:1104 setup/main.py:1328 setup/main.py:3954
+#: setup/main.py:988 setup/main.py:1104 setup/main.py:1328 setup/main.py:3960
 msgid "Set to default"
 msgstr "Nastavit na výchozí"
 
@@ -948,7 +948,7 @@ msgstr "Upravit"
 msgid "Edit the key bindings for the selected command"
 msgstr "Upravit navázání kláves pro označený příkaz"
 
-#: setup/main.py:1332 setup/main.py:3959
+#: setup/main.py:1332 setup/main.py:3965
 msgid "Set default key bindings for the selected command"
 msgstr "Nastavit výchozí navázání na klávesy pro označený příkaz"
 
@@ -1390,11 +1390,11 @@ msgstr "Emotikona"
 msgid "Are you sure?"
 msgstr "Opravdu?"
 
-#: setup/main.py:2304 setup/main.py:2842 setup/main.py:2920 setup/main.py:4027
+#: setup/main.py:2304 setup/main.py:2842 setup/main.py:2920 setup/main.py:4033
 msgid "_Cancel"
 msgstr "_Storno"
 
-#: setup/main.py:2305 setup/main.py:2843 setup/main.py:2921 setup/main.py:4028
+#: setup/main.py:2305 setup/main.py:2843 setup/main.py:2921 setup/main.py:4034
 msgid "_OK"
 msgstr "_OK"
 
@@ -1427,16 +1427,16 @@ msgstr "Přidat slovník"
 msgid "Add input method"
 msgstr "Přidat vstupní metodu"
 
-#: setup/main.py:3907
+#: setup/main.py:3913
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Upravit navázání kláves pro příkaz „%s“"
 
-#: setup/main.py:3935
+#: setup/main.py:3941
 msgid "Add a key binding"
 msgstr "Přidat navázání klávesy"
 
-#: setup/main.py:3947
+#: setup/main.py:3953
 msgid "Remove selected key binding"
 msgstr "Odebrat označené navázání klávesy"
 
@@ -1445,7 +1445,7 @@ msgstr "Odebrat označené navázání klávesy"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:4008
+#: setup/main.py:4014
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1453,16 +1453,16 @@ msgstr ""
 "Opravdu chcete nastavit navázání kláves pro všechny příkazy na výchozí "
 "hodnoty?"
 
-#: setup/main.py:4024
+#: setup/main.py:4030
 msgid "Open File ..."
 msgstr "Otevřít soubor…"
 
-#: setup/main.py:4043
+#: setup/main.py:4049
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Úspěšně naučeno ze souboru %(filename)s."
 
-#: setup/main.py:4052
+#: setup/main.py:4058
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Učení ze souboru %(filename)s se nezdařilo."
@@ -1477,25 +1477,25 @@ msgstr "Učení ze souboru %(filename)s se nezdařilo."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:4075
+#: setup/main.py:4081
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr "Opravdu chcete smazat veškerá data naučená z psaní nebo čtení souborů?"
 
-#: setup/main.py:5556
+#: setup/main.py:5562
 msgid "ibus is not running."
 msgstr "ibus není spuštěné."
 
-#: typing-booster.appdata.xml:5
+#: typing-booster.appdata.xml:6
 msgid "Typing Booster"
 msgstr "Urychlovač psaní"
 
-#: typing-booster.appdata.xml:6
+#: typing-booster.appdata.xml:7
 msgid "Predictive input method"
 msgstr "Prediktivní vstupní metoda"
 
-#: typing-booster.appdata.xml:8
+#: typing-booster.appdata.xml:9
 msgid ""
 "Ibus-typing-booster is a predictive input method and predicts complete words "
 "based on context and partial input. One can then simply select the desired "

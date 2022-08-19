@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-07-26 02:47+0200\n"
+"POT-Creation-Date: 2022-08-07 11:58+0200\n"
 "PO-Revision-Date: 2022-02-25 18:38+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Catalan <https://translate.fedoraproject.org/projects/ibus-"
@@ -18,31 +18,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.11\n"
 
-#: engine/emoji_picker.py:203
+#: engine/emoji_picker.py:204
 msgid "Emoji Picker"
 msgstr "Selector d’emojis"
 
-#: engine/emoji_picker.py:324
+#: engine/emoji_picker.py:325
 msgid "Clear recently used"
 msgstr "Neteja els utilitzats recentment"
 
-#: engine/emoji_picker.py:330 setup/main.py:188
+#: engine/emoji_picker.py:331 setup/main.py:188
 msgid "About"
 msgstr "Quant a"
 
-#: engine/emoji_picker.py:334
+#: engine/emoji_picker.py:335
 msgid "Quit"
 msgstr "Surt"
 
-#: engine/emoji_picker.py:343
+#: engine/emoji_picker.py:344
 msgid "Search for emoji"
 msgstr "Cerca un emoji"
 
-#: engine/emoji_picker.py:355
+#: engine/emoji_picker.py:356
 msgid "Set the font to display emoji"
 msgstr "Establiu el tipus de lletra per a mostrar emojis"
 
-#: engine/emoji_picker.py:363
+#: engine/emoji_picker.py:364
 msgid "Set font size"
 msgstr "Establiu la mida de la lletra"
 
@@ -54,92 +54,92 @@ msgstr "Establiu la mida de la lletra"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:384
+#: engine/emoji_picker.py:385
 msgid "Fallback"
 msgstr "Alternatives"
 
-#: engine/emoji_picker.py:386
+#: engine/emoji_picker.py:387
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
 
-#: engine/emoji_picker.py:462
+#: engine/emoji_picker.py:463
 msgid "Recently used"
 msgstr "Utilitzats recentment"
 
-#: engine/emoji_picker.py:641
+#: engine/emoji_picker.py:642
 msgid "Categories"
 msgstr "Categories"
 
-#: engine/emoji_picker.py:642
+#: engine/emoji_picker.py:643
 msgid "Unicode categories"
 msgstr "Categories del Unicode"
 
-#: engine/emoji_picker.py:643
+#: engine/emoji_picker.py:644
 msgid "Keywords"
 msgstr "Paraules clau"
 
-#: engine/emoji_picker.py:683
+#: engine/emoji_picker.py:684
 msgid "Fonts used to render this emoji:"
 msgstr "Tipus de lletra utilitzats per a representar aquest emoji:"
 
-#: engine/emoji_picker.py:700
+#: engine/emoji_picker.py:701
 msgid "Unicode Version:"
 msgstr "Versió del Unicode:"
 
-#: engine/emoji_picker.py:722 engine/emoji_picker.py:1830
+#: engine/emoji_picker.py:723 engine/emoji_picker.py:1832
 msgid "Left click to copy"
 msgstr "Feu clic per a copiar"
 
-#: engine/emoji_picker.py:725
+#: engine/emoji_picker.py:726
 msgid "Long press or middle click for skin tones"
 msgstr ""
 
-#: engine/emoji_picker.py:726
+#: engine/emoji_picker.py:727
 msgid "Right click for info"
 msgstr "Feu clic dret per a mostrar informació"
 
-#: engine/emoji_picker.py:1217
+#: engine/emoji_picker.py:1219
 msgid "Search Results"
 msgstr "Resultats de la cerca"
 
-#: engine/emoji_picker.py:1221
+#: engine/emoji_picker.py:1223
 msgid "Search produced empty result."
 msgstr "La cerca ha produït un resultat buit."
 
-#: engine/emoji_picker.py:1491 engine/emoji_picker.py:1618
+#: engine/emoji_picker.py:1493 engine/emoji_picker.py:1620
 msgid "Copied to clipboard!"
 msgstr "S’ha copiat al porta-retalls."
 
-#: engine/emoji_picker.py:1942
+#: engine/emoji_picker.py:1944
 msgid "Lookup on emojipedia"
 msgstr "Cerca a l’Emojipedia"
 
-#: engine/emoji_picker.py:2064 engine/emoji_picker.py:2065
-#: engine/emoji_picker.py:2066 setup/main.py:1454
+#: engine/emoji_picker.py:2066 engine/emoji_picker.py:2067
+#: engine/emoji_picker.py:2068 setup/main.py:1454
 msgid "System default"
 msgstr "Valor per defecte de sistema"
 
-#: engine/emoji_picker.py:2201
+#: engine/emoji_picker.py:2203
 msgid "Set Font"
 msgstr ""
 
-#: engine/hunspell_table.py:493 engine/hunspell_table.py:527
-#: engine/hunspell_table.py:548
+#: engine/hunspell_table.py:501 engine/hunspell_table.py:535
+#: engine/hunspell_table.py:556
 msgid "Off"
 msgstr "Desactivat"
 
-#: engine/hunspell_table.py:498 engine/hunspell_table.py:532
-#: engine/hunspell_table.py:553
+#: engine/hunspell_table.py:506 engine/hunspell_table.py:540
+#: engine/hunspell_table.py:561
 msgid "On"
 msgstr "Activat"
 
-#: engine/hunspell_table.py:517
+#: engine/hunspell_table.py:525
 msgid "Input mode"
 msgstr "Mode d’entrada"
 
-#: engine/hunspell_table.py:518
+#: engine/hunspell_table.py:526
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr ""
 
@@ -150,7 +150,7 @@ msgstr ""
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:537 engine/hunspell_table.py:539 setup/main.py:576
+#: engine/hunspell_table.py:545 engine/hunspell_table.py:547 setup/main.py:576
 msgid "Unicode symbols and emoji predictions"
 msgstr "Prediccions d’emojis i símbols del Unicode"
 
@@ -161,62 +161,62 @@ msgstr "Prediccions d’emojis i símbols del Unicode"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:558 engine/hunspell_table.py:559 setup/main.py:605
+#: engine/hunspell_table.py:566 engine/hunspell_table.py:567 setup/main.py:605
 msgid "Off the record mode"
 msgstr "Mode confidencial"
 
-#: engine/hunspell_table.py:1547
+#: engine/hunspell_table.py:1566
 msgid "Highest priority dictionary"
 msgstr "Diccionari prioritari"
 
-#: engine/hunspell_table.py:1548
+#: engine/hunspell_table.py:1567
 msgid "Choose highest priority dictionary"
 msgstr "Trieu el diccionari prioritari"
 
-#: engine/hunspell_table.py:1577
+#: engine/hunspell_table.py:1596
 msgid "Preedit input method"
 msgstr "Mètode d’entrada de preedició"
 
-#: engine/hunspell_table.py:1578
+#: engine/hunspell_table.py:1597
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1892
+#: engine/hunspell_table.py:1911
 msgid "Setup"
 msgstr "Configuració"
 
-#: engine/hunspell_table.py:1895 setup/main.py:152
+#: engine/hunspell_table.py:1914 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferències de l’ibus-typing-booster"
 
-#: engine/hunspell_table.py:4688
+#: engine/hunspell_table.py:4720
 msgid "Failed to import Google speech-to-text."
 msgstr "Ha fallat la importació de la conversió de veu a text de Google."
 
-#: engine/hunspell_table.py:4691
+#: engine/hunspell_table.py:4723
 msgid "Failed to import pyaudio."
 msgstr "Ha fallat la importació del pyaudio."
 
-#: engine/hunspell_table.py:4694
+#: engine/hunspell_table.py:4726
 msgid "Failed to import queue."
 msgstr "Ha fallat la importació de la cua."
 
-#: engine/hunspell_table.py:4699
+#: engine/hunspell_table.py:4731
 msgid "No supported language for speech recognition."
 msgstr "Cap llengua no és compatible amb el reconeixement de veu."
 
-#: engine/hunspell_table.py:4703
+#: engine/hunspell_table.py:4735
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "No s’ha trobat el fitxer de «credencials d’aplicació de Google» «%s»."
 
-#: engine/hunspell_table.py:4716
+#: engine/hunspell_table.py:4748
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Ha fallat la inicialització de la conversió de veu a text de Google. Vegeu "
 "debug.log."
 
-#: engine/hunspell_table.py:4824
+#: engine/hunspell_table.py:4856
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 "S’ha produït un error amb la conversió de veu a text de Google. Vegeu debug."
@@ -303,31 +303,31 @@ msgstr "regions"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2641
+#: engine/itb_util.py:2662
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util.py:4080 engine/itb_util.py:4761
+#: engine/itb_util.py:4106 engine/itb_util.py:4787
 msgid "File not found"
 msgstr "No s’ha trobat el fitxer"
 
-#: engine/itb_util.py:4084 engine/itb_util.py:4765
+#: engine/itb_util.py:4110 engine/itb_util.py:4791
 msgid "Permission error"
 msgstr ""
 
-#: engine/itb_util.py:4088 engine/itb_util.py:4769
+#: engine/itb_util.py:4114 engine/itb_util.py:4795
 msgid "Unicode decoding error"
 msgstr ""
 
-#: engine/itb_util.py:4092 engine/itb_util.py:4773
+#: engine/itb_util.py:4118 engine/itb_util.py:4799
 msgid "Unknown error"
 msgstr "Error desconegut"
 
-#: engine/itb_util.py:4738
+#: engine/itb_util.py:4764
 msgid "Native Keyboard"
 msgstr "Teclat natiu"
 
-#: engine/itb_util.py:4740
+#: engine/itb_util.py:4766
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -337,38 +337,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5285
+#: engine/itb_util.py:5311
 msgid "Key input"
 msgstr "Entrada de tecles"
 
-#: engine/itb_util.py:5291
+#: engine/itb_util.py:5317
 msgid "Cancel"
 msgstr "Cancel·la"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5298
+#: engine/itb_util.py:5324
 msgid "Please press a key (or a key combination)"
 msgstr "Premeu una tecla (o una combinació de tecles)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5303
+#: engine/itb_util.py:5329
 msgid "The dialog will be closed when the key is released"
 msgstr "El diàleg es tancarà quan es deixi anar la tecla"
 
-#: engine/itb_util.py:5342
+#: engine/itb_util.py:5368
 msgid "A completion input method to speedup typing."
 msgstr "Un mètode d’entrada de compleció per a accelerar l’escriptura."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5351
+#: engine/itb_util.py:5377
 msgid "translator-credits"
 msgstr "Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2019-2021"
 
-#: engine/itb_util.py:5359
+#: engine/itb_util.py:5385
 msgid "Online documentation:"
 msgstr "Documentació en línia:"
 
@@ -380,7 +380,7 @@ msgstr "Preferències"
 msgid "Restore all defaults"
 msgstr "Restableix-ho tot al predeterminat"
 
-#: setup/main.py:202 setup/main.py:5494
+#: setup/main.py:202 setup/main.py:5500
 msgid "_Close"
 msgstr "_Tanca"
 
@@ -790,7 +790,7 @@ msgstr "Instal·la els diccionaris mancants"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Instal·la els diccionaris ací configurats però que no s'han instal·lat"
 
-#: setup/main.py:988 setup/main.py:1104 setup/main.py:1328 setup/main.py:3954
+#: setup/main.py:988 setup/main.py:1104 setup/main.py:1328 setup/main.py:3960
 msgid "Set to default"
 msgstr "Defineix com a per defecte"
 
@@ -890,7 +890,7 @@ msgstr "Edita"
 msgid "Edit the key bindings for the selected command"
 msgstr "Edita la drecera de teclat de l’ordre seleccionada"
 
-#: setup/main.py:1332 setup/main.py:3959
+#: setup/main.py:1332 setup/main.py:3965
 msgid "Set default key bindings for the selected command"
 msgstr "Estableix les dreceres per defecte de l’ordre seleccionada"
 
@@ -1263,11 +1263,11 @@ msgstr "Emoji"
 msgid "Are you sure?"
 msgstr "N’esteu segur?"
 
-#: setup/main.py:2304 setup/main.py:2842 setup/main.py:2920 setup/main.py:4027
+#: setup/main.py:2304 setup/main.py:2842 setup/main.py:2920 setup/main.py:4033
 msgid "_Cancel"
 msgstr "_Cancel·la"
 
-#: setup/main.py:2305 setup/main.py:2843 setup/main.py:2921 setup/main.py:4028
+#: setup/main.py:2305 setup/main.py:2843 setup/main.py:2921 setup/main.py:4034
 msgid "_OK"
 msgstr "_D'acord"
 
@@ -1294,16 +1294,16 @@ msgstr "Afegeix un diccionari"
 msgid "Add input method"
 msgstr "Afegeix un mètode d’entrada"
 
-#: setup/main.py:3907
+#: setup/main.py:3913
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr ""
 
-#: setup/main.py:3935
+#: setup/main.py:3941
 msgid "Add a key binding"
 msgstr ""
 
-#: setup/main.py:3947
+#: setup/main.py:3953
 msgid "Remove selected key binding"
 msgstr ""
 
@@ -1312,22 +1312,22 @@ msgstr ""
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:4008
+#: setup/main.py:4014
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr ""
 
-#: setup/main.py:4024
+#: setup/main.py:4030
 msgid "Open File ..."
 msgstr "Obre el fitxer..."
 
-#: setup/main.py:4043
+#: setup/main.py:4049
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "S'ha après correctament del fitxer %(filename)s."
 
-#: setup/main.py:4052
+#: setup/main.py:4058
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Ha fallat l'aprenentatge del fitxer %(filename)s."
@@ -1342,7 +1342,7 @@ msgstr "Ha fallat l'aprenentatge del fitxer %(filename)s."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:4075
+#: setup/main.py:4081
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1350,19 +1350,19 @@ msgstr ""
 "Realment voleu suprimir totes les dades lingüístiques apreses a partir de "
 "l'escriptura amb el teclat i de la lectura de fitxers?"
 
-#: setup/main.py:5556
+#: setup/main.py:5562
 msgid "ibus is not running."
 msgstr "L’ibus no s’està executant."
 
-#: typing-booster.appdata.xml:5
+#: typing-booster.appdata.xml:6
 msgid "Typing Booster"
 msgstr "Accelerador mecanogràfic"
 
-#: typing-booster.appdata.xml:6
+#: typing-booster.appdata.xml:7
 msgid "Predictive input method"
 msgstr "Mètode d’entrada predictiu"
 
-#: typing-booster.appdata.xml:8
+#: typing-booster.appdata.xml:9
 msgid ""
 "Ibus-typing-booster is a predictive input method and predicts complete words "
 "based on context and partial input. One can then simply select the desired "

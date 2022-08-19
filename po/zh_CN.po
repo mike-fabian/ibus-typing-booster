@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-07-26 02:47+0200\n"
+"POT-Creation-Date: 2022-08-07 11:58+0200\n"
 "PO-Revision-Date: 2022-02-25 18:38+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
@@ -23,31 +23,31 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.11\n"
 
-#: engine/emoji_picker.py:203
+#: engine/emoji_picker.py:204
 msgid "Emoji Picker"
 msgstr "Emoji 选择器"
 
-#: engine/emoji_picker.py:324
+#: engine/emoji_picker.py:325
 msgid "Clear recently used"
 msgstr "清除最近使用"
 
-#: engine/emoji_picker.py:330 setup/main.py:188
+#: engine/emoji_picker.py:331 setup/main.py:188
 msgid "About"
 msgstr "关于"
 
-#: engine/emoji_picker.py:334
+#: engine/emoji_picker.py:335
 msgid "Quit"
 msgstr "退出"
 
-#: engine/emoji_picker.py:343
+#: engine/emoji_picker.py:344
 msgid "Search for emoji"
 msgstr "搜索 Emoji"
 
-#: engine/emoji_picker.py:355
+#: engine/emoji_picker.py:356
 msgid "Set the font to display emoji"
 msgstr "设置显示 Emoji 的默认字体"
 
-#: engine/emoji_picker.py:363
+#: engine/emoji_picker.py:364
 msgid "Set font size"
 msgstr "设置字体大小"
 
@@ -59,93 +59,93 @@ msgstr "设置字体大小"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:384
+#: engine/emoji_picker.py:385
 msgid "Fallback"
 msgstr "启用用于 Emoji 的回落字体"
 
-#: engine/emoji_picker.py:386
+#: engine/emoji_picker.py:387
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
 "当 Emoji 表情或表情组合的部分无法使用所选字体显示时，是否使用回落字体来显示。"
 
-#: engine/emoji_picker.py:462
+#: engine/emoji_picker.py:463
 msgid "Recently used"
 msgstr "最近使用"
 
-#: engine/emoji_picker.py:641
+#: engine/emoji_picker.py:642
 msgid "Categories"
 msgstr "分类"
 
-#: engine/emoji_picker.py:642
+#: engine/emoji_picker.py:643
 msgid "Unicode categories"
 msgstr "Unicode 分类"
 
-#: engine/emoji_picker.py:643
+#: engine/emoji_picker.py:644
 msgid "Keywords"
 msgstr "关键词"
 
-#: engine/emoji_picker.py:683
+#: engine/emoji_picker.py:684
 msgid "Fonts used to render this emoji:"
 msgstr "用于渲染该 Emoji 的字体："
 
-#: engine/emoji_picker.py:700
+#: engine/emoji_picker.py:701
 msgid "Unicode Version:"
 msgstr "Unicode 版本："
 
-#: engine/emoji_picker.py:722 engine/emoji_picker.py:1830
+#: engine/emoji_picker.py:723 engine/emoji_picker.py:1832
 msgid "Left click to copy"
 msgstr "左键复制"
 
-#: engine/emoji_picker.py:725
+#: engine/emoji_picker.py:726
 msgid "Long press or middle click for skin tones"
 msgstr "长按或中键更改肤色"
 
-#: engine/emoji_picker.py:726
+#: engine/emoji_picker.py:727
 msgid "Right click for info"
 msgstr "右键获取信息"
 
-#: engine/emoji_picker.py:1217
+#: engine/emoji_picker.py:1219
 msgid "Search Results"
 msgstr "搜索结果"
 
-#: engine/emoji_picker.py:1221
+#: engine/emoji_picker.py:1223
 msgid "Search produced empty result."
 msgstr "搜索结果为空。"
 
-#: engine/emoji_picker.py:1491 engine/emoji_picker.py:1618
+#: engine/emoji_picker.py:1493 engine/emoji_picker.py:1620
 msgid "Copied to clipboard!"
 msgstr "已复制到剪贴板！"
 
-#: engine/emoji_picker.py:1942
+#: engine/emoji_picker.py:1944
 msgid "Lookup on emojipedia"
 msgstr "在 Emojipedia 中查找"
 
-#: engine/emoji_picker.py:2064 engine/emoji_picker.py:2065
-#: engine/emoji_picker.py:2066 setup/main.py:1454
+#: engine/emoji_picker.py:2066 engine/emoji_picker.py:2067
+#: engine/emoji_picker.py:2068 setup/main.py:1454
 msgid "System default"
 msgstr "系统默认"
 
-#: engine/emoji_picker.py:2201
+#: engine/emoji_picker.py:2203
 msgid "Set Font"
 msgstr "设置字体"
 
-#: engine/hunspell_table.py:493 engine/hunspell_table.py:527
-#: engine/hunspell_table.py:548
+#: engine/hunspell_table.py:501 engine/hunspell_table.py:535
+#: engine/hunspell_table.py:556
 msgid "Off"
 msgstr "关闭"
 
-#: engine/hunspell_table.py:498 engine/hunspell_table.py:532
-#: engine/hunspell_table.py:553
+#: engine/hunspell_table.py:506 engine/hunspell_table.py:540
+#: engine/hunspell_table.py:561
 msgid "On"
 msgstr "开启"
 
-#: engine/hunspell_table.py:517
+#: engine/hunspell_table.py:525
 msgid "Input mode"
 msgstr "输入模式"
 
-#: engine/hunspell_table.py:518
+#: engine/hunspell_table.py:526
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "您可以在这里开启或关闭 ibus-typing-booster。"
 
@@ -156,7 +156,7 @@ msgstr "您可以在这里开启或关闭 ibus-typing-booster。"
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:537 engine/hunspell_table.py:539 setup/main.py:576
+#: engine/hunspell_table.py:545 engine/hunspell_table.py:547 setup/main.py:576
 msgid "Unicode symbols and emoji predictions"
 msgstr "Unicode 符号和 Emoji 表情预测"
 
@@ -167,60 +167,60 @@ msgstr "Unicode 符号和 Emoji 表情预测"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:558 engine/hunspell_table.py:559 setup/main.py:605
+#: engine/hunspell_table.py:566 engine/hunspell_table.py:567 setup/main.py:605
 msgid "Off the record mode"
 msgstr "停止记录模式"
 
-#: engine/hunspell_table.py:1547
+#: engine/hunspell_table.py:1566
 msgid "Highest priority dictionary"
 msgstr "最高优先级的字典"
 
-#: engine/hunspell_table.py:1548
+#: engine/hunspell_table.py:1567
 msgid "Choose highest priority dictionary"
 msgstr "选择最高优先级的字典"
 
-#: engine/hunspell_table.py:1577
+#: engine/hunspell_table.py:1596
 msgid "Preedit input method"
 msgstr "预编辑输入方式"
 
-#: engine/hunspell_table.py:1578
+#: engine/hunspell_table.py:1597
 msgid "Switch preedit input method"
 msgstr "切换预编辑的输入方式"
 
-#: engine/hunspell_table.py:1892
+#: engine/hunspell_table.py:1911
 msgid "Setup"
 msgstr "设置"
 
-#: engine/hunspell_table.py:1895 setup/main.py:152
+#: engine/hunspell_table.py:1914 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr "Ibus-typing-booster 首选项"
 
-#: engine/hunspell_table.py:4688
+#: engine/hunspell_table.py:4720
 msgid "Failed to import Google speech-to-text."
 msgstr "尝试导入 Google 语音转文本文件失败。"
 
-#: engine/hunspell_table.py:4691
+#: engine/hunspell_table.py:4723
 msgid "Failed to import pyaudio."
 msgstr "导入 pyaudio 失败。"
 
-#: engine/hunspell_table.py:4694
+#: engine/hunspell_table.py:4726
 msgid "Failed to import queue."
 msgstr "导入 queue 失败。"
 
-#: engine/hunspell_table.py:4699
+#: engine/hunspell_table.py:4731
 msgid "No supported language for speech recognition."
 msgstr "未支持语音识别的语言。"
 
-#: engine/hunspell_table.py:4703
+#: engine/hunspell_table.py:4735
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google 应用默认凭据”文件“%s”未找到。"
 
-#: engine/hunspell_table.py:4716
+#: engine/hunspell_table.py:4748
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "初始化 Google 语音转文本服务失败。详情请见 debug.log。"
 
-#: engine/hunspell_table.py:4824
+#: engine/hunspell_table.py:4856
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google 语音转文本出错。详情请见 debug.log。"
 
@@ -305,31 +305,31 @@ msgstr "地区"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2641
+#: engine/itb_util.py:2662
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util.py:4080 engine/itb_util.py:4761
+#: engine/itb_util.py:4106 engine/itb_util.py:4787
 msgid "File not found"
 msgstr "文件未找到"
 
-#: engine/itb_util.py:4084 engine/itb_util.py:4765
+#: engine/itb_util.py:4110 engine/itb_util.py:4791
 msgid "Permission error"
 msgstr "权限错误"
 
-#: engine/itb_util.py:4088 engine/itb_util.py:4769
+#: engine/itb_util.py:4114 engine/itb_util.py:4795
 msgid "Unicode decoding error"
 msgstr "Unicode 解码出错"
 
-#: engine/itb_util.py:4092 engine/itb_util.py:4773
+#: engine/itb_util.py:4118 engine/itb_util.py:4799
 msgid "Unknown error"
 msgstr "未知错误"
 
-#: engine/itb_util.py:4738
+#: engine/itb_util.py:4764
 msgid "Native Keyboard"
 msgstr "原生键盘"
 
-#: engine/itb_util.py:4740
+#: engine/itb_util.py:4766
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -341,34 +341,34 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5285
+#: engine/itb_util.py:5311
 msgid "Key input"
 msgstr "输入的键盘码"
 
-#: engine/itb_util.py:5291
+#: engine/itb_util.py:5317
 msgid "Cancel"
 msgstr "取消"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5298
+#: engine/itb_util.py:5324
 msgid "Please press a key (or a key combination)"
 msgstr "请按下一个键盘按键（或者按键组合）"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5303
+#: engine/itb_util.py:5329
 msgid "The dialog will be closed when the key is released"
 msgstr "当按键被按下，这个对话框将会自动关闭"
 
-#: engine/itb_util.py:5342
+#: engine/itb_util.py:5368
 msgid "A completion input method to speedup typing."
 msgstr "一个用于补全的输入法，它将会提升你的打字速度。"
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5351
+#: engine/itb_util.py:5377
 msgid "translator-credits"
 msgstr ""
 "lexuge <LEXUGEyky@outlook.com>, 2017\n"
@@ -378,7 +378,7 @@ msgstr ""
 "Hankel Bao <hankelbao@outlook.com>, 2020\n"
 "Dingzhong Chen <wsxy162@gmail.com>, 2021"
 
-#: engine/itb_util.py:5359
+#: engine/itb_util.py:5385
 msgid "Online documentation:"
 msgstr "线上文档："
 
@@ -390,7 +390,7 @@ msgstr "首选项"
 msgid "Restore all defaults"
 msgstr "全部恢复为默认"
 
-#: setup/main.py:202 setup/main.py:5494
+#: setup/main.py:202 setup/main.py:5500
 msgid "_Close"
 msgstr "关闭(_C)"
 
@@ -828,7 +828,7 @@ msgstr "安装缺失的词典"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "安装已设置但未安装的词典"
 
-#: setup/main.py:988 setup/main.py:1104 setup/main.py:1328 setup/main.py:3954
+#: setup/main.py:988 setup/main.py:1104 setup/main.py:1328 setup/main.py:3960
 msgid "Set to default"
 msgstr "设为默认"
 
@@ -928,7 +928,7 @@ msgstr "编辑"
 msgid "Edit the key bindings for the selected command"
 msgstr "编辑所选命令绑定的快捷键"
 
-#: setup/main.py:1332 setup/main.py:3959
+#: setup/main.py:1332 setup/main.py:3965
 msgid "Set default key bindings for the selected command"
 msgstr "重置所选命令绑定的快捷键为默认"
 
@@ -1328,11 +1328,11 @@ msgstr "Emoji 表情"
 msgid "Are you sure?"
 msgstr "你确定吗？"
 
-#: setup/main.py:2304 setup/main.py:2842 setup/main.py:2920 setup/main.py:4027
+#: setup/main.py:2304 setup/main.py:2842 setup/main.py:2920 setup/main.py:4033
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: setup/main.py:2305 setup/main.py:2843 setup/main.py:2921 setup/main.py:4028
+#: setup/main.py:2305 setup/main.py:2843 setup/main.py:2921 setup/main.py:4034
 msgid "_OK"
 msgstr "确定(_O)"
 
@@ -1359,16 +1359,16 @@ msgstr "添加字典"
 msgid "Add input method"
 msgstr "添加输入法"
 
-#: setup/main.py:3907
+#: setup/main.py:3913
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "编辑“%s”命令绑定的快捷键"
 
-#: setup/main.py:3935
+#: setup/main.py:3941
 msgid "Add a key binding"
 msgstr "添加快捷键绑定"
 
-#: setup/main.py:3947
+#: setup/main.py:3953
 msgid "Remove selected key binding"
 msgstr "移除所绑定的快捷键"
 
@@ -1377,22 +1377,22 @@ msgstr "移除所绑定的快捷键"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:4008
+#: setup/main.py:4014
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr "你真的要将所有命令绑定的快捷键恢复为默认吗？"
 
-#: setup/main.py:4024
+#: setup/main.py:4030
 msgid "Open File ..."
 msgstr "打开文件…"
 
-#: setup/main.py:4043
+#: setup/main.py:4049
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "从文件 %(filename)s 学习成功。"
 
-#: setup/main.py:4052
+#: setup/main.py:4058
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "从文件 %(filename)s 学习失败。"
@@ -1407,25 +1407,25 @@ msgstr "从文件 %(filename)s 学习失败。"
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:4075
+#: setup/main.py:4081
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr "真的要删除从你的输入或文件读取中学习的所有语言数据吗？"
 
-#: setup/main.py:5556
+#: setup/main.py:5562
 msgid "ibus is not running."
 msgstr "IBus 没有运行。"
 
-#: typing-booster.appdata.xml:5
+#: typing-booster.appdata.xml:6
 msgid "Typing Booster"
 msgstr "打字加速器"
 
-#: typing-booster.appdata.xml:6
+#: typing-booster.appdata.xml:7
 msgid "Predictive input method"
 msgstr "预测型输入法"
 
-#: typing-booster.appdata.xml:8
+#: typing-booster.appdata.xml:9
 msgid ""
 "Ibus-typing-booster is a predictive input method and predicts complete words "
 "based on context and partial input. One can then simply select the desired "
