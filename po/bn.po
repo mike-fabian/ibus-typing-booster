@@ -2,6 +2,7 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Mahmudul Hasan <ptcmahmudulhasa@gmail.com>, 2022.
+# Sudip Shil <sshil@redhat.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -9,7 +10,7 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2022-07-26 02:47+0200\n"
 "PO-Revision-Date: 2022-08-21 20:27+0000\n"
-"Last-Translator: Mahmudul Hasan <ptcmahmudulhasa@gmail.com>\n"
+"Last-Translator: Sudip Shil <sshil@redhat.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/bn/>\n"
 "Language: bn\n"
@@ -161,7 +162,7 @@ msgstr "এখানে আপনি আইবাস-টাইপিং-বু�
 #: engine/hunspell_table.py:537 engine/hunspell_table.py:539 setup/main.py:576
 #: engine/hunspell_table.py:545 engine/hunspell_table.py:547
 msgid "Unicode symbols and emoji predictions"
-msgstr ""
+msgstr "ইউনিকোড প্রতীক এবং ইমোজি ভবিষ্যদ্বাণী"
 
 #. Translators: While “Off the record” mode is on, learning
 #. from user input is disabled. If learned user input is
