@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 23 Aug 2022 Release 2.18.10
+* Add functions to get and set variables for m17n input methods
+* Update emoji annotations from CLDR
+* Translation update from Weblate (bn added 42% complete)
+* Test cases for bn-national-jatiya.mim
+* Add more icons in different sizes to the appdata.xml files
+* Stop calling self.set_wmclass('emoji-picker', 'Emoji Picker') (avoid deprecation warning)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 07 Aug 2022 Release 2.18.9
 * Make it possible to use custom labels for different dictionary matches
 * Distinguish dictionary matches shown by flags in the candidate list if some flags are identical (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/358)
