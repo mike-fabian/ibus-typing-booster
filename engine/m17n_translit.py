@@ -21,6 +21,9 @@
 '''A module to do transliteration using m17n-lib.
 '''
 
+from typing import Dict
+from typing import List
+from typing import Tuple
 from typing import Iterable
 from typing import Any
 import sys
@@ -63,6 +66,17 @@ libm17n__mtext_len = None
 libm17n__Mcoding_utf_8 = None
 
 _utf8_converter = None
+
+libm17n__minput_get_variable = None
+libm17n__mplist_key = None
+libm17n__mplist_value = None
+libm17n__mplist_next = None
+libm17n__msymbol_name = None
+libm17n__mplist_add = None
+libm17n__mplist_length = None
+libm17n__mconv_decode_buffer = None
+libm17n__minput_config_variable = None
+libm17n__minput_save_config = None
 
 def mtext_to_string(mtext_pointer: Any) -> str:
     '''Return the text contained in an MText object as a Python string
@@ -164,6 +178,50 @@ def _init() -> None:
     global _utf8_converter
     _utf8_converter = libm17n__mconv_buffer_converter(
         libm17n__Mcoding_utf_8, ctypes.c_char_p(None), ctypes.c_int(0))
+    global libm17n__minput_get_variable
+    libm17n__minput_get_variable = libm17n__lib.minput_get_variable
+    libm17n__minput_get_variable.argtypes = [
+        libm17n__MSymbol, libm17n__MSymbol, libm17n__MSymbol]
+    libm17n__minput_get_variable.restype = ctypes.POINTER(libm17n__MPlist)
+    global libm17n__mplist_key
+    libm17n__mplist_key = libm17n__lib.mplist_key
+    libm17n__mplist_key.argtypes = [ctypes.POINTER(libm17n__MPlist)]
+    libm17n__mplist_key.restype = libm17n__MSymbol
+    global libm17n__mplist_value
+    libm17n__mplist_value = libm17n__lib.mplist_value
+    libm17n__mplist_value.argtypes = [ctypes.POINTER(libm17n__MPlist)]
+    libm17n__mplist_value.restype = ctypes.c_void_p
+    global libm17n__mplist_next
+    libm17n__mplist_next = libm17n__lib.mplist_next
+    libm17n__mplist_next.argtypes = [ctypes.POINTER(libm17n__MPlist)]
+    libm17n__mplist_next.restype = ctypes.POINTER(libm17n__MPlist)
+    global libm17n__msymbol_name
+    libm17n__msymbol_name = libm17n__lib.msymbol_name
+    libm17n__msymbol_name.argtypes = [libm17n__MSymbol]
+    libm17n__msymbol_name.restype = ctypes.c_char_p
+    global libm17n__mplist_add
+    libm17n__mplist_add = libm17n__lib.mplist_add
+    libm17n__mplist_add.argtypes = [
+        ctypes.POINTER(libm17n__MPlist), libm17n__MSymbol, ctypes.c_void_p]
+    libm17n__mplist_add.restype = ctypes.POINTER(libm17n__MPlist)
+    global libm17n__mplist_length
+    libm17n__mplist_length = libm17n__lib.mplist_length
+    libm17n__mplist_length.argtypes = [ctypes.POINTER(libm17n__MPlist)]
+    libm17n__mplist_length.restype = ctypes.c_int
+    global libm17n__mconv_decode_buffer
+    libm17n__mconv_decode_buffer = libm17n__lib.mconv_decode_buffer
+    libm17n__mconv_decode_buffer.argtypes = [
+        libm17n__MSymbol, ctypes.c_char_p, ctypes.c_int]
+    libm17n__mconv_decode_buffer.restype = ctypes.POINTER(libm17n__MText)
+    global libm17n__minput_config_variable
+    libm17n__minput_config_variable = libm17n__lib.minput_config_variable
+    libm17n__minput_config_variable.argtypes = [
+        libm17n__MSymbol, libm17n__MSymbol, libm17n__MSymbol, ctypes.POINTER(libm17n__MPlist)]
+    libm17n__minput_config_variable.restype = ctypes.c_int
+    global libm17n__minput_save_config
+    libm17n__minput_save_config = libm17n__lib.minput_save_config
+    libm17n__minput_save_config.argtypes = []
+    libm17n__minput_save_config.restype = ctypes.c_int
 
 def _del() -> None:
     '''Cleanup'''
@@ -274,11 +332,11 @@ class Transliterator:
         if ime == 'NoIME':
             self._dummy = True
             return
-        language = ime.split('-')[0]
-        name = '-'.join(ime.split('-')[1:])
+        self._language = ime.split('-')[0]
+        self._name = '-'.join(ime.split('-')[1:])
         self._im = libm17n__minput_open_im( # type: ignore
-            libm17n__msymbol(ctypes.c_char_p(language.encode('utf-8'))), # type: ignore
-            libm17n__msymbol(ctypes.c_char_p(name.encode('utf-8'))), # type: ignore
+            libm17n__msymbol(ctypes.c_char_p(self._language.encode('utf-8'))), # type: ignore
+            libm17n__msymbol(ctypes.c_char_p(self._name.encode('utf-8'))), # type: ignore
             ctypes.c_void_p(None))
         try:
             _im_contents = self._im.contents
@@ -321,6 +379,203 @@ class Transliterator:
                 if retval and symbol != 'nil':
                     output += symbol
         return output
+
+    def get_variables(self) -> List[Tuple[str, str, str]]:
+        '''
+        Gets the optional variables of this transliterator input method
+
+        Examples:
+
+        >>> trans = Transliterator('NoIME')
+        >>> trans.get_variables()
+        []
+        >>> trans = Transliterator('si-wijesekera')
+        >>> trans.get_variables()
+        [('use-surrounding-text', 'Surrounding text vs. preedit.\\nIf 1, try to use surrounding text.  Otherwise, use preedit.', '0')]
+        >>> trans = Transliterator('t-unicode')
+        >>> trans.get_variables()
+        [('prompt', 'Preedit prompt\\nPrompt string shown in the preedit area while typing hexadecimal numbers.', 'U+')]
+        '''
+        variables_list: List[Tuple[str, str, str]] = []
+        if self._dummy:
+            return variables_list
+        plist = libm17n__minput_get_variable( # type: ignore
+            libm17n__msymbol(self._language.encode('utf-8')), # type: ignore
+            libm17n__msymbol(self._name.encode('utf-8')), # type: ignore
+            libm17n__msymbol('nil'.encode('utf-8'))) # type: ignore
+        while bool(plist): # NULL pointers have a False boolean value
+            key = libm17n__mplist_key(plist) # type: ignore
+            if not bool(key): # NULL pointers have a False boolean value
+                break
+            if b'plist' != libm17n__msymbol_name(key.contents): # type: ignore
+                break
+            p = ctypes.cast(libm17n__mplist_value(plist), # type: ignore
+                            ctypes.POINTER(libm17n__MPlist))
+            key = ctypes.cast(libm17n__mplist_value(p), # type: ignore
+                              ctypes.POINTER(libm17n__MSymbolStruct))
+            if not bool(key): # NULL pointers have a False boolean value
+                break
+            variable_name = libm17n__msymbol_name( # type: ignore
+                key.contents).decode('utf-8')
+            p = libm17n__mplist_next(p) # type: ignore
+            variable_description_pointer = ctypes.cast(
+                libm17n__mplist_value(p), # type: ignore
+                ctypes.POINTER(libm17n__MText))
+            variable_description = ''
+            if bool(variable_description_pointer):
+                variable_description = mtext_to_string(
+                    variable_description_pointer)
+            # Next item in the list is STATUS (we don’t use this)
+            p = libm17n__mplist_next(p) # type: ignore
+            mvalue = libm17n__mplist_next(p) # type: ignore
+            key = libm17n__mplist_key(mvalue) # type: ignore
+            if not bool(key):
+                break
+            key_name = libm17n__msymbol_name(key.contents) # type: ignore
+            variable_value = ''
+            if key_name == b'symbol':
+                variable_value = libm17n__msymbol_name( # type: ignore
+                    ctypes.cast(
+                        libm17n__mplist_value(mvalue), # type: ignore
+                        ctypes.POINTER(libm17n__MSymbolStruct)).contents
+                ).decode('utf-8')
+            elif key_name == b'mtext':
+                variable_value = mtext_to_string(
+                    ctypes.cast(libm17n__mplist_value(mvalue), # type: ignore
+                            ctypes.POINTER(libm17n__MText)))
+            elif key_name == b'integer':
+                if libm17n__mplist_value(mvalue) is None: # type: ignore
+                    variable_value = '0'
+                else:
+                    variable_value = str(
+                        libm17n__mplist_value(mvalue)) # type: ignore
+            elif key_name == b't':
+                variable_value = ''
+            variables_list.append((variable_name,
+                                   variable_description,
+                                   variable_value))
+            plist = libm17n__mplist_next(plist) # type: ignore
+        return variables_list
+
+    def set_variables(self, variables: Dict[str, str]) -> None:
+        '''
+        Sets the optional variables of this transliterator input method
+
+        Raises ValueError if something fails.
+
+        Examples:
+
+        >>> trans = Transliterator('NoIME')
+        >>> trans.set_variables([])
+
+        Only two >> from here on to avoid executing these Examples
+        accidentally as doctests and accidentally do real changes
+        to the user config file ~/.m17n.d/config.mic:
+
+        >> trans = Transliterator('bn-national-jatiya')
+        >> trans.set_variables({'use-automatic-vowel-forming': '1'})
+
+        Setting empty strings as values sets the default values
+        (i.e. it removes the setting from the user config file to
+        use the global default instead):
+
+        >> trans = Transliterator('bn-national-jatiya')
+        >> trans.set_variables({'use-automatic-vowel-forming': ''})
+
+        >> trans = Transliterator('t-unicode')
+        >> trans.set_variables({'prompt': 'U+'})
+
+        >> trans = Transliterator('ja-anthy')
+        >> trans.set_variables({'input-mode': 'hiragana', 'zen-han': 'hankaku'})
+        '''
+        if self._dummy or not variables:
+            return
+        for variable_name, variable_value in variables.items():
+            plist = libm17n__minput_get_variable( # type: ignore
+                libm17n__msymbol(self._language.encode('utf-8')), # type: ignore
+                libm17n__msymbol(self._name.encode('utf-8')), # type: ignore
+                libm17n__msymbol(variable_name.encode('utf-8'))) # type: ignore
+            if not bool(plist):
+                raise ValueError('minput_get_variable() returned NULL')
+            key = libm17n__mplist_key(plist) # type: ignore
+            if not bool(key):
+                raise ValueError('mplist_key(plist) returned NULL')
+            if b'plist' != libm17n__msymbol_name(key.contents): # type: ignore
+                raise ValueError('msymbol_name(key.contents) is not b"plist"')
+            p = ctypes.cast(libm17n__mplist_value(plist), # type: ignore
+                            ctypes.POINTER(libm17n__MPlist))
+            p = libm17n__mplist_next(p) # type: ignore
+            p = libm17n__mplist_next(p) # type: ignore
+            mvalue = libm17n__mplist_next(p) # type: ignore
+            key = libm17n__mplist_key(mvalue) # type: ignore
+            if not bool(key):
+                raise ValueError('mplist_key(mvalue) returned NULL')
+            key_name = libm17n__msymbol_name(key.contents) # type: ignore
+            new_value_plist = libm17n__mplist() # type: ignore
+            # If variable_value is the empty string '' the newly
+            # created empty new_value_plist is not filled and used
+            # empty in minput_config_variable() which cancels any
+            # configuration and customization of the variable, and the
+            # default value is assigned to the variable.
+            if variable_value:
+                if key_name == b'symbol':
+                    libm17n__mplist_add( # type: ignore
+                        new_value_plist,
+                        libm17n__msymbol('symbol'.encode('utf-8')), # type: ignore
+                        libm17n__msymbol(variable_value.encode('utf-8'))) # type: ignore
+                elif key_name == b'mtext':
+                    mtext = libm17n__mconv_decode_buffer( # type: ignore
+                        libm17n__Mcoding_utf_8,
+                        ctypes.c_char_p(variable_value.encode('utf-8')),
+                        len(variable_value.encode('utf-8')))
+                    libm17n__mplist_add( # type: ignore
+                        new_value_plist,
+                        libm17n__msymbol('mtext'.encode('utf-8')), # type: ignore
+                        mtext)
+                elif key_name == b'integer':
+                    try:
+                        int_value = int(variable_value, 10)
+                        libm17n__mplist_add( # type: ignore
+                            new_value_plist,
+                            libm17n__msymbol('integer'.encode('utf-8')), # type: ignore
+                            int_value)
+                    except ValueError:
+                         new_value_plist = libm17n__mplist() # type: ignore
+                else:
+                    # This should never happen:
+                    raise ValueError(
+                        'Variable type is not Msymbol, Minteger, or Mtext')
+            retval = libm17n__minput_config_variable( # type: ignore
+                libm17n__msymbol(self._language.encode('utf-8')), # type: ignore
+                libm17n__msymbol(self._name.encode('utf-8')), # type: ignore
+                libm17n__msymbol(variable_name.encode('utf-8')), # type: ignore
+                new_value_plist)
+            # If the operation was successful, minput_config_variable()
+            # returns 0, otherwise -1.
+            if retval:
+                raise ValueError(
+                    f'minput_config_variable() failed with retval = {retval}')
+            retval = libm17n__minput_save_config() # type: ignore
+            # minput_save_config() returns:
+            # - If the operation was successful, 1 is returned
+            # - If the per-user customization file is currently locked,
+            #   0 is returned.  In that case, the caller may wait for a
+            #   while and try again.
+            # - If the configuration file is not writable, -1 is returned.
+            if retval == 1:
+                continue
+            if retval == 0:
+                raise ValueError(
+                    f'minput_save_config() failed with retval = {retval} '
+                    '(per-user customization file is locked).')
+            if retval == -1:
+                raise ValueError(
+                    f'minput_save_config() failed with retval = {retval} '
+                    '(configuration file not writeable).')
+            raise ValueError(
+                f'minput_save_config() failed with retval = {retval} '
+                '(unknown error, should never happen)')
+        return
 
 if __name__ == "__main__":
     import doctest

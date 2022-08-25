@@ -23,11 +23,18 @@ This file implements test cases for finding key codes for key values
 
 from typing import Any
 import sys
+import os
+import locale
+import tempfile
 import unittest
 
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
+
+# Avoid failing test cases because of stuff in the users M17NDIR ('~/.m17n.d'):
+os.environ['M17NDIR'] = tempfile.TemporaryDirectory().name
+M17N_CONFIG_FILE= os.path.join(os.environ['M17NDIR'], 'config.mic')
 
 sys.path.insert(0, "../engine")
 import itb_util
@@ -37,7 +44,8 @@ sys.path.pop(0)
 
 class M17nTranslitTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        pass
+        # Avoid translations changing test case results:
+        locale.setlocale(locale.LC_MESSAGES, 'en_US.UTF-8')
 
     def tearDown(self) -> None:
         pass
@@ -560,6 +568,515 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('gX')), 'ঔ') # + ৌ U+09CC BENGALI VOWEL SIGN AU = ঔ U+0994 BENGALI LETTER AU
         self.assertEqual(trans.transliterate(list('gG')), '॥') # + । U+0964 DEVANAGARI DANDA = ॥ U+0965 DEVANAGARI DOUBLE DANDA
         # pylint: enable=line-too-long
+
+    def test_get_variables_bn_national_jatiya(self) -> None:
+        trans = self.get_transliterator_or_skip('bn-national-jatiya')
+        self.assertEqual(
+            trans.get_variables(),
+            [('use-automatic-vowel-forming',
+              'If this variable is 1 (the default), automatic vowel forming is used.\n'
+              'For example, a dependent vowel like া is automatically converted to\n'
+              'the independent form আ if it is not typed after a consonant.',
+              '1')])
+
+    def test_get_variables_ath_phonetic(self) -> None:
+        trans = self.get_transliterator_or_skip('ath-phonetic')
+        self.assertEqual(
+            trans.get_variables(),
+            [('s-bridge-below', 'private use', '58283')])
+
+    def test_get_variables_bo_ewts(self) -> None:
+        trans = self.get_transliterator_or_skip('bo-ewts')
+        self.assertEqual(
+            trans.get_variables(),
+            [('precomposed',
+              'Flag to tell whether or not to generate precomposed characters.\n'
+              'If 1 (the default), generate precomposed characters (i.e. NFC) if available '
+              '(e.g. "ྲྀ"(U+0F76).\n'
+              'If 0, generate only decomposed characters (i.e. NFD) (e.g. "ྲྀ" (U+0FB2 '
+              'U+0F80).',
+              '1')])
+
+    def test_get_variables_hi_itrans(self) -> None:
+        trans = self.get_transliterator_or_skip('hi-itrans')
+        self.assertEqual(
+            trans.get_variables(),
+            [('trim-last-halant',
+              'If this variable is 1 (the default), the last Halant in a syllable\n'
+              'is removed if it is followed by non Devanagari letter.  For instance,\n'
+              'typing "har.." produces "हर।", not "हर्।".',
+              '1')])
+
+    def test_get_variables_ja_anthy(self) -> None:
+        trans = self.get_transliterator_or_skip('ja-anthy')
+        self.assertEqual(
+            trans.get_variables(),
+            [('input-mode',
+              'Hiragana or Katakana (not yet implemented)\nSelect Hiragana or Katakana',
+              'hiragana'),
+             ('zen-han', 'Zenkaku or Hankaku (not yet implemented)', 'zenkaku')])
+
+    def test_get_variables_ml_swanalekha(self) -> None:
+        trans = self.get_transliterator_or_skip('ml-swanalekha')
+        self.assertEqual(
+            trans.get_variables(),
+            [('candidates-group-size',
+              'Maxmum number of candidates in a candidate group.\n'
+              'Value must be an integer.\n'
+              'If the value is not positive, number of candidates in a group is decided\n'
+              'by how candiates are grouped in an input method source file.',
+              '10')])
+
+    def test_get_variables_mr_gamabhana(self) -> None:
+        trans = self.get_transliterator_or_skip('mr-gamabhana')
+        self.assertEqual(
+            trans.get_variables(),
+            [('trim-last-halant',
+              'If this variable is 1 (the default), the last Halant in a syllable\n'
+              'is removed if it is followed by non Devanagari letter.  For instance,\n'
+              'typing "har.." produces "हर।", not "हर्।".',
+              '1')])
+
+    def test_get_variables_oj_phonetic(self) -> None:
+        trans = self.get_transliterator_or_skip('oj-phonetic')
+        self.assertEqual(
+            trans.get_variables(),
+            [('i-style-p', 'unofficial', '43502'),
+             ('i-style-t', 'unofficial', '43503'),
+             ('i-style-k', 'unofficial', '43504'),
+             ('i-style-c', 'unofficial', '43505'),
+             ('i-style-m', 'unofficial', '43506'),
+             ('i-style-n', 'unofficial', '43507'),
+             ('i-style-s', 'unofficial', '43508'),
+             ('i-style-sh', 'unofficial', '43509')])
+
+    def test_get_variables_sa_itrans(self) -> None:
+        trans = self.get_transliterator_or_skip('sa-itrans')
+        self.assertEqual(
+            trans.get_variables(),
+            [('trim-last-halant', '', '0'), ('enable-udatta', '', '1')])
+
+    def test_get_variables_si_wijesekera(self) -> None:
+        trans = self.get_transliterator_or_skip('si-wijesekera')
+        self.assertEqual(
+            trans.get_variables(),
+            [('use-surrounding-text',
+              'Surrounding text vs. preedit.\n'
+              'If 1, try to use surrounding text.  Otherwise, use preedit.',
+              '0')])
+
+    def test_get_variables_ta_lk_renganathan(self) -> None:
+        trans = self.get_transliterator_or_skip('ta-lk-renganathan')
+        self.assertEqual(
+            trans.get_variables(),
+            [('use-surrounding-text',
+              'Surrounding text vs. preedit\n'
+              'If 1, try to use surrounding text.  Otherwise, use preedit.',
+              '0')])
+
+    def test_get_variables_th_kesmanee(self) -> None:
+        trans = self.get_transliterator_or_skip('th-kesmanee')
+        self.assertEqual(
+            trans.get_variables(),
+            [('level',
+              'Acceptance level\n'
+              'The level of character sequence acceptance defined in WTT 2.0.\n'
+              '0 accepts any key sequence.  2 accepts only orthographic ones.\n'
+              '1 is somewhere between.',
+              '1')])
+
+    def test_get_variables_th_pattachote(self) -> None:
+        trans = self.get_transliterator_or_skip('th-pattachote')
+        self.assertEqual(
+            trans.get_variables(),
+            [('level',
+              'Acceptance level\n'
+              'The level of character sequence acceptance defined in WTT 2.0.\n'
+              '0 accepts any key sequence.  2 accepts only orthographic ones.\n'
+              '1 is somewhere between.',
+              '1')])
+
+    def test_get_variables_th_tis820(self) -> None:
+        trans = self.get_transliterator_or_skip('th-tis820')
+        self.assertEqual(
+            trans.get_variables(),
+            [('level',
+              'Acceptance level\n'
+              'The level of character sequence acceptance defined in WTT 2.0.\n'
+              '0 accepts any key sequence.  2 accepts only orthographic ones.\n'
+              '1 is somewhere between.',
+              '1')])
+
+    def test_get_variables_t_unicode(self) -> None:
+        trans = self.get_transliterator_or_skip('t-unicode')
+        self.assertEqual(
+            trans.get_variables(),
+            [('prompt',
+              'Preedit prompt\n'
+              'Prompt string shown in the preedit area while typing hexadecimal numbers.',
+              'U+')])
+
+    def test_get_variables_vi_han(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-han')
+        self.assertEqual(
+            trans.get_variables(),
+            [('candidates-group-size',
+              'Maxmum number of candidates in a candidate group.\n'
+              'Value must be an integer.\n'
+              'If the value is not positive, number of candidates in a group is decided\n'
+              'by how candiates are grouped in an input method source file.',
+              '10')])
+
+    def test_get_variables_vi_nomvni(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-nomvni')
+        self.assertEqual(
+            trans.get_variables(),
+            [('candidates-group-size',
+              'Maxmum number of candidates in a candidate group.\n'
+              'Value must be an integer.\n'
+              'If the value is not positive, number of candidates in a group is decided\n'
+              'by how candiates are grouped in an input method source file.',
+              '10')])
+
+    def test_get_variables_vi_nomtelex(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-nomtelex')
+        self.assertEqual(
+            trans.get_variables(),
+            [('candidates-group-size',
+              'Maxmum number of candidates in a candidate group.\n'
+              'Value must be an integer.\n'
+              'If the value is not positive, number of candidates in a group is decided\n'
+              'by how candiates are grouped in an input method source file.',
+              '10')])
+
+    def test_get_variables_vi_tcvn(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-tcvn')
+        self.assertEqual(
+            trans.get_variables(),
+            [('tone-mark-on-last',
+              'Flag to control tone mark position in equivocal cases.\n'
+              'If this variable is 0 (the default), put tone mark on the first vowel\n'
+              'in such equivocal cases as "oa", "oe", "uy".\n'
+              'Otherwise, put tone mark on the last vowel.',
+              '0'),
+             ('backspace-is-undo',
+              'Flag to control the action of Backspace key (delete or undo).\n'
+              'If this variable is 0 (the default), Backspace key deletes the previous\n'
+              'character (e.g. "q u a i s BS" => "quá").\n'
+              'If the value is 1, Backspace key undoes the previous key\n'
+              '(e.g. "q u a i s BS" => "quai").',
+              '0')])
+
+    def test_get_variables_vi_telex(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-telex')
+        self.assertEqual(
+            trans.get_variables(),
+            [('tone-mark-on-last',
+              'Flag to control tone mark position in equivocal cases.\n'
+              'If this variable is 0 (the default), put tone mark on the first vowel\n'
+              'in such equivocal cases as "oa", "oe", "uy".\n'
+              'Otherwise, put tone mark on the last vowel.',
+              '0'),
+             ('backspace-is-undo',
+              'Flag to control the action of Backspace key (delete or undo).\n'
+              'If this variable is 0 (the default), Backspace key deletes the previous\n'
+              'character (e.g. "q u a i s BS" => "quá").\n'
+              'If the value is 1, Backspace key undoes the previous key\n'
+              '(e.g. "q u a i s BS" => "quai").',
+              '0')])
+
+    def test_get_variables_vi_viqr(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-viqr')
+        self.assertEqual(
+            trans.get_variables(),
+            [('tone-mark-on-last',
+              'Flag to control tone mark position in equivocal cases.\n'
+              'If this variable is 0 (the default), put tone mark on the first vowel\n'
+              'in such equivocal cases as "oa", "oe", "uy".\n'
+              'Otherwise, put tone mark on the last vowel.',
+              '0'),
+             ('backspace-is-undo',
+              'Flag to control the action of Backspace key (delete or undo).\n'
+              'If this variable is 0 (the default), Backspace key deletes the previous\n'
+              'character (e.g. "q u a i s BS" => "quá").\n'
+              'If the value is 1, Backspace key undoes the previous key\n'
+              '(e.g. "q u a i s BS" => "quai").',
+              '0')])
+
+    def test_get_variables_vi_vni(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-vni')
+        self.assertEqual(
+            trans.get_variables(),
+            [('tone-mark-on-last',
+              'Flag to control tone mark position in equivocal cases.\n'
+              'If this variable is 0 (the default), put tone mark on the first vowel\n'
+              'in such equivocal cases as "oa", "oe", "uy".\n'
+              'Otherwise, put tone mark on the last vowel.',
+              '0'),
+             ('backspace-is-undo',
+              'Flag to control the action of Backspace key (delete or undo).\n'
+              'If this variable is 0 (the default), Backspace key deletes the previous\n'
+              'character (e.g. "q u a i s BS" => "quá").\n'
+              'If the value is 1, Backspace key undoes the previous key\n'
+              '(e.g. "q u a i s BS" => "quai").',
+              '0')])
+
+    def test_get_variables_zh_cangjie(self) -> None:
+        trans = self.get_transliterator_or_skip('zh-cangjie')
+        self.assertEqual(
+            trans.get_variables(),
+            [('candidates-group-size',
+              'Maxmum number of candidates in a candidate group.\n'
+              'Value must be an integer.\n'
+              'If the value is not positive, number of candidates in a group is decided\n'
+              'by how candiates are grouped in an input method source file.',
+              '10')])
+
+    def test_get_variables_zh_py_b5(self) -> None:
+        trans = self.get_transliterator_or_skip('zh-py-b5')
+        self.assertEqual(
+            trans.get_variables(),
+            [('candidates-group-size',
+              'Maxmum number of candidates in a candidate group.\n'
+              'Value must be an integer.\n'
+              'If the value is not positive, number of candidates in a group is decided\n'
+              'by how candiates are grouped in an input method source file.',
+              '10'),
+             ('candidates-charset',
+              'Character set to limit candidates.\n'
+              'Value must be a symbol representing a charater set, or nil.\n'
+              'If the value is not nil, a candidate containing a character not belonging\n'
+              'to the specified character set is ignored.',
+              'big5')])
+
+    def test_get_variables_zh_py_gb(self) -> None:
+        trans = self.get_transliterator_or_skip('zh-py-gb')
+        self.assertEqual(
+            trans.get_variables(),
+            [('candidates-group-size',
+              'Maxmum number of candidates in a candidate group.\n'
+              'Value must be an integer.\n'
+              'If the value is not positive, number of candidates in a group is decided\n'
+              'by how candiates are grouped in an input method source file.',
+              '10'),
+             ('candidates-charset',
+              'Character set to limit candidates.\n'
+              'Value must be a symbol representing a charater set, or nil.\n'
+              'If the value is not nil, a candidate containing a character not belonging\n'
+              'to the specified character set is ignored.',
+              'gb2312.1980')])
+
+    def test_get_variables_zh_py(self) -> None:
+        trans = self.get_transliterator_or_skip('zh-py')
+        self.assertEqual(
+            trans.get_variables(),
+            [('candidates-group-size',
+              'Maxmum number of candidates in a candidate group.\n'
+              'Value must be an integer.\n'
+              'If the value is not positive, number of candidates in a group is decided\n'
+              'by how candiates are grouped in an input method source file.',
+              '10')])
+
+    def test_get_variables_zh_quick(self) -> None:
+        trans = self.get_transliterator_or_skip('zh-quick')
+        self.assertEqual(
+            trans.get_variables(),
+            [('candidates-group-size',
+              'Maxmum number of candidates in a candidate group.\n'
+              'Value must be an integer.\n'
+              'If the value is not positive, number of candidates in a group is decided\n'
+              'by how candiates are grouped in an input method source file.',
+              '10')])
+
+    def test_get_variables_zh_tonepy_b5(self) -> None:
+        trans = self.get_transliterator_or_skip('zh-tonepy-b5')
+        self.assertEqual(
+            trans.get_variables(),
+            [('candidates-group-size',
+              'Maxmum number of candidates in a candidate group.\n'
+              'Value must be an integer.\n'
+              'If the value is not positive, number of candidates in a group is decided\n'
+              'by how candiates are grouped in an input method source file.',
+              '10'),
+             ('candidates-charset',
+              'Character set to limit candidates.\n'
+              'Value must be a symbol representing a charater set, or nil.\n'
+              'If the value is not nil, a candidate containing a character not belonging\n'
+              'to the specified character set is ignored.',
+              'big5')])
+
+    def test_get_variables_zh_tonepy_gb(self) -> None:
+        trans = self.get_transliterator_or_skip('zh-tonepy-gb')
+        self.assertEqual(
+            trans.get_variables(),
+            [('candidates-group-size',
+              'Maxmum number of candidates in a candidate group.\n'
+              'Value must be an integer.\n'
+              'If the value is not positive, number of candidates in a group is decided\n'
+              'by how candiates are grouped in an input method source file.',
+              '10'),
+             ('candidates-charset',
+              'Character set to limit candidates.\n'
+              'Value must be a symbol representing a charater set, or nil.\n'
+              'If the value is not nil, a candidate containing a character not belonging\n'
+              'to the specified character set is ignored.',
+              'gb2312.1980')])
+
+    def test_get_variables_zh_tonepy(self) -> None:
+        trans = self.get_transliterator_or_skip('zh-tonepy')
+        self.assertEqual(
+            trans.get_variables(),
+            [('candidates-group-size',
+              'Maxmum number of candidates in a candidate group.\n'
+              'Value must be an integer.\n'
+              'If the value is not positive, number of candidates in a group is decided\n'
+              'by how candiates are grouped in an input method source file.',
+              '10')])
+
+    def test_get_variables_zh_zhuyin(self) -> None:
+        trans = self.get_transliterator_or_skip('zh-zhuyin')
+        self.assertEqual(
+            trans.get_variables(),
+            [('candidates-group-size',
+              'Maxmum number of candidates in a candidate group.\n'
+              'Value must be an integer.\n'
+              'If the value is not positive, number of candidates in a group is decided\n'
+              'by how candiates are grouped in an input method source file.',
+              '10')])
+
+    def test_set_variables(self) -> None:
+        trans_bn_national_jatiya = self.get_transliterator_or_skip('bn-national-jatiya')
+        trans_t_unicode = self.get_transliterator_or_skip('t-unicode')
+        trans_ja_anthy = self.get_transliterator_or_skip('ja-anthy')
+        self.assertEqual(
+            trans_bn_national_jatiya.get_variables(),
+            [('use-automatic-vowel-forming',
+              'If this variable is 1 (the default), automatic vowel forming is used.\n'
+              'For example, a dependent vowel like া is automatically converted to\n'
+              'the independent form আ if it is not typed after a consonant.',
+              '1')])
+        self.assertEqual(
+            trans_t_unicode.get_variables(),
+            [('prompt',
+              'Preedit prompt\n'
+              'Prompt string shown in the preedit area while typing hexadecimal numbers.',
+              'U+')])
+        self.assertEqual(
+            trans_ja_anthy.get_variables(),
+            [('input-mode',
+              'Hiragana or Katakana (not yet implemented)\nSelect Hiragana or Katakana',
+              'hiragana'),
+             ('zen-han', 'Zenkaku or Hankaku (not yet implemented)', 'zenkaku')])
+        trans_bn_national_jatiya.set_variables({'use-automatic-vowel-forming': '0'})
+        self.assertEqual(
+            trans_bn_national_jatiya.get_variables(),
+            [('use-automatic-vowel-forming',
+              'If this variable is 1 (the default), automatic vowel forming is used.\n'
+              'For example, a dependent vowel like া is automatically converted to\n'
+              'the independent form আ if it is not typed after a consonant.',
+              '0')])
+        self.assertEqual(
+            trans_t_unicode.get_variables(),
+            [('prompt',
+              'Preedit prompt\n'
+              'Prompt string shown in the preedit area while typing hexadecimal numbers.',
+              'U+')])
+        self.assertEqual(
+            trans_ja_anthy.get_variables(),
+            [('input-mode',
+              'Hiragana or Katakana (not yet implemented)\nSelect Hiragana or Katakana',
+              'hiragana'),
+             ('zen-han', 'Zenkaku or Hankaku (not yet implemented)', 'zenkaku')])
+        trans_t_unicode.set_variables({'prompt': 'U_'})
+        self.assertEqual(
+            trans_bn_national_jatiya.get_variables(),
+            [('use-automatic-vowel-forming',
+              'If this variable is 1 (the default), automatic vowel forming is used.\n'
+              'For example, a dependent vowel like া is automatically converted to\n'
+              'the independent form আ if it is not typed after a consonant.',
+              '0')])
+        self.assertEqual(
+            trans_t_unicode.get_variables(),
+            [('prompt',
+              'Preedit prompt\n'
+              'Prompt string shown in the preedit area while typing hexadecimal numbers.',
+              'U_')])
+        self.assertEqual(
+            trans_ja_anthy.get_variables(),
+            [('input-mode',
+              'Hiragana or Katakana (not yet implemented)\nSelect Hiragana or Katakana',
+              'hiragana'),
+             ('zen-han', 'Zenkaku or Hankaku (not yet implemented)', 'zenkaku')])
+        trans_ja_anthy.set_variables({'input-mode': 'katakana', 'zen-han': 'hankaku'})
+        self.assertEqual(
+            trans_bn_national_jatiya.get_variables(),
+            [('use-automatic-vowel-forming',
+              'If this variable is 1 (the default), automatic vowel forming is used.\n'
+              'For example, a dependent vowel like া is automatically converted to\n'
+              'the independent form আ if it is not typed after a consonant.',
+              '0')])
+        self.assertEqual(
+            trans_t_unicode.get_variables(),
+            [('prompt',
+              'Preedit prompt\n'
+              'Prompt string shown in the preedit area while typing hexadecimal numbers.',
+              'U_')])
+        self.assertEqual(
+            trans_ja_anthy.get_variables(),
+            [('input-mode',
+              'Hiragana or Katakana (not yet implemented)\nSelect Hiragana or Katakana',
+              'katakana'),
+             ('zen-han', 'Zenkaku or Hankaku (not yet implemented)', 'hankaku')])
+        with open(M17N_CONFIG_FILE, mode='rt', encoding='utf-8') as config_file:
+            config_file_contents = config_file.read()
+        self.assertEqual(
+            config_file_contents,
+            ';; -*- mode:lisp; coding:utf-8 -*-\n'
+            '((input-method bn national-jatiya)\n'
+            ' (variable\n'
+            '  (use-automatic-vowel-forming nil 0)))\n'
+            '((input-method t unicode)\n'
+            ' (variable\n'
+            '  (prompt nil\n'
+            '   "U_")))\n'
+            '((input-method ja anthy)\n'
+            ' (variable\n'
+            '  (input-mode nil katakana)\n'
+            '  (zen-han nil hankaku)))\n'
+            )
+        # Now set the default values again:
+        trans_bn_national_jatiya.set_variables({'use-automatic-vowel-forming': '1'})
+        trans_t_unicode.set_variables({'prompt': 'U+'})
+        trans_ja_anthy.set_variables({'input-mode': 'hiragana', 'zen-han': 'zenkaku'})
+        with open(M17N_CONFIG_FILE, mode='rt', encoding='utf-8') as config_file:
+            config_file_contents = config_file.read()
+        self.assertEqual(
+            config_file_contents,
+            ';; -*- mode:lisp; coding:utf-8 -*-\n'
+            '((input-method bn national-jatiya)\n'
+            ' (variable\n'
+            '  (use-automatic-vowel-forming nil 1)))\n'
+            '((input-method t unicode)\n'
+            ' (variable\n'
+            '  (prompt nil\n'
+            '   "U+")))\n'
+            '((input-method ja anthy)\n'
+            ' (variable\n'
+            '  (input-mode nil hiragana)\n'
+            '  (zen-han nil zenkaku)))\n'
+            )
+        # Now set the *global* default values by setting empty values:
+        trans_bn_national_jatiya.set_variables({'use-automatic-vowel-forming': ''})
+        trans_t_unicode.set_variables({'prompt': ''})
+        trans_ja_anthy.set_variables({'input-mode': '', 'zen-han': ''})
+        # Setting the *global* default values like this should make the config
+        # file empty (except for the comment line at the top):
+        with open(M17N_CONFIG_FILE, mode='rt', encoding='utf-8') as config_file:
+            config_file_contents = config_file.read()
+        self.assertEqual(
+            config_file_contents,
+            ';; -*- mode:lisp; coding:utf-8 -*-\n'
+            )
 
 if __name__ == '__main__':
     unittest.main()
