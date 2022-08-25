@@ -9,8 +9,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-07-26 02:47+0200\n"
-"PO-Revision-Date: 2022-08-21 20:27+0000\n"
-"Last-Translator: Sudip Shil <sshil@redhat.com>\n"
+"PO-Revision-Date: 2022-08-25 16:19+0000\n"
+"Last-Translator: Mahmudul Hasan <ptcmahmudulhasa@gmail.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/bn/>\n"
 "Language: bn\n"
@@ -498,7 +498,7 @@ msgid ""
 "full candidate list."
 msgstr ""
 "যদি একটি পূর্ণ প্রার্থী তালিকা দেখানোর পরিবর্তে সর্বোত্তম সমাপ্তিটি প্রথমে "
-"প্রিডিট ইনলাইন দেখানো হয়ে থাকে। তাহলে ইনলাইন প্রার্থীকে ট্যাব টাইপ করে নির্বা"
+"প্রিডিট ইনলাইন দেখানো হয়ে থাকে। তাহলে ইনলাইন প্রার্থীকে ট্যাব কী চেপে নির্বা"
 "চন করা যেতে পারে এবং এরপর যথারীতি প্রতিশ্রুতিবদ্ধ করা যেতে পারে, উদাহরণস্বরূ"
 "প স্পেস বা কন্ট্রোল+স্পেস টাইপ করা। টাইপিং ট্যাব আবার পরবর্তী প্রার্থীর কাছে "
 "চলে যাবে এবং সম্পূর্ণ প্রার্থী তালিকা খুলবে।"
@@ -509,21 +509,21 @@ msgstr "না"
 
 #: setup/main.py:401
 msgid "Yes, with fallback to popup"
-msgstr ""
+msgstr "হ্যাঁ, “পিছান” অপশন’সহ পপআপ করুন"
 
 #: setup/main.py:403
 msgid "Yes, without fallback to popup"
-msgstr ""
+msgstr "হ্যাঁ, “পিছান” অপশন ছাড়াই পপআপ করুন"
 
 #. Translators: Whether to automatically capitalize after
 #. punctuation.
 #: setup/main.py:429
 msgid "Auto capitalize"
-msgstr ""
+msgstr "স্বয়ংক্রিয়ভাবে বড় অক্ষরে লিখুন"
 
 #: setup/main.py:431
 msgid "Automatically capitalize after punctuation."
-msgstr ""
+msgstr "বিরাম চিহ্নের পরে স্বয়ংক্রিয়ভাবে বড় অক্ষর হবে।"
 
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
@@ -535,7 +535,7 @@ msgstr ""
 #. command which will deselect all candidates.
 #: setup/main.py:454
 msgid "Automatically select the best candidate"
-msgstr ""
+msgstr "স্বয়ংক্রিয়ভাবে সবথেকে উপযোগী শব্দ নির্বাচন করুন"
 
 #: setup/main.py:456
 msgid ""
@@ -546,14 +546,20 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
+"আপনি যা টাইপ করবেন তা স্বয়ংক্রিয়ভাবে সম্ভাব্য সেরা শব্দ বা শব্দ গুচ্ছ বেছে "
+"নেওয়ার মাধ্যমে উপযুক্ত শব্দের কাছে সংশোধন করা হবে। এই বিকল্পটি বন্ধ থাকলে "
+"আপনাকে পরবর্তী শব্দ নির্বাচন করতে কী বন্ধন ব্যবহার করে ম্যানুয়ালি একটি শব্দ "
+"নির্বাচন করতে হবে। যদি এই বিকল্পটি চালু থাকে এবং আপনি স্বয়ংক্রিয়ভাবে "
+"নির্বাচিত শব্দ ব্যবহার করতে না চান, তাহলে আপনি \"বাতিল\" কমান্ডের জন্য কী বন্"
+"ধন ব্যবহার করতে পারেন যা সমস্ত শব্দ অনির্বাচন করবে।"
 
 #: setup/main.py:470
 msgid "Yes, but only when extremely likely"
-msgstr ""
+msgstr "হ্যাঁ, কিন্তু শুধুমাত্র যখন অত্যন্ত সম্ভাবনাময়"
 
 #: setup/main.py:472
 msgid "Yes, always"
-msgstr ""
+msgstr "হ্যাঁ, সবসময়"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
@@ -561,6 +567,8 @@ msgstr ""
 #: setup/main.py:499
 msgid "Add a space when committing by mouse click"
 msgstr ""
+"একটি স্পেস যুক্ত হবে যখন শব্দ পরামর্শ তালিকা থেকে মাউস দ্বারা ক্লিক করে শব্দ "
+"নির্বাচন করা হবে"
 
 #: setup/main.py:501
 msgid ""
