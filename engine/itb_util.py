@@ -4865,7 +4865,7 @@ class M17nDbInfo:
         There has to be one system directory (e.g. /usr/share/m17n) and
         it is possible that there is also a user directory indicated
         by the M17NDIR environment variable. If the environment
-        variable M17NDIR is not set, the user directory is '~/.m17nd.'
+        variable M17NDIR is not set, the user directory is '~/.m17n.d'.
         if that directory exists.
 
         :return: A list of one or two directories
