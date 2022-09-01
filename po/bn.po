@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Mahmudul Hasan <ptcmahmudulhasa@gmail.com>, 2022.
 # Sudip Shil <sshil@redhat.com>, 2022.
+# Mike FABIAN <mfabian@redhat.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-07-26 02:47+0200\n"
-"PO-Revision-Date: 2022-08-25 16:19+0000\n"
-"Last-Translator: Mahmudul Hasan <ptcmahmudulhasa@gmail.com>\n"
+"PO-Revision-Date: 2022-09-01 11:22+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/bn/>\n"
 "Language: bn\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 4.14\n"
 
 #: engine/emoji_picker.py:204
 msgid "Emoji Picker"
@@ -987,11 +988,11 @@ msgstr ""
 
 #: setup/main.py:1450
 msgid "Horizontal"
-msgstr ""
+msgstr "অনুভূমিক"
 
 #: setup/main.py:1452
 msgid "Vertical"
-msgstr ""
+msgstr "উল্লম্ব"
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
@@ -1007,7 +1008,7 @@ msgstr ""
 #. at all for the preedit.
 #: setup/main.py:1493
 msgid "None"
-msgstr ""
+msgstr "একটিও নয়"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
@@ -1294,12 +1295,12 @@ msgstr ""
 #: setup/main.py:2304 setup/main.py:2842 setup/main.py:2920 setup/main.py:4027
 #: setup/main.py:4033
 msgid "_Cancel"
-msgstr ""
+msgstr "বাতিল(_C)"
 
 #: setup/main.py:2305 setup/main.py:2843 setup/main.py:2921 setup/main.py:4028
 #: setup/main.py:4034
 msgid "_OK"
-msgstr ""
+msgstr "ঠিক আছে (_O)"
 
 #: setup/main.py:2337
 msgid "Another instance of this app is already running."
