@@ -49,7 +49,7 @@ from gi.repository import Gio
 require_version('GLib', '2.0')
 from gi.repository import GLib
 # pylint: enable=wrong-import-position
-from m17n_translit import Transliterator
+import m17n_translit
 import itb_util
 import itb_active_window
 import itb_emoji
@@ -415,7 +415,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._transliterated_strings: Dict[str, str] = {}
         self._transliterated_strings_before_compose: Dict[str, str] = {}
         self._transliterated_strings_compose_part = ''
-        self._transliterators: Dict[str, Transliterator] = {}
+        self._transliterators: Dict[str, m17n_translit.Transliterator] = {}
         self._init_transliterators()
         # self._candidates: Array to hold candidates found in the
         #                   user database, the (hunspell) dictionaries,
@@ -632,14 +632,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     LOGGER.debug(
                         'instantiating Transliterator(%(ime)s)',
                         {'ime': ime})
-                self._transliterators[ime] = Transliterator(ime)
+                self._transliterators[ime] = m17n_translit.Transliterator(ime)
             except ValueError:
                 LOGGER.exception(
                     'Error initializing Transliterator %s '
                     'Maybe /usr/share/m17n/%s.mim is not installed?',
                     ime, ime)
                 # Use dummy transliterator “NoIME” as a fallback:
-                self._transliterators[ime] = Transliterator('NoIME')
+                self._transliterators[ime] = m17n_translit.Transliterator(
+                    'NoIME')
         self._update_transliterated_strings()
 
     def is_empty(self) -> bool:
@@ -6489,6 +6490,24 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._clear_input_and_update_ui()
     # pylint: enable=unused-argument
 
+    # pylint: disable=unused-argument
+    def _reload_input_methods(
+            self, value: Any, update_gsettings: bool = False) -> None:
+        '''(re)load all input_methods
+
+        Needs to be called when an input method has been changed,
+        usually because an optional variable of an input method was changed.
+
+        :param value: ignored
+        :param update_gsettings: ignored
+        '''
+        LOGGER.info('Reloading input methods ...')
+        m17n_translit._del()
+        m17n_translit._init()
+        self._init_transliterators()
+        self._clear_input_and_update_ui()
+    # pylint: enable=unused-argument
+
     def on_set_surrounding_text(self,
                                 _engine: IBus.Engine,
                                 text: IBus.Text,
@@ -6536,6 +6555,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'inputmethod': self.set_current_imes,
             'dictionary':  self.set_dictionary_names,
             'dictionaryinstalltimestamp': self._reload_dictionaries,
+            'inputmethodchangetimestamp': self._reload_input_methods,
             'avoidforwardkeyevent': self.set_avoid_forward_key_event,
             'addspaceoncommit': self.set_add_space_on_commit,
             'inlinecompletion': self.set_inline_completion,

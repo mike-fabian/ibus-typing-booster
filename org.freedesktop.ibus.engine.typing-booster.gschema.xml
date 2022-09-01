@@ -432,6 +432,13 @@
         Comma separated list of m17n input methods to use.
       </description>
     </key>
+    <key name="inputmethodchangetimestamp" type="s">
+      <default>''</default>
+      <summary>Time when an input method last was changed</summary>
+      <description>
+        If that time stamp changes, reload all input methods.
+      </description>
+    </key>
     <key name="dictionary" type="s">
       <default>''</default>
       <summary>A list of dictionaries to use</summary>

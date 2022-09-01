@@ -59,7 +59,7 @@ sys.path.insert(0, "../engine")
 import hunspell_table
 import tabsqlitedb
 import itb_util
-from m17n_translit import Transliterator
+import m17n_translit
 # pylint: enable=import-error
 sys.path.pop(0)
 
@@ -323,7 +323,7 @@ class ItbTestCase(unittest.TestCase):
     def get_transliterator_or_skip(self, ime: str) -> Optional[Any]:
         try:
             sys.stderr.write('ime "%s" ... ' %ime)
-            trans = Transliterator(ime)
+            trans = m17n_translit.Transliterator(ime)
         except ValueError as error:
             trans = None
             self.skipTest(error)

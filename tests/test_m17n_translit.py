@@ -39,7 +39,6 @@ M17N_CONFIG_FILE= os.path.join(os.environ['M17NDIR'], 'config.mic')
 sys.path.insert(0, "../engine")
 import itb_util
 import m17n_translit
-from m17n_translit import Transliterator
 sys.path.pop(0)
 
 class M17nTranslitTestCase(unittest.TestCase):
@@ -53,7 +52,7 @@ class M17nTranslitTestCase(unittest.TestCase):
     def get_transliterator_or_skip(self, ime: str) -> Any:
         try:
             sys.stderr.write('ime "%s" ... ' %ime)
-            trans = Transliterator(ime)
+            trans = m17n_translit.Transliterator(ime)
         except ValueError as error:
             trans = None
             self.skipTest(error)
@@ -71,7 +70,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         # because a non-existing input method was given as the
         # argument, a ValueError is raised:
         try:
-            dummy_trans = Transliterator('ru-translitx')
+            dummy_trans = m17n_translit.Transliterator('ru-translitx')
         except ValueError:
             pass
         except Exception:
@@ -79,18 +78,18 @@ class M17nTranslitTestCase(unittest.TestCase):
             self.assertTrue(False)
 
     def test_ru_translit(self) -> None:
-        trans = Transliterator('ru-translit')
+        trans = m17n_translit.Transliterator('ru-translit')
         self.assertEqual(trans.transliterate(list('y')), 'ы')
         self.assertEqual(trans.transliterate(list('yo')), 'ё')
         self.assertEqual(trans.transliterate(list('yo y')), 'ё ы')
 
     def test_mr_itrans(self) -> None:
-        trans = Transliterator('mr-itrans')
+        trans = m17n_translit.Transliterator('mr-itrans')
         self.assertEqual(trans.transliterate(list('praviN')), 'प्रविण्')
         self.assertEqual(trans.transliterate(list('namaste')), 'नमस्ते')
 
     def test_hi_itrans(self) -> None:
-        trans = Transliterator('hi-itrans')
+        trans = m17n_translit.Transliterator('hi-itrans')
         self.assertEqual(trans.transliterate(list('namaste')), 'नमस्ते')
         self.assertEqual(trans.transliterate(list('. ')), '। ')
 
@@ -147,17 +146,17 @@ class M17nTranslitTestCase(unittest.TestCase):
             b'\xe0\xa4\xb0\xe0\xa5\x8d\xe2\x80\x8d\xe0\xa4\xaf')
 
     def test_t_latn_post(self) -> None:
-        trans = Transliterator('t-latn-post')
+        trans = m17n_translit.Transliterator('t-latn-post')
         self.assertEqual(trans.transliterate(list('gru"n')), 'grün')
 
     def test_NoIME(self) -> None:
-        trans = Transliterator('NoIME')
+        trans = m17n_translit.Transliterator('NoIME')
         self.assertEqual(
             trans.transliterate(['a', 'b', 'c', 'C-c', 'G-4']),
             'abcC-cG-4')
 
     def test_si_wijesekera(self) -> None:
-        trans = Transliterator('si-wijesekera')
+        trans = m17n_translit.Transliterator('si-wijesekera')
         self.assertEqual(trans.transliterate(list('a')), '්')
         self.assertEqual(trans.transliterate(list('t')), 'එ')
         self.assertEqual(trans.transliterate(list('ta')), 'ඒ')

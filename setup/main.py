@@ -83,7 +83,7 @@ except (ImportError,):
 # pylint: disable=wrong-import-position
 # pylint: disable=import-error
 sys.path = [sys.path[0]+'/../engine'] + sys.path
-from m17n_translit import Transliterator
+import m17n_translit
 import tabsqlitedb
 import itb_util
 import itb_emoji
@@ -1098,6 +1098,21 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_methods_help_button.connect(
             'clicked', self._on_input_methods_help_button_clicked)
         self._input_methods_help_button.set_sensitive(False)
+        self._input_methods_options_button = Gtk.Button()
+        self._input_methods_options_button_label = Gtk.Label()
+        self._input_methods_options_button_label.set_text(
+            '<span size="xx-large">🛠️️</span>') # Hammer and wrench
+        self._input_methods_options_button_label.set_use_markup(True)
+        self._input_methods_options_button.add(
+            self._input_methods_options_button_label)
+        self._input_methods_options_button.set_tooltip_text(
+            # Translators: Tooltip for a button to set some advanced
+            # options for the input method currently selected in the
+            # list of input methods.
+            _('Options for the input method selected above.'))
+        self._input_methods_options_button.connect(
+            'clicked', self._on_input_methods_options_button_clicked)
+        self._input_methods_options_button.set_sensitive(False)
         self._input_methods_default_button = Gtk.Button()
         self._input_methods_default_button_label = Gtk.Label()
         self._input_methods_default_button_label.set_text(
@@ -1116,6 +1131,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_methods_action_area.add(self._input_methods_remove_button)
         self._input_methods_action_area.add(self._input_methods_up_button)
         self._input_methods_action_area.add(self._input_methods_down_button)
+        self._input_methods_action_area.add(self._input_methods_options_button)
         self._input_methods_action_area.add(self._input_methods_help_button)
         self._input_methods_action_area.add(self._input_methods_default_button)
         self._input_methods_listbox_selected_ime_name = ''
@@ -2218,7 +2234,7 @@ class SetupUI(Gtk.Window): # type: ignore
         if title:
             row += '\t' + '(' + title + ')'
         try:
-            dummy = Transliterator(ime)
+            dummy = m17n_translit.Transliterator(ime)
             row += '\t' + '✔️'
         except ValueError as open_error:
             row += '\t' + '❌ ' + str(open_error)
@@ -2377,6 +2393,23 @@ class SetupUI(Gtk.Window): # type: ignore
                     'But here in the setup tool there is nothing to do.')
     # pylint: enable=unused-argument
 
+    # pylint: disable=unused-argument
+    @staticmethod
+    def _reload_input_methods(
+            value: Any, update_gsettings: bool = False) -> None:
+        '''(re)load all input methods
+
+        Called when an input method has been changed,
+        usually because an optional variable of an input method was changed.
+
+        :param value: ignored
+        :param update_gsettings: ignored
+        '''
+        LOGGER.info('A input method has been changed.\n'
+                    'ibus-typing-booster will (re)load all input methods.\n'
+                    'But here in the setup tool there is nothing to do.')
+    # pylint: enable=unused-argument
+
     def _on_gsettings_value_changed(
             self, _settings: Gio.Settings, key: str) -> None:
         '''
@@ -2442,6 +2475,7 @@ class SetupUI(Gtk.Window): # type: ignore
             'dictionary': self.set_dictionary_names,
             'keybindings': self.set_keybindings,
             'dictionaryinstalltimestamp': self._reload_dictionaries,
+            'inputmethodchangetimestamp': self._reload_input_methods,
         }
         if key in set_functions:
             set_functions[key](value, update_gsettings=False)
@@ -3492,6 +3526,190 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_methods_listbox.select_row(
             self._input_methods_listbox.get_row_at_index(index + 1))
 
+    def _on_input_methods_options_button_clicked(
+            self, _button: Gtk.Button) -> None:
+        '''
+        Called when the button to set options for the currently selected
+        input method has been clicked.
+        '''
+        if not self._input_methods_listbox_selected_ime_name:
+            return
+        ime = self._input_methods_listbox_selected_ime_name
+        LOGGER.debug('Option setup for %s', ime)
+        variables: List[Tuple[str, str, str]] = []
+        try:
+            trans = m17n_translit.Transliterator(ime)
+            variables = trans.get_variables()
+        except ValueError as error:
+            LOGGER.exception(
+                'Exception when opening ime %s: %s: %s',
+                ime, error.__class__.__name__, error)
+        if not variables:
+            return
+        self._input_methods_options_popover = Gtk.Popover()
+        if self._input_methods_options_popover is None:
+            LOGGER.debug('self._input_methods_options_popover is None')
+            return
+        self._input_methods_options_popover.set_relative_to(
+            self._input_methods_options_button)
+        self._input_methods_options_popover.set_position(Gtk.PositionType.TOP)
+        self._input_methods_options_popover.set_vexpand(True)
+        self._input_methods_options_popover.set_hexpand(True)
+        vbox = Gtk.Box()
+        vbox.set_orientation(Gtk.Orientation.VERTICAL)
+        margin = 12
+        vbox.set_margin_start(margin)
+        vbox.set_margin_end(margin)
+        vbox.set_margin_top(margin)
+        vbox.set_margin_bottom(margin)
+        vbox.set_spacing(margin)
+        hbox = Gtk.Box()
+        hbox.set_orientation(Gtk.Orientation.HORIZONTAL)
+        hbox.set_spacing(10)
+        label = Gtk.Label()
+        label.set_text(html.escape(self._fill_input_methods_listbox_row(ime)))
+        margin = 1
+        label.set_margin_start(margin)
+        label.set_margin_end(margin)
+        label.set_margin_top(margin)
+        label.set_margin_bottom(margin)
+        if not M17N_DB_INFO is None:
+            image = Gtk.Image.new_from_file(M17N_DB_INFO.get_icon(ime))
+            image.set_pixel_size(48)
+            hbox.add(image)
+        hbox.add(label)
+        vbox.add(hbox)
+        scroll = Gtk.ScrolledWindow()
+        scroll.set_hexpand(True)
+        scroll.set_vexpand(True)
+        scroll.set_kinetic_scrolling(False)
+        scroll.set_overlay_scrolling(True)
+        treeview = Gtk.TreeView()
+        treeview.set_can_focus(True)
+        treeview.set_has_tooltip(True)
+        treeview.set_grid_lines(Gtk.TreeViewGridLines.BOTH)
+        treeview_model = Gtk.ListStore(str, str, str)
+        treeview.set_model(treeview_model)
+        for (name, description, value) in variables:
+            treeview_model.append((name, description, value))
+        treeview_column_0 = Gtk.TreeViewColumn(
+            # Translators: Column heading of the table listing the variables
+            # for the currently selected input method
+            _('Variable'),
+            Gtk.CellRendererText(),
+            text=0)
+        treeview_column_0.set_sort_column_id(0)
+        treeview.append_column(treeview_column_0)
+        value_renderer = Gtk.CellRendererText()
+        treeview_column_2 = Gtk.TreeViewColumn(
+            # Translators: Column heading of the table listing the variables
+            # for the currently selected input method
+            _('Value'),
+            value_renderer,
+            text=2)
+        treeview_column_2.set_sort_column_id(2)
+        treeview.append_column(treeview_column_2)
+        value_renderer.set_property('editable', True)
+        value_renderer.connect(
+            'edited',
+            self._on_input_methods_options_popover_treeview_value_edited,
+            treeview_model)
+        treeview.connect(
+            'query-tooltip',
+            self._on_input_methods_options_popover_treeview_query_tooltip)
+        scroll.add(treeview)
+        vbox.add(scroll)
+        self._input_methods_options_popover.add(vbox)
+        if GTK_VERSION >= (3, 22, 0):
+            self._input_methods_options_popover.popup()
+        self._input_methods_options_popover.show_all()
+
+    def _on_input_methods_options_popover_treeview_value_edited(
+            self,
+            cell: Gtk.CellRendererText,
+            path: str,
+            new_edited_value: str,
+            model: Gtk.ListStore) -> None:
+        '''
+        Called when the value of an m17n input method variable has
+        been edited in the treeview
+        '''
+        ime = self._input_methods_listbox_selected_ime_name
+        old_variables: List[Tuple[str, str, str]] = []
+        try:
+            trans = m17n_translit.Transliterator(ime)
+            old_variables = trans.get_variables()
+        except ValueError as error:
+            LOGGER.exception(
+                'Exception when opening ime %s: %s: %s',
+                ime, error.__class__.__name__, error)
+        if not old_variables:
+            LOGGER.debug('Could not find any variables for ime %s', ime)
+            return
+        iterator = model.get_iter(path)
+        old_name = model.get_value(iterator, 0)
+        old_value = model.get_value(iterator, 2)
+        try:
+            trans.set_variables({old_name: new_edited_value})
+        except ValueError as error:
+            LOGGER.exception(
+                'Exception when setting %s to %s: %s: %s',
+                old_name, new_edited_value,
+                error.__class__.__name__, error)
+            LOGGER.debug('Trying to set default value now ...')
+            try:
+                trans.set_variables({old_name: ''})
+            except ValueError as error:
+                LOGGER.exception(
+                    'Exception when setting %s to %s: %s: %s',
+                    old_name, '',
+                    error.__class__.__name__, error)
+                LOGGER.debug('Giving up and returning.')
+                return
+        variables = trans.get_variables()
+        if variables == old_variables:
+            LOGGER.debug('No variables were changed when saving, returning.')
+            return
+        for (name, description, value) in variables:
+            if name != old_name:
+                continue
+            if value == old_value:
+                LOGGER.debug(
+                    'Value not changed, should never happen here, returning.')
+                return
+            if value != new_edited_value:
+                LOGGER.debug(
+                    'Tried to set %s to %s but actual result was %s',
+                    name, new_edited_value, value)
+            model.set_value(iterator, 2, value)
+            LOGGER.info('Successfully changed value to %s', value)
+            LOGGER.debug(
+                'Tell typing booster to reload all input methods.')
+            self._gsettings.set_value(
+                'inputmethodchangetimestamp',
+                GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
+
+    def _on_input_methods_options_popover_treeview_query_tooltip(
+            self,
+            treeview: Gtk.TreeView,
+            x: int,
+            y: int,
+            keyboard_tip: bool,
+            tooltip: Gtk.Tooltip) -> bool:
+        '''
+        Called to show the descriptions of the m17n input method variables
+        as tooltips.
+        '''
+        (is_treeview_row_at_coordinates, x, y,
+         model, path, iterator) = treeview.get_tooltip_context(
+             x, y, keyboard_tip)
+        if not is_treeview_row_at_coordinates:
+            return False
+        description = model.get_value(iterator, 1)
+        tooltip.set_text(description)
+        treeview.set_tooltip_row(tooltip, path)
+        return True
+
     def _on_input_methods_help_button_clicked(
             self, _button: Gtk.Button) -> None:
         '''
@@ -3558,6 +3776,19 @@ class SetupUI(Gtk.Window): # type: ignore
             self._input_methods_down_button.set_sensitive(
                 0 <= index < len(self._current_imes) - 1)
             self._input_methods_help_button.set_sensitive(True)
+            variables = []
+            try:
+                trans = m17n_translit.Transliterator(
+                    self._input_methods_listbox_selected_ime_name)
+                variables = trans.get_variables()
+            except ValueError as error:
+                LOGGER.exception(
+                    'Exception when opening ime %s: %s: %s',
+                    self._input_methods_listbox_selected_ime_name,
+                    error.__class__.__name__, error)
+            self._input_methods_options_button.set_sensitive(False)
+            if variables:
+                self._input_methods_options_button.set_sensitive(True)
         else:
             # all rows have been unselected
             self._input_methods_listbox_selected_ime_name = ''
@@ -3566,6 +3797,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self._input_methods_up_button.set_sensitive(False)
             self._input_methods_down_button.set_sensitive(False)
             self._input_methods_help_button.set_sensitive(False)
+            self._input_methods_options_button.set_sensitive(False)
 
     def _set_shortcut_button_sensitivity(self) -> None:
         '''Adjust the sensitivity values of the “Clear”, “Delete”, and “Add”
