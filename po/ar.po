@@ -3,23 +3,24 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Ahmed M. Farrag <a.m.farrag@gmail.com>, 2019, 2020.
 # Mike FABIAN <mfabian@redhat.com>, 2019.
+# Avid Seeker <avidseeker7@protonmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-08-07 11:58+0200\n"
-"PO-Revision-Date: 2020-03-24 16:38+0000\n"
-"Last-Translator: Ahmed M. Farrag <a.m.farrag@gmail.com>\n"
-"Language-Team: Arabic <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ar/>\n"
+"PO-Revision-Date: 2022-09-02 19:36+0000\n"
+"Last-Translator: Avid Seeker <avidseeker7@protonmail.com>\n"
+"Language-Team: Arabic <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 3.11.3\n"
+"X-Generator: Weblate 4.14\n"
 
 #: engine/emoji_picker.py:204
 msgid "Emoji Picker"
@@ -306,7 +307,7 @@ msgstr "مناطق"
 #. are seperated by punctuation or white space.
 #: engine/itb_util.py:2662
 msgid "Others, Miscellaneous, Various, Diverse"
-msgstr ""
+msgstr "أخرى، مُتنوّعة، مختلفة، متعددة"
 
 #: engine/itb_util.py:4106 engine/itb_util.py:4787
 msgid "File not found"
@@ -370,7 +371,9 @@ msgstr "أسلوب إدخال مُكمِل لتسريع الكتابة."
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:5377
 msgid "translator-credits"
-msgstr "أحمد فراج <afarrag@fedoraproject.org>، 2019"
+msgstr ""
+"أحمد فراج <afarrag@fedoraproject.org>، 2019\n"
+"AvidSeeker <avidseeker7@protonmail.com>"
 
 #: engine/itb_util.py:5385
 msgid "Online documentation:"
@@ -381,10 +384,8 @@ msgid "Preferences"
 msgstr "التفضيلات"
 
 #: setup/main.py:194
-#, fuzzy
-#| msgid "Set all to default"
 msgid "Restore all defaults"
-msgstr "إعادة الكل للوضع الافتراضي"
+msgstr "استرجع الوضع الافتراضي"
 
 #: setup/main.py:202 setup/main.py:5500
 msgid "_Close"
@@ -454,7 +455,7 @@ msgstr "التعرف على الكلام"
 #. again until the next key bound to this command is typed.
 #: setup/main.py:356
 msgid "Enable suggestions by key (Default is the Tab key)"
-msgstr "تشغيل الاقتراحات  بضغط مفتاح (الافتراضي هو مفتاح الجدول Tab)"
+msgstr "تشغيل الاقتراحات بضغط مفتاح (الافتراضي هو مفتاح الجدول Tab)"
 
 #: setup/main.py:358
 msgid ""
@@ -493,28 +494,26 @@ msgstr ""
 "الجدول ثانية سينقل الاختيار للاقتراح التالي ويفتح قائمة الاقتراحات كاملةَ."
 
 #: setup/main.py:399 setup/main.py:468
-#, fuzzy
-#| msgid "None"
 msgid "No"
-msgstr "بلا"
+msgstr "لا"
 
 #: setup/main.py:401
 msgid "Yes, with fallback to popup"
-msgstr ""
+msgstr "نعم، مع رجوع احتياطي إلى مُنبَثَق"
 
 #: setup/main.py:403
 msgid "Yes, without fallback to popup"
-msgstr ""
+msgstr "نعم، دون رجوع احتياطي إلى مُنبَثَق"
 
 #. Translators: Whether to automatically capitalize after
 #. punctuation.
 #: setup/main.py:429
 msgid "Auto capitalize"
-msgstr ""
+msgstr "كبتلة الحروف تلقائياً"
 
 #: setup/main.py:431
 msgid "Automatically capitalize after punctuation."
-msgstr ""
+msgstr "كبتلة الحروف تلقائياً بعد علامات الترقيم."
 
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
@@ -545,11 +544,11 @@ msgstr ""
 
 #: setup/main.py:470
 msgid "Yes, but only when extremely likely"
-msgstr ""
+msgstr "نعم، لكن فقط عندما تكون عالية الثقة"
 
 #: setup/main.py:472
 msgid "Yes, always"
-msgstr ""
+msgstr "نعم، دائماً"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
@@ -593,16 +592,16 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:551
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remember input mode"
-msgstr "حذف أسلوب إدخال"
+msgstr "تذكر وضع الإدخال"
 
 #: setup/main.py:553
 msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
+"إذا فُعِّل هذا الخيار، فإن آخر وضع إدخال مُستخدم (مُفعّل، موقف) سيُتذكَّر "
+"حتى بعد إعادة تشغيل الجلسة."
 
 #: setup/main.py:578
 msgid ""
@@ -612,9 +611,9 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
-"ما إذا كان ينبغي لرموز يونيكود والوجوه التعبيرية أن تُضمّن مع التنبؤات. الوجوه "
-"التعبيرية هي رسومات تعبيرية مثل  ☺♨⛵…. أما رموز يونيكود فهي رموز أخرى مثل "
-"الرموز الرياضياتية  (∀∑∯…)، والأسهم (←↑↔…)، ورموز العملات (€₹₺…)، وأنماط "
+"ما إذا كان ينبغي لرموز يونيكود والوجوه التعبيرية أن تُضمّن مع التنبؤات. "
+"الوجوه التعبيرية هي رسومات تعبيرية مثل ☺♨⛵…. أما رموز يونيكود فهي رموز أخرى "
+"مثل الرموز الرياضياتية (∀∑∯…)، والأسهم (←↑↔…)، ورموز العملات (€₹₺…)، وأنماط "
 "برايل (⠥⠩…)، وغيرها الكثير من الرموز. للدقة، هذه ليست وجوه تعبيرية، إلا أنها "
 "رموز مفيدة."
 
@@ -648,7 +647,7 @@ msgstr ""
 #: setup/main.py:641
 #, python-format
 msgid "Avoid using the %s function"
-msgstr ""
+msgstr "تجنب استعمال إجراء %s"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -673,6 +672,8 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
+"استعمل الحل المؤقت إذا كان إجراء %s لا يعمل. فعل هذا الخيار فقط في حالة "
+"الضرورة القصوى، فقد يتسبب بمشاكل، خصوصاً أنّ XIM مُستعمل."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it.
@@ -680,7 +681,7 @@ msgstr ""
 #. committed words.
 #: setup/main.py:682
 msgid "Enable reopening preedits"
-msgstr ""
+msgstr "تفعيل إعادة فتح ما قبل التعديل"
 
 #: setup/main.py:684
 msgid ""
@@ -688,21 +689,23 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
+"ما إذا كان مسموح بوضع كلمة في طور ما قبل التعديل عندما تكون المؤّشرة في "
+"نهاية أو بداية كلمة. تفعيل هذا الخيار مُفيد لتصحيح الكلمات المودَعة بالفعل."
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
 #. “Unicode symbols and emoji predictions” is off.
 #: setup/main.py:706
-#, fuzzy
-#| msgid "Auto commit characters:"
 msgid "Emoji trigger characters:"
-msgstr "حروف التأكيد التلقائي:"
+msgstr "الحروف المشغلة للإيموجي:"
 
 #: setup/main.py:708
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
 msgstr ""
+"الحروف في هذه القائمة تستدعي بحث إيموجي ورمز يونيكود حتى لو كان الخيار \"توقّ"
+"عات رموز اليونيكود والإيموجي\" غير مفعل."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -755,7 +758,7 @@ msgstr "عدم عرض اقتراحات عند كتابة عدد حروف أقل 
 #. sound is played on error
 #: setup/main.py:806
 msgid "Play sound file on error"
-msgstr ""
+msgstr "شغل ملفاً صوتياً في حال وجود خطأ"
 
 #: setup/main.py:808
 msgid ""
@@ -763,6 +766,8 @@ msgid ""
 "the simpleaudio module for Python3 is not installed, this option does "
 "nothing."
 msgstr ""
+"هنا تستطيع اختيار ما إذا كان الملف الصوتي تم تشغيله في حال وصول خطأز إن كانت "
+"وحدة simpleaudio للبايثون3 غير منصبة، فإن هذا الخيار لا يفعل شيئاً."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -843,7 +848,7 @@ msgstr "جعله افتراضيا"
 #. dictionaries to the default for the current locale.
 #: setup/main.py:994
 msgid "Set dictionaries to the default for the current locale."
-msgstr ""
+msgstr "ضبط القواميس إلى وضعها الافتراضي بالنسبة للمحلية الحالية."
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
@@ -883,7 +888,7 @@ msgstr "عرض بعض المساعدة حيال كيفية استخدام وسي
 #. input methods to the default for the current locale.
 #: setup/main.py:1110
 msgid "Set input methods to the default for the current locale."
-msgstr ""
+msgstr "ضبط طرق الإدخال إلى الوضع الافتراضي للمحلية الحالية."
 
 #: setup/main.py:1134
 msgid "Enter shortcut here:"
@@ -1133,32 +1138,24 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
 #: setup/main.py:1676
-#, fuzzy
-#| msgid "Use color for inline completion"
 msgid "Use color for compose preview"
-msgstr "استخدم لونًا للتكملة التلقائية المضمَّنة"
+msgstr "استخدم لونًا للتكملة للتأليف المُعايَن"
 
 #: setup/main.py:1678
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for a suggestion shown "
-#| "inline."
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
-msgstr "يمكنك هنا اختيار لونٍ ليُستخدم للاقتراحات المضمّنة."
+msgstr "يمكنك هنا اختيار لونٍ للتأليف المُعايَن."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
 #: setup/main.py:1706
-#, fuzzy
-#| msgid "Choose color for inline completion"
 msgid "Choose color for compose preview"
-msgstr "اختر لونًا للتكملة التلقائية المضمَّنة"
+msgstr "اختر لونًا للتأليف المُعايَن"
 
 #: setup/main.py:1708
 msgid "Here you can specify which color to use for the compose preview."
-msgstr ""
+msgstr "هنا تستطيع تحديد اللون المستخدم للتأليف المُعايَن."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
@@ -1304,21 +1301,15 @@ msgstr ""
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2001
-#, fuzzy
-#| msgid "Use label for dictionary suggestions"
 msgid "Use flags for dictionary suggestions"
-msgstr "استخدم علامة لاقتراحات القاموس"
+msgstr "استخدم أعلاماً لاقتراحات القاموس"
 
 #: setup/main.py:2003
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a label is used for candidates in the lookup "
-#| "table which come from a dictionary."
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
-"يمكنك هنا أن تختار إذا كنت ترغب أن تُستخدم علامة للاقتراحات من جدول البحث "
+"يمكنك هنا أن تختار إذا كنت ترغب أن تُستخدم أعلاماً للاقتراحات من جدول البحث "
 "السريع القادم من قاموس."
 
 #. Translators: A checkbox where one can choose whether a
@@ -1336,7 +1327,7 @@ msgstr "يمكنك أن تختار هنا ظهور علامة تبيّن انش�
 #. Translators:
 #: setup/main.py:2056 setup/main.py:2839
 msgid "Set “Google application credentials” .json file:"
-msgstr "إعداد ملف جيسون .json  الخاص ب\"اعتماديات تطبيقات غوغل\":"
+msgstr "إعداد ملف جيسون .json الخاص ب\"اعتماديات تطبيقات غوغل\":"
 
 #: setup/main.py:2058
 msgid "Full path of the “Google application credentials” .json file."
@@ -1374,16 +1365,12 @@ msgstr "هذا البرنامج يعمل بالفعل."
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
 #: setup/main.py:2471
-#, fuzzy
-#| msgid ""
-#| "Do you really want to set the key bindings for all commands to their "
-#| "defaults?"
 msgid "Do you really want to restore all default settings?"
-msgstr "هل ترغب حقا في إعادة تعيين ارتباطات المفاتيح لوضعها الافتراضي؟"
+msgstr "هل ترغب حقا في إعادة ضبط الإعدادات؟"
 
 #: setup/main.py:2917
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr "اختر ملف .wav الصوتي:"
 
 #: setup/main.py:3071
 msgid "Add dictionary"
