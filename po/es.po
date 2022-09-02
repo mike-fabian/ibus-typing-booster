@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-08-07 11:58+0200\n"
+"POT-Creation-Date: 2022-08-23 08:52+0200\n"
 "PO-Revision-Date: 2022-07-15 16:33+0000\n"
 "Last-Translator: Emilio Herrera <ehespinosa57@gmail.com>\n"
 "Language-Team: Spanish <https://translate.fedoraproject.org/projects/ibus-"
@@ -28,27 +28,27 @@ msgstr ""
 msgid "Emoji Picker"
 msgstr "Selector de emoyis"
 
-#: engine/emoji_picker.py:325
+#: engine/emoji_picker.py:312
 msgid "Clear recently used"
 msgstr "Vaciar utilizados recientemente"
 
-#: engine/emoji_picker.py:331 setup/main.py:188
+#: engine/emoji_picker.py:318 setup/main.py:188
 msgid "About"
 msgstr "Acerca de"
 
-#: engine/emoji_picker.py:335
+#: engine/emoji_picker.py:322
 msgid "Quit"
 msgstr "Salir"
 
-#: engine/emoji_picker.py:344
+#: engine/emoji_picker.py:331
 msgid "Search for emoji"
 msgstr "Buscar un emoyi"
 
-#: engine/emoji_picker.py:356
+#: engine/emoji_picker.py:343
 msgid "Set the font to display emoji"
 msgstr "Establecer el tipo de letra de los emoyis"
 
-#: engine/emoji_picker.py:364
+#: engine/emoji_picker.py:351
 msgid "Set font size"
 msgstr "Establecer el tamaño de letra"
 
@@ -60,11 +60,11 @@ msgstr "Establecer el tamaño de letra"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:385
+#: engine/emoji_picker.py:372
 msgid "Fallback"
 msgstr "Tipos de letra de reserva"
 
-#: engine/emoji_picker.py:387
+#: engine/emoji_picker.py:374
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -73,82 +73,82 @@ msgstr ""
 "secuencias de emoyis, que no puedan mostrarse con el tipo de letra "
 "seleccionado."
 
-#: engine/emoji_picker.py:463
+#: engine/emoji_picker.py:450
 msgid "Recently used"
 msgstr "Utilizados recientemente"
 
-#: engine/emoji_picker.py:642
+#: engine/emoji_picker.py:629
 msgid "Categories"
 msgstr "Categorías"
 
-#: engine/emoji_picker.py:643
+#: engine/emoji_picker.py:630
 msgid "Unicode categories"
 msgstr "Categorías de Unicode"
 
-#: engine/emoji_picker.py:644
+#: engine/emoji_picker.py:631
 msgid "Keywords"
 msgstr "Palabras clave"
 
-#: engine/emoji_picker.py:684
+#: engine/emoji_picker.py:671
 msgid "Fonts used to render this emoji:"
 msgstr "Tipos de letra utilizados para representar este emoyi:"
 
-#: engine/emoji_picker.py:701
+#: engine/emoji_picker.py:688
 msgid "Unicode Version:"
 msgstr "Versión de Unicode:"
 
-#: engine/emoji_picker.py:723 engine/emoji_picker.py:1832
+#: engine/emoji_picker.py:710 engine/emoji_picker.py:1819
 msgid "Left click to copy"
 msgstr "Botón principal del ratón para copiar"
 
-#: engine/emoji_picker.py:726
+#: engine/emoji_picker.py:713
 msgid "Long press or middle click for skin tones"
 msgstr "Pulsación prolongada o con botón central para los tonos de piel"
 
-#: engine/emoji_picker.py:727
+#: engine/emoji_picker.py:714
 msgid "Right click for info"
 msgstr "Botón secundario del ratón para información"
 
-#: engine/emoji_picker.py:1219
+#: engine/emoji_picker.py:1206
 msgid "Search Results"
 msgstr "Resultados de la búsqueda"
 
-#: engine/emoji_picker.py:1223
+#: engine/emoji_picker.py:1210
 msgid "Search produced empty result."
 msgstr "La búsqueda no produjo ningún resultado."
 
-#: engine/emoji_picker.py:1493 engine/emoji_picker.py:1620
+#: engine/emoji_picker.py:1480 engine/emoji_picker.py:1607
 msgid "Copied to clipboard!"
 msgstr "Se copió en el portapapeles."
 
-#: engine/emoji_picker.py:1944
+#: engine/emoji_picker.py:1931
 msgid "Lookup on emojipedia"
 msgstr "Buscar en Emojipedia"
 
-#: engine/emoji_picker.py:2066 engine/emoji_picker.py:2067
-#: engine/emoji_picker.py:2068 setup/main.py:1454
+#: engine/emoji_picker.py:2053 engine/emoji_picker.py:2054
+#: engine/emoji_picker.py:2055 setup/main.py:1454
 msgid "System default"
 msgstr "Predeterminado del sistema"
 
-#: engine/emoji_picker.py:2203
+#: engine/emoji_picker.py:2190
 msgid "Set Font"
 msgstr "Establecer tipo de letra"
 
-#: engine/hunspell_table.py:501 engine/hunspell_table.py:535
-#: engine/hunspell_table.py:556
+#: engine/hunspell_table.py:500 engine/hunspell_table.py:534
+#: engine/hunspell_table.py:555
 msgid "Off"
 msgstr "Desactivado"
 
-#: engine/hunspell_table.py:506 engine/hunspell_table.py:540
-#: engine/hunspell_table.py:561
+#: engine/hunspell_table.py:505 engine/hunspell_table.py:539
+#: engine/hunspell_table.py:560
 msgid "On"
 msgstr "Activado"
 
-#: engine/hunspell_table.py:525
+#: engine/hunspell_table.py:524
 msgid "Input mode"
 msgstr "Modo de entrada"
 
-#: engine/hunspell_table.py:526
+#: engine/hunspell_table.py:525
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Aquí puede activar o desactivar ibus-typing-booster."
 
@@ -159,7 +159,7 @@ msgstr "Aquí puede activar o desactivar ibus-typing-booster."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:545 engine/hunspell_table.py:547 setup/main.py:576
+#: engine/hunspell_table.py:544 engine/hunspell_table.py:546 setup/main.py:576
 msgid "Unicode symbols and emoji predictions"
 msgstr "Predicciones de símbolos y emoyis de Unicode"
 
@@ -170,61 +170,61 @@ msgstr "Predicciones de símbolos y emoyis de Unicode"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:566 engine/hunspell_table.py:567 setup/main.py:605
+#: engine/hunspell_table.py:565 engine/hunspell_table.py:566 setup/main.py:605
 msgid "Off the record mode"
 msgstr "Modo confidencial"
 
-#: engine/hunspell_table.py:1566
+#: engine/hunspell_table.py:1565
 msgid "Highest priority dictionary"
 msgstr "Diccionario prioritario"
 
-#: engine/hunspell_table.py:1567
+#: engine/hunspell_table.py:1566
 msgid "Choose highest priority dictionary"
 msgstr "Elija el diccionario prioritario"
 
-#: engine/hunspell_table.py:1596
+#: engine/hunspell_table.py:1595
 msgid "Preedit input method"
 msgstr "Método de entrada de preedición"
 
-#: engine/hunspell_table.py:1597
+#: engine/hunspell_table.py:1596
 msgid "Switch preedit input method"
 msgstr "Conmutar método de entrada de preedición"
 
-#: engine/hunspell_table.py:1911
+#: engine/hunspell_table.py:1910
 msgid "Setup"
 msgstr "Configuración"
 
-#: engine/hunspell_table.py:1914 setup/main.py:152
+#: engine/hunspell_table.py:1913 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferencias de ibus-typing-booster"
 
-#: engine/hunspell_table.py:4720
+#: engine/hunspell_table.py:4719
 msgid "Failed to import Google speech-to-text."
 msgstr "Falló la importación de speech-to-text de Google."
 
-#: engine/hunspell_table.py:4723
+#: engine/hunspell_table.py:4722
 msgid "Failed to import pyaudio."
 msgstr "Falló la importación de pyaudio."
 
-#: engine/hunspell_table.py:4726
+#: engine/hunspell_table.py:4725
 msgid "Failed to import queue."
 msgstr "Falló la importación de la cola."
 
-#: engine/hunspell_table.py:4731
+#: engine/hunspell_table.py:4730
 msgid "No supported language for speech recognition."
 msgstr "No se admite ningún idioma para el reconocimiento de voz."
 
-#: engine/hunspell_table.py:4735
+#: engine/hunspell_table.py:4734
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "No se encontró el archivo de credenciales de aplicaciones de Google «%s»."
 
-#: engine/hunspell_table.py:4748
+#: engine/hunspell_table.py:4747
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Falló la inicialización de speech-to-text de Google. Lea debug.log."
 
-#: engine/hunspell_table.py:4856
+#: engine/hunspell_table.py:4855
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Error en speech-to-text de Google. Lea debug.log."
 

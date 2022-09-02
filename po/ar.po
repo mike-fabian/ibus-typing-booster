@@ -9,11 +9,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-08-07 11:58+0200\n"
+"POT-Creation-Date: 2022-08-23 08:52+0200\n"
 "PO-Revision-Date: 2022-09-02 19:36+0000\n"
 "Last-Translator: Avid Seeker <avidseeker7@protonmail.com>\n"
-"Language-Team: Arabic <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/ar/>\n"
+"Language-Team: Arabic <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,27 +26,27 @@ msgstr ""
 msgid "Emoji Picker"
 msgstr "منتقي الوجوه التعبيرية"
 
-#: engine/emoji_picker.py:325
+#: engine/emoji_picker.py:312
 msgid "Clear recently used"
 msgstr "احذف المستَخدم حديثًا"
 
-#: engine/emoji_picker.py:331 setup/main.py:188
+#: engine/emoji_picker.py:318 setup/main.py:188
 msgid "About"
 msgstr "عن"
 
-#: engine/emoji_picker.py:335
+#: engine/emoji_picker.py:322
 msgid "Quit"
 msgstr "خروج"
 
-#: engine/emoji_picker.py:344
+#: engine/emoji_picker.py:331
 msgid "Search for emoji"
 msgstr "البحث عن الوجوه التعبيرية"
 
-#: engine/emoji_picker.py:356
+#: engine/emoji_picker.py:343
 msgid "Set the font to display emoji"
 msgstr "اختر نوع خط عرض الوجوه التعبيرية"
 
-#: engine/emoji_picker.py:364
+#: engine/emoji_picker.py:351
 msgid "Set font size"
 msgstr "اختر حجم الخط"
 
@@ -58,11 +58,11 @@ msgstr "اختر حجم الخط"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:385
+#: engine/emoji_picker.py:372
 msgid "Fallback"
 msgstr "الرجوع لبديل"
 
-#: engine/emoji_picker.py:387
+#: engine/emoji_picker.py:374
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -70,82 +70,82 @@ msgstr ""
 "ما إذا كنت ترغب في استخدام خط بديل للوجوده التعبيرية أو أجزائها التي لا يمكن "
 "عرضها باستخدام الخط المختار."
 
-#: engine/emoji_picker.py:463
+#: engine/emoji_picker.py:450
 msgid "Recently used"
 msgstr "المستخدَم حديثًا"
 
-#: engine/emoji_picker.py:642
+#: engine/emoji_picker.py:629
 msgid "Categories"
 msgstr "التصنيفات"
 
-#: engine/emoji_picker.py:643
+#: engine/emoji_picker.py:630
 msgid "Unicode categories"
 msgstr "تصنيفات يونيكود"
 
-#: engine/emoji_picker.py:644
+#: engine/emoji_picker.py:631
 msgid "Keywords"
 msgstr "الكلمات المفتاحية"
 
-#: engine/emoji_picker.py:684
+#: engine/emoji_picker.py:671
 msgid "Fonts used to render this emoji:"
 msgstr "الخطوط المستخدمة لرسم هذا الوجه التعبيري:"
 
-#: engine/emoji_picker.py:701
+#: engine/emoji_picker.py:688
 msgid "Unicode Version:"
 msgstr "نسخة يونيكود:"
 
-#: engine/emoji_picker.py:723 engine/emoji_picker.py:1832
+#: engine/emoji_picker.py:710 engine/emoji_picker.py:1819
 msgid "Left click to copy"
 msgstr "انقر بالزر الأيسر للنسخ"
 
-#: engine/emoji_picker.py:726
+#: engine/emoji_picker.py:713
 msgid "Long press or middle click for skin tones"
 msgstr "انقر نقرًا طويلًا أو بالزر الأوسط لتغيير لون الجلد"
 
-#: engine/emoji_picker.py:727
+#: engine/emoji_picker.py:714
 msgid "Right click for info"
 msgstr "انقر بالزر الأيمن للتفاصيل"
 
-#: engine/emoji_picker.py:1219
+#: engine/emoji_picker.py:1206
 msgid "Search Results"
 msgstr "نتائج البحث"
 
-#: engine/emoji_picker.py:1223
+#: engine/emoji_picker.py:1210
 msgid "Search produced empty result."
 msgstr "لم يسفر البحث عن أية نتائج."
 
-#: engine/emoji_picker.py:1493 engine/emoji_picker.py:1620
+#: engine/emoji_picker.py:1480 engine/emoji_picker.py:1607
 msgid "Copied to clipboard!"
 msgstr "نُسخ للحافظة!"
 
-#: engine/emoji_picker.py:1944
+#: engine/emoji_picker.py:1931
 msgid "Lookup on emojipedia"
 msgstr "ابحث في موسوعة الوجوه التعبيرية emojipedia"
 
-#: engine/emoji_picker.py:2066 engine/emoji_picker.py:2067
-#: engine/emoji_picker.py:2068 setup/main.py:1454
+#: engine/emoji_picker.py:2053 engine/emoji_picker.py:2054
+#: engine/emoji_picker.py:2055 setup/main.py:1454
 msgid "System default"
 msgstr "الوضع الافتراضي للنظام"
 
-#: engine/emoji_picker.py:2203
+#: engine/emoji_picker.py:2190
 msgid "Set Font"
 msgstr "اختر الخط"
 
-#: engine/hunspell_table.py:501 engine/hunspell_table.py:535
-#: engine/hunspell_table.py:556
+#: engine/hunspell_table.py:500 engine/hunspell_table.py:534
+#: engine/hunspell_table.py:555
 msgid "Off"
 msgstr "إيقاف التشغيل"
 
-#: engine/hunspell_table.py:506 engine/hunspell_table.py:540
-#: engine/hunspell_table.py:561
+#: engine/hunspell_table.py:505 engine/hunspell_table.py:539
+#: engine/hunspell_table.py:560
 msgid "On"
 msgstr "تشغيل"
 
-#: engine/hunspell_table.py:525
+#: engine/hunspell_table.py:524
 msgid "Input mode"
 msgstr "وضع الإدخال"
 
-#: engine/hunspell_table.py:526
+#: engine/hunspell_table.py:525
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "هنا يمكنك تشغيل وإيقاف ibus-typing-booster."
 
@@ -156,7 +156,7 @@ msgstr "هنا يمكنك تشغيل وإيقاف ibus-typing-booster."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:545 engine/hunspell_table.py:547 setup/main.py:576
+#: engine/hunspell_table.py:544 engine/hunspell_table.py:546 setup/main.py:576
 msgid "Unicode symbols and emoji predictions"
 msgstr "تنبؤات رموز ووجوه يونيكود التعبيرية"
 
@@ -167,60 +167,60 @@ msgstr "تنبؤات رموز ووجوه يونيكود التعبيرية"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:566 engine/hunspell_table.py:567 setup/main.py:605
+#: engine/hunspell_table.py:565 engine/hunspell_table.py:566 setup/main.py:605
 msgid "Off the record mode"
 msgstr "وضع عدم التسجيل"
 
-#: engine/hunspell_table.py:1566
+#: engine/hunspell_table.py:1565
 msgid "Highest priority dictionary"
 msgstr "القاموس الأَوْلى"
 
-#: engine/hunspell_table.py:1567
+#: engine/hunspell_table.py:1566
 msgid "Choose highest priority dictionary"
 msgstr "اختر القاموس الأَوْلى"
 
-#: engine/hunspell_table.py:1596
+#: engine/hunspell_table.py:1595
 msgid "Preedit input method"
 msgstr "وضع إدخال التحرير المبدأي"
 
-#: engine/hunspell_table.py:1597
+#: engine/hunspell_table.py:1596
 msgid "Switch preedit input method"
 msgstr "تغيير وسيلة إدخال التحرير المبدأي"
 
-#: engine/hunspell_table.py:1911
+#: engine/hunspell_table.py:1910
 msgid "Setup"
 msgstr "الإعدادات"
 
-#: engine/hunspell_table.py:1914 setup/main.py:152
+#: engine/hunspell_table.py:1913 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr "تفضيلات ibus-typing-booster"
 
-#: engine/hunspell_table.py:4720
+#: engine/hunspell_table.py:4719
 msgid "Failed to import Google speech-to-text."
 msgstr "فشل استيراد محرك غوغل لتحويل الحديث لنصوص."
 
-#: engine/hunspell_table.py:4723
+#: engine/hunspell_table.py:4722
 msgid "Failed to import pyaudio."
 msgstr "فشل استيراد pyaudio."
 
-#: engine/hunspell_table.py:4726
+#: engine/hunspell_table.py:4725
 msgid "Failed to import queue."
 msgstr "فشل استيراد طابور الانتظار."
 
-#: engine/hunspell_table.py:4731
+#: engine/hunspell_table.py:4730
 msgid "No supported language for speech recognition."
 msgstr "لا توجد لغة مدعومة للتعرف على الكلام."
 
-#: engine/hunspell_table.py:4735
+#: engine/hunspell_table.py:4734
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "ملف اعتماد تطبيقات غوغل %s غير موجود."
 
-#: engine/hunspell_table.py:4748
+#: engine/hunspell_table.py:4747
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "فشل بدء محرك غوغل لتحويل الكلام لنصوص. طالع السجل debug.log."
 
-#: engine/hunspell_table.py:4856
+#: engine/hunspell_table.py:4855
 msgid "Google speech-to-text error. See debug.log."
 msgstr "وقع خطأ في محرك غوغل لتحويل الكام لنصوص. طالع السجل debug.log."
 
@@ -600,8 +600,8 @@ msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
-"إذا فُعِّل هذا الخيار، فإن آخر وضع إدخال مُستخدم (مُفعّل، موقف) سيُتذكَّر "
-"حتى بعد إعادة تشغيل الجلسة."
+"إذا فُعِّل هذا الخيار، فإن آخر وضع إدخال مُستخدم (مُفعّل، موقف) سيُتذكَّر حتى بعد "
+"إعادة تشغيل الجلسة."
 
 #: setup/main.py:578
 msgid ""
@@ -611,9 +611,9 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
-"ما إذا كان ينبغي لرموز يونيكود والوجوه التعبيرية أن تُضمّن مع التنبؤات. "
-"الوجوه التعبيرية هي رسومات تعبيرية مثل ☺♨⛵…. أما رموز يونيكود فهي رموز أخرى "
-"مثل الرموز الرياضياتية (∀∑∯…)، والأسهم (←↑↔…)، ورموز العملات (€₹₺…)، وأنماط "
+"ما إذا كان ينبغي لرموز يونيكود والوجوه التعبيرية أن تُضمّن مع التنبؤات. الوجوه "
+"التعبيرية هي رسومات تعبيرية مثل ☺♨⛵…. أما رموز يونيكود فهي رموز أخرى مثل "
+"الرموز الرياضياتية (∀∑∯…)، والأسهم (←↑↔…)، ورموز العملات (€₹₺…)، وأنماط "
 "برايل (⠥⠩…)، وغيرها الكثير من الرموز. للدقة، هذه ليست وجوه تعبيرية، إلا أنها "
 "رموز مفيدة."
 
@@ -689,8 +689,8 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
-"ما إذا كان مسموح بوضع كلمة في طور ما قبل التعديل عندما تكون المؤّشرة في "
-"نهاية أو بداية كلمة. تفعيل هذا الخيار مُفيد لتصحيح الكلمات المودَعة بالفعل."
+"ما إذا كان مسموح بوضع كلمة في طور ما قبل التعديل عندما تكون المؤّشرة في نهاية "
+"أو بداية كلمة. تفعيل هذا الخيار مُفيد لتصحيح الكلمات المودَعة بالفعل."
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
@@ -704,8 +704,8 @@ msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
 msgstr ""
-"الحروف في هذه القائمة تستدعي بحث إيموجي ورمز يونيكود حتى لو كان الخيار \"توقّ"
-"عات رموز اليونيكود والإيموجي\" غير مفعل."
+"الحروف في هذه القائمة تستدعي بحث إيموجي ورمز يونيكود حتى لو كان الخيار "
+"\"توقّعات رموز اليونيكود والإيموجي\" غير مفعل."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
