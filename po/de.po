@@ -14,16 +14,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-09-02 23:29+0200\n"
-"PO-Revision-Date: 2022-07-15 11:34+0000\n"
+"PO-Revision-Date: 2022-09-02 21:41+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 4.14\n"
 
 #: engine/emoji_picker.py:204
 msgid "Emoji Picker"
@@ -919,11 +919,8 @@ msgstr "Hilfe zur Benutzung der oben ausgewählten Eingabemethode anzeigen."
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1112
-#, fuzzy
-#| msgid ""
-#| "Display some help showing how to use the input method selected above."
 msgid "Options for the input method selected above."
-msgstr "Hilfe zur Benutzung der oben ausgewählten Eingabemethode anzeigen."
+msgstr "Optionen für die oben ausgewählte Inputmethode."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
@@ -1450,13 +1447,13 @@ msgstr "Eingabemethode hinzufügen"
 #. for the currently selected input method
 #: setup/main.py:3598
 msgid "Variable"
-msgstr ""
+msgstr "Variable"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
 #: setup/main.py:3607
 msgid "Value"
-msgstr ""
+msgstr "Wert"
 
 #: setup/main.py:4145
 #, python-format
