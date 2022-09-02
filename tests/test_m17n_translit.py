@@ -1077,5 +1077,59 @@ class M17nTranslitTestCase(unittest.TestCase):
             ';; -*- mode:lisp; coding:utf-8 -*-\n'
             )
 
+    def test_set_variables_reload_input_method(self) -> None:
+        trans = self.get_transliterator_or_skip('bn-national-jatiya')
+        self.assertEqual(
+            trans.get_variables(),
+            [('use-automatic-vowel-forming',
+              'If this variable is 1 (the default), automatic vowel forming is used.\n'
+              'For example, a dependent vowel like া is automatically converted to\n'
+              'the independent form আ if it is not typed after a consonant.',
+              '1')])
+        self.assertEqual(trans.transliterate(['a']), 'ঋ')  # U+098B BENGALI LETTER VOCALIC R
+        trans.set_variables({'use-automatic-vowel-forming': '0'})
+        with open(M17N_CONFIG_FILE, mode='rt', encoding='utf-8') as config_file:
+            config_file_contents = config_file.read()
+        self.assertEqual(
+            config_file_contents,
+            ';; -*- mode:lisp; coding:utf-8 -*-\n'
+            '((input-method bn national-jatiya)\n'
+            ' (variable\n'
+            '  (use-automatic-vowel-forming nil 0)))\n'
+            )
+        # Changing the variable has an immediate effect on the already existing
+        # trans object:
+        self.assertEqual(trans.transliterate(['a']), 'ৃ')  # U+09C3 BENGALI VOWEL SIGN VOCALIC R
+        # reinitialize m17n_translit:
+        m17n_translit._del()
+        m17n_translit._init()
+        # using the old trans for example like
+        # trans.transliterate(['a']) would segfault now, we need to
+        # get a new object and check that it uses the new variable
+        # value as well:
+        trans = self.get_transliterator_or_skip('bn-national-jatiya')
+        self.assertEqual(trans.transliterate(['a']), 'ৃ')  # U+09C3 BENGALI VOWEL SIGN VOCALIC R
+        # set the default again:
+        trans.set_variables({'use-automatic-vowel-forming': ''})
+        # Setting the *global* default value like this should make the config
+        # file empty (except for the comment line at the top):
+        with open(M17N_CONFIG_FILE, mode='rt', encoding='utf-8') as config_file:
+            config_file_contents = config_file.read()
+        self.assertEqual(
+            config_file_contents,
+            ';; -*- mode:lisp; coding:utf-8 -*-\n'
+            )
+        # Again the change has an immediate effect of the existing trans object:
+        self.assertEqual(trans.transliterate(['a']), 'ঋ')  # U+098B BENGALI LETTER VOCALIC R
+        # reinitialize m17n_translit:
+        m17n_translit._del()
+        m17n_translit._init()
+        # using the old trans for example like
+        # trans.transliterate(['a']) would segfault now, we need to
+        # get a new object and check that it uses the new variable
+        # value as well:
+        trans = self.get_transliterator_or_skip('bn-national-jatiya')
+        self.assertEqual(trans.transliterate(['a']), 'ঋ')  # U+098B BENGALI LETTER VOCALIC R
+
 if __name__ == '__main__':
     unittest.main()
