@@ -10,8 +10,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-07-26 02:47+0200\n"
-"PO-Revision-Date: 2022-09-01 11:22+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"PO-Revision-Date: 2022-09-02 19:36+0000\n"
+"Last-Translator: Mahmudul Hasan <ptcmahmudulhasa@gmail.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/bn/>\n"
 "Language: bn\n"
@@ -96,7 +96,7 @@ msgstr "ইউনিকোড সংস্করণ:"
 #: engine/emoji_picker.py:722 engine/emoji_picker.py:1830
 #: engine/emoji_picker.py:723 engine/emoji_picker.py:1832
 msgid "Left click to copy"
-msgstr "অনুলিপি করতে বাম ক্লিক করুণ"
+msgstr "অনুলিপি করতে বাম ক্লিক করুন"
 
 #: engine/emoji_picker.py:725 engine/emoji_picker.py:726
 msgid "Long press or middle click for skin tones"
@@ -187,7 +187,7 @@ msgstr "সর্বোচ্চ অগ্রাধিকার অভিধা�
 
 #: engine/hunspell_table.py:1577 engine/hunspell_table.py:1596
 msgid "Preedit input method"
-msgstr "প্রিডিট"
+msgstr "প্রিডিট ইনপুট পদ্ধতি"
 
 #: engine/hunspell_table.py:1578 engine/hunspell_table.py:1597
 msgid "Switch preedit input method"
@@ -576,6 +576,8 @@ msgid ""
 "Add a space if a candidate from the candidate list is committed by clicking "
 "it with the mouse."
 msgstr ""
+"একটি স্পেস যোগ করুন যদি শব্দ পরামর্শ তালিকা থেকে কোনো শব্দ মাউসের মাধ্যমে "
+"ক্লিক করে প্রতিশ্রুতিবদ্ধ করা হয়।"
 
 #. Translators: If more then one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -585,7 +587,7 @@ msgstr ""
 #. the session is restarted.
 #: setup/main.py:523
 msgid "Remember last used preedit input method"
-msgstr ""
+msgstr "সর্বশেষ ব্যবহৃত প্রিডিট ইনপুট পদ্ধতি মনে রাখবেন"
 
 #: setup/main.py:525
 msgid ""
@@ -594,6 +596,11 @@ msgid ""
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
 msgstr ""
+"যদি একের অধিক ইনপুট পদ্ধতি একই সময় ব্যবহার করা হয়ে থাকে, তাহলে তাদের মধ্যে "
+"একটি প্রিডিটের জন্য ব্যবহার করা হয়। ইনপুট পদ্ধতি কোনটি প্রিডিটের জন্য ব্যবহা"
+"র করা হবে তা মেনু বা শর্টকাট কীগুলির মাধ্যমে পরিবর্তন করা যেতে পারে। এই "
+"বিকল্পটি সক্রিয় থাকলে, সেশন পুনরায় আরম্ভ করা হলেও এই ধরনের পরিবর্তন মনে "
+"রাখা হয়।"
 
 #. Translators: If more then one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -603,13 +610,15 @@ msgstr ""
 #. the session is restarted.
 #: setup/main.py:551
 msgid "Remember input mode"
-msgstr ""
+msgstr "ইনপুট মোড মনে রাখবেন"
 
 #: setup/main.py:553
 msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
+"যদি এই বিকল্পটি সক্রিয় করা থাকে, শেষ ব্যবহৃত ইনপুট মোড (চালু/বন্ধ) মনে রাখা "
+"হয় এমনকি সেশনটি পুনরায় চালু করা হলেও।"
 
 #: setup/main.py:578
 msgid ""
