@@ -10,10 +10,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-09-02 23:29+0200\n"
-"PO-Revision-Date: 2022-09-02 20:00+0000\n"
+"PO-Revision-Date: 2022-09-02 21:47+0000\n"
 "Last-Translator: Avid Seeker <avidseeker7@protonmail.com>\n"
-"Language-Team: Arabic <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ar/>\n"
+"Language-Team: Arabic <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -888,11 +888,8 @@ msgstr "عرض بعض المساعدة حيال كيفية استخدام وسي
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1112
-#, fuzzy
-#| msgid ""
-#| "Display some help showing how to use the input method selected above."
 msgid "Options for the input method selected above."
-msgstr "عرض بعض المساعدة حيال كيفية استخدام وسيلة الإدخال المختارة أعلاه."
+msgstr "تجد خيارات وسيلة الإدخال المحددة أعلاه."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
@@ -1394,13 +1391,13 @@ msgstr "إضافة وسيلة إدخال"
 #. for the currently selected input method
 #: setup/main.py:3598
 msgid "Variable"
-msgstr ""
+msgstr "متغير"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
 #: setup/main.py:3607
 msgid "Value"
-msgstr ""
+msgstr "قيمة"
 
 #: setup/main.py:4145
 #, python-format
