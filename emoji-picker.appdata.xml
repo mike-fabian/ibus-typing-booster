@@ -39,6 +39,43 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.19.0" date="2022-09-09" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.19.0</url>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/383">
+          github-issues#383: Save horizontal space to make the new Georgian
+          translations fit better on small screens
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/379">
+           github-issues#379: Make compose support work for sequences
+           starting with keys other than Multi_key and dead keys
+        </issue>
+        <issue>
+          Update emoji annotations from CLDR
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/377">
+           github-issues#377: Stop using deprecated keyword arguments
+           “flags” and “message_format” when creating
+           Gtk.MessageDialog()
+        </issue>
+        <issue>
+          Use ['ar-kbd', 'NoIME'] by default for all Arabic locales
+          instead of just ['NoIME']
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/360">
+          github-issues#360: Make it possible to set options for m17n
+          input methods in the typing booster setup tool
+        </issue>
+        <issue>
+          Translation update from Weblate (ar 100%, bn 67% (new!), de
+          100%, ka 100% (new!), nl 100%, pl 100%, sv 100%, tr 100%, uk
+          100%)
+        </issue>
+      </issues>
+    </release>
     <release version="2.18.10" date="2022-09-01" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
