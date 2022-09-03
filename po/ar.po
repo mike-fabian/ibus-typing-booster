@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-09-02 23:29+0200\n"
-"PO-Revision-Date: 2022-09-02 21:47+0000\n"
+"PO-Revision-Date: 2022-09-03 07:33+0000\n"
 "Last-Translator: Avid Seeker <avidseeker7@protonmail.com>\n"
 "Language-Team: Arabic <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ar/>\n"
@@ -24,11 +24,11 @@ msgstr ""
 
 #: engine/emoji_picker.py:204
 msgid "Emoji Picker"
-msgstr "منتقي الوجوه التعبيرية"
+msgstr "منتقي الإيموجي"
 
 #: engine/emoji_picker.py:312
 msgid "Clear recently used"
-msgstr "احذف المستَخدم حديثًا"
+msgstr "مسح المُستعمل حديثاً"
 
 #: engine/emoji_picker.py:318 setup/main.py:188
 msgid "About"
@@ -40,15 +40,15 @@ msgstr "خروج"
 
 #: engine/emoji_picker.py:331
 msgid "Search for emoji"
-msgstr "البحث عن الوجوه التعبيرية"
+msgstr "البحث عن إيموجي"
 
 #: engine/emoji_picker.py:343
 msgid "Set the font to display emoji"
-msgstr "اختر نوع خط عرض الوجوه التعبيرية"
+msgstr "ضبط خط عرض الإيموجي"
 
 #: engine/emoji_picker.py:351
 msgid "Set font size"
-msgstr "اختر حجم الخط"
+msgstr "ضبط حجم الخط"
 
 #. Translators: This is a checkbox which enables or disables
 #. the pango font fallback. If font fallback is off, only the
@@ -67,8 +67,8 @@ msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
-"ما إذا كنت ترغب في استخدام خط بديل للوجوده التعبيرية أو أجزائها التي لا يمكن "
-"عرضها باستخدام الخط المختار."
+"ما إذا أُريد استخدام خط احتياطي للإيموجي أو أجزائها التي لا يمكن عرضها "
+"باستخدام الخط المحدد."
 
 #: engine/emoji_picker.py:450
 msgid "Recently used"
@@ -100,7 +100,7 @@ msgstr "انقر بالزر الأيسر للنسخ"
 
 #: engine/emoji_picker.py:713
 msgid "Long press or middle click for skin tones"
-msgstr "انقر نقرًا طويلًا أو بالزر الأوسط لتغيير لون الجلد"
+msgstr "انقر طويلًا أو بالزر الأوسط لتغيير لون البشرة"
 
 #: engine/emoji_picker.py:714
 msgid "Right click for info"
@@ -120,12 +120,12 @@ msgstr "نُسخ للحافظة!"
 
 #: engine/emoji_picker.py:1931
 msgid "Lookup on emojipedia"
-msgstr "ابحث في موسوعة الوجوه التعبيرية emojipedia"
+msgstr "ابحث في موسوعة الإيموجي emojipedia"
 
 #: engine/emoji_picker.py:2053 engine/emoji_picker.py:2054
 #: engine/emoji_picker.py:2055 setup/main.py:1470
 msgid "System default"
-msgstr "الوضع الافتراضي للنظام"
+msgstr "وضع النظام الافتراضي"
 
 #: engine/emoji_picker.py:2190
 msgid "Set Font"
