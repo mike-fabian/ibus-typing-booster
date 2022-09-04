@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-09-02 23:29+0200\n"
-"PO-Revision-Date: 2022-09-03 18:00+0000\n"
+"PO-Revision-Date: 2022-09-04 18:51+0000\n"
 "Last-Translator: Mahmudul Hasan <ptcmahmudulhasa@gmail.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/bn/>\n"
@@ -83,7 +83,7 @@ msgstr "ইউনিকোড বিভাগ"
 
 #: engine/emoji_picker.py:631
 msgid "Keywords"
-msgstr "বিষয়কসূচক শব্দ গুলো"
+msgstr "বিষয়কসূচক শব্দগুলো"
 
 #: engine/emoji_picker.py:671
 msgid "Fonts used to render this emoji:"
@@ -259,12 +259,12 @@ msgstr "বস্তু সামগ্রী"
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:833 engine/itb_emoji.py:1026
 msgid "symbols"
-msgstr "প্রতীক গুলো"
+msgstr "প্রতীকগুলো"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:834 engine/itb_emoji.py:1012
 msgid "flags"
-msgstr "পতাকা গুলো"
+msgstr "পতাকাগুলো"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
@@ -395,7 +395,7 @@ msgstr "_বন্ধ"
 #. in.
 #: setup/main.py:227
 msgid "Dictionaries and input methods"
-msgstr "অভিধান এবং ইনপুট পদ্ধতি গুলো"
+msgstr "অভিধান এবং ইনপুট পদ্ধতিগুলো"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence the
@@ -535,12 +535,12 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
-"আপনি যা টাইপ করবেন তা স্বয়ংক্রিয়ভাবে সম্ভাব্য সেরা শব্দ বা শব্দ গুচ্ছ বেছে নেওয়ার "
-"মাধ্যমে উপযুক্ত শব্দের কাছে সংশোধন করা হবে। এই বিকল্পটি বন্ধ থাকলে আপনাকে পরবর্তী "
-"শব্দ নির্বাচন করতে কী বন্ধন ব্যবহার করে ম্যানুয়ালি একটি শব্দ নির্বাচন করতে হবে। যদি "
-"এই বিকল্পটি চালু থাকে এবং আপনি স্বয়ংক্রিয়ভাবে নির্বাচিত শব্দ ব্যবহার করতে না চান, "
-"তাহলে আপনি \"বাতিল\" কমান্ডের জন্য কী বন্ধন ব্যবহার করতে পারেন যা সমস্ত শব্দ "
-"অনির্বাচন করবে।"
+"আপনি যা টাইপ করবেন তা স্বয়ংক্রিয়ভাবে সম্ভাব্য সেরা শব্দ বা শব্দগুচ্ছ বেছে "
+"নেওয়ার মাধ্যমে উপযুক্ত শব্দের কাছে সংশোধন করা হবে। এই বিকল্পটি বন্ধ থাকলে "
+"আপনাকে পরবর্তী শব্দ নির্বাচন করতে কী বন্ধন ব্যবহার করে ম্যানুয়ালি একটি শব্দ "
+"নির্বাচন করতে হবে। যদি এই বিকল্পটি চালু থাকে এবং আপনি স্বয়ংক্রিয়ভাবে "
+"নির্বাচিত শব্দ ব্যবহার করতে না চান, তাহলে আপনি \"বাতিল\" কমান্ডের জন্য কী বন্"
+"ধন ব্যবহার করতে পারেন যা সমস্ত শব্দ অনির্বাচন করবে।"
 
 #: setup/main.py:470
 msgid "Yes, but only when extremely likely"
@@ -653,7 +653,7 @@ msgstr ""
 #: setup/main.py:641
 #, python-format
 msgid "Avoid using the %s function"
-msgstr ""
+msgstr "%s ফাংশন ব্যবহার করা এড়িয়ে চলুন"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -678,6 +678,9 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
+"%s ফাংশন নষ্ট হলে একটি সমাধান ব্যবহার করুন। শুধুমাত্র প্রয়োজন হলেই এই "
+"বিকল্পটি সক্রিয় করুন, এটি সমস্যাও সৃষ্টি করতে পারে, বিশেষ করে যখন এটি XIM "
+"ব্যবহার করে।"
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it.
@@ -685,7 +688,7 @@ msgstr ""
 #. committed words.
 #: setup/main.py:682
 msgid "Enable reopening preedits"
-msgstr ""
+msgstr "প্রিডিটগুলি পুনরায় খোলার সক্ষম করুন"
 
 #: setup/main.py:684
 msgid ""
@@ -693,19 +696,24 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
+"যখন কিনা কার্সার শব্দের শেষ অথবা শুরুতে চলে যায় তখন প্রিডিটে একটি শব্দ "
+"ফিরিয়ে আনার অনুমতি দেওয়া হয়। এই বিকল্পটি সক্রিয় করলে ইতিমধ্যে "
+"প্রতিশ্রুতিবদ্ধ শব্দগুলি সংশোধন করতে কার্যকর ভূমিকা পালন করবে।"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
 #. “Unicode symbols and emoji predictions” is off.
 #: setup/main.py:706
 msgid "Emoji trigger characters:"
-msgstr ""
+msgstr "ইমোজি ট্রিগার অক্ষরগুলো:"
 
 #: setup/main.py:708
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
 msgstr ""
+"\"ইউনিকোড চিহ্ন এবং ইমোজি ভবিষ্যদ্বাণী\" বিকল্পটি বন্ধ থাকলেও এই তালিকার "
+"অক্ষরগুলি একটি ইমোজি এবং ইউনিকোড প্রতীকের সন্ধান ট্রিগার করে৷"
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -721,7 +729,7 @@ msgstr ""
 #. (which is the default).
 #: setup/main.py:741
 msgid "Auto commit characters:"
-msgstr ""
+msgstr "স্বয়ংক্রিয় প্রতিশ্রুতি অক্ষরগুলো:"
 
 #: setup/main.py:743
 msgid ""
@@ -735,23 +743,32 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
+"একবার স্পেস কী চাপার পর, এই তালিকার অক্ষরগুলির কারণে প্রিডিট স্বয়ংক্রিয়ভাবে"
+" প্রতিশ্রুতিবদ্ধ হয়। উদাহরণস্বরূপ, যদি \".\" একটি স্বয়ংক্রিয় প্রতিশ্রুতি "
+"অক্ষর হয়ে থাকে, তবে একটি বাক্য শেষ হওয়ার পরে ম্যানুয়ালি স্পেস কী টাইপ করার "
+"সময় এটি সংরক্ষণ করবে। আপনি অবাধে এই তালিকা সম্পাদনা করতে পারেন, তবে অবশ্যই "
+"একটি যুক্তিসঙ্গত মান হতে হবে “.,;:?!)”। আপনার ইনপুট পদ্ধতির জন্য প্রয়োজন "
+"এমন অক্ষরগুলো তালিকায় যোগ করা উচিত নয়, উদাহরণস্বরূপ আপনি যদি ল্যাটিন-প্রি "
+"(t-latn-pre) ব্যবহার করেন তবে \".\" যোগ করা একটি খারাপ ধারণা হবে। কারণ সেই "
+"তালিকায় এটি আপনাকে \"ṡ\" পেতে \".s\" টাইপ করতে বাধা দেবে৷ এছাড়াও আপনি "
+"তালিকাটি খালি করে (যা ডিফল্ট) এই বৈশিষ্ট্যটি সম্পূর্ণরূপে অক্ষম করতে পারেন।"
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
 #: setup/main.py:777
 msgid "Minimum number of chars for completion:"
-msgstr ""
+msgstr "সম্পূর্ণ করার জন্য সর্বনিম্ন অক্ষর সংখ্যা:"
 
 #: setup/main.py:779
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
-msgstr ""
+msgstr "উক্ত সংখ্যার কম অক্ষর টাইপ করা হলে কোন পরামর্শ দেখানো হবে না।"
 
 #. Translators: A checkbox where one can choose whether a
 #. sound is played on error
 #: setup/main.py:806
 msgid "Play sound file on error"
-msgstr ""
+msgstr "ত্রুটি অবস্থায় শব্দ নথি চালনা করুণ"
 
 #: setup/main.py:808
 msgid ""
@@ -1308,11 +1325,11 @@ msgstr ""
 
 #: setup/main.py:2320 setup/main.py:2876 setup/main.py:2954 setup/main.py:4265
 msgid "_Cancel"
-msgstr "বাতিল(_C)"
+msgstr "_বাতিল"
 
 #: setup/main.py:2321 setup/main.py:2877 setup/main.py:2955 setup/main.py:4266
 msgid "_OK"
-msgstr "ঠিক আছে (_O)"
+msgstr "_ঠিক আছে"
 
 #: setup/main.py:2353
 msgid "Another instance of this app is already running."
