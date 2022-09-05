@@ -9,16 +9,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-09-02 23:29+0200\n"
-"PO-Revision-Date: 2022-07-22 08:05+0000\n"
+"PO-Revision-Date: 2022-09-05 16:29+0000\n"
 "Last-Translator: Geert Warrink <geert.warrink@onsnet.nu>\n"
-"Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/nl/>\n"
+"Language-Team: Dutch <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 4.14\n"
 
 #: engine/emoji_picker.py:204
 msgid "Emoji Picker"
@@ -903,13 +903,8 @@ msgstr ""
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1112
-#, fuzzy
-#| msgid ""
-#| "Display some help showing how to use the input method selected above."
 msgid "Options for the input method selected above."
-msgstr ""
-"Bekijk het hulpvenster om alles te weten te komen over de hierboven gekozen "
-"invoermethode."
+msgstr "Opties voor de hierboven gekozen invoermethode."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
@@ -1423,13 +1418,13 @@ msgstr "Invoermethode toevoegen"
 #. for the currently selected input method
 #: setup/main.py:3598
 msgid "Variable"
-msgstr ""
+msgstr "Variabele"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
 #: setup/main.py:3607
 msgid "Value"
-msgstr ""
+msgstr "Waarde"
 
 #: setup/main.py:4145
 #, python-format
