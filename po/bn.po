@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-09-02 23:29+0200\n"
-"PO-Revision-Date: 2022-09-05 16:29+0000\n"
+"PO-Revision-Date: 2022-09-05 18:47+0000\n"
 "Last-Translator: Mahmudul Hasan <ptcmahmudulhasa@gmail.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/bn/>\n"
@@ -787,187 +787,193 @@ msgstr ""
 #. debug information may also be shown graphically.
 #: setup/main.py:848
 msgid "Debug level:"
-msgstr ""
+msgstr "ডিবাগ স্তর:"
 
 #: setup/main.py:850
 msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
 msgstr ""
+"0-এর বেশি হলে, লগ নথিতে ডিবাগ তথ্য মুদ্রিত হতে পারে এবং ডিবাগ তথ্য "
+"গ্রাফিকভাবে দেখানো হতে পারে।"
 
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
 #. reading that text file.
 #: setup/main.py:879
 msgid "Learn from text file"
-msgstr ""
+msgstr "টেক্সট নথি থেকে শিখবে"
 
 #: setup/main.py:881
 msgid "Learn your style by reading a text file"
-msgstr ""
+msgstr "একটি টেক্সট নথি পড়ে আপনার লেখার ধরণ শিখবে"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
 #: setup/main.py:893
 msgid "Delete learned data"
-msgstr ""
+msgstr "আপনার লেখার ধরণ শেখার তথ্যগুলো মুছে ফেলুন"
 
 #: setup/main.py:895
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
+"আপনি যা টাইপ করেছেন বা নথি পড়ে শেখা আপনার সমস্ত ব্যক্তিগত ভাষার তথ্য মুছুন"
 
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:910
 msgid "Use dictionaries for the following languages:"
-msgstr ""
+msgstr "নিম্নলিখিত ভাষার জন্য অভিধান ব্যবহার করুন:"
 
 #: setup/main.py:938
 msgid "Add a dictionary"
-msgstr ""
+msgstr "একটি অভিধান যোগ করুন"
 
 #: setup/main.py:949
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "একটি অভিধান সরান"
 
 #: setup/main.py:960
 msgid "Move dictionary up"
-msgstr ""
+msgstr "অভিধান উপরে উঠান"
 
 #: setup/main.py:972
 msgid "Move dictionary down"
-msgstr ""
+msgstr "অভিধান নিচে নামান"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
 #: setup/main.py:979
 msgid "Install missing dictionaries"
-msgstr ""
+msgstr "অনুপস্থিত অভিধান ইনস্টল করুন"
 
 #: setup/main.py:981
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr ""
+"যে অভিধানগুলো এখানে সেটআপ করা আছে কিন্তু ইনস্টল করা হয়নি সেগুলো ইনস্টল করুন"
 
 #: setup/main.py:988 setup/main.py:1119 setup/main.py:1344 setup/main.py:4192
 msgid "Set to default"
-msgstr ""
+msgstr "ডিফল্টে সেট করুন"
 
 #. Translators: Tooltip for a button used to set the list of
 #. dictionaries to the default for the current locale.
 #: setup/main.py:994
 msgid "Set dictionaries to the default for the current locale."
-msgstr ""
+msgstr "বর্তমান আঞ্চলিকের জন্য ডিফল্টে অভিধান সেট করুন।"
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:1022
 msgid "Use the following input methods:"
-msgstr ""
+msgstr "নিম্ন লিখিত ইনপুট পদ্ধতি ব্যবহার করুন:"
 
 #: setup/main.py:1050
 msgid "Add an input method"
-msgstr ""
+msgstr "একটি ইনপুট পদ্ধতি যোগ করুন"
 
 #: setup/main.py:1062
 msgid "Remove an input method"
-msgstr ""
+msgstr "একটি ইনপুট পদ্ধতি সরান"
 
 #: setup/main.py:1074
 msgid "Move input method up"
-msgstr ""
+msgstr "ইনপুট পদ্ধতি উপরের দিকে উঠান"
 
 #: setup/main.py:1086
 msgid "Move input method down"
-msgstr ""
+msgstr "ইনপুট পদ্ধতি নিচের দিকে নামান"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
 #: setup/main.py:1094
 msgid "Input Method Help"
-msgstr ""
+msgstr "ইনপুট পদ্ধতি সাহায্য"
 
 #: setup/main.py:1096
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
+"উপরের নির্বাচিত ইনপুট পদ্ধতি কিভাবে ব্যবহার করতে হবে তা দেখার জন্য কিছু "
+"সাহায্য প্রদর্শন করা হয়।"
 
 #. Translators: Tooltip for a button to set some advanced
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1112
 msgid "Options for the input method selected above."
-msgstr ""
+msgstr "উপরে নির্বাচিত ইনপুট পদ্ধতির জন্য বিকল্প।"
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
 #: setup/main.py:1125
 msgid "Set input methods to the default for the current locale."
-msgstr ""
+msgstr "বর্তমান আঞ্চলিকের জন্য ডিফল্ট ইনপুট পদ্ধতি সেট করুন।"
 
 #: setup/main.py:1150
 msgid "Enter shortcut here:"
-msgstr ""
+msgstr "এখানে শর্টকাট লিখুন:"
 
 #: setup/main.py:1172
 msgid "Enter shortcut expansion here:"
-msgstr ""
+msgstr "এখানে শর্টকাট সম্প্রসারণ লিখুন:"
 
 #: setup/main.py:1202
 msgid "Clear input"
-msgstr ""
+msgstr "ইনপুট পরিষ্কার করুন"
 
 #: setup/main.py:1213
 msgid "Delete shortcut"
-msgstr ""
+msgstr "শর্টকাট মুছুন"
 
 #: setup/main.py:1224
 msgid "Add shortcut"
-msgstr ""
+msgstr "শর্টকাট যুক্ত করুণ"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
 #: setup/main.py:1258
 msgid "Shortcut"
-msgstr ""
+msgstr "শর্টকাট"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
 #: setup/main.py:1266
 msgid "Shortcut expansion"
-msgstr ""
+msgstr "শর্টকাট সম্প্রসারণ"
 
 #: setup/main.py:1280
 msgid "Current key bindings:"
-msgstr ""
+msgstr "বর্তমান কী বন্ধনগুলো:"
 
 #. Translators: Column heading of the table listing the
 #. existing key bindings
 #: setup/main.py:1303
 msgid "Command"
-msgstr ""
+msgstr "নির্দেশ"
 
 #: setup/main.py:1333
 msgid "Edit"
-msgstr ""
+msgstr "সম্পাদনা"
 
 #: setup/main.py:1337
 msgid "Edit the key bindings for the selected command"
-msgstr ""
+msgstr "নির্বাচিত কমান্ডের জন্য কী বন্ধনগুলো সম্পাদনা করুন"
 
 #: setup/main.py:1348 setup/main.py:4197
 msgid "Set default key bindings for the selected command"
-msgstr ""
+msgstr "নির্বাচিত নির্দেশের জন্য ডিফল্ট কী বন্ধনগুলো নির্ধারণ করুন"
 
 #: setup/main.py:1355
 msgid "Set all to default"
-msgstr ""
+msgstr "সবকিছু ডিফল্ট হিসেবে নির্ধারণ করুণ"
 
 #: setup/main.py:1359
 msgid "Set default key bindings for all commands"
-msgstr ""
+msgstr "সমস্ত নির্দেশনার জন্য ডিফল্ট কী বন্ধনগুলো নির্ধারণ করুণ"
 
 #. Translators: Checkbox to choose whether to display how
 #. many candidates there are and which one is selected on
