@@ -5788,10 +5788,10 @@ if __name__ == '__main__':
     i18n_init()
     if IBus.get_address() is None:
         DIALOG = Gtk.MessageDialog(
-            flags=Gtk.DialogFlags.MODAL,
+            modal=True,
             message_type=Gtk.MessageType.ERROR,
             buttons=Gtk.ButtonsType.OK,
-            message_format=_('ibus is not running.'))
+            text=_('ibus is not running.'))
         DIALOG.run()
         DIALOG.destroy()
         sys.exit(1)
