@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-09-02 23:29+0200\n"
-"PO-Revision-Date: 2022-09-05 18:47+0000\n"
+"PO-Revision-Date: 2022-09-08 06:36+0000\n"
 "Last-Translator: Mahmudul Hasan <ptcmahmudulhasa@gmail.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/bn/>\n"
@@ -980,13 +980,15 @@ msgstr "সমস্ত নির্দেশনার জন্য ডিফল
 #. top of the list of candidates.
 #: setup/main.py:1381
 msgid "Display total number of candidates"
-msgstr ""
+msgstr "শব্দ পরামর্শের উইন্ডোতে মোট শব্দ সংখ্যা প্রদর্শন করুন"
 
 #: setup/main.py:1383
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
 msgstr ""
+"শব্দ তালিকায় কতটি শব্দ আছে এবং শব্দ তালিকার শীর্ষে কোনটি নির্বাচিত হয়েছে তা "
+"প্রদর্শন করুন।"
 
 #. Translators: Checkbox to choose whether to show above
 #. the candidate list whether “Emoji prediction” mode and
