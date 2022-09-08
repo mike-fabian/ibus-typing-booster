@@ -4030,8 +4030,8 @@ class ComposeSequences:
         names = re.sub(r'[<>\s]+', ' ', sequence).strip().split()
         keyvals = []
         for name in names:
-            if re.match(r'U[0-9a-fA-F]{4}', name):
-                keyvals.append(int(name[1:], 16))
+            if re.match(r'U[0-9a-fA-F]{4,5}', name):
+                keyvals.append(0x01000000 + int(name[1:], 16))
             else:
                 try:
                     keyvals.append(getattr(IBus, f'KEY_{name}'))
@@ -4308,6 +4308,14 @@ class ComposeSequences:
                     return '' # Invalid dead key sequence
                 combining_sequence = character + combining_sequence
         return unicodedata.normalize('NFC', combining_sequence)
+
+    def is_start_key(self, keyval: int) -> bool:
+        '''
+        Checks whether a key with the value keyval starts Compose sequence
+
+        :return: True if the key can start a Compose sequence, False if not
+        '''
+        return bool(keyval in self._compose_sequences)
 
     def compose(
             self,

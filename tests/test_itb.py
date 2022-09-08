@@ -1895,6 +1895,105 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.assertEqual('tastingß', self.engine.mock_preedit_text)
 
+    def test_compose_sequences_khmer_digraphs(self) -> None:
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.do_process_key_event(0x010017FF, 0, 0)
+        self.assertEqual(
+            'ាំ', # ា U+17B6 KHMER VOWEL SIGN AA ំ U+17C6 KHMER SIGN NIKAHIT
+            self.engine.mock_preedit_text)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'ាំ ')
+        self.engine.do_process_key_event(0x010017FE, 0, 0)
+        self.assertEqual(
+            'ោះ', # ោ U+17C4 KHMER VOWEL SIGN OO ះ U+17C7 KHMER SIGN REAHMUK
+            self.engine.mock_preedit_text)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'ាំ ោះ ')
+        self.engine.do_process_key_event(0x010017FD, 0, 0)
+        self.assertEqual(
+            'េះ', # េ U+17C1 KHMER VOWEL SIGN E ះ U+17C7 KHMER SIGN REAHMUK
+            self.engine.mock_preedit_text)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'ាំ ោះ េះ ')
+        self.engine.do_process_key_event(0x010017FC, 0, 0)
+        self.assertEqual(
+            'ុំ', # ុ U+17BB KHMER VOWEL SIGN U ំ U+17C6 KHMER SIGN NIKAHIT
+            self.engine.mock_preedit_text)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'ាំ ោះ េះ ុំ ')
+        self.engine.do_process_key_event(0x010017FB, 0, 0)
+        self.assertEqual(
+            'ុះ', # ុ U+17BB KHMER VOWEL SIGN U ះ U+17C7 KHMER SIGN REAHMUK
+            self.engine.mock_preedit_text)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'ាំ ោះ េះ ុំ ុះ ')
+
+    def test_compose_sequences_arabic_lam_alef(self) -> None:
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.do_process_key_event(0x0100FEFB, 0, 0)
+        self.assertEqual(
+            'لا', # ل U+0644 ARABIC LETTER LAM ا U+0627 ARABIC LETTER ALEF U+0627
+            self.engine.mock_preedit_text)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'لا ')
+        self.engine.do_process_key_event(0x0100FEF7, 0, 0)
+        self.assertEqual(
+            'لأ', # ل U+0644 ARABIC LETTER LAM أ U+0623 ARABIC LETTER ALEF WITH HAMZA ABOVE
+            self.engine.mock_preedit_text)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'لا لأ ')
+        self.engine.do_process_key_event(0x0100FEF9, 0, 0)
+        self.assertEqual(
+            'لإ', # ل U+0644 ARABIC LETTER LAM إ U+0625 ARABIC LETTER ALEF WITH HAMZA BELOW
+            self.engine.mock_preedit_text)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'لا لأ لإ ')
+        self.engine.do_process_key_event(0x0100FEF5, 0, 0)
+        self.assertEqual(
+            'لآ', # ل U+0644 ARABIC LETTER LAM آ U+0622 ARABIC LETTER ALEF WITH MADDA ABOVE
+            self.engine.mock_preedit_text)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'لا لأ لإ لآ ')
+
+    def test_compose_sequences_arabic_multi_key(self) -> None:
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
+        self.engine.do_process_key_event(0x01000654, 0, 0)
+        self.engine.do_process_key_event(0x010006D5, 0, 0)
+        self.assertEqual(
+            'ۀ', # U+06C0 ARABIC LETTER HEH WITH YEH ABOVE
+            self.engine.mock_preedit_text)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'ۀ ')
+        self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
+        self.engine.do_process_key_event(0x01000653, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_Arabic_alef, 0, 0)
+        self.assertEqual(
+            'آ', # U+0622 ARABIC LETTER ALEF WITH MADDA ABOVE
+            self.engine.mock_preedit_text)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'ۀ آ ')
+
     def test_compose_sequences_containing_code_points(self) -> None:
         self.engine.set_current_imes(
             ['t-latn-pre', 'NoIME'], update_gsettings=False)
@@ -1902,19 +2001,19 @@ class ItbTestCase(unittest.TestCase):
             ['en_US'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_dead_macron, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '¯')
-        self.engine.do_process_key_event(0x01EB, 0, 0)
+        self.engine.do_process_key_event(0x010001EB, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'ǭ')
         self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'ǭ·')
         self.engine.do_process_key_event(IBus.KEY_macron, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'ǭ¯')
-        self.engine.do_process_key_event(0x01EB, 0, 0)
+        self.engine.do_process_key_event(0x010001EB, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'ǭǭ')
         self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'ǭǭ·')
         self.engine.do_process_key_event(IBus.KEY_underscore, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'ǭǭ_')
-        self.engine.do_process_key_event(0x01EB, 0, 0)
+        self.engine.do_process_key_event(0x010001EB, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'ǭǭǭ')
         self.engine.do_process_key_event(IBus.KEY_dead_macron, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'ǭǭǭ¯')
@@ -1987,18 +2086,18 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'ǭǭǭǭǭǭǭǭǭǮǮǯǯ ')
         self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '·')
-        self.engine.do_process_key_event(0x2276, 0, 0)
+        self.engine.do_process_key_event(0x01002276, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '≶')
-        self.engine.do_process_key_event(0x0338, 0, 0)
+        self.engine.do_process_key_event(0x01000338, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '≸')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'ǭǭǭǭǭǭǭǭǭǮǮǯǯ ≸ ')
         self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '·')
-        self.engine.do_process_key_event(0x093C, 0, 0)
+        self.engine.do_process_key_event(0x0100093C, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '़')
-        self.engine.do_process_key_event(0x0915, 0, 0)
+        self.engine.do_process_key_event(0x01000915, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'क़')
         self.assertEqual(self.engine.mock_preedit_text, '\u0915\u093C')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)

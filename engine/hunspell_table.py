@@ -5532,10 +5532,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.debug('Ignoring release event.')
             return False
         if (not self._typed_compose_sequence
-            and not key.name == 'Multi_key'
-            and not key.name.startswith('dead_')):
+            and not self._compose_sequences.is_start_key(key.val)):
             if DEBUG_LEVEL > 1:
-                LOGGER.debug('Not in a compose sequence.')
+                LOGGER.debug(
+                    'Not in a compose sequence and the key cannot '
+                    'start a compose sequence either. '
+                    'Key Event object: %s', key)
             return False
         if (not self._typed_compose_sequence
             and not self._is_candidate_auto_selected

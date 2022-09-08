@@ -291,6 +291,30 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_space]),
             '"')
 
+    def test_compose_arabic(self) -> None:
+        # /usr/share/X11/locale/en_US.UTF-8/Compose contains:
+        # # Arabic Lam-Alef ligatures
+        # <UFEFB>	:   "لا" # ARABIC LIGATURE LAM WITH ALEF
+        # <UFEF7>	:   "لأ" # ARABIC LIGATURE LAM WITH ALEF WITH HAMZA ABOVE
+        # <UFEF9>	:   "لإ" # ARABIC LIGATURE LAM WITH ALEF WITH HAMZA BELOW
+        # <UFEF5>	:   "لآ" # ARABIC LIGATURE LAM WITH ALEF WITH MADDA ABOVE
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [0x0100FEFB]),
+                '\u0644\u0627')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [0x0100FEF7]),
+                '\u0644\u0623')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [0x0100FEF9]),
+                '\u0644\u0625')
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [0x0100FEF5]),
+                '\u0644\u0622')
+
     def test_compose_cs_CZ(self) -> None:
         # /usr/share/X11/locale/cs_CZ.UTF-8/Compose overrides some of
         # the compose sequences from
@@ -339,7 +363,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
         # https://gitlab.freedesktop.org/xorg/lib/libx11/issues/106):
         self.assertEqual(
             self._compose_sequences.compose(
-                [0x17FF]),
+                [0x010017FF]),
             'ាំ')
 
     def test_compose_pt_BR(self) -> None:
@@ -514,7 +538,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
             != '/usr/share/X11/locale/am_ET.UTF-8/Compose'):
             self.skipTest(
                 '/usr/share/X11/locale/am_ET.UTF-8/Compose not available')
-        if self._compose_sequences.compose([0xFE75, 0x1200]) != '':
+        if self._compose_sequences.compose([0x0100FE75, 0x01001200]) != '':
             self.skipTest(
                 'New Compose file updated by '
                 'Benno Schulenberg <bensberg@telfort.nl> '
@@ -523,7 +547,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
         self.assertEqual(
             self._compose_sequences.compose(
                 [IBus.KEY_u,
-                 0x1200]),
+                 0x01001200]),
             'ሁ')
         self.assertEqual(
             self._compose_sequences.compose(
