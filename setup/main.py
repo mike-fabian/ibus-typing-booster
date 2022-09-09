@@ -178,16 +178,19 @@ class SetupUI(Gtk.Window): # type: ignore
         self._notebook.set_hexpand(True)
         self._notebook.set_vexpand(True)
         self._main_container.add(self._notebook)
-        self._dialog_action_area = Gtk.ButtonBox()
+        self._dialog_action_area = Gtk.Box()
+        self._dialog_action_area.set_orientation(Gtk.Orientation.HORIZONTAL)
         self._dialog_action_area.set_visible(True)
         self._dialog_action_area.set_can_focus(False)
         self._dialog_action_area.set_hexpand(True)
         self._dialog_action_area.set_vexpand(False)
-        self._dialog_action_area.set_layout(Gtk.ButtonBoxStyle.EDGE)
         self._main_container.add(self._dialog_action_area)
         self._about_button = Gtk.Button(label=_('About'))
         self._about_button.connect('clicked', self._on_about_button_clicked)
         self._dialog_action_area.add(self._about_button)
+        empty_hexpanding_label = Gtk.Label()
+        empty_hexpanding_label.set_hexpand(True)
+        self._dialog_action_area.add(empty_hexpanding_label)
         self._restore_all_defaults_button = Gtk.Button()
         self._restore_all_defaults_button_label = Gtk.Label()
         self._restore_all_defaults_button_label.set_text(
@@ -197,6 +200,9 @@ class SetupUI(Gtk.Window): # type: ignore
         self._restore_all_defaults_button.connect(
             'clicked', self._on_restore_all_defaults_button_clicked)
         self._dialog_action_area.add(self._restore_all_defaults_button)
+        empty_hexpanding_label = Gtk.Label()
+        empty_hexpanding_label.set_hexpand(True)
+        self._dialog_action_area.add(empty_hexpanding_label)
         self._close_button = Gtk.Button()
         self._close_button_label = Gtk.Label()
         self._close_button_label.set_text_with_mnemonic(_('_Close'))
@@ -373,7 +379,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self._tab_enable_checkbutton.set_active(True)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._tab_enable_checkbutton, 0, _options_grid_row, 1, 1)
+            self._tab_enable_checkbutton, 0, _options_grid_row, 2, 1)
 
         self._inline_completion_label = Gtk.Label()
         self._inline_completion_label.set_text(
@@ -439,7 +445,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self._auto_capitalize_checkbutton.set_active(True)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._auto_capitalize_checkbutton, 0, _options_grid_row, 1, 1)
+            self._auto_capitalize_checkbutton, 0, _options_grid_row, 2, 1)
 
         self._auto_select_candidate_label = Gtk.Label()
         self._auto_select_candidate_label.set_text(
@@ -511,7 +517,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self._add_space_on_commit_checkbutton.set_active(True)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._add_space_on_commit_checkbutton, 0, _options_grid_row, 1, 1)
+            self._add_space_on_commit_checkbutton, 0, _options_grid_row, 2, 1)
 
         self._remember_last_used_preedit_ime_checkbutton = Gtk.CheckButton(
             # Translators: If more then one input method is used at
@@ -539,7 +545,7 @@ class SetupUI(Gtk.Window): # type: ignore
         _options_grid_row += 1
         self._options_grid.attach(
             self._remember_last_used_preedit_ime_checkbutton,
-            0, _options_grid_row, 1, 1)
+            0, _options_grid_row, 2, 1)
 
         self._remember_input_mode_checkbutton = Gtk.CheckButton(
             # Translators: If more then one input method is used at
@@ -563,7 +569,7 @@ class SetupUI(Gtk.Window): # type: ignore
         _options_grid_row += 1
         self._options_grid.attach(
             self._remember_input_mode_checkbutton,
-            0, _options_grid_row, 1, 1)
+            0, _options_grid_row, 2, 1)
 
         self._emoji_predictions_checkbutton = Gtk.CheckButton(
             # Translators: Whether Unicode symbols and emoji should be
@@ -592,7 +598,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self._emoji_predictions_checkbutton.set_active(True)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._emoji_predictions_checkbutton, 0, _options_grid_row, 1, 1)
+            self._emoji_predictions_checkbutton, 0, _options_grid_row, 2, 1)
 
         self._off_the_record_checkbutton = Gtk.CheckButton(
             # Translators: While “Off the record” mode is on, learning
@@ -622,7 +628,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self._off_the_record_checkbutton.set_active(True)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._off_the_record_checkbutton, 0, _options_grid_row, 1, 1)
+            self._off_the_record_checkbutton, 0, _options_grid_row, 2, 1)
 
         self._avoid_forward_key_event_checkbutton = Gtk.CheckButton(
             # Translators: Avoid the function forward_key_event() in
@@ -672,7 +678,7 @@ class SetupUI(Gtk.Window): # type: ignore
         _options_grid_row += 1
         self._options_grid.attach(
             self._avoid_forward_key_event_checkbutton,
-            0, _options_grid_row, 1, 1)
+            0, _options_grid_row, 2, 1)
 
         self._arrow_keys_reopen_preedit_checkbutton = Gtk.CheckButton(
             # Translators: Whether it is allowed to reopen a preedit
@@ -696,7 +702,7 @@ class SetupUI(Gtk.Window): # type: ignore
         _options_grid_row += 1
         self._options_grid.attach(
             self._arrow_keys_reopen_preedit_checkbutton,
-            0, _options_grid_row, 1, 1)
+            0, _options_grid_row, 2, 1)
 
         self._emoji_trigger_characters_label = Gtk.Label()
         self._emoji_trigger_characters_label.set_text(
@@ -922,9 +928,10 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dictionaries_scroll = Gtk.ScrolledWindow()
         self._dictionaries_and_input_methods_vbox.add(
             self._dictionaries_scroll)
-        self._dictionaries_action_area = Gtk.ButtonBox()
+        self._dictionaries_action_area = Gtk.Box()
+        self._dictionaries_action_area.set_orientation(
+            Gtk.Orientation.HORIZONTAL)
         self._dictionaries_action_area.set_can_focus(False)
-        self._dictionaries_action_area.set_layout(Gtk.ButtonBoxStyle.START)
         self._dictionaries_and_input_methods_vbox.add(
             self._dictionaries_action_area)
         self._dictionaries_add_button = Gtk.Button()
@@ -1034,9 +1041,10 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_methods_scroll = Gtk.ScrolledWindow()
         self._dictionaries_and_input_methods_vbox.add(
             self._input_methods_scroll)
-        self._input_methods_action_area = Gtk.ButtonBox()
+        self._input_methods_action_area = Gtk.Box()
+        self._input_methods_action_area.set_orientation(
+            Gtk.Orientation.HORIZONTAL)
         self._input_methods_action_area.set_can_focus(False)
-        self._input_methods_action_area.set_layout(Gtk.ButtonBoxStyle.START)
         self._dictionaries_and_input_methods_vbox.add(
             self._input_methods_action_area)
         self._input_methods_add_button = Gtk.Button()
@@ -1322,9 +1330,10 @@ class SetupUI(Gtk.Window): # type: ignore
             self._keybindings_label)
         self._keybindings_vbox.add(
             self._keybindings_treeview_scroll)
-        self._keybindings_action_area = Gtk.ButtonBox()
+        self._keybindings_action_area = Gtk.Box()
+        self._keybindings_action_area.set_orientation(
+            Gtk.Orientation.HORIZONTAL)
         self._keybindings_action_area.set_can_focus(False)
-        self._keybindings_action_area.set_layout(Gtk.ButtonBoxStyle.START)
         self._keybindings_vbox.add(
             self._keybindings_action_area)
         self._keybindings_edit_button = Gtk.Button()
@@ -4156,10 +4165,10 @@ class SetupUI(Gtk.Window): # type: ignore
         self._keybindings_edit_popover_scroll.set_overlay_scrolling(True)
         keybindings_edit_popover_vbox.add(
             self._keybindings_edit_popover_scroll)
-        keybindings_edit_popover_button_box = Gtk.ButtonBox()
+        keybindings_edit_popover_button_box = Gtk.Box()
+        keybindings_edit_popover_button_box.set_orientation(
+            Gtk.Orientation.HORIZONTAL)
         keybindings_edit_popover_button_box.set_can_focus(False)
-        keybindings_edit_popover_button_box.set_layout(
-            Gtk.ButtonBoxStyle.START)
         keybindings_edit_popover_vbox.add(
             keybindings_edit_popover_button_box)
         self._keybindings_edit_popover_add_button = Gtk.Button()
