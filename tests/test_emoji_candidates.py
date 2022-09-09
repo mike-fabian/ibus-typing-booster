@@ -312,7 +312,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('⚛\ufe0f', 'atom symbol'))
         self.assertEqual(
             mq.candidates('peacesymbol')[0][:2],
-            ('☮\ufe0f', 'peace symbol {Symbol}'))
+            ('☮\ufe0f', 'peace symbol'))
         self.assertEqual(
             mq.candidates('peace symbol')[0][:2],
             ('☮\ufe0f', 'peace symbol {Symbol}'))

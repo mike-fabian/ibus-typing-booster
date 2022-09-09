@@ -184,44 +184,17 @@ class HunspellSuggestTestCase(unittest.TestCase):
     def test_en_US(self) -> None:
         h = hunspell_suggest.Hunspell(['en_US'])
         self.assertEqual(
+            h.suggest('camel'),
             [('Camel', 0),
              ('camel', 0),
              ('Camelot', 0),
              ('camellia', 0),
              ('camelhair', 0),
              ('Camelopardalis', 0),
-             ('CAM', -1),
-             ('Cal', -1),
-             ('Mel', -1),
-             ('cal', -1),
-             ('cam', -1),
-             ('Carl', -1),
-             ('Gael', -1),
-             ('Jame', -1),
-             ('call', -1),
              ('came', -1),
-             ('come', -1),
-             ('game', -1),
-             ('Jamal', -1),
-             ('Jamel', -1),
-             ('Ocaml', -1),
-             ('cable', -1),
              ('cameo', -1),
-             ('calmer', -1),
-             ('camels', -1),
-             ('comely', -1),
-             ('compel', -1),
-             ('gamely', -1),
-             ("Camel's", -1),
-             ('Camilla', -1),
-             ('Camille', -1),
-             ('Carmela', -1),
-             ('Carmelo', -1),
-             ("Jamel's", -1),
-             ("camel's", -1),
-             ('caramel', -1),
-             ('Carmella', -1)],
-            h.suggest('camel'))
+             ('came l', -1),
+             ('camels', -1)])
 
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
@@ -305,7 +278,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         d = hunspell_suggest.Dictionary('en_US')
         self.assertEqual(
             d.spellcheck_suggest_enchant('kamel'),
-            ['Jamel', 'Camel', 'camel', 'Jamal', 'gamely'])
+            ['camel', 'Camel'])
 
     @unittest.skipUnless(
         IMPORT_HUNSPELL_SUCCESSFUL and not IMPORT_ENCHANT_SUCCESSFUL,

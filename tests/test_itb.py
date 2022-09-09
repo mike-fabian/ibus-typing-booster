@@ -897,9 +897,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(
-            [('Barcelona', 0, '', False, False),
-             ("Barcelona's", -1, '', False, True),
-             ('Barceloneta', -1, '', False, True)],
+            [('Barcelona', 0, '', False, False)],
             self.engine._candidates)
         self.engine.do_process_key_event(IBus.KEY_4, 0, 0)
         # Nothing should be committed:
@@ -908,9 +906,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'Barcelona')
         self.assertEqual(
-            [('Barcelona', 0, '', False, False),
-             ("Barcelona's", -1, '', False, True),
-             ('Barceloneta', -1, '', False, True)],
+            [('Barcelona', 0, '', False, False)],
             self.engine._candidates)
         self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'Barcelona ')
@@ -2170,24 +2166,13 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(
+            self.engine._candidates,
             [('kiss', -1, '', False, True),
-             ("CSS's", -1, '', False, True),
              ('kissa', -1, '', False, True),
-             ("Hiss's", -1, '', False, True),
-             ("Jess's", -1, '', False, True),
              ('Kiassa', -1, '', False, True),
-             ("cuss's", -1, '', False, True),
-             ("hiss's", -1, '', False, True),
-             ("kiss's", -1, '', False, True),
              ('kissaa', -1, '', False, True),
-             ('kissed', -1, '', False, True),
-             ('kisser', -1, '', False, True),
-             ('kisses', -1, '', False, True),
-             ("miss's", -1, '', False, True),
-             ("piss's", -1, '', False, True),
              ('kisassa', -1, '', False, True),
-             ('kisussa', -1, '', False, True)],
-            self.engine._candidates)
+             ('kisussa', -1, '', False, True)])
 
     def test_control_alpha(self) -> None:
         '''Test case for

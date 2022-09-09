@@ -116,6 +116,6 @@ def enchant_working_as_expected() -> bool:
     if d.check('hedgehgo'):
         return False
     if (d.suggest('hedgehgo') !=
-        ['hedgehog', 'hedgerow', 'hedger', 'hedgers', 'hedging', "hedger's"]):
+        ['hedgehog', 'hedgehop']):
         return False
     return True
