@@ -10,10 +10,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-09-09 13:45+0200\n"
-"PO-Revision-Date: 2022-09-08 06:36+0000\n"
+"PO-Revision-Date: 2022-09-11 07:56+0000\n"
 "Last-Translator: Mahmudul Hasan <ptcmahmudulhasa@gmail.com>\n"
-"Language-Team: Bengali <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/bn/>\n"
+"Language-Team: Bengali <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/bn/>\n"
 "Language: bn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -119,7 +119,7 @@ msgstr "ক্লিপবোর্ডে অনুলিপি করা হয
 
 #: engine/emoji_picker.py:1931
 msgid "Lookup on emojipedia"
-msgstr "ইমোজিপিডিয়া দেখুন"
+msgstr "ইমোজিপিডিয়া খুঁজে দেখুন"
 
 #: engine/emoji_picker.py:2053 engine/emoji_picker.py:2054
 #: engine/emoji_picker.py:2055 setup/main.py:1479
@@ -991,7 +991,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1410
 msgid "Show status info in auxiliary text"
-msgstr ""
+msgstr "সহায়ক পাঠ্যে স্থিতির তথ্য দেখান"
 
 #: setup/main.py:1412
 msgid ""
@@ -1000,28 +1000,32 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
+"\"ইমোজি ভবিষ্যদ্বাণী\" মোড এবং \"রেকর্ড মোড বন্ধ করুন\" মোড চালু বা বন্ধ আছে "
+"কিনা সহায়ক পাঠ্যে দেখান এবং প্রিডিটের (প্রাক সম্পাদনা) জন্য বর্তমানে কোন "
+"ইনপুট পদ্ধতি ব্যবহার করা হয়েছে তা দেখান। সহায়ক পাঠ্যটি শব্দ পরামর্শ তালিকা"
+"র উপরে প্রদর্শিত পাঠ্যের একটি ঐচ্ছিক লাইন।"
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
 #: setup/main.py:1439
 msgid "Candidate window page size:"
-msgstr ""
+msgstr "শব্দ পরামর্শ তালিকার উইন্ডো পৃষ্ঠার আকার:"
 
 #: setup/main.py:1441
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
-msgstr ""
+msgstr "শব্দ পরামর্শ তালিকার এক পৃষ্ঠায় কতগুলো শব্দ পরামর্শ দেখানো হবে।"
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
 #: setup/main.py:1467
 msgid "Candidate window orientation"
-msgstr ""
+msgstr "শব্দ পরামর্শ উইন্ডো অভিযোজন"
 
 #: setup/main.py:1469
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
-msgstr ""
+msgstr "শব্দ পরামর্শ উইন্ডোটি অনুভূমিকভাবে বা উল্লম্বভাবে দেখাবে।"
 
 #: setup/main.py:1475
 msgid "Horizontal"
@@ -1035,11 +1039,12 @@ msgstr "উল্লম্ব"
 #. underlining for the preedit.
 #: setup/main.py:1509
 msgid "Preedit underline"
-msgstr ""
+msgstr "প্রিডিট (প্রাক সম্পাদনা) আন্ডারলাইন"
 
 #: setup/main.py:1511
 msgid "Which style of underlining to use for the preedit."
 msgstr ""
+"প্রিডিটের (প্রাক সম্পাদনা) জন্য আন্ডারলাইন করার কোন স্টাইল ব্যবহার করতে হবে।"
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
@@ -1051,19 +1056,19 @@ msgstr "একটিও নয়"
 #. underline for the preedit.
 #: setup/main.py:1522
 msgid "Single"
-msgstr ""
+msgstr "একক"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
 #: setup/main.py:1526
 msgid "Double"
-msgstr ""
+msgstr "দ্বিগুণ"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
 #: setup/main.py:1530
 msgid "Low"
-msgstr ""
+msgstr "কম"
 
 #. Translators: Checkbox to choose whether a preedit style
 #. like underlining will only be used if lookup is
@@ -1073,7 +1078,7 @@ msgstr ""
 #. of characters before a lookup is done.
 #: setup/main.py:1561
 msgid "Use preedit style only if lookup is enabled"
-msgstr ""
+msgstr "খুঁজে দেখা সক্ষম হলেই প্রিডিট (প্রাক সম্পাদনা) শৈলী ব্যবহার করুন"
 
 #: setup/main.py:1563
 msgid ""
