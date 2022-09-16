@@ -3350,7 +3350,7 @@ class SetupUI(Gtk.Window): # type: ignore
                 continue
             filter_words = itb_util.remove_accents(filter_text.lower()).split()
             row = self._fill_input_methods_listbox_row(ime)
-            text_to_match = row.replace(' ', '')
+            text_to_match = row.replace(' ', '').lower()
             ime_language = ime.split('-')[0]
             text_to_match += ' ' + itb_util.locale_text_to_match(ime_language)
             filter_match = True
