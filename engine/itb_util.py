@@ -3894,7 +3894,8 @@ class ComposeSequences:
         compose_file_paths = []
         # Gtk reads compose files like this:
         #
-        # https://developer.gnome.org/gtk3/stable/GtkIMContextSimple.html
+        # https://docs.gtk.org/gtk3/class.IMContextSimple.html
+        # https://docs.gtk.org/gtk4/class.IMContextSimple.html
         # explains how Gtk reads compose files:
         #
         #     GtkIMContextSimple reads additional compose sequences
