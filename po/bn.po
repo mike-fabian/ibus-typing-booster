@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-09-09 13:45+0200\n"
-"PO-Revision-Date: 2022-09-11 07:56+0000\n"
+"PO-Revision-Date: 2022-09-16 09:19+0000\n"
 "Last-Translator: Mahmudul Hasan <ptcmahmudulhasa@gmail.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/bn/>\n"
@@ -1081,12 +1081,18 @@ msgid "Use preedit style only if lookup is enabled"
 msgstr "খুঁজে দেখা সক্ষম হলেই প্রিডিট (প্রাক সম্পাদনা) শৈলী ব্যবহার করুন"
 
 #: setup/main.py:1563
+#, fuzzy
 msgid ""
 "If this option is on, a preedit style like underlining will only be used if "
 "lookup is enabled. The lookup can be disabled because one uses the option to "
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
+"যদি এই বিকল্পটি চালু থাকে, তখন আন্ডারলাইন করার মতো একটি প্রিডিট (প্রাক "
+"সম্পাদনা) শৈলি ব্যবহার করবে যদি খুঁজে দেখা অপশন সক্ষম থাকে। খুঁজে দেখা "
+"নিষ্ক্রিয় করা যেতে পারে, কারণ একটি কী তখনি চাপা হয় যখন খুঁজে দেখা সক্ষম করা"
+"র বিকল্পটি ব্যবহার করবে অথবা ন্যূনতম সংখ্যক অক্ষর প্রয়োজনের বিকল্পটি খুঁজে "
+"দেখা অপশনের আগে ব্যবহার করবে।"
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and
@@ -1094,7 +1100,7 @@ msgstr ""
 #. might contain a spelling error.
 #: setup/main.py:1587
 msgid "Preedit spellchecking"
-msgstr ""
+msgstr "প্রিডিট (প্রাক সম্পাদনা) বানান পরীক্ষা"
 
 #: setup/main.py:1589
 msgid ""
