@@ -1,11 +1,11 @@
 # emoji-variation-sequences.txt
-# Date: 2022-05-02, 03:44:53 GMT
+# Date: 2022-05-13, 21:54:24 GMT
 # © 2022 Unicode®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use, see https://www.unicode.org/terms_of_use.html
 #
 # Emoji Variation Sequences for UTS #51
-# Version: 15.0
+# Used with Emoji Version 15.0 and subsequent minor revisions (if any)
 #
 # For documentation and usage, see https://www.unicode.org/reports/tr51
 #

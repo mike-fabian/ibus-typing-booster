@@ -1,11 +1,11 @@
 # emoji-data.txt
-# Date: 2022-05-06, 16:14:52 GMT
+# Date: 2022-08-02, 00:26:10 GMT
 # © 2022 Unicode®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use, see https://www.unicode.org/terms_of_use.html
 #
 # Emoji Data for UTS #51
-# Version: 15.0
+# Used with Emoji Version 15.0 and subsequent minor revisions (if any)
 #
 # For documentation and usage, see https://www.unicode.org/reports/tr51
 #
@@ -19,8 +19,7 @@
 
 # ================================================
 
-# All omitted code points have Emoji=No 
-# @missing: 0000..10FFFF  ; Emoji ; No
+# All omitted code points have Emoji=No
 
 0023          ; Emoji                # E0.0   [1] (#️)       hash sign
 002A          ; Emoji                # E0.0   [1] (*️)       asterisk
@@ -431,8 +430,7 @@
 
 # ================================================
 
-# All omitted code points have Emoji_Presentation=No 
-# @missing: 0000..10FFFF  ; Emoji_Presentation ; No
+# All omitted code points have Emoji_Presentation=No
 
 231A..231B    ; Emoji_Presentation   # E0.6   [2] (⌚..⌛)    watch..hourglass done
 23E9..23EC    ; Emoji_Presentation   # E0.6   [4] (⏩..⏬)    fast-forward button..fast down button
@@ -721,8 +719,7 @@
 
 # ================================================
 
-# All omitted code points have Emoji_Modifier=No 
-# @missing: 0000..10FFFF  ; Emoji_Modifier ; No
+# All omitted code points have Emoji_Modifier=No
 
 1F3FB..1F3FF  ; Emoji_Modifier       # E1.0   [5] (🏻..🏿)    light skin tone..dark skin tone
 
@@ -730,8 +727,7 @@
 
 # ================================================
 
-# All omitted code points have Emoji_Modifier_Base=No 
-# @missing: 0000..10FFFF  ; Emoji_Modifier_Base ; No
+# All omitted code points have Emoji_Modifier_Base=No
 
 261D          ; Emoji_Modifier_Base  # E0.6   [1] (☝️)       index pointing up
 26F9          ; Emoji_Modifier_Base  # E0.7   [1] (⛹️)       person bouncing ball
@@ -788,8 +784,7 @@
 
 # ================================================
 
-# All omitted code points have Emoji_Component=No 
-# @missing: 0000..10FFFF  ; Emoji_Component ; No
+# All omitted code points have Emoji_Component=No
 
 0023          ; Emoji_Component      # E0.0   [1] (#️)       hash sign
 002A          ; Emoji_Component      # E0.0   [1] (*️)       asterisk
@@ -806,8 +801,7 @@ E0020..E007F  ; Emoji_Component      # E0.0  [96] (󠀠..󠁿)      tag space..c
 
 # ================================================
 
-# All omitted code points have Extended_Pictographic=No 
-# @missing: 0000..10FFFF  ; Extended_Pictographic ; No
+# All omitted code points have Extended_Pictographic=No
 
 00A9          ; Extended_Pictographic# E0.6   [1] (©️)       copyright
 00AE          ; Extended_Pictographic# E0.6   [1] (®️)       registered

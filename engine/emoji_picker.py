@@ -157,9 +157,10 @@ def parse_args() -> Any:
         ('20200701', '13.0'),
         ('20200915', '13.1'),
         ('20210914', '14.0'),
+        ('20220913', '15.0'),
     )
     current_date = time.strftime('%Y%m%d')
-    current_unicode_version = '13.0'
+    current_unicode_version = '15.0'
     for (date, version) in unicode_versions:
         if current_date > date:
             current_unicode_version = version
