@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-09-09 13:45+0200\n"
+"POT-Creation-Date: 2022-10-05 13:28+0200\n"
 "PO-Revision-Date: 2022-09-08 19:59+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://translate.fedoraproject.org/projects/ibus-"
@@ -19,31 +19,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.14\n"
 
-#: engine/emoji_picker.py:204
+#: engine/emoji_picker.py:205
 msgid "Emoji Picker"
 msgstr "ემოჯის არჩევა"
 
-#: engine/emoji_picker.py:312
+#: engine/emoji_picker.py:313
 msgid "Clear recently used"
 msgstr "ახლახანს გამოყენებულის გასუფთავება"
 
-#: engine/emoji_picker.py:318 setup/main.py:188
+#: engine/emoji_picker.py:319 setup/main.py:188
 msgid "About"
 msgstr "შესახებ"
 
-#: engine/emoji_picker.py:322
+#: engine/emoji_picker.py:323
 msgid "Quit"
 msgstr "გასვლა"
 
-#: engine/emoji_picker.py:331
+#: engine/emoji_picker.py:332
 msgid "Search for emoji"
 msgstr "ემოჯის მოძებნა"
 
-#: engine/emoji_picker.py:343
+#: engine/emoji_picker.py:344
 msgid "Set the font to display emoji"
 msgstr "ემოჯის საჩვენებელი ფონტი"
 
-#: engine/emoji_picker.py:351
+#: engine/emoji_picker.py:352
 msgid "Set font size"
 msgstr "ფონტის ზომის დაყენება"
 
@@ -55,11 +55,11 @@ msgstr "ფონტის ზომის დაყენება"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:372
+#: engine/emoji_picker.py:373
 msgid "Fallback"
 msgstr "გადართვა შეცდომის შემთხვევაში"
 
-#: engine/emoji_picker.py:374
+#: engine/emoji_picker.py:375
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -67,64 +67,64 @@ msgstr ""
 "გამოყენებული იქნება თუ არა სხვა ფონტზე გადართვა ემოჯისთვის ან ემოჯიების "
 "მიმდევრობებისთვის, რომლებიც არჩეული ფონტით ნაჩვენები ვერ იქნება."
 
-#: engine/emoji_picker.py:450
+#: engine/emoji_picker.py:451
 msgid "Recently used"
 msgstr "ახლახანს გამოყენებული"
 
-#: engine/emoji_picker.py:629
+#: engine/emoji_picker.py:630
 msgid "Categories"
 msgstr "კატეგორიები"
 
-#: engine/emoji_picker.py:630
+#: engine/emoji_picker.py:631
 msgid "Unicode categories"
 msgstr "უნიკოდის კატეგორიები"
 
-#: engine/emoji_picker.py:631
+#: engine/emoji_picker.py:632
 msgid "Keywords"
 msgstr "საკვანძო სიტყვები"
 
-#: engine/emoji_picker.py:671
+#: engine/emoji_picker.py:672
 msgid "Fonts used to render this emoji:"
 msgstr "ამ ემოჯის რენდერისთვის გამოყენებული ფონტები:"
 
-#: engine/emoji_picker.py:688
+#: engine/emoji_picker.py:689
 msgid "Unicode Version:"
 msgstr "უნიკოდის ვერსია:"
 
-#: engine/emoji_picker.py:710 engine/emoji_picker.py:1819
+#: engine/emoji_picker.py:711 engine/emoji_picker.py:1820
 msgid "Left click to copy"
 msgstr "მარცხენა წკაპი კოპირებისთვის"
 
-#: engine/emoji_picker.py:713
+#: engine/emoji_picker.py:714
 msgid "Long press or middle click for skin tones"
 msgstr "თემის ტონებისთვის დიდხანს ან შუა ღილაკით დააწექით"
 
-#: engine/emoji_picker.py:714
+#: engine/emoji_picker.py:715
 msgid "Right click for info"
 msgstr "მარჯვენა წკაპი ინფორმაიისთვის"
 
-#: engine/emoji_picker.py:1206
+#: engine/emoji_picker.py:1207
 msgid "Search Results"
 msgstr "ძებნის შედეგები"
 
-#: engine/emoji_picker.py:1210
+#: engine/emoji_picker.py:1211
 msgid "Search produced empty result."
 msgstr "ცარიელი შედეგი."
 
-#: engine/emoji_picker.py:1480 engine/emoji_picker.py:1607
+#: engine/emoji_picker.py:1481 engine/emoji_picker.py:1608
 msgid "Copied to clipboard!"
 msgstr "დაკოპირდა გაცვლის ბაფერში!"
 
-#: engine/emoji_picker.py:1931
+#: engine/emoji_picker.py:1932
 msgid "Lookup on emojipedia"
 msgstr "Emojipedia-ზე მოძებნა"
 
-#: engine/emoji_picker.py:2053 engine/emoji_picker.py:2054
-#: engine/emoji_picker.py:2055 setup/main.py:1479
+#: engine/emoji_picker.py:2054 engine/emoji_picker.py:2055
+#: engine/emoji_picker.py:2056 setup/main.py:1479
 msgid "System default"
 msgstr "სისტემის ნაგულისხმები"
 
-#: engine/emoji_picker.py:2190
+#: engine/emoji_picker.py:2191
 msgid "Set Font"
 msgstr "ფონტის დაყენება"
 
@@ -306,27 +306,27 @@ msgstr "რეგიონალური"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "სხვები, დამატებით, სხვადასხვა, განსხვავებული"
 
-#: engine/itb_util.py:4106 engine/itb_util.py:4795
+#: engine/itb_util.py:4107 engine/itb_util.py:4796
 msgid "File not found"
 msgstr "ფაილი ვერ მოიძებნა"
 
-#: engine/itb_util.py:4110 engine/itb_util.py:4799
+#: engine/itb_util.py:4111 engine/itb_util.py:4800
 msgid "Permission error"
 msgstr "წვდომის შეცდომა"
 
-#: engine/itb_util.py:4114 engine/itb_util.py:4803
+#: engine/itb_util.py:4115 engine/itb_util.py:4804
 msgid "Unicode decoding error"
 msgstr "უნიკოდის გაშიფვრის შეცდომა"
 
-#: engine/itb_util.py:4118 engine/itb_util.py:4807
+#: engine/itb_util.py:4119 engine/itb_util.py:4808
 msgid "Unknown error"
 msgstr "უცნობი შეცდომა"
 
-#: engine/itb_util.py:4772
+#: engine/itb_util.py:4773
 msgid "Native Keyboard"
 msgstr "ადგილობრივი კლავიატურა"
 
-#: engine/itb_util.py:4774
+#: engine/itb_util.py:4775
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -339,38 +339,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5319
+#: engine/itb_util.py:5320
 msgid "Key input"
 msgstr "ღილაკის შეყვანა"
 
-#: engine/itb_util.py:5325
+#: engine/itb_util.py:5326
 msgid "Cancel"
 msgstr "გაუქმება"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5332
+#: engine/itb_util.py:5333
 msgid "Please press a key (or a key combination)"
 msgstr "დააწექით ღილაკს (ან მათ კომბინაციას)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5337
+#: engine/itb_util.py:5338
 msgid "The dialog will be closed when the key is released"
 msgstr "ეს ფანჯარა დაიხურება, როცა ღილაკს გაუშვებთ"
 
-#: engine/itb_util.py:5376
+#: engine/itb_util.py:5377
 msgid "A completion input method to speedup typing."
 msgstr "სიტყვების ავტომატური დამთავრების შეტანის მეთოდი კრეფის ასაჩქარებლად."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5385
+#: engine/itb_util.py:5386
 msgid "translator-credits"
 msgstr "თემური დოღონაძე"
 
-#: engine/itb_util.py:5393
+#: engine/itb_util.py:5394
 msgid "Online documentation:"
 msgstr "ონლაინ დოკუმენტაცია:"
 
