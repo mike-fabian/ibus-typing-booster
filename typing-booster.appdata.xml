@@ -45,6 +45,20 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.19.2" date="2022-10-09" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.19.2</url>
+      <issues>
+        <issue url="https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/5865">
+          gitlab-gnome-issues#387: Do not commit by index when OSK is visible
+        </issue>
+        <issue>
+          Translation update from Weblate (sw 100% complete)
+        </issue>
+      </issues>
+    </release>
     <release version="2.19.1" date="2022-10-05" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>

@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 09 Oct 2022 Release 2.19.2
+* Do not commit by index when OSK is visible (Resolves: https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/5865)
+* Translation update from Weblate (sw 100% complete)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 05 Oct 2022 Release 2.19.1
 * Update emoji annotations from CLDR
 * Make search for input methods which contain uppercase in their names work (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/387)
