@@ -9,16 +9,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-10-05 13:28+0200\n"
-"PO-Revision-Date: 2022-07-31 19:57+0000\n"
+"PO-Revision-Date: 2022-10-09 12:19+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
-"Language-Team: Swahili <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/sw/>\n"
+"Language-Team: Swahili <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/sw/>\n"
 "Language: sw\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: engine/emoji_picker.py:205
 msgid "Emoji Picker"
@@ -894,12 +894,8 @@ msgstr ""
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1120
-#, fuzzy
-#| msgid ""
-#| "Display some help showing how to use the input method selected above."
 msgid "Options for the input method selected above."
-msgstr ""
-"Pata msaada wa jinsi ya kutumia mbinu za kuingiza zilizochaguliwa hapo juu."
+msgstr "Chagua jinsi ya kutumia mbinu ya kuingiza iliyochaguliwa hapo juu."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
@@ -1409,13 +1405,13 @@ msgstr "Ongeza mbinu ya kuingiza"
 #. for the currently selected input method
 #: setup/main.py:3607
 msgid "Variable"
-msgstr ""
+msgstr "Jina"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
 #: setup/main.py:3616
 msgid "Value"
-msgstr ""
+msgstr "Chaguo"
 
 #: setup/main.py:4154
 #, python-format
