@@ -2558,6 +2558,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :param extra_text: Additional text append to the commit,
                            usually a space
         '''
+        if (hasattr(IBus.Capabilite, 'OSK')
+            and
+            self.client_capabilities & IBus.Capabilite.OSK):
+            LOGGER.info(
+                'OSK is visible: do not commit candidate by index %s', index)
+            return False
         if (not self.get_lookup_table().get_number_of_candidates()
             or self._lookup_table_hidden):
             return False
