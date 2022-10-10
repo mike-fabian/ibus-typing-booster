@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-10-05 13:28+0200\n"
+"POT-Creation-Date: 2022-10-09 18:05+0200\n"
 "PO-Revision-Date: 2022-07-13 09:12+0000\n"
 "Last-Translator: Paul S <psads.g@gmail.com>\n"
 "Language-Team: Portuguese <https://translate.fedoraproject.org/projects/ibus-"
@@ -197,33 +197,33 @@ msgstr "Configurar"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferências para o ibus-typing-booster"
 
-#: engine/hunspell_table.py:4720
+#: engine/hunspell_table.py:4726
 msgid "Failed to import Google speech-to-text."
 msgstr "Falha ao importar a conversão de fala para texto do Google."
 
-#: engine/hunspell_table.py:4723
+#: engine/hunspell_table.py:4729
 msgid "Failed to import pyaudio."
 msgstr "Falha a importar pyaudio."
 
-#: engine/hunspell_table.py:4726
+#: engine/hunspell_table.py:4732
 msgid "Failed to import queue."
 msgstr "Falha ao importar a fila."
 
-#: engine/hunspell_table.py:4731
+#: engine/hunspell_table.py:4737
 msgid "No supported language for speech recognition."
 msgstr "Nenhuma língua suportada para reconhecimento de fala."
 
-#: engine/hunspell_table.py:4735
+#: engine/hunspell_table.py:4741
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Ficheiro “Google application credentials” “%s” não encontrado."
 
-#: engine/hunspell_table.py:4748
+#: engine/hunspell_table.py:4754
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Falha ao iniciar a conversão de fala em texto do Google. Consulte debug.log."
 
-#: engine/hunspell_table.py:4856
+#: engine/hunspell_table.py:4862
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Erro de conversão de fala em texto do Google. Consulte debug.log."
 

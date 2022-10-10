@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-10-05 13:28+0200\n"
+"POT-Creation-Date: 2022-10-09 18:05+0200\n"
 "PO-Revision-Date: 2022-09-07 07:02+0000\n"
 "Last-Translator: Göran Uddeborg <goeran@uddeborg.se>\n"
 "Language-Team: Swedish <https://translate.fedoraproject.org/projects/ibus-"
@@ -195,32 +195,32 @@ msgstr "Inställning"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Inställningar för ibus-typing-booster"
 
-#: engine/hunspell_table.py:4720
+#: engine/hunspell_table.py:4726
 msgid "Failed to import Google speech-to-text."
 msgstr "Kunde inte importera Googles tal-till-text."
 
-#: engine/hunspell_table.py:4723
+#: engine/hunspell_table.py:4729
 msgid "Failed to import pyaudio."
 msgstr "Kunde inte importera pyaudio."
 
-#: engine/hunspell_table.py:4726
+#: engine/hunspell_table.py:4732
 msgid "Failed to import queue."
 msgstr "Kunde inte importera kö."
 
-#: engine/hunspell_table.py:4731
+#: engine/hunspell_table.py:4737
 msgid "No supported language for speech recognition."
 msgstr "Inget språk som stöds för taligenkänning."
 
-#: engine/hunspell_table.py:4735
+#: engine/hunspell_table.py:4741
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google application credentials” filen “%s” kunde inte hittas."
 
-#: engine/hunspell_table.py:4748
+#: engine/hunspell_table.py:4754
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Kunde inte starta Googles tal-till-text. Se debug.log."
 
-#: engine/hunspell_table.py:4856
+#: engine/hunspell_table.py:4862
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google tal-till-text-fel. Se debug.log."
 
