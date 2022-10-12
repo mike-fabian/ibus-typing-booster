@@ -10,16 +10,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2022-10-09 18:05+0200\n"
-"PO-Revision-Date: 2022-09-16 09:19+0000\n"
+"PO-Revision-Date: 2022-10-12 15:08+0000\n"
 "Last-Translator: Mahmudul Hasan <ptcmahmudulhasa@gmail.com>\n"
-"Language-Team: Bengali <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/bn/>\n"
+"Language-Team: Bengali <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/bn/>\n"
 "Language: bn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: engine/emoji_picker.py:205
 msgid "Emoji Picker"
@@ -1080,17 +1080,17 @@ msgid "Use preedit style only if lookup is enabled"
 msgstr "খুঁজে দেখা সক্ষম হলেই প্রিডিট (প্রাক সম্পাদনা) শৈলী ব্যবহার করুন"
 
 #: setup/main.py:1563
-#, fuzzy
 msgid ""
 "If this option is on, a preedit style like underlining will only be used if "
 "lookup is enabled. The lookup can be disabled because one uses the option to "
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
-"যদি এই বিকল্পটি চালু থাকে, তখন আন্ডারলাইন করার মতো একটি প্রিডিট (প্রাক সম্পাদনা) "
-"শৈলি ব্যবহার করবে যদি খুঁজে দেখা অপশন সক্ষম থাকে। খুঁজে দেখা নিষ্ক্রিয় করা যেতে "
-"পারে, কারণ একটি কী তখনি চাপা হয় যখন খুঁজে দেখা সক্ষম করার বিকল্পটি ব্যবহার করবে "
-"অথবা ন্যূনতম সংখ্যক অক্ষর প্রয়োজনের বিকল্পটি খুঁজে দেখা অপশনের আগে ব্যবহার করবে।"
+"যদি এই বিকল্পটি চালু থাকে, তখন আন্ডারলাইন করার মতো একটি প্রিডিট (প্রাক "
+"সম্পাদনা) শৈলি ব্যবহার করবে যদি খুঁজে দেখা অপশন সক্ষম থাকে। খুঁজে দেখা "
+"নিষ্ক্রিয় করা যেতে পারে, কারণ কেউ একটি কী চাপলেই খুঁজে দেখা সক্ষম করার "
+"বিকল্পটি ব্যবহার করবে বা ন্যূনতম সংখ্যক অক্ষর প্রয়োজনের বিকল্পটি খুঁজে দেখা "
+"অপশনের আগে ব্যবহার করবে।"
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and
@@ -1106,13 +1106,16 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"এখানে আপনি প্রিডিটের (প্রাক সম্পাদনা) বিষয়বস্তুতে বানান পরীক্ষা করা হয়েছে "
+"কিনা তা চয়ন করতে পারেন এবং প্রিডিটে (প্রাক সম্পাদনা) কখন বানান ত্রুটি থাকতে "
+"পারে তা নির্দেশ করার জন্য একটি কাস্টম রঙ ব্যবহার করতে পারেন।"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
 #: setup/main.py:1619
 msgid "Choose color for preedit spellchecking"
-msgstr ""
+msgstr "প্রিডিট (প্রাক সম্পাদনা) বানান পরীক্ষা করার জন্য রঙ চয়ন করুন"
 
 #: setup/main.py:1621
 msgid ""
@@ -1120,25 +1123,31 @@ msgid ""
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
+"এখানে আপনি নির্দিষ্ট করতে পারেন যে প্রিডিটের জন্য কোন রঙ ব্যবহার করতে হবে "
+"যখন প্রিডিটে (প্রাক সম্পাদনা) একটি বানান ত্রুটি থাকতে পারে। এই সেটিংটি "
+"শুধুমাত্র তখনই প্রভাব ফেলবে যদি প্রিডিট (প্রাক সম্পাদনা) বানান পরীক্ষা সক্ষম "
+"করা থাকে।"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
 #: setup/main.py:1645
 msgid "Use color for inline completion"
-msgstr ""
+msgstr "ইনলাইন সমাপ্তির জন্য রঙ ব্যবহার করুন"
 
 #: setup/main.py:1647
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
 msgstr ""
+"ইনলাইনে দেখানো সাজেশনের জন্য একটি কাস্টম রঙ ব্যবহার করা হবে কিনা তা এখানে "
+"আপনি বেছে নিতে পারেন।"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
 #: setup/main.py:1675
 msgid "Choose color for inline completion"
-msgstr ""
+msgstr "ইনলাইন সমাপ্তির জন্য রঙ চয়ন করুন"
 
 #: setup/main.py:1677
 msgid ""
@@ -1146,48 +1155,57 @@ msgid ""
 "only has an effect if the use of color for inline completion is enabled and "
 "inline completion is enabled."
 msgstr ""
+"ইনলাইন সমাপ্তির জন্য কোন রঙ ব্যবহার করতে হবে তা এখানে আপনি উল্লেখ করতে পারেন।"
+" ইনলাইন সমাপ্তির জন্য রঙের ব্যবহার সক্ষম হলে এবং ইনলাইন সমাপ্তি সক্ষম হলেই "
+"এই সেটিংটি একটি প্রভাব ফেলে৷"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
 #: setup/main.py:1701
 msgid "Use color for compose preview"
-msgstr ""
+msgstr "কম্পোজ পূর্বরূপের জন্য রঙ ব্যবহার করুন"
 
 #: setup/main.py:1703
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
+"কম্পোজ পূর্বরূপের জন্য একটি কাস্টম রঙ ব্যবহার করা হবে কিনা তা এখানে আপনি চয়"
+"ন করতে পারেন।"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
 #: setup/main.py:1731
 msgid "Choose color for compose preview"
-msgstr ""
+msgstr "কম্পোজ পূর্বরূপের জন্য রঙ চয়ন করুন"
 
 #: setup/main.py:1733
 msgid "Here you can specify which color to use for the compose preview."
 msgstr ""
+"এখানে আপনি কম্পোজ পূর্বরূপের জন্য কোন রঙ ব্যবহার করবেন তা নির্দিষ্ট করতে "
+"পারেন।"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
 #: setup/main.py:1756
 msgid "Use color for user database suggestions"
-msgstr ""
+msgstr "ব্যবহারকারীর ডাটাবেসের পরামর্শের জন্য রঙ ব্যবহার করুন"
 
 #: setup/main.py:1758
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
 msgstr ""
+"এখানে আপনি ব্যবহারকারী ডাটাবেস থেকে আসা খুঁজে দেখুন (লুকআপ) টেবিলে প্রার্থীদে"
+"র জন্য একটি কাস্টম রঙ ব্যবহার করা হবে কিনা তা চয়ন করতে পারেন।"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
 #: setup/main.py:1782
 msgid "Choose color for user database suggestions"
-msgstr ""
+msgstr "ব্যবহারকারী ডাটাবেস পরামর্শের জন্য রঙ চয়ন করুন"
 
 #: setup/main.py:1784
 msgid ""
@@ -1195,25 +1213,30 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
 msgstr ""
+"এখানে আপনি ব্যবহারকারী ডাটাবেস থেকে আসা খুঁজে দেখুন (লুকআপ) টেবিলে প্রার্থীদে"
+"র জন্য কোন রঙ ব্যবহার করতে হবে তা উল্লেখ করতে পারেন। ব্যবহারকারী ডাটাবেস থেকে"
+" প্রার্থীদের জন্য রঙের ব্যবহার সক্ষম হলেই এই সেটিংটি প্রভাব ফেলবে৷"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
 #: setup/main.py:1807
 msgid "Use color for spellchecking suggestions"
-msgstr ""
+msgstr "বানান পরীক্ষা পরামর্শের জন্য রঙ ব্যবহার করুন"
 
 #: setup/main.py:1809
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
 msgstr ""
+"এখানে আপনি চয়ন করতে পারবেন যে প্রার্থীদের জন্য একটি কাস্টম রঙ ব্যবহার করা "
+"হবে যা কিনা বানান পরীক্ষা থেকে আসে।"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
 #: setup/main.py:1833
 msgid "Choose color for spellchecking suggestions"
-msgstr ""
+msgstr "বানান পরীক্ষা পরামর্শের জন্য রঙ চয়ন করুন"
 
 #: setup/main.py:1835
 msgid ""
@@ -1221,26 +1244,31 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
 msgstr ""
+"এখানে আপনি উল্লেখ করতে পারেন যে বানান পরীক্ষা থেকে আসা শব্দ তালিকার জন্য কোন "
+"রঙ ব্যবহার করতে হবে। এই সেটিংটি তখনি প্রভাব ফেলবে যখন বানান পরীক্ষা থেকে শব্"
+"দ তালিকার জন্য রঙের ব্যবহার সক্ষম করা থাকবে।"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
 #: setup/main.py:1861
 msgid "Use color for dictionary suggestions"
-msgstr ""
+msgstr "অভিধান পরামর্শের জন্য রঙ ব্যবহার করুন"
 
 #: setup/main.py:1863
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
 msgstr ""
+"এখানে আপনি একটি অভিধান থেকে আসা অনুসন্ধান টেবিলে শব্দ তালিকার জন্য একটি কাস্"
+"টম রঙ ব্যবহার করা হবে কিনা তা চয়ন করতে পারেন।"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
 #: setup/main.py:1887
 msgid "Choose color for dictionary suggestions"
-msgstr ""
+msgstr "অভিধান পরামর্শের জন্য রঙ চয়ন করুন"
 
 #: setup/main.py:1889
 msgid ""
@@ -1248,95 +1276,108 @@ msgid ""
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
 msgstr ""
+"এখানে আপনি একটি অভিধান থেকে আসা অনুসন্ধান সারণীতে শব্দ তালিকার জন্য কোন রঙ "
+"ব্যবহার করতে হবে তা উল্লেখ করতে পারেন। এই সেটিংটি শুধুমাত্র তখনই প্রভাব ফেলবে"
+" যখন একটি অভিধান থেকে শব্দ তালিকার জন্য রঙের ব্যবহার সক্ষম করা থাকে।"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
 #: setup/main.py:1915
 msgid "Use label for user database suggestions"
-msgstr ""
+msgstr "ব্যবহারকারী ডাটাবেস পরামর্শের জন্য প্রতীক ব্যবহার করুন"
 
 #: setup/main.py:1917
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
 msgstr ""
+"এখানে আপনি ব্যবহারকারী ডাটাবেস থেকে আসা খুঁজে দেখুন (লুকআপ) টেবিলে শব্দ "
+"তালিকার জন্য একটি প্রতীক ব্যবহার করা হবে কিনা তা চয়ন করতে পারেন।"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
 #: setup/main.py:1952
 msgid "Use label for spellchecking suggestions"
-msgstr ""
+msgstr "বানান পরীক্ষা পরামর্শের জন্য প্রতীক ব্যবহার করুন"
 
 #: setup/main.py:1954
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
 msgstr ""
+"এখানে আপনি বানান পরীক্ষা থেকে আসা শব্দ তালিকার জন্য একটি লেবেল ব্যবহার করা "
+"হবে কিনা তা চয়ন করতে পারেন।"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:1989
 msgid "Use label for dictionary suggestions"
-msgstr ""
+msgstr "অভিধান পরামর্শের জন্য প্রতীক ব্যবহার করুন"
 
 #: setup/main.py:1991
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
+"এখানে আপনি একটি অভিধান থেকে আসা অনুসন্ধান সারণীতে শব্দ তালিকার জন্য একটি "
+"প্রতীক ব্যবহার করা হবে কিনা তা চয়ন করতে পারেন৷"
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2026
 msgid "Use flags for dictionary suggestions"
-msgstr ""
+msgstr "অভিধান পরামর্শের জন্য পতাকা ব্যবহার করুন"
 
 #: setup/main.py:2028
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
+"এখানে আপনি একটি অভিধান থেকে আসা খুঁজে দেখুন (লুকআপ) টেবিলে শব্দ তালিকার জন্য "
+"পতাকা ব্যবহার করা হবে কিনা তা চয়ন করতে পারেন।"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
 #: setup/main.py:2046
 msgid "Use a label to indicate busy state"
-msgstr ""
+msgstr "ব্যস্ত অবস্থা নির্দেশ করতে একটি লেবেল ব্যবহার করুন"
 
 #: setup/main.py:2048
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
+"আইবাস-টাইপিং-বুস্টার ব্যস্ত থাকাকালীন ইঙ্গিত করার জন্য একটি প্রতীক ব্যবহার "
+"করা হবে কিনা তা এখানে আপনি চয়ন করতে পারেন।"
 
 #. Translators:
 #: setup/main.py:2081 setup/main.py:2882
 msgid "Set “Google application credentials” .json file:"
-msgstr ""
+msgstr "\"গুগল অ্যাপ্লিকেশন শংসাপত্র\" .json ফাইল সেট করুন:"
 
 #: setup/main.py:2083
 msgid "Full path of the “Google application credentials” .json file."
-msgstr ""
+msgstr "\"গুগল অ্যাপ্লিকেশন শংসাপত্র\" .json ফাইলের সম্পূর্ণ পথ।"
 
 #: setup/main.py:2091
 msgid "File not yet set."
-msgstr ""
+msgstr "ফাইল এখনো সেট করা হয়নি।"
 
 #: setup/main.py:2139
 msgid "Spell checking"
-msgstr ""
+msgstr "বানান যাচাই করা"
 
 #: setup/main.py:2155
 msgid "Emoji"
-msgstr ""
+msgstr "ইমোজি"
 
 #: setup/main.py:2327
 msgid "Are you sure?"
-msgstr ""
+msgstr "তুমি কি নিশ্চিত?"
 
 #: setup/main.py:2329 setup/main.py:2885 setup/main.py:2963 setup/main.py:4274
 msgid "_Cancel"
@@ -1348,51 +1389,51 @@ msgstr "_ঠিক আছে"
 
 #: setup/main.py:2362
 msgid "Another instance of this app is already running."
-msgstr ""
+msgstr "এই অ্যাপটির আরেকটি উদাহরণ ইতিমধ্যেই চলছে৷"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
 #: setup/main.py:2514
 msgid "Do you really want to restore all default settings?"
-msgstr ""
+msgstr "আপনি কি সত্যিই সমস্ত ডিফল্ট সেটিংস পুনরুদ্ধার করতে চান?"
 
 #: setup/main.py:2960
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr ".wav সাউন্ড ফাইল নির্বাচন করুন:"
 
 #: setup/main.py:3114
 msgid "Add dictionary"
-msgstr ""
+msgstr "একটি অভিধান যোগ করুন"
 
 #: setup/main.py:3431
 msgid "Add input method"
-msgstr ""
+msgstr "একটি ইনপুট পদ্ধতি যোগ করুন"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
 #: setup/main.py:3607
 msgid "Variable"
-msgstr ""
+msgstr "চলক"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
 #: setup/main.py:3616
 msgid "Value"
-msgstr ""
+msgstr "মান"
 
 #: setup/main.py:4154
 #, python-format
 msgid "Edit key bindings for command “%s”"
-msgstr ""
+msgstr "\"%s\" কমান্ডের জন্য কী বন্ধন সম্পাদনা করুন"
 
 #: setup/main.py:4182
 msgid "Add a key binding"
-msgstr ""
+msgstr "একটি কী বন্ধন যোগ করুন"
 
 #: setup/main.py:4194
 msgid "Remove selected key binding"
-msgstr ""
+msgstr "নির্বাচিত কী বন্ধন সরান"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1403,21 +1444,21 @@ msgstr ""
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
-msgstr ""
+msgstr "আপনি কি সত্যিই সমস্ত কমান্ডের জন্য তাদের ডিফল্টে কী বন্ধন সেট করতে চান?"
 
 #: setup/main.py:4271
 msgid "Open File ..."
-msgstr ""
+msgstr "খোলা ফাইল ..."
 
 #: setup/main.py:4290
 #, python-format
 msgid "Learned successfully from file %(filename)s."
-msgstr ""
+msgstr "ফাইল %(filename)s থেকে সফলভাবে শিখেছি।"
 
 #: setup/main.py:4299
 #, python-format
 msgid "Learning from file %(filename)s failed."
-msgstr ""
+msgstr "ফাইল %(filename)s থেকে শেখা ব্যর্থ হয়েছে৷"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1434,18 +1475,19 @@ msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr ""
+"আপনি কি সত্যিই টাইপিং অথবা নথি পড়ে শেখা সমস্ত ভাষা সম্পর্কৃত ডেটা মুছতে চান?"
 
 #: setup/main.py:5803
 msgid "ibus is not running."
-msgstr ""
+msgstr "আইবাস চলছে না।"
 
 #: typing-booster.appdata.xml:6
 msgid "Typing Booster"
-msgstr ""
+msgstr "টাইপিং বুস্টার"
 
 #: typing-booster.appdata.xml:7
 msgid "Predictive input method"
-msgstr ""
+msgstr "ভবিষ্যদ্বাণীমূলক ইনপুট পদ্ধতি"
 
 #: typing-booster.appdata.xml:9
 msgid ""
@@ -1453,3 +1495,7 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+"আইবাস-টাইপিং-বুস্টার হল একটি ভবিষ্যদ্বাণীমূলক ইনপুট পদ্ধতি সেই সাথে প্রসঙ্গ "
+"এবং আংশিক ইনপুটের উপর ভিত্তি করে সম্পূর্ণ শব্দের পূর্বাভাস দেয়। ব্যবহারকারী "
+"শব্দ পরামর্শের তালিকা থেকে পছন্দসই শব্দটি নির্বাচন করতে পারে এবং ব্যবহারকারী"
+"র টাইপিং গতি এবং বানান উন্নত করতে পারে।"
