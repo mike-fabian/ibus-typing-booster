@@ -45,6 +45,25 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.19.6" date="2022-10-15" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.19.6</url>
+      <issues>
+        <issue>
+          Update emoji annotations from CLDR
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/393">
+         github-issues#393: Avoid showing passwords in OSK buttons by
+         disabling typing-booster in terminals when the
+         on-screen-keyboard (OSK) is shown
+        </issue>
+        <issue>
+          Translation update from Weblate (sw 100% complete)
+        </issue>
+      </issues>
+    </release>
     <release version="2.19.2" date="2022-10-09" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
