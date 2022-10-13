@@ -5732,10 +5732,27 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if match:
             return return_value
 
-        if (not self._input_mode
-            or (self._input_purpose
-                in [itb_util.InputPurpose.PASSWORD.value,
-                    itb_util.InputPurpose.PIN.value])):
+        if not self._input_mode:
+            if DEBUG_LEVEL > 0:
+                LOGGER.debug('Direct input mode')
+            return self._return_false(keyval, keycode, state)
+        if (hasattr(IBus.Capabilite, 'OSK')
+            and
+            self.client_capabilities & IBus.Capabilite.OSK
+            and
+            (self._input_purpose in [itb_util.InputPurpose.TERMINAL.value])):
+            if DEBUG_LEVEL > 0:
+                LOGGER.debug(
+                    'OSK is visible and input purpose is TERMINAL, '
+                    'disable to avoid showing passwords in the '
+                    'OSK completion buttons.')
+            return self._return_false(keyval, keycode, state)
+        if (self._input_purpose
+            in [itb_util.InputPurpose.PASSWORD.value,
+                itb_util.InputPurpose.PIN.value]):
+            if DEBUG_LEVEL > 0:
+                LOGGER.debug(
+                    'Disable because of input purpose PASSWORD or PIN')
             return self._return_false(keyval, keycode, state)
 
         (match, return_value) = self._handle_hotkeys(key)
