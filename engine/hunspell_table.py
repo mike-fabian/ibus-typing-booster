@@ -6370,8 +6370,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('object_path=%s\n', object_path)
+        # Do not do self._input_purpose = 0 here, see
+        # https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/5966#note_1576732
+        # if the input purpose is set correctly on focus in, then it
+        # should not be necessary to reset it here.
         self._im_client = ''
-        self._input_purpose = 0
         # The preëdit, if there was any, has already been committed
         # automatically because
         # update_preedit_text_with_mode(,,,IBus.PreeditFocusMode.COMMIT)
