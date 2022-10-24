@@ -2187,6 +2187,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._update_preedit()
             return
         if (not self._inline_completion
+            or (hasattr(IBus.Capabilite, 'OSK')
+                and
+                self.client_capabilities & IBus.Capabilite.OSK)
             or self._typed_compose_sequence
             or self._lookup_table_shows_related_candidates
             or self.get_lookup_table().get_cursor_pos() != 0):
@@ -6331,6 +6334,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if self._candidates:
                 first_candidate = self._candidates[0][0]
             if (not self._inline_completion
+                or (hasattr(IBus.Capabilite, 'OSK')
+                    and
+                    self.client_capabilities & IBus.Capabilite.OSK)
                 or self.get_lookup_table().get_cursor_pos() != 0
                 or not first_candidate
                 or not first_candidate.startswith(typed_string)
