@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 24 Oct 2022 Release 2.19.7
+* Avoid inline completion when OSK (on-screen-keyboard) is shown (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/395)
+* Do not reset input purpose on focus out (See: https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/5966#note_1576732)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 15 Oct 2022 Release 2.19.6
 * Update emoji annotations from CLDR
 * Avoid showing passwords in OSK buttons by disabling typing-booster in terminals when the on-screen-keyboard (OSK) is shown (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/393)
