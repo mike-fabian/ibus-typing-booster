@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-10-09 18:05+0200\n"
+"POT-Creation-Date: 2022-10-24 20:24+0200\n"
 "PO-Revision-Date: 2022-02-25 18:38+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Catalan <https://translate.fedoraproject.org/projects/ibus-"
@@ -189,34 +189,34 @@ msgstr "Configuració"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferències de l’ibus-typing-booster"
 
-#: engine/hunspell_table.py:4726
+#: engine/hunspell_table.py:4729
 msgid "Failed to import Google speech-to-text."
 msgstr "Ha fallat la importació de la conversió de veu a text de Google."
 
-#: engine/hunspell_table.py:4729
+#: engine/hunspell_table.py:4732
 msgid "Failed to import pyaudio."
 msgstr "Ha fallat la importació del pyaudio."
 
-#: engine/hunspell_table.py:4732
+#: engine/hunspell_table.py:4735
 msgid "Failed to import queue."
 msgstr "Ha fallat la importació de la cua."
 
-#: engine/hunspell_table.py:4737
+#: engine/hunspell_table.py:4740
 msgid "No supported language for speech recognition."
 msgstr "Cap llengua no és compatible amb el reconeixement de veu."
 
-#: engine/hunspell_table.py:4741
+#: engine/hunspell_table.py:4744
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "No s’ha trobat el fitxer de «credencials d’aplicació de Google» «%s»."
 
-#: engine/hunspell_table.py:4754
+#: engine/hunspell_table.py:4757
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Ha fallat la inicialització de la conversió de veu a text de Google. Vegeu "
 "debug.log."
 
-#: engine/hunspell_table.py:4862
+#: engine/hunspell_table.py:4865
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 "S’ha produït un error amb la conversió de veu a text de Google. Vegeu debug."
