@@ -2128,7 +2128,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             itb_util.color_string_to_argb('SlateGray'),
             0,
             len(aux_string)))
-        if DEBUG_LEVEL > 0:
+        if DEBUG_LEVEL > 0 and not self._unit_test:
             client = f'🪟{self._im_client}'
             aux_string += client
             attrs.append(IBus.attr_foreground_new(
