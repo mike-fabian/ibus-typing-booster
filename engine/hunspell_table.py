@@ -120,7 +120,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             DEBUG_LEVEL = int(0)
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
-                'TypingBoosterEngine.__init__(bus=%s, obj_path=%s, db=%s)',
+                'TypingBoosterEngine.__init__'
+                '(bus=%s, obj_path=%s, database=%s)',
                 bus, obj_path, database)
         LOGGER.info('ibus version = %s', '.'.join(map(str, IBUS_VERSION)))
         if hasattr(IBus.Engine.props, 'has_focus_id'):
