@@ -5154,7 +5154,7 @@ class KeyEvent:
         return False
 
     def __str__(self) -> str:
-        return (
+        return repr(
             f'val={self.val} '
             f'code={self.code} '
             f'state=0x{self.state:08x} '
@@ -5178,7 +5178,7 @@ class KeyEvent:
             f'button4={self.button4} '
             f'button5={self.button5} '
             f'release={self.release} '
-            f'modifier={self.modifier}\n')
+            f'modifier={self.modifier}')
 
 def keyevent_to_keybinding(keyevent: KeyEvent) -> str:
     '''Calculates a keybinding string from a key event.'''
