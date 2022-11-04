@@ -5521,6 +5521,66 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                          keyval, keycode, ibus_keycode, keystate)
         self.forward_key_event(keyval, ibus_keycode, keystate)
 
+    def _commit_or_forward_key_event_or_return_false(
+            self, key: itb_util.KeyEvent) -> bool:
+        '''Commit the key event, or forward it or return False.
+
+        :param key: The key event to commit, forward or pass through
+        :return: True if the key event was committed or forwarded
+                 False if the key event is passed through
+
+        Prefer to commit the key event if that makes sense. For keys like
+        space without modifiers pressed, this should always work well no matter
+        what toolkit is used and no matter whether OSK is used or not.
+
+        If committing does not make sense, prefer to forward the key event.
+
+        If that does not make sense either, pass the key through with
+        “return False”.
+        '''
+        if DEBUG_LEVEL > 0:
+            LOGGER.info('key=%s', key)
+        if (key.unicode # and key.code == 0
+            and (key.val not in (
+                IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter))
+            and not key.state & itb_util.KEYBINDING_STATE_MASK):
+            if DEBUG_LEVEL > 0:
+                LOGGER.info('Committing instead of forwarding')
+            super().commit_text(
+                IBus.Text.new_from_string(key.unicode))
+            return True
+        # Forward the key event which triggered the commit here
+        # and return True instead of trying to pass that key event
+        # to the application by returning False.
+        #
+        # Alhough doing it by returning false works correctly in
+        # most cases, it does *not* work when using XIM, i.e. *not*
+        # when using Qt with the XIM module and *not* in X11
+        # applications like xterm.
+        #
+        # When “return False” is used, the key event which
+        # triggered the commit here arrives *before* the committed
+        # string when XIM is used. I.e. when typing “word ” the
+        # space which triggered the commit gets to application
+        # first and the applications receives “ word”. No amount
+        # of sleep before the “return False” can fix this. See:
+        # https://bugzilla.redhat.com/show_bug.cgi?id=1291238
+        #
+        # Therefore, forward_key_event() should be preferred
+        # unless the option to avoid it is set:
+        if (self._avoid_forward_key_event
+            or
+            (hasattr(IBus.Capabilite, 'SYNC_PROCESS_KEY')
+             and
+             self.client_capabilities & IBus.Capabilite.SYNC_PROCESS_KEY)):
+            if DEBUG_LEVEL > 0:
+                LOGGER.info('Returning False')
+            return self._return_false(key.val, key.code, key.state)
+        if DEBUG_LEVEL > 0:
+            LOGGER.info('Forwarding key event')
+        self.forward_key_event(key.val, key.code, key.state)
+        return True
+
     def _play_error_sound(self) -> None:
         '''Play an error sound if enabled and possible'''
         if self._error_sound and self._error_sound_object:
@@ -6140,37 +6200,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 candidate_was_selected = True
             caret_was = self.get_caret()
             self._commit_string(commit_string, input_phrase=input_phrase)
+            # These sleeps between commit() and
+            # forward_key_event() are unfortunately needed because
+            # this is racy, without the sleeps it works
+            # unreliably.
+            time.sleep(self._ibus_event_sleep_seconds)
             if not candidate_was_selected:
                 # cursor needs to be corrected leftwards:
                 for dummy_char in commit_string[caret_was:]:
                     self._forward_generated_key_event(IBus.KEY_Left)
-            # Forward the key event which triggered the commit here
-            # and return True instead of trying to pass that key event
-            # to the application by returning False.
-            #
-            # Alhough doing it by returning false works correctly in
-            # most cases, it does *not* work when using XIM, i.e. *not*
-            # when using Qt with the XIM module and *not* in X11
-            # applications like xterm.
-            #
-            # When “return False” is used, the key event which
-            # triggered the commit here arrives *before* the committed
-            # string when XIM is used. I.e. when typing “word ” the
-            # space which triggered the commit gets to application
-            # first and the applications receives “ word”. No amount
-            # of sleep before the “return False” can fix this. See:
-            # https://bugzilla.redhat.com/show_bug.cgi?id=1291238
-            #
-            # Therefore, forward_key_event() should be preferred
-            # unless the option to avoid it is set:
-            if (self._avoid_forward_key_event
-                or
-                (hasattr(IBus.Capabilite, 'SYNC_PROCESS_KEY')
-                 and
-                 self.client_capabilities & IBus.Capabilite.SYNC_PROCESS_KEY)):
-                return self._return_false(key.val, key.code, key.state)
-            self.forward_key_event(key.val, key.code, key.state)
-            return True
+            return self._commit_or_forward_key_event_or_return_false(key)
 
         if key.unicode:
             # If the suggestions are only enabled by Tab key, i.e. the
