@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 07 Nov 2022 Release 2.19.8
+* Do not show automatic emoji predictions when OSK (on-screen-keyboard) is visible (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/398)
+* Update emoji annotations from CLDR
+* If a commit is triggered by a simple space, commit the space instead of forwarding it (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/397)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 24 Oct 2022 Release 2.19.7
 * Avoid inline completion when OSK (on-screen-keyboard) is shown (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/395)
 * Do not reset input purpose on focus out (See: https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/5966#note_1576732)
