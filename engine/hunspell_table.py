@@ -2188,9 +2188,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._update_preedit()
             return
         if (not self._inline_completion
-            or (hasattr(IBus.Capabilite, 'OSK')
-                and
-                self.client_capabilities & IBus.Capabilite.OSK)
+            or (self.client_capabilities & itb_util.Capabilite.OSK)
             or self._typed_compose_sequence
             or self._lookup_table_shows_related_candidates
             or self.get_lookup_table().get_cursor_pos() != 0):
@@ -2562,9 +2560,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :param extra_text: Additional text append to the commit,
                            usually a space
         '''
-        if (hasattr(IBus.Capabilite, 'OSK')
-            and
-            self.client_capabilities & IBus.Capabilite.OSK):
+        if self.client_capabilities & itb_util.Capabilite.OSK:
             LOGGER.info(
                 'OSK is visible: do not commit candidate by index %s', index)
             return False
@@ -2728,7 +2724,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         make the result “word! ”.
 
         '''
-        if (self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
+        if (self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
             and
             self._input_purpose not in [itb_util.InputPurpose.TERMINAL.value]):
             pattern_sentence_end = re.compile(
@@ -2844,7 +2840,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.debug(
                     'Not reopening the preedit because a modifier is set.')
             return False
-        if (not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
+        if (not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
             or self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
             if DEBUG_LEVEL > 1:
                 LOGGER.debug('Surrounding text is not supported. '
@@ -2989,7 +2985,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         '''
         self._is_context_from_surrounding_text = False
-        if (not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
+        if (not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
             or self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
             # If getting the surrounding text is not supported, leave
             # the context as it is, i.e. rely on remembering what was
@@ -4872,7 +4868,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # or if the text left of the cursor is empty.
             # If surrounding text cannot be used, uppercase the
             # first letter unconditionally:
-            if (not self.client_capabilities & IBus.Capabilite.SURROUNDING_TEXT
+            if (not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
                 or
                 self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
                 transcript = transcript[0].upper() + transcript[1:]
@@ -5570,9 +5566,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # unless the option to avoid it is set:
         if (self._avoid_forward_key_event
             or
-            (hasattr(IBus.Capabilite, 'SYNC_PROCESS_KEY')
-             and
-             self.client_capabilities & IBus.Capabilite.SYNC_PROCESS_KEY)):
+            (self.client_capabilities & itb_util.Capabilite.SYNC_PROCESS_KEY)):
             if DEBUG_LEVEL > 0:
                 LOGGER.info('Returning False')
             return self._return_false(key.val, key.code, key.state)
@@ -5800,9 +5794,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if DEBUG_LEVEL > 0:
                 LOGGER.debug('Direct input mode')
             return self._return_false(keyval, keycode, state)
-        if (hasattr(IBus.Capabilite, 'OSK')
-            and
-            self.client_capabilities & IBus.Capabilite.OSK
+        if (self.client_capabilities & itb_util.Capabilite.OSK
             and
             (self._input_purpose in [itb_util.InputPurpose.TERMINAL.value])):
             if DEBUG_LEVEL > 0:
@@ -6374,9 +6366,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if self._candidates:
                 first_candidate = self._candidates[0][0]
             if (not self._inline_completion
-                or (hasattr(IBus.Capabilite, 'OSK')
-                    and
-                    self.client_capabilities & IBus.Capabilite.OSK)
+                or (self.client_capabilities & itb_util.Capabilite.OSK)
                 or self.get_lookup_table().get_cursor_pos() != 0
                 or not first_candidate
                 or not first_candidate.startswith(typed_string)

@@ -3432,6 +3432,97 @@ def get_hunspell_dictionary_wordlist(
     ]
     return (dic_path, dictionary_encoding, word_list)
 
+class Capabilite(Flag):
+    '''Compatibility class to handle IBus.Capabilite the same way no matter
+    what version of ibus is used.
+
+    For example, older versions of ibus might not have IBus.Capabilite.SYNC_PROCESS_KEY
+    (or maybe even do not have IBus.Capabilite at all). Then
+
+        capabilities & IBus.Capabilite.SYNC_PROCESS_KEY
+
+    will produce an exception. But when using this compatibility class
+
+        capabilities & IBus.Capabilite.SYNC_PROCESS_KEY
+
+    will just be False but not cause an exception.
+
+    >>> int(Capabilite.PREEDIT_TEXT)
+    1
+
+    >>> Capabilite.PREEDIT_TEXT == 1
+    True
+
+    >>> Capabilite.PREEDIT_TEXT | 2
+    3
+
+    >>> 2 | Capabilite.PREEDIT_TEXT
+    3
+
+    >>> int(Capabilite.PREEDIT_TEXT | Capabilite.AUXILIARY_TEXT)
+    3
+
+    >>> 3 == Capabilite.AUXILIARY_TEXT | Capabilite.PREEDIT_TEXT
+    True
+
+    >>> 3 == Capabilite.AUXILIARY_TEXT | IBus.Capabilite.PREEDIT_TEXT
+    True
+
+    >>> Capabilite.PREEDIT_TEXT == IBus.Capabilite.PREEDIT_TEXT
+    True
+    '''
+    def __new__(cls, attr: str) -> Any:
+        obj = object.__new__(cls)
+        if hasattr(IBus, 'Capabilite') and hasattr(IBus.Capabilite, attr):
+            obj._value_ = int(getattr(IBus.Capabilite, attr))
+        else:
+            obj._value_ = 0
+        return obj
+
+    def __int__(self) -> int:
+        return int(self._value_)
+
+    def __eq__(self, other: Any) -> bool:
+        if (self.__class__ is other.__class__
+            or other.__class__ is IBus.Capabilite):
+            return bool(int(self) == int(other))
+        if other.__class__ is int or other.__class__ is float:
+            return bool(int(self) == other)
+        return NotImplemented
+
+    def __or__(self, other: Any) -> Any:
+        if self.__class__ is other.__class__:
+            return self.value | other.value
+        if (other.__class__ is IBus.Capabilite):
+            return int(self) | int(other)
+        if other.__class__ is int:
+            return int(self) | other
+        return NotImplemented
+
+    def __ror__(self, other: Any) -> Any:
+        return self.__or__(other)
+
+    def __and__(self, other: Any) -> Any:
+        if self.__class__ is other.__class__:
+            return self.value & other.value
+        if (other.__class__ is IBus.Capabilite):
+            return int(self) & int(other)
+        if other.__class__ is int:
+            return int(self) & other
+        return NotImplemented
+
+    def __rand__(self, other: Any) -> Any:
+        return self.__and__(other)
+
+    PREEDIT_TEXT = ('PREEDIT_TEXT')
+    AUXILIARY_TEXT = ('AUXILIARY_TEXT')
+    LOOKUP_TABLE = ('LOOKUP_TABLE')
+    FOCUS = ('FOCUS')
+    PROPERTY = ('PROPERTY')
+    SURROUNDING_TEXT = ('SURROUNDING_TEXT')
+    OSK = ('OSK')
+    SYNC_PROCESS_KEY = ('SYNC_PROCESS_KEY')
+
 class InputPurpose(Enum):
     '''Compatibility class to handle InputPurpose the same way no matter
     what version of ibus is used.
