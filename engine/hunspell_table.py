@@ -1014,7 +1014,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         phrase_frequencies[cand[0]] = cand[1]
                 phrase_candidates = self.database.best_candidates(
                     phrase_frequencies)
-        if (self._emoji_predictions
+        if ((self._emoji_predictions
+             and not (self.client_capabilities & itb_util.Capabilite.OSK))
             or self._typed_string[0] in self._emoji_trigger_characters
             or self._typed_string[-1] in self._emoji_trigger_characters):
             # If emoji mode is off and the emoji predictions are
