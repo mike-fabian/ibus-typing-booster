@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-10-24 20:24+0200\n"
+"POT-Creation-Date: 2022-11-08 14:07+0100\n"
 "PO-Revision-Date: 2022-10-09 12:19+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
 "Language-Team: Swahili <https://translate.fedoraproject.org/projects/ibus-"
@@ -129,21 +129,21 @@ msgstr "Chaguo-msingi la mfumo"
 msgid "Set Font"
 msgstr "Chagua Fonti"
 
-#: engine/hunspell_table.py:500 engine/hunspell_table.py:534
-#: engine/hunspell_table.py:555
+#: engine/hunspell_table.py:501 engine/hunspell_table.py:535
+#: engine/hunspell_table.py:556
 msgid "Off"
 msgstr "Zima"
 
-#: engine/hunspell_table.py:505 engine/hunspell_table.py:539
-#: engine/hunspell_table.py:560
+#: engine/hunspell_table.py:506 engine/hunspell_table.py:540
+#: engine/hunspell_table.py:561
 msgid "On"
 msgstr "Wezesha"
 
-#: engine/hunspell_table.py:524
+#: engine/hunspell_table.py:525
 msgid "Input mode"
 msgstr "Hali ya kuingiza"
 
-#: engine/hunspell_table.py:525
+#: engine/hunspell_table.py:526
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Hapa, unaweza kuwezesha au kuzima msaidizi-wa-kuchapa-mbio-wa-ibus."
 
@@ -154,7 +154,7 @@ msgstr "Hapa, unaweza kuwezesha au kuzima msaidizi-wa-kuchapa-mbio-wa-ibus."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:544 engine/hunspell_table.py:546 setup/main.py:582
+#: engine/hunspell_table.py:545 engine/hunspell_table.py:547 setup/main.py:582
 msgid "Unicode symbols and emoji predictions"
 msgstr "Alama za unikodi na emoji zilizotabiriwa"
 
@@ -165,63 +165,63 @@ msgstr "Alama za unikodi na emoji zilizotabiriwa"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:565 engine/hunspell_table.py:566 setup/main.py:611
+#: engine/hunspell_table.py:566 engine/hunspell_table.py:567 setup/main.py:611
 msgid "Off the record mode"
 msgstr "Tumia kamusi pekee kuongeza mbio ya kuchapa"
 
-#: engine/hunspell_table.py:1566
+#: engine/hunspell_table.py:1568
 msgid "Highest priority dictionary"
 msgstr "Kamusi yenye kipaumbele"
 
-#: engine/hunspell_table.py:1567
+#: engine/hunspell_table.py:1569
 msgid "Choose highest priority dictionary"
 msgstr "Chagua kamusi yenye kipaumbele"
 
-#: engine/hunspell_table.py:1596
+#: engine/hunspell_table.py:1598
 msgid "Preedit input method"
 msgstr "Jinsi ya kuhariri mbeleni hali ya kuingiza"
 
-#: engine/hunspell_table.py:1597
+#: engine/hunspell_table.py:1599
 msgid "Switch preedit input method"
 msgstr "Badili jinsi ya kuhariri mbeleni hali-tumizi ya ingizo"
 
-#: engine/hunspell_table.py:1911
+#: engine/hunspell_table.py:1913
 msgid "Setup"
 msgstr "Mipangilio"
 
-#: engine/hunspell_table.py:1914 setup/main.py:152
+#: engine/hunspell_table.py:1916 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr "Pendekezo ya msaidizi-wa-kuchapa-mbio-wa-ibus"
 
-#: engine/hunspell_table.py:4729
+#: engine/hunspell_table.py:4727
 msgid "Failed to import Google speech-to-text."
 msgstr ""
 "Haiwezekana kuwezesha programmu ya Google ya utamboaji otomatiki wa usemi."
 
-#: engine/hunspell_table.py:4732
+#: engine/hunspell_table.py:4730
 msgid "Failed to import pyaudio."
 msgstr "Haiwezekana kutumia programmu pyaudio."
 
-#: engine/hunspell_table.py:4735
+#: engine/hunspell_table.py:4733
 msgid "Failed to import queue."
 msgstr "Haiwezekana kuleta foleni."
 
-#: engine/hunspell_table.py:4740
+#: engine/hunspell_table.py:4738
 msgid "No supported language for speech recognition."
 msgstr "Hakuna lugha ina utamboaji wa usemi."
 
-#: engine/hunspell_table.py:4744
+#: engine/hunspell_table.py:4742
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Faili “%s” ya “programmu ya Google ya utambolisho“ haionekana."
 
-#: engine/hunspell_table.py:4757
+#: engine/hunspell_table.py:4755
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Haiwezekana kuanza programmu ya Google ya utamboaji wa usemi. Angalia faili "
 "ya batli ya eua."
 
-#: engine/hunspell_table.py:4865
+#: engine/hunspell_table.py:4863
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Kosa ya Google utambaoji wa usemi. Angalia faili ya batli ya eua."
 
@@ -306,31 +306,31 @@ msgstr "mkoani"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2662
+#: engine/itb_util.py:2666
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Mengineo, mbalimbali, ya ziada"
 
-#: engine/itb_util.py:4107 engine/itb_util.py:4796
+#: engine/itb_util.py:4202 engine/itb_util.py:4891
 msgid "File not found"
 msgstr "Faili haionekana"
 
-#: engine/itb_util.py:4111 engine/itb_util.py:4800
+#: engine/itb_util.py:4206 engine/itb_util.py:4895
 msgid "Permission error"
 msgstr "Kosa ya kibali"
 
-#: engine/itb_util.py:4115 engine/itb_util.py:4804
+#: engine/itb_util.py:4210 engine/itb_util.py:4899
 msgid "Unicode decoding error"
 msgstr "Kosa ya kufumbua msimbosare"
 
-#: engine/itb_util.py:4119 engine/itb_util.py:4808
+#: engine/itb_util.py:4214 engine/itb_util.py:4903
 msgid "Unknown error"
 msgstr "Kosa haifahamika"
 
-#: engine/itb_util.py:4773
+#: engine/itb_util.py:4868
 msgid "Native Keyboard"
 msgstr "Kibodi Awali"
 
-#: engine/itb_util.py:4775
+#: engine/itb_util.py:4870
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -342,38 +342,38 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5320
+#: engine/itb_util.py:5425
 msgid "Key input"
 msgstr "Chagua kitufe"
 
-#: engine/itb_util.py:5326
+#: engine/itb_util.py:5431
 msgid "Cancel"
 msgstr "Futa"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5333
+#: engine/itb_util.py:5438
 msgid "Please press a key (or a key combination)"
 msgstr "Tafadhali bofya kitufe (au mchanganyiko wa vitufe)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5338
+#: engine/itb_util.py:5443
 msgid "The dialog will be closed when the key is released"
 msgstr "Kisanduku hiki kitajifunga baada ya kuachilia kitufe"
 
-#: engine/itb_util.py:5377
+#: engine/itb_util.py:5482
 msgid "A completion input method to speedup typing."
 msgstr "Mbinu ya kuharakisha uingizaji kwa kujaliza."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5386
+#: engine/itb_util.py:5491
 msgid "translator-credits"
 msgstr "watafsiri"
 
-#: engine/itb_util.py:5394
+#: engine/itb_util.py:5499
 msgid "Online documentation:"
 msgstr "Maelezo ya mtandaoni:"
 
