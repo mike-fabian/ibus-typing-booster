@@ -5085,21 +5085,31 @@ class KeyvalsToKeycodes:
     '''
     def __init__(self) -> None:
         self.keyvals_to_keycodes: Dict[int, List[int]] = {}
+        display = None
+        keymap = None
         display = Gdk.Display.get_default()
-        keymap = Gdk.Keymap.get_for_display(display)
-        for keycode in range(0, 256):
-            (keycode_found,
-             dummy_keymapkeys,
-             keyvals) = Gdk.Keymap.get_entries_for_keycode(keymap, keycode)
-            if keycode_found:
-                for keyval in keyvals:
-                    if keyval:
-                        if (keyval in self.keyvals_to_keycodes
-                            and
-                            keycode not in self.keyvals_to_keycodes[keyval]):
-                            self.keyvals_to_keycodes[keyval].append(keycode)
-                        else:
-                            self.keyvals_to_keycodes[keyval] = [keycode]
+        if not display:
+            LOGGER.warning('Gdk.Display.get_default() returned %s', display)
+        else:
+            keymap = Gdk.Keymap.get_for_display(display)
+        if not keymap:
+            LOGGER.warning('Could not get keymap')
+        else:
+            for keycode in range(0, 256):
+                (keycode_found,
+                 dummy_keymapkeys,
+                 keyvals) = Gdk.Keymap.get_entries_for_keycode(keymap, keycode)
+                if keycode_found:
+                    for keyval in keyvals:
+                        if keyval:
+                            if (keyval in self.keyvals_to_keycodes
+                                and
+                                keycode
+                                not in self.keyvals_to_keycodes[keyval]):
+                                self.keyvals_to_keycodes[keyval].append(
+                                    keycode)
+                            else:
+                                self.keyvals_to_keycodes[keyval] = [keycode]
         # Gdk.Keymap.get_entries_for_keycode() seems to never find any
         # key codes on big endian platforms (s390x). Might be a bug in
         # that function. Until I figure out what the problem really
