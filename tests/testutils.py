@@ -49,11 +49,21 @@ except (ImportError,):
     pass
 
 def get_libvoikko_version() -> str:
+    '''Return the version of libvoikko
+
+    If libvoikko is not available, return 0
+    '''
     if IMPORT_LIBVOIKKO_SUCCESSFUL:
         return str(libvoikko.Voikko.getVersion())
     return '0'
 
 def init_libvoikko_error() -> str:
+    '''
+    Checks whether an error happens during initilization of Voikko.
+
+    :return: '' (empty string) if Voikko initialization worked.
+             error message string if Voikko initialization failed.
+    '''
     if IMPORT_LIBVOIKKO_SUCCESSFUL:
         try:
             voikko = libvoikko.Voikko('fi')
@@ -89,8 +99,8 @@ def enchant_sanity_test(language: str = '', word: str = '') -> bool:
         return False
     if not itb_util.get_hunspell_dictionary_wordlist(language)[0]:
         return False
-    d = enchant.Dict(language)
-    if d.suggest(word):
+    enchant_dictionary = enchant.Dict(language)
+    if enchant_dictionary.suggest(word):
         return True
     return  False
 
@@ -112,10 +122,10 @@ def enchant_working_as_expected() -> bool:
     '''
     if not IMPORT_ENCHANT_SUCCESSFUL:
         return False
-    d = enchant.Dict('en_US')
-    if d.check('hedgehgo'):
+    enchant_dictionary = enchant.Dict('en_US')
+    if enchant_dictionary.check('hedgehgo'):
         return False
-    if (d.suggest('hedgehgo') !=
+    if (enchant_dictionary.suggest('hedgehgo') !=
         ['hedgehog', 'hedgehop']):
         return False
     return True
