@@ -33,6 +33,8 @@ from gi.repository import IBus # type: ignore
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
+import testutils
+
 sys.path.insert(0, "../engine")
 import itb_util
 sys.path.pop(0)
@@ -315,6 +317,10 @@ class ComposeSequencesTestCase(unittest.TestCase):
                 [0x0100FEF5]),
                 '\u0644\u0622')
 
+    @unittest.skipIf(
+        testutils.set_locale_error('cs_CZ.UTF-8'),
+        'Skipping, this test needs a locale which is not available: %s'
+        % testutils.set_locale_error('cs_CZ.UTF-8'))
     def test_compose_cs_CZ(self) -> None:
         # /usr/share/X11/locale/cs_CZ.UTF-8/Compose overrides some of
         # the compose sequences from
@@ -341,6 +347,10 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_quotedbl]),
             'ä')
 
+    @unittest.skipIf(
+        testutils.set_locale_error('km_KH.UTF-8'),
+        'Skipping, this test needs a locale which is not available: %s'
+        % testutils.set_locale_error('km_KH.UTF-8'))
     def test_compose_km_KH(self) -> None:
         locale.setlocale(locale.LC_CTYPE, 'km_KH.UTF-8')
         self._compose_sequences = itb_util.ComposeSequences()
@@ -366,6 +376,10 @@ class ComposeSequencesTestCase(unittest.TestCase):
                 [0x010017FF]),
             'ាំ')
 
+    @unittest.skipIf(
+        testutils.set_locale_error('pt_BR.UTF-8'),
+        'Skipping, this test needs a locale which is not available: %s'
+        % testutils.set_locale_error('pt_BR.UTF-8'))
     def test_compose_pt_BR(self) -> None:
         # This sequence comes from
         # /usr/share/X11/locale/en_US.UTF-8/Compose and is not
@@ -455,6 +469,10 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_quotedbl]),
             'ä')
 
+    @unittest.skipIf(
+        testutils.set_locale_error('pt_PT.UTF-8'),
+        'Skipping, this test needs a locale which is not available: %s'
+        % testutils.set_locale_error('pt_PT.UTF-8'))
     def test_compose_pt_PT(self) -> None:
         # These sequences come from
         # /usr/share/X11/locale/en_US.UTF-8/Compose and is not
@@ -513,6 +531,10 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_comma]),
             'Ų')
 
+    @unittest.skipIf(
+        testutils.set_locale_error('am_ET.UTF-8'),
+        'Skipping, this test needs a locale which is not available: %s'
+        % testutils.set_locale_error('am_ET.UTF-8'))
     def test_compose_am_ET(self) -> None:
         # These sequences come from
         # /usr/share/X11/locale/en_US.UTF-8/Compose:

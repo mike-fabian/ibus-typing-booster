@@ -22,6 +22,7 @@ This file implements a few helper functions for test cases
 '''
 
 import sys
+import locale
 
 sys.path.insert(0, "../engine")
 # pylint: disable=import-error
@@ -129,3 +130,21 @@ def enchant_working_as_expected() -> bool:
         ['hedgehog', 'hedgehop']):
         return False
     return True
+
+def set_locale_error(locale_name: str) -> str:
+    '''
+    Checks whether an error occurs when trying to set locale.
+
+    :return: '' (empty string) if setting this locale worked.
+             error message string if setting this locale failed.
+
+    It checks by trying to set LC_CTYPE and then restoring the old
+    value.
+    '''
+    old_lc_ctype = locale.getlocale(locale.LC_CTYPE)
+    try:
+        locale.setlocale(locale.LC_CTYPE, locale_name)
+        locale.setlocale(locale.LC_CTYPE, '.'.join(old_lc_ctype))
+        return ''
+    except (locale.Error,) as error:
+        return f'{locale_name}: {str(error)}'
