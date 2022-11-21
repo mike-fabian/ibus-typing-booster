@@ -28,18 +28,19 @@ import locale
 import tempfile
 import unittest
 
-from gi import require_version # type: ignore
-require_version('IBus', '1.0')
-from gi.repository import IBus # type: ignore
-
 # Avoid failing test cases because of stuff in the users M17NDIR ('~/.m17n.d'):
-os.environ['M17NDIR'] = tempfile.TemporaryDirectory().name
+os.environ['M17NDIR'] = tempfile.TemporaryDirectory().name # pylint: disable=consider-using-with
 M17N_CONFIG_FILE= os.path.join(os.environ['M17NDIR'], 'config.mic')
 
+# pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
-import itb_util
-import m17n_translit
+import m17n_translit # pylint: disable=import-error
 sys.path.pop(0)
+# pylint: enable=wrong-import-position
+
+# pylint: disable=missing-class-docstring
+# pylint: disable=missing-function-docstring
+# pylint: disable=invalid-name
 
 class M17nTranslitTestCase(unittest.TestCase):
     def setUp(self) -> None:
@@ -51,12 +52,12 @@ class M17nTranslitTestCase(unittest.TestCase):
 
     def get_transliterator_or_skip(self, ime: str) -> Any:
         try:
-            sys.stderr.write('ime "%s" ... ' %ime)
+            sys.stderr.write(f'ime "{ime}" ... ')
             trans = m17n_translit.Transliterator(ime)
         except ValueError as error:
             trans = None
             self.skipTest(error)
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             sys.stderr.write('Unexpected exception!')
             trans = None
             self.skipTest(error)
@@ -73,9 +74,9 @@ class M17nTranslitTestCase(unittest.TestCase):
             dummy_trans = m17n_translit.Transliterator('ru-translitx')
         except ValueError:
             pass
-        except Exception:
+        except Exception: # pylint: disable=broad-except
             # Something unexpected happened:
-            self.assertTrue(False)
+            self.assertTrue(False) # pylint: disable=redundant-unittest-assert
 
     def test_ru_translit(self) -> None:
         trans = m17n_translit.Transliterator('ru-translit')
@@ -185,6 +186,7 @@ class M17nTranslitTestCase(unittest.TestCase):
 
     def test_si_sayura(self) -> None:
         # pylint: disable=line-too-long
+        # pylint: disable=fixme
         trans = self.get_transliterator_or_skip('si-sayura')
         self.assertEqual(trans.transliterate(list('a')), 'අ')
         self.assertEqual(trans.transliterate(list('a ')), 'අ ')
@@ -340,6 +342,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('takWsHN')), 'තාක්‍ෂණ')
         self.assertEqual(trans.transliterate(list('takwsHN')), 'තාක්ෂණ')
         # pylint: enable=line-too-long
+        # pylint: enable=fixme
 
     def test_bn_national_jatiya(self) -> None:
         '''
@@ -1101,8 +1104,8 @@ class M17nTranslitTestCase(unittest.TestCase):
         # trans object:
         self.assertEqual(trans.transliterate(['a']), 'ৃ')  # U+09C3 BENGALI VOWEL SIGN VOCALIC R
         # reinitialize m17n_translit:
-        m17n_translit._del()
-        m17n_translit._init()
+        m17n_translit.fini()
+        m17n_translit.init()
         # using the old trans for example like
         # trans.transliterate(['a']) would segfault now, we need to
         # get a new object and check that it uses the new variable
@@ -1122,8 +1125,8 @@ class M17nTranslitTestCase(unittest.TestCase):
         # Again the change has an immediate effect of the existing trans object:
         self.assertEqual(trans.transliterate(['a']), 'ঋ')  # U+098B BENGALI LETTER VOCALIC R
         # reinitialize m17n_translit:
-        m17n_translit._del()
-        m17n_translit._init()
+        m17n_translit.fini()
+        m17n_translit.init()
         # using the old trans for example like
         # trans.transliterate(['a']) would segfault now, we need to
         # get a new object and check that it uses the new variable

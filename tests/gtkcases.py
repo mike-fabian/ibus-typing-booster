@@ -1,21 +1,26 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+'''
+Test cases for the graphical Gtk tests.
 
-# 'init' has one array which is [keysym, keycode, modifier] and to be run
-# before the main tests. E.g.
-# Ctrl-space to enable Hiragana mode
-#
-# 'tests' cases are the main test cases.
-# 'preedit' case runs to create a preedit text.
-# 'lookup' case runs to update a lookup table.
-# 'commit' case runs to commit the preedit text.
-# 'result' case is the expected output.
-# 'preedit', 'lookup', 'commit' can choose the type of either 'string' or 'keys'
-# 'string' type is a string sequence which does not need modifiers
+ 'init' has one array which is [keysym, keycode, modifier] and to be run
+ before the main tests. E.g.
+ Ctrl-space to enable Hiragana mode
 
-from gi import require_version as gi_require_version # type: ignore
-gi_require_version('IBus', '1.0')
+ 'tests' cases are the main test cases.
+ 'preedit' case runs to create a preedit text.
+ 'lookup' case runs to update a lookup table.
+ 'commit' case runs to commit the preedit text.
+ 'result' case is the expected output.
+ 'preedit', 'lookup', 'commit' can choose the type of either 'string' or 'keys'
+ 'string' type is a string sequence which does not need modifiers
+'''
+
+from gi import require_version # type: ignore
+# pylint: disable=wrong-import-position
+require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
+# pylint: enable=wrong-import-position
 
 TestCases = {
     #'init': [IBus.KEY_j, 0, IBus.ModifierType.CONTROL_MASK],

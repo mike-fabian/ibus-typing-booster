@@ -30,7 +30,6 @@ from typing import Optional
 from typing import Union
 from typing import Iterable
 from typing import Callable
-from typing import Generator
 from enum import Enum, Flag
 import sys
 import os
@@ -44,6 +43,7 @@ import shutil
 import subprocess
 import glob
 import gettext
+# pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
@@ -53,6 +53,7 @@ require_version('Gdk', '3.0')
 from gi.repository import Gdk
 require_version('Gtk', '3.0')
 from gi.repository import Gtk
+# pylint: enable=wrong-import-position
 
 import itb_version
 
@@ -63,12 +64,16 @@ try:
 except (ImportError,):
     IMPORT_DISTRO_SUCCESSFUL = False
 
-IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = False
-try:
-    import xdg.BaseDirectory # type: ignore
-    IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = False
+# Importing xdg.BaseDirectory is not needed at the moment, see
+# the implemention of xdg_save_data_path() below does not use it
+# at the moment.
+#
+#IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = False
+#try:
+#    import xdg.BaseDirectory # type: ignore
+#    IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = True
+#except (ImportError,):
+#    IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = False
 
 IMPORT_PYAUDIO_SUCCESSFUL = False
 try:
@@ -2205,7 +2210,7 @@ def get_flag(lookup_text: str) -> str:
         return FLAGS[lookup_text[0]] + FLAGS[lookup_text[1]]
     if lookup_text.isdigit() and len(lookup_text) == 3:
         return FLAGS.get(lookup_text, FLAGS['None'])
-    locale = parse_locale(lookup_text)
+    locale = parse_locale(lookup_text) # pylint: disable=redefined-outer-name
     if (len(locale.territory) == 2
         and locale.territory.isalpha()
         and locale.territory.isupper()
@@ -2219,6 +2224,7 @@ def get_flag(lookup_text: str) -> str:
     return FLAGS['None']
 
 def get_flags(dictionaries: List[str]) -> Dict[str, str]:
+    # pylint: disable=line-too-long
     '''
     Examples:
 
@@ -2227,6 +2233,7 @@ def get_flags(dictionaries: List[str]) -> Dict[str, str]:
     >>> get_flags(['fr_FR', 'de_DE', 'fy_DE', 'eo', 'de', '150'])
     {'fr_FR': '🇫🇷fr_FR', 'de_DE': '🇩🇪de_DE', 'fy_DE': '🇩🇪fy_DE', 'eo': '🌍eo', 'de': '🌍de', '150': '🌍150'}
     '''
+    # pylint: enable=line-too-long
     flags: Dict[str, str] = {}
     flags_seen: Set[str] = set()
     duplicate_flags = False
@@ -2299,7 +2306,7 @@ Locale = collections.namedtuple(
     'Locale',
     ['language', 'script', 'territory', 'variant', 'encoding'])
 
-def parse_locale(localeId: str) -> Locale:
+def parse_locale(localeId: str) -> Locale: # pylint: disable=invalid-name
     # pylint: disable=line-too-long
     '''
     Parses a locale name in glibc or CLDR format and returns
@@ -2467,7 +2474,7 @@ def parse_locale(localeId: str) -> Locale:
                   variant=variant,
                   encoding=encoding)
 
-def locale_normalize(localeId: str) -> str:
+def locale_normalize(localeId: str) -> str: # pylint: disable=invalid-name
     '''
     Returns a normalized version of the locale id string
     *without* the encoding.
@@ -2509,7 +2516,7 @@ def locale_normalize(localeId: str) -> str:
     >>> locale_normalize('xxxx')
     ''
     '''
-    locale = parse_locale(localeId)
+    locale = parse_locale(localeId) # pylint: disable=redefined-outer-name
     normalized_locale_id: str = locale.language
     if locale.script:
         normalized_locale_id += '_' + locale.script
@@ -2599,7 +2606,7 @@ def expand_languages(languages: Iterable[str]) -> List[str]:
         expanded_languages.append('en')
     return expanded_languages
 
-def locale_text_to_match(localeId: str) -> str:
+def locale_text_to_match(localeId: str) -> str: # pylint: disable=invalid-name
     # pylint: disable=line-too-long
     '''
     Returns a text which can be matched against typed user input
@@ -2673,7 +2680,7 @@ def locale_text_to_match(localeId: str) -> str:
                     languageId=localeId,
                     languageIdQuery=query_language)
     elif IMPORT_PYCOUNTRY_SUCCESSFUL:
-        locale = parse_locale(localeId)
+        locale = parse_locale(localeId) # pylint: disable=redefined-outer-name
         if locale.language:
             language = pycountry.languages.get(alpha_2=locale.language)
             if not language:
@@ -2707,7 +2714,8 @@ def locale_text_to_match(localeId: str) -> str:
                 text_to_match += ' ' + gtrans.gettext(country.name)
     return remove_accents(text_to_match).lower()
 
-def locale_language_description(localeId: str) -> str:
+def locale_language_description( # pylint: disable=invalid-name
+        localeId: str) -> str:
     '''
     Returns a description of the language of the locale
 
@@ -2737,7 +2745,7 @@ def locale_language_description(localeId: str) -> str:
             language_description = langtable.language_name(
                 languageId=localeId, languageIdQuery='en')
     elif IMPORT_PYCOUNTRY_SUCCESSFUL:
-        locale = parse_locale(localeId)
+        locale = parse_locale(localeId) # pylint: disable=redefined-outer-name
         if locale.language:
             language = pycountry.languages.get(alpha_2=locale.language)
             if not language:
@@ -3328,7 +3336,7 @@ def get_hunspell_dictionary_wordlist(
         except (FileNotFoundError, PermissionError) as error:
             LOGGER.exception('Error loading .aff File %s: %s: %s',
                              aff_path, error.__class__.__name__, error)
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error loading .aff File %s: %s: %s',
                              aff_path, error.__class__.__name__, error)
@@ -3364,17 +3372,17 @@ def get_hunspell_dictionary_wordlist(
                 dic_buffer = dic_file.readlines()
         except (UnicodeDecodeError,
                 FileNotFoundError,
-                PermissionError) as error:
+                PermissionError) as error2:
             LOGGER.exception(
                 'loading %s as %s encoding failed, giving up. %s: %s',
-                dic_path, dictionary_encoding, error.__class__.__name__, error)
+                dic_path, dictionary_encoding, error.__class__.__name__, error2)
             return ('', '', [])
-        except Exception as error:
+        except Exception as error2: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error loading .dic File %s: %s: %s',
-                dic_path, error.__class__.__name__, error)
+                dic_path, error.__class__.__name__, error2)
             return ('', '', [])
-    except Exception as error:
+    except Exception as error: # pylint: disable=broad-except
         LOGGER.exception(
             'Unexpected error loading .dic File %s: %s: %s',
             dic_path, error.__class__.__name__, error)
@@ -3493,7 +3501,7 @@ class Capabilite(Flag):
     def __or__(self, other: Any) -> Any:
         if self.__class__ is other.__class__:
             return self.value | other.value
-        if (other.__class__ is IBus.Capabilite):
+        if other.__class__ is IBus.Capabilite:
             return int(self) | int(other)
         if other.__class__ is int:
             return int(self) | other
@@ -3505,7 +3513,7 @@ class Capabilite(Flag):
     def __and__(self, other: Any) -> Any:
         if self.__class__ is other.__class__:
             return self.value & other.value
-        if (other.__class__ is IBus.Capabilite):
+        if other.__class__ is IBus.Capabilite:
             return int(self) & int(other)
         if other.__class__ is int:
             return int(self) & other
@@ -3907,14 +3915,18 @@ class ComposeSequences:
             IBus.KEY_dead_caron: '\u030C', # COMBINING CARON
             IBus.KEY_dead_cedilla: '\u0327', # COMBINING CEDILLA
             IBus.KEY_dead_circumflex: '\u0302', # COMBINING CIRCUMFLEX ACCENT
+            # pylint: disable=fixme
             # IBus.KEY_dead_currency: '', # FIXME
+            # pylint: enable=fixme
             # dead_dasia is an alias for dead_abovereversedcomma
             IBus.KEY_dead_dasia: '\u0314', # COMBINING REVERSED COMMA ABOVE
             IBus.KEY_dead_diaeresis: '\u0308', # COMBINING DIAERESIS
             IBus.KEY_dead_doubleacute: '\u030B', # COMBINING DOUBLE ACUTE ACCENT
             IBus.KEY_dead_doublegrave: '\u030F', # COMBINING DOUBLE GRAVE ACCENT
             IBus.KEY_dead_grave: '\u0300', # COMBINING GRAVE ACCENT
+            # pylint: disable=fixme
             # IBus.KEY_dead_greek: '', # FIXME
+            # pylint: enable=fixme
             IBus.KEY_dead_hook: '\u0309', # COMBINING HOOK ABOVE
             IBus.KEY_dead_horn: '\u031B', # COMBINING HORN
             IBus.KEY_dead_invertedbreve: '\u0311', # COMBINING INVERTED BREVE
@@ -4213,7 +4225,7 @@ class ComposeSequences:
             LOGGER.exception('Error loading %s: %s: %s: %s',
                              compose_path, _('Unicode decoding error'),
                              error.__class__.__name__, error)
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception('Unexpected error loading %s: %s: %s: %s',
                              compose_path, _('Unknown error'),
                              error.__class__.__name__, error)
@@ -4679,7 +4691,7 @@ class ComposeSequences:
     def list_compose_sequences(
             self,
             compose_sequences: Dict[int, Union[Dict[Any, Any], str]],
-            partial_sequence: List[int] = [],
+            partial_sequence: Optional[List[int]] = None,
             available_keyvals: Optional[Set[int]] = None,
             omit_sequences_involving_keypad: bool = True) -> List[List[int]]:
         '''Lists all possible compose sequences in a dictionary
@@ -4701,6 +4713,8 @@ class ComposeSequences:
                                                 containing any
                                                 keys on the keypad.
         '''
+        if partial_sequence is None:
+            partial_sequence = []
         possible_sequences: List[List[int]] = []
         for keyval in compose_sequences:
             if available_keyvals and keyval not in available_keyvals:
@@ -4840,7 +4854,7 @@ class M17nDbInfo:
                     'Exception when calling %s: %s: %s stderr: %s',
                     m17n_db_binary,
                     error.__class__.__name__, error, error.stderr)
-            except Exception as error:
+            except Exception as error: # pylint: disable=broad-except
                 LOGGER.exception(
                     'Exception when calling %s: %s: %s',
                     m17n_db_binary, error.__class__.__name__, error)
@@ -4902,7 +4916,7 @@ class M17nDbInfo:
                     LOGGER.exception('Error loading %s: %s: %s: %s',
                                      mim_path, _('Unicode decoding error'),
                                      error.__class__.__name__, error)
-                except Exception as error:
+                except Exception as error: # pylint: disable=broad-except
                     LOGGER.exception('Unexpected error loading %s: %s: %s: %s',
                                      mim_path, _('Unknown error'),
                                      error.__class__.__name__, error)
@@ -5435,7 +5449,7 @@ class ItbKeyInputDialog(Gtk.MessageDialog): # type: ignore
         self.add_button(_('Cancel'), Gtk.ResponseType.CANCEL)
         self.set_modal(True)
         self.set_markup(
-            '<big><b>%s</b></big>'
+            '<big><b>%s</b></big>' # pylint: disable=consider-using-f-string
             # Translators: This is from the dialog to enter a key or a
             # key combination to be used as a key binding for a
             # command.
@@ -5559,6 +5573,8 @@ class MicrophoneStream():
         # Create a thread-safe buffer of audio data
         self._buff: queue.Queue[Any] = queue.Queue()
         self.closed = True
+        self._audio_interface: Optional[pyaudio.PyAudio] = None
+        self._audio_stream: Optional[Any] = None
 
     def __enter__(self) -> Any:
         self._audio_interface = pyaudio.PyAudio()
@@ -5578,26 +5594,31 @@ class MicrophoneStream():
 
         return self
 
-    def __exit__(self, type: Any, value: Any, traceback: Any) -> None:
-        self._audio_stream.stop_stream()
-        self._audio_stream.close()
+    def __exit__(self, _type: Any, _value: Any, _traceback: Any) -> None:
+        if self._audio_stream:
+            self._audio_stream.stop_stream()
+            self._audio_stream.close()
         self.closed = True
         # Signal the generator to terminate so that the client's
         # streaming_recognize method will not block the process termination.
         self._buff.put(None)
-        self._audio_interface.terminate()
+        if self._audio_interface:
+            self._audio_interface.terminate()
 
     def _fill_buffer(
             self,
             in_data: Any,
-            frame_count: Any,
-            time_info: Any,
-            status_flags: Any) -> Tuple[None, Any]:
+            _frame_count: Any,
+            _time_info: Any,
+            _status_flags: Any) -> Tuple[None, Any]:
         """Continuously collect data from the audio stream, into the buffer."""
         self._buff.put(in_data)
         return None, pyaudio.paContinue
 
     def generator(self) -> Iterable[bytes]:
+        '''
+        Generator method yielding audio chunks
+        '''
         while not self.closed:
             # Use a blocking get() to ensure there's at least one chunk of
             # data, and stop iteration if the chunk is None, indicating the

@@ -27,7 +27,6 @@ from typing import Tuple
 from typing import Dict
 from typing import Any
 import os
-import sys
 import time
 import sqlite3
 import argparse
@@ -90,10 +89,13 @@ def parse_args() -> Any:
         type=str,
         action='store',
         default='none',
-        help=('Print keystrokes saved by period. '
-              'Period can be "none|second(s)|minute(s)|hour(s)|day(s)|week(s)|month(s)|year(s)|total(s)". '
-              '"none" means do not print saved keystrokes. '
-              'default: "%(default)s"'))
+        help=(
+            'Print keystrokes saved by period. '
+            'Period can be '
+            '"none|second(s)|minute(s)|hour(s)|day(s)'
+            '|week(s)|month(s)|year(s)|total(s)". '
+            '"none" means do not print saved keystrokes. '
+            'default: "%(default)s"'))
     parser.add_argument(
         '--time_newest',
         dest='time_newest',
@@ -120,7 +122,7 @@ def parse_args() -> Any:
         dest='user_freq_distribution',
         action='store_true',
         default=False,
-        help=('Show the destribution of user frequencies, i.e. '
+        help=('Show the distribution of user frequencies, i.e. '
               'how many rows are there wich have been used once, '
               'how many rows have been  used twice, etc. ... '
               'default: %(default)s'))
@@ -137,6 +139,9 @@ def parse_args() -> Any:
 _ARGS = parse_args()
 
 class DbContents:
+    '''
+    Class used to analyse the database contents
+    '''
     def __init__(
             self,
             user_db_file: str = '',
@@ -158,6 +163,7 @@ class DbContents:
             self._time_newest = self._original_rows[-1][6]
 
     def print_decay(self) -> None:
+        '''Print information how many rows would be decayed or deleted'''
         self.sort_by_user_freq_time_ascending()
         print(f'1st pass: Maximum number of rows to keep='
               f'{self._max_rows}')
@@ -225,21 +231,26 @@ class DbContents:
               f'{number_of_rows_to_delete}')
 
     def print_total_rows(self) -> None:
+        '''Print the total number of rows'''
         print(f'Total number of rows={len(self._original_rows)}')
 
     def print_time_oldest(self) -> None:
+        '''Print the oldest timestamp in the database'''
         print(f'Oldest timestamp={self._time_oldest} '
               f'{time.ctime(self._time_oldest)}')
 
     def print_time_newest(self) -> None:
+        '''Print the newest timestamp in the database'''
         print(f'Newest timestamp={self._time_newest} '
               f'{time.ctime(self._time_newest)}')
 
     def print_time_now(self) -> None:
+        '''Print the timestamp used for “now” when doing the calculations.'''
         print(f'Now timestamp={self._time_now} '
               f'{time.ctime(self._time_now)}')
 
     def print_savings(self, period: str = 'none') -> None:
+        '''Print the keystrokes saved by period'''
         length_typed: Dict[int, int] = {}
         length_committed: Dict[int, int] = {}
         percent_saved: Dict[int, float] = {}
@@ -331,6 +342,7 @@ class DbContents:
                   f'{percent_saved_b[index]:6.4}%')
 
     def print_user_freq_distribution(self) -> None:
+        '''Print the distribution of user frequencies'''
         user_freqs: Dict[int, int] = {}
         for row in self._original_rows:
             user_freq = row[5]
@@ -341,7 +353,8 @@ class DbContents:
         for count in sorted(user_freqs):
             print(f'{count:7}: {user_freqs[count]}')
 
-    def _print_row(self,
+    @classmethod
+    def _print_row(cls,
                    row: Tuple[int, str, str, str, str, int, float],
                    prefix: str = '') -> None:
         print(f'{prefix}'
@@ -356,6 +369,7 @@ class DbContents:
               )
 
     def dump(self, sort: str = 'user_freq') -> None:
+        '''Print all rows of the database'''
         if sort == 'user_freq':
             self.sort_by_user_freq_time_ascending()
         elif sort == 'time':
@@ -366,6 +380,7 @@ class DbContents:
             self._print_row(row)
 
     def sort_by_time_ascending(self) -> None:
+        '''Sort rows by time ascending'''
         self._original_rows = sorted(self._original_rows,
                                      key = lambda x: (
                                          x[6], # timestamp
@@ -373,6 +388,7 @@ class DbContents:
                                      ))
 
     def sort_by_user_freq_time_ascending(self) -> None:
+        '''Sort rows by user_freq and the by time, ascending'''
         self._original_rows = sorted(self._original_rows,
                                      key = lambda x: (
                                          x[5], # user_freq
@@ -381,23 +397,22 @@ class DbContents:
                                      ))
 
 if __name__ == '__main__':
-        dbcontents = DbContents(user_db_file=_ARGS.file,
-                                verbose=_ARGS.verbose,
-                                max_rows=_ARGS.max_rows)
-        dbcontents.sort_by_user_freq_time_ascending()
-        if _ARGS.rows:
-            dbcontents.dump(sort=_ARGS.sort)
-        dbcontents.print_savings(_ARGS.period)
-        if _ARGS.user_freq_distribution:
-            dbcontents.print_user_freq_distribution()
-        if _ARGS.time_oldest:
-            dbcontents.print_time_oldest()
-        if _ARGS.time_newest:
-            dbcontents.print_time_newest()
-        if _ARGS.time_now:
-            dbcontents.print_time_now()
-        if _ARGS.decay:
-            dbcontents.print_decay()
-        if _ARGS.total_rows:
-            dbcontents.print_total_rows()
-
+    dbcontents = DbContents(user_db_file=_ARGS.file,
+                            verbose=_ARGS.verbose,
+                            max_rows=_ARGS.max_rows)
+    dbcontents.sort_by_user_freq_time_ascending()
+    if _ARGS.rows:
+        dbcontents.dump(sort=_ARGS.sort)
+    dbcontents.print_savings(_ARGS.period)
+    if _ARGS.user_freq_distribution:
+        dbcontents.print_user_freq_distribution()
+    if _ARGS.time_oldest:
+        dbcontents.print_time_oldest()
+    if _ARGS.time_newest:
+        dbcontents.print_time_newest()
+    if _ARGS.time_now:
+        dbcontents.print_time_now()
+    if _ARGS.decay:
+        dbcontents.print_decay()
+    if _ARGS.total_rows:
+        dbcontents.print_total_rows()

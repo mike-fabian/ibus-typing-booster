@@ -27,10 +27,6 @@ import logging
 import unittest
 import unicodedata
 
-from gi import require_version # type: ignore
-require_version('IBus', '1.0')
-from gi.repository import IBus # type: ignore
-
 LOGGER = logging.getLogger('ibus-typing-booster')
 
 IMPORT_DISTRO_SUCCESSFUL = False
@@ -42,21 +38,30 @@ except (ImportError,):
 
 IMPORT_LANGTABLE_SUCCESSFUL = False
 try:
+    # pylint: disable=unused-import
     import langtable # type: ignore
+    # pylint: enable=unused-import
     IMPORT_LANGTABLE_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_LANGTABLE_SUCCESSFUL = False
 
 IMPORT_PYCOUNTRY_SUCCESSFUL = False
 try:
+    # pylint: disable=unused-import
     import pycountry # type: ignore
+    # pylint: enable=unused-import
     IMPORT_PYCOUNTRY_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_PYCOUNTRY_SUCCESSFUL = False
 
+# pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
-import itb_util
+import itb_util # pylint: disable=import-error
 sys.path.pop(0)
+# pylint: enable=wrong-import-position
+
+# pylint: disable=missing-class-docstring
+# pylint: disable=missing-function-docstring
 
 class ItbUtilTestCase(unittest.TestCase):
     def setUp(self) -> None:

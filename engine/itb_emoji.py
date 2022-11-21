@@ -286,7 +286,8 @@ def _in_range(codepoint: int) -> bool:
     >>> _in_range(ord('₺'))
     True
     '''
-    return any([x <= codepoint <= y for x, y in VALID_RANGES])
+    return any( # pylint: disable=use-a-generator
+        [x <= codepoint <= y for x, y in VALID_RANGES])
 
 def _find_path_and_open_function(
         dirnames: Iterable[str],
@@ -1299,7 +1300,7 @@ class EmojiMatcher():
         # the matching a little bit but it is very slow.
         if debug:
             print(f'seq1 = “{self._seq1}” seq2 = “{self._seq2}”')
-        for tag, i1, i2, j1, j2 in self._matcher.get_opcodes():
+        for tag, i1, i2, j1, j2 in self._matcher.get_opcodes(): # pylint: disable=invalid-name
             score = 0
             if tag in ('replace', 'delete', 'insert'):
                 pass
@@ -1866,11 +1867,11 @@ class EmojiMatcher():
                             # information to the user. Better skip
                             # the rest of labels in this case.
                             break
-        for similar_key in self._emoji_dict:
+        for similar_key, similar_key_value in self._emoji_dict.items():
             similar_string = similar_key[0]
             language = similar_key[1]
-            if 'names' in self._emoji_dict[similar_key]:
-                similar_name = self._emoji_dict[similar_key]['names'][0]
+            if 'names' in similar_key_value:
+                similar_name = similar_key_value['names'][0]
             else:
                 similar_name = self.name(similar_string)
             if (len(similar_string) == 1
@@ -1893,8 +1894,8 @@ class EmojiMatcher():
                         emoji_string,
                         variation_selector=self._variation_selector)]
             for label_key in label_keys:
-                if label_key in self._emoji_dict[similar_key]:
-                    for label in self._emoji_dict[similar_key][label_key]:
+                if label_key in similar_key_value:
+                    for label in similar_key_value[label_key]:
                         if label in original_labels[language]:
                             if scores_key in candidate_scores:
                                 candidate_scores[scores_key].append(label)
@@ -1987,11 +1988,11 @@ class EmojiMatcher():
                                     language][
                                         label_key][
                                             label].append(emoji)
-        for language in emoji_by_label_dict:
-            for label_key in emoji_by_label_dict[language]:
-                for label in emoji_by_label_dict[language][label_key]:
-                    emoji_by_label_dict[language][label_key][label] = sorted(
-                        emoji_by_label_dict[language][label_key][label],
+        for language, language_value in emoji_by_label_dict.items():
+            for label_key in language_value:
+                for label in language_value[label_key]:
+                    language_value[label_key][label] = sorted(
+                        language_value[label_key][label],
                         key=lambda x: (
                             self.cldr_order(x),
                             x,
@@ -2326,7 +2327,7 @@ def main() -> None:
         profile.enable()
 
     failed = 0
-    if False:
+    if False: # pylint: disable=using-constant-test
         matcher = EmojiMatcher(
             languages=['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE',
                        'ja_JP', 'zh_TW', 'zh_CN'],
@@ -2339,7 +2340,7 @@ def main() -> None:
         # the translations for the doctest tests. Translations may
         # make the tests fail just because some translations are
         # added, changed, or missing.
-        global DOMAINNAME
+        global DOMAINNAME # pylint: disable=global-statement
         DOMAINNAME = ''
         flags = doctest.REPORT_NDIFF #|doctest.FAIL_FAST
         (failed, dummy_attempted) = doctest.testmod(optionflags=flags)

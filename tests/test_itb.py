@@ -21,9 +21,6 @@
 This file implements the test cases for the unit tests of ibus-typing-booster
 '''
 
-# pylint: disable=missing-function-docstring
-# pylint: disable=protected-access
-# pylint: disable=wrong-import-position
 
 from typing import Any
 from typing import Optional
@@ -32,28 +29,32 @@ import sys
 import logging
 import unicodedata
 import unittest
-import subprocess
 import importlib
 from unittest import mock
 
+# pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
 require_version('Gdk', '3.0')
 from gi.repository import Gdk
+# pylint: enable=wrong-import-position
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
 # Get more verbose output in the test log:
 os.environ['IBUS_TYPING_BOOSTER_DEBUG_LEVEL'] = '255'
 
+# pylint: disable=import-error
 from mock_engine import MockEngine
 from mock_engine import MockLookupTable
 from mock_engine import MockProperty
 from mock_engine import MockPropList
+# pylint: enable=import-error
 
-import testutils
+import testutils # pylint: disable=import-error
 
+# pylint: disable=wrong-import-order
 sys.path.insert(0, "../engine")
 # pylint: disable=import-error
 import hunspell_table
@@ -62,25 +63,37 @@ import itb_util
 import m17n_translit
 # pylint: enable=import-error
 sys.path.pop(0)
+# pylint: enable=wrong-import-order
 
 IMPORT_ENCHANT_SUCCESSFUL = False
 IMPORT_HUNSPELL_SUCCESSFUL = False
 try:
+    # pylint: disable=unused-import
     import enchant # type: ignore
+    # pylint: enable=unused-import
     IMPORT_ENCHANT_SUCCESSFUL = True
 except (ImportError,):
     try:
+        # pylint: disable=unused-import
         import hunspell # type: ignore
+        # pylint: enable=unused-import
         IMPORT_HUNSPELL_SUCCESSFUL = True
     except (ImportError,):
         pass
 
 IMPORT_LIBVOIKKO_SUCCESSFUL = False
 try:
+    # pylint: disable=unused-import
     import libvoikko # type: ignore
+    # pylint: enable=unused-import
     IMPORT_LIBVOIKKO_SUCCESSFUL = True
 except (ImportError,):
     pass
+
+# pylint: disable=missing-function-docstring
+# pylint: disable=protected-access
+# pylint: disable=line-too-long
+# pylint: disable=invalid-name
 
 @unittest.skipIf(Gdk.Display.open('') is None, 'Display cannot be opened.')
 class ItbTestCase(unittest.TestCase):
@@ -322,12 +335,12 @@ class ItbTestCase(unittest.TestCase):
 
     def get_transliterator_or_skip(self, ime: str) -> Optional[Any]:
         try:
-            sys.stderr.write('ime "%s" ... ' %ime)
+            sys.stderr.write(f'ime "{ime}" ... ')
             trans = m17n_translit.Transliterator(ime)
         except ValueError as error:
             trans = None
             self.skipTest(error)
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             sys.stderr.write('Unexpected exception!')
             trans = None
             self.skipTest(error)
@@ -2119,7 +2132,7 @@ class ItbTestCase(unittest.TestCase):
         "Skipping, requires python3-libvoikko version >= 4.3.")
     @unittest.skipIf(
         testutils.init_libvoikko_error(),
-        "Skipping, %s" % testutils.init_libvoikko_error())
+        f'Skipping, {testutils.init_libvoikko_error()}')
     def test_voikko(self) -> None:
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)
@@ -2144,7 +2157,7 @@ class ItbTestCase(unittest.TestCase):
         "Skipping, requires python3-libvoikko version >= 4.3.")
     @unittest.skipIf(
         testutils.init_libvoikko_error(),
-        "Skipping, %s" % testutils.init_libvoikko_error())
+        f'Skipping, {testutils.init_libvoikko_error()}')
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
@@ -2279,7 +2292,7 @@ class ItbTestCase(unittest.TestCase):
             'commit_candidate_4': [],
             'commit_candidate_4_plus_space': [],
             'commit_candidate_5': [],
-            'commit_candidate_6_plus_space': [],
+            'commit_candidate_5_plus_space': [],
             'commit_candidate_6': [],
             'commit_candidate_6_plus_space': [],
             'commit_candidate_7': [],

@@ -25,18 +25,15 @@ import sys
 import logging
 import unittest
 
-from gi import require_version # type: ignore
-require_version('IBus', '1.0')
-from gi.repository import IBus # type: ignore
-
 LOGGER = logging.getLogger('ibus-typing-booster')
 
-import testutils
-
+# pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
-import itb_util
-import itb_emoji
+import itb_emoji # pylint: disable=import-error
 sys.path.pop(0)
+
+import testutils # pylint: disable=import-error
+# pylint: enable=wrong-import-position
 
 # Set the domain name to something invalid to avoid using
 # the translations for the doctest tests. Translations may
@@ -47,22 +44,31 @@ itb_emoji.DOMAINNAME = ''
 IMPORT_ENCHANT_SUCCESSFUL = False
 IMPORT_HUNSPELL_SUCCESSFUL = False
 try:
+    # pylint: disable=unused-import
     import enchant # type: ignore
+    # pylint: enable=unused-import
     IMPORT_ENCHANT_SUCCESSFUL = True
 except (ImportError,):
     try:
+        # pylint: disable=unused-import
         import hunspell # type: ignore
+        # pylint: enable=unused-import
         IMPORT_HUNSPELL_SUCCESSFUL = True
     except (ImportError,):
         pass
 
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-class-docstring
+# pylint: disable=invalid-name
+# pylint: disable=line-too-long
+
 @unittest.skipIf(
     '..' not in itb_emoji.find_cldr_annotation_path('en'),
-    'Using external emoji annotations: %s '
-    % itb_emoji.find_cldr_annotation_path('en')
-    + 'Testing with older emoji annotations instead '
-    'of those included in the ibus-typing-booster source is likely '
-    'to create meaningless test failures.')
+    f'Using external emoji annotations: '
+    f'{itb_emoji.find_cldr_annotation_path("en")} '
+    f'Testing with older emoji annotations instead '
+    f'of those included in the ibus-typing-booster source is likely '
+    f'to create meaningless test failures.')
 class EmojiCandidatesTestCase(unittest.TestCase):
     def setUp(self) -> None:
         self.maxDiff = None
@@ -98,12 +104,10 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     def test_candidates_similar_emoji(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
-        # pylint: disable=line-too-long
         self.assertEqual(
             mq.candidates('😺', match_limit=3),
             [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, uc6, grinning]', 10), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, mouth, open, smile, uc6]', 7), ('😄', 'smiling face with open mouth and smiling eyes [So, people, face, mouth, open, smile, uc6]', 7)]
         )
-        # pylint: enable=line-too-long
 
     def test_candidates_japanese_full_width_low_line(self) -> None:
         # ＿ U+FF3F FULLWIDTH LOW LINE should not disturb the match
@@ -465,10 +469,12 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('1b'),
             [('\x1b', 'U+1B', 2000), ('🧔🏻\u200d♂️', 'man: light skin tone, beard', 44), ('🧔🏻\u200d♀️', 'woman: light skin tone, beard', 44), ('🧑🏻\u200d🦲', 'person: light skin tone, bald', 44)])
 
-    def test_candidates_de_DE_versus_de_CH(self) -> None:
+    def test_candidates_de_DE_versus_de_CH(self) -> None: # pylint: disable=invalid-name
+        # pylint: disable=fixme
         # FIXME: This doesn’t work perfectly, when de_CH is the main
         # language, “Reissverschluss” should be preferred in the
         # results.
+        # pylint: enable=fixme
         mq = itb_emoji.EmojiMatcher(
             languages = ['de_DE'])
         self.assertEqual(
@@ -495,7 +501,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin worked.")
-    def test_candidates_pinyin_missing_zh_CN(self) -> None:
+    def test_candidates_pinyin_missing_zh_CN(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
             languages = ['zh_CN'])
         self.assertEqual(
@@ -507,7 +513,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin failed.")
-    def test_candidates_pinyin_available_zh_CN(self) -> None:
+    def test_candidates_pinyin_available_zh_CN(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
             languages = ['zh_CN'])
         self.assertEqual(
@@ -520,7 +526,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin worked.")
-    def test_candidates_pinyin_missing_zh_TW(self) -> None:
+    def test_candidates_pinyin_missing_zh_TW(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
             languages = ['zh_TW'])
         self.assertEqual(
@@ -532,7 +538,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin failed.")
-    def test_candidates_pinyin_available_zh_TW(self) -> None:
+    def test_candidates_pinyin_available_zh_TW(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
             languages = ['zh_TW'])
         self.assertEqual(
@@ -545,7 +551,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipIf(
         itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
         "Skipping because import pykakasi worked.")
-    def test_candidates_pykakasi_missing_ja_JP(self) -> None:
+    def test_candidates_pykakasi_missing_ja_JP(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
             languages = ['ja_JP'])
         self.assertEqual(
@@ -584,7 +590,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
         "Skipping because import pykakasi failed.")
-    def test_candidates_pykakasi_available_ja_JP(self) -> None:
+    def test_candidates_pykakasi_available_ja_JP(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
             languages = ['ja_JP'])
         self.assertEqual(

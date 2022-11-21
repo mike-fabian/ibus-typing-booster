@@ -26,6 +26,10 @@ from typing import Tuple
 import sys
 import ctypes
 
+# pylint: disable=invalid-name
+# pylint: disable=too-few-public-methods
+# pylint: disable=missing-class-docstring
+# pylint: disable=protected-access
 class glib__GSList(ctypes.Structure):
     pass
 glib__GSList._fields_ = [
@@ -90,7 +94,12 @@ libpango__PangoGlyphItem._fields_ = [
     ('item', ctypes.POINTER(libpango__PangoItem)),
     ('glyphs', ctypes.POINTER(libpango__PangoGlyphString)),
 ]
+# pylint: enable=invalid-name
+# pylint: enable=too-few-public-methods
+# pylint: enable=missing-class-docstring
+# pylint: enable=protected-access
 
+# pylint: disable=invalid-name
 libglib__lib = None
 libgtk3__lib = None
 libpango__lib = None
@@ -112,6 +121,7 @@ libpango__pango_layout_set_attributes = None
 libpango__pango_layout_get_line_readonly = None
 libpango__pango_font_describe = None
 libpango__pango_font_description_get_family = None
+# pylint: enable=invalid-name
 
 def get_fonts_used_for_text(
         font: str, text: str, fallback: bool = True) -> List[Tuple[str, str]]:
@@ -168,7 +178,7 @@ def get_fonts_used_for_text(
         pango_item_p = pango_glyph_item.item
         offset = pango_item_p.contents.offset
         length = pango_item_p.contents.length
-        num_chars = pango_item_p.contents.num_chars
+        _num_chars = pango_item_p.contents.num_chars
         pango_analysis = pango_item_p.contents.analysis
         pango_font_p = pango_analysis.font
         font_description_used = libpango__pango_font_describe(pango_font_p) # type: ignore
@@ -182,6 +192,8 @@ def get_fonts_used_for_text(
     return fonts_used
 
 def _init() -> None:
+    # pylint: disable=invalid-name
+    # pylint: disable=global-statement
     global libglib__lib
     libglib__lib = ctypes.CDLL('libglib-2.0.so.0', mode=ctypes.RTLD_GLOBAL)
     global libgtk3__lib
@@ -283,12 +295,14 @@ def _init() -> None:
     libgtk3__gtk_init(
         ctypes.byref(ctypes.c_int(0)),
         ctypes.byref(ctypes.pointer(ctypes.c_char_p(b''))))
+    # pylint: enable=invalid-name
+    # pylint: enable=global-statement
 
 def _del() -> None:
     '''Cleanup'''
-    pass
+    return
 
-class __ModuleInitializer:
+class __ModuleInitializer: # pylint: disable=too-few-public-methods,invalid-name
     def __init__(self) -> None:
         _init()
 

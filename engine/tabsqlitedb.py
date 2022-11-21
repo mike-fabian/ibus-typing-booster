@@ -27,8 +27,6 @@ from typing import Optional
 from typing import Any
 from typing import Callable
 import os
-import os.path as path
-import codecs
 import unicodedata
 import sqlite3
 import time
@@ -69,7 +67,7 @@ class TabSqliteDb:
     '''
     # pylint: enable=line-too-long
     def __init__(self, user_db_file: str = '') -> None:
-        global DEBUG_LEVEL
+        global DEBUG_LEVEL # pylint: disable=global-statement
         try:
             DEBUG_LEVEL = int(str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
         except (TypeError, ValueError):
@@ -79,7 +77,7 @@ class TabSqliteDb:
                 'TabSqliteDb.__init__(user_db_file = %s)', user_db_file)
         self.user_db_file = user_db_file
         if not self.user_db_file and os.getenv('HOME'):
-            self.user_db_file = path.join(
+            self.user_db_file = os.path.join(
                 str(os.getenv('HOME')), '.local/share/ibus-typing-booster/user.db')
         if not self.user_db_file:
             LOGGER.debug('Falling back to ":memory:" for user.db')
@@ -173,7 +171,7 @@ class TabSqliteDb:
                         LOGGER.info(
                             'Compatible database %(db)s found.',
                             {'db': self.user_db_file})
-                except Exception as error:
+                except Exception as error: # pylint: disable=broad-except
                     LOGGER.exception(
                         'Unexpected error searching user database: %s: %s',
                         error.__class__.__name__, error)
@@ -186,8 +184,8 @@ class TabSqliteDb:
             self.database = sqlite3.connect(self.user_db_file)
             self.set_database_pragma_options()
             self.database.executescript(
-                'ATTACH DATABASE "%s" AS user_db;' % self.user_db_file)
-        except Exception as error:
+                f'ATTACH DATABASE "{self.user_db_file}" AS user_db;')
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Could not open the database %s. %s: %s',
                 self.user_db_file, error.__class__.__name__, error)
@@ -210,7 +208,7 @@ class TabSqliteDb:
             self.database = sqlite3.connect(self.user_db_file)
             self.set_database_pragma_options()
             self.database.executescript(
-                'ATTACH DATABASE "%s" AS user_db;' % self.user_db_file)
+                f'ATTACH DATABASE "{self.user_db_file} AS user_db;')
         self.create_tables()
         if self.old_phrases:
             sqlargs = []
@@ -228,7 +226,7 @@ class TabSqliteDb:
             ;'''
             try:
                 self.database.executemany(sqlstr, sqlargs)
-            except Exception as error:
+            except Exception as error: # pylint: disable=broad-except
                 LOGGER.exception(
                     'Unexpected error inserting old phrases '
                     'into the user database: %s: %s',
@@ -277,7 +275,7 @@ class TabSqliteDb:
             self.database.execute(sqlstr, sqlargs)
             if commit:
                 self.database.commit()
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error updating phrase in user_db: %s: %s',
                 error.__class__.__name__, error)
@@ -359,7 +357,7 @@ class TabSqliteDb:
             self.database.execute(insert_sqlstr, insert_sqlargs)
             if commit:
                 self.database.commit()
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error adding phrase to database: %s: %s',
                 error.__class__.__name__, error)
@@ -376,8 +374,9 @@ class TabSqliteDb:
         if commit:
             self.database.commit()
 
+    @classmethod
     def best_candidates(
-            self,
+            cls,
             phrase_frequencies: Dict[str, float],
             title: bool = False) -> List[Tuple[str, float]]:
         '''Sorts the phrase_frequencies dictionary and returns the best
@@ -429,7 +428,7 @@ class TabSqliteDb:
         try:
             results_shortcuts = self.database.execute(
                 sqlstr, sqlargs).fetchall()
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error fetching '
                 'user shortcuts from database: %s: %s',
@@ -472,8 +471,7 @@ class TabSqliteDb:
             # Trying to complete an input_phrase which contains spaces
             # will never work and spell checking suggestions by hunspell
             # for input which contains spaces is almost always nonsense.
-            phrase_frequencies.update([
-                x for x in self.hunspell_obj.suggest(input_phrase)])
+            phrase_frequencies.update(self.hunspell_obj.suggest(input_phrase))
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'hunspell: best_candidates=%s',
@@ -507,14 +505,14 @@ class TabSqliteDb:
             quoted_input_phrase = input_phrase.replace(
                 '\x00', '').replace('"', '""')
         self.database.execute('DROP VIEW IF EXISTS like_input_phrase_view;')
-        sqlstr = '''
+        sqlstr = f'''
         CREATE TEMPORARY VIEW IF NOT EXISTS like_input_phrase_view AS
         SELECT * FROM user_db.phrases
-        WHERE input_phrase LIKE "%(quoted_input_phrase)s%%"
-        ;''' % {'quoted_input_phrase': quoted_input_phrase}
+        WHERE input_phrase LIKE "{quoted_input_phrase}%%"
+        ;'''
         try:
             self.database.execute(sqlstr)
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error in creating database view: %s: %s',
                 error.__class__.__name__, error)
@@ -542,7 +540,7 @@ class TabSqliteDb:
             # (“c|conspiracy|1” is not selected because it doesn’t
             # match the user input “LIKE co%”! I.e. this is filtered
             # out by the VIEW created above already)
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error getting “unigram” data from user_db: %s: %s',
                 error.__class__.__name__, error)
@@ -558,7 +556,7 @@ class TabSqliteDb:
         sqlstr = 'SELECT sum(user_freq) FROM like_input_phrase_view;'
         try:
             count = self.database.execute(sqlstr, sqlargs).fetchall()[0][0]
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error getting total unigram count '
                 'from user_db: %s: %s',
@@ -582,7 +580,7 @@ class TabSqliteDb:
             'WHERE p_phrase = :p_phrase GROUP BY phrase;')
         try:
             results_bi = self.database.execute(sqlstr, sqlargs).fetchall()
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error getting “bigram” data '
                 'from user_db: %s: %s',
@@ -597,7 +595,7 @@ class TabSqliteDb:
         try:
             count_p_phrase = self.database.execute(
                 sqlstr, sqlargs).fetchall()[0][0]
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error getting total bigram count '
                 'from user_db: %s: %s',
@@ -623,7 +621,7 @@ class TabSqliteDb:
                   'AND pp_phrase = :pp_phrase GROUP BY phrase;')
         try:
             results_tri = self.database.execute(sqlstr, sqlargs).fetchall()
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error getting “trigram” data '
                 'from user_db: %s: %s',
@@ -639,7 +637,7 @@ class TabSqliteDb:
         try:
             count_pp_phrase_p_phrase = self.database.execute(
                 sqlstr, sqlargs).fetchall()[0][0]
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error getting total trigram count '
                 'from user_db: %s: %s',
@@ -678,7 +676,7 @@ class TabSqliteDb:
                 + 'VALUES (?, DATETIME("now", "localtime"));')
             self.database.execute(sqlstring, ("create-time", ))
             self.database.commit()
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error adding description to user_db: %s: %s',
                  error.__class__.__name__, error)
@@ -689,7 +687,7 @@ class TabSqliteDb:
         '''
         if self.user_db_file == ':memory:':
             return
-        if not path.exists(self.user_db_file):
+        if not os.path.exists(self.user_db_file):
             self.database = sqlite3.connect(self.user_db_file)
             self.set_database_pragma_options()
 
@@ -712,9 +710,10 @@ class TabSqliteDb:
         ''')
         self.database.commit()
 
-    def get_database_desc(self, db_file: str) -> Optional[Dict[str, str]]:
+    @classmethod
+    def get_database_desc(cls, db_file: str) -> Optional[Dict[str, str]]:
         '''Get the description of the database'''
-        if not path.exists(db_file):
+        if not os.path.exists(db_file):
             return None
         try:
             database = sqlite3.connect(db_file)
@@ -723,14 +722,15 @@ class TabSqliteDb:
                 desc[row[0]] = row[1]
             database.close()
             return desc
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error getting database description: %s: %s',
                  error.__class__.__name__, error)
             return None
 
+    @classmethod
     def get_number_of_columns_of_phrase_table(
-            self, db_file: str) -> Optional[int]:
+            cls, db_file: str) -> Optional[int]:
         # pylint: disable=line-too-long
         '''
         Get the number of columns in the 'phrases' table in
@@ -746,7 +746,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         lines.
         '''
         # pylint: enable=line-too-long
-        if not path.exists(db_file):
+        if not os.path.exists(db_file):
             return None
         try:
             database = sqlite3.connect(db_file)
@@ -761,7 +761,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                 table_phrases_columns = match.group(1).split(',')
                 return len(table_phrases_columns)
             return 0
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error getting number of columns '
                 'of database: %s: %s',
@@ -821,7 +821,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             self.database.execute(sqlstr, sqlargs)
             if commit:
                 self.database.commit()
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error defining shortcut: %s: %s',
                 error.__class__.__name__, error)
@@ -862,7 +862,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         results = []
         try:
             results = self.database.execute(sqlstr, sqlargs).fetchall()
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error checking user shortcuts in user_db: %s: %s',
                  error.__class__.__name__, error)
@@ -891,7 +891,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                 self.database.execute(sqlstr, sqlargs)
                 if commit:
                     self.database.commit()
-            except Exception as error:
+            except Exception as error: # pylint: disable=broad-except
                 LOGGER.exception(
                     'Unexpected error updating shortcut in user_db: %s: %s',
                     error.__class__.__name__, error)
@@ -1039,7 +1039,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                 phrases
             ]
             return phrases[:]
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error extracting user phrases: %s: %s',
                  error.__class__.__name__, error)
@@ -1103,7 +1103,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                     unicodedata.normalize(
                         itb_util.NORMALIZATION_FORM_INTERNAL, line)
                     for line in file_handle.readlines()]
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error reading training data from file: %s: %s',
                  error.__class__.__name__, error)
@@ -1127,8 +1127,8 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                 pp_token = p_token
                 p_token = token
         sqlargs = []
-        for key in database_dict:
-            sqlargs.append(database_dict[key])
+        for key, value in database_dict.items():
+            sqlargs.append(value)
         sqlstr = '''
         INSERT INTO user_db.phrases (input_phrase, phrase, p_phrase, pp_phrase, user_freq, timestamp)
         VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq, :timestamp)
@@ -1142,7 +1142,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             self.database.executemany(sqlstr, sqlargs)
             self.database.commit()
             self.database.execute('PRAGMA wal_checkpoint;')
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error writing training data to database: %s: %s',
                  error.__class__.__name__, error)
@@ -1158,7 +1158,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             self.database.execute('DELETE FROM phrases;')
             self.database.commit()
             self.database.execute('PRAGMA wal_checkpoint;')
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error removing all phrases from database: %s: %s',
                  error.__class__.__name__, error)
@@ -1177,7 +1177,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             for row in self.database.execute(
                     "SELECT * FROM phrases;").fetchall():
                 LOGGER.debug('%s', repr(row))
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception('Unexpected error dumping database: %s: %s',
                               error.__class__.__name__, error)
             return
@@ -1191,7 +1191,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         try:
             return len(self.database.execute(
                 "SELECT * FROM phrases;").fetchall())
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error getting number of database rows: %s: %s',
                 error.__class__.__name__, error)
@@ -1227,11 +1227,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             else:
                 database = self.database
             rows = database.execute("SELECT * FROM phrases;").fetchall()
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception('Exception when accessing database: %s: %s',
                               error.__class__.__name__, error)
-            import traceback
-            traceback.print_exc()
         if not rows:
             return
         rows = sorted(rows,
@@ -1258,18 +1256,16 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                 sqlargs_delete = {'id': row[0]}
                 try:
                     database.execute(sqlstr_delete, sqlargs_delete)
-                except Exception as error:
+                except Exception as error: # pylint: disable=broad-except
                     LOGGER.exception(
                         '1st pass: exception deleting row '
                         'from database: %s: %s',
                          error.__class__.__name__, error)
-                    import traceback
-                    traceback.print_exc()
             else:
                 rows_kept.append(row)
             index -= 1
-        LOGGER.info('1st pass: Number of rows deleted above maximum size='
-                    f'{number_delete_above_max}')
+        LOGGER.info('1st pass: Number of rows deleted above maximum size=%s',
+                    number_delete_above_max)
         # As the first pass above removes rows sorted by count and
         # then by timestamp, it will never remove rows with a higher
         # count even if they are extremely old. Therefore, a second
@@ -1311,13 +1307,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                     sqlargs_delete = {'id': row[0]}
                     try:
                         database.execute(sqlstr_delete, sqlargs_delete)
-                    except Exception as error:
+                    except Exception as error: # pylint: disable=broad-except
                         LOGGER.exception(
                             '2nd pass: exception deleting row '
                             'from database: %s: %s',
                              error.__class__.__name__, error)
-                        import traceback
-                        traceback.print_exc()
                 else:
                     LOGGER.info('2nd pass: decaying %s %s',
                                 repr(row),
@@ -1335,13 +1329,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
 
                     try:
                         database.execute(sqlstr_update, sqlargs_update)
-                    except Exception as error:
+                    except Exception as error: # pylint: disable=broad-except
                         LOGGER.exception(
                             '2nd pass: exception decaying row '
                             'from database: %s: %s',
                              error.__class__.__name__, error)
-                        import traceback
-                        traceback.print_exc()
             index -= 1
         LOGGER.info('Commit database and execute checkpoint ...')
         database.commit()

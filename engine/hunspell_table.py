@@ -62,6 +62,13 @@ try:
 except (ImportError,):
     IMPORT_SIMPLEAUDIO_SUCCESSFUL = False
 
+IMPORT_ITB_NLTK_SUCCESSFUL = False
+try:
+    import itb_nltk
+    IMPORT_ITB_NLTK_SUCCESSFUL = True
+except (ImportError, LookupError):
+    IMPORT_ITB_NLTK_SUCCESSFUL = False
+
 IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = False
 try:
     from google.cloud import speech # type: ignore
@@ -112,7 +119,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             obj_path: str,
             database: Any, # tabsqlitedb.TabSqliteDb
             unit_test: bool = False) -> None:
-        global DEBUG_LEVEL
+        global DEBUG_LEVEL # pylint: disable=global-statement
         try:
             DEBUG_LEVEL = int(str(os.getenv(
                 'IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
@@ -966,7 +973,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                             stripped_transliterated_string,
                             p_phrase=self._p_phrase,
                             pp_phrase=self._pp_phrase)
-                    except Exception as error:
+                    except Exception as error: # pylint: disable=broad-except
                         LOGGER.exception(
                             'Exception when calling select_words: %s: %s',
                             error.__class__.__name__, error)
@@ -976,7 +983,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 try:
                     shortcut_candidates = self.database.select_shortcuts(
                         self._transliterated_strings[ime])
-                except Exception as error:
+                except Exception as error: # pylint: disable=broad-except
                     LOGGER.exception(
                         'Exception when calling select_shortcuts: %s: %s',
                         error.__class__.__name__, error)
@@ -1015,7 +1022,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 phrase_candidates = self.database.best_candidates(
                     phrase_frequencies)
         if ((self._emoji_predictions
-             and not (self.client_capabilities & itb_util.Capabilite.OSK))
+             and not self.client_capabilities & itb_util.Capabilite.OSK)
             or self._typed_string[0] in self._emoji_trigger_characters
             or self._typed_string[-1] in self._emoji_trigger_characters):
             # If emoji mode is off and the emoji predictions are
@@ -1919,7 +1926,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.main_prop_list.append(self._setup_property)
         self.register_properties(self.main_prop_list)
 
-    def do_property_activate(
+    def do_property_activate( # pylint: disable=arguments-differ
             self,
             ibus_property: str,
             prop_state: IBus.PropState = IBus.PropState.UNCHECKED) -> None:
@@ -2003,7 +2010,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._clear_input()
         self._update_ui()
 
-    def do_destroy(self) -> None:
+    def do_destroy(self) -> None: # pylint: disable=arguments-differ
         '''Called when this input engine is destroyed
         '''
         if DEBUG_LEVEL > 1:
@@ -2419,16 +2426,21 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         else:
             related_candidates = self.emoji_matcher.similar(
                 phrase, show_keywords=False)
-        try:
-            import itb_nltk
-            for synonym in itb_nltk.synonyms(phrase, keep_original=False):
-                related_candidates.append((synonym, '[synonym]', 0))
-            for hypernym in itb_nltk.hypernyms(phrase, keep_original=False):
-                related_candidates.append((hypernym, '[hypernym]', 0))
-            for hyponym in itb_nltk.hyponyms(phrase, keep_original=False):
-                related_candidates.append((hyponym, '[hyponym]', 0))
-        except (ImportError, LookupError):
-            pass
+        if not IMPORT_ITB_NLTK_SUCCESSFUL:
+            LOGGER.info('nltk is not available')
+        else:
+            LOGGER.info('Getting related words from nltk for: “%s”', phrase)
+            try:
+                for synonym in itb_nltk.synonyms(phrase, keep_original=False):
+                    related_candidates.append((synonym, '[synonym]', 0))
+                for hypernym in itb_nltk.hypernyms(phrase, keep_original=False):
+                    related_candidates.append((hypernym, '[hypernym]', 0))
+                for hyponym in itb_nltk.hyponyms(phrase, keep_original=False):
+                    related_candidates.append((hyponym, '[hyponym]', 0))
+            except (LookupError,) as error:
+                LOGGER.exception(
+                    'Exception when trying to use nltk: %s: %s',
+                     error.__class__.__name__, error)
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'related_candidates of “%s” = %s\n',
@@ -2686,7 +2698,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if not commit_phrase or not input_phrase:
             return
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
-        stripped_input_phrase = itb_util.strip_token(input_phrase)
         self.database.check_phrase_and_update_frequency(
             input_phrase=input_phrase,
             phrase=commit_phrase,
@@ -4435,7 +4446,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        global DEBUG_LEVEL
+        global DEBUG_LEVEL # pylint: disable=global-statement
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', debug_level, update_gsettings)
@@ -4526,7 +4537,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     LOGGER.exception(
                         'Initializing error sound object failed: %s: %s ',
                         error.__class__.__name__, error)
-                except Exception as error:
+                except Exception as error: # pylint: disable=broad-except
                     LOGGER.exception(
                         'Initializing error sound object failed: %s: %s',
                         error.__class__.__name__, error)
@@ -4637,7 +4648,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         return self._auto_select_candidate
 
-    def do_candidate_clicked(
+    def do_candidate_clicked( # pylint: disable=arguments-differ
             self, index: int, button: int, state: int) -> None:
         '''Called when a candidate in the lookup table
         is clicked with the mouse
@@ -4747,7 +4758,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._google_application_credentials)
         try:
             client = speech.SpeechClient()
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Exception when intializing Google speech-to-text: %s: %s',
                 error.__class__.__name__, error)
@@ -4856,7 +4867,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         True)
                     if result.is_final:
                         break
-            except Exception as error:
+            except Exception as error: # pylint: disable=broad-except
                 LOGGER.exception('Google speech-to-text error: %s: %s',
                                  error.__class__.__name__, error)
                 self._speech_recognition_error(
@@ -4869,7 +4880,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # or if the text left of the cursor is empty.
             # If surrounding text cannot be used, uppercase the
             # first letter unconditionally:
-            if (not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
+            if (not
+                self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
                 or
                 self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
                 transcript = transcript[0].upper() + transcript[1:]
@@ -5581,7 +5593,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._error_sound and self._error_sound_object:
             try:
                 dummy = self._error_sound_object.play()
-            except Exception as error:
+            except Exception as error: # pylint: disable=broad-except
                 LOGGER.exception('Playing error sound failed: %s: %s',
                                  error.__class__.__name__, error)
 
@@ -5773,7 +5785,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             IBus.Text.new_from_string(compose_result))
         return True
 
-    def do_process_key_event(
+    def do_process_key_event( # pylint: disable=arguments-differ
             self, keyval: int, keycode: int, state: int) -> bool:
         '''Process Key Events
         Key Events include Key Press and Key Release,
@@ -6274,7 +6286,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # returning “False”.
         return self._return_false(key.val, key.code, key.state)
 
-    def do_focus_in(self) -> None:
+    def do_focus_in(self) -> None: # pylint: disable=arguments-differ
         '''
         Called for ibus < 1.5.27 when a window gets focus while
         this input engine is enabled
@@ -6283,7 +6295,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.debug('entering do_focus_in()\n')
         self.do_focus_in_id('', '')
 
-    def do_focus_in_id(self, object_path: str, client: str) -> None:
+    def do_focus_in_id( # pylint: disable=arguments-differ
+            self, object_path: str, client: str) -> None:
         '''Called for ibus >= 1.5.27 when a window gets focus while
         this input engine is enabled
 
@@ -6391,7 +6404,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 pp_phrase=self.get_pp_phrase())
             self.push_context(stripped_commit_phrase)
 
-    def do_focus_out(self) -> None:
+    def do_focus_out(self) -> None: # pylint: disable=arguments-differ
         '''
         Called for ibus < 1.5.27 when a window loses focus while
         this input engine is enabled
@@ -6400,7 +6413,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.debug('entering do_focus_out()\n')
         self.do_focus_out_id('')
 
-    def do_focus_out_id(self, object_path: str) -> None:
+    def do_focus_out_id( # pylint: disable=arguments-differ
+            self, object_path: str) -> None:
         '''
         Called for ibus >= 1.5.27 when a window loses focus while
         this input engine is enabled
@@ -6422,7 +6436,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.clear_context()
         self._clear_input_and_update_ui()
 
-    def do_reset(self) -> None:
+    def do_reset(self) -> None: # pylint: disable=arguments-differ
         '''Called when the mouse pointer is used to move to cursor to a
         different position in the current window.
 
@@ -6463,7 +6477,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.clear_context()
         self._clear_input_and_update_ui()
 
-    def do_set_content_type(self, purpose: int, hints: int) -> None:
+    def do_set_content_type( # pylint: disable=arguments-differ
+            self, purpose: int, hints: int) -> None:
         '''Called when the input purpose or hints change'''
         LOGGER.debug('purpose=%s hints=%s\n', purpose, format(hints, '016b'))
         self._input_purpose = purpose
@@ -6486,7 +6501,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         'hint: %s %s',
                         str(hint), format(int(hint), '016b'))
 
-    def do_enable(self) -> None:
+    def do_enable(self) -> None: # pylint: disable=arguments-differ
         '''Called when this input engine is enabled'''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('do_enable()\n')
@@ -6495,13 +6510,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.get_surrounding_text()
         self.do_focus_in()
 
-    def do_disable(self) -> None:
+    def do_disable(self) -> None: # pylint: disable=arguments-differ
         '''Called when this input engine is disabled'''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('do_disable()\n')
         self._clear_input_and_update_ui()
 
-    def do_page_up(self) -> bool:
+    def do_page_up(self) -> bool: # pylint: disable=arguments-differ
         '''Called when the page up button in the lookup table is clicked with
         the mouse
 
@@ -6511,7 +6526,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return True
         return True
 
-    def do_page_down(self) -> bool:
+    def do_page_down(self) -> bool: # pylint: disable=arguments-differ
         '''Called when the page down button in the lookup table is clicked with
         the mouse
 
@@ -6521,7 +6536,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return True
         return False
 
-    def do_cursor_up(self) -> bool:
+    def do_cursor_up(self, *_args: Any, **_kwargs: Any) -> bool:
         '''Called when the mouse wheel is rolled up in the candidate area of
         the lookup table
 
@@ -6530,7 +6545,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._update_lookup_table_and_aux()
         return res
 
-    def do_cursor_down(self) -> bool:
+    def do_cursor_down(self) -> bool: # pylint: disable=arguments-differ
         '''Called when the mouse wheel is rolled down in the candidate area of
         the lookup table
 
@@ -6567,8 +6582,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :param update_gsettings: ignored
         '''
         LOGGER.info('Reloading input methods ...')
-        m17n_translit._del()
-        m17n_translit._init()
+        m17n_translit.fini()
+        m17n_translit.init()
         self._init_transliterators()
         self._clear_input_and_update_ui()
     # pylint: enable=unused-argument

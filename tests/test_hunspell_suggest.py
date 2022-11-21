@@ -24,35 +24,44 @@ This file implements test cases for suggestions from hunspell dictionaries
 import sys
 import unittest
 
-from gi import require_version # type: ignore
-require_version('IBus', '1.0')
-from gi.repository import IBus # type: ignore
-
-import testutils
-
+# pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
-import hunspell_suggest
-import itb_util
+import hunspell_suggest # pylint: disable=import-error
+import itb_util # pylint: disable=import-error
 sys.path.pop(0)
+
+import testutils # pylint: disable=import-error
+# pylint: enable=wrong-import-position
 
 IMPORT_ENCHANT_SUCCESSFUL = False
 IMPORT_HUNSPELL_SUCCESSFUL = False
 try:
+    # pylint: disable=unused-import
     import enchant # type: ignore
+    # pylint: enable=unused-import
     IMPORT_ENCHANT_SUCCESSFUL = True
 except (ImportError,):
     try:
+        # pylint: disable=unused-import
         import hunspell # type: ignore
+        # pylint: enable=unused-import
         IMPORT_HUNSPELL_SUCCESSFUL = True
     except (ImportError,):
         pass
 
 IMPORT_LIBVOIKKO_SUCCESSFUL = False
 try:
+    # pylint: disable=unused-import
     import libvoikko # type: ignore
+    # pylint: enable=unused-import
     IMPORT_LIBVOIKKO_SUCCESSFUL = True
 except (ImportError,):
     pass
+
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-class-docstring
+# pylint: disable=invalid-name
+# pylint: disable=line-too-long
 
 class HunspellSuggestTestCase(unittest.TestCase):
     def setUp(self) -> None:
@@ -233,7 +242,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         "Skipping, requires python3-libvoikko version >= 4.3.")
     @unittest.skipIf(
         testutils.init_libvoikko_error(),
-        "Skipping, %s" % testutils.init_libvoikko_error())
+        f'Skipping, {testutils.init_libvoikko_error()}')
     def test_fi_FI_voikko(self) -> None:
         d = hunspell_suggest.Dictionary('fi_FI')
         self.assertEqual(d.has_spellchecking(), True)
@@ -308,7 +317,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         "Skipping, requires python3-libvoikko version >= 4.3.")
     @unittest.skipIf(
         testutils.init_libvoikko_error(),
-        "Skipping, %s" % testutils.init_libvoikko_error())
+        f'Skipping, {testutils.init_libvoikko_error()}')
     def test_fi_FI_spellcheck_voikko(self) -> None:
         d = hunspell_suggest.Dictionary('fi_FI')
         self.assertEqual(d.spellcheck_voikko('kissa'), True)
@@ -321,7 +330,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         "Skipping, requires python3-libvoikko version >= 4.3.")
     @unittest.skipIf(
         testutils.init_libvoikko_error(),
-        "Skipping, %s" % testutils.init_libvoikko_error())
+        f'Skipping, {testutils.init_libvoikko_error()}')
     def test_fi_FI_spellcheck_suggest_voikko(self) -> None:
         d = hunspell_suggest.Dictionary('fi_FI')
         self.assertEqual(

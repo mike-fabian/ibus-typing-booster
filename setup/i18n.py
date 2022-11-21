@@ -17,7 +17,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
-
+'''
+Module to initialize gettext
+'''
 from typing import Callable
 import locale
 import gettext
@@ -29,6 +31,9 @@ _: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
 N_: Callable[[str], str] = lambda a: a
 
 def init() -> None:
+    '''
+    Initialize gettext
+    '''
     localedir = os.getenv("IBUS_LOCALEDIR")
     # Python's locale module doesn't provide all methods on some
     # operating systems like FreeBSD

@@ -44,8 +44,10 @@ import logging
 import logging.handlers
 
 from gi import require_version # type: ignore
+# pylint: disable=wrong-import-position
 require_version('GLib', '2.0')
 from gi.repository import GLib # type: ignore
+# pylint: enable=wrong-import-position
 
 # set_prgname before importing other modules to show the name in warning
 # messages when import modules are failed. E.g. Gtk.
@@ -53,11 +55,13 @@ GLib.set_application_name('Emoji Picker')
 # This makes gnome-shell load the .desktop file when running under Wayland:
 GLib.set_prgname('emoji-picker')
 
+# pylint: disable=wrong-import-position
 require_version('Gdk', '3.0')
 from gi.repository import Gdk
 require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from gi.repository import GObject
+# pylint: enable=wrong-import-position
 import itb_emoji
 import itb_util
 import itb_pango
@@ -608,8 +612,9 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                  language, label_key, label])
         return True
 
-    def _sort_labels( # pylint: disable=no-self-use
-            self,
+    @classmethod
+    def _sort_labels(
+            cls,
             labels: Dict[str, List[str]],
             language: str) -> List[str]:
         return sorted(
@@ -883,7 +888,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             except (PermissionError, SyntaxError, IndentationError) as error:
                 LOGGER.exception('Error when reading options: %s: %s',
                                  error.__class__.__name__, error)
-            except Exception as error:
+            except Exception as error: # pylint: disable=broad-except
                 LOGGER.exception(
                     'Unexpected error when reading options: %s: %s',
                     error.__class__.__name__, error)
@@ -950,7 +955,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             except (PermissionError, SyntaxError, IndentationError) as error:
                 LOGGER.exception('Error reading recently used emoji: %s: %s',
                                  error.__class__.__name__, error)
-            except Exception as error:
+            except Exception as error: # pylint: disable=broad-except
                 LOGGER.exception(
                     'Unexpected error reading recently used emoji: %s: %s',
                     error.__class__.__name__, error)

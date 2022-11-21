@@ -21,13 +21,9 @@
 '''
 This file implements the test cases using GTK GUI
 '''
-# “Wrong continued indentation”: pylint: disable=bad-continuation
 # pylint: disable=attribute-defined-outside-init
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-class-docstring
-# pylint: disable=global-statement
-# pylint: disable=wrong-import-order
-# pylint: disable=wrong-import-position
 
 from typing import List
 from typing import Dict
@@ -39,6 +35,7 @@ import signal
 import sys
 import unittest
 
+# pylint: disable=wrong-import-position
 from gi import require_version as gi_require_version # type: ignore
 gi_require_version('GLib', '2.0')
 gi_require_version('Gdk', '3.0')
@@ -50,6 +47,7 @@ from gi.repository import Gdk
 from gi.repository import Gio
 from gi.repository import Gtk
 from gi.repository import IBus
+# pylint: enable=wrong-import-position
 
 # Get more verbose output in the test log:
 os.environ['IBUS_TYPING_BOOSTER_DEBUG_LEVEL'] = '255'
@@ -71,7 +69,7 @@ sys.path.pop(0)
 
 DONE_EXIT = True
 
-from gtkcases import TestCases
+from gtkcases import TestCases # pylint: disable=import-error
 
 # Need to flush the output against Gtk.main()
 def printflush(sentence: str) -> None:
@@ -92,7 +90,6 @@ def printerr(sentence: str) -> None:
     'XDG_SESSION_TYPE is neither "x11" nor "wayland".')
 @unittest.skipIf(Gdk.Display.open('') is None, 'Display cannot be opened.')
 class SimpleGtkTestCase(unittest.TestCase):
-    global DONE_EXIT
     ENGINE_PATH = '/com/redhat/IBus/engines/typing_booster/Test/Engine'
     _flag: bool = False
     _gsettings: Optional[Gio.Settings] = None
@@ -148,7 +145,7 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__preedit_index = 0
         self.__lookup_index = 0
         self.__inserted_text = ''
-        self.__commit_done = False
+        self.__commit_done = False # pylint: disable=unused-private-member
         self.__reset_coming = False
         if self._gsettings is not None:
             self._gsettings.set_string('dictionary', 'fr_FR,en_US')
@@ -227,7 +224,7 @@ class SimpleGtkTestCase(unittest.TestCase):
             Gtk.main_quit()
             return None
         self.__id += 1
-        object_path = '%s/%d' % (self.ENGINE_PATH, self.__id)
+        object_path = f'{self.ENGINE_PATH}/{self.__id:d}'
         database = tabsqlitedb.TabSqliteDb(user_db_file=':memory:')
         self.__engine = hunspell_table.TypingBoosterEngine(
             self.__bus,
@@ -316,7 +313,7 @@ class SimpleGtkTestCase(unittest.TestCase):
     def __main_test(self) -> None:
         self.__preedit_index = 0
         self.__lookup_index = 0
-        self.__commit_done = False
+        self.__commit_done = False # pylint: disable=unused-private-member
         self.__run_cases('preedit')
 
     def __lookup_test(self) -> None:
@@ -345,8 +342,8 @@ class SimpleGtkTestCase(unittest.TestCase):
         case_type = list(cases.keys())[0]
         i = 0
         if case_type == 'string':
-            printflush('test step: %s sequences: "%s"'
-                       % (tag, str(cases['string'])))
+            printflush(
+                f'test step: {tag} sequences: "{str(cases["string"])}"')
             for character in cases['string']:
                 if start >= 0 and i < start:
                     i += 1
@@ -357,8 +354,7 @@ class SimpleGtkTestCase(unittest.TestCase):
                 i += 1
         if case_type == 'keys':
             if start == -1 and end == -1:
-                printflush('test step: %s sequences: %s'
-                           % (tag, str(cases['keys'])))
+                printflush(f'test step: {tag} sequences: {str(cases["keys"])}')
             for key in cases['keys']:
                 if start >= 0 and i < start:
                     i += 1
@@ -366,8 +362,9 @@ class SimpleGtkTestCase(unittest.TestCase):
                 if 0 <= end <= i:
                     break
                 if start != -1 or end != -1:
-                    printflush('test step: %s sequences: [0x%X, 0x%X, 0x%X]'
-                               % (tag, key[0], key[1], key[2]))
+                    printflush(
+                        f'test step: {tag}s sequences: '
+                        f'[0x{key[0]:X}, 0x{key[1]:X}, 0x{key[2]:X}]')
                 self.__typing(key[0], key[1], key[2])
                 i += 1
 
@@ -399,22 +396,21 @@ class SimpleGtkTestCase(unittest.TestCase):
             self.__inserted_text = chars
         cases = tests['result']
         if cases['string'] == self.__inserted_text:
-            printflush('OK: %d "%s"'
-                       % (self.__test_index, self.__inserted_text))
+            printflush(f'OK: {self.__test_index} "{self.__inserted_text}"')
         else:
             if DONE_EXIT:
                 Gtk.main_quit()
             with self.subTest(i=self.__test_index):
-                self.fail('NG: %d "%s" "%s"'
-                          % (self.__test_index, str(cases['string']),
-                             self.__inserted_text))
+                self.fail(
+                    f'NG: {self.__test_index:d} '
+                    f'"{str(cases["string"])}" "{self.__inserted_text}"')
         self.__inserted_text = ''
         self.__test_index += 1
         if self.__test_index == len(TestCases['tests']):
             if DONE_EXIT:
                 Gtk.main_quit()
             return
-        self.__commit_done = True
+        self.__commit_done = True # pylint: disable=unused-private-member
         self.__entry.set_text('')
         if not self.__reset_coming:
             self.__main_test()
@@ -455,7 +451,7 @@ def main() -> None:
     args, unittest_args = parser.parse_known_args()
     sys.argv[1:] = unittest_args
     if args.keep:
-        global DONE_EXIT
+        global DONE_EXIT # pylint: disable=global-statement
         DONE_EXIT = False
     if args.unittest_failfast:
         sys.argv.append('-f')

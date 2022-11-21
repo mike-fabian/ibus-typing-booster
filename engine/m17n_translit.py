@@ -29,6 +29,10 @@ from typing import Any
 import sys
 import ctypes
 
+# pylint: disable=invalid-name
+# pylint: disable=too-few-public-methods
+# pylint: disable=missing-class-docstring
+# pylint: disable=protected-access
 class libm17n__MSymbolStruct(ctypes.Structure):
     pass
 libm17n__MSymbol = ctypes.POINTER(libm17n__MSymbolStruct)
@@ -48,7 +52,12 @@ libm17n__MSymbolStruct._fields_ = [
     ('length', ctypes.c_int),
     ('plist', libm17n__MPlist),
     ('next', ctypes.POINTER(libm17n__MSymbolStruct))]
+# pylint: enable=invalid-name
+# pylint: enable=too-few-public-methods
+# pylint: enable=missing-class-docstring
+# pylint: enable=protected-access
 
+# pylint: disable=invalid-name
 libm17n__lib = None
 libm17n__msymbol = None
 libm17n__mplist = None
@@ -77,6 +86,7 @@ libm17n__mplist_length = None
 libm17n__mconv_decode_buffer = None
 libm17n__minput_config_variable = None
 libm17n__minput_save_config = None
+# pylint: enable=invalid-name
 
 def mtext_to_string(mtext_pointer: Any) -> str:
     '''Return the text contained in an MText object as a Python string
@@ -99,10 +109,12 @@ def mtext_to_string(mtext_pointer: Any) -> str:
     conversion_buffer = conversion_buffer[0:conversion_buffer.find(b'\x00')]
     return conversion_buffer.decode('utf-8')
 
-def _init() -> None:
+def init() -> None:
     '''Open libm17n and fill global variables for functions and
     variables from libm17n
     '''
+    # pylint: disable=invalid-name
+    # pylint: disable=global-statement
     global libm17n__lib
     libm17n__lib = ctypes.CDLL('libm17n.so.0', mode = ctypes.RTLD_GLOBAL)
     libm17n__lib.m17n_init()
@@ -222,14 +234,16 @@ def _init() -> None:
     libm17n__minput_save_config = libm17n__lib.minput_save_config
     libm17n__minput_save_config.argtypes = []
     libm17n__minput_save_config.restype = ctypes.c_int
+    # pylint: enable=invalid-name
+    # pylint: enable=global-statement
 
-def _del() -> None:
+def fini() -> None:
     '''Cleanup'''
     libm17n__lib.m17n_fini() # type: ignore
 
-class __ModuleInitializer:
+class __ModuleInitializer: # pylint: disable=too-few-public-methods,invalid-name
     def __init__(self) -> None:
-        _init()
+        init()
 
     def __del__(self) -> None:
         return
@@ -340,13 +354,13 @@ class Transliterator:
             ctypes.c_void_p(None))
         try:
             _im_contents = self._im.contents
-        except ValueError: # NULL pointer access
-            raise ValueError('minput_open_im() failed')
+        except ValueError as error: # NULL pointer access
+            raise ValueError('minput_open_im() failed') from error
         self._ic = libm17n__minput_create_ic(self._im, ctypes.c_void_p(None)) # type: ignore
         try:
             _ic_contents = self._ic.contents
-        except ValueError: # NULL pointer access
-            raise ValueError('minput_create_ic() failed')
+        except ValueError as error: # NULL pointer access
+            raise ValueError('minput_create_ic() failed') from error
 
     def transliterate(self, msymbol_list: Iterable[str]) -> str:
         '''Transliterate a list of Msymbol names
@@ -381,6 +395,7 @@ class Transliterator:
         return output
 
     def get_variables(self) -> List[Tuple[str, str, str]]:
+        # pylint: disable=line-too-long
         '''
         Gets the optional variables of this transliterator input method
 
@@ -396,6 +411,7 @@ class Transliterator:
         >>> trans.get_variables()
         [('prompt', 'Preedit prompt\\nPrompt string shown in the preedit area while typing hexadecimal numbers.', 'U+')]
         '''
+        # pylint: enable=line-too-long
         variables_list: List[Tuple[str, str, str]] = []
         if self._dummy:
             return variables_list
@@ -409,25 +425,25 @@ class Transliterator:
                 break
             if b'plist' != libm17n__msymbol_name(key.contents): # type: ignore
                 break
-            p = ctypes.cast(libm17n__mplist_value(plist), # type: ignore
+            ptr = ctypes.cast(libm17n__mplist_value(plist), # type: ignore
                             ctypes.POINTER(libm17n__MPlist))
-            key = ctypes.cast(libm17n__mplist_value(p), # type: ignore
+            key = ctypes.cast(libm17n__mplist_value(ptr), # type: ignore
                               ctypes.POINTER(libm17n__MSymbolStruct))
             if not bool(key): # NULL pointers have a False boolean value
                 break
             variable_name = libm17n__msymbol_name( # type: ignore
                 key.contents).decode('utf-8')
-            p = libm17n__mplist_next(p) # type: ignore
+            ptr = libm17n__mplist_next(ptr) # type: ignore
             variable_description_pointer = ctypes.cast(
-                libm17n__mplist_value(p), # type: ignore
+                libm17n__mplist_value(ptr), # type: ignore
                 ctypes.POINTER(libm17n__MText))
             variable_description = ''
             if bool(variable_description_pointer):
                 variable_description = mtext_to_string(
                     variable_description_pointer)
             # Next item in the list is STATUS (we don’t use this)
-            p = libm17n__mplist_next(p) # type: ignore
-            mvalue = libm17n__mplist_next(p) # type: ignore
+            ptr = libm17n__mplist_next(ptr) # type: ignore
+            mvalue = libm17n__mplist_next(ptr) # type: ignore
             key = libm17n__mplist_key(mvalue) # type: ignore
             if not bool(key):
                 break
@@ -502,11 +518,11 @@ class Transliterator:
                 raise ValueError('mplist_key(plist) returned NULL')
             if b'plist' != libm17n__msymbol_name(key.contents): # type: ignore
                 raise ValueError('msymbol_name(key.contents) is not b"plist"')
-            p = ctypes.cast(libm17n__mplist_value(plist), # type: ignore
-                            ctypes.POINTER(libm17n__MPlist))
-            p = libm17n__mplist_next(p) # type: ignore
-            p = libm17n__mplist_next(p) # type: ignore
-            mvalue = libm17n__mplist_next(p) # type: ignore
+            ptr = ctypes.cast(libm17n__mplist_value(plist), # type: ignore
+                              ctypes.POINTER(libm17n__MPlist))
+            ptr = libm17n__mplist_next(ptr) # type: ignore
+            ptr = libm17n__mplist_next(ptr) # type: ignore
+            mvalue = libm17n__mplist_next(ptr) # type: ignore
             key = libm17n__mplist_key(mvalue) # type: ignore
             if not bool(key):
                 raise ValueError('mplist_key(mvalue) returned NULL')
@@ -540,7 +556,7 @@ class Transliterator:
                             libm17n__msymbol('integer'.encode('utf-8')), # type: ignore
                             int_value)
                     except ValueError:
-                         new_value_plist = libm17n__mplist() # type: ignore
+                        new_value_plist = libm17n__mplist() # type: ignore
                 else:
                     # This should never happen:
                     raise ValueError(

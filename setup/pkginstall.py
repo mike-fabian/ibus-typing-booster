@@ -18,13 +18,26 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
-
+'''
+Module to install packages using the Packagekit daemon (packagekitd)
+'''
 from typing import Set
-import gi # type: ignore
-from gi.repository import Gio, GLib # type: ignore
+from typing import Optional
+# pylint: disable=wrong-import-position
+from gi import require_version # type: ignore
+require_version('Gio', '2.0')
+from gi.repository import Gio # type: ignore
+require_version('GLib', '2.0')
+from gi.repository import GLib
+# pylint: enable=wrong-import-position
 
-class InstallPackages(object):
-    def __init__(self, packages: Set[str] = set()) -> None:
+class InstallPackages(): # pylint: disable=too-few-public-methods
+    '''
+    Class to install packages
+    '''
+    def __init__(self, packages: Optional[Set[str]] = None) -> None:
+        if packages is None:
+            packages = set()
         bus_type = Gio.BusType.SESSION
         flags = 0
         iface_info = None

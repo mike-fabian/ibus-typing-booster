@@ -29,12 +29,16 @@ import signal
 import logging
 import logging.handlers
 
+# pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
 require_version('Gtk', '3.0')
 from gi.repository import Gtk # type: ignore
+# pylint: enable=wrong-import-position
 
+# pylint: disable=import-error
 sys.path = [sys.path[0]+'/../engine'] + sys.path
 import itb_util
+# pylint: enable=import-error
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -53,7 +57,7 @@ class InputPurposeTest(Gtk.Window): # type: ignore
         self._main_container = Gtk.Box()
         self._main_container.set_orientation(Gtk.Orientation.VERTICAL)
         self._main_container.set_spacing(0)
-        self.add(self._main_container)
+        self.add(self._main_container) # pylint: disable=no-member
 
         margin = 5
 
@@ -131,7 +135,7 @@ class InputPurposeTest(Gtk.Window): # type: ignore
 
         self._main_container.add(self._test_text_view)
 
-        self.show_all()
+        self.show_all() # pylint: disable=no-member
 
     def on_delete_event(self, *_args: Any) -> None: # pylint: disable=no-self-use
         '''

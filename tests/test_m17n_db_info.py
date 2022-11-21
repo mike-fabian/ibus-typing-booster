@@ -25,13 +25,15 @@ import sys
 import os
 import unittest
 
-from gi import require_version # type: ignore
-require_version('IBus', '1.0')
-from gi.repository import IBus # type: ignore
-
+# pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
-import itb_util
+import itb_util # pylint: disable=import-error
 sys.path.pop(0)
+# pylint: enable=wrong-import-position
+
+# pylint: disable=missing-class-docstring
+# pylint: disable=missing-function-docstring
+# pylint: disable=invalid-name
 
 class M17nDbInfoTestCase(unittest.TestCase):
     def setUp(self) -> None:

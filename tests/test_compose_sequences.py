@@ -22,22 +22,26 @@ This file implements test cases for compose sequences.
 '''
 
 import sys
-import os
 import logging
 import locale
 import unittest
 
+# pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
+# pylint: enable=wrong-import-position
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
-import testutils
-
 sys.path.insert(0, "../engine")
-import itb_util
+import itb_util # pylint: disable=import-error
 sys.path.pop(0)
+
+import testutils # pylint: disable=import-error
+
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-class-docstring
 
 class ComposeSequencesTestCase(unittest.TestCase):
     def setUp(self) -> None:
@@ -51,6 +55,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
         self.assertEqual(True, True)
 
     def test_adding_and_deleting_compose_sequences(self) -> None:
+        # pylint: disable=protected-access
         self._compose_sequences._add_compose_sequence(
             '<Multi_key> <e> <m> <p> <t> <y>', '∅')
         available_keyvals = None
@@ -200,6 +205,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
             [IBus.KEY_Multi_key,
              IBus.KEY_e,
              IBus.KEY_equal]))
+        # pylint: enable=protected-access
 
     def test_preedit_representations(self) -> None:
         self.assertEqual(
@@ -319,9 +325,9 @@ class ComposeSequencesTestCase(unittest.TestCase):
 
     @unittest.skipIf(
         testutils.set_locale_error('cs_CZ.UTF-8'),
-        'Skipping, this test needs a locale which is not available: %s'
-        % testutils.set_locale_error('cs_CZ.UTF-8'))
-    def test_compose_cs_CZ(self) -> None:
+        f'Skipping, this test needs a locale which is not available: '
+        f'{testutils.set_locale_error("cs_CZ.UTF-8")}')
+    def test_compose_cs_CZ(self) -> None: # pylint: disable=invalid-name
         # /usr/share/X11/locale/cs_CZ.UTF-8/Compose overrides some of
         # the compose sequences from
         # /usr/share/X11/locale/en_US.UTF-8/Compose:
@@ -349,9 +355,9 @@ class ComposeSequencesTestCase(unittest.TestCase):
 
     @unittest.skipIf(
         testutils.set_locale_error('km_KH.UTF-8'),
-        'Skipping, this test needs a locale which is not available: %s'
-        % testutils.set_locale_error('km_KH.UTF-8'))
-    def test_compose_km_KH(self) -> None:
+        f'Skipping, this test needs a locale which is not available: '
+        f'{testutils.set_locale_error("km_KH.UTF-8")}')
+    def test_compose_km_KH(self) -> None: # pylint: disable=invalid-name
         locale.setlocale(locale.LC_CTYPE, 'km_KH.UTF-8')
         self._compose_sequences = itb_util.ComposeSequences()
         # This sequence comes from
@@ -378,9 +384,9 @@ class ComposeSequencesTestCase(unittest.TestCase):
 
     @unittest.skipIf(
         testutils.set_locale_error('pt_BR.UTF-8'),
-        'Skipping, this test needs a locale which is not available: %s'
-        % testutils.set_locale_error('pt_BR.UTF-8'))
-    def test_compose_pt_BR(self) -> None:
+        f'Skipping, this test needs a locale which is not available: '
+        f'{testutils.set_locale_error("pt_BR.UTF-8")}')
+    def test_compose_pt_BR(self) -> None: # pylint: disable=invalid-name
         # This sequence comes from
         # /usr/share/X11/locale/en_US.UTF-8/Compose and is not
         # overridden in /usr/share/X11/locale/pt_BR.UTF-8/:
@@ -471,9 +477,9 @@ class ComposeSequencesTestCase(unittest.TestCase):
 
     @unittest.skipIf(
         testutils.set_locale_error('pt_PT.UTF-8'),
-        'Skipping, this test needs a locale which is not available: %s'
-        % testutils.set_locale_error('pt_PT.UTF-8'))
-    def test_compose_pt_PT(self) -> None:
+        f'Skipping, this test needs a locale which is not available: '
+        f'{testutils.set_locale_error("pt_PT.UTF-8")}')
+    def test_compose_pt_PT(self) -> None: # pylint: disable=invalid-name
         # These sequences come from
         # /usr/share/X11/locale/en_US.UTF-8/Compose and is not
         # overridden in /usr/share/X11/locale/pt_PT.UTF-8/:
@@ -533,9 +539,9 @@ class ComposeSequencesTestCase(unittest.TestCase):
 
     @unittest.skipIf(
         testutils.set_locale_error('am_ET.UTF-8'),
-        'Skipping, this test needs a locale which is not available: %s'
-        % testutils.set_locale_error('am_ET.UTF-8'))
-    def test_compose_am_ET(self) -> None:
+        f'Skipping, this test needs a locale which is not available: '
+        f'{testutils.set_locale_error("am_ET.UTF-8")}')
+    def test_compose_am_ET(self) -> None: # pylint: disable=invalid-name
         # These sequences come from
         # /usr/share/X11/locale/en_US.UTF-8/Compose:
         self.assertEqual(
@@ -556,16 +562,18 @@ class ComposeSequencesTestCase(unittest.TestCase):
         # all compose sequences from the am_ET.UTF-8 compose file):
         locale.setlocale(locale.LC_CTYPE, 'am_ET.UTF-8')
         self._compose_sequences = itb_util.ComposeSequences()
+        # pylint: disable=protected-access
         if (self._compose_sequences._locale_compose_file()
             != '/usr/share/X11/locale/am_ET.UTF-8/Compose'):
             self.skipTest(
                 '/usr/share/X11/locale/am_ET.UTF-8/Compose not available')
+        # pylint: enable=protected-access
         if self._compose_sequences.compose([0x0100FE75, 0x01001200]) != '':
             self.skipTest(
                 'New Compose file updated by '
                 'Benno Schulenberg <bensberg@telfort.nl> '
                 'is installed, see: '
-                'https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/488b156fe2cc8aca6946a49236ec7b7698fceda4')
+                'https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/488b156fe2cc8aca6946a49236ec7b7698fceda4') # pylint: disable=line-too-long
         self.assertEqual(
             self._compose_sequences.compose(
                 [IBus.KEY_u,

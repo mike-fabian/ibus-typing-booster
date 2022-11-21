@@ -25,9 +25,11 @@ import sys
 import locale
 
 sys.path.insert(0, "../engine")
+# pylint: disable=wrong-import-position
 # pylint: disable=import-error
 import itb_util
 # pylint: enable=import-error
+# pylint: enable=wrong-import-position
 sys.path.pop(0)
 
 IMPORT_ENCHANT_SUCCESSFUL = False
@@ -37,7 +39,9 @@ try:
     IMPORT_ENCHANT_SUCCESSFUL = True
 except (ImportError,):
     try:
+        # pylint: disable=unused-import
         import hunspell # type: ignore
+        # pylint: enable=unused-import
         IMPORT_HUNSPELL_SUCCESSFUL = True
     except (ImportError,):
         pass

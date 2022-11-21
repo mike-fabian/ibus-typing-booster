@@ -25,16 +25,13 @@ import sys
 import logging
 import unittest
 
-from gi import require_version # type: ignore
-require_version('IBus', '1.0')
-from gi.repository import IBus # type: ignore
-
 LOGGER = logging.getLogger('ibus-typing-booster')
 
+# pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
-import itb_util
-import itb_emoji
+import itb_emoji # pylint: disable=import-error
 sys.path.pop(0)
+# pylint: enable=wrong-import-position
 
 # Set the domain name to something invalid to avoid using
 # the translations for the doctest tests. Translations may
@@ -42,13 +39,18 @@ sys.path.pop(0)
 # added, changed, or missing.
 itb_emoji.DOMAINNAME = ''
 
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-class-docstring
+# pylint: disable=invalid-name
+# pylint: disable=line-too-long
+
 @unittest.skipIf(
     '..' not in itb_emoji.find_cldr_annotation_path('en'),
-    'Using external emoji annotations: %s '
-    % itb_emoji.find_cldr_annotation_path('en')
-    + 'Testing with older emoji annotations instead '
-    'of those included in the ibus-typing-booster source is likely '
-    'to create meaningless test failures.')
+    f'Using external emoji annotations: '
+    f'{itb_emoji.find_cldr_annotation_path("en")} '
+    f'Testing with older emoji annotations instead '
+    f'of those included in the ibus-typing-booster source is likely '
+    f'to create meaningless test failures.')
 class EmojiSimilarTestCase(unittest.TestCase):
     def setUp(self) -> None:
         self.maxDiff = None

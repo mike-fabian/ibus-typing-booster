@@ -41,7 +41,7 @@ try:
     # Enable new improved regex engine instead of backwards compatible
     # v0.  regex.match('ß', 'SS', regex.IGNORECASE) matches only with
     # the improved version!  See also: https://pypi.org/project/regex/
-    regex.DEFAULT_VERSION = regex.VERSION1
+    regex.DEFAULT_VERSION = regex.VERSION1 # pylint: disable=no-member
 except (ImportError,):
     # Use standard “re” module as a fallback:
     import re
@@ -142,7 +142,7 @@ class Dictionary:
                         'Error initializing enchant for %s: %s: %s',
                         self.name, error.__class__.__name__, error)
                     self.enchant_dict = None
-                except Exception as error:
+                except Exception as error: # pylint: disable=broad-except
                     LOGGER.exception(
                         'Unexpected error initializing enchant for %s: %s: %s',
                         self.name, error.__class__.__name__, error)
@@ -150,14 +150,15 @@ class Dictionary:
             elif IMPORT_HUNSPELL_SUCCESSFUL and self.dic_path:
                 aff_path = self.dic_path.replace('.dic', '.aff')
                 try:
-                    self.pyhunspell_object = hunspell.HunSpell(
-                        self.dic_path, aff_path)
+                    self.pyhunspell_object = (
+                        hunspell.HunSpell( # pylint: disable=used-before-assignment
+                            self.dic_path, aff_path))
                 except hunspell.HunSpellError as error:
                     LOGGER.debug(
                         'Error initializing hunspell for %s: %s: %s',
                         self.name, error.__class__.__name__, error)
                     self.pyhunspell_object = None
-                except Exception as error:
+                except Exception as error: # pylint: disable=broad-except
                     LOGGER.debug(
                         'Unexpected error initializing hunspell for '
                         '%s: %s: %s',
@@ -351,7 +352,7 @@ class Hunspell:
     using a list of Hunspell dictionaries
     '''
     def __init__(self, dictionary_names: Iterable[str] = ()) -> None:
-        global DEBUG_LEVEL
+        global DEBUG_LEVEL # pylint: disable=global-statement
         try:
             DEBUG_LEVEL = int(
                 str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
@@ -677,7 +678,7 @@ class Hunspell:
                                 for x in dictionary.word_pairs
                                 if regex_pattern.match(x[1])])
                         else:
-                            re_pattern = re.compile(
+                            re_pattern = re.compile( # pylint: disable=used-before-assignment
                                 re.escape(input_phrase_no_accents),
                                 re.IGNORECASE)
                             suggested_words.update([

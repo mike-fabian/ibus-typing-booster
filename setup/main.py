@@ -30,7 +30,6 @@ from typing import Union
 from typing import Any
 import sys
 import os
-import re
 import html
 import signal
 import argparse
@@ -80,7 +79,6 @@ try:
 except (ImportError,):
     IMPORT_SIMPLEAUDIO_SUCCESSFUL = False
 
-# pylint: disable=wrong-import-position
 # pylint: disable=import-error
 sys.path = [sys.path[0]+'/../engine'] + sys.path
 import m17n_translit
@@ -89,12 +87,9 @@ import itb_util
 import itb_emoji
 import itb_version
 # pylint: enable=import-error
-# pylint: enable=wrong-import-position
 
-# pylint: disable=wrong-import-position
 from pkginstall import InstallPackages
 from i18n import _, init as i18n_init
-# pylint: enable=wrong-import-position
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -125,7 +120,7 @@ class SetupUI(Gtk.Window): # type: ignore
     '''
     User interface of the setup tool
     '''
-    def __init__(self) -> None:
+    def __init__(self) -> None: # pylint: disable=too-many-statements
         Gtk.Window.__init__(self, title='🚀 ' + _('Preferences'))
         self.set_name('TypingBoosterPreferences')
         self.set_modal(True)
@@ -1150,6 +1145,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_methods_add_listbox_imes: List[str] = []
         self._input_methods_add_popover = None
         self._input_methods_add_popover_scroll = None
+        self._input_methods_options_popover = None
         self._fill_input_methods_listbox()
 
         _shortcuts_grid_row = -1
@@ -3635,7 +3631,7 @@ class SetupUI(Gtk.Window): # type: ignore
 
     def _on_input_methods_options_popover_treeview_value_edited(
             self,
-            cell: Gtk.CellRendererText,
+            _cell: Gtk.CellRendererText,
             path: str,
             new_edited_value: str,
             model: Gtk.ListStore) -> None:
@@ -3668,18 +3664,18 @@ class SetupUI(Gtk.Window): # type: ignore
             LOGGER.debug('Trying to set default value now ...')
             try:
                 trans.set_variables({old_name: ''})
-            except ValueError as error:
+            except ValueError as error2:
                 LOGGER.exception(
                     'Exception when setting %s to %s: %s: %s',
                     old_name, '',
-                    error.__class__.__name__, error)
+                    error.__class__.__name__, error2)
                 LOGGER.debug('Giving up and returning.')
                 return
         variables = trans.get_variables()
         if variables == old_variables:
             LOGGER.debug('No variables were changed when saving, returning.')
             return
-        for (name, description, value) in variables:
+        for (name, _description, value) in variables:
             if name != old_name:
                 continue
             if value == old_value:
@@ -3698,20 +3694,21 @@ class SetupUI(Gtk.Window): # type: ignore
                 'inputmethodchangetimestamp',
                 GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
 
+    @classmethod
     def _on_input_methods_options_popover_treeview_query_tooltip(
-            self,
+            cls,
             treeview: Gtk.TreeView,
-            x: int,
-            y: int,
+            x_pos: int,
+            y_pos: int,
             keyboard_tip: bool,
             tooltip: Gtk.Tooltip) -> bool:
         '''
         Called to show the descriptions of the m17n input method variables
         as tooltips.
         '''
-        (is_treeview_row_at_coordinates, x, y,
+        (is_treeview_row_at_coordinates, x_pos, y_pos,
          model, path, iterator) = treeview.get_tooltip_context(
-             x, y, keyboard_tip)
+             x_pos, y_pos, keyboard_tip)
         if not is_treeview_row_at_coordinates:
             return False
         description = model.get_value(iterator, 1)
@@ -5401,7 +5398,7 @@ class SetupUI(Gtk.Window): # type: ignore
                     LOGGER.exception(
                         'Initializing error sound object failed.'
                         'File not found or no read permissions.')
-                except Exception:
+                except Exception: # pylint: disable=broad-except
                     LOGGER.exception(
                         'Initializing error sound object failed '
                         'for unknown reasons.')

@@ -31,11 +31,6 @@ import os
 import gzip
 import logging
 import unittest
-import unicodedata
-
-from gi import require_version # type: ignore
-require_version('IBus', '1.0')
-from gi.repository import IBus # type: ignore
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -46,14 +41,22 @@ try:
 except (ImportError,):
     IMPORT_DISTRO_SUCCESSFUL = False
 
+# pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
+# pylint: disable=import-error
 import itb_util
 import tabsqlitedb
+# pylint: disable=import-error
 sys.path.pop(0)
+# pylint: enable=wrong-import-position
+
+# pylint: disable=missing-class-docstring
+# pylint: disable=missing-function-docstring
 
 class TabSqliteDbTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        pass
+        self.database: tabsqlitedb.TabSqliteDb = tabsqlitedb.TabSqliteDb(
+            user_db_file=':memory:')
 
     def tearDown(self) -> None:
         pass
@@ -88,7 +91,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
         if not os.path.isfile(path):
             path += '.gz'
         if not os.path.isfile(path):
-            self.assertFalse(True)
+            self.assertFalse(True) # pylint: disable=redundant-unittest-assert
             return stats
         open_function: Callable[[Any], Any] = open
         if path.endswith('.gz'):
@@ -283,7 +286,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
             user_db_file=':memory:',dictionary_names=['fr_FR'])
         self.assertEqual(0, self.database.number_of_rows_in_database())
         if not self.read_training_data_from_file(training_file):
-            self.skipTest('Training file %s not available' % training_file)
+            self.skipTest(f'Training file {training_file} not available')
         # Now the database should have rows:
         self.assertEqual(156245, self.database.number_of_rows_in_database())
         self.database.cleanup_database(thread=False)

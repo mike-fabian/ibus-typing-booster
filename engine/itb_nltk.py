@@ -36,7 +36,6 @@ it using:
 from typing import List
 import sys
 import nltk # type: ignore
-from nltk.corpus import wordnet # type: ignore
 
 def synonyms(word: str, keep_original: bool = True) -> List[str]:
     '''List synonyms for word
@@ -56,7 +55,7 @@ def synonyms(word: str, keep_original: bool = True) -> List[str]:
     ['Stetson', 'felt hat', 'homburg', 'trilby']
     '''
     result = sorted(set(lemma_name.replace('_', ' ')
-                        for synset in wordnet.synsets(word)
+                        for synset in nltk.corpus.wordnet.synsets(word)
                         for lemma_name in synset.lemma_names()))
     if word in result:
         result.remove(word)
@@ -84,7 +83,7 @@ def hyponyms(word: str, keep_original: bool = True) -> List[str]:
     '''
     # pylint: enable=line-too-long
     result = sorted(set(lemma.name().replace('_', ' ')
-                        for synset in wordnet.synsets(word)
+                        for synset in nltk.corpus.wordnet.synsets(word)
                         for hyponym in synset.hyponyms()
                         for lemma in hyponym.lemmas()))
     if word in result:
@@ -111,7 +110,7 @@ def hypernyms(word: str, keep_original: bool = True) -> List[str]:
     ['chapeau', 'hat', 'lid']
     '''
     result = sorted(set(lemma.name().replace('_', ' ')
-                        for synset in wordnet.synsets(word)
+                        for synset in nltk.corpus.wordnet.synsets(word)
                         for hypernym in synset.hypernyms()
                         for lemma in hypernym.lemmas()))
     if word in result:
@@ -154,7 +153,7 @@ def _init() -> None:
     really usable.
     '''
     try:
-        wordnet.synsets('car')
+        nltk.corpus.wordnet.synsets('car')
     except (LookupError,) as error:
         print(f'{error.__class__.__name__}: {error}')
         raise LookupError from error
@@ -167,7 +166,7 @@ def _del() -> None:
     '''Cleanup, nothing to do here'''
     return
 
-class __ModuleInitializer:
+class __ModuleInitializer: # pylint: disable=too-few-public-methods,invalid-name
     def __init__(self) -> None:
         _init()
 
@@ -188,12 +187,12 @@ def main() -> None:
     runs some tests and prints profiling data.
     '''
     if BENCHMARK:
-        import cProfile
-        import pstats
+        import cProfile # pylint: disable=import-outside-toplevel
+        import pstats # pylint: disable=import-outside-toplevel
         profile = cProfile.Profile()
         profile.enable()
 
-    import doctest
+    import doctest # pylint: disable=import-outside-toplevel
     _init()
     (failed, dummy_attempted) = doctest.testmod()
 

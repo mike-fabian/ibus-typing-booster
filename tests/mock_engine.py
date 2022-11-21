@@ -20,17 +20,26 @@
 
 from typing import Any
 from typing import List
+# pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
+# pylint: enable=wrong-import-position
 
+# pylint: disable=missing-function-docstring
+# pylint: disable=too-few-public-methods
+# pylint: disable=missing-class-docstring
 class MockEngine:
+    '''Mock engine class to simulate IBus.Engine for testing'''
     props = None
     def __init__(
             self,
             engine_name: str = '',
             connection: Any = None,
             object_path: str = '') -> None:
+        self.mock_engine_name = engine_name
+        self.mock_connection = connection
+        self.mock_object_path = object_path
         self.mock_auxiliary_text = ''
         self.mock_preedit_text = ''
         self.mock_preedit_text_cursor_pos = 0
@@ -49,7 +58,7 @@ class MockEngine:
         # engine does not try to support surrounding text, i.e.
         # we omit “| IBus.Capabilite.SURROUNDING_TEXT” here.
 
-    def update_auxiliary_text(self, text: IBus.Text, visible: bool) -> None:
+    def update_auxiliary_text(self, text: IBus.Text, _visible: bool) -> None:
         self.mock_auxiliary_text = text.text
 
     def commit_text(self, text: IBus.Text) -> None:
@@ -61,7 +70,7 @@ class MockEngine:
                 self.mock_committed_text_cursor_pos:])
         self.mock_committed_text_cursor_pos += len(text.text)
 
-    def forward_key_event(self, val: int, code: int, state: int) -> None:
+    def forward_key_event(self, val: int, _code: int, _state: int) -> None:
         if (val == IBus.KEY_Left
             and self.mock_committed_text_cursor_pos > 0):
             self.mock_committed_text_cursor_pos -= 1
@@ -97,7 +106,7 @@ class MockEngine:
     def register_properties(self, property_list: List[IBus.Property]) -> None:
         pass
 
-    def update_property(self, property: IBus.Property) -> None:
+    def update_property(self, _property: IBus.Property) -> None:
         pass
 
     def hide_lookup_table(self) -> None:
@@ -115,7 +124,7 @@ class MockLookupTable:
             page_size: int = 9,
             cursor_pos: int = 0,
             cursor_visible: bool = False,
-            round: bool = True) -> None:
+            wrap_around: bool = True) -> None:
         self.clear()
         self.mock_labels = {
             1: '1.',
@@ -132,8 +141,9 @@ class MockLookupTable:
         self.mock_cursor_pos = cursor_pos
         self.mock_cursor_visible = cursor_visible
         self.cursor_visible = cursor_visible
-        self.mock_round = round
+        self.mock_wrap_around = wrap_around
         self.mock_candidates: List[str] = []
+        self.mock_orientation = 0
 
     def clear(self) -> None:
         self.mock_candidates = []
@@ -151,8 +161,8 @@ class MockLookupTable:
     def get_page_size(self) -> int:
         return self.mock_page_size
 
-    def set_round(self, round: bool) -> None:
-        self.mock_round = round
+    def set_round(self, wrap_around: bool) -> None:
+        self.mock_wrap_around = wrap_around
 
     def set_cursor_pos(self, pos: int) -> None:
         self.mock_cursor_pos = pos
@@ -165,12 +175,12 @@ class MockLookupTable:
         self.cursor_visible = visible
 
     def cursor_down(self) -> None:
-        if len(self.mock_candidates):
+        if self.mock_candidates:
             self.mock_cursor_pos += 1
             self.mock_cursor_pos %= len(self.mock_candidates)
 
     def cursor_up(self) -> None:
-        if len(self.mock_candidates):
+        if self.mock_candidates:
             if self.mock_cursor_pos > 0:
                 self.mock_cursor_pos -= 1
             else:
@@ -189,7 +199,7 @@ class MockLookupTable:
         return self.mock_candidates[index]
 
 class MockPropList:
-    def append(self, property: IBus.Property) -> None:
+    def append(self, _property: IBus.Property) -> None:
         pass
 
 class MockProperty:

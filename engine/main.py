@@ -18,7 +18,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
-
+'''
+Main program of ibus-typing-booster
+'''
 from typing import Any
 from typing import Union
 import os
@@ -28,11 +30,13 @@ import re
 import logging
 import logging.handlers
 from signal import signal, SIGTERM, SIGINT
+# pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
 require_version('GLib', '2.0')
 from gi.repository import GLib
+# pylint: enable=wrong-import-position
 
 import itb_version
 
@@ -44,19 +48,19 @@ try:
 except (TypeError, ValueError):
     DEBUG_LEVEL = int(0)
 
-try:
+if os.getenv('IBUS_TYPING_BOOSTER_LOCATION'):
     ICON_DIR = os.path.join(
         str(os.getenv('IBUS_TYPING_BOOSTER_LOCATION')),
         'icons')
-except:
+else:
     ICON_DIR = os.path.join(
         itb_version.get_prefix(), 'share/ibus-typing-booster/icons')
 
-try:
+if os.getenv('IBUS_TYPING_BOOSTER_LIB_LOCATION'):
     SETUP_TOOL = os.path.join(
         str(os.getenv('IBUS_TYPING_BOOSTER_LIB_LOCATION')),
         'ibus-setup-typing-booster')
-except:
+else:
     SETUP_TOOL = os.path.join(
         itb_version.get_prefix(),
         'libexec/ibus-setup-typing-booster')
@@ -129,6 +133,7 @@ else:
     import factory
 
 class IMApp:
+    '''Input method application class'''
     def __init__(self, exec_by_ibus: bool) -> None:
         if DEBUG_LEVEL > 1:
             LOGGER.debug('IMApp.__init__(exec_by_ibus=%s)\n', exec_by_ibus)
@@ -176,6 +181,7 @@ class IMApp:
             self.__bus.register_component(self.__component)
 
     def run(self) -> None:
+        '''Run the input method application'''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('IMApp.run()\n')
         if _ARGS.profile:
@@ -184,6 +190,7 @@ class IMApp:
         self.__bus_destroy_cb()
 
     def quit(self) -> None:
+        '''Quit the input method application'''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('IMApp.quit()\n')
         self.__bus_destroy_cb()
@@ -210,6 +217,9 @@ class IMApp:
             LOGGER.info('Profiling info:\n%s', stats_stream.getvalue())
 
 def cleanup(ima_ins: IMApp) -> None:
+    '''
+    Clean up when the input method application was killed by a signal
+    '''
     ima_ins.quit()
     sys.exit()
 
@@ -219,12 +229,15 @@ def indent(element: Any, level: int = 0) -> None:
     if element:
         if not element.text or not element.text.strip():
             element.text = i + "    "
+        last_subelement = None
         for subelement in element:
+            last_subelement = subelement
             indent(subelement, level+1)
             if not subelement.tail or not subelement.tail.strip():
                 subelement.tail = i + "    "
-        if not subelement.tail or not subelement.tail.strip():
-            subelement.tail = i
+        if (last_subelement
+            and (not last_subelement.tail or not last_subelement.tail.strip())):
+            last_subelement.tail = i
     else:
         if level and (not element.tail or not element.tail.strip()):
             element.tail = i
