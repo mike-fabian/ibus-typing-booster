@@ -58,7 +58,7 @@ import itb_version
 
 IMPORT_DISTRO_SUCCESSFUL = False
 try:
-    import distro # type: ignore
+    import distro
     IMPORT_DISTRO_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_DISTRO_SUCCESSFUL = False
@@ -3499,7 +3499,7 @@ class Capabilite(Flag):
             return int(self) | other
         return NotImplemented
 
-    def __ror__(self, other: Any) -> Any:
+    def __ror__(self, other: Any) -> Any: # type: ignore[override]
         return self.__or__(other)
 
     def __and__(self, other: Any) -> Any:
@@ -3511,7 +3511,7 @@ class Capabilite(Flag):
             return int(self) & other
         return NotImplemented
 
-    def __rand__(self, other: Any) -> Any:
+    def __rand__(self, other: Any) -> Any: # type: ignore[override]
         return self.__and__(other)
 
     PREEDIT_TEXT = ('PREEDIT_TEXT')
@@ -3713,7 +3713,7 @@ class InputHints(Flag):
             return int(self) | other
         return NotImplemented
 
-    def __ror__(self, other: Any) -> Any:
+    def __ror__(self, other: Any) -> Any: # type: ignore[override]
         return self.__or__(other)
 
     def __and__(self, other: Any) -> Any:
@@ -3726,7 +3726,7 @@ class InputHints(Flag):
             return int(self) & other
         return NotImplemented
 
-    def __rand__(self, other: Any) -> Any:
+    def __rand__(self, other: Any) -> Any: # type: ignore[override]
         return self.__and__(other)
 
     NONE = ('NONE')
@@ -4172,6 +4172,10 @@ class ComposeSequences:
         '''
         lc_ctype_locale, lc_ctype_encoding = locale.getlocale(
             category=locale.LC_CTYPE)
+        if not lc_ctype_locale:
+            lc_ctype_locale = 'en_US'
+        if not lc_ctype_encoding:
+            lc_ctype_encoding = 'UTF-8'
         if lc_ctype_encoding not in ('UTF-8', 'utf8'):
             LOGGER.warning('Not running in an UTF-8 locale: %s.%s',
                            lc_ctype_locale, lc_ctype_encoding)

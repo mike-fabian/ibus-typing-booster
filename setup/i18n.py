@@ -34,7 +34,7 @@ def init() -> None:
     # operating systems like FreeBSD
     try:
         # for non-standard localedir
-        locale.bindtextdomain(DOMAINNAME, localedir) # type: ignore
+        locale.bindtextdomain(DOMAINNAME, localedir)
     except AttributeError:
         pass
     gettext.bindtextdomain(DOMAINNAME, localedir)

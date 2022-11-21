@@ -141,10 +141,16 @@ def set_locale_error(locale_name: str) -> str:
     It checks by trying to set LC_CTYPE and then restoring the old
     value.
     '''
-    old_lc_ctype = locale.getlocale(locale.LC_CTYPE)
+    (old_lc_ctype_locale,
+     old_lc_ctype_encoding) = locale.getlocale(locale.LC_CTYPE)
+    if not old_lc_ctype_locale:
+        old_lc_ctype_locale = 'en_US'
+    if not old_lc_ctype_encoding:
+        old_lc_ctype_encoding = 'UTF-8'
+    old_locale_name = old_lc_ctype_locale + '.' + old_lc_ctype_encoding
     try:
         locale.setlocale(locale.LC_CTYPE, locale_name)
-        locale.setlocale(locale.LC_CTYPE, '.'.join(old_lc_ctype))
+        locale.setlocale(locale.LC_CTYPE, old_locale_name)
         return ''
     except (locale.Error,) as error:
         return f'{locale_name}: {str(error)}'

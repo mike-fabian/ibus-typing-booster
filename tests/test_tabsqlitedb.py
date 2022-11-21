@@ -41,7 +41,7 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 
 IMPORT_DISTRO_SUCCESSFUL = False
 try:
-    import distro # type: ignore
+    import distro
     IMPORT_DISTRO_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_DISTRO_SUCCESSFUL = False

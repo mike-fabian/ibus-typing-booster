@@ -8,25 +8,30 @@ RETVAL=0
 
 echo "running $SCRIPT_DIR/mypy.sh"
 
+MYPY="mypy --strict --show-error-codes --pretty"
+
+echo cd $SCRIPT_DIR/engine
 cd $SCRIPT_DIR/engine
-echo "Checking $SCRIPT_DIR/engine"
-mypy --strict *.py
+echo ${MYPY} *.py
+${MYPY} *.py
 ENGINE_RETVAL=$?
 if [ ${ENGINE_RETVAL} != 0 ] ; then
     RETVAL=$((${RETVAL} + ${ENGINE_RETVAL}))
 fi
 
+echo cd $SCRIPT_DIR/setup
 cd $SCRIPT_DIR/setup
-echo "Checking $SCRIPT_DIR/setup"
-mypy --strict ../engine/{tabsqlitedb,itb_util,itb_emoji}.py *.py
+echo ${MYPY} ../engine/{tabsqlitedb,itb_util,itb_emoji}.py *.py
+${MYPY} ../engine/{tabsqlitedb,itb_util,itb_emoji}.py *.py
 SETUP_RETVAL=$?
 if [ ${SETUP_RETVAL} != 0 ] ; then
     RETVAL=$((${RETVAL} + ${SETUP_RETVAL}))
 fi
 
+echo cd $SCRIPT_DIR/tests
 cd $SCRIPT_DIR/tests
-echo "Checking $SCRIPT_DIR/tests"
-mypy --strict ../engine/{tabsqlitedb,itb_util,itb_emoji}.py test_*.py
+echo ${MYPY} ../engine/{tabsqlitedb,itb_util,itb_emoji}.py test_*.py
+${MYPY} ../engine/{tabsqlitedb,itb_util,itb_emoji}.py test_*.py
 SETUP_RETVAL=$?
 if [ ${SETUP_RETVAL} != 0 ] ; then
     RETVAL=$((${RETVAL} + ${SETUP_RETVAL}))
