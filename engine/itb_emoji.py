@@ -1234,7 +1234,10 @@ class EmojiMatcher():
                 print(f'Cached, total_score = {total_score}')
             return total_score
         # Does the complete query string match exactly?
-        if self._string1 == self._string2:
+        # (If the strings contain white space, we count it as an exact
+        # match if all words match in any order. For example 'black
+        # cat' counts as an exact match for 'cat black'.
+        if set(self._string1.split()) == set(self._string2.split()):
             if debug:
                 print('Exact match, total_score += 1000')
             total_score += 1000
