@@ -1296,6 +1296,9 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             child.set_can_focus(False)
 
         self.show_all() # pylint: disable=no-member
+        if self._flowbox.get_children():
+            event_box = self._flowbox.get_children()[0].get_child()
+            self._emoji_event_box_selected(event_box, popover=False)
         self._candidates_invalid = False
         self._busy_stop()
 
@@ -1446,7 +1449,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             self._emoji_selected_popover = None
         return False
 
-    def _emoji_event_box_selected(self, event_box: Gtk.EventBox) -> bool:
+    def _emoji_event_box_selected(
+            self, event_box: Gtk.EventBox, popover: bool = True) -> bool:
         '''
         Called when an event box containing an emoji
         was selected in the flowbox.
@@ -1472,6 +1476,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._show_concise_emoji_description_in_header_bar(emoji)
         self._set_clipboards(emoji)
         self._add_to_recently_used(emoji)
+        if not popover:
+            return True # Gdk.EVENT_PROPAGATE is defined as False
         self._emoji_selected_popover = Gtk.Popover()
         self._emoji_selected_popover.set_relative_to(event_box)
         self._emoji_selected_popover.set_position(Gtk.PositionType.TOP)
