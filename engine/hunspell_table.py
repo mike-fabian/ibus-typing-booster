@@ -5027,14 +5027,20 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     text_for_lookup_table = (
                         self._compose_sequences.lookup_representation(
                             compose_completion))
-                    text_for_lookup_table += '   \t' + compose_result
-                    if len(compose_result) < 6:
-                        text_for_lookup_table += '  \t'
-                        for char in compose_result:
-                            text_for_lookup_table += f' U+{ord(char):04X}'
-                    if len(compose_result) == 1:
-                        text_for_lookup_table += ' ' + unicodedata.name(
-                            compose_result).lower()
+                    if (self._lookup_table.get_orientation()
+                        == IBus.Orientation.VERTICAL):
+                        text_for_lookup_table += '   \t' + compose_result
+                    else:
+                        text_for_lookup_table += ' ' + compose_result
+                    if (self._lookup_table.get_orientation()
+                        == IBus.Orientation.VERTICAL):
+                        if len(compose_result) < 6:
+                            text_for_lookup_table += '  \t'
+                            for char in compose_result:
+                                text_for_lookup_table += f' U+{ord(char):04X}'
+                        if len(compose_result) == 1:
+                            text_for_lookup_table += ' ' + unicodedata.name(
+                                compose_result).lower()
                     self._append_candidate_to_lookup_table(
                         phrase=text_for_lookup_table)
             self._update_lookup_table_and_aux()

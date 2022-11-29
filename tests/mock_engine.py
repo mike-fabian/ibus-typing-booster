@@ -189,6 +189,9 @@ class MockLookupTable:
     def set_orientation(self, orientation: int) -> None:
         self.mock_orientation = orientation
 
+    def get_orientation(self) -> int:
+        return self.mock_orientation
+
     def get_number_of_candidates(self) -> int:
         return len(self.mock_candidates)
 

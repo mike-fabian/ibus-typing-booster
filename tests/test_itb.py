@@ -279,6 +279,8 @@ class ItbTestCase(unittest.TestCase):
             False, update_gsettings=False)
         self.engine.set_page_size(
             6, update_gsettings=False)
+        self.engine.set_lookup_table_orientation(
+            1, update_gsettings=False)
         self.engine.set_min_char_complete(
             1, update_gsettings=False)
         self.engine.set_show_number_of_candidates(
