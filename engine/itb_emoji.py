@@ -41,7 +41,6 @@ import html
 import logging
 from difflib import SequenceMatcher
 import gettext
-from packaging import version
 import itb_util
 
 DOMAINNAME = 'ibus-typing-booster'
@@ -1940,12 +1939,7 @@ class EmojiMatcher():
                 emoji = self.variation_selector_normalize(
                     emoji_key[0],
                     variation_selector=self._variation_selector)
-                unicode_version = self.unicode_version(emoji)
-                if (unicode_version
-                        and (version.parse(unicode_version)
-                             < version.parse(self._emoji_unicode_min)
-                             or version.parse(unicode_version)
-                             > version.parse(self._emoji_unicode_max))):
+                if not self.unicode_version_in_range(emoji):
                     continue
                 if len(emoji) > 1:
                     has_skin_tone_modifier = False
@@ -2086,6 +2080,31 @@ class EmojiMatcher():
                 and ('uversion' in self._emoji_dict[(emoji_string, 'en')])):
             return str(self._emoji_dict[(emoji_string, 'en')]['uversion'])
         return ''
+
+    def unicode_version_in_range(self, emoji_string: str) -> bool:
+        '''
+        Checks whether the Unicode version of this emoji is in the desired
+        range
+
+        :param emoji_string: An emoji
+        :return: True if the Unicode version is in the desired range,
+                 False if not.
+        '''
+        unicode_version = self.unicode_version(emoji_string)
+        if not unicode_version:
+            return False
+        version = [
+            int(number)
+            for number in re.findall(r'\d+', unicode_version)]
+        min_version = [
+            int(number)
+            for number in re.findall(r'\d+', self._emoji_unicode_min)]
+        max_version = [
+            int(number)
+            for number in re.findall(r'\d+', self._emoji_unicode_max)]
+        if min_version <= version <= max_version:
+            return True
+        return False
 
     def skin_tone_modifier_supported(self, emoji_string: str) -> bool:
         '''Checks whether skin tone modifiers are possible for this emoji
