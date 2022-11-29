@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 29 Nov 2022 Release 2.19.10
+* Save space when displaying compose completion in horizontal lookup tables (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/407)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 28 Nov 2022 Release 2.19.9
 * Emoji search: If search strings contain whitespace count as an exact match if all words match in any order (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/405)
 * emoji-picker: If a search string contains non-whitespace characters, strip whitespace (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/404)
