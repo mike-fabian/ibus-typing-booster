@@ -45,6 +45,15 @@
       </description>
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.19.9</url>
       <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/405">
+          github-issues#405: Emoji search: If search strings contain
+          whitespace count as an exact match if all words match in any
+          order
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/404">
+          github-issues#404: emoji-picker: If a search string contains
+          non-whitespace characters, strip whitespace
+        </issue>
         <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/402">
           github-issues#402: emoji-picker: Put the first match in a
           search always into the clipboards automatically
@@ -57,15 +66,6 @@
       </description>
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.19.8</url>
       <issues>
-        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/405">
-          github-issues#405: Emoji search: If search strings contain
-          whitespace count as an exact match if all words match in any
-          order
-        </issue>
-        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/404">
-          github-issues#404: emoji-picker: If a search string contains
-          non-whitespace characters, strip whitespace
-        </issue>
         <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/398">
           github-issues#398: Do not show automatic emoji predictions
           when OSK (on-screen-keyboard) is visible
