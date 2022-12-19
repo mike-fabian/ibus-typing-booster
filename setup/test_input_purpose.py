@@ -117,6 +117,7 @@ class InputPurposeTest(Gtk.Window): # type: ignore
         self._main_container.add(self._test_entry)
 
         self._test_text_view = Gtk.TextView()
+        self._test_text_view.set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
         margin = 10
         self._test_text_view.set_margin_start(margin)
         self._test_text_view.set_margin_end(margin)
