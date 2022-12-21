@@ -94,149 +94,158 @@ class TabSqliteDb:
             'user_freq',
             'timestamp']
 
-        self.old_phrases = []
+        self._old_phrases: List[Tuple[str, str, int]] = []
 
         self.hunspell_obj = hunspell_suggest.Hunspell(())
 
-        if self.user_db_file != ':memory:':
-            if not os.path.exists(self.user_db_file):
-                LOGGER.info(
-                    'The user database %(udb)s does not exist yet.',
-                    {'udb': self.user_db_file})
-            else:
-                try:
-                    desc = self.get_database_desc(self.user_db_file)
-                    if (desc is None
-                            or desc["version"] != USER_DATABASE_VERSION
-                            or (self.get_number_of_columns_of_phrase_table(
-                                self.user_db_file)
-                                != len(self._phrase_table_column_names))):
-                        LOGGER.info(
-                            'The user database %(udb)s seems incompatible',
-                            {'udb': self.user_db_file})
-                        if desc is None:
-                            LOGGER.info(
-                                'No version information in the database')
-                        elif desc["version"] != USER_DATABASE_VERSION:
-                            LOGGER.info(
-                                'The version of the database does not match '
-                                '(too old or too new?)')
-                            LOGGER.info(
-                                'ibus-typing-booster wants version=%s',
-                                USER_DATABASE_VERSION)
-                            LOGGER.info(
-                                'But the  database actually has version=%s',
-                                desc["version"])
-                        elif (self.get_number_of_columns_of_phrase_table(
-                                self.user_db_file)
-                              != len(self._phrase_table_column_names)):
-                            LOGGER.info(
-                                'The number of columns of the database '
-                                'does not match')
-                            LOGGER.info(
-                                'ibus-typing-booster expects %(col)s columns',
-                                {'col': len(self._phrase_table_column_names)})
-                            LOGGER.info(
-                                'The database actually has %(col)s columns',
-                                {'col':
-                                 self.get_number_of_columns_of_phrase_table(
-                                     self.user_db_file)})
-                        LOGGER.info(
-                            'Trying to recover the phrases from the old, '
-                            'incompatible database')
-                        self.old_phrases = self.extract_user_phrases()
-                        timestamp = time.strftime('-%Y-%m-%d_%H:%M:%S')
-                        LOGGER.info(
-                            'Renaming the incompatible database to "%(name)s"',
-                            {'name': self.user_db_file+timestamp})
-                        if os.path.exists(self.user_db_file):
-                            os.rename(self.user_db_file,
-                                      self.user_db_file+timestamp)
-                        if os.path.exists(self.user_db_file+'-shm'):
-                            os.rename(self.user_db_file+'-shm',
-                                      self.user_db_file+'-shm'+timestamp)
-                        if os.path.exists(self.user_db_file+'-wal'):
-                            os.rename(self.user_db_file+'-wal',
-                                      self.user_db_file+'-wal'+timestamp)
-                        LOGGER.info(
-                            'Creating a new, empty database "%(name)s".',
-                            {'name': self.user_db_file})
-                        self.init_user_db()
-                        LOGGER.info(
-                            'If user phrases were successfully recovered '
-                            'from the old, '
-                            'incompatible database, they will be used to '
-                            'initialize the new database.')
-                    else:
-                        LOGGER.info(
-                            'Compatible database %(db)s found.',
-                            {'db': self.user_db_file})
-                except Exception as error: # pylint: disable=broad-except
-                    LOGGER.exception(
-                        'Unexpected error searching user database: %s: %s',
-                        error.__class__.__name__, error)
+        self._check_database_compatibility()
+        self._check_database_readability()
 
-        # open user phrase database
+        LOGGER.info(
+            'Connect to the database %s.', self.user_db_file)
+        self.database = self.sqlite3_connect_database(self.user_db_file)
         try:
-            LOGGER.info(
-                'Connect to the database %(name)s.',
-                {'name': self.user_db_file})
-            self.database = sqlite3.connect(self.user_db_file)
-            self.set_database_pragma_options()
             self.database.executescript(
                 f'ATTACH DATABASE "{self.user_db_file}" AS user_db;')
         except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
-                'Could not open the database %s. %s: %s',
+                'Could not attach the database %s. %s: %s '
+                'This should never happen.',
                 self.user_db_file, error.__class__.__name__, error)
-            timestamp = time.strftime('-%Y-%m-%d_%H:%M:%S')
-            LOGGER.info(
-                'Renaming the incompatible database to "%(name)s".',
-                {'name': self.user_db_file+timestamp})
-            if os.path.exists(self.user_db_file):
-                os.rename(self.user_db_file, self.user_db_file+timestamp)
-            if os.path.exists(self.user_db_file+'-shm'):
-                os.rename(self.user_db_file+'-shm',
-                          self.user_db_file+'-shm'+timestamp)
-            if os.path.exists(self.user_db_file+'-wal'):
-                os.rename(self.user_db_file+'-wal',
-                          self.user_db_file+'-wal'+timestamp)
-            LOGGER.info(
-                'Creating a new, empty database "%(name)s".',
-                {'name': self.user_db_file})
-            self.init_user_db()
-            self.database = sqlite3.connect(self.user_db_file)
-            self.set_database_pragma_options()
-            self.database.executescript(
-                f'ATTACH DATABASE "{self.user_db_file} AS user_db;')
         self.create_tables()
-        if self.old_phrases:
-            sqlargs = []
-            for ophrase in self.old_phrases:
-                sqlargs.append(
-                    {'input_phrase': ophrase[0],
-                     'phrase': ophrase[0],
-                     'p_phrase': '',
-                     'pp_phrase': '',
-                     'user_freq': ophrase[1],
-                     'timestamp': time.time()})
-            sqlstr = '''
-            INSERT INTO user_db.phrases (input_phrase, phrase, p_phrase, pp_phrase, user_freq, timestamp)
-            VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq, :timestamp)
-            ;'''
-            try:
-                self.database.executemany(sqlstr, sqlargs)
-            except Exception as error: # pylint: disable=broad-except
-                LOGGER.exception(
-                    'Unexpected error inserting old phrases '
-                    'into the user database: %s: %s',
-                    error.__class__.__name__, error)
-            self.database.commit()
-            self.database.execute('PRAGMA wal_checkpoint;')
+        self._restore_old_phrases()
 
         # try create all hunspell-tables in user database
         self.create_indexes(commit=False)
         self.generate_userdb_desc()
+
+    def _restore_old_phrases(self) -> None:
+        '''Restore phrases recovered from old database into new database'''
+        if not self._old_phrases:
+            return
+        LOGGER.info('Restoring old phrases: %s', self._old_phrases)
+        sqlargs = []
+        for ophrase in self._old_phrases:
+            sqlargs.append(
+                {'input_phrase': ophrase[0],
+                 'phrase': ophrase[1],
+                 'p_phrase': '',
+                 'pp_phrase': '',
+                 'user_freq': ophrase[2],
+                 'timestamp': time.time()})
+        sqlstr = '''
+        INSERT INTO user_db.phrases (input_phrase, phrase, p_phrase, pp_phrase, user_freq, timestamp)
+        VALUES (:input_phrase, :phrase, :p_phrase, :pp_phrase, :user_freq, :timestamp)
+        ;'''
+        try:
+            self.database.executemany(sqlstr, sqlargs)
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.exception(
+                'Unexpected error inserting old phrases '
+                'into the user database: %s: %s',
+                error.__class__.__name__, error)
+        self.database.commit()
+        self.database.execute('PRAGMA wal_checkpoint;')
+
+    def _check_database_compatibility(self) -> None:
+        '''Check whether the database is compatible'''
+        if self.user_db_file == ':memory:':
+            LOGGER.info(
+                ':memory: database is always newly created '
+                ' and therefore always compatible.')
+            return
+        if not os.path.exists(self.user_db_file):
+            LOGGER.info(
+                'User database %s does not exist yet and will be created. '
+                'A newly created database is always compatible.',
+                self.user_db_file)
+            return
+        try:
+            desc = self.get_database_desc(self.user_db_file)
+            if (desc
+                and
+                desc['version'] == USER_DATABASE_VERSION
+                and
+                self.get_number_of_columns_of_phrase_table(self.user_db_file)
+                == len(self._phrase_table_column_names)):
+                LOGGER.info(
+                    'Compatible database %s found.', self.user_db_file)
+                return
+            LOGGER.info('User database %s seems incompatible.',
+                        self.user_db_file)
+            # Log reason for incompatibility
+            if not desc:
+                LOGGER.info('No version information in the database')
+            elif desc['version'] != USER_DATABASE_VERSION:
+                LOGGER.info('The version of the database does not match '
+                            '(too old or too new?).'
+                            'ibus-typing-booster wants version=%s '
+                            'but the database actually has version=%s.',
+                            USER_DATABASE_VERSION, desc['version'])
+            elif (self.get_number_of_columns_of_phrase_table(self.user_db_file)
+                  != len(self._phrase_table_column_names)):
+                LOGGER.info(
+                    'The number of columns of the database does not match.'
+                    'ibus-typing-booster expectes %s columns but the '
+                    'database actually has %s columns.',
+                    len(self._phrase_table_column_names),
+                    self.get_number_of_columns_of_phrase_table(self.user_db_file))
+            # Try to recover old phrases to use for initializing a new
+            # database:
+            self._old_phrases = self._extract_user_phrases()
+            self._rename_incompatible_or_broken_database()
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.exception(
+                'Unexpected error checking database compatibility: %s: %s',
+                error.__class__.__name__, error)
+
+    def _check_database_readability(self) -> None:
+        '''Check whether all rows from the phrases table of the
+        database are readable
+        '''
+        if self.user_db_file == ':memory:':
+            LOGGER.info(
+                ':memory: database is always newly created '
+                ' and therefore always readable.')
+            return
+        if not os.path.exists(self.user_db_file):
+            LOGGER.info(
+                'User database %s does not exist yet and will be created. '
+                'A newly created database is always readable.',
+                self.user_db_file)
+            return
+        database = self.sqlite3_connect_database(self.user_db_file)
+        try:
+            database.execute('SELECT * FROM phrases;').fetchall()
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.exception(
+                'Error checking database readability: %s: %s',
+                error.__class__.__name__, error)
+            self._rename_incompatible_or_broken_database()
+            return
+        LOGGER.info('Database seems readable.')
+
+    def _rename_incompatible_or_broken_database(self) -> None:
+        '''
+        Creates a backup copy of an incompatible or broken database
+
+        Also creates a new empty database.
+        '''
+        timestamp = time.strftime('-%Y-%m-%d_%H:%M:%S')
+        LOGGER.info('Renaming incompatible or broken database to "%s"',
+                    self.user_db_file+timestamp)
+        if os.path.exists(self.user_db_file):
+            os.rename(self.user_db_file,
+                      self.user_db_file+timestamp)
+        if os.path.exists(self.user_db_file+'-shm'):
+            os.rename(self.user_db_file+'-shm',
+                      self.user_db_file+'-shm'+timestamp)
+        if os.path.exists(self.user_db_file+'-wal'):
+            os.rename(self.user_db_file+'-wal',
+                      self.user_db_file+'-wal'+timestamp)
+        LOGGER.info(
+            'Creating a new, empty database "%s".', self.user_db_file)
+        self.database = self.sqlite3_connect_database(self.user_db_file)
 
     def update_phrase(
             self,
@@ -681,23 +690,19 @@ class TabSqliteDb:
                 'Unexpected error adding description to user_db: %s: %s',
                  error.__class__.__name__, error)
 
-    def init_user_db(self) -> None:
-        '''
-        Initialize the user database unless it is an in-memory database
-        '''
-        if self.user_db_file == ':memory:':
-            return
-        if not os.path.exists(self.user_db_file):
-            self.database = sqlite3.connect(self.user_db_file)
-            self.set_database_pragma_options()
+    @classmethod
+    def sqlite3_connect_database(cls, db_file: str) -> sqlite3.Connection:
+        '''Connect to a database, creating it if it does not exist
 
-    def set_database_pragma_options(self) -> None:
-        '''Set options for the user database'''
-        # a database containing the complete German Hunspell
+        Also set our standard options for the database.
+        '''
+        # Creates the file db_file if it does not exist:
+        database_connection = sqlite3.connect(db_file)
+        # A database containing the complete German Hunspell
         # dictionary has less then 6000 pages. 20000 pages
         # should be enough to cache the complete database
         # in most cases.
-        self.database.executescript('''
+        database_connection.executescript('''
         PRAGMA encoding = "UTF-8";
         PRAGMA case_sensitive_like = true;
         PRAGMA page_size = 4096;
@@ -708,7 +713,11 @@ class TabSqliteDb:
         PRAGMA synchronous = NORMAL;
         PRAGMA auto_vacuum = FULL;
         ''')
-        self.database.commit()
+        database_connection.commit()
+        database_connection.text_factory = (
+            lambda x: x.decode(
+                encoding='utf-8', errors='replace')) # or better 'ignore'?
+        return database_connection
 
     @classmethod
     def get_database_desc(cls, db_file: str) -> Optional[Dict[str, str]]:
@@ -716,7 +725,7 @@ class TabSqliteDb:
         if not os.path.exists(db_file):
             return None
         try:
-            database = sqlite3.connect(db_file)
+            database = cls.sqlite3_connect_database(db_file)
             desc = {}
             for row in database.execute("SELECT * FROM desc;").fetchall():
                 desc[row[0]] = row[1]
@@ -749,7 +758,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         if not os.path.exists(db_file):
             return None
         try:
-            database = sqlite3.connect(db_file)
+            database = cls.sqlite3_connect_database(db_file)
             table_phrases_result = database.execute(
                 "select sql from sqlite_master where name='phrases';"
             ).fetchall()
@@ -1023,18 +1032,25 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         if commit:
             self.database.commit()
 
-    def extract_user_phrases(self) -> List[Tuple[str, int]]:
+    def _extract_user_phrases(self) -> List[Tuple[str, str, int]]:
         '''extract user phrases from database'''
+        LOGGER.info(
+            'Trying to recover phrases from old, incompatible database'
+            'Phrases successfully recovered can be used to '
+            'initialize a newly created database.')
         try:
-            database = sqlite3.connect(self.user_db_file)
+            database = self.sqlite3_connect_database(self.user_db_file)
             database.execute('PRAGMA wal_checkpoint;')
             phrases = database.execute(
-                'SELECT phrase, sum(user_freq) FROM phrases GROUP BY phrase;'
+                'SELECT input_phrase, phrase, sum(user_freq) FROM phrases GROUP BY phrase;'
             ).fetchall()
             database.close()
             phrases = [
                 (unicodedata.normalize(
-                    itb_util.NORMALIZATION_FORM_INTERNAL, x[0]), x[1])
+                    itb_util.NORMALIZATION_FORM_INTERNAL, x[0]),
+                 unicodedata.normalize(
+                    itb_util.NORMALIZATION_FORM_INTERNAL, x[1]),
+                 x[2])
                 for x in
                 phrases
             ]
@@ -1223,7 +1239,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                 # SQLite objects created in a thread can only be used in
                 # that same thread.  As the database cleanup is usually
                 # called in a separate thread, get a new connection:
-                database = sqlite3.connect(self.user_db_file)
+                database = self.sqlite3_connect_database(self.user_db_file)
             else:
                 database = self.database
             rows = database.execute("SELECT * FROM phrases;").fetchall()
