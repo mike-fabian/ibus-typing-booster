@@ -45,6 +45,17 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.19.13" date="2022-12-30" urgency="medium">
+      <description>
+        <p>Bug fixes and enhancements</p>
+      </description>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.19.13</url>
+      <issues>
+        <issue url="https://bugzilla.redhat.com/show_bug.cgi?id=2151448">
+          Catch exception when user database is locked during shutdown.
+        </issue>
+      </issues>
+    </release>
     <release version="2.19.12" date="2022-12-28" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
