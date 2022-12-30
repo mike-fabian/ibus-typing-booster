@@ -290,15 +290,16 @@ class TabSqliteDb:
                 error.__class__.__name__, error)
 
     def sync_usrdb(self) -> None:
-        '''
-        Trigger a checkpoint operation.
-        '''
-        if DEBUG_LEVEL > 1:
-            LOGGER.debug('commit and execute checkpoint ...')
-        self.database.commit()
-        self.database.execute('PRAGMA wal_checkpoint;')
-        if DEBUG_LEVEL > 1:
-            LOGGER.debug('commit and execute checkpoint done.')
+        '''Trigger a checkpoint operation.'''
+        LOGGER.info('commit and execute checkpoint ...')
+        try:
+            self.database.commit()
+            self.database.execute('PRAGMA wal_checkpoint;')
+            LOGGER.info('commit and execute checkpoint done.')
+        except sqlite3.OperationalError as error:
+            LOGGER.exception(
+                'Unexpected error syncing user database: %s: %s',
+                error.__class__.__name__, error)
 
     def create_tables(self) -> None:
         '''Create table for the phrases.'''
