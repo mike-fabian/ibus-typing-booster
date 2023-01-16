@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 19 Jan 2023 Release 2.20.0
+* Allow predictions when 0 characters have been typed (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/268)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 30 Dec 2022 Release 2.19.13
 * Catch exception when user database is locked during shutdown (Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=215144)
 
