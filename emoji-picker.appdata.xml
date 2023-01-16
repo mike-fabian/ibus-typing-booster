@@ -15,7 +15,7 @@
     <keyword>emoji</keyword>
   </keywords>
   <screenshots>
-    <screenshot>
+    <screenshot type="default">
       <image type="source" xml:lang="en">
         https://mike-fabian.github.io/ibus-typing-booster/images/emoji-picker.png
       </image>
