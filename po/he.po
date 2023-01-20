@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2022-12-22 10:52+0100\n"
+"POT-Creation-Date: 2023-01-16 11:55+0100\n"
 "PO-Revision-Date: 2020-10-08 08:01+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://translate.fedoraproject.org/projects/ibus-"
@@ -194,34 +194,34 @@ msgstr "הגדרה"
 msgid "Preferences for ibus-typing-booster"
 msgstr "העדפות ל־ibus-typing-booster"
 
-#: engine/hunspell_table.py:4738
+#: engine/hunspell_table.py:4805
 msgid "Failed to import Google speech-to-text."
 msgstr "הייבוא של דיבור לטקסט של Google נכשל."
 
-#: engine/hunspell_table.py:4741
+#: engine/hunspell_table.py:4808
 msgid "Failed to import pyaudio."
 msgstr "הייבוא של pyaudio נכשל."
 
-#: engine/hunspell_table.py:4744
+#: engine/hunspell_table.py:4811
 msgid "Failed to import queue."
 msgstr "ייבוא התור נכשל."
 
-#: engine/hunspell_table.py:4749
+#: engine/hunspell_table.py:4816
 msgid "No supported language for speech recognition."
 msgstr "אין שפה נתמכת לזיהוי דיבור."
 
-#: engine/hunspell_table.py:4753
+#: engine/hunspell_table.py:4820
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "הקובץ „%s” של „Google application credentials” (פרטי הגישה ליישומים של "
 "Google) לא נמצא."
 
-#: engine/hunspell_table.py:4766
+#: engine/hunspell_table.py:4833
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "הפעלת המרת דיבור לטקסט של Google נכשלה. מידע נוסף ב־debug.log."
 
-#: engine/hunspell_table.py:4874
+#: engine/hunspell_table.py:4941
 msgid "Google speech-to-text error. See debug.log."
 msgstr "שגיאה בדיבור לטקסט של Google. מידע נוסף ב־debug.log."
 
