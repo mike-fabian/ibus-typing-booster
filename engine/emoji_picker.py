@@ -2227,6 +2227,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         if GTK_VERSION >= (3, 22, 0):
             self._font_popover.popup()
         self._font_popover.show_all()
+        font_popover_search_entry.grab_focus()
 
 def get_languages() -> List[str]:
     '''
