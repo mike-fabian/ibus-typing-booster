@@ -516,5 +516,10 @@
       <summary>List of keybindings</summary>
       <description>The list of configurable keybindings</description>
     </key>
+    <key name="autosettings" type="aas">
+      <default>[]</default>
+      <summary>List auf automatic settings</summary>
+      <description>The list of settings automatically applied when regular expressions match windows</description>
+    </key>
   </schema>
 </schemalist>

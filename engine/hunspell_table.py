@@ -355,6 +355,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._gsettings.get_value('keybindings')),
             update_gsettings=False)
 
+        self._autosettings: List[Tuple[str, str, str]] = []
+        self.set_autosettings(
+            itb_util.variant_to_value(
+                self._gsettings.get_value('autosettings')),
+            update_gsettings=False)
+        self._autosettings_revert: Dict[str, Any] = {}
+
         self._remember_input_mode: bool = itb_util.variant_to_value(
             self._gsettings.get_value('rememberinputmode'))
         if (self._keybindings['toggle_input_mode_on_off']
@@ -602,6 +609,163 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._set_surrounding_text_event.clear()
         self._surrounding_text_old: Optional[Tuple[IBus.Text, int, int]] = None
         self._is_context_from_surrounding_text = False
+
+        self._set_get_functions: Dict[str, Dict[str, Any]] = {
+            'inputmethod': {
+                'set': self.set_current_imes,
+                'get': self.get_current_imes},
+            'dictionary': {
+                'set': self.set_dictionary_names,
+                'get': self.get_dictionary_names},
+            'dictionaryinstalltimestamp': {
+                'set': self._reload_dictionaries},
+            'inputmethodchangetimestamp': {
+                'set': self._reload_input_methods},
+            'avoidforwardkeyevent': {
+                'set': self.set_avoid_forward_key_event,
+                'get': self.set_avoid_forward_key_event},
+            'addspaceoncommit': {
+                'set': self.set_add_space_on_commit,
+                'get': self.set_add_space_on_commit},
+            'inlinecompletion': {
+                'set': self.set_inline_completion,
+                'get': self.get_inline_completion},
+            'autocapitalize': {
+                'set': self.set_auto_capitalize,
+                'get': self.get_auto_capitalize},
+            'arrowkeysreopenpreedit': {
+                'set': self.set_arrow_keys_reopen_preedit,
+                'get': self.get_arrow_keys_reopen_preedit},
+            'emojipredictions': {
+                'set': self.set_emoji_prediction_mode,
+                'get': self.get_emoji_prediction_mode},
+            'offtherecord': {
+                'set': self.set_off_the_record_mode,
+                'get': self.get_off_the_record_mode},
+            'emojitriggercharacters': {
+                'set': self.set_emoji_trigger_characters,
+                'get': self.get_emoji_trigger_characters},
+            'autocommitcharacters': {
+                'set': self.set_auto_commit_characters,
+                'get': self.get_auto_commit_characters},
+            'tabenable': {
+                'set': self.set_tab_enable,
+                'get': self.get_tab_enable},
+            'rememberlastusedpreeditime': {
+                'set': self.set_remember_last_used_preedit_ime,
+                'get': self.get_remember_last_used_preedit_ime},
+            'rememberinputmode': {
+                'set': self.set_remember_input_mode,
+                'get': self.get_remember_input_mode},
+            'inputmode': {
+                'set': self.set_input_mode,
+                'get': self.get_input_mode},
+            'pagesize': {
+                'set': self.set_page_size,
+                'get': self.get_page_size},
+            'lookuptableorientation': {
+                'set': self.set_lookup_table_orientation,
+                'get': self.get_lookup_table_orientation},
+            'preeditunderline': {
+                'set': self.set_preedit_underline,
+                'get': self.get_preedit_underline},
+            'preeditstyleonlywhenlookup': {
+                'set': self.set_preedit_style_only_when_lookup,
+                'get': self.get_preedit_style_only_when_lookup},
+            'mincharcomplete': {
+                'set': self.set_min_char_complete,
+                'get': self.get_min_char_complete},
+            'debuglevel': {
+                'set': self.set_debug_level,
+                'get': self.get_debug_level},
+            'errorsound': {
+                'set': self.set_error_sound,
+                'get': self.get_error_sound},
+            'errorsoundfile': {
+                'set': self.set_error_sound_file,
+                'get': self.get_error_sound_file},
+            'shownumberofcandidates': {
+                'set': self.set_show_number_of_candidates,
+                'get': self.get_show_number_of_candidates},
+            'showstatusinfoinaux': {
+                'set': self.set_show_status_info_in_auxiliary_text,
+                'get': self.get_show_status_info_in_auxiliary_text},
+            'autoselectcandidate': {
+                'set': self.set_auto_select_candidate,
+                'get': self.get_auto_select_candidate},
+            'colorpreeditspellcheck': {
+                'set': self.set_color_preedit_spellcheck,
+                'get': self.get_color_preedit_spellcheck},
+            'colorpreeditspellcheckstring': {
+                'set': self.set_color_preedit_spellcheck_string,
+                'get': self.get_color_preedit_spellcheck_string},
+            'colorinlinecompletion': {
+                'set': self.set_color_inline_completion,
+                'get': self.get_color_inline_completion},
+            'colorinlinecompletionstring': {
+                'set': self.set_color_inline_completion_string,
+                'get': self.get_color_inline_completion_string},
+            'colorcomposepreview': {
+                'set': self.set_color_compose_preview,
+                'get': self.get_color_compose_preview},
+            'colorcomposepreviewstring': {
+                'set': self.set_color_compose_preview_string,
+                'get': self.get_color_compose_preview_string},
+            'coloruserdb': {
+                'set': self.set_color_userdb,
+                'get': self.get_color_userdb},
+            'coloruserdbstring': {
+                'set': self.set_color_userdb_string,
+                'get': self.get_color_userdb_string},
+            'colorspellcheck': {
+                'set': self.set_color_spellcheck,
+                'get': self.get_color_spellcheck},
+            'colorspellcheckstring': {
+                'set': self.set_color_spellcheck_string,
+                'get': self.get_color_spellcheck_string},
+            'colordictionary': {
+                'set': self.set_color_dictionary,
+                'get': self.get_color_dictionary},
+            'colordictionarystring': {
+                'set': self.set_color_dictionary_string,
+                'get': self.get_color_dictionary_string},
+            'labeluserdb': {
+                'set': self.set_label_userdb,
+                'get': self.get_label_userdb},
+            'labeluserdbstring': {
+                'set': self.set_label_userdb_string,
+                'get': self.get_label_userdb_string},
+            'labelspellcheck': {
+                'set': self.set_label_spellcheck,
+                'get': self.get_label_spellcheck},
+            'labelspellcheckstring': {
+                'set': self.set_label_spellcheck_string,
+                'get': self.get_label_spellcheck_string},
+            'labeldictionary': {
+                'set': self.set_label_dictionary,
+                'get': self.get_label_dictionary},
+            'labeldictionarystring': {
+                'set': self.set_label_dictionary_string,
+                'get': self.get_label_dictionary_string},
+            'flagdictionary': {
+                'set': self.set_flag_dictionary,
+                'get': self.get_flag_dictionary},
+            'labelbusy': {
+                'set': self.set_label_busy,
+                'get': self.get_label_busy},
+            'labelbusystring': {
+                'set': self.set_label_busy_string,
+                'get': self.get_label_busy_string},
+            'keybindings': {
+                'set': self.set_keybindings,
+                'get': self.get_keybindings},
+            'autosettings': {
+                'set': self.set_autosettings,
+                'get': self.get_autosettings},
+            'googleapplicationcredentials': {
+                'set': self.set_google_application_credentials,
+                'get': self.get_google_application_credentials},
+        }
 
         self._clear_input_and_update_ui()
 
@@ -1457,6 +1621,46 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # the private member variable directly.
         return self._dictionary_names[:]
 
+    def set_autosettings(
+            self,
+            autosettings: Union[List[Tuple[str, str, str]], Any],
+            update_gsettings: bool = True) -> None:
+        '''Set the current automatic settings
+
+        :param autosettings: The automatic settings to use
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if DEBUG_LEVEL > 0:
+            LOGGER.debug('autosettings=%s', autosettings)
+        if not isinstance(autosettings, list):
+            return
+        if autosettings == self._autosettings:
+            return
+        self._autosettings = autosettings
+        if update_gsettings:
+            variant_array = GLib.Variant.new_array(GLib.VariantType('as'), [
+                    GLib.Variant.new_array(GLib.VariantType('s'), [
+                        GLib.Variant.new_string(x) for x in autosetting])
+                    for autosetting in autosettings
+                ])
+            self._gsettings.set_value(
+                'autosettings',
+                variant_array)
+
+    def get_autosettings(self) -> List[Tuple[str, str, str]]:
+        '''Get current autosettings
+
+        Returns the list of settings automatically applied when
+        regular expressions match windows
+        '''
+        # It is important to return a copy, we do not want to change
+        # the private member variable directly.
+        return self._autosettings.copy()
+
     def set_keybindings(
             self,
             keybindings: Union[Dict[str, List[str]], Any],
@@ -2013,7 +2217,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
     def do_destroy(self) -> None: # pylint: disable=arguments-differ
         '''Called when this input engine is destroyed
         '''
-        if DEBUG_LEVEL > 1:
+        if DEBUG_LEVEL > 0:
             LOGGER.debug('entering function')
         self._clear_input_and_update_ui()
         self.do_focus_out()
@@ -6445,6 +6649,56 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.clear_context()
         self._commit_happened_after_focus_in = False
         self._update_ui()
+        self._apply_autosettings()
+
+    def _apply_autosettings(self) -> None:
+        '''Apply automatic setting changes for the window which just got focus'''
+        if DEBUG_LEVEL > 0:
+            LOGGER.debug('self._im_client=%s', self._im_client)
+        if self._autosettings_revert:
+            self._revert_autosettings()
+        if not self._im_client:
+            return
+        autosettings_apply: Dict[str, Any] = {}
+        for (setting, value, regexp) in self._autosettings:
+            if (not regexp
+                or setting not in self._set_get_functions
+                or 'set' not in self._set_get_functions[setting]
+                or 'get' not in self._set_get_functions[setting]):
+                continue
+            pattern = re.compile(regexp)
+            if not pattern.search(self._im_client):
+                continue
+            current_value = self._set_get_functions[setting]['get']()
+            if setting in ('inputmethod', 'dictionary'):
+                current_value = ','.join(current_value)
+            if type(current_value) not in [str, int, bool]:
+                continue
+            new_value: Union[str, bool, int] = ''
+            if isinstance(current_value, str):
+                new_value = value
+            elif isinstance(current_value, bool):
+                if value.lower() in ['true', 'false']:
+                    new_value = value.lower() == 'true'
+                else:
+                    continue
+            elif isinstance(current_value, int):
+                try:
+                    new_value = int(value)
+                except (ValueError,) as error:
+                    continue
+            else:
+                continue
+            LOGGER.info(
+                'regexp “%s” matches “%s”, trying to set “%s” to “%s”',
+                regexp, self._im_client, setting, value)
+            autosettings_apply[setting] = new_value
+            self._autosettings_revert[setting] = current_value
+        for setting, value in autosettings_apply.items():
+            LOGGER.info('Apply autosetting: %s: %s -> %s',
+                        setting, self._autosettings_revert[setting], value)
+            self._set_get_functions[setting]['set'](
+                value, update_gsettings=True)
 
     def _record_in_database_and_push_context(
             self, commit_phrase: str = '', input_phrase: str = '') -> None:
@@ -6511,6 +6765,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         Called for ibus >= 1.5.27 when a window loses focus while
         this input engine is enabled
+
+        :param object_path: Example:
+                            '/org/freedesktop/IBus/InputContext_23'
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('object_path=%s\n', object_path)
@@ -6528,6 +6785,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._record_in_database_and_push_context()
         self.clear_context()
         self._clear_input_and_update_ui()
+        self._revert_autosettings()
+
+    def _revert_autosettings(self) -> None:
+        '''Revert automatic setting changes which were done on focus in'''
+        for setting, value in self._autosettings_revert.items():
+            LOGGER.info('Revert autosetting: %s: -> %s', setting, value)
+            self._set_get_functions[setting]['set'](
+                value, update_gsettings=True)
+        self._autosettings_revert = {}
 
     def do_reset(self) -> None: # pylint: disable=arguments-differ
         '''Called when the mouse pointer is used to move to cursor to a
@@ -6779,6 +7045,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'labelbusy': self.set_label_busy,
             'labelbusystring': self.set_label_busy_string,
             'keybindings': self.set_keybindings,
+            'autosettings': self.set_autosettings,
             'googleapplicationcredentials':
             self.set_google_application_credentials,
         }

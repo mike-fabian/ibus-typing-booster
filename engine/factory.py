@@ -93,6 +93,18 @@ class EngineFactory(IBus.Factory): # type: ignore
 
     def do_destroy(self) -> None:  # pylint: disable=arguments-differ
         '''Destructor, which finish some task for IME'''
+        # It is necessary to call the do_destroy() function here to
+        # get finish stuff properly, for example do_focus_out() needs
+        # to be called because it calls
+        # _revert_autosettings(). Without that, applied autosettings
+        # survive a “ibus restart” if the autosettings are written go
+        # gsettings when they are applied. I an not sure yet whether
+        # writing applied autosettings to gsettings is a good idea,
+        # but calling do_destroy() here is a good idea anyway to make
+        # sure everything is properly finished.
+        for key, engine in self.enginedict.items():
+            LOGGER.info('Destroying engine %s %s', key, engine)
+            engine.do_destroy()
         LOGGER.info('Syncing user database(s)')
         for key, database in self.database_dict.items():
             LOGGER.info('Syncing %s %s', key, database)
