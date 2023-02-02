@@ -6424,13 +6424,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if DEBUG_LEVEL > 1:
             LOGGER.debug('object_path=%s client=%s\n', object_path, client)
         self._im_client = client
+        (program_name,
+         window_title) = itb_active_window.get_active_window()
         if ':' not in self._im_client:
-            (program_name,
-             _window_title) = itb_active_window.get_active_window()
-            if program_name:
-                self._im_client += ':' + program_name
-            if DEBUG_LEVEL > 1:
-                LOGGER.debug('self._im_client=%s\n', self._im_client)
+            self._im_client += ':' + program_name + ':' + window_title
+        else:
+            self._im_client += ':' + window_title
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('self._im_client=%s\n', self._im_client)
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         if DEBUG_LEVEL > 2:
             for keyval in self._keyvals_to_keycodes.keyvals():
