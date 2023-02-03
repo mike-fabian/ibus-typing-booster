@@ -6990,67 +6990,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         value = itb_util.variant_to_value(self._gsettings.get_value(key))
         LOGGER.debug('Settings changed: key=%s value=%s\n', key, value)
-        set_functions = {
-            'inputmethod': self.set_current_imes,
-            'dictionary':  self.set_dictionary_names,
-            'dictionaryinstalltimestamp': self._reload_dictionaries,
-            'inputmethodchangetimestamp': self._reload_input_methods,
-            'avoidforwardkeyevent': self.set_avoid_forward_key_event,
-            'addspaceoncommit': self.set_add_space_on_commit,
-            'inlinecompletion': self.set_inline_completion,
-            'autocapitalize': self.set_auto_capitalize,
-            'arrowkeysreopenpreedit': self.set_arrow_keys_reopen_preedit,
-            'emojipredictions': self.set_emoji_prediction_mode,
-            'offtherecord': self.set_off_the_record_mode,
-            'emojitriggercharacters': self.set_emoji_trigger_characters,
-            'autocommitcharacters': self.set_auto_commit_characters,
-            'tabenable': self.set_tab_enable,
-            'rememberlastusedpreeditime':
-            self.set_remember_last_used_preedit_ime,
-            'rememberinputmode': self.set_remember_input_mode,
-            'inputmode': self.set_input_mode,
-            'pagesize': self.set_page_size,
-            'lookuptableorientation': self.set_lookup_table_orientation,
-            'preeditunderline': self.set_preedit_underline,
-            'preeditstyleonlywhenlookup':
-            self.set_preedit_style_only_when_lookup,
-            'mincharcomplete': self.set_min_char_complete,
-            'debuglevel': self.set_debug_level,
-            'errorsound': self.set_error_sound,
-            'errorsoundfile': self.set_error_sound_file,
-            'shownumberofcandidates': self.set_show_number_of_candidates,
-            'showstatusinfoinaux': self.set_show_status_info_in_auxiliary_text,
-            'autoselectcandidate': self.set_auto_select_candidate,
-            'colorpreeditspellcheck': self.set_color_preedit_spellcheck,
-            'colorpreeditspellcheckstring':
-            self.set_color_preedit_spellcheck_string,
-            'colorinlinecompletion': self.set_color_inline_completion,
-            'colorinlinecompletionstring':
-            self.set_color_inline_completion_string,
-            'colorcomposepreview': self.set_color_compose_preview,
-            'colorcomposepreviewstring': self.set_color_compose_preview_string,
-            'coloruserdb': self.set_color_userdb,
-            'coloruserdbstring': self.set_color_userdb_string,
-            'colorspellcheck': self.set_color_spellcheck,
-            'colorspellcheckstring': self.set_color_spellcheck_string,
-            'colordictionary': self.set_color_dictionary,
-            'colordictionarystring': self.set_color_dictionary_string,
-            'labeluserdb': self.set_label_userdb,
-            'labeluserdbstring': self.set_label_userdb_string,
-            'labelspellcheck': self.set_label_spellcheck,
-            'labelspellcheckstring': self.set_label_spellcheck_string,
-            'labeldictionary': self.set_label_dictionary,
-            'labeldictionarystring': self.set_label_dictionary_string,
-            'flagdictionary': self.set_flag_dictionary,
-            'labelbusy': self.set_label_busy,
-            'labelbusystring': self.set_label_busy_string,
-            'keybindings': self.set_keybindings,
-            'autosettings': self.set_autosettings,
-            'googleapplicationcredentials':
-            self.set_google_application_credentials,
-        }
-        if key in set_functions:
-            set_functions[key](value, update_gsettings=False)
+        if (key in self._set_get_functions
+            and 'set' in self._set_get_functions[key]):
+            self._set_get_functions[key]['set'](value, update_gsettings=False)
             return
         LOGGER.warning('Unknown key\n')
         return
