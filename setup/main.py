@@ -686,6 +686,25 @@ class SetupUI(Gtk.Window): # type: ignore
             self._arrow_keys_reopen_preedit_checkbutton,
             0, _options_grid_row, 2, 1)
 
+        self._disable_in_terminals_checkbutton = Gtk.CheckButton(
+            # Translators: Whether ibus-typing-booster should be disabled in terminals
+            # (gnome-terminal, xfce4-terminal, ...)
+            label=_('Disable in terminals'))
+        self._disable_in_terminals_checkbutton.set_tooltip_text(
+            _('Whether ibus-typing-booster should be disabled in terminals.'))
+        self._disable_in_terminals_checkbutton.connect(
+            'clicked', self._on_disable_in_terminals_checkbutton)
+        self._disable_in_terminals = itb_util.variant_to_value(
+            self._gsettings.get_value('disableinterminals'))
+        if self._disable_in_terminals is None:
+            self._disable_in_terminals = False
+        if self._disable_in_terminals is True:
+            self._disable_in_terminals_checkbutton.set_active(True)
+        _options_grid_row += 1
+        self._options_grid.attach(
+            self._disable_in_terminals_checkbutton,
+            0, _options_grid_row, 2, 1)
+
         self._emoji_trigger_characters_label = Gtk.Label()
         self._emoji_trigger_characters_label.set_text(
             # Translators: The characters in this list trigger an
@@ -2413,6 +2432,7 @@ class SetupUI(Gtk.Window): # type: ignore
         value = itb_util.variant_to_value(self._gsettings.get_value(key))
         LOGGER.info('Settings changed: key=%s value=%s\n', key, value)
         set_functions = {
+            'disableinterminals': self.set_disable_in_terminals,
             'avoidforwardkeyevent': self.set_avoid_forward_key_event,
             'addspaceoncommit': self.set_add_space_on_commit,
             'arrowkeysreopenpreedit': self.set_arrow_keys_reopen_preedit,
@@ -2835,6 +2855,15 @@ class SetupUI(Gtk.Window): # type: ignore
         a preëdit, has been clicked.
         '''
         self.set_arrow_keys_reopen_preedit(
+            widget.get_active(), update_gsettings=True)
+
+    def _on_disable_in_terminals_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
+        '''
+        The checkbutton whether to disable Typing Booster in terminals
+        has been clicked.
+        '''
+        self.set_disable_in_terminals(
             widget.get_active(), update_gsettings=True)
 
     def _on_emoji_trigger_characters_entry(
@@ -4358,6 +4387,31 @@ class SetupUI(Gtk.Window): # type: ignore
                 GLib.Variant.new_boolean(mode))
         else:
             self._arrow_keys_reopen_preedit_checkbutton.set_active(mode)
+
+    def set_disable_in_terminals(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets whether the to disable Typing Booster in terminals
+
+        :param mode: Whether to disable Typing Booster in terminals
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._disable_in_terminals:
+            return
+        self._disable_in_terminals = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'disableinterminals',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._disable_in_terminals_checkbutton.set_active(mode)
 
     def set_emoji_prediction_mode(
             self,

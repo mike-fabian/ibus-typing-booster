@@ -230,6 +230,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._tab_enable: bool = itb_util.variant_to_value(
             self._gsettings.get_value('tabenable'))
 
+        self._disable_in_terminals: bool = itb_util.variant_to_value(
+            self._gsettings.get_value('disableinterminals'))
+
         self._off_the_record: bool = itb_util.variant_to_value(
             self._gsettings.get_value('offtherecord'))
 
@@ -660,6 +663,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'inputmode': {
                 'set': self.set_input_mode,
                 'get': self.get_input_mode},
+            'disableinterminals': {
+                'set': self.set_disable_in_terminals,
+                'get': self.get_disable_in_terminals},
             'pagesize': {
                 'set': self.set_page_size,
                 'get': self.get_page_size},
@@ -4477,6 +4483,34 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Returns the current value of the “Tab enable” mode'''
         return self._tab_enable
 
+    def set_disable_in_terminals(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the “Disable in terminals” mode
+
+        :param mode: Whether to disable Typing Booster in terminals
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._disable_in_terminals:
+            return
+        self._disable_in_terminals = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'disableinterminals',
+                GLib.Variant.new_boolean(mode))
+
+    def get_disable_in_terminals(self) -> bool:
+        '''Returns the current value of the “Disable in terminals” mode'''
+        return self._disable_in_terminals
+
     def set_remember_last_used_preedit_ime(
             self,
             mode: Union[bool, Any],
@@ -5876,7 +5910,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.exception('Playing error sound failed: %s: %s',
                                  error.__class__.__name__, error)
 
-    def _handle_compose(self, key: itb_util.KeyEvent) -> bool:
+    def _handle_compose(self, key: itb_util.KeyEvent, add_to_preedit: bool = True) -> bool:
         '''Internal method to handle possible compose keys
 
         :return: True if the key event has been handled, else False
@@ -5991,7 +6025,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._typed_compose_sequence = []
             self._update_transliterated_strings()
             self._update_preedit()
-            if self.get_input_mode():
+            if add_to_preedit:
                 self._insert_string_at_cursor(list(compose_result))
                 self._update_ui()
                 return False
@@ -6034,7 +6068,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._typed_compose_sequence = []
                 self._update_transliterated_strings()
                 self._update_preedit()
-                if self.get_input_mode():
+                if add_to_preedit:
                     # When not in direct input mode insert the current
                     # compose preedit representation into the typed
                     # string and return False to let processing of the
@@ -6056,7 +6090,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._typed_compose_sequence = []
         self._update_transliterated_strings()
         self._update_preedit()
-        if self.get_input_mode():
+        if add_to_preedit:
             self._insert_string_at_cursor(list(compose_result))
             self._update_ui()
             return True
@@ -6074,7 +6108,36 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if DEBUG_LEVEL > 1:
             LOGGER.debug('KeyEvent object: %s', key)
 
-        if self._handle_compose(key):
+        disabled = False
+        if not self._input_mode:
+            if DEBUG_LEVEL > 0:
+                LOGGER.debug('Direct input mode')
+            disabled = True
+        elif (self._disable_in_terminals
+              and itb_util.detect_terminal(self._input_purpose, self._im_client)):
+            if DEBUG_LEVEL > 0:
+                LOGGER.debug(
+                    'Terminal detected and the option '
+                    'to disable in terminals is set.')
+            disabled = True
+        elif (self.client_capabilities & itb_util.Capabilite.OSK
+              and
+              (self._input_purpose in [itb_util.InputPurpose.TERMINAL.value])):
+            if DEBUG_LEVEL > 0:
+                LOGGER.debug(
+                    'OSK is visible and input purpose is TERMINAL, '
+                    'disable to avoid showing passwords in the '
+                    'OSK completion buttons.')
+            disabled = True
+        elif (self._input_purpose
+              in [itb_util.InputPurpose.PASSWORD.value,
+                  itb_util.InputPurpose.PIN.value]):
+            if DEBUG_LEVEL > 0:
+                LOGGER.debug(
+                    'Disable because of input purpose PASSWORD or PIN')
+            disabled = True
+
+        if self._handle_compose(key, add_to_preedit=not disabled):
             return True
 
         (match, return_value) = self._handle_hotkeys(
@@ -6082,25 +6145,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if match:
             return return_value
 
-        if not self._input_mode:
-            if DEBUG_LEVEL > 0:
-                LOGGER.debug('Direct input mode')
-            return self._return_false(keyval, keycode, state)
-        if (self.client_capabilities & itb_util.Capabilite.OSK
-            and
-            (self._input_purpose in [itb_util.InputPurpose.TERMINAL.value])):
-            if DEBUG_LEVEL > 0:
-                LOGGER.debug(
-                    'OSK is visible and input purpose is TERMINAL, '
-                    'disable to avoid showing passwords in the '
-                    'OSK completion buttons.')
-            return self._return_false(keyval, keycode, state)
-        if (self._input_purpose
-            in [itb_util.InputPurpose.PASSWORD.value,
-                itb_util.InputPurpose.PIN.value]):
-            if DEBUG_LEVEL > 0:
-                LOGGER.debug(
-                    'Disable because of input purpose PASSWORD or PIN')
+        if disabled:
             return self._return_false(keyval, keycode, state)
 
         (match, return_value) = self._handle_hotkeys(key)

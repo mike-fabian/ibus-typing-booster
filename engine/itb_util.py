@@ -2269,6 +2269,31 @@ def get_effective_lc_messages() -> str:
         return os.environ['LANG']
     return 'C'
 
+def detect_terminal(input_purpose: int, im_client: str) -> bool:
+    '''Detect whether the focus is on a terminal
+
+    Checks input purpose first and if that is not set to TERMINAL,
+    checks the program name in im_client to guess whether it is
+    a terminal.
+    '''
+    if input_purpose in [InputPurpose.TERMINAL.value]:
+        return True
+    if not im_client:
+        return False
+    terminal_regexps = [
+        '^xim:xterm:',
+        '^QIBusInputContext:konsole:',
+        '^xim:rxvt:',
+        '^xim:urxvt:',
+    ]
+    for regexp in terminal_regexps:
+        LOGGER.info('FIXME regexp=%s', regexp)
+        if re.compile(regexp).search(im_client):
+            LOGGER.info('FIXME match')
+            return True
+    LOGGER.info('FIXME nothing matched')
+    return False
+
 # For the ICU/CLDR locale pattern see: http://userguide.icu-project.org/locale
 # (We ignore the variant code here)
 _cldr_locale_pattern = re.compile(
