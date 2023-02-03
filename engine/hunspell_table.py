@@ -6698,7 +6698,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.info('Apply autosetting: %s: %s -> %s',
                         setting, self._autosettings_revert[setting], value)
             self._set_get_functions[setting]['set'](
-                value, update_gsettings=True)
+                value, update_gsettings=False)
 
     def _record_in_database_and_push_context(
             self, commit_phrase: str = '', input_phrase: str = '') -> None:
@@ -6792,7 +6792,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         for setting, value in self._autosettings_revert.items():
             LOGGER.info('Revert autosetting: %s: -> %s', setting, value)
             self._set_get_functions[setting]['set'](
-                value, update_gsettings=True)
+                value, update_gsettings=False)
         self._autosettings_revert = {}
 
     def do_reset(self) -> None: # pylint: disable=arguments-differ
