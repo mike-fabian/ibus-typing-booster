@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 06 Feb 2023 Release 2.21.0
+* Add an option to disable Typing Booster in terminals (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/414)
+* Update emoji annotations from CLDR
+* Add autosettings option (command line only at the moment, useful for https://github.com/mike-fabian/ibus-typing-booster/issues/328)
+* Translation update from Weblate (de 100%, uk 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 19 Jan 2023 Release 2.20.0
 * Allow predictions when 0 characters have been typed (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/268)
 
