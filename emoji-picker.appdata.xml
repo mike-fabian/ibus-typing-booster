@@ -39,6 +39,22 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.21.1" date="2023-02-09" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.21.1</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Small performance tweak in detecting terminals
+          </li>
+          <li>
+            Translation update from Weblate (nl 100%, pl 100%, sv 100%, tr 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+      </issues>
+    </release>
     <release version="2.21.0" date="2023-02-06" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.21.0</url>
       <description>
