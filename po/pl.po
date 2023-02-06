@@ -1,26 +1,26 @@
-# Piotr Drąg <piotrdrag@gmail.com>, 2016. #zanata, 2020, 2021, 2022.
+# Piotr Drąg <piotrdrag@gmail.com>, 2016. #zanata, 2020, 2021, 2022, 2023.
 # Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019.
-# Piotr Drąg <piotrdrag@gmail.com>, 2017. #zanata, 2020, 2021, 2022.
+# Piotr Drąg <piotrdrag@gmail.com>, 2017. #zanata, 2020, 2021, 2022, 2023.
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
-# Piotr Drąg <piotrdrag@gmail.com>, 2018. #zanata, 2020, 2021, 2022.
-# Piotr Drąg <piotrdrag@gmail.com>, 2019. #zanata, 2020, 2021, 2022.
+# Piotr Drąg <piotrdrag@gmail.com>, 2018. #zanata, 2020, 2021, 2022, 2023.
+# Piotr Drąg <piotrdrag@gmail.com>, 2019. #zanata, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2023-02-05 13:03+0100\n"
-"PO-Revision-Date: 2022-09-03 10:40+0000\n"
+"PO-Revision-Date: 2023-02-06 16:47+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/pl/>\n"
+"Language-Team: Polish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.15.2\n"
 
 #: engine/emoji_picker.py:209
 msgid "Emoji Picker"
@@ -380,7 +380,7 @@ msgstr ""
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:5534
 msgid "translator-credits"
-msgstr "Piotr Drąg <piotrdrag@gmail.com>, 2016-2022"
+msgstr "Piotr Drąg <piotrdrag@gmail.com>, 2016-2023"
 
 #: engine/itb_util.py:5542
 msgid "Online documentation:"
@@ -715,11 +715,11 @@ msgstr ""
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:692
 msgid "Disable in terminals"
-msgstr ""
+msgstr "Wyłączenie w terminalach"
 
 #: setup/main.py:694
 msgid "Whether ibus-typing-booster should be disabled in terminals."
-msgstr ""
+msgstr "Czy ibus-typing-booster ma być wyłączony w terminalach."
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
