@@ -2,23 +2,23 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Mike FABIAN <mfabian@redhat.com>, 2019, 2021.
-# Geert Warrink <geert.warrink@onsnet.nu>, 2020, 2021, 2022.
+# Geert Warrink <geert.warrink@onsnet.nu>, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2023-02-05 13:03+0100\n"
-"PO-Revision-Date: 2022-09-05 16:29+0000\n"
+"PO-Revision-Date: 2023-02-06 15:09+0000\n"
 "Last-Translator: Geert Warrink <geert.warrink@onsnet.nu>\n"
-"Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/nl/>\n"
+"Language-Team: Dutch <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.15.2\n"
 
 #: engine/emoji_picker.py:209
 msgid "Emoji Picker"
@@ -704,11 +704,11 @@ msgstr ""
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:692
 msgid "Disable in terminals"
-msgstr ""
+msgstr "Uitschakelen in terminals"
 
 #: setup/main.py:694
 msgid "Whether ibus-typing-booster should be disabled in terminals."
-msgstr ""
+msgstr "Of ibus-typing-booster moet worden uitgeschakeld in terminals."
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
