@@ -7,6 +7,8 @@ title: Downloads
 * [Fedora copr](https://copr.fedorainfracloud.org/coprs/mfabian/ibus-typing-booster/)
   🥼🧪 (Experimental updates for Fedora)
 * [openSUSE:Leap:15.2](https://build.opensuse.org/package/show/openSUSE:Leap:15.2/ibus-typing-booster)
+* [openSUSE:Leap:15.3](https://build.opensuse.org/package/show/openSUSE:Leap:15.3/ibus-typing-booster)
+* [openSUSE:Leap:15.4](https://build.opensuse.org/package/show/openSUSE:Leap:15.4/ibus-typing-booster)
 * [openSUSE:Factory](https://build.opensuse.org/package/show/openSUSE:Factory/ibus-typing-booster)
   🏭 (The next openSUSE distribution)
 * [openSUSE M17N project](https://build.opensuse.org/package/show/M17N/ibus-typing-booster)
