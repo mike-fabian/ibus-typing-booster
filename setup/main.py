@@ -144,6 +144,27 @@ class SetupUI(Gtk.Window): # type: ignore
         self._gsettings = Gio.Settings(
             schema='org.freedesktop.ibus.engine.typing-booster')
         self._gsettings.connect('changed', self._on_gsettings_value_changed)
+        self._allowed_autosettings: Dict[str, Dict[str, str]] = {}
+        schema_source: Gio.SettingsSchemaSource = (
+            Gio.SettingsSchemaSource.get_default())
+        schema: Gio.SettingsSchema = schema_source.lookup(
+            'org.freedesktop.ibus.engine.typing-booster', True)
+        for key in schema.list_keys():
+            value_type = schema.get_key(key).get_value_type().dup_string()
+            if key in ('dictionaryinstalltimestamp',
+                       'inputmethodchangetimestamp'):
+                continue
+            if value_type == 'i':
+                value_hint = 'int'
+            elif value_type == 'b':
+                value_hint = 'bool'
+            elif value_type == 's':
+                value_hint = 'str'
+            else:
+                continue
+            self._allowed_autosettings[key] = {
+                'value_type': value_type, 'value_hint': value_hint}
+
         self.set_title('🚀 ' + _('Preferences for ibus-typing-booster'))
 
         self.connect('destroy-event', self._on_destroy_event)
@@ -300,6 +321,22 @@ class SetupUI(Gtk.Window): # type: ignore
         # recognition.
         self._speech_recognition_label.set_text(_('Speech recognition'))
 
+        self._autosettings_vbox = Gtk.Box()
+        self._autosettings_vbox.set_orientation(
+            Gtk.Orientation.VERTICAL)
+        self._autosettings_vbox.set_spacing(0)
+        margin = 10
+        self._autosettings_vbox.set_margin_start(margin)
+        self._autosettings_vbox.set_margin_end(margin)
+        self._autosettings_vbox.set_margin_top(margin)
+        self._autosettings_vbox.set_margin_bottom(margin)
+        self._autosettings_label = Gtk.Label()
+        # Translators: This is the label of a tab in the setup tool.
+        # Here the user can set up whether some settings should change
+        # automatically to specific values depending on which window
+        # (or which browser tab) gets the focus.
+        self._autosettings_label.set_text(_('Autosettings'))
+
         self._notebook.append_page(
             self._dictionaries_and_input_methods_vbox,
             self._dictionaries_and_input_methods_label)
@@ -318,6 +355,9 @@ class SetupUI(Gtk.Window): # type: ignore
         self._notebook.append_page(
             self._speech_recognition_grid,
             self._speech_recognition_label)
+        self._notebook.append_page(
+            self._autosettings_vbox,
+            self._autosettings_label)
 
         self._keybindings = {}
         # Don’t just use get_value(), if the user has changed the
@@ -2111,6 +2151,111 @@ class SetupUI(Gtk.Window): # type: ignore
         self._google_application_credentials_button.connect(
             'clicked', self._on_google_application_credentials_button)
 
+        autosettings_label = Gtk.Label()
+        autosettings_label.set_text(
+            # Translators: This is the header of the list of settings
+            # changed automatically depending on the which window has
+            # focus:
+            '<b>' + _('Autosettings') + '</b>')
+        autosettings_label.set_use_markup(True)
+        margin = 5
+        autosettings_label.set_margin_start(margin)
+        autosettings_label.set_margin_end(margin)
+        autosettings_label.set_margin_top(margin)
+        autosettings_label.set_margin_bottom(margin)
+        autosettings_label.set_hexpand(False)
+        autosettings_label.set_vexpand(False)
+        autosettings_label.set_xalign(0)
+        self._autosettings_vbox.add(autosettings_label)
+        self._autosettings_scroll = Gtk.ScrolledWindow()
+        self._autosettings_scroll.set_hexpand(True)
+        self._autosettings_scroll.set_vexpand(True)
+        self._autosettings_scroll.set_kinetic_scrolling(False)
+        self._autosettings_scroll.set_overlay_scrolling(True)
+        self._autosettings_scroll.set_shadow_type(Gtk.ShadowType.IN)
+        self._autosettings_vbox.add(self._autosettings_scroll)
+        autosettings_action_area = Gtk.Box()
+        autosettings_action_area.set_orientation(
+            Gtk.Orientation.HORIZONTAL)
+        autosettings_action_area.set_can_focus(False)
+        self._autosettings_vbox.add(autosettings_action_area)
+        self._autosettings_add_button =  Gtk.Button()
+        autosettings_add_button_label = Gtk.Label()
+        autosettings_add_button_label.set_text(
+            '<span size="xx-large"><b>+</b></span>')
+        autosettings_add_button_label.set_use_markup(True)
+        self._autosettings_add_button.add(autosettings_add_button_label)
+        # Translators: This is a button to add an autosetting.
+        # “Autosettings” are settings which may change automatically
+        # to specific values depending on which window (or which
+        # browser tab) gets the focus.
+        self._autosettings_add_button.set_tooltip_text(_('Add an autosetting'))
+        self._autosettings_add_button.connect(
+            'clicked', self._on_autosettings_add_button_clicked)
+        self._autosettings_add_button.set_sensitive(True)
+        self._autosettings_remove_button =  Gtk.Button()
+        autosettings_remove_button_label = Gtk.Label()
+        autosettings_remove_button_label.set_text(
+            '<span size="xx-large"><b>-</b></span>')
+        autosettings_remove_button_label.set_use_markup(True)
+        self._autosettings_remove_button.add(autosettings_remove_button_label)
+        # Translators: This is a button to remove an autosetting.
+        # “Autosettings” are settings which may change automatically
+        # to specific valueS depending on which window (or which
+        # browser tab) gets the focus.
+        self._autosettings_remove_button.set_tooltip_text(_('Remove an autosetting'))
+        self._autosettings_remove_button.connect(
+            'clicked', self._on_autosettings_remove_button_clicked)
+        self._autosettings_remove_button.set_sensitive(False)
+        self._autosettings_up_button =  Gtk.Button()
+        autosettings_up_button_label = Gtk.Label()
+        autosettings_up_button_label.set_text(
+            '<span size="xx-large"><b>↑</b></span>')
+        autosettings_up_button_label.set_use_markup(True)
+        self._autosettings_up_button.add(autosettings_up_button_label)
+        # Translators: This is a button to move an autosetting up in the
+        # order the autosettings are applied. “Up” means it is applied
+        # earlier. The order in which autosettings
+        # are applied is important because settings applied later might
+        # override settings applied earlier.
+        # “Autosettings” are settings which may change automatically
+        # to specific valueS depending on which window (or which
+        # browser tab) gets the focus.
+        self._autosettings_up_button.set_tooltip_text(_('Move an autosetting up'))
+        self._autosettings_up_button.connect(
+            'clicked', self._on_autosettings_up_button_clicked)
+        self._autosettings_up_button.set_sensitive(False)
+        self._autosettings_down_button =  Gtk.Button()
+        autosettings_down_button_label = Gtk.Label()
+        autosettings_down_button_label.set_text(
+            '<span size="xx-large"><b>↓</b></span>')
+        autosettings_down_button_label.set_use_markup(True)
+        self._autosettings_down_button.add(autosettings_down_button_label)
+        # Translators: This is a button to move an autosetting down in the
+        # order the autosettings are applied. “Down” means it is applied
+        # later. The order in which autosettings
+        # are applied is important because settings applied later might
+        # override settings applied earlier.
+        # “Autosettings” are settings which may change automatically
+        # to specific valueS depending on which window (or which
+        # browser tab) gets the focus.
+        self._autosettings_down_button.set_tooltip_text(_('Move an autosetting down'))
+        self._autosettings_down_button.connect(
+            'clicked', self._on_autosettings_down_button_clicked)
+        self._autosettings_down_button.set_sensitive(False)
+        autosettings_action_area.add(self._autosettings_add_button)
+        autosettings_action_area.add(self._autosettings_remove_button)
+        autosettings_action_area.add(self._autosettings_up_button)
+        autosettings_action_area.add(self._autosettings_down_button)
+        self._autosettings_selected_index = -1
+        self._autosettings: List[Tuple[str, str, str]] = []
+        self._autosettings_treeview = None
+        self._autosettings_add_listbox = None
+        self._autosettings_add_listbox_settings: List[str] = []
+        self._autosettings_add_popover = None
+        self._autosettings_add_popover_scroll = None
+        self._fill_autosettings_treeview()
+
         self.show_all() # pylint: disable=no-member
 
         self._notebook.set_current_page(0) # Has to be after show_all()
@@ -2305,6 +2450,101 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_methods_add_button.set_sensitive(
             len(self._current_imes) < itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS)
 
+    def _fill_autosettings_treeview(self) -> None:
+        '''
+        Fill the autosettings treeview with the autosettings read from dconf
+        '''
+        # In case a previously created treeview exists already, set
+        # the selection mode to NONE in order to avoid that selection
+        # changed events still get called while the previously created
+        # treeview and its model are destroyed:
+        if self._autosettings_treeview is not None:
+            self._autosettings_treeview.get_selection().set_mode(
+            Gtk.SelectionMode.NONE)
+        for child in self._autosettings_scroll.get_children():
+            self._autosettings_scroll.remove(child)
+        self._autosettings_treeview = Gtk.TreeView()
+        if self._autosettings_treeview is None:
+            LOGGER.debug('self._autosettings_treeview is None')
+            return
+        self._autosettings_treeview.get_selection().set_mode(
+            Gtk.SelectionMode.NONE)
+        self._autosettings_treeview.set_can_focus(True)
+        self._autosettings_treeview.set_has_tooltip(True)
+        self._autosettings_treeview.set_grid_lines(Gtk.TreeViewGridLines.BOTH)
+        autosettings_treeview_model = Gtk.ListStore(str, str, str, str)
+        self._autosettings_treeview.set_model(autosettings_treeview_model)
+        self._autosettings = (
+            itb_util.variant_to_value(
+                self._gsettings.get_value('autosettings')))
+        for (setting, value, regexp) in self._autosettings:
+            value_hint = ''
+            if (setting in self._allowed_autosettings
+                and 'value_hint' in self._allowed_autosettings[setting]):
+                value_hint = self._allowed_autosettings[setting]['value_hint']
+            autosettings_treeview_model.append((
+                setting, value, regexp, value_hint))
+        autosettings_treeview_column_0 = Gtk.TreeViewColumn(
+            # Translators: Column heading of the table listing
+            # the automatic settings
+            _('Setting'),
+            Gtk.CellRendererText(),
+            text=0)
+        self._autosettings_treeview.append_column(
+            autosettings_treeview_column_0)
+        autosettings_value_renderer = Gtk.CellRendererText()
+        autosettings_treeview_column_1 = Gtk.TreeViewColumn(
+            # Translators: Column heading of the table listing
+            # the automatic settings
+            _('Value'),
+            autosettings_value_renderer,
+            text=1)
+        self._autosettings_treeview.append_column(
+            autosettings_treeview_column_1)
+        autosettings_value_renderer.set_property('editable', True)
+        def set_placeholder_text(
+                column: Gtk.TreeViewColumn,
+                cell: Gtk.CellRendererText,
+                model: Gtk.TreeModel,
+                row_iter: Gtk.TreeIter,
+                data=None) -> None:
+            placeholder_text: str = model.get_value(row_iter, 3)
+            cell.set_property('placeholder-text', placeholder_text)
+        autosettings_treeview_column_1.set_cell_data_func(
+            autosettings_value_renderer, set_placeholder_text)
+        autosettings_value_renderer.connect(
+            'edited',
+            self._on_autosettings_treeview_value_edited,
+            autosettings_treeview_model)
+        autosettings_regexp_renderer = Gtk.CellRendererText()
+        autosettings_treeview_column_2 = Gtk.TreeViewColumn(
+            # Translators: Column heading of the table listing
+            # the automatic settings
+            _('Regular expression'),
+            autosettings_regexp_renderer,
+            text=2)
+        self._autosettings_treeview.append_column(
+            autosettings_treeview_column_2)
+        autosettings_regexp_renderer.set_property('editable', True)
+        autosettings_regexp_renderer.connect(
+            'edited',
+            self._on_autosettings_treeview_regexp_edited,
+            autosettings_treeview_model)
+        self._autosettings_scroll.add(self._autosettings_treeview)
+        self._autosettings_treeview.get_selection().connect(
+            'changed', self._on_autosettings_treeview_row_selected)
+        self._autosettings_treeview.connect(
+            'row-activated', self._on_autosettings_treeview_row_activated)
+        self._autosettings_treeview.get_selection().set_mode(
+            Gtk.SelectionMode.SINGLE)
+        index = self._autosettings_selected_index
+        LOGGER.debug('Selecting index %s', index)
+        tree_path = Gtk.TreePath.new_from_indices([index])
+        # Triggers a call to self._on_autosettings_treeview_row_selected()
+        # which fixes up the state of the buttons:
+        self._autosettings_treeview.get_selection().select_path(tree_path)
+        self._autosettings_treeview.show()
+
     @staticmethod
     def __run_message_dialog(
             message: str,
@@ -2488,11 +2728,12 @@ class SetupUI(Gtk.Window): # type: ignore
             'keybindings': self.set_keybindings,
             'dictionaryinstalltimestamp': self._reload_dictionaries,
             'inputmethodchangetimestamp': self._reload_input_methods,
+            'autosettings': self.set_autosettings,
         }
         if key in set_functions:
             set_functions[key](value, update_gsettings=False)
             return
-        LOGGER.error('Unknown key\n')
+        LOGGER.error('Unknown key=%s', key)
         return
 
     @staticmethod
@@ -2997,6 +3238,36 @@ class SetupUI(Gtk.Window): # type: ignore
         self.set_debug_level(
             self._debug_level_adjustment.get_value(),
             update_gsettings=True)
+
+
+    def _on_autosetting_to_add_selected(
+            self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
+        '''
+        Signal handler for selecting an autosetting to add
+
+        :param _listbox: The list box used to select the setting to add
+        :param listbox_row: A row containing a setting name
+        '''
+        index = listbox_row.get_index()
+        setting = self._autosettings_add_listbox_settings[index]
+        if self._autosettings_add_popover is None:
+            LOGGER.debug('self._autosettings_add_popover is None')
+            return
+        if GTK_VERSION >= (3, 22, 0):
+            self._autosettings_add_popover.popdown()
+        self._autosettings_add_popover.hide()
+        if not setting or setting not in self._allowed_autosettings:
+            return
+        self.set_autosettings(
+            [(setting, '', '')] + self._autosettings,
+            update_gsettings=True)
+        # self.set_autosettings has reset
+        # self._autosettings_selected_index = -1 and reset the
+        # sensitivity of the buttons accordingly, set the correct
+        # index again and fill the treeview again to get the correct
+        # button state:
+        self._autosettings_selected_index = 0
+        self._fill_autosettings_treeview()
 
     def _on_dictionary_to_add_selected(
             self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
@@ -3820,6 +4091,293 @@ class SetupUI(Gtk.Window): # type: ignore
             self._input_methods_down_button.set_sensitive(False)
             self._input_methods_help_button.set_sensitive(False)
             self._input_methods_options_button.set_sensitive(False)
+
+    def _on_autosettings_treeview_row_activated(
+            self,
+            treeview: Gtk.TreeView,
+            treepath: Gtk.TreePath,
+            column: Gtk.TreeViewColumn) -> None:
+        '''
+        Signal handler for activating a row in the autosettings treeview
+
+        :param treeview: The autosettings treeview
+        :param treepath: The path of the activated row in the treeview
+        :param column: The column of the activated row in the treeview
+        '''
+        # Currently we do not do anything when a row is activated:
+        LOGGER.debug('%s %s %s', treeview, treepath, column)
+
+    def _on_autosettings_treeview_row_selected(
+            self, selection: Gtk.TreeSelection) -> None:
+        '''A row in the autosettings treeview has been selected'''
+        (_list_store, tree_path_list) = selection.get_selected_rows()
+        if (len(tree_path_list) == 1
+            and tree_path_list[0].get_depth() == 1
+            and len(tree_path_list[0].get_indices()) == 1):
+            index = tree_path_list[0].get_indices()[0]
+            self._autosettings_selected_index = index
+            self._autosettings_remove_button.set_sensitive(True)
+            self._autosettings_up_button.set_sensitive(index > 0)
+            self._autosettings_down_button.set_sensitive(
+                index < len(self._autosettings) - 1)
+        else:
+            self._autosettings_selected_index = -1
+            self._autosettings_remove_button.set_sensitive(False)
+            self._autosettings_up_button.set_sensitive(False)
+            self._autosettings_down_button.set_sensitive(False)
+
+    def _on_autosettings_treeview_value_edited(
+            self,
+            _cell: Gtk.CellRendererText,
+            path: str,
+            new_edited_value: str,
+            model: Gtk.ListStore) -> None:
+        '''
+        Called when the value of an autosetting has been edited in the treeview
+        '''
+        LOGGER.debug('path=%s, new_edited_value=%s', path, new_edited_value)
+        if ':' in path:
+            LOGGER.debug('":" found in path, should never happen')
+            return
+        try:
+            index = int(path)
+        except (TypeError, ValueError):
+            LOGGER.debug('Cannot convert path to integer, should never happen')
+        if not 0 <= index < len(self._autosettings):
+            LOGGER.debug('index out of range')
+            return
+        iterator = model.get_iter(path)
+        old_setting = model.get_value(iterator, 0)
+        old_value = model.get_value(iterator, 1)
+        old_regexp = model.get_value(iterator, 2)
+        if old_value == new_edited_value:
+            LOGGER.debug('Value not changed')
+            return
+        if old_setting in self._allowed_autosettings:
+            value_type = self._allowed_autosettings[old_setting]['value_type']
+            if value_type == 'i':
+                try:
+                    value_integer = int(new_edited_value)
+                    new_edited_value = str(value_integer)
+                except (ValueError,) as error:
+                    new_edited_value = ''
+            elif value_type == 'b':
+                if new_edited_value.lower() in ('true', 'false'):
+                    new_edited_value = new_edited_value.lower()
+                else:
+                    new_edited_value = ''
+        model.set_value(iterator, 1, new_edited_value)
+        new_autosettings = self._autosettings[:]
+        new_autosettings[index] = (old_setting, new_edited_value, old_regexp)
+        self.set_autosettings(new_autosettings)
+
+    def _on_autosettings_treeview_regexp_edited(
+            self,
+            _cell: Gtk.CellRendererText,
+            path: str,
+            new_edited_regexp: str,
+            model: Gtk.ListStore) -> None:
+        '''
+        Called when the value of an autosetting has been edited in the treeview
+        '''
+        LOGGER.debug('path=%s, new_edited_value=%s', path, new_edited_regexp)
+        if ':' in path:
+            LOGGER.debug('":" found in path, should never happen')
+            return
+        try:
+            index = int(path)
+        except (TypeError, ValueError):
+            LOGGER.debug('Cannot convert path to integer, should never happen')
+        if not 0 <= index < len(self._autosettings):
+            LOGGER.debug('index out of range')
+            return
+        iterator = model.get_iter(path)
+        old_setting = model.get_value(iterator, 0)
+        old_value = model.get_value(iterator, 1)
+        old_regexp = model.get_value(iterator, 2)
+        if old_regexp == new_edited_regexp:
+            LOGGER.debug('Regexp not changed')
+            return
+        model.set_value(iterator, 2, new_edited_regexp)
+        new_autosettings = self._autosettings[:]
+        new_autosettings[index] = (old_setting, old_value, new_edited_regexp)
+        self.set_autosettings(new_autosettings)
+
+    def _fill_autosettings_add_listbox(self, filter_text: str) -> None:
+        '''
+        Fill the listbox of autosettings to choose from
+
+        :param filter_text: The filter text to limit the autosettings
+                            listed. Only autosettings which contain
+                            all the words from the filter text as substrings
+                            (ignoring case and accents) are listed.
+        '''
+        self._autosettings_add_listbox_settings = []
+        if self._autosettings_add_popover_scroll is None:
+            LOGGER.debug('self._autosettings_add_popover_scroll is None')
+            return
+        for child in self._autosettings_add_popover_scroll.get_children():
+            self._autosettings_add_popover_scroll.remove(child)
+        self._autosettings_add_listbox = Gtk.ListBox()
+        self._autosettings_add_popover_scroll.add(
+            self._autosettings_add_listbox)
+        self._autosettings_add_listbox.set_visible(True)
+        self._autosettings_add_listbox.set_vexpand(True)
+        self._autosettings_add_listbox.set_selection_mode(
+            Gtk.SelectionMode.SINGLE)
+        self._autosettings_add_listbox.set_activate_on_single_click(True)
+        self._autosettings_add_listbox.connect(
+            'row-selected', self._on_autosetting_to_add_selected) # FIXME
+        rows = []
+        for setting in sorted(self._allowed_autosettings):
+            filter_words = itb_util.remove_accents(filter_text.lower()).split()
+            text_to_match = setting
+            filter_match = True
+            for filter_word in filter_words:
+                if filter_word not in text_to_match:
+                    filter_match = False
+            if filter_match:
+                self._autosettings_add_listbox_settings.append(setting)
+                rows.append(setting)
+        for row in rows:
+            label = Gtk.Label()
+            label.set_text(html.escape(row))
+            label.set_use_markup(True)
+            label.set_xalign(0)
+            margin = 1
+            label.set_margin_start(margin)
+            label.set_margin_end(margin)
+            label.set_margin_top(margin)
+            label.set_margin_bottom(margin)
+            self._autosettings_add_listbox.insert(label, -1)
+        self._autosettings_add_popover.show_all()
+
+    def _on_autosettings_search_entry_changed(
+            self, search_entry: Gtk.SearchEntry) -> None:
+        '''
+        Signal handler for changed text in the autosettings search entry
+
+        :param search_entry: The search entry
+        '''
+        filter_text = search_entry.get_text()
+        self._fill_autosettings_add_listbox(filter_text)
+
+    def _on_autosettings_add_button_clicked(self, *_args: Any) -> None:
+        '''
+        Signal handler called when the “add” button to add
+        an autosetting is clicked
+        '''
+        LOGGER.info('FIXME')
+        self._autosettings_add_popover = Gtk.Popover()
+        if self._autosettings_add_popover is None:
+            LOGGER.debug('self._autosettings_add_popover is None')
+            return
+        self._autosettings_add_popover.set_relative_to(
+            self._autosettings_add_button)
+        self._autosettings_add_popover.set_position(Gtk.PositionType.RIGHT)
+        self._autosettings_add_popover.set_vexpand(True)
+        self._autosettings_add_popover.set_hexpand(True)
+        autosettings_add_popover_vbox = Gtk.Box()
+        autosettings_add_popover_vbox.set_orientation(
+            Gtk.Orientation.VERTICAL)
+        margin = 12
+        autosettings_add_popover_vbox.set_margin_start(margin)
+        autosettings_add_popover_vbox.set_margin_end(margin)
+        autosettings_add_popover_vbox.set_margin_top(margin)
+        autosettings_add_popover_vbox.set_margin_bottom(margin)
+        autosettings_add_popover_vbox.set_spacing(margin)
+        autosettings_add_popover_label = Gtk.Label()
+        autosettings_add_popover_label.set_text(_('Add an autosetting'))
+        autosettings_add_popover_label.set_visible(True)
+        autosettings_add_popover_label.set_halign(Gtk.Align.FILL)
+        autosettings_add_popover_vbox.add(
+            autosettings_add_popover_label)
+        autosettings_add_popover_search_entry = Gtk.SearchEntry()
+        autosettings_add_popover_search_entry.set_can_focus(True)
+        autosettings_add_popover_search_entry.set_visible(True)
+        autosettings_add_popover_search_entry.set_halign(Gtk.Align.FILL)
+        autosettings_add_popover_search_entry.set_hexpand(False)
+        autosettings_add_popover_search_entry.set_vexpand(False)
+        autosettings_add_popover_search_entry.connect(
+            'search-changed', self._on_autosettings_search_entry_changed)
+        autosettings_add_popover_vbox.add(
+            autosettings_add_popover_search_entry)
+        self._autosettings_add_popover_scroll = Gtk.ScrolledWindow()
+        self._autosettings_add_popover_scroll.set_hexpand(True)
+        self._autosettings_add_popover_scroll.set_vexpand(True)
+        self._autosettings_add_popover_scroll.set_kinetic_scrolling(False)
+        self._autosettings_add_popover_scroll.set_overlay_scrolling(True)
+        self._fill_autosettings_add_listbox('')
+        autosettings_add_popover_vbox.add(
+            self._autosettings_add_popover_scroll)
+        self._autosettings_add_popover.add(autosettings_add_popover_vbox)
+        if GTK_VERSION >= (3, 22, 0):
+            self._autosettings_add_popover.popup()
+        self._autosettings_add_popover.show_all()
+
+    def _on_autosettings_remove_button_clicked(self, *_args: Any) -> None:
+        '''
+        Signal handler called when the “remove” button to remove
+        an autosetting is clicked
+        '''
+        index = self._autosettings_selected_index
+        LOGGER.debug('remove index %s', index)
+        if not 0 <= index < len(self._autosettings):
+            # This should not happen, one should not be able
+            # to click the remove button in this case, just return:
+            return
+        self._autosettings_selected_index = -1
+        self.set_autosettings(
+            self._autosettings[:index] + self._autosettings[index + 1:],
+            update_gsettings=True)
+
+    def _on_autosettings_up_button_clicked(self, *_args: Any) -> None:
+        '''
+        Signal handler called when the “up” button to move
+        an autosetting up is clicked
+        '''
+        index = self._autosettings_selected_index
+        if not 0 < index < len(self._autosettings):
+            # This should not happen, one should not be able
+            # to click the up button in this case, just return:
+            return
+        self.set_autosettings(
+            self._autosettings[:index - 1]
+            + [self._autosettings[index]]
+            + [self._autosettings[index - 1]]
+            + self._autosettings[index + 1:],
+            update_gsettings=True)
+        # self.set_autosettings has reset
+        # self._autosettings_selected_index = -1 and reset the
+        # sensitivity of the buttons accordingly, set the correct
+        # index again and fill the treeview again to get the correct
+        # button state:
+        self._autosettings_selected_index = index - 1
+        self._fill_autosettings_treeview()
+
+    def _on_autosettings_down_button_clicked(self, *_args: Any) -> None:
+        '''
+        Signal handler called when the “down” button to move
+        an autosetting down is clicked
+        '''
+        index = self._autosettings_selected_index
+        if not 0 <= index < len(self._autosettings) - 1:
+            # This should not happen, one should not be able
+            # to click the down button in this case, just return:
+            return
+        self.set_autosettings(
+            self._autosettings[:index]
+            + [self._autosettings[index + 1]]
+            + [self._autosettings[index]]
+            + self._autosettings[index + 2:],
+            update_gsettings=True)
+        # self.set_autosettings has reset
+        # self._autosettings_selected_index = -1 and reset the
+        # sensitivity of the buttons accordingly, set the correct
+        # index again and fill the treeview again to get the correct
+        # button state:
+        self._autosettings_selected_index = index + 1
+        self._fill_autosettings_treeview()
 
     def _set_shortcut_button_sensitivity(self) -> None:
         '''Adjust the sensitivity values of the “Clear”, “Delete”, and “Add”
@@ -5684,6 +6242,38 @@ class SetupUI(Gtk.Window): # type: ignore
             self._dictionaries_remove_button.set_sensitive(False)
             self._dictionaries_up_button.set_sensitive(False)
             self._dictionaries_down_button.set_sensitive(False)
+
+    def set_autosettings(
+            self,
+            autosettings: Union[List[Tuple[str, str, str]], Any],
+            update_gsettings: bool = True) -> None:
+        '''Set the current automatic settings
+
+        :param autosettings: The automatic settings to use
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.debug('autosettings=%s', autosettings)
+        if not isinstance(autosettings, list):
+            return
+        self._autosettings = autosettings
+        if update_gsettings:
+            self._fill_autosettings_treeview()
+            variant_array = GLib.Variant.new_array(GLib.VariantType('as'), [
+                    GLib.Variant.new_array(GLib.VariantType('s'), [
+                        GLib.Variant.new_string(x) for x in autosetting])
+                    for autosetting in autosettings
+                ])
+            self._gsettings.set_value(
+                'autosettings',
+                variant_array)
+        else:
+            LOGGER.debug('Unselecting all rows and updating button status')
+            self._autosettings_selected_index = -1
+            self._fill_autosettings_treeview()
 
     def set_keybindings(
             self,
