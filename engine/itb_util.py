@@ -2287,11 +2287,8 @@ def detect_terminal(input_purpose: int, im_client: str) -> bool:
         '^xim:urxvt:',
     ]
     for regexp in terminal_regexps:
-        LOGGER.info('FIXME regexp=%s', regexp)
         if re.compile(regexp).search(im_client):
-            LOGGER.info('FIXME match')
             return True
-    LOGGER.info('FIXME nothing matched')
     return False
 
 # For the ICU/CLDR locale pattern see: http://userguide.icu-project.org/locale
