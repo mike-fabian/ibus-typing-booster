@@ -213,6 +213,7 @@ class IMApp:
             stats.print_stats('tabsqlite', 25)
             stats.print_stats('hunspell_suggest', 25)
             stats.print_stats('hunspell_table', 25)
+            stats.print_stats('itb_util', 25)
             stats.print_stats('itb_emoji', 25)
             LOGGER.info('Profiling info:\n%s', stats_stream.getvalue())
 
