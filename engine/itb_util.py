@@ -2269,6 +2269,7 @@ def get_effective_lc_messages() -> str:
         return os.environ['LANG']
     return 'C'
 
+@functools.lru_cache(maxsize=None)
 def detect_terminal(input_purpose: int, im_client: str) -> bool:
     '''Detect whether the focus is on a terminal
 
