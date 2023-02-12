@@ -45,6 +45,22 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.21.3" date="2023-02-12" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.21.3</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Translation update from Weblate (ka 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+      </issues>
+    </release>
     <release version="2.21.2" date="2023-02-12" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.21.2</url>
       <description>
