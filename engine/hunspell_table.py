@@ -2516,7 +2516,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     and typed_string
                     and typed_string != first_candidate
                     and itb_util.remove_accents(first_candidate)
-                    == itb_util.remove_accents(typed_string)
+                    == typed_string
                     and user_freq > 0.2):
                     self._lookup_table.set_cursor_visible(True)
                     self._is_candidate_auto_selected = True
