@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-02-05 13:03+0100\n"
+"POT-Creation-Date: 2023-02-09 16:09+0100\n"
 "PO-Revision-Date: 2020-07-08 15:27+0000\n"
 "Last-Translator: Bendegúz Gyönki <gyonkibendeguz@gmail.com>\n"
 "Language-Team: Hungarian <https://translate.fedoraproject.org/projects/ibus-"
@@ -308,31 +308,31 @@ msgstr "regionális"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2698
+#: engine/itb_util.py:2696
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util.py:4243 engine/itb_util.py:4934
+#: engine/itb_util.py:4241 engine/itb_util.py:4932
 msgid "File not found"
 msgstr "A fájl nem található"
 
-#: engine/itb_util.py:4247 engine/itb_util.py:4938
+#: engine/itb_util.py:4245 engine/itb_util.py:4936
 msgid "Permission error"
 msgstr "Jogosultság hiba"
 
-#: engine/itb_util.py:4251 engine/itb_util.py:4942
+#: engine/itb_util.py:4249 engine/itb_util.py:4940
 msgid "Unicode decoding error"
 msgstr "Unicode dekódolási hiba"
 
-#: engine/itb_util.py:4255 engine/itb_util.py:4946
+#: engine/itb_util.py:4253 engine/itb_util.py:4944
 msgid "Unknown error"
 msgstr "Ismeretlen hiba"
 
-#: engine/itb_util.py:4911
+#: engine/itb_util.py:4909
 msgid "Native Keyboard"
 msgstr "Natív billentyűzet"
 
-#: engine/itb_util.py:4913
+#: engine/itb_util.py:4911
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -346,11 +346,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5468
+#: engine/itb_util.py:5466
 msgid "Key input"
 msgstr "Billentyű lenyomása"
 
-#: engine/itb_util.py:5474
+#: engine/itb_util.py:5472
 msgid "Cancel"
 msgstr "Mégse"
 
@@ -358,27 +358,27 @@ msgstr "Mégse"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5481
+#: engine/itb_util.py:5479
 msgid "Please press a key (or a key combination)"
 msgstr "Nyomjon le egy billentyű (vagy billentyűkombinációt)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5486
+#: engine/itb_util.py:5484
 msgid "The dialog will be closed when the key is released"
 msgstr "A párbeszédablak bezárul, ha felengedi a gombot"
 
-#: engine/itb_util.py:5525
+#: engine/itb_util.py:5523
 msgid "A completion input method to speedup typing."
 msgstr "Egy kiegészítést végző bemeneti mód, hogy gyorsítsa a gépelést."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5534
+#: engine/itb_util.py:5532
 msgid "translator-credits"
 msgstr "Meskó Balázs <mesko.balazs at fsf dot hu>"
 
-#: engine/itb_util.py:5542
+#: engine/itb_util.py:5540
 msgid "Online documentation:"
 msgstr "Online dokumentáció:"
 
