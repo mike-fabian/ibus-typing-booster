@@ -45,6 +45,24 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.21.2" date="2023-02-12" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.21.2</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Autoselect extremely likely candidates: Allow only adding
+            of accents, never removing accents (Resolves:
+            github-issues#420)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/420">
+          github-issues#420
+        </issue>
+      </issues>
+    </release>
     <release version="2.21.1" date="2023-02-09" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.21.1</url>
       <description>

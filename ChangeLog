@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 12 Feb 2023 Release 2.21.2
+* Autoselect extremely likely candidates: Allow only adding of accents, never removing accents (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/420)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 07 Feb 2023 Release 2.21.1
 * Small performance tweak in detecting terminals
 * Translation update from Weblate (nl 100%, pl 100%, sv 100%, tr 100%)
