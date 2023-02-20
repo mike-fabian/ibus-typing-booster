@@ -28,6 +28,8 @@ from typing import Dict
 from typing import Tuple
 from typing import List
 from typing import Iterable
+from typing import Any
+from typing import Type
 import os
 import sys
 import unicodedata
@@ -77,12 +79,30 @@ except (ImportError,):
 # letter of a word until the candidate lookup table pops up.
 MAX_WORDS = 100
 
-class Dictionary:
-    '''A class to hold a hunspell dictionary
-    '''
-    def __init__(self, name: str = 'en_US') -> None:
+class Dictionary():
+    '''A class to hold a hunspell dictionary'''
+    # As soon as it is OK ot require Python >= 3.7, use these nicer type hints:
+    #
+    # _instances: Dict[Tuple[Type['Dictionary'], str], 'Dictionary'] = {}
+    #
+    # def __new__(cls: Type['Dictionary'], name: str = 'en_US') -> 'Dictionary':
+    #
+    # openSUSE Leap 15.4 still has only Python 3.6.
+    _instances: Dict[Tuple[Any, str], Any] = {}
+
+    def __new__(cls: Any, name: str = 'en_US') -> Any:
+        '''Caching instances of this class and reuse previously created instances'''
+        key = (cls, name)
+        if key not in cls._instances:
+            instance = super().__new__(cls)
+            cls._instances[key] = instance
+            instance._initialize(name=name)
+        return cls._instances[key]
+
+    def _initialize(self, name: str = 'en_US') -> None:
+        '''Initialize a Dictionary'''
         if DEBUG_LEVEL > 1:
-            LOGGER.debug('Dictionary.__init__(name=%s)\n', name)
+            LOGGER.debug('name=%s', name)
         self.name = name
         self.language = self.name.split('_')[0]
         self.dic_path = ''
