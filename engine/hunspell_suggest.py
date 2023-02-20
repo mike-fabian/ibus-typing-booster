@@ -753,6 +753,11 @@ def main() -> None:
     runs some tests and prints profiling data.
     '''
     log_handler = logging.StreamHandler(stream=sys.stderr)
+    log_formatter = logging.Formatter(
+        '%(asctime)s %(filename)s '
+        'line %(lineno)d %(funcName)s %(levelname)s: '
+        '%(message)s')
+    log_handler.setFormatter(log_formatter)
     LOGGER.setLevel(logging.DEBUG)
     LOGGER.addHandler(log_handler)
 
