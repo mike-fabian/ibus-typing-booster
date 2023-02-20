@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 20 Feb 2023 Release 2.21.4
+* Memoize instances of the Dictionary class (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/425)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 12 Feb 2023 Release 2.21.3
 * Update emoji annotations from CLDR
 * Translation update from Weblate (ka 100%)

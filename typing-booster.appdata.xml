@@ -45,6 +45,22 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.21.4" date="2023-02-20" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.21.4</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Memoize instances of the Dictionary class (Resolves: github-issues#425)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/425">
+          github-issues#425
+        </issue>
+      </issues>
+    </release>
     <release version="2.21.3" date="2023-02-12" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.21.3</url>
       <description>
