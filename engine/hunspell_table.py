@@ -5375,9 +5375,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         imes = self.get_current_imes()
         if len(imes) > 1:
             # remove the first ime from the list and append it to the end.
+            update_gsettings=self._remember_last_used_preedit_ime
+            if 'inputmethod' in self._autosettings_revert:
+                update_gsettings = False
             self.set_current_imes(
                 imes[1:] + imes[:1],
-                update_gsettings=self._remember_last_used_preedit_ime)
+                update_gsettings=update_gsettings)
             return True
         return False
 
@@ -5389,9 +5392,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         imes = self.get_current_imes()
         if len(imes) > 1:
             # remove the last ime in the list and add it in front:
+            update_gsettings=self._remember_last_used_preedit_ime
+            if 'inputmethod' in self._autosettings_revert:
+                update_gsettings = False
             self.set_current_imes(
                 imes[-1:] + imes[:-1],
-                update_gsettings=self._remember_last_used_preedit_ime)
+                update_gsettings=update_gsettings)
             return True
         return False
 
@@ -5404,9 +5410,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if len(names) > 1:
             # remove the first dictionary from the list and append
             # it to the end.
+            update_gsettings = True
+            if 'dictionary' in self._autosettings_revert:
+                update_gsettings = False
             self.set_dictionary_names(
                 names[1:] + names[:1],
-                update_gsettings=True)
+                update_gsettings=update_gsettings)
             return True
         return False
 
@@ -5418,9 +5427,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         names = self.get_dictionary_names()
         if len(names) > 1:
             # remove the last dictionary in the list and add it in front:
+            update_gsettings = True
+            if 'dictionary' in self._autosettings_revert:
+                update_gsettings = False
             self.set_dictionary_names(
                 names[-1:] + names[:-1],
-                update_gsettings=True)
+                update_gsettings=update_gsettings)
             return True
         return False
 
