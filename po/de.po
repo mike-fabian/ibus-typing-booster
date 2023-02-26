@@ -14,10 +14,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2023-02-26 19:51+0100\n"
-"PO-Revision-Date: 2023-02-06 08:11+0000\n"
+"PO-Revision-Date: 2023-02-26 20:18+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -460,7 +460,7 @@ msgstr "Spracherkennung"
 #. focus:
 #: setup/main.py:338 setup/main.py:2159
 msgid "Autosettings"
-msgstr ""
+msgstr "Automatisierte Einstellungen"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -1429,17 +1429,15 @@ msgstr "Datei noch nicht gesetzt."
 #. browser tab) gets the focus.
 #: setup/main.py:2192
 msgid "Add an autosetting"
-msgstr ""
+msgstr "Automatisierte Einstellung hinzufügen"
 
 #. Translators: This is a button to remove an autosetting.
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2206
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remove an autosetting"
-msgstr "Eingabemethode entfernen"
+msgstr "Automatisierte Einstellung entfernen"
 
 #. Translators: This is a button to move an autosetting up in the
 #. order the autosettings are applied. “Up” means it is applied
@@ -1450,10 +1448,8 @@ msgstr "Eingabemethode entfernen"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2224
-#, fuzzy
-#| msgid "Move input method up"
 msgid "Move autosetting up"
-msgstr "Eingabemethode aufwärts schieben"
+msgstr "Automatisierte Einstellung nach oben verschieben"
 
 #. Translators: This is a button to move an autosetting down in the
 #. order the autosettings are applied. “Down” means it is applied
@@ -1464,10 +1460,8 @@ msgstr "Eingabemethode aufwärts schieben"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2242
-#, fuzzy
-#| msgid "Move input method down"
 msgid "Move autosetting down"
-msgstr "Eingabemethode abwärts schieben"
+msgstr "Automatisierte Einstellung nach unten verschieben"
 
 #: setup/main.py:2286
 msgid "Spell checking"
@@ -1481,7 +1475,7 @@ msgstr "Emoji"
 #. the automatic settings
 #: setup/main.py:2490
 msgid "Setting"
-msgstr ""
+msgstr "Option"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1495,7 +1489,7 @@ msgstr "Wert"
 #. the automatic settings
 #: setup/main.py:2523
 msgid "Regular expression"
-msgstr ""
+msgstr "Regulärer Ausdruck"
 
 #: setup/main.py:2569
 msgid "Are you sure?"
@@ -1540,7 +1534,7 @@ msgstr "Variable"
 
 #: setup/main.py:4290
 msgid "Add autosetting"
-msgstr ""
+msgstr "Automatisierte Einstellung hinzufügen"
 
 #: setup/main.py:4725
 #, python-format
