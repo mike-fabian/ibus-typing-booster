@@ -13,11 +13,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-02-26 19:51+0100\n"
+"POT-Creation-Date: 2023-02-26 20:56+0100\n"
 "PO-Revision-Date: 2023-02-26 20:18+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1427,7 +1427,7 @@ msgstr "Datei noch nicht gesetzt."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2192
+#: setup/main.py:2192 setup/main.py:4290
 msgid "Add an autosetting"
 msgstr "Automatisierte Einstellung hinzufügen"
 
@@ -1448,7 +1448,9 @@ msgstr "Automatisierte Einstellung entfernen"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2224
-msgid "Move autosetting up"
+#, fuzzy
+#| msgid "Move autosetting up"
+msgid "Move an autosetting up"
 msgstr "Automatisierte Einstellung nach oben verschieben"
 
 #. Translators: This is a button to move an autosetting down in the
@@ -1460,7 +1462,9 @@ msgstr "Automatisierte Einstellung nach oben verschieben"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2242
-msgid "Move autosetting down"
+#, fuzzy
+#| msgid "Move autosetting down"
+msgid "Move an autosetting down"
 msgstr "Automatisierte Einstellung nach unten verschieben"
 
 #: setup/main.py:2286
@@ -1531,10 +1535,6 @@ msgstr "Eingabemethode hinzufügen"
 #: setup/main.py:3890
 msgid "Variable"
 msgstr "Variable"
-
-#: setup/main.py:4290
-msgid "Add autosetting"
-msgstr "Automatisierte Einstellung hinzufügen"
 
 #: setup/main.py:4725
 #, python-format
@@ -1617,6 +1617,9 @@ msgstr ""
 "vorschlägt. Man kann einfach das gewünschte Wort aus einer Liste von "
 "Vorschlägen auswählen und so seine Tippgeschwindigkeit und Rechtschreibung "
 "verbessern."
+
+#~ msgid "Add autosetting"
+#~ msgstr "Automatisierte Einstellung hinzufügen"
 
 #~ msgid "Arrow keys can reopen a preedit"
 #~ msgstr "Pfeiltasten können ein Preedit wieder öffnen"

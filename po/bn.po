@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-02-26 19:51+0100\n"
+"POT-Creation-Date: 2023-02-26 20:56+0100\n"
 "PO-Revision-Date: 2022-10-12 15:08+0000\n"
 "Last-Translator: Mahmudul Hasan <ptcmahmudulhasa@gmail.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/ibus-"
@@ -1391,7 +1391,7 @@ msgstr "ফাইল এখনো সেট করা হয়নি।"
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2192
+#: setup/main.py:2192 setup/main.py:4290
 msgid "Add an autosetting"
 msgstr ""
 
@@ -1416,7 +1416,7 @@ msgstr "একটি ইনপুট পদ্ধতি সরান"
 #: setup/main.py:2224
 #, fuzzy
 #| msgid "Move input method up"
-msgid "Move autosetting up"
+msgid "Move an autosetting up"
 msgstr "ইনপুট পদ্ধতি উপরের দিকে উঠান"
 
 #. Translators: This is a button to move an autosetting down in the
@@ -1430,7 +1430,7 @@ msgstr "ইনপুট পদ্ধতি উপরের দিকে উঠ�
 #: setup/main.py:2242
 #, fuzzy
 #| msgid "Move input method down"
-msgid "Move autosetting down"
+msgid "Move an autosetting down"
 msgstr "ইনপুট পদ্ধতি নিচের দিকে নামান"
 
 #: setup/main.py:2286
@@ -1501,10 +1501,6 @@ msgstr "একটি ইনপুট পদ্ধতি যোগ করুন"
 #: setup/main.py:3890
 msgid "Variable"
 msgstr "চলক"
-
-#: setup/main.py:4290
-msgid "Add autosetting"
-msgstr ""
 
 #: setup/main.py:4725
 #, python-format

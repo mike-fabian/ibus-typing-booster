@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-02-26 19:51+0100\n"
+"POT-Creation-Date: 2023-02-26 20:56+0100\n"
 "PO-Revision-Date: 2022-10-09 12:19+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
 "Language-Team: Swahili <https://translate.fedoraproject.org/projects/ibus-"
@@ -1385,7 +1385,7 @@ msgstr "Faili bado haijateuliwa."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2192
+#: setup/main.py:2192 setup/main.py:4290
 msgid "Add an autosetting"
 msgstr ""
 
@@ -1410,7 +1410,7 @@ msgstr "Ondoa njia ya kuingiza"
 #: setup/main.py:2224
 #, fuzzy
 #| msgid "Move input method up"
-msgid "Move autosetting up"
+msgid "Move an autosetting up"
 msgstr "Songesha juu njia ya kuingiza"
 
 #. Translators: This is a button to move an autosetting down in the
@@ -1424,7 +1424,7 @@ msgstr "Songesha juu njia ya kuingiza"
 #: setup/main.py:2242
 #, fuzzy
 #| msgid "Move input method down"
-msgid "Move autosetting down"
+msgid "Move an autosetting down"
 msgstr "Songesha chini njia ya kuingiza"
 
 #: setup/main.py:2286
@@ -1495,10 +1495,6 @@ msgstr "Ongeza mbinu ya kuingiza"
 #: setup/main.py:3890
 msgid "Variable"
 msgstr "Jina"
-
-#: setup/main.py:4290
-msgid "Add autosetting"
-msgstr ""
 
 #: setup/main.py:4725
 #, python-format

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-02-26 19:51+0100\n"
+"POT-Creation-Date: 2023-02-26 20:56+0100\n"
 "PO-Revision-Date: 2022-03-03 12:45+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Persian <https://translate.fedoraproject.org/projects/ibus-"
@@ -1279,7 +1279,7 @@ msgstr ""
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2192
+#: setup/main.py:2192 setup/main.py:4290
 msgid "Add an autosetting"
 msgstr ""
 
@@ -1300,7 +1300,7 @@ msgstr ""
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2224
-msgid "Move autosetting up"
+msgid "Move an autosetting up"
 msgstr ""
 
 #. Translators: This is a button to move an autosetting down in the
@@ -1312,7 +1312,7 @@ msgstr ""
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2242
-msgid "Move autosetting down"
+msgid "Move an autosetting down"
 msgstr ""
 
 #: setup/main.py:2286
@@ -1382,10 +1382,6 @@ msgstr ""
 #. for the currently selected input method
 #: setup/main.py:3890
 msgid "Variable"
-msgstr ""
-
-#: setup/main.py:4290
-msgid "Add autosetting"
 msgstr ""
 
 #: setup/main.py:4725

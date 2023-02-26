@@ -10,17 +10,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-02-26 19:51+0100\n"
+"POT-Creation-Date: 2023-02-26 20:56+0100\n"
 "PO-Revision-Date: 2023-02-26 20:18+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/uk/>\n"
+"Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.15.2\n"
 
 #: engine/emoji_picker.py:209
@@ -1418,7 +1418,7 @@ msgstr "Файл ще не встановлено."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2192
+#: setup/main.py:2192 setup/main.py:4290
 msgid "Add an autosetting"
 msgstr "Додати автопараметр"
 
@@ -1439,7 +1439,9 @@ msgstr "Вилучити автопараметр"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2224
-msgid "Move autosetting up"
+#, fuzzy
+#| msgid "Move autosetting up"
+msgid "Move an autosetting up"
 msgstr "Пересунути автопараметр вище"
 
 #. Translators: This is a button to move an autosetting down in the
@@ -1451,7 +1453,9 @@ msgstr "Пересунути автопараметр вище"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2242
-msgid "Move autosetting down"
+#, fuzzy
+#| msgid "Move autosetting down"
+msgid "Move an autosetting down"
 msgstr "Пересунути автопараметр нижче"
 
 #: setup/main.py:2286
@@ -1522,10 +1526,6 @@ msgstr "Додати спосіб введення"
 #: setup/main.py:3890
 msgid "Variable"
 msgstr "Змінна"
-
-#: setup/main.py:4290
-msgid "Add autosetting"
-msgstr "Додати автопараметр"
 
 #: setup/main.py:4725
 #, python-format
@@ -1605,6 +1605,9 @@ msgstr ""
 "визначає повну форму частково введених слів за контекстом. Ви можете просто "
 "вибрати бажане слово зі списку пропозицій, отже пришвидшити введення тексту "
 "та поліпшити його якість."
+
+#~ msgid "Add autosetting"
+#~ msgstr "Додати автопараметр"
 
 #~ msgid "Arrow keys can reopen a preedit"
 #~ msgstr ""

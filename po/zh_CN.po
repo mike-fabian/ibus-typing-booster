@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-02-26 19:51+0100\n"
+"POT-Creation-Date: 2023-02-26 20:56+0100\n"
 "PO-Revision-Date: 2022-02-25 18:38+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
@@ -1353,7 +1353,7 @@ msgstr "文件还未设定。"
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2192
+#: setup/main.py:2192 setup/main.py:4290
 msgid "Add an autosetting"
 msgstr ""
 
@@ -1378,7 +1378,7 @@ msgstr "移除输入法"
 #: setup/main.py:2224
 #, fuzzy
 #| msgid "Move input method up"
-msgid "Move autosetting up"
+msgid "Move an autosetting up"
 msgstr "上移输入法"
 
 #. Translators: This is a button to move an autosetting down in the
@@ -1392,7 +1392,7 @@ msgstr "上移输入法"
 #: setup/main.py:2242
 #, fuzzy
 #| msgid "Move input method down"
-msgid "Move autosetting down"
+msgid "Move an autosetting down"
 msgstr "下移输入法"
 
 #: setup/main.py:2286
@@ -1462,10 +1462,6 @@ msgstr "添加输入法"
 #. for the currently selected input method
 #: setup/main.py:3890
 msgid "Variable"
-msgstr ""
-
-#: setup/main.py:4290
-msgid "Add autosetting"
 msgstr ""
 
 #: setup/main.py:4725

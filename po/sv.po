@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-02-26 19:51+0100\n"
+"POT-Creation-Date: 2023-02-26 20:56+0100\n"
 "PO-Revision-Date: 2023-02-09 12:20+0000\n"
 "Last-Translator: Luna Jernberg <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://translate.fedoraproject.org/projects/ibus-"
@@ -1399,7 +1399,7 @@ msgstr "Filen ännu inte angiven."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2192
+#: setup/main.py:2192 setup/main.py:4290
 msgid "Add an autosetting"
 msgstr ""
 
@@ -1424,7 +1424,7 @@ msgstr "Ta bort en inmatningsmetod"
 #: setup/main.py:2224
 #, fuzzy
 #| msgid "Move input method up"
-msgid "Move autosetting up"
+msgid "Move an autosetting up"
 msgstr "Flytta upp inmatningsmetod"
 
 #. Translators: This is a button to move an autosetting down in the
@@ -1438,7 +1438,7 @@ msgstr "Flytta upp inmatningsmetod"
 #: setup/main.py:2242
 #, fuzzy
 #| msgid "Move input method down"
-msgid "Move autosetting down"
+msgid "Move an autosetting down"
 msgstr "Flytta ner inmatningsmetod"
 
 #: setup/main.py:2286
@@ -1509,10 +1509,6 @@ msgstr "Lägg till indatametod"
 #: setup/main.py:3890
 msgid "Variable"
 msgstr "Variabel"
-
-#: setup/main.py:4290
-msgid "Add autosetting"
-msgstr ""
 
 #: setup/main.py:4725
 #, python-format
