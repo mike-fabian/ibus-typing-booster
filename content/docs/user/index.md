@@ -1011,6 +1011,27 @@ This differs from the [Disabling in terminals](#2_2_6) option, which
 completely disables Typing Booster without the option to switch it
 back on within the terminal.
 
+⚠️ **Attention when using Wayland**: On Wayland it may be necessary to
+set the following environment variables in `~/.profile` to enable
+Typing Booster to get the program names and window titles:
+
+```
+export GNOME_ACCESSIBILITY=1
+export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1
+export QT_ACCESSIBILITY=1
+```
+
+On Wayland desktops like Gnome Wayland and Plasma Wayland, Typing
+Booster uses the accessibility interface
+[AT-SPI](https://en.wikipedia.org/wiki/Assistive_Technology_Service_Provider_Interface)
+to get the program name and window title (on Xorg desktops the `xprop`
+program is used). This accessibility interface is enabled by default
+on Gnome Wayland **except** for the two browsers `firefox` and
+`google-chrome`.  For these browsers, `GNOME_ACCESSIBILITY=1` has to
+be in the environment to make it work. Qt5 programs on Wayland need
+`QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1` and Qt4 programs on Wayland need
+`QT_ACCESSIBILITY=1`.
+
 ###### 3
 ## Key and Mouse bindings
 
