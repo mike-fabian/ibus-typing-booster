@@ -21,6 +21,8 @@ date: 2021-09-30
         * [Spellchecking](#2_2_3)
         * [Toggle input mode on/off (Direct Input Mode)](#2_2_4)
         * [Reopening preëdits](#2_2_5)
+        * [Disabling in terminals](#2_2_6)
+        * [Autosettings](#2_2_7)
 1. [Key and Mouse bindings](#3)
     * [The “AltGr” key](#3_1)
     * [Table of default key bindings](#3_2)
@@ -830,6 +832,184 @@ preëdits:
   a preëdit. I cannot get correct “surrounding text” results after mouse
   movements at the moment (2021-09-16).
 
+###### 2_2_6
+## Disabling in terminals
+
+{{<
+video label="Demonstration of disabling in terminals"
+webm="/videos/user-docs/disabling-in-terminals.webm"
+>}}
+
+The above video shows how to disable Typing Booster in terminals
+using the
+
+☑️ Disable in terminals
+
+option.
+
+Some users may want to disable Typing Booster in terminals because
+
+* Shells like bash have their own features to complete commands,
+  options, and file names, which are often more useful for those
+  purposes than Typing Booster's completions, which are designed for
+  natural language text.
+
+* Sometimes password prompts are shown in shells when using `ssh`,
+  `sudo`, and others. When Typing Booster is active while typing a
+  password, the password will be visible in the preëdit and saved to
+  Typing Booster's user database. Therefore, if you use Typing Booster
+  in a shell, you should be careful to switch it off manually when
+  typing passwords. If you don't find Typing Booster useful in shells,
+  it's easier to disable it completely for terminals.
+
+To disable Typing Booster in terminals, check the “☑️ Disable in
+terminals” option. If you do so, Typing Booster will mostly disable
+itself in terminals, except for [Compose support](#5), which doesn’t
+interfere with shell completion or password input.
+
+Please note that whether this option works or not depends on the
+terminal and desktop used. It works best for Gtk-based terminals like
+xfce4-terminal, gnome-terminal, and gnome-console, as these set the
+input purpose to `TERMINAL`, which Typing Booster can easily check. For
+other terminals like konsole (from KDE) or Xorg-based terminals like
+xterm, rxvt, urxvt, etc., Typing Booster falls back to checking the
+program name and window title to determine whether they are terminals
+it currently knows.
+
+List of terminals currently known by Typing Booster which do not set
+input purpose `TERMINAL`:
+
+* konsole
+* xterm
+* rxvt
+* urxvt
+
+On Xorg desktops like Gnome Xorg, Plasma Xorg, Xfce, etc., Typing
+Booster can reliably get the program name and window title using
+`xprop`. Therefore, on Xorg it works reliably and out of the box for all
+terminals Typing Booster knows. If you use a different terminal not on
+the above list, please let us know so we can add it to the list.
+
+On Wayland desktops like Gnome Wayland and Plasma Wayland, Typing
+Booster uses the accessibility interface
+[AT-SPI](https://en.wikipedia.org/wiki/Assistive_Technology_Service_Provider_Interface)
+to get the program name and window title. This works out of the box on
+Gnome Wayland, but for Plasma Wayland you need to set
+`QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1` in the environment. If
+you use non-Gtk Terminals in Plasma Wayland, please put `export
+QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1` in your `~/.profile`. Getting
+the program name and window title using AT-SPI mostly works just fine,
+but in very rare circumstances it can fail; using `xprop` on Xorg
+desktops is more reliable.
+
+Please note that if you disable Typing Booster as described above in
+terminals, you won't be able to switch it on again temporarily. If you
+want to disable Typing Booster always when the focus enters a terminal
+but still be able to switch it on using a key binding, please see the
+more advanced setup in the “[Autosettings](#2_2_7)” chapter.
+
+###### 2_2_7
+## Autosettings
+
+{{<
+video label="Demonstration of using autosettings"
+webm="/videos/user-docs/using-autosettings.webm"
+>}}
+
+This video shows how one can add automatic settings, i.e. settings which
+change automatically depending on which window gets focus. In the setup
+tool of Typing Booster is an “Autosettings” tab where one can add
+settings to be changed, and then enter the value the setting should be
+changed to. Then one can add a regular expression which triggers the
+change when it matches when a window or browser tab gets focus.
+
+The client id string the regular expression needs to match consists of
+three parts separated by “:”:
+
+```
+<im toolkit>:<program name>:<window title>
+```
+
+Here are a few examples for such client id strings:
+
+```
+gtk3-im:xfce4-terminal:Terminal - mfabian@fedora:~
+gtk3-im:firefox:Duolingo - La meilleure façon d'apprendre l'italien — Mozilla Firefox
+gtk3-im:gedit:Untitled Document 2 - gedit
+gtk4-im:gnome-text-editor:New Document (Draft) - Text Editor
+QIBusInputContext:konsole:~ : bash — Konsole
+```
+
+To check how exactly that client id string looks like for the window
+or browser tab one is interested in one can set the “Debug level”
+option in the “Options” tab in the setup tool to a value >= 1.
+
+Then type into the window using Typing Booster until a candidate list
+is shown On top of the candidate list there will be debug output like
+
+```
+🪟gtk3-im:xfce4-terminal:Terminal - mfabian@fedora:~
+```
+
+This is also shown near the end of the demonstration video above, when
+“test” is typed into the xfce4-terminal.
+
+Or, one can grep the `debug.log` file for `apply_autosettings` like
+this (also with “Debug level” >= 1):
+
+```
+tail -F ~/.local/share/ibus-typing-booster/debug.log  | grep apply_autosettings
+```
+
+and see what appears there when the interested window or browser tab gets focus, one should see
+matches like this:
+
+```
+2023-02-27 15:13:27,739 hunspell_table.py line 6714 _apply_autosettings DEBUG: self._im_client=gtk3-im:xfce4-terminal:Terminal - mfabian@fedora:~
+```
+
+In the demonstration video these autosettings are added in the setup tool:
+
+| Setting | Value | Regular expression |
+| --- | --- | --- |
+| `dictionary` | `en_GB,fr_FR` | `gtk3-im:gedit:` |
+| `dictionary` | `it_IT,fr_FR` | `gtk3-im:firefox:Duolingo` |
+| `inputmode` | `false` | `gtk3-im:.*terminal.*:` |
+
+The “default” dictionaries setup in the “Dictionaries and input
+methods” tab of the setup tool are `es_ES,de_DE`.  In the video one
+can see that “es_ES 🇪🇸” is shown in the floating toolbar of ibus while
+the focus is still in the setup tool.
+
+After finishing the setup of the autosettings, the focus is moved to
+the “Duolingo” tab in `firefox` and the dictionary setting
+automatically changes to “it_IT,fr_FR” which one can see in the
+floating toolbar which now shows “it_IT 🇮🇹”.
+
+Then the focus is moved to `gedit` and the dictionaries are changed to
+“en_GB,fr_FR” which is visible in the floating toolbar as “en_GB 🇬🇧”.
+
+Finally, the focus is moved to the `xfce4-terminal` and the
+dictionaries revert to the “default” value of `es_ES,de_DE` and the
+floating toolbar shows “es_ES 🇪🇸” again. On top of that, the
+autosetting to switch the input mode to `false` in the terminal did
+match, one can see that because the icon in the floating toolbar and
+the panel switched from 🚀 (Rocket, means Typing Booster is on) to 🐌
+(Snail, means Typing Booster is in direct input mode, which basically
+means off except for [Compose support](#5)). But one can still switch
+Typing Booster on again temporarily in that terminal if one has set a
+keybinding for the command `toggle_input_mode_on_off`. For the
+demonstration video, the keybinding for `toggle_input_mode_on_off` has
+been set to `['Control+Tab']` (For details see [Toggle input mode
+on/off (Direct Input Mode)](#2_2_4)).  When this key combination is
+typed into the terminal, the icon changes from 🐌 to 🚀 again and
+Typing Booster is on again in that terminal. Moving the focus out of
+the terminal and back into the terminal switches Typing Booster off
+again.
+
+This differs from the [Disabling in terminals](#2_2_6) option, which
+completely disables Typing Booster without the option to switch it
+back on within the terminal.
 
 ###### 3
 ## Key and Mouse bindings
