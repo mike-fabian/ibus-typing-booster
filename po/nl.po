@@ -9,10 +9,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2023-02-26 20:56+0100\n"
-"PO-Revision-Date: 2023-02-06 15:09+0000\n"
+"PO-Revision-Date: 2023-02-27 16:19+0000\n"
 "Last-Translator: Geert Warrink <geert.warrink@onsnet.nu>\n"
-"Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/nl/>\n"
+"Language-Team: Dutch <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -459,7 +459,7 @@ msgstr "Spraakherkenning"
 #. focus:
 #: setup/main.py:338 setup/main.py:2159
 msgid "Autosettings"
-msgstr ""
+msgstr "Automatische instellingen"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -1400,17 +1400,15 @@ msgstr "Bestand nog niet ingesteld."
 #. browser tab) gets the focus.
 #: setup/main.py:2192 setup/main.py:4290
 msgid "Add an autosetting"
-msgstr ""
+msgstr "Voeg een automatische instelling toe"
 
 #. Translators: This is a button to remove an autosetting.
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2206
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remove an autosetting"
-msgstr "Invoermethode verwijderen"
+msgstr "Een automatische instelling verwijderen"
 
 #. Translators: This is a button to move an autosetting up in the
 #. order the autosettings are applied. “Up” means it is applied
@@ -1421,10 +1419,8 @@ msgstr "Invoermethode verwijderen"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2224
-#, fuzzy
-#| msgid "Move input method up"
 msgid "Move an autosetting up"
-msgstr "Invoermethode omhoog verplaatsen"
+msgstr "Verplaats een automatische instelling omhoog"
 
 #. Translators: This is a button to move an autosetting down in the
 #. order the autosettings are applied. “Down” means it is applied
@@ -1435,10 +1431,8 @@ msgstr "Invoermethode omhoog verplaatsen"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2242
-#, fuzzy
-#| msgid "Move input method down"
 msgid "Move an autosetting down"
-msgstr "Invoermethode omlaag verplaatsen"
+msgstr "Verplaats een automatische instelling naar beneden"
 
 #: setup/main.py:2286
 msgid "Spell checking"
@@ -1452,7 +1446,7 @@ msgstr "Emoji"
 #. the automatic settings
 #: setup/main.py:2490
 msgid "Setting"
-msgstr ""
+msgstr "Instelling"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1466,7 +1460,7 @@ msgstr "Waarde"
 #. the automatic settings
 #: setup/main.py:2523
 msgid "Regular expression"
-msgstr ""
+msgstr "Reguliere expressie"
 
 #: setup/main.py:2569
 msgid "Are you sure?"
