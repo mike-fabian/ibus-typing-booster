@@ -6590,7 +6590,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         self._current_case_mode = 'lower'
             if (key.msymbol in ('G- ', 'G-_')
                 and not self._has_transliteration([key.msymbol])):
-                insert_msymbol = ' '
+                insert_msymbol = key.unicode # ' ' for 'G- ' and '_' for 'G-_'
             else:
                 insert_msymbol = key.msymbol
             if (not self._is_candidate_auto_selected
