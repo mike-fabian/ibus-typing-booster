@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 03 Apr 2023 Release 2.22.2
+* Translation update from Weblate (ka 100%, sw 99.5%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 28 Feb 2023 Release 2.22.1
 * Translation update from Weblate (sv 100%)
 * Fix input of '_' and emoji lookup using '_' for the French BÉPO layout and the German neo2 layout (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/432)
