@@ -8,10 +8,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2023-02-26 20:56+0100\n"
-"PO-Revision-Date: 2023-02-12 07:20+0000\n"
+"PO-Revision-Date: 2023-03-01 06:28+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
-"Language-Team: Georgian <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ka/>\n"
+"Language-Team: Georgian <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ka/>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -453,7 +453,7 @@ msgstr "საუბრის ამოცნობა"
 #. focus:
 #: setup/main.py:338 setup/main.py:2159
 msgid "Autosettings"
-msgstr ""
+msgstr "ავტომორგება"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -1403,17 +1403,15 @@ msgstr "ფაილი ჯერ დაყენებული არაა."
 #. browser tab) gets the focus.
 #: setup/main.py:2192 setup/main.py:4290
 msgid "Add an autosetting"
-msgstr ""
+msgstr "ავტოპარამეტრის დამატება"
 
 #. Translators: This is a button to remove an autosetting.
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2206
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remove an autosetting"
-msgstr "შეტანის მეთოდის წაშლა"
+msgstr "ავტოპარამეტრის წაშლა"
 
 #. Translators: This is a button to move an autosetting up in the
 #. order the autosettings are applied. “Up” means it is applied
@@ -1424,10 +1422,8 @@ msgstr "შეტანის მეთოდის წაშლა"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2224
-#, fuzzy
-#| msgid "Move input method up"
 msgid "Move an autosetting up"
-msgstr "შეტანის მეთოდის მაღლა აწევა"
+msgstr "ავტოპარამეტრის მაღლა აწევა"
 
 #. Translators: This is a button to move an autosetting down in the
 #. order the autosettings are applied. “Down” means it is applied
@@ -1438,10 +1434,8 @@ msgstr "შეტანის მეთოდის მაღლა აწევ
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2242
-#, fuzzy
-#| msgid "Move input method down"
 msgid "Move an autosetting down"
-msgstr "შეტანის მეთოდის დაბლა ჩამოწევა"
+msgstr "ავტოპარამეტრის დაბლა ჩამოწევა"
 
 #: setup/main.py:2286
 msgid "Spell checking"
@@ -1455,7 +1449,7 @@ msgstr "ემოჯი"
 #. the automatic settings
 #: setup/main.py:2490
 msgid "Setting"
-msgstr ""
+msgstr "პარამეტრი"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1469,7 +1463,7 @@ msgstr "მნიშვნელობა"
 #. the automatic settings
 #: setup/main.py:2523
 msgid "Regular expression"
-msgstr ""
+msgstr "რეგულარული გამოსახულება"
 
 #: setup/main.py:2569
 msgid "Are you sure?"
