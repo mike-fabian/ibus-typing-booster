@@ -1,4 +1,7 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 13 Apr 2023 Release 2.22.3
+* Apply workaround for committing multiline strings only for '^gtk3-im:(firefox|thunderbird)', i.e. not on Wayland (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/438)
+
 * 03 Apr 2023 Release 2.22.2
 * Translation update from Weblate (ka 100%, sw 99.5%)
 

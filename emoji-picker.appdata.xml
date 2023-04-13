@@ -39,6 +39,24 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.22.3" date="2023-04-13" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.22.3</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Apply workaround for committing multiline strings only for
+            '^gtk3-im:(firefox|thunderbird)', i.e. not on Wayland (Resolves:
+            github-issues#438)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/438">
+          github-issues#438
+        </issue>
+      </issues>
+    </release>
     <release version="2.22.2" date="2023-04-03" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.22.2</url>
       <description>
