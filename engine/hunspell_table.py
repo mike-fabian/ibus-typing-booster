@@ -2947,10 +2947,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._new_sentence = True
         if fix_sentence_end:
             self._commit_string_fix_sentence_end(commit_phrase)
-        if self._avoid_forward_key_event:
-            super().commit_text(
-                IBus.Text.new_from_string(commit_phrase))
-        else:
+        if (not self._avoid_forward_key_event
+            and re.compile('^gtk3-im:(firefox|thunderbird)').search(self._im_client)):
+            # Workaround for Gmail editor in firefox and for thunderbird, see
+            # https://github.com/mike-fabian/ibus-typing-booster/commit/35a22dab25be8cb9d09d048ca111f661d6b73909
+            #
+            # This workaround helps only for '^gtk3-im:', *not* for '^gnome-shell:'.
             for commit_line in commit_phrase.splitlines(keepends=True):
                 if not commit_line.endswith('\n'):
                     super().commit_text(
@@ -2966,6 +2968,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # sleep it is likely that all the commits come first
                 # followed by all the forwarded Return keys:
                 time.sleep(self._ibus_event_sleep_seconds)
+        else:
+            super().commit_text(
+                IBus.Text.new_from_string(commit_phrase))
         self._clear_input_and_update_ui()
         self._commit_happened_after_focus_in = True
         if (self._off_the_record
