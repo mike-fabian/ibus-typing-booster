@@ -85,7 +85,7 @@ class InputPurposeTest(Gtk.Window): # type: ignore
         self._input_hints = itb_util.InputHints.NONE
 
         self._input_hints_checkbuttons: Dict[str, Gtk.CheckButton] = {}
-        for hint in list(itb_util.InputHints):
+        for hint in itb_util.InputHints:
             if hint.name is None or hint.name == 'NONE':
                 continue
             self._input_hints_checkbuttons[hint.name] = Gtk.CheckButton(

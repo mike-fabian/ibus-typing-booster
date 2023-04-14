@@ -6911,7 +6911,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.debug(
                     'self._input_purpose = %s (Unknown)',
                     self._input_purpose)
-            for hint in list(itb_util.InputHints):
+            for hint in itb_util.InputHints:
                 if self._input_hints & hint:
                     LOGGER.debug(
                         'hint: %s %s',
