@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 24 Apr 2023 Release 2.22.4
+* Return empty program_name and window_title in get_active_window_xprop() when xprop results are unexpected (Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=2175009)
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 13 Apr 2023 Release 2.22.3
 * Apply workaround for committing multiline strings only for '^gtk3-im:(firefox|thunderbird)', i.e. not on Wayland (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/438)
 

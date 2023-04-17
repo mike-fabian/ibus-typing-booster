@@ -45,6 +45,27 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.22.4" date="2023-04-24" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.22.4</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Return empty program_name and window_title in
+            get_active_window_xprop() when xprop results are
+            unexpected (Resolves: rhbz#2175009)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://bugzilla.redhat.com/show_bug.cgi?id=2175009">
+          rhbz#2175009
+        </issue>
+      </issues>
+    </release>
     <release version="2.22.3" date="2023-04-13" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.22.3</url>
       <description>
