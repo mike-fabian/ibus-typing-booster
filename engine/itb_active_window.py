@@ -258,7 +258,10 @@ def get_active_window_xprop() -> Tuple[str, str]:
         return (program_name, window_title)
     # result now looks like in this example:
     #
-    # b'_NET_ACTIVE_WINDOW(WINDOW) 0x1e02d79'
+    # '_NET_ACTIVE_WINDOW(WINDOW) 0x1e02d79'
+    if len(result.stdout.split()) < 2:
+        LOGGER.error('Unexpected xprop output for id of active window')
+        return (program_name, window_title)
     window_id = result.stdout.split()[-1:][0]
     if window_id == '0x0':
         return (program_name, window_title)
@@ -274,7 +277,11 @@ def get_active_window_xprop() -> Tuple[str, str]:
         return (program_name, window_title)
     # result now looks like in this example
     #
-    # b'WM_CLASS(STRING) = "xfce4-terminal", "Xfce4-terminal"\n'
+    # 'WM_CLASS(STRING) = "xfce4-terminal", "Xfce4-terminal"\n'
+    if '=' not in result.stdout or ',' not in result.stdout:
+        LOGGER.error(
+            'Unexpected xprop output for program name of active window')
+        return (program_name, window_title)
     program_name = result.stdout.split(
         '=', maxsplit=1)[1].split(',')[1].strip()[1:-1].lower()
     try:
@@ -289,7 +296,10 @@ def get_active_window_xprop() -> Tuple[str, str]:
         return (program_name, window_title)
     # result now looks like in this example
     #
-    # b'_NET_WM_NAME(UTF8_STRING) = "☺foo = "bar"\n'
+    # '_NET_WM_NAME(UTF8_STRING) = "☺foo = "bar"\n'
+    if '=' not in result.stdout:
+        LOGGER.error('Unexpected xprop output for title of active window')
+        return (program_name, window_title)
     window_title = result.stdout.split('=', maxsplit=1)[1].strip()[1:-1]
     return (program_name, window_title)
 
