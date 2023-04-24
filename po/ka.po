@@ -7,11 +7,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-02-26 20:56+0100\n"
+"POT-Creation-Date: 2023-04-13 18:57+0200\n"
 "PO-Revision-Date: 2023-03-01 06:28+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
-"Language-Team: Georgian <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/ka/>\n"
+"Language-Team: Georgian <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/ka/>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -192,32 +192,32 @@ msgstr "მორგება"
 msgid "Preferences for ibus-typing-booster"
 msgstr "\"ibus-typing-booster\"-ის მორგება"
 
-#: engine/hunspell_table.py:5043
+#: engine/hunspell_table.py:5048
 msgid "Failed to import Google speech-to-text."
 msgstr "Google speech-to-text-ის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:5046
+#: engine/hunspell_table.py:5051
 msgid "Failed to import pyaudio."
 msgstr "Pyaudio-ის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:5049
+#: engine/hunspell_table.py:5054
 msgid "Failed to import queue."
 msgstr "რიგის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:5054
+#: engine/hunspell_table.py:5059
 msgid "No supported language for speech recognition."
 msgstr "საუბრის ამოსაცნობად ენა მხარდაუჭერელია."
 
-#: engine/hunspell_table.py:5058
+#: engine/hunspell_table.py:5063
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google -ის აპლიკაციაში შესვლის დეტალების” ფაილი “%s” არ არსებობს."
 
-#: engine/hunspell_table.py:5071
+#: engine/hunspell_table.py:5076
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Google speech-to-text -ის ინიციალიზაციის შეცდომა. იხილეთ debug.log."
 
-#: engine/hunspell_table.py:5179
+#: engine/hunspell_table.py:5184
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google speech-to-text -ის შეცდომა. ხილეთ debug.log."
 

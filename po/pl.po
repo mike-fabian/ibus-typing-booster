@@ -9,11 +9,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-02-26 20:56+0100\n"
+"POT-Creation-Date: 2023-04-13 18:57+0200\n"
 "PO-Revision-Date: 2023-02-26 20:26+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/pl/>\n"
+"Language-Team: Polish <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -197,34 +197,34 @@ msgstr "Ustawienia"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferencje dla ibus-typing-booster"
 
-#: engine/hunspell_table.py:5043
+#: engine/hunspell_table.py:5048
 msgid "Failed to import Google speech-to-text."
 msgstr "Zaimportowanie mechanizmu mowy-na-tekst Google się nie powiodło."
 
-#: engine/hunspell_table.py:5046
+#: engine/hunspell_table.py:5051
 msgid "Failed to import pyaudio."
 msgstr "Zaimportowanie pyaudio się nie powiodło."
 
-#: engine/hunspell_table.py:5049
+#: engine/hunspell_table.py:5054
 msgid "Failed to import queue."
 msgstr "Zaimportowanie kolejki się nie powiodło."
 
-#: engine/hunspell_table.py:5054
+#: engine/hunspell_table.py:5059
 msgid "No supported language for speech recognition."
 msgstr "Brak obsługiwanych języków do rozpoznawania mowy."
 
-#: engine/hunspell_table.py:5058
+#: engine/hunspell_table.py:5063
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Nie odnaleziono pliku „%s” z danymi uwierzytelniania aplikacji Google."
 
-#: engine/hunspell_table.py:5071
+#: engine/hunspell_table.py:5076
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Zainicjowanie mechanizmu mowy-na-tekst Google się nie powiodło. Więcej "
 "informacji znajduje się w pliku debug.log."
 
-#: engine/hunspell_table.py:5179
+#: engine/hunspell_table.py:5184
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 "Błąd mechanizmu mowy-na-tekst Google. Więcej informacji znajduje się w pliku "

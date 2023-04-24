@@ -13,11 +13,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-02-26 20:56+0100\n"
+"POT-Creation-Date: 2023-04-13 18:57+0200\n"
 "PO-Revision-Date: 2023-02-26 20:26+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -198,32 +198,32 @@ msgstr "Einstellungen"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Ibus Typing Booster Einstellungen"
 
-#: engine/hunspell_table.py:5043
+#: engine/hunspell_table.py:5048
 msgid "Failed to import Google speech-to-text."
 msgstr "Fehler beim Importieren von Google speech-to-text."
 
-#: engine/hunspell_table.py:5046
+#: engine/hunspell_table.py:5051
 msgid "Failed to import pyaudio."
 msgstr "Fehler beim importieren von pyaudio."
 
-#: engine/hunspell_table.py:5049
+#: engine/hunspell_table.py:5054
 msgid "Failed to import queue."
 msgstr "Fehler beim Importieren von queue."
 
-#: engine/hunspell_table.py:5054
+#: engine/hunspell_table.py:5059
 msgid "No supported language for speech recognition."
 msgstr "Keine unterstützte Sprache für Spracherkennung."
 
-#: engine/hunspell_table.py:5058
+#: engine/hunspell_table.py:5063
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "„Google application credentials“ Datei “%s” nicht gefunden."
 
-#: engine/hunspell_table.py:5071
+#: engine/hunspell_table.py:5076
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Fehler bei initialisieren von Google speech-to-text. Siehe debug.log."
 
-#: engine/hunspell_table.py:5179
+#: engine/hunspell_table.py:5184
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google speech-to-text Fehler. Siehe debug.log."
 

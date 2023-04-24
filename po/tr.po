@@ -10,11 +10,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-02-26 20:56+0100\n"
+"POT-Creation-Date: 2023-04-13 18:57+0200\n"
 "PO-Revision-Date: 2023-02-27 07:29+0000\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
-"Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/tr/>\n"
+"Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -195,34 +195,34 @@ msgstr "Kurulum"
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster için tercihler"
 
-#: engine/hunspell_table.py:5043
+#: engine/hunspell_table.py:5048
 msgid "Failed to import Google speech-to-text."
 msgstr "Google konuşmadan metne (speech-to-text) alınamadı."
 
-#: engine/hunspell_table.py:5046
+#: engine/hunspell_table.py:5051
 msgid "Failed to import pyaudio."
 msgstr "Pyaudio alınamadı."
 
-#: engine/hunspell_table.py:5049
+#: engine/hunspell_table.py:5054
 msgid "Failed to import queue."
 msgstr "Queue alınamadı."
 
-#: engine/hunspell_table.py:5054
+#: engine/hunspell_table.py:5059
 msgid "No supported language for speech recognition."
 msgstr "Konuşma tanıma için desteklenen dil yok."
 
-#: engine/hunspell_table.py:5058
+#: engine/hunspell_table.py:5063
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google uygulama kimlik bilgileri” dosyası “%s” bulunamadı."
 
-#: engine/hunspell_table.py:5071
+#: engine/hunspell_table.py:5076
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Google konuşmadan metne (speech-to-text) başlatılamadı. debug.log dosyasına "
 "bakın."
 
-#: engine/hunspell_table.py:5179
+#: engine/hunspell_table.py:5184
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 "Google konuşmadan metne (speech-to-text) hatası. debug.log dosyasına bakın."
