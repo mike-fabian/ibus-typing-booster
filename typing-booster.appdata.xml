@@ -20,13 +20,13 @@
   </keywords>
   <screenshots>
     <screenshot type="default">
-      <image type="source" width="956" height="233" xml:lang="en">
+      <image type="source" width="956" height="233">
       https://mike-fabian.github.io/ibus-typing-booster/images/typing-emoji-and-context-sensitive-completion.png
       </image>
       <caption>Typing Booster screenshot</caption>
     </screenshot>
     <screenshot>
-      <video container="webm" codec="vp9" xml:lang="en">
+      <video container="webm" codec="vp9">
         https://mike-fabian.github.io/ibus-typing-booster/videos/overview-demo-setup-use-typing-booster-emoji-picker.webm
       </video>
       <caption>Typing booster demo video</caption>
