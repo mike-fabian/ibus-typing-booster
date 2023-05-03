@@ -4994,7 +4994,7 @@ class M17nDbInfo:
                     self._imes[ime]['title'] = title
                 description_pattern = re.compile(
                     r'\([\s]*description[\s]*'
-                    r'"(?P<description>.+?)(?<!\\)"[\s]*\)',
+                    r'(\(_)?"(?P<description>.+?)(?<!\\)"[\s]*\)',
                     re.DOTALL|re.MULTILINE|re.UNICODE)
                 match = description_pattern.search(full_contents)
                 if match:
