@@ -55,6 +55,8 @@ GLib.set_prgname('ibus-setup-typing-booster')
 
 require_version('Gdk', '3.0')
 from gi.repository import Gdk
+require_version('GdkPixbuf', '2.0')
+from gi.repository import GdkPixbuf
 require_version('Gtk', '3.0')
 from gi.repository import Gtk
 require_version('Pango', '1.0')
@@ -2438,8 +2440,20 @@ class SetupUI(Gtk.Window): # type: ignore
             label.set_margin_end(margin)
             label.set_margin_top(margin)
             label.set_margin_bottom(margin)
-            image = Gtk.Image.new_from_file(M17N_DB_INFO.get_icon(ime))
-            image.set_pixel_size(48)
+            icon_size = 48
+            try:
+                pixbuf = Gtk.IconTheme.get_default().load_icon(
+                    'image-missing', icon_size, 0)
+            except (GLib.GError,) as error:
+                LOGGER.exception(
+                    'Exception when loading "image-missing" icon %s: %s',
+                    error.__class__.__name__, error)
+                pixbuf = GdkPixbuf.Pixbuf()
+            icon_file = M17N_DB_INFO.get_icon(ime)
+            if icon_file:
+                pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                    icon_file, icon_size, icon_size, True)
+            image = Gtk.Image.new_from_pixbuf(pixbuf)
             hbox = Gtk.Box()
             hbox.set_orientation(Gtk.Orientation.HORIZONTAL)
             hbox.set_spacing(10)
