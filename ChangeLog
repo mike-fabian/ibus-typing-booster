@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 09 May 2023 Release 2.22.5
+* Remove `xml:lang="en"` from the screenshots in appdata.xml (See: https://github.com/ximion/appstream/issues/494)
+* Improve regexp for parsing description out of of .mim files (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/440)
+* Setup tool: scale input method icons correctly (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/441)
+* Update emoji annotations from CLDR
+* Get version information of m17n-db (Needed for test cases depending on the version of m17n-db)
+* Skip m17n_translit test cases when m17n-db is too old
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 24 Apr 2023 Release 2.22.4
 * Return empty program_name and window_title in get_active_window_xprop() when xprop results are unexpected (Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=2175009)
 * Update emoji annotations from CLDR

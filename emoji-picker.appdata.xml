@@ -39,6 +39,46 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.22.5" date="2023-05-09" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.22.5</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Remove `xml:lang="en"` from the screenshots in appdata.xml
+            (There must be one image in the default locale, and there
+            can be some translated ones, but having only translated
+            images is not okay).
+          </li>
+          <li>
+            Improve regexp for parsing description out of of .mim
+            files (Resolves: github-issues#440)
+          </li>
+          <li>
+            Setup tool: scale input method icons correctly (Resolves:
+            github-issues#441)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Get version information of m17n-db (Needed for test cases
+            depending on the version of m17n-db)
+          </li>
+          <li>
+            Skip m17n_translit test cases when m17n-db is too old
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/440">
+          github-issues#440
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/441">
+          github-issues#441
+        </issue>
+      </issues>
+    </release>
     <release version="2.22.4" date="2023-04-17" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.22.4</url>
       <description>
