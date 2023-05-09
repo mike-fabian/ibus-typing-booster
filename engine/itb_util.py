@@ -4848,8 +4848,43 @@ class M17nDbInfo:
     def __init__(self) -> None:
         self._dirs: List[str] = []
         self._imes: Dict[str, Dict[str, str]] = {}
+        self._version: str = ''
+        self._major_version: int = 0
+        self._minor_version: int = 0
+        self._micro_version: int = 0
+        self._get_version()
         self._find_dirs()
         self._find_imes()
+
+    def _get_version(self) -> None:
+        '''Gets the version of m17n-db'''
+        m17n_db_binary = shutil.which('m17n-db')
+        self._version = ''
+        if m17n_db_binary:
+            try:
+                result = subprocess.run(
+                    [m17n_db_binary, '-v'],
+                    encoding='utf-8', check=True, capture_output=True)
+                self._version = result.stdout.strip()
+                LOGGER.info('%s printed: %s', m17n_db_binary, self._version)
+            except FileNotFoundError as error:
+                LOGGER.exception(
+                    'Exception when calling %s: %s: %s',
+                    m17n_db_binary, error.__class__.__name__, error)
+            except subprocess.CalledProcessError as error:
+                LOGGER.exception(
+                    'Exception when calling %s: %s: %s stderr: %s',
+                    m17n_db_binary,
+                    error.__class__.__name__, error, error.stderr)
+            except Exception as error: # pylint: disable=broad-except
+                LOGGER.exception(
+                    'Exception when calling %s: %s: %s',
+                    m17n_db_binary, error.__class__.__name__, error)
+        if self._version:
+            (major, minor, micro) = self._version.split('.')
+            self._major_version = int(major)
+            self._minor_version = int(minor)
+            self._micro_version = int(micro)
 
     def _find_dirs(self) -> None:
         '''Finds the directories which contain the m17n input methods which
@@ -5002,6 +5037,22 @@ class M17nDbInfo:
                         '\\"', '"')
                     self._imes[ime]['description'] = description
                 self._imes[ime]['content'] = full_contents
+
+    def get_version(self) -> str:
+        '''Returns the version of m17n-db'''
+        return self._version
+
+    def get_major_version(self) -> int:
+        '''Returns the major version of m17n-db as an integer'''
+        return self._major_version
+
+    def get_minor_version(self) -> int:
+        '''Returns the major version of m17n-db as an integer'''
+        return self._minor_version
+
+    def get_micro_version(self) -> int:
+        '''Returns the major version of m17n-db as an integer'''
+        return self._micro_version
 
     def get_dirs(self) -> List[str]:
         '''
