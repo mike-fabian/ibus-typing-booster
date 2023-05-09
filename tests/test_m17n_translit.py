@@ -35,12 +35,18 @@ M17N_CONFIG_FILE= os.path.join(os.environ['M17NDIR'], 'config.mic')
 # pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
 import m17n_translit # pylint: disable=import-error
+import itb_util # pylint: disable=import-error
 sys.path.pop(0)
 # pylint: enable=wrong-import-position
 
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
 # pylint: disable=invalid-name
+
+M17N_DB_INFO = itb_util.M17nDbInfo()
+M17N_DB_VERSION = (M17N_DB_INFO.get_major_version(),
+                   M17N_DB_INFO.get_minor_version(),
+                   M17N_DB_INFO.get_micro_version())
 
 class M17nTranslitTestCase(unittest.TestCase):
     def setUp(self) -> None:
@@ -618,16 +624,20 @@ class M17nTranslitTestCase(unittest.TestCase):
               'hiragana'),
              ('zen-han', 'Zenkaku or Hankaku (not yet implemented)', 'zenkaku')])
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 2),
+        'Skipping because m17n-db is too old')
     def test_get_variables_ml_swanalekha(self) -> None:
         trans = self.get_transliterator_or_skip('ml-swanalekha')
         self.assertEqual(
             trans.get_variables(),
             [('candidates-group-size',
-              'Maxmum number of candidates in a candidate group.\n'
+              'Maximum number of candidates in a candidate group.\n'
               'Value must be an integer.\n'
               'If the value is not positive, number of candidates in a group is decided\n'
               'by how candiates are grouped in an input method source file.',
-              '10')])
+              '10'),
+             ('show-lookup', 'Show lookup table', '0')])
 
     def test_get_variables_mr_gamabhana(self) -> None:
         trans = self.get_transliterator_or_skip('mr-gamabhana')
@@ -718,34 +728,43 @@ class M17nTranslitTestCase(unittest.TestCase):
               'Prompt string shown in the preedit area while typing hexadecimal numbers.',
               'U+')])
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 2),
+        'Skipping because m17n-db is too old')
     def test_get_variables_vi_han(self) -> None:
         trans = self.get_transliterator_or_skip('vi-han')
         self.assertEqual(
             trans.get_variables(),
             [('candidates-group-size',
-              'Maxmum number of candidates in a candidate group.\n'
+              'Maximum number of candidates in a candidate group.\n'
               'Value must be an integer.\n'
               'If the value is not positive, number of candidates in a group is decided\n'
               'by how candiates are grouped in an input method source file.',
               '10')])
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 2),
+        'Skipping because m17n-db is too old')
     def test_get_variables_vi_nomvni(self) -> None:
         trans = self.get_transliterator_or_skip('vi-nomvni')
         self.assertEqual(
             trans.get_variables(),
             [('candidates-group-size',
-              'Maxmum number of candidates in a candidate group.\n'
+              'Maximum number of candidates in a candidate group.\n'
               'Value must be an integer.\n'
               'If the value is not positive, number of candidates in a group is decided\n'
               'by how candiates are grouped in an input method source file.',
               '10')])
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 2),
+        'Skipping because m17n-db is too old')
     def test_get_variables_vi_nomtelex(self) -> None:
         trans = self.get_transliterator_or_skip('vi-nomtelex')
         self.assertEqual(
             trans.get_variables(),
             [('candidates-group-size',
-              'Maxmum number of candidates in a candidate group.\n'
+              'Maximum number of candidates in a candidate group.\n'
               'Value must be an integer.\n'
               'If the value is not positive, number of candidates in a group is decided\n'
               'by how candiates are grouped in an input method source file.',
@@ -823,23 +842,29 @@ class M17nTranslitTestCase(unittest.TestCase):
               '(e.g. "q u a i s BS" => "quai").',
               '0')])
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 2),
+        'Skipping because m17n-db is too old')
     def test_get_variables_zh_cangjie(self) -> None:
         trans = self.get_transliterator_or_skip('zh-cangjie')
         self.assertEqual(
             trans.get_variables(),
             [('candidates-group-size',
-              'Maxmum number of candidates in a candidate group.\n'
+              'Maximum number of candidates in a candidate group.\n'
               'Value must be an integer.\n'
               'If the value is not positive, number of candidates in a group is decided\n'
               'by how candiates are grouped in an input method source file.',
               '10')])
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 2),
+        'Skipping because m17n-db is too old')
     def test_get_variables_zh_py_b5(self) -> None:
         trans = self.get_transliterator_or_skip('zh-py-b5')
         self.assertEqual(
             trans.get_variables(),
             [('candidates-group-size',
-              'Maxmum number of candidates in a candidate group.\n'
+              'Maximum number of candidates in a candidate group.\n'
               'Value must be an integer.\n'
               'If the value is not positive, number of candidates in a group is decided\n'
               'by how candiates are grouped in an input method source file.',
@@ -851,12 +876,15 @@ class M17nTranslitTestCase(unittest.TestCase):
               'to the specified character set is ignored.',
               'big5')])
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 2),
+        'Skipping because m17n-db is too old')
     def test_get_variables_zh_py_gb(self) -> None:
         trans = self.get_transliterator_or_skip('zh-py-gb')
         self.assertEqual(
             trans.get_variables(),
             [('candidates-group-size',
-              'Maxmum number of candidates in a candidate group.\n'
+              'Maximum number of candidates in a candidate group.\n'
               'Value must be an integer.\n'
               'If the value is not positive, number of candidates in a group is decided\n'
               'by how candiates are grouped in an input method source file.',
@@ -868,34 +896,43 @@ class M17nTranslitTestCase(unittest.TestCase):
               'to the specified character set is ignored.',
               'gb2312.1980')])
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 2),
+        'Skipping because m17n-db is too old')
     def test_get_variables_zh_py(self) -> None:
         trans = self.get_transliterator_or_skip('zh-py')
         self.assertEqual(
             trans.get_variables(),
             [('candidates-group-size',
-              'Maxmum number of candidates in a candidate group.\n'
+              'Maximum number of candidates in a candidate group.\n'
               'Value must be an integer.\n'
               'If the value is not positive, number of candidates in a group is decided\n'
               'by how candiates are grouped in an input method source file.',
               '10')])
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 2),
+        'Skipping because m17n-db is too old')
     def test_get_variables_zh_quick(self) -> None:
         trans = self.get_transliterator_or_skip('zh-quick')
         self.assertEqual(
             trans.get_variables(),
             [('candidates-group-size',
-              'Maxmum number of candidates in a candidate group.\n'
+              'Maximum number of candidates in a candidate group.\n'
               'Value must be an integer.\n'
               'If the value is not positive, number of candidates in a group is decided\n'
               'by how candiates are grouped in an input method source file.',
               '10')])
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 2),
+        'Skipping because m17n-db is too old')
     def test_get_variables_zh_tonepy_b5(self) -> None:
         trans = self.get_transliterator_or_skip('zh-tonepy-b5')
         self.assertEqual(
             trans.get_variables(),
             [('candidates-group-size',
-              'Maxmum number of candidates in a candidate group.\n'
+              'Maximum number of candidates in a candidate group.\n'
               'Value must be an integer.\n'
               'If the value is not positive, number of candidates in a group is decided\n'
               'by how candiates are grouped in an input method source file.',
@@ -907,12 +944,15 @@ class M17nTranslitTestCase(unittest.TestCase):
               'to the specified character set is ignored.',
               'big5')])
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 2),
+        'Skipping because m17n-db is too old')
     def test_get_variables_zh_tonepy_gb(self) -> None:
         trans = self.get_transliterator_or_skip('zh-tonepy-gb')
         self.assertEqual(
             trans.get_variables(),
             [('candidates-group-size',
-              'Maxmum number of candidates in a candidate group.\n'
+              'Maximum number of candidates in a candidate group.\n'
               'Value must be an integer.\n'
               'If the value is not positive, number of candidates in a group is decided\n'
               'by how candiates are grouped in an input method source file.',
@@ -924,23 +964,29 @@ class M17nTranslitTestCase(unittest.TestCase):
               'to the specified character set is ignored.',
               'gb2312.1980')])
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 2),
+        'Skipping because m17n-db is too old')
     def test_get_variables_zh_tonepy(self) -> None:
         trans = self.get_transliterator_or_skip('zh-tonepy')
         self.assertEqual(
             trans.get_variables(),
             [('candidates-group-size',
-              'Maxmum number of candidates in a candidate group.\n'
+              'Maximum number of candidates in a candidate group.\n'
               'Value must be an integer.\n'
               'If the value is not positive, number of candidates in a group is decided\n'
               'by how candiates are grouped in an input method source file.',
               '10')])
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 2),
+        'Skipping because m17n-db is too old')
     def test_get_variables_zh_zhuyin(self) -> None:
         trans = self.get_transliterator_or_skip('zh-zhuyin')
         self.assertEqual(
             trans.get_variables(),
             [('candidates-group-size',
-              'Maxmum number of candidates in a candidate group.\n'
+              'Maximum number of candidates in a candidate group.\n'
               'Value must be an integer.\n'
               'If the value is not positive, number of candidates in a group is decided\n'
               'by how candiates are grouped in an input method source file.',
