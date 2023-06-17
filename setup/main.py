@@ -4176,8 +4176,8 @@ class SetupUI(Gtk.Window): # type: ignore
                 except (ValueError,) as error:
                     new_edited_value = ''
             elif value_type == 'b':
-                if new_edited_value.lower() in ('true', 'false'):
-                    new_edited_value = new_edited_value.lower()
+                if new_edited_value.lower().strip() in ('true', 'false'):
+                    new_edited_value = new_edited_value.lower().strip()
                 else:
                     new_edited_value = ''
         model.set_value(iterator, 1, new_edited_value)
