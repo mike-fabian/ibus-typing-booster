@@ -747,6 +747,29 @@ class SetupUI(Gtk.Window): # type: ignore
             self._disable_in_terminals_checkbutton,
             0, _options_grid_row, 2, 1)
 
+        self._ascii_digits_checkbutton = Gtk.CheckButton(
+            # Translators: Whether language specific digits should be
+            # converted to ASCII digits
+            label=_('Convert language specific digits to ASCII digits'))
+        self._ascii_digits_checkbutton.set_tooltip_text(
+            _('Some input methods produce language specific digits by '
+              'default. If one never wants to use such language specific '
+              'digits but prefers western (ASCII) digits always, one can set '
+              'this option to convert language specific digits produced '
+              'by input methods always to ASCII digits.'))
+        self._ascii_digits_checkbutton.connect(
+            'clicked', self._on_ascii_digits_checkbutton)
+        self._ascii_digits = itb_util.variant_to_value(
+            self._gsettings.get_value('asciidigits'))
+        if self._ascii_digits is None:
+            self._ascii_digits = False
+        if self._ascii_digits is True:
+            self._ascii_digits_checkbutton.set_active(True)
+        _options_grid_row += 1
+        self._options_grid.attach(
+            self._ascii_digits_checkbutton,
+            0, _options_grid_row, 2, 1)
+
         self._emoji_trigger_characters_label = Gtk.Label()
         self._emoji_trigger_characters_label.set_text(
             # Translators: The characters in this list trigger an
@@ -2687,6 +2710,7 @@ class SetupUI(Gtk.Window): # type: ignore
         LOGGER.info('Settings changed: key=%s value=%s\n', key, value)
         set_functions = {
             'disableinterminals': self.set_disable_in_terminals,
+            'asciidigits': self.set_ascii_digits,
             'avoidforwardkeyevent': self.set_avoid_forward_key_event,
             'addspaceoncommit': self.set_add_space_on_commit,
             'arrowkeysreopenpreedit': self.set_arrow_keys_reopen_preedit,
@@ -3119,6 +3143,15 @@ class SetupUI(Gtk.Window): # type: ignore
         has been clicked.
         '''
         self.set_disable_in_terminals(
+            widget.get_active(), update_gsettings=True)
+
+    def _on_ascii_digits_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
+        '''
+        The checkbutton whether to convert language specific
+        digits to ASCII digits has been clicked.
+        '''
+        self.set_ascii_digits(
             widget.get_active(), update_gsettings=True)
 
     def _on_emoji_trigger_characters_entry(
@@ -4984,6 +5017,32 @@ class SetupUI(Gtk.Window): # type: ignore
                 GLib.Variant.new_boolean(mode))
         else:
             self._disable_in_terminals_checkbutton.set_active(mode)
+
+    def set_ascii_digits(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets whether the to convert language specific digits to ASCII digits
+
+        :param mode: Whether to convert language specific digits
+                     to ASCII digits
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._ascii_digits:
+            return
+        self._ascii_digits = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'asciidigits',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._ascii_digits_checkbutton.set_active(mode)
 
     def set_emoji_prediction_mode(
             self,

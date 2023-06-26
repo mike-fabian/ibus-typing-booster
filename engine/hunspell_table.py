@@ -233,6 +233,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._disable_in_terminals: bool = itb_util.variant_to_value(
             self._gsettings.get_value('disableinterminals'))
 
+        self._ascii_digits: bool = itb_util.variant_to_value(
+            self._gsettings.get_value('asciidigits'))
+
         self._off_the_record: bool = itb_util.variant_to_value(
             self._gsettings.get_value('offtherecord'))
 
@@ -666,6 +669,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'disableinterminals': {
                 'set': self.set_disable_in_terminals,
                 'get': self.get_disable_in_terminals},
+            'asciidigits': {
+                'set': self.set_ascii_digits,
+                'get': self.get_ascii_digits},
             'pagesize': {
                 'set': self.set_page_size,
                 'get': self.get_page_size},
@@ -935,7 +941,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         preedit_ime = self._current_imes[0]
         transliterated_string_up_to_cursor = (
             self._transliterators[preedit_ime].transliterate(
-                self._typed_string[:self._typed_string_cursor]))
+                self._typed_string[:self._typed_string_cursor],
+                ascii_digits=self._ascii_digits))
         if preedit_ime in ['ko-romaja', 'ko-han2']:
             transliterated_string_up_to_cursor = unicodedata.normalize(
                 'NFKD', transliterated_string_up_to_cursor)
@@ -1506,16 +1513,19 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if self._typed_compose_sequence:
                 self._transliterated_strings_before_compose[ime] = (
                     self._transliterators[ime].transliterate(
-                        self._typed_string[:self._typed_string_cursor]))
+                        self._typed_string[:self._typed_string_cursor],
+                        ascii_digits=self._ascii_digits))
                 self._transliterated_strings[ime] = (
                     self._transliterated_strings_before_compose[ime]
                     + self._transliterated_strings_compose_part
                     + self._transliterators[ime].transliterate(
-                        self._typed_string[self._typed_string_cursor:]))
+                        self._typed_string[self._typed_string_cursor:],
+                        ascii_digits=self._ascii_digits))
             else:
                 self._transliterated_strings[ime] = (
                     self._transliterators[ime].transliterate(
-                        self._typed_string))
+                        self._typed_string,
+                        ascii_digits=self._ascii_digits))
             if ime in ['ko-romaja', 'ko-han2']:
                 self._transliterated_strings[ime] = unicodedata.normalize(
                     'NFKD', self._transliterated_strings[ime])
@@ -4516,6 +4526,35 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Returns the current value of the “Disable in terminals” mode'''
         return self._disable_in_terminals
 
+    def set_ascii_digits(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets whether the to convert language specific digits to ASCII digits
+
+        :param mode: Whether to convert language specific digits
+                     to ASCII digits
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._ascii_digits:
+            return
+        self._ascii_digits = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'asciidigits',
+                GLib.Variant.new_boolean(mode))
+
+    def get_ascii_digits(self) -> bool:
+        '''Returns the current value of the “ASCII digits” mode'''
+        return self._ascii_digits
+
     def set_remember_last_used_preedit_ime(
             self,
             mode: Union[bool, Any],
@@ -6261,7 +6300,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     # to transliterate and commit the result:
                     transliterated_digit = self._transliterators[
                         self.get_current_imes()[0]
-                    ].transliterate([key.msymbol])
+                    ].transliterate([key.msymbol],
+                                    ascii_digits=self._ascii_digits)
                     self._commit_string(
                         transliterated_digit,
                         input_phrase=transliterated_digit)
@@ -6444,7 +6484,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             preedit_ime = self._current_imes[0]
             input_phrase = self._transliterators[
                 preedit_ime].transliterate(
-                    self._typed_string + [key.msymbol])
+                    self._typed_string + [key.msymbol],
+                    ascii_digits=self._ascii_digits)
             input_phrase = self._case_modes[
                 self._current_case_mode]['function'](input_phrase)
             if key.msymbol:
@@ -6504,12 +6545,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # forwarded to the application.
                 input_phrase_left = (
                     self._transliterators[preedit_ime].transliterate(
-                        self._typed_string[:self._typed_string_cursor]))
+                        self._typed_string[:self._typed_string_cursor],
+                        ascii_digits=self._ascii_digits))
                 input_phrase_left = self._case_modes[
                     self._current_case_mode]['function'](input_phrase_left)
                 input_phrase_right = (
                     self._transliterators[preedit_ime].transliterate(
-                        self._typed_string[self._typed_string_cursor:]))
+                        self._typed_string[self._typed_string_cursor:],
+                        ascii_digits=self._ascii_digits))
                 if self._current_case_mode == 'upper':
                     input_phrase_right = self._case_modes[
                         self._current_case_mode]['function'](
