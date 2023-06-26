@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 28 Jun 2023 Release 2.23.0
+* Translation update from Weblate (de 100%, ka 100%, nl 100%, sv 100%, uk 100%)
+* configure.ac: add a warning about not using /usr/local as the prefix (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/444)
+* Add an option to convert language specific digits to ASCII (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/445)
+* Strip entered autosettings value for boolean values
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 09 May 2023 Release 2.22.5
 * Remove `xml:lang="en"` from the screenshots in appdata.xml (See: https://github.com/ximion/appstream/issues/494)
 * Improve regexp for parsing description out of of .mim files (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/440)
