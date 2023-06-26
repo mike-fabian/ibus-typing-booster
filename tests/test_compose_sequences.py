@@ -568,15 +568,20 @@ class ComposeSequencesTestCase(unittest.TestCase):
             self.skipTest(
                 '/usr/share/X11/locale/am_ET.UTF-8/Compose not available')
         # pylint: enable=protected-access
+        if self._compose_sequences.compose([IBus.KEY_u, 0x01001200]) != '':
+            self.skipTest('Obsolete old Compose file is installed')
         if self._compose_sequences.compose([0x0100FE75, 0x01001200]) != '':
             self.skipTest(
-                'New Compose file updated by '
+                'Broken new Compose file updated by '
                 'Benno Schulenberg <bensberg@telfort.nl> '
                 'is installed, see: '
                 'https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/488b156fe2cc8aca6946a49236ec7b7698fceda4') # pylint: disable=line-too-long
+        # New, good compose file after
+        # https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/208d550954c7266fa8093b02a2a97047e1478c00 # pylint: disable=line-too-long
+        # is installed.
         self.assertEqual(
             self._compose_sequences.compose(
-                [IBus.KEY_u,
+                [IBus.KEY_dead_u,
                  0x01001200]),
             'ሁ')
         self.assertEqual(
@@ -591,16 +596,17 @@ class ComposeSequencesTestCase(unittest.TestCase):
             '፦')
         # This sequence comes from
         # /usr/share/X11/locale/en_US.UTF-8/Compose and because
-        # /usr/share/X11/locale/am_ET.UTF-8/Compose does not include
+        # /usr/share/X11/locale/am_ET.UTF-8/Compose did not include
         # /usr/share/X11/locale/en_US.UTF-8/Compose this sequence
-        # is invalid in am_ET.UTF-8 locale and therefore returns
-        # an empty string:
+        # was invalid in am_ET.UTF-8 locale and therefore it used to
+        # return an empty string. In the latest version of am_ET.UTF-8
+        # this is fixed though, now it returns an “ä”
         self.assertEqual(
             self._compose_sequences.compose(
                 [IBus.KEY_Multi_key,
                  IBus.KEY_a,
                  IBus.KEY_quotedbl]),
-            '')
+            'ä')
 
     def test_reasonable_dead_key_sequences(self) -> None:
         # “reasonable” dead key sequences are are handled even if they
