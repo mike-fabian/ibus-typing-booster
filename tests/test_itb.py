@@ -161,6 +161,10 @@ class ItbTestCase(unittest.TestCase):
         assert IBus.PropList is not MockPropList
 
     def backup_original_settings(self) -> None:
+        self.orig_disable_in_terminals = (
+            self.engine.get_disable_in_terminals())
+        self.orig_ascii_digits = (
+            self.engine.get_ascii_digits())
         self.orig_emoji_prediction_mode = (
             self.engine.get_emoji_prediction_mode())
         self.orig_off_the_record_mode = (
@@ -201,6 +205,12 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_keybindings())
 
     def restore_original_settings(self) -> None:
+        self.engine.set_disable_in_terminals(
+            self.orig_disable_in_terminals,
+            update_gsettings=False)
+        self.engine.set_ascii_digits(
+            self.orig_ascii_digits,
+            update_gsettings=False)
         self.engine.set_emoji_prediction_mode(
             self.orig_emoji_prediction_mode,
             update_gsettings=False)
@@ -260,6 +270,10 @@ class ItbTestCase(unittest.TestCase):
             update_gsettings=False)
 
     def set_default_settings(self) -> None:
+        self.engine.set_disable_in_terminals(
+            False, update_gsettings=False)
+        self.engine.set_ascii_digits(
+            False, update_gsettings=False)
         self.engine.set_emoji_prediction_mode(
             False, update_gsettings=False)
         self.engine.set_off_the_record_mode(
