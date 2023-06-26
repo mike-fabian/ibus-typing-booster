@@ -141,6 +141,7 @@ class ItbTestCase(unittest.TestCase):
             unit_test=True)
         self.backup_original_settings()
         self.set_default_settings()
+        self._compose_sequences = itb_util.ComposeSequences()
 
     def tearDown(self) -> None:
         self.restore_original_settings()
@@ -2205,11 +2206,15 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'ǭǭǭǭǭǭǭǭǭǮǮǯǯ ')
+        if self._compose_sequences.compose([IBus.KEY_Multi_key, 0x01002276, IBus.KEY_slash]) != '≸':
+            self.skipTest(
+                'Compose file too old, older than '
+                'https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/03ba0140940cc76524d83096a47309f5c398541f')  # pylint: disable=line-too-long
         self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '·')
         self.engine.do_process_key_event(0x01002276, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '≶')
-        self.engine.do_process_key_event(0x01000338, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_slash, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '≸')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
