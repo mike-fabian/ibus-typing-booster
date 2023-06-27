@@ -4555,6 +4555,18 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Returns the current value of the “ASCII digits” mode'''
         return self._ascii_digits
 
+    def toggle_ascii_digits(self, update_gsettings: bool = True) -> None:
+        '''Toggles whether to convert languages specific digits to ASCII digits
+
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        self.set_ascii_digits(
+            not self._ascii_digits, update_gsettings)
+
     def set_remember_last_used_preedit_ime(
             self,
             mode: Union[bool, Any],
@@ -5538,6 +5550,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :return: True if the key was completely handled, False if not.
         '''
         self.toggle_off_the_record_mode()
+        return True
+
+    def _command_toggle_ascii_digits(self) -> bool:
+        '''Handle hotkey for the command “toggle_ascii_digits”
+
+        :return: True if the key was completely handled, False if not.
+        '''
+        self.toggle_ascii_digits()
         return True
 
     def _command_lookup_related(self) -> bool:
