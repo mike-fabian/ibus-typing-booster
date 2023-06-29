@@ -450,6 +450,103 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'cerulean ')
 
+    def test_ascii_digits(self) -> None:
+        self.engine.set_current_imes(
+            ['hi-itrans', 'NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['hi_IN', 'en_GB'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_3, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_4, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_5, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_6, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_7, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_8, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_9, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९')
+        self.engine.set_ascii_digits(True, update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_3, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_4, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_5, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_6, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_7, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_8, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_9, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९0123456789')
+        # Remove all digits from the key bindings:
+        self.engine.set_keybindings({
+            'commit_candidate_1': [],
+            'commit_candidate_1_plus_space': ['F1'],
+            'commit_candidate_2': [],
+            'commit_candidate_2_plus_space': ['F2'],
+            'commit_candidate_3': [],
+            'commit_candidate_3_plus_space': ['F3'],
+            'commit_candidate_4': [],
+            'commit_candidate_4_plus_space': ['F4'],
+            'commit_candidate_5': [],
+            'commit_candidate_5_plus_space': ['F5'],
+            'commit_candidate_6': [],
+            'commit_candidate_6_plus_space': ['F6'],
+            'commit_candidate_7': [],
+            'commit_candidate_7_plus_space': ['F7'],
+            'commit_candidate_8': [],
+            'commit_candidate_8_plus_space': ['F8'],
+            'commit_candidate_9': [],
+            'commit_candidate_9_plus_space': ['F9'],
+        }, update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_3, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_4, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_5, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_6, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_7, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_8, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_9, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'नमस्ते0123456789')
+        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९0123456789')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९0123456789नमस्ते0123456789 ')
+        self.engine.set_ascii_digits(False, update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_3, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_4, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_5, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_6, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_7, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_8, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_9, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'नमस्ते०१२३४५६७८९')
+        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९0123456789नमस्ते0123456789 ')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९0123456789नमस्ते0123456789 नमस्ते०१२३४५६७८९ ')
+
     def test_complete_with_empty_input(self) -> None:
         '''Test completion when something has just been committed with
         follwing white space and no new characters have been typed
