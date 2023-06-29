@@ -93,6 +93,8 @@ $ make check # optional
 $ make install
 ```
 
+**For all distributions:** please use `--prefix=/usr` and **not** the default `/usr/local`, installing into `/usr/local` will usually not work! And use the correct `--libexecdir` option for your distribution, the default is `--libexecdir=/usr/libexec` which is correct for Fedora, but on openSUSE and Debian based distributions it is `--libexecdir=/usr/lib/ibus`!
+
 ### Required and optional packages for running
 
 **Note about m17n-lib:** m17n-lib is required to use ibus-typing-booster but unfortunately the latest released version (currently 1.7.0) has a serious bug which causes a crash when using ibus-typing-booster. To fix this bug you need my [patch](http://git.savannah.nongnu.org/cgit/m17n/m17n-lib.git/commit/?id=70126a8fd252ee5c0cb8ab66b72cea39b472121e) from the upstream git repository (Patch also discussed [here](https://lists.nongnu.org/archive/html/m17n-list/2015-08/msg00001.html) and [here](https://lists.nongnu.org/archive/html/m17n-list/2015-08/msg00002.html)). Some distributions like Fedora >= 23 already have this patch, some don’t. For Debian there is [this bugreport](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=856959) requesting to include the patch.
