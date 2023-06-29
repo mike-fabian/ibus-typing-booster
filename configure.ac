@@ -54,11 +54,6 @@ AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION(0.16.1)
 
 # ARGUMENTS
-AC_ARG_ENABLE([additional],
-    [AS_HELP_STRING([--disable-additional],[Dont generate additional Engine])], ,
-    [enable_additional=yes])
-
-AM_CONDITIONAL([IBUS_EUROPEAN_TABLE_BUILD_ADDITIONAL],[test x"$enable_additional" = x"yes"])
 
 AC_ARG_ENABLE([installed-tests],
     [AS_HELP_STRING([--enable-installed-tests],
@@ -97,7 +92,7 @@ Build options:
   prefix:                   $prefix
   exec_prefix:              ${exec_prefix}
   libexecdir:               $libexecdir
-  Build Additional          $enable_additional
+  Enable installed tests:   $enable_installed_tests
 ])
 
 if test "$prefix" = "/usr/local" -o "$prefix" = "/usr/local/" -o "$prefix" = "NONE"; then
