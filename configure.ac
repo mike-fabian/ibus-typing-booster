@@ -94,6 +94,18 @@ AC_OUTPUT
 AC_MSG_RESULT([
 Build options:
   Version                   $VERSION
-  Install prefix            $prefix
+  prefix:                   $prefix
+  exec_prefix:              ${exec_prefix}
+  libexecdir:               $libexecdir
   Build Additional          $enable_additional
 ])
+
+if test "$prefix" = "/usr/local" -o "$prefix" = "/usr/local/" -o "$prefix" = "NONE"; then
+    echo "\
+*** Installing ibus-typing-booster into /usr/local will usually not work
+*** It is strongly advised use /usr as the prefix unless you are doing
+*** something very special and know what you are doing.
+*** Also make sure to use the correct --libexecdir for your distribution.
+*** For example on Fedora this is --libexecdir=/usr/libexec and on Debian
+*** based distributions this is --libexecdir=/usr/lib/ibus ."
+fi
