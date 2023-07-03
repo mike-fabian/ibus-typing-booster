@@ -34,6 +34,8 @@ import unittest
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
+import testutils # pylint: disable=import-error
+
 IMPORT_DISTRO_SUCCESSFUL = False
 try:
     import distro
@@ -154,9 +156,21 @@ class TabSqliteDbTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no en_US hunspell dictionary could be found.')
+    @unittest.skipUnless(
+        testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
+        'Skipping because python3-enchant seems broken for cs_CZ.')
+    @unittest.skipUnless(
+        testutils.enchant_working_as_expected(),
+        'Skipping because of an unexpected change in the enchant behaviour.')
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_empty_database_only_dictionary(self) -> None:
         self.init_database(
             user_db_file=':memory:', dictionary_names=['en_US'])
+        print(self.database.select_words(
+            'baltim', p_phrase='foo', pp_phrase='bar')[0][0])
         self.assertEqual(
             'Baltimore',
             self.database.select_words(
@@ -173,6 +187,10 @@ class TabSqliteDbTestCase(unittest.TestCase):
         and distro.id() == 'fedora',
         'Skipping on other distros then Fedora, '
         'French dictionary might be too different on other distributions.')
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_english_poem(self) -> None:
         training_file = 'the_road_not_taken.txt'
         self.init_database(
@@ -227,6 +245,10 @@ class TabSqliteDbTestCase(unittest.TestCase):
         and distro.id() == 'fedora',
         'Skipping on other distros then Fedora, '
         'French dictionary might be too different on other distributions.')
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_french_poem(self) -> None:
         training_file = 'chant_d_automne.txt'
         self.init_database(

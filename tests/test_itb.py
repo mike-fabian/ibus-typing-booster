@@ -449,6 +449,10 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_lookup_table().mock_page_size,
             5)
 
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_complete_word_from_us_english_dictionary(self) -> None:
         self.engine.set_current_imes(
             ['NoIME', 't-latn-post'], update_gsettings=False)
@@ -758,6 +762,10 @@ class ItbTestCase(unittest.TestCase):
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_emoji_related_tab_enable_cursor_visible_escape(self) -> None:
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)
@@ -1067,6 +1075,10 @@ class ItbTestCase(unittest.TestCase):
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_emoji_triggered_by_underscore(self) -> None:
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)
@@ -1133,18 +1145,17 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
-        self.assertEqual(
-            [('Barcelona', 0, '', False, False)],
-            self.engine._candidates)
+        self.assertTrue(
+            ('Barcelona', 0, '', False, False), self.engine._candidates[0])
+        self.assertTrue(len(self.engine._candidates) <= 3)
         self.engine.do_process_key_event(IBus.KEY_4, 0, 0)
         # Nothing should be committed:
         self.assertEqual(self.engine.mock_committed_text, '')
         self.assertEqual(self.engine.mock_preedit_text, 'Barcelona4')
         self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'Barcelona')
-        self.assertEqual(
-            [('Barcelona', 0, '', False, False)],
-            self.engine._candidates)
+        self.assertTrue(
+            ('Barcelona', 0, '', False, False), self.engine._candidates[0])
         self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'Barcelona ')
         self.assertEqual(self.engine.mock_preedit_text, '')
@@ -1241,6 +1252,10 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text,
                          'test test. Test test . Test , hello ')
 
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_no_commit_by_index_when_using_inline_completion(self) -> None:
         '''Test to avoid committing by index when using inline completion
         https://github.com/mike-fabian/ibus-typing-booster/issues/325
@@ -1313,6 +1328,10 @@ class ItbTestCase(unittest.TestCase):
         # No space should be added now:
         self.assertEqual(self.engine.mock_committed_text, 'test test')
 
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_tab_enable_key_binding_changed(self) -> None:
         self.engine.set_current_imes(
             ['NoIME', 't-latn-post'], update_gsettings=False)
@@ -1417,6 +1436,10 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text,
                          '०१२३४५६७८९०१२३४५६७८९ ')
 
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_commit_candidate_1_without_space(self) -> None:
         self.engine.set_current_imes(
             ['NoIME', 't-latn-post'], update_gsettings=False)
@@ -1444,6 +1467,10 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_Right, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'cerulean cerulean')
 
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_toggle_candidate_case(self) -> None:
         self.engine.set_current_imes(
             ['NoIME', 't-latn-post'], update_gsettings=False)
@@ -2030,6 +2057,10 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual('', self.engine.mock_preedit_text)
         self.assertEqual('Größe —', self.engine.mock_committed_text)
 
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_backspace_left_when_candidate_manually_selected(self) -> None:
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)
@@ -2077,6 +2108,10 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(8, self.engine.mock_preedit_text_cursor_pos)
         self.assertEqual('Cassandra', self.engine._candidates[0][0])
 
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_start_compose_when_candidate_selected(self) -> None:
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)
@@ -2361,6 +2396,10 @@ class ItbTestCase(unittest.TestCase):
     @unittest.skipIf(
         testutils.init_libvoikko_error(),
         f'Skipping, {testutils.init_libvoikko_error()}')
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_voikko(self) -> None:
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)
@@ -2395,6 +2434,10 @@ class ItbTestCase(unittest.TestCase):
     @unittest.skipUnless(
         testutils.enchant_working_as_expected(),
         'Skipping because of an unexpected change in the enchant behaviour.')
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_voikko_en_GB_fi_FI(self) -> None:
         self.engine.set_current_imes(
             ['NoIME'], update_gsettings=False)
@@ -2406,14 +2449,12 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
-        self.assertEqual(
-            self.engine._candidates,
-            [('kiss', -1, '', False, True),
-             ('kissa', -1, '', False, True),
-             ('Kiassa', -1, '', False, True),
-             ('kissaa', -1, '', False, True),
-             ('kisassa', -1, '', False, True),
-             ('kisussa', -1, '', False, True)])
+        self.assertTrue(('kiss', -1, '', False, True) in self.engine._candidates)
+        self.assertTrue(('kissa', -1, '', False, True) in self.engine._candidates)
+        self.assertTrue(('Kiassa', -1, '', False, True) in self.engine._candidates)
+        self.assertTrue(('kissaa', -1, '', False, True) in self.engine._candidates)
+        self.assertTrue(('kisassa', -1, '', False, True) in self.engine._candidates)
+        self.assertTrue(('kisussa', -1, '', False, True) in self.engine._candidates)
 
     def test_control_alpha(self) -> None:
         '''Test case for

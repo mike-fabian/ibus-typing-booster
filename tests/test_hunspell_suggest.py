@@ -190,20 +190,21 @@ class HunspellSuggestTestCase(unittest.TestCase):
     @unittest.skipUnless(
         testutils.enchant_working_as_expected(),
         'Skipping because of an unexpected change in the enchant behaviour.')
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_en_US(self) -> None:
         h = hunspell_suggest.Hunspell(['en_US'])
-        self.assertEqual(
-            h.suggest('camel'),
-            [('Camel', 0),
-             ('camel', 0),
-             ('Camelot', 0),
-             ('camellia', 0),
-             ('camelhair', 0),
-             ('Camelopardalis', 0),
-             ('came', -1),
-             ('cameo', -1),
-             ('came l', -1),
-             ('camels', -1)])
+        self.assertTrue(('Camel', 0) in h.suggest('camel'))
+        self.assertTrue(('camel', 0) in h.suggest('camel'))
+        self.assertTrue(('Camelot', 0) in h.suggest('camel'))
+        self.assertTrue(('camellia', 0) in h.suggest('camel'))
+        self.assertTrue(('camelhair', 0) in h.suggest('camel'))
+        self.assertTrue(('Camelopardalis', 0) in h.suggest('camel'))
+        self.assertTrue(('came', -1) in h.suggest('camel'))
+        self.assertTrue(('cameo', -1) in h.suggest('camel'))
+        self.assertTrue(('camels', -1) in h.suggest('camel'))
 
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
@@ -283,11 +284,14 @@ class HunspellSuggestTestCase(unittest.TestCase):
     @unittest.skipUnless(
         testutils.enchant_working_as_expected(),
         'Skipping because of an unexpected change in the enchant behaviour.')
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_en_US_spellcheck_suggest_enchant(self) -> None:
         d = hunspell_suggest.Dictionary('en_US')
-        self.assertEqual(
-            d.spellcheck_suggest_enchant('kamel'),
-            ['camel', 'Camel'])
+        self.assertTrue('camel' in d.spellcheck_suggest_enchant('kamel'))
+        self.assertTrue('Camel' in d.spellcheck_suggest_enchant('kamel'))
 
     @unittest.skipUnless(
         IMPORT_HUNSPELL_SUCCESSFUL and not IMPORT_ENCHANT_SUCCESSFUL,

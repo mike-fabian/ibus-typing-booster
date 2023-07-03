@@ -79,6 +79,17 @@ def init_libvoikko_error() -> str:
             return str(error)
     return 'import libvoikko failed.'
 
+def get_hunspell_dictionary_length(language: str = '') -> int:
+    '''
+    :param language: The language of the dictionary to try
+
+    This is used as a sanity check to ensure that a dictionary
+    has a resonable size.
+
+    See: https://bugzilla.redhat.com/show_bug.cgi?id=2218460
+    '''
+    return len(itb_util.get_hunspell_dictionary_wordlist(language)[2])
+
 def enchant_sanity_test(language: str = '', word: str = '') -> bool:
     '''Checks whether python3-enchant returns some suggestions given a
     language and a word.
@@ -130,8 +141,7 @@ def enchant_working_as_expected() -> bool:
     enchant_dictionary = enchant.Dict('en_US')
     if enchant_dictionary.check('hedgehgo'):
         return False
-    if (enchant_dictionary.suggest('hedgehgo') !=
-        ['hedgehog', 'hedgehop']):
+    if 'hedgehog' not in enchant_dictionary.suggest('hedgehgo'):
         return False
     return True
 

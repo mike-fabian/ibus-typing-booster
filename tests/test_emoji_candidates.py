@@ -315,11 +315,17 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('atomsymbol')[0][:2],
             ('⚛\ufe0f', 'atom symbol'))
         self.assertEqual(
-            mq.candidates('peacesymbol')[0][:2],
-            ('☮\ufe0f', 'peace symbol'))
+            mq.candidates('peacesymbol')[0][0], '☮\ufe0f')
+        # .startswith() because it may be 'peace symbol {Symbol}' or
+        # just 'peace symbol'
+        self.assertTrue(
+            mq.candidates('peacesymbol')[0][1].startswith('peace symbol'))
         self.assertEqual(
-            mq.candidates('peace symbol')[0][:2],
-            ('☮\ufe0f', 'peace symbol {Symbol}'))
+            mq.candidates('peace symbol')[0][0], '☮\ufe0f')
+        # .startswith() because it may be 'peace symbol {Symbol}' or
+        # just 'peace symbol'
+        self.assertTrue(
+            mq.candidates('peace symbol')[0][1].startswith('peace symbol'))
 
     def test_candidates_animals(self) -> None:
         mq = itb_emoji.EmojiMatcher(
