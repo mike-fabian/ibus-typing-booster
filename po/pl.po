@@ -10,17 +10,17 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2023-06-27 11:23+0200\n"
-"PO-Revision-Date: 2023-02-26 20:26+0000\n"
+"PO-Revision-Date: 2023-07-03 11:56+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/pl/>\n"
+"Language-Team: Polish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.15.2\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #: engine/emoji_picker.py:209
 msgid "Emoji Picker"
@@ -736,7 +736,7 @@ msgstr "Czy ibus-typing-booster ma być wyłączony w terminalach."
 #. converted to ASCII digits
 #: setup/main.py:753
 msgid "Convert language specific digits to ASCII digits"
-msgstr ""
+msgstr "Konwertowanie cyfr danego języka na cyfry ASCII"
 
 #: setup/main.py:755
 msgid ""
@@ -745,6 +745,10 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"Część metod wprowadzania domyślnie używa cyfr danego języka. Jeśli "
+"użytkownik nigdy nie chce używać takich cyfr, tylko preferuje zachodnie "
+"cyfry (ASCII), to może ustawić tę opcję, aby konwertować cyfry danego języka "
+"tworzone przez metody wprowadzania na cyfry ASCII."
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
