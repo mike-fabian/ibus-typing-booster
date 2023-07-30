@@ -3,24 +3,24 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Ahmed M. Farrag <a.m.farrag@gmail.com>, 2019, 2020.
 # Mike FABIAN <mfabian@redhat.com>, 2019.
-# Avid Seeker <avidseeker7@protonmail.com>, 2022.
+# Avid Seeker <avidseeker7@protonmail.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2023-06-27 11:23+0200\n"
-"PO-Revision-Date: 2022-09-03 10:58+0000\n"
+"PO-Revision-Date: 2023-07-30 09:19+0000\n"
 "Last-Translator: Avid Seeker <avidseeker7@protonmail.com>\n"
-"Language-Team: Arabic <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ar/>\n"
+"Language-Team: Arabic <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #: engine/emoji_picker.py:209
 msgid "Emoji Picker"
@@ -458,7 +458,7 @@ msgstr "التعرف على الكلام"
 #. focus:
 #: setup/main.py:340 setup/main.py:2184
 msgid "Autosettings"
-msgstr ""
+msgstr "الإعدادات التلقائية"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -707,17 +707,17 @@ msgstr ""
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:734
 msgid "Disable in terminals"
-msgstr ""
+msgstr "عطِّل في الطرفيات"
 
 #: setup/main.py:736
 msgid "Whether ibus-typing-booster should be disabled in terminals."
-msgstr ""
+msgstr "ما إذا كان يجب تعطيل مُدعِّمُ كتابةِ ‎ibus‏ في الطرفيات."
 
 #. Translators: Whether language specific digits should be
 #. converted to ASCII digits
 #: setup/main.py:753
 msgid "Convert language specific digits to ASCII digits"
-msgstr ""
+msgstr "بدِّل الأرقام المختصة باللغة إلى أرقام ASCII"
 
 #: setup/main.py:755
 msgid ""
@@ -726,6 +726,9 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"بعض طرق الإدخال تُنتج أرقاماً مرتبطة بلغة بشكل افتراضي. إن كنت لا تود "
+"استعمال مثل هذه الأرقام وتفضل الأرقام العربية (ASCII)، فبإمكانك تحديد هذا "
+"الخيار."
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
@@ -1385,17 +1388,15 @@ msgstr "لم يُحدد ملف بعد."
 #. browser tab) gets the focus.
 #: setup/main.py:2217 setup/main.py:4337
 msgid "Add an autosetting"
-msgstr ""
+msgstr "أضِف إعداداً تلقائياً"
 
 #. Translators: This is a button to remove an autosetting.
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2231
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remove an autosetting"
-msgstr "حذف طريقة إدخال"
+msgstr "احذف إعداداً افتراضياً"
 
 #. Translators: This is a button to move an autosetting up in the
 #. order the autosettings are applied. “Up” means it is applied
@@ -1406,10 +1407,8 @@ msgstr "حذف طريقة إدخال"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2249
-#, fuzzy
-#| msgid "Move input method up"
 msgid "Move an autosetting up"
-msgstr "نقل طريقة إدخال للأعلى"
+msgstr "نقل إعداد تلقائي للإعلى"
 
 #. Translators: This is a button to move an autosetting down in the
 #. order the autosettings are applied. “Down” means it is applied
@@ -1420,10 +1419,8 @@ msgstr "نقل طريقة إدخال للأعلى"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2267
-#, fuzzy
-#| msgid "Move input method down"
 msgid "Move an autosetting down"
-msgstr "نقل طريقة إدخال للأسفل"
+msgstr "نقل إعداد تلقائي للأسفل"
 
 #: setup/main.py:2311
 msgid "Spell checking"
@@ -1437,7 +1434,7 @@ msgstr "الإيموجي"
 #. the automatic settings
 #: setup/main.py:2527
 msgid "Setting"
-msgstr ""
+msgstr "إعداد"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1451,7 +1448,7 @@ msgstr "قيمة"
 #. the automatic settings
 #: setup/main.py:2560
 msgid "Regular expression"
-msgstr ""
+msgstr "تعبير نمطي"
 
 #: setup/main.py:2606
 msgid "Are you sure?"
