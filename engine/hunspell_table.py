@@ -159,7 +159,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._setup_pid = 0
         self._gsettings = Gio.Settings(
             schema='org.freedesktop.ibus.engine.typing-booster')
-        self._gsettings.connect('changed', self.on_gsettings_value_changed)
 
         self._prop_dict: Dict[str, IBus.Property] = {}
         self._sub_props_dict: Dict[str, IBus.PropList] = {}
@@ -778,6 +777,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 'set': self.set_google_application_credentials,
                 'get': self.get_google_application_credentials},
         }
+        self._gsettings.connect('changed', self.on_gsettings_value_changed)
 
         self._clear_input_and_update_ui()
 
