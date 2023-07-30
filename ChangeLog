@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 30 Jul 2023 Release 2.23.2
+* Move self._gsettings.connect('changed', self.on_gsettings_value_changed) in __init__() *after* defining self._set_get_functions (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/454) (Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=2171140)
+* Translation update from Weblate (ar 100%)
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 03 Jul 2023 Release 2.23.1
 * Translation update from Weblate (pl 100%)
 * Adapt some test cases to changes in enchant

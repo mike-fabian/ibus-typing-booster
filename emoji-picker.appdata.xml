@@ -39,6 +39,32 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.23.2" date="2023-07-30" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.23.2</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Move self._gsettings.connect('changed', self.on_gsettings_value_changed) in __init__() *after* defining self._set_get_functions
+            (Resolves: github-issues#454)
+          </li>
+          <li>
+            Translation update from Weblate (ar 100%)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/454">
+          github-issues#454
+        </issue>
+        <issue url="https://bugzilla.redhat.com/show_bug.cgi?id=2171140">
+          rhbz#2171140
+        </issue>
+      </issues>
+    </release>
     <release version="2.23.1" date="2023-07-03" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.23.1</url>
       <description>
