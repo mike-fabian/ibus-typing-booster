@@ -11,16 +11,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2023-06-27 11:23+0200\n"
-"PO-Revision-Date: 2023-02-27 07:29+0000\n"
+"PO-Revision-Date: 2023-08-03 08:02+0000\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
-"Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/tr/>\n"
+"Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.2\n"
+"X-Generator: Weblate 4.18.2\n"
 
 #: engine/emoji_picker.py:209
 msgid "Emoji Picker"
@@ -728,7 +728,7 @@ msgstr ""
 #. converted to ASCII digits
 #: setup/main.py:753
 msgid "Convert language specific digits to ASCII digits"
-msgstr ""
+msgstr "Dile özgü rakamları ASCII rakamlarına dönüştür"
 
 #: setup/main.py:755
 msgid ""
@@ -737,6 +737,11 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"Bazı giriş yöntemleri öntanımlı olarak dile özgü rakamlar üretir. Eğer kişi "
+"bu tür dile özgü rakamları hiçbir zaman kullanmak istemiyorsa ve her zaman "
+"batı (ASCII) rakamlarını tercih ediyorsa, giriş yöntemleri tarafından "
+"üretilen dile özgü rakamları her zaman ASCII rakamlarına dönüştürmek için bu "
+"seçeneği ayarlayabilir."
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
