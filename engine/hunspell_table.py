@@ -6386,6 +6386,20 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/107
             if self.is_empty() and not self._lookup_table.cursor_visible:
                 return self._return_false(key.val, key.code, key.state)
+            preedit_ime = self._current_imes[0]
+            # Support 'S-C-Return' as commit to preedit if the current
+            # preedit_ime needs it:
+            # https://github.com/mike-fabian/ibus-typing-booster/issues/457
+            if (not self.is_empty() and key.msymbol == 'S-C-Return'
+                and
+                self._transliterators[
+                    preedit_ime].transliterate(
+                        self._typed_string + [key.msymbol],
+                        ascii_digits=self._ascii_digits)
+                != self._transliterated_strings[preedit_ime] + 'S-C-Return'):
+                self._insert_string_at_cursor([key.msymbol])
+                self._update_ui()
+                return True
             if (not key.shift and (not self.get_lookup_table().cursor_visible
                                    or self._is_candidate_auto_selected)):
                 # Nothing is *manually* selected in the lookup table,
@@ -6501,7 +6515,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # the input might influence the transliteration. For example
             # When using hi-itrans, “. ” translates to “। ”
             # (See: https://bugzilla.redhat.com/show_bug.cgi?id=1353672)
-            preedit_ime = self._current_imes[0]
             input_phrase = self._transliterators[
                 preedit_ime].transliterate(
                     self._typed_string + [key.msymbol],

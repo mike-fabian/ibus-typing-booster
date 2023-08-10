@@ -409,6 +409,81 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'ä ')
 
+    def test_hi_itrans_full_stop_space(self) -> None:
+        ''' https://bugzilla.redhat.com/show_bug.cgi?id=1353672 '''
+        self.engine.set_current_imes(
+            ['hi-itrans', 'mr-itrans', 'NoIME'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_period, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '.')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '। ')
+
+    def test_hi_itrans_commit_to_preedit(self) -> None:
+        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/457 '''
+        self.engine.set_current_imes(
+            ['hi-itrans', 'mr-itrans', 'NoIME'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'न')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(
+            IBus.KEY_Return, 0,
+            IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'न्')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_T, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'न्ट')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(
+            IBus.KEY_Return, 0,
+            IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'न्ट्')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'न्ट् ')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'अ')
+        self.assertEqual(self.engine.mock_committed_text, 'न्ट् ')
+        self.engine.do_process_key_event(
+            IBus.KEY_Return, 0,
+            IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'न्ट् अ\r')
+
+    def test_mr_itrans_no_commit_to_preedit(self) -> None:
+        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/457 '''
+        self.engine.set_current_imes(
+            ['mr-itrans', 'hi-itrans', 'NoIME'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'न्')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(
+            IBus.KEY_Return, 0,
+            IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'न्\r')
+        self.engine.do_process_key_event(IBus.KEY_T, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'ट्')
+        self.assertEqual(self.engine.mock_committed_text, 'न्\r')
+        self.engine.do_process_key_event(
+            IBus.KEY_Return, 0,
+            IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'न्\rट्\r')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'न्\rट्\r ')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'अ')
+        self.assertEqual(self.engine.mock_committed_text, 'न्\rट्\r ')
+        self.engine.do_process_key_event(
+            IBus.KEY_Return, 0,
+            IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'न्\rट्\r अ\r')
+
     def test_autocommit_characters(self) -> None:
         self.engine.set_current_imes(
             ['NoIME', 't-latn-post'], update_gsettings=False)

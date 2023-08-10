@@ -5300,6 +5300,9 @@ class KeyEvent:
         self.name = IBus.keyval_name(self.val)
         self.unicode = IBus.keyval_to_unicode(self.val)
         self.msymbol = self.unicode
+        if self.msymbol == '\r':
+            # https://github.com/mike-fabian/ibus-typing-booster/issues/457
+            self.msymbol = self.name # “Return”
         self.shift = self.state & IBus.ModifierType.SHIFT_MASK != 0
         self.lock = self.state & IBus.ModifierType.LOCK_MASK != 0
         self.control = self.state & IBus.ModifierType.CONTROL_MASK != 0
@@ -5331,6 +5334,9 @@ class KeyEvent:
                 self.msymbol = 'A-' + self.msymbol
             if self.mod5:
                 self.msymbol = 'G-' + self.msymbol
+            if self.shift and self.msymbol == 'C-Return':
+                # https://github.com/mike-fabian/ibus-typing-booster/issues/457
+                self.msymbol = 'S-C-Return'
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, KeyEvent):
