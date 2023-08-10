@@ -45,6 +45,37 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.23.4" date="2023-08-10" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.23.4</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Support msymbol 'S-C-Return' as a commit to preedit key
+            (Resolves: github-issues#457). Needed by hi-itrans.mim,
+            hi-optitransv2.mim, kn-optitransv2.mim, mr-gamabhana.mim,
+            sa-itrans.mim, sa-vedic-itrans.mim.
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Remove useless m4/{Makefile.am,as-version.m4}
+          </li>
+          <li>
+            Update UnicodeData.txt to current Unicode 15.1.0 draft
+          </li>
+          <li>
+            Update emoji data files for current Unicode 15.1 DRAFT
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/457">
+          github-issues#457
+        </issue>
+      </issues>
+    </release>
     <release version="2.23.3" date="2023-08-03" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.23.3</url>
       <description>

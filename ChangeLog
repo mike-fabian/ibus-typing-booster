@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 10 Aug 2023 Release 2.23.4
+* Support msymbol 'S-C-Return' as a commit to preedit key (Resolves https://github.com/mike-fabian/ibus-typing-booster/issues/457). Needed by hi-itrans.mim, hi-optitransv2.mim, kn-optitransv2.mim, mr-gamabhana.mim, sa-itrans.mim, sa-vedic-itrans.mim
+* Remove useless m4/{Makefile.am,as-version.m4}
+* Update emoji annotations from CLDR
+* Update UnicodeData.txt to current Unicode 15.1.0 draft (https://www.unicode.org/Public/draft/UCD/ucd/UnicodeData.txt)
+* Update emoji data files for current Unicode 15.1 DRAFT (https://www.unicode.org/Public/draft/UCD/ucd/emoji/emoji-data.txt https://www.unicode.org/Public/draft/UCD/ucd/emoji/emoji-variation-sequences.txt)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 03 Aug 2023 Release 2.23.3
 * Translation update from Weblate (tr 100%)
 
