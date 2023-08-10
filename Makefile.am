@@ -22,7 +22,6 @@ DISTCHECK_CONFIGURE_FLAGS = \
 SUBDIRS = \
 	engine \
 	icons \
-	m4 \
 	data \
 	data/annotations \
 	data/annotationsDerived \

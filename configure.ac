@@ -80,8 +80,7 @@ AC_CONFIG_FILES([po/Makefile.in
     data/Makefile
     data/annotations/Makefile
     data/annotationsDerived/Makefile
-    icons/Makefile
-    m4/Makefile]
+    icons/Makefile]
 )
 
 AC_OUTPUT
