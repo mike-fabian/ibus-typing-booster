@@ -299,6 +299,13 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_space]),
             '"')
 
+    def test_compose_sequences_with_code_points(self) -> None:
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key, IBus.KEY_quotedbl, 0x010004D9]),
+                'ӛ' # "ӛ"   U04DB # CYRILLIC SMALL LETTER SCHWA WITH DIAERESIS
+                )
+
     def test_compose_arabic(self) -> None:
         # /usr/share/X11/locale/en_US.UTF-8/Compose contains:
         # # Arabic Lam-Alef ligatures
