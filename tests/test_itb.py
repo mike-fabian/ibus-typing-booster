@@ -425,7 +425,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_current_imes(
             ['hi-itrans', 'mr-itrans', 'NoIME'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
-        self.assertEqual(self.engine.mock_preedit_text, 'न')
+        self.assertEqual(self.engine.mock_preedit_text, 'न्')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(
             IBus.KEY_Return, 0,
@@ -433,7 +433,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, 'न्')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_T, 0, 0)
-        self.assertEqual(self.engine.mock_preedit_text, 'न्ट')
+        self.assertEqual(self.engine.mock_preedit_text, 'न्ट्')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(
             IBus.KEY_Return, 0,

@@ -42,8 +42,6 @@ class libm17n__MConverter(ctypes.Structure):
     pass
 class libm17n__MInputMethod(ctypes.Structure):
     pass
-class libm17n__MInputContext(ctypes.Structure):
-    pass
 class libm17n__MText(ctypes.Structure):
     pass
 libm17n__MSymbolStruct._fields_ = [
@@ -52,6 +50,36 @@ libm17n__MSymbolStruct._fields_ = [
     ('length', ctypes.c_int),
     ('plist', libm17n__MPlist),
     ('next', ctypes.POINTER(libm17n__MSymbolStruct))]
+class libm17n__MInputContext__spot(ctypes.Structure):
+    _fields_ = [
+        ('x', ctypes.c_int),
+        ('y', ctypes.c_int),
+        ('ascent', ctypes.c_int),
+        ('descent', ctypes.c_int),
+        ('fontsize', ctypes.c_int),
+        ('mt', ctypes.POINTER(libm17n__MText)),
+        ('pos', ctypes.c_int)]
+class libm17n__MInputContext(ctypes.Structure):
+    _fields_ = [
+        ('im', ctypes.POINTER(libm17n__MInputMethod)),
+        ('produced', ctypes.POINTER(libm17n__MText)),
+        ('arg', ctypes.c_void_p),
+        ('active', ctypes.c_int),
+        ('spot', libm17n__MInputContext__spot),
+        ('info', ctypes.c_void_p),
+        ('status', ctypes.POINTER(libm17n__MText)),
+        ('status_changed', ctypes.c_int),
+        ('preedit', ctypes.POINTER(libm17n__MText)),
+        ('preedit_changed', ctypes.c_int),
+        ('cursor_pos', ctypes.c_int),
+        ('cursor_pos_changed', ctypes.c_int),
+        ('candidate_list',  ctypes.POINTER(libm17n__MPlist)),
+        ('candidate_index', ctypes.c_int),
+        ('candidate_from', ctypes.c_int),
+        ('candidate_to', ctypes.c_int),
+        ('candidate_show', ctypes.c_int),
+        ('candidates_changed', ctypes.c_int),
+        ('plist', ctypes.POINTER(libm17n__MPlist))]
 # pylint: enable=invalid-name
 # pylint: enable=too-few-public-methods
 # pylint: enable=missing-class-docstring
@@ -1009,7 +1037,7 @@ class Transliterator:
             return ''.join(msymbol_list)
         libm17n__minput_reset_ic(self._ic) # type: ignore
         output = ''
-        for symbol in msymbol_list + ['nil']:
+        for symbol in msymbol_list:
             _symbol = libm17n__msymbol(symbol.encode('utf-8')) # type: ignore
             retval = libm17n__minput_filter( # type: ignore
                 self._ic, _symbol, ctypes.c_void_p(None))
@@ -1019,8 +1047,42 @@ class Transliterator:
                     self._ic, _symbol, ctypes.c_void_p(None), _mt)
                 if libm17n__mtext_len(_mt) > 0: # type: ignore
                     output += mtext_to_string(_mt)
-                if retval and symbol != 'nil':
+                if retval:
                     output += symbol
+        try:
+            if (self._ic.contents.preedit_changed
+                and
+                libm17n__mtext_len(
+                    self._ic.contents.preedit) > 0): # type: ignore
+                output += mtext_to_string(self._ic.contents.preedit)
+        except Exception as error: # pylint: disable=broad-except
+            # This should never happen:
+            raise ValueError('Problem accessing preedit') from error
+        # From the m17n-lib documentation:
+        #
+        # The minput_reset_ic () function resets input context $IC by
+        # calling a callback function corresponding to @b
+        # Minput_reset.  It resets the status of $IC to its initial
+        # one.  As the current preedit text is deleted without
+        # commitment, if necessary, call minput_filter () with the arg
+        # @b key #Mnil to force the input method to commit the preedit
+        # in advance.
+        #
+        # Looks like we need to do this here, i.e. call minput_filter
+        # with a final 'nil' msymbol to commit the preedit in the
+        # input context to make the next call to minput_reset_ic()
+        # work reliably.  Without that minput_reset_ic() sometimes
+        # segfaults.  The old code, before fixing
+        # https://github.com/mike-fabian/ibus-typing-booster/issues/460
+        # always appended a final 'nil' symbol to the msymbol_list
+        # argument which had to be removed to get the correct preedit
+        # contents.  But apparently that final 'nil' is necessary to
+        # make it work reliably. We can do this here because above we read
+        # the preedit and added it to 'output' already and don’t
+        # need it anymore.
+        _symbol = libm17n__msymbol('nil'.encode('utf-8')) # type: ignore
+        _retval = libm17n__minput_filter( # type: ignore
+            self._ic, _symbol, ctypes.c_void_p(None))
         if not ascii_digits:
             return output
         return convert_digits_to_ascii(output)
