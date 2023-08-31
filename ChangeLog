@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 01 Sep 2023 Release 2.24.0
+* Implement “commit_and_forward_key” command (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/461)
+* m17n-lib interface: transliterate “produced” part and “preedit” separately (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/460)
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 10 Aug 2023 Release 2.23.4
 * Support msymbol 'S-C-Return' as a commit to preedit key (Resolves https://github.com/mike-fabian/ibus-typing-booster/issues/457). Needed by hi-itrans.mim, hi-optitransv2.mim, kn-optitransv2.mim, mr-gamabhana.mim, sa-itrans.mim, sa-vedic-itrans.mim
 * Remove useless m4/{Makefile.am,as-version.m4}

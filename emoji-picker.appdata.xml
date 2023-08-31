@@ -39,6 +39,33 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.24.0" date="2023-09-01" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.24.0</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Implement “commit_and_forward_key” command (Resolves:
+            github-issues#461)
+          </li>
+          <li>
+            m17n-lib interface: transliterate “produced” part and
+            “preedit” separately (Resolves: github-issues#460)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/461">
+          github-issues#461
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/460">
+          github-issues#460
+        </issue>
+      </issues>
+    </release>
     <release version="2.23.4" date="2023-08-10" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.23.4</url>
       <description>
