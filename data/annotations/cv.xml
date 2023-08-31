@@ -29,15 +29,23 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🦳" type="tts" draft="unconfirmed">шурӑ ҫӳҫ</annotation>
 		<annotation cp="🦲" draft="unconfirmed">кукша | ҫӳҫсӗр | химиотерапи | хырӑннӑ</annotation>
 		<annotation cp="🦲" type="tts" draft="unconfirmed">кукша пуҫ</annotation>
+		<annotation cp="🎄" draft="unconfirmed">Раштав елки</annotation>
 		<annotation cp="🎄" type="tts" draft="unconfirmed">Раштав елки</annotation>
+		<annotation cp="👓" draft="unconfirmed">куҫлӑх</annotation>
 		<annotation cp="👓" type="tts" draft="unconfirmed">куҫлӑх</annotation>
+		<annotation cp="🕶" draft="unconfirmed">хӗвел хӳтӗлекен куҫлӑх</annotation>
 		<annotation cp="🕶" type="tts" draft="unconfirmed">хӗвел хӳтӗлекен куҫлӑх</annotation>
+		<annotation cp="🥽" draft="unconfirmed">симӗс куҫлӑх</annotation>
 		<annotation cp="🥽" type="tts" draft="unconfirmed">симӗс куҫлӑх</annotation>
+		<annotation cp="👖" draft="unconfirmed">джинссем</annotation>
 		<annotation cp="👖" type="tts" draft="unconfirmed">джинссем</annotation>
 		<annotation cp="🔋" draft="unconfirmed">аккумулятор</annotation>
 		<annotation cp="🔋" type="tts" draft="unconfirmed">аккумулятор</annotation>
+		<annotation cp="💻" draft="unconfirmed">ноутбук</annotation>
 		<annotation cp="💻" type="tts" draft="unconfirmed">ноутбук</annotation>
+		<annotation cp="🖨" draft="unconfirmed">принтер</annotation>
 		<annotation cp="🖨" type="tts" draft="unconfirmed">принтер</annotation>
+		<annotation cp="🖱" draft="unconfirmed">компьютер шӑшийӗ</annotation>
 		<annotation cp="🖱" type="tts" draft="unconfirmed">компьютер шӑшийӗ</annotation>
 		<annotation cp="🏁" draft="unconfirmed">ӑмӑрту | тӑваткал-тӑваткал ялав</annotation>
 		<annotation cp="🏁" type="tts" draft="unconfirmed">клеткӑллӑ ялав</annotation>

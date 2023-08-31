@@ -965,7 +965,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🎅" type="tts">Sántá Klọz</annotation>
 		<annotation cp="🤶">Klọz | Krísmas | Mamá | Misis | Mọ́da | Sẹlibréshọn</annotation>
 		<annotation cp="🤶" type="tts">Misis Klọz</annotation>
-		<annotation cp="🧑‍🎄">Klọz, Krísmas | Mx Klọz</annotation>
+		<annotation cp="🧑‍🎄">Klọz | Krísmas | Mx Klọz</annotation>
 		<annotation cp="🧑‍🎄" type="tts">Mx Klọz</annotation>
 		<annotation cp="🦸">Bẹtá | Gud | Híro | Supahíro | Supapáwa | Wúmán Híro</annotation>
 		<annotation cp="🦸" type="tts">Supahíro</annotation>
@@ -1209,8 +1209,6 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="💏" type="tts">Kis</annotation>
 		<annotation cp="💑">Lọv | Tuú Pípul | Tuú Pípul Wit Hat</annotation>
 		<annotation cp="💑" type="tts">Tuú Pípul Wit Hat</annotation>
-		<annotation cp="👪">Fámíli</annotation>
-		<annotation cp="👪" type="tts">Fámíli</annotation>
 		<annotation cp="🗣">Dák Shép Ọf Pẹ́sin Ọ Sọ́mtin | Fes | Hẹd | Hẹd Wé De Tọk | Pẹ́sin Wé De Tọk | Spik | Tọk</annotation>
 		<annotation cp="🗣" type="tts">Hẹd Wé De Tọk</annotation>
 		<annotation cp="👤">Dák Shép Ọf Ọ́p Pát Ọf Pẹ́sin Bọdí | Dák Shép Ọf Pẹ́sin Ọ Sọ́mtin | Ọ́p Pát Ọf Pẹ́sin Bọdí</annotation>
@@ -1219,6 +1217,8 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="👥" type="tts">Dák Shép Ọf Ọ́p Pát Ọf Tú Pípul Bọdí</annotation>
 		<annotation cp="🫂">Baibaí | Hẹ́lo | Họg | Hól Tait | Pípul Wé Họ́g Ích Ọ́da | Pípul Wé Hól Ích Ọ́da Tait | Tánkio</annotation>
 		<annotation cp="🫂" type="tts">Pípul Wé Hól Ích Ọ́da Tait</annotation>
+		<annotation cp="👪">Fámíli</annotation>
+		<annotation cp="👪" type="tts">Fámíli</annotation>
 		<annotation cp="👣">Fútmak | Fútmak-dẹm | Klọt | Lẹ́gmak-dẹm | Mak Lẹ́gmak</annotation>
 		<annotation cp="👣" type="tts">Fútmak-dẹm</annotation>
 		<annotation cp="🦰">Jínja | Rẹ́d Hea | Rẹ́dhẹd</annotation>
@@ -1659,7 +1659,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🍲" type="tts">Pọ́t Ọf Fud</annotation>
 		<annotation cp="🫕">Chiz | Chọ́kọ́lét | Fọ́ndu | Mẹlt | Pọt | Swis</annotation>
 		<annotation cp="🫕" type="tts">Fọ́ndu</annotation>
-		<annotation cp="🥣">Díp-plet Wit Spun | Díp-Plet Wit Spun | Kọ́nji: Wọ́n Fud Wé Dẹm Mék Wit Rais | Mọ́nín Chọp | Síril: Fud Wé Dẹm Mék Wit Gren Laik Kọn, Báli Ọ Wiit</annotation>
+		<annotation cp="🥣">Díp-plet Wit Spun | Díp-Plet Wit Spun | Kọ́nji: Wọ́n Fud Wé Dẹm Mék Wit Rais | Mọ́nín Chọp | Síril: Fud Wé Dẹm Mék Wit Gren Laik Kọn | Báli Ọ Wiit</annotation>
 		<annotation cp="🥣" type="tts">Díp-plet Wit Spun</annotation>
 		<annotation cp="🥗">Fud | Grin | Grín Salad | Salad</annotation>
 		<annotation cp="🥗" type="tts">Grín Salad</annotation>
@@ -1787,9 +1787,9 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🥢" type="tts">Chọpstik-dẹm</annotation>
 		<annotation cp="🍽">Fọk | Fọk An Naif Wit Plet | Kuk | Naif | Plet</annotation>
 		<annotation cp="🍽" type="tts">Fọk An Naif Wit Plet</annotation>
-		<annotation cp="🍴">Fọk | Fọ́k An Naif | Kọ́tlári: Naif, Fọk, Spun Wé Pípul De Yúz Chọ́p Fud | Naif | To Kúk Fud</annotation>
+		<annotation cp="🍴">Fọk | Fọ́k An Naif | Kọ́tlári: Naif | Fọk | Spun Wé Pípul De Yúz Chọ́p Fud | Naif | To Kúk Fud</annotation>
 		<annotation cp="🍴" type="tts">Fọ́k An Naif</annotation>
-		<annotation cp="🥄">Spun | Tébúlwea: Tins Wé Yu De Ték Chọp Laik Spun, Naif, Fọk, Plet, Kọp</annotation>
+		<annotation cp="🥄">Spun | Tébúlwea: Tins Wé Yu De Ték Chọp Laik Spun | Naif | Fọk | Plet | Kọp</annotation>
 		<annotation cp="🥄" type="tts">Spun</annotation>
 		<annotation cp="🔪">Japán Kíchín Naif | Kíchín Naif | Naif | To Kuk | Tul | Wẹ́pọn</annotation>
 		<annotation cp="🔪" type="tts">Kíchín Naif</annotation>
@@ -2859,7 +2859,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🩻" type="tts">Eks-Rè</annotation>
 		<annotation cp="🚪">Dọọ</annotation>
 		<annotation cp="🚪" type="tts">Dọọ</annotation>
-		<annotation cp="🛗">Aksẹsibílíti: Haú I Dé Ízi To Rích Sọm Ples, Ẹ́ntá Ọ Yúz Ọ Sí Sọ́mtin | Ẹ́livétọ | Lift | Lìft | To Púl Sọ́mtin Gó Ọp</annotation>
+		<annotation cp="🛗">Aksẹsibílíti: Haú I Dé Ízi To Rích Sọm Ples | Ẹ́ntá Ọ Yúz Ọ Sí Sọ́mtin | Ẹ́livétọ | Lift | Lìft | To Púl Sọ́mtin Gó Ọp</annotation>
 		<annotation cp="🛗" type="tts">Lìft</annotation>
 		<annotation cp="🪞">Imej | Lukin Glas | Mírọ | Riflẹ́ktọ | Spẹ́kulum</annotation>
 		<annotation cp="🪞" type="tts">Mírọ</annotation>

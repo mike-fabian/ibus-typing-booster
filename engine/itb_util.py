@@ -1434,6 +1434,7 @@ CLDR_ANNOTATION_FILES = {
     'ksf_CM',
     'ksh',
     'ksh_DE',
+    'ku',
     'kw',
     'kw_GB',
     'ky',

@@ -773,14 +773,14 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="💏" type="tts">bewsa</annotation>
 		<annotation cp="💑">imħabba | koppja | koppja b’qalb</annotation>
 		<annotation cp="💑" type="tts">koppja b’qalb</annotation>
-		<annotation cp="👪">familja</annotation>
-		<annotation cp="👪" type="tts">familja</annotation>
 		<annotation cp="🗣">jitkellmu | ras | silwett | titkellem | wiċċ</annotation>
 		<annotation cp="🗣" type="tts">titkellem ras</annotation>
 		<annotation cp="👤">bust | bust f’silwett | silwett</annotation>
 		<annotation cp="👤" type="tts">bust f’silwett</annotation>
 		<annotation cp="👥">bust | busti f’silwett | silwett</annotation>
 		<annotation cp="👥" type="tts">busti f’silwett</annotation>
+		<annotation cp="👪">familja</annotation>
+		<annotation cp="👪" type="tts">familja</annotation>
 		<annotation cp="👣">ħwejjeġ | impronta | ipprintja | marki tas-saqajn</annotation>
 		<annotation cp="👣" type="tts">marki tas-saqajn</annotation>
 		<annotation cp="🐵">wiċċ | wiċċ ta’ xadina | xadina</annotation>
@@ -1739,7 +1739,7 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🀄" type="tts">mahjong red dragon</annotation>
 		<annotation cp="🎴">fjuri | fjuri tal-karti tal-logħob | Ġappuniż | jilgħab | karta | logħba</annotation>
 		<annotation cp="🎴" type="tts">fjuri tal-karti tal-logħob</annotation>
-		<annotation cp="🎭">arti | arti, żfin u mużika | maskra | performattivi | teatru</annotation>
+		<annotation cp="🎭">arti | arti | żfin u mużika | maskra | performattivi | teatru</annotation>
 		<annotation cp="🎭" type="tts">arti, żfin u mużika</annotation>
 		<annotation cp="🖼">arti | frejm | mużew | pittura | stampa | stampa fi frejm</annotation>
 		<annotation cp="🖼" type="tts">stampa fi frejm</annotation>
