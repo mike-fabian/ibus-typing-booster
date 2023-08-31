@@ -311,6 +311,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_keybindings({
             'cancel': ['Escape'],
             'commit': [],
+            'commit_and_forward_key': [],
             'commit_candidate_1': [],
             'commit_candidate_1_plus_space': ['1', 'KP_1', 'F1'],
             'commit_candidate_2': [],
@@ -782,6 +783,28 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'test test')
+
+    def test_commit_and_forward_key_command_keybinding(self) -> None:
+        '''Test binding a key to the “commit_and_forward_key” command'''
+        # not yet implemented:
+        self.engine.set_current_imes(
+            ['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        # Set the option to commit by grave
+        self.engine.set_keybindings({
+            'commit_and_forward_key': ['grave'],
+        }, update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'test')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # Now committing with grave, it should commit **and** add a `:
+        self.engine.do_process_key_event(IBus.KEY_grave, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'test`')
 
     def test_commit_with_arrows(self) -> None:
         self.engine.set_current_imes(

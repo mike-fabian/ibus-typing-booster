@@ -5597,6 +5597,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._commit_current_input()
         return True
 
+    def _command_commit_and_forward_key(self) -> bool:
+        '''Handle hotkey for the command “commit_and_forward_key”
+
+        :return: True if the key was completely handled, False if not.
+        '''
+        if self.is_empty() and not self._typed_compose_sequence:
+            return False
+        self._commit_current_input()
+        return True
+
     def _command_commit_candidate_1(self) -> bool:
         '''Handle hotkey for the command “commit_candidate_1”
 
@@ -5792,7 +5802,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             commands: Iterable[str] = ()) -> Tuple[bool, bool]:
         '''Handle hotkey commands
 
-        :return: True if the key was completely handled, False if not.
+        :return: A tuple of too boolean values (match, return_value)
+                 “match” is true if the hotkey matched, false if not
+                 “return_value” is the value which should be returned
+                 from do_process_key_event().
         :param key: The typed key. If this is a hotkey,
                     execute the command for this hotkey.
         :param commands: A list of commands to check whether
@@ -5850,6 +5863,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                     'Meta_L', 'Meta_R',
                                     'Super_L', 'Super_R',
                                     'ISO_Level3_Shift'):
+                        return (True, False)
+                    if command in ('commit_and_forward_key',):
                         return (True, False)
                     return (True, True)
         if hotkey_removed_from_compose_sequence:
@@ -6063,6 +6078,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         (match, return_value) = self._handle_hotkeys(
                 key, commands=['cancel',
                                'commit',
+                               'commit_and_forward_key',
                                'toggle_input_mode_on_off',
                                'enable_lookup',
                                'select_next_candidate',
@@ -6219,14 +6235,18 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         (match, return_value) = self._handle_hotkeys(
             key, commands=['toggle_input_mode_on_off'])
         if match:
-            return return_value
+            if return_value:
+                return True
+            return self._return_false(keyval, keycode, state)
 
         if disabled:
             return self._return_false(keyval, keycode, state)
 
         (match, return_value) = self._handle_hotkeys(key)
         if match:
-            return return_value
+            if return_value:
+                return True
+            return self._return_false(keyval, keycode, state)
 
         result = self._process_key_event(key)
         self._prev_key = key
