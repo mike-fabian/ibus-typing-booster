@@ -45,6 +45,7 @@ engine_table_PYTHON = \
 	itb_nltk.py \
 	itb_pango.py \
 	itb_active_window.py \
+	itb_sound.py \
 	m17n_translit.py \
 	emoji_picker.py \
 	itb_version.py \

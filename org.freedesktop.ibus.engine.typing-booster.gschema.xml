@@ -389,6 +389,9 @@
     <key name="errorsoundfile" type="s">
       <default>'/usr/share/ibus-typing-booster/data/coin9.wav'</default>
     </key>
+    <key name="soundbackend" type="s">
+      <default>'automatic'</default>
+    </key>
     <key name="debuglevel" type="i">
       <default>0</default>
       <summary>Debug level</summary>

@@ -52,15 +52,9 @@ from gi.repository import GLib
 import m17n_translit
 import itb_util
 import itb_active_window
+import itb_sound
 import itb_emoji
 import itb_version
-
-IMPORT_SIMPLEAUDIO_SUCCESSFUL = False
-try:
-    import simpleaudio # type: ignore
-    IMPORT_SIMPLEAUDIO_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_SIMPLEAUDIO_SUCCESSFUL = False
 
 IMPORT_ITB_NLTK_SUCCESSFUL = False
 try:
@@ -376,7 +370,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         else:
             self.set_input_mode(True, update_gsettings=True)
 
-        self._error_sound_object: Optional[simpleaudio.WaveObject] = None
+        self._sound_backend: str = itb_util.variant_to_value(
+            self._gsettings.get_value('soundbackend'))
+        self._error_sound_object: Optional[itb_sound.SoundObject] = None
         self._error_sound_file = ''
         self._error_sound: bool = itb_util.variant_to_value(
             self._gsettings.get_value('errorsound'))
@@ -695,6 +691,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'errorsoundfile': {
                 'set': self.set_error_sound_file,
                 'get': self.get_error_sound_file},
+            'soundbackend': {
+                'set': self.set_sound_backend,
+                'get': self.get_sound_backend},
             'shownumberofcandidates': {
                 'set': self.set_show_number_of_candidates,
                 'get': self.get_show_number_of_candidates},
@@ -4876,38 +4875,53 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._error_sound_file = path
         if update_gsettings:
             self._gsettings.set_value(
-                "errorsoundfile",
+                'errorsoundfile',
                 GLib.Variant.new_string(path))
-        path = os.path.expanduser(path)
-        if not IMPORT_SIMPLEAUDIO_SUCCESSFUL:
-            LOGGER.info(
-                'No error sound because python3-simpleaudio is not available.')
-        else:
-            if not os.path.isfile(path):
-                LOGGER.info('Error sound file %s does not exist.', path)
-            elif not os.access(path, os.R_OK):
-                LOGGER.info('Error sound file %s not readable.', path)
-            else:
-                try:
-                    LOGGER.info(
-                        'Trying to initialize error sound from %s', path)
-                    self._error_sound_object = (
-                        simpleaudio.WaveObject.from_wave_file(path))
-                    LOGGER.info('Error sound initialized.')
-                except (FileNotFoundError, PermissionError) as error:
-                    LOGGER.exception(
-                        'Initializing error sound object failed: %s: %s ',
-                        error.__class__.__name__, error)
-                except Exception as error: # pylint: disable=broad-except
-                    LOGGER.exception(
-                        'Initializing error sound object failed: %s: %s',
-                        error.__class__.__name__, error)
+        self._error_sound_object = itb_sound.SoundObject(
+            os.path.expanduser(path),
+            audio_backend=self._sound_backend)
 
     def get_error_sound_file(self) -> str:
         '''
         Return the path of the .wav file containing the error sound.
         '''
         return self._error_sound_file
+
+    def set_sound_backend(
+            self,
+            sound_backend: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the path of the .wav file containing the sound
+        to play on error.
+
+        :param sound_backend: The name of sound backend to use
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the dconf key changed
+                                 to avoid endless loops when the dconf
+                                 key is changed twice in a short time.
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', sound_backend, update_gsettings)
+        if not isinstance(sound_backend, str):
+            return
+        if sound_backend == self._sound_backend:
+            return
+        self._sound_backend = sound_backend
+        if update_gsettings:
+            self._gsettings.set_value(
+                'soundbackend',
+                GLib.Variant.new_string(sound_backend))
+        self._error_sound_object = itb_sound.SoundObject(
+            os.path.expanduser(self._error_sound_file),
+            audio_backend=self._sound_backend)
+
+    def get_sound_backend(self) -> str:
+        '''
+        Return the name of the currently used sound backend
+        '''
+        return self._sound_backend
 
     def set_show_number_of_candidates(
             self,
@@ -5996,7 +6010,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Play an error sound if enabled and possible'''
         if self._error_sound and self._error_sound_object:
             try:
-                dummy = self._error_sound_object.play()
+                self._error_sound_object.play()
             except Exception as error: # pylint: disable=broad-except
                 LOGGER.exception('Playing error sound failed: %s: %s',
                                  error.__class__.__name__, error)
