@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 12 Sep 2023 Release 2.24.1
+* Support several backends for playing sounds (Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=2237675)
+* Update UnicodeData.txt to current Unicode 15.1.0 and emoji data files to current Unicode 15.1
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 01 Sep 2023 Release 2.24.0
 * Implement “commit_and_forward_key” command (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/461)
 * m17n-lib interface: transliterate “produced” part and “preedit” separately (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/460)

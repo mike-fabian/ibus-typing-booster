@@ -39,6 +39,29 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.24.1" date="2023-09-12" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.24.1</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Support several backends for playing sounds (Resolves: rhbz#2237675)
+          </li>
+          <li>
+            Update UnicodeData.txt to current Unicode 15.1.0 and emoji
+            data files to current Unicode 15.1
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://bugzilla.redhat.com/show_bug.cgi?id=2237675">
+          rhbz#2237675
+        </issue>
+      </issues>
+    </release>
     <release version="2.24.0" date="2023-09-01" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.24.0</url>
       <description>
