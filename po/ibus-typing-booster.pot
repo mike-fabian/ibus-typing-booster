@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-09-01 14:59+0200\n"
+"POT-Creation-Date: 2023-09-12 09:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -125,21 +125,21 @@ msgstr ""
 msgid "Set Font"
 msgstr ""
 
-#: engine/hunspell_table.py:520 engine/hunspell_table.py:554
-#: engine/hunspell_table.py:575
+#: engine/hunspell_table.py:516 engine/hunspell_table.py:550
+#: engine/hunspell_table.py:571
 msgid "Off"
 msgstr ""
 
-#: engine/hunspell_table.py:525 engine/hunspell_table.py:559
-#: engine/hunspell_table.py:580
+#: engine/hunspell_table.py:521 engine/hunspell_table.py:555
+#: engine/hunspell_table.py:576
 msgid "On"
 msgstr ""
 
-#: engine/hunspell_table.py:544
+#: engine/hunspell_table.py:540
 msgid "Input mode"
 msgstr ""
 
-#: engine/hunspell_table.py:545
+#: engine/hunspell_table.py:541
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr ""
 
@@ -150,7 +150,7 @@ msgstr ""
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:564 engine/hunspell_table.py:566 setup/main.py:606
+#: engine/hunspell_table.py:560 engine/hunspell_table.py:562 setup/main.py:606
 msgid "Unicode symbols and emoji predictions"
 msgstr ""
 
@@ -161,60 +161,60 @@ msgstr ""
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:585 engine/hunspell_table.py:586 setup/main.py:635
+#: engine/hunspell_table.py:581 engine/hunspell_table.py:582 setup/main.py:635
 msgid "Off the record mode"
 msgstr ""
 
-#: engine/hunspell_table.py:1795
+#: engine/hunspell_table.py:1794
 msgid "Highest priority dictionary"
 msgstr ""
 
-#: engine/hunspell_table.py:1796
+#: engine/hunspell_table.py:1795
 msgid "Choose highest priority dictionary"
 msgstr ""
 
-#: engine/hunspell_table.py:1825
+#: engine/hunspell_table.py:1824
 msgid "Preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1826
+#: engine/hunspell_table.py:1825
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:2140
+#: engine/hunspell_table.py:2139
 msgid "Setup"
 msgstr ""
 
-#: engine/hunspell_table.py:2143 setup/main.py:170
+#: engine/hunspell_table.py:2142 setup/main.py:170
 msgid "Preferences for ibus-typing-booster"
 msgstr ""
 
-#: engine/hunspell_table.py:5099
+#: engine/hunspell_table.py:5113
 msgid "Failed to import Google speech-to-text."
 msgstr ""
 
-#: engine/hunspell_table.py:5102
+#: engine/hunspell_table.py:5116
 msgid "Failed to import pyaudio."
 msgstr ""
 
-#: engine/hunspell_table.py:5105
+#: engine/hunspell_table.py:5119
 msgid "Failed to import queue."
 msgstr ""
 
-#: engine/hunspell_table.py:5110
+#: engine/hunspell_table.py:5124
 msgid "No supported language for speech recognition."
 msgstr ""
 
-#: engine/hunspell_table.py:5114
+#: engine/hunspell_table.py:5128
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 
-#: engine/hunspell_table.py:5127
+#: engine/hunspell_table.py:5141
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 
-#: engine/hunspell_table.py:5235
+#: engine/hunspell_table.py:5249
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 
