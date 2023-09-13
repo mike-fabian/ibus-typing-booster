@@ -4891,8 +4891,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self,
             sound_backend: Union[str, Any],
             update_gsettings: bool = True) -> None:
-        '''Sets the path of the .wav file containing the sound
-        to play on error.
+        '''Sets the sound backend to use
 
         :param sound_backend: The name of sound backend to use
         :param update_gsettings: Whether to write the change to Gsettings.
