@@ -162,9 +162,10 @@ def parse_args() -> Any:
         ('20200915', '13.1'),
         ('20210914', '14.0'),
         ('20220913', '15.0'),
+        ('20230912', '15.1'),
     )
     current_date = time.strftime('%Y%m%d')
-    current_unicode_version = '15.0'
+    current_unicode_version = '15.1'
     for (date, version) in unicode_versions:
         if current_date > date:
             current_unicode_version = version
@@ -201,8 +202,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                  languages: Iterable[str] = ('en_US',),
                  modal: bool = False,
                  unicode_data_all: bool = False,
-                 emoji_unicode_min: str = '1.0',
-                 emoji_unicode_max: str = '100.0',
+                 emoji_unicode_min: Optional[str] = '0.0',
+                 emoji_unicode_max: Optional[str] = '100.0',
                  font: Optional[str] = None,
                  fontsize: Optional[float] = None,
                  fallback: Optional[bool] = None) -> None:
@@ -259,8 +260,13 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self.connect('delete-event', self.on_delete_event)
         self.connect('key-press-event', self.on_main_window_key_press_event)
         self._languages = languages
-        self._emoji_unicode_min = emoji_unicode_min
-        self._emoji_unicode_max = emoji_unicode_max
+        self._emoji_unicode_min = '0.0'
+        if not emoji_unicode_min is None:
+            self._emoji_unicode_min = emoji_unicode_min
+        self._emoji_unicode_max = '100.0'
+        if not emoji_unicode_max is None:
+            self._emoji_unicode_max = emoji_unicode_max
+
         self._unicode_data_all = unicode_data_all
         self._emoji_matcher = itb_emoji.EmojiMatcher(
             languages=self._languages,
