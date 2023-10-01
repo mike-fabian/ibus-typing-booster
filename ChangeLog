@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 01 Oct 2023 Release 2.24.2
+* improve _return_false() and remove _commit_or_forward_key_event_or_return_false() (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/463)
+* Make characters for Biángbiángmiàn easily searchable
+* emoji-picker: Update default for current Unicode release 15.1
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 12 Sep 2023 Release 2.24.1
 * Support several backends for playing sounds (Resolves: https://bugzilla.redhat.com/show_bug.cgi?id=2237675)
 * Update UnicodeData.txt to current Unicode 15.1.0 and emoji data files to current Unicode 15.1

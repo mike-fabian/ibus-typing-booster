@@ -45,6 +45,30 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.24.2" date="2023-10-01" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.24.2</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            improve _return_false() and remove
+            _commit_or_forward_key_event_or_return_false() (Resolves:
+            github-issues#463)
+          </li>
+          <li>
+            Make characters for Biángbiángmiàn easily searchable
+          </li>
+          <li>
+            emoji-picker: Update default for current Unicode release 15.1
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/463">
+          github-issues#463
+        </issue>
+      </issues>
+    </release>
     <release version="2.24.1" date="2023-09-12" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.24.1</url>
       <description>
