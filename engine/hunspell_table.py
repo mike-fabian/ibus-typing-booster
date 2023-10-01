@@ -5884,49 +5884,142 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._typed_compose_sequence.append(key.val)
         return (False, False)
 
-    def _return_false(self, keyval: int, keycode: int, state: int) -> bool:
+    def _return_false(self, key: itb_util.KeyEvent) -> bool:
         '''A replacement for “return False” in do_process_key_event()
 
-        do_process_key_event should return “True” if a key event has
+        do_process_key_event() should return “True” if a key event has
         been handled completely. It should return “False” if the key
         event should be passed to the application.
 
-        But just doing “return False” doesn’t work well when trying to
-        do the unit tests. The MockEngine class in the unit tests
-        cannot get that return value. Therefore, it cannot do the
-        necessary updates to the self._mock_committed_text etc. which
-        prevents proper testing of the effects of such keys passed to
-        the application. Instead of “return False”, one can also use
-        self.forward_key_event(keyval, keycode, keystate) to pass the
-        key to the application. And this works fine with the unit
-        tests because a forward_key_event function is implemented in
-        MockEngine as well which then gets the key and can test its
-        effects.
+        But just doing “return False” has many problems.
 
-        Unfortunately, “forward_key_event()” does not work in some
-        environments:
+        1) It doesn’t work well when trying to do the unit
+        tests. The MockEngine class in the unit tests cannot get that
+        return value. Therefore, it cannot do the necessary updates to
+        the self._mock_committed_text etc. which prevents proper
+        testing of the effects of such keys passed to the application.
+
+        2) It does *not* work when using XIM, i.e. *not* when using Qt
+        with the XIM module and *not* in X11 applications like xterm.
+        When “return False” is used with XIM, the key event which
+        triggered the commit here arrives *before* the committed
+        string. I.e. when typing “word ” the space which triggered the
+        commit gets to application first and the applications receives
+        “ word”. No amount of sleep before the “return False” can fix
+        this. See: https://bugzilla.redhat.com/show_bug.cgi?id=1291238
+
+        3) “return False” fails to work correctly when the key.code is
+        incorrect. The on-screen-keyboard (OSK) often seems to pass
+        key events which have key.code == 0, instead of a correct
+        key.code. “return False” then does not work, the application
+        receives nothing at all.
+
+        To work around the problems with “return False”, one can
+        sometimes use self.forward_key_event(key.val, key.code,
+        key.state) instead to pass the key to the application.  This
+        works fine with the unit tests because a forward_key_event()
+        function is implemented in MockEngine as well which then gets
+        the key and can test its effects. As far as the unit tests are
+        concerned, it does not matter whether the key.code is correct
+        or incorrectly key.code == 0.
+
+        But when forward_key_event() is used “for real”, i.e. when not
+        doing unit testing, it has the same problem as “return False”
+        that it does nothing at all when key.code is 0, which is often
+        the case when the on-screen-keyboard OSK is
+        used. ibus-typing-booster can fix that in many or even most
+        cases by getting a correct key.code for key.val from the
+        current keyboard layout, but there are circumstances when this
+        is also not possible.
+
+        On top of that, “forward_key_event()” does not work at all in
+        some environments even if OSK is not involved:
 
         - Qt4 when using the input module and not XIM
         - older versions of Qt5
         - older versions of Wayland
         - Gtk4
 
-        Always using “forward_key_event()” instead of “return False”
-        in “do_process_key_event()” would break ibus-typing-booster
-        completely for environments where forward_key_event() is not
-        implemented or has a broken implementation.
+        So using “forward_key_event()” instead of “return False”
+        in “do_process_key_event()” helps in some cases, but there
+        are cases when this fails as well.
 
-        To work around this problem and make unit testing possible
-        without causing problems in environments with a broken
-        forward_key_event(), we use this helper function which uses
-        “forward_key_event()” when unit testing and “return False”
-        during normal usage.
+        A third possibility to pass a key to the application can
+        sometimes be to commit something instead of using
+        forward_key_event() or “return False”. When committing is
+        possible, it seems to be the most reliable option, no problems
+        with the order of things as in the “return False” with XIM
+        case and no problems when the key.code is incorrectly 0.
 
+        But committing is also not always possible, for example
+        key.unicode needs to be a non-empty string in order to make
+        committing something possible. And even then it does not
+        always make sense, for example when key.val is
+        IBus.KEY_Return, key.unicode is '\r' but committing that does
+        not have the desired effect of breaking a line. And key
+        release events as well as events where modifiers like Control,
+        Alt, ... are set should not be committed but really passed
+        through to the application.
+
+        To work around these problems as good as possible we use this
+        helper function which
+
+        - prefers a commit if possible
+        - if committing is not possible, but forward_key_event()
+          is possible, use forward_key_event() and try to fix
+          key.code in case it is incorrectly set to 0 by OSK (unless
+          unit testing, then the key.code does not matter)
+        - if committing is not possible and forward_key_event()
+          is is not possible either, fall back to the worst option
+          “return False”.
         '''
-        if self._unit_test:
-            self.forward_key_event(keyval, keycode, state)
+        if DEBUG_LEVEL > 0:
+            LOGGER.info('key=%s', key)
+        # If it is possible to commit instead of forwarding a key event
+        # or doing a “return False”, prefer the commit:
+        if (key.unicode
+            and unicodedata.category(key.unicode) not in ('Cc',)
+            and (key.val not in (
+                IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter,
+                IBus.KEY_BackSpace, IBus.KEY_Delete))
+            and not key.state & IBus.ModifierType.RELEASE_MASK
+            and not key.state & itb_util.KEYBINDING_STATE_MASK):
+            if DEBUG_LEVEL > 0:
+                LOGGER.info('Committing instead of forwarding or “return False”')
+            super().commit_text(
+                IBus.Text.new_from_string(key.unicode))
             return True
-        return False
+        # When unit testing, forward the key event if a commit was not possible.
+        # “return False” doesn’t work well when doing unit testing because the
+        # MockEngine class cannot get that return value.
+        # The keycode does not matter here, we do not care whether it is correct
+        # or not when doing unit testing.
+        if self._unit_test:
+            self.forward_key_event(key.val, key.code, key.state)
+            return True
+        if (self._avoid_forward_key_event
+            or
+            (self.client_capabilities & itb_util.Capabilite.SYNC_PROCESS_KEY)):
+            if DEBUG_LEVEL > 0:
+                LOGGER.info('Returning False')
+            if not key.code:
+                LOGGER.error('key.code=%s, 0 is not a valid keycode. '
+                             'Probably caused by OSK, no way to fix this '
+                             ' in the “return False” case.')
+            return False
+        if not key.code:
+            LOGGER.info(
+                'key.code= %s, probably coming from OSK, try to fix it ...',
+                key.code)
+            key.code = self._keyvals_to_keycodes.ibus_keycode(key.val)
+            if key.code:
+                LOGGER.info('Fixed key.code = %s', key.code)
+            else:
+                LOGGER.info('Could not fix key.code, still key.code == 0')
+        if DEBUG_LEVEL > 0:
+            LOGGER.info('Forwarding key event')
+        self.forward_key_event(key.val, key.code, key.state)
+        return True
 
     def _forward_generated_key_event(self, keyval: int) -> None:
         '''Forward a generated key event for keyval to the application.'''
@@ -5946,64 +6039,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.debug('keyval=%s keycode=%s ibus_keycode=%s keystate=%s',
                          keyval, keycode, ibus_keycode, keystate)
         self.forward_key_event(keyval, ibus_keycode, keystate)
-
-    def _commit_or_forward_key_event_or_return_false(
-            self, key: itb_util.KeyEvent) -> bool:
-        '''Commit the key event, or forward it or return False.
-
-        :param key: The key event to commit, forward or pass through
-        :return: True if the key event was committed or forwarded
-                 False if the key event is passed through
-
-        Prefer to commit the key event if that makes sense. For keys like
-        space without modifiers pressed, this should always work well no matter
-        what toolkit is used and no matter whether OSK is used or not.
-
-        If committing does not make sense, prefer to forward the key event.
-
-        If that does not make sense either, pass the key through with
-        “return False”.
-        '''
-        if DEBUG_LEVEL > 0:
-            LOGGER.info('key=%s', key)
-        if (key.unicode # and key.code == 0
-            and (key.val not in (
-                IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter))
-            and not key.state & itb_util.KEYBINDING_STATE_MASK):
-            if DEBUG_LEVEL > 0:
-                LOGGER.info('Committing instead of forwarding')
-            super().commit_text(
-                IBus.Text.new_from_string(key.unicode))
-            return True
-        # Forward the key event which triggered the commit here
-        # and return True instead of trying to pass that key event
-        # to the application by returning False.
-        #
-        # Alhough doing it by returning false works correctly in
-        # most cases, it does *not* work when using XIM, i.e. *not*
-        # when using Qt with the XIM module and *not* in X11
-        # applications like xterm.
-        #
-        # When “return False” is used, the key event which
-        # triggered the commit here arrives *before* the committed
-        # string when XIM is used. I.e. when typing “word ” the
-        # space which triggered the commit gets to application
-        # first and the applications receives “ word”. No amount
-        # of sleep before the “return False” can fix this. See:
-        # https://bugzilla.redhat.com/show_bug.cgi?id=1291238
-        #
-        # Therefore, forward_key_event() should be preferred
-        # unless the option to avoid it is set:
-        if (self._avoid_forward_key_event
-            or
-            (self.client_capabilities & itb_util.Capabilite.SYNC_PROCESS_KEY)):
-            if DEBUG_LEVEL > 0:
-                LOGGER.info('Returning False')
-            return self._return_false(key.val, key.code, key.state)
-        if DEBUG_LEVEL > 0:
-            LOGGER.info('Forwarding key event')
-        self.forward_key_event(key.val, key.code, key.state)
-        return True
 
     def _play_error_sound(self) -> None:
         '''Play an error sound if enabled and possible'''
@@ -6250,16 +6285,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if match:
             if return_value:
                 return True
-            return self._return_false(keyval, keycode, state)
+            return self._return_false(key)
 
         if disabled:
-            return self._return_false(keyval, keycode, state)
+            return self._return_false(key)
 
         (match, return_value) = self._handle_hotkeys(key)
         if match:
             if return_value:
                 return True
-            return self._return_false(keyval, keycode, state)
+            return self._return_false(key)
 
         result = self._process_key_event(key)
         self._prev_key = key
@@ -6280,7 +6315,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if self._maybe_reopen_preedit(key):
                 if DEBUG_LEVEL > 1:
                     LOGGER.debug('Preedit reopened successfully.')
-            return self._return_false(key.val, key.code, key.state)
+            return self._return_false(key)
 
         if self.is_empty() and not self._lookup_table.cursor_visible:
             if DEBUG_LEVEL > 1:
@@ -6301,13 +6336,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # character, return False to pass the character through as is,
                 # it makes no sense trying to complete something
                 # starting with a control character:
-                return self._return_false(key.val, key.code, key.state)
+                return self._return_false(key)
             if key.val == IBus.KEY_space and not key.mod5:
                 # if the first character is a space, just pass it through
                 # it makes not sense trying to complete (“not key.mod5” is
                 # checked here because AltGr+Space is the key binding to
                 # insert a literal space into the preëdit):
-                return self._return_false(key.val, key.code, key.state)
+                return self._return_false(key)
             if (key.val >= 32 and not key.control
                 and not self._tab_enable
                 and key.msymbol
@@ -6345,7 +6380,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     if self.get_current_imes()[0] == 'NoIME':
                         # If a digit has been typed and no transliteration
                         # is used, we can pass it through
-                        return self._return_false(key.val, key.code, key.state)
+                        return self._return_false(key)
                     # If a digit has been typed and we use
                     # transliteration, we may want to convert it to
                     # native digits. For example, with mr-inscript we
@@ -6418,7 +6453,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # transliterated to something).  See:
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/107
             if self.is_empty() and not self._lookup_table.cursor_visible:
-                return self._return_false(key.val, key.code, key.state)
+                return self._return_false(key)
             preedit_ime = self._current_imes[0]
             # Support 'S-C-Return' as commit to preedit if the current
             # preedit_ime needs it:
@@ -6654,7 +6689,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # have been something in the preëdit or the lookup table:
                 if DEBUG_LEVEL > 0:
                     LOGGER.error('commit string unexpectedly empty.')
-                return self._return_false(key.val, key.code, key.state)
+                return self._return_false(key)
             # Remember whether a candidate is selected and where the
             # caret is now because after self._commit_string() this
             # information is gone:
@@ -6681,7 +6716,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                          or key.hyper
                          or key.meta)):
                 self._update_ui_empty_input_try_completion()
-            return self._commit_or_forward_key_event_or_return_false(key)
+            return self._return_false(key)
 
         if key.unicode:
             # If the suggestions are only enabled by Tab key, i.e. the
@@ -6751,7 +6786,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # or other special key either.  So whatever this was, we
         # cannot handle it, just pass it through to the application by
         # returning “False”.
-        return self._return_false(key.val, key.code, key.state)
+        return self._return_false(key)
 
     def do_focus_in(self) -> None: # pylint: disable=arguments-differ
         '''
