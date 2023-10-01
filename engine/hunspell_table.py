@@ -6857,6 +6857,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 try:
                     new_value = int(value)
                 except (ValueError,) as error:
+                    LOGGER.exception(
+                        'Exception converting autosettings value to integer: '
+                        '%s: %s',
+                        error.__class__.__name__, error)
                     continue
             else:
                 continue

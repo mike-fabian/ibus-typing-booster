@@ -2984,8 +2984,7 @@ def is_ascii(text: str) -> bool:
         text.encode('ascii')
     except UnicodeEncodeError:
         return False
-    else:
-        return True
+    return True
 
 # Mapping of Unicode ordinals to Unicode ordinals, strings, or None.
 # Unmapped characters are left untouched. Characters mapped to None
@@ -3549,14 +3548,14 @@ class Capabilite(Flag):
     def __rand__(self, other: Any) -> Any: # type: ignore[override]
         return self.__and__(other)
 
-    PREEDIT_TEXT = ('PREEDIT_TEXT')
-    AUXILIARY_TEXT = ('AUXILIARY_TEXT')
-    LOOKUP_TABLE = ('LOOKUP_TABLE')
-    FOCUS = ('FOCUS')
-    PROPERTY = ('PROPERTY')
-    SURROUNDING_TEXT = ('SURROUNDING_TEXT')
-    OSK = ('OSK')
-    SYNC_PROCESS_KEY = ('SYNC_PROCESS_KEY')
+    PREEDIT_TEXT = 'PREEDIT_TEXT'
+    AUXILIARY_TEXT = 'AUXILIARY_TEXT'
+    LOOKUP_TABLE = 'LOOKUP_TABLE'
+    FOCUS = 'FOCUS'
+    PROPERTY = 'PROPERTY'
+    SURROUNDING_TEXT = 'SURROUNDING_TEXT'
+    OSK = 'OSK'
+    SYNC_PROCESS_KEY = 'SYNC_PROCESS_KEY'
 
 class InputPurpose(Enum):
     '''Compatibility class to handle InputPurpose the same way no matter
@@ -3654,17 +3653,17 @@ class InputPurpose(Enum):
             return bool(int(self) <= other)
         return NotImplemented
 
-    FREE_FORM = ('FREE_FORM')
-    ALPHA = ('ALPHA')
-    DIGITS = ('DIGITS')
-    NUMBER = ('NUMBER')
-    PHONE = ('PHONE')
-    URL = ('URL')
-    EMAIL = ('EMAIL')
-    NAME = ('NAME')
-    PASSWORD = ('PASSWORD')
-    PIN = ('PIN')
-    TERMINAL = ('TERMINAL')
+    FREE_FORM = 'FREE_FORM'
+    ALPHA = 'ALPHA'
+    DIGITS = 'DIGITS'
+    NUMBER = 'NUMBER'
+    PHONE = 'PHONE'
+    URL = 'URL'
+    EMAIL = 'EMAIL'
+    NAME = 'NAME'
+    PASSWORD = 'PASSWORD'
+    PIN = 'PIN'
+    TERMINAL = 'TERMINAL'
 
 class InputHints(Flag):
     '''Compatibility class to handle InputHints the same way no matter
@@ -3764,19 +3763,19 @@ class InputHints(Flag):
     def __rand__(self, other: Any) -> Any: # type: ignore[override]
         return self.__and__(other)
 
-    NONE = ('NONE')
-    SPELLCHECK = ('SPELLCHECK')
-    NO_SPELLCHECK = ('NO_SPELLCHECK')
-    WORD_COMPLETION = ('WORD_COMPLETION')
-    LOWERCASE = ('LOWERCASE')
-    UPPERCASE_CHARS = ('UPPERCASE_CHARS')
-    UPPERCASE_WORDS = ('UPPERCASE_WORDS')
-    UPPERCASE_SENTENCES = ('UPPERCASE_SENTENCES')
-    INHIBIT_OSK = ('INHIBIT_OSK')
-    VERTICAL_WRITING = ('VERTICAL_WRITING')
-    EMOJI = ('EMOJI')
-    NO_EMOJI = ('NO_EMOJI')
-    PRIVATE = ('PRIVATE')
+    NONE = 'NONE'
+    SPELLCHECK = 'SPELLCHECK'
+    NO_SPELLCHECK = 'NO_SPELLCHECK'
+    WORD_COMPLETION = 'WORD_COMPLETION'
+    LOWERCASE = 'LOWERCASE'
+    UPPERCASE_CHARS = 'UPPERCASE_CHARS'
+    UPPERCASE_WORDS = 'UPPERCASE_WORDS'
+    UPPERCASE_SENTENCES = 'UPPERCASE_SENTENCES'
+    INHIBIT_OSK = 'INHIBIT_OSK'
+    VERTICAL_WRITING = 'VERTICAL_WRITING'
+    EMOJI = 'EMOJI'
+    NO_EMOJI = 'NO_EMOJI'
+    PRIVATE = 'PRIVATE'
 
 class ComposeSequences:
     '''Class to handle compose sequences.
