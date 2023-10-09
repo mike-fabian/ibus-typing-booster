@@ -3111,6 +3111,9 @@ def is_right_to_left(text: str) -> bool:
     TR9> and its matching PDI or, if it has no matching PDI, the end of the
     TR9> paragraph
 
+    U+2069 POP DIRECTIONAL ISOLATE
+    U+2068 FIRST STRONG ISOLATE
+
     Examples:
 
     >>> is_right_to_left('Hallo!')
@@ -3119,16 +3122,16 @@ def is_right_to_left(text: str) -> bool:
     >>> is_right_to_left('﷼')
     True
 
-    >>> is_right_to_left('⁨﷼⁩')
+    >>> is_right_to_left('\u2068﷼\u2069')
     False
 
-    >>> is_right_to_left('⁨﷼⁩﷼')
+    >>> is_right_to_left('\u2068﷼\u2069﷼')
     True
 
-    >>> is_right_to_left('a⁨﷼⁩﷼')
+    >>> is_right_to_left('a\u2068﷼\u2069﷼')
     False
 
-    >>> is_right_to_left('⁨a⁩⁨﷼⁩﷼')
+    >>> is_right_to_left('\u2068a\u2069\u2068﷼\u2069﷼')
     True
     '''
     # pylint: enable=bidirectional-unicode
@@ -3160,10 +3163,10 @@ def bidi_embed(text: str) -> str:
     Examples:
 
     >>> bidi_embed('a')
-    '‪a‬'
+    '\u202Aa\u202C'
 
     >>> bidi_embed('﷼')
-    '‫﷼‬'
+    '\u202B﷼\u202C'
     '''
     # pylint: enable=bidirectional-unicode
     if is_right_to_left(text):
