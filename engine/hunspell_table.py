@@ -6032,6 +6032,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # could be different on an unusual keyboard layout.  So do not
         # hardcode keycodes here, calculate them correctly for the
         # current layout.
+        if not self._unit_test and self._avoid_forward_key_event:
+            if DEBUG_LEVEL > 0:
+                LOGGER.debug(
+                    'return without doing anything because '
+                    'self._avoid_forward_key_event is True. '
+                    'keyval=%s', keyval)
+            return
         keycode = self._keyvals_to_keycodes.keycode(keyval)
         ibus_keycode = self._keyvals_to_keycodes.ibus_keycode(keyval)
         keystate = 0
@@ -6677,8 +6684,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 time.sleep(self._ibus_event_sleep_seconds)
                 for dummy_char in input_phrase_right:
                     self._forward_generated_key_event(IBus.KEY_Left)
-                self.forward_key_event(key.val, key.code, key.state)
-                return True
+                # self._return_false(key) might use a commit again instead
+                # of forward_key_event() and if a commit is used, another
+                # sleep is necessary.
+                time.sleep(self._ibus_event_sleep_seconds)
+                return self._return_false(key)
             else:
                 # nothing is selected in the lookup table, commit the
                 # input_phrase
