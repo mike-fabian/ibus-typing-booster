@@ -39,6 +39,34 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.24.3" date="2023-10-16" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.24.3</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+             Adapt compose test cases to newest compose table
+          </li>
+          <li>
+            Parse compose sequence “Multi_key slash slash : "\\"
+            backslash # REVERSE SOLIDUS” correctly (Resolves:
+            github-issues#467)
+          </li>
+          <li>
+            Avoid really *all* use of self.foreward_key_event() if the
+            option self._avoid_forward_key_event is True
+          </li>
+          <li>
+            Avoid verbatim bidi formatting characters in the source code
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/467">
+          github-issues#467
+        </issue>
+      </issues>
+    </release>
     <release version="2.24.2" date="2023-10-01" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.24.2</url>
       <description>
