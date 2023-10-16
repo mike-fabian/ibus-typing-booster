@@ -299,6 +299,21 @@ class ComposeSequencesTestCase(unittest.TestCase):
                  IBus.KEY_space]),
             '"')
 
+    def test_compose_parse_backslash_in_result(self) -> None:
+        # https://github.com/mike-fabian/ibus-typing-booster/issues/467
+        #
+        # Make sure this sequence from
+        # /usr/share/X11/locale/en_US.UTF-8/Compose is parsed
+        # correctly:
+        #
+        # <Multi_key> <slash> <slash> : "\\" backslash # REVERSE SOLIDUS
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key,
+                 IBus.KEY_slash,
+                 IBus.KEY_slash]),
+            '\\')
+
     def test_compose_sequences_with_code_points(self) -> None:
         self.assertEqual(
             self._compose_sequences.compose(

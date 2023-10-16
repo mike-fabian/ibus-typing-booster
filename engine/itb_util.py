@@ -4287,7 +4287,9 @@ class ComposeSequences:
             match = compose_sequence_pattern.search(line)
             if match:
                 sequence = match.group('sequence')
-                result = match.group('result').replace('\\"', '"')
+                result = match.group('result')
+                result = result.replace('\\"', '"')
+                result = result.replace('\\\\', '\\')
                 self._add_compose_sequence(sequence, result)
 
     def preedit_representation(self, keyvals: List[int]) -> str:
