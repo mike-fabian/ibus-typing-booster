@@ -320,6 +320,16 @@ class ComposeSequencesTestCase(unittest.TestCase):
                 [IBus.KEY_Multi_key, IBus.KEY_quotedbl, 0x010004D9]),
                 'ӛ' # "ӛ"   U04DB # CYRILLIC SMALL LETTER SCHWA WITH DIAERESIS
                 )
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key, 0x0100093C, 0x01000915]),
+                'क़' # "क़"   U0958 # DEVANAGARI LETTER QA
+                )
+        self.assertEqual(
+            self._compose_sequences.compose(
+                [IBus.KEY_Multi_key, 0x01000654, IBus.KEY_Arabic_yeh]),
+                'ئ' # "ئ"	U0626 # ARABIC LETTER YEH WITH HAMZA ABOVE
+                )
 
     def test_compose_arabic(self) -> None:
         # /usr/share/X11/locale/en_US.UTF-8/Compose contains:
