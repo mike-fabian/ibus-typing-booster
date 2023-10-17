@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-10-01 20:03+0200\n"
+"POT-Creation-Date: 2023-10-16 21:22+0200\n"
 "PO-Revision-Date: 2023-07-03 11:56+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <https://translate.fedoraproject.org/projects/ibus-"
@@ -315,27 +315,27 @@ msgstr "regionalne"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Inne, pozostałe, różne"
 
-#: engine/itb_util.py:4244 engine/itb_util.py:4970
+#: engine/itb_util.py:4247 engine/itb_util.py:4975
 msgid "File not found"
 msgstr "Nie odnaleziono pliku"
 
-#: engine/itb_util.py:4248 engine/itb_util.py:4974
+#: engine/itb_util.py:4251 engine/itb_util.py:4979
 msgid "Permission error"
 msgstr "Błąd uprawnień"
 
-#: engine/itb_util.py:4252 engine/itb_util.py:4978
+#: engine/itb_util.py:4255 engine/itb_util.py:4983
 msgid "Unicode decoding error"
 msgstr "Błąd podczas dekodowania unikodu"
 
-#: engine/itb_util.py:4256 engine/itb_util.py:4982
+#: engine/itb_util.py:4259 engine/itb_util.py:4987
 msgid "Unknown error"
 msgstr "Nieznany błąd"
 
-#: engine/itb_util.py:4947
+#: engine/itb_util.py:4952
 msgid "Native Keyboard"
 msgstr "Natywna klawiatura"
 
-#: engine/itb_util.py:4949
+#: engine/itb_util.py:4954
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -348,11 +348,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5526
+#: engine/itb_util.py:5531
 msgid "Key input"
 msgstr "Wprowadzanie klawisza"
 
-#: engine/itb_util.py:5532
+#: engine/itb_util.py:5537
 msgid "Cancel"
 msgstr "Anuluj"
 
@@ -360,29 +360,29 @@ msgstr "Anuluj"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5539
+#: engine/itb_util.py:5544
 msgid "Please press a key (or a key combination)"
 msgstr "Proszę nacisnąć klawisz (lub kombinację klawiszy)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5544
+#: engine/itb_util.py:5549
 msgid "The dialog will be closed when the key is released"
 msgstr "Okno dialogowe zostanie zamknięte po zwolnieniu klawisza"
 
-#: engine/itb_util.py:5583
+#: engine/itb_util.py:5588
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Przyspieszająca pisanie metoda wprowadzania, działająca na podstawie "
 "uzupełniania."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5592
+#: engine/itb_util.py:5597
 msgid "translator-credits"
 msgstr "Piotr Drąg <piotrdrag@gmail.com>, 2016-2023"
 
-#: engine/itb_util.py:5600
+#: engine/itb_util.py:5605
 msgid "Online documentation:"
 msgstr "Dokumentacja online:"
 

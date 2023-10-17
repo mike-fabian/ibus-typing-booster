@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-10-01 20:03+0200\n"
+"POT-Creation-Date: 2023-10-16 21:22+0200\n"
 "PO-Revision-Date: 2022-02-25 18:38+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
@@ -309,27 +309,27 @@ msgstr "地区"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util.py:4244 engine/itb_util.py:4970
+#: engine/itb_util.py:4247 engine/itb_util.py:4975
 msgid "File not found"
 msgstr "文件未找到"
 
-#: engine/itb_util.py:4248 engine/itb_util.py:4974
+#: engine/itb_util.py:4251 engine/itb_util.py:4979
 msgid "Permission error"
 msgstr "权限错误"
 
-#: engine/itb_util.py:4252 engine/itb_util.py:4978
+#: engine/itb_util.py:4255 engine/itb_util.py:4983
 msgid "Unicode decoding error"
 msgstr "Unicode 解码出错"
 
-#: engine/itb_util.py:4256 engine/itb_util.py:4982
+#: engine/itb_util.py:4259 engine/itb_util.py:4987
 msgid "Unknown error"
 msgstr "未知错误"
 
-#: engine/itb_util.py:4947
+#: engine/itb_util.py:4952
 msgid "Native Keyboard"
 msgstr "原生键盘"
 
-#: engine/itb_util.py:4949
+#: engine/itb_util.py:4954
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -341,11 +341,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5526
+#: engine/itb_util.py:5531
 msgid "Key input"
 msgstr "输入的键盘码"
 
-#: engine/itb_util.py:5532
+#: engine/itb_util.py:5537
 msgid "Cancel"
 msgstr "取消"
 
@@ -353,23 +353,23 @@ msgstr "取消"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5539
+#: engine/itb_util.py:5544
 msgid "Please press a key (or a key combination)"
 msgstr "请按下一个键盘按键（或者按键组合）"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5544
+#: engine/itb_util.py:5549
 msgid "The dialog will be closed when the key is released"
 msgstr "当按键被按下，这个对话框将会自动关闭"
 
-#: engine/itb_util.py:5583
+#: engine/itb_util.py:5588
 msgid "A completion input method to speedup typing."
 msgstr "一个用于补全的输入法，它将会提升你的打字速度。"
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5592
+#: engine/itb_util.py:5597
 msgid "translator-credits"
 msgstr ""
 "lexuge <LEXUGEyky@outlook.com>, 2017\n"
@@ -379,7 +379,7 @@ msgstr ""
 "Hankel Bao <hankelbao@outlook.com>, 2020\n"
 "Dingzhong Chen <wsxy162@gmail.com>, 2021"
 
-#: engine/itb_util.py:5600
+#: engine/itb_util.py:5605
 msgid "Online documentation:"
 msgstr "线上文档："
 
