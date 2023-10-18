@@ -39,6 +39,24 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.24.4" date="2023-10-18" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.24.4</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Fix typos which prevented autosettings from working when
+            the attempting to autoset “avoidforwardkeyevent” or
+            “addspaceoncommit” (Resolves: github-issues#469)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/469">
+          github-issues#469
+        </issue>
+      </issues>
+    </release>
     <release version="2.24.3" date="2023-10-16" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.24.3</url>
       <description>

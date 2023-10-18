@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 18 Oct 2023 Release 2.24.4
+* Fix typos which prevented autosettings from working when the attempting to autoset “avoidforwardkeyevent” or “addspaceoncommit” (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/469)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 16 Oct 2023 Release 2.24.3
 * Adapt compose test cases to newest compose table
 * Parse compose sequence “<Multi_key> <slash> <slash> : "\\" backslash # REVERSE SOLIDUS” correctly (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/467)
