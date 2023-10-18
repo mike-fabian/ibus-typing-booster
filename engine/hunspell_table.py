@@ -624,10 +624,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 'set': self._reload_input_methods},
             'avoidforwardkeyevent': {
                 'set': self.set_avoid_forward_key_event,
-                'get': self.set_avoid_forward_key_event},
+                'get': self.get_avoid_forward_key_event},
             'addspaceoncommit': {
                 'set': self.set_add_space_on_commit,
-                'get': self.set_add_space_on_commit},
+                'get': self.get_add_space_on_commit},
             'inlinecompletion': {
                 'set': self.set_inline_completion,
                 'get': self.get_inline_completion},
