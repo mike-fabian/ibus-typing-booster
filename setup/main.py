@@ -3373,11 +3373,7 @@ class SetupUI(Gtk.Window): # type: ignore
                 continue
             filter_words = itb_util.remove_accents(filter_text.lower()).split()
             text_to_match = itb_util.locale_text_to_match(name)
-            filter_match = True
-            for filter_word in filter_words:
-                if filter_word not in text_to_match:
-                    filter_match = False
-            if filter_match:
+            if all(filter_word in text_to_match for filter_word in filter_words):
                 self._dictionaries_add_listbox_dictionary_names.append(name)
                 rows.append(self._fill_dictionaries_listbox_row(name)[0])
         for row in rows:
@@ -3683,11 +3679,7 @@ class SetupUI(Gtk.Window): # type: ignore
             text_to_match = row.replace(' ', '').lower()
             ime_language = ime.split('-')[0]
             text_to_match += ' ' + itb_util.locale_text_to_match(ime_language)
-            filter_match = True
-            for filter_word in filter_words:
-                if filter_word not in text_to_match:
-                    filter_match = False
-            if filter_match:
+            if all(filter_word in text_to_match for filter_word in filter_words):
                 self._input_methods_add_listbox_imes.append(ime)
                 rows.append(row)
                 images[row] = Gtk.Image.new_from_file(
@@ -4279,11 +4271,7 @@ class SetupUI(Gtk.Window): # type: ignore
         for setting in sorted(self._allowed_autosettings):
             filter_words = itb_util.remove_accents(filter_text.lower()).split()
             text_to_match = setting
-            filter_match = True
-            for filter_word in filter_words:
-                if filter_word not in text_to_match:
-                    filter_match = False
-            if filter_match:
+            if all(filter_word in text_to_match for filter_word in filter_words):
                 self._autosettings_add_listbox_settings.append(setting)
                 rows.append(setting)
         for row in rows:
@@ -4560,15 +4548,10 @@ class SetupUI(Gtk.Window): # type: ignore
             self.tabsqlitedb.list_user_shortcuts())
         filter_words = itb_util.remove_accents(filter_text.lower()).split()
         for shortcut in current_shortcuts:
-            filter_match = True
-            for filter_word in filter_words:
-                if (filter_word
-                    not in itb_util.remove_accents(shortcut[0]).lower()
-                    and
-                    filter_word
-                    not in itb_util.remove_accents(shortcut[1]).lower()):
-                    filter_match = False
-            if filter_match:
+            text_to_match = (
+                itb_util.remove_accents(shortcut[0]).lower()
+                + ' ' + itb_util.remove_accents(shortcut[1]).lower())
+            if all(filter_word in text_to_match for filter_word in filter_words):
                 self._shortcut_treeview_model.append(shortcut)
 
     def _on_shortcut_search_entry_changed(
