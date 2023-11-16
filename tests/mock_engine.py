@@ -118,6 +118,9 @@ class MockEngine:
     def connect(self, signal: str, callback_function: Any) -> None:
         pass
 
+    def add_table_by_locale(self, locale: str) -> None:
+        pass
+
 class MockLookupTable:
     def __init__(
             self,

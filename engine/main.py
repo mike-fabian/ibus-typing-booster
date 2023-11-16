@@ -328,6 +328,7 @@ def main() -> None:
     LOGGER.addHandler(log_handler)
     LOGGER.info('********** STARTING **********')
 
+    IBus.init()
     if _ARGS.daemon:
         if os.fork():
             sys.exit()
