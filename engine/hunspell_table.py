@@ -6236,13 +6236,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.debug('Compose sequence finished.')
         self._typed_compose_sequence = []
         self._update_transliterated_strings()
-        self._update_preedit()
         if add_to_preedit:
             self._insert_string_at_cursor(list(compose_result))
             self._update_ui()
             return True
         super().commit_text(
             IBus.Text.new_from_string(compose_result))
+        super().update_preedit_text_with_mode(
+            IBus.Text.new_from_string(''), 0, False,
+            IBus.PreeditFocusMode.COMMIT)
         return True
 
     def do_process_key_event( # pylint: disable=arguments-differ
