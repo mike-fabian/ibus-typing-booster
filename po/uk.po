@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-10-16 21:22+0200\n"
+"POT-Creation-Date: 2023-12-05 09:11+0100\n"
 "PO-Revision-Date: 2023-06-27 15:45+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/ibus-"
@@ -393,7 +393,7 @@ msgstr "Налаштування"
 msgid "Restore all defaults"
 msgstr "Відновити усі типові значення"
 
-#: setup/main.py:213 setup/main.py:6442
+#: setup/main.py:213 setup/main.py:6425
 msgid "_Close"
 msgstr "_Закрити"
 
@@ -909,7 +909,7 @@ msgstr "Встановити невстановлені словники"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Встановити словники, які налаштовано тут, але які не встановлено"
 
-#: setup/main.py:1061 setup/main.py:1193 setup/main.py:1420 setup/main.py:4819
+#: setup/main.py:1061 setup/main.py:1193 setup/main.py:1420 setup/main.py:4802
 msgid "Set to default"
 msgstr "Встановити типову"
 
@@ -1018,7 +1018,7 @@ msgstr "Змінити"
 msgid "Edit the key bindings for the selected command"
 msgstr "Змінити прив'язки клавіш для вибраної команди"
 
-#: setup/main.py:1424 setup/main.py:4824
+#: setup/main.py:1424 setup/main.py:4807
 msgid "Set default key bindings for the selected command"
 msgstr "Встановити типову прив'язку клавіш для вибраної команди"
 
@@ -1437,7 +1437,7 @@ msgstr "Файл ще не встановлено."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2217 setup/main.py:4337
+#: setup/main.py:2217 setup/main.py:4325
 msgid "Add an autosetting"
 msgstr "Додати автопараметр"
 
@@ -1491,7 +1491,7 @@ msgstr "Параметр"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2536 setup/main.py:3946
+#: setup/main.py:2536 setup/main.py:3938
 msgid "Value"
 msgstr "Значення"
 
@@ -1505,11 +1505,11 @@ msgstr "Формальний вираз"
 msgid "Are you sure?"
 msgstr "Ви впевнені?"
 
-#: setup/main.py:2608 setup/main.py:3185 setup/main.py:3263 setup/main.py:4892
+#: setup/main.py:2608 setup/main.py:3185 setup/main.py:3263 setup/main.py:4875
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: setup/main.py:2609 setup/main.py:3186 setup/main.py:3264 setup/main.py:4893
+#: setup/main.py:2609 setup/main.py:3186 setup/main.py:3264 setup/main.py:4876
 msgid "_OK"
 msgstr "_Гаразд"
 
@@ -1528,30 +1528,30 @@ msgstr "Ви справді хочете відновити усі типові 
 msgid "Select .wav sound file:"
 msgstr "Виберіть звуковий файл .wav:"
 
-#: setup/main.py:3444
+#: setup/main.py:3440
 msgid "Add dictionary"
 msgstr "Додати словник"
 
-#: setup/main.py:3761
+#: setup/main.py:3753
 msgid "Add input method"
 msgstr "Додати спосіб введення"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:3937
+#: setup/main.py:3929
 msgid "Variable"
 msgstr "Змінна"
 
-#: setup/main.py:4772
+#: setup/main.py:4755
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Змінити прив'язку клавіш для команди «%s»"
 
-#: setup/main.py:4800
+#: setup/main.py:4783
 msgid "Add a key binding"
 msgstr "Додати прив'язку клавіш"
 
-#: setup/main.py:4812
+#: setup/main.py:4795
 msgid "Remove selected key binding"
 msgstr "Вилучити позначену прив'язку клавіш"
 
@@ -1560,22 +1560,22 @@ msgstr "Вилучити позначену прив'язку клавіш"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:4873
+#: setup/main.py:4856
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr "Ви справді хочете повернути для усіх команд типові прив'язки клавіш?"
 
-#: setup/main.py:4889
+#: setup/main.py:4872
 msgid "Open File ..."
 msgstr "Відкрити файл…"
 
-#: setup/main.py:4908
+#: setup/main.py:4891
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Успішно вивчено з файла %(filename)s."
 
-#: setup/main.py:4917
+#: setup/main.py:4900
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Спроба навчання з файла %(filename)s зазнала невдачі."
@@ -1590,7 +1590,7 @@ msgstr "Спроба навчання з файла %(filename)s зазнала 
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:4940
+#: setup/main.py:4923
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1598,7 +1598,7 @@ msgstr ""
 "Ви справді хочете вилучити усі дані мови, вивчені із введених даних і "
 "читання файлів?"
 
-#: setup/main.py:6504
+#: setup/main.py:6487
 msgid "ibus is not running."
 msgstr "ibus не запущено."
 

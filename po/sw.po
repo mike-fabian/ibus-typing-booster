@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-10-16 21:22+0200\n"
+"POT-Creation-Date: 2023-12-05 09:11+0100\n"
 "PO-Revision-Date: 2023-03-08 08:20+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
 "Language-Team: Swahili <https://translate.fedoraproject.org/projects/ibus-"
@@ -387,7 +387,7 @@ msgstr "Mapendeleo"
 msgid "Restore all defaults"
 msgstr "Rejesha pote chaguo-msingi la mfumo"
 
-#: setup/main.py:213 setup/main.py:6442
+#: setup/main.py:213 setup/main.py:6425
 msgid "_Close"
 msgstr "_Funga"
 
@@ -882,7 +882,7 @@ msgstr "Sakinisha kamusi zilizokosekana"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Sakinisha kamusi zilizochaguliwa hapa lakini bado hazijasakinishwa"
 
-#: setup/main.py:1061 setup/main.py:1193 setup/main.py:1420 setup/main.py:4819
+#: setup/main.py:1061 setup/main.py:1193 setup/main.py:1420 setup/main.py:4802
 msgid "Set to default"
 msgstr "Weka kama chaguo-msingi"
 
@@ -990,7 +990,7 @@ msgstr "Hariri"
 msgid "Edit the key bindings for the selected command"
 msgstr "Hariri vitufe teule vya amri iliyochaguliwa"
 
-#: setup/main.py:1424 setup/main.py:4824
+#: setup/main.py:1424 setup/main.py:4807
 msgid "Set default key bindings for the selected command"
 msgstr "Weka chaguo-msingi la vitufe teule vya amri iliyochaguliwa"
 
@@ -1399,7 +1399,7 @@ msgstr "Faili bado haijateuliwa."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2217 setup/main.py:4337
+#: setup/main.py:2217 setup/main.py:4325
 msgid "Add an autosetting"
 msgstr "Ongeza mpangilio otomatiki"
 
@@ -1453,7 +1453,7 @@ msgstr "Mpangilio"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2536 setup/main.py:3946
+#: setup/main.py:2536 setup/main.py:3938
 msgid "Value"
 msgstr "Chaguo"
 
@@ -1467,11 +1467,11 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "Je, una uhahika?"
 
-#: setup/main.py:2608 setup/main.py:3185 setup/main.py:3263 setup/main.py:4892
+#: setup/main.py:2608 setup/main.py:3185 setup/main.py:3263 setup/main.py:4875
 msgid "_Cancel"
 msgstr "_Futa"
 
-#: setup/main.py:2609 setup/main.py:3186 setup/main.py:3264 setup/main.py:4893
+#: setup/main.py:2609 setup/main.py:3186 setup/main.py:3264 setup/main.py:4876
 msgid "_OK"
 msgstr "_NDIO"
 
@@ -1490,30 +1490,30 @@ msgstr "Je, kweli ungependa kurudisha mipangilio yote kwa chaguo-msingi?"
 msgid "Select .wav sound file:"
 msgstr "Chagua faili ya sauti ya .wav:"
 
-#: setup/main.py:3444
+#: setup/main.py:3440
 msgid "Add dictionary"
 msgstr "Ongeza kamusi"
 
-#: setup/main.py:3761
+#: setup/main.py:3753
 msgid "Add input method"
 msgstr "Ongeza mbinu ya kuingiza"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:3937
+#: setup/main.py:3929
 msgid "Variable"
 msgstr "Jina"
 
-#: setup/main.py:4772
+#: setup/main.py:4755
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Hariri vitufe teule vya amri “%s”"
 
-#: setup/main.py:4800
+#: setup/main.py:4783
 msgid "Add a key binding"
 msgstr "Ongeza kitufe teule"
 
-#: setup/main.py:4812
+#: setup/main.py:4795
 msgid "Remove selected key binding"
 msgstr "Ondoa kitufe teule kilichochaguliwa"
 
@@ -1522,23 +1522,23 @@ msgstr "Ondoa kitufe teule kilichochaguliwa"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:4873
+#: setup/main.py:4856
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr ""
 "Je, kweli ungependa kurudisha vitufe teule vya amri zote kwa chaguo-msingi?"
 
-#: setup/main.py:4889
+#: setup/main.py:4872
 msgid "Open File ..."
 msgstr "Fungua Faili ..."
 
-#: setup/main.py:4908
+#: setup/main.py:4891
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Imefaulu kujifunza kutokana na faili %(filename)s."
 
-#: setup/main.py:4917
+#: setup/main.py:4900
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Imeshindwa kujifunza kutokana na faili %(filename)s."
@@ -1553,7 +1553,7 @@ msgstr "Imeshindwa kujifunza kutokana na faili %(filename)s."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:4940
+#: setup/main.py:4923
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1561,7 +1561,7 @@ msgstr ""
 "Je, kweli ungependa kufuta habari zote za lugha zilizofahamika ulipoandika "
 "au kwa kusoma faili?"
 
-#: setup/main.py:6504
+#: setup/main.py:6487
 msgid "ibus is not running."
 msgstr "ibus haifanyi kazi."
 
