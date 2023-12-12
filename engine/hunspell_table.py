@@ -2227,7 +2227,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Clear the preëdit and close the lookup table
         '''
         self._clear_input()
-        self._update_ui()
+        self._update_ui_empty_input()
 
     def do_destroy(self) -> None: # pylint: disable=arguments-differ
         '''Called when this input engine is destroyed
@@ -2286,6 +2286,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'NFC', self._transliterated_strings[
                 self.get_current_imes()[0]])
         _str = self._case_modes[self._current_case_mode]['function'](_str)
+        if DEBUG_LEVEL > 2:
+            LOGGER.debug('_str=“%s”', _str)
         if self._hide_input:
             _str = '*' * len(_str)
         if _str == '':
@@ -2537,12 +2539,34 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._update_candidates()
         self._update_lookup_table_and_aux()
 
-    def _update_ui_empty_input_try_completion(self) -> None:
-        '''
+    def _update_ui_empty_input(self) -> None:
+        '''Update the UI when the input is empty.
+
+        Even when the input is empty, it is possible that a preedit
+        and a lookup table are shown because it is possible that
+        self._min_char_complete == 0 and then sometimes a completion
+        is tried even when the input is empty.
+
         '''
         LOGGER.debug('entering function')
         self._update_preedit()
+        self.get_lookup_table().clear()
+        self.get_lookup_table().set_cursor_visible(False)
+        self.hide_lookup_table()
+        self._lookup_table_hidden = True
+        self.is_lookup_table_enabled_by_tab = False
+        self._lookup_table_shows_related_candidates = False
+        self._current_auxiliary_text = IBus.Text.new_from_string('')
+        super().update_auxiliary_text(
+            self._current_auxiliary_text, False)
+
+    def _update_ui_empty_input_try_completion(self) -> None:
+        '''
+        Update the UI when the input is empty and try a completion.
+        '''
+        LOGGER.debug('entering function')
         if not self.is_empty():
+            self._update_preedit()
             return
         if (self._min_char_complete != 0
             or self._hide_input
@@ -2558,12 +2582,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._current_auxiliary_text = IBus.Text.new_from_string('')
             super().update_auxiliary_text(
                 self._current_auxiliary_text, False)
+            self._update_preedit()
             return
         self.is_lookup_table_enabled_by_tab = False
         self._lookup_table_shows_related_candidates = False
         phrase_candidates = self.database.select_words(
             '', p_phrase=self.get_p_phrase(), pp_phrase=self.get_pp_phrase())
+        if DEBUG_LEVEL > 2:
+            LOGGER.debug('phrase_candidates=%s', phrase_candidates)
         if not phrase_candidates:
+            self._update_preedit()
             return
         self._lookup_table_is_invalid = True
         # Don’t show the lookup table if it is invalid anway
@@ -2890,8 +2918,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         else:
             # _commit_string() will calculate input_phrase:
             self._commit_string(phrase + extra_text)
+        self._clear_input()
         if extra_text == ' ':
             self._update_ui_empty_input_try_completion()
+        else:
+            self._update_ui_empty_input()
         return True
 
     def _commit_string(
@@ -2980,7 +3011,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         else:
             super().commit_text(
                 IBus.Text.new_from_string(commit_phrase))
-        self._clear_input_and_update_ui()
         self._commit_happened_after_focus_in = True
         if (self._off_the_record
             or self._hide_input
@@ -3592,6 +3622,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             candidate_was_selected = True
         caret_was = self.get_caret()
         self._commit_string(commit_string, input_phrase=input_phrase)
+        self._clear_input_and_update_ui()
         if not candidate_was_selected:
             # cursor needs to be corrected leftwards:
             for dummy_char in commit_string[caret_was:]:
@@ -5064,6 +5095,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 if self._add_space_on_commit:
                     phrase += ' '
                 self._commit_string(phrase)
+                self._clear_input_and_update_ui()
             return
         if (button == 3
             and (state & IBus.ModifierType.MOD1_MASK)
@@ -6330,14 +6362,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if DEBUG_LEVEL > 1:
                 LOGGER.debug(
                     'self.is_empty(): KeyEvent object: %s', key)
-            self._update_preedit()
-            self.get_lookup_table().clear()
-            self.get_lookup_table().set_cursor_visible(False)
-            self.hide_lookup_table()
-            self._lookup_table_hidden = True
-            self._current_auxiliary_text = IBus.Text.new_from_string('')
-            super().update_auxiliary_text(
-                self._current_auxiliary_text, False)
             # This is the first character typed since the last commit
             # there is nothing in the preëdit yet.
             if key.val < 32 or key.val == IBus.KEY_Escape:
@@ -6345,12 +6369,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # character, return False to pass the character through as is,
                 # it makes no sense trying to complete something
                 # starting with a control character:
+                self._update_ui_empty_input()
                 return self._return_false(key)
             if key.val == IBus.KEY_space and not key.mod5:
                 # if the first character is a space, just pass it through
                 # it makes not sense trying to complete (“not key.mod5” is
                 # checked here because AltGr+Space is the key binding to
                 # insert a literal space into the preëdit):
+                self._update_ui_empty_input()
                 return self._return_false(key)
             if (key.val >= 32 and not key.control
                 and not self._tab_enable
@@ -6389,6 +6415,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     if self.get_current_imes()[0] == 'NoIME':
                         # If a digit has been typed and no transliteration
                         # is used, we can pass it through
+                        self._update_ui_empty_input()
                         return self._return_false(key)
                     # If a digit has been typed and we use
                     # transliteration, we may want to convert it to
@@ -6402,6 +6429,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     self._commit_string(
                         transliterated_digit,
                         input_phrase=transliterated_digit)
+                    self._clear_input()
+                    self._update_ui_empty_input()
                     return True
 
         # These keys may trigger a commit:
@@ -6462,6 +6491,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # transliterated to something).  See:
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/107
             if self.is_empty() and not self._lookup_table.cursor_visible:
+                self._update_ui_empty_input()
                 return self._return_false(key)
             preedit_ime = self._current_imes[0]
             # Support 'S-C-Return' as commit to preedit if the current
@@ -6679,6 +6709,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         input_phrase_right, input_phrase=input_phrase_right,
                         push_context=False,
                         fix_sentence_end=False)
+                self._clear_input_and_update_ui()
                 # These sleeps between commit() and
                 # forward_key_event() are unfortunately needed because
                 # this is racy, without the sleeps it works
@@ -6701,6 +6732,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # have been something in the preëdit or the lookup table:
                 if DEBUG_LEVEL > 0:
                     LOGGER.error('commit string unexpectedly empty.')
+                self._update_ui_empty_input()
                 return self._return_false(key)
             # Remember whether a candidate is selected and where the
             # caret is now because after self._commit_string() this
@@ -6727,7 +6759,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                          or key.super
                          or key.hyper
                          or key.meta)):
+                self._clear_input()
                 self._update_ui_empty_input_try_completion()
+            else:
+                self._clear_input_and_update_ui()
             return self._return_false(key)
 
         if key.unicode:
@@ -6788,6 +6823,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         key.msymbol)
                 self._commit_string(
                     input_phrase + ' ', input_phrase=input_phrase)
+                self._clear_input()
             self._update_ui()
             return True
 
@@ -6798,6 +6834,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # or other special key either.  So whatever this was, we
         # cannot handle it, just pass it through to the application by
         # returning “False”.
+        if self.is_empty():
+            self._update_ui_empty_input()
         return self._return_false(key)
 
     def do_focus_in(self) -> None: # pylint: disable=arguments-differ
@@ -7030,7 +7068,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         '''
         if DEBUG_LEVEL > 1:
-            LOGGER.debug('do_reset()\n')
+            LOGGER.debug('do_reset() self._prev_key=%s', self._prev_key)
         if self._prev_key is not None and self._prev_key.val in (
                 IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter):
             # The “Return” and “KP_Enter” keys trigger a call to
