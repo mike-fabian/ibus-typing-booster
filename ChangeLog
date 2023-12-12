@@ -1,4 +1,19 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 29 Dec 2023 Release 2.24.10
+* Update the preedit to empty right after deleting surrounding text when reopening a preedit (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/474)
+* Add debug output to show surrounding text after updating candidates, lookup_table, and aux
+* Improve do_reset() (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/473) (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/474)
+* Fix _record_in_database_and_push_context()
+* Avoid updating the preedit to empty or  hiding it if the preedit is already hidden or empty
+* Do not pass through a key release event if the corresponding key press event was handled
+* Remove two probably redundant calls to get_surrounding_text()
+* Hide and clear lookup table and aux in _update_ui_empty_input_try_completion() if no candidates are found
+* Make self._ibus_event_sleep_seconds settable via gsettings
+* Avoid more duplicate calls of _update_preedit() (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/473) (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/474)
+* Fix disappearing first characters or words in the web clients of WhatsApp and Telegram used in Firefox (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/473)
+* Update emoji annotations from CLDR
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 05 Dec 2023 Release 2.24.5
 * Fix first character disappearing when compose was involved in WhatsApp and Telegram (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/471)
 * Update emoji annotations from CLDR
