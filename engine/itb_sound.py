@@ -215,13 +215,14 @@ class SoundObject:
             LOGGER.error('pyaudio.PyAudio() did not work.')
             return
         LOGGER.info('Playing sound with pyaudio ...')
+        chunk_size = 1024
         stream = self._paudio.open(
             format=self._paudio.get_format_from_width(
                 self._wav_file.getsampwidth()),
             channels=self._wav_file.getnchannels(),
             rate=self._wav_file.getframerate(),
-            output=True)
-        chunk_size = 1024
+            output=True,
+            frames_per_buffer=chunk_size)
         self._wav_file.rewind()
         data = self._wav_file.readframes(chunk_size)
         while data and not stop_event.is_set():
