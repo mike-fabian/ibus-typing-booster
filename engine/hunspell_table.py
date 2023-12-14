@@ -2332,24 +2332,22 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._show_status_info_in_auxiliary_text:
             if self._emoji_predictions:
                 aux_string += (
-                    MODE_ON_SYMBOL + EMOJI_PREDICTION_MODE_SYMBOL + ' ')
+                    f'{MODE_ON_SYMBOL}{EMOJI_PREDICTION_MODE_SYMBOL} ')
             else:
                 aux_string += (
-                    MODE_OFF_SYMBOL + EMOJI_PREDICTION_MODE_SYMBOL + ' ')
+                    f'{MODE_OFF_SYMBOL}{EMOJI_PREDICTION_MODE_SYMBOL} ')
             if self._off_the_record:
                 aux_string += (
-                    MODE_ON_SYMBOL + OFF_THE_RECORD_MODE_SYMBOL + ' ')
+                    f'{MODE_ON_SYMBOL}{OFF_THE_RECORD_MODE_SYMBOL} ')
             else:
                 aux_string += (
-                    MODE_OFF_SYMBOL + OFF_THE_RECORD_MODE_SYMBOL + ' ')
+                    f'{MODE_OFF_SYMBOL}{OFF_THE_RECORD_MODE_SYMBOL} ')
             names = self.get_dictionary_names()
-            dictionary_label = (
-                names[0] + ' ' + itb_util.get_flag(names[0]))
-            if dictionary_label:
-                aux_string += dictionary_label
+            if names:
+                aux_string += f'{names[0]} {itb_util.get_flag(names[0])}'
             preedit_ime = self.get_current_imes()[0]
             if preedit_ime != 'NoIME':
-                aux_string += ' ' + preedit_ime + ' '
+                aux_string += f' {preedit_ime} '
         # Colours do not work at the moment in the auxiliary text!
         # Needs fix in ibus.
         attrs = IBus.AttrList()
@@ -2365,18 +2363,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 len(aux_string)-len(client),
                 len(aux_string)))
         if DEBUG_LEVEL > 2:
-            context = ''
+            context_indicator = '🔴'
             if self._is_context_from_surrounding_text:
-                context += '🟢'
-            else:
-                context += '🔴'
-            context += (self.get_ppp_phrase()
-                        + ' ' + self.get_pp_phrase()
-                        + ' ' + self.get_p_phrase())
-            aux_string += context
+                context_indicator = '🟢'
+            len_aux_string_orig = len(aux_string)
+            aux_string += (f'{context_indicator}'
+                           f'{self.get_ppp_phrase()} '
+                           f'{self.get_pp_phrase()} '
+                           f'{self.get_p_phrase()}')
             attrs.append(IBus.attr_foreground_new(
                 itb_util.color_string_to_argb('DeepPink'),
-                len(aux_string)-len(context),
+                len_aux_string_orig,
                 len(aux_string)))
         text = IBus.Text.new_from_string(aux_string)
         i = 0
@@ -2609,9 +2606,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         else:
             super().update_auxiliary_text(
                 IBus.Text.new_from_string(''), False)
-        self._candidates = []
-        for cand in phrase_candidates:
-            self._candidates.append((cand[0], cand[1], '', True, False))
+        self._candidates = [(cand[0], cand[1], '', True, False)
+                            for cand in phrase_candidates]
         for cand in self._candidates:
             self._append_candidate_to_lookup_table(
                 phrase=cand[0], user_freq=cand[1], comment=cand[2],
