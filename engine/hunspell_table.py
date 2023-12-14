@@ -6744,15 +6744,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if not input_phrase:
                 input_phrase = commit_string
             self._commit_string(commit_string, input_phrase=input_phrase)
-            # These sleeps between commit() and
-            # forward_key_event() are unfortunately needed because
-            # this is racy, without the sleeps it works
-            # unreliably.
-            time.sleep(self._ibus_event_sleep_seconds)
-            if not candidate_was_selected:
-                # cursor needs to be corrected leftwards:
-                for dummy_char in commit_string[caret_was:]:
-                    self._forward_generated_key_event(IBus.KEY_Left)
             if (key.val in (IBus.KEY_space, IBus.KEY_Tab)
                 and not (key.control
                          or key.mod1
@@ -6763,6 +6754,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._update_ui_empty_input_try_completion()
             else:
                 self._clear_input_and_update_ui()
+            # These sleeps between commit() and
+            # forward_key_event() are unfortunately needed because
+            # this is racy, without the sleeps it works
+            # unreliably.
+            time.sleep(self._ibus_event_sleep_seconds)
+            if not candidate_was_selected:
+                # cursor needs to be corrected leftwards:
+                for dummy_char in commit_string[caret_was:]:
+                    self._forward_generated_key_event(IBus.KEY_Left)
             return self._return_false(key)
 
         if key.unicode:
