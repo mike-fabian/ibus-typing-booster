@@ -2624,7 +2624,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Update User Interface'''
         if DEBUG_LEVEL > 1:
             LOGGER.debug('entering function')
-        self._update_preedit()
         if self.is_empty():
             # Hide lookup table again if preëdit became empty and
             # suggestions are only enabled by Tab key:
@@ -2643,9 +2642,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._current_auxiliary_text = IBus.Text.new_from_string('')
             super().update_auxiliary_text(
                 self._current_auxiliary_text, False)
+            self._update_preedit()
             return
         self._lookup_table_shows_related_candidates = False
         if self._lookup_table_is_invalid:
+            self._update_preedit()
             return
         self._lookup_table_is_invalid = True
         # Don’t show the lookup table if it is invalid anway
