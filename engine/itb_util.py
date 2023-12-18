@@ -3204,6 +3204,8 @@ def variant_to_value(variant: GLib.Variant) -> Any:
         return variant.get_string()
     if type_string == 'i':
         return variant.get_int32()
+    if type_string == 'd':
+        return variant.get_double()
     if type_string == 'b':
         return variant.get_boolean()
     if type_string == 'v':

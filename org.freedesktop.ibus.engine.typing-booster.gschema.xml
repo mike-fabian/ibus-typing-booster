@@ -400,6 +400,15 @@
         log file and debug information may also be shown graphically.
       </description>
     </key>
+    <key name="ibuseventsleepseconds" type="d">
+      <default>0.1</default>
+      <summary>Sleep time between some ibus events</summary>
+      <description>
+        Between some events sent to ibus like forward_key_event(),
+        delete_surrounding_text(), commit_text(), a sleep is necessary.
+        Without the sleep, these events may be processed out of order.
+      </description>
+    </key>
     <key name="shownumberofcandidates" type="b">
       <default>false</default>
       <summary>Display total number of candidates</summary>

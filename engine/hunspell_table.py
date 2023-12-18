@@ -177,7 +177,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # Between some events sent to ibus like forward_key_event(),
         # delete_surrounding_text(), commit_text(), a sleep is necessary.
         # Without the sleep, these events may be processed out of order.
-        self._ibus_event_sleep_seconds = 0.1
+        self._ibus_event_sleep_seconds: float = itb_util.variant_to_value(
+            self._gsettings.get_value('ibuseventsleepseconds'))
+        LOGGER.info('self._ibus_event_sleep_seconds=%s', self._ibus_event_sleep_seconds)
 
         self._emoji_predictions: bool = itb_util.variant_to_value(
             self._gsettings.get_value('emojipredictions'))
@@ -685,6 +687,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'debuglevel': {
                 'set': self.set_debug_level,
                 'get': self.get_debug_level},
+            'ibuseventsleepseconds': {
+                'set': self.set_ibus_event_sleep_seconds,
+                'get': self.get_ibus_event_sleep_seconds},
             'errorsound': {
                 'set': self.set_error_sound,
                 'get': self.get_error_sound},
@@ -4852,6 +4857,33 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
     def get_debug_level(self) -> int:
         '''Returns the current debug level'''
         return self._debug_level
+
+    def set_ibus_event_sleep_seconds(
+            self,
+            seconds: Union[float, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the ibus event sleep seconds
+
+        :param seconds:          ibus event sleep seconds
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.debug(
+            '(%s, update_gsettings = %s)', seconds, update_gsettings)
+        if seconds == self._ibus_event_sleep_seconds:
+            return
+        self._ibus_event_sleep_seconds = seconds
+        if update_gsettings:
+            self._gsettings.set_value(
+                'ibuseventsleepseconds',
+                GLib.Variant.new_double(self._ibus_event_sleep_seconds))
+
+    def get_ibus_event_sleep_seconds(self) -> float:
+        '''Returns the current value ibus event sleep seconds '''
+        return self._ibus_event_sleep_seconds
 
     def set_error_sound(
             self, error_sound: bool, update_gsettings: bool = True) -> None:
