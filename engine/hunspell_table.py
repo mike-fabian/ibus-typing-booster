@@ -2577,14 +2577,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # point in updating the candidates, save some time by making
             # sure the lookup table and the auxiliary text are really
             # empty and hidden and return immediately:
-            self.get_lookup_table().clear()
-            self.get_lookup_table().set_cursor_visible(False)
-            self.hide_lookup_table()
-            self._lookup_table_hidden = True
-            self._current_auxiliary_text = IBus.Text.new_from_string('')
-            super().update_auxiliary_text(
-                self._current_auxiliary_text, False)
-            self._update_preedit()
+            self._update_ui_empty_input()
             return
         self.is_lookup_table_enabled_by_tab = False
         self._lookup_table_shows_related_candidates = False
@@ -2593,7 +2586,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if DEBUG_LEVEL > 2:
             LOGGER.debug('phrase_candidates=%s', phrase_candidates)
         if not phrase_candidates:
-            self._update_preedit()
+            self._update_ui_empty_input()
             return
         self._lookup_table_is_invalid = True
         # Don’t show the lookup table if it is invalid anway
