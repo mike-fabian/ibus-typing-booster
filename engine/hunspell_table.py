@@ -3202,8 +3202,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                          cursor_pos_old, anchor_pos_old)
             LOGGER.debug('Cannot reopen preedit.')
             return False
-        surrounding_text = self.get_surrounding_text() # Redundant?
-        surrounding_text = self.get_surrounding_text() # Redundant?
         self._set_surrounding_text_event.wait(timeout=0.1)
         if not self._set_surrounding_text_event.is_set():
             LOGGER.debug(
