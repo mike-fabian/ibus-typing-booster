@@ -3068,7 +3068,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     LOGGER.debug(
                         'Checking for whitespace before sentence end char. '
                         'surrounding_text = '
-                        '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
+                        '[text = %r, cursor_pos = %s, anchor_pos = %s]',
                         text, cursor_pos, anchor_pos)
                 # The commit_phrase is *not* yet in the surrounding text,
                 # it will show up there only when the next key event is
@@ -3086,7 +3086,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         LOGGER.debug(
                             'Removed whitespace before sentence end char. '
                             'surrounding_text = '
-                            '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
+                            '[text = %r, cursor_pos = %s, anchor_pos = %s]',
                             text, cursor_pos, anchor_pos)
 
     def _maybe_reopen_preedit(
@@ -3191,7 +3191,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         cursor_pos_old = self._surrounding_text_old[1]
         anchor_pos_old = self._surrounding_text_old[2]
         if DEBUG_LEVEL > 1:
-            LOGGER.debug('Old surrounding_text = ["%s", %s, %s]',
+            LOGGER.debug('Old surrounding_text = [%r, %s, %s]',
                          text_old, cursor_pos_old, anchor_pos_old)
         if not text_old:
             LOGGER.debug(
@@ -3220,7 +3220,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         cursor_pos = surrounding_text[1]
         anchor_pos = surrounding_text[2]
         if DEBUG_LEVEL > 1:
-            LOGGER.debug('New surrounding_text = ["%s", %s, %s]',
+            LOGGER.debug('New surrounding_text = [%r, %s, %s]',
                          text, cursor_pos, anchor_pos)
         if not text:
             LOGGER.debug(
@@ -3332,7 +3332,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'Getting context: surrounding_text = '
-                '[text = “%s”, cursor_pos = %s, anchor_pos = %s]',
+                '[text = “%r”, cursor_pos = %s, anchor_pos = %s]',
                 text, cursor_pos, anchor_pos)
         if not self._commit_happened_after_focus_in:
             # Before the first commit or cursor movement, the
@@ -5322,9 +5322,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 if DEBUG_LEVEL > 1:
                     LOGGER.debug(
                         'surrounding_text = '
-                        '[text = "%s", cursor_pos = %s, anchor_pos = %s]',
+                        '[text = %r, cursor_pos = %s, anchor_pos = %s]',
                         text, cursor_pos, anchor_pos)
-                    LOGGER.debug('text_left = %s', text_left)
+                    LOGGER.debug('text_left = %r', text_left)
                 if not text_left or text_left[-1] in '.;:?!':
                     transcript = transcript[0].upper() + transcript[1:]
 
@@ -7255,7 +7255,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._set_surrounding_text_event.wait(timeout=0.1)
         '''
         if DEBUG_LEVEL > 1:
-            LOGGER.debug('text=“%s” cursor_pos=%s anchor_pos=%s',
+            LOGGER.debug('text=“%r” cursor_pos=%s anchor_pos=%s',
                          text.get_text(), cursor_pos, anchor_pos)
         self._set_surrounding_text_text = text.get_text()
         self._set_surrounding_text_cursor_pos = cursor_pos
