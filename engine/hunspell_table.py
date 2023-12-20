@@ -137,6 +137,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 object_path=obj_path)
             LOGGER.info('This ibus version does *not* have focus id.')
 
+        self._process_key_event_press_key_handled = True
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         self._compose_sequences = itb_util.ComposeSequences()
         self._unit_test = unit_test
@@ -6041,6 +6042,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             super().commit_text(
                 IBus.Text.new_from_string(key.unicode))
             return True
+        self._process_key_event_press_key_handled = False
         # When unit testing, forward the key event if a commit was not possible.
         # “return False” doesn’t work well when doing unit testing because the
         # MockEngine class cannot get that return value.
@@ -6309,6 +6311,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if DEBUG_LEVEL > 1:
             LOGGER.debug('KeyEvent object: %s', key)
 
+        if not key.state & IBus.ModifierType.RELEASE_MASK:
+            self._process_key_event_press_key_handled = True
         disabled = False
         if not self._input_mode:
             if DEBUG_LEVEL > 0:
@@ -6376,6 +6380,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if self._maybe_reopen_preedit(key):
                 if DEBUG_LEVEL > 1:
                     LOGGER.debug('Preedit reopened successfully.')
+            if self._process_key_event_press_key_handled:
+                if DEBUG_LEVEL > 0:
+                    LOGGER.info('Press key event was handled. '
+                                'Do not pass release key event.')
+                return True
             return self._return_false(key)
 
         if self.is_empty() and not self._lookup_table.cursor_visible:
