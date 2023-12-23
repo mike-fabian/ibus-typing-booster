@@ -148,6 +148,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._lookup_table_shows_related_candidates = False
         self._lookup_table_shows_compose_completions = False
         self._current_auxiliary_text = ''
+        self._current_preedit_text = ''
         self._bus = bus
         self.database = database
         self.emoji_matcher: Optional[itb_emoji.EmojiMatcher] = None
@@ -2297,36 +2298,40 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._hide_input:
             _str = '*' * len(_str)
         if _str == '':
-            super().update_preedit_text_with_mode(
-                IBus.Text.new_from_string(''), 0, False,
-                IBus.PreeditFocusMode.COMMIT)
+            if not self._current_preedit_text:
+                if DEBUG_LEVEL > 1:
+                    LOGGER.debug('Avoid hiding already hidden preedit.')
+                return
+            super().hide_preedit_text()
+            self._current_preedit_text = ''
+            return
+        self._current_preedit_text = _str
+        attrs = IBus.AttrList()
+        if (not self._preedit_style_only_when_lookup
+            or self.is_lookup_table_enabled_by_tab
+            or self.is_lookup_table_enabled_by_min_char_complete):
+            attrs.append(IBus.attr_underline_new(
+                self._preedit_underline, 0, len(_str)))
+            self._add_color_to_attrs_for_compose(attrs)
+            self._add_color_to_attrs_for_spellcheck(attrs, _str)
         else:
-            attrs = IBus.AttrList()
-            if (not self._preedit_style_only_when_lookup
-                or self.is_lookup_table_enabled_by_tab
-                or self.is_lookup_table_enabled_by_min_char_complete):
-                attrs.append(IBus.attr_underline_new(
-                    self._preedit_underline, 0, len(_str)))
-                self._add_color_to_attrs_for_compose(attrs)
-                self._add_color_to_attrs_for_spellcheck(attrs, _str)
-            else:
-                # Preedit style “only when lookup is enabled” is
-                # requested and lookup is *not* enabled.  Therefore,
-                # make the preedit appear as if it were completely
-                # normal text:
-                attrs.append(IBus.attr_underline_new(
-                    IBus.AttrUnderline.NONE, 0, len(_str)))
-            text = IBus.Text.new_from_string(_str)
-            i = 0
-            while attrs.get(i) is not None:
-                attr = attrs.get(i)
-                text.append_attribute(attr.get_attr_type(),
-                                      attr.get_value(),
-                                      attr.get_start_index(),
-                                      attr.get_end_index())
-                i += 1
-            super().update_preedit_text_with_mode(
-                text, self.get_caret(), True, IBus.PreeditFocusMode.COMMIT)
+            # Preedit style “only when lookup is enabled” is
+            # requested and lookup is *not* enabled.  Therefore,
+            # make the preedit appear as if it were completely
+            # normal text:
+            attrs.append(IBus.attr_underline_new(
+                IBus.AttrUnderline.NONE, 0, len(_str)))
+        text = IBus.Text.new_from_string(_str)
+        i = 0
+        while attrs.get(i) is not None:
+            attr = attrs.get(i)
+            text.append_attribute(attr.get_attr_type(),
+                                  attr.get_value(),
+                                  attr.get_start_index(),
+                                  attr.get_end_index())
+            i += 1
+        super().update_preedit_text_with_mode(
+            text, self.get_caret(), True, IBus.PreeditFocusMode.COMMIT)
 
     def _update_aux(self) -> None:
         '''Update auxiliary text'''
@@ -2466,6 +2471,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         text = IBus.Text.new_from_string('')
         super().update_auxiliary_text(text, False)
         text = IBus.Text.new_from_string(typed_string + completion)
+        self._current_preedit_text = typed_string + completion
         attrs = IBus.AttrList()
         attrs.append(IBus.attr_underline_new(
             self._preedit_underline, 0, len(typed_string)))
@@ -6296,9 +6302,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return True
         super().commit_text(
             IBus.Text.new_from_string(compose_result))
-        super().update_preedit_text_with_mode(
-            IBus.Text.new_from_string(''), 0, False,
-            IBus.PreeditFocusMode.COMMIT)
+        if not self._current_preedit_text:
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Avoid hiding of already hidden preedit.')
+            return True
+        super().hide_preedit_text()
+        self._current_preedit_text = ''
         return True
 
     def do_process_key_event( # pylint: disable=arguments-differ
