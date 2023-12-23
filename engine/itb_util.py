@@ -5347,6 +5347,7 @@ class KeyEvent:
             if self.shift and self.msymbol == 'C-Return':
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/457
                 self.msymbol = 'S-C-Return'
+        self.time: float = 0.0
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, KeyEvent):
@@ -5391,7 +5392,8 @@ class KeyEvent:
             f'button4={self.button4} '
             f'button5={self.button5} '
             f'release={self.release} '
-            f'modifier={self.modifier}')
+            f'modifier={self.modifier} '
+            f'time={self.time}')
 
 def keyevent_to_keybinding(keyevent: KeyEvent) -> str:
     '''Calculates a keybinding string from a key event.'''

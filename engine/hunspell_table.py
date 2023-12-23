@@ -6372,6 +6372,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         result = self._process_key_event(key)
         self._prev_key = key
+        self._prev_key.time = time.time()
         self._set_surrounding_text_event.clear()
         self._surrounding_text_old = self.get_surrounding_text()
         return result
@@ -7122,24 +7123,66 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         '''
         if DEBUG_LEVEL > 1:
-            LOGGER.debug('do_reset() self._prev_key=%s', self._prev_key)
-        if self._prev_key is not None and self._prev_key.val in (
-                IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter):
-            # The “Return” and “KP_Enter” keys trigger a call to
-            # do_reset().  But I don’t want to clear the context, in
-            # that case. Usually this just means that one continues to
-            # write in the next line and the context is still valid.
-            # This helps if the context is only remembered and not
-            # from surrounding text.
-            #
-            # However, if surrounding text is used to get the context,
-            # this usually does not help because at least in Gtk
-            # surrounding text seems to fetch only the current line.
-            # That means that after typing Return in a Gtk application
-            # (like Gedit for example), the context determined from
-            # surrounding text is empty because the surrounding text
-            # contains nothing from the previous line.
+            LOGGER.debug('self._current_preedit_text=%r '
+                         'self._typed_string=%s '
+                         'self._typed_compose_sequence=%s '
+                         'compose preedit representation=%r',
+                         self._current_preedit_text,
+                         repr(self._typed_string),
+                         repr(self._typed_compose_sequence),
+                         self._compose_sequences.preedit_representation(
+                             self._typed_compose_sequence))
+        if not self._current_preedit_text:
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Current preedit is empty: '
+                             'do not record, clear input, update UI.')
+            # If the current preedit is empty, that means that there is
+            # no current input, neither "normal" nor compose input. In that
+            # case, there is nothing to record in the database, no pending
+            # input needs to be cleared and the UI needs no update.
+            if (self._prev_key
+                and
+                self._prev_key.val in (
+                    IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter)):
+                if DEBUG_LEVEL > 1:
+                    LOGGER.debug(
+                        'Avoid clearing context after Return or Enter')
+                return
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Clear context: cursor might have moved, '
+                             'remembered context might be wrong')
+            self.clear_context()
             return
+        if (self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
+            and
+            self._input_purpose not in [itb_util.InputPurpose.TERMINAL.value]):
+            surrounding_text = self.get_surrounding_text()
+            text = surrounding_text[0].get_text()
+            cursor_pos = surrounding_text[1]
+            anchor_pos = surrounding_text[2]
+            if surrounding_text:
+                LOGGER.debug('surrounding_text = [%r, %s, %s]',
+                             text, cursor_pos, anchor_pos)
+            else:
+                LOGGER.debug('Surrounding text object is None. '
+                             'Should never happen.')
+                return
+            if not text.endswith(self._current_preedit_text):
+                LOGGER.debug(
+                    'Whatever caused the reset did not commit the preedit. '
+                    'A reset seems to happen sometimes right after '
+                    'reopening a preedit. In that case nothing '
+                    'should be recorded, nothing cleared, nothing updated.')
+                return
+        time_since_prev_key_handled = 0.0
+        if self._prev_key:
+            time_since_prev_key_handled = time.time() - self._prev_key.time
+        if 0.0 <= time_since_prev_key_handled <= 0.1:
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('probably triggered by key')
+        else:
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('probably triggered by mouse')
         # The preëdit, if there was any, has already been committed
         # automatically because
         # update_preedit_text_with_mode(,,,IBus.PreeditFocusMode.COMMIT)
@@ -7147,6 +7190,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # been recorded in the user database yet. Do it now:
         if not self.is_empty():
             self._record_in_database_and_push_context()
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('Clearing context and input.')
         self.clear_context()
         self._clear_input_and_update_ui()
 
