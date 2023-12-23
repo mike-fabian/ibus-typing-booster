@@ -7042,12 +7042,28 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if (self._off_the_record
             or self._hide_input
             or self._input_hints & itb_util.InputHints.PRIVATE):
-            self.database.check_phrase_and_update_frequency(
-                input_phrase=stripped_input_phrase,
-                phrase=stripped_commit_phrase,
-                p_phrase=self.get_p_phrase(),
-                pp_phrase=self.get_pp_phrase())
-            self.push_context(stripped_commit_phrase)
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Privacy: NOT recording and pushing context.')
+            return
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                'stripped_input_phrase=%r stripped_commit_phrase=%r '
+                'p_phrase=%r pp_phrase=%r',
+                stripped_input_phrase, stripped_commit_phrase,
+                self.get_p_phrase(), self.get_pp_phrase())
+        if not stripped_input_phrase or not stripped_commit_phrase:
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug(
+                    'Empty input or commit: NOT recording and pushing context')
+            return
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('recording and pushing context.')
+        self.database.check_phrase_and_update_frequency(
+            input_phrase=stripped_input_phrase,
+            phrase=stripped_commit_phrase,
+            p_phrase=self.get_p_phrase(),
+            pp_phrase=self.get_pp_phrase())
+        self.push_context(stripped_commit_phrase)
 
     def do_focus_out(self) -> None: # pylint: disable=arguments-differ
         '''
