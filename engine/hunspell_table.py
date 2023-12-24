@@ -2547,6 +2547,18 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Update the candidates, the lookup table and the auxiliary text'''
         self._update_candidates()
         self._update_lookup_table_and_aux()
+        if DEBUG_LEVEL < 1:
+            return
+        if not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
+            return
+        surrounding_text = self.get_surrounding_text()
+        if not surrounding_text:
+            LOGGER.debug('Surrounding text object is None. '
+                         'Should never happen.')
+            return
+        LOGGER.debug('surrounding_text = [%r, %s, %s]',
+                     surrounding_text[0].get_text(),
+                     surrounding_text[1], surrounding_text[2])
 
     def _update_ui_empty_input(self) -> None:
         '''Update the UI when the input is empty.
