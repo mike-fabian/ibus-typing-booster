@@ -103,6 +103,9 @@ class MockEngine:
         self.mock_preedit_focus_mode = focus_mode
         self.update_preedit_text(text, cursor_pos, visible)
 
+    def hide_preedit_text(self) -> None:
+        self.update_preedit_text(IBus.Text.new_from_string(''), 0, False)
+
     def register_properties(self, property_list: List[IBus.Property]) -> None:
         pass
 
