@@ -3270,6 +3270,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             token = match.group('token')
             # Delete the token, get new context and put it into preedit again:
             self.delete_surrounding_text(-len(token), len(token))
+            # https://github.com/mike-fabian/ibus-typing-booster/issues/474#issuecomment-1872148410
+            # In very rare cases, like in the editor of https://meta.stackexchange.com/
+            # the delete_surrounding_text() does not seem to remove the text
+            # from the editor until something is committed or the preedit is
+            # set to an empty string:
+            super().update_preedit_text_with_mode(
+                IBus.Text.new_from_string(''), 0, True,
+                IBus.PreeditFocusMode.COMMIT)
+            self._current_preedit_text = ''
             self.get_context()
             self._insert_string_at_cursor(list(token))
             self._update_ui()
@@ -3310,6 +3319,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             token = match.group('token')
             # Delete the token, get new context and put it into preedit again:
             self.delete_surrounding_text(0, len(token))
+            # https://github.com/mike-fabian/ibus-typing-booster/issues/474#issuecomment-1872148410
+            # In very rare cases, like in the editor of https://meta.stackexchange.com/
+            # the delete_surrounding_text() does not seem to remove the text
+            # from the editor until something is committed or the preedit is
+            # set to an empty string:
+            super().update_preedit_text_with_mode(
+                IBus.Text.new_from_string(''), 0, True,
+                IBus.PreeditFocusMode.COMMIT)
             self.get_context()
             self._insert_string_at_cursor(list(token))
             self._typed_string_cursor = 0
