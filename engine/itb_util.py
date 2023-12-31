@@ -3475,14 +3475,14 @@ class Capabilite(Flag):
     '''Compatibility class to handle IBus.Capabilite the same way no matter
     what version of ibus is used.
 
-    For example, older versions of ibus might not have IBus.Capabilite.SYNC_PROCESS_KEY
+    For example, older versions of ibus might not have IBus.Capabilite.SYNC_PROCESS_KEY_V2
     (or maybe even do not have IBus.Capabilite at all). Then
 
-        capabilities & IBus.Capabilite.SYNC_PROCESS_KEY
+        capabilities & IBus.Capabilite.SYNC_PROCESS_KEY_V2
 
     will produce an exception. But when using this compatibility class
 
-        capabilities & IBus.Capabilite.SYNC_PROCESS_KEY
+        capabilities & IBus.Capabilite.SYNC_PROCESS_KEY_V2
 
     will just be False but not cause an exception.
 
@@ -3561,6 +3561,7 @@ class Capabilite(Flag):
     SURROUNDING_TEXT = 'SURROUNDING_TEXT'
     OSK = 'OSK'
     SYNC_PROCESS_KEY = 'SYNC_PROCESS_KEY'
+    SYNC_PROCESS_KEY_V2 = 'SYNC_PROCESS_KEY_V2'
 
 class InputPurpose(Enum):
     '''Compatibility class to handle InputPurpose the same way no matter
