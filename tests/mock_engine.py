@@ -106,6 +106,9 @@ class MockEngine:
     def hide_preedit_text(self) -> None:
         self.update_preedit_text(IBus.Text.new_from_string(''), 0, False)
 
+    def show_preedit_text(self) -> None:
+        pass
+
     def register_properties(self, property_list: List[IBus.Property]) -> None:
         pass
 
