@@ -6087,6 +6087,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self.forward_key_event(key.val, key.code, key.state)
             return True
         if (self._avoid_forward_key_event
+            or self._im_client.startswith('gtk4-im')
             or
             (self.client_capabilities & itb_util.Capabilite.SYNC_PROCESS_KEY)):
             if DEBUG_LEVEL > 0:
