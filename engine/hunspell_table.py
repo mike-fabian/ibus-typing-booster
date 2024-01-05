@@ -2300,9 +2300,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if _str == '':
             if not self._current_preedit_text:
                 if DEBUG_LEVEL > 1:
-                    LOGGER.debug('Avoid hiding already hidden preedit.')
+                    LOGGER.debug('Avoid clearing already empty preedit.')
                 return
-            super().hide_preedit_text()
+            super().update_preedit_text_with_mode(
+                IBus.Text.new_from_string(''), 0, False,
+                IBus.PreeditFocusMode.COMMIT)
             self._current_preedit_text = ''
             return
         self._current_preedit_text = _str
@@ -6334,9 +6336,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             IBus.Text.new_from_string(compose_result))
         if not self._current_preedit_text:
             if DEBUG_LEVEL > 1:
-                LOGGER.debug('Avoid hiding of already hidden preedit.')
+                LOGGER.debug('Avoid clearing already empty preedit.')
             return True
-        super().hide_preedit_text()
+        super().update_preedit_text_with_mode(
+            IBus.Text.new_from_string(''), 0, False,
+            IBus.PreeditFocusMode.COMMIT)
         self._current_preedit_text = ''
         return True
 
