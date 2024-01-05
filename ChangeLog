@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 06 Jan 2024 Release 2.24.11
+* Really clear the preedit when it is empty, don’t just hide it (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/476)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 29 Dec 2023 Release 2.24.10
 * Update the preedit to empty right after deleting surrounding text when reopening a preedit (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/474)
 * Add debug output to show surrounding text after updating candidates, lookup_table, and aux

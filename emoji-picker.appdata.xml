@@ -41,6 +41,26 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.24.11" date="2024-01-06" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.24.11</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Really clear the preedit when it is empty, don’t just hide
+            it (Resolves: github-issues#476). Just hiding a non-empty
+            preedit is not enough because of
+            IBus.PreeditFocusMode.COMMIT a non-empty preedit is still
+            committed on focus out, even when it is hidden.
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/476">
+          github-issues#476
+        </issue>
+      </issues>
+    </release>
     <release version="2.24.10" date="2023-12-29" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.24.10</url>
       <description>
