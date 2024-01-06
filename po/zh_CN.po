@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-12-05 09:11+0100\n"
+"POT-Creation-Date: 2024-01-06 00:46+0100\n"
 "PO-Revision-Date: 2022-02-25 18:38+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
@@ -131,21 +131,21 @@ msgstr "系统默认"
 msgid "Set Font"
 msgstr "设置字体"
 
-#: engine/hunspell_table.py:516 engine/hunspell_table.py:550
-#: engine/hunspell_table.py:571
+#: engine/hunspell_table.py:520 engine/hunspell_table.py:554
+#: engine/hunspell_table.py:575
 msgid "Off"
 msgstr "关闭"
 
-#: engine/hunspell_table.py:521 engine/hunspell_table.py:555
-#: engine/hunspell_table.py:576
+#: engine/hunspell_table.py:525 engine/hunspell_table.py:559
+#: engine/hunspell_table.py:580
 msgid "On"
 msgstr "开启"
 
-#: engine/hunspell_table.py:540
+#: engine/hunspell_table.py:544
 msgid "Input mode"
 msgstr "输入模式"
 
-#: engine/hunspell_table.py:541
+#: engine/hunspell_table.py:545
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "您可以在这里开启或关闭 ibus-typing-booster。"
 
@@ -156,7 +156,7 @@ msgstr "您可以在这里开启或关闭 ibus-typing-booster。"
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:560 engine/hunspell_table.py:562 setup/main.py:606
+#: engine/hunspell_table.py:564 engine/hunspell_table.py:566 setup/main.py:606
 msgid "Unicode symbols and emoji predictions"
 msgstr "Unicode 符号和 Emoji 表情预测"
 
@@ -167,60 +167,60 @@ msgstr "Unicode 符号和 Emoji 表情预测"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:581 engine/hunspell_table.py:582 setup/main.py:635
+#: engine/hunspell_table.py:585 engine/hunspell_table.py:586 setup/main.py:635
 msgid "Off the record mode"
 msgstr "停止记录模式"
 
-#: engine/hunspell_table.py:1794
+#: engine/hunspell_table.py:1801
 msgid "Highest priority dictionary"
 msgstr "最高优先级的字典"
 
-#: engine/hunspell_table.py:1795
+#: engine/hunspell_table.py:1802
 msgid "Choose highest priority dictionary"
 msgstr "选择最高优先级的字典"
 
-#: engine/hunspell_table.py:1824
+#: engine/hunspell_table.py:1831
 msgid "Preedit input method"
 msgstr "预编辑输入方式"
 
-#: engine/hunspell_table.py:1825
+#: engine/hunspell_table.py:1832
 msgid "Switch preedit input method"
 msgstr "切换预编辑的输入方式"
 
-#: engine/hunspell_table.py:2139
+#: engine/hunspell_table.py:2146
 msgid "Setup"
 msgstr "设置"
 
-#: engine/hunspell_table.py:2142 setup/main.py:170
+#: engine/hunspell_table.py:2149 setup/main.py:170
 msgid "Preferences for ibus-typing-booster"
 msgstr "Ibus-typing-booster 首选项"
 
-#: engine/hunspell_table.py:5112
+#: engine/hunspell_table.py:5202
 msgid "Failed to import Google speech-to-text."
 msgstr "尝试导入 Google 语音转文本文件失败。"
 
-#: engine/hunspell_table.py:5115
+#: engine/hunspell_table.py:5205
 msgid "Failed to import pyaudio."
 msgstr "导入 pyaudio 失败。"
 
-#: engine/hunspell_table.py:5118
+#: engine/hunspell_table.py:5208
 msgid "Failed to import queue."
 msgstr "导入 queue 失败。"
 
-#: engine/hunspell_table.py:5123
+#: engine/hunspell_table.py:5213
 msgid "No supported language for speech recognition."
 msgstr "未支持语音识别的语言。"
 
-#: engine/hunspell_table.py:5127
+#: engine/hunspell_table.py:5217
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google 应用默认凭据”文件“%s”未找到。"
 
-#: engine/hunspell_table.py:5140
+#: engine/hunspell_table.py:5230
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "初始化 Google 语音转文本服务失败。详情请见 debug.log。"
 
-#: engine/hunspell_table.py:5248
+#: engine/hunspell_table.py:5338
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google 语音转文本出错。详情请见 debug.log。"
 
@@ -309,27 +309,27 @@ msgstr "地区"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util.py:4247 engine/itb_util.py:4975
+#: engine/itb_util.py:4250 engine/itb_util.py:4978
 msgid "File not found"
 msgstr "文件未找到"
 
-#: engine/itb_util.py:4251 engine/itb_util.py:4979
+#: engine/itb_util.py:4254 engine/itb_util.py:4982
 msgid "Permission error"
 msgstr "权限错误"
 
-#: engine/itb_util.py:4255 engine/itb_util.py:4983
+#: engine/itb_util.py:4258 engine/itb_util.py:4986
 msgid "Unicode decoding error"
 msgstr "Unicode 解码出错"
 
-#: engine/itb_util.py:4259 engine/itb_util.py:4987
+#: engine/itb_util.py:4262 engine/itb_util.py:4990
 msgid "Unknown error"
 msgstr "未知错误"
 
-#: engine/itb_util.py:4952
+#: engine/itb_util.py:4955
 msgid "Native Keyboard"
 msgstr "原生键盘"
 
-#: engine/itb_util.py:4954
+#: engine/itb_util.py:4957
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -341,11 +341,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5531
+#: engine/itb_util.py:5536
 msgid "Key input"
 msgstr "输入的键盘码"
 
-#: engine/itb_util.py:5537
+#: engine/itb_util.py:5542
 msgid "Cancel"
 msgstr "取消"
 
@@ -353,23 +353,23 @@ msgstr "取消"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5544
+#: engine/itb_util.py:5549
 msgid "Please press a key (or a key combination)"
 msgstr "请按下一个键盘按键（或者按键组合）"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5549
+#: engine/itb_util.py:5554
 msgid "The dialog will be closed when the key is released"
 msgstr "当按键被按下，这个对话框将会自动关闭"
 
-#: engine/itb_util.py:5588
+#: engine/itb_util.py:5593
 msgid "A completion input method to speedup typing."
 msgstr "一个用于补全的输入法，它将会提升你的打字速度。"
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5597
+#: engine/itb_util.py:5602
 msgid "translator-credits"
 msgstr ""
 "lexuge <LEXUGEyky@outlook.com>, 2017\n"
@@ -379,7 +379,7 @@ msgstr ""
 "Hankel Bao <hankelbao@outlook.com>, 2020\n"
 "Dingzhong Chen <wsxy162@gmail.com>, 2021"
 
-#: engine/itb_util.py:5605
+#: engine/itb_util.py:5610
 msgid "Online documentation:"
 msgstr "线上文档："
 

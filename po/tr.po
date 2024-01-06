@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2023-12-05 09:11+0100\n"
+"POT-Creation-Date: 2024-01-06 00:46+0100\n"
 "PO-Revision-Date: 2023-08-03 08:02+0000\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
 "Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
@@ -131,21 +131,21 @@ msgstr "Sistem öntanımlı değeri"
 msgid "Set Font"
 msgstr "Yazı Tipini Ayarla"
 
-#: engine/hunspell_table.py:516 engine/hunspell_table.py:550
-#: engine/hunspell_table.py:571
+#: engine/hunspell_table.py:520 engine/hunspell_table.py:554
+#: engine/hunspell_table.py:575
 msgid "Off"
 msgstr "Kapalı"
 
-#: engine/hunspell_table.py:521 engine/hunspell_table.py:555
-#: engine/hunspell_table.py:576
+#: engine/hunspell_table.py:525 engine/hunspell_table.py:559
+#: engine/hunspell_table.py:580
 msgid "On"
 msgstr "Açık"
 
-#: engine/hunspell_table.py:540
+#: engine/hunspell_table.py:544
 msgid "Input mode"
 msgstr "Giriş modu"
 
-#: engine/hunspell_table.py:541
+#: engine/hunspell_table.py:545
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Buradan ibus-typing-booster'ı açıp kapatabilirsiniz."
 
@@ -156,7 +156,7 @@ msgstr "Buradan ibus-typing-booster'ı açıp kapatabilirsiniz."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:560 engine/hunspell_table.py:562 setup/main.py:606
+#: engine/hunspell_table.py:564 engine/hunspell_table.py:566 setup/main.py:606
 msgid "Unicode symbols and emoji predictions"
 msgstr "Unicode sembolleri ve emoji tahminleri"
 
@@ -167,62 +167,62 @@ msgstr "Unicode sembolleri ve emoji tahminleri"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:581 engine/hunspell_table.py:582 setup/main.py:635
+#: engine/hunspell_table.py:585 engine/hunspell_table.py:586 setup/main.py:635
 msgid "Off the record mode"
 msgstr "Kayıt dışı modu"
 
-#: engine/hunspell_table.py:1794
+#: engine/hunspell_table.py:1801
 msgid "Highest priority dictionary"
 msgstr "En yüksek öncelikli sözlük"
 
-#: engine/hunspell_table.py:1795
+#: engine/hunspell_table.py:1802
 msgid "Choose highest priority dictionary"
 msgstr "En yüksek öncelikli sözlüğü seç"
 
-#: engine/hunspell_table.py:1824
+#: engine/hunspell_table.py:1831
 msgid "Preedit input method"
 msgstr "Ön düzenleme giriş yöntemi"
 
-#: engine/hunspell_table.py:1825
+#: engine/hunspell_table.py:1832
 msgid "Switch preedit input method"
 msgstr "Ön düzenleme giriş yöntemini değiştir"
 
-#: engine/hunspell_table.py:2139
+#: engine/hunspell_table.py:2146
 msgid "Setup"
 msgstr "Kurulum"
 
-#: engine/hunspell_table.py:2142 setup/main.py:170
+#: engine/hunspell_table.py:2149 setup/main.py:170
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster için tercihler"
 
-#: engine/hunspell_table.py:5112
+#: engine/hunspell_table.py:5202
 msgid "Failed to import Google speech-to-text."
 msgstr "Google konuşmadan metne (speech-to-text) alınamadı."
 
-#: engine/hunspell_table.py:5115
+#: engine/hunspell_table.py:5205
 msgid "Failed to import pyaudio."
 msgstr "Pyaudio alınamadı."
 
-#: engine/hunspell_table.py:5118
+#: engine/hunspell_table.py:5208
 msgid "Failed to import queue."
 msgstr "Queue alınamadı."
 
-#: engine/hunspell_table.py:5123
+#: engine/hunspell_table.py:5213
 msgid "No supported language for speech recognition."
 msgstr "Konuşma tanıma için desteklenen dil yok."
 
-#: engine/hunspell_table.py:5127
+#: engine/hunspell_table.py:5217
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google uygulama kimlik bilgileri” dosyası “%s” bulunamadı."
 
-#: engine/hunspell_table.py:5140
+#: engine/hunspell_table.py:5230
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Google konuşmadan metne (speech-to-text) başlatılamadı. debug.log dosyasına "
 "bakın."
 
-#: engine/hunspell_table.py:5248
+#: engine/hunspell_table.py:5338
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 "Google konuşmadan metne (speech-to-text) hatası. debug.log dosyasına bakın."
@@ -312,27 +312,27 @@ msgstr "bölgesel"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Diğerleri, Muhtelif, Çeşitli"
 
-#: engine/itb_util.py:4247 engine/itb_util.py:4975
+#: engine/itb_util.py:4250 engine/itb_util.py:4978
 msgid "File not found"
 msgstr "Dosya bulunamadı"
 
-#: engine/itb_util.py:4251 engine/itb_util.py:4979
+#: engine/itb_util.py:4254 engine/itb_util.py:4982
 msgid "Permission error"
 msgstr "İzin hatası"
 
-#: engine/itb_util.py:4255 engine/itb_util.py:4983
+#: engine/itb_util.py:4258 engine/itb_util.py:4986
 msgid "Unicode decoding error"
 msgstr "Unicode çözümleme hatası"
 
-#: engine/itb_util.py:4259 engine/itb_util.py:4987
+#: engine/itb_util.py:4262 engine/itb_util.py:4990
 msgid "Unknown error"
 msgstr "Bilinmeyen hata"
 
-#: engine/itb_util.py:4952
+#: engine/itb_util.py:4955
 msgid "Native Keyboard"
 msgstr "Yerel Klavye"
 
-#: engine/itb_util.py:4954
+#: engine/itb_util.py:4957
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -345,11 +345,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5531
+#: engine/itb_util.py:5536
 msgid "Key input"
 msgstr "Tuş girişi"
 
-#: engine/itb_util.py:5537
+#: engine/itb_util.py:5542
 msgid "Cancel"
 msgstr "İptal"
 
@@ -357,27 +357,27 @@ msgstr "İptal"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5544
+#: engine/itb_util.py:5549
 msgid "Please press a key (or a key combination)"
 msgstr "Lütfen bir tuşa (veya bir tuş dizisine) basın"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5549
+#: engine/itb_util.py:5554
 msgid "The dialog will be closed when the key is released"
 msgstr "Tuş bırakıldığında iletişim penceresi kapatılacaktır"
 
-#: engine/itb_util.py:5588
+#: engine/itb_util.py:5593
 msgid "A completion input method to speedup typing."
 msgstr "Yazmayı hızlandırmak için bir tamamlama giriş yöntemi."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5597
+#: engine/itb_util.py:5602
 msgid "translator-credits"
 msgstr "Oğuz Ersen <oguz@ersen.moe>"
 
-#: engine/itb_util.py:5605
+#: engine/itb_util.py:5610
 msgid "Online documentation:"
 msgstr "Çevrim içi belgeler:"
 
