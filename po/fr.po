@@ -2,9 +2,9 @@
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2016. #zanata, 2019.
 # José Fournier <jaaf64@zoraldia.com>, 2016. #zanata
 # José Fournier <jaaf64@zoraldia.com>, 2017. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019, 2020, 2022.
+# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019, 2020, 2022, 2024.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2018. #zanata, 2019.
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2022.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2022, 2024.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019. #zanata
 # Julien Humbert <julroy67@gmail.com>, 2020, 2022.
 # Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2020.
@@ -14,16 +14,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-01-06 00:46+0100\n"
-"PO-Revision-Date: 2022-06-09 10:50+0000\n"
+"PO-Revision-Date: 2024-01-22 11:52+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: French <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/fr/>\n"
+"Language-Team: French <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.12.2\n"
+"X-Generator: Weblate 5.3.1\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -468,7 +468,7 @@ msgstr "Reconnaissance vocale"
 #. focus:
 #: setup/main.py:340 setup/main.py:2184
 msgid "Autosettings"
-msgstr ""
+msgstr "Paramètres automatiques"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -573,11 +573,11 @@ msgstr ""
 
 #: setup/main.py:500
 msgid "Yes, but only when extremely likely"
-msgstr ""
+msgstr "Oui, mais seulement en cas d’extrême possibilité"
 
 #: setup/main.py:502
 msgid "Yes, always"
-msgstr ""
+msgstr "Oui, toujours"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
@@ -731,11 +731,11 @@ msgstr ""
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:734
 msgid "Disable in terminals"
-msgstr ""
+msgstr "Désactiver dans les terminaux"
 
 #: setup/main.py:736
 msgid "Whether ibus-typing-booster should be disabled in terminals."
-msgstr ""
+msgstr "Si ibus-typing-booster doit être désactivé dans les terminaux."
 
 #. Translators: Whether language specific digits should be
 #. converted to ASCII digits
@@ -1409,21 +1409,15 @@ msgstr ""
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2093
-#, fuzzy
-#| msgid "Use label for dictionary suggestions"
 msgid "Use flags for dictionary suggestions"
-msgstr "Utiliser un libellé pour les suggestions du dictionnaire"
+msgstr "Utiliser des drapeaux pour les suggestions du dictionnaire."
 
 #: setup/main.py:2095
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a label is used for candidates in the lookup "
-#| "table which come from a dictionary."
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
-"Ici vous pouvez choisir si un libellé est utilisé pour les candidats dans la "
+"Ici vous pouvez choisir si un drapeau est utilisé pour les candidats dans la "
 "table de recherche provenant d’un dictionnaire."
 
 #. Translators: A checkbox where one can choose whether a
@@ -1459,7 +1453,7 @@ msgstr "Fichier non défini."
 #. browser tab) gets the focus.
 #: setup/main.py:2217 setup/main.py:4325
 msgid "Add an autosetting"
-msgstr ""
+msgstr "Ajouter un paramètre automatique"
 
 #. Translators: This is a button to remove an autosetting.
 #. “Autosettings” are settings which may change automatically
@@ -1511,7 +1505,7 @@ msgstr "Emoji"
 #. the automatic settings
 #: setup/main.py:2527
 msgid "Setting"
-msgstr ""
+msgstr "Paramètre"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1519,13 +1513,13 @@ msgstr ""
 #. for the currently selected input method
 #: setup/main.py:2536 setup/main.py:3938
 msgid "Value"
-msgstr ""
+msgstr "Valeur"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
 #: setup/main.py:2560
 msgid "Regular expression"
-msgstr ""
+msgstr "Expression régulière"
 
 #: setup/main.py:2606
 msgid "Are you sure?"
@@ -1566,7 +1560,7 @@ msgstr "Ajouter une méthode de saisie"
 #. for the currently selected input method
 #: setup/main.py:3929
 msgid "Variable"
-msgstr ""
+msgstr "Variable"
 
 #: setup/main.py:4755
 #, python-format
