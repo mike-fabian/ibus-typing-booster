@@ -3002,7 +3002,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if itb_util.text_ends_a_sentence(commit_phrase):
                 self._new_sentence = True
         if fix_sentence_end:
-            self._commit_string_fix_sentence_end(commit_phrase)
+            commit_phrase = (
+                self._commit_string_fix_sentence_end(commit_phrase)
+                + commit_phrase)
         if (not self._avoid_forward_key_event
             and re.compile('^gtk3-im:(firefox|thunderbird)').search(self._im_client)):
             # Workaround for Gmail editor in firefox and for thunderbird, see
@@ -3059,7 +3061,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if push_context:
             self.push_context(stripped_commit_phrase)
 
-    def _commit_string_fix_sentence_end(self, commit_phrase: str) -> None:
+    def _commit_string_fix_sentence_end(self, commit_phrase: str) -> str:
         '''Remove trailing white space before sentence end characters
 
         :param commit_phrase: The text which is going to be committed.
@@ -3073,13 +3075,31 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         make the result “word! ”.
 
         '''
-        if (self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
-            and
-            self._input_purpose not in [itb_util.InputPurpose.TERMINAL.value]):
+        if (not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
+            or
+            self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
+            return ''
+        language_code = '*'
+        used_french_spacing_dictionaries = set(
+            ('fr_FR', 'fr_MC', 'fr_BE', 'fr_LU')
+        ).intersection(self._dictionary_names)
+        if used_french_spacing_dictionaries:
+            if self._dictionary_names[0] in used_french_spacing_dictionaries:
+                language_code =  self._dictionary_names[0]
+            else:
+                matched_french_spacing_dictionaries = (
+                    used_french_spacing_dictionaries.intersection(
+                        self.database.hunspell_obj.spellcheck_single_dictionary(
+                        (self._p_phrase, self._pp_phrase, self._ppp_phrase))))
+                if matched_french_spacing_dictionaries:
+                    language_code = list(matched_french_spacing_dictionaries)[0]
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('language_code=%r', language_code)
+        chars_dict = itb_util.FIX_WHITESPACE_CHARACTERS.get(
+            language_code, itb_util.FIX_WHITESPACE_CHARACTERS['*'])
+        for chars, new_whitespace in chars_dict.items():
             pattern_sentence_end = re.compile(
-                r'^['
-                + re.escape(itb_util.REMOVE_WHITESPACE_CHARACTERS)
-                + r']+[\s]*$')
+                r'^[' + re.escape(chars) + r']+[\s]*$')
             if pattern_sentence_end.search(commit_phrase):
                 surrounding_text = self.get_surrounding_text()
                 text = surrounding_text[0].get_text()
@@ -3087,10 +3107,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 anchor_pos = surrounding_text[2]
                 if DEBUG_LEVEL > 1:
                     LOGGER.debug(
-                        'Checking for whitespace before sentence end char. '
-                        'surrounding_text = '
-                        '[text = %r, cursor_pos = %s, anchor_pos = %s]',
-                        text, cursor_pos, anchor_pos)
+                        'Checking for whitespace before commit_phrase %r: '
+                        'surrounding_text = [%r, %s, %s]',
+                        commit_phrase, text, cursor_pos, anchor_pos)
                 # The commit_phrase is *not* yet in the surrounding text,
                 # it will show up there only when the next key event is
                 # processed:
@@ -3105,10 +3124,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         cursor_pos = surrounding_text[1]
                         anchor_pos = surrounding_text[2]
                         LOGGER.debug(
-                            'Removed whitespace before sentence end char. '
-                            'surrounding_text = '
-                            '[text = %r, cursor_pos = %s, anchor_pos = %s]',
-                            text, cursor_pos, anchor_pos)
+                            'Removed whitespace before commit_phrase %r: '
+                            'surrounding_text = [%r, %s, %s] '
+                            'Replace with %r',
+                            commit_phrase,
+                            text, cursor_pos, anchor_pos, new_whitespace)
+                    return new_whitespace
+        return ''
 
     def _maybe_reopen_preedit(
             self, key: itb_util.KeyEvent) -> bool:

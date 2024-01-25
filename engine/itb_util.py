@@ -145,7 +145,16 @@ SHORTCUT_USER_FREQ = 1000000
 # context before is “word ”, make the result “word!”.  And if the
 # commit_phrase is “!  ” and the context before is “word ” make the
 # result “word! ”.
-REMOVE_WHITESPACE_CHARACTERS = '.,;:?!)'
+FIX_WHITESPACE_CHARACTERS = {
+    'fr_FR': {'.,)]}': '',
+              '?!;:%#«»€$¢£¥฿': ' ', # U+202F NARROW NO-BREAK SPACE
+              },
+    # all other languages:
+    '*': {'.,;:?!)]}': ''},
+}
+FIX_WHITESPACE_CHARACTERS['fr_MC'] = FIX_WHITESPACE_CHARACTERS['fr_FR']
+FIX_WHITESPACE_CHARACTERS['fr_BE'] = FIX_WHITESPACE_CHARACTERS['fr_FR']
+FIX_WHITESPACE_CHARACTERS['fr_LU'] = FIX_WHITESPACE_CHARACTERS['fr_FR']
 
 # If a commit ends with one of these characters and auto-capitalization is
 # activated, capitalize the next word:
