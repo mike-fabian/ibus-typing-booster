@@ -524,15 +524,16 @@ class Hunspell:
                 match_list.append(dictionary.name)
         return match_list
 
-    def spellcheck_single_dictionary(self, words: Iterable[str] = ()) -> bool:
+    def spellcheck_single_dictionary(self, words: Iterable[str] = ()) -> List[str]:
         '''
         Checks whether there is at least one dictionary where all words
         in the input list spellcheck as True.
 
         :param words: A list or tuple of words to spellcheck
-        :return: - False if at least one input word is empty
-                 - True if there is at least one dictionary where all
-                   words in the input list spellcheck as True, else False.
+        :return: - '' if at least one input word is empty
+                 - name of a dictionary where all
+                   words in the input list spellcheck as True, if
+                   there is no such dictionary, return ''.
 
         Examples:
 
@@ -541,49 +542,54 @@ class Hunspell:
         All 3 words spellcheck True in the French dictionary:
 
         >>> h.spellcheck_single_dictionary(('Je', 'suis', 'arrivé'))
-        True
+        ['fr_FR']
 
         Not a correct French sentence but all 3 words spellcheck True
         in the French dictionary:
 
         >>> h.spellcheck_single_dictionary(('Je', 'suis', 'arrive'))
-        True
+        ['fr_FR']
 
+        All words spellcheck as True in both the English and the French dictionary:
+
+        >>> h.spellcheck_single_dictionary(('arrive', 'arrive', 'arrive'))
+        ['en_US', 'fr_FR']
 
         Not all 3 words spellcheck True in the French dictionary and
         not all 3 words spellcheck True in the English dictionary either:
 
         >>> h.spellcheck_single_dictionary(('Je', 'suis', 'arrived'))
-        False
+        []
 
         All 3 words spellcheck True in the English dictionary:
 
         >>> h.spellcheck_single_dictionary(('I', 'have', 'arrived'))
-        True
+        ['en_US']
 
         Unfortunately these 3 words spellcheck True in the French dictionary
         ('have' is a form of the verb 'haver', 'I' is the name of the letter):
 
         >>> h.spellcheck_single_dictionary(('I', 'have', 'arrivé'))
-        True
+        ['fr_FR']
 
-        If the input contains empty words the result is False:
+        If the input contains empty words the result is '':
 
         >>> h.spellcheck_single_dictionary(('I', 'have', ''))
-        False
+        []
         '''
         if not words:
-            return False
+            return []
         for word in words:
             if not word:
-                return False
+                return []
+        dictionary_names = []
         for dictionary in self._dictionaries:
             spellcheck_total = True
             for word in words:
                 spellcheck_total &= dictionary.spellcheck(word)
             if spellcheck_total:
-                return True
-        return False
+                dictionary_names.append(dictionary.name)
+        return sorted(dictionary_names)
 
     def suggest(self, input_phrase: str) -> List[Tuple[str, int]]:
         # pylint: disable=line-too-long
