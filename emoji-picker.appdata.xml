@@ -41,6 +41,23 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.24.12" date="2024-01-27" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.24.12</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Improve handling of punctuation marks when writing (French) French
+            (Resolves: github-issues#480).
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/480">
+          github-issues#480
+        </issue>
+      </issues>
+    </release>
     <release version="2.24.11" date="2024-01-06" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.24.11</url>
       <description>
