@@ -137,10 +137,12 @@ the extra features. Then ibus-typing-booster behaves like any
 ibus-m17n engine.</p><p>The advantage of simulating ibus-m17n using ibus-typing-booster is
 that there are probably fewer bugs because ibus-typing-booster is more
 actively maintained.</p><p>To simulate ibus-m17n with ibus-typing-booster, one can use the
-following setup options:</p><ul><li>Dictionaries and input methods tab:<ul><li>Remove all input methods except the one you want to use</li></ul></li><li>Options tab:<ul><li>Check the option “Enable suggestions by key”</li><li>Check the option “Off the record mode”</li></ul></li><li>Key bindings tab:<ul><li>Remove all keys bound to the command “enable_lookup”</li></ul></li><li>Appearance tab:<ul><li>Set “Preedit underline” to “None”</li></ul></li></ul><p>With these settings, no candidate lists will ever pop up because one
+following setup options:</p><ul><li>Dictionaries and input methods tab:<ul><li>Remove all input methods except the one you want to use</li></ul></li><li>Options tab:<ul><li>Check the option “Enable suggestions by key”</li><li>Check the option “Off the record mode”</li></ul></li><li>Key bindings tab:<ul><li>Remove all keys bound to the command “enable_lookup”</li><li>Bind the command “commit_and_forward_key” to the key “Left”</li></ul></li><li>Appearance tab:<ul><li>Set “Preedit underline” to “None”</li></ul></li></ul><p>With these settings, no candidate lists will ever pop up because one
 would need to press a key to enable a suggestion but all such keys
 have been removed from the “enable_lookup” command. So candidate lists
-are never shown, just like in ibus-m17n.</p><p>No user input is recorded because of enabling the option “Off the
+are never shown, just like in ibus-m17n.</p><p>Binding the command “commit_and_forward_key” to the key “Left” also makes
+the behaviour more similar to ibus-m17n, by default “Left” does not commit
+but move the cursor left into the preedit.</p><p>No user input is recorded because of enabling the option “Off the
 record mode”. Recording user input would be useless because stuff
 learned from user input is normally used to improve the quality of the
 suggestions based on previous input. But if there are never any
