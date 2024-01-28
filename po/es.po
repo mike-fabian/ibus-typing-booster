@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-01-06 00:46+0100\n"
+"POT-Creation-Date: 2024-01-27 20:48+0100\n"
 "PO-Revision-Date: 2022-07-15 16:33+0000\n"
 "Last-Translator: Emilio Herrera <ehespinosa57@gmail.com>\n"
 "Language-Team: Spanish <https://translate.fedoraproject.org/projects/ibus-"
@@ -198,33 +198,33 @@ msgstr "Configuración"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferencias de ibus-typing-booster"
 
-#: engine/hunspell_table.py:5202
+#: engine/hunspell_table.py:5224
 msgid "Failed to import Google speech-to-text."
 msgstr "Falló la importación de speech-to-text de Google."
 
-#: engine/hunspell_table.py:5205
+#: engine/hunspell_table.py:5227
 msgid "Failed to import pyaudio."
 msgstr "Falló la importación de pyaudio."
 
-#: engine/hunspell_table.py:5208
+#: engine/hunspell_table.py:5230
 msgid "Failed to import queue."
 msgstr "Falló la importación de la cola."
 
-#: engine/hunspell_table.py:5213
+#: engine/hunspell_table.py:5235
 msgid "No supported language for speech recognition."
 msgstr "No se admite ningún idioma para el reconocimiento de voz."
 
-#: engine/hunspell_table.py:5217
+#: engine/hunspell_table.py:5239
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "No se encontró el archivo de credenciales de aplicaciones de Google «%s»."
 
-#: engine/hunspell_table.py:5230
+#: engine/hunspell_table.py:5252
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Falló la inicialización de speech-to-text de Google. Lea debug.log."
 
-#: engine/hunspell_table.py:5338
+#: engine/hunspell_table.py:5360
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Error en speech-to-text de Google. Lea debug.log."
 
@@ -309,31 +309,31 @@ msgstr "regiones"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2700
+#: engine/itb_util.py:2709
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Otros, Mezclas, Varios, Diverso"
 
-#: engine/itb_util.py:4250 engine/itb_util.py:4978
+#: engine/itb_util.py:4259 engine/itb_util.py:4987
 msgid "File not found"
 msgstr "No se encontró el archivo"
 
-#: engine/itb_util.py:4254 engine/itb_util.py:4982
+#: engine/itb_util.py:4263 engine/itb_util.py:4991
 msgid "Permission error"
 msgstr "Error de permisos"
 
-#: engine/itb_util.py:4258 engine/itb_util.py:4986
+#: engine/itb_util.py:4267 engine/itb_util.py:4995
 msgid "Unicode decoding error"
 msgstr "Error de decodificación Unicode"
 
-#: engine/itb_util.py:4262 engine/itb_util.py:4990
+#: engine/itb_util.py:4271 engine/itb_util.py:4999
 msgid "Unknown error"
 msgstr "Error desconocido"
 
-#: engine/itb_util.py:4955
+#: engine/itb_util.py:4964
 msgid "Native Keyboard"
 msgstr "Teclado nativo"
 
-#: engine/itb_util.py:4957
+#: engine/itb_util.py:4966
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -346,11 +346,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5536
+#: engine/itb_util.py:5545
 msgid "Key input"
 msgstr "Entrada de tecla"
 
-#: engine/itb_util.py:5542
+#: engine/itb_util.py:5551
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -358,24 +358,24 @@ msgstr "Cancelar"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5549
+#: engine/itb_util.py:5558
 msgid "Please press a key (or a key combination)"
 msgstr "Oprima una tecla (o combinación de teclas)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5554
+#: engine/itb_util.py:5563
 msgid "The dialog will be closed when the key is released"
 msgstr "El cuadro de diálogo se cerrará cuando se suelte la tecla"
 
-#: engine/itb_util.py:5593
+#: engine/itb_util.py:5602
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Un método de entrada de compleción automática para acelerar la mecanografía."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5602
+#: engine/itb_util.py:5611
 msgid "translator-credits"
 msgstr ""
 "Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2019-2021\n"
@@ -383,7 +383,7 @@ msgstr ""
 "Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2018\n"
 "Emilio Herrera <ehespinosa57@gmail.com>, 2017"
 
-#: engine/itb_util.py:5610
+#: engine/itb_util.py:5619
 msgid "Online documentation:"
 msgstr "Documentación en línea:"
 
