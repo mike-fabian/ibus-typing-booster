@@ -490,6 +490,7 @@ following setup options:
     * Check the option “Off the record mode”
 * Key bindings tab:
     * Remove all keys bound to the command “enable_lookup”
+    * Bind the command “commit_and_forward_key” to the key “Left”
 * Appearance tab:
     * Set “Preedit underline” to “None”
 
@@ -497,6 +498,10 @@ With these settings, no candidate lists will ever pop up because one
 would need to press a key to enable a suggestion but all such keys
 have been removed from the “enable_lookup” command. So candidate lists
 are never shown, just like in ibus-m17n.
+
+Binding the command “commit_and_forward_key” to the key “Left” also makes
+the behaviour more similar to ibus-m17n, by default “Left” does not commit
+but move the cursor left into the preedit.
 
 No user input is recorded because of enabling the option “Off the
 record mode”. Recording user input would be useless because stuff
