@@ -1053,6 +1053,30 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                         commit=commit)
         return
 
+    def phrase_exists(self, phrase: str) -> int:
+        '''
+        Checks if an entry for phrase already exists in the user database
+
+        :param phrase: The phrase to check whether it is already recorded
+        :return: 0 if not in the database. > 0 if in the database.
+                 The value > 0 gives the sum(user_freq) in the database
+                 for phrase.
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('phrase=%r', phrase)
+        if not phrase:
+            return 0
+        phrase = unicodedata.normalize(
+            itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
+        select_sqlstr = '''
+        SELECT sum(user_freq) FROM user_db.phrases WHERE phrase = :phrase ;
+        '''
+        select_sqlargs = {'phrase': phrase}
+        retval = self.database.execute(select_sqlstr, select_sqlargs).fetchall()
+        if retval[0][0] is None:
+            return 0
+        return int(retval[0][0])
+
     def remove_phrase(
             self,
             input_phrase: str = '',

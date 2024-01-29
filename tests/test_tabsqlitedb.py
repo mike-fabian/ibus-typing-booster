@@ -180,6 +180,49 @@ class TabSqliteDbTestCase(unittest.TestCase):
         itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no en_US hunspell dictionary could be found.')
     @unittest.skipUnless(
+        testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
+        'Skipping because python3-enchant seems broken for cs_CZ.')
+    @unittest.skipUnless(
+        testutils.enchant_working_as_expected(),
+        'Skipping because of an unexpected change in the enchant behaviour.')
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
+    def test_add_phrase_to_database_and_check_existance(self) -> None:
+        self.init_database(
+            user_db_file=':memory:', dictionary_names=['en_US'])
+        self.assertEqual(
+            0,
+            self.database.phrase_exists('suoicodilaipxecitsiligarfilacrepus'))
+        self.database.add_phrase(
+            input_phrase='suoicodilaipxecitsiligarfilacrepus',
+            phrase='suoicodilaipxecitsiligarfilacrepus',
+            user_freq=1)
+        self.assertEqual(
+            [('suoicodilaipxecitsiligarfilacrepus', 1.0)],
+            self.database.select_words('suoicodilaipxecitsiligarfilacrepus'))
+        self.assertEqual(
+            1,
+            self.database.phrase_exists('suoicodilaipxecitsiligarfilacrepus'))
+        self.database.remove_phrase(
+            input_phrase='suoicodilaipxecitsiligarfilacrepus',
+            phrase='suoicodilaipxecitsiligarfilacrepus')
+        self.assertEqual(
+            0,
+            self.database.phrase_exists('suoicodilaipxecitsiligarfilacrepus'))
+        self.database.add_phrase(
+            input_phrase='suoicodilaipxecitsiligarfilacrepus',
+            phrase='suoicodilaipxecitsiligarfilacrepus',
+            user_freq=4711)
+        self.assertEqual(
+            4711,
+            self.database.phrase_exists('suoicodilaipxecitsiligarfilacrepus'))
+
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        'Skipping because no en_US hunspell dictionary could be found.')
+    @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
         'Skipping because no fr_FR hunspell dictionary could be found.')
     @unittest.skipUnless(
