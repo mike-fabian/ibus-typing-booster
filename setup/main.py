@@ -654,6 +654,56 @@ class SetupUI(Gtk.Window): # type: ignore
         self._options_grid.attach(
             self._off_the_record_checkbutton, 0, _options_grid_row, 2, 1)
 
+        self._record_mode_label = Gtk.Label()
+        self._record_mode_label.set_text(
+            # Translators: A combo box to select which kind of input
+            # should be recorded in the user database.
+            _('Record mode'))
+        self._record_mode_label.set_tooltip_text(
+            _('Selects which kind of input should be recorded in the user '
+              'database: “Everything”: Every typed word is added to the user '
+              'database or its frequency updated if it is already there. '
+              '“Correctly spelled or previously recorded”: A typed word is only '
+              'added to the user database if it is likely to be correctly '
+              'spelled. If a word is already in the user database its '
+              'frequency is updated no matter how it is spelled.  “Correctly '
+              'spelled”: A typed word is only added to the database or its '
+              'frequency updated in the database if it is likely to be '
+              'correctly spelled.  “Nothing”: Do not record any input at all '
+              'in the user database.'))
+        self._record_mode_label.set_xalign(0)
+        self._record_mode_combobox = Gtk.ComboBox()
+        self._record_mode_store = Gtk.ListStore(str, int)
+        self._record_mode_store.append(
+            [_('Everything'), 0])
+        self._record_mode_store.append(
+            [_('Correctly spelled or previously recorded'), 1])
+        self._record_mode_store.append(
+            [_('Correctly spelled'), 2])
+        self._record_mode_store.append(
+            [_('Nothing'), 3])
+        self._record_mode_combobox.set_model(
+            self._record_mode_store)
+        renderer_text = Gtk.CellRendererText()
+        self._record_mode_combobox.pack_start(
+            renderer_text, True)
+        self._record_mode_combobox.add_attribute(
+            renderer_text, "text", 0)
+        self._record_mode = itb_util.variant_to_value(
+            self._gsettings.get_value('recordmode'))
+        if self._record_mode is None:
+            self._record_mode = 0
+        for i, item in enumerate(self._record_mode_store):
+            if self._record_mode == item[1]:
+                self._record_mode_combobox.set_active(i)
+        self._record_mode_combobox.connect(
+            'changed', self._on_record_mode_combobox_changed)
+        _options_grid_row += 1
+        self._options_grid.attach(
+            self._record_mode_label, 0, _options_grid_row, 1, 1)
+        self._options_grid.attach(
+            self._record_mode_combobox, 1, _options_grid_row, 1, 1)
+
         self._avoid_forward_key_event_checkbutton = Gtk.CheckButton(
             # Translators: Avoid the function forward_key_event() in
             # case it is not implemented or has a broken
@@ -957,7 +1007,7 @@ class SetupUI(Gtk.Window): # type: ignore
             'clicked', self._on_learn_from_file_clicked)
         _options_grid_row += 1
         self._options_grid.attach(
-            self._learn_from_file_button, 0, _options_grid_row, 2, 1)
+            self._learn_from_file_button, 0, _options_grid_row, 1, 1)
 
         self._delete_learned_data_button = Gtk.Button(
             # Translators: A button used to delete all personal
@@ -970,9 +1020,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._delete_learned_data_button.set_vexpand(False)
         self._delete_learned_data_button.connect(
             'clicked', self._on_delete_learned_data_clicked)
-        _options_grid_row += 1
         self._options_grid.attach(
-            self._delete_learned_data_button, 0, _options_grid_row, 2, 1)
+            self._delete_learned_data_button, 1, _options_grid_row, 1, 1)
 
         self._dictionaries_label = Gtk.Label()
         self._dictionaries_label.set_text(
@@ -2716,6 +2765,7 @@ class SetupUI(Gtk.Window): # type: ignore
             'arrowkeysreopenpreedit': self.set_arrow_keys_reopen_preedit,
             'emojipredictions': self.set_emoji_prediction_mode,
             'offtherecord': self.set_off_the_record_mode,
+            'recordmode': self.set_record_mode,
             'emojitriggercharacters': self.set_emoji_trigger_characters,
             'autocommitcharacters': self.set_auto_commit_characters,
             'googleapplicationcredentials':
@@ -3028,6 +3078,19 @@ class SetupUI(Gtk.Window): # type: ignore
             model = widget.get_model()
             mode = model[tree_iter][1]
             self.set_inline_completion(
+                mode, update_gsettings=True)
+
+    def _on_record_mode_combobox_changed(
+            self, widget: Gtk.ComboBox) -> None:
+        '''
+        A change of the record mode has been requested
+        with the combobox.
+        '''
+        tree_iter = widget.get_active_iter()
+        if tree_iter is not None:
+            model = widget.get_model()
+            mode = model[tree_iter][1]
+            self.set_record_mode(
                 mode, update_gsettings=True)
 
     def _on_auto_capitalize_checkbutton(self, widget: Gtk.CheckButton) -> None:
@@ -5789,6 +5852,37 @@ class SetupUI(Gtk.Window): # type: ignore
             for i, item in enumerate(self._inline_completion_store):
                 if self._inline_completion == item[1]:
                     self._inline_completion_combobox.set_active(i)
+
+    def set_record_mode(
+            self,
+            mode: Union[int, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the “Record mode”
+
+        :param mode: Specifies how much to record
+                     0: Everything
+                     1: Correctly spelled or previously recorded words
+                     2: Correctly spelled words
+                     3: Nothing
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._record_mode:
+            return
+        self._record_mode = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'recordmode',
+                GLib.Variant.new_int32(mode))
+        else:
+            for i, item in enumerate(self._record_mode_store):
+                if self._record_mode == item[1]:
+                    self._record_mode_combobox.set_active(i)
 
     def set_auto_capitalize(
             self,

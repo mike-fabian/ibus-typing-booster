@@ -169,6 +169,8 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_emoji_prediction_mode())
         self.orig_off_the_record_mode = (
             self.engine.get_off_the_record_mode())
+        self.orig_record_mode = (
+            self.engine.get_record_mode())
         self.orig_emoji_trigger_characters = (
             self.engine.get_emoji_trigger_characters())
         self.orig_auto_commit_characters = (
@@ -216,6 +218,9 @@ class ItbTestCase(unittest.TestCase):
             update_gsettings=False)
         self.engine.set_off_the_record_mode(
             self.orig_off_the_record_mode,
+            update_gsettings=False)
+        self.engine.set_record_mode(
+            self.orig_record_mode,
             update_gsettings=False)
         self.engine.set_emoji_trigger_characters(
             self.orig_emoji_trigger_characters,
@@ -278,6 +283,8 @@ class ItbTestCase(unittest.TestCase):
             False, update_gsettings=False)
         self.engine.set_off_the_record_mode(
             False, update_gsettings=False)
+        self.engine.set_record_mode(
+            0, update_gsettings=False)
         self.engine.set_emoji_trigger_characters(
             '_', update_gsettings=False)
         self.engine.set_auto_commit_characters(
@@ -524,6 +531,236 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(
             self.engine.get_lookup_table().mock_page_size,
             5)
+
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
+    def test_record_mode(self) -> None:
+        self.engine.set_current_imes(
+            ['NoIME', 't-latn-post'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.set_record_mode(0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_g, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_f, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_p, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.assertEqual(self.engine._candidates, [])
+        self.assertEqual(
+            0,
+            self.database.phrase_exists('citsiligarfilacrepus'))
+        self.assertEqual(self.engine.mock_preedit_text, 'citsiligarfilacrepus')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'citsiligarfilacrepus ')
+        self.assertEqual(
+            1,
+            self.database.phrase_exists('citsiligarfilacrepus'))
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_g, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_f, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_p, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'citsiligarfilacrepus')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(
+            2,
+            self.database.phrase_exists('citsiligarfilacrepus'))
+        self.engine.set_record_mode(1)
+        # Previously recorded phrase failing spellcheck should still be recorded:
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_g, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_f, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_p, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'citsiligarfilacrepus')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(
+            3,
+            self.database.phrase_exists('citsiligarfilacrepus'))
+        # New phrase failing spellcheck cannot be recorded:
+        self.assertEqual(
+            0,
+            self.database.phrase_exists('ilacrepus'))
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_p, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'ilacrepus')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(
+            0,
+            self.database.phrase_exists('ilacrepus'))
+        # New phrase passing spellcheck can be recorded:
+        self.assertEqual(
+            0,
+            self.database.phrase_exists('hello'))
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'hello')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(
+            1,
+            self.database.phrase_exists('hello'))
+        self.engine.set_record_mode(2)
+        #  Previously recorded phrase failing spellcheck cannot be recorded
+        self.assertEqual(
+            3,
+            self.database.phrase_exists('citsiligarfilacrepus'))
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_g, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_f, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_p, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'citsiligarfilacrepus')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(
+            3,
+            self.database.phrase_exists('citsiligarfilacrepus'))
+        # Existing phrase passing spellcheck can be recorded:
+        self.assertEqual(
+            1,
+            self.database.phrase_exists('hello'))
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'hello')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(
+            2,
+            self.database.phrase_exists('hello'))
+        # New phrase passing spellcheck can be recorded:
+        self.assertEqual(
+            0,
+            self.database.phrase_exists('world'))
+        self.engine.do_process_key_event(IBus.KEY_w, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_d, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'world')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(
+            1,
+            self.database.phrase_exists('world'))
+        # Check that multiple word were recorded:
+        self.assertEqual(
+            1,
+            self.database.phrase_exists('hello world'))
+        # Misspelled word is not recorded
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'hellllo')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(
+            0,
+            self.database.phrase_exists('hellllo'))
+        # Record another correctly spelled word:
+        self.engine.do_process_key_event(IBus.KEY_w, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_r, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_d, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'world')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(
+            2,
+            self.database.phrase_exists('world'))
+        self.assertEqual(
+            1,
+            self.database.phrase_exists('hello world'))
+        # Check that the misspelled 'hellllo' was not recorded
+        # in the multiple word recording:
+        self.assertEqual(
+            0,
+            self.database.phrase_exists('hellllo world'))
 
     @unittest.skipUnless(
         testutils.get_hunspell_dictionary_length('en_US') >= 10000,

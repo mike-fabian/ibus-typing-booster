@@ -261,6 +261,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._inline_completion: int = itb_util.variant_to_value(
             self._gsettings.get_value('inlinecompletion'))
 
+        self._record_mode: int = itb_util.variant_to_value(
+            self._gsettings.get_value('recordmode'))
+
         self._auto_capitalize: bool = itb_util.variant_to_value(
             self._gsettings.get_value('autocapitalize'))
 
@@ -635,6 +638,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'inlinecompletion': {
                 'set': self.set_inline_completion,
                 'get': self.get_inline_completion},
+            'recordmode': {
+                'set': self.set_record_mode,
+                'get': self.get_record_mode},
             'autocapitalize': {
                 'set': self.set_auto_capitalize,
                 'get': self.get_auto_capitalize},
@@ -3031,18 +3037,47 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 IBus.Text.new_from_string(commit_phrase))
         self._commit_happened_after_focus_in = True
         if (self._off_the_record
+            or self._record_mode == 3
             or self._hide_input
             or self._input_hints & itb_util.InputHints.PRIVATE):
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Privacy: NOT recording and pushing context.')
             return
         if not commit_phrase or not input_phrase:
             return
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('input_phrase=%r commit_phrase=%r '
+                         'p_phrase=%r pp_phrase=%r ppp_phrase=%r '
+                         'record_mode=%d '
+                         'spellcheck=%r previously recorded=%d',
+                         input_phrase, commit_phrase,
+                         self.get_p_phrase(), self.get_pp_phrase(),
+                         self.get_ppp_phrase(), self._record_mode,
+                         self.database.hunspell_obj.spellcheck(commit_phrase),
+                         self.database.phrase_exists(commit_phrase))
+        if (self._record_mode == 1
+            and not self.database.phrase_exists(commit_phrase)
+            and not self.database.hunspell_obj.spellcheck(commit_phrase)):
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('self._record_mode=%d: Not recording: %r',
+                             self._record_mode, commit_phrase)
+            return
+        if (self._record_mode == 2
+            and not self.database.hunspell_obj.spellcheck(commit_phrase)):
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('self._record_mode=%d: Not recording: %r',
+                             self._record_mode, commit_phrase)
+            return
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('recording and pushing context.')
         self.database.check_phrase_and_update_frequency(
             input_phrase=input_phrase,
             phrase=commit_phrase,
             p_phrase=self.get_p_phrase(),
             pp_phrase=self.get_pp_phrase())
-        if (self.get_p_phrase()
+        if (stripped_commit_phrase
+            and self.get_p_phrase()
             and self.get_pp_phrase()
             and self.get_ppp_phrase()):
             # Commit the current commit phrase and the previous
@@ -3051,6 +3086,29 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # phrase is “to” and the total context was “I am
             # going”, then also commit “going to” with the context
             # “I am”:
+            if (self._record_mode == 1
+                and not self.database.phrase_exists(self.get_p_phrase())
+                and not
+                self.database.hunspell_obj.spellcheck(self.get_p_phrase())):
+                if DEBUG_LEVEL > 1:
+                    LOGGER.debug(
+                        'self._record_mode=%d: Not recording multi: %r',
+                        self._record_mode,
+                        self.get_p_phrase() + ' ' + stripped_commit_phrase)
+                return
+            if (self._record_mode == 2
+                and not
+                self.database.hunspell_obj.spellcheck(self.get_p_phrase())):
+                if DEBUG_LEVEL > 1:
+                    LOGGER.debug(
+                        'self._record_mode=%d: Not recording multi: %r',
+                        self._record_mode,
+                        self.get_p_phrase() + ' ' + stripped_commit_phrase)
+                return
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug(
+                    'Recording multi: %r',
+                    self.get_p_phrase() + ' ' + stripped_commit_phrase)
             self.database.check_phrase_and_update_frequency(
                 input_phrase=
                 self.get_p_phrase() + ' ' + stripped_commit_phrase,
@@ -3498,6 +3556,38 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         candidate list.
         '''
         return self._inline_completion
+
+    def set_record_mode(
+            self,
+            mode: Union[int, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets whether the value of record mode
+
+        :param mode: Specifies how much to record
+                     0: Everything
+                     1: Correctly spelled or previously recorded words
+                     2: Correctly spelled words
+                     3: Nothing
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._record_mode:
+            return
+        self._record_mode = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'recordmode',
+                GLib.Variant.new_int32(mode))
+
+    def get_record_mode(self) -> int:
+        '''Returns the current value of the record mode'''
+        return self._record_mode
 
     def set_auto_capitalize(
             self,
@@ -7073,6 +7163,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :param input_phrase: The typed input. This parameter can be empty,
                              then the transliterated input is used.
         '''
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('commit_phrase=%r input_phrase=%r',
+                         commit_phrase, input_phrase)
         if not input_phrase:
             input_phrase = self._transliterated_strings[
                 self.get_current_imes()[0]]
@@ -7097,6 +7190,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         stripped_input_phrase = itb_util.strip_token(input_phrase)
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
         if (self._off_the_record
+            or self._record_mode == 3
             or self._hide_input
             or self._input_hints & itb_util.InputHints.PRIVATE):
             if DEBUG_LEVEL > 1:
@@ -7105,13 +7199,30 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'stripped_input_phrase=%r stripped_commit_phrase=%r '
-                'p_phrase=%r pp_phrase=%r',
+                'p_phrase=%r pp_phrase=%r '
+                'record_mode=%d '
+                'spellcheck=%r previously recorded=%d',
                 stripped_input_phrase, stripped_commit_phrase,
-                self.get_p_phrase(), self.get_pp_phrase())
+                self.get_p_phrase(), self.get_pp_phrase(), self._record_mode,
+                self.database.hunspell_obj.spellcheck(commit_phrase),
+                self.database.phrase_exists(commit_phrase))
         if not stripped_input_phrase or not stripped_commit_phrase:
             if DEBUG_LEVEL > 1:
                 LOGGER.debug(
                     'Empty input or commit: NOT recording and pushing context')
+            return
+        if (self._record_mode == 1
+            and not self.database.phrase_exists(stripped_commit_phrase)
+            and not self.database.hunspell_obj.spellcheck(stripped_commit_phrase)):
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('self._record_mode=%d: Not recording: %r',
+                             self._record_mode, stripped_commit_phrase)
+            return
+        if (self._record_mode == 2
+            and not self.database.hunspell_obj.spellcheck(stripped_commit_phrase)):
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('self._record_mode=%d: Not recording: %r',
+                             self._record_mode, stripped_commit_phrase)
             return
         if DEBUG_LEVEL > 1:
             LOGGER.debug('recording and pushing context.')

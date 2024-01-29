@@ -233,6 +233,23 @@
         to disk it might make sense to use this option temporarily.
       </description>
     </key>
+    <key name="recordmode" type="i">
+      <default>0</default>
+      <summary>Record mode</summary>
+      <description>
+        Selects which kind of input should be recorded in the user
+        database: “Everything”: Every typed word is added to the user
+        database or its frequency updated if it is already there.
+        “Correctly spelled or previously recorded”: A typed word is only
+        added to the user database if it is likely to be correctly
+        spelled. If a word is already in the user database its
+        frequency is updated no matter how it is spelled.  “Correctly
+        spelled”: A typed word is only added to the database or its
+        frequency updated in the database if it is likely to be
+        correctly spelled.  “Nothing”: Do not record any input at all
+        in the user database.
+      </description>
+    </key>
     <key name="emojitriggercharacters" type="s">
       <default>'_'</default>
       <summary>Emoji trigger characters</summary>
