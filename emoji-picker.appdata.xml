@@ -41,6 +41,34 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.25.0" date="2024-02-05" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.25.0</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Add new combobox option “Record mode” (Resolves:
+            github-issues#470).
+          </li>
+          <li>
+            Improve handling of “:” for fr_CA and add fr_CH to use the
+            same rules as fr_FR (Related: github-issues#480).
+          </li>
+          <li>
+            Translation update from Weblate (bn 100%, de 100%, fr
+            100%, ja 99%, ka 100%, sv 100%, tr 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/470">
+          github-issues#470
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/480">
+          github-issues#480
+        </issue>
+      </issues>
+    </release>
     <release version="2.24.12" date="2024-01-27" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.24.12</url>
       <description>
