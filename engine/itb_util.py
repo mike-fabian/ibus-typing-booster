@@ -149,12 +149,16 @@ FIX_WHITESPACE_CHARACTERS = {
     'fr_FR': {'.,)]}': '',
               '?!;:%#«»€$¢£¥฿': ' ', # U+202F NARROW NO-BREAK SPACE
               },
+    'fr_CA': {'.,;?!)]}': '',
+              ':': ' ', # U+202F NARROW NO-BREAK SPACE
+              },
     # all other languages:
     '*': {'.,;:?!)]}': ''},
 }
 FIX_WHITESPACE_CHARACTERS['fr_MC'] = FIX_WHITESPACE_CHARACTERS['fr_FR']
 FIX_WHITESPACE_CHARACTERS['fr_BE'] = FIX_WHITESPACE_CHARACTERS['fr_FR']
 FIX_WHITESPACE_CHARACTERS['fr_LU'] = FIX_WHITESPACE_CHARACTERS['fr_FR']
+FIX_WHITESPACE_CHARACTERS['fr_CH'] = FIX_WHITESPACE_CHARACTERS['fr_FR']
 
 # If a commit ends with one of these characters and auto-capitalization is
 # activated, capitalize the next word:

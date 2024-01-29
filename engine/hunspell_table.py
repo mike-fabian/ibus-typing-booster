@@ -3081,7 +3081,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return ''
         language_code = '*'
         used_french_spacing_dictionaries = set(
-            ('fr_FR', 'fr_MC', 'fr_BE', 'fr_LU')
+            ('fr_FR', 'fr_MC', 'fr_BE', 'fr_LU', 'fr_CH', 'fr_CA')
         ).intersection(self._dictionary_names)
         if used_french_spacing_dictionaries:
             if self._dictionary_names[0] in used_french_spacing_dictionaries:
