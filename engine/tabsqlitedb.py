@@ -323,10 +323,8 @@ class TabSqliteDb:
         '''
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
-                'input_phrase=%s phrase=%s user_freq=%s ',
-                input_phrase.encode('UTF-8'),
-                phrase.encode('UTF-8'),
-                user_freq)
+                'input_phrase=%r phrase=%r user_freq=%s ',
+                input_phrase, phrase, user_freq)
         if not input_phrase or not phrase:
             return
         input_phrase = itb_util.remove_accents(input_phrase.lower())
@@ -1066,9 +1064,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         no matter for what input phrase from the database.
         '''
         if DEBUG_LEVEL > 1:
-            LOGGER.debug(
-                'TabSqliteDb.remove_phrase() phrase=%(p)s',
-                {'p': phrase.encode('UTF-8')})
+            LOGGER.debug('phrase=%r', phrase)
         if not phrase:
             return
         phrase = unicodedata.normalize(
