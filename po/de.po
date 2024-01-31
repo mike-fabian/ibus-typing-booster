@@ -3,27 +3,27 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the ibus-typing-booster package.
 # Translators:
-# Mike FABIAN <mfabian@redhat.com>, 2012, 2019, 2020, 2021, 2022, 2023.
-# Mike FABIAN <mfabian@redhat.com>, 2016. #zanata, 2019, 2020, 2021, 2022, 2023.
-# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019, 2020, 2021, 2022, 2023.
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2021, 2022, 2023.
-# Mike FABIAN <mfabian@redhat.com>, 2019. #zanata, 2020, 2021, 2022, 2023.
+# Mike FABIAN <mfabian@redhat.com>, 2012, 2019, 2020, 2021, 2022, 2023, 2024.
+# Mike FABIAN <mfabian@redhat.com>, 2016. #zanata, 2019, 2020, 2021, 2022, 2023, 2024.
+# Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019, 2020, 2021, 2022, 2023, 2024.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2021, 2022, 2023, 2024.
+# Mike FABIAN <mfabian@redhat.com>, 2019. #zanata, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-01-31 17:36+0100\n"
-"PO-Revision-Date: 2023-06-27 09:19+0000\n"
+"PO-Revision-Date: 2024-01-31 17:13+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18.1\n"
+"X-Generator: Weblate 5.3.1\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -663,10 +663,8 @@ msgstr ""
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
 #: setup/main.py:661
-#, fuzzy
-#| msgid "Off the record mode"
 msgid "Record mode"
-msgstr "Vertraulicher Modus"
+msgstr "Aufzeichnungs Modus"
 
 #: setup/main.py:663
 msgid ""
@@ -680,24 +678,33 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"Wähle aus, welche Art von Eingabe im Benutzerdatenbank aufgezeichnet werden "
+"soll: \"Alles\": Jedes getippte Wort wird der Benutzerdatenbank hinzugefügt "
+"oder seine Häufigkeit aktualisiert, wenn es bereits vorhanden ist. \"Richtig "
+"geschrieben oder zuvor aufgezeichnet\": Ein getipptes Wort wird nur zur "
+"Benutzerdatenbank hinzugefügt, wenn es wahrscheinlich richtig geschrieben "
+"ist. Wenn ein Wort bereits in der Benutzerdatenbank vorhanden ist, wird "
+"seine Häufigkeit aktualisiert, unabhängig von seiner Rechtschreibung. "
+"\"Richtig geschrieben\": Ein getipptes Wort wird nur zur Datenbank "
+"hinzugefügt oder seine Häufigkeit in der Datenbank aktualisiert, wenn es "
+"wahrscheinlich richtig geschrieben ist. \"Nichts\": Keine Eingabe in der "
+"Benutzerdatenbank aufzeichnen."
 
 #: setup/main.py:678
 msgid "Everything"
-msgstr ""
+msgstr "Alles"
 
 #: setup/main.py:680
 msgid "Correctly spelled or previously recorded"
-msgstr ""
+msgstr "Richtig geschrieben oder zuvor aufgezeichnet"
 
 #: setup/main.py:682
-#, fuzzy
-#| msgid "Clear recently used"
 msgid "Correctly spelled"
-msgstr "„Zuletzt verwendet“ löschen"
+msgstr "Richtig geschrieben"
 
 #: setup/main.py:684
 msgid "Nothing"
-msgstr ""
+msgstr "Nichts"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
