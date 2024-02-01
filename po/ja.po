@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-01-31 17:36+0100\n"
-"PO-Revision-Date: 2024-02-01 13:43+0000\n"
+"PO-Revision-Date: 2024-02-01 15:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ja/>\n"
@@ -43,7 +43,7 @@ msgstr "絵文字の検索"
 
 #: engine/emoji_picker.py:354
 msgid "Set the font to display emoji"
-msgstr ""
+msgstr "絵文字の表示フォントを設定"
 
 #: engine/emoji_picker.py:362
 msgid "Set font size"
@@ -59,13 +59,14 @@ msgstr "フォントのサイズ"
 #. selected font.
 #: engine/emoji_picker.py:383
 msgid "Fallback"
-msgstr ""
+msgstr "フォールバック"
 
 #: engine/emoji_picker.py:385
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
-msgstr ""
+msgstr "選択されたフォントでは表示できない絵文字や絵文字の一部に対して、フォントのフ"
+"ォールバックを使用するかどうか。"
 
 #: engine/emoji_picker.py:461
 msgid "Recently used"
@@ -85,7 +86,7 @@ msgstr "キーワード"
 
 #: engine/emoji_picker.py:683
 msgid "Fonts used to render this emoji:"
-msgstr ""
+msgstr "この絵文字を表示するために使用されるフォント："
 
 #: engine/emoji_picker.py:700
 msgid "Unicode Version:"
@@ -93,15 +94,15 @@ msgstr "ユニコードバージョン:"
 
 #: engine/emoji_picker.py:722 engine/emoji_picker.py:1845
 msgid "Left click to copy"
-msgstr ""
+msgstr "左クリックでコピー"
 
 #: engine/emoji_picker.py:725
 msgid "Long press or middle click for skin tones"
-msgstr ""
+msgstr "長押しまたは中クリックで肌の色を選択"
 
 #: engine/emoji_picker.py:726
 msgid "Right click for info"
-msgstr ""
+msgstr "右クリックで情報"
 
 #: engine/emoji_picker.py:1218
 msgid "Search Results"
@@ -109,7 +110,7 @@ msgstr "検索結果"
 
 #: engine/emoji_picker.py:1222
 msgid "Search produced empty result."
-msgstr ""
+msgstr "検索は空の結果を出しました。"
 
 #: engine/emoji_picker.py:1506 engine/emoji_picker.py:1633
 msgid "Copied to clipboard!"
@@ -117,7 +118,7 @@ msgstr "文字をクリップボードにコピーしました。"
 
 #: engine/emoji_picker.py:1957
 msgid "Lookup on emojipedia"
-msgstr ""
+msgstr "Emojipedia で検索"
 
 #: engine/emoji_picker.py:2079 engine/emoji_picker.py:2080
 #: engine/emoji_picker.py:2081 setup/main.py:1595
@@ -144,7 +145,7 @@ msgstr "入力モード"
 
 #: engine/hunspell_table.py:548
 msgid "Here you can switch ibus-typing-booster on or off."
-msgstr ""
+msgstr "ここでは、ibus-typing-boosterをオンまたはオフに切り替えることができます。"
 
 #. Translators: Whether Unicode symbols and emoji should be
 #. included in the predictions. Emoji are pictographs like
@@ -155,7 +156,7 @@ msgstr ""
 #. nevertheless useful symbols.
 #: engine/hunspell_table.py:567 engine/hunspell_table.py:569 setup/main.py:606
 msgid "Unicode symbols and emoji predictions"
-msgstr ""
+msgstr "Unicode 記号と絵文字の予測"
 
 #. Translators: While “Off the record” mode is on, learning
 #. from user input is disabled. If learned user input is
@@ -170,19 +171,19 @@ msgstr "オフ・ザ・レコードモード"
 
 #: engine/hunspell_table.py:1807
 msgid "Highest priority dictionary"
-msgstr ""
+msgstr "最優先辞書"
 
 #: engine/hunspell_table.py:1808
 msgid "Choose highest priority dictionary"
-msgstr ""
+msgstr "最優先辞書を選択"
 
 #: engine/hunspell_table.py:1837
 msgid "Preedit input method"
-msgstr ""
+msgstr "プリエディット入力方法"
 
 #: engine/hunspell_table.py:1838
 msgid "Switch preedit input method"
-msgstr ""
+msgstr "プリエディット入力方法の切り替え"
 
 #: engine/hunspell_table.py:2152
 msgid "Setup"
@@ -194,32 +195,32 @@ msgstr "ibus-typing-booster の設定"
 
 #: engine/hunspell_table.py:5290
 msgid "Failed to import Google speech-to-text."
-msgstr ""
+msgstr "Google音声テキストのインポートに失敗しました。"
 
 #: engine/hunspell_table.py:5293
 msgid "Failed to import pyaudio."
-msgstr ""
+msgstr "pyaudio のインポートに失敗しました。"
 
 #: engine/hunspell_table.py:5296
 msgid "Failed to import queue."
-msgstr ""
+msgstr "queue のインポートに失敗しました。"
 
 #: engine/hunspell_table.py:5301
 msgid "No supported language for speech recognition."
-msgstr ""
+msgstr "音声認識に対応する言語がありません。"
 
 #: engine/hunspell_table.py:5305
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
-msgstr ""
+msgstr "'Google application credentials' ファイル '%s' が見つかりませんでした。"
 
 #: engine/hunspell_table.py:5318
 msgid "Failed to init Google speech-to-text. See debug.log."
-msgstr ""
+msgstr "Google音声テキストの初期化に失敗しました。debug.logを参照してください。"
 
 #: engine/hunspell_table.py:5426
 msgid "Google speech-to-text error. See debug.log."
-msgstr ""
+msgstr "Google音声テキストエラー。debug.logを参照してください。"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
@@ -304,7 +305,7 @@ msgstr "地方指示子"
 #. are seperated by punctuation or white space.
 #: engine/itb_util.py:2713
 msgid "Others, Miscellaneous, Various, Diverse"
-msgstr ""
+msgstr "その他、雑多、様々、多様"
 
 #: engine/itb_util.py:4263 engine/itb_util.py:4991
 msgid "File not found"
@@ -316,7 +317,7 @@ msgstr "パーミッションエラーです"
 
 #: engine/itb_util.py:4271 engine/itb_util.py:4999
 msgid "Unicode decoding error"
-msgstr ""
+msgstr "Unicode 解読エラー"
 
 #: engine/itb_util.py:4275 engine/itb_util.py:5003
 msgid "Unknown error"
@@ -324,7 +325,7 @@ msgstr "不明なエラー"
 
 #: engine/itb_util.py:4968
 msgid "Native Keyboard"
-msgstr ""
+msgstr "ネイティブキーボード"
 
 #: engine/itb_util.py:4970
 msgid ""
@@ -332,6 +333,9 @@ msgid ""
 "whatever comes from the current keyboard layout without any further changes. "
 "So no transliteration or composing is done here."
 msgstr ""
+"直接キーボード入力。これは実際には入力方式ではありません。現在のキーボードレ"
+"イアウトから直接取得し、さらなる変更を加えません。したがって、ここでは転写や"
+"構成は行われません。"
 
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
@@ -361,7 +365,7 @@ msgstr "このダイアログはキーリリース時に閉じられます"
 
 #: engine/itb_util.py:5606
 msgid "A completion input method to speedup typing."
-msgstr ""
+msgstr "入力を高速化するための補完入力方式。"
 
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:5615
@@ -460,7 +464,7 @@ msgstr "自動設定"
 #. again until the next key bound to this command is typed.
 #: setup/main.py:386
 msgid "Enable suggestions by key (Default is the Tab key)"
-msgstr ""
+msgstr "キーによる補完を有効にする（デフォルトは Tab キーです）"
 
 #: setup/main.py:388
 msgid ""
@@ -470,6 +474,10 @@ msgid ""
 "a commit the suggestions are hidden again until the next key bound to this "
 "command is typed."
 msgstr ""
+"このオプションがオンの場合、デフォルトでは補完が表示されません。補完のリスト"
+"を表示するには、キーを入力する必要があります。このためのキーはキーバインディ"
+"ングの設定で変更できます。デフォルトでは Tab キーです。確定後、次にこのコマン"
+"ドにバインドされたキーが入力されるまで、補完は再び非表示になります。"
 
 #. Translators: Whether the best completion is first shown
 #. inline in the preedit instead of showing a full
@@ -479,7 +487,7 @@ msgstr ""
 #. the next candidate and opens the full candidate list.
 #: setup/main.py:416
 msgid "Use inline completion"
-msgstr ""
+msgstr "インライン補完を使用する"
 
 #: setup/main.py:418
 msgid ""
@@ -489,6 +497,10 @@ msgid ""
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
+"最良の補完が、候補リスト全体を表示するのではなく、プリエディット内で最初にイ"
+"ンラインで表示されるかどうか。インラインの候補は、Tab キーを入力して選択し、"
+"通常通りSpaceまたはControl+Spaceを入力して確定できます。Tab "
+"キーを再度入力すると、次の候補に移動し、候補リスト全体が開きます。"
 
 #: setup/main.py:429 setup/main.py:498
 msgid "No"
@@ -496,11 +508,11 @@ msgstr "いいえ"
 
 #: setup/main.py:431
 msgid "Yes, with fallback to popup"
-msgstr ""
+msgstr "はい、ポップアップへのフォールバックを使用"
 
 #: setup/main.py:433
 msgid "Yes, without fallback to popup"
-msgstr ""
+msgstr "はい、ポップアップへのフォールバックなし"
 
 #. Translators: Whether to automatically capitalize after
 #. punctuation.
@@ -522,7 +534,7 @@ msgstr "句点の後のアルファベットは自動で大文字に変化しま
 #. command which will deselect all candidates.
 #: setup/main.py:484
 msgid "Automatically select the best candidate"
-msgstr ""
+msgstr "自動的に最適な候補を選択する"
 
 #: setup/main.py:486
 msgid ""
@@ -533,27 +545,32 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
+"入力内容は最適な候補を自動的に選択することで自動的に修正されます。このオプシ"
+"ョンがオフの場合、次の候補を選択するためのキーバインディングを使用して候補を"
+"手動で選択する必要があります。このオプションがオンで、自動的に選択された候補"
+"を使用したくない場合は、すべての候補を非選択にする「キャンセル」コマンドのキ"
+"ーバインディングを使用できます。"
 
 #: setup/main.py:500
 msgid "Yes, but only when extremely likely"
-msgstr ""
+msgstr "はい、ただし非常に確実な場合のみ"
 
 #: setup/main.py:502
 msgid "Yes, always"
-msgstr ""
+msgstr "はい、常に"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
 #. with the mouse.
 #: setup/main.py:529
 msgid "Add a space when committing by mouse click"
-msgstr ""
+msgstr "マウスクリックで確定する際にスペースを追加する"
 
 #: setup/main.py:531
 msgid ""
 "Add a space if a candidate from the candidate list is committed by clicking "
 "it with the mouse."
-msgstr ""
+msgstr "マウスで候補リストからクリックして確定した場合、スペースを追加します。"
 
 #. Translators: If more then one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -563,7 +580,7 @@ msgstr ""
 #. the session is restarted.
 #: setup/main.py:553
 msgid "Remember last used preedit input method"
-msgstr ""
+msgstr "最後に使用したプリエディット入力方式を記憶する"
 
 #: setup/main.py:555
 msgid ""
@@ -572,6 +589,10 @@ msgid ""
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
 msgstr ""
+"複数の入力方式が同時に使用されている場合、そのうちの一つがプリエディットに使"
+"用されます。プリエディットに使用される入力方式はメニューまたはショートカット"
+"キーで変更できます。このオプションが有効な場合、そのような変更はセッションを"
+"再起動しても記憶されます。"
 
 #. Translators: If more then one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -580,16 +601,15 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:581
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remember input mode"
-msgstr "入力メソッドを削除する"
+msgstr "入力モードを記憶する"
 
 #: setup/main.py:583
 msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
-msgstr ""
+msgstr "このオプションが有効な場合、セッションを再起動しても最後に使用した入力モード"
+"（オン/オフ）が記憶されます。"
 
 #: setup/main.py:608
 msgid ""
@@ -599,6 +619,10 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
+"Unicode記号と絵文字を予測に含めるかどうか。 "
+"絵文字は☺♨⛵のようなピクトグラフです。 Unicode記号には数学記号 (∀∑∯…)、矢印 "
+"(←↑↔…)、通貨記号 (€₹₺…)、点字のパターン "
+"(⠥⠩…)などが含まれ、これらは絵文字ではありませんが、依然として便利な記号です。"
 
 #: setup/main.py:637
 msgid ""
@@ -673,7 +697,7 @@ msgstr "何も"
 #: setup/main.py:721
 #, python-format
 msgid "Avoid using the %s function"
-msgstr ""
+msgstr "%s 関数の使用を避ける"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -698,6 +722,9 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
+"%s 関数が壊れている場合に回避策を使用します。本当に必要な場合にのみこのオプシ"
+"ョンを有効にしてください。これは問題を引き起こす可能性があります。特にXIMが使"
+"用されている場合には特に注意してください。"
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it.
@@ -705,7 +732,7 @@ msgstr ""
 #. committed words.
 #: setup/main.py:762
 msgid "Enable reopening preedits"
-msgstr ""
+msgstr "プリエディットの再オープンを有効にする"
 
 #: setup/main.py:764
 msgid ""
@@ -713,22 +740,25 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
+"カーソルが単語の末尾または先頭に移動すると、単語をプリエディットに戻すことが"
+"許可されるかどうか。このオプションを有効にすると、すでに確定した単語を修正す"
+"るのに役立ちます。"
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:784
 msgid "Disable in terminals"
-msgstr ""
+msgstr "ターミナルで無効にする"
 
 #: setup/main.py:786
 msgid "Whether ibus-typing-booster should be disabled in terminals."
-msgstr ""
+msgstr "ibus-typing-boosterをターミナルで無効にするかどうか。"
 
 #. Translators: Whether language specific digits should be
 #. converted to ASCII digits
 #: setup/main.py:803
 msgid "Convert language specific digits to ASCII digits"
-msgstr ""
+msgstr "言語固有の数字をASCII数字に変換する"
 
 #: setup/main.py:805
 msgid ""
@@ -737,19 +767,24 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"一部の入力方式はデフォルトで言語固有の数字を生成します。もし言語固有の数字を"
+"使いたくなく、常に西洋（ASCII）の数字を好む場合、このオプションを設定して、入"
+"力方式によって生成された言語固有の数字を常にASCII数字に変換することができます"
+"。"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
 #. “Unicode symbols and emoji predictions” is off.
 #: setup/main.py:828
 msgid "Emoji trigger characters:"
-msgstr ""
+msgstr "絵文字トリガー文字:"
 
 #: setup/main.py:830
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
-msgstr ""
+msgstr "このリスト内の文字は、オプション「Unicode "
+"記号と絵文字の予測」がオフでも絵文字およびUnicode記号の検索をトリガーします。"
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -765,7 +800,7 @@ msgstr ""
 #. (which is the default).
 #: setup/main.py:863
 msgid "Auto commit characters:"
-msgstr ""
+msgstr "自動確定文字:"
 
 #: setup/main.py:865
 msgid ""
@@ -779,17 +814,25 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
+"このリスト内の文字は、プリエディットを自動的に確定させ、その後にスペースが挿"
+"入されます。たとえば、「.」が自動確定文字の場合、文末に手動でスペースを入力す"
+"る手間が省けます。このリストは自由に編集できますが、「.,;:?!)」のような妥当な"
+"値があります。ただし、入力方式で必要な文字をこのリストに追加しないでください"
+"。たとえば、Latin-Pre（t-latn-"
+"pre）を使用している場合、「.」をリストに追加すると、「.s」を入力して「ṡ」を取"
+"得することができなくなります。この機能を完全に無効にするには、リストを空にす"
+"ることもできます（これがデフォルトです）。"
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
 #: setup/main.py:899
 msgid "Minimum number of chars for completion:"
-msgstr ""
+msgstr "補完のための最小文字数:"
 
 #: setup/main.py:901
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
-msgstr ""
+msgstr "これよりも少ない文字が入力された場合、補完を表示しません。"
 
 #. Translators: A checkbox where one can choose whether a
 #. sound is played on error
@@ -817,29 +860,30 @@ msgstr "デバッグレベル:"
 msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
-msgstr ""
+msgstr "0より大きい場合、デバッグ情報はログファイルに出力され、またグラフィカルに表示"
+"されることがあります。"
 
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
 #. reading that text file.
 #: setup/main.py:1001
 msgid "Learn from text file"
-msgstr ""
+msgstr "テキストファイルから学習"
 
 #: setup/main.py:1003
 msgid "Learn your style by reading a text file"
-msgstr ""
+msgstr "テキストファイルを読み込んで、あなたのスタイルを学習します"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
 #: setup/main.py:1015
 msgid "Delete learned data"
-msgstr ""
+msgstr "学習データの削除"
 
 #: setup/main.py:1017
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
-msgstr ""
+msgstr "入力またはファイルの読み込みから学習した個人の言語データをすべて削除します"
 
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
@@ -882,7 +926,7 @@ msgstr "デフォルトに設定する"
 #. dictionaries to the default for the current locale.
 #: setup/main.py:1116
 msgid "Set dictionaries to the default for the current locale."
-msgstr ""
+msgstr "現在のロケールにデフォルトの辞書を設定します。"
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
@@ -916,20 +960,20 @@ msgstr "入力メソッドのヘルプ"
 
 #: setup/main.py:1219
 msgid "Display some help showing how to use the input method selected above."
-msgstr ""
+msgstr "上記で選択した入力方式の使用方法を示すヘルプを表示します。"
 
 #. Translators: Tooltip for a button to set some advanced
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1235
 msgid "Options for the input method selected above."
-msgstr ""
+msgstr "上記で選択した入力方式のオプション。"
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
 #: setup/main.py:1248
 msgid "Set input methods to the default for the current locale."
-msgstr ""
+msgstr "入力方式を現在のロケールにデフォルトに設定します。"
 
 #: setup/main.py:1274
 msgid "Enter shortcut here:"
