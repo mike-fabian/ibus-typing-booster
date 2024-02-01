@@ -4,23 +4,23 @@
 # Oguz Ersen <oguzersen@protonmail.com>, 2019.
 # Oğuz Ersen <oguzersen@protonmail.com>, 2019, 2020, 2021, 2022.
 # Mike FABIAN <mfabian@redhat.com>, 2021, 2022.
-# Oğuz Ersen <oguz@ersen.moe>, 2022, 2023.
+# Oğuz Ersen <oguz@ersen.moe>, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-01-31 17:36+0100\n"
-"PO-Revision-Date: 2023-08-03 08:02+0000\n"
+"PO-Revision-Date: 2024-02-01 22:28+0000\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
-"Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/tr/>\n"
+"Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18.2\n"
+"X-Generator: Weblate 5.3.1\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -653,10 +653,8 @@ msgstr ""
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
 #: setup/main.py:661
-#, fuzzy
-#| msgid "Off the record mode"
 msgid "Record mode"
-msgstr "Kayıt dışı modu"
+msgstr "Kayıt modu"
 
 #: setup/main.py:663
 msgid ""
@@ -670,6 +668,15 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"Kullanıcı veri tabanına hangi tür girişlerin kaydedileceğini seçer: \"Her "
+"şey\": Yazılan her sözcük kullanıcı veri tabanına eklenir veya zaten "
+"oradaysa sıklığı güncellenir. \"Doğru hecelenen veya daha önce kaydedilen\": "
+"Yazılan bir sözcük yalnızca doğru yazılma olasılığı yüksekse kullanıcı veri "
+"tabanına eklenir. Bir sözcük zaten kullanıcı veri tabanında bulunuyorsa, "
+"nasıl yazıldığına bakılmaksızın sıklığı güncellenir.  \"Doğru hecelenen\": "
+"Yazılan bir sözcük yalnızca doğru yazılma olasılığı varsa veri tabanına "
+"eklenir veya veri tabanındaki sıklığı güncellenir.  \"Hiçbir şey\": "
+"Kullanıcı veri tabanına hiçbir giriş kaydedilmez."
 
 #: setup/main.py:678
 msgid "Everything"
@@ -677,13 +684,11 @@ msgstr ""
 
 #: setup/main.py:680
 msgid "Correctly spelled or previously recorded"
-msgstr ""
+msgstr "Doğru hecelenen veya daha önce kaydedilen"
 
 #: setup/main.py:682
-#, fuzzy
-#| msgid "Clear recently used"
 msgid "Correctly spelled"
-msgstr "Son kullanılanları temizle"
+msgstr "Doğru hecelenen"
 
 #: setup/main.py:684
 msgid "Nothing"
