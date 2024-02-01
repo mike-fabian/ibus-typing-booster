@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-01-31 17:36+0100\n"
-"PO-Revision-Date: 2024-02-01 15:48+0000\n"
+"PO-Revision-Date: 2024-02-01 22:47+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ja/>\n"
@@ -977,23 +977,23 @@ msgstr "入力方式を現在のロケールにデフォルトに設定します
 
 #: setup/main.py:1274
 msgid "Enter shortcut here:"
-msgstr ""
+msgstr "ショートカットをここに入力:"
 
 #: setup/main.py:1296
 msgid "Enter shortcut expansion here:"
-msgstr ""
+msgstr "ショートカットをここに入力:"
 
 #: setup/main.py:1326
 msgid "Clear input"
-msgstr ""
+msgstr "入力をクリア"
 
 #: setup/main.py:1337
 msgid "Delete shortcut"
-msgstr ""
+msgstr "ショートカットを削除"
 
 #: setup/main.py:1348
 msgid "Add shortcut"
-msgstr ""
+msgstr "ショートカットを追加"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -1005,11 +1005,11 @@ msgstr "ショートカット"
 #. existing shortcuts
 #: setup/main.py:1390
 msgid "Shortcut expansion"
-msgstr ""
+msgstr "ショートカットの展開"
 
 #: setup/main.py:1404
 msgid "Current key bindings:"
-msgstr ""
+msgstr "現在のキー割り当て:"
 
 #. Translators: Column heading of the table listing the
 #. existing key bindings
@@ -1042,13 +1042,13 @@ msgstr "すべてのコマンドのキーバインディングをデフォルト
 #. top of the list of candidates.
 #: setup/main.py:1506
 msgid "Display total number of candidates"
-msgstr ""
+msgstr "候補の総数を表示"
 
 #: setup/main.py:1508
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
-msgstr ""
+msgstr "候補の総数と選択されている候補の位置を候補リストの上部に表示します。"
 
 #. Translators: Checkbox to choose whether to show above
 #. the candidate list whether “Emoji prediction” mode and
@@ -1058,7 +1058,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1526
 msgid "Show status info in auxiliary text"
-msgstr ""
+msgstr "補助テキストに状態情報を表示"
 
 #: setup/main.py:1528
 msgid ""
@@ -1067,6 +1067,9 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
+"補助テキストに「絵文字予測」モードと「オフザレコード」モードのオン/オフを表示"
+"し、また、プリエディットに現在使用されている入力方式も表示します。補助テキス"
+"トは候補リストの上に表示されるオプションのテキスト行です。"
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
@@ -1077,7 +1080,7 @@ msgstr "候補ウインドウの項目数:"
 #: setup/main.py:1557
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
-msgstr ""
+msgstr "候補リストの1ページに表示する提案候補の数。"
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
