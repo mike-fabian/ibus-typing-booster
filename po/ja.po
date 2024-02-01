@@ -10,9 +10,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-01-31 17:36+0100\n"
-"PO-Revision-Date: 2024-02-01 09:09+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"PO-Revision-Date: 2024-02-01 13:43+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ja/>\n"
 "Language: ja\n"
@@ -847,7 +846,7 @@ msgstr ""
 #. ibus-typing-booster.
 #: setup/main.py:1031
 msgid "Use dictionaries for the following languages:"
-msgstr ""
+msgstr "以下の言語の辞書を使用する："
 
 #: setup/main.py:1060
 msgid "Add a dictionary"
@@ -859,11 +858,11 @@ msgstr "辞書を削除する"
 
 #: setup/main.py:1082
 msgid "Move dictionary up"
-msgstr ""
+msgstr "辞書を上に移動"
 
 #: setup/main.py:1094
 msgid "Move dictionary down"
-msgstr ""
+msgstr "辞書を下に移動"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
@@ -890,7 +889,7 @@ msgstr ""
 #. ibus-typing-booster.
 #: setup/main.py:1144
 msgid "Use the following input methods:"
-msgstr ""
+msgstr "以下の入力方法を使用する："
 
 #: setup/main.py:1173
 msgid "Add an input method"
@@ -902,11 +901,11 @@ msgstr "入力メソッドを削除する"
 
 #: setup/main.py:1197
 msgid "Move input method up"
-msgstr ""
+msgstr "入力方法を上に移動"
 
 #: setup/main.py:1209
 msgid "Move input method down"
-msgstr ""
+msgstr "入力方法を下に移動"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
