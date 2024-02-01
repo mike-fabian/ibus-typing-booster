@@ -11,7 +11,8 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2024-01-31 17:36+0100\n"
 "PO-Revision-Date: 2024-02-01 09:09+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ja/>\n"
 "Language: ja\n"
@@ -643,7 +644,7 @@ msgstr ""
 
 #: setup/main.py:678
 msgid "Everything"
-msgstr ""
+msgstr "すべて"
 
 #: setup/main.py:680
 msgid "Correctly spelled or previously recorded"
