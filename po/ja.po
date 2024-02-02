@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-01-31 17:36+0100\n"
-"PO-Revision-Date: 2024-02-02 14:15+0000\n"
+"PO-Revision-Date: 2024-02-02 15:40+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ja/>\n"
@@ -114,7 +114,7 @@ msgstr "検索は空の結果を出しました。"
 
 #: engine/emoji_picker.py:1506 engine/emoji_picker.py:1633
 msgid "Copied to clipboard!"
-msgstr "文字をクリップボードにコピーしました。"
+msgstr "文字をクリップボードにコピーしました！"
 
 #: engine/emoji_picker.py:1957
 msgid "Lookup on emojipedia"
@@ -1249,20 +1249,21 @@ msgstr "ここでは、コンポーズプレビューに使用する色を指定
 #. user database.
 #: setup/main.py:1872
 msgid "Use color for user database suggestions"
-msgstr ""
+msgstr "ユーザーデータベースの補完に色を使用"
 
 #: setup/main.py:1874
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
-msgstr ""
+msgstr "ここでは、ユーザーデータベースからの候補に使用するカスタムカラーを選択できま"
+"す。"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
 #: setup/main.py:1898
 msgid "Choose color for user database suggestions"
-msgstr ""
+msgstr "ユーザーデータベースの補完用の色を選択"
 
 #: setup/main.py:1900
 msgid ""
@@ -1270,25 +1271,28 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
 msgstr ""
+"ここでは、ユーザーデータベースからの候補に使用する色を指定できます。この設定"
+"は、ユーザーデータベースからの候補に色を使用するオプションが有効な場合のみ効"
+"果があります。"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
 #: setup/main.py:1923
 msgid "Use color for spellchecking suggestions"
-msgstr ""
+msgstr "スペルチェックの補完に色を使用"
 
 #: setup/main.py:1925
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
-msgstr ""
+msgstr "ここでは、スペルチェックからの候補に使用するカスタムカラーを選択できます。"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
 #: setup/main.py:1949
 msgid "Choose color for spellchecking suggestions"
-msgstr ""
+msgstr "スペルチェックの補完用の色を選択"
 
 #: setup/main.py:1951
 msgid ""
@@ -1296,110 +1300,115 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
 msgstr ""
+"ここでは、スペルチェックからの候補に使用する色を指定できます。この設定は、ス"
+"ペルチェックからの候補に色を使用するオプションが有効な場合のみ効果があります"
+"。"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
 #: setup/main.py:1977
 msgid "Use color for dictionary suggestions"
-msgstr ""
+msgstr "辞書の補完に色を使用"
 
 #: setup/main.py:1979
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
-msgstr ""
+msgstr "ここでは、辞書からの候補に使用するカスタムカラーを選択できます。"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
 #: setup/main.py:2003
 msgid "Choose color for dictionary suggestions"
-msgstr ""
+msgstr "辞書の補完用の色を選択"
 
 #: setup/main.py:2005
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
-msgstr ""
+msgstr "ここでは、辞書からの候補に使用する色を指定できます。この設定は、辞書からの候"
+"補に色を使用するオプションが有効な場合のみ効果があります。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
 #: setup/main.py:2031
 msgid "Use label for user database suggestions"
-msgstr ""
+msgstr "ユーザーデータベースの補完にラベルを使用"
 
 #: setup/main.py:2033
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
-msgstr ""
+msgstr "ここでは、ユーザーデータベースからの候補に使用するラベルを選択できます。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
 #: setup/main.py:2068
 msgid "Use label for spellchecking suggestions"
-msgstr ""
+msgstr "スペルチェックの提案にラベルを使用"
 
 #: setup/main.py:2070
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
-msgstr ""
+msgstr "ここでは、スペルチェックからの候補に使用するラベルを選択できます。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2105
 msgid "Use label for dictionary suggestions"
-msgstr ""
+msgstr "辞書の提案にラベルを使用"
 
 #: setup/main.py:2107
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
-msgstr ""
+msgstr "ここでは、辞書からの候補に使用するラベルを選択できます。"
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2142
 msgid "Use flags for dictionary suggestions"
-msgstr ""
+msgstr "辞書の提案に国旗を使用"
 
 #: setup/main.py:2144
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
-msgstr ""
+msgstr "ここでは、辞書からの候補に国旗が使用されるかどうかを選択できます。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
 #: setup/main.py:2162
 msgid "Use a label to indicate busy state"
-msgstr ""
+msgstr "ビジー状態を示すためにラベルを使用"
 
 #: setup/main.py:2164
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
-msgstr ""
+msgstr "ここでは、ibus-typing-"
+"boosterがビジー状態のときに示すラベルを使用するかどうかを選択できます。"
 
 #. Translators:
 #: setup/main.py:2197 setup/main.py:3245
 msgid "Set “Google application credentials” .json file:"
-msgstr ""
+msgstr "「Googleアプリケーションの資格情報」.jsonファイルを設定:"
 
 #: setup/main.py:2199
 msgid "Full path of the “Google application credentials” .json file."
-msgstr ""
+msgstr "「Googleアプリケーションの資格情報」 .jsonファイルのフルパス。"
 
 #: setup/main.py:2207
 msgid "File not yet set."
-msgstr ""
+msgstr "ファイルがまだ設定されていません。"
 
 #. Translators: This is a button to add an autosetting.
 #. “Autosettings” are settings which may change automatically
@@ -1508,7 +1517,7 @@ msgstr "入力メソッドを追加する"
 #. for the currently selected input method
 #: setup/main.py:3992
 msgid "Variable"
-msgstr ""
+msgstr "変数"
 
 #: setup/main.py:4818
 #, python-format
@@ -1541,12 +1550,12 @@ msgstr "ファイルを開く…"
 #: setup/main.py:4954
 #, python-format
 msgid "Learned successfully from file %(filename)s."
-msgstr ""
+msgstr "ファイル %(filename)s からの学習が成功しました。"
 
 #: setup/main.py:4963
 #, python-format
 msgid "Learning from file %(filename)s failed."
-msgstr ""
+msgstr "ファイル %(filename)s からの学習に失敗しました。"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1562,7 +1571,8 @@ msgstr ""
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
-msgstr ""
+msgstr "本当にタイピングやファイルの読み込みから学習したすべての言語データを削除しま"
+"すか？"
 
 #: setup/main.py:6581
 msgid "ibus is not running."
@@ -1570,11 +1580,11 @@ msgstr "ibus が起動していません。"
 
 #: typing-booster.appdata.xml:6
 msgid "Typing Booster"
-msgstr ""
+msgstr "タイピングブースター"
 
 #: typing-booster.appdata.xml:7
 msgid "Predictive input method"
-msgstr ""
+msgstr "予測入力方式"
 
 #: typing-booster.appdata.xml:9
 msgid ""
@@ -1582,6 +1592,9 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+"Ibus-typing-boosterは予測入力方式であり、文脈や部分的な入力に基づいて完全な単"
+"語を予測します。ユーザーは提案のリストから目的の単語を選択し、タイピングの速"
+"度とスペルを向上させることができます。"
 
 #~ msgid "Add autosetting"
 #~ msgstr "自動設定を追加する"

@@ -14,10 +14,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-01-31 17:36+0100\n"
-"PO-Revision-Date: 2024-01-22 11:52+0000\n"
+"PO-Revision-Date: 2024-02-02 15:40+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: French <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/fr/>\n"
+"Language-Team: French <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -526,11 +526,11 @@ msgstr "Non"
 
 #: setup/main.py:431
 msgid "Yes, with fallback to popup"
-msgstr ""
+msgstr "Oui, avec recours à la fenêtre contextuelle"
 
 #: setup/main.py:433
 msgid "Yes, without fallback to popup"
-msgstr ""
+msgstr "Oui, sans recours à la fenêtre contextuelle"
 
 #. Translators: Whether to automatically capitalize after
 #. punctuation.
@@ -667,10 +667,8 @@ msgstr ""
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
 #: setup/main.py:661
-#, fuzzy
-#| msgid "Off the record mode"
 msgid "Record mode"
-msgstr "Mode sans enregistrement"
+msgstr "Mode d'enregistrement"
 
 #: setup/main.py:663
 msgid ""
@@ -684,6 +682,17 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"Sélectionne le type d'entrée à enregistrer dans la base de données "
+"utilisateur : « Tout » : Chaque mot tapé est ajouté à la base de données "
+"utilisateur ou sa fréquence est mise à jour s'il y est déjà. « Correctement "
+"orthographié ou déjà enregistré » : Un mot tapé n'est ajouté à la base de "
+"données utilisateur que s'il est probablement correctement orthographié. Si "
+"un mot est déjà dans la base de données utilisateur, sa fréquence est mise à "
+"jour, quelle que soit son orthographe. « Correctement orthographié » : Un "
+"mot tapé n'est ajouté à la base de données, ou sa fréquence mise à jour dans "
+"la base de données, que s'il est probablement correctement orthographié. « "
+"Rien » : Ne pas enregistrer du tout d'entrée dans la base de données "
+"utilisateur."
 
 #: setup/main.py:678
 msgid "Everything"
@@ -691,17 +700,15 @@ msgstr ""
 
 #: setup/main.py:680
 msgid "Correctly spelled or previously recorded"
-msgstr ""
+msgstr "Correctement orthographié ou déjà enregistré"
 
 #: setup/main.py:682
-#, fuzzy
-#| msgid "Clear recently used"
 msgid "Correctly spelled"
-msgstr "Effacer les derniers utilisés"
+msgstr "Correctement orthographié"
 
 #: setup/main.py:684
 msgid "Nothing"
-msgstr ""
+msgstr "Rien"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -780,7 +787,7 @@ msgstr "Si ibus-typing-booster doit être désactivé dans les terminaux."
 #. converted to ASCII digits
 #: setup/main.py:803
 msgid "Convert language specific digits to ASCII digits"
-msgstr ""
+msgstr "Convertir les chiffres spécifiques à la langue en chiffres ASCII"
 
 #: setup/main.py:805
 msgid ""
@@ -789,21 +796,28 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"Certaines méthodes de saisie produisent par défaut des chiffres spécifiques "
+"à la langue. Si l'on ne souhaite jamais utiliser de tels chiffres "
+"spécifiques à la langue mais préfère toujours les chiffres occidentaux "
+"(ASCII), on peut régler cette option pour convertir toujours les chiffres "
+"spécifiques à la langue produits par les méthodes de saisie en chiffres "
+"ASCII."
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
 #. “Unicode symbols and emoji predictions” is off.
 #: setup/main.py:828
-#, fuzzy
-#| msgid "Auto commit characters:"
 msgid "Emoji trigger characters:"
-msgstr "Caractères d auto-validation :"
+msgstr "Caractères déclencheurs d'emoji :"
 
 #: setup/main.py:830
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
 msgstr ""
+"Les caractères de cette liste déclenchent une recherche d'emoji et de "
+"symboles Unicode même si l'option « Prédictions d'emoji et de symboles "
+"Unicode » est désactivée."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -996,13 +1010,8 @@ msgstr ""
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1235
-#, fuzzy
-#| msgid ""
-#| "Display some help showing how to use the input method selected above."
 msgid "Options for the input method selected above."
-msgstr ""
-"Affiche de l’aide montrant comment utiliser la méthode de saisie "
-"sélectionnée ci-dessus."
+msgstr "Options pour la méthode de saisie sélectionnée ci-dessus."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
@@ -1449,7 +1458,7 @@ msgstr ""
 #. dictionary in the candidate list.
 #: setup/main.py:2142
 msgid "Use flags for dictionary suggestions"
-msgstr "Utiliser des drapeaux pour les suggestions du dictionnaire."
+msgstr "Utiliser des drapeaux pour les suggestions du dictionnaire"
 
 #: setup/main.py:2144
 msgid ""
@@ -1499,10 +1508,8 @@ msgstr "Ajouter un paramètre automatique"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2280
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remove an autosetting"
-msgstr "Retirer une méthode de saisie"
+msgstr "Supprimer un paramètre automatique"
 
 #. Translators: This is a button to move an autosetting up in the
 #. order the autosettings are applied. “Up” means it is applied
@@ -1513,10 +1520,8 @@ msgstr "Retirer une méthode de saisie"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2298
-#, fuzzy
-#| msgid "Move input method up"
 msgid "Move an autosetting up"
-msgstr "Remonter la méthode de saisie"
+msgstr "Déplacer un paramètre automatique vers le haut"
 
 #. Translators: This is a button to move an autosetting down in the
 #. order the autosettings are applied. “Down” means it is applied
@@ -1527,10 +1532,8 @@ msgstr "Remonter la méthode de saisie"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2316
-#, fuzzy
-#| msgid "Move input method down"
 msgid "Move an autosetting down"
-msgstr "Descendre la méthode de saisie"
+msgstr "Déplacer un paramètre automatique vers le bas"
 
 #: setup/main.py:2360
 msgid "Spell checking"
