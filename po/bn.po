@@ -2,7 +2,7 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Mahmudul Hasan <ptcmahmudulhasa@gmail.com>, 2022.
-# Sudip Shil <sshil@redhat.com>, 2022.
+# Sudip Shil <sshil@redhat.com>, 2022, 2024.
 # Mike FABIAN <mfabian@redhat.com>, 2022.
 msgid ""
 msgstr ""
@@ -10,16 +10,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-01-31 17:36+0100\n"
-"PO-Revision-Date: 2022-10-12 15:08+0000\n"
-"Last-Translator: Mahmudul Hasan <ptcmahmudulhasa@gmail.com>\n"
-"Language-Team: Bengali <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/bn/>\n"
+"PO-Revision-Date: 2024-02-02 13:43+0000\n"
+"Last-Translator: Sudip Shil <sshil@redhat.com>\n"
+"Language-Team: Bengali <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/bn/>\n"
 "Language: bn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 5.3.1\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -455,7 +455,7 @@ msgstr "বক্তৃতা সনান্তকরণ"
 #. focus:
 #: setup/main.py:340 setup/main.py:2233
 msgid "Autosettings"
-msgstr ""
+msgstr "স্বয়ংক্রিয় সেটিংস"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -652,10 +652,8 @@ msgstr ""
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
 #: setup/main.py:661
-#, fuzzy
-#| msgid "Off the record mode"
 msgid "Record mode"
-msgstr "রেকর্ড মোড বন্ধ করুন"
+msgstr "রেকর্ড মোড"
 
 #: setup/main.py:663
 msgid ""
@@ -669,24 +667,32 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"কোন ধরনের ইনপুট ব্যবহারকারী ডাটাবেসে রেকর্ড করা উচিত তা নির্বাচন করে: \"সবক"
+"িছু\": প্রতিটি টাইপ করা শব্দ ব্যবহারকারী ডাটাবেসে যোগ করা হয় অথবা এটির "
+"ফ্রিকোয়েন্সি আপডেট করা হয় যদি এটি ইতিমধ্যেই থাকে। \"সঠিকভাবে বানান করা অথবা"
+" আগে রেকর্ড করা\": একটি টাইপ করা শব্দ শুধুমাত্র ব্যবহারকারীর ডাটাবেসে যোগ করা"
+" হয় যদি এটি সঠিকভাবে বানান হওয়ার সম্ভাবনা থাকে। যদি একটি শব্দ ইতিমধ্যেই "
+"ব্যবহারকারীর ডাটাবেসে থাকে তবে এটির বানান যেভাবেই হোক না কেন তার "
+"ফ্রিকোয়েন্সি আপডেট করা হয়। \"সঠিকভাবে বানান\": একটি টাইপ করা শব্দ শুধুমাত্"
+"র ডাটাবেসে যোগ করা হয় অথবা ডাটাবেসে এর ফ্রিকোয়েন্সি আপডেট করা হয় যদি এটি "
+"সঠিকভাবে বানান হওয়ার সম্ভাবনা থাকে। \"কিছুই না\": ব্যবহারকারী ডাটাবেসে কোনো "
+"ইনপুট রেকর্ড করবেন না।"
 
 #: setup/main.py:678
 msgid "Everything"
-msgstr ""
+msgstr "সবকিছু"
 
 #: setup/main.py:680
 msgid "Correctly spelled or previously recorded"
-msgstr ""
+msgstr "সঠিকভাবে বানান অথবা আগে রেকর্ড করা"
 
 #: setup/main.py:682
-#, fuzzy
-#| msgid "Clear recently used"
 msgid "Correctly spelled"
-msgstr "সম্প্রতি যা ব্যবহার করা হয়েছে তা পরিষ্কার করুণ"
+msgstr "সঠিক বানান"
 
 #: setup/main.py:684
 msgid "Nothing"
-msgstr ""
+msgstr "কোনো কিছুই নয়"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -754,17 +760,17 @@ msgstr ""
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:784
 msgid "Disable in terminals"
-msgstr ""
+msgstr "টার্মিনালগুলিতে নিষ্ক্রিয় করুন"
 
 #: setup/main.py:786
 msgid "Whether ibus-typing-booster should be disabled in terminals."
-msgstr ""
+msgstr "টার্মিনালে আইবাস-টাইপিং-বুস্টার নিষ্ক্রিয় করা উচিত কিনা।"
 
 #. Translators: Whether language specific digits should be
 #. converted to ASCII digits
 #: setup/main.py:803
 msgid "Convert language specific digits to ASCII digits"
-msgstr ""
+msgstr "ভাষার নির্দিষ্ট অঙ্কগুলিকে অ্যাস্‌কি সংখ্যায় রূপান্তর করুন"
 
 #: setup/main.py:805
 msgid ""
@@ -773,6 +779,11 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"কিছু ইনপুট পদ্ধতি ডিফল্টরূপে ভাষার নির্দিষ্ট সংখ্যা তৈরি করে। যদি কেউ কখনও "
+"এই ধরনের ভাষা নির্দিষ্ট অঙ্কগুলি ব্যবহার করতে না চায় তবে সর্বদা পশ্চিমী "
+"(অ্যাস্‌কি) সংখ্যাগুলি পছন্দ করে, তবে ইনপুট পদ্ধতি দ্বারা উত্পাদিত ভাষা "
+"নির্দিষ্ট অঙ্কগুলিকে সর্বদা অ্যাস্‌কি সংখ্যাগুলিতে রূপান্তর করতে এই বিকল্পটি "
+"সেট করতে পারেন।"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
@@ -1446,17 +1457,15 @@ msgstr "ফাইল এখনো সেট করা হয়নি।"
 #. browser tab) gets the focus.
 #: setup/main.py:2266 setup/main.py:4388
 msgid "Add an autosetting"
-msgstr ""
+msgstr "একটি অটোসেটিং যোগ করুন"
 
 #. Translators: This is a button to remove an autosetting.
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2280
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remove an autosetting"
-msgstr "একটি ইনপুট পদ্ধতি সরান"
+msgstr "একটি অটোসেটিং সরান"
 
 #. Translators: This is a button to move an autosetting up in the
 #. order the autosettings are applied. “Up” means it is applied
@@ -1467,10 +1476,8 @@ msgstr "একটি ইনপুট পদ্ধতি সরান"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2298
-#, fuzzy
-#| msgid "Move input method up"
 msgid "Move an autosetting up"
-msgstr "ইনপুট পদ্ধতি উপরের দিকে উঠান"
+msgstr "একটি অটোসেটিং উপরের দিকে উঠান"
 
 #. Translators: This is a button to move an autosetting down in the
 #. order the autosettings are applied. “Down” means it is applied
@@ -1481,10 +1488,8 @@ msgstr "ইনপুট পদ্ধতি উপরের দিকে উঠ�
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2316
-#, fuzzy
-#| msgid "Move input method down"
 msgid "Move an autosetting down"
-msgstr "ইনপুট পদ্ধতি নিচের দিকে নামান"
+msgstr "একটি অটোসেটিং নিচের দিকে নামান"
 
 #: setup/main.py:2360
 msgid "Spell checking"
@@ -1498,7 +1503,7 @@ msgstr "ইমোজি"
 #. the automatic settings
 #: setup/main.py:2576
 msgid "Setting"
-msgstr ""
+msgstr "বিন্যাস"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1512,7 +1517,7 @@ msgstr "মান"
 #. the automatic settings
 #: setup/main.py:2609
 msgid "Regular expression"
-msgstr ""
+msgstr "নিয়মিত অভিব্যক্তি"
 
 #: setup/main.py:2655
 msgid "Are you sure?"
