@@ -165,7 +165,13 @@ FIX_WHITESPACE_CHARACTERS['fr_CH'] = FIX_WHITESPACE_CHARACTERS['fr_FR']
 AUTO_CAPITALIZE_CHARACTERS = '.;:?!)'
 
 CATEGORIES_TO_STRIP_FROM_TOKENS = (
-    'Po', 'Pi', 'Pf', 'Ps', 'Pe', 'Pc', 'Pd'
+    'Po', # Punctuation Other
+    'Pi', # Punctuation Initial quote
+    'Pf', # Punctuation Final quote
+    'Ps', # Punctuation Open
+    'Pe', # Punctuation Close
+    'Pc', # Punctuation Connector
+    'Pd', # Punctuation Dash
 )
 
 # List of languages where accent insensitive matching makes sense:
