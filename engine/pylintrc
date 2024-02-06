@@ -21,7 +21,7 @@ analyse-fallback-blocks=no
 # A comma-separated list of package or module names from where C extensions may
 # be loaded. Extensions are loading into the active Python interpreter and may
 # run arbitrary code.
-extension-pkg-allow-list=
+extension-pkg-allow-list=hunspell
 
 # A comma-separated list of package or module names from where C extensions may
 # be loaded. Extensions are loading into the active Python interpreter and may
@@ -450,7 +450,7 @@ ignored-parents=
 max-args=10
 
 # Maximum number of attributes for a class (see R0902).
-max-attributes=130
+max-attributes=140
 
 # Maximum number of boolean expressions in an if statement (see R0916).
 max-bool-expr=15
@@ -465,7 +465,7 @@ max-locals=50
 max-parents=7
 
 # Maximum number of public methods for a class (see R0904).
-max-public-methods=140
+max-public-methods=160
 
 # Maximum number of return / yield for function / method body.
 max-returns=50

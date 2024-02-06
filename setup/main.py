@@ -2514,8 +2514,8 @@ class SetupUI(Gtk.Window): # type: ignore
             label.set_margin_bottom(margin)
             icon_size = 48
             try:
-                pixbuf = Gtk.IconTheme.get_default().load_icon(
-                    'image-missing', icon_size, 0)
+                pixbuf = Gtk.IconTheme.get_default( # pylint: disable=no-member
+                ).load_icon('image-missing', icon_size, 0)
             except (GLib.GError,) as error:
                 LOGGER.exception(
                     'Exception when loading "image-missing" icon %s: %s',
@@ -2588,7 +2588,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._autosettings_treeview.append_column(
             autosettings_treeview_column_1)
         autosettings_value_renderer.set_property('editable', True)
-        def set_placeholder_text(
+        def set_placeholder_text( # pylint: disable=unused-argument
                 column: Gtk.TreeViewColumn,
                 cell: Gtk.CellRendererText,
                 model: Gtk.TreeModel,
@@ -4194,6 +4194,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self._input_methods_help_button.set_sensitive(False)
             self._input_methods_options_button.set_sensitive(False)
 
+    # pylint: disable=no-self-use
     def _on_autosettings_treeview_row_activated(
             self,
             treeview: Gtk.TreeView,
@@ -4208,6 +4209,7 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         # Currently we do not do anything when a row is activated:
         LOGGER.debug('%s %s %s', treeview, treepath, column)
+    # pylint: enable=no-self-use
 
     def _on_autosettings_treeview_row_selected(
             self, selection: Gtk.TreeSelection) -> None:
@@ -4262,6 +4264,9 @@ class SetupUI(Gtk.Window): # type: ignore
                     value_integer = int(new_edited_value)
                     new_edited_value = str(value_integer)
                 except (ValueError,) as error:
+                    LOGGER.exception(
+                        'Exception converting string to integer %s: %s',
+                        error.__class__.__name__, error)
                     new_edited_value = ''
             elif value_type == 'b':
                 if new_edited_value.lower().strip() in ('true', 'false'):
@@ -4329,7 +4334,7 @@ class SetupUI(Gtk.Window): # type: ignore
             Gtk.SelectionMode.SINGLE)
         self._autosettings_add_listbox.set_activate_on_single_click(True)
         self._autosettings_add_listbox.connect(
-            'row-selected', self._on_autosetting_to_add_selected) # FIXME
+            'row-selected', self._on_autosetting_to_add_selected)
         rows = []
         for setting in sorted(self._allowed_autosettings):
             filter_words = itb_util.remove_accents(filter_text.lower()).split()
@@ -4365,7 +4370,6 @@ class SetupUI(Gtk.Window): # type: ignore
         Signal handler called when the “add” button to add
         an autosetting is clicked
         '''
-        LOGGER.info('FIXME')
         self._autosettings_add_popover = Gtk.Popover()
         if self._autosettings_add_popover is None:
             LOGGER.debug('self._autosettings_add_popover is None')

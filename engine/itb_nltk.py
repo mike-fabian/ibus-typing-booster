@@ -160,7 +160,7 @@ def _init() -> None:
     except Exception as error:
         print(f'Unexpected error: {error.__class__.__name__}: {error} '
               f'{sys.exc_info()[0]}')
-        raise Exception from error
+        raise Exception from error # pylint: disable=broad-exception-raised
 
 def _del() -> None:
     '''Cleanup, nothing to do here'''

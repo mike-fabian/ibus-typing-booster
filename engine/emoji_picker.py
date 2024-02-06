@@ -1100,9 +1100,11 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         '''
         Print some profiling information to the log.
         '''
+        # pylint: disable=used-before-assignment
         PROFILE.disable()
         stats_stream = io.StringIO()
         stats = pstats.Stats(PROFILE, stream=stats_stream)
+        # pylint: enable=used-before-assignment
         stats.strip_dirs()
         stats.sort_stats('cumulative')
         stats.print_stats('emoji_picker', 25)

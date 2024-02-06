@@ -328,13 +328,14 @@ class SoundObject:
         if not self._aplay_binary:
             return
         try:
-            self._aplay_process = subprocess.Popen('aplay', shell=False,
-                                                   stdin=subprocess.PIPE,
-                                                   stderr=subprocess.PIPE,
-                                                   stdout=subprocess.PIPE,
-                                                   encoding=None,
-                                                   errors=None,
-                                                   text=None)
+            self._aplay_process = subprocess.Popen( # pylint: disable=consider-using-with
+                'aplay', shell=False,
+                stdin=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                encoding=None,
+                errors=None,
+                text=None)
         except (OSError, ValueError) as error:
             LOGGER.exception(
                 'cannot start aplay process %s: %s',

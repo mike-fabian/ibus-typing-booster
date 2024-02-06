@@ -29,7 +29,6 @@ from typing import Tuple
 from typing import List
 from typing import Iterable
 from typing import Any
-from typing import Type
 import os
 import sys
 import unicodedata
@@ -79,6 +78,7 @@ except (ImportError,):
 # letter of a word until the candidate lookup table pops up.
 MAX_WORDS = 100
 
+# pylint: disable=attribute-defined-outside-init
 class Dictionary():
     '''A class to hold a hunspell dictionary'''
     # As soon as it is OK ot require Python >= 3.7, use these nicer type hints:
@@ -366,6 +366,7 @@ class Dictionary():
         if self.voikko:
             return self.spellcheck_suggest_voikko(word)
         return []
+# pylint: enable=attribute-defined-outside-init
 
 class Hunspell:
     '''A class to suggest completions or corrections

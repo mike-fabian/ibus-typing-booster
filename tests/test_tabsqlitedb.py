@@ -34,7 +34,9 @@ import unittest
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
+# pylint: disable=wrong-import-position
 import testutils # pylint: disable=import-error
+# pylint: enable=wrong-import-position
 
 IMPORT_DISTRO_SUCCESSFUL = False
 try:
@@ -43,6 +45,7 @@ try:
 except (ImportError,):
     IMPORT_DISTRO_SUCCESSFUL = False
 
+# pylint: disable=wrong-import-order
 # pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
 # pylint: disable=import-error
@@ -51,6 +54,7 @@ import tabsqlitedb
 # pylint: disable=import-error
 sys.path.pop(0)
 # pylint: enable=wrong-import-position
+# pylint: enable=wrong-import-order
 
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring

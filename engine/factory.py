@@ -89,7 +89,7 @@ class EngineFactory(IBus.Factory): # type: ignore
             LOGGER.exception(
                 'Failed to create engine %s: %s: %s',
                 engine_name, error.__class__.__name__, error)
-            raise Exception from error
+            raise Exception from error # pylint: disable=broad-exception-raised
 
     def do_destroy(self) -> None:  # pylint: disable=arguments-differ
         '''Destructor, which finish some task for IME'''
