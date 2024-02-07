@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-01-31 17:36+0100\n"
+"POT-Creation-Date: 2024-02-06 10:51+0100\n"
 "PO-Revision-Date: 2022-07-13 09:12+0000\n"
 "Last-Translator: Paul S <psads.g@gmail.com>\n"
 "Language-Team: Portuguese <https://translate.fedoraproject.org/projects/ibus-"
@@ -95,7 +95,7 @@ msgstr "Fontes usadas para mostrar este emoji:"
 msgid "Unicode Version:"
 msgstr "Versão de Unicode:"
 
-#: engine/emoji_picker.py:722 engine/emoji_picker.py:1845
+#: engine/emoji_picker.py:722 engine/emoji_picker.py:1847
 msgid "Left click to copy"
 msgstr "Clique esquerdo para copiar"
 
@@ -108,28 +108,28 @@ msgstr ""
 msgid "Right click for info"
 msgstr "Clique no botão direito do rato para informação"
 
-#: engine/emoji_picker.py:1218
+#: engine/emoji_picker.py:1220
 msgid "Search Results"
 msgstr "Resultados da Pesquisa"
 
-#: engine/emoji_picker.py:1222
+#: engine/emoji_picker.py:1224
 msgid "Search produced empty result."
 msgstr "A pesquisa não produziu resultados."
 
-#: engine/emoji_picker.py:1506 engine/emoji_picker.py:1633
+#: engine/emoji_picker.py:1508 engine/emoji_picker.py:1635
 msgid "Copied to clipboard!"
 msgstr "Copiado para a área de transferência!"
 
-#: engine/emoji_picker.py:1957
+#: engine/emoji_picker.py:1959
 msgid "Lookup on emojipedia"
 msgstr "Procure na emojipedia"
 
-#: engine/emoji_picker.py:2079 engine/emoji_picker.py:2080
-#: engine/emoji_picker.py:2081 setup/main.py:1595
+#: engine/emoji_picker.py:2081 engine/emoji_picker.py:2082
+#: engine/emoji_picker.py:2083 setup/main.py:1595
 msgid "System default"
 msgstr "Predefinição do sistema"
 
-#: engine/emoji_picker.py:2216
+#: engine/emoji_picker.py:2218
 msgid "Set Font"
 msgstr "Definir a fonte"
 
@@ -197,33 +197,33 @@ msgstr "Configurar"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferências para o ibus-typing-booster"
 
-#: engine/hunspell_table.py:5290
+#: engine/hunspell_table.py:5314
 msgid "Failed to import Google speech-to-text."
 msgstr "Falha ao importar a conversão de fala para texto do Google."
 
-#: engine/hunspell_table.py:5293
+#: engine/hunspell_table.py:5317
 msgid "Failed to import pyaudio."
 msgstr "Falha a importar pyaudio."
 
-#: engine/hunspell_table.py:5296
+#: engine/hunspell_table.py:5320
 msgid "Failed to import queue."
 msgstr "Falha ao importar a fila."
 
-#: engine/hunspell_table.py:5301
+#: engine/hunspell_table.py:5325
 msgid "No supported language for speech recognition."
 msgstr "Nenhuma língua suportada para reconhecimento de fala."
 
-#: engine/hunspell_table.py:5305
+#: engine/hunspell_table.py:5329
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Ficheiro “Google application credentials” “%s” não encontrado."
 
-#: engine/hunspell_table.py:5318
+#: engine/hunspell_table.py:5342
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Falha ao iniciar a conversão de fala em texto do Google. Consulte debug.log."
 
-#: engine/hunspell_table.py:5426
+#: engine/hunspell_table.py:5450
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Erro de conversão de fala em texto do Google. Consulte debug.log."
 
@@ -308,31 +308,31 @@ msgstr "regional"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2713
+#: engine/itb_util.py:2719
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Outras, Miscelâneas, Várias, Diversas"
 
-#: engine/itb_util.py:4263 engine/itb_util.py:4991
+#: engine/itb_util.py:4269 engine/itb_util.py:4997
 msgid "File not found"
 msgstr "Ficheiro não encontrado"
 
-#: engine/itb_util.py:4267 engine/itb_util.py:4995
+#: engine/itb_util.py:4273 engine/itb_util.py:5001
 msgid "Permission error"
 msgstr "Erro de permissão"
 
-#: engine/itb_util.py:4271 engine/itb_util.py:4999
+#: engine/itb_util.py:4277 engine/itb_util.py:5005
 msgid "Unicode decoding error"
 msgstr "Erro de descodificação unicode"
 
-#: engine/itb_util.py:4275 engine/itb_util.py:5003
+#: engine/itb_util.py:4281 engine/itb_util.py:5009
 msgid "Unknown error"
 msgstr "Erro desconhecido"
 
-#: engine/itb_util.py:4968
+#: engine/itb_util.py:4974
 msgid "Native Keyboard"
 msgstr "Teclado nativo"
 
-#: engine/itb_util.py:4970
+#: engine/itb_util.py:4976
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -345,11 +345,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5549
+#: engine/itb_util.py:5555
 msgid "Key input"
 msgstr "Input de teclado"
 
-#: engine/itb_util.py:5555
+#: engine/itb_util.py:5561
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -357,30 +357,30 @@ msgstr "Cancelar"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5562
+#: engine/itb_util.py:5568
 msgid "Please press a key (or a key combination)"
 msgstr "Por favor prima uma tecla (ou uma combinação de teclas)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5567
+#: engine/itb_util.py:5573
 msgid "The dialog will be closed when the key is released"
 msgstr "A caixa de diálogo será fechada quando a tecla for solta"
 
-#: engine/itb_util.py:5606
+#: engine/itb_util.py:5612
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Um método de introdução de dados de completamento para acelerar a digitação."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5615
+#: engine/itb_util.py:5621
 msgid "translator-credits"
 msgstr ""
 "Manuela Silva\n"
 "Paul S <psads.g@gmail.com>, 2022"
 
-#: engine/itb_util.py:5623
+#: engine/itb_util.py:5629
 msgid "Online documentation:"
 msgstr "Documentação on-line:"
 
@@ -393,7 +393,7 @@ msgstr "Preferências"
 msgid "Restore all defaults"
 msgstr "Restaurar todas as predefinições"
 
-#: setup/main.py:213 setup/main.py:6519
+#: setup/main.py:213 setup/main.py:6523
 msgid "_Close"
 msgstr "_Fechar"
 
@@ -940,7 +940,7 @@ msgid "Install the dictionaries which are setup here but not installed"
 msgstr ""
 "Instalar os dicionários que estão configurados aqui, mas não instalados"
 
-#: setup/main.py:1110 setup/main.py:1242 setup/main.py:1469 setup/main.py:4865
+#: setup/main.py:1110 setup/main.py:1242 setup/main.py:1469 setup/main.py:4869
 msgid "Set to default"
 msgstr "Definir para predefinição"
 
@@ -1054,7 +1054,7 @@ msgstr "Editar"
 msgid "Edit the key bindings for the selected command"
 msgstr "Editar a configuração de teclas para o comando seleccionado"
 
-#: setup/main.py:1473 setup/main.py:4870
+#: setup/main.py:1473 setup/main.py:4874
 msgid "Set default key bindings for the selected command"
 msgstr "Definir atalhos de teclado padrão para o comando selecionado"
 
@@ -1480,7 +1480,7 @@ msgstr "Ficheiro ainda não definido."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2266 setup/main.py:4388
+#: setup/main.py:2266 setup/main.py:4392
 msgid "Add an autosetting"
 msgstr ""
 
@@ -1554,11 +1554,11 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "Tem certeza?"
 
-#: setup/main.py:2657 setup/main.py:3248 setup/main.py:3326 setup/main.py:4938
+#: setup/main.py:2657 setup/main.py:3248 setup/main.py:3326 setup/main.py:4942
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: setup/main.py:2658 setup/main.py:3249 setup/main.py:3327 setup/main.py:4939
+#: setup/main.py:2658 setup/main.py:3249 setup/main.py:3327 setup/main.py:4943
 msgid "_OK"
 msgstr "_OK"
 
@@ -1591,16 +1591,16 @@ msgstr "Adicionar um método de entrada"
 msgid "Variable"
 msgstr ""
 
-#: setup/main.py:4818
+#: setup/main.py:4822
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Editar as combinações de teclas para o comando “%s”"
 
-#: setup/main.py:4846
+#: setup/main.py:4850
 msgid "Add a key binding"
 msgstr "Adicionar combinação de teclas"
 
-#: setup/main.py:4858
+#: setup/main.py:4862
 msgid "Remove selected key binding"
 msgstr "Remover a combinação de teclas selecionada"
 
@@ -1609,7 +1609,7 @@ msgstr "Remover a combinação de teclas selecionada"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:4919
+#: setup/main.py:4923
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1617,16 +1617,16 @@ msgstr ""
 "Quer realmente definir os atalhos de teclado de todos os comandos para os "
 "seus valores de defeito?"
 
-#: setup/main.py:4935
+#: setup/main.py:4939
 msgid "Open File ..."
 msgstr "Abre ficheiro ..."
 
-#: setup/main.py:4954
+#: setup/main.py:4958
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Aprendeu com sucesso a partir do ficheiro %(filename)s."
 
-#: setup/main.py:4963
+#: setup/main.py:4967
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Aprendizagem a partir do ficheiro %(filename)s falhou."
@@ -1641,14 +1641,14 @@ msgstr "Aprendizagem a partir do ficheiro %(filename)s falhou."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:4986
+#: setup/main.py:4990
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr ""
 "Quer mesmo apagar todos os dados aprendidos ao digitar ou ler ficheiros?"
 
-#: setup/main.py:6581
+#: setup/main.py:6585
 msgid "ibus is not running."
 msgstr "O ibus não está a correr."
 

@@ -9,11 +9,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-01-31 17:36+0100\n"
+"POT-Creation-Date: 2024-02-06 10:51+0100\n"
 "PO-Revision-Date: 2024-02-02 13:43+0000\n"
 "Last-Translator: Sudip Shil <sshil@redhat.com>\n"
-"Language-Team: Bengali <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/bn/>\n"
+"Language-Team: Bengali <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/bn/>\n"
 "Language: bn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -93,7 +93,7 @@ msgstr "ইমোজি দেখাতে ব্যবহৃত ফন্টগ
 msgid "Unicode Version:"
 msgstr "ইউনিকোড সংস্করণ:"
 
-#: engine/emoji_picker.py:722 engine/emoji_picker.py:1845
+#: engine/emoji_picker.py:722 engine/emoji_picker.py:1847
 msgid "Left click to copy"
 msgstr "অনুলিপি করতে বাম ক্লিক করুন"
 
@@ -105,28 +105,28 @@ msgstr "স্কিন টোনের জন্য দীর্ঘক্ষণ
 msgid "Right click for info"
 msgstr "তথ্যের জন্য ডান ক্লিক করুন"
 
-#: engine/emoji_picker.py:1218
+#: engine/emoji_picker.py:1220
 msgid "Search Results"
 msgstr "অনুসন্ধান ফলাফল"
 
-#: engine/emoji_picker.py:1222
+#: engine/emoji_picker.py:1224
 msgid "Search produced empty result."
 msgstr "আপনি যা অনুসন্ধান করছেন, সে সম্পর্কিত কোনো কিছু খুঁজে পাওয়া যায় নি।"
 
-#: engine/emoji_picker.py:1506 engine/emoji_picker.py:1633
+#: engine/emoji_picker.py:1508 engine/emoji_picker.py:1635
 msgid "Copied to clipboard!"
 msgstr "ক্লিপবোর্ডে অনুলিপি করা হয়েছে!"
 
-#: engine/emoji_picker.py:1957
+#: engine/emoji_picker.py:1959
 msgid "Lookup on emojipedia"
 msgstr "ইমোজিপিডিয়া খুঁজে দেখুন"
 
-#: engine/emoji_picker.py:2079 engine/emoji_picker.py:2080
-#: engine/emoji_picker.py:2081 setup/main.py:1595
+#: engine/emoji_picker.py:2081 engine/emoji_picker.py:2082
+#: engine/emoji_picker.py:2083 setup/main.py:1595
 msgid "System default"
 msgstr "সিস্টেম ডিফল্ট"
 
-#: engine/emoji_picker.py:2216
+#: engine/emoji_picker.py:2218
 msgid "Set Font"
 msgstr "ফন্ট নির্ধারণ করুন"
 
@@ -194,32 +194,32 @@ msgstr "সেটআপ"
 msgid "Preferences for ibus-typing-booster"
 msgstr "আইবাস-টাইপিং-বুস্টারের জন্য রূপরেখা নির্ধারণ করুন"
 
-#: engine/hunspell_table.py:5290
+#: engine/hunspell_table.py:5314
 msgid "Failed to import Google speech-to-text."
 msgstr "গুগল বক্তৃতা-থেকে-পাঠ্য আমদানি করতে ব্যর্থ হয়েছে।"
 
-#: engine/hunspell_table.py:5293
+#: engine/hunspell_table.py:5317
 msgid "Failed to import pyaudio."
 msgstr "পাইঅডিও আমদানি করতে ব্যর্থ হয়েছে৷"
 
-#: engine/hunspell_table.py:5296
+#: engine/hunspell_table.py:5320
 msgid "Failed to import queue."
 msgstr "সারিবদ্ধ আমদানি করতে ব্যর্থ হয়েছে৷"
 
-#: engine/hunspell_table.py:5301
+#: engine/hunspell_table.py:5325
 msgid "No supported language for speech recognition."
 msgstr "বক্তৃতা বুঝতে পারে এমন কোনো সমর্থিত ভাষা নেই।"
 
-#: engine/hunspell_table.py:5305
+#: engine/hunspell_table.py:5329
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“গুগল আবেদন প্রমাণপত্রাদি” নথি “%s” পাওয়া যায় নি।"
 
-#: engine/hunspell_table.py:5318
+#: engine/hunspell_table.py:5342
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "গুগল বক্তৃতা-থেকে-পাঠ্য শুরু করতে ব্যর্থ হয়েছে। ডিবাগ লগ দেখুন।"
 
-#: engine/hunspell_table.py:5426
+#: engine/hunspell_table.py:5450
 msgid "Google speech-to-text error. See debug.log."
 msgstr "গুগল বক্তৃতা-থেকে-পাঠ্য ত্রুটি। ডিবাগ লগ দেখুন।"
 
@@ -304,31 +304,31 @@ msgstr "আঞ্চলিক"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2713
+#: engine/itb_util.py:2719
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "অন্যান্য, বিবিধ, বিভিন্ন, বৈচিত্র্যময়"
 
-#: engine/itb_util.py:4263 engine/itb_util.py:4991
+#: engine/itb_util.py:4269 engine/itb_util.py:4997
 msgid "File not found"
 msgstr "নথি খুঁজে পাওয়া যায় নি"
 
-#: engine/itb_util.py:4267 engine/itb_util.py:4995
+#: engine/itb_util.py:4273 engine/itb_util.py:5001
 msgid "Permission error"
 msgstr "অনুমতি সংক্রান্ত ত্রুটি"
 
-#: engine/itb_util.py:4271 engine/itb_util.py:4999
+#: engine/itb_util.py:4277 engine/itb_util.py:5005
 msgid "Unicode decoding error"
 msgstr "ইউনিকোড ডিকোডিং সংক্রান্ত ত্রুটি"
 
-#: engine/itb_util.py:4275 engine/itb_util.py:5003
+#: engine/itb_util.py:4281 engine/itb_util.py:5009
 msgid "Unknown error"
 msgstr "অজানা ত্রুটি"
 
-#: engine/itb_util.py:4968
+#: engine/itb_util.py:4974
 msgid "Native Keyboard"
 msgstr "স্থায়ী কীবোর্ড"
 
-#: engine/itb_util.py:4970
+#: engine/itb_util.py:4976
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -341,11 +341,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5549
+#: engine/itb_util.py:5555
 msgid "Key input"
 msgstr "কী ইনপুট"
 
-#: engine/itb_util.py:5555
+#: engine/itb_util.py:5561
 msgid "Cancel"
 msgstr "বাতিল"
 
@@ -353,27 +353,27 @@ msgstr "বাতিল"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5562
+#: engine/itb_util.py:5568
 msgid "Please press a key (or a key combination)"
 msgstr "অনুগ্রহ করে একটি কী চাপুন (অথবা একটি কী সমন্বয় করুন)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5567
+#: engine/itb_util.py:5573
 msgid "The dialog will be closed when the key is released"
 msgstr "একটি কী প্রবেশ করানোর পর এই বার্তা দেখানো বন্ধ হয়ে যাবে"
 
-#: engine/itb_util.py:5606
+#: engine/itb_util.py:5612
 msgid "A completion input method to speedup typing."
 msgstr "টাইপ করার গতি বাড়ানোর জন্য একটি সম্পূর্ণ ইনপুট পদ্ধতি।"
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5615
+#: engine/itb_util.py:5621
 msgid "translator-credits"
 msgstr "মাহমুদুল হাসান"
 
-#: engine/itb_util.py:5623
+#: engine/itb_util.py:5629
 msgid "Online documentation:"
 msgstr "অনলাইন ব্যবহার নির্দেশিকা:"
 
@@ -386,7 +386,7 @@ msgstr "পছন্দসমূহ"
 msgid "Restore all defaults"
 msgstr "সমস্ত ডিফল্ট পুনরুদ্ধার করুন"
 
-#: setup/main.py:213 setup/main.py:6519
+#: setup/main.py:213 setup/main.py:6523
 msgid "_Close"
 msgstr "_বন্ধ"
 
@@ -667,16 +667,15 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
-"কোন ধরনের ইনপুট ব্যবহারকারী ডাটাবেসে রেকর্ড করা উচিত তা নির্বাচন করে: \"সবক"
-"িছু\": প্রতিটি টাইপ করা শব্দ ব্যবহারকারী ডাটাবেসে যোগ করা হয় অথবা এটির "
-"ফ্রিকোয়েন্সি আপডেট করা হয় যদি এটি ইতিমধ্যেই থাকে। \"সঠিকভাবে বানান করা অথবা"
-" আগে রেকর্ড করা\": একটি টাইপ করা শব্দ শুধুমাত্র ব্যবহারকারীর ডাটাবেসে যোগ করা"
-" হয় যদি এটি সঠিকভাবে বানান হওয়ার সম্ভাবনা থাকে। যদি একটি শব্দ ইতিমধ্যেই "
-"ব্যবহারকারীর ডাটাবেসে থাকে তবে এটির বানান যেভাবেই হোক না কেন তার "
-"ফ্রিকোয়েন্সি আপডেট করা হয়। \"সঠিকভাবে বানান\": একটি টাইপ করা শব্দ শুধুমাত্"
-"র ডাটাবেসে যোগ করা হয় অথবা ডাটাবেসে এর ফ্রিকোয়েন্সি আপডেট করা হয় যদি এটি "
-"সঠিকভাবে বানান হওয়ার সম্ভাবনা থাকে। \"কিছুই না\": ব্যবহারকারী ডাটাবেসে কোনো "
-"ইনপুট রেকর্ড করবেন না।"
+"কোন ধরনের ইনপুট ব্যবহারকারী ডাটাবেসে রেকর্ড করা উচিত তা নির্বাচন করে: \"সবকিছু\": "
+"প্রতিটি টাইপ করা শব্দ ব্যবহারকারী ডাটাবেসে যোগ করা হয় অথবা এটির ফ্রিকোয়েন্সি "
+"আপডেট করা হয় যদি এটি ইতিমধ্যেই থাকে। \"সঠিকভাবে বানান করা অথবা আগে রেকর্ড "
+"করা\": একটি টাইপ করা শব্দ শুধুমাত্র ব্যবহারকারীর ডাটাবেসে যোগ করা হয় যদি এটি "
+"সঠিকভাবে বানান হওয়ার সম্ভাবনা থাকে। যদি একটি শব্দ ইতিমধ্যেই ব্যবহারকারীর "
+"ডাটাবেসে থাকে তবে এটির বানান যেভাবেই হোক না কেন তার ফ্রিকোয়েন্সি আপডেট করা হয়। "
+"\"সঠিকভাবে বানান\": একটি টাইপ করা শব্দ শুধুমাত্র ডাটাবেসে যোগ করা হয় অথবা "
+"ডাটাবেসে এর ফ্রিকোয়েন্সি আপডেট করা হয় যদি এটি সঠিকভাবে বানান হওয়ার সম্ভাবনা "
+"থাকে। \"কিছুই না\": ব্যবহারকারী ডাটাবেসে কোনো ইনপুট রেকর্ড করবেন না।"
 
 #: setup/main.py:678
 msgid "Everything"
@@ -779,11 +778,10 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
-"কিছু ইনপুট পদ্ধতি ডিফল্টরূপে ভাষার নির্দিষ্ট সংখ্যা তৈরি করে। যদি কেউ কখনও "
-"এই ধরনের ভাষা নির্দিষ্ট অঙ্কগুলি ব্যবহার করতে না চায় তবে সর্বদা পশ্চিমী "
-"(অ্যাস্‌কি) সংখ্যাগুলি পছন্দ করে, তবে ইনপুট পদ্ধতি দ্বারা উত্পাদিত ভাষা "
-"নির্দিষ্ট অঙ্কগুলিকে সর্বদা অ্যাস্‌কি সংখ্যাগুলিতে রূপান্তর করতে এই বিকল্পটি "
-"সেট করতে পারেন।"
+"কিছু ইনপুট পদ্ধতি ডিফল্টরূপে ভাষার নির্দিষ্ট সংখ্যা তৈরি করে। যদি কেউ কখনও এই ধরনের "
+"ভাষা নির্দিষ্ট অঙ্কগুলি ব্যবহার করতে না চায় তবে সর্বদা পশ্চিমী (অ্যাস্‌কি) সংখ্যাগুলি "
+"পছন্দ করে, তবে ইনপুট পদ্ধতি দ্বারা উত্পাদিত ভাষা নির্দিষ্ট অঙ্কগুলিকে সর্বদা অ্যাস্‌কি "
+"সংখ্যাগুলিতে রূপান্তর করতে এই বিকল্পটি সেট করতে পারেন।"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
@@ -934,7 +932,7 @@ msgstr "অনুপস্থিত অভিধান ইনস্টল কর
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "যে অভিধানগুলো এখানে সেটআপ করা আছে কিন্তু ইনস্টল করা হয়নি সেগুলো ইনস্টল করুন"
 
-#: setup/main.py:1110 setup/main.py:1242 setup/main.py:1469 setup/main.py:4865
+#: setup/main.py:1110 setup/main.py:1242 setup/main.py:1469 setup/main.py:4869
 msgid "Set to default"
 msgstr "ডিফল্টে সেট করুন"
 
@@ -1043,7 +1041,7 @@ msgstr "সম্পাদনা"
 msgid "Edit the key bindings for the selected command"
 msgstr "নির্বাচিত কমান্ডের জন্য কী বন্ধনগুলো সম্পাদনা করুন"
 
-#: setup/main.py:1473 setup/main.py:4870
+#: setup/main.py:1473 setup/main.py:4874
 msgid "Set default key bindings for the selected command"
 msgstr "নির্বাচিত নির্দেশের জন্য ডিফল্ট কী বন্ধনগুলো নির্ধারণ করুন"
 
@@ -1455,7 +1453,7 @@ msgstr "ফাইল এখনো সেট করা হয়নি।"
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2266 setup/main.py:4388
+#: setup/main.py:2266 setup/main.py:4392
 msgid "Add an autosetting"
 msgstr "একটি অটোসেটিং যোগ করুন"
 
@@ -1523,11 +1521,11 @@ msgstr "নিয়মিত অভিব্যক্তি"
 msgid "Are you sure?"
 msgstr "তুমি কি নিশ্চিত?"
 
-#: setup/main.py:2657 setup/main.py:3248 setup/main.py:3326 setup/main.py:4938
+#: setup/main.py:2657 setup/main.py:3248 setup/main.py:3326 setup/main.py:4942
 msgid "_Cancel"
 msgstr "_বাতিল"
 
-#: setup/main.py:2658 setup/main.py:3249 setup/main.py:3327 setup/main.py:4939
+#: setup/main.py:2658 setup/main.py:3249 setup/main.py:3327 setup/main.py:4943
 msgid "_OK"
 msgstr "_ঠিক আছে"
 
@@ -1560,16 +1558,16 @@ msgstr "একটি ইনপুট পদ্ধতি যোগ করুন"
 msgid "Variable"
 msgstr "চলক"
 
-#: setup/main.py:4818
+#: setup/main.py:4822
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "\"%s\" কমান্ডের জন্য কী বন্ধন সম্পাদনা করুন"
 
-#: setup/main.py:4846
+#: setup/main.py:4850
 msgid "Add a key binding"
 msgstr "একটি কী বন্ধন যোগ করুন"
 
-#: setup/main.py:4858
+#: setup/main.py:4862
 msgid "Remove selected key binding"
 msgstr "নির্বাচিত কী বন্ধন সরান"
 
@@ -1578,22 +1576,22 @@ msgstr "নির্বাচিত কী বন্ধন সরান"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:4919
+#: setup/main.py:4923
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr "আপনি কি সত্যিই সমস্ত কমান্ডের জন্য তাদের ডিফল্টে কী বন্ধন সেট করতে চান?"
 
-#: setup/main.py:4935
+#: setup/main.py:4939
 msgid "Open File ..."
 msgstr "খোলা ফাইল ..."
 
-#: setup/main.py:4954
+#: setup/main.py:4958
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "ফাইল %(filename)s থেকে সফলভাবে শিখেছি।"
 
-#: setup/main.py:4963
+#: setup/main.py:4967
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "ফাইল %(filename)s থেকে শেখা ব্যর্থ হয়েছে৷"
@@ -1608,13 +1606,13 @@ msgstr "ফাইল %(filename)s থেকে শেখা ব্যর্থ �
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:4986
+#: setup/main.py:4990
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr "আপনি কি সত্যিই টাইপিং অথবা নথি পড়ে শেখা সমস্ত ভাষা সম্পর্কৃত ডেটা মুছতে চান?"
 
-#: setup/main.py:6581
+#: setup/main.py:6585
 msgid "ibus is not running."
 msgstr "আইবাস চলছে না।"
 
