@@ -941,6 +941,33 @@ class Transliterator:
     >>> trans.transliterate(list('namaste'))
     'नमस्ते'
 
+    >>> trans.transliterate_parts(list('n'))
+    ('', 'न्')
+
+    >>> trans.transliterate_parts(list('n '))
+    ('न ', '')
+
+    >>> trans.transliterate_parts(list('na'))
+    ('', 'न')
+
+    >>> trans.transliterate_parts(list('nam'))
+    ('न', 'म्')
+
+    >>> trans.transliterate_parts(list('nama'))
+    ('न', 'म')
+
+    >>> trans.transliterate_parts(list('namas'))
+    ('नम', 'स्')
+
+    >>> trans.transliterate_parts(list('namast'))
+    ('नम', 'स्त्')
+
+    >>> trans.transliterate_parts(list('namaste'))
+    ('नम', 'स्ते')
+
+    >>> trans.transliterate_parts(list('namaste '))
+    ('नमस्ते ', '')
+
     >>> trans.transliterate(list('. '))
     '। '
 
@@ -1019,7 +1046,7 @@ class Transliterator:
         except ValueError as error: # NULL pointer access
             raise ValueError('minput_create_ic() failed') from error
 
-    def transliterate(self, msymbol_list: Iterable[str], ascii_digits: bool = False) -> str:
+    def transliterate_parts(self, msymbol_list: Iterable[str], ascii_digits: bool = False) -> Tuple[str, str]:
         '''Transliterate a list of Msymbol names
 
         :param msymbol_list: A list of strings which are interpreted
@@ -1029,14 +1056,15 @@ class Transliterator:
                              Msymbols is just joined to a single string.
         :param ascii_digits: If true, convert language specific digits
                              to ASCII digits
-        :return: The transliteration
+        :return: The transliteration in two parts: (committed, preedit)
         '''
         if not isinstance(msymbol_list, list):
             raise ValueError('Argument of transliterate() must be a list.')
         if self._dummy:
-            return ''.join(msymbol_list)
+            return (''.join(msymbol_list), '')
         libm17n__minput_reset_ic(self._ic) # type: ignore
-        output = ''
+        committed = ''
+        preedit = ''
         for symbol in msymbol_list:
             _symbol = libm17n__msymbol(symbol.encode('utf-8')) # type: ignore
             retval = libm17n__minput_filter( # type: ignore
@@ -1046,15 +1074,15 @@ class Transliterator:
                 retval = libm17n__minput_lookup( # type: ignore
                     self._ic, _symbol, ctypes.c_void_p(None), _mt)
                 if libm17n__mtext_len(_mt) > 0: # type: ignore
-                    output += mtext_to_string(_mt)
+                    committed += mtext_to_string(_mt)
                 if retval:
-                    output += symbol
+                    committed += symbol
         try:
             if (self._ic.contents.preedit_changed
                 and
                 libm17n__mtext_len(
                     self._ic.contents.preedit) > 0): # type: ignore
-                output += mtext_to_string(self._ic.contents.preedit)
+                preedit = mtext_to_string(self._ic.contents.preedit)
         except Exception as error: # pylint: disable=broad-except
             # This should never happen:
             raise ValueError('Problem accessing preedit') from error
@@ -1077,15 +1105,30 @@ class Transliterator:
         # always appended a final 'nil' symbol to the msymbol_list
         # argument which had to be removed to get the correct preedit
         # contents.  But apparently that final 'nil' is necessary to
-        # make it work reliably. We can do this here because above we read
-        # the preedit and added it to 'output' already and don’t
-        # need it anymore.
+        # make it work reliably. We can do this here because above we
+        # read the preedit already and don’t need it anymore.
         _symbol = libm17n__msymbol('nil'.encode('utf-8')) # type: ignore
         _retval = libm17n__minput_filter( # type: ignore
             self._ic, _symbol, ctypes.c_void_p(None))
         if not ascii_digits:
-            return output
-        return convert_digits_to_ascii(output)
+            return (committed, preedit)
+        return (convert_digits_to_ascii(committed),
+                convert_digits_to_ascii(preedit))
+
+    def transliterate(self, msymbol_list: Iterable[str], ascii_digits: bool = False) -> str:
+        '''Transliterate a list of Msymbol names
+
+        :param msymbol_list: A list of strings which are interpreted
+                             as the names of Msymbols to transliterate.
+                             If the input method has the special name “NoIME”,
+                             no transliteration is done, the list of
+                             Msymbols is just joined to a single string.
+        :param ascii_digits: If true, convert language specific digits
+                             to ASCII digits
+        :return: The transliteration in one string
+        '''
+        (committed, preedit) = self.transliterate_parts(msymbol_list, ascii_digits)
+        return committed + preedit
 
     def get_variables(self) -> List[Tuple[str, str, str]]:
         # pylint: disable=line-too-long
