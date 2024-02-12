@@ -317,6 +317,9 @@ class ItbTestCase(unittest.TestCase):
             False, update_gsettings=False)
         self.engine.set_keybindings({
             'cancel': ['Escape'],
+            'change_line_direction_left_to_right': [],
+            'change_line_direction_right_to_left': [],
+            'change_line_direction_toggle': [],
             'commit': [],
             'commit_and_forward_key': [],
             'commit_candidate_1': [],

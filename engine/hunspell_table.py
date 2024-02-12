@@ -72,6 +72,13 @@ try:
 except (ImportError,):
     IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = False
 
+IMPORT_BIDI_ALGORITHM_SUCCESSFUL = False
+try:
+    import bidi.algorithm # type: ignore
+    IMPORT_BIDI_ALGORITHM_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_BIDI_ALGORITHM_SUCCESSFUL = False
+
 LOGGER = logging.getLogger('ibus-typing-booster')
 
 __all__ = (
@@ -426,6 +433,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 GLib.Variant.new_string(','.join(self._current_imes)))
 
         self._commit_happened_after_focus_in = False
+        self._surrounding_text_event_happened_after_focus_in = False
 
         self._prev_key: Optional[itb_util.KeyEvent] = None
         self._typed_compose_sequence: List[int] = [] # A list of key values
@@ -5823,6 +5831,228 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._start_setup()
         return True
 
+    def _change_line_direction(self, direction: str) -> None:
+        '''Change the direction of the current line
+
+        :param direction: The desired direction of the current line:
+                          'ltr', 'rtl', 'toggle'
+        '''
+        LOGGER.debug('Trying to change line direction to %r'
+                     'self._im_client=%s',
+                     direction, self._im_client)
+        if (not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
+            or
+            self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
+            LOGGER.debug(
+                'Surrounding text not supported, cannot change line direction.')
+            return
+        if re.compile(
+                r':(firefox|google-chrome|soffice|libreoffice-calc):').search(
+                    self._im_client):
+            LOGGER.debug('firefox, libreoffice, or google-chrome detected. '
+                         'Cannot change line direction in these programs. '
+                         'These programs already have their own support to '
+                         'change direction between RTL and LTR for the whole '
+                         'buffer, use this instead of changing the direction '
+                         'of single lines with typing booster.')
+            return
+        if not self.is_empty() or self._typed_compose_sequence:
+            LOGGER.debug('Committing pending input first ...')
+            self._commit_current_input()
+            LOGGER.debug(
+                'To make the committed text appear in the surrounding '
+                'text, another key event is needed. Therefore, a return '
+                'is unfortunately necessary here and to really change '
+                'the line direction, one has to press the keybinding again.')
+            return
+        surrounding_text = self.get_surrounding_text()
+        LOGGER.debug('self._surrounding_text_event_happened_after_focus_in=%r '
+                     'self._commit_happened_after_focus_in=%r '
+                     'surrouning text=[%r, %s, %s]',
+                     self._surrounding_text_event_happened_after_focus_in,
+                     self._commit_happened_after_focus_in,
+                     surrounding_text[0].get_text(),
+                     surrounding_text[1], surrounding_text[2])
+        if (not self._surrounding_text_event_happened_after_focus_in
+            and not self._commit_happened_after_focus_in):
+            # Before the first surrounding text event happened,
+            # surrounding text is probably from the previously
+            # focused window (bug!), don’t use it.
+            if DEBUG_LEVEL > 1:
+                LOGGER.debug('Neither a surrounding text event nor a '
+                             'commit happend since focus in. '
+                             'The surrounding_text might be wrong. '
+                             'Do not try to change line direction.')
+            return
+        surrounding_text = self.get_surrounding_text()
+        if not surrounding_text:
+            LOGGER.debug(
+                'New surrounding text object is None. Should never happen.')
+            return
+        text = surrounding_text[0].get_text()
+        cursor_pos = surrounding_text[1]
+        anchor_pos = surrounding_text[2]
+        LOGGER.debug('surrounding_text=[%r, %s, %s]',
+                     list(text), cursor_pos, anchor_pos)
+        if cursor_pos != anchor_pos:
+            LOGGER.debug('cursor_pos != anchor_pos, do nothing.')
+            return
+        if not text:
+            LOGGER.debug('surrounding text empty, do nothing.')
+        cursor_pos_in_current_line = cursor_pos
+        current_line = ''
+        for line in text.splitlines(keepends=True):
+            if len(line) < cursor_pos_in_current_line:
+                cursor_pos_in_current_line -= len(line)
+                continue
+            current_line = line
+            break
+        if current_line.endswith('\n'):
+            current_line = current_line[:-1]
+        LOGGER.debug(
+            'current_line=%r len(current_line)=%d '
+            'cursor_pos_in_current_line=%d ',
+            current_line, len(current_line),
+            cursor_pos_in_current_line)
+        if not current_line.strip():
+            LOGGER.debug('Current line empty or whitespace only, do nothing.')
+            return
+        if direction == 'toggle':
+            direction = 'rtl'
+            if itb_util.is_right_to_left(current_line):
+                direction = 'ltr'
+        LOGGER.debug('Current line needs to change direction to %r.',
+                     direction)
+        directions = {
+            'ltr': {'addmark': '\u200E',
+                    'removemark': '\u200F',
+                    'is_right_to_left': False},
+            'rtl': {'addmark': '\u200F',
+                    'removemark': '\u200E',
+                    'is_right_to_left': True},
+        }
+        if (directions[direction]['is_right_to_left']
+            == itb_util.is_right_to_left(current_line)):
+            LOGGER.debug(
+                'Current_line already has desired direction %r, do nothing.',
+                direction)
+            return
+        self.delete_surrounding_text(
+            -cursor_pos_in_current_line, len(current_line))
+        cursor_correction_chars_logical = current_line[cursor_pos_in_current_line:]
+        # All chars I currently use in cmarkers have Bidi class “ON” (Other Neutrals)
+        markers = ['_\ufffd_', # U+FFFD REPLACEMENT CHARACTER
+                    '_\ufffc_', # U+FFFC OBJECT REPLACEMENT CHARACTER
+                    '_☺_☺_☺_',  # some emoji
+        ]
+        cmarker = ''
+        for marker in markers:
+            if marker not in current_line:
+                cmarker = marker
+                break
+        if not cmarker:
+            LOGGER.debug('Could not find suitable cursor marker')
+            return
+        LOGGER.debug('Using cmarker=%r', cmarker)
+        current_line_with_cmarker = (
+            f'{current_line[:cursor_pos_in_current_line]}'
+            f'{cmarker}'
+            f'{current_line[cursor_pos_in_current_line:]}')
+        is_right_to_left = directions[direction]['is_right_to_left']
+        removemark = str(directions[direction]['removemark'])
+        addmark = str(directions[direction]['addmark'])
+        if current_line.startswith(removemark):
+            LOGGER.debug('Wrong direction mark %r found, remove it.',
+                         removemark)
+            current_line = current_line[1:]
+            current_line_with_cmarker = current_line_with_cmarker[1:]
+        if is_right_to_left != itb_util.is_right_to_left(current_line):
+            LOGGER.debug('Add direction mark %r', addmark)
+            current_line = f'{addmark}{current_line}'
+            current_line_with_cmarker = f'{addmark}{current_line_with_cmarker}'
+            if is_right_to_left != itb_util.is_right_to_left(current_line):
+                LOGGER.error('Line direction still wrong, should never happen.')
+                return
+        super().commit_text(
+            IBus.Text.new_from_string(current_line))
+        self._commit_happened_after_focus_in = True
+        time.sleep(self._ibus_event_sleep_seconds)
+        if re.compile(r'^QIBusInputContext:').search(self._im_client):
+            LOGGER.debug('QIBusInputContext detected, correcting cursor.')
+            arrow_key_value = IBus.KEY_Left
+            if direction == 'rtl':
+                arrow_key_value = IBus.KEY_Right
+            for char in cursor_correction_chars_logical:
+                LOGGER.debug('cursor correction char=%r category=%r',
+                             char, unicodedata.category(char))
+                if unicodedata.category(char) not in ('Mn',):
+                    self._forward_generated_key_event(arrow_key_value)
+        elif re.compile(r'^(gtk[3,4]-im|gnome-shell):').search(self._im_client):
+            im_module = self._im_client.split(':')[0]
+            LOGGER.debug('%r detected, trying to correct cursor.', im_module)
+            if im_module == 'gtk4-im':
+                LOGGER.debug('forward_key_event() does not work in “gtk4-im”, '
+                             'cursor correction cannot not work.')
+                return
+            if im_module == 'gnome-shell':
+                LOGGER.debug('gnome-shell, i.e. wayland input in '
+                             'gnome wayland detected. Probably typing '
+                             'into some Gtk program. But correcting '
+                             'the cursor does not seem to work with '
+                             'gnome wayland input. ')
+                return
+            if not IMPORT_BIDI_ALGORITHM_SUCCESSFUL:
+                LOGGER.debug(
+                    '"import bidi.algorithm" didn’t work, '
+                    'no cursor correction possible. '
+                    'Try `pip install --user python-bidi`')
+                return
+            new_line_with_cmarker = bidi.algorithm.get_display(
+                current_line_with_cmarker)
+            cmarker_pos = new_line_with_cmarker.find(cmarker)
+            if cmarker_pos < 0:
+                LOGGER.debug('Failed to find cursor marker in new line. '
+                             'No cursor correction possible.')
+                return
+            arrow_key_value = IBus.KEY_Left
+            cursor_correction_chars_display = new_line_with_cmarker[
+                cmarker_pos+len(cmarker):]
+            if direction == 'rtl':
+                arrow_key_value = IBus.KEY_Right
+                cursor_correction_chars_display = new_line_with_cmarker[
+                    :cmarker_pos]
+            LOGGER.debug('current_line_with_cmarker=%r, '
+                         'new_line_with_cmarker=%r, '
+                         'cmarker_pos=%d '
+                         'cursor_correction_chars_display=%r',
+                         current_line_with_cmarker,
+                         new_line_with_cmarker,
+                         cmarker_pos,
+                         cursor_correction_chars_display)
+            for char in cursor_correction_chars_display:
+                LOGGER.debug('cursor correction char=%r category=%r',
+                             char, unicodedata.category(char))
+                if unicodedata.category(char) not in ('Mn',):
+                    self._forward_generated_key_event(arrow_key_value)
+        return
+
+    def _command_change_line_direction_left_to_right(self) -> bool:
+        '''Make the direction of the current line left-to-right'''
+        self._change_line_direction('ltr')
+        return True
+
+    def _command_change_line_direction_right_to_left(self) -> bool:
+        '''Make the direction of the current line right-to-left'''
+        self._change_line_direction('rtl')
+        return True
+
+    def _command_change_line_direction_toggle(self) -> bool:
+        '''Toggle the direction of the current line between
+        left-to-right and right-to-left
+        '''
+        self._change_line_direction('toggle')
+        return True
+
     def _command_commit(self) -> bool:
         '''Handle hotkey for the command “commit”
 
@@ -6358,6 +6588,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 repr(compose_result))
         (match, return_value) = self._handle_hotkeys(
                 key, commands=['cancel',
+                               'change_line_direction_left_to_right',
+                               'change_line_direction_right_to_left',
+                               'change_line_direction_toggle',
                                'commit',
                                'commit_and_forward_key',
                                'toggle_input_mode_on_off',
@@ -6540,7 +6773,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return True
 
         (match, return_value) = self._handle_hotkeys(
-            key, commands=['toggle_input_mode_on_off'])
+            key, commands=['toggle_input_mode_on_off',
+                           'change_line_direction_left_to_right',
+                           'change_line_direction_right_to_left',
+                           'change_line_direction_toggle'])
         if match:
             self._prepare_return_from_do_process_key_event(key)
             if return_value:
@@ -7129,6 +7365,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.register_properties(self.main_prop_list)
         self.clear_context()
         self._commit_happened_after_focus_in = False
+        self._surrounding_text_event_happened_after_focus_in = False
         self._update_ui()
         self._apply_autosettings()
 
@@ -7545,6 +7782,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._set_surrounding_text_cursor_pos = cursor_pos
         self._set_surrounding_text_anchor_pos = anchor_pos
         self._set_surrounding_text_event.set()
+        self._surrounding_text_event_happened_after_focus_in = True
 
     def on_gsettings_value_changed(
             self, _settings: Gio.Settings, key: str) -> None:

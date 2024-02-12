@@ -512,6 +512,9 @@
       <default>
         {
         'cancel': &lt;['Escape']&gt;,
+        'change_line_direction_left_to_right': &lt;@as []&gt;,
+        'change_line_direction_right_to_left': &lt;@as []&gt;,
+        'change_line_direction_toggle': &lt;@as []&gt;,
         'commit': &lt;@as []&gt;,
         'commit_and_forward_key': &lt;@as []&gt;,
         'commit_candidate_1': &lt;@as []&gt;,
