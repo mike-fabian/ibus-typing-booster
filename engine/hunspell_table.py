@@ -3173,6 +3173,25 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # it will show up there only when the next key event is
                 # processed:
                 pattern = re.compile(r'(?P<white_space>[\s]+)$')
+                if re.compile('^QIBusInputContext:(kate|kwrite)').search(
+                        self._im_client):
+                    # For kate and kwrite (but not for other qt5
+                    # applications like 'lineedits' from the qt5
+                    # examples), the commit phrase is already found in
+                    # the surrounding text here even though it is
+                    # still in preedit and not committed yet. So it needs
+                    # to be added to the regexp. But after the match,
+                    # when deleting the surrounding text, only the part
+                    # of the regexp which matched the whitespace needs to be
+                    # deleted. Weird behaviour, but it seems to work like
+                    # that when kate or kwrite are used.
+                    regexp = (r'(?P<white_space>[\s]+)'
+                              + re.escape(commit_phrase)
+                              + r'$')
+                    LOGGER.debug(
+                        'Special hack for kate and kwrite, use regexp=%r',
+                        regexp)
+                    pattern = re.compile(regexp)
                 match = pattern.search(text[:cursor_pos])
                 if match:
                     nchars = len(match.group('white_space'))
