@@ -2934,6 +2934,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 return True
             super().commit_text(
                 IBus.Text.new_from_string(phrase))
+            self._commit_happened_after_focus_in = True
             return True
         if self.is_empty():
             self._commit_string(phrase + extra_text, input_phrase=phrase)
@@ -5253,6 +5254,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     self._update_preedit()
                     super().commit_text(
                         IBus.Text.new_from_string(phrase))
+                    self._commit_happened_after_focus_in = True
             return
 
         if button == 1 and (state & IBus.ModifierType.CONTROL_MASK):
@@ -6190,6 +6192,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.info('Committing instead of forwarding or “return False”')
             super().commit_text(
                 IBus.Text.new_from_string(key.unicode))
+            self._commit_happened_after_focus_in = True
             return True
         self._process_key_event_press_key_handled = False
         # When unit testing, forward the key event if a commit was not possible.
@@ -6382,6 +6385,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 return False
             super().commit_text(
                 IBus.Text.new_from_string(compose_result))
+            self._commit_happened_after_focus_in = True
             return False
         self._lookup_table_shows_compose_completions = False
         self._candidates = []
@@ -6433,6 +6437,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # continue:
                 super().commit_text(
                     IBus.Text.new_from_string(preedit_representation))
+                self._commit_happened_after_focus_in = True
                 return False
             self._play_error_sound()
             return True
@@ -6446,6 +6451,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return True
         super().commit_text(
             IBus.Text.new_from_string(compose_result))
+        self._commit_happened_after_focus_in = True
         if not self._current_preedit_text:
             if DEBUG_LEVEL > 1:
                 LOGGER.debug('Avoid clearing already empty preedit.')
@@ -6854,6 +6860,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     super().commit_text(IBus.Text.new_from_string('\t'))
                 else:
                     super().commit_text(IBus.Text.new_from_string(' '))
+                self._commit_happened_after_focus_in = True
                 self._update_ui()
                 return True
             elif (key.val in (IBus.KEY_space, IBus.KEY_Tab,
