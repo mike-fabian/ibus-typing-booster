@@ -5416,7 +5416,24 @@ class KeyEvent:
             f'time={self.time}')
 
 def keyevent_to_keybinding(keyevent: KeyEvent) -> str:
-    '''Calculates a keybinding string from a key event.'''
+    # pylint: disable=line-too-long
+    '''Calculates a keybinding string from a key event.
+
+    Examples:
+
+    >>> keyevent_to_keybinding(KeyEvent(IBus.KEY_Left, 0, 0))
+    'Left'
+
+    >>> keyevent_to_keybinding(KeyEvent(IBus.KEY_Left, 0, IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK))
+    'Shift+Control+Left'
+
+    >>> keyevent_to_keybinding(KeyEvent(0x0100263A, 0, IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK))
+    'Shift+Control+U+263A'
+
+    >>> keyevent_to_keybinding(KeyEvent(0x0101F923, 0, IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK))
+    'Shift+Control+U+1F923'
+    '''
+    # pylint: enable=line-too-long
     keybinding = ''
     if keyevent.shift:
         keybinding += 'Shift+'
@@ -5444,9 +5461,36 @@ def keyevent_to_keybinding(keyevent: KeyEvent) -> str:
     return keybinding
 
 def keybinding_to_keyevent(keybinding: str) -> KeyEvent:
-    '''Returns a key event object created from a key binding string.'''
+    # pylint: disable=line-too-long
+    '''Returns a key event object created from a key binding string.
+
+    Examples:
+
+    >>> keybinding_to_keyevent('Shift+Control+Left').val == IBus.KEY_Left
+    True
+
+    >>> keybinding_to_keyevent('Shift+Control+Left').name
+    'Left'
+
+    >>> keybinding_to_keyevent('Shift+Control+Left').state == IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK
+    True
+
+    >>> f"0x{keybinding_to_keyevent('Shift+Control+U+263A').val:08x}"
+    '0x0100263a'
+
+    >>> f"0x{keybinding_to_keyevent('Shift+Control+U+1F923').val:08x}"
+    '0x0101f923'
+
+    >>> f"0x{keybinding_to_keyevent('Shift+Control+U+1G923').val:08x}"
+    '0x00ffffff'
+    '''
+    # pylint: enable=line-too-long
     name = keybinding.split('+')[-1]
+    if 'U+' in keybinding:
+        name = f'U+{name}'
     keyval = IBus.keyval_from_name(name)
+    if keyval == 0xffffff and re.match(r'U\+[0-9a-fA-F]{4,5}', name):
+        keyval = 0x1000000  + int(name[2:], 16)
     state = 0
     if 'Shift+' in keybinding:
         state |= IBus.ModifierType.SHIFT_MASK
