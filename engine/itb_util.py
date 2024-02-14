@@ -5389,7 +5389,7 @@ class KeyEvent:
 
     def __str__(self) -> str:
         return repr(
-            f'val={self.val} '
+            f'val={self.val:08x} '
             f'code={self.code} '
             f'state=0x{self.state:08x} '
             f'name=“{self.name}” '
