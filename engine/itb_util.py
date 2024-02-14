@@ -5483,13 +5483,16 @@ def keybinding_to_keyevent(keybinding: str) -> KeyEvent:
 
     >>> f"0x{keybinding_to_keyevent('Shift+Control+U+1G923').val:08x}"
     '0x00ffffff'
+
+    >>> keybinding_to_keyevent('Shift+Control+U+1G923').val == IBus.KEY_VoidSymbol
+    True
     '''
     # pylint: enable=line-too-long
     name = keybinding.split('+')[-1]
     if 'U+' in keybinding:
         name = f'U+{name}'
     keyval = IBus.keyval_from_name(name)
-    if keyval == 0xffffff and re.match(r'U\+[0-9a-fA-F]{4,5}', name):
+    if keyval == IBus.KEY_VoidSymbol and re.match(r'U\+[0-9a-fA-F]{4,5}', name):
         keyval = 0x1000000  + int(name[2:], 16)
     state = 0
     if 'Shift+' in keybinding:
