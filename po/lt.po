@@ -2,35 +2,41 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # mooo <hazap@hotmail.com>, 2023.
+# Mike FABIAN <mfabian@redhat.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-02-13 23:42+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-02-15 14:20+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Language-Team: Lithuanian <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
+"19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
+"1 : 2);\n"
+"X-Generator: Weblate 5.3.1\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
-msgstr ""
+msgstr "Jaustukų rinkiklis"
 
 #: engine/emoji_picker.py:323
 msgid "Clear recently used"
-msgstr ""
+msgstr "Aiškus neseniai naudotas"
 
 #: engine/emoji_picker.py:329 setup/main.py:193
 msgid "About"
-msgstr ""
+msgstr "Apie"
 
 #: engine/emoji_picker.py:333
 msgid "Quit"
-msgstr ""
+msgstr "Išeiti"
 
 #: engine/emoji_picker.py:342
 msgid "Search for emoji"
@@ -100,7 +106,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:1220
 msgid "Search Results"
-msgstr ""
+msgstr "Paieškos rez_ultatai:"
 
 #: engine/emoji_picker.py:1224
 msgid "Search produced empty result."
@@ -126,12 +132,12 @@ msgstr ""
 #: engine/hunspell_table.py:523 engine/hunspell_table.py:557
 #: engine/hunspell_table.py:578
 msgid "Off"
-msgstr ""
+msgstr "Išjungta"
 
 #: engine/hunspell_table.py:528 engine/hunspell_table.py:562
 #: engine/hunspell_table.py:583
 msgid "On"
-msgstr ""
+msgstr "Įjungta"
 
 #: engine/hunspell_table.py:547
 msgid "Input mode"
@@ -315,7 +321,7 @@ msgstr ""
 
 #: engine/itb_util.py:4281 engine/itb_util.py:5009
 msgid "Unknown error"
-msgstr ""
+msgstr "Nežinoma klaida"
 
 #: engine/itb_util.py:4974
 msgid "Native Keyboard"
@@ -337,7 +343,7 @@ msgstr ""
 
 #: engine/itb_util.py:5605
 msgid "Cancel"
-msgstr ""
+msgstr "Atsisakyti"
 
 #. pylint: disable=consider-using-f-string
 #. Translators: This is from the dialog to enter a key or a
@@ -370,7 +376,7 @@ msgstr ""
 #. pylint: disable=too-many-statements
 #: setup/main.py:126
 msgid "Preferences"
-msgstr ""
+msgstr "Nuostatos"
 
 #: setup/main.py:202
 msgid "Restore all defaults"
@@ -378,7 +384,7 @@ msgstr ""
 
 #: setup/main.py:213 setup/main.py:6523
 msgid "_Close"
-msgstr ""
+msgstr "_Užverti"
 
 #. Translators: This is the label of a tab in the setup
 #. tool. Here the user can setup the dictionaries for the
@@ -394,7 +400,7 @@ msgstr ""
 #. behaviour of ibus-typing-booster.
 #: setup/main.py:254
 msgid "Options"
-msgstr ""
+msgstr "Parametrai"
 
 #. Translators: This is a label of a tab in the setup tool.
 #. Here the user can create custom shortcuts. For example if
@@ -487,7 +493,7 @@ msgstr ""
 
 #: setup/main.py:429 setup/main.py:498
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: setup/main.py:431
 msgid "Yes, with fallback to popup"
@@ -953,7 +959,7 @@ msgstr ""
 
 #: setup/main.py:1458
 msgid "Edit"
-msgstr ""
+msgstr "Keisti"
 
 #: setup/main.py:1462
 msgid "Edit the key bindings for the selected command"
@@ -1026,11 +1032,11 @@ msgstr ""
 
 #: setup/main.py:1591
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontali"
 
 #: setup/main.py:1593
 msgid "Vertical"
-msgstr ""
+msgstr "Vertikali"
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
@@ -1046,25 +1052,25 @@ msgstr ""
 #. at all for the preedit.
 #: setup/main.py:1634
 msgid "None"
-msgstr ""
+msgstr "Nėra"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
 #: setup/main.py:1638
 msgid "Single"
-msgstr ""
+msgstr "Viengubas"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
 #: setup/main.py:1642
 msgid "Double"
-msgstr ""
+msgstr "Dvigubas"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
 #: setup/main.py:1646
 msgid "Low"
-msgstr ""
+msgstr "Žemas"
 
 #. Translators: Checkbox to choose whether a preedit style
 #. like underlining will only be used if lookup is
@@ -1370,7 +1376,7 @@ msgstr ""
 #. the automatic settings
 #: setup/main.py:2576
 msgid "Setting"
-msgstr ""
+msgstr "Nustatymai"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1378,7 +1384,7 @@ msgstr ""
 #. for the currently selected input method
 #: setup/main.py:2585 setup/main.py:4001
 msgid "Value"
-msgstr ""
+msgstr "Reikšmė"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1392,11 +1398,11 @@ msgstr ""
 
 #: setup/main.py:2657 setup/main.py:3248 setup/main.py:3326 setup/main.py:4942
 msgid "_Cancel"
-msgstr ""
+msgstr "_Atsisakyti"
 
 #: setup/main.py:2658 setup/main.py:3249 setup/main.py:3327 setup/main.py:4943
 msgid "_OK"
-msgstr ""
+msgstr "_Gerai"
 
 #: setup/main.py:2690
 msgid "Another instance of this app is already running."
