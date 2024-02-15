@@ -3173,7 +3173,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # it will show up there only when the next key event is
                 # processed:
                 pattern = re.compile(r'(?P<white_space>[\s]+)$')
-                if re.compile('^QIBusInputContext:(kate|kwrite)').search(
+                if re.compile(r'^QIBusInputContext:(kate|kwrite)').search(
                         self._im_client):
                     # For kate and kwrite (but not for other qt5
                     # applications like 'lineedits' from the qt5
