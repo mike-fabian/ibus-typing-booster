@@ -6481,6 +6481,19 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._current_preedit_text = ''
         return True
 
+    def _prepare_return_from_do_process_key_event(
+            self, key: itb_util.KeyEvent) -> None:
+        '''
+        When returning from do_process_key_event, remember
+        the previous key event and when it happend.
+        Also remember the old surrounding text and clear
+        the surrounding text event.
+        '''
+        self._prev_key = key
+        self._prev_key.time = time.time()
+        self._set_surrounding_text_event.clear()
+        self._surrounding_text_old = self.get_surrounding_text()
+
     def do_process_key_event( # pylint: disable=arguments-differ
             self, keyval: int, keycode: int, state: int) -> bool:
         '''Process Key Events
@@ -6523,29 +6536,30 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             disabled = True
 
         if self._handle_compose(key, add_to_preedit=not disabled):
+            self._prepare_return_from_do_process_key_event(key)
             return True
 
         (match, return_value) = self._handle_hotkeys(
             key, commands=['toggle_input_mode_on_off'])
         if match:
+            self._prepare_return_from_do_process_key_event(key)
             if return_value:
                 return True
             return self._return_false(key)
 
         if disabled:
+            self._prepare_return_from_do_process_key_event(key)
             return self._return_false(key)
 
         (match, return_value) = self._handle_hotkeys(key)
         if match:
+            self._prepare_return_from_do_process_key_event(key)
             if return_value:
                 return True
             return self._return_false(key)
 
         result = self._process_key_event(key)
-        self._prev_key = key
-        self._prev_key.time = time.time()
-        self._set_surrounding_text_event.clear()
-        self._surrounding_text_old = self.get_surrounding_text()
+        self._prepare_return_from_do_process_key_event(key)
         return result
 
     def _process_key_event(self, key: itb_util.KeyEvent) -> bool:
