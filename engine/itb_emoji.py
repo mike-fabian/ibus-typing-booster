@@ -2113,6 +2113,13 @@ class EmojiMatcher():
         max_version = [
             int(number)
             for number in re.findall(r'\d+', self._emoji_unicode_max)]
+        # Make all version number lists at at least length 3 to make
+        # comparison work well:
+        # `[15, 0, 0] <= [15] <= [15, 0]` is `False` but
+        # `[15, 0, 0] <= [15, 0, 0] <= [15, 0, 0]` is `True`.
+        version += [0] * (3 - len(version))
+        min_version += [0] * (3 - len(min_version))
+        max_version += [0] * (3 - len(max_version))
         if min_version <= version <= max_version:
             return True
         return False
