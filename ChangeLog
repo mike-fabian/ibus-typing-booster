@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 24 Feb 2024 Release 2.25.3
+* Add a feature to insert or remove RLM or LRM markers to change the direction of a line of bidi text (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/500)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 13 Feb 2024 Release 2.25.1
 * Make it possible to use keys with Unicode keysyms in keybindings (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/497)
 * Add hack to make space handling for punctuation work for kate and kwrite (https://github.com/mike-fabian/ibus-typing-booster/issues/496)
