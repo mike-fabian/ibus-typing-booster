@@ -31,7 +31,7 @@
   <icon type="remote" width="256" height="256">https://raw.githubusercontent.com/mike-fabian/ibus-typing-booster/main/icons/256x256/ibus-typing-booster.png</icon>
   <icon type="remote">https://raw.githubusercontent.com/mike-fabian/ibus-typing-booster/main/icons/ibus-typing-booster.svg</icon>
   <project_license>GPL-3.0+</project_license>
-  <developer>
+  <developer id="io.github.mike-fabian">
     <name>Mike FABIAN</name>
   </developer>
   <update_contact>mfabian@redhat.com</update_contact>
