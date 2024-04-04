@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 04 Apr 2024 Release 2.25.4
+* Pass key which triggered cancel command to application if self._min_char_complete == 0 and there are no candidates (Resolves:  https://github.com/mike-fabian/ibus-typing-booster/issues/505)
+* Update emoji annotations from CLDR
+* Translation update from Weblate (ka 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 24 Feb 2024 Release 2.25.3
 * Add a feature to insert or remove RLM or LRM markers to change the direction of a line of bidi text (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/500)
 
