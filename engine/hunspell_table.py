@@ -5550,8 +5550,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :return: True if the key was completely handled, False if not.
         '''
         if (self.is_empty()
-            and self._min_char_complete != 0
             and not self._typed_compose_sequence):
+            if self.get_lookup_table().get_number_of_candidates():
+                # There might be candidates even if the input
+                # is empty if self._min_char_complete == 0.
+                # If that is the case, cancel these candidates
+                # and return True. If not, return False
+                # because then there is nothing to cancel and the
+                # key which triggered the cancel command should be
+                # passed through.
+                self._update_ui_empty_input()
+                return True
             return False
         if self._typed_compose_sequence:
             if self._lookup_table_shows_compose_completions:
