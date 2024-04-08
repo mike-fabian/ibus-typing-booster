@@ -5368,6 +5368,13 @@ class KeyEvent:
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/457
                 self.msymbol = 'S-C-Return'
         self.time: float = 0.0
+        # Whether the key has been handled by do_process_key_event
+        # (i.e. True was returned) or passed through (i.e. “return
+        # False” was used or the key was forwarded with
+        # forward_key_event()). This is used to avoid passing through
+        # a release key if the corresponding press key has been
+        # handled.
+        self.handled: bool = False
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, KeyEvent):
@@ -5413,7 +5420,8 @@ class KeyEvent:
             f'button5={self.button5} '
             f'release={self.release} '
             f'modifier={self.modifier} '
-            f'time={self.time}')
+            f'time={self.time} '
+            f'handled={self.handled}')
 
 def keyevent_to_keybinding(keyevent: KeyEvent) -> str:
     # pylint: disable=line-too-long

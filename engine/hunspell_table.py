@@ -144,7 +144,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 object_path=obj_path)
             LOGGER.info('This ibus version does *not* have focus id.')
 
-        self._process_key_event_press_key_handled = True
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         self._compose_sequences = itb_util.ComposeSequences()
         self._unit_test = unit_test
@@ -6346,6 +6345,22 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._typed_compose_sequence.append(key.val)
         return (False, False)
 
+    def _return_true(self, key: itb_util.KeyEvent) -> bool:
+        '''A replacement for “return True” in do_process_key_event()
+
+        do_process_key_event() should return “True” if a key event has
+        been handled completely. It should return “False” if the key
+        event should be passed to the application.
+        '''
+        if DEBUG_LEVEL > 0:
+            LOGGER.info('key=%s', key)
+        self._prev_key = key
+        self._prev_key.time = time.time()
+        self._prev_key.handled = True
+        self._set_surrounding_text_event.clear()
+        self._surrounding_text_old = self.get_surrounding_text()
+        return True
+
     def _return_false(self, key: itb_util.KeyEvent) -> bool:
         '''A replacement for “return False” in do_process_key_event()
 
@@ -6437,6 +6452,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         if DEBUG_LEVEL > 0:
             LOGGER.info('key=%s', key)
+        self._prev_key = key
+        self._prev_key.time = time.time()
+        self._prev_key.handled = False
+        self._set_surrounding_text_event.clear()
+        self._surrounding_text_old = self.get_surrounding_text()
         # If it is possible to commit instead of forwarding a key event
         # or doing a “return False”, prefer the commit:
         if (key.unicode
@@ -6451,8 +6471,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             super().commit_text(
                 IBus.Text.new_from_string(key.unicode))
             self._commit_happened_after_focus_in = True
+            self._prev_key.handled = True
             return True
-        self._process_key_event_press_key_handled = False
         # When unit testing, forward the key event if a commit was not possible.
         # “return False” doesn’t work well when doing unit testing because the
         # MockEngine class cannot get that return value.
@@ -6723,19 +6743,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._current_preedit_text = ''
         return True
 
-    def _prepare_return_from_do_process_key_event(
-            self, key: itb_util.KeyEvent) -> None:
-        '''
-        When returning from do_process_key_event, remember
-        the previous key event and when it happend.
-        Also remember the old surrounding text and clear
-        the surrounding text event.
-        '''
-        self._prev_key = key
-        self._prev_key.time = time.time()
-        self._set_surrounding_text_event.clear()
-        self._surrounding_text_old = self.get_surrounding_text()
-
     def do_process_key_event( # pylint: disable=arguments-differ
             self, keyval: int, keycode: int, state: int) -> bool:
         '''Process Key Events
@@ -6746,8 +6753,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if DEBUG_LEVEL > 1:
             LOGGER.debug('KeyEvent object: %s', key)
 
-        if not key.state & IBus.ModifierType.RELEASE_MASK:
-            self._process_key_event_press_key_handled = True
         disabled = False
         if not self._input_mode:
             if DEBUG_LEVEL > 0:
@@ -6778,8 +6783,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             disabled = True
 
         if self._handle_compose(key, add_to_preedit=not disabled):
-            self._prepare_return_from_do_process_key_event(key)
-            return True
+            return self._return_true(key)
 
         (match, return_value) = self._handle_hotkeys(
             key, commands=['toggle_input_mode_on_off',
@@ -6787,25 +6791,23 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                            'change_line_direction_right_to_left',
                            'change_line_direction_toggle'])
         if match:
-            self._prepare_return_from_do_process_key_event(key)
             if return_value:
-                return True
+                return self._return_true(key)
             return self._return_false(key)
 
         if disabled:
-            self._prepare_return_from_do_process_key_event(key)
             return self._return_false(key)
 
         (match, return_value) = self._handle_hotkeys(key)
         if match:
-            self._prepare_return_from_do_process_key_event(key)
             if return_value:
-                return True
+                return self._return_true(key)
             return self._return_false(key)
 
         result = self._process_key_event(key)
-        self._prepare_return_from_do_process_key_event(key)
-        return result
+        if result:
+            return self._return_true(key)
+        return self._return_false(key)
 
     def _process_key_event(self, key: itb_util.KeyEvent) -> bool:
         '''Internal method to process key event
@@ -6816,16 +6818,19 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                  and is passed through.
         '''
         # Ignore (almost all) key release events
-        if key.state & IBus.ModifierType.RELEASE_MASK:
+        if key.release:
             if self._maybe_reopen_preedit(key):
                 if DEBUG_LEVEL > 1:
                     LOGGER.debug('Preedit reopened successfully.')
-            if self._process_key_event_press_key_handled:
+            if (self._prev_key is not None
+                and self._prev_key.handled
+                and not self._prev_key.release
+                and self._prev_key.val == key.val):
                 if DEBUG_LEVEL > 0:
                     LOGGER.info('Press key event was handled. '
                                 'Do not pass release key event.')
                 return True
-            return self._return_false(key)
+            return False
 
         if self.is_empty() and not self._lookup_table.cursor_visible:
             if DEBUG_LEVEL > 1:
@@ -6839,14 +6844,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # it makes no sense trying to complete something
                 # starting with a control character:
                 self._update_ui_empty_input()
-                return self._return_false(key)
+                return False
             if key.val == IBus.KEY_space and not key.mod5:
                 # if the first character is a space, just pass it through
                 # it makes not sense trying to complete (“not key.mod5” is
                 # checked here because AltGr+Space is the key binding to
                 # insert a literal space into the preëdit):
                 self._update_ui_empty_input()
-                return self._return_false(key)
+                return False
             if (key.val >= 32 and not key.control
                 and not self._tab_enable
                 and key.msymbol
@@ -6885,7 +6890,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         # If a digit has been typed and no transliteration
                         # is used, we can pass it through
                         self._update_ui_empty_input()
-                        return self._return_false(key)
+                        return False
                     # If a digit has been typed and we use
                     # transliteration, we may want to convert it to
                     # native digits. For example, with mr-inscript we
@@ -6961,7 +6966,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/107
             if self.is_empty() and not self._lookup_table.cursor_visible:
                 self._update_ui_empty_input()
-                return self._return_false(key)
+                return False
             preedit_ime = self._current_imes[0]
             # Support 'S-C-Return' as commit to preedit if the current
             # preedit_ime needs it:
@@ -7191,7 +7196,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # of forward_key_event() and if a commit is used, another
                 # sleep is necessary.
                 time.sleep(self._ibus_event_sleep_seconds)
-                return self._return_false(key)
+                return False
             else:
                 # nothing is selected in the lookup table, commit the
                 # input_phrase
@@ -7203,7 +7208,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 if DEBUG_LEVEL > 0:
                     LOGGER.error('commit string unexpectedly empty.')
                 self._update_ui_empty_input()
-                return self._return_false(key)
+                return False
             # Remember whether a candidate is selected and where the
             # caret is now because after self._commit_string() this
             # information is gone:
@@ -7233,7 +7238,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # cursor needs to be corrected leftwards:
                 for dummy_char in commit_string[caret_was:]:
                     self._forward_generated_key_event(IBus.KEY_Left)
-            return self._return_false(key)
+            return False
 
         if key.unicode:
             # If the suggestions are only enabled by Tab key, i.e. the
@@ -7306,7 +7311,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # returning “False”.
         if self.is_empty():
             self._update_ui_empty_input()
-        return self._return_false(key)
+        return False
 
     def do_focus_in(self) -> None: # pylint: disable=arguments-differ
         '''
