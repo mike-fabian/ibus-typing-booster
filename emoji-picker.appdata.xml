@@ -41,6 +41,28 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.25.6" date="2024-04-10" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.25.6</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            If Shift+something is pressed and then released, do not
+            swallow the release of the Shift key (Resolves:
+            github-issues#504).
+          </li>
+          <li>
+            Decrease grid_row_spacing from 5 to 1 pixels to make the
+            setup tool still fit on a 1024x768 pixel screen
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/504">
+          github-issues#504
+        </issue>
+      </issues>
+    </release>
     <release version="2.25.4" date="2024-04-04" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.25.4</url>
       <description>
