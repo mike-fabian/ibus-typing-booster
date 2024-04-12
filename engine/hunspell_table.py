@@ -6457,6 +6457,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._prev_key.handled = False
         self._set_surrounding_text_event.clear()
         self._surrounding_text_old = self.get_surrounding_text()
+        if not key.code:
+            LOGGER.warning(
+                'key.code=0 is not a valid keycode. Probably caused by OSK.')
         # If it is possible to commit instead of forwarding a key event
         # or doing a “return False”, prefer the commit:
         if (key.unicode
@@ -6487,10 +6490,25 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             (self.client_capabilities & itb_util.Capabilite.SYNC_PROCESS_KEY)):
             if DEBUG_LEVEL > 0:
                 LOGGER.info('Returning False')
-            if not key.code:
-                LOGGER.error('key.code=%s, 0 is not a valid keycode. '
-                             'Probably caused by OSK, no way to fix this '
-                             ' in the “return False” case.')
+            return False
+        if (self._im_client.startswith('gnome-shell')
+            and os.getenv('XDG_SESSION_TYPE') == 'wayland'
+            and ((key.shift and key.name in
+                  ('F1', 'F2', 'F3', 'F4', 'F5', 'F6',
+                   'F7', 'F8', 'F9', 'F10', 'F11', 'F12'))
+                 or key.control
+                 or key.super
+                 or key.hyper
+                 or key.meta
+                 or key.mod1
+                 or key.mod4)):
+            # https://github.com/mike-fabian/ibus-typing-booster/issues/507
+            # Gnome keyboard shortcuts with modifiers don’t work anymore when
+            # such a key is forwarded (since Fedora 40, Gnome 46.0).
+            LOGGER.info(
+                'Returning False: '
+                'gnome-shell client in wayland session and possibly '
+                'a Gnome keyboard shortcut involving a modifier. ')
             return False
         if not key.code:
             LOGGER.info(
