@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 15 Apr 2024 Release 2.25.7
+* Don’t use forward_key_event() on Gnome Wayland if the key might be a keyboard shortcut using a modifier (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/507)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 10 Apr 2024 Release 2.25.6
 * If Shift+something is pressed and then released, do not swallow the release of the Shift key (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/504)
 * Decrease grid_row_spacing from 5 to 1 pixels to make the setup tool still fit on a 1024x768 pixel screen
