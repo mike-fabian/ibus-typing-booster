@@ -7,6 +7,7 @@
 # Mike FABIAN <mfabian@redhat.com>, 2022.
 # Paul S <psads.g@gmail.com>, 2022.
 # Jonathan Oliveira <bho.jsoliveira@gmail.com>, 2024.
+# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -14,7 +15,8 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2024-04-10 14:53+0200\n"
 "PO-Revision-Date: 2024-04-20 16:36+0000\n"
-"Last-Translator: Jonathan Oliveira <bho.jsoliveira@gmail.com>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Portuguese <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/pt/>\n"
 "Language: pt\n"
@@ -680,7 +682,7 @@ msgstr ""
 
 #: setup/main.py:678
 msgid "Everything"
-msgstr ""
+msgstr "Tudo"
 
 #: setup/main.py:680
 msgid "Correctly spelled or previously recorded"
