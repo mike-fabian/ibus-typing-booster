@@ -6,22 +6,23 @@
 # Anonymous <noreply@weblate.org>, 2019.
 # Mike FABIAN <mfabian@redhat.com>, 2022.
 # Paul S <psads.g@gmail.com>, 2022.
+# Jonathan Oliveira <bho.jsoliveira@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-04-10 14:53+0200\n"
-"PO-Revision-Date: 2022-07-13 09:12+0000\n"
-"Last-Translator: Paul S <psads.g@gmail.com>\n"
-"Language-Team: Portuguese <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/pt/>\n"
+"PO-Revision-Date: 2024-04-20 16:36+0000\n"
+"Last-Translator: Jonathan Oliveira <bho.jsoliveira@gmail.com>\n"
+"Language-Team: Portuguese <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 5.4\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -461,8 +462,9 @@ msgstr "Reconhecimento de voz"
 #. changed automatically depending on the which window has
 #. focus:
 #: setup/main.py:340 setup/main.py:2233
+#, fuzzy
 msgid "Autosettings"
-msgstr ""
+msgstr "Configurações automáticas"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -660,10 +662,8 @@ msgstr ""
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
 #: setup/main.py:661
-#, fuzzy
-#| msgid "Off the record mode"
 msgid "Record mode"
-msgstr "Fora do modo de gravação"
+msgstr "Modo de gravação"
 
 #: setup/main.py:663
 msgid ""
@@ -690,7 +690,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Clear recently used"
 msgid "Correctly spelled"
-msgstr "Limpar utilizados recentemente"
+msgstr "Corretamente escrito"
 
 #: setup/main.py:684
 msgid "Nothing"
@@ -737,7 +737,7 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
-"Utilizar uma alternativa se a função %s for quebrada. Activar esta opção "
+"Utilizar uma alternativa se a função %s for quebrada. Ativar esta opção "
 "apenas se for absolutamente necessário, também pode causar problemas, "
 "especialmente quando o XIM é utilizado."
 
@@ -747,9 +747,10 @@ msgstr ""
 #. committed words.
 #: setup/main.py:762
 msgid "Enable reopening preedits"
-msgstr "Ativar reabertura de pré-edits"
+msgstr "Ativar reabertura de pré-editados"
 
 #: setup/main.py:764
+#, fuzzy
 msgid ""
 "Whether it is allowed to put a word back into a preedit when the cursor "
 "moves to the end or the beginning of a word. Enabling this option is useful "
@@ -757,17 +758,19 @@ msgid ""
 msgstr ""
 "Se é permitido colocar uma palavra de volta numa pré-edição quando o cursor "
 "se move para o final ou para o início de uma palavra. Ativar esta opção é "
-"útil para corrigir palavras já \"commited\"."
+"útil para corrigir palavras já \"submetidas\"."
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:784
+#, fuzzy
 msgid "Disable in terminals"
-msgstr ""
+msgstr "Desabilitado em terminais"
 
 #: setup/main.py:786
+#, fuzzy
 msgid "Whether ibus-typing-booster should be disabled in terminals."
-msgstr ""
+msgstr "Se o ibus-typing-booster deve ser desabilitado em terminais"
 
 #. Translators: Whether language specific digits should be
 #. converted to ASCII digits
