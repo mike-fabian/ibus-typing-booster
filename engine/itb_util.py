@@ -30,8 +30,12 @@ from typing import Optional
 from typing import Union
 from typing import Iterable
 from typing import Callable
-from enum import Enum, Flag
 import sys
+if sys.version_info >= (3, 8):
+    from typing import Literal
+else:
+    from typing_extensions import Literal
+from enum import Enum, Flag
 import os
 import re
 import functools
@@ -132,7 +136,7 @@ MAXIMUM_NUMBER_OF_DICTIONARIES = 10
 # and unused entries can be hidden.
 MAXIMUM_NUMBER_OF_INPUT_METHODS = 10
 
-NORMALIZATION_FORM_INTERNAL = 'NFD'
+NORMALIZATION_FORM_INTERNAL: Literal['NFC', 'NFD', 'NFKC', 'NFKD'] = 'NFD'
 
 # maximum possible value for the INTEGER datatype in SQLite3
 SQLITE_MAXINT = 2**63-1
