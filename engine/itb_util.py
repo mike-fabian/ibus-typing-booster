@@ -4194,7 +4194,10 @@ class ComposeSequences:
         keyvals = []
         for name in names:
             if re.match(r'U[0-9a-fA-F]{4,5}', name):
-                keyvals.append(0x01000000 + int(name[1:], 16))
+                code_point = int(name[1:], 16)
+                if code_point > 0x7F: # above ASCII range
+                    code_point += 0x01000000
+                keyvals.append(code_point)
             else:
                 try:
                     keyvals.append(getattr(IBus, f'KEY_{name}'))

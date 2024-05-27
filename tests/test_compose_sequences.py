@@ -207,6 +207,98 @@ class ComposeSequencesTestCase(unittest.TestCase):
              IBus.KEY_equal]))
         # pylint: enable=protected-access
 
+    def test_single_char_u263a_compose_sequence(self) -> None:
+        # pylint: disable=protected-access
+        self._compose_sequences._add_compose_sequence(
+            '<U263A>', 'smiley-expanded')
+        self.assertEqual(
+            'smiley-expanded', self._compose_sequences.compose([0x0100263A]))
+        # pylint: enable=protected-access
+
+    def test_single_char_u1f607_compose_sequence(self) -> None:
+        # pylint: disable=protected-access
+        self._compose_sequences._add_compose_sequence(
+            '<U1F607>', 'smiling-face-with-halo-expanded')
+        self.assertEqual(
+            'smiling-face-with-halo-expanded',
+            self._compose_sequences.compose([0x0101f607]))
+        # pylint: enable=protected-access
+
+    def test_single_char_euro_sign_compose_sequence(self) -> None:
+        # pylint: disable=protected-access
+        self._compose_sequences._add_compose_sequence(
+            '<EuroSign>', 'euro-sign-expanded')
+        self.assertEqual(
+            'euro-sign-expanded', self._compose_sequences.compose([IBus.KEY_EuroSign]))
+        self.assertEqual(
+            'euro-sign-expanded', self._compose_sequences.compose([0x20ac]))
+        self.assertNotEqual(
+            'euro-sign-expanded', self._compose_sequences.compose([0x010020ac]))
+        # pylint: enable=protected-access
+
+    def test_single_char_euro_sign_code_point_compose_sequence(self) -> None:
+        # pylint: disable=protected-access
+        self._compose_sequences._add_compose_sequence(
+            '<U20AC>', 'euro-sign-code-point-expanded')
+        self.assertEqual(
+            'euro-sign-code-point-expanded', self._compose_sequences.compose([0x010020ac]))
+        self.assertNotEqual(
+            'euro-sign-code-point-expanded', self._compose_sequences.compose([IBus.KEY_EuroSign]))
+        # pylint: enable=protected-access
+
+    def test_single_char_a_compose_sequence(self) -> None:
+        # pylint: disable=protected-access
+        self._compose_sequences._add_compose_sequence(
+            '<a>', 'a-expanded')
+        self.assertEqual(
+            'a-expanded', self._compose_sequences.compose([IBus.KEY_a]))
+        self.assertEqual(
+            'a-expanded', self._compose_sequences.compose([0x0061]))
+        self.assertEqual(
+            '', self._compose_sequences.compose([0x01000061]))
+        # pylint: enable=protected-access
+
+    def test_single_char_a_code_point_compose_sequence(self) -> None:
+        # pylint: disable=protected-access
+        self._compose_sequences._add_compose_sequence(
+            '<U0061>', 'a-expanded')
+        self.assertEqual(
+            'a-expanded', self._compose_sequences.compose([IBus.KEY_a]))
+        self.assertEqual(
+            'a-expanded', self._compose_sequences.compose([0x0061]))
+        self.assertEqual(
+            '', self._compose_sequences.compose([0x01000061]))
+        # pylint: enable=protected-access
+
+    def test_single_char_braille_blank_compose_sequence(self) -> None:
+        # pylint: disable=protected-access
+        self._compose_sequences._add_compose_sequence(
+            '<braille_blank>', 'braille-blank-expanded')
+        self.assertEqual(
+            'braille-blank-expanded', self._compose_sequences.compose([IBus.KEY_braille_blank]))
+        self.assertEqual(
+            'braille-blank-expanded', self._compose_sequences.compose([0x01002800]))
+        # pylint: enable=protected-access
+
+    def test_single_char_braille_blank_code_point_compose_sequence(self) -> None:
+        # pylint: disable=protected-access
+        self._compose_sequences._add_compose_sequence(
+            '<U2800>', 'braille-blank-expanded')
+        self.assertEqual(
+            'braille-blank-expanded', self._compose_sequences.compose([IBus.KEY_braille_blank]))
+        self.assertEqual(
+            'braille-blank-expanded', self._compose_sequences.compose([0x01002800]))
+        # pylint: enable=protected-access
+
+    def test_compose_sequence_with_fdd5_unassigned_code_point(self) -> None:
+        ''' https://github.com/ibus/ibus/issues/2646 U+FDD5 is unassigned in Unicode'''
+        # pylint: disable=protected-access
+        self._compose_sequences._add_compose_sequence(
+            '<UFDD5> <0>', 'fdd5-0-expanded')
+        self.assertEqual(
+            'fdd5-0-expanded', self._compose_sequences.compose([0x0100fdd5, IBus.KEY_0]))
+        # pylint: enable=protected-access
+
     def test_preedit_representations(self) -> None:
         self.assertEqual(
             self._compose_sequences.preedit_representation(
