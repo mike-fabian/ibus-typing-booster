@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-# -*- coding: utf-8 -*-
 #
 # ibus-typing-booster - A completion input method for IBus
 #
@@ -75,13 +74,13 @@ from gtkcases import TestCases # pylint: disable=import-error
 def printflush(sentence: str) -> None:
     try:
         print(sentence, flush=True)
-    except IOError:
+    except OSError:
         pass
 
 def printerr(sentence: str) -> None:
     try:
         print(sentence, flush=True, file=sys.stderr)
-    except IOError:
+    except OSError:
         pass
 
 @unittest.skipUnless(

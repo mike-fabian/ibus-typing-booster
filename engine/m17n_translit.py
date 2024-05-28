@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # vim:et sts=4 sw=4
 #
 # ibus-typing-booster - A completion input method for IBus
@@ -1107,7 +1106,7 @@ class Transliterator:
         # contents.  But apparently that final 'nil' is necessary to
         # make it work reliably. We can do this here because above we
         # read the preedit already and don’t need it anymore.
-        _symbol = libm17n__msymbol('nil'.encode('utf-8')) # type: ignore
+        _symbol = libm17n__msymbol(b'nil') # type: ignore
         _retval = libm17n__minput_filter( # type: ignore
             self._ic, _symbol, ctypes.c_void_p(None))
         if not ascii_digits:
@@ -1154,7 +1153,7 @@ class Transliterator:
         plist = libm17n__minput_get_variable( # type: ignore
             libm17n__msymbol(self._language.encode('utf-8')), # type: ignore
             libm17n__msymbol(self._name.encode('utf-8')), # type: ignore
-            libm17n__msymbol('nil'.encode('utf-8'))) # type: ignore
+            libm17n__msymbol(b'nil')) # type: ignore
         while bool(plist): # NULL pointers have a False boolean value
             key = libm17n__mplist_key(plist) # type: ignore
             if not bool(key): # NULL pointers have a False boolean value
@@ -1273,7 +1272,7 @@ class Transliterator:
                 if key_name == b'symbol':
                     libm17n__mplist_add( # type: ignore
                         new_value_plist,
-                        libm17n__msymbol('symbol'.encode('utf-8')), # type: ignore
+                        libm17n__msymbol(b'symbol'), # type: ignore
                         libm17n__msymbol(variable_value.encode('utf-8'))) # type: ignore
                 elif key_name == b'mtext':
                     mtext = libm17n__mconv_decode_buffer( # type: ignore
@@ -1282,14 +1281,14 @@ class Transliterator:
                         len(variable_value.encode('utf-8')))
                     libm17n__mplist_add( # type: ignore
                         new_value_plist,
-                        libm17n__msymbol('mtext'.encode('utf-8')), # type: ignore
+                        libm17n__msymbol(b'mtext'), # type: ignore
                         mtext)
                 elif key_name == b'integer':
                     try:
                         int_value = int(variable_value, 10)
                         libm17n__mplist_add( # type: ignore
                             new_value_plist,
-                            libm17n__msymbol('integer'.encode('utf-8')), # type: ignore
+                            libm17n__msymbol(b'integer'), # type: ignore
                             int_value)
                     except ValueError:
                         new_value_plist = libm17n__mplist() # type: ignore

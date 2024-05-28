@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # vim:et sts=4 sw=4
 #
 # ibus-typing-booster - A completion input method for IBus
@@ -31,10 +30,7 @@ from typing import Union
 from typing import Iterable
 from typing import Callable
 import sys
-if sys.version_info >= (3, 8):
-    from typing import Literal
-else:
-    from typing_extensions import Literal
+from typing import Literal
 from enum import Enum, Flag
 import os
 import re
@@ -2986,7 +2982,7 @@ def color_string_to_argb(color_string: str) -> int:
     return (((int(gdk_rgba.alpha * 0xff) & 0xff) << 24)
             + ((int(gdk_rgba.red * 0xff) & 0xff) << 16)
             + ((int(gdk_rgba.green * 0xff) & 0xff) << 8)
-            + ((int(gdk_rgba.blue * 0xff) & 0xff)))
+            + (int(gdk_rgba.blue * 0xff) & 0xff))
 
 def is_ascii(text: str) -> bool:
     '''Checks whether all characters in text are ASCII characters
@@ -3383,7 +3379,6 @@ def get_hunspell_dictionary_wordlist(
         aff_buffer = ''
         try:
             with open(aff_path,
-                      mode='r',
                       encoding='ISO-8859-1',
                       errors='ignore') as aff_file:
                 aff_buffer = aff_file.read().replace('\r\n', '\n')
@@ -4267,7 +4262,6 @@ class ComposeSequences:
             return
         try:
             with open(compose_path,
-                      mode='r',
                       encoding='UTF-8',
                       errors='ignore') as compose_file:
                 lines = compose_file.readlines()
@@ -4995,7 +4989,6 @@ class M17nDbInfo:
             for mim_path in glob.glob(os.path.join(dirname, '*.mim')):
                 try:
                     with open(mim_path,
-                              mode='r',
                               encoding='UTF-8',
                               errors='ignore') as ime_file:
                         full_contents = ime_file.read()

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # vim:et sts=4 sw=4
 #
 # ibus-typing-booster - A completion input method for IBus
@@ -888,7 +887,6 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         if os.path.isfile(self._options_file):
             try:
                 with open(self._options_file,
-                          mode='r',
                           encoding='UTF-8') as options_file:
                     options_dict = ast.literal_eval(options_file.read())
             except (PermissionError, SyntaxError, IndentationError) as error:
@@ -954,7 +952,6 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         if os.path.isfile(self._recently_used_emoji_file):
             try:
                 with open(self._recently_used_emoji_file,
-                          mode='r',
                           encoding='UTF-8') as recently_used_file:
                     recently_used_emoji = ast.literal_eval(
                         recently_used_file.read())
