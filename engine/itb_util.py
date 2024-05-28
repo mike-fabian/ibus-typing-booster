@@ -4207,7 +4207,7 @@ class ComposeSequences:
         compose_sequences = self._compose_sequences
         if result == '':
             for keyval in keyvals:
-                if not keyval in compose_sequences:
+                if keyval not in compose_sequences:
                     return
                 if (isinstance(compose_sequences[keyval], str)
                     or len(compose_sequences[keyval]) == 1):
@@ -4216,7 +4216,7 @@ class ComposeSequences:
                 compose_sequences = compose_sequences[keyval]
             return
         for keyval in keyvals:
-            if (not keyval in compose_sequences
+            if (keyval not in compose_sequences
                 or isinstance(compose_sequences[keyval], str)):
                 compose_sequences[keyval] = {}
             last_compose_sequences = compose_sequences
@@ -4470,7 +4470,7 @@ class ComposeSequences:
                     return '' # Invalid dead key sequence
                 character = IBus.keyval_to_unicode(keyval)
                 if (not character
-                    or not unicodedata.category(character) in ('Lu', 'Ll')):
+                    or unicodedata.category(character) not in ('Lu', 'Ll')):
                     return '' # Invalid dead key sequence
                 combining_sequence = character + combining_sequence
         return unicodedata.normalize('NFC', combining_sequence)

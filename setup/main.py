@@ -2458,7 +2458,7 @@ class SetupUI(Gtk.Window): # type: ignore
         # add some spaces for nicer formatting:
         row += ' ' * (20 - len(ime))
         title = ''
-        if not M17N_DB_INFO is None:
+        if M17N_DB_INFO is not None:
             title = M17N_DB_INFO.get_title(ime)
         if title:
             row += '\t' + '(' + title + ')'
@@ -3966,7 +3966,7 @@ class SetupUI(Gtk.Window): # type: ignore
         label.set_margin_end(margin)
         label.set_margin_top(margin)
         label.set_margin_bottom(margin)
-        if not M17N_DB_INFO is None:
+        if M17N_DB_INFO is not None:
             image = Gtk.Image.new_from_file(M17N_DB_INFO.get_icon(ime))
             image.set_pixel_size(48)
             hbox.add(image)
@@ -4113,7 +4113,7 @@ class SetupUI(Gtk.Window): # type: ignore
         if not self._input_methods_listbox_selected_ime_name:
             return
         ime = self._input_methods_listbox_selected_ime_name
-        if not M17N_DB_INFO is None:
+        if M17N_DB_INFO is not None:
             path = M17N_DB_INFO.get_path(ime)
             title = M17N_DB_INFO.get_title(ime)
             description = M17N_DB_INFO.get_description(ime)

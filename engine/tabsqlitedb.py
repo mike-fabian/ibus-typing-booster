@@ -531,7 +531,7 @@ class TabSqliteDb:
         p_phrase = itb_util.remove_accents(p_phrase.lower())
         pp_phrase = itb_util.remove_accents(pp_phrase.lower())
         title_case = input_phrase.istitle()
-        if not ' ' in input_phrase:
+        if ' ' not in input_phrase:
             # Get suggestions from hunspell dictionaries. But only
             # if input_phrase does not contain spaces. The hunspell
             # dictionaries contain only single words, not sentences.

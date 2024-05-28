@@ -248,11 +248,11 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             itb_util.xdg_save_data_path('emoji-picker'),
             'options')
         self._read_options()
-        if not font is None:
+        if font is not None:
             self._font = font
-        if not fontsize is None:
+        if fontsize is not None:
             self._fontsize = fontsize
-        if not fallback is None:
+        if fallback is not None:
             self._fallback = bool(fallback)
         self._save_options()
         self.connect('destroy-event', self.on_destroy_event)
@@ -260,10 +260,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self.connect('key-press-event', self.on_main_window_key_press_event)
         self._languages = languages
         self._emoji_unicode_min = '0.0'
-        if not emoji_unicode_min is None:
+        if emoji_unicode_min is not None:
             self._emoji_unicode_min = emoji_unicode_min
         self._emoji_unicode_max = '100.0'
-        if not emoji_unicode_max is None:
+        if emoji_unicode_max is not None:
             self._emoji_unicode_max = emoji_unicode_max
 
         self._unicode_data_all = unicode_data_all
@@ -599,7 +599,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             label_key_display: str,
             language: str,
             language_iter: Any) -> bool:
-        if not label_key in self._emoji_by_label[language]:
+        if label_key not in self._emoji_by_label[language]:
             return False
         labels = self._sort_labels(
             self._emoji_by_label[language][label_key],
