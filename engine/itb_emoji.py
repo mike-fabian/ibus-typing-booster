@@ -1964,16 +1964,15 @@ class EmojiMatcher():
                         # the categories in emoji-picker:
                         continue
                 language = emoji_key[1]
-                if not language in emoji_by_label_dict:
+                if language not in emoji_by_label_dict:
                     emoji_by_label_dict[language] = {}
                 if label_key in emoji_value:
-                    if not label_key in emoji_by_label_dict[language]:
+                    if label_key not in emoji_by_label_dict[language]:
                         emoji_by_label_dict[language][label_key] = {}
                     if label_key == 'ucategories':
                         ucategory_label_full = ', '.join(
                             emoji_value[label_key])
-                        if (not ucategory_label_full
-                                in emoji_by_label_dict[language][label_key]):
+                        if (ucategory_label_full not in emoji_by_label_dict[language][label_key]):
                             emoji_by_label_dict[
                                 language][
                                     label_key][
@@ -1985,8 +1984,7 @@ class EmojiMatcher():
                                         ucategory_label_full].append(emoji)
                     else:
                         for label in emoji_value[label_key]:
-                            if (not label in
-                                    emoji_by_label_dict[language][label_key]):
+                            if (label not in emoji_by_label_dict[language][label_key]):
                                 emoji_by_label_dict[
                                     language][
                                         label_key][

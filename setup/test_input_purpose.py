@@ -177,7 +177,7 @@ class InputPurposeTest(Gtk.Window): # type: ignore
         if tree_iter is not None:
             model = widget.get_model()
             self._input_purpose = model[tree_iter][1]
-            if not self._input_purpose in list(itb_util.InputPurpose):
+            if self._input_purpose not in list(itb_util.InputPurpose):
                 LOGGER.info(
                     'self._input_purpose = %s (Unknown)',
                     self._input_purpose)

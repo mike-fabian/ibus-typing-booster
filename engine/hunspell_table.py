@@ -1871,7 +1871,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         visible = len(self.get_dictionary_names()) > 1
         self._init_or_update_sub_properties_dictionary(
             sub_properties, current_mode=current_mode)
-        if not key in self._prop_dict: # initialize property
+        if key not in self._prop_dict: # initialize property
             self._prop_dict[key] = IBus.Property(
                 key=key,
                 prop_type=IBus.PropType.MENU,
@@ -1917,7 +1917,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         visible = len(self.get_current_imes()) > 1
         self._init_or_update_sub_properties_preedit_ime(
             sub_properties, current_mode=current_mode)
-        if not key in self._prop_dict: # initialize property
+        if key not in self._prop_dict: # initialize property
             self._prop_dict[key] = IBus.Property(
                 key=key,
                 prop_type=IBus.PropType.MENU,
@@ -2053,7 +2053,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                        or self._keybindings['toggle_input_mode_on_off'])
         self._init_or_update_sub_properties(
             menu_key, sub_properties_dict, current_mode=current_mode)
-        if not menu_key in self._prop_dict: # initialize property
+        if menu_key not in self._prop_dict: # initialize property
             self._prop_dict[menu_key] = IBus.Property(
                 key=menu_key,
                 prop_type=IBus.PropType.MENU,
@@ -2085,7 +2085,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         Initialize or update the sub-properties of a property menu entry.
         '''
-        if not menu_key in self._sub_props_dict:
+        if menu_key not in self._sub_props_dict:
             update = False
             self._sub_props_dict[menu_key] = IBus.PropList()
         else:
