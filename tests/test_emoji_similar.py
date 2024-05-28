@@ -75,20 +75,20 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.similar('☺', match_limit=5),
-            [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, uc1, smiling face]', 9), ('😙', 'kissing face with smiling eyes [So, people, face, smile]', 4), ('😍', 'smiling face with heart-shaped eyes [So, people, face, smile]', 4), ('😋', 'face savouring delicious food [So, people, face, smile]', 4), ('😇', 'smiling face with halo [So, people, face, smile]', 4)])
+            [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, uc1, happy, smiling]', 10), ('😇', 'smiling face with halo [So, people, face, smile, happy, smiling]', 6), ('🙂', 'slightly smiling face [So, people, face, smile, happy, smiling]', 6), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, smile, happy, smiling]', 6), ('😁', 'grinning face with smiling eyes [So, people, face, smile, happy, smiling]', 6)])
 
     def test_similar_white_smiling_face_it_IT(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['it_IT', 'en_US', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.similar('☺', match_limit=5),
-            [('☺️', 'faccina sorridente [☺️, delineata, faccina, rilassata, sorridente]', 5), ('😗', 'faccina che bacia [faccina]', 1), ('😚', 'faccina che bacia con occhi chiusi [faccina]', 1), ('😘', 'faccina che manda un bacio [faccina]', 1), ('😙', 'faccina che bacia con occhi sorridenti [faccina]', 1)])
+            [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, delineata, emozionarsi, faccina, felice, rilassata, sorridente]', 8), ('🥲', 'faccina sorridente con lacrima [faccina, felice, sorridente]', 3), ('🤩', 'colpo di fulmine [faccina, felice]', 2), ('😊', 'faccina con occhi sorridenti [faccina, felice]', 2), ('🙂', 'faccina con sorriso accennato [faccina, felice]', 2)])
 
     def test_similar_camel_en_US(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
-            [('🐫', 'bactrian camel [🐫, So, nature, bactrian, camel, hump, uc6, two-hump camel]', 8), ('🐪', 'dromedary camel [So, nature, hump, uc6, camel]', 5), ('🐐', 'goat [So, nature, uc6]', 3), ('🐑', 'sheep [So, nature, uc6]', 3), ('🐘', 'elephant [So, nature, uc6]', 3)],
+            [('🐫', 'bactrian camel [🐫, So, nature, bactrian, camel, hump, uc6, animal, desert, two hump, two-hump camel]', 11), ('🐪', 'dromedary camel [So, nature, hump, uc6, animal, camel, desert]', 7), ('🐌', 'snail [So, nature, uc6, animal, nature]', 5), ('🐝', 'honeybee [So, nature, uc6, animal, nature]', 5), ('🐞', 'lady beetle [So, nature, uc6, animal, nature]', 5)],
             mq.similar('🐫', match_limit=5))
 
     def test_similar_camel_it_IT(self) -> None:
@@ -96,14 +96,14 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['it_IT', 'en_US','es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.similar('🐫', match_limit=5),
-            [('🐫', 'cammello [🐫, animale, cammello, gobba]', 4), ('🐪', 'dromedario [animale, cammello, gobba]', 3), ('🐐', 'capra [animale]', 1), ('🐑', 'pecora [animale]', 1), ('🐘', 'elefante [animale]', 1)])
+            [('🐫', 'cammello [🐫, animale, animali, cammello, deserto, due gobbe, gobba]', 7), ('🐪', 'dromedario [animale, animali, cammello, deserto, gobba]', 5), ('🐐', 'capra [animale, animali]', 2), ('🦒', 'giraffa [animale, animali]', 2), ('🐑', 'pecora [animale, animali]', 2)])
 
     def test_similar_camel_de_DE(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['de_DE', 'it_IT', 'en_US','es_MX', 'es_ES', 'ja_JP'])
         self.assertEqual(
             mq.similar('🐫', match_limit=5),
-            [('🐫', 'Kamel [🐫, Kamel, Tier, zweihöckrig]', 4), ('🐪', 'Dromedar [Kamel, Tier]', 2), ('🐐', 'Ziege [Tier]', 1), ('🐑', 'Schaf [Tier]', 1), ('🐘', 'Elefant [Tier]', 1)])
+            [('🐫', 'Kamel [🐫, Kamel, Tier, Wüste, zweihöckrig]', 5), ('🐪', 'Dromedar [Kamel, Tier, Wüste]', 3), ('🦙', 'Lama [Kamel, Tier]', 2), ('🐐', 'Ziege [Tier]', 1), ('🐑', 'Schaf [Tier]', 1)])
 
     def test_similar_camel_es_MX(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -117,7 +117,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         self.assertEqual(
             mq.similar('🐫', match_limit=5),
-            [('🐫', 'camello [🐫, bactriano, camello, desierto, dromedario, jorobas]', 6), ('🐪', 'dromedario [camello, desierto, dromedario]', 3), ('🏜️', 'desierto [desierto]', 1), ('🐫', 'cammello [🐫, animale, cammello, gobba]', 4), ('🐪', 'dromedario [animale, cammello, gobba]', 3)])
+            [('🐫', 'camello [🐫, bactriano, camello, desierto, dromedario, jorobas]', 6), ('🐪', 'dromedario [camello, desierto, dromedario]', 3), ('🏜️', 'desierto [desierto]', 1), ('🐫', 'cammello [🐫, animale, animali, cammello, deserto, due gobbe, gobba]', 7), ('🐪', 'dromedario [animale, animali, cammello, deserto, gobba]', 5)])
 
     def test_similar_euro_sign_es_ES(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -138,7 +138,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['de_DE'])
         self.assertEqual(
             mq.similar('🤐', match_limit = 3),
-            [('🤐', 'Gesicht mit Reißverschlussmund [🤐, Gesicht, Gesicht mit Reißverschlussmund, Mund, Reißverschluss]', 5), ('🫡', 'salutierendes Gesicht [Gesicht]', 1), ('🤔', 'nachdenkendes Gesicht [Gesicht]', 1)])
+            [('🤐', 'Gesicht mit Reißverschlussmund [🤐, Gesicht, Gesicht mit Reißverschlussmund, Mund, Reißverschluss, Smiley, Smiley mit Reißverschlussmund]', 7), ('🤑', 'Gesicht mit Dollarzeichen [Gesicht, Mund, Smiley]', 3), ('🫡', 'salutierendes Gesicht [Gesicht, Smiley]', 2)])
         mq = itb_emoji.EmojiMatcher(
             languages = ['de_CH'])
         self.assertEqual(
@@ -149,10 +149,10 @@ class EmojiSimilarTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
         self.assertEqual(
-            [('🐌', 'snail [🐌, So, nature, snail, uc6]', 5), ('🐛', 'bug [So, nature, uc6]', 3), ('🐚', 'spiral shell [So, nature, uc6]', 3)],
+            [('🐌', 'snail [🐌, So, nature, snail, uc6, animal, escargot, garden, nature, slug]', 10), ('🐞', 'lady beetle [So, nature, uc6, animal, garden, nature]', 6), ('🐛', 'bug [So, nature, uc6, animal, garden]', 5)],
             mq.similar('🐌', match_limit = 3))
         self.assertEqual(
-            [('🐌', 'snail', 5), ('🐛', 'bug', 3), ('🐚', 'spiral shell', 3)],
+            [('🐌', 'snail', 10), ('🐞', 'lady beetle', 6), ('🐛', 'bug', 5)],
             mq.similar('🐌', match_limit = 3, show_keywords=False))
 
     @unittest.skipIf(
@@ -163,7 +163,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['zh_CN'])
         self.assertEqual(
             mq.similar('🏇', match_limit = 3),
-            [('🏇', '赛马 [🏇, 赛马, 马]', 3), ('🏇🏻', '赛马: 较浅肤色 [赛马, 马]', 2), ('🏇🏼', '赛马: 中等-浅肤色 [赛马, 马]', 2)])
+            [('🏇', '赛马 [🏇, 三冠, 赛马, 赛马骑师, 马, 骑师, 骑马]', 7), ('🐎', '马 [三冠, 赛马, 马, 骑马]', 4), ('🏇🏻', '赛马: 较浅肤色 [赛马, 马]', 2)])
 
     @unittest.skipUnless(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
@@ -173,7 +173,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['zh_CN'])
         self.assertEqual(
             mq.similar('🏇', match_limit = 3),
-            [('🏇', '赛马 [🏇, 赛马, sàimǎ, 马, mǎ]', 5), ('🏇🏻', '赛马: 较浅肤色 [赛马, sàimǎ, 马, mǎ]', 4), ('🏇🏼', '赛马: 中等-浅肤色 [赛马, sàimǎ, 马, mǎ]', 4)])
+            [('🏇', '赛马 [🏇, 三冠, sānguān, 赛马, sàimǎ, 赛马骑师, sàimǎqíshī, 马, mǎ, 骑师, qíshī, 骑马, qímǎ]', 13), ('🐎', '马 [三冠, sānguān, 赛马, sàimǎ, 马, mǎ, 骑马, qímǎ]', 8), ('🏇🏻', '赛马: 较浅肤色 [赛马, sàimǎ, 马, mǎ]', 4)])
 
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
@@ -183,7 +183,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['zh_TW'])
         self.assertEqual(
             mq.similar('🏇', match_limit = 1),
-            [('🏇', '賽馬 [🏇, 賽馬, 騎馬]', 3)])
+            [('🏇', '賽馬 [🏇, 賽馬, 馬, 騎馬]', 4)])
 
     @unittest.skipUnless(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
@@ -193,7 +193,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['zh_TW'])
         self.assertEqual(
             mq.similar('🏇', match_limit = 1),
-            [('🏇', '賽馬 [🏇, 賽馬, sàimǎ, 騎馬, qímǎ]', 5)])
+            [('🏇', '賽馬 [🏇, 賽馬, sàimǎ, 馬, mǎ, 騎馬, qímǎ]', 7)])
 
     @unittest.skipIf(
         itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
@@ -205,10 +205,10 @@ class EmojiSimilarTestCase(unittest.TestCase):
             [('🐤', 'ひよこ [🐤, ひな, ひよこ, 動物, 横を向いているひよこ, 顔, 鳥]', 7), ('🐣', '卵からかえったひよこ [ひな, ひよこ, 動物, 顔, 鳥]', 5), ('🐥', '前を向いているひよこ [ひな, ひよこ, 動物, 鳥]', 4), ('🐦', '鳥 [動物, 顔, 鳥]', 3), ('🐔', 'にわとり [動物, 顔, 鳥]', 3)],
             mq.similar('🐤', match_limit=5))
         self.assertEqual(
-            [('🐌', 'かたつむり [🐌, かたつむり, でんでん虫, 虫]', 4), ('🦋', 'チョウ [虫]', 1), ('🐛', '毛虫 [虫]', 1), ('🐜', 'アリ [虫]', 1), ('🐝', 'ミツバチ [虫]', 1)],
+            [('🐌', 'かたつむり [🐌, エスカルゴ, かたつむり, カタツムリ, でんでん虫, 虫]', 6), ('🦋', 'チョウ [虫]', 1), ('🐛', '毛虫 [虫]', 1), ('🐜', 'アリ [虫]', 1), ('🐝', 'ミツバチ [虫]', 1)],
             mq.similar('🐌', match_limit=5))
         self.assertEqual(
-            [('😱', '恐怖 [😱, がーん, ショック, 叫び, 恐怖, 顔]', 6), ('🙀', '絶望する猫 [がーん, ショック, 顔]', 3), ('😨', '青ざめ [がーん, 顔]', 2), ('🤯', '頭爆発 [ショック, 顔]', 2), ('🫨', '震えている顔 [ショック, 顔]', 2)],
+            [('😱', '恐怖 [😱, がーん, ショック, 叫び, 叫んでいる顔, 恐怖, 顔, 驚き]', 8), ('🤯', '頭爆発 [ショック, 顔, 驚き]', 3), ('🙀', '絶望する猫 [がーん, ショック, 顔]', 3), ('😨', '青ざめ [がーん, 顔]', 2), ('😧', '苦悩 [顔, 驚き]', 2)],
             mq.similar('😱', match_limit=5))
 
     @unittest.skipUnless(
@@ -221,10 +221,10 @@ class EmojiSimilarTestCase(unittest.TestCase):
             [('🐤', 'ひよこ [🐤, ひな, ひよこ, 動物, どうぶつ, 横を向いているひよこ, よこをむいているひよこ, 顔, かお, 鳥, とり, hina, hiyoko, doubutsu, yokowomuiteiruhiyoko, kao, tori]', 17), ('🐣', '卵からかえったひよこ [ひな, ひよこ, 動物, どうぶつ, 顔, かお, 鳥, とり, hina, hiyoko, doubutsu, kao, tori]', 13), ('🐥', '前を向いているひよこ [ひな, ひよこ, 動物, どうぶつ, 鳥, とり, hina, hiyoko, doubutsu, tori]', 10), ('🐦', '鳥 [動物, どうぶつ, 顔, かお, 鳥, とり, doubutsu, kao, tori]', 9), ('🐔', 'にわとり [動物, どうぶつ, 顔, かお, 鳥, とり, doubutsu, kao, tori]', 9)],
             mq.similar('🐤', match_limit=5))
         self.assertEqual(
-            [('🐌', 'かたつむり [🐌, かたつむり, でんでん虫, でんでんむし, 虫, むし, katatsumuri, dendenmushi, mushi]', 9), ('🦋', 'チョウ [虫, むし, mushi]', 3), ('🐛', '毛虫 [虫, むし, mushi]', 3), ('🐜', 'アリ [虫, むし, mushi]', 3), ('🐝', 'ミツバチ [虫, むし, mushi]', 3)],
+            [('🐌', 'かたつむり [🐌, エスカルゴ, えすかるご, かたつむり, カタツムリ, でんでん虫, でんでんむし, 虫, むし, esukarugo, katatsumuri, dendenmushi, mushi]', 13), ('🦋', 'チョウ [虫, むし, mushi]', 3), ('🐛', '毛虫 [虫, むし, mushi]', 3), ('🐜', 'アリ [虫, むし, mushi]', 3), ('🐝', 'ミツバチ [虫, むし, mushi]', 3)],
             mq.similar('🐌', match_limit=5))
         self.assertEqual(
-            [('😱', '恐怖 [😱, がーん, ショック, しょっく, 叫び, さけび, 恐怖, きょうふ, 顔, かお, gaan, shokku, sakebi, kyoufu, kao]', 15), ('🙀', '絶望する猫 [がーん, ショック, しょっく, 顔, かお, gaan, shokku, kao]', 8), ('🤯', '頭爆発 [ショック, しょっく, 顔, かお, shokku, kao]', 6), ('🫨', '震えている顔 [ショック, しょっく, 顔, かお, shokku, kao]', 6), ('😨', '青ざめ [がーん, 顔, かお, gaan, kao]', 5)],
+            [('😱', '恐怖 [😱, がーん, ショック, しょっく, 叫び, さけび, 叫んでいる顔, さけんでいるかお, 恐怖, きょうふ, 顔, かお, 驚き, おどろき, gaan, shokku, sakebi, sakendeirukao, kyoufu, kao, odoroki]', 21), ('🤯', '頭爆発 [ショック, しょっく, 顔, かお, 驚き, おどろき, shokku, kao, odoroki]', 9), ('🙀', '絶望する猫 [がーん, ショック, しょっく, 顔, かお, gaan, shokku, kao]', 8), ('🫨', '震えている顔 [がーん, ショック, しょっく, 顔, かお, gaan, shokku, kao]', 8), ('😧', '苦悩 [顔, かお, 驚き, おどろき, kao, odoroki]', 6)],
             mq.similar('😱', match_limit=5))
 
 

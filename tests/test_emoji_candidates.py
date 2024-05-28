@@ -106,7 +106,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.candidates('😺', match_limit=3),
-            [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, uc6, grinning]', 10), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, mouth, open, smile, uc6]', 7), ('😄', 'smiling face with open mouth and smiling eyes [So, people, face, mouth, open, smile, uc6]', 7)]
+            [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, uc6, animal, grinning, smiling cat face with open mouth]', 12), ('😸', 'grinning cat face with smiling eyes [So, people, cat, face, smile, uc6, animal]', 7), ('😻', 'smiling cat face with heart-shaped eyes [So, people, cat, face, smile, uc6, animal]', 7)]
         )
 
     def test_candidates_japanese_full_width_low_line(self) -> None:
@@ -169,9 +169,9 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('😺', 'gatto che sorride'))
         self.assertEqual(
             mq.candidates('nerd glasses')[0][:2],
-            ('🤓', 'nerd face'))
+            ('🤓', 'nerd face [glasses]'))
         self.assertEqual(
-            mq.candidates('smiling face sun glasses')[0][:2],
+            mq.candidates('smiling face with sunglasses')[0][:2],
             ('😎', 'smiling face with sunglasses'))
 
     def test_candidates_skin_tones(self) -> None:
@@ -287,7 +287,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('👨\u200d👨\u200d👧\u200d👦', 'family: man, man, girl, boy'))
         self.assertEqual(
             mq.candidates('people')[0][:2],
-            ('🧑🏾\u200d🤝\u200d🧑🏼', 'people holding hands: medium-dark skin tone, medium-light skin tone “people holding hands medium dark skin tone medium light skin tone”'))
+            ('👯', 'woman with bunny ears “people with bunny ears partying”'))
 
     def test_candidates_birthday_cake(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -297,7 +297,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('🎂', 'birthday cake'))
         self.assertEqual(
             mq.candidates('birth')[0][:2],
-            ('🎂', 'birthday cake'))
+            ('🍼', 'baby bottle [birth]'))
 
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
@@ -332,16 +332,16 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.candidates('animal')[0][:2],
-            ('🦍', 'gorilla [animal]'))
+            ('🐕', 'dog [animal]'))
         self.assertEqual(
             mq.candidates('dromedary animal')[0][:2],
-            ('🐪', 'dromedary camel'))
+            ('🐪', 'dromedary camel [animal]'))
         self.assertEqual(
             mq.candidates('camel')[0][:2],
             ('🐫', 'bactrian camel'))
         self.assertEqual(
             mq.candidates('nature')[0][:2],
-            ('🙈', 'see-no-evil monkey {nature}'))
+            ('🐌', 'snail {nature}'))
 
     def test_candidates_travel(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -351,7 +351,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('📷', 'camera'))
         self.assertEqual(
             mq.candidates('travel')[0][:2],
-            ('\U0001f9f3', 'luggage {travel}'))
+            ('🚂', 'steam locomotive {travel}'))
         self.assertEqual(
             mq.candidates('ferry')[0][:2],
             ('⛴\ufe0f', 'ferry'))
@@ -457,7 +457,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             languages = ['fr_FR'])
         self.assertEqual(
             mq.candidates('🤔', match_limit = 3),
-            [('🤔', 'visage en pleine réflexion [🤔, réflexion, visage, visage en pleine réflexion]', 4), ('🤐', 'visage avec bouche fermeture éclair [visage]', 1), ('🤗', 'visage qui fait un câlin [visage]', 1)])
+            [('🤔', 'visage en pleine réflexion [🤔, émoticône, hum, méditer, penser, réfléchir, réflexion, visage, visage en pleine réflexion]', 9), ('🤐', 'visage avec bouche fermeture éclair [émoticône, visage]', 2), ('🤗', 'visage qui fait un câlin [émoticône, visage]', 2)])
 
     def test_candidates_code_point_input(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -572,11 +572,14 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('かたつむり＿')[0][:2],
             ('🐌', 'かたつむり'))
         self.assertEqual(
-            0, len(mq.candidates('カタツムリ')))
+            mq.candidates('カタツムリ')[0][:2],
+            ('🐌', 'かたつむり [カタツムリ]'))
         self.assertEqual(
-            0, len(mq.candidates('カタツムリ_')))
+            mq.candidates('カタツムリ_')[0][:2],
+            ('🐌', 'かたつむり [カタツムリ]'))
         self.assertEqual(
-            0, len(mq.candidates('カタツムリ＿')))
+            mq.candidates('カタツムリ＿')[0][:2],
+            ('🐌', 'かたつむり [カタツムリ]'))
         self.assertEqual(
             mq.candidates('ネコ')[0][:2],
             ('🐈', 'ネコ'))
@@ -612,11 +615,14 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('かたつむり＿')[0][:2],
             ('🐌', 'かたつむり'))
         self.assertEqual(
-            0, len(mq.candidates('カタツムリ')))
+            mq.candidates('カタツムリ')[0][:2],
+            ('🐌', 'かたつむり [カタツムリ]'))
         self.assertEqual(
-            0, len(mq.candidates('カタツムリ_')))
+            mq.candidates('カタツムリ_')[0][:2],
+            ('🐌', 'かたつむり [カタツムリ]'))
         self.assertEqual(
-            0, len(mq.candidates('カタツムリ＿')))
+            mq.candidates('カタツムリ＿')[0][:2],
+            ('🐌', 'かたつむり [カタツムリ]'))
         self.assertEqual(
             mq.candidates('ネコ')[0][:2],
             ('🐈', 'ネコ'))
