@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-04-10 14:53+0200\n"
+"POT-Creation-Date: 2024-05-28 17:59+0200\n"
 "PO-Revision-Date: 2024-02-27 15:36+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://translate.fedoraproject.org/projects/ibus-"
@@ -303,31 +303,31 @@ msgstr "რეგიონალური"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2719
+#: engine/itb_util.py:2723
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "სხვები, დამატებით, სხვადასხვა, განსხვავებული"
 
-#: engine/itb_util.py:4269 engine/itb_util.py:4997
+#: engine/itb_util.py:4276 engine/itb_util.py:5004
 msgid "File not found"
 msgstr "ფაილი ვერ მოიძებნა"
 
-#: engine/itb_util.py:4273 engine/itb_util.py:5001
+#: engine/itb_util.py:4280 engine/itb_util.py:5008
 msgid "Permission error"
 msgstr "წვდომის შეცდომა"
 
-#: engine/itb_util.py:4277 engine/itb_util.py:5005
+#: engine/itb_util.py:4284 engine/itb_util.py:5012
 msgid "Unicode decoding error"
 msgstr "უნიკოდის გაშიფვრის შეცდომა"
 
-#: engine/itb_util.py:4281 engine/itb_util.py:5009
+#: engine/itb_util.py:4288 engine/itb_util.py:5016
 msgid "Unknown error"
 msgstr "უცნობი შეცდომა"
 
-#: engine/itb_util.py:4974
+#: engine/itb_util.py:4981
 msgid "Native Keyboard"
 msgstr "ადგილობრივი კლავიატურა"
 
-#: engine/itb_util.py:4976
+#: engine/itb_util.py:4983
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -340,11 +340,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5610
+#: engine/itb_util.py:5617
 msgid "Key input"
 msgstr "ღილაკის შეყვანა"
 
-#: engine/itb_util.py:5616
+#: engine/itb_util.py:5623
 msgid "Cancel"
 msgstr "გაუქმება"
 
@@ -352,27 +352,27 @@ msgstr "გაუქმება"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5623
+#: engine/itb_util.py:5630
 msgid "Please press a key (or a key combination)"
 msgstr "დააწექით ღილაკს (ან მათ კომბინაციას)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5628
+#: engine/itb_util.py:5635
 msgid "The dialog will be closed when the key is released"
 msgstr "ეს ფანჯარა დაიხურება, როცა ღილაკს გაუშვებთ"
 
-#: engine/itb_util.py:5667
+#: engine/itb_util.py:5674
 msgid "A completion input method to speedup typing."
 msgstr "სიტყვების ავტომატური დამთავრების შეტანის მეთოდი კრეფის ასაჩქარებლად."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5676
+#: engine/itb_util.py:5683
 msgid "translator-credits"
 msgstr "თემური დოღონაძე"
 
-#: engine/itb_util.py:5684
+#: engine/itb_util.py:5691
 msgid "Online documentation:"
 msgstr "ონლაინ დოკუმენტაცია:"
 
