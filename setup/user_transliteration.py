@@ -54,30 +54,30 @@ class LangDictTable:
 
     def get_mr_table(self) -> Dict[str, str]:
         table: Dict[str, str] = dict({
-            (u'ā', 'aa'),
-            (u'ṭ', 't'),
-            (u'ḍ', 'd'),
-            (u'ē', 'e'),
-            (u'ĕ', 'ey'),
-            (u'ẖ', 'ha'),
-            (u'ṛ', 'da'),
-            (u'ġ', 'gan'),
-            (u'ī', 'ee'),
-            (u'ḵ', 'k'),
-            (u'ḷ', 'l'),
-            (u'ṁ', '-mm'),
-            (u'ṅ', 'nn'),
-            (u'ṇ', 'na'),
-            (u'', 'a'),
-            (u'ō', 'o'),
-            (u'ṣ', 'sh'),
-            (u'ŏ', 'oy'),
-            (u'ḥ', 'tah'),
-            (u'ś', 'she'),
-            (u'ṟ', 'rr'),
-            (u'ū', 'u'),
-            (u'ñ', 'dnya'),
-            (u'n̄' , 'n')
+            ('ā', 'aa'),
+            ('ṭ', 't'),
+            ('ḍ', 'd'),
+            ('ē', 'e'),
+            ('ĕ', 'ey'),
+            ('ẖ', 'ha'),
+            ('ṛ', 'da'),
+            ('ġ', 'gan'),
+            ('ī', 'ee'),
+            ('ḵ', 'k'),
+            ('ḷ', 'l'),
+            ('ṁ', '-mm'),
+            ('ṅ', 'nn'),
+            ('ṇ', 'na'),
+            ('', 'a'),
+            ('ō', 'o'),
+            ('ṣ', 'sh'),
+            ('ŏ', 'oy'),
+            ('ḥ', 'tah'),
+            ('ś', 'she'),
+            ('ṟ', 'rr'),
+            ('ū', 'u'),
+            ('ñ', 'dnya'),
+            ('n̄' , 'n')
         })
         return table
 
@@ -126,7 +126,7 @@ class LatinConvert:
             except:
                 print("load_dictionary(): loading %(dic)s as %(enc)s encoding failed, giving up." %{
                     'dic': self.hunspell_dict, 'enc': encoding})
-        if dict_buffer[0] == u'\ufeff':
+        if dict_buffer[0] == '\ufeff':
             dict_buffer = dict_buffer[1:]
         return dict_buffer
 
@@ -151,7 +151,7 @@ class LatinConvert:
         for char in word:
             if char in self.lang_table:
                 new_word.append(self.lang_table[char])
-            elif char in[ u'\u0325', u'\u0310',u'\u0304', u'\u0315',u'\u0314']:
+            elif char in[ '\u0325', '\u0310','\u0304', '\u0315','\u0314']:
                 pass
             else:
                 new_word.append(char)

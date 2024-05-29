@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # vim:et sts=4 sw=4
 #
 # ibus-typing-booster - A completion input method for IBus
@@ -684,8 +683,8 @@ class EmojiMatcher():
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
-                codepoint_string, property_string = [
-                    x.strip() for x in line.split(';')[:2]]
+                codepoint_string, property_string = (
+                    x.strip() for x in line.split(';')[:2])
                 codepoint_range = [
                     int(x, 16) for x in codepoint_string.split('..')]
                 if len(codepoint_range) == 1:
@@ -732,8 +731,8 @@ class EmojiMatcher():
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
-                codepoints, property_string, name = [
-                    x.strip() for x in line.split(';')[:3]]
+                codepoints, property_string, name = (
+                    x.strip() for x in line.split(';')[:3])
                 if property_string == 'Basic_Emoji':
                     continue
                 if codepoints == '0023 FE0F 20E3' and name == 'keycap:':
@@ -782,8 +781,8 @@ class EmojiMatcher():
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
-                codepoints, property_string, name = [
-                    x.strip() for x in line.split(';')[:3]]
+                codepoints, property_string, name = (
+                    x.strip() for x in line.split(';')[:3])
                 emoji_string = ''
                 for codepoint in codepoints.split(' '):
                     emoji_string += chr(int(codepoint, 16))
@@ -871,8 +870,8 @@ class EmojiMatcher():
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
-                codepoints, property_string = [
-                    x.strip() for x in line.split(';')[:2]]
+                codepoints, property_string = (
+                    x.strip() for x in line.split(';')[:2])
                 if property_string != 'fully-qualified':
                     # The non-fully-qualified sequences are
                     # all duplicates of the fully-qualified

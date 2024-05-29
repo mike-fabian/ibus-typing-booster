@@ -1093,7 +1093,7 @@ class M17nTranslitTestCase(unittest.TestCase):
               'Hiragana or Katakana (not yet implemented)\nSelect Hiragana or Katakana',
               'katakana'),
              ('zen-han', 'Zenkaku or Hankaku (not yet implemented)', 'hankaku')])
-        with open(M17N_CONFIG_FILE, mode='rt', encoding='utf-8') as config_file:
+        with open(M17N_CONFIG_FILE, encoding='utf-8') as config_file:
             config_file_contents = config_file.read()
         self.assertEqual(
             config_file_contents,
@@ -1114,7 +1114,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         trans_bn_national_jatiya.set_variables({'use-automatic-vowel-forming': '1'})
         trans_t_unicode.set_variables({'prompt': 'U+'})
         trans_ja_anthy.set_variables({'input-mode': 'hiragana', 'zen-han': 'zenkaku'})
-        with open(M17N_CONFIG_FILE, mode='rt', encoding='utf-8') as config_file:
+        with open(M17N_CONFIG_FILE, encoding='utf-8') as config_file:
             config_file_contents = config_file.read()
         self.assertEqual(
             config_file_contents,
@@ -1137,7 +1137,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         trans_ja_anthy.set_variables({'input-mode': '', 'zen-han': ''})
         # Setting the *global* default values like this should make the config
         # file empty (except for the comment line at the top):
-        with open(M17N_CONFIG_FILE, mode='rt', encoding='utf-8') as config_file:
+        with open(M17N_CONFIG_FILE, encoding='utf-8') as config_file:
             config_file_contents = config_file.read()
         self.assertEqual(
             config_file_contents,
@@ -1155,7 +1155,7 @@ class M17nTranslitTestCase(unittest.TestCase):
               '1')])
         self.assertEqual(trans.transliterate(['a']), 'ঋ')  # U+098B BENGALI LETTER VOCALIC R
         trans.set_variables({'use-automatic-vowel-forming': '0'})
-        with open(M17N_CONFIG_FILE, mode='rt', encoding='utf-8') as config_file:
+        with open(M17N_CONFIG_FILE, encoding='utf-8') as config_file:
             config_file_contents = config_file.read()
         self.assertEqual(
             config_file_contents,
@@ -1180,7 +1180,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         trans.set_variables({'use-automatic-vowel-forming': ''})
         # Setting the *global* default value like this should make the config
         # file empty (except for the comment line at the top):
-        with open(M17N_CONFIG_FILE, mode='rt', encoding='utf-8') as config_file:
+        with open(M17N_CONFIG_FILE, encoding='utf-8') as config_file:
             config_file_contents = config_file.read()
         self.assertEqual(
             config_file_contents,

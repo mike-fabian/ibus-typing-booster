@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # vim:et sts=4 sw=4
 #
 # ibus-typing-booster - A completion input method for IBus

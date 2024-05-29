@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # vim:et sts=4 sw=4
 #
 # ibus-typing-booster - A completion input method for IBus
@@ -1153,8 +1152,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 stripped_transliterated_string = (
                     itb_util.lstrip_token(self._transliterated_strings[ime]))
                 if (stripped_transliterated_string
-                        and ((len(stripped_transliterated_string)
-                              >= self._min_char_complete))):
+                        and (len(stripped_transliterated_string)
+                              >= self._min_char_complete)):
                     self.is_lookup_table_enabled_by_min_char_complete = True
                 if (self.is_lookup_table_enabled_by_min_char_complete
                         or self.is_lookup_table_enabled_by_tab):
@@ -1862,12 +1861,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         for prop in sub_properties:
             if sub_properties[prop]['number'] == int(current_mode):
                 symbol = sub_properties[prop]['symbol']
-                label = '%(label)s (%(symbol)s)' % {
-                    'label': menu['label'],
-                    'symbol': symbol}
-                tooltip = '%(tooltip)s\n%(shortcut_hint)s' % {
-                    'tooltip': menu['tooltip'],
-                    'shortcut_hint': menu['shortcut_hint']}
+                label = '{label} ({symbol})'.format(
+                    label=menu['label'],
+                    symbol=symbol)
+                tooltip = '{tooltip}\n{shortcut_hint}'.format(
+                    tooltip=menu['tooltip'],
+                    shortcut_hint=menu['shortcut_hint'])
         visible = len(self.get_dictionary_names()) > 1
         self._init_or_update_sub_properties_dictionary(
             sub_properties, current_mode=current_mode)
@@ -1908,12 +1907,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         for prop in sub_properties:
             if sub_properties[prop]['number'] == int(current_mode):
                 symbol = sub_properties[prop]['symbol']
-                label = '%(label)s (%(symbol)s)' % {
-                    'label': menu['label'],
-                    'symbol': symbol}
-                tooltip = '%(tooltip)s\n%(shortcut_hint)s' % {
-                    'tooltip': menu['tooltip'],
-                    'shortcut_hint': menu['shortcut_hint']}
+                label = '{label} ({symbol})'.format(
+                    label=menu['label'],
+                    symbol=symbol)
+                tooltip = '{tooltip}\n{shortcut_hint}'.format(
+                    tooltip=menu['tooltip'],
+                    shortcut_hint=menu['shortcut_hint'])
         visible = len(self.get_current_imes()) > 1
         self._init_or_update_sub_properties_preedit_ime(
             sub_properties, current_mode=current_mode)
@@ -3146,9 +3145,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
             return ''
         language_code = '*'
-        used_french_spacing_dictionaries = set(
-            ('fr_FR', 'fr_MC', 'fr_BE', 'fr_LU', 'fr_CH', 'fr_CA')
-        ).intersection(self._dictionary_names)
+        used_french_spacing_dictionaries = {
+            'fr_FR', 'fr_MC', 'fr_BE', 'fr_LU', 'fr_CH', 'fr_CA'
+        }.intersection(self._dictionary_names)
         if used_french_spacing_dictionaries:
             if self._dictionary_names[0] in used_french_spacing_dictionaries:
                 language_code =  self._dictionary_names[0]

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # vim:et sts=4 sw=4
 #
 # ibus-typing-booster - A completion input method for IBus
@@ -54,9 +53,9 @@ def synonyms(word: str, keep_original: bool = True) -> List[str]:
     >>> synonyms('fedora', keep_original = False)
     ['Stetson', 'felt hat', 'homburg', 'trilby']
     '''
-    result = sorted(set(lemma_name.replace('_', ' ')
+    result = sorted({lemma_name.replace('_', ' ')
                         for synset in nltk.corpus.wordnet.synsets(word)
-                        for lemma_name in synset.lemma_names()))
+                        for lemma_name in synset.lemma_names()})
     if word in result:
         result.remove(word)
     if keep_original:
@@ -82,10 +81,10 @@ def hyponyms(word: str, keep_original: bool = True) -> List[str]:
     ['Panama', 'Panama hat', 'Stetson', 'bearskin', 'beaver', 'boater', 'bonnet', 'bowler', 'bowler hat', 'busby', 'campaign hat', 'cavalier hat', 'cocked hat', 'cowboy hat', 'deerstalker', 'derby', 'derby hat', 'dress hat', 'dunce cap', "dunce's cap", 'fedora', 'felt hat', "fool's cap", 'fur hat', 'high hat', 'homburg', 'leghorn', 'millinery', 'opera hat', 'plug hat', 'poke bonnet', 'sailor', 'shako', 'shovel hat', 'silk hat', 'skimmer', 'slouch hat', 'snap-brim hat', 'sombrero', "sou'wester", 'stovepipe', 'straw hat', 'sun hat', 'sunhat', 'ten-gallon hat', 'tirolean', 'titfer', 'top hat', 'topper', 'toque', 'trilby', 'tyrolean', "woman's hat"]
     '''
     # pylint: enable=line-too-long
-    result = sorted(set(lemma.name().replace('_', ' ')
+    result = sorted({lemma.name().replace('_', ' ')
                         for synset in nltk.corpus.wordnet.synsets(word)
                         for hyponym in synset.hyponyms()
-                        for lemma in hyponym.lemmas()))
+                        for lemma in hyponym.lemmas()})
     if word in result:
         result.remove(word)
     if keep_original:
@@ -109,10 +108,10 @@ def hypernyms(word: str, keep_original: bool = True) -> List[str]:
     >>> hypernyms('fedora', keep_original = False)
     ['chapeau', 'hat', 'lid']
     '''
-    result = sorted(set(lemma.name().replace('_', ' ')
+    result = sorted({lemma.name().replace('_', ' ')
                         for synset in nltk.corpus.wordnet.synsets(word)
                         for hypernym in synset.hypernyms()
-                        for lemma in hypernym.lemmas()))
+                        for lemma in hypernym.lemmas()})
     if word in result:
         result.remove(word)
     if keep_original:
