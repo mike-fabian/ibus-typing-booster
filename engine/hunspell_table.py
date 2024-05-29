@@ -1861,12 +1861,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         for prop in sub_properties:
             if sub_properties[prop]['number'] == int(current_mode):
                 symbol = sub_properties[prop]['symbol']
-                label = '{label} ({symbol})'.format(
-                    label=menu['label'],
-                    symbol=symbol)
-                tooltip = '{tooltip}\n{shortcut_hint}'.format(
-                    tooltip=menu['tooltip'],
-                    shortcut_hint=menu['shortcut_hint'])
+                label = f'{menu["label"]} ({symbol})'
+                tooltip = f'{menu["tooltip"]}\n{menu["shortcut_hint"]}'
         visible = len(self.get_dictionary_names()) > 1
         self._init_or_update_sub_properties_dictionary(
             sub_properties, current_mode=current_mode)
@@ -1907,12 +1903,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         for prop in sub_properties:
             if sub_properties[prop]['number'] == int(current_mode):
                 symbol = sub_properties[prop]['symbol']
-                label = '{label} ({symbol})'.format(
-                    label=menu['label'],
-                    symbol=symbol)
-                tooltip = '{tooltip}\n{shortcut_hint}'.format(
-                    tooltip=menu['tooltip'],
-                    shortcut_hint=menu['shortcut_hint'])
+                label = f'{menu["label"]} ({symbol})'
+                tooltip = f'{menu["tooltip"]}\n{menu["shortcut_hint"]}'
         visible = len(self.get_current_imes()) > 1
         self._init_or_update_sub_properties_preedit_ime(
             sub_properties, current_mode=current_mode)
