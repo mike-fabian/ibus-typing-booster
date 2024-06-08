@@ -2,22 +2,23 @@
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
 # Pavel Borecki <pavel.borecki@gmail.com>, 2019. #zanata, 2021.
 # Josef Hruska <hrusjos@gmail.com>, 2019, 2021.
+# Daniel Rusek <mail@asciiwolf.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-05-28 17:59+0200\n"
-"PO-Revision-Date: 2021-12-03 23:16+0000\n"
-"Last-Translator: Josef Hruska <hrusjos@gmail.com>\n"
-"Language-Team: Czech <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/cs/>\n"
+"PO-Revision-Date: 2024-06-08 21:36+0000\n"
+"Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
+"Language-Team: Czech <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.9.1\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -65,7 +66,7 @@ msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
-"Zda pro emotikony nebo ty jejich části, které není možné zobrazit zvoleným "
+"Zda pro emodži nebo ty jejich části, které není možné zobrazit zvoleným "
 "písmem použít náhradní řešení v podobě textového zobrazení."
 
 #: engine/emoji_picker.py:461
@@ -87,7 +88,7 @@ msgstr "Klíčová slova"
 
 #: engine/emoji_picker.py:683
 msgid "Fonts used to render this emoji:"
-msgstr "Písma použitá pro vykreslení této emotikony:"
+msgstr "Písma použitá pro vykreslení této emodži:"
 
 #: engine/emoji_picker.py:700
 msgid "Unicode Version:"
@@ -158,7 +159,7 @@ msgstr "Zde je možné ibus-typing-booster vypnout nebo zapnout."
 #. nevertheless useful symbols.
 #: engine/hunspell_table.py:574 engine/hunspell_table.py:576 setup/main.py:606
 msgid "Unicode symbols and emoji predictions"
-msgstr "Predikce unicode symbolů a emotikon"
+msgstr "Predikce symbolů Unicode a emodži"
 
 #. Translators: While “Off the record” mode is on, learning
 #. from user input is disabled. If learned user input is
@@ -267,7 +268,7 @@ msgstr "symboly"
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:845 engine/itb_emoji.py:1023
 msgid "flags"
-msgstr "příznaky"
+msgstr "vlaječky"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
@@ -387,10 +388,8 @@ msgid "Preferences"
 msgstr "Předvolby"
 
 #: setup/main.py:202
-#, fuzzy
-#| msgid "Set all to default"
 msgid "Restore all defaults"
-msgstr "Nastavit vše na výchozí"
+msgstr "Obnovit vše na výchozí"
 
 #: setup/main.py:213 setup/main.py:6523
 msgid "_Close"
@@ -462,7 +461,7 @@ msgstr "Rozpoznávání hlasu"
 #. focus:
 #: setup/main.py:340 setup/main.py:2233
 msgid "Autosettings"
-msgstr ""
+msgstr "Autonastavení"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -513,18 +512,16 @@ msgstr ""
 "kandidátů."
 
 #: setup/main.py:429 setup/main.py:498
-#, fuzzy
-#| msgid "None"
 msgid "No"
-msgstr "Žádné"
+msgstr "Ne"
 
 #: setup/main.py:431
 msgid "Yes, with fallback to popup"
-msgstr ""
+msgstr "Ano, se záložním vyskakovacím oknem"
 
 #: setup/main.py:433
 msgid "Yes, without fallback to popup"
-msgstr ""
+msgstr "Ano, bez záložního vyskakovacího okna"
 
 #. Translators: Whether to automatically capitalize after
 #. punctuation.
@@ -566,11 +563,11 @@ msgstr ""
 
 #: setup/main.py:500
 msgid "Yes, but only when extremely likely"
-msgstr ""
+msgstr "Ano, ale jen když je to velmi pravděpodobné"
 
 #: setup/main.py:502
 msgid "Yes, always"
-msgstr ""
+msgstr "Ano, vždy"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
@@ -633,10 +630,10 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
-"Zda by měly být v predikci zahrnuty Unicode znaky a emotiony. Emotikony jsou "
-"piktogramy jako ☺♨⛵…. Unicode symboly jsou ostatní symboly jako ty "
+"Zda by měly být v predikci zahrnuty znaky Unicode a emodži. Emodži jsou "
+"piktogramy jako ☺♨⛵…. Symboly Unicode jsou ostatní symboly jako ty "
 "matematické (∀∑∯…), šipky (←↑↔…), symboly měn (€₹₺…), vzorce braillova písma "
-"(⠥⠩…), a mnohé ostatní symboly. Tyto technicky nejsou emotikony, ale i tak "
+"(⠥⠩…), a mnohé ostatní symboly. Tyto technicky nejsou emodži, ale přesto "
 "užitečné symboly."
 
 #: setup/main.py:637
@@ -656,10 +653,8 @@ msgstr ""
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
 #: setup/main.py:661
-#, fuzzy
-#| msgid "Off the record mode"
 msgid "Record mode"
-msgstr "Režim mimo záznam"
+msgstr "Režim záznamu"
 
 #: setup/main.py:663
 msgid ""
@@ -673,24 +668,31 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"Vybírá, jaký druh vstupu má být zaznamenán v uživatelské databázi: „Vše“: "
+"Každé zadané slovo je přidáno do uživatelské databáze nebo je aktualizována "
+"jeho frekvence, pokud tam již je. „Správně napsané nebo dříve zaznamenané“: "
+"Zadané slovo se do uživatelské databáze přidá pouze tehdy, pokud je "
+"pravděpodobné, že bude správně napsáno. Pokud je slovo již v uživatelské "
+"databázi, jeho frekvence se aktualizuje bez ohledu na to, jak je napsáno.  „"
+"Správně napsané“: Zadané slovo se do databáze přidá nebo se jeho frekvence v "
+"databázi aktualizuje pouze v případě, že je pravděpodobné, že bude správně "
+"napsáno.  „Nic“: Nezaznamenávat do uživatelské databáze vůbec žádný vstup."
 
 #: setup/main.py:678
 msgid "Everything"
-msgstr ""
+msgstr "Vše"
 
 #: setup/main.py:680
 msgid "Correctly spelled or previously recorded"
-msgstr ""
+msgstr "Správně napsané nebo dříve zaznamenané"
 
 #: setup/main.py:682
-#, fuzzy
-#| msgid "Clear recently used"
 msgid "Correctly spelled"
-msgstr "Vyčistit nedávno použité"
+msgstr "Správně napsané"
 
 #: setup/main.py:684
 msgid "Nothing"
-msgstr ""
+msgstr "Nic"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -751,22 +753,25 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
+"Zda je povoleno vložit slovo zpět do předúpravy, když se kurzor přesune na "
+"konec nebo začátek slova. Povolení této možnosti je užitečné pro opravu již "
+"potvrzených slov."
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:784
 msgid "Disable in terminals"
-msgstr ""
+msgstr "Zakázat v terminálech"
 
 #: setup/main.py:786
 msgid "Whether ibus-typing-booster should be disabled in terminals."
-msgstr ""
+msgstr "Zda má být ibus-typing-booster zakázán v terminálech."
 
 #. Translators: Whether language specific digits should be
 #. converted to ASCII digits
 #: setup/main.py:803
 msgid "Convert language specific digits to ASCII digits"
-msgstr ""
+msgstr "Převést číslice specifické pro daný jazyk na číslice ASCII"
 
 #: setup/main.py:805
 msgid ""
@@ -775,21 +780,26 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"Některé metody vstupu standardně produkují číslice specifické pro daný "
+"jazyk. Pokud člověk nikdy nechce používat číslice specifické pro daný jazyk, "
+"ale vždy dává přednost západním (ASCII) číslicím, lze nastavit tuto volbu "
+"tak, aby byly číslice specifické pro daný jazyk vytvořené metodami zadávání "
+"vždy převedeny na číslice ASCII."
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
 #. “Unicode symbols and emoji predictions” is off.
 #: setup/main.py:828
-#, fuzzy
-#| msgid "Auto commit characters:"
 msgid "Emoji trigger characters:"
-msgstr "Automaticky potvrzovat znaky:"
+msgstr "Spouštěcí znaky emodži:"
 
 #: setup/main.py:830
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
 msgstr ""
+"Znaky v tomto seznamu spouštějí vyhledávání emodži a symbolů Unicode, i když "
+"je vypnutá možnost „Predikce symbolů Unicode a emodži“."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -844,7 +854,7 @@ msgstr "Pokud je zadáno méně než tolik znaků nezobrazovat žádné návrhy.
 #. sound is played on error
 #: setup/main.py:928
 msgid "Play sound file on error"
-msgstr ""
+msgstr "Přehrát zvukový soubor při chybě"
 
 #: setup/main.py:930
 msgid ""
@@ -852,6 +862,8 @@ msgid ""
 "the simpleaudio module for Python3 is not installed, this option does "
 "nothing."
 msgstr ""
+"Zde můžete zvolit, zda se v případě chyby přehraje zvukový soubor. Pokud "
+"není nainstalován modul simpleaudio pro Python3, tato volba nedělá nic."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -931,7 +943,7 @@ msgstr "Nastavit na výchozí"
 #. dictionaries to the default for the current locale.
 #: setup/main.py:1116
 msgid "Set dictionaries to the default for the current locale."
-msgstr ""
+msgstr "Nastavit slovníky na výchozí hodnotu pro aktuální národní prostředí."
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
@@ -971,17 +983,14 @@ msgstr "Zobrazí nápovědu popisující jak použít výše vybranou metodu vst
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1235
-#, fuzzy
-#| msgid ""
-#| "Display some help showing how to use the input method selected above."
 msgid "Options for the input method selected above."
-msgstr "Zobrazí nápovědu popisující jak použít výše vybranou metodu vstupu."
+msgstr "Možnosti pro metodu vstupu vybranou výše."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
 #: setup/main.py:1248
 msgid "Set input methods to the default for the current locale."
-msgstr ""
+msgstr "Nastavit metody vstupu na výchozí pro aktuální národní prostředí."
 
 #: setup/main.py:1274
 msgid "Enter shortcut here:"
@@ -1077,10 +1086,10 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
-"Zobrazit v pomocném textu zda režim_„predikce emotikon“ a režim_„mimo "
-"záznam“ jsou zapnuté nebo vypnuté a zobrazuje, která metoda vstupu je v tuto "
-"chvíli použita pro předúpravu. Pomocný text je volitelný řádek textu "
-"zobrazovaný nad seznamem kandidátů."
+"Zobrazit v pomocném textu zda režim  „predikce emodži“ a režim  „mimo záznam“"
+" jsou zapnuté nebo vypnuté a zobrazuje, která metoda vstupu je v tuto chvíli "
+"použita pro předúpravu. Pomocný text je volitelný řádek textu zobrazovaný "
+"nad seznamem kandidátů."
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
@@ -1177,10 +1186,8 @@ msgstr ""
 #. a custom color is used to indicate when the preedit
 #. might contain a spelling error.
 #: setup/main.py:1703
-#, fuzzy
-#| msgid "Spell checking"
 msgid "Preedit spellchecking"
-msgstr "Kontrola pravopisu"
+msgstr "Kontrola pravopisu před editací"
 
 #: setup/main.py:1705
 msgid ""
@@ -1188,30 +1195,26 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"Zde můžete zvolit, zda se má provádět kontrola pravopisu u obsahu před "
+"editací a zda se má použít uživatelsky určená barva k označení, kdy obsah "
+"před editací může obsahovat pravopisnou chybu."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
 #: setup/main.py:1735
-#, fuzzy
-#| msgid "Choose color for spellchecking suggestions"
 msgid "Choose color for preedit spellchecking"
-msgstr "Zvolte barvu pro návrhy kontroly pravopisu"
+msgstr "Zvolte barvu pro kontrolu pravopisu před editací"
 
 #: setup/main.py:1737
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from spellchecking. This setting only has an effect if "
-#| "the use of color for candidates from spellchecking is enabled."
 msgid ""
 "Here you can specify which color to use for the preedit when the preedit "
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
-"Zde je možné určit kterou barvu použít pro kandidáty v tabulce vyhledávání, "
-"která pochází z kontroly pravopisu. Toto nastavení má význam pouze pokud je "
-"zapnuté použít barvy pro kandidáty z kontroly pravopisu."
+"Zde je možné určit, jakou barvu použít pro předúpravu, pokud předúprava může "
+"obsahovat pravopisnou chybu. Toto nastavení má význam pouze, pokud je "
+"zapnutá kontrola pravopisu před editací."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
@@ -1247,34 +1250,26 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
 #: setup/main.py:1817
-#, fuzzy
-#| msgid "Use color for inline completion"
 msgid "Use color for compose preview"
-msgstr "Použít barvu pro dokončování v textu"
+msgstr "Použít barvu pro náhled psaní"
 
 #: setup/main.py:1819
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for a suggestion shown "
-#| "inline."
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
-"Zde je možné zvolit zda je pro návrhy v textu používána uživatelsky určená "
+"Zde je možné zvolit, zda je pro náhled psaní používána uživatelsky určená "
 "barva."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
 #: setup/main.py:1847
-#, fuzzy
-#| msgid "Choose color for inline completion"
 msgid "Choose color for compose preview"
-msgstr "Zvolte barvu pro dokončování přímo v textu"
+msgstr "Zvolte barvu pro náhled psaní"
 
 #: setup/main.py:1849
 msgid "Here you can specify which color to use for the compose preview."
-msgstr ""
+msgstr "Zde můžete určit, jakou barvu použít pro náhled psaní."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
@@ -1288,8 +1283,8 @@ msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
 msgstr ""
-"Zde je možné zvolit zda je použita pro kandidáty v tabulce vyhledávání která "
-"pochází z uživatelské databáze uživatelsky určená barva."
+"Zde je možné zvolit, zda je pro kandidáty použita uživatelsky určená barva v "
+"tabulce vyhledávání, která pochází z uživatelské databáze."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1319,7 +1314,7 @@ msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
 msgstr ""
-"Zde je možné zvolit zda je pro kandidáty použita uživatelsky určená barva v "
+"Zde je možné zvolit, zda je pro kandidáty použita uživatelsky určená barva v "
 "tabulce vyhledávání, která pochází z kontroly pravopisu."
 
 #. Translators: Used in the title bar of the colour chooser
@@ -1351,8 +1346,8 @@ msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
 msgstr ""
-"Zde je možné zvolit zda je pro kandidáty z vyhledávací tabulky, která "
-"pochází ze slovníku."
+"Zde je možné zvolit, zda je pro kandidáty použita uživatelsky určená barva v "
+"tabulce vyhledávání, která pochází ze slovníku."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1383,8 +1378,8 @@ msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
 msgstr ""
-"Zde je možné zvolit zda je štítek použit pro kandidáty v tabulce vyhledávání "
-"která pochází z uživatelovy databáze."
+"Zde je možné zvolit, zda je štítek použit pro kandidáty v tabulce "
+"vyhledávání, která pochází z uživatelovy databáze."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
@@ -1398,8 +1393,8 @@ msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
 msgstr ""
-"Zde je možné zvolit zda je pro štítek použit pro kandidáty v tabulce "
-"vyhledávání která pochází z kontroly pravopisu."
+"Zde je možné zvolit, zda je štítek použit pro kandidáty v tabulce "
+"vyhledávání, která pochází z kontroly pravopisu."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
@@ -1413,28 +1408,22 @@ msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
-"Zde je možné zvolit zda je použít štítek pro kandidáty ve vyhledávací "
+"Zde je možné zvolit, zda je štítek použit pro kandidáty ve vyhledávací "
 "tabulce, které pocházejí ze slovníku."
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2142
-#, fuzzy
-#| msgid "Use label for dictionary suggestions"
 msgid "Use flags for dictionary suggestions"
-msgstr "Použít štítek pro návrhy ze slovníku"
+msgstr "Použít vlaječky pro návrhy ze slovníku"
 
 #: setup/main.py:2144
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a label is used for candidates in the lookup "
-#| "table which come from a dictionary."
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
-"Zde je možné zvolit zda je použít štítek pro kandidáty ve vyhledávací "
+"Zde je možné zvolit, zda jsou vlaječky použity pro kandidáty ve vyhledávací "
 "tabulce, které pocházejí ze slovníku."
 
 #. Translators: A checkbox where one can choose whether a
@@ -1448,7 +1437,7 @@ msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
-"Zde je možné zvolit zda je štítek použit když je ibus-typing-booster "
+"Zde je možné zvolit, zda je štítek použit, když je ibus-typing-booster "
 "zaneprázdněné."
 
 #. Translators:
@@ -1462,7 +1451,7 @@ msgstr "Úplný popis umístění .json souboru s „přihlašovacími údaji do
 
 #: setup/main.py:2207
 msgid "File not yet set."
-msgstr ""
+msgstr "Soubor ještě není nastaven."
 
 #. Translators: This is a button to add an autosetting.
 #. “Autosettings” are settings which may change automatically
@@ -1470,17 +1459,15 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2266 setup/main.py:4392
 msgid "Add an autosetting"
-msgstr ""
+msgstr "Přidat autonastavení"
 
 #. Translators: This is a button to remove an autosetting.
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2280
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remove an autosetting"
-msgstr "Odebrat metodu vstupu"
+msgstr "Odebrat autonastavení"
 
 #. Translators: This is a button to move an autosetting up in the
 #. order the autosettings are applied. “Up” means it is applied
@@ -1491,10 +1478,8 @@ msgstr "Odebrat metodu vstupu"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2298
-#, fuzzy
-#| msgid "Move input method up"
 msgid "Move an autosetting up"
-msgstr "Posunout metodu vstupu výš"
+msgstr "Posunout autonastavení výš"
 
 #. Translators: This is a button to move an autosetting down in the
 #. order the autosettings are applied. “Down” means it is applied
@@ -1505,10 +1490,8 @@ msgstr "Posunout metodu vstupu výš"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2316
-#, fuzzy
-#| msgid "Move input method down"
 msgid "Move an autosetting down"
-msgstr "Posunout metodu vstupu níž"
+msgstr "Posunout autonastavení níž"
 
 #: setup/main.py:2360
 msgid "Spell checking"
@@ -1516,13 +1499,13 @@ msgstr "Kontrola pravopisu"
 
 #: setup/main.py:2376
 msgid "Emoji"
-msgstr "Emotikona"
+msgstr "Emodži"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
 #: setup/main.py:2576
 msgid "Setting"
-msgstr ""
+msgstr "Nastavení"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1530,13 +1513,13 @@ msgstr ""
 #. for the currently selected input method
 #: setup/main.py:2585 setup/main.py:4001
 msgid "Value"
-msgstr ""
+msgstr "Hodnota"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
 #: setup/main.py:2609
 msgid "Regular expression"
-msgstr ""
+msgstr "Regulární výraz"
 
 #: setup/main.py:2655
 msgid "Are you sure?"
@@ -1558,18 +1541,12 @@ msgstr "Už je spuštěná jiná instance této aplikace."
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
 #: setup/main.py:2846
-#, fuzzy
-#| msgid ""
-#| "Do you really want to set the key bindings for all commands to their "
-#| "defaults?"
 msgid "Do you really want to restore all default settings?"
-msgstr ""
-"Opravdu chcete nastavit navázání kláves pro všechny příkazy na výchozí "
-"hodnoty?"
+msgstr "Opravdu chcete obnovit všechna výchozí nastavení?"
 
 #: setup/main.py:3323
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr "Vyberte zvukový soubor .wav:"
 
 #: setup/main.py:3503
 msgid "Add dictionary"
@@ -1583,7 +1560,7 @@ msgstr "Přidat vstupní metodu"
 #. for the currently selected input method
 #: setup/main.py:3992
 msgid "Variable"
-msgstr ""
+msgstr "Proměnná"
 
 #: setup/main.py:4822
 #, python-format
