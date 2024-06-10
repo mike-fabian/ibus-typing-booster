@@ -1373,7 +1373,7 @@ class EmojiMatcher():
         If the query string is an emoji itself, similar emoji are returned:
 
         >>> mq.candidates('😺', match_limit=3)
-        [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, uc6, animal, grinning, smiling cat face with open mouth]', 12), ('😸', 'grinning cat face with smiling eyes [So, people, cat, face, smile, uc6, animal]', 7), ('😻', 'smiling cat face with heart-shaped eyes [So, people, cat, face, smile, uc6, animal]', 7)]
+        [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, uc6, animal, grinning, smiling]', 12), ('😸', 'grinning cat face with smiling eyes [So, people, cat, face, smile, uc6, animal, grinning, smiling]', 9), ('😅', 'smiling face with open mouth and cold sweat [So, people, face, open, smile, uc6, grinning, mouth, smiling]', 9)]
 
         It works in different languages:
 
@@ -1726,7 +1726,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         >>> matcher.keywords('🙂')
-        ['face', 'smile', 'uc7', 'happy', 'slightly smiling face', 'smiling']
+        ['face', 'smile', 'uc7', 'happy', 'slightly', 'smiling']
 
         >>> matcher.keywords('🙂', language='it')
         ['contenta', 'contento', 'faccina', 'faccina che sorride', 'faccina con sorriso accennato', 'felice', 'mezzo sorriso', 'ok', 'sorrisetto', 'sorriso', 'sorriso a bocca chiusa', 'sorriso accennato', 'va bene']
@@ -1831,7 +1831,7 @@ class EmojiMatcher():
         []
 
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, uc1, happy, smiling]', 10), ('😇', 'smiling face with halo [So, people, face, smile, happy, smiling]', 6), ('🙂', 'slightly smiling face [So, people, face, smile, happy, smiling]', 6), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, smile, happy, smiling]', 6), ('😁', 'grinning face with smiling eyes [So, people, face, smile, happy, smiling]', 6)]
+        [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, uc1, happy, smiling]', 10), ('🥲', 'smiling face with tear [So, people, face, happy, smile, smiling]', 6), ('😇', 'smiling face with halo [So, people, face, smile, happy, smiling]', 6), ('🙂', 'slightly smiling face [So, people, face, smile, happy, smiling]', 6), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, smile, happy, smiling]', 6)]
 
         >>> matcher = EmojiMatcher(languages = ['it_IT'])
         >>> matcher.similar('☺', match_limit = 5)

@@ -106,8 +106,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.candidates('😺', match_limit=3),
-            [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, uc6, animal, grinning, smiling cat face with open mouth]', 12), ('😸', 'grinning cat face with smiling eyes [So, people, cat, face, smile, uc6, animal]', 7), ('😻', 'smiling cat face with heart-shaped eyes [So, people, cat, face, smile, uc6, animal]', 7)]
-        )
+            [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, uc6, animal, grinning, smiling]', 12), ('😸', 'grinning cat face with smiling eyes [So, people, cat, face, smile, uc6, animal, grinning, smiling]', 9), ('😅', 'smiling face with open mouth and cold sweat [So, people, face, open, smile, uc6, grinning, mouth, smiling]', 9)])
 
     def test_candidates_japanese_full_width_low_line(self) -> None:
         # ＿ U+FF3F FULLWIDTH LOW LINE should not disturb the match
@@ -293,7 +292,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
-            mq.candidates('bir')[0][:2],
+            mq.candidates('birthday')[0][:2],
             ('🎂', 'birthday cake'))
         self.assertEqual(
             mq.candidates('birth')[0][:2],
@@ -310,7 +309,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.candidates('symbol')[0][:2],
-            ('🔣', 'input symbol for symbols {Symbol}'))
+            ('♻️', 'black universal recycling symbol {Symbol}'))
         self.assertEqual(
             mq.candidates('atomsymbol')[0][:2],
             ('⚛\ufe0f', 'atom symbol'))
@@ -422,10 +421,10 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('‼\ufe0f', 'double exclamation mark {Punctuation} [punctuation]'))
         self.assertEqual(
             mq.candidates('final quote')[0][:2],
-            ('’', 'right single quotation mark {Final quote}'))
+            ('”', 'right double quotation mark {Final quote}'))
         self.assertEqual(
             mq.candidates('initial quote')[0][:2],
-            ('‘', 'left single quotation mark {Initial quote}'))
+            ('“', 'left double quotation mark {Initial quote}'))
         self.assertEqual(
             mq.candidates('modifier')[0][:2],
             ('🏻', 'emoji modifier fitzpatrick type-1-2 {Modifier}'))

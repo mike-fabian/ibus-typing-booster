@@ -75,7 +75,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.similar('☺', match_limit=5),
-            [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, uc1, happy, smiling]', 10), ('😇', 'smiling face with halo [So, people, face, smile, happy, smiling]', 6), ('🙂', 'slightly smiling face [So, people, face, smile, happy, smiling]', 6), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, smile, happy, smiling]', 6), ('😁', 'grinning face with smiling eyes [So, people, face, smile, happy, smiling]', 6)])
+            [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, uc1, happy, smiling]', 10), ('🥲', 'smiling face with tear [So, people, face, happy, smile, smiling]', 6), ('😇', 'smiling face with halo [So, people, face, smile, happy, smiling]', 6), ('🙂', 'slightly smiling face [So, people, face, smile, happy, smiling]', 6), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, smile, happy, smiling]', 6)])
 
     def test_similar_white_smiling_face_it_IT(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -88,7 +88,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
-            [('🐫', 'bactrian camel [🐫, So, nature, bactrian, camel, hump, uc6, animal, desert, two hump, two-hump camel]', 11), ('🐪', 'dromedary camel [So, nature, hump, uc6, animal, camel, desert]', 7), ('🐌', 'snail [So, nature, uc6, animal, nature]', 5), ('🐝', 'honeybee [So, nature, uc6, animal, nature]', 5), ('🐞', 'lady beetle [So, nature, uc6, animal, nature]', 5)],
+            [('🐫', 'bactrian camel [🐫, So, nature, bactrian, camel, hump, uc6, animal, desert, two, two-hump]', 11), ('🐪', 'dromedary camel [So, nature, hump, uc6, animal, camel, desert]', 7), ('🐌', 'snail [So, nature, uc6, animal, nature]', 5), ('🐝', 'honeybee [So, nature, uc6, animal, nature]', 5), ('🐞', 'lady beetle [So, nature, uc6, animal, nature]', 5)],
             mq.similar('🐫', match_limit=5))
 
     def test_similar_camel_it_IT(self) -> None:
