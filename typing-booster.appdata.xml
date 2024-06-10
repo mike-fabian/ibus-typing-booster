@@ -47,6 +47,28 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.25.9" date="2024-06-10" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.25.9</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Translation update from Weblate (cs 100%)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Drop Python &lt; 3.6 support
+          </li>
+          <li>
+            Fix test_0_gtk.py: typing booster now avoids clearing the input in do_reset() when the preedit is empty
+          </li>
+        </ul>
+      </description>
+      <issues>
+      </issues>
+    </release>
     <release version="2.25.8" date="2024-05-27" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.25.8</url>
       <description>
