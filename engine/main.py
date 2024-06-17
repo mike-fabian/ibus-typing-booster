@@ -226,7 +226,9 @@ def cleanup(ima_ins: IMApp) -> None:
 def indent(element: Any, level: int = 0) -> None:
     '''Use to format xml Element pretty :)'''
     i = "\n" + level*"    "
-    if element:
+    if element is None:
+        return
+    if len(element):
         if not element.text or not element.text.strip():
             element.text = i + "    "
         last_subelement = None
@@ -235,7 +237,7 @@ def indent(element: Any, level: int = 0) -> None:
             indent(subelement, level+1)
             if not subelement.tail or not subelement.tail.strip():
                 subelement.tail = i + "    "
-        if (last_subelement
+        if (last_subelement is not None
             and (not last_subelement.tail or not last_subelement.tail.strip())):
             last_subelement.tail = i
     else:
