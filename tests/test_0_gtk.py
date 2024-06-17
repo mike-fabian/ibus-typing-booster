@@ -145,7 +145,6 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__lookup_index = 0
         self.__inserted_text = ''
         self.__commit_done = False # pylint: disable=unused-private-member
-        self.__reset_coming = False
         if self._gsettings is not None:
             self._gsettings.set_string('dictionary', 'fr_FR,en_US')
             self._gsettings.set_boolean('tabenable', False)
@@ -231,9 +230,7 @@ class SimpleGtkTestCase(unittest.TestCase):
             database)
         self.__engine.connect('focus-in', self.__engine_focus_in)
         self.__engine.connect('focus-out', self.__engine_focus_out)
-        # Need to connect 'reset' after TypingBoosterEngine._clear_input()
-        # is called.
-        self.__engine.connect_after('reset', self.__engine_reset)
+        self.__engine.connect_after('reset', self.__engine_after_reset)
         self.__bus.get_connection().signal_subscribe(
             None,
             IBus.INTERFACE_ENGINE,
@@ -262,10 +259,8 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__test_index = 0
         self.__entry.set_text('')
 
-    def __engine_reset(self, _engine: IBus.Engine) -> None:
-        if self.__reset_coming:
-            self.__reset_coming = False
-            self.__main_test()
+    def __engine_after_reset(self, _engine: IBus.Engine) -> None:
+        printflush('__engine_after_reset() called')
 
     def __entry_focus_in_event_cb(
             self, entry: Gtk.Entry, event: Gdk.EventFocus) -> bool:
@@ -383,14 +378,11 @@ class SimpleGtkTestCase(unittest.TestCase):
                 self.__inserted_text += chars
                 if chars != ' ':
                     return
-            # Return key emits 'reset' signal in GTK and it calls
-            # TypingBoosterEngine._clear_input().
             elif cases['keys'][0] == [IBus.KEY_Return, 0, 0] or \
                  cases['keys'][0] == [IBus.KEY_KP_Enter, 0, 0] or \
                  cases['keys'][0] == [IBus.KEY_ISO_Enter, 0, 0] or \
                  cases['keys'][0] == [IBus.KEY_Escape, 0, 0]:
                 self.__inserted_text = chars
-                self.__reset_coming = True
         else:
             self.__inserted_text = chars
         cases = tests['result']
@@ -411,8 +403,7 @@ class SimpleGtkTestCase(unittest.TestCase):
             return
         self.__commit_done = True # pylint: disable=unused-private-member
         self.__entry.set_text('')
-        if not self.__reset_coming:
-            self.__main_test()
+        self.__main_test()
 
     def create_window(self) -> None:
         window = Gtk.Window(type=Gtk.WindowType.TOPLEVEL)
