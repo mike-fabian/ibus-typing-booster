@@ -5439,10 +5439,10 @@ def keyevent_to_keybinding(keyevent: KeyEvent) -> str:
     'Shift+Control+Left'
 
     >>> keyevent_to_keybinding(KeyEvent(0x0100263A, 0, IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK))
-    'Shift+Control+U+263A'
+    'Shift+Control+0x100263a'
 
     >>> keyevent_to_keybinding(KeyEvent(0x0101F923, 0, IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK))
-    'Shift+Control+U+1F923'
+    'Shift+Control+0x101f923'
     '''
     # pylint: enable=line-too-long
     keybinding = ''
@@ -5486,16 +5486,22 @@ def keybinding_to_keyevent(keybinding: str) -> KeyEvent:
     >>> keybinding_to_keyevent('Shift+Control+Left').state == IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK
     True
 
-    >>> f"0x{keybinding_to_keyevent('Shift+Control+U+263A').val:08x}"
+    >>> f"0x{keybinding_to_keyevent('Shift+Control+0x100263a').val:08x}"
     '0x0100263a'
 
-    >>> f"0x{keybinding_to_keyevent('Shift+Control+U+1F923').val:08x}"
+    >>> f"0x{keybinding_to_keyevent('Shift+Control+0x101F923').val:08x}"
     '0x0101f923'
 
     >>> f"0x{keybinding_to_keyevent('Shift+Control+U+1G923').val:08x}"
     '0x00ffffff'
 
+    >>> f"0x{keybinding_to_keyevent('Shift+Control+0x101G923').val:08x}"
+    '0x00ffffff'
+
     >>> keybinding_to_keyevent('Shift+Control+U+1G923').val == IBus.KEY_VoidSymbol
+    True
+
+    >>> keybinding_to_keyevent('Shift+Control+0x101G923').val == IBus.KEY_VoidSymbol
     True
     '''
     # pylint: enable=line-too-long
@@ -5503,8 +5509,8 @@ def keybinding_to_keyevent(keybinding: str) -> KeyEvent:
     if 'U+' in keybinding:
         name = f'U+{name}'
     keyval = IBus.keyval_from_name(name)
-    if keyval == IBus.KEY_VoidSymbol and re.match(r'U\+[0-9a-fA-F]{4,5}', name):
-        keyval = 0x1000000  + int(name[2:], 16)
+    if keyval == IBus.KEY_VoidSymbol and re.match(r'0x10[0-9a-fA-F]{5}', name):
+        keyval = int(name[2:], 16)
     state = 0
     if 'Shift+' in keybinding:
         state |= IBus.ModifierType.SHIFT_MASK
