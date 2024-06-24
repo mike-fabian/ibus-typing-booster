@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 24 Jun 2024 Release 2.25.10
+* Use NFC when doing the cursor correction after committing a preedit using space (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/515)
+* Fix for ibus-1.5.30: Make it possible again to use keys with Unicode keysyms in keybindings (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/497)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 10 Jun 2024 Release 2.25.9
 * Translation update from Weblate (cs 100%)
 * Update emoji annotations from CLDR

@@ -47,6 +47,31 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.25.10" date="2024-06-24" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.25.10</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Use NFC when doing the cursor correction after committing
+            a preedit using space (Resolves: github-issues#515).
+          </li>
+          <li>
+            Fix for ibus-1.5.30: Make it possible again to use keys
+            with Unicode keysyms in keybindings (Resolves:
+            github-issues#497).
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/515">
+          github-issues#515
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/497">
+          github-issues#497
+        </issue>
+      </issues>
+    </release>
     <release version="2.25.9" date="2024-06-10" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.25.9</url>
       <description>
