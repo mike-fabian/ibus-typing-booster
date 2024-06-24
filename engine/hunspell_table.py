@@ -7245,6 +7245,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             time.sleep(self._ibus_event_sleep_seconds)
             if not candidate_was_selected:
                 # cursor needs to be corrected leftwards:
+                commit_string = unicodedata.normalize('NFC', commit_string)
                 for dummy_char in commit_string[caret_was:]:
                     self._forward_generated_key_event(IBus.KEY_Left)
             return False
