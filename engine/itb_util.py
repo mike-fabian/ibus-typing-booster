@@ -5331,6 +5331,21 @@ class KeyEvent:
         self.code = keycode
         self.state = state
         self.name = IBus.keyval_name(self.val)
+        if re.match(r'U\+[0-9a-fA-F]{4,5}', self.name):
+            # Older versions of ibus produce
+            #
+            # >>> IBus.keyval_name(0x0100263a)
+            # 'U+263A'
+            #
+            # Convert this into the same name used by newere
+            # versions of ibus which is:
+            #
+            # >>> IBus.keyval_name(0x0100263a)
+            # '0x100263a'
+            #
+            # to make it possible for me to always work
+            # with the same names, no matter the ibus version
+            self.name = f'0x{0x1000000  + int(self.name[2:], 16):x}'
         self.unicode = IBus.keyval_to_unicode(self.val)
         self.msymbol = self.unicode
         if self.msymbol == '\r':
@@ -5435,6 +5450,12 @@ def keyevent_to_keybinding(keyevent: KeyEvent) -> str:
     >>> keyevent_to_keybinding(KeyEvent(IBus.KEY_Left, 0, 0))
     'Left'
 
+    >>> keyevent_to_keybinding(KeyEvent(0x0100263a, 0, 0))
+    '0x100263a'
+
+    >>> keyevent_to_keybinding(KeyEvent(0x0101F923, 0, 0))
+    '0x101f923'
+
     >>> keyevent_to_keybinding(KeyEvent(IBus.KEY_Left, 0, IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK))
     'Shift+Control+Left'
 
@@ -5492,22 +5513,14 @@ def keybinding_to_keyevent(keybinding: str) -> KeyEvent:
     >>> f"0x{keybinding_to_keyevent('Shift+Control+0x101F923').val:08x}"
     '0x0101f923'
 
-    >>> f"0x{keybinding_to_keyevent('Shift+Control+U+1G923').val:08x}"
-    '0x00ffffff'
-
     >>> f"0x{keybinding_to_keyevent('Shift+Control+0x101G923').val:08x}"
     '0x00ffffff'
-
-    >>> keybinding_to_keyevent('Shift+Control+U+1G923').val == IBus.KEY_VoidSymbol
-    True
 
     >>> keybinding_to_keyevent('Shift+Control+0x101G923').val == IBus.KEY_VoidSymbol
     True
     '''
     # pylint: enable=line-too-long
     name = keybinding.split('+')[-1]
-    if 'U+' in keybinding:
-        name = f'U+{name}'
     keyval = IBus.keyval_from_name(name)
     if keyval == IBus.KEY_VoidSymbol and re.match(r'0x10[0-9a-fA-F]{5}', name):
         keyval = int(name[2:], 16)
