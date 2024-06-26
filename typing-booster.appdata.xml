@@ -47,6 +47,24 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.25.11" date="2024-06-26" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.25.11</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Yet another fix to make it possible again to use keys with
+            Unicode keysyms in keybindings and make it work with all
+            known versions of ibus (Resolves: github-issues#497).
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/497">
+          github-issues#497
+        </issue>
+      </issues>
+    </release>
     <release version="2.25.10" date="2024-06-24" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.25.10</url>
       <description>
