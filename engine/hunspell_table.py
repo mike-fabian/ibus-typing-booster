@@ -915,9 +915,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 +self._typed_string[self._typed_string_cursor+1:])
             self._update_transliterated_strings()
 
-    def get_caret(self) -> int:
-        '''
-        Get caret position in preëdit string
+    def get_caret(self, extra_msymbol: str = '') -> int:
+        '''Get caret position in preëdit string
 
         The preëdit contains the transliterated string, the caret
         position can only be approximated from the cursor position in
@@ -955,17 +954,32 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         the preëdit did not work at all. Now it works fine if
         no transliteration is used and works better than nothing
         even if transliteration is used.
+
+        https://github.com/mike-fabian/ibus-typing-booster/issues/519
+        A key which triggered a commit might have changed the
+        transliteration, see
+        https://bugzilla.redhat.com/show_bug.cgi?id=1353672 and it
+        might have even changed the length of the transliteration,
+        even increasing the length is possible.  So sometimes we need
+        to consider an extra msymbol coming from the commit key to
+        calculate the caret position in the preedit string.
         '''
         preedit_ime = self._current_imes[0]
+        typed_string = self._typed_string[:self._typed_string_cursor]
+        if extra_msymbol and not self._typed_compose_sequence:
+            typed_string += [extra_msymbol]
         transliterated_string_up_to_cursor = (
             self._transliterators[preedit_ime].transliterate(
-                self._typed_string[:self._typed_string_cursor],
-                ascii_digits=self._ascii_digits))
+                typed_string, ascii_digits=self._ascii_digits))
         if preedit_ime in ['ko-romaja', 'ko-han2']:
             transliterated_string_up_to_cursor = unicodedata.normalize(
                 'NFKD', transliterated_string_up_to_cursor)
         transliterated_string_up_to_cursor = unicodedata.normalize(
             'NFC', transliterated_string_up_to_cursor)
+        if (extra_msymbol and not self._typed_compose_sequence
+            and transliterated_string_up_to_cursor.endswith(extra_msymbol)):
+            transliterated_string_up_to_cursor = (
+                transliterated_string_up_to_cursor[:-len(extra_msymbol)])
         caret = len(transliterated_string_up_to_cursor)
         if self._typed_compose_sequence:
             caret += len(
@@ -7230,7 +7244,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             candidate_was_selected = False
             if self.get_lookup_table().cursor_visible:
                 candidate_was_selected = True
-            caret_was = self.get_caret()
+            caret_was = self.get_caret(extra_msymbol=key.msymbol)
             if not input_phrase:
                 input_phrase = commit_string
             self._commit_string(commit_string, input_phrase=input_phrase)
