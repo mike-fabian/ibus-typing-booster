@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 09 Jul 2024 Release 2.25.12
+* Correct calculation of caret when a key which triggered a commit *increases* the length of the transliteration (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/519)
+* Do the retransliteration of the input_phrase currently only when the cursor is at the end of the typed string
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 26 Jun 2024 Release 2.25.11
 * Yet another fix to make it possible again to use keys with Unicode keysyms in keybindings and make it work with all known versions of ibus (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/497)
 

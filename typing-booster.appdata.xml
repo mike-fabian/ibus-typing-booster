@@ -47,6 +47,24 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.25.12" date="2024-07-09" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.25.12</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Correct calculation of caret when a key which triggered a
+            commit *increases* the length of the transliteration
+            (Resolves: github-issues#519).
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/519">
+          github-issues#519
+        </issue>
+      </issues>
+    </release>
     <release version="2.25.11" date="2024-06-26" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.25.11</url>
       <description>
