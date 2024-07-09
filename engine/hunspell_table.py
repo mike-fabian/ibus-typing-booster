@@ -7105,30 +7105,36 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # the input might influence the transliteration. For example
             # When using hi-itrans, “. ” translates to “। ”
             # (See: https://bugzilla.redhat.com/show_bug.cgi?id=1353672)
-            input_phrase = self._transliterators[
-                preedit_ime].transliterate(
-                    self._typed_string + [key.msymbol],
-                    ascii_digits=self._ascii_digits)
+            input_phrase = self._transliterated_strings[preedit_ime]
             input_phrase = self._case_modes[
                 self._current_case_mode]['function'](input_phrase)
-            if key.msymbol:
-                if input_phrase.endswith(key.msymbol):
-                    # If the transliteration now ends with the commit
-                    # key, cut it off because the commit key is passed
-                    # to the application later anyway and we do not
-                    # want to pass it twice:
-                    input_phrase = input_phrase[:-len(key.msymbol)]
-                else:
-                    # The commit key has been absorbed by the
-                    # transliteration.  Add the key to the input
-                    # instead of committing:
-                    if DEBUG_LEVEL > 1:
-                        LOGGER.debug(
-                            'Insert instead of commit: key.msymbol=“%s”',
-                            key.msymbol)
-                    self._insert_string_at_cursor([key.msymbol])
-                    self._update_ui()
-                    return True
+            if self._typed_string_cursor == len(self._typed_string):
+                LOGGER.debug('FIXME input_phrase=“%s”', input_phrase)
+                input_phrase = self._transliterators[
+                    preedit_ime].transliterate(
+                        self._typed_string + [key.msymbol],
+                        ascii_digits=self._ascii_digits)
+                input_phrase = self._case_modes[
+                    self._current_case_mode]['function'](input_phrase)
+                LOGGER.debug('FIXME input_phrase=“%s”', input_phrase)
+                if key.msymbol:
+                    if input_phrase.endswith(key.msymbol):
+                        # If the transliteration now ends with the commit
+                        # key, cut it off because the commit key is passed
+                        # to the application later anyway and we do not
+                        # want to pass it twice:
+                        input_phrase = input_phrase[:-len(key.msymbol)]
+                    else:
+                        # The commit key has been absorbed by the
+                        # transliteration.  Add the key to the input
+                        # instead of committing:
+                        if DEBUG_LEVEL > 1:
+                            LOGGER.debug(
+                                'Insert instead of commit: key.msymbol=“%s”',
+                                key.msymbol)
+                        self._insert_string_at_cursor([key.msymbol])
+                        self._update_ui()
+                        return True
             if (self.get_lookup_table().get_number_of_candidates()
                 and self.get_lookup_table().cursor_visible):
                 # something is selected in the lookup table, commit
