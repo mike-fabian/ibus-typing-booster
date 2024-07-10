@@ -2,6 +2,7 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Jelly Lopster <jellylopster@gmail.com>, 2024.
+# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -9,7 +10,8 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2024-07-09 13:09+0200\n"
 "PO-Revision-Date: 2024-07-10 03:42+0000\n"
-"Last-Translator: Jelly Lopster <jellylopster@gmail.com>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Russian <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ru/>\n"
 "Language: ru\n"
@@ -123,7 +125,7 @@ msgstr "Искать в emojipedia"
 #: engine/emoji_picker.py:2078 engine/emoji_picker.py:2079
 #: engine/emoji_picker.py:2080 setup/main.py:1594
 msgid "System default"
-msgstr ""
+msgstr "Системные по умолчанию"
 
 #: engine/emoji_picker.py:2215
 msgid "Set Font"
@@ -132,7 +134,7 @@ msgstr "Установить шрифт"
 #: engine/hunspell_table.py:529 engine/hunspell_table.py:563
 #: engine/hunspell_table.py:584
 msgid "Off"
-msgstr ""
+msgstr "Выкл."
 
 #: engine/hunspell_table.py:534 engine/hunspell_table.py:568
 #: engine/hunspell_table.py:589
@@ -141,7 +143,7 @@ msgstr "Вкл."
 
 #: engine/hunspell_table.py:553
 msgid "Input mode"
-msgstr ""
+msgstr "Режим ввода"
 
 #: engine/hunspell_table.py:554
 msgid "Here you can switch ibus-typing-booster on or off."
