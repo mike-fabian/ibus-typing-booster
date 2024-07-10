@@ -1,10 +1,10 @@
-# Yuri Chornoivan <yurchor@ukr.net>, 2016, 2019, 2020, 2021, 2022, 2023.
-# Yuri Chornoivan <yurchor@ukr.net>, 2016. #zanata, 2019, 2020, 2021, 2022, 2023.
+# Yuri Chornoivan <yurchor@ukr.net>, 2016, 2019, 2020, 2021, 2022, 2023, 2024.
+# Yuri Chornoivan <yurchor@ukr.net>, 2016. #zanata, 2019, 2020, 2021, 2022, 2023, 2024.
 # Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019, 2020.
-# Yuri Chornoivan <yurchor@ukr.net>, 2017. #zanata, 2019, 2020, 2021, 2022, 2023.
+# Yuri Chornoivan <yurchor@ukr.net>, 2017. #zanata, 2019, 2020, 2021, 2022, 2023, 2024.
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018. #zanata, 2019, 2020, 2021, 2022, 2023.
-# Yuri Chornoivan <yurchor@ukr.net>, 2019. #zanata, 2020, 2021, 2022, 2023.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018. #zanata, 2019, 2020, 2021, 2022, 2023, 2024.
+# Yuri Chornoivan <yurchor@ukr.net>, 2019. #zanata, 2020, 2021, 2022, 2023, 2024.
 # Jelly Lopster <jellylopster@gmail.com>, 2024.
 msgid ""
 msgstr ""
@@ -12,8 +12,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-07-09 13:09+0200\n"
-"PO-Revision-Date: 2024-07-10 03:42+0000\n"
-"Last-Translator: Jelly Lopster <jellylopster@gmail.com>\n"
+"PO-Revision-Date: 2024-07-10 08:25+0000\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/uk/>\n"
 "Language: uk\n"
@@ -682,15 +682,15 @@ msgid ""
 "any input at all in the user database."
 msgstr ""
 "Дозволяє вибрати тип даних, які слід записати до бази даних користувачів: "
-"\"Все\": Кожне введене слово додається до бази даних користувачів або "
-"оновлюється його частота, якщо воно вже там є. \"Правильно написане або "
-"раніше записане\": Введене слово додається до бази даних користувачів лише в "
-"тому випадку, якщо є ймовірність його правильного написання. Якщо слово вже "
-"є в базі даних користувачів, його частота оновлюється незалежно від того, як "
-"воно написане.  \"Правильне написання\": Введене слово додається до бази "
-"даних або оновлюється його частота в базі даних лише в тому випадку, якщо є "
-"ймовірність його правильного написання.  \"Нічого\": Не вносити жодних даних "
-"до бази даних користувачів."
+"«Все»: кожне введене слово буде додано до бази даних користувача або буде "
+"оновлено його частоту, якщо воно вже там є. «Правильно написане або раніше "
+"записане»: введене слово буде додано до бази даних користувача лише в тому "
+"випадку, якщо є ймовірність його правильного написання. Якщо слово вже є в "
+"базі даних користувача, його частота оновлюється незалежно від того, як воно "
+"написане. «Правильне написання»: введене слово буде додано до бази даних або "
+"буде оновлено його частоту в базі даних лише тоді, коли є ймовірність його "
+"правильного написання. «Нічого»: не вносити жодних даних до бази даних "
+"користувача."
 
 #: setup/main.py:677
 msgid "Everything"
