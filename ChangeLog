@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 18 Jul 2024 Release 2.25.13
+* Name of Sinhala input method changed: si-wijesekera ➡️ si-wijesekara
+* Translation update from Weblate (new: ru 12.3%, uk 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 09 Jul 2024 Release 2.25.12
 * Correct calculation of caret when a key which triggered a commit *increases* the length of the transliteration (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/519)
 * Do the retransliteration of the input_phrase currently only when the cursor is at the end of the typed string
