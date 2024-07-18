@@ -517,7 +517,7 @@ LOCALE_DEFAULTS = {
     'sh_ME': {'inputmethods': ['NoIME'], 'dictionaries': ['sh_ME']},
     'sh_YU': {'inputmethods': ['NoIME'], 'dictionaries': ['sh_YU']},
     'shs': {'inputmethods': ['NoIME'], 'dictionaries': ['shs_CA']},
-    'si': {'inputmethods': ['si-wijesekera', 'NoIME'],
+    'si': {'inputmethods': ['si-wijesekara', 'NoIME'],
            'dictionaries': ['si_LK', 'en_GB']},
     'sk': {'inputmethods': ['NoIME'], 'dictionaries': ['sk_SK']},
     'sl': {'inputmethods': ['NoIME'], 'dictionaries': ['sl_SI']},

@@ -180,8 +180,8 @@ class M17nTranslitTestCase(unittest.TestCase):
             trans.transliterate(['a', 'b', 'c', 'C-c', 'G-4']),
             'abcC-cG-4')
 
-    def test_si_wijesekera(self) -> None:
-        trans = m17n_translit.Transliterator('si-wijesekera')
+    def test_si_wijesekara(self) -> None:
+        trans = self.get_transliterator_or_skip('si-wijesekara')
         self.assertEqual(trans.transliterate(list('a')), '්')
         self.assertEqual(trans.transliterate(list('t')), 'එ')
         self.assertEqual(trans.transliterate(list('ta')), 'ඒ')
@@ -686,8 +686,8 @@ class M17nTranslitTestCase(unittest.TestCase):
             trans.get_variables(),
             [('trim-last-halant', '', '0'), ('enable-udatta', '', '1')])
 
-    def test_get_variables_si_wijesekera(self) -> None:
-        trans = self.get_transliterator_or_skip('si-wijesekera')
+    def test_get_variables_si_wijesekara(self) -> None:
+        trans = self.get_transliterator_or_skip('si-wijesekara')
         self.assertEqual(
             trans.get_variables(),
             [('use-surrounding-text',

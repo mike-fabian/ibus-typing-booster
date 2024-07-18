@@ -1008,7 +1008,7 @@ class Transliterator:
     >>> trans.transliterate(list('annyeonghaseyo'))
     '안녕하세요'
 
-    >>> trans = Transliterator('si-wijesekera')
+    >>> trans = Transliterator('si-wijesekara')
     >>> trans.transliterate(list('vksIal kjSka '))
     'ඩනිෂ්ක නවීන් '
 
@@ -1139,7 +1139,7 @@ class Transliterator:
         >>> trans = Transliterator('NoIME')
         >>> trans.get_variables()
         []
-        >>> trans = Transliterator('si-wijesekera')
+        >>> trans = Transliterator('si-wijesekara')
         >>> trans.get_variables()
         [('use-surrounding-text', 'Surrounding text vs. preedit.\\nIf 1, try to use surrounding text.  Otherwise, use preedit.', '0')]
         >>> trans = Transliterator('t-unicode')

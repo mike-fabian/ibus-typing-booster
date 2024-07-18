@@ -1971,9 +1971,10 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'in Germany In Germany IN GERMANY In Germany in germany ')
 
-    def test_sinhala_wijesekera(self) -> None:
+    def test_sinhala_wijesekara(self) -> None:
+        dummy_trans = self.get_transliterator_or_skip('si-wijesekara')
         self.engine.set_current_imes(
-            ['si-wijesekera', 'NoIME'], update_gsettings=False)
+            ['si-wijesekara', 'NoIME'], update_gsettings=False)
         self.engine.set_dictionary_names(
             ['en_US'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_v, 0, 0)
