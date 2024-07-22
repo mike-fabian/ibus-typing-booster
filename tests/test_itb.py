@@ -420,6 +420,44 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'ä ')
 
+    def test_shift_space_latn_post(self) -> None:
+        '''https://github.com/mike-fabian/ibus-typing-booster/issues/524'''
+        dummy_trans = self.get_transliterator_or_skip('t-latn-post')
+        self.engine.set_current_imes(
+            ['t-latn-post', 'NoIME'], update_gsettings=False)
+        self.engine.do_process_key_event(
+            IBus.KEY_space, 0, IBus.ModifierType.SHIFT_MASK)
+        self.assertEqual(self.engine.mock_committed_text, ' ')
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, ' ')
+        self.assertEqual(self.engine.mock_preedit_text, 'a')
+        self.engine.do_process_key_event(
+            IBus.KEY_space, 0, IBus.ModifierType.SHIFT_MASK)
+        self.assertEqual(self.engine.mock_committed_text, ' a ')
+        self.assertEqual(self.engine.mock_preedit_text, '')
+
+    def test_shift_space_mr_itrans(self) -> None:
+        '''https://github.com/mike-fabian/ibus-typing-booster/issues/524'''
+        dummy_trans = self.get_transliterator_or_skip('mr-itrans')
+        self.engine.set_current_imes(
+            ['mr-itrans', 'NoIME'], update_gsettings=False)
+        self.engine.do_process_key_event(
+            IBus.KEY_space, 0, IBus.ModifierType.SHIFT_MASK)
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine.mock_preedit_text, '\u200c')
+        self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine.mock_preedit_text, '\u200cक')
+        self.engine.do_process_key_event(
+            IBus.KEY_space, 0, IBus.ModifierType.SHIFT_MASK)
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine.mock_preedit_text, '\u200cक\u200c')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '\u200cक\u200c ')
+
     def test_hi_itrans_full_stop_space(self) -> None:
         ''' https://bugzilla.redhat.com/show_bug.cgi?id=1353672 '''
         self.engine.set_current_imes(

@@ -5385,6 +5385,9 @@ class KeyEvent:
             if self.shift and self.msymbol == 'C-Return':
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/457
                 self.msymbol = 'S-C-Return'
+            if self.shift and self.msymbol == ' ':
+                # https://github.com/mike-fabian/ibus-typing-booster/issues/524
+                self.msymbol = 'S- '
         self.time: float = 0.0
         # Whether the key has been handled by do_process_key_event
         # (i.e. True was returned) or passed through (i.e. “return

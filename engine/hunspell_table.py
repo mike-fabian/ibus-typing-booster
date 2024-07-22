@@ -6868,11 +6868,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # starting with a control character:
                 self._update_ui_empty_input()
                 return False
-            if key.val == IBus.KEY_space and not key.mod5:
-                # if the first character is a space, just pass it through
-                # it makes not sense trying to complete (“not key.mod5” is
-                # checked here because AltGr+Space is the key binding to
-                # insert a literal space into the preëdit):
+            if key.val == IBus.KEY_space and not key.mod5 and not key.shift:
+                # if the first character is a space, just pass it
+                # through it makes not sense trying to complete (“not
+                # key.mod5” is checked here because AltGr+Space is the
+                # key binding to insert a literal space into the
+                # preëdit, “not key.shift” is checked here because
+                # some input methods transliterate the msymbol 'S- '
+                # (See:
+                # https://github.com/mike-fabian/ibus-typing-booster/issues/524)):
                 self._update_ui_empty_input()
                 return False
             if (key.val >= 32 and not key.control
@@ -6932,6 +6936,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         # These keys may trigger a commit:
         if (key.msymbol not in ('G- ', 'G-_')
+            and not (key.msymbol in ('S- ')
+                 and self._has_transliteration([key.msymbol]))
             and (key.val in self._commit_trigger_keys
                  or (len(key.msymbol) == 1
                      and (key.control
@@ -6987,6 +6993,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # this would also trigger a commit unless 'C-a' is
                 # transliterated to something).  See:
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/107
+                #
+                # 'S- ' (Shift-space) should not trigger a commit if
+                # it has a transliteration, see:
+                # https://github.com/mike-fabian/ibus-typing-booster/issues/524
             if self.is_empty() and not self._lookup_table.cursor_visible:
                 self._update_ui_empty_input()
                 return False
@@ -7123,14 +7133,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             input_phrase = self._case_modes[
                 self._current_case_mode]['function'](input_phrase)
             if self._typed_string_cursor == len(self._typed_string):
-                LOGGER.debug('FIXME input_phrase=“%s”', input_phrase)
                 input_phrase = self._transliterators[
                     preedit_ime].transliterate(
                         self._typed_string + [key.msymbol],
                         ascii_digits=self._ascii_digits)
                 input_phrase = self._case_modes[
                     self._current_case_mode]['function'](input_phrase)
-                LOGGER.debug('FIXME input_phrase=“%s”', input_phrase)
                 if key.msymbol:
                     if input_phrase.endswith(key.msymbol):
                         # If the transliteration now ends with the commit
