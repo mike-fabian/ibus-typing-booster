@@ -1729,7 +1729,7 @@ class EmojiMatcher():
         ['face', 'smile', 'uc7', 'happy', 'slightly', 'smiling']
 
         >>> matcher.keywords('🙂', language='it')
-        ['contenta', 'contento', 'faccina', 'faccina che sorride', 'faccina con sorriso accennato', 'felice', 'mezzo sorriso', 'ok', 'sorrisetto', 'sorriso', 'sorriso a bocca chiusa', 'sorriso accennato', 'va bene']
+        ['contento', 'faccina', 'faccina che sorride', 'faccina con sorriso accennato', 'felice', 'mezzo sorriso', 'ok', 'sorrisetto', 'sorriso', 'sorriso a bocca chiusa', 'sorriso accennato', 'va bene']
         '''
         # pylint: enable=line-too-long
         #
@@ -1835,7 +1835,7 @@ class EmojiMatcher():
 
         >>> matcher = EmojiMatcher(languages = ['it_IT'])
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, delineata, emozionarsi, faccina, felice, rilassata, sorridente]', 8), ('🥲', 'faccina sorridente con lacrima [faccina, felice, sorridente]', 3), ('🤩', 'colpo di fulmine [faccina, felice]', 2), ('😊', 'faccina con occhi sorridenti [faccina, felice]', 2), ('🙂', 'faccina con sorriso accennato [faccina, felice]', 2)]
+        [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, delineata, emozionarsi, faccina, felice, rilassata, sorridente]', 8), ('🤩', 'colpo di fulmine [faccina, felice]', 2), ('😊', 'faccina con occhi sorridenti [faccina, felice]', 2), ('🙂', 'faccina con sorriso accennato [faccina, felice]', 2), ('😂', 'faccina con lacrime di gioia [faccina, felice]', 2)]
 
         Some symbols which are not emoji work as well:
 

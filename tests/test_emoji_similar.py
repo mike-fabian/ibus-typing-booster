@@ -82,7 +82,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['it_IT', 'en_US', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.similar('☺', match_limit=5),
-            [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, delineata, emozionarsi, faccina, felice, rilassata, sorridente]', 8), ('🥲', 'faccina sorridente con lacrima [faccina, felice, sorridente]', 3), ('🤩', 'colpo di fulmine [faccina, felice]', 2), ('😊', 'faccina con occhi sorridenti [faccina, felice]', 2), ('🙂', 'faccina con sorriso accennato [faccina, felice]', 2)])
+            [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, delineata, emozionarsi, faccina, felice, rilassata, sorridente]', 8), ('🤩', 'colpo di fulmine [faccina, felice]', 2), ('😊', 'faccina con occhi sorridenti [faccina, felice]', 2), ('🙂', 'faccina con sorriso accennato [faccina, felice]', 2), ('😂', 'faccina con lacrime di gioia [faccina, felice]', 2)])
 
     def test_similar_camel_en_US(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -96,7 +96,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['it_IT', 'en_US','es_MX', 'es_ES', 'de_DE', 'ja_JP'])
         self.assertEqual(
             mq.similar('🐫', match_limit=5),
-            [('🐫', 'cammello [🐫, animale, animali, cammello, deserto, due gobbe, gobba]', 7), ('🐪', 'dromedario [animale, animali, cammello, deserto, gobba]', 5), ('🐐', 'capra [animale, animali]', 2), ('🦒', 'giraffa [animale, animali]', 2), ('🐑', 'pecora [animale, animali]', 2)])
+            [('🐫', 'cammello [🐫, animale, animali, cammello, deserto, due gobbe, gobba]', 7), ('🐪', 'dromedario [animale, animali, cammello, deserto, gobba]', 5), ('🐐', 'capra [animale, animali]', 2), ('🦒', 'giraffa [animale, animali]', 2), ('🐏', 'montone [animale, animali]', 2)])
 
     def test_similar_camel_de_DE(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -138,12 +138,12 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['de_DE'])
         self.assertEqual(
             mq.similar('🤐', match_limit = 3),
-            [('🤐', 'Gesicht mit Reißverschlussmund [🤐, Gesicht, Gesicht mit Reißverschlussmund, Mund, Reißverschluss, Smiley, Smiley mit Reißverschlussmund]', 7), ('🤑', 'Gesicht mit Dollarzeichen [Gesicht, Mund, Smiley]', 3), ('🫡', 'salutierendes Gesicht [Gesicht, Smiley]', 2)])
+            [('🤐', 'Gesicht mit Reißverschlussmund [🤐, Geheimnis, Gesicht, halten, Mund, Reißverschluss, schweigen, Smiley, wahren]', 9), ('😶', 'Gesicht ohne Mund [Gesicht, Mund, Smiley]', 3), ('🫢', 'Gesicht mit offenen Augen und Hand über dem Mund [Gesicht, Mund, Smiley]', 3)])
         mq = itb_emoji.EmojiMatcher(
             languages = ['de_CH'])
         self.assertEqual(
             mq.similar('🤐', match_limit = 3),
-            [('🤐', 'Smiley mit Reissverschlussmund [🤐, Gesicht, Mund, Reissverschluss, Smiley mit Reissverschlussmund]', 5), ('🫡', 'grüssendes Gesicht [Gesicht]', 1), ('😅', 'Lachender Smiley mit kaltem Schweiss [Gesicht]', 1)])
+            [('🤐', 'Smiley mit Reissverschlussmund [🤐, Geheimnis, Gesicht, halten, Mund, Reissverschluss, schweigen, Smiley, wahren]', 9), ('🤪', 'irres Gesicht [Gesicht, Smiley]', 2), ('🥵', 'schwitzendes Gesicht [Gesicht, Smiley]', 2)])
 
     def test_similar_show_keywords_option_en_US(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -163,7 +163,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['zh_CN'])
         self.assertEqual(
             mq.similar('🏇', match_limit = 3),
-            [('🏇', '赛马 [🏇, 三冠, 赛马, 赛马骑师, 马, 骑师, 骑马]', 7), ('🐎', '马 [三冠, 赛马, 马, 骑马]', 4), ('🏇🏻', '赛马: 较浅肤色 [赛马, 马]', 2)])
+            [('🏇', '赛马 [🏇, 三冠, 赛马, 赛马骑师, 马, 骑师, 骑马]', 7), ('🐎', '马 [赛马, 马, 骑马]', 3), ('🏇🏻', '赛马: 较浅肤色 [赛马, 马]', 2)])
 
     @unittest.skipUnless(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
@@ -173,7 +173,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['zh_CN'])
         self.assertEqual(
             mq.similar('🏇', match_limit = 3),
-            [('🏇', '赛马 [🏇, 三冠, sānguān, 赛马, sàimǎ, 赛马骑师, sàimǎqíshī, 马, mǎ, 骑师, qíshī, 骑马, qímǎ]', 13), ('🐎', '马 [三冠, sānguān, 赛马, sàimǎ, 马, mǎ, 骑马, qímǎ]', 8), ('🏇🏻', '赛马: 较浅肤色 [赛马, sàimǎ, 马, mǎ]', 4)])
+            [('🏇', '赛马 [🏇, 三冠, sānguān, 赛马, sàimǎ, 赛马骑师, sàimǎqíshī, 马, mǎ, 骑师, qíshī, 骑马, qímǎ]', 13), ('🐎', '马 [赛马, sàimǎ, 马, mǎ, 骑马, qímǎ]', 6), ('🏇🏻', '赛马: 较浅肤色 [赛马, sàimǎ, 马, mǎ]', 4)])
 
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
