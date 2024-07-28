@@ -10,7 +10,8 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2024-07-22 23:23+0200\n"
 "PO-Revision-Date: 2024-07-28 17:22+0000\n"
-"Last-Translator: Jelly Lopster <jellylopster@gmail.com>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Russian <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ru/>\n"
 "Language: ru\n"
@@ -188,7 +189,7 @@ msgstr "Переключение метода предварительного �
 
 #: engine/hunspell_table.py:2164
 msgid "Setup"
-msgstr ""
+msgstr "Настройка"
 
 #: engine/hunspell_table.py:2167 setup/main.py:169
 msgid "Preferences for ibus-typing-booster"
@@ -323,7 +324,7 @@ msgstr "Ошибка декодирования Юникода"
 
 #: engine/itb_util.py:4290 engine/itb_util.py:5017
 msgid "Unknown error"
-msgstr ""
+msgstr "Неизвестная ошибка"
 
 #: engine/itb_util.py:4983
 msgid "Native Keyboard"
@@ -345,11 +346,11 @@ msgstr ""
 #. key binding for a command.
 #: engine/itb_util.py:5640
 msgid "Key input"
-msgstr ""
+msgstr "Ввод клавиши"
 
 #: engine/itb_util.py:5646
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #. pylint: disable=consider-using-f-string
 #. Translators: This is from the dialog to enter a key or a
@@ -357,14 +358,14 @@ msgstr ""
 #. command.
 #: engine/itb_util.py:5653
 msgid "Please press a key (or a key combination)"
-msgstr ""
+msgstr "Нажмите клавишу (или комбинацию клавиш)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
 #: engine/itb_util.py:5658
 msgid "The dialog will be closed when the key is released"
-msgstr ""
+msgstr "Диалоговое окно будет закрыто, когда клавиша будет отпущена"
 
 #: engine/itb_util.py:5697
 msgid "A completion input method to speedup typing."
