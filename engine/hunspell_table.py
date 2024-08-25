@@ -59,7 +59,7 @@ IMPORT_ITB_NLTK_SUCCESSFUL = False
 try:
     import itb_nltk
     IMPORT_ITB_NLTK_SUCCESSFUL = True
-except (ImportError, LookupError):
+except (ImportError, LookupError, ValueError):
     IMPORT_ITB_NLTK_SUCCESSFUL = False
 
 IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = False
