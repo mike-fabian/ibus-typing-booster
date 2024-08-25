@@ -41,6 +41,29 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.25.15" date="2024-08-25" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.25.15</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+             Also catch ValueError exception when trying to import
+             nltk (Resolves: github-issues#527)
+          </li>
+          <li>
+            Translation update from Weblate (ru 25.1%)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/527">
+          github-issues#527
+        </issue>
+      </issues>
+    </release>
     <release version="2.25.14" date="2024-07-22" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.25.14</url>
       <description>
