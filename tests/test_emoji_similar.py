@@ -163,7 +163,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['zh_CN'])
         self.assertEqual(
             mq.similar('🏇', match_limit = 3),
-            [('🏇', '赛马 [🏇, 三冠, 赛马, 赛马骑师, 马, 骑师, 骑马]', 7), ('🐎', '马 [赛马, 马, 骑马]', 3), ('🏇🏻', '赛马: 较浅肤色 [赛马, 马]', 2)])
+            [('🏇', '赛马 [🏇, 三冠, 赛马, 赛马骑师, 马, 骑师, 骑马]', 7), ('🏇🏻', '赛马: 较浅肤色 [三冠, 赛马, 赛马骑师, 马, 骑师, 骑马]', 6), ('🏇🏼', '赛马: 中等-浅肤色 [三冠, 赛马, 赛马骑师, 马, 骑师, 骑马]', 6)])
 
     @unittest.skipUnless(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
@@ -173,7 +173,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['zh_CN'])
         self.assertEqual(
             mq.similar('🏇', match_limit = 3),
-            [('🏇', '赛马 [🏇, 三冠, sānguān, 赛马, sàimǎ, 赛马骑师, sàimǎqíshī, 马, mǎ, 骑师, qíshī, 骑马, qímǎ]', 13), ('🐎', '马 [赛马, sàimǎ, 马, mǎ, 骑马, qímǎ]', 6), ('🏇🏻', '赛马: 较浅肤色 [赛马, sàimǎ, 马, mǎ]', 4)])
+            [('🏇', '赛马 [🏇, 三冠, sānguān, 赛马, sàimǎ, 赛马骑师, sàimǎqíshī, 马, mǎ, 骑师, qíshī, 骑马, qímǎ]', 13), ('🏇🏻', '赛马: 较浅肤色 [三冠, sānguān, 赛马, sàimǎ, 赛马骑师, sàimǎqíshī, 马, mǎ, 骑师, qíshī, 骑马, qímǎ]', 12), ('🏇🏼', '赛马: 中等-浅肤色 [三冠, sānguān, 赛马, sàimǎ, 赛马骑师, sàimǎqíshī, 马, mǎ, 骑师, qíshī, 骑马, qímǎ]', 12)])
 
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,

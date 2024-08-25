@@ -286,7 +286,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('👨\u200d👨\u200d👧\u200d👦', 'family: man, man, girl, boy'))
         self.assertEqual(
             mq.candidates('people')[0][:2],
-            ('👯', 'woman with bunny ears “people with bunny ears partying”'))
+            ('🧑🏾\u200d🤝\u200d🧑🏼', 'people holding hands: medium-dark skin tone, medium-light skin tone “people holding hands medium dark skin tone medium light skin tone”'))
 
     def test_candidates_birthday_cake(self) -> None:
         mq = itb_emoji.EmojiMatcher(
