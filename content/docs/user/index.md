@@ -104,7 +104,7 @@ on Gnome one has to log out and log in again, otherwise one will not
 find ibus-typing-booster when trying to [add it it in the desktop
 settings](#1).
 
-{{< video label="Installing using “Ubuntu Software” on Ubuntu 21.04" webm="/videos/user-docs/installing-using-ubuntu-software-on-ubuntu-21.04.webm" >}}
+{{< video label="Installing using “Ubuntu Software” on Ubuntu 21.04" mp4="/videos/user-docs/installing-using-ubuntu-software-on-ubuntu-21.04.mp4" >}}
 
 ###### 1
 ## Adding ibus-typing-booster to your desktop
@@ -117,7 +117,7 @@ The procedure to add an ibus-typing-booster input method differs slightly depend
 ###### 1_1
 ## When using the Gnome3 desktop
 
-{{< video label="Adding ibus-typing-booster to the Gnome3 desktop" webm="/videos/user-docs/When-using-the-Gnome3-desktop.webm" >}}
+{{< video label="Adding ibus-typing-booster to the Gnome3 desktop" mp4="/videos/user-docs/When-using-the-Gnome3-desktop.mp4" >}}
 
 This video shows how to add ibus-typing-booster to recent Gnome3
 desktops, using Gnome3 on Fedora 34 in this example. In older versions
@@ -166,7 +166,7 @@ settings instead of in the “Keyboard” settings, for example [Ubuntu
 ###### 1_2
 ## When using older Gnome3 desktops like in Ubuntu 21.04
 
-{{< video label="Adding ibus-typing-booster to older Gnome3 desktops like in Ubuntu 21.04" webm="/videos/user-docs/When-using-Ubuntu-21.04.webm" >}}
+{{< video label="Adding ibus-typing-booster to older Gnome3 desktops like in Ubuntu 21.04" mp4="/videos/user-docs/When-using-Ubuntu-21.04.mp4" >}}
 
 This video shows how to add ibus-typing-booster to older Gnome3 desktops
 like for example in Ubuntu 21.04 where the input method setup was still
@@ -176,7 +176,7 @@ For adding ibus-typing-booster in newer versions of Gnome look [here](#1_1).
 ###### 1_3
 ## When using other desktops than Gnome3
 
-{{< video label="When using other desktops than Gnome3" webm="/videos/user-docs/When-using-other-desktops-than-Gnome3.webm" >}}
+{{< video label="When using other desktops than Gnome3" mp4="/videos/user-docs/When-using-other-desktops-than-Gnome3.mp4" >}}
 
 This chapter shows how to add the ibus-typing-booster input method on most desktops except Gnome3 and Unity. The screenshots in this chapter are using XFCE on Fedora 34, but it is the same procedure on most other desktops and window managers as well, only Gnome3 and Unity are a bit special.
 
@@ -297,7 +297,7 @@ Ibus-typing-booster has a setup tool which allows to adapt the behaviour a lot t
 ###### 2_1
 ## Basic setup for your language
 
-{{< video label="Default settings in Hindi locale" webm="/videos/user-docs/hindi-locale-default-settings.webm" >}}
+{{< video label="Default settings in Hindi locale" mp4="/videos/user-docs/hindi-locale-default-settings.mp4" >}}
 
 This video shows how to setup languages and input methods in Typing Booster.
 
@@ -375,7 +375,7 @@ This chapter explains more advanced options how to adapt the behaviour and the l
 ###### 2_2_1
 ## Enable suggestions by a key
 
-{{< video label="Enable suggestions by key" webm="/videos/user-docs/enable-suggestions-by-key.webm" >}}
+{{< video label="Enable suggestions by key" mp4="/videos/user-docs/enable-suggestions-by-key.mp4" >}}
 
 This video shows what the options “☑️ Enable suggestions by key” and
 “☑️ Use preedit style only if lookup is enabled” do.
@@ -452,7 +452,7 @@ missing feature in Wayland.
 ###### 2_2_1_1
 ## Simulate the behaviour of ibus-m17n
 
-{{< video label="Simulating ibus-m17n (hi-itrans)" webm="/videos/user-docs/simulating-ibus-m17n-hi-itrans.webm" >}}
+{{< video label="Simulating ibus-m17n (hi-itrans)" mp4="/videos/user-docs/simulating-ibus-m17n-hi-itrans.mp4" >}}
 
 This video shows how one can emulate ibus-m17n using
 ibus-typing-booster by switching off all the features
@@ -521,7 +521,7 @@ all above options are set, the behaviour looks identical.
 ###### 2_2_2
 ## Use inline completion
 
-{{< video label="“Normal” completion versus inline completion" webm="/videos/user-docs/inline-completion.webm" >}}
+{{< video label="“Normal” completion versus inline completion" mp4="/videos/user-docs/inline-completion.mp4" >}}
 
 The video above shows how “inline completion” looks like compared to
 “normal” completion.
@@ -582,7 +582,7 @@ displayed.
 ###### 2_2_2_1
 ## Inline completion is hard to use on Wayland
 
-{{< video label="Inline completion is hard to use on Wayland" webm="/videos/user-docs/inline-completion-wayland.webm" >}}
+{{< video label="Inline completion is hard to use on Wayland" mp4="/videos/user-docs/inline-completion-wayland.mp4" >}}
 
 ⚠️ **Attention when using Wayland**: Currently it is not possible to do any
 style changes to the preedit on Wayland. On Wayland the preedit is
@@ -609,7 +609,7 @@ this to be quite hard.
 ###### 2_2_3
 ## Spellchecking
 
-{{< video label="Spellchecking in the preedit and candidate list" webm="/videos/user-docs/spellchecking-preedit-and-candidate-list.webm" >}}
+{{< video label="Spellchecking in the preedit and candidate list" mp4="/videos/user-docs/spellchecking-preedit-and-candidate-list.mp4" >}}
 
 ibus-typing-booster also does spellchecking (Using hunspell for most
 languages and voikko for Finnish).
@@ -683,7 +683,7 @@ tool of ibus-typing-booster. That is a missing feature in Wayland.
 
 {{<
 video label="Configuring a key to toggle Typing Booster on/off"
-webm="/videos/user-docs/configuring-a-key-for-toggle-input-mode-on-off.webm"
+mp4="/videos/user-docs/configuring-a-key-for-toggle-input-mode-on-off.mp4"
 >}}
 
 This video shows how to configure a key to quickly toggle Typing
@@ -751,7 +751,7 @@ See also: [⚠️ Caveat: Key bindings can only work when there is input focus](
 
 {{<
 video label="Demonstration of reopening preëdits"
-webm="/videos/user-docs/reopening-preedits.webm"
+mp4="/videos/user-docs/reopening-preedits.mp4"
 >}}
 
 This video shows that when the option “☑️ Enable reopening preedits” is
@@ -842,7 +842,7 @@ preëdits:
 
 {{<
 video label="Demonstration of disabling in terminals"
-webm="/videos/user-docs/disabling-in-terminals.webm"
+mp4="/videos/user-docs/disabling-in-terminals.mp4"
 >}}
 
 The above video shows how to disable Typing Booster in terminals
@@ -918,7 +918,7 @@ more advanced setup in the “[Autosettings](#2_2_7)” chapter.
 
 {{<
 video label="Demonstration of using autosettings"
-webm="/videos/user-docs/using-autosettings.webm"
+mp4="/videos/user-docs/using-autosettings.mp4"
 >}}
 
 This video shows how one can add automatic settings, i.e. settings which
@@ -1451,7 +1451,7 @@ When more than one input method at the same time is used, the following addition
 ###### 3_4
 ### Customizing key bindings
 
-{{< video label="Customizing key bindings" webm="/videos/user-docs/key-bindings-customization.webm" >}}
+{{< video label="Customizing key bindings" mp4="/videos/user-docs/key-bindings-customization.mp4" >}}
 
 This video shows how one can change a keybinding.
 
@@ -1537,7 +1537,7 @@ something.
 ###### 4
 ## Multilingual input
 
-{{< video label="Setup several dictionaries and input methods" webm="/videos/user-docs/setup-several-dictionaries-and-input-methods.webm" >}}
+{{< video label="Setup several dictionaries and input methods" mp4="/videos/user-docs/setup-several-dictionaries-and-input-methods.mp4" >}}
 
 This video shows how to setup multiple dictionaries and input methods.
 
@@ -1627,7 +1627,7 @@ sudo dnf install hunspell-es hunspell-fr
 ###### 4_1
 ### Example using Hindi and English at the same time
 
-{{< video label="Example using Hindi and English at the same time" webm="/videos/user-docs/Example-using-Hindi-and-English-at-the-same-time.webm" >}}
+{{< video label="Example using Hindi and English at the same time" mp4="/videos/user-docs/Example-using-Hindi-and-English-at-the-same-time.mp4" >}}
 
 This video shows how Hindi and English can be used at the same time in
 ibus-typing-booster.
@@ -1885,7 +1885,7 @@ In some desktops, for example in Gnome3, you can also easily choose which key to
 for Compose in the system settings. The following example video shows
 how to do that in Gnome3 on Fedora 34:
 
-{{< video label="Selecting the Compose key in Gnome3 on Fedora 34" webm="/videos/user-docs/selecting-compose-key-in-gnome3-fedora34.webm" >}}
+{{< video label="Selecting the Compose key in Gnome3 on Fedora 34" mp4="/videos/user-docs/selecting-compose-key-in-gnome3-fedora34.mp4" >}}
 
 “Dead key sequences” and “Compose sequences” are basically the same
 thing as far as Xorg, Gtk, IBus, and Typing Booster are concerned.
@@ -2317,7 +2317,7 @@ the sequence could be completed](#5_4_5).
 ###### 5_4_5
 ## Show possible completions of compose sequences
 
-{{< video label="Show possible completions of compose sequences" webm="/videos/user-docs/show-possible-completions-of-compose-sequences.webm" >}}
+{{< video label="Show possible completions of compose sequences" mp4="/videos/user-docs/show-possible-completions-of-compose-sequences.mp4" >}}
 
 This video shows how possible completions of partially typed compose
 sequences can be displayed by typing a key bound to the command
@@ -2497,7 +2497,7 @@ English and the Greek layout!
 ###### 5_4_6
 ## Optional colour for the compose preëdit
 
-{{< video label="Optional colour for the compose preëdit" webm="/videos/user-docs/optional-color-for-the-compose-preedit.webm" >}}
+{{< video label="Optional colour for the compose preëdit" mp4="/videos/user-docs/optional-color-for-the-compose-preedit.mp4" >}}
 
 The video shows how a different colour can be chosen for the compose part of the preëdit.
 
@@ -2536,7 +2536,7 @@ To make all emoji display correctly, you need good fonts which contain all emoji
 ###### 7_1
 ### Emoji input
 
-{{< video label="Typing Emoji in English with Emoji option on" webm="/videos/user-docs/emoji-english-emoji-option-on.webm" >}}
+{{< video label="Typing Emoji in English with Emoji option on" mp4="/videos/user-docs/emoji-english-emoji-option-on.mp4" >}}
 
 When the “☑️ Unicode symbols and emoji predictions” option is on (it is
 off by default), you get emoji displayed in the candidate list
@@ -2565,7 +2565,7 @@ use emoji only occasionally.
 ###### 7_2
 ## Emoji input fuzzy matching
 
-{{< video label="Emoji input fuzzy matching" webm="/videos/user-docs/emoji-english-fuzzy-castle.webm" >}}
+{{< video label="Emoji input fuzzy matching" mp4="/videos/user-docs/emoji-english-fuzzy-castle.mp4" >}}
 
 Ibus-typing-booster tries to match the emoji names in a fuzzy way, in
 many cases you will get a match even if your input contains spelling
@@ -2579,7 +2579,7 @@ EUROPEAN CASTLE).
 ###### 7_3
 ### Emoji input using multiple keywords
 
-{{< video label="Emoji input using multiple keywords" webm="/videos/user-docs/emoji-english-multiple-keywords-castle-japanese.webm" >}}
+{{< video label="Emoji input using multiple keywords" mp4="/videos/user-docs/emoji-english-multiple-keywords-castle-japanese.mp4" >}}
 
 This video shows how to use multiple keywords to search for emoji.
 
@@ -2597,7 +2597,7 @@ CASTLE).
 ###### 7_4
 ### Looking up related emoji
 
-{{< video label="Looking up related emoji" webm="/videos/user-docs/related-emoji.webm" >}}
+{{< video label="Looking up related emoji" mp4="/videos/user-docs/related-emoji.mp4" >}}
 
 It is also possible to look up related emoji which may not have
 matched the typed text well but are related to the emoji shown because
@@ -2629,7 +2629,7 @@ typing the “Escape” key, one can go back to the original list.
 ###### 7_5_1
 #### Emoji input using German and English
 
-{{< video label="Emoji input using German and English" webm="/videos/user-docs/emoji-german-english.webm" >}}
+{{< video label="Emoji input using German and English" mp4="/videos/user-docs/emoji-german-english.mp4" >}}
 
 In this example video, Typing Booster is used with dictionaries setup for British English
 and German in the setup tool.
@@ -2645,7 +2645,7 @@ lock emoji.
 ###### 7_5_2
 #### Emoji input using Hindi and English
 
-{{< video label="Emoji input using Hindi and English" webm="/videos/user-docs/emoji-hindi-english.webm" >}}
+{{< video label="Emoji input using Hindi and English" mp4="/videos/user-docs/emoji-hindi-english.mp4" >}}
 
 This example video shows using Hindi and English to lookup emoji.
 
@@ -2676,7 +2676,7 @@ typed as this is now shown in the preëdit.
 ###### 7_5_3
 #### Emoji input using Japanese
 
-{{< video label="Emoji input using Japanese" webm="/videos/user-docs/emoji-japanese.webm" >}}
+{{< video label="Emoji input using Japanese" mp4="/videos/user-docs/emoji-japanese.mp4" >}}
 
 This video shows that emoji can be searched using Japanese keywords as
 well.
@@ -2802,13 +2802,13 @@ the tone marks, i.e. one does not need to type “nv̌jǐngchá”.
 
 {{<
 video label="Emoji input using Japanese or Chinese phonetics"
-webm="/videos/user-docs/emoji-japanese-chinese-phonetics.webm"
+mp4="/videos/user-docs/emoji-japanese-chinese-phonetics.mp4"
 >}}
 
 ###### 7_6
 ### Unicode symbol input
 
-{{< video label="Unicode symbol input" webm="/videos/user-docs/unicode-symbol-input.webm" >}}
+{{< video label="Unicode symbol input" mp4="/videos/user-docs/unicode-symbol-input.mp4" >}}
 
 This video example shows how arbitrary Unicode symbols and characters
 can be input with Typing Booster.
@@ -2842,7 +2842,7 @@ Anything in Unicode except normal letters is possible.
 ###### 7_7
 ### Unicode code point input
 
-{{< video label="Unicode code point input" webm="/videos/user-docs/unicode-code-point-input.webm" >}}
+{{< video label="Unicode code point input" mp4="/videos/user-docs/unicode-code-point-input.mp4" >}}
 
 This example video shows how the “☑️ Unicode symbols and emoji
 predictions” feature of Typing Booster can also be used to input
@@ -2874,7 +2874,7 @@ Then “20B9” is typed which matches ₹ U+20B9 INDIAN RUPEE SIGN.
 ###### 7_8
 ### Quickly toggling emoji mode on and off
 
-{{< video label="Quickly toggling emoji mode on and off" webm="/videos/user-docs/emoji-quick-toggle.webm" >}}
+{{< video label="Quickly toggling emoji mode on and off" mp4="/videos/user-docs/emoji-quick-toggle.mp4" >}}
 
 When “☑️ Unicode symbols and emoji predictions” is enabled, finding
 matching candidates can be considerably slower compared to when emoji
@@ -2928,7 +2928,7 @@ caption="Screenshot of Emoji Picker"
 >}}
 
 {{<
-video label="Emoji picker" webm="/videos/user-docs/emoji-picker.webm"
+video label="Emoji picker" mp4="/videos/user-docs/emoji-picker.mp4"
 caption="Video showing Emoji Picker"
 >}}
 
@@ -3102,7 +3102,7 @@ Good fonts to display emoji:
 
 The following video shows the above mentioned fonts used in “emoji-picker”:
 
-{{< video label="Emoji font selection in emoji-picker" webm="/videos/user-docs/emoji-font-selection-in-emoji-picker.webm" >}}
+{{< video label="Emoji font selection in emoji-picker" mp4="/videos/user-docs/emoji-font-selection-in-emoji-picker.mp4" >}}
 
 ###### 7_10_1
 #### <span style="color:red">Historic:</span> Showing emoji in colour
@@ -3133,7 +3133,7 @@ Linux distributions display nice, colourful emoji by default now.
 
 {{<
 video label="Enabling and using the Gnome on-screen keyboard"
-webm="/videos/user-docs/enabling-and-using-the-gnome-on-screen-keyboard.webm"
+mp4="/videos/user-docs/enabling-and-using-the-gnome-on-screen-keyboard.mp4"
 >}}
 
 This video shows how one can enable the Gnome on-screen keyboard and

@@ -43,7 +43,7 @@ Anish Patil anish.developer@gmail.com
 
 {{<
 video label="Demo of Typing Booster and Emoji Picker"
-webm="videos/overview-demo-setup-use-typing-booster-emoji-picker.webm"
+mp4="videos/overview-demo-setup-use-typing-booster-emoji-picker.mp4"
 >}}
 
 # Emoji Picker screenshot
