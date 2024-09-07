@@ -8,13 +8,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-07-22 23:23+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-09-07 16:00+0000\n"
+"Last-Translator: Giannis Antypas <gianni.antypas@gmail.com>\n"
+"Language-Team: Greek <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.7.2\n"
 
 #: engine/emoji_picker.py:209
 msgid "Emoji Picker"
@@ -68,7 +71,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:640
 msgid "Categories"
-msgstr ""
+msgstr "Κατηγορίες"
 
 #: engine/emoji_picker.py:641
 msgid "Unicode categories"
@@ -76,7 +79,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:642
 msgid "Keywords"
-msgstr ""
+msgstr "Λέξεις κλειδιά"
 
 #: engine/emoji_picker.py:682
 msgid "Fonts used to render this emoji:"
@@ -84,11 +87,11 @@ msgstr ""
 
 #: engine/emoji_picker.py:699
 msgid "Unicode Version:"
-msgstr ""
+msgstr "Έκδοση Unicode:"
 
 #: engine/emoji_picker.py:721 engine/emoji_picker.py:1844
 msgid "Left click to copy"
-msgstr ""
+msgstr "Αριστερό κλικ για αντιγραφή"
 
 #: engine/emoji_picker.py:724
 msgid "Long press or middle click for skin tones"
@@ -96,11 +99,11 @@ msgstr ""
 
 #: engine/emoji_picker.py:725
 msgid "Right click for info"
-msgstr ""
+msgstr "Δεξί κλικ για πληροφορίες"
 
 #: engine/emoji_picker.py:1217
 msgid "Search Results"
-msgstr ""
+msgstr "Αποτελέσματα αναζήτησης"
 
 #: engine/emoji_picker.py:1221
 msgid "Search produced empty result."
@@ -117,7 +120,7 @@ msgstr ""
 #: engine/emoji_picker.py:2078 engine/emoji_picker.py:2079
 #: engine/emoji_picker.py:2080 setup/main.py:1594
 msgid "System default"
-msgstr ""
+msgstr "Προεπιλογή συστήματος"
 
 #: engine/emoji_picker.py:2215
 msgid "Set Font"
@@ -135,7 +138,7 @@ msgstr ""
 
 #: engine/hunspell_table.py:553
 msgid "Input mode"
-msgstr ""
+msgstr "Λειτουργία εισαγωγής"
 
 #: engine/hunspell_table.py:554
 msgid "Here you can switch ibus-typing-booster on or off."
@@ -165,15 +168,15 @@ msgstr ""
 
 #: engine/hunspell_table.py:1827
 msgid "Highest priority dictionary"
-msgstr ""
+msgstr "Λεξικό υψηλότατης προτεραιότητας"
 
 #: engine/hunspell_table.py:1828
 msgid "Choose highest priority dictionary"
-msgstr ""
+msgstr "Επιλογή λεξικού υψηλότατης προτεραιότητας"
 
 #: engine/hunspell_table.py:1857
 msgid "Preedit input method"
-msgstr ""
+msgstr "Μέθοδος εισαγωγής προεπεξεργασίας"
 
 #: engine/hunspell_table.py:1858
 msgid "Switch preedit input method"
@@ -181,7 +184,7 @@ msgstr ""
 
 #: engine/hunspell_table.py:2164
 msgid "Setup"
-msgstr ""
+msgstr "Διαρρύθμιση"
 
 #: engine/hunspell_table.py:2167 setup/main.py:169
 msgid "Preferences for ibus-typing-booster"
