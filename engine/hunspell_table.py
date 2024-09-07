@@ -148,7 +148,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._unit_test = unit_test
         self._input_purpose: int = 0
         self._input_hints: int = 0
-        self._lookup_table_is_invalid = False
         self._lookup_table_hidden = False
         self._lookup_table_shows_related_candidates = False
         self._lookup_table_shows_compose_completions = False
@@ -180,6 +179,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._im_client: str = ''
 
         self._current_imes: List[str] = []
+
+        self._timeout_source_id: int = 0
+        self._candidates_delay_milliseconds: int = itb_util.variant_to_value(
+            self._gsettings.get_value('candidatesdelaymilliseconds'))
+        self._candidates_delay_milliseconds = max(
+            self._candidates_delay_milliseconds, 0)
+        self._candidates_delay_milliseconds = min(
+            self._candidates_delay_milliseconds, itb_util.UINT32_MAX)
+        LOGGER.info('self._candidates_delay_milliseconds=%s',
+                    self._candidates_delay_milliseconds)
 
         # Between some events sent to ibus like forward_key_event(),
         # delete_surrounding_text(), commit_text(), a sleep is necessary.
@@ -701,6 +710,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'debuglevel': {
                 'set': self.set_debug_level,
                 'get': self.get_debug_level},
+            'candidatesdelaymilliseconds': {
+                'set': self.set_candidates_delay_milliseconds,
+                'get': self.get_candidates_delay_milliseconds},
             'ibuseventsleepseconds': {
                 'set': self.set_ibus_event_sleep_seconds,
                 'get': self.get_ibus_event_sleep_seconds},
@@ -867,7 +879,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._transliterated_strings[ime] = ''
         self.is_lookup_table_enabled_by_tab = False
         self.is_lookup_table_enabled_by_min_char_complete = False
-        self._lookup_table_is_invalid = False
+        self._timeout_source_id = 0
         self._lookup_table_hidden = False
         self._lookup_table_shows_related_candidates = False
         self._lookup_table_shows_compose_completions = False
@@ -2526,13 +2538,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         return
 
     def _update_lookup_table_and_aux(self) -> None:
-        '''Update the lookup table and the auxiliary text'''
+        '''Update the lookup table and the auxiliary text
+
+        :return: None, always, which is falsy and should work
+                 the same as `return False` to remove the source
+                 added by Glib.timeout_add() (GLib.SOURCE_REMOVE is False)
+        '''
         self._update_aux()
         # auto select best candidate if the option
         # self._auto_select_candidate is on:
         self._is_candidate_auto_selected = False
-        if (self._lookup_table_is_invalid
-            and self.get_lookup_table().get_number_of_candidates()
+        if (self.get_lookup_table().get_number_of_candidates()
             and not self._lookup_table.cursor_visible):
             if self._auto_select_candidate == 2:
                 # auto select: Yes, always
@@ -2561,10 +2577,25 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     self._lookup_table.set_cursor_visible(True)
                     self._is_candidate_auto_selected = True
         self._update_lookup_table()
-        self._lookup_table_is_invalid = False
+        self._timeout_source_id = 0
 
     def _update_candidates_and_lookup_table_and_aux(self) -> None:
-        '''Update the candidates, the lookup table and the auxiliary text'''
+        '''Update the candidates, the lookup table and the auxiliary text
+
+        :return: None, always, which is falsy and should work
+                 the same as `return False` to remove the source
+                 added by Glib.timeout_add() (GLib.SOURCE_REMOVE is False)
+        '''
+        if self._label_busy and self._label_busy_string.strip():
+            # Show a label in the auxiliary text to indicate that the
+            # lookup table is being updated (by default an hourglass
+            # with moving sand):
+            super().update_auxiliary_text(
+                IBus.Text.new_from_string(
+                    self._label_busy_string.strip()), True)
+        else:
+            super().update_auxiliary_text(
+                IBus.Text.new_from_string(''), False)
         self._update_candidates()
         self._update_lookup_table_and_aux()
         if DEBUG_LEVEL < 1:
@@ -2627,8 +2658,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if not phrase_candidates:
             self._update_ui_empty_input()
             return
-        self._lookup_table_is_invalid = True
-        # Don’t show the lookup table if it is invalid anway
         self.get_lookup_table().clear()
         self.get_lookup_table().set_cursor_visible(False)
         self.hide_lookup_table()
@@ -2652,10 +2681,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._candidates_case_mode_orig = self._candidates.copy()
         if self._current_case_mode != 'orig':
             self._case_mode_change(mode=self._current_case_mode)
+        self._update_preedit()
+        if self._timeout_source_id:
+            GLib.source_remove(self._timeout_source_id)
+            self._timeout_source_id = 0
         if self._unit_test:
             self._update_lookup_table_and_aux()
-        else:
-            GLib.idle_add(self._update_lookup_table_and_aux)
+            return
+        self._timeout_source_id = GLib.timeout_add(
+            self._candidates_delay_milliseconds,
+            self._update_lookup_table_and_aux)
 
     def _update_ui(self) -> None:
         '''Update User Interface'''
@@ -2682,29 +2717,28 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._update_preedit()
             return
         self._lookup_table_shows_related_candidates = False
-        if self._lookup_table_is_invalid:
-            self._update_preedit()
-            return
-        self._lookup_table_is_invalid = True
-        # Don’t show the lookup table if it is invalid anway
+        # See: https://github.com/mike-fabian/ibus-typing-booster/issues/474
+        # Nevertheless update the preedit unconditionally here, even though
+        # it is updated again in _update_lookup_table(). Because when
+        # self._candidates_delay_milliseconds is big and thus
+        # updating the candidates is delayed by a long time, it is weird
+        # when the preedit does not update until the lookup table appears.
+        self._update_preedit()
         self.get_lookup_table().clear()
         self.get_lookup_table().set_cursor_visible(False)
         self.hide_lookup_table()
         self._lookup_table_hidden = True
-        if self._label_busy and self._label_busy_string.strip():
-            # Show a label in the auxiliary text to indicate that the
-            # lookup table is being updated (by default an hourglass
-            # with moving sand):
-            super().update_auxiliary_text(
-                IBus.Text.new_from_string(
-                    self._label_busy_string.strip()), True)
-        else:
-            super().update_auxiliary_text(
-                IBus.Text.new_from_string(''), False)
+        super().update_auxiliary_text(
+            IBus.Text.new_from_string(''), False)
+        if self._timeout_source_id:
+            GLib.source_remove(self._timeout_source_id)
+            self._timeout_source_id = 0
         if self._unit_test:
             self._update_candidates_and_lookup_table_and_aux()
-        else:
-            GLib.idle_add(self._update_candidates_and_lookup_table_and_aux)
+            return
+        self._timeout_source_id = GLib.timeout_add(
+            self._candidates_delay_milliseconds,
+            self._update_candidates_and_lookup_table_and_aux)
 
     def _lookup_related_candidates(self) -> None:
         '''Lookup related (similar) emoji or related words (synonyms,
@@ -5031,6 +5065,33 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
     def get_debug_level(self) -> int:
         '''Returns the current debug level'''
         return self._debug_level
+
+    def set_candidates_delay_milliseconds(
+            self,
+            milliseconds: Union[int, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the delay of the candidates in milliseconds
+
+        :param milliseconds:     delay of the candidates in milliseconds
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.debug(
+            '(%s, update_gsettings = %s)', milliseconds, update_gsettings)
+        if milliseconds == self._candidates_delay_milliseconds:
+            return
+        self._candidates_delay_milliseconds = milliseconds
+        if update_gsettings:
+            self._gsettings.set_value(
+                'candidatesdelaymilliseconds',
+                GLib.Variant.new_uint32(self._candidates_delay_milliseconds))
+
+    def get_candidates_delay_milliseconds(self) -> float:
+        '''Returns the current value of the candidates delay in milliseconds'''
+        return self._candidates_delay_milliseconds
 
     def set_ibus_event_sleep_seconds(
             self,

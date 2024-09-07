@@ -417,6 +417,15 @@
         log file and debug information may also be shown graphically.
       </description>
     </key>
+    <key name="candidatesdelaymilliseconds" type="u">
+      <default>200</default>
+      <summary>Candidates delay</summary>
+      <description>
+        Delay updating the candidates and showing a lookup table by
+        the specified time in milliseconds after the idle state is
+        reached.
+      </description>
+    </key>
     <key name="ibuseventsleepseconds" type="d">
       <default>0.1</default>
       <summary>Sleep time between some ibus events</summary>

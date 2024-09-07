@@ -1617,6 +1617,43 @@ class SetupUI(Gtk.Window): # type: ignore
             self._lookup_table_orientation_combobox,
             1, _appearance_grid_row, 1, 1)
 
+        self._candidates_delay_milliseconds_label = Gtk.Label()
+        self._candidates_delay_milliseconds_label.set_text(
+            # Translators: Here one can choose how many milliseconds
+            # the system needs to be idle after pressing a key before
+            # candidates are displayed
+            _('Candidate window delay in milliseconds:'))
+        self._candidates_delay_milliseconds_label.set_tooltip_text(
+            # Translators: A tooltip explaining the meaning of the
+            # “Candidate window delay in milliseconds:” option.
+            _('How long to wait after the last key press before '
+              'candidates are displayed.'))
+        self._candidates_delay_milliseconds_label.set_xalign(0)
+        self._candidates_delay_milliseconds_adjustment = Gtk.SpinButton()
+        self._candidates_delay_milliseconds_adjustment.set_visible(True)
+        self._candidates_delay_milliseconds_adjustment.set_can_focus(True)
+        self._candidates_delay_milliseconds_adjustment.set_increments(
+            10.0, 100.0)
+        self._candidates_delay_milliseconds_adjustment.set_range(
+            0.0, float(itb_util.UINT32_MAX))
+        self._candidates_delay_milliseconds = itb_util.variant_to_value(
+            self._gsettings.get_value('candidatesdelaymilliseconds'))
+        if self._candidates_delay_milliseconds:
+            self._candidates_delay_milliseconds_adjustment.set_value(
+                int(self._candidates_delay_milliseconds))
+        else:
+            self._candidates_delay_milliseconds_adjustment.set_value(200.0)
+        self._candidates_delay_milliseconds_adjustment.connect(
+            'value-changed',
+            self._on_candidates_delay_milliseconds_adjustment_value_changed)
+        _appearance_grid_row += 1
+        self._appearance_grid.attach(
+            self._candidates_delay_milliseconds_label,
+            0, _appearance_grid_row, 1, 1)
+        self._appearance_grid.attach(
+            self._candidates_delay_milliseconds_adjustment,
+            1, _appearance_grid_row, 1, 1)
+
         self._preedit_underline_label = Gtk.Label()
         self._preedit_underline_label.set_text(
             # Translators: A combobox to choose the style of
@@ -2776,6 +2813,8 @@ class SetupUI(Gtk.Window): # type: ignore
             self.set_remember_last_used_preedit_ime,
             'rememberinputmode': self.set_remember_input_mode,
             'pagesize': self.set_page_size,
+            'candidatesdelaymilliseconds':
+            self.set_candidates_delay_milliseconds,
             'lookuptableorientation': self.set_lookup_table_orientation,
             'preeditunderline': self.set_preedit_underline,
             'preeditstyleonlywhenlookup':
@@ -3266,6 +3305,15 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         self.set_page_size(
             self._page_size_adjustment.get_value(), update_gsettings=True)
+
+    def _on_candidates_delay_milliseconds_adjustment_value_changed(
+            self, _widget: Gtk.SpinButton) -> None:
+        '''
+        The delay of the candidates has been changed.
+        '''
+        self.set_candidates_delay_milliseconds(
+            self._candidates_delay_milliseconds_adjustment.get_value(),
+            update_gsettings=True)
 
     def _on_lookup_table_orientation_combobox_changed(
             self, widget: Gtk.ComboBox) -> None:
@@ -5989,6 +6037,34 @@ class SetupUI(Gtk.Window): # type: ignore
                     GLib.Variant.new_int32(page_size))
             else:
                 self._page_size_adjustment.set_value(int(page_size))
+
+    def set_candidates_delay_milliseconds(
+            self,
+            milliseconds: Union[int, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the delay of the candidates in milliseconds
+
+        :param milliseconds: delay of the candidates in milliseconds
+                             0 <= milliseconds <= itb_util.UINT32_MAX
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', milliseconds, update_gsettings)
+        if milliseconds == self._candidates_delay_milliseconds:
+            return
+        if 0 <= milliseconds <= itb_util.UINT32_MAX:
+            self._candidates_delay_milliseconds = milliseconds
+            if update_gsettings:
+                self._gsettings.set_value(
+                    'candidatesdelaymilliseconds',
+                    GLib.Variant.new_uint32(milliseconds))
+            else:
+                self._candidates_delay_milliseconds_adjustment.set_value(
+                    int(milliseconds))
 
     def set_lookup_table_orientation(
             self,

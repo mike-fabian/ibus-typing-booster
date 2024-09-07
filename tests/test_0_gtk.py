@@ -97,6 +97,7 @@ class SimpleGtkTestCase(unittest.TestCase):
     _orig_inputmode: bool = True
     _orig_inline_completion: int = 0
     _orig_auto_select_candidate: int = 0
+    _orig_candidates_delay_milliseconds: int = 0
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -110,6 +111,8 @@ class SimpleGtkTestCase(unittest.TestCase):
         cls._orig_inline_completion = cls._gsettings.get_int('inlinecompletion')
         cls._orig_auto_select_candidate = cls._gsettings.get_int(
             'autoselectcandidate')
+        cls._orig_candidates_delay_milliseconds = cls._gsettings.get_int(
+            'candidatesdelaymilliseconds')
         signums: List[Optional[signal.Signals]] = [
             getattr(signal, s, None) for s in 'SIGINT SIGTERM SIGHUP'.split()]
         for signum in filter(None, signums):
@@ -127,6 +130,8 @@ class SimpleGtkTestCase(unittest.TestCase):
             cls._gsettings.set_int('inlinecompletion', cls._orig_inline_completion)
             cls._gsettings.set_int('autoselectcandidate',
                                    cls._orig_auto_select_candidate)
+            cls._gsettings.set_int('candidatesdelaymilliseconds',
+                                   cls._orig_candidates_delay_milliseconds)
 
     @classmethod
     def signal_handler(cls, user_data: Any) -> None:
@@ -151,6 +156,7 @@ class SimpleGtkTestCase(unittest.TestCase):
             self._gsettings.set_boolean('inputmode', True)
             self._gsettings.set_int('inlinecompletion', 0)
             self._gsettings.set_int('autoselectcandidate', 0)
+            self._gsettings.set_int('candidatesdelaymilliseconds', 0)
 
     def register_ibus_engine(self) -> bool:
         self.__bus = IBus.Bus()

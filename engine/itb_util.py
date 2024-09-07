@@ -137,8 +137,15 @@ MAXIMUM_NUMBER_OF_INPUT_METHODS = 10
 
 NORMALIZATION_FORM_INTERNAL: Literal['NFC', 'NFD', 'NFKC', 'NFKD'] = 'NFD'
 
+# maximum possible value for the Gsettings.get_int32()
+INT32_MAX = 2**31-1
+# maximum possible value for the Gsettings.get_uint32()
+UINT32_MAX = 2**32-1
 # maximum possible value for the INTEGER datatype in SQLite3
-SQLITE_MAXINT = 2**63-1
+# and for Gsettings.get_int64()
+INT64_MAX = 2**63-1
+# maximum possible value for the Gsettings.get_uint64()
+UINT64_MAX = 2**64-1
 # user frequency used for a user defined shortcut
 SHORTCUT_USER_FREQ = 1000000
 
@@ -3354,6 +3361,12 @@ def variant_to_value(variant: GLib.Variant) -> Any:
         return variant.get_string()
     if type_string == 'i':
         return variant.get_int32()
+    if type_string == 'u':
+        return variant.get_uint32()
+    if type_string == 'x':
+        return variant.get_int64()
+    if type_string == 't':
+        return variant.get_uint64()
     if type_string == 'd':
         return variant.get_double()
     if type_string == 'b':
