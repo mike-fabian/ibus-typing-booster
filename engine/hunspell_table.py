@@ -3013,7 +3013,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             input_phrase = self._transliterated_strings[
                 self.get_current_imes()[0]]
         # commit always in NFC:
-        commit_phrase = unicodedata.normalize('NFC', commit_phrase)
+        commit_phrase = itb_util.normalize_nfc_and_composition_exclusions(
+            commit_phrase)
         if not commit_phrase.isspace():
             # If the commit space contains only white space
             # leave self._new_sentence as it is!

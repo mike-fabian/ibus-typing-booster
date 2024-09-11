@@ -3096,6 +3096,125 @@ def remove_accents(text: str, keep: str = '') -> str:
             if unicodedata.category(x) != 'Mn']).translate(TRANS_TABLE)
     return unicodedata.normalize(NORMALIZATION_FORM_INTERNAL, result)
 
+COMPOSITION_EXCLUSIONS = {
+    # See https://www.unicode.org/Public/16.0.0/ucd/CompositionExclusions.txt
+    '\u0915\u093C': '\u0958', # DEVANAGARI LETTER QA
+    '\u0916\u093C': '\u0959', # DEVANAGARI LETTER KHHA
+    '\u0917\u093C': '\u095A', # DEVANAGARI LETTER GHHA
+    '\u091C\u093C': '\u095B', # DEVANAGARI LETTER ZA
+    '\u0921\u093C': '\u095C', # DEVANAGARI LETTER DDDHA
+    '\u0922\u093C': '\u095D', # DEVANAGARI LETTER RHA
+    '\u092B\u093C': '\u095E', # DEVANAGARI LETTER FA
+    '\u092F\u093C': '\u095F', # DEVANAGARI LETTER YYA
+    '\u09A1\u09BC': '\u09DC', # BENGALI LETTER RRA
+    '\u09A2\u09BC': '\u09DD', # BENGALI LETTER RHA
+    '\u09AF\u09BC': '\u09DF', # BENGALI LETTER YYA
+    '\u0A32\u0A3C': '\u0A33', #  GURMUKHI LETTER LLA
+    '\u0A38\u0A3C': '\u0A36', #  GURMUKHI LETTER SHA
+    '\u0A16\u0A3C': '\u0A59', #  GURMUKHI LETTER KHHA
+    '\u0A17\u0A3C': '\u0A5A', #  GURMUKHI LETTER GHHA
+    '\u0A1C\u0A3C': '\u0A5B', #  GURMUKHI LETTER ZA
+    '\u0A2B\u0A3C': '\u0A5E', #  GURMUKHI LETTER FA
+    '\u0B21\u0B3C': '\u0B5C', #  ORIYA LETTER RRA
+    '\u0B22\u0B3C': '\u0B5D', #  ORIYA LETTER RHA
+    '\u0F42\u0FB7': '\u0F43', #  TIBETAN LETTER GHA
+    '\u0F4C\u0FB7': '\u0F4D', #  TIBETAN LETTER DDHA
+    '\u0F51\u0FB7': '\u0F52', #  TIBETAN LETTER DHA
+    '\u0F56\u0FB7': '\u0F57', #  TIBETAN LETTER BHA
+    '\u0F5B\u0FB7': '\u0F5C', #  TIBETAN LETTER DZHA
+    '\u0F40\u0FB5': '\u0F69', #  TIBETAN LETTER KSSA
+    '\u0FB2\u0F80': '\u0F76', #  TIBETAN VOWEL SIGN VOCALIC R
+    '\u0FB3\u0F80': '\u0F78', #  TIBETAN VOWEL SIGN VOCALIC L
+    '\u0F92\u0FB7': '\u0F93', #  TIBETAN SUBJOINED LETTER GHA
+    '\u0F9C\u0FB7': '\u0F9D', #  TIBETAN SUBJOINED LETTER DDHA
+    '\u0FA1\u0FB7': '\u0FA2', #  TIBETAN SUBJOINED LETTER DHA
+    '\u0FA6\u0FB7': '\u0FA7', #  TIBETAN SUBJOINED LETTER BHA
+    '\u0FAB\u0FB7': '\u0FAC', #  TIBETAN SUBJOINED LETTER DZHA
+    '\u0F90\u0FB5': '\u0FB9', #  TIBETAN SUBJOINED LETTER KSSA
+    '\u05D9\u05B4': '\uFB1D', #  HEBREW LETTER YOD WITH HIRIQ
+    '\u05F2\u05B7': '\uFB1F', #  HEBREW LIGATURE YIDDISH YOD YOD PATAH
+    '\u05E9\u05C1': '\uFB2A', #  HEBREW LETTER SHIN WITH SHIN DOT
+    '\u05E9\u05C2': '\uFB2B', #  HEBREW LETTER SHIN WITH SIN DOT
+    '\u05E9\u05BC\u05C1': '\uFB2C', #  HEBREW LETTER SHIN WITH DAGESH AND SHIN DOT
+    '\u05E9\u05BC\u05C2': '\uFB2D', #  HEBREW LETTER SHIN WITH DAGESH AND SIN DOT
+    '\u05D0\u05B7': '\uFB2E', #  HEBREW LETTER ALEF WITH PATAH
+    '\u05D0\u05B8': '\uFB2F', #  HEBREW LETTER ALEF WITH QAMATS
+    '\u05D0\u05BC': '\uFB30', #  HEBREW LETTER ALEF WITH MAPIQ
+    '\u05D1\u05BC': '\uFB31', #  HEBREW LETTER BET WITH DAGESH
+    '\u05D2\u05BC': '\uFB32', #  HEBREW LETTER GIMEL WITH DAGESH
+    '\u05D3\u05BC': '\uFB33', #  HEBREW LETTER DALET WITH DAGESH
+    '\u05D4\u05BC': '\uFB34', #  HEBREW LETTER HE WITH MAPIQ
+    '\u05D5\u05BC': '\uFB35', #  HEBREW LETTER VAV WITH DAGESH
+    '\u05D6\u05BC': '\uFB36', #  HEBREW LETTER ZAYIN WITH DAGESH
+    '\u05D8\u05BC': '\uFB38', #  HEBREW LETTER TET WITH DAGESH
+    '\u05D9\u05BC': '\uFB39', #  HEBREW LETTER YOD WITH DAGESH
+    '\u05DA\u05BC': '\uFB3A', #  HEBREW LETTER FINAL KAF WITH DAGESH
+    '\u05DB\u05BC': '\uFB3B', #  HEBREW LETTER KAF WITH DAGESH
+    '\u05DC\u05BC': '\uFB3C', #  HEBREW LETTER LAMED WITH DAGESH
+    '\u05DE\u05BC': '\uFB3E', #  HEBREW LETTER MEM WITH DAGESH
+    '\u05E0\u05BC': '\uFB40', #  HEBREW LETTER NUN WITH DAGESH
+    '\u05E1\u05BC': '\uFB41', #  HEBREW LETTER SAMEKH WITH DAGESH
+    '\u05E3\u05BC': '\uFB43', #  HEBREW LETTER FINAL PE WITH DAGESH
+    '\u05E4\u05BC': '\uFB44', #  HEBREW LETTER PE WITH DAGESH
+    '\u05E6\u05BC': '\uFB46', #  HEBREW LETTER TSADI WITH DAGESH
+    '\u05E7\u05BC': '\uFB47', #  HEBREW LETTER QOF WITH DAGESH
+    '\u05E8\u05BC': '\uFB48', #  HEBREW LETTER RESH WITH DAGESH
+    '\u05E9\u05BC': '\uFB49', #  HEBREW LETTER SHIN WITH DAGESH
+    '\u05EA\u05BC': '\uFB4A', #  HEBREW LETTER TAV WITH DAGESH
+    '\u05D5\u05B9': '\uFB4B', #  HEBREW LETTER VAV WITH HOLAM
+    '\u05D1\u05BF': '\uFB4C', #  HEBREW LETTER BET WITH RAFE
+    '\u05DB\u05BF': '\uFB4D', #  HEBREW LETTER KAF WITH RAFE
+    '\u05E4\u05BF': '\uFB4E', #  HEBREW LETTER PE WITH RAFE
+    '\u2ADD\u0338': '\u2ADC', #  FORKING
+    '\u1D15\u0045': '\u1D15E',   #  MUSICAL SYMBOL HALF NOTE
+    '\u1D15\u0046': '\u1D15F',   #  MUSICAL SYMBOL QUARTER NOTE
+    '\u1D16\u0030': '\u1D160',   #  MUSICAL SYMBOL EIGHTH NOTE
+    '\u1D16\u0031': '\u1D161',   #  MUSICAL SYMBOL SIXTEENTH NOTE
+    '\u1D16\u0032': '\u1D162',   #  MUSICAL SYMBOL THIRTY-SECOND NOTE
+    '\u1D16\u0033': '\u1D163',   #  MUSICAL SYMBOL SIXTY-FOURTH NOTE
+    '\u1D16\u0034': '\u1D164',   #  MUSICAL SYMBOL ONE HUNDRED TWENTY-EIGHTH NOTE
+    '\u1D1B\u0042': '\u1D1BB',   #  MUSICAL SYMBOL MINIMA
+    '\u1D1B\u0043': '\u1D1BC',   #  MUSICAL SYMBOL MINIMA BLACK
+    '\u1D1B\u0044': '\u1D1BD',   #  MUSICAL SYMBOL SEMIMINIMA WHITE
+    '\u1D1B\u0045': '\u1D1BE',   #  MUSICAL SYMBOL SEMIMINIMA BLACK
+    '\u1D1B\u0046': '\u1D1BF',   #  MUSICAL SYMBOL FUSA WHITE
+    '\u1D1C\u0030': '\u1D1C0',   #  MUSICAL SYMBOL FUSA BLACK Should be complete
+    # for Unicode 16.0.0, add further exclusions if needed for later
+    # Unicode versions.
+}
+
+# Compile a regex that matches any of the keys in COMPOSITION_EXCLUSIONS
+COMPOSITION_EXCLUSION_REGEX = re.compile(
+    '|'.join(map(re.escape, COMPOSITION_EXCLUSIONS.keys())))
+
+def normalize_nfc_and_composition_exclusions(text: str) -> str:
+    # pylint: disable=line-too-long
+    '''
+    Normalize to NFC **and** also recompose characters listed as
+    composition exclusions.
+
+    :param text: The text to normalize
+    :return: The normalized text
+
+    Examples:
+
+    >>> normalize_nfc_and_composition_exclusions('\u09a1\u09bc')
+    '\u09dc'
+
+    >>> normalize_nfc_and_composition_exclusions('gr\u0075\u0308n \u09a1\u09bc \u09a2\u09bc \u09af\u09bc \u09a1')
+    'gr\u00FCn \u09dc \u09dd \u09df \u09a1'
+    '''
+    # pylint: enable=line-too-long
+    text = unicodedata.normalize('NFC', text)
+
+    # openSUSE Leap 15.4 still has only Python 3.6.
+    # Cannot use the nicer type hint
+    # def replace_exclusions(match: re.Match[str]) -> str:
+    def replace_exclusions(match: Any) -> str:
+        return COMPOSITION_EXCLUSIONS[match.group(0)]
+
+    return COMPOSITION_EXCLUSION_REGEX.sub(replace_exclusions, text)
+
 def is_right_to_left_messages() -> bool:
     '''
     Check whether the effective LC_MESSAGES locale points to a languages

@@ -2808,6 +2808,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'ئ ')
         self.engine.mock_committed_text = ''
 
+        # <Multi_key> <U093C> <U0915> : "क़" U0958 # DEVANAGARI LETTER QA
         self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '·')
         self.engine.do_process_key_event(0x0100093C, 0, 0)
@@ -2821,8 +2822,12 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, 'क़')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
+        # On commit the text is not only converted to NFC but also
+        # recomposes the composition exclusions
+        # See: https://github.com/mike-fabian/ibus-typing-booster/issues/531
+        # https://www.unicode.org/Public/16.0.0/ucd/CompositionExclusions.txt
         self.assertEqual(self.engine.mock_committed_text,
-                         '\u0915\u093C ')
+                         '\u0958 ')
         self.engine.mock_committed_text = ''
 
     def test_compose_combining_chars_in_preedit_representation(self) -> None:
