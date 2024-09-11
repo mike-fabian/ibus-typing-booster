@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 11 Sep 2024 Release 2.25.16
+* When committing, normalize to NFC **and** recompose the composition exclusions (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/531)
+* Update the emoji data files to the to version from the final Unicode 16.0.0 release 2024-09-10
+* Update UnicodeData.txt to the Unicode 16.0.0 release 2024-09-10
+* Update emoji annotations from CLDR
+* Translation update from Weblate (New: el 4.9%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 25 Aug 2024 Release 2.25.15
 * Also catch ValueError exception when trying to import nltk (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/527)
 * Translation update from Weblate (ru 25.1%)
