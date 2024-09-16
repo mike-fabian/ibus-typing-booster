@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-07-22 23:23+0200\n"
+"POT-Creation-Date: 2024-09-12 01:29+0200\n"
 "PO-Revision-Date: 2024-02-11 13:44+0000\n"
 "Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
 "memory@weblate.org>\n"
@@ -24,31 +24,31 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 5.3.1\n"
 
-#: engine/emoji_picker.py:209
+#: engine/emoji_picker.py:210
 msgid "Emoji Picker"
 msgstr "Wybieranie emoji"
 
-#: engine/emoji_picker.py:322
+#: engine/emoji_picker.py:323
 msgid "Clear recently used"
 msgstr "Wyczyść ostatnio używane"
 
-#: engine/emoji_picker.py:328 setup/main.py:192
+#: engine/emoji_picker.py:329 setup/main.py:192
 msgid "About"
 msgstr "O programie"
 
-#: engine/emoji_picker.py:332
+#: engine/emoji_picker.py:333
 msgid "Quit"
 msgstr "Zakończ"
 
-#: engine/emoji_picker.py:341
+#: engine/emoji_picker.py:342
 msgid "Search for emoji"
 msgstr "Wyszukaj emoji"
 
-#: engine/emoji_picker.py:353
+#: engine/emoji_picker.py:354
 msgid "Set the font to display emoji"
 msgstr "Ustaw czcionkę do wyświetlania emoji"
 
-#: engine/emoji_picker.py:361
+#: engine/emoji_picker.py:362
 msgid "Set font size"
 msgstr "Ustaw rozmiar czcionki"
 
@@ -60,11 +60,11 @@ msgstr "Ustaw rozmiar czcionki"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:382
+#: engine/emoji_picker.py:383
 msgid "Fallback"
 msgstr "Używanie czcionek zapasowych"
 
-#: engine/emoji_picker.py:384
+#: engine/emoji_picker.py:385
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -72,66 +72,66 @@ msgstr ""
 "Czy używać czcionek zapasowych dla emoji lub części sekwencji emoji, których "
 "nie można wyświetlić za pomocą wybranej czcionki."
 
-#: engine/emoji_picker.py:460
+#: engine/emoji_picker.py:461
 msgid "Recently used"
 msgstr "Ostatnio używane"
 
-#: engine/emoji_picker.py:640
+#: engine/emoji_picker.py:641
 msgid "Categories"
 msgstr "Kategorie"
 
-#: engine/emoji_picker.py:641
+#: engine/emoji_picker.py:642
 msgid "Unicode categories"
 msgstr "Kategorie unikodu"
 
-#: engine/emoji_picker.py:642
+#: engine/emoji_picker.py:643
 msgid "Keywords"
 msgstr "Słowa kluczowe"
 
-#: engine/emoji_picker.py:682
+#: engine/emoji_picker.py:683
 msgid "Fonts used to render this emoji:"
 msgstr "Czcionki używane do wyświetlenia tej emoji:"
 
-#: engine/emoji_picker.py:699
+#: engine/emoji_picker.py:700
 msgid "Unicode Version:"
 msgstr "Wersja unikodu:"
 
-#: engine/emoji_picker.py:721 engine/emoji_picker.py:1844
+#: engine/emoji_picker.py:722 engine/emoji_picker.py:1845
 msgid "Left click to copy"
 msgstr "Kliknięcie lewym przyciskiem myszy skopiuje"
 
-#: engine/emoji_picker.py:724
+#: engine/emoji_picker.py:725
 msgid "Long press or middle click for skin tones"
 msgstr ""
 "Długie przyciśnięcie lub kliknięcie środkowym przyciskiem myszy wyświetli "
 "kolory skóry"
 
-#: engine/emoji_picker.py:725
+#: engine/emoji_picker.py:726
 msgid "Right click for info"
 msgstr "Kliknięcie prawym przyciskiem myszy wyświetli informacje"
 
-#: engine/emoji_picker.py:1217
+#: engine/emoji_picker.py:1218
 msgid "Search Results"
 msgstr "Wyniki wyszukiwania"
 
-#: engine/emoji_picker.py:1221
+#: engine/emoji_picker.py:1222
 msgid "Search produced empty result."
 msgstr "Brak wyników wyszukiwania."
 
-#: engine/emoji_picker.py:1505 engine/emoji_picker.py:1632
+#: engine/emoji_picker.py:1506 engine/emoji_picker.py:1633
 msgid "Copied to clipboard!"
 msgstr "Skopiowano do schowka."
 
-#: engine/emoji_picker.py:1956
+#: engine/emoji_picker.py:1957
 msgid "Lookup on emojipedia"
 msgstr "Wyszukaj na Emojipedii"
 
-#: engine/emoji_picker.py:2078 engine/emoji_picker.py:2079
-#: engine/emoji_picker.py:2080 setup/main.py:1594
+#: engine/emoji_picker.py:2079 engine/emoji_picker.py:2080
+#: engine/emoji_picker.py:2081 setup/main.py:1594
 msgid "System default"
 msgstr "Domyślne systemu"
 
-#: engine/emoji_picker.py:2215
+#: engine/emoji_picker.py:2216
 msgid "Set Font"
 msgstr "Ustaw czcionkę"
 
@@ -199,34 +199,34 @@ msgstr "Ustawienia"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferencje dla ibus-typing-booster"
 
-#: engine/hunspell_table.py:5347
+#: engine/hunspell_table.py:5348
 msgid "Failed to import Google speech-to-text."
 msgstr "Zaimportowanie mechanizmu mowy-na-tekst Google się nie powiodło."
 
-#: engine/hunspell_table.py:5350
+#: engine/hunspell_table.py:5351
 msgid "Failed to import pyaudio."
 msgstr "Zaimportowanie pyaudio się nie powiodło."
 
-#: engine/hunspell_table.py:5353
+#: engine/hunspell_table.py:5354
 msgid "Failed to import queue."
 msgstr "Zaimportowanie kolejki się nie powiodło."
 
-#: engine/hunspell_table.py:5358
+#: engine/hunspell_table.py:5359
 msgid "No supported language for speech recognition."
 msgstr "Brak obsługiwanych języków do rozpoznawania mowy."
 
-#: engine/hunspell_table.py:5362
+#: engine/hunspell_table.py:5363
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Nie odnaleziono pliku „%s” z danymi uwierzytelniania aplikacji Google."
 
-#: engine/hunspell_table.py:5375
+#: engine/hunspell_table.py:5376
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Zainicjowanie mechanizmu mowy-na-tekst Google się nie powiodło. Więcej "
 "informacji znajduje się w pliku debug.log."
 
-#: engine/hunspell_table.py:5483
+#: engine/hunspell_table.py:5484
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 "Błąd mechanizmu mowy-na-tekst Google. Więcej informacji znajduje się w pliku "
@@ -317,27 +317,27 @@ msgstr "regionalne"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Inne, pozostałe, różne"
 
-#: engine/itb_util.py:4278 engine/itb_util.py:5005
+#: engine/itb_util.py:4397 engine/itb_util.py:5124
 msgid "File not found"
 msgstr "Nie odnaleziono pliku"
 
-#: engine/itb_util.py:4282 engine/itb_util.py:5009
+#: engine/itb_util.py:4401 engine/itb_util.py:5128
 msgid "Permission error"
 msgstr "Błąd uprawnień"
 
-#: engine/itb_util.py:4286 engine/itb_util.py:5013
+#: engine/itb_util.py:4405 engine/itb_util.py:5132
 msgid "Unicode decoding error"
 msgstr "Błąd podczas dekodowania unikodu"
 
-#: engine/itb_util.py:4290 engine/itb_util.py:5017
+#: engine/itb_util.py:4409 engine/itb_util.py:5136
 msgid "Unknown error"
 msgstr "Nieznany błąd"
 
-#: engine/itb_util.py:4983
+#: engine/itb_util.py:5102
 msgid "Native Keyboard"
 msgstr "Natywna klawiatura"
 
-#: engine/itb_util.py:4985
+#: engine/itb_util.py:5104
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -350,11 +350,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5640
+#: engine/itb_util.py:5759
 msgid "Key input"
 msgstr "Wprowadzanie klawisza"
 
-#: engine/itb_util.py:5646
+#: engine/itb_util.py:5765
 msgid "Cancel"
 msgstr "Anuluj"
 
@@ -362,29 +362,29 @@ msgstr "Anuluj"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5653
+#: engine/itb_util.py:5772
 msgid "Please press a key (or a key combination)"
 msgstr "Proszę nacisnąć klawisz (lub kombinację klawiszy)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5658
+#: engine/itb_util.py:5777
 msgid "The dialog will be closed when the key is released"
 msgstr "Okno dialogowe zostanie zamknięte po zwolnieniu klawisza"
 
-#: engine/itb_util.py:5697
+#: engine/itb_util.py:5816
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Przyspieszająca pisanie metoda wprowadzania, działająca na podstawie "
 "uzupełniania."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5706
+#: engine/itb_util.py:5825
 msgid "translator-credits"
 msgstr "Piotr Drąg <piotrdrag@gmail.com>, 2016-2023"
 
-#: engine/itb_util.py:5714
+#: engine/itb_util.py:5833
 msgid "Online documentation:"
 msgstr "Dokumentacja online:"
 
