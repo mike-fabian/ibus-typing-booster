@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 # vim:set et sts=4 sw=4
 #
 # emoji-picker - An emoji selection tool
