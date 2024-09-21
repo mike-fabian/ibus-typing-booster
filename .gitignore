@@ -5,6 +5,8 @@ Makefile.in
 /config.log
 /config.rpath
 /config.status
+/config.guess
+/config.sub
 /configure
 /configure~
 /ibus-typing-booster.spec
