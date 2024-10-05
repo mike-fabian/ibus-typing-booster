@@ -21,6 +21,7 @@
 extradata_DATA = \
 	emoji.json \
 	UnicodeData.txt \
+	DerivedAge.txt \
 	emoji-data.txt \
 	emoji-variation-sequences.txt \
 	emoji-zwj-sequences.txt \

@@ -447,6 +447,7 @@ class EmojiMatcher():
             for language in itb_util.expand_languages(self._languages):
                 self._load_cldr_annotation_data(language, 'annotations')
                 self._load_cldr_annotation_data(language, 'annotationsDerived')
+        self._load_derived_age()
 
     def get_languages(self) -> List[str]:
         # pylint: disable=line-too-long
@@ -601,6 +602,58 @@ class EmojiMatcher():
         else:
             self._emoji_dict[emoji_dict_key][values_key] = values
 
+    def _load_derived_age(self) -> None:
+        '''Loads in which Unicode versions code points were added'''
+        dirnames = (USER_DATADIR, DATADIR,
+                    # On Fedora, the “unicode-ucd” package has the
+                    # DerivedAge.txt file here:
+                    '/usr/share/unicode/ucd',
+                    # On Ubuntu 20.04.3 it is here:
+                    '/usr/share/unicode/',)
+        basenames = ('DerivedAge.txt',)
+        (path, open_function) = _find_path_and_open_function(
+            dirnames, basenames)
+        if not path:
+            LOGGER.warning(
+                'could not find "%s" in "%s"', basenames, dirnames)
+            return
+        if open_function is None:
+            LOGGER.warning('could not find open function')
+            return
+        lines = []
+        with open_function( # type: ignore
+                path, mode='rt', encoding='utf-8') as derived_age_file:
+            lines = derived_age_file.readlines()
+        for line in lines:
+            unicode_version = ''
+            line = re.sub(r'#.*$', '', line).strip()
+            if not line:
+                continue
+            codepoint_string, unicode_version = (
+                x.strip() for x in line.split(';')[:2])
+            if not unicode_version:
+                continue
+            codepoint_range = [
+                int(x, 16) for x in codepoint_string.split('..')]
+            if len(codepoint_range) == 1:
+                codepoint_range.append(codepoint_range[0])
+            assert len(codepoint_range) == 2
+            for codepoint in range(
+                    codepoint_range[0], codepoint_range[1] + 1):
+                emoji_string = chr(codepoint)
+                emoji_dict_key = (emoji_string, 'en')
+                if emoji_dict_key in self._emoji_dict:
+                    # This might overwrite uversion data already loaded
+                    # from the emoji-data.txt file, for example:
+                    #
+                    # 🧦 was added in Unicode 10.0 in and added to
+                    # Emoji 5.0 in 2017. So when by the emoji data
+                    # files 5.0 was found, 'uversion' will be
+                    # overwritten with 10.0 here and 5.0 will still be
+                    # available as 'eversion'.
+                    self._add_to_emoji_dict(
+                        (emoji_string, 'en'), 'uversion', unicode_version)
+
     def _load_unicode_data(self) -> None:
         '''Loads emoji names from UnicodeData.txt'''
         dirnames = (USER_DATADIR, DATADIR,
@@ -673,13 +726,13 @@ class EmojiMatcher():
         with open_function( # type: ignore
                 path, mode='rt', encoding='utf-8') as unicode_emoji_data_file:
             for line in unicode_emoji_data_file.readlines():
-                unicode_version = ''
+                emoji_version = ''
                 pattern = re.compile(
-                    r'[^;]*;[^;]*#\s*E(?P<uversion>[0-9]+\.[0-9]+)\s*'
+                    r'[^;]*;[^;]*#\s*E(?P<eversion>[0-9]+\.[0-9]+)\s*'
                     + r'\[[0-9]+\]')
                 match = pattern.match(line)
-                if match and match.group('uversion'):
-                    unicode_version = match.group('uversion')
+                if match and match.group('eversion'):
+                    emoji_version = match.group('eversion')
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
@@ -695,9 +748,11 @@ class EmojiMatcher():
                     emoji_string = chr(codepoint)
                     self._add_to_emoji_dict(
                         (emoji_string, 'en'), 'properties', [property_string])
-                    if unicode_version:
+                    if emoji_version:
                         self._add_to_emoji_dict(
-                            (emoji_string, 'en'), 'uversion', unicode_version)
+                            (emoji_string, 'en'), 'uversion', emoji_version)
+                        self._add_to_emoji_dict(
+                            (emoji_string, 'en'), 'eversion', emoji_version)
 
     def _load_unicode_emoji_sequences(self) -> None:
         '''
@@ -721,13 +776,13 @@ class EmojiMatcher():
                 mode='rt',
                 encoding='utf-8') as unicode_emoji_sequences_file:
             for line in unicode_emoji_sequences_file.readlines():
-                unicode_version = ''
+                emoji_version = ''
                 pattern = re.compile(
-                    r'[^;]*;[^;]*;[^;]*#\s*E(?P<uversion>[0-9]+\.[0-9]+)\s*'
+                    r'[^;]*;[^;]*;[^;]*#\s*E(?P<eversion>[0-9]+\.[0-9]+)\s*'
                     + r'\[[0-9]+\]')
                 match = pattern.match(line)
-                if match and match.group('uversion'):
-                    unicode_version = match.group('uversion')
+                if match and match.group('eversion'):
+                    emoji_version = match.group('eversion')
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
@@ -745,9 +800,9 @@ class EmojiMatcher():
                         (emoji_string, 'en'), 'properties', [property_string])
                     self._add_to_emoji_dict(
                         (emoji_string, 'en'), 'names', [name.lower()])
-                    if unicode_version:
+                    if emoji_version:
                         self._add_to_emoji_dict(
-                            (emoji_string, 'en'), 'uversion', unicode_version)
+                            (emoji_string, 'en'), 'eversion', emoji_version)
 
     def _load_unicode_emoji_zwj_sequences(self) -> None:
         '''
@@ -771,13 +826,13 @@ class EmojiMatcher():
                 mode='rt',
                 encoding='utf-8') as unicode_emoji_zwj_sequences_file:
             for line in unicode_emoji_zwj_sequences_file.readlines():
-                unicode_version = ''
+                emoji_version = ''
                 pattern = re.compile(
-                    r'[^;]*;[^;]*;[^;]*#\s*E(?P<uversion>[0-9]+\.[0-9]+)\s*'
+                    r'[^;]*;[^;]*;[^;]*#\s*E(?P<eversion>[0-9]+\.[0-9]+)\s*'
                     + r'\[[0-9]+\]')
                 match = pattern.match(line)
-                if match and match.group('uversion'):
-                    unicode_version = match.group('uversion')
+                if match and match.group('eversion'):
+                    emoji_version = match.group('eversion')
                 line = re.sub(r'#.*$', '', line).strip()
                 if not line:
                     continue
@@ -791,9 +846,9 @@ class EmojiMatcher():
                         (emoji_string, 'en'), 'properties', [property_string])
                     self._add_to_emoji_dict(
                         (emoji_string, 'en'), 'names', [name.lower()])
-                    if unicode_version:
+                    if emoji_version:
                         self._add_to_emoji_dict(
-                            (emoji_string, 'en'), 'uversion', unicode_version)
+                            (emoji_string, 'en'), 'eversion', emoji_version)
 
     def _load_unicode_emoji_test(self) -> None:
         '''Loads emoji property data from emoji-test.txt
@@ -801,19 +856,6 @@ class EmojiMatcher():
         http://unicode.org/Public/emoji/4.0/emoji-test.txt
 
         This is mostly for emoji sorting and for some categorization
-
-        Don’t use the 5.0 file until Emoji 5.0 is released and some
-        fonts support it, using the 5.0 file now results in lots of
-        ugly replacement characters when browsing the categories.
-
-        For the other files emoji-data.txt, emoji-zwj-sequences.txt,
-        and emoji-sequences.txt it is OK to use the draft 5.0 versions
-        as they don’t cause proposed characters to show up when
-        browsing the categories. The proposed characters only show up
-        when searching and in that case it is OK I think, it is not so
-        obviously ugly. And I think it is useful for the proposed
-        characters to be searchable.
-
         '''
         dirnames = (USER_DATADIR, DATADIR)
         basenames = ('emoji-test.txt',)
@@ -862,7 +904,7 @@ class EmojiMatcher():
                     continue
                 name = ''
                 pattern = re.compile(
-                    r'[^#]+#\s+\S+\s+E(?P<uversion>[0-9]+\.[0-9]+)'
+                    r'[^#]+#\s+\S+\s+E(?P<eversion>[0-9]+\.[0-9]+)'
                     + r'\s+(?P<name>.+)$')
                 match = pattern.match(line)
                 if match and match.group('name'):
@@ -2073,6 +2115,21 @@ class EmojiMatcher():
                 and ('properties' in self._emoji_dict[(emoji_string, 'en')])):
             return list(self._emoji_dict[(emoji_string, 'en')]['properties'])
         return []
+
+    def emoji_version(self, emoji_string: str) -> str:
+        '''
+        Returns the Emoji version when this emoji/character was added
+
+        :param emoji_string: An emoji
+        '''
+        # self._emoji_dict contains only emoji or sequences without
+        # variation selectors:
+        emoji_string = self.variation_selector_normalize(
+            emoji_string, variation_selector='')
+        if (((emoji_string, 'en') in self._emoji_dict)
+                and ('eversion' in self._emoji_dict[(emoji_string, 'en')])):
+            return str(self._emoji_dict[(emoji_string, 'en')]['eversion'])
+        return ''
 
     def unicode_version(self, emoji_string: str) -> str:
         '''

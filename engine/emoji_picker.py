@@ -165,7 +165,7 @@ def parse_args() -> Any:
         ('20240910', '16.0'),
     )
     current_date = time.strftime('%Y%m%d')
-    current_unicode_version = '15.1'
+    current_unicode_version = '16.0'
     for (date, version) in unicode_versions:
         if current_date > date:
             current_unicode_version = version
@@ -699,6 +699,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             descriptions.append(
                 _('Unicode Version:') + ' '
                 + self._emoji_matcher.unicode_version(emoji))
+        if self._emoji_matcher.emoji_version(emoji):
+            descriptions.append(
+                _('Emoji Version:') + ' '
+                + self._emoji_matcher.emoji_version(emoji))
         if _ARGS.debug:
             descriptions.append(
                 f'emoji_order = {self._emoji_matcher.emoji_order(emoji)}')
