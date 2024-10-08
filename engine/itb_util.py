@@ -3240,7 +3240,11 @@ def is_right_to_left_messages() -> bool:
         # 'mzj', 'jod', 'jud', 'kfo', 'kga', 'mxx', 'dyu', 'bof', 'skq'
         # There is no glibc locale yet for any of these.
         #
-        # 'ff', (Fula) is written in Adlm (RTL). There is no glibc locale yet.
+        # 'wo' (Wolof) may be written in Gara (RTL). There is no locale
+        # for this script yet, the wo_SN glibc locale uses Latn script.
+        #
+        # 'ff' (Fula) may be written in Adlm (RTL). There is no locale for
+        # this script yet, the ff_SN glibc locale uses Latn script.
         return True
     return False
 
