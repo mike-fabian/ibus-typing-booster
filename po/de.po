@@ -14,16 +14,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-10-08 11:35+0200\n"
-"PO-Revision-Date: 2024-01-31 17:23+0000\n"
+"PO-Revision-Date: 2024-10-08 10:12+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.3.1\n"
+"X-Generator: Weblate 5.7.2\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -98,10 +98,8 @@ msgid "Unicode Version:"
 msgstr "Unicode-Version:"
 
 #: engine/emoji_picker.py:704
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji Version:"
-msgstr "Unicode-Version:"
+msgstr "Emoji-Version:"
 
 #: engine/emoji_picker.py:726 engine/emoji_picker.py:1849
 msgid "Left click to copy"
