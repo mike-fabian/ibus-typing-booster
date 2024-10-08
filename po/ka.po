@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-09-12 01:29+0200\n"
+"POT-Creation-Date: 2024-10-08 11:35+0200\n"
 "PO-Revision-Date: 2024-02-27 15:36+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://translate.fedoraproject.org/projects/ibus-"
@@ -92,40 +92,46 @@ msgstr "ამ ემოჯის რენდერისთვის გამ
 msgid "Unicode Version:"
 msgstr "უნიკოდის ვერსია:"
 
-#: engine/emoji_picker.py:722 engine/emoji_picker.py:1845
+#: engine/emoji_picker.py:704
+#, fuzzy
+#| msgid "Unicode Version:"
+msgid "Emoji Version:"
+msgstr "უნიკოდის ვერსია:"
+
+#: engine/emoji_picker.py:726 engine/emoji_picker.py:1849
 msgid "Left click to copy"
 msgstr "მარცხენა წკაპი კოპირებისთვის"
 
-#: engine/emoji_picker.py:725
+#: engine/emoji_picker.py:729
 msgid "Long press or middle click for skin tones"
 msgstr "თემის ტონებისთვის დიდხანს ან შუა ღილაკით დააწექით"
 
-#: engine/emoji_picker.py:726
+#: engine/emoji_picker.py:730
 msgid "Right click for info"
 msgstr "მარჯვენა წკაპი ინფორმაიისთვის"
 
-#: engine/emoji_picker.py:1218
+#: engine/emoji_picker.py:1222
 msgid "Search Results"
 msgstr "ძებნის შედეგები"
 
-#: engine/emoji_picker.py:1222
+#: engine/emoji_picker.py:1226
 msgid "Search produced empty result."
 msgstr "ცარიელი შედეგი."
 
-#: engine/emoji_picker.py:1506 engine/emoji_picker.py:1633
+#: engine/emoji_picker.py:1510 engine/emoji_picker.py:1637
 msgid "Copied to clipboard!"
 msgstr "დაკოპირდა გაცვლის ბაფერში!"
 
-#: engine/emoji_picker.py:1957
+#: engine/emoji_picker.py:1961
 msgid "Lookup on emojipedia"
 msgstr "Emojipedia-ზე მოძებნა"
 
-#: engine/emoji_picker.py:2079 engine/emoji_picker.py:2080
-#: engine/emoji_picker.py:2081 setup/main.py:1594
+#: engine/emoji_picker.py:2083 engine/emoji_picker.py:2084
+#: engine/emoji_picker.py:2085 setup/main.py:1594
 msgid "System default"
 msgstr "სისტემის ნაგულისხმები"
 
-#: engine/emoji_picker.py:2216
+#: engine/emoji_picker.py:2220
 msgid "Set Font"
 msgstr "ფონტის დაყენება"
 
@@ -224,56 +230,56 @@ msgstr "Google speech-to-text -ის შეცდომა. ხილეთ deb
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:835 engine/itb_emoji.py:836 engine/itb_emoji.py:837
-#: engine/itb_emoji.py:1032
+#: engine/itb_emoji.py:881 engine/itb_emoji.py:882 engine/itb_emoji.py:883
+#: engine/itb_emoji.py:1078
 msgid "people"
 msgstr "მომხმარებლები"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:838 engine/itb_emoji.py:1028
+#: engine/itb_emoji.py:884 engine/itb_emoji.py:1074
 msgid "nature"
 msgstr "ბუნება"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:839 engine/itb_emoji.py:1024
+#: engine/itb_emoji.py:885 engine/itb_emoji.py:1070
 msgid "food"
 msgstr "საჭმელი"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:840 engine/itb_emoji.py:1038
+#: engine/itb_emoji.py:886 engine/itb_emoji.py:1084
 msgid "travel"
 msgstr "მოგზაურობა"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:841 engine/itb_emoji.py:850 engine/itb_emoji.py:1020
+#: engine/itb_emoji.py:887 engine/itb_emoji.py:896 engine/itb_emoji.py:1066
 msgid "activity"
 msgstr "აქტივობა"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:842 engine/itb_emoji.py:1030
+#: engine/itb_emoji.py:888 engine/itb_emoji.py:1076
 msgid "objects"
 msgstr "ობიექტები"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:843 engine/itb_emoji.py:1036
+#: engine/itb_emoji.py:889 engine/itb_emoji.py:1082
 msgid "symbols"
 msgstr "სიმბოლოები"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:844 engine/itb_emoji.py:1022
+#: engine/itb_emoji.py:890 engine/itb_emoji.py:1068
 msgid "flags"
 msgstr "ალმები"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:845 engine/itb_emoji.py:846 engine/itb_emoji.py:1026
+#: engine/itb_emoji.py:891 engine/itb_emoji.py:892 engine/itb_emoji.py:1072
 msgid "modifier"
 msgstr "მოდიფიკატორი"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:847 engine/itb_emoji.py:1034
+#: engine/itb_emoji.py:893 engine/itb_emoji.py:1080
 msgid "regional"
 msgstr "რეგიონალური"
 
