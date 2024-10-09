@@ -77,11 +77,11 @@ class EmojiUnicodeVersionTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
         self.assertEqual(mq.emoji_version('🇿🇼'), '2.0')
-        self.assertEqual(mq.unicode_version('🇿🇼'), '')
+        self.assertEqual(mq.unicode_version('🇿🇼'), '8.0')
         self.assertEqual(mq.emoji_version('🤳🏽'), '3.0')
-        self.assertEqual(mq.unicode_version('🤳🏽'), '')
+        self.assertEqual(mq.unicode_version('🤳🏽'), '9.0')
         self.assertEqual(mq.emoji_version('🤲🏿'), '5.0')
-        self.assertEqual(mq.unicode_version('🤲🏿'), '')
+        self.assertEqual(mq.unicode_version('🤲🏿'), '10.0')
         self.assertEqual(
             mq.emoji_version(
             '🏴\U000e0067\U000e0062\U000e0065\U000e006e\U000e0067\U000e007f'),
@@ -89,17 +89,17 @@ class EmojiUnicodeVersionTestCase(unittest.TestCase):
         self.assertEqual(
             mq.unicode_version(
             '🏴\U000e0067\U000e0062\U000e0065\U000e006e\U000e0067\U000e007f'),
-            '')
+            '10.0')
 
     def test_unicode_version_emoji_zwj_sequences_file(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
         # transgender flag:
         self.assertEqual(mq.emoji_version('🏳\u200d\u26a7'), '13.0')
-        self.assertEqual(mq.unicode_version('🏳\u200d\u26a7'), '')
+        self.assertEqual(mq.unicode_version('🏳\u200d\u26a7'), '13.0')
         # transgender flag fully qualified:
         self.assertEqual(mq.emoji_version('🏳\ufe0f\u200d\u26a7\ufe0f'), '13.0')
-        self.assertEqual(mq.unicode_version('🏳\ufe0f\u200d\u26a7\ufe0f'), '')
+        self.assertEqual(mq.unicode_version('🏳\ufe0f\u200d\u26a7\ufe0f'), '13.0')
 
 if __name__ == '__main__':
     LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)

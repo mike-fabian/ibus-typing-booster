@@ -117,6 +117,34 @@ UNICODE_CATEGORIES = {
     'Zs': {'valid': True, 'major': 'Separator', 'minor': 'Space'},
 }
 
+EMOJI_VERSION_TO_UNICODE_VERSIONS = {
+    # See: https://emojipedia.org/emoji-versions
+    '1.0': ['6.0', '6.1', '7.0', '8.0'],
+    # No Unicode update, only new sequences and emoji presentations
+    # for existing code points:
+    '2.0': ['6.0', '6.1', '7.0', '8.0'],
+    '3.0': ['9.0'],
+    '4.0': ['9.0'],
+    '5.0': ['10.0'],
+    # Emoji versions 6.0-10.0 do not exist.  It was decided that from
+    # 11.0 on, the emoji version should align with the Unicode
+    # version:
+    '11.0': ['11.0'],
+    '12.0': ['12.0'],
+    # No Unicode update, only new sequences and emoji presentations
+    # for existing code points:
+    '12.1': ['12.0'],
+    '13.0': ['13.0'],
+    # No Unicode update, only new sequences and emoji presentations
+    # for existing code points:
+    '13.1': ['13.0'],
+    '14.0': ['14.0'],
+    '15.0': ['15.0'],
+    '15.1': ['15.1'],
+    '16.0': ['16.0'],
+    '17.0': ['17.0'],
+}
+
 # VALID_RANGES are taken from ibus-uniemoji
 # (but not used anymore at the moment)
 VALID_RANGES = (
@@ -441,13 +469,13 @@ class EmojiMatcher():
         self._load_unicode_emoji_data()
         self._load_unicode_emoji_sequences()
         self._load_unicode_emoji_zwj_sequences()
+        self._load_derived_age()
         self._load_unicode_emoji_test()
         self._load_emojione_data()
         if cldr_data:
             for language in itb_util.expand_languages(self._languages):
                 self._load_cldr_annotation_data(language, 'annotations')
                 self._load_cldr_annotation_data(language, 'annotationsDerived')
-        self._load_derived_age()
 
     def get_languages(self) -> List[str]:
         # pylint: disable=line-too-long
@@ -750,9 +778,13 @@ class EmojiMatcher():
                         (emoji_string, 'en'), 'properties', [property_string])
                     if emoji_version:
                         self._add_to_emoji_dict(
-                            (emoji_string, 'en'), 'uversion', emoji_version)
-                        self._add_to_emoji_dict(
                             (emoji_string, 'en'), 'eversion', emoji_version)
+                        # Redundant, as these are single code points,
+                        # the Unicode version will be overwritten by
+                        # Data from DerivedAge.txt when calling
+                        # _load_derived_age():
+                        self._add_to_emoji_dict(
+                            (emoji_string, 'en'), 'uversion', emoji_version)
 
     def _load_unicode_emoji_sequences(self) -> None:
         '''
@@ -803,6 +835,15 @@ class EmojiMatcher():
                     if emoji_version:
                         self._add_to_emoji_dict(
                             (emoji_string, 'en'), 'eversion', emoji_version)
+                        # Sequences also need to have some Unicode version set
+                        # otherwise the emoji-picker GUI will not display
+                        # them:
+                        unicode_version = emoji_version
+                        if emoji_version in EMOJI_VERSION_TO_UNICODE_VERSIONS:
+                            unicode_version = EMOJI_VERSION_TO_UNICODE_VERSIONS[
+                                emoji_version][-1]
+                        self._add_to_emoji_dict(
+                            (emoji_string, 'en'), 'uversion', unicode_version)
 
     def _load_unicode_emoji_zwj_sequences(self) -> None:
         '''
@@ -849,6 +890,15 @@ class EmojiMatcher():
                     if emoji_version:
                         self._add_to_emoji_dict(
                             (emoji_string, 'en'), 'eversion', emoji_version)
+                        # Sequences also need to have some Unicode version set
+                        # otherwise the emoji-picker GUI will not display
+                        # them:
+                        unicode_version = emoji_version
+                        if emoji_version in EMOJI_VERSION_TO_UNICODE_VERSIONS:
+                            unicode_version = EMOJI_VERSION_TO_UNICODE_VERSIONS[
+                                emoji_version][-1]
+                        self._add_to_emoji_dict(
+                            (emoji_string, 'en'), 'uversion', unicode_version)
 
     def _load_unicode_emoji_test(self) -> None:
         '''Loads emoji property data from emoji-test.txt
@@ -937,6 +987,14 @@ class EmojiMatcher():
                     if name:
                         self._add_to_emoji_dict(
                             (emoji_string, 'en'), 'names', [name.lower()])
+                    if self.emoji_version(emoji_string) == '':
+                        LOGGER.warning('Emoji “%s” lacks emoji version, '
+                                       'this should not happen!',
+                                       emoji_string)
+                    if self.unicode_version(emoji_string) == '':
+                        LOGGER.warning('Emoji “%s” lacks Unicode version, '
+                                       'this should not happen!',
+                                       emoji_string)
 
     def _load_emojione_data(self) -> None:
         '''
