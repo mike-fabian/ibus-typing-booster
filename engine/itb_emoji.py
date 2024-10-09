@@ -433,6 +433,7 @@ class EmojiMatcher():
         self._quick = quick
         self._variation_selector = variation_selector
         self._romaji = romaji
+        self._unicode_blocks: Dict[range, str] = {}
         self._enchant_dicts = []
         if IMPORT_ENCHANT_SUCCESSFUL:
             for language in self._languages:
@@ -476,6 +477,7 @@ class EmojiMatcher():
             for language in itb_util.expand_languages(self._languages):
                 self._load_cldr_annotation_data(language, 'annotations')
                 self._load_cldr_annotation_data(language, 'annotationsDerived')
+        self._load_unicode_blocks()
 
     def get_languages(self) -> List[str]:
         # pylint: disable=line-too-long
@@ -629,6 +631,40 @@ class EmojiMatcher():
                     self._emoji_dict[emoji_dict_key][values_key] += [value]
         else:
             self._emoji_dict[emoji_dict_key][values_key] = values
+
+    def _load_unicode_blocks(self) -> None:
+        '''Loads the names of Unicode blocks'''
+        dirnames = (USER_DATADIR, DATADIR,
+                    # On Fedora, the “unicode-ucd” package has the
+                    # Blocks.txt file here:
+                    '/usr/share/unicode/ucd',
+                    # On Ubuntu 20.04.3 it is here:
+                    '/usr/share/unicode/',)
+        basenames = ('Blocks.txt',)
+        (path, open_function) = _find_path_and_open_function(
+            dirnames, basenames)
+        if not path:
+            LOGGER.warning(
+                'could not find "%s" in "%s"', basenames, dirnames)
+            return
+        if open_function is None:
+            LOGGER.warning('could not find open function')
+            return
+        lines = []
+        with open_function( # type: ignore
+                path, mode='rt', encoding='utf-8') as blocks_file:
+            lines = blocks_file.readlines()
+        blocks_pattern = re.compile(r'([0-9A-F]+)\.\.([0-9A-F]+);\ (\S.*\S)')
+        for line in lines:
+            line = re.sub(r'#.*$', '', line).strip()
+            if not line:
+                continue
+            match = blocks_pattern.match(line)
+            if match:
+                block_start, block_end, block_name = match.groups()
+                self._unicode_blocks[
+                    range(int(block_start, 16),
+                          int(block_end, 16) + 1)] = block_name
 
     def _load_derived_age(self) -> None:
         '''Loads in which Unicode versions code points were added'''
@@ -2248,6 +2284,20 @@ class EmojiMatcher():
         if min_version <= version <= max_version:
             return True
         return False
+
+    def unicode_block(self, emoji_string: str) -> str:
+        '''Returns the name of the Unicode block the character is in'''
+        # Get rid of the variation selector to be able to get the
+        # Unicode block name of the base character:
+        emoji_string = self.variation_selector_normalize(
+            emoji_string, variation_selector='')
+        if len(emoji_string) != 1:
+            return ''
+        codepoint = ord(emoji_string)
+        for block_range, block_name in self._unicode_blocks.items():
+            if codepoint in block_range:
+                return block_name
+        return ''
 
     def skin_tone_modifier_supported(self, emoji_string: str) -> bool:
         '''Checks whether skin tone modifiers are possible for this emoji
