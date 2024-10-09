@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-10-08 11:35+0200\n"
+"POT-Creation-Date: 2024-10-08 12:13+0200\n"
 "PO-Revision-Date: 2024-04-20 16:36+0000\n"
 "Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
 "memory@weblate.org>\n"
@@ -238,56 +238,56 @@ msgstr "Erro de conversão de fala em texto do Google. Consulte debug.log."
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:881 engine/itb_emoji.py:882 engine/itb_emoji.py:883
-#: engine/itb_emoji.py:1078
+#: engine/itb_emoji.py:877 engine/itb_emoji.py:878 engine/itb_emoji.py:879
+#: engine/itb_emoji.py:1074
 msgid "people"
 msgstr "pessoas"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:884 engine/itb_emoji.py:1074
+#: engine/itb_emoji.py:880 engine/itb_emoji.py:1070
 msgid "nature"
 msgstr "natureza"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:885 engine/itb_emoji.py:1070
+#: engine/itb_emoji.py:881 engine/itb_emoji.py:1066
 msgid "food"
 msgstr "comida"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:886 engine/itb_emoji.py:1084
+#: engine/itb_emoji.py:882 engine/itb_emoji.py:1080
 msgid "travel"
 msgstr "viajem"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:887 engine/itb_emoji.py:896 engine/itb_emoji.py:1066
+#: engine/itb_emoji.py:883 engine/itb_emoji.py:892 engine/itb_emoji.py:1062
 msgid "activity"
 msgstr "atividade"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:888 engine/itb_emoji.py:1076
+#: engine/itb_emoji.py:884 engine/itb_emoji.py:1072
 msgid "objects"
 msgstr "objetos"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:889 engine/itb_emoji.py:1082
+#: engine/itb_emoji.py:885 engine/itb_emoji.py:1078
 msgid "symbols"
 msgstr "símbolos"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:890 engine/itb_emoji.py:1068
+#: engine/itb_emoji.py:886 engine/itb_emoji.py:1064
 msgid "flags"
 msgstr "sinalizadores"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:891 engine/itb_emoji.py:892 engine/itb_emoji.py:1072
+#: engine/itb_emoji.py:887 engine/itb_emoji.py:888 engine/itb_emoji.py:1068
 msgid "modifier"
 msgstr "modificador"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:893 engine/itb_emoji.py:1080
+#: engine/itb_emoji.py:889 engine/itb_emoji.py:1076
 msgid "regional"
 msgstr "regional"
 
