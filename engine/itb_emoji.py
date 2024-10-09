@@ -2116,6 +2116,19 @@ class EmojiMatcher():
             return list(self._emoji_dict[(emoji_string, 'en')]['properties'])
         return []
 
+    def unicode_category(self, emoji_string: str) -> List[str]:
+        '''
+        Returns the Unicode category of this emoji from UnicodeData.txt
+
+        :param emoji_string: An emoji or Unicode character
+        '''
+        emoji_string = self.variation_selector_normalize(
+            emoji_string, variation_selector='')
+        if (((emoji_string, 'en') in self._emoji_dict)
+                and ('ucategories' in self._emoji_dict[(emoji_string, 'en')])):
+            return list(self._emoji_dict[(emoji_string, 'en')]['ucategories'])
+        return []
+
     def emoji_version(self, emoji_string: str) -> str:
         '''
         Returns the Emoji version when this emoji/character was added

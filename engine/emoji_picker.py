@@ -711,6 +711,9 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             descriptions.append(
                 'Emoji properties from unicode.org:' + '\n'
                 + ', '.join(self._emoji_matcher.properties(emoji)))
+            descriptions.append(
+                'Unicode category:' + '\n'
+                + ' '.join(self._emoji_matcher.unicode_category(emoji)))
         return descriptions
 
     def _emoji_label_set_tooltip( # pylint: disable=no-self-use
