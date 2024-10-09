@@ -1,5 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
 * 08 Oct 2024 Release 2.25.17
+* Make sure all emoji, even those which are sequences, get a Unicode version and not only an Emoji version (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/542)
+* Translation update from Weblate (ka 100%, pl 99.5%, tr 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
+* 08 Oct 2024 Release 2.25.17
 * Get correct Unicode version from DerivedAge.txt and also display both Unicode version and Emoji version in emoji-picker (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/538)
 * Translation update from Weblate (de 100%, fr 100%, ja 100%)
 
