@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-10-08 12:13+0200\n"
+"POT-Creation-Date: 2024-10-09 18:07+0200\n"
 "PO-Revision-Date: 2023-03-08 08:20+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
 "Language-Team: Swahili <https://translate.fedoraproject.org/projects/ibus-"
@@ -98,40 +98,40 @@ msgstr "Toleo La Unikodi:"
 msgid "Emoji Version:"
 msgstr "Toleo La Unikodi:"
 
-#: engine/emoji_picker.py:726 engine/emoji_picker.py:1849
+#: engine/emoji_picker.py:731 engine/emoji_picker.py:1854
 msgid "Left click to copy"
 msgstr "Bofya kushoto kunakili"
 
-#: engine/emoji_picker.py:729
+#: engine/emoji_picker.py:734
 msgid "Long press or middle click for skin tones"
 msgstr "Bofya kwa muda au kitufe cha katikati kubadili rangi ya ngozi"
 
-#: engine/emoji_picker.py:730
+#: engine/emoji_picker.py:735
 msgid "Right click for info"
 msgstr "Bofya kulia kwa habari zaidi"
 
-#: engine/emoji_picker.py:1222
+#: engine/emoji_picker.py:1227
 msgid "Search Results"
 msgstr "Matokeo"
 
-#: engine/emoji_picker.py:1226
+#: engine/emoji_picker.py:1231
 msgid "Search produced empty result."
 msgstr "Matokeo hayajapatikana."
 
-#: engine/emoji_picker.py:1510 engine/emoji_picker.py:1637
+#: engine/emoji_picker.py:1515 engine/emoji_picker.py:1642
 msgid "Copied to clipboard!"
 msgstr "Imenakiliwa kwa ubao nakili!"
 
-#: engine/emoji_picker.py:1961
+#: engine/emoji_picker.py:1966
 msgid "Lookup on emojipedia"
 msgstr "Tafuta kwa emojipedia"
 
-#: engine/emoji_picker.py:2083 engine/emoji_picker.py:2084
-#: engine/emoji_picker.py:2085 setup/main.py:1594
+#: engine/emoji_picker.py:2088 engine/emoji_picker.py:2089
+#: engine/emoji_picker.py:2090 setup/main.py:1594
 msgid "System default"
 msgstr "Chaguo-msingi la mfumo"
 
-#: engine/emoji_picker.py:2220
+#: engine/emoji_picker.py:2225
 msgid "Set Font"
 msgstr "Chagua Fonti"
 
@@ -233,56 +233,56 @@ msgstr "Kosa ya Google utambaoji wa usemi. Angalia faili ya batli ya eua."
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:877 engine/itb_emoji.py:878 engine/itb_emoji.py:879
-#: engine/itb_emoji.py:1074
+#: engine/itb_emoji.py:963 engine/itb_emoji.py:964 engine/itb_emoji.py:965
+#: engine/itb_emoji.py:1168
 msgid "people"
 msgstr "watu"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:880 engine/itb_emoji.py:1070
+#: engine/itb_emoji.py:966 engine/itb_emoji.py:1164
 msgid "nature"
 msgstr "porini"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:881 engine/itb_emoji.py:1066
+#: engine/itb_emoji.py:967 engine/itb_emoji.py:1160
 msgid "food"
 msgstr "chakula"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:882 engine/itb_emoji.py:1080
+#: engine/itb_emoji.py:968 engine/itb_emoji.py:1174
 msgid "travel"
 msgstr "safiri"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:883 engine/itb_emoji.py:892 engine/itb_emoji.py:1062
+#: engine/itb_emoji.py:969 engine/itb_emoji.py:978 engine/itb_emoji.py:1156
 msgid "activity"
 msgstr "shughuli"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:884 engine/itb_emoji.py:1072
+#: engine/itb_emoji.py:970 engine/itb_emoji.py:1166
 msgid "objects"
 msgstr "vitu"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:885 engine/itb_emoji.py:1078
+#: engine/itb_emoji.py:971 engine/itb_emoji.py:1172
 msgid "symbols"
 msgstr "alama"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:886 engine/itb_emoji.py:1064
+#: engine/itb_emoji.py:972 engine/itb_emoji.py:1158
 msgid "flags"
 msgstr "bendera"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:887 engine/itb_emoji.py:888 engine/itb_emoji.py:1068
+#: engine/itb_emoji.py:973 engine/itb_emoji.py:974 engine/itb_emoji.py:1162
 msgid "modifier"
 msgstr "mageuzi"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:889 engine/itb_emoji.py:1076
+#: engine/itb_emoji.py:975 engine/itb_emoji.py:1170
 msgid "regional"
 msgstr "mkoani"
 
@@ -316,27 +316,27 @@ msgstr "mkoani"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Mengineo, mbalimbali, ya ziada"
 
-#: engine/itb_util.py:4397 engine/itb_util.py:5124
+#: engine/itb_util.py:4401 engine/itb_util.py:5128
 msgid "File not found"
 msgstr "Faili haionekana"
 
-#: engine/itb_util.py:4401 engine/itb_util.py:5128
+#: engine/itb_util.py:4405 engine/itb_util.py:5132
 msgid "Permission error"
 msgstr "Kosa ya kibali"
 
-#: engine/itb_util.py:4405 engine/itb_util.py:5132
+#: engine/itb_util.py:4409 engine/itb_util.py:5136
 msgid "Unicode decoding error"
 msgstr "Kosa ya kufumbua msimbosare"
 
-#: engine/itb_util.py:4409 engine/itb_util.py:5136
+#: engine/itb_util.py:4413 engine/itb_util.py:5140
 msgid "Unknown error"
 msgstr "Kosa haifahamika"
 
-#: engine/itb_util.py:5102
+#: engine/itb_util.py:5106
 msgid "Native Keyboard"
 msgstr "Kibodi Awali"
 
-#: engine/itb_util.py:5104
+#: engine/itb_util.py:5108
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -348,11 +348,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5759
+#: engine/itb_util.py:5763
 msgid "Key input"
 msgstr "Chagua kitufe"
 
-#: engine/itb_util.py:5765
+#: engine/itb_util.py:5769
 msgid "Cancel"
 msgstr "Futa"
 
@@ -360,27 +360,27 @@ msgstr "Futa"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5772
+#: engine/itb_util.py:5776
 msgid "Please press a key (or a key combination)"
 msgstr "Tafadhali bofya kitufe (au mchanganyiko wa vitufe)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5777
+#: engine/itb_util.py:5781
 msgid "The dialog will be closed when the key is released"
 msgstr "Kisanduku hiki kitajifunga baada ya kuachilia kitufe"
 
-#: engine/itb_util.py:5816
+#: engine/itb_util.py:5820
 msgid "A completion input method to speedup typing."
 msgstr "Mbinu ya kuharakisha uingizaji kwa kujaliza."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5825
+#: engine/itb_util.py:5829
 msgid "translator-credits"
 msgstr "watafsiri"
 
-#: engine/itb_util.py:5833
+#: engine/itb_util.py:5837
 msgid "Online documentation:"
 msgstr "Maelezo ya mtandaoni:"
 
