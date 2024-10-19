@@ -10,7 +10,8 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2024-10-09 18:07+0200\n"
 "PO-Revision-Date: 2024-10-19 11:38+0000\n"
-"Last-Translator: Rachida SA <rgebbid@gmail.com>\n"
+"Last-Translator: ButterflyOfFire <butterflyoffire@users.noreply.translate."
+"fedoraproject.org>\n"
 "Language-Team: Kabyle <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/kab/>\n"
 "Language: kab\n"
@@ -235,27 +236,27 @@ msgstr "medden"
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:966 engine/itb_emoji.py:1164
 msgid "nature"
-msgstr ""
+msgstr "agama"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:967 engine/itb_emoji.py:1160
 msgid "food"
-msgstr ""
+msgstr "učči"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:968 engine/itb_emoji.py:1174
 msgid "travel"
-msgstr ""
+msgstr "asikel"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:969 engine/itb_emoji.py:978 engine/itb_emoji.py:1156
 msgid "activity"
-msgstr ""
+msgstr "armud"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:970 engine/itb_emoji.py:1166
 msgid "objects"
-msgstr ""
+msgstr "tiɣawsiwin"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:971 engine/itb_emoji.py:1172
@@ -277,7 +278,7 @@ msgstr ""
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:975 engine/itb_emoji.py:1170
 msgid "regional"
-msgstr ""
+msgstr "timnaḍin"
 
 #. Translators: This is a string is never displayed
 #. anywhere, it is only for searching.
@@ -323,7 +324,7 @@ msgstr ""
 
 #: engine/itb_util.py:4413 engine/itb_util.py:5140
 msgid "Unknown error"
-msgstr ""
+msgstr "Tuccḍa tarussint"
 
 #: engine/itb_util.py:5106
 msgid "Native Keyboard"
@@ -341,7 +342,7 @@ msgstr ""
 #. key binding for a command.
 #: engine/itb_util.py:5763
 msgid "Key input"
-msgstr ""
+msgstr "Taqeffalt n usekcem"
 
 #: engine/itb_util.py:5769
 msgid "Cancel"
@@ -369,7 +370,7 @@ msgstr ""
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:5829
 msgid "translator-credits"
-msgstr ""
+msgstr "Athmane Mokraoui <butterflyoffire@protonmail.com>, 2024."
 
 #: engine/itb_util.py:5837
 msgid "Online documentation:"
@@ -411,7 +412,7 @@ msgstr "Tinefrunin"
 #. candidate, he can define such a custom shortcut here.
 #: setup/main.py:269
 msgid "Custom shortcuts"
-msgstr ""
+msgstr "Inegzumen yugnen"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can customize the key bindings to execute
@@ -422,7 +423,7 @@ msgstr ""
 #. existing key bindings
 #: setup/main.py:285 setup/main.py:1434
 msgid "Key bindings"
-msgstr ""
+msgstr "Inegzumen n unasiw"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence how
@@ -442,7 +443,7 @@ msgstr "Timeẓri"
 #. recognition.
 #: setup/main.py:323 setup/main.py:2382
 msgid "Speech recognition"
-msgstr ""
+msgstr "Aɛqal n taɣect"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up whether some settings should change
@@ -1054,7 +1055,7 @@ msgstr ""
 #. at all for the preedit.
 #: setup/main.py:1633
 msgid "None"
-msgstr ""
+msgstr "Ula yiwen"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
@@ -1433,7 +1434,7 @@ msgstr "Rnu tarrayt n unekcum"
 #. for the currently selected input method
 #: setup/main.py:3991
 msgid "Variable"
-msgstr ""
+msgstr "Ameskil"
 
 #: setup/main.py:4821
 #, python-format
