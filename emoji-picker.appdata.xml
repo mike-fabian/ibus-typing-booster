@@ -41,6 +41,31 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.26.0" date="2024-10-23" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.26.0</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Introduce a delay time before candidates are updated and
+            displayed (Resolves: github-issues#530)
+          </li>
+          <li>
+            emoji-picker: Show Emoji properties, Unicode category, and
+            Unicode block always, not only when --debug is used. As
+            they are now shown always, make their labels translatable.
+          </li>
+          <li>
+            Translation update from Weblate (de 100%, fr 100%, ja 99.5%, ka 100%, sv 100%, tr 100%, uk 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/530">
+          github-issues#530
+        </issue>
+      </issues>
+    </release>
     <release version="2.25.19" date="2024-10-19" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.25.19</url>
       <description>

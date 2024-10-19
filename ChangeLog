@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 23 Oct 2024 Release 2.26.0
+* Introduce a delay time before candidates are updated and displayed (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/530)
+* emoji-picker: Show Emoji properties, Unicode category, and Unicode block always, not only when --debug is used. As they are now shown always, make their labels translatable.
+* Translation update from Weblate (de 100%, fr 100%, ja 99.5%, ka 100%, sv 100%, tr 100%, uk 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 19 Oct 2024 Release 2.25.19
 * Translation update from Weblate (el 5.3%, kab 34.8%, sv 100%)
 
