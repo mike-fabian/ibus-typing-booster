@@ -2,15 +2,15 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # ButterflyOfFire <butterflyoffire@users.noreply.translate.fedoraproject.org>, 2024.
+# Rachida SA <rgebbid@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-10-09 18:07+0200\n"
-"PO-Revision-Date: 2024-10-16 15:38+0000\n"
-"Last-Translator: ButterflyOfFire <butterflyoffire@users.noreply.translate."
-"fedoraproject.org>\n"
+"PO-Revision-Date: 2024-10-19 11:38+0000\n"
+"Last-Translator: Rachida SA <rgebbid@gmail.com>\n"
 "Language-Team: Kabyle <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/kab/>\n"
 "Language: kab\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:323
 msgid "Clear recently used"
-msgstr ""
+msgstr "Sfeḍ ayen yettwasqedcen melmi kan"
 
 #: engine/emoji_picker.py:329 setup/main.py:192
 msgid "About"
@@ -38,15 +38,15 @@ msgstr "Ffeɣ"
 
 #: engine/emoji_picker.py:342
 msgid "Search for emoji"
-msgstr ""
+msgstr "Nadi imujiten"
 
 #: engine/emoji_picker.py:354
 msgid "Set the font to display emoji"
-msgstr ""
+msgstr "Sbadu tasefsit i uskan n yimujit"
 
 #: engine/emoji_picker.py:362
 msgid "Set font size"
-msgstr ""
+msgstr "Sbadu teɣzi n tsefsit"
 
 #. Translators: This is a checkbox which enables or disables
 #. the pango font fallback. If font fallback is off, only the
@@ -68,7 +68,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:461
 msgid "Recently used"
-msgstr ""
+msgstr "Yettwaseqdec melmi kan"
 
 #: engine/emoji_picker.py:641
 msgid "Categories"
@@ -76,27 +76,27 @@ msgstr "Taggayin"
 
 #: engine/emoji_picker.py:642
 msgid "Unicode categories"
-msgstr ""
+msgstr "Taggayin n Unicode"
 
 #: engine/emoji_picker.py:643
 msgid "Keywords"
-msgstr ""
+msgstr "Inasiwen"
 
 #: engine/emoji_picker.py:683
 msgid "Fonts used to render this emoji:"
-msgstr ""
+msgstr "Tisefsiyin i usuneɣ n yimuji-a:"
 
 #: engine/emoji_picker.py:700
 msgid "Unicode Version:"
-msgstr ""
+msgstr "Lqem Unicode:"
 
 #: engine/emoji_picker.py:704
 msgid "Emoji Version:"
-msgstr ""
+msgstr "Lqem n yimuji:"
 
 #: engine/emoji_picker.py:731 engine/emoji_picker.py:1854
 msgid "Left click to copy"
-msgstr ""
+msgstr "Sit ɣef tqeffalt tazelmaḍt i unɣal"
 
 #: engine/emoji_picker.py:734
 msgid "Long press or middle click for skin tones"
@@ -104,19 +104,19 @@ msgstr ""
 
 #: engine/emoji_picker.py:735
 msgid "Right click for info"
-msgstr ""
+msgstr "Sit ɣef tqeffalt tayeffust i talɣut"
 
 #: engine/emoji_picker.py:1227
 msgid "Search Results"
-msgstr ""
+msgstr "Nadi igmaḍ"
 
 #: engine/emoji_picker.py:1231
 msgid "Search produced empty result."
-msgstr ""
+msgstr "Anadi yefka-d agmuḍ d ilem."
 
 #: engine/emoji_picker.py:1515 engine/emoji_picker.py:1642
 msgid "Copied to clipboard!"
-msgstr ""
+msgstr "Nɣel ɣer tecfawt!"
 
 #: engine/emoji_picker.py:1966
 msgid "Lookup on emojipedia"
@@ -125,16 +125,16 @@ msgstr ""
 #: engine/emoji_picker.py:2088 engine/emoji_picker.py:2089
 #: engine/emoji_picker.py:2090 setup/main.py:1594
 msgid "System default"
-msgstr ""
+msgstr "Anagraw amezwer"
 
 #: engine/emoji_picker.py:2225
 msgid "Set Font"
-msgstr ""
+msgstr "Sbadu tasefsit"
 
 #: engine/hunspell_table.py:529 engine/hunspell_table.py:563
 #: engine/hunspell_table.py:584
 msgid "Off"
-msgstr ""
+msgstr "Yensa"
 
 #: engine/hunspell_table.py:534 engine/hunspell_table.py:568
 #: engine/hunspell_table.py:589
@@ -143,7 +143,7 @@ msgstr "Yermed"
 
 #: engine/hunspell_table.py:553
 msgid "Input mode"
-msgstr ""
+msgstr "Askar n unekcum"
 
 #: engine/hunspell_table.py:554
 msgid "Here you can switch ibus-typing-booster on or off."
@@ -169,7 +169,7 @@ msgstr ""
 #. sense to use this option temporarily.
 #: engine/hunspell_table.py:594 engine/hunspell_table.py:595 setup/main.py:634
 msgid "Off the record mode"
-msgstr ""
+msgstr "Yensa uskar n usekles"
 
 #: engine/hunspell_table.py:1827
 msgid "Highest priority dictionary"
@@ -185,7 +185,7 @@ msgstr ""
 
 #: engine/hunspell_table.py:1858
 msgid "Switch preedit input method"
-msgstr ""
+msgstr "Senfel tarrayt n unekcum n uẓrag uzwir"
 
 #: engine/hunspell_table.py:2164
 msgid "Setup"
@@ -193,19 +193,19 @@ msgstr "Iɣewwaṛen"
 
 #: engine/hunspell_table.py:2167 setup/main.py:169
 msgid "Preferences for ibus-typing-booster"
-msgstr ""
+msgstr "Ismenyafen i ibus-typing-booster"
 
 #: engine/hunspell_table.py:5348
 msgid "Failed to import Google speech-to-text."
-msgstr ""
+msgstr "Aktar Google n tririt n yinaw ɣer yeḍrisen yecceḍ."
 
 #: engine/hunspell_table.py:5351
 msgid "Failed to import pyaudio."
-msgstr ""
+msgstr "Yecceḍ uktar n pyaudio."
 
 #: engine/hunspell_table.py:5354
 msgid "Failed to import queue."
-msgstr ""
+msgstr "Yecceḍ uktar n queue."
 
 #: engine/hunspell_table.py:5359
 msgid "No supported language for speech recognition."
@@ -543,7 +543,7 @@ msgstr ""
 
 #: setup/main.py:501
 msgid "Yes, always"
-msgstr ""
+msgstr "Ih, yal tikkelt"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
@@ -631,7 +631,7 @@ msgstr ""
 
 #: setup/main.py:677
 msgid "Everything"
-msgstr ""
+msgstr "Kullec"
 
 #: setup/main.py:679
 msgid "Correctly spelled or previously recorded"
@@ -639,11 +639,11 @@ msgstr ""
 
 #: setup/main.py:681
 msgid "Correctly spelled"
-msgstr ""
+msgstr "Yettwaɣra-d akken iwata"
 
 #: setup/main.py:683
 msgid "Nothing"
-msgstr ""
+msgstr "Acemma"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -661,7 +661,7 @@ msgstr ""
 #: setup/main.py:720
 #, python-format
 msgid "Avoid using the %s function"
-msgstr ""
+msgstr "Zgel aseqdec n tmahilt %s"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -706,7 +706,7 @@ msgstr ""
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:783
 msgid "Disable in terminals"
-msgstr ""
+msgstr "Sens deg terminals"
 
 #: setup/main.py:785
 msgid "Whether ibus-typing-booster should be disabled in terminals."
@@ -783,7 +783,7 @@ msgstr ""
 #. sound is played on error
 #: setup/main.py:927
 msgid "Play sound file on error"
-msgstr ""
+msgstr "Taɣuri n ufaylu n yimesli mi ara tili tuccḍa"
 
 #: setup/main.py:929
 msgid ""
@@ -919,7 +919,7 @@ msgstr ""
 
 #: setup/main.py:1273
 msgid "Enter shortcut here:"
-msgstr ""
+msgstr "Sekcem anegzum dagi:"
 
 #: setup/main.py:1295
 msgid "Enter shortcut expansion here:"
@@ -927,15 +927,15 @@ msgstr ""
 
 #: setup/main.py:1325
 msgid "Clear input"
-msgstr ""
+msgstr "Sfeḍ anekcum"
 
 #: setup/main.py:1336
 msgid "Delete shortcut"
-msgstr ""
+msgstr "Kkes anegzum"
 
 #: setup/main.py:1347
 msgid "Add shortcut"
-msgstr ""
+msgstr "Rnu anegzum"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -1151,7 +1151,7 @@ msgstr ""
 #. custom color is used for the compose preview.
 #: setup/main.py:1816
 msgid "Use color for compose preview"
-msgstr ""
+msgstr "Seqdec ini i uskan n tsuddest"
 
 #: setup/main.py:1818
 msgid ""
@@ -1293,7 +1293,7 @@ msgstr ""
 #. dictionary in the candidate list.
 #: setup/main.py:2141
 msgid "Use flags for dictionary suggestions"
-msgstr ""
+msgstr "Seqdec annayen i yisumar n umawal"
 
 #: setup/main.py:2143
 msgid ""
@@ -1305,7 +1305,7 @@ msgstr ""
 #. label is used to show when ibus-typing-booster is busy.
 #: setup/main.py:2161
 msgid "Use a label to indicate busy state"
-msgstr ""
+msgstr "Seqdec tabzimt i uskan n waddad iceɣlen"
 
 #: setup/main.py:2163
 msgid ""
@@ -1316,15 +1316,15 @@ msgstr ""
 #. Translators:
 #: setup/main.py:2196 setup/main.py:3244
 msgid "Set “Google application credentials” .json file:"
-msgstr ""
+msgstr "Sbadu afaylu .json “Inekcam n usnas n Google”:"
 
 #: setup/main.py:2198
 msgid "Full path of the “Google application credentials” .json file."
-msgstr ""
+msgstr "Abrid ummid n ufaylu .json n “yinekcam n usnas Google” yeččur."
 
 #: setup/main.py:2206
 msgid "File not yet set."
-msgstr ""
+msgstr "Afaylu-a mazal ur yettusbadu ara."
 
 #. Translators: This is a button to add an autosetting.
 #. “Autosettings” are settings which may change automatically
@@ -1372,13 +1372,13 @@ msgstr ""
 
 #: setup/main.py:2375
 msgid "Emoji"
-msgstr ""
+msgstr "Imujit"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
 #: setup/main.py:2575
 msgid "Setting"
-msgstr ""
+msgstr "Aɣewwar"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1396,7 +1396,7 @@ msgstr ""
 
 #: setup/main.py:2654
 msgid "Are you sure?"
-msgstr ""
+msgstr "D tidet?"
 
 #: setup/main.py:2656 setup/main.py:3247 setup/main.py:3325 setup/main.py:4941
 msgid "_Cancel"
@@ -1423,11 +1423,11 @@ msgstr ""
 
 #: setup/main.py:3502
 msgid "Add dictionary"
-msgstr ""
+msgstr "Rnu amawal"
 
 #: setup/main.py:3815
 msgid "Add input method"
-msgstr ""
+msgstr "Rnu tarrayt n unekcum"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
@@ -1495,7 +1495,7 @@ msgstr ""
 
 #: typing-booster.appdata.xml:6
 msgid "Typing Booster"
-msgstr ""
+msgstr "Amesɣiwel n tira"
 
 #: typing-booster.appdata.xml:7
 msgid "Predictive input method"
