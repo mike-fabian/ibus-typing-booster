@@ -12,10 +12,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-10-22 16:30+0200\n"
-"PO-Revision-Date: 2024-10-11 08:38+0000\n"
+"PO-Revision-Date: 2024-10-22 17:42+0000\n"
 "Last-Translator: Luna Jernberg <bittin@reimu.nl>\n"
-"Language-Team: Swedish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/sv/>\n"
+"Language-Team: Swedish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -103,27 +103,21 @@ msgstr "Emoji-version:"
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
 #: engine/emoji_picker.py:711
-#, fuzzy
-#| msgid "Emoji Version:"
 msgid "Emoji properties:"
-msgstr "Emoji-version:"
+msgstr "Emoji egenskaper:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
 #: engine/emoji_picker.py:717
-#, fuzzy
-#| msgid "Unicode categories"
 msgid "Unicode category:"
-msgstr "Unicode-kategorier"
+msgstr "Unicode kategori:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
 #: engine/emoji_picker.py:724
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Unicode block:"
-msgstr "Unicode-version:"
+msgstr "Unicode block:"
 
 #: engine/emoji_picker.py:743 engine/emoji_picker.py:1866
 msgid "Left click to copy"
@@ -1158,10 +1152,8 @@ msgstr "Vertikalt"
 #. the system needs to be idle after pressing a key before
 #. candidates are displayed
 #: setup/main.py:1625
-#, fuzzy
-#| msgid "Candidate window page size:"
 msgid "Candidate window delay in milliseconds:"
-msgstr "Kandidatfönsterstorlek:"
+msgstr "Kandidatfönsterfördröjning i millisekunder:"
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
@@ -1169,6 +1161,8 @@ msgstr "Kandidatfönsterstorlek:"
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
 msgstr ""
+"Hur länge man ska vänta efter senaste knapptryckningen innan kandidater "
+"visas."
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
