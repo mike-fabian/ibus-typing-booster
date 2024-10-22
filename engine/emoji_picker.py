@@ -703,19 +703,31 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             descriptions.append(
                 _('Emoji Version:') + ' '
                 + self._emoji_matcher.emoji_version(emoji))
+        if self._emoji_matcher.properties(emoji):
+            descriptions.append(
+                # Translators: Emoji properties from unicode.org like
+                # “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
+                # “RGI_Emoji_ZWJ_Sequence”, ...
+                _('Emoji properties:') + '\n'
+                + ', '.join(self._emoji_matcher.properties(emoji)))
+        if self._emoji_matcher.unicode_category(emoji):
+            descriptions.append(
+                # Translators: The Unicode category is something like
+                # “So Symbol Other”, “Sm Symbol Math”, ...
+                _('Unicode category:') + ' '
+                + ' '.join(self._emoji_matcher.unicode_category(emoji)))
+        if self._emoji_matcher.unicode_block(emoji):
+            descriptions.append(
+                # Translators: The Unicode block is something like
+                # “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
+                # (see: https://en.wikipedia.org/wiki/Unicode_block)
+                _('Unicode block:')
+                + f' {self._emoji_matcher.unicode_block(emoji)}')
         if _ARGS.debug:
             descriptions.append(
                 f'emoji_order = {self._emoji_matcher.emoji_order(emoji)}')
             descriptions.append(
                 f'cldr_order = {self._emoji_matcher.cldr_order(emoji)}')
-            descriptions.append(
-                'Emoji properties from unicode.org:' + '\n'
-                + ', '.join(self._emoji_matcher.properties(emoji)))
-            descriptions.append(
-                'Unicode category: '
-                + ' '.join(self._emoji_matcher.unicode_category(emoji)))
-            descriptions.append(
-                f'Unicode block: {self._emoji_matcher.unicode_block(emoji)}')
         return descriptions
 
     def _emoji_label_set_tooltip( # pylint: disable=no-self-use
