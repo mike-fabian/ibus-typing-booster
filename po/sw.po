@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-10-09 18:07+0200\n"
+"POT-Creation-Date: 2024-10-22 16:30+0200\n"
 "PO-Revision-Date: 2023-03-08 08:20+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
 "Language-Team: Swahili <https://translate.fedoraproject.org/projects/ibus-"
@@ -98,58 +98,84 @@ msgstr "Toleo La Unikodi:"
 msgid "Emoji Version:"
 msgstr "Toleo La Unikodi:"
 
-#: engine/emoji_picker.py:731 engine/emoji_picker.py:1854
+#. Translators: Emoji properties from unicode.org like
+#. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
+#. “RGI_Emoji_ZWJ_Sequence”, ...
+#: engine/emoji_picker.py:711
+#, fuzzy
+#| msgid "Unicode Version:"
+msgid "Emoji properties:"
+msgstr "Toleo La Unikodi:"
+
+#. Translators: The Unicode category is something like
+#. “So Symbol Other”, “Sm Symbol Math”, ...
+#: engine/emoji_picker.py:717
+#, fuzzy
+#| msgid "Unicode categories"
+msgid "Unicode category:"
+msgstr "Kategoria za unikodi"
+
+#. Translators: The Unicode block is something like
+#. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
+#. (see: https://en.wikipedia.org/wiki/Unicode_block)
+#: engine/emoji_picker.py:724
+#, fuzzy
+#| msgid "Unicode Version:"
+msgid "Unicode block:"
+msgstr "Toleo La Unikodi:"
+
+#: engine/emoji_picker.py:743 engine/emoji_picker.py:1866
 msgid "Left click to copy"
 msgstr "Bofya kushoto kunakili"
 
-#: engine/emoji_picker.py:734
+#: engine/emoji_picker.py:746
 msgid "Long press or middle click for skin tones"
 msgstr "Bofya kwa muda au kitufe cha katikati kubadili rangi ya ngozi"
 
-#: engine/emoji_picker.py:735
+#: engine/emoji_picker.py:747
 msgid "Right click for info"
 msgstr "Bofya kulia kwa habari zaidi"
 
-#: engine/emoji_picker.py:1227
+#: engine/emoji_picker.py:1239
 msgid "Search Results"
 msgstr "Matokeo"
 
-#: engine/emoji_picker.py:1231
+#: engine/emoji_picker.py:1243
 msgid "Search produced empty result."
 msgstr "Matokeo hayajapatikana."
 
-#: engine/emoji_picker.py:1515 engine/emoji_picker.py:1642
+#: engine/emoji_picker.py:1527 engine/emoji_picker.py:1654
 msgid "Copied to clipboard!"
 msgstr "Imenakiliwa kwa ubao nakili!"
 
-#: engine/emoji_picker.py:1966
+#: engine/emoji_picker.py:1978
 msgid "Lookup on emojipedia"
 msgstr "Tafuta kwa emojipedia"
 
-#: engine/emoji_picker.py:2088 engine/emoji_picker.py:2089
-#: engine/emoji_picker.py:2090 setup/main.py:1594
+#: engine/emoji_picker.py:2100 engine/emoji_picker.py:2101
+#: engine/emoji_picker.py:2102 setup/main.py:1594
 msgid "System default"
 msgstr "Chaguo-msingi la mfumo"
 
-#: engine/emoji_picker.py:2225
+#: engine/emoji_picker.py:2237
 msgid "Set Font"
 msgstr "Chagua Fonti"
 
-#: engine/hunspell_table.py:529 engine/hunspell_table.py:563
-#: engine/hunspell_table.py:584
+#: engine/hunspell_table.py:538 engine/hunspell_table.py:572
+#: engine/hunspell_table.py:593
 msgid "Off"
 msgstr "Zima"
 
-#: engine/hunspell_table.py:534 engine/hunspell_table.py:568
-#: engine/hunspell_table.py:589
+#: engine/hunspell_table.py:543 engine/hunspell_table.py:577
+#: engine/hunspell_table.py:598
 msgid "On"
 msgstr "Wezesha"
 
-#: engine/hunspell_table.py:553
+#: engine/hunspell_table.py:562
 msgid "Input mode"
 msgstr "Hali ya kuingiza"
 
-#: engine/hunspell_table.py:554
+#: engine/hunspell_table.py:563
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Hapa, unaweza kuwezesha au kuzima msaidizi-wa-kuchapa-mbio-wa-ibus."
 
@@ -160,7 +186,7 @@ msgstr "Hapa, unaweza kuwezesha au kuzima msaidizi-wa-kuchapa-mbio-wa-ibus."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:573 engine/hunspell_table.py:575 setup/main.py:605
+#: engine/hunspell_table.py:582 engine/hunspell_table.py:584 setup/main.py:605
 msgid "Unicode symbols and emoji predictions"
 msgstr "Alama za unikodi na emoji zilizotabiriwa"
 
@@ -171,63 +197,63 @@ msgstr "Alama za unikodi na emoji zilizotabiriwa"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:594 engine/hunspell_table.py:595 setup/main.py:634
+#: engine/hunspell_table.py:603 engine/hunspell_table.py:604 setup/main.py:634
 msgid "Off the record mode"
 msgstr "Tumia kamusi pekee kuongeza mbio ya kuchapa"
 
-#: engine/hunspell_table.py:1827
+#: engine/hunspell_table.py:1839
 msgid "Highest priority dictionary"
 msgstr "Kamusi yenye kipaumbele"
 
-#: engine/hunspell_table.py:1828
+#: engine/hunspell_table.py:1840
 msgid "Choose highest priority dictionary"
 msgstr "Chagua kamusi yenye kipaumbele"
 
-#: engine/hunspell_table.py:1857
+#: engine/hunspell_table.py:1869
 msgid "Preedit input method"
 msgstr "Jinsi ya kuhariri mbeleni hali ya kuingiza"
 
-#: engine/hunspell_table.py:1858
+#: engine/hunspell_table.py:1870
 msgid "Switch preedit input method"
 msgstr "Badili jinsi ya kuhariri mbeleni hali-tumizi ya ingizo"
 
-#: engine/hunspell_table.py:2164
+#: engine/hunspell_table.py:2176
 msgid "Setup"
 msgstr "Mipangilio"
 
-#: engine/hunspell_table.py:2167 setup/main.py:169
+#: engine/hunspell_table.py:2179 setup/main.py:169
 msgid "Preferences for ibus-typing-booster"
 msgstr "Pendekezo ya msaidizi-wa-kuchapa-mbio-wa-ibus"
 
-#: engine/hunspell_table.py:5348
+#: engine/hunspell_table.py:5423
 msgid "Failed to import Google speech-to-text."
 msgstr ""
 "Haiwezekana kuwezesha programmu ya Google ya utamboaji otomatiki wa usemi."
 
-#: engine/hunspell_table.py:5351
+#: engine/hunspell_table.py:5426
 msgid "Failed to import pyaudio."
 msgstr "Haiwezekana kutumia programmu pyaudio."
 
-#: engine/hunspell_table.py:5354
+#: engine/hunspell_table.py:5429
 msgid "Failed to import queue."
 msgstr "Haiwezekana kuleta foleni."
 
-#: engine/hunspell_table.py:5359
+#: engine/hunspell_table.py:5434
 msgid "No supported language for speech recognition."
 msgstr "Hakuna lugha ina utamboaji wa usemi."
 
-#: engine/hunspell_table.py:5363
+#: engine/hunspell_table.py:5438
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Faili “%s” ya “programmu ya Google ya utambolisho“ haionekana."
 
-#: engine/hunspell_table.py:5376
+#: engine/hunspell_table.py:5451
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Haiwezekana kuanza programmu ya Google ya utamboaji wa usemi. Angalia faili "
 "ya batli ya eua."
 
-#: engine/hunspell_table.py:5484
+#: engine/hunspell_table.py:5559
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Kosa ya Google utambaoji wa usemi. Angalia faili ya batli ya eua."
 
@@ -312,31 +338,31 @@ msgstr "mkoani"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2727
+#: engine/itb_util.py:2734
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Mengineo, mbalimbali, ya ziada"
 
-#: engine/itb_util.py:4401 engine/itb_util.py:5128
+#: engine/itb_util.py:4414 engine/itb_util.py:5141
 msgid "File not found"
 msgstr "Faili haionekana"
 
-#: engine/itb_util.py:4405 engine/itb_util.py:5132
+#: engine/itb_util.py:4418 engine/itb_util.py:5145
 msgid "Permission error"
 msgstr "Kosa ya kibali"
 
-#: engine/itb_util.py:4409 engine/itb_util.py:5136
+#: engine/itb_util.py:4422 engine/itb_util.py:5149
 msgid "Unicode decoding error"
 msgstr "Kosa ya kufumbua msimbosare"
 
-#: engine/itb_util.py:4413 engine/itb_util.py:5140
+#: engine/itb_util.py:4426 engine/itb_util.py:5153
 msgid "Unknown error"
 msgstr "Kosa haifahamika"
 
-#: engine/itb_util.py:5106
+#: engine/itb_util.py:5119
 msgid "Native Keyboard"
 msgstr "Kibodi Awali"
 
-#: engine/itb_util.py:5108
+#: engine/itb_util.py:5121
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -348,11 +374,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5763
+#: engine/itb_util.py:5776
 msgid "Key input"
 msgstr "Chagua kitufe"
 
-#: engine/itb_util.py:5769
+#: engine/itb_util.py:5782
 msgid "Cancel"
 msgstr "Futa"
 
@@ -360,27 +386,27 @@ msgstr "Futa"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5776
+#: engine/itb_util.py:5789
 msgid "Please press a key (or a key combination)"
 msgstr "Tafadhali bofya kitufe (au mchanganyiko wa vitufe)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5781
+#: engine/itb_util.py:5794
 msgid "The dialog will be closed when the key is released"
 msgstr "Kisanduku hiki kitajifunga baada ya kuachilia kitufe"
 
-#: engine/itb_util.py:5820
+#: engine/itb_util.py:5833
 msgid "A completion input method to speedup typing."
 msgstr "Mbinu ya kuharakisha uingizaji kwa kujaliza."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5829
+#: engine/itb_util.py:5842
 msgid "translator-credits"
 msgstr "watafsiri"
 
-#: engine/itb_util.py:5837
+#: engine/itb_util.py:5850
 msgid "Online documentation:"
 msgstr "Maelezo ya mtandaoni:"
 
@@ -393,7 +419,7 @@ msgstr "Mapendeleo"
 msgid "Restore all defaults"
 msgstr "Rejesha pote chaguo-msingi la mfumo"
 
-#: setup/main.py:212 setup/main.py:6522
+#: setup/main.py:212 setup/main.py:6598
 msgid "_Close"
 msgstr "_Funga"
 
@@ -449,7 +475,7 @@ msgstr "Mwonekano"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:323 setup/main.py:2382
+#: setup/main.py:323 setup/main.py:2419
 msgid "Speech recognition"
 msgstr "Ufahamu wa sauti"
 
@@ -460,7 +486,7 @@ msgstr "Ufahamu wa sauti"
 #. Translators: This is the header of the list of settings
 #. changed automatically depending on the which window has
 #. focus:
-#: setup/main.py:339 setup/main.py:2232
+#: setup/main.py:339 setup/main.py:2269
 msgid "Autosettings"
 msgstr "Mipangilio Otomatiki"
 
@@ -927,7 +953,7 @@ msgstr "Sakinisha kamusi zilizokosekana"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Sakinisha kamusi zilizochaguliwa hapa lakini bado hazijasakinishwa"
 
-#: setup/main.py:1109 setup/main.py:1241 setup/main.py:1468 setup/main.py:4868
+#: setup/main.py:1109 setup/main.py:1241 setup/main.py:1468 setup/main.py:4916
 msgid "Set to default"
 msgstr "Weka kama chaguo-msingi"
 
@@ -1035,7 +1061,7 @@ msgstr "Hariri"
 msgid "Edit the key bindings for the selected command"
 msgstr "Hariri vitufe teule vya amri iliyochaguliwa"
 
-#: setup/main.py:1472 setup/main.py:4873
+#: setup/main.py:1472 setup/main.py:4921
 msgid "Set default key bindings for the selected command"
 msgstr "Weka chaguo-msingi la vitufe teule vya amri iliyochaguliwa"
 
@@ -1115,37 +1141,53 @@ msgstr "Mlalo"
 msgid "Vertical"
 msgstr "Wima"
 
+#. Translators: Here one can choose how many milliseconds
+#. the system needs to be idle after pressing a key before
+#. candidates are displayed
+#: setup/main.py:1625
+#, fuzzy
+#| msgid "Candidate window page size:"
+msgid "Candidate window delay in milliseconds:"
+msgstr "Idadi ya mapendekezo katika ukurasa:"
+
+#. Translators: A tooltip explaining the meaning of the
+#. “Candidate window delay in milliseconds:” option.
+#: setup/main.py:1629
+msgid ""
+"How long to wait after the last key press before candidates are displayed."
+msgstr ""
+
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
-#: setup/main.py:1624
+#: setup/main.py:1661
 msgid "Preedit underline"
 msgstr "Piga mstari kinachohaririwa"
 
-#: setup/main.py:1626
+#: setup/main.py:1663
 msgid "Which style of underlining to use for the preedit."
 msgstr "Aina ya mstari kupiga neno linalohaririwa."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
-#: setup/main.py:1633
+#: setup/main.py:1670
 msgid "None"
 msgstr "Hapana"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
-#: setup/main.py:1637
+#: setup/main.py:1674
 msgid "Single"
 msgstr "Mmoja"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
-#: setup/main.py:1641
+#: setup/main.py:1678
 msgid "Double"
 msgstr "Miwili"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
-#: setup/main.py:1645
+#: setup/main.py:1682
 msgid "Low"
 msgstr "Chini"
 
@@ -1155,11 +1197,11 @@ msgstr "Chini"
 #. option to enable lookup only when a key is pressed or
 #. because one uses the option to require a minimum number
 #. of characters before a lookup is done.
-#: setup/main.py:1676
+#: setup/main.py:1713
 msgid "Use preedit style only if lookup is enabled"
 msgstr "Tumia mbinu ya kuhariri ikiwa tu hali ya msako imewezeshwa"
 
-#: setup/main.py:1678
+#: setup/main.py:1715
 msgid ""
 "If this option is on, a preedit style like underlining will only be used if "
 "lookup is enabled. The lookup can be disabled because one uses the option to "
@@ -1175,11 +1217,11 @@ msgstr ""
 #. spellchecking is done on the contents of the preedit and
 #. a custom color is used to indicate when the preedit
 #. might contain a spelling error.
-#: setup/main.py:1702
+#: setup/main.py:1739
 msgid "Preedit spellchecking"
 msgstr "Ukaguzi wa kinachohaririwa"
 
-#: setup/main.py:1704
+#: setup/main.py:1741
 msgid ""
 "Here you can choose whether spellchecking is done on the contents of the "
 "preedit and a custom color is used to indicate when the preedit might "
@@ -1191,11 +1233,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
-#: setup/main.py:1734
+#: setup/main.py:1771
 msgid "Choose color for preedit spellchecking"
 msgstr "Chagua rangi maalum ya ukaguzi wa kinachoharirirwa"
 
-#: setup/main.py:1736
+#: setup/main.py:1773
 msgid ""
 "Here you can specify which color to use for the preedit when the preedit "
 "might contain a spelling error. This setting only has an effect if the "
@@ -1207,11 +1249,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
-#: setup/main.py:1760
+#: setup/main.py:1797
 msgid "Use color for inline completion"
 msgstr "Tumia rangi neno linapojalizwa"
 
-#: setup/main.py:1762
+#: setup/main.py:1799
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
@@ -1222,11 +1264,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
-#: setup/main.py:1790
+#: setup/main.py:1827
 msgid "Choose color for inline completion"
 msgstr "Chagua rangi ya neno linalojalizwa"
 
-#: setup/main.py:1792
+#: setup/main.py:1829
 msgid ""
 "Here you can specify which color to use for inline completion. This setting "
 "only has an effect if the use of color for inline completion is enabled and "
@@ -1237,11 +1279,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
-#: setup/main.py:1816
+#: setup/main.py:1853
 msgid "Use color for compose preview"
 msgstr "Tumia rangi unapohakiki utungaji"
 
-#: setup/main.py:1818
+#: setup/main.py:1855
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
@@ -1250,22 +1292,22 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
-#: setup/main.py:1846
+#: setup/main.py:1883
 msgid "Choose color for compose preview"
 msgstr "Chagua rangi ya uhakiki wa utungaji"
 
-#: setup/main.py:1848
+#: setup/main.py:1885
 msgid "Here you can specify which color to use for the compose preview."
 msgstr "Chagua rangi itakayotumika katika uhakiki wa utungaji."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
-#: setup/main.py:1871
+#: setup/main.py:1908
 msgid "Use color for user database suggestions"
 msgstr "Tumia rangi kwa mapendekezo yatokanayo na hifadhidata ya watumizi"
 
-#: setup/main.py:1873
+#: setup/main.py:1910
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
@@ -1276,11 +1318,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
-#: setup/main.py:1897
+#: setup/main.py:1934
 msgid "Choose color for user database suggestions"
 msgstr "Chagua rangi ya mapendekezo yatokanayo na hifadhidata ya watumizi"
 
-#: setup/main.py:1899
+#: setup/main.py:1936
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
@@ -1292,11 +1334,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
-#: setup/main.py:1922
+#: setup/main.py:1959
 msgid "Use color for spellchecking suggestions"
 msgstr "Tumia rangi kwa mapendekezo ya ukaguzi wa tahajia"
 
-#: setup/main.py:1924
+#: setup/main.py:1961
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
@@ -1307,11 +1349,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
-#: setup/main.py:1948
+#: setup/main.py:1985
 msgid "Choose color for spellchecking suggestions"
 msgstr "Chagua rangi ya kuashiria mapendekezo ya tahajia"
 
-#: setup/main.py:1950
+#: setup/main.py:1987
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
@@ -1324,11 +1366,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
-#: setup/main.py:1976
+#: setup/main.py:2013
 msgid "Use color for dictionary suggestions"
 msgstr "Tumia rangi kwa mapendekezo yatokayo kwa kamusi"
 
-#: setup/main.py:1978
+#: setup/main.py:2015
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
@@ -1339,11 +1381,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
-#: setup/main.py:2002
+#: setup/main.py:2039
 msgid "Choose color for dictionary suggestions"
 msgstr "Chagua rangi ya mapendekezo yatokayo kwa kamusi"
 
-#: setup/main.py:2004
+#: setup/main.py:2041
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
@@ -1356,11 +1398,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
-#: setup/main.py:2030
+#: setup/main.py:2067
 msgid "Use label for user database suggestions"
 msgstr "Tumia lebo kwa mapendekezo yatokayo kwa hifadhidata ya watumizi"
 
-#: setup/main.py:2032
+#: setup/main.py:2069
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
@@ -1371,11 +1413,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
-#: setup/main.py:2067
+#: setup/main.py:2104
 msgid "Use label for spellchecking suggestions"
 msgstr "Tumia lebo kwa mapendekezo yatokanayo na ukaguzi wa tahajia"
 
-#: setup/main.py:2069
+#: setup/main.py:2106
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
@@ -1386,11 +1428,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
-#: setup/main.py:2104
+#: setup/main.py:2141
 msgid "Use label for dictionary suggestions"
 msgstr "Tumia lebo kwa mapendekezo yatokayo kwa kamusi"
 
-#: setup/main.py:2106
+#: setup/main.py:2143
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
@@ -1401,11 +1443,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
-#: setup/main.py:2141
+#: setup/main.py:2178
 msgid "Use flags for dictionary suggestions"
 msgstr "Tumia alama kuashiria mapendekezo yatokayo kwa kamusi"
 
-#: setup/main.py:2143
+#: setup/main.py:2180
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
@@ -1415,11 +1457,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
-#: setup/main.py:2161
+#: setup/main.py:2198
 msgid "Use a label to indicate busy state"
 msgstr "Tumia lebo kuashiria hali ya kushughulikia mengine"
 
-#: setup/main.py:2163
+#: setup/main.py:2200
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
@@ -1428,15 +1470,15 @@ msgstr ""
 "kuandika cha ibus kinashughulikia mengine."
 
 #. Translators:
-#: setup/main.py:2196 setup/main.py:3244
+#: setup/main.py:2233 setup/main.py:3283
 msgid "Set “Google application credentials” .json file:"
 msgstr "Teua faili ya \"nywila za programu ya Google\".json:"
 
-#: setup/main.py:2198
+#: setup/main.py:2235
 msgid "Full path of the “Google application credentials” .json file."
 msgstr "Njia kamili ya faili ya \"nywila za programu ya Google\".json."
 
-#: setup/main.py:2206
+#: setup/main.py:2243
 msgid "File not yet set."
 msgstr "Faili bado haijateuliwa."
 
@@ -1444,7 +1486,7 @@ msgstr "Faili bado haijateuliwa."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2265 setup/main.py:4391
+#: setup/main.py:2302 setup/main.py:4439
 msgid "Add an autosetting"
 msgstr "Ongeza mpangilio otomatiki"
 
@@ -1452,7 +1494,7 @@ msgstr "Ongeza mpangilio otomatiki"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2279
+#: setup/main.py:2316
 msgid "Remove an autosetting"
 msgstr "Ondoa mpangilio otomatiki"
 
@@ -1464,7 +1506,7 @@ msgstr "Ondoa mpangilio otomatiki"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2297
+#: setup/main.py:2334
 msgid "Move an autosetting up"
 msgstr "Songesha juu mpangilio otomatiki"
 
@@ -1476,21 +1518,21 @@ msgstr "Songesha juu mpangilio otomatiki"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2315
+#: setup/main.py:2352
 msgid "Move an autosetting down"
 msgstr "Songesha chini mpangilio otomatiki"
 
-#: setup/main.py:2359
+#: setup/main.py:2396
 msgid "Spell checking"
 msgstr "Ukaguzi wa tahajia"
 
-#: setup/main.py:2375
+#: setup/main.py:2412
 msgid "Emoji"
 msgstr "Emoji"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2575
+#: setup/main.py:2612
 msgid "Setting"
 msgstr "Mpangilio"
 
@@ -1498,67 +1540,67 @@ msgstr "Mpangilio"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2584 setup/main.py:4000
+#: setup/main.py:2621 setup/main.py:4048
 msgid "Value"
 msgstr "Chaguo"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2608
+#: setup/main.py:2645
 msgid "Regular expression"
 msgstr ""
 
-#: setup/main.py:2654
+#: setup/main.py:2691
 msgid "Are you sure?"
 msgstr "Je, una uhahika?"
 
-#: setup/main.py:2656 setup/main.py:3247 setup/main.py:3325 setup/main.py:4941
+#: setup/main.py:2693 setup/main.py:3286 setup/main.py:3373 setup/main.py:4989
 msgid "_Cancel"
 msgstr "_Futa"
 
-#: setup/main.py:2657 setup/main.py:3248 setup/main.py:3326 setup/main.py:4942
+#: setup/main.py:2694 setup/main.py:3287 setup/main.py:3374 setup/main.py:4990
 msgid "_OK"
 msgstr "_NDIO"
 
-#: setup/main.py:2689
+#: setup/main.py:2726
 msgid "Another instance of this app is already running."
 msgstr "Kuna kipindi cha programu hii ambacho kingali kinatumika."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:2845
+#: setup/main.py:2884
 msgid "Do you really want to restore all default settings?"
 msgstr "Je, kweli ungependa kurudisha mipangilio yote kwa chaguo-msingi?"
 
-#: setup/main.py:3322
+#: setup/main.py:3370
 msgid "Select .wav sound file:"
 msgstr "Chagua faili ya sauti ya .wav:"
 
-#: setup/main.py:3502
+#: setup/main.py:3550
 msgid "Add dictionary"
 msgstr "Ongeza kamusi"
 
-#: setup/main.py:3815
+#: setup/main.py:3863
 msgid "Add input method"
 msgstr "Ongeza mbinu ya kuingiza"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:3991
+#: setup/main.py:4039
 msgid "Variable"
 msgstr "Jina"
 
-#: setup/main.py:4821
+#: setup/main.py:4869
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Hariri vitufe teule vya amri “%s”"
 
-#: setup/main.py:4849
+#: setup/main.py:4897
 msgid "Add a key binding"
 msgstr "Ongeza kitufe teule"
 
-#: setup/main.py:4861
+#: setup/main.py:4909
 msgid "Remove selected key binding"
 msgstr "Ondoa kitufe teule kilichochaguliwa"
 
@@ -1567,23 +1609,23 @@ msgstr "Ondoa kitufe teule kilichochaguliwa"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:4922
+#: setup/main.py:4970
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr ""
 "Je, kweli ungependa kurudisha vitufe teule vya amri zote kwa chaguo-msingi?"
 
-#: setup/main.py:4938
+#: setup/main.py:4986
 msgid "Open File ..."
 msgstr "Fungua Faili ..."
 
-#: setup/main.py:4957
+#: setup/main.py:5005
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Imefaulu kujifunza kutokana na faili %(filename)s."
 
-#: setup/main.py:4966
+#: setup/main.py:5014
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Imeshindwa kujifunza kutokana na faili %(filename)s."
@@ -1598,7 +1640,7 @@ msgstr "Imeshindwa kujifunza kutokana na faili %(filename)s."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:4989
+#: setup/main.py:5037
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1606,7 +1648,7 @@ msgstr ""
 "Je, kweli ungependa kufuta habari zote za lugha zilizofahamika ulipoandika "
 "au kwa kusoma faili?"
 
-#: setup/main.py:6584
+#: setup/main.py:6660
 msgid "ibus is not running."
 msgstr "ibus haifanyi kazi."
 
