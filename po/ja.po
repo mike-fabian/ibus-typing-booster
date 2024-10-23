@@ -9,11 +9,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-10-22 16:30+0200\n"
+"POT-Creation-Date: 2024-10-22 20:41+0200\n"
 "PO-Revision-Date: 2024-10-22 15:24+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/ja/>\n"
+"Language-Team: Japanese <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -219,34 +219,34 @@ msgstr "設定"
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster の設定"
 
-#: engine/hunspell_table.py:5423
+#: engine/hunspell_table.py:5409
 msgid "Failed to import Google speech-to-text."
 msgstr "Google音声テキストのインポートに失敗しました。"
 
-#: engine/hunspell_table.py:5426
+#: engine/hunspell_table.py:5412
 msgid "Failed to import pyaudio."
 msgstr "pyaudio のインポートに失敗しました。"
 
-#: engine/hunspell_table.py:5429
+#: engine/hunspell_table.py:5415
 msgid "Failed to import queue."
 msgstr "queue のインポートに失敗しました。"
 
-#: engine/hunspell_table.py:5434
+#: engine/hunspell_table.py:5420
 msgid "No supported language for speech recognition."
 msgstr "音声認識に対応する言語がありません。"
 
-#: engine/hunspell_table.py:5438
+#: engine/hunspell_table.py:5424
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "'Google application credentials' ファイル '%s' が見つかりませんでした。"
 
-#: engine/hunspell_table.py:5451
+#: engine/hunspell_table.py:5437
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Google音声テキストの初期化に失敗しました。debug.logを参照してください。"
 
-#: engine/hunspell_table.py:5559
+#: engine/hunspell_table.py:5545
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google音声テキストエラー。debug.logを参照してください。"
 

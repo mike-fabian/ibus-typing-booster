@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-10-22 16:30+0200\n"
+"POT-Creation-Date: 2024-10-22 20:41+0200\n"
 "PO-Revision-Date: 2023-07-30 09:19+0000\n"
 "Last-Translator: Avid Seeker <avidseeker7@protonmail.com>\n"
 "Language-Team: Arabic <https://translate.fedoraproject.org/projects/ibus-"
@@ -227,32 +227,32 @@ msgstr "الإعدادات"
 msgid "Preferences for ibus-typing-booster"
 msgstr "تفضيلات معزز ibus للكتابة"
 
-#: engine/hunspell_table.py:5423
+#: engine/hunspell_table.py:5409
 msgid "Failed to import Google speech-to-text."
 msgstr "فشل استيراد محرك غوغل لتحويل الحديث لنصوص."
 
-#: engine/hunspell_table.py:5426
+#: engine/hunspell_table.py:5412
 msgid "Failed to import pyaudio."
 msgstr "فشل استيراد pyaudio."
 
-#: engine/hunspell_table.py:5429
+#: engine/hunspell_table.py:5415
 msgid "Failed to import queue."
 msgstr "فشل استيراد طابور الانتظار."
 
-#: engine/hunspell_table.py:5434
+#: engine/hunspell_table.py:5420
 msgid "No supported language for speech recognition."
 msgstr "لا توجد لغة مدعومة للتعرف على الكلام."
 
-#: engine/hunspell_table.py:5438
+#: engine/hunspell_table.py:5424
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "ملف اعتماد تطبيقات غوغل %s غير موجود."
 
-#: engine/hunspell_table.py:5451
+#: engine/hunspell_table.py:5437
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "فشل بدء محرك غوغل لتحويل الكلام لنصوص. طالع السجل debug.log."
 
-#: engine/hunspell_table.py:5559
+#: engine/hunspell_table.py:5545
 msgid "Google speech-to-text error. See debug.log."
 msgstr "وقع خطأ في محرك غوغل لتحويل الكام لنصوص. طالع السجل debug.log."
 
