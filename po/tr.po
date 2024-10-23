@@ -12,10 +12,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-10-22 16:30+0200\n"
-"PO-Revision-Date: 2024-10-09 12:12+0000\n"
+"PO-Revision-Date: 2024-10-23 08:24+0000\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
-"Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/tr/>\n"
+"Language-Team: Turkish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -103,27 +103,21 @@ msgstr "Emoji Sürümü:"
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
 #: engine/emoji_picker.py:711
-#, fuzzy
-#| msgid "Emoji Version:"
 msgid "Emoji properties:"
-msgstr "Emoji Sürümü:"
+msgstr "Emoji özellikleri:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
 #: engine/emoji_picker.py:717
-#, fuzzy
-#| msgid "Unicode categories"
 msgid "Unicode category:"
-msgstr "Unicode kategorileri"
+msgstr "Unicode kategorisi:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
 #: engine/emoji_picker.py:724
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Unicode block:"
-msgstr "Unicode Sürümü:"
+msgstr "Unicode grubu:"
 
 #: engine/emoji_picker.py:743 engine/emoji_picker.py:1866
 msgid "Left click to copy"
@@ -1160,10 +1154,8 @@ msgstr "Dikey"
 #. the system needs to be idle after pressing a key before
 #. candidates are displayed
 #: setup/main.py:1625
-#, fuzzy
-#| msgid "Candidate window page size:"
 msgid "Candidate window delay in milliseconds:"
-msgstr "Aday penceresi sayfa boyutu:"
+msgstr "Milisaniye cinsinden aday pencere gecikmesi:"
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
@@ -1171,6 +1163,8 @@ msgstr "Aday penceresi sayfa boyutu:"
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
 msgstr ""
+"Adaylar görüntülenmeden önce son tuşa basıldıktan sonra ne kadar süre "
+"bekleneceği."
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
