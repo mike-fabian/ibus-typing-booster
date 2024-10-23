@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-10-22 16:30+0200\n"
+"POT-Creation-Date: 2024-10-22 20:41+0200\n"
 "PO-Revision-Date: 2024-06-08 21:36+0000\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: Czech <https://translate.fedoraproject.org/projects/ibus-"
@@ -229,33 +229,33 @@ msgstr "Nastavení"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Předvolby pro ibus-typing-booster"
 
-#: engine/hunspell_table.py:5423
+#: engine/hunspell_table.py:5409
 msgid "Failed to import Google speech-to-text."
 msgstr "Nepodařilo se importovat Google speech-to-text."
 
-#: engine/hunspell_table.py:5426
+#: engine/hunspell_table.py:5412
 msgid "Failed to import pyaudio."
 msgstr "Nepodařilo se importovat pyaudio."
 
-#: engine/hunspell_table.py:5429
+#: engine/hunspell_table.py:5415
 msgid "Failed to import queue."
 msgstr "Nepodařilo se importovat frontu."
 
-#: engine/hunspell_table.py:5434
+#: engine/hunspell_table.py:5420
 msgid "No supported language for speech recognition."
 msgstr "Žádný jazyk podporovaný pro rozpoznávání řeči."
 
-#: engine/hunspell_table.py:5438
+#: engine/hunspell_table.py:5424
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Nenalezen soubor „%s“ s „přihlašovacími údaji do Google“."
 
-#: engine/hunspell_table.py:5451
+#: engine/hunspell_table.py:5437
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Nepodařilo se inicializovat Google řeč na text. Viz záznam ladících událostí."
 
-#: engine/hunspell_table.py:5559
+#: engine/hunspell_table.py:5545
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Chyba Google řeč na text. Viz záznam ladících událostí."
 

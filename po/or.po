@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-10-22 16:30+0200\n"
+"POT-Creation-Date: 2024-10-22 20:41+0200\n"
 "PO-Revision-Date: 2019-12-20 00:16+0000\n"
 "Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
 "Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/ibus-"
@@ -226,32 +226,32 @@ msgstr "ସ୍ଥାପନକରଣି"
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster ପାଇଁ ଅଭିରୁଚିମାନ"
 
-#: engine/hunspell_table.py:5423
+#: engine/hunspell_table.py:5409
 msgid "Failed to import Google speech-to-text."
 msgstr "ଗୁଗଲ speech-to-text କୁ ଆମଦାନି କରିବାରେ ବିଫଳ।"
 
-#: engine/hunspell_table.py:5426
+#: engine/hunspell_table.py:5412
 msgid "Failed to import pyaudio."
 msgstr "pyaudio କୁ ଆମଦାନି କରିବାରେ ବିଫଳ।"
 
-#: engine/hunspell_table.py:5429
+#: engine/hunspell_table.py:5415
 msgid "Failed to import queue."
 msgstr "queue କୁ ଆମଦାନି କରିବାରେ ବିଫଳ।"
 
-#: engine/hunspell_table.py:5434
+#: engine/hunspell_table.py:5420
 msgid "No supported language for speech recognition."
 msgstr "ଭାଷଣ ମାନ୍ୟତା ପାଇଁ କୌଣସି ସମର୍ଥିତ ଭାଷା ନାହିଁ।"
 
-#: engine/hunspell_table.py:5438
+#: engine/hunspell_table.py:5424
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“ଗୁଗଲ ଆପ୍ଲିକେସନ କ୍ରେଡ଼େନସିଆଲସ” ଫାଇଲ “%s” ମିଳିଲା ନାହିଁ।"
 
-#: engine/hunspell_table.py:5451
+#: engine/hunspell_table.py:5437
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "ଗୁଗଲ speech-to-text କୁ ପ୍ରାରଭିକରଣରେ ବିଫଳ। debug.log ଦେଖନ୍ତୁ।"
 
-#: engine/hunspell_table.py:5559
+#: engine/hunspell_table.py:5545
 msgid "Google speech-to-text error. See debug.log."
 msgstr "ଗୁଗଲ speech-to-text ତ୍ରୁଟି। debug.log ଦେଖନ୍ତୁ।"
 
