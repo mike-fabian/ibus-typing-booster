@@ -22,6 +22,8 @@
 
 from typing import List
 from typing import Tuple
+from typing import Dict
+from typing import Any
 import sys
 from gi import require_version # type: ignore
 require_version('Gtk', '3.0')
@@ -29,8 +31,35 @@ from gi.repository import Gtk # type: ignore
 require_version('Pango', '1.0')
 from gi.repository import Pango
 
+def get_available_font_names() -> List[str]:
+    '''Return a list of the names of fonts available on the system
+
+    Examples:
+
+    “Sans”, “Serif”, and “Monospace” are not “real” fonts but should
+    always be available:
+
+    >>> 'Sans' in get_available_font_names()
+    True
+
+    >>> 'Serif' in get_available_font_names()
+    True
+
+    >>> 'Monospace' in get_available_font_names()
+    True
+
+    “Noto Sans” is a real font which is probably avaible on most systems:
+
+    >>> 'Noto Sans' in get_available_font_names()
+    True
+    '''
+    label = Gtk.Label()
+    pango_context = label.get_pango_context()
+    families = pango_context.list_families()
+    return sorted([family.get_name() for family in families])
+
 def get_fonts_used_for_text(
-        font: str, text: str, fallback: bool = True) -> List[Tuple[str, str]]:
+        font: str, text: str, fallback: bool = True) -> List[Tuple[str, Dict[str, Any]]]:
     '''Return a list of fonts which were really used to render a text
 
     :param font: The font requested to render the text in
@@ -43,14 +72,20 @@ def get_fonts_used_for_text(
 
     Examples:
 
+    (Don’t run CI checks regularly on these examples, it depends too much
+    on the fonts installed on the system used to do the test}
+
     >>> get_fonts_used_for_text('DejaVu Sans Mono', '😀 ')
-    [('😀', 'Noto Color Emoji'), (' ', 'DejaVu Sans Mono')]
+    [('😀', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True}), (' ', {'font': 'DejaVu Sans Mono', 'glyph-count': 1, 'visible': False, 'glyph-available': True})]
 
     >>> get_fonts_used_for_text('DejaVu Sans', '日本語 नमस्ते')
-    [('日本語', 'Droid Sans'), (' ', 'DejaVu Sans'), ('नमस्ते', 'Droid Sans')]
+    [('日本語 ', {'font': 'Droid Sans Fallback', 'glyph-count': 4, 'visible': True}), ('नमस्ते', {'font': 'FreeSans', 'glyph-count': 5, 'visible': True})]
 
     >>> get_fonts_used_for_text('DejaVu Sans', '日本語 🕉️')
-    [('日本語', 'Droid Sans'), (' ', 'DejaVu Sans'), ('🕉️', 'Noto Color Emoji')]
+    [('日本語 ', {'font': 'Droid Sans Fallback', 'glyph-count': 4, 'visible': True}), ('🕉️', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True})]
+
+    >>> get_fonts_used_for_text('DejaVu Sans', '🕉\uFE0F')
+    [('🕉\uFE0F', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True})]
     '''
     fonts_used = []
     text_utf8 = text.encode('UTF-8', errors='replace')
@@ -66,21 +101,122 @@ def get_fonts_used_for_text(
     pango_layout.set_text(text)
     pango_layout_line = pango_layout.get_line_readonly(0)
     gs_list = pango_layout_line.runs
-    number_of_runs = len(gs_list)
     for glyph_item in gs_list:
         pango_item = glyph_item.item
         offset = pango_item.offset
         length = pango_item.length
-        _num_chars = pango_item.num_chars
+        # _num_chars = pango_item.num_chars
         pango_glyph_string = glyph_item.glyphs
-        _num_glyphs = pango_glyph_string.num_glyphs
+        num_glyphs = pango_glyph_string.num_glyphs
         pango_analysis = pango_item.analysis
         pango_font = pango_analysis.font
         font_description_used = pango_font.describe()
-        run_text = text_utf8[offset:offset + length].decode('UTF-8', errors='replace')
+        run_text = text_utf8[offset:offset + length].decode(
+            'UTF-8', errors='replace')
         run_family = font_description_used.get_family()
-        fonts_used.append((run_text, run_family))
+        pango_layout_run = Pango.Layout(pango_context)
+        pango_layout_run.set_font_description(pango_font_description)
+        pango_layout_run.set_attributes(pango_attr_list)
+        pango_layout_run.set_text(run_text)
+        pango_layout_run_line = pango_layout_run.get_line_readonly(0)
+        visible = False
+        ink_rect, logical_rect = pango_layout_run_line.get_pixel_extents()
+        if ink_rect.width > 0 and ink_rect.height > 0:
+            visible = True
+        pango_has_char_input = ''
+        if len(run_text) == 1:
+            pango_has_char_input = run_text
+        # If it is only one character followed by a variation
+        # selector, check whether the Pango font has the character
+        # before the variation selector:
+        if (len(run_text) == 2
+            and ord('\uFE00') <= ord(run_text[1]) <= ord('\uFE0F')):
+            pango_has_char_input = run_text[0]
+            # With some fonts a 2 character sequence ending with
+            # a variation selector gets two glyphs, with some only one.
+            # For example with “Twemoji”, '☺\uFE0F' gets 1 glyph
+            # but with “Twitter Color Emoji” it gets 2 glyphs.
+            # But as the variation selector is invisible, we want to
+            # treat all 2 character texts ending with a variation selector
+            # as one glyph texts:
+            num_glyphs = 1
+        results_for_run = {
+            'font': run_family,
+            'glyph-count': num_glyphs,
+            'visible': visible}
+        if (num_glyphs == 1
+            and pango_has_char_input
+            and hasattr(Pango.Font, 'has_char')):
+            results_for_run['glyph-available'] = pango_font.has_char(
+                pango_has_char_input)
+        fonts_used.append((run_text, results_for_run))
     return fonts_used
+
+def emoji_font_fallback_needed(font: str, text: str) -> bool:
+    '''
+    Examples:
+
+    Twemoji does not support the emoji sequence for “head shaking vertically”
+    (U+1F642 U+200D U+2195, added in Unicode 15.1):
+
+    >>> emoji_font_fallback_needed('Twemoji', '🙂‍↕️')
+    True
+
+    Twemoji does not have the flag of Sark (U+1F1E8 U+1F1F6, added in Unicode 16.0):
+
+    >>> emoji_font_fallback_needed('Twemoji',  '🇨🇶')
+    True
+
+    Twemoji does not have U+1FAE9 FACE WITH BAGS UNDER EYES (added in Unicode 16.0):
+
+    >>> emoji_font_fallback_needed('Twemoji', '🫩')
+    True
+
+    But Twemoji has U+1F925 LYING FACE (added in Unicode 9.0):
+
+    >>> emoji_font_fallback_needed('Twemoji', '🤥')
+    False
+
+    >>> emoji_font_fallback_needed('Twemoji', '☺\ufe0f')
+    False
+
+    Twemoji does support the emoji sequence for the flag of Wales
+    (U+1F3F4 U+E0067 U+E0062 U+E0077 U+E006C U+E0073 U+E007F):
+
+    >>> emoji_font_fallback_needed('Twemoji', '🏴󠁧󠁢󠁷󠁬󠁳󠁿')
+    False
+
+    Twemoji does not have regular Latin characters like “A”:
+
+    >>> emoji_font_fallback_needed('Twemoji', 'A')
+    True
+
+    But of course any standard font has “A”:
+
+    >>> emoji_font_fallback_needed('Sans', 'A')
+    False
+
+    If the text given contains more than one emoji, then we don’t know and
+    the result is always True because a fallback might be needed:
+
+    >>> emoji_font_fallback_needed('Twemoji', '🏴󠁧󠁢󠁷󠁬󠁳󠁿🤥')
+    True
+    '''
+    fonts_used = get_fonts_used_for_text(font, text, fallback=False)
+    if len(fonts_used) > 1:
+        # If there is more than one run, that means the text contained more
+        # then just a single emoji or a single character. A fallback
+        # might be needed in that case, that is hard to tell. Just
+        # assume it is needed for the moment:
+        return True
+    results_for_run = fonts_used[0][1]
+    if results_for_run['glyph-count'] > 1:
+        return True
+    if not results_for_run['visible']:
+        return True
+    if 'glyph-available' in results_for_run and not results_for_run['glyph-available']:
+        return True
+    return False
 
 def _init() -> None:
     '''Initialization'''

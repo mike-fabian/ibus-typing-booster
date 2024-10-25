@@ -658,6 +658,22 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         descriptions = []
         descriptions.append(
             ' '.join([f'U+{ord(character):04X}' for character in emoji]))
+        fonts_description = _('Fonts used to render this emoji:')
+        fallback = self._optimize_pango_fallback(emoji)
+        for text, font_dict in itb_pango.get_fonts_used_for_text(
+                self._font + ' ' + str(self._fontsize), emoji,
+                fallback=fallback):
+            fonts_description += '\n'
+            code_points = ''
+            for char in text:
+                code_points += f' U+{ord(char):04X}'
+            fonts_description += (
+                f'<span font="{self._font}" '
+                f'fallback="{str(fallback).lower()}" >'
+                + text + '</span>'
+                + f'<span fallback="true">{code_points}</span>')
+            fonts_description += f': {font_dict}'
+        descriptions.append(fonts_description)
         for language in itb_util.expand_languages(self._languages):
             names = self._emoji_matcher.names(emoji, language=language)
             description = f'<b>{language}</b>'
@@ -680,21 +696,6 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 description_empty = False
             if not description_empty:
                 descriptions.append(description)
-        fonts_description = _('Fonts used to render this emoji:')
-        for text, font_family in itb_pango.get_fonts_used_for_text(
-                self._font + ' ' + str(self._fontsize), emoji,
-                fallback=self._fallback):
-            fonts_description += '\n'
-            code_points = ''
-            for char in text:
-                code_points += f' U+{ord(char):04X}'
-            fonts_description += (
-                f'<span font="{self._font}" '
-                f'fallback="{str(self._fallback).lower()}" >'
-                + text + '</span>'
-                + f'<span fallback="true">{code_points}</span>')
-            fonts_description += ': ' + font_family
-        descriptions.append(fonts_description)
         if self._emoji_matcher.unicode_version(emoji):
             descriptions.append(
                 _('Unicode Version:') + ' '
@@ -829,18 +830,17 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                     if recently_used_index < len(sorted_recently_used):
                         emoji = sorted_recently_used[recently_used_index]
             gtk_label = Gtk.Label()
+            fallback = self._optimize_pango_fallback(emoji)
             # Make font for emoji large using pango markup
             text = (
                 f'<span font="{self._font} {self._fontsize}" '
-                f'fallback="{str(self._fallback).lower()}">'
-                + html.escape(emoji)
-                + '</span>')
+                f'fallback="{str(fallback).lower()}">'
+                f'{html.escape(emoji)}</span>')
             if itb_emoji.is_invisible(emoji):
                 text += (
                     f'<span fallback="false" font="{self._fontsize / 2}">'
-                    f' U+{ord(emoji):04X} '
-                    + self._emoji_matcher.name(emoji)
-                    + '</span>')
+                    f' U+{ord(emoji):04X} {self._emoji_matcher.name(emoji)}'
+                    '</span>')
             gtk_label.set_text(text)
             gtk_label.set_use_markup(True)
             gtk_label.set_can_focus(False)
@@ -1259,9 +1259,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             dummy_score = candidate[2]
             label = Gtk.Label()
             # Make font for emoji large using pango markup
+            fallback = self._optimize_pango_fallback(emoji)
             label.set_text(
                 f'<span font="{self._font} {self._fontsize}" '
-                f'fallback="{str(self._fallback).lower()}">'
+                f'fallback="{str(fallback).lower()}">'
                 + html.escape(emoji)
                 + '</span>'
                 + f'<span font="{self._fontsize / 2}">'
@@ -1447,6 +1448,20 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 'on_row_activated() %s %s %s\n',
                 repr(treeview), repr(treepath), repr(column))
 
+    def _optimize_pango_fallback(self, emoji: str) -> bool:
+        '''
+        Which fallback value to use best in the pango markup for this emoji.
+
+        If fallback is requested, pango may fall back to a different font,
+        even if the currently selected font supports the emoji just fine.
+        In that case, avoid the fallback.
+        '''
+        if not self._fallback:
+            return False
+        if not itb_pango.emoji_font_fallback_needed(self._font, emoji):
+            return False
+        return True
+
     def _parse_emoji_and_name_from_text( # pylint: disable=no-self-use
             self, text: str) -> Tuple[str, str]:
         '''
@@ -1587,9 +1602,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             (emoji, name) = self._parse_emoji_and_name_from_text(text)
             if emoji:
                 emoji = self._variation_selector_normalize_for_font(emoji)
+                fallback = self._optimize_pango_fallback(emoji)
                 new_text = (
                     f'<span font="{self._font} {self._fontsize}" '
-                    f'fallback="{str(self._fallback).lower()}">'
+                    f'fallback="{str(fallback).lower()}">'
                     + html.escape(emoji)
                     + '</span>')
                 if name:
@@ -1670,9 +1686,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             # If the old emoji has a name, this is a line
             # in a search results flowbox and we do *not* want
             # to replace the emoji.
+            fallback = self._optimize_pango_fallback(emoji)
             new_text = (
                 f'<span font="{self._font} {self._fontsize}" '
-                f'fallback="{str(self._fallback).lower()}">'
+                f'fallback="{str(fallback).lower()}">'
                 + html.escape(emoji)
                 + '</span>')
             label.set_text(new_text)
@@ -1842,9 +1859,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             'child-activated', self.on_skin_tone_selected)
         for skin_tone_variant in skin_tone_variants:
             label = Gtk.Label()
+            fallback = self._optimize_pango_fallback(emoji)
             label.set_text(
                 f'<span font="{self._font} {self._fontsize}" '
-                f'fallback="{str(self._fallback).lower()}">'
+                f'fallback="{str(fallback).lower()}">'
                 + html.escape(skin_tone_variant)
                 + '</span>')
             label.set_use_markup(True)
@@ -1951,9 +1969,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         label.set_vexpand(False)
         label.set_halign(Gtk.Align.START)
         label.set_valign(Gtk.Align.START)
+        fallback = self._optimize_pango_fallback(emoji)
         label.set_markup(
             f'<span font="{self._font} {self._fontsize * 3}" '
-            f'fallback="{str(self._fallback).lower()}">'
+            f'fallback="{str(fallback).lower()}">'
             + html.escape(emoji)
             + '</span>')
         emoji_info_popover_listbox.insert(label, -1)
@@ -2085,6 +2104,14 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         '''
         good_emoji_fonts = [
             'Noto Color Emoji 🎨',
+            # “Twitter Color Emoji” is a font with SVG images in an
+            # OpenType font.  One can get it from
+            # https://github.com/13rac1/twemoji-color-font The latest
+            # release is currently:
+            # https://github.com/13rac1/twemoji-color-font/releases/download/v15.1.0/TwitterColorEmoji-SVGinOT-Linux-15.1.0.tar.gz
+            # Just unpack the tarball in ~/.fonts/ I tested that it
+            # works well (in colour!) on Fedora 40 and Fedora 41.
+            'Twitter Color Emoji 🎨', # color
             'Twemoji 🎨', # color
             'Apple Color Emoji 🎨', # color
             'Emoji Two 🎨', # color
@@ -2094,7 +2121,6 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             'Noto Emoji 🙾', # black and white
             'Android Emoji 🙾', # black and white
             'Segoe UI Emoji 🙾', # seems to be black and white
-            'Twitter Color Emoji 🙾', # seems to be black and white
         ]
         available_good_emoji_fonts = [
             'emoji (' + _('System default') + ')',

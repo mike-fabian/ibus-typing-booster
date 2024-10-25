@@ -25,6 +25,7 @@ TESTS = \
 	test_emoji_unicode_version.py \
 	test_hunspell_suggest.py \
 	test_itb.py \
+	test_itb_pango.py \
 	test_itb_util.py \
 	test_keyvals_to_keycodes.py \
 	test_m17n_db_info.py \
