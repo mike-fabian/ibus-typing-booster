@@ -41,6 +41,45 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.26.6" date="2024-10-28" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.26.6</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            In do_reset() skip clearing input only when the
+            surrounding text **up to the cursor** ends with the
+            current preedit (Resolves:github-issues#529)
+          </li>
+          <li>
+            Also make it possible to show font file names, font
+            versions, and emoji related OpenType tables of the fonts
+            used (shown only in debug mode, i.e. when "emoji-picker
+            --debug" is used, when not in debug mode show only the
+            font family name)
+          </li>
+          <li>
+            Get more information about the Pango rendering support for
+            an emoji and use fallback in emoji-picker only when
+            necessary (Resolves: github-issues#508)
+          </li>
+          <li>
+            Simplify itb_pango.py: don’t use ctypes, use `from gi.repository import Pango` instead
+          </li>
+          <li>
+            Translation update from Weblate (kab 75.9%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/529">
+          github-issues#529
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/508">
+          github-issues#508
+        </issue>
+      </issues>
+    </release>
     <release version="2.26.0" date="2024-10-23" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.26.0</url>
       <description>

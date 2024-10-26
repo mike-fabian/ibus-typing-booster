@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 28 Oct 2024 Release 2.26.6
+* Simplify itb_pango.py: don’t use ctypes, use `from gi.repository import Pango` instead
+* Get more information about the Pango rendering support for an emoji and use fallback in emoji-picker only when necessary (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/508)
+* Also make it possible to show font file names, font versions, and emoji related OpenType tables of the fonts used (shown only in debug mode, i.e. when "emoji-picker --debug" is used, when not in debug mode show only the font family name)
+* In do_reset() skip clearing input only when the surrounding text **up to the cursor** ends with the current preedit (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/529)
+* Translation update from Weblate (kab 75.9%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 23 Oct 2024 Release 2.26.0
 * Introduce a delay time before candidates are updated and displayed (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/530)
 * emoji-picker: Show Emoji properties, Unicode category, and Unicode block always, not only when --debug is used. As they are now shown always, make their labels translatable.
