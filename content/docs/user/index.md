@@ -3067,9 +3067,25 @@ Good fonts to display emoji:
       https://www.google.com/get/noto/. (Search for “Noto Color
       Emoji”).
 
+* “Twitter Color Emoji”:
+
+    * A color and B&W emoji SVG-OpenType / SVGinOT font. I tested that
+    it works well on Fedora 40 and Fedora 41. As it uses SVG and not
+    fixed size images like most other colour emoji fonts, it scales
+    nicely without looking blurry even to huge sizes.
+
+    * Github: https://github.com/13rac1/twemoji-color-font
+
+    * I am not aware of packages for Fedora or openSUSE but  one can
+    easily download the tarball for the latest release from
+    https://github.com/13rac1/twemoji-color-font/releases/download/v15.1.0/TwitterColorEmoji-SVGinOT-Linux-15.1.0.tar.gz
+    and unpack it in the ~/.fonts/ directory.
+
 * “Twemoji”:
 
-    * Homepage: https://twemoji.twitter.com/
+    * Homepage: https://twemoji.twitter.com/ (doesn’t exist anymore)
+
+    * Github: https://github.com/twitter/twemoji/
     
     * On Fedora, this font is in the `twitter-twemoji-fonts` package.
 
