@@ -672,7 +672,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 f'fallback="{str(fallback).lower()}" >'
                 + text + '</span>'
                 + f'<span fallback="true">{code_points}</span>')
-            fonts_description += f': {font_dict}'
+            if _ARGS.debug:
+                fonts_description += f': {font_dict}'
+            else:
+                fonts_description += f': {font_dict["font"]}'
         descriptions.append(fonts_description)
         for language in itb_util.expand_languages(self._languages):
             names = self._emoji_matcher.names(emoji, language=language)
@@ -1128,6 +1131,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         stats.sort_stats('cumulative')
         stats.print_stats('emoji_picker', 25)
         stats.print_stats('itb_emoji', 25)
+        stats.print_stats('itb_pango', 25)
         LOGGER.info('Profiling info:\n%s', stats_stream.getvalue())
 
     def on_delete_event(self, *_args: Any) -> None:

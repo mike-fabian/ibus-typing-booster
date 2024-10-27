@@ -25,11 +25,146 @@ from typing import Tuple
 from typing import Dict
 from typing import Any
 import sys
+import re
+import subprocess
+import shutil
+import functools
+import logging
 from gi import require_version # type: ignore
 require_version('Gtk', '3.0')
 from gi.repository import Gtk # type: ignore
 require_version('Pango', '1.0')
 from gi.repository import Pango
+
+LOGGER = logging.getLogger('ibus-typing-booster')
+
+# @functools.cache is available only in Python >= 3.9.
+#
+# Python >= 3.9 is not available on RHEL8, not yet on openSUSE
+# Tumbleweed (2021-22-29), ...
+#
+# But @functools.lru_cache(maxsize=None) is the same and it is
+# available for Python >= 3.2, that means it should be available
+# everywhere.
+
+@functools.lru_cache(maxsize=None)
+def get_font_file(family: str) -> str:
+    '''Use Fontconfig to find the font file path for a given font family
+
+    Examples:
+
+    >>> get_font_file('Noto Color Emoji')
+    '/home/mfabian/.fonts/Noto-COLRv1.ttf'
+
+    >>> get_font_file('This family does not exist.')
+    '/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf'
+
+    '''
+    path = ''
+    fc_match_binary = shutil.which('fc-match')
+    if fc_match_binary:
+        try:
+            output = subprocess.check_output([fc_match_binary, family, '--format', '%{file}'],
+                                             stderr=subprocess.STDOUT,
+                                             encoding='utf-8')
+            path = output.strip()
+        except FileNotFoundError as error:
+            LOGGER.warning('Exception when calling %s: %s: %s',
+                           fc_match_binary, error.__class__.__name__, error)
+        except subprocess.CalledProcessError as error:
+            LOGGER.warning('Exception when calling %s: %s: %s',
+                           fc_match_binary, error.__class__.__name__, error)
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.warning('Exception when calling %s: %s: %s',
+                           fc_match_binary, error.__class__.__name__, error)
+    return path
+
+@functools.lru_cache(maxsize=None)
+def get_font_version(font_file: str) -> str:
+    '''Use otfinfo to get the font version from a font file
+
+    Examples:
+
+    >>> get_font_version('/usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf')
+    'Version 2.042;GOOG;noto-emoji:20231129:7f49a00d523ae5f94e52fd9f9a39bac9cf65f958'
+
+    >>> get_font_version('/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf')
+    'Version 2.37'
+
+    >>> get_font_version('/this-file-does-not-exist.ttf')
+    ''
+    '''
+    version = ''
+    otfinfo_binary = shutil.which('otfinfo')
+    if otfinfo_binary:
+        try:
+            output = subprocess.check_output([otfinfo_binary, '-v', font_file],
+                                             stderr=subprocess.STDOUT,
+                                             encoding='utf-8')
+            version = output.strip()
+        except FileNotFoundError as error:
+            LOGGER.warning('Exception when calling %s: %s: %s',
+                           otfinfo_binary, error.__class__.__name__, error)
+        except subprocess.CalledProcessError as error:
+            LOGGER.warning('Exception when calling %s: %s: %s',
+                           otfinfo_binary, error.__class__.__name__, error)
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.warning('Exception when calling %s: %s: %s',
+                           otfinfo_binary, error.__class__.__name__, error)
+    return version
+
+@functools.lru_cache(maxsize=None)
+def get_font_tables(font_file: str) -> List[str]:
+    '''Use otfinfo to get the OpenType tables in a font file
+
+    (Only those which are interesting for rendering emoji)
+
+    Examples:
+
+    >>> get_font_tables('/usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf')
+    ['CBDT']
+
+    >>> get_font_tables('/home/mfabian/.fonts/Noto-COLRv1.ttf')
+    ['COLR']
+
+    >>> get_font_tables('/usr/share/fonts/hfg-gmuend-openmoji-color-fonts/OpenMoji-color-glyf_colr_1.ttf')
+    ['COLR']
+
+    >>> get_font_tables('/home/mfabian/.fonts/OpenMoji-black-glyf.ttf')
+    []
+
+    >>> get_font_tables('/home/mfabian/.fonts/OpenMoji-color-colr1_svg.ttf')
+    ['COLR', 'SVG']
+
+    >>> get_font_tables('/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf')
+    []
+
+    '''
+    tables = []
+    otfinfo_binary = shutil.which('otfinfo')
+    if otfinfo_binary:
+        try:
+            output = subprocess.check_output([otfinfo_binary, '-t', font_file],
+                                             stderr=subprocess.STDOUT,
+                                             encoding='utf-8')
+            pattern = re.compile(r'\s*(?P<size>[0-9]+)\s+(?P<table>\S+)\s*')
+            for line in output.splitlines():
+                match_result = pattern.match(line.strip())
+                if match_result:
+                    size = match_result.group('size')
+                    table = match_result.group('table')
+                    if table in ('CBDT', 'COLR', 'SVG'):
+                        tables.append(table)
+        except FileNotFoundError as error:
+            LOGGER.warning('Exception when calling %s: %s: %s',
+                           otfinfo_binary, error.__class__.__name__, error)
+        except subprocess.CalledProcessError as error:
+            LOGGER.warning('Exception when calling %s: %s: %s',
+                           otfinfo_binary, error.__class__.__name__, error)
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.warning('Exception when calling %s: %s: %s',
+                           otfinfo_binary, error.__class__.__name__, error)
+    return tables
 
 def get_available_font_names() -> List[str]:
     '''Return a list of the names of fonts available on the system
@@ -76,16 +211,16 @@ def get_fonts_used_for_text(
     on the fonts installed on the system used to do the test}
 
     >>> get_fonts_used_for_text('DejaVu Sans Mono', '😀 ')
-    [('😀', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True}), (' ', {'font': 'DejaVu Sans Mono', 'glyph-count': 1, 'visible': False, 'glyph-available': True})]
+    [('😀', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True, 'file': '/home/mfabian/.fonts/Noto-COLRv1.ttf', 'version': 'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced', 'opentype-tables': ['COLR']}), (' ', {'font': 'DejaVu Sans Mono', 'glyph-count': 1, 'visible': False, 'glyph-available': True, 'file': '/usr/share/fonts/dejavu-sans-mono-fonts/DejaVuSansMono.ttf', 'version': 'Version 2.37'})]
 
     >>> get_fonts_used_for_text('DejaVu Sans', '日本語 नमस्ते')
-    [('日本語 ', {'font': 'Droid Sans Fallback', 'glyph-count': 4, 'visible': True}), ('नमस्ते', {'font': 'FreeSans', 'glyph-count': 5, 'visible': True})]
+    [('日本語 ', {'font': 'Droid Sans Fallback', 'glyph-count': 4, 'visible': True, 'file': '/usr/share/fonts/google-droid-sans-fonts/DroidSansFallbackFull.ttf', 'version': 'Version 1.00c'}), ('नमस्ते', {'font': 'FreeSans', 'glyph-count': 5, 'visible': True, 'file': '/usr/share/fonts/gnu-free/FreeSans.ttf', 'version': 'Version 0412.2268'})]
 
     >>> get_fonts_used_for_text('DejaVu Sans', '日本語 🕉️')
-    [('日本語 ', {'font': 'Droid Sans Fallback', 'glyph-count': 4, 'visible': True}), ('🕉️', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True})]
+    [('日本語 ', {'font': 'Droid Sans Fallback', 'glyph-count': 4, 'visible': True, 'file': '/usr/share/fonts/google-droid-sans-fonts/DroidSansFallbackFull.ttf', 'version': 'Version 1.00c'}), ('🕉️', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True, 'file': '/home/mfabian/.fonts/Noto-COLRv1.ttf', 'version': 'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced', 'opentype-tables': ['COLR']})]
 
     >>> get_fonts_used_for_text('DejaVu Sans', '🕉\uFE0F')
-    [('🕉\uFE0F', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True})]
+    [('🕉️', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True, 'file': '/home/mfabian/.fonts/Noto-COLRv1.ttf', 'version': 'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced', 'opentype-tables': ['COLR']})]
     '''
     fonts_used = []
     text_utf8 = text.encode('UTF-8', errors='replace')
@@ -149,6 +284,15 @@ def get_fonts_used_for_text(
             and hasattr(Pango.Font, 'has_char')):
             results_for_run['glyph-available'] = pango_font.has_char(
                 pango_has_char_input)
+        path = get_font_file(run_family)
+        if path:
+            results_for_run['file'] = path
+            version = get_font_version(path)
+            if version:
+                results_for_run['version'] = version
+            open_type_tables = get_font_tables(path)
+            if open_type_tables:
+                results_for_run['opentype-tables'] = open_type_tables
         fonts_used.append((run_text, results_for_run))
     return fonts_used
 
@@ -234,6 +378,12 @@ class __ModuleInitializer: # pylint: disable=too-few-public-methods,invalid-name
         return
 
 if __name__ == "__main__":
+    LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
+    LOGGER.setLevel(logging.DEBUG)
+    LOGGER.addHandler(LOG_HANDLER)
     import doctest
     (FAILED, _ATTEMPTED) = doctest.testmod()
+    LOGGER.info('get_font_file() cache info: %s', get_font_file.cache_info())
+    LOGGER.info('get_font_version() cache info: %s', get_font_version.cache_info())
+    LOGGER.info('get_font_tables() cache info: %s', get_font_tables.cache_info())
     sys.exit(FAILED)
