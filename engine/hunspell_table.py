@@ -7718,14 +7718,22 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             text = surrounding_text[0].get_text()
             cursor_pos = surrounding_text[1]
             anchor_pos = surrounding_text[2]
+            text_to_cursor = text[:cursor_pos]
             if surrounding_text:
-                LOGGER.debug('surrounding_text = [%r, %s, %s]',
-                             text, cursor_pos, anchor_pos)
+                LOGGER.debug(
+                    'surrounding_text = [%r, %s, %s] text_to_cursor=“%s”',
+                    text, cursor_pos, anchor_pos, text_to_cursor)
             else:
                 LOGGER.debug('Surrounding text object is None. '
                              'Should never happen.')
                 return
-            if not text.endswith(self._current_preedit_text):
+            if (self._im_client.startswith('gtk3-im')
+                and not text_to_cursor.endswith(self._current_preedit_text)):
+                # On Wayland this causes problems, as the surrounding text
+                # behaves differently. Do this workaround only if the im client
+                # uses gtk3-im, if not it will cause more problems then help.
+                LOGGER.debug('self._current_preedit_text=“%s”',
+                             self._current_preedit_text)
                 LOGGER.debug(
                     'Whatever caused the reset did not commit the preedit. '
                     'A reset seems to happen sometimes right after '
