@@ -1229,16 +1229,37 @@ well. For example,</p><pre><code>LANGUAGE=de:en:fr emoji-picker
 fallback though.)</p><p>The command line options to choose a different font or font size can
 be used like this:</p><pre><code>emoji-picker --font &quot;Noto Color Emoji&quot; --fontsize 32
 </code></pre><p>The command line font options override the font options in the
-graphical user interface.</p><p>For more about emoji fonts and colour, see <a href=#6_10>Emoji fonts</a>.</p><h6 id=7_10>7_10</h6><h3 id=emoji-fonts>Emoji fonts</h3><p>Good fonts to display emoji:</p><ul><li><p>“Noto Color Emoji”:</p><ul><li><p>On Fedora, this font is in the <code>google-noto-emoji-fonts</code> package</p></li><li><p>On openSUSE in the <code>noto-coloremoji-fonts</code> package</p></li><li><p>If the version packaged for your distribution is not up-to-date,
+graphical user interface.</p><p>For more about emoji fonts and colour, see <a href=#6_10>Emoji fonts</a>.</p><h6 id=7_10>7_10</h6><h3 id=emoji-fonts>Emoji fonts</h3><p>Good fonts to display emoji:</p><ul><li><p>“Noto Color Emoji”:</p><ul><li><p>On Fedora 40, this font is in the <code>google-noto-emoji-fonts</code> package.
+The version currently packaged is a bitmap font (OpenType CBDT table).
+When the bitmaps are scaled up to huge sizes the results look blurry.</p></li><li><p>On openSUSE it is in the <code>noto-coloremoji-fonts</code> package.
+The version currently packaged is a bitmap font (OpenType CBDT table).
+When the bitmaps are scaled up to huge sizes the results look blurry.</p></li><li><p>If the version packaged for your distribution is not up-to-date,
 you can get the most recent version here:
 <a href=https://www.google.com/get/noto/>https://www.google.com/get/noto/</a>. (Search for “Noto Color
-Emoji”).</p></li></ul></li><li><p>“Twitter Color Emoji”:</p><ul><li><p>A color and B&W emoji SVG-OpenType / SVGinOT font. I tested that
-it works well on Fedora 40 and Fedora 41. As it uses SVG and not
-fixed size images like most other colour emoji fonts, it scales
-nicely without looking blurry even to huge sizes.</p></li><li><p>Github: <a href=https://github.com/13rac1/twemoji-color-font>https://github.com/13rac1/twemoji-color-font</a></p></li><li><p>I am not aware of packages for Fedora or openSUSE but one can
+Emoji”).</p></li><li><p>You can also get this font from the github repo:
+<a href=https://github.com/googlefonts/noto-emoji/tree/main/fonts>https://github.com/googlefonts/noto-emoji/tree/main/fonts</a>
+There is also a Noto-COLRv1.ttf in that directory which
+uses COLRv1 (it has a OpenType COLR table). COLR fonts
+use scalable vector graphics and thus render nicely at any size.
+COLRv1 also renders quite fast, faster than SVG apparently.</p></li></ul></li><li><p>“Twitter Color Emoji”:</p><ul><li><p>A color and B&W emoji SVG-OpenType / SVGinOT font (has the
+OpenType SVG table) I tested that it works well on Fedora 40 and
+Fedora 41. SVG is a scalable vector graphics format, therefore
+this font renders nicely at any size. SVG seems to render
+slower than COLRv1, but this font still renders quite fast.</p></li><li><p>Github: <a href=https://github.com/13rac1/twemoji-color-font>https://github.com/13rac1/twemoji-color-font</a></p></li><li><p>I am not aware of packages for Fedora or openSUSE but one can
 easily download the tarball for the latest release from
 <a href=https://github.com/13rac1/twemoji-color-font/releases/download/v15.1.0/TwitterColorEmoji-SVGinOT-Linux-15.1.0.tar.gz>https://github.com/13rac1/twemoji-color-font/releases/download/v15.1.0/TwitterColorEmoji-SVGinOT-Linux-15.1.0.tar.gz</a>
-and unpack it in the ~/.fonts/ directory.</p></li></ul></li><li><p>“Twemoji”:</p><ul><li><p>Homepage: <a href=https://twemoji.twitter.com/>https://twemoji.twitter.com/</a> (doesn’t exist anymore)</p></li><li><p>Github: <a href=https://github.com/twitter/twemoji/>https://github.com/twitter/twemoji/</a></p></li><li><p>On Fedora, this font is in the <code>twitter-twemoji-fonts</code> package.</p></li></ul></li><li><p>“Symbola”:</p><ul><li><p>Created by George Douros. The latest version (Version 13.00,
+and unpack it in the ~/.fonts/ directory.</p></li></ul></li><li><p>“Twemoji”:</p><ul><li><p>Homepage: <a href=https://twemoji.twitter.com/>https://twemoji.twitter.com/</a> (doesn’t exist anymore)</p></li><li><p>Github: <a href=https://github.com/twitter/twemoji/>https://github.com/twitter/twemoji/</a></p></li><li><p>On Fedora, this font is in the <code>twitter-twemoji-fonts</code> package.
+It is a bitmap font (OpenType CBDT table).</p></li></ul></li><li><p>“OpenMoji”:</p><ul><li><p>Homepage: <a href=https://openmoji.org/>https://openmoji.org/</a></p></li><li><p>On Fedora 40, this font is in
+the <code>hfg-gmuend-openmoji-color-fonts</code> package. The font in the
+package is a COLRv1 font (OpenType COLR table), i.e. a vector
+graphics font which scales nicely to any size. Other varieties
+of this font can be found in the github repo:
+<a href=https://github.com/hfg-gmuend/openmoji/tree/15.0.0/font>https://github.com/hfg-gmuend/openmoji/tree/15.0.0/font</a> There
+are versions with CBDT (bitmap), COLRv0, COLRv1, SVG, SBIX, SVG
+and COLRv0, SVG and COLRv1. The SVG rendering works for me on
+Fedora 40 but is really slow. There is also a black and white
+verson of this font in that github repo,
+“OpenMoji-black-glyf.ttf”.</p></li></ul></li><li><p>“Symbola”:</p><ul><li><p>Created by George Douros. The latest version (Version 13.00,
 released March 25, 2020)is available here:
 <a href=https://dn-works.com/ufas/>https://dn-works.com/ufas/</a></p></li><li><p>Distributions usually have packages old version of this font as
 the recent versions have a licence which does not allow to include
