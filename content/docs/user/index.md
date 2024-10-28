@@ -3058,28 +3058,40 @@ Good fonts to display emoji:
 
 * “Noto Color Emoji”:
 
-    * On Fedora, this font is in the `google-noto-emoji-fonts` package
+    * On Fedora 40, this font is in the `google-noto-emoji-fonts` package.
+      The version currently packaged is a bitmap font (OpenType CBDT table).
+      When the bitmaps are scaled up to huge sizes the results look blurry.
 
-    * On openSUSE in the `noto-coloremoji-fonts` package
+    * On openSUSE it is in the `noto-coloremoji-fonts` package.
+      The version currently packaged is a bitmap font (OpenType CBDT table).
+      When the bitmaps are scaled up to huge sizes the results look blurry.
 
     * If the version packaged for your distribution is not up-to-date,
       you can get the most recent version here:
       https://www.google.com/get/noto/. (Search for “Noto Color
       Emoji”).
 
+    * You can also get this font from the github repo:
+      https://github.com/googlefonts/noto-emoji/tree/main/fonts
+      There is also a Noto-COLRv1.ttf in that directory which
+      uses COLRv1 (it has a OpenType COLR table). COLR fonts
+      use scalable vector graphics and thus render nicely at any size.
+      COLRv1 also renders quite fast, faster than SVG apparently.
+
 * “Twitter Color Emoji”:
 
-    * A color and B&W emoji SVG-OpenType / SVGinOT font. I tested that
-    it works well on Fedora 40 and Fedora 41. As it uses SVG and not
-    fixed size images like most other colour emoji fonts, it scales
-    nicely without looking blurry even to huge sizes.
+    * A color and B&W emoji SVG-OpenType / SVGinOT font (has the
+      OpenType SVG table) I tested that it works well on Fedora 40 and
+      Fedora 41. SVG is a scalable vector graphics format, therefore
+      this font renders nicely at any size.  SVG seems to render
+      slower than COLRv1, but this font still renders quite fast.
 
     * Github: https://github.com/13rac1/twemoji-color-font
 
     * I am not aware of packages for Fedora or openSUSE but  one can
-    easily download the tarball for the latest release from
-    https://github.com/13rac1/twemoji-color-font/releases/download/v15.1.0/TwitterColorEmoji-SVGinOT-Linux-15.1.0.tar.gz
-    and unpack it in the ~/.fonts/ directory.
+      easily download the tarball for the latest release from
+      https://github.com/13rac1/twemoji-color-font/releases/download/v15.1.0/TwitterColorEmoji-SVGinOT-Linux-15.1.0.tar.gz
+      and unpack it in the ~/.fonts/ directory.
 
 * “Twemoji”:
 
@@ -3088,6 +3100,23 @@ Good fonts to display emoji:
     * Github: https://github.com/twitter/twemoji/
     
     * On Fedora, this font is in the `twitter-twemoji-fonts` package.
+      It is a bitmap font (OpenType CBDT table).
+
+* “OpenMoji”:
+
+    * Homepage: https://openmoji.org/
+
+    * On Fedora 40, this font is in
+      the `hfg-gmuend-openmoji-color-fonts` package.  The font in the
+      package is a COLRv1 font (OpenType COLR table), i.e. a vector
+      graphics font which scales nicely to any size.  Other varieties
+      of this font can be found in the github repo:
+      https://github.com/hfg-gmuend/openmoji/tree/15.0.0/font There
+      are versions with CBDT (bitmap), COLRv0, COLRv1, SVG, SBIX, SVG
+      and COLRv0, SVG and COLRv1. The SVG rendering works for me on
+      Fedora 40 but is really slow. There is also a black and white
+      verson of this font in that github repo,
+      “OpenMoji-black-glyf.ttf”.
 
 * “Symbola”:
 
