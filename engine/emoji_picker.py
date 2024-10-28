@@ -2108,6 +2108,9 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         '''
         good_emoji_fonts = [
             'Noto Color Emoji 🎨',
+            # “OpenMoji Color”: https://openmoji.org/
+            # It is available in the “hfg-gmuend-openmoji-color-fonts” package on Fedora.
+            'OpenMoji Color 🎨',
             # “Twitter Color Emoji” is a font with SVG images in an
             # OpenType font.  One can get it from
             # https://github.com/13rac1/twemoji-color-font The latest
@@ -2121,6 +2124,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             'Emoji Two 🎨', # color
             'Emoji One 🎨', # color
             'JoyPixels 🎨', # color
+            # “OpenMoji Black” is available at: https://openmoji.org/
+            'OpenMoji Black 🙾', # black and white
             'Symbola 🙾', # black and white
             'Noto Emoji 🙾', # black and white
             'Android Emoji 🙾', # black and white
