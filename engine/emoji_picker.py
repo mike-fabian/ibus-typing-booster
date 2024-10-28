@@ -2124,12 +2124,12 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             'Emoji Two 🎨', # color
             'Emoji One 🎨', # color
             'JoyPixels 🎨', # color
+            'Segoe UI Emoji 🎨', # newer versions are in color
             # “OpenMoji Black” is available at: https://openmoji.org/
             'OpenMoji Black 🙾', # black and white
             'Symbola 🙾', # black and white
             'Noto Emoji 🙾', # black and white
             'Android Emoji 🙾', # black and white
-            'Segoe UI Emoji 🙾', # seems to be black and white
         ]
         available_good_emoji_fonts = [
             'emoji (' + _('System default') + ')',
