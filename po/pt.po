@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-10-22 20:41+0200\n"
+"POT-Creation-Date: 2024-10-28 12:07+0100\n"
 "PO-Revision-Date: 2024-04-20 16:36+0000\n"
 "Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
 "memory@weblate.org>\n"
@@ -90,15 +90,15 @@ msgstr "Categorias de Unicode"
 msgid "Keywords"
 msgstr "Palavras-chave"
 
-#: engine/emoji_picker.py:683
+#: engine/emoji_picker.py:661
 msgid "Fonts used to render this emoji:"
 msgstr "Fontes usadas para mostrar este emoji:"
 
-#: engine/emoji_picker.py:700
+#: engine/emoji_picker.py:704
 msgid "Unicode Version:"
 msgstr "Versão de Unicode:"
 
-#: engine/emoji_picker.py:704
+#: engine/emoji_picker.py:708
 #, fuzzy
 #| msgid "Unicode Version:"
 msgid "Emoji Version:"
@@ -107,7 +107,7 @@ msgstr "Versão de Unicode:"
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
-#: engine/emoji_picker.py:711
+#: engine/emoji_picker.py:715
 #, fuzzy
 #| msgid "Unicode Version:"
 msgid "Emoji properties:"
@@ -115,7 +115,7 @@ msgstr "Versão de Unicode:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
-#: engine/emoji_picker.py:717
+#: engine/emoji_picker.py:721
 #, fuzzy
 #| msgid "Unicode categories"
 msgid "Unicode category:"
@@ -124,47 +124,47 @@ msgstr "Categorias de Unicode"
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
-#: engine/emoji_picker.py:724
+#: engine/emoji_picker.py:728
 #, fuzzy
 #| msgid "Unicode Version:"
 msgid "Unicode block:"
 msgstr "Versão de Unicode:"
 
-#: engine/emoji_picker.py:743 engine/emoji_picker.py:1866
+#: engine/emoji_picker.py:747 engine/emoji_picker.py:1888
 msgid "Left click to copy"
 msgstr "Clique esquerdo para copiar"
 
-#: engine/emoji_picker.py:746
+#: engine/emoji_picker.py:750
 msgid "Long press or middle click for skin tones"
 msgstr ""
 "Pressione longamente ou clique no botão do meio do rato para tons de pele"
 
-#: engine/emoji_picker.py:747
+#: engine/emoji_picker.py:751
 msgid "Right click for info"
 msgstr "Clique no botão direito do rato para informação"
 
-#: engine/emoji_picker.py:1239
+#: engine/emoji_picker.py:1243
 msgid "Search Results"
 msgstr "Resultados da Pesquisa"
 
-#: engine/emoji_picker.py:1243
+#: engine/emoji_picker.py:1247
 msgid "Search produced empty result."
 msgstr "A pesquisa não produziu resultados."
 
-#: engine/emoji_picker.py:1527 engine/emoji_picker.py:1654
+#: engine/emoji_picker.py:1546 engine/emoji_picker.py:1674
 msgid "Copied to clipboard!"
 msgstr "Copiado para a área de transferência!"
 
-#: engine/emoji_picker.py:1978
+#: engine/emoji_picker.py:2001
 msgid "Lookup on emojipedia"
 msgstr "Procure na emojipedia"
 
-#: engine/emoji_picker.py:2100 engine/emoji_picker.py:2101
-#: engine/emoji_picker.py:2102 setup/main.py:1594
+#: engine/emoji_picker.py:2135 engine/emoji_picker.py:2136
+#: engine/emoji_picker.py:2137 setup/main.py:1594
 msgid "System default"
 msgstr "Predefinição do sistema"
 
-#: engine/emoji_picker.py:2237
+#: engine/emoji_picker.py:2272
 msgid "Set Font"
 msgstr "Definir a fonte"
 
