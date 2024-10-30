@@ -2130,6 +2130,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             'Symbola 🙾', # black and white
             'Noto Emoji 🙾', # black and white
             'Android Emoji 🙾', # black and white
+            # 2001 era DoCoMo emojis from: https://meowni.ca/posts/og-emoji-font/
+            'og-dcm-emoji 🙾'
         ]
         available_good_emoji_fonts = [
             'emoji (' + _('System default') + ')',

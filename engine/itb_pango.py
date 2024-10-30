@@ -56,27 +56,32 @@ def get_font_file(family: str) -> str:
     >>> get_font_file('Noto Color Emoji')
     '/home/mfabian/.fonts/Noto-COLRv1.ttf'
 
+    >>> get_font_file('og-dcm-emoji')
+    '/home/mfabian/.fonts/og-dcm-emoji.ttf'
+
     >>> get_font_file('This family does not exist.')
     '/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf'
 
     '''
     path = ''
     fc_match_binary = shutil.which('fc-match')
-    if fc_match_binary:
-        try:
-            output = subprocess.check_output([fc_match_binary, family, '--format', '%{file}'],
-                                             stderr=subprocess.STDOUT,
-                                             encoding='utf-8')
-            path = output.strip()
-        except FileNotFoundError as error:
-            LOGGER.warning('Exception when calling %s: %s: %s',
-                           fc_match_binary, error.__class__.__name__, error)
-        except subprocess.CalledProcessError as error:
-            LOGGER.warning('Exception when calling %s: %s: %s',
-                           fc_match_binary, error.__class__.__name__, error)
-        except Exception as error: # pylint: disable=broad-except
-            LOGGER.warning('Exception when calling %s: %s: %s',
-                           fc_match_binary, error.__class__.__name__, error)
+    if not fc_match_binary:
+        return path
+    try:
+        family = family.replace('-', '\\-')
+        output = subprocess.check_output([fc_match_binary, family, '--format', '%{file}'],
+                                         stderr=subprocess.STDOUT,
+                                         encoding='utf-8')
+        path = output.strip()
+    except FileNotFoundError as error:
+        LOGGER.warning('Exception when calling %s: %s: %s',
+                       fc_match_binary, error.__class__.__name__, error)
+    except subprocess.CalledProcessError as error:
+        LOGGER.warning('Exception when calling %s: %s: %s',
+                       fc_match_binary, error.__class__.__name__, error)
+    except Exception as error: # pylint: disable=broad-except
+        LOGGER.warning('Exception when calling %s: %s: %s',
+                       fc_match_binary, error.__class__.__name__, error)
     return path
 
 @functools.lru_cache(maxsize=None)
