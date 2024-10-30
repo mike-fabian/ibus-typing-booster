@@ -86,7 +86,7 @@ def get_font_version(font_file: str) -> str:
     Examples:
 
     >>> get_font_version('/usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf')
-    'Version 2.042;GOOG;noto-emoji:20231129:7f49a00d523ae5f94e52fd9f9a39bac9cf65f958'
+    'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced'
 
     >>> get_font_version('/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf')
     'Version 2.37'
@@ -214,10 +214,10 @@ def get_fonts_used_for_text(
     [('😀', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True, 'file': '/home/mfabian/.fonts/Noto-COLRv1.ttf', 'version': 'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced', 'opentype-tables': ['COLR']}), (' ', {'font': 'DejaVu Sans Mono', 'glyph-count': 1, 'visible': False, 'glyph-available': True, 'file': '/usr/share/fonts/dejavu-sans-mono-fonts/DejaVuSansMono.ttf', 'version': 'Version 2.37'})]
 
     >>> get_fonts_used_for_text('DejaVu Sans', '日本語 नमस्ते')
-    [('日本語 ', {'font': 'Droid Sans Fallback', 'glyph-count': 4, 'visible': True, 'file': '/usr/share/fonts/google-droid-sans-fonts/DroidSansFallbackFull.ttf', 'version': 'Version 1.00c'}), ('नमस्ते', {'font': 'FreeSans', 'glyph-count': 5, 'visible': True, 'file': '/usr/share/fonts/gnu-free/FreeSans.ttf', 'version': 'Version 0412.2268'})]
+    [('日本語 ', {'font': 'Droid Sans', 'glyph-count': 4, 'visible': True, 'file': '/usr/share/fonts/google-droid-sans-fonts/DroidSans.ttf', 'version': 'Version 1.00 build 114'}), ('नमस्ते', {'font': 'FreeSans', 'glyph-count': 5, 'visible': True, 'file': '/usr/share/fonts/gnu-free/FreeSans.ttf', 'version': 'Version 0412.2268'})]
 
     >>> get_fonts_used_for_text('DejaVu Sans', '日本語 🕉️')
-    [('日本語 ', {'font': 'Droid Sans Fallback', 'glyph-count': 4, 'visible': True, 'file': '/usr/share/fonts/google-droid-sans-fonts/DroidSansFallbackFull.ttf', 'version': 'Version 1.00c'}), ('🕉️', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True, 'file': '/home/mfabian/.fonts/Noto-COLRv1.ttf', 'version': 'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced', 'opentype-tables': ['COLR']})]
+    [('日本語 ', {'font': 'Droid Sans', 'glyph-count': 4, 'visible': True, 'file': '/usr/share/fonts/google-droid-sans-fonts/DroidSans.ttf', 'version': 'Version 1.00 build 114'}), ('🕉️', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True, 'file': '/home/mfabian/.fonts/Noto-COLRv1.ttf', 'version': 'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced', 'opentype-tables': ['COLR']})]
 
     >>> get_fonts_used_for_text('DejaVu Sans', '🕉\uFE0F')
     [('🕉️', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True, 'file': '/home/mfabian/.fonts/Noto-COLRv1.ttf', 'version': 'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced', 'opentype-tables': ['COLR']})]
