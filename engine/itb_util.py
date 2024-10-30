@@ -5978,6 +5978,6 @@ if __name__ == "__main__":
     LOGGER.setLevel(logging.DEBUG)
     LOGGER.addHandler(LOG_HANDLER)
     import doctest
-    (FAILED, ATTEMPTED) = doctest.testmod()
+    (FAILED, _ATTEMPTED, *_extras) = doctest.testmod()
     LOGGER.info('remove_accents() cache info: %s', remove_accents.cache_info())
     sys.exit(FAILED)

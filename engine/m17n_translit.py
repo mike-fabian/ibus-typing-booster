@@ -1330,5 +1330,5 @@ class Transliterator:
 
 if __name__ == "__main__":
     import doctest
-    (FAILED, _ATTEMPTED) = doctest.testmod()
+    (FAILED, _ATTEMPTED, *_EXTRAS) = doctest.testmod()
     sys.exit(FAILED)

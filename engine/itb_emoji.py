@@ -57,7 +57,7 @@ IMPORT_PYKAKASI_SUCCESSFUL = False
 try:
     import pykakasi
     IMPORT_PYKAKASI_SUCCESSFUL = True
-    KAKASI_INSTANCE = pykakasi.kakasi()
+    KAKASI_INSTANCE = pykakasi.kakasi() # type: ignore
 except (ImportError,):
     IMPORT_PYKAKASI_SUCCESSFUL = False
 
@@ -2558,7 +2558,7 @@ def main() -> None:
         global DOMAINNAME # pylint: disable=global-statement
         DOMAINNAME = ''
         flags = doctest.REPORT_NDIFF #|doctest.FAIL_FAST
-        (failed, dummy_attempted) = doctest.testmod(optionflags=flags)
+        (failed, _attempted, *_extras) = doctest.testmod(optionflags=flags)
 
     if BENCHMARK:
         profile.disable()
