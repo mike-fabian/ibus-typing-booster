@@ -101,21 +101,22 @@ def get_font_version(font_file: str) -> str:
     '''
     version = ''
     otfinfo_binary = shutil.which('otfinfo')
-    if otfinfo_binary:
-        try:
-            output = subprocess.check_output([otfinfo_binary, '-v', font_file],
-                                             stderr=subprocess.STDOUT,
-                                             encoding='utf-8')
-            version = output.strip()
-        except FileNotFoundError as error:
-            LOGGER.warning('Exception when calling %s: %s: %s',
-                           otfinfo_binary, error.__class__.__name__, error)
-        except subprocess.CalledProcessError as error:
-            LOGGER.warning('Exception when calling %s: %s: %s',
-                           otfinfo_binary, error.__class__.__name__, error)
-        except Exception as error: # pylint: disable=broad-except
-            LOGGER.warning('Exception when calling %s: %s: %s',
-                           otfinfo_binary, error.__class__.__name__, error)
+    if not otfinfo_binary:
+        return version
+    try:
+        output = subprocess.check_output([otfinfo_binary, '-v', font_file],
+                                         stderr=subprocess.STDOUT,
+                                         encoding='utf-8')
+        version = output.strip()
+    except FileNotFoundError as error:
+        LOGGER.warning('Exception when calling %s: %s: %s',
+                       otfinfo_binary, error.__class__.__name__, error)
+    except subprocess.CalledProcessError as error:
+        LOGGER.warning('Exception when calling %s: %s: %s',
+                       otfinfo_binary, error.__class__.__name__, error)
+    except Exception as error: # pylint: disable=broad-except
+        LOGGER.warning('Exception when calling %s: %s: %s',
+                       otfinfo_binary, error.__class__.__name__, error)
     return version
 
 @functools.lru_cache(maxsize=None)
@@ -145,30 +146,31 @@ def get_font_tables(font_file: str) -> List[str]:
     []
 
     '''
-    tables = []
+    tables: List[str] = []
     otfinfo_binary = shutil.which('otfinfo')
-    if otfinfo_binary:
-        try:
-            output = subprocess.check_output([otfinfo_binary, '-t', font_file],
-                                             stderr=subprocess.STDOUT,
-                                             encoding='utf-8')
-            pattern = re.compile(r'\s*(?P<size>[0-9]+)\s+(?P<table>\S+)\s*')
-            for line in output.splitlines():
-                match_result = pattern.match(line.strip())
-                if match_result:
-                    size = match_result.group('size')
-                    table = match_result.group('table')
-                    if table in ('CBDT', 'COLR', 'SVG'):
-                        tables.append(table)
-        except FileNotFoundError as error:
-            LOGGER.warning('Exception when calling %s: %s: %s',
-                           otfinfo_binary, error.__class__.__name__, error)
-        except subprocess.CalledProcessError as error:
-            LOGGER.warning('Exception when calling %s: %s: %s',
-                           otfinfo_binary, error.__class__.__name__, error)
-        except Exception as error: # pylint: disable=broad-except
-            LOGGER.warning('Exception when calling %s: %s: %s',
-                           otfinfo_binary, error.__class__.__name__, error)
+    if not otfinfo_binary:
+        return tables
+    try:
+        output = subprocess.check_output([otfinfo_binary, '-t', font_file],
+                                         stderr=subprocess.STDOUT,
+                                         encoding='utf-8')
+        pattern = re.compile(r'\s*(?P<size>[0-9]+)\s+(?P<table>\S+)\s*')
+        for line in output.splitlines():
+            match_result = pattern.match(line.strip())
+            if match_result:
+                size = match_result.group('size')
+                table = match_result.group('table')
+                if table in ('CBDT', 'COLR', 'SVG'):
+                    tables.append(table)
+    except FileNotFoundError as error:
+        LOGGER.warning('Exception when calling %s: %s: %s',
+                       otfinfo_binary, error.__class__.__name__, error)
+    except subprocess.CalledProcessError as error:
+        LOGGER.warning('Exception when calling %s: %s: %s',
+                       otfinfo_binary, error.__class__.__name__, error)
+    except Exception as error: # pylint: disable=broad-except
+        LOGGER.warning('Exception when calling %s: %s: %s',
+                       otfinfo_binary, error.__class__.__name__, error)
     return tables
 
 def get_available_font_names() -> List[str]:
