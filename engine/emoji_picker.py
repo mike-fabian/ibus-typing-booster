@@ -2107,7 +2107,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         Returns a list of font names available on the system
         '''
         good_emoji_fonts = [
+            # color fonts are marked with ' 🎨' in this list, black and white fonts with ' 🙾'.
             'Noto Color Emoji 🎨',
+            # https://github.com/C1710/blobmoji (Old “blob” style Google emoji, fork of Noto Color Emoji)
+            'Blobmoji 🎨',
             # “OpenMoji Color”: https://openmoji.org/
             # It is available in the “hfg-gmuend-openmoji-color-fonts” package on Fedora.
             'OpenMoji Color 🎨',
@@ -2118,18 +2121,21 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             # https://github.com/13rac1/twemoji-color-font/releases/download/v15.1.0/TwitterColorEmoji-SVGinOT-Linux-15.1.0.tar.gz
             # Just unpack the tarball in ~/.fonts/ I tested that it
             # works well (in colour!) on Fedora 40 and Fedora 41.
-            'Twitter Color Emoji 🎨', # color
+            'Twitter Color Emoji 🎨',
             'Twemoji 🎨', # color
-            'Apple Color Emoji 🎨', # color
-            'Emoji Two 🎨', # color
-            'Emoji One 🎨', # color
-            'JoyPixels 🎨', # color
+            # https://github.com/toss/tossface/, https://toss.im/tossface
+            # https://toss.im/tossface/copyright (free for personal use, attribution required if used publicly)
+            'Toss Face Font Web 🎨',
+            'Apple Color Emoji 🎨',
+            'Emoji Two 🎨',
+            'Emoji One 🎨',
+            'JoyPixels 🎨',
             'Segoe UI Emoji 🎨', # newer versions are in color
             # “OpenMoji Black” is available at: https://openmoji.org/
-            'OpenMoji Black 🙾', # black and white
-            'Symbola 🙾', # black and white
-            'Noto Emoji 🙾', # black and white
-            'Android Emoji 🙾', # black and white
+            'OpenMoji Black 🙾',
+            'Symbola 🙾',
+            'Noto Emoji 🙾',
+            'Android Emoji 🙾',
             # 2001 era DoCoMo emojis from: https://meowni.ca/posts/og-emoji-font/
             'og-dcm-emoji 🙾'
         ]
