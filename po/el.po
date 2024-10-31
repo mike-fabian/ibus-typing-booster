@@ -8,10 +8,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-10-28 12:07+0100\n"
-"PO-Revision-Date: 2024-10-14 13:02+0000\n"
+"PO-Revision-Date: 2024-10-31 02:50+0000\n"
 "Last-Translator: Giannis Antypas <gianni.antypas@gmail.com>\n"
-"Language-Team: Greek <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/el/>\n"
+"Language-Team: Greek <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -97,18 +97,14 @@ msgstr "Έκδοση Emoji:"
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
 #: engine/emoji_picker.py:715
-#, fuzzy
-#| msgid "Emoji Version:"
 msgid "Emoji properties:"
-msgstr "Έκδοση Emoji:"
+msgstr "Ιδιότητες Emoji:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
 #: engine/emoji_picker.py:721
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Unicode category:"
-msgstr "Έκδοση Unicode:"
+msgstr "Κατηγορία Unicode:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
