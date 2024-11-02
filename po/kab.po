@@ -9,17 +9,17 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-10-28 12:07+0100\n"
-"PO-Revision-Date: 2024-10-23 16:20+0000\n"
+"PO-Revision-Date: 2024-11-02 22:31+0000\n"
 "Last-Translator: ButterflyOfFire <butterflyoffire@users.noreply.translate."
 "fedoraproject.org>\n"
-"Language-Team: Kabyle <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/kab/>\n"
+"Language-Team: Kabyle <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/kab/>\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.7.2\n"
+"X-Generator: Weblate 5.8.2\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -99,10 +99,8 @@ msgstr "Lqem n yimuji:"
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
 #: engine/emoji_picker.py:715
-#, fuzzy
-#| msgid "Emoji Version:"
 msgid "Emoji properties:"
-msgstr "Lqem n yimuji:"
+msgstr ""
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
@@ -114,10 +112,8 @@ msgstr "Taggayt n Unicode:"
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
 #: engine/emoji_picker.py:728
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Unicode block:"
-msgstr "Lqem Unicode:"
+msgstr ""
 
 #: engine/emoji_picker.py:747 engine/emoji_picker.py:1888
 msgid "Left click to copy"
@@ -1073,10 +1069,8 @@ msgstr "Ubdid"
 #. the system needs to be idle after pressing a key before
 #. candidates are displayed
 #: setup/main.py:1625
-#, fuzzy
-#| msgid "Candidate window page size:"
 msgid "Candidate window delay in milliseconds:"
-msgstr "Teɣzi n usebtar n usfaylu n usumer:"
+msgstr ""
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
