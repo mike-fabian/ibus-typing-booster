@@ -9,6 +9,8 @@ Makefile.in
 /config.sub
 /configure
 /configure~
+/install-sh
+/install-sh~
 /ibus-typing-booster.spec
 /autom4te.cache/
 compile
