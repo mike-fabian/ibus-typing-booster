@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 04 Nov 2024 Release 2.26.8
+* When adding an msymbol to input_phrase and checking whether it changes the transliteration, don’t apply a case mode change to that msymbol (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/558)
+* Fix get_font_file() for family names which contain “-”
+* Translation update from Weblate (kab 75.9%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 28 Oct 2024 Release 2.26.6
 * Simplify itb_pango.py: don’t use ctypes, use `from gi.repository import Pango` instead
 * Get more information about the Pango rendering support for an emoji and use fallback in emoji-picker only when necessary (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/508)
