@@ -7199,8 +7199,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     preedit_ime].transliterate(
                         self._typed_string + [key.msymbol],
                         ascii_digits=self._ascii_digits)
-                input_phrase = self._case_modes[
-                    self._current_case_mode]['function'](input_phrase)
                 if key.msymbol:
                     if input_phrase.endswith(key.msymbol):
                         # If the transliteration now ends with the commit
@@ -7208,6 +7206,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         # to the application later anyway and we do not
                         # want to pass it twice:
                         input_phrase = input_phrase[:-len(key.msymbol)]
+                        input_phrase = self._case_modes[
+                            self._current_case_mode]['function'](input_phrase)
                     else:
                         # The commit key has been absorbed by the
                         # transliteration.  Add the key to the input

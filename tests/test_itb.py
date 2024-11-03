@@ -1877,6 +1877,44 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'Cerulean ')
 
+    def test_toggle_case_then_return(self) -> None:
+        '''
+        For https://github.com/mike-fabian/ibus-typing-booster/issues/558
+        '''
+        self.engine.set_current_imes(
+            ['NoIME', 't-latn-post'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['en_US'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'test')
+        # Shift_L goes to 'capitalize':
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'Test')
+        self.engine.do_process_key_event(IBus.KEY_Return, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'Test\r')
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'test')
+        # Shift_L goes to 'capitalize':
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'TEST')
+        self.engine.do_process_key_event(IBus.KEY_Return, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'Test\rTEST\r')
+
     def test_toggle_case_for_multiple_words(self) -> None:
         self.engine.set_current_imes(
             ['NoIME', 't-latn-post'], update_gsettings=False)
@@ -1899,9 +1937,9 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
         self.engine.do_process_key_event(
             IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
-        # If there are not candidates, the case mode change is not
+        # If there are no candidates, the case mode change is not
         # done, i.e. we still have the unchanged text in the preedit:
-        # (I guess I should change this? Maybe the casem mode change
+        # (I guess I should change this? Maybe the case mode change
         # is useful even if it changes only the preedit? Anyway, just
         # testing the current implementation for the moment)
         self.assertEqual(self.engine.mock_preedit_text, 'in Germany')
