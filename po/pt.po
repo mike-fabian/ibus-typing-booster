@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-10-28 12:07+0100\n"
+"POT-Creation-Date: 2024-11-03 18:37+0100\n"
 "PO-Revision-Date: 2024-04-20 16:36+0000\n"
 "Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
 "memory@weblate.org>\n"
@@ -159,12 +159,12 @@ msgstr "Copiado para a área de transferência!"
 msgid "Lookup on emojipedia"
 msgstr "Procure na emojipedia"
 
-#: engine/emoji_picker.py:2135 engine/emoji_picker.py:2136
-#: engine/emoji_picker.py:2137 setup/main.py:1594
+#: engine/emoji_picker.py:2143 engine/emoji_picker.py:2144
+#: engine/emoji_picker.py:2145 setup/main.py:1594
 msgid "System default"
 msgstr "Predefinição do sistema"
 
-#: engine/emoji_picker.py:2272
+#: engine/emoji_picker.py:2280
 msgid "Set Font"
 msgstr "Definir a fonte"
 

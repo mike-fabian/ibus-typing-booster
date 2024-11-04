@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-10-28 12:07+0100\n"
+"POT-Creation-Date: 2024-11-03 18:37+0100\n"
 "PO-Revision-Date: 2020-10-08 08:01+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://translate.fedoraproject.org/projects/ibus-"
@@ -153,12 +153,12 @@ msgstr "הועתק ללוח הגזירים!"
 msgid "Lookup on emojipedia"
 msgstr "חיפוש ב־emojipedia"
 
-#: engine/emoji_picker.py:2135 engine/emoji_picker.py:2136
-#: engine/emoji_picker.py:2137 setup/main.py:1594
+#: engine/emoji_picker.py:2143 engine/emoji_picker.py:2144
+#: engine/emoji_picker.py:2145 setup/main.py:1594
 msgid "System default"
 msgstr "בררת המחדל של המערכת"
 
-#: engine/emoji_picker.py:2272
+#: engine/emoji_picker.py:2280
 msgid "Set Font"
 msgstr "הגדרת גופן"
 

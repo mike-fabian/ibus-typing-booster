@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-10-28 12:07+0100\n"
+"POT-Creation-Date: 2024-11-03 18:37+0100\n"
 "PO-Revision-Date: 2021-08-18 09:23+0000\n"
 "Last-Translator: Hela Basa <r45xveza@pm.me>\n"
 "Language-Team: Sinhala <https://translate.fedoraproject.org/projects/ibus-"
@@ -142,12 +142,12 @@ msgstr ""
 msgid "Lookup on emojipedia"
 msgstr ""
 
-#: engine/emoji_picker.py:2135 engine/emoji_picker.py:2136
-#: engine/emoji_picker.py:2137 setup/main.py:1594
+#: engine/emoji_picker.py:2143 engine/emoji_picker.py:2144
+#: engine/emoji_picker.py:2145 setup/main.py:1594
 msgid "System default"
 msgstr ""
 
-#: engine/emoji_picker.py:2272
+#: engine/emoji_picker.py:2280
 msgid "Set Font"
 msgstr ""
 

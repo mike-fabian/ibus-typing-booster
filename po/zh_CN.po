@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-10-28 12:07+0100\n"
+"POT-Creation-Date: 2024-11-03 18:37+0100\n"
 "PO-Revision-Date: 2022-02-25 18:38+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
@@ -154,12 +154,12 @@ msgstr "已复制到剪贴板！"
 msgid "Lookup on emojipedia"
 msgstr "在 Emojipedia 中查找"
 
-#: engine/emoji_picker.py:2135 engine/emoji_picker.py:2136
-#: engine/emoji_picker.py:2137 setup/main.py:1594
+#: engine/emoji_picker.py:2143 engine/emoji_picker.py:2144
+#: engine/emoji_picker.py:2145 setup/main.py:1594
 msgid "System default"
 msgstr "系统默认"
 
-#: engine/emoji_picker.py:2272
+#: engine/emoji_picker.py:2280
 msgid "Set Font"
 msgstr "设置字体"
 
