@@ -3014,11 +3014,9 @@ def is_ascii(text: str) -> bool:
     >>> is_ascii('Naïve')
     False
     '''
-    try:
-        text.encode('ascii')
-    except UnicodeEncodeError:
-        return False
-    return True
+    if sys.version_info >= (3, 7): # str.ascii() was introduced in Python 3.7
+        return text.isascii()
+    return all(ord(char) < 128 for char in text)
 
 # Mapping of Unicode ordinals to Unicode ordinals, strings, or None.
 # Unmapped characters are left untouched. Characters mapped to None

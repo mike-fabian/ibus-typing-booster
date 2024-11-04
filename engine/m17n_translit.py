@@ -27,6 +27,10 @@ from typing import Iterable
 from typing import Any
 import sys
 import ctypes
+from gi import require_version # type: ignore
+require_version('IBus', '1.0')
+from gi.repository import IBus # type: ignore
+import itb_util
 
 # pylint: disable=invalid-name
 # pylint: disable=too-few-public-methods
@@ -1064,7 +1068,14 @@ class Transliterator:
         libm17n__minput_reset_ic(self._ic) # type: ignore
         committed = ''
         preedit = ''
-        for symbol in msymbol_list:
+        for index, symbol in enumerate(msymbol_list):
+            if len(symbol) == 1 and not itb_util.is_ascii(symbol):
+                symbol = IBus.keyval_name(IBus.unicode_to_keyval(symbol))
+            elif (len(symbol) == 3 and symbol[1] == '-'
+                and symbol[0] in ('G', 'C', 'A')
+                and not itb_util.is_ascii(symbol[2])):
+                symbol = symbol[:2] + IBus.keyval_name(
+                    IBus.unicode_to_keyval(symbol[2]))
             _symbol = libm17n__msymbol(symbol.encode('utf-8')) # type: ignore
             retval = libm17n__minput_filter( # type: ignore
                 self._ic, _symbol, ctypes.c_void_p(None))
@@ -1075,7 +1086,7 @@ class Transliterator:
                 if libm17n__mtext_len(_mt) > 0: # type: ignore
                     committed += mtext_to_string(_mt)
                 if retval:
-                    committed += symbol
+                    committed += msymbol_list[index]
         try:
             if (self._ic.contents.preedit_changed
                 and
