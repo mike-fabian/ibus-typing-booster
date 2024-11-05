@@ -5521,12 +5521,31 @@ class KeyEvent:
                 self.msymbol = 'A-' + self.msymbol
             if self.mod5:
                 self.msymbol = 'G-' + self.msymbol
-            if self.shift and self.msymbol == 'C-Return':
-                # https://github.com/mike-fabian/ibus-typing-booster/issues/457
-                self.msymbol = 'S-C-Return'
-            if self.shift and self.msymbol == ' ':
-                # https://github.com/mike-fabian/ibus-typing-booster/issues/524
-                self.msymbol = 'S- '
+            if (self.shift
+                and (self.unicode.isspace() or not self.unicode.isprintable())):
+                # (Python has no “isgraph()”, but “isspace() or not isprintable()”
+                # does the same as “not isgraph()”.
+                #
+                # This makes sure that if self.msymbol == 'C-Return'
+                # it is changed into 'S-C-Return' (See:
+                # https://github.com/mike-fabian/ibus-typing-booster/issues/457)
+                # and if self.msymbol == ' ' it is changed into 'S- '
+                # (See:
+                # https://github.com/mike-fabian/ibus-typing-booster/issues/457)
+                # and also other similar cases. There are already .mim
+                # files using 'S- ', 'S-C-Return, 'S-Left', and
+                # 'S-Right' in m17n-db. Others like 'S-Up', 'S-Down',
+                # ... might make sense too. I think that always, when
+                # the Unicode value is white space or not printable
+                # adding the 'S-' to the msymbol when Shift is pressed
+                # is the right thing to do.  But when the character is
+                # printable and not white space, for example Ü
+                # (self.name == 'Udiaeresis'), then adding the 'S-' is
+                # wrong. Pressing Shift+ü generates an uppercase Ü,
+                # the Shift has been “absorbed” in making the
+                # character uppercase, adding an extra 'S-' to the
+                # msymbol is then wrong.
+                self.msymbol = 'S-' + self.msymbol
         self.time: float = 0.0
         # Whether the key has been handled by do_process_key_event
         # (i.e. True was returned) or passed through (i.e. “return
