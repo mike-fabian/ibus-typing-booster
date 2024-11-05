@@ -31,10 +31,12 @@ import shutil
 import functools
 import logging
 from gi import require_version # type: ignore
+# pylint: disable=wrong-import-position
 require_version('Gtk', '3.0')
 from gi.repository import Gtk # type: ignore
 require_version('Pango', '1.0')
 from gi.repository import Pango
+# pylint: enable=wrong-import-position
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -121,6 +123,7 @@ def get_font_version(font_file: str) -> str:
 
 @functools.lru_cache(maxsize=None)
 def get_font_tables(font_file: str) -> List[str]:
+    # pylint: disable=line-too-long
     '''Use otfinfo to get the OpenType tables in a font file
 
     (Only those which are interesting for rendering emoji)
@@ -146,6 +149,7 @@ def get_font_tables(font_file: str) -> List[str]:
     []
 
     '''
+    # pylint: enable=line-too-long
     tables: List[str] = []
     otfinfo_binary = shutil.which('otfinfo')
     if not otfinfo_binary:
@@ -158,7 +162,7 @@ def get_font_tables(font_file: str) -> List[str]:
         for line in output.splitlines():
             match_result = pattern.match(line.strip())
             if match_result:
-                size = match_result.group('size')
+                _size = match_result.group('size')
                 table = match_result.group('table')
                 if table in ('CBDT', 'COLR', 'SVG'):
                     tables.append(table)
@@ -174,6 +178,7 @@ def get_font_tables(font_file: str) -> List[str]:
     return tables
 
 def get_available_font_names() -> List[str]:
+    # pylint: disable=line-too-long
     '''Return a list of the names of fonts available on the system
 
     Examples:
@@ -195,6 +200,7 @@ def get_available_font_names() -> List[str]:
     >>> 'Noto Sans' in get_available_font_names()
     True
     '''
+    # pylint: enable=line-too-long
     label = Gtk.Label()
     pango_context = label.get_pango_context()
     families = pango_context.list_families()
@@ -202,6 +208,7 @@ def get_available_font_names() -> List[str]:
 
 def get_fonts_used_for_text(
         font: str, text: str, fallback: bool = True) -> List[Tuple[str, Dict[str, Any]]]:
+    # pylint: disable=line-too-long
     '''Return a list of fonts which were really used to render a text
 
     :param font: The font requested to render the text in
@@ -229,6 +236,7 @@ def get_fonts_used_for_text(
     >>> get_fonts_used_for_text('DejaVu Sans', '🕉\uFE0F')
     [('🕉️', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True, 'file': '/home/mfabian/.fonts/Noto-COLRv1.ttf', 'version': 'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced', 'opentype-tables': ['COLR']})]
     '''
+    # pylint: enable=line-too-long
     fonts_used = []
     text_utf8 = text.encode('UTF-8', errors='replace')
     label = Gtk.Label()
@@ -262,7 +270,7 @@ def get_fonts_used_for_text(
         pango_layout_run.set_text(run_text)
         pango_layout_run_line = pango_layout_run.get_line_readonly(0)
         visible = False
-        ink_rect, logical_rect = pango_layout_run_line.get_pixel_extents()
+        ink_rect, _logical_rect = pango_layout_run_line.get_pixel_extents()
         if ink_rect.width > 0 and ink_rect.height > 0:
             visible = True
         pango_has_char_input = ''

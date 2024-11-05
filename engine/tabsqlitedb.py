@@ -1274,7 +1274,6 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         except Exception as error: # pylint: disable=broad-except
             LOGGER.exception('Unexpected error dumping database: %s: %s',
                               error.__class__.__name__, error)
-            return
 
     def number_of_rows_in_database(self) -> int:
         '''

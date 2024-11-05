@@ -2107,7 +2107,8 @@ class EmojiMatcher():
                     if label_key == 'ucategories':
                         ucategory_label_full = ', '.join(
                             emoji_value[label_key])
-                        if (ucategory_label_full not in emoji_by_label_dict[language][label_key]):
+                        if (ucategory_label_full
+                            not in emoji_by_label_dict[language][label_key]):
                             emoji_by_label_dict[
                                 language][
                                     label_key][
@@ -2119,7 +2120,7 @@ class EmojiMatcher():
                                         ucategory_label_full].append(emoji)
                     else:
                         for label in emoji_value[label_key]:
-                            if (label not in emoji_by_label_dict[language][label_key]):
+                            if label not in emoji_by_label_dict[language][label_key]:
                                 emoji_by_label_dict[
                                     language][
                                         label_key][

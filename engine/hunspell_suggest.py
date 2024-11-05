@@ -133,8 +133,7 @@ class Dictionary():
                     for x in self.words
                 ]
             for word in self.words:
-                if len(word) > self.max_word_len:
-                    self.max_word_len = len(word)
+                self.max_word_len = max(self.max_word_len, len(word))
             if DEBUG_LEVEL > 1:
                 LOGGER.debug(
                     'max_word_len = %s\n', self.max_word_len)

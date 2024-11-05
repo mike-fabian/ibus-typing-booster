@@ -139,7 +139,9 @@ class IMApp:
         self.__mainloop = GLib.MainLoop()
         self.__bus = IBus.Bus()
         self.__bus.connect("disconnected", self.__bus_destroy_cb)
+        # pylint: disable=possibly-used-before-assignment
         self.__factory = factory.EngineFactory(self.__bus)
+        # pylint: enable=possibly-used-before-assignment
         self.destroyed = False
         if exec_by_ibus:
             self.__bus.request_name(
@@ -248,10 +250,11 @@ def write_xml() -> None:
     '''
     Writes the XML to describe the engine(s) to standard output.
     '''
-    egs = Element('engines')
+    egs = Element('engines') # pylint: disable=possibly-used-before-assignment
 
     for language in ('t',):
-        _engine = SubElement(egs, 'engine')
+        _engine = SubElement( # pylint: disable=possibly-used-before-assignment
+            egs, 'engine')
 
         _name = SubElement(_engine, 'name')
         _name.text = 'typing-booster'
@@ -290,7 +293,8 @@ def write_xml() -> None:
 
     # now format the xmlout pretty
     indent(egs)
-    egsout = tostring(egs, encoding='utf8', method='xml').decode('utf-8')
+    egsout = tostring( # pylint: disable=possibly-used-before-assignment
+        egs, encoding='utf8', method='xml').decode('utf-8')
     patt = re.compile(r'<\?.*\?>\n')
     egsout = patt.sub('', egsout)
     sys.stdout.buffer.write((egsout+'\n').encode('utf-8'))

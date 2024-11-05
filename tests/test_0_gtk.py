@@ -265,7 +265,8 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__test_index = 0
         self.__entry.set_text('')
 
-    def __engine_after_reset(self, _engine: IBus.Engine) -> None:
+    def __engine_after_reset( # pylint: disable=no-self-use
+            self, _engine: IBus.Engine) -> None:
         printflush('__engine_after_reset() called')
 
     def __entry_focus_in_event_cb(

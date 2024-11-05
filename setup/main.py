@@ -4161,6 +4161,10 @@ class SetupUI(Gtk.Window): # type: ignore
         if not self._input_methods_listbox_selected_ime_name:
             return
         ime = self._input_methods_listbox_selected_ime_name
+        path = ''
+        title = ''
+        description = ''
+        content = ''
         if M17N_DB_INFO is not None:
             path = M17N_DB_INFO.get_path(ime)
             title = M17N_DB_INFO.get_title(ime)

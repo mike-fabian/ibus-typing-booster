@@ -76,6 +76,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
             list(dictionary_names))
 
     def read_training_data_from_file(self, filename: str) -> bool:
+        path = filename
         if '/' not in filename:
             path = os.path.join(os.path.dirname(__file__), filename)
         path = os.path.expanduser(path)

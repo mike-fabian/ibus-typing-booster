@@ -2106,13 +2106,17 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         '''
         Returns a list of font names available on the system
         '''
+        # pylint: disable=line-too-long
         good_emoji_fonts = [
-            # color fonts are marked with ' 🎨' in this list, black and white fonts with ' 🙾'.
+            # color fonts are marked with ' 🎨' in this list,
+            # black and white fonts with ' 🙾'.
             'Noto Color Emoji 🎨',
-            # https://github.com/C1710/blobmoji (Old “blob” style Google emoji, fork of Noto Color Emoji)
+            # https://github.com/C1710/blobmoji (Old “blob” style Google emoji,
+            # fork of Noto Color Emoji)
             'Blobmoji 🎨',
             # “OpenMoji Color”: https://openmoji.org/
-            # It is available in the “hfg-gmuend-openmoji-color-fonts” package on Fedora.
+            # It is available in the “hfg-gmuend-openmoji-color-fonts”
+            # package on Fedora.
             'OpenMoji Color 🎨',
             # “Twitter Color Emoji” is a font with SVG images in an
             # OpenType font.  One can get it from
@@ -2124,7 +2128,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             'Twitter Color Emoji 🎨',
             'Twemoji 🎨', # color
             # https://github.com/toss/tossface/, https://toss.im/tossface
-            # https://toss.im/tossface/copyright (free for personal use, attribution required if used publicly)
+            # https://toss.im/tossface/copyright (free for personal use,
+            # attribution required if used publicly)
             'Toss Face Font Web 🎨',
             'Apple Color Emoji 🎨',
             'Emoji Two 🎨',
@@ -2139,6 +2144,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             # 2001 era DoCoMo emojis from: https://meowni.ca/posts/og-emoji-font/
             'og-dcm-emoji 🙾'
         ]
+        # pylint: enable=line-too-long
         available_good_emoji_fonts = [
             'emoji (' + _('System default') + ')',
             'text (' + _('System default') + ')',

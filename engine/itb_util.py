@@ -29,6 +29,7 @@ from typing import Optional
 from typing import Union
 from typing import Iterable
 from typing import Callable
+# pylint: disable=wrong-import-position
 import sys
 if sys.version_info >= (3, 8):
     from typing import Literal
@@ -46,7 +47,6 @@ import shutil
 import subprocess
 import glob
 import gettext
-# pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore

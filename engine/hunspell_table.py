@@ -1884,6 +1884,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         key = menu['key']
         sub_properties = menu['sub_properties']
+        symbol = ''
+        label= ''
+        tooltip = ''
         for prop in sub_properties:
             if sub_properties[prop]['number'] == int(current_mode):
                 symbol = sub_properties[prop]['symbol']
@@ -1926,6 +1929,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         key = menu['key']
         sub_properties = menu['sub_properties']
+        symbol = ''
+        label = ''
+        tooltip = ''
         for prop in sub_properties:
             if sub_properties[prop]['number'] == int(current_mode):
                 symbol = sub_properties[prop]['symbol']
@@ -2061,6 +2067,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         menu_key = menu['key']
         sub_properties_dict = menu['sub_properties']
+        symbol = ''
+        label = ''
+        tooltip = ''
         for prop in sub_properties_dict:
             if sub_properties_dict[prop]['number'] == int(current_mode):
                 symbol = sub_properties_dict[prop]['symbol']

@@ -27,6 +27,9 @@ import logging
 import unittest
 import unicodedata
 
+from gi import require_version # type: ignore
+require_version('IBus', '1.0')
+
 LOGGER = logging.getLogger('ibus-typing-booster')
 
 IMPORT_DISTRO_SUCCESSFUL = False

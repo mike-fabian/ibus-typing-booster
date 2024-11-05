@@ -22,10 +22,8 @@ This file implements test cases for itb_pango.py
 '''
 
 import sys
-import os
 import logging
 import unittest
-import unicodedata
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -279,7 +277,9 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual('glyph-available' in results_for_run, True)
         self.assertEqual(results_for_run['glyph-available'], True)
 
-        text = '🫩︎' # U+1FAE9 FACE WITH BAGS UNDER EYES, added in Unicode 16.0, has Emoji_Presentation property
+        # 🫩︎ U+1FAE9 FACE WITH BAGS UNDER EYES, added in Unicode 16.0,
+        # has Emoji_Presentation property
+        text = '🫩︎'
         fallback = False
         # Symbola has no glyph for this:
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
@@ -292,7 +292,9 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual('glyph-available' in results_for_run, True)
         self.assertEqual(results_for_run['glyph-available'], False)
 
-        text = '🫩︎' # U+1FAE9 FACE WITH BAGS UNDER EYES, added in Unicode 16.0, has Emoji_Presentation property
+         # 🫩︎ U+1FAE9 FACE WITH BAGS UNDER EYES, added in Unicode 16.0,
+         # has Emoji_Presentation property
+        text = '🫩︎'
         fallback = True
         # fallback to “Noto Color Emoji” is used:
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)

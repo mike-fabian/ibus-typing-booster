@@ -28,8 +28,10 @@ from typing import Any
 import sys
 import ctypes
 from gi import require_version # type: ignore
+# pylint: disable=wrong-import-position
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
+# pylint: enable=wrong-import-position
 import itb_util
 
 # pylint: disable=invalid-name
@@ -1049,7 +1051,10 @@ class Transliterator:
         except ValueError as error: # NULL pointer access
             raise ValueError('minput_create_ic() failed') from error
 
-    def transliterate_parts(self, msymbol_list: Iterable[str], ascii_digits: bool = False) -> Tuple[str, str]:
+    def transliterate_parts(
+            self,
+            msymbol_list: Iterable[str],
+            ascii_digits: bool = False) -> Tuple[str, str]:
         '''Transliterate a list of Msymbol names
 
         :param msymbol_list: A list of strings which are interpreted

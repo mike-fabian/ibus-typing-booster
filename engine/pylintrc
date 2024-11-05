@@ -446,6 +446,9 @@ exclude-too-few-public-methods=
 # R0901)
 ignored-parents=
 
+# Maximum number of positional arguments for function / method
+max-positional-arguments=10
+
 # Maximum number of arguments for function / method.
 max-args=10
 
