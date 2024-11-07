@@ -87,6 +87,36 @@ def get_font_file(family: str) -> str:
     return path
 
 @functools.lru_cache(maxsize=None)
+def get_font_lang(family: str) -> str:
+    '''Use Fontconfig to find the supported languages by font family matched with fc-match
+
+    Examples:
+
+    >>> get_font_lang('Noto Color Emoji')
+    'und-zsye'
+    '''
+    lang = ''
+    fc_match_binary = shutil.which('fc-match')
+    if not fc_match_binary:
+        return lang
+    try:
+        family = family.replace('-', '\\-')
+        output = subprocess.check_output([fc_match_binary, family, '--format', '%{lang}'],
+                                         stderr=subprocess.STDOUT,
+                                         encoding='utf-8')
+        lang = output.strip()
+    except FileNotFoundError as error:
+        LOGGER.warning('Exception when calling %s: %s: %s',
+                       fc_match_binary, error.__class__.__name__, error)
+    except subprocess.CalledProcessError as error:
+        LOGGER.warning('Exception when calling %s: %s: %s',
+                       fc_match_binary, error.__class__.__name__, error)
+    except Exception as error: # pylint: disable=broad-except
+        LOGGER.warning('Exception when calling %s: %s: %s',
+                       fc_match_binary, error.__class__.__name__, error)
+    return lang
+
+@functools.lru_cache(maxsize=None)
 def get_font_version(font_file: str) -> str:
     '''Use otfinfo to get the font version from a font file
 
@@ -136,13 +166,13 @@ def get_font_tables(font_file: str) -> List[str]:
     >>> get_font_tables('/home/mfabian/.fonts/Noto-COLRv1.ttf')
     ['COLR']
 
-    >>> get_font_tables('/usr/share/fonts/hfg-gmuend-openmoji-color-fonts/OpenMoji-color-glyf_colr_1.ttf')
+    >>> get_font_tables('/home/mfabian/.fonts/openmoji/OpenMoji-color-glyf_colr_1.ttf')
     ['COLR']
 
-    >>> get_font_tables('/home/mfabian/.fonts/OpenMoji-black-glyf.ttf')
+    >>> get_font_tables('/home/mfabian/.fonts/openmoji/OpenMoji-black-glyf.ttf')
     []
 
-    >>> get_font_tables('/home/mfabian/.fonts/OpenMoji-color-colr1_svg.ttf')
+    >>> get_font_tables('/home/mfabian/.fonts/openmoji/OpenMoji-color-colr1_svg.ttf')
     ['COLR', 'SVG']
 
     >>> get_font_tables('/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf')
@@ -302,6 +332,9 @@ def get_fonts_used_for_text(
         path = get_font_file(run_family)
         if path:
             results_for_run['file'] = path
+            lang = get_font_lang(run_family)
+            if lang:
+                results_for_run['lang'] = lang
             version = get_font_version(path)
             if version:
                 results_for_run['version'] = version
