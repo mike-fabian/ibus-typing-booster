@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 09 Nov 2024 Release 2.26.11
+* Improve detection of Wayland session (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/561)
+* Support non-ASCII input for m17n-db input methods (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/537)
+* Improve “class KeyEvent”: Prepend 'S-' to msymbol when Shift is pressed and is is a space or not printable
+* Show also the languages supported by a font in emoji-picker (only when -d or --debug is used)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 04 Nov 2024 Release 2.26.8
 * When adding an msymbol to input_phrase and checking whether it changes the transliteration, don’t apply a case mode change to that msymbol (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/558)
 * Fix get_font_file() for family names which contain “-”
