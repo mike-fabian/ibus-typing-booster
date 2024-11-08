@@ -314,7 +314,8 @@ def get_active_window() -> Tuple[str, str]:
 
     '''
     (program_name, window_title) = ('', '')
-    if ('XDG_SESSION_TYPE' in os.environ
+    if ('WAYLAND_DISPLAY' in os.environ
+        and 'XDG_SESSION_TYPE' in os.environ
         and os.environ['XDG_SESSION_TYPE'].lower() == 'wayland'):
         (program_name, window_title) = get_active_window_atspi()
     if program_name:
