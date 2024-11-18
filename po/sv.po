@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-11-03 18:37+0100\n"
+"POT-Creation-Date: 2024-11-08 16:24+0100\n"
 "PO-Revision-Date: 2024-10-22 17:42+0000\n"
 "Last-Translator: Luna Jernberg <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://translate.fedoraproject.org/projects/ibus-"
@@ -147,12 +147,12 @@ msgstr "Kopierat till urklipp!"
 msgid "Lookup on emojipedia"
 msgstr "Slå upp på emojipedia"
 
-#: engine/emoji_picker.py:2143 engine/emoji_picker.py:2144
-#: engine/emoji_picker.py:2145 setup/main.py:1594
+#: engine/emoji_picker.py:2149 engine/emoji_picker.py:2150
+#: engine/emoji_picker.py:2151 setup/main.py:1594
 msgid "System default"
 msgstr "Systemstandard"
 
-#: engine/emoji_picker.py:2280
+#: engine/emoji_picker.py:2286
 msgid "Set Font"
 msgstr "Ange teckensnitt"
 
@@ -212,40 +212,40 @@ msgstr "Preedit inmatningsmetod"
 msgid "Switch preedit input method"
 msgstr "Byt preedit inmatningsmetod"
 
-#: engine/hunspell_table.py:2176
+#: engine/hunspell_table.py:2185
 msgid "Setup"
 msgstr "Inställning"
 
-#: engine/hunspell_table.py:2179 setup/main.py:169
+#: engine/hunspell_table.py:2188 setup/main.py:169
 msgid "Preferences for ibus-typing-booster"
 msgstr "Inställningar för ibus-typing-booster"
 
-#: engine/hunspell_table.py:5409
+#: engine/hunspell_table.py:5418
 msgid "Failed to import Google speech-to-text."
 msgstr "Kunde inte importera Googles tal-till-text."
 
-#: engine/hunspell_table.py:5412
+#: engine/hunspell_table.py:5421
 msgid "Failed to import pyaudio."
 msgstr "Kunde inte importera pyaudio."
 
-#: engine/hunspell_table.py:5415
+#: engine/hunspell_table.py:5424
 msgid "Failed to import queue."
 msgstr "Kunde inte importera kö."
 
-#: engine/hunspell_table.py:5420
+#: engine/hunspell_table.py:5429
 msgid "No supported language for speech recognition."
 msgstr "Inget språk som stöds för taligenkänning."
 
-#: engine/hunspell_table.py:5424
+#: engine/hunspell_table.py:5433
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google application credentials” filen “%s” kunde inte hittas."
 
-#: engine/hunspell_table.py:5437
+#: engine/hunspell_table.py:5446
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Kunde inte starta Googles tal-till-text. Se debug.log."
 
-#: engine/hunspell_table.py:5545
+#: engine/hunspell_table.py:5554
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google tal-till-text-fel. Se debug.log."
 
@@ -334,27 +334,27 @@ msgstr "regional"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Annat, Andra, Olika, Diverse, Övrigt, Övriga"
 
-#: engine/itb_util.py:4414 engine/itb_util.py:5141
+#: engine/itb_util.py:4412 engine/itb_util.py:5139
 msgid "File not found"
 msgstr "Filen hittades inte"
 
-#: engine/itb_util.py:4418 engine/itb_util.py:5145
+#: engine/itb_util.py:4416 engine/itb_util.py:5143
 msgid "Permission error"
 msgstr "Rättighetsfel"
 
-#: engine/itb_util.py:4422 engine/itb_util.py:5149
+#: engine/itb_util.py:4420 engine/itb_util.py:5147
 msgid "Unicode decoding error"
 msgstr "Unicode avkodningsfel"
 
-#: engine/itb_util.py:4426 engine/itb_util.py:5153
+#: engine/itb_util.py:4424 engine/itb_util.py:5151
 msgid "Unknown error"
 msgstr "Okänt fel"
 
-#: engine/itb_util.py:5119
+#: engine/itb_util.py:5117
 msgid "Native Keyboard"
 msgstr "Inbyggt tangentbord"
 
-#: engine/itb_util.py:5121
+#: engine/itb_util.py:5119
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -367,11 +367,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5776
+#: engine/itb_util.py:5793
 msgid "Key input"
 msgstr "Tangentinmatning"
 
-#: engine/itb_util.py:5782
+#: engine/itb_util.py:5799
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -379,27 +379,27 @@ msgstr "Avbryt"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5789
+#: engine/itb_util.py:5806
 msgid "Please press a key (or a key combination)"
 msgstr "Tryck på en tangent (eller en tangentkombination)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5794
+#: engine/itb_util.py:5811
 msgid "The dialog will be closed when the key is released"
 msgstr "Dialogen stängs när tangenten släpps"
 
-#: engine/itb_util.py:5833
+#: engine/itb_util.py:5850
 msgid "A completion input method to speedup typing."
 msgstr "En kompletterande indatametod för att påskynda textinmatning."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5842
+#: engine/itb_util.py:5859
 msgid "translator-credits"
 msgstr "Åke Engelbrektson"
 
-#: engine/itb_util.py:5850
+#: engine/itb_util.py:5867
 msgid "Online documentation:"
 msgstr "Dokumentation online:"
 
@@ -412,7 +412,7 @@ msgstr "Inställningar"
 msgid "Restore all defaults"
 msgstr "Återställ alla standardvärden"
 
-#: setup/main.py:212 setup/main.py:6598
+#: setup/main.py:212 setup/main.py:6602
 msgid "_Close"
 msgstr "_Stäng"
 
@@ -960,7 +960,7 @@ msgstr "Installera saknade ordböcker"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Installera de ordböcker som angetts här men inte är installerade"
 
-#: setup/main.py:1109 setup/main.py:1241 setup/main.py:1468 setup/main.py:4916
+#: setup/main.py:1109 setup/main.py:1241 setup/main.py:1468 setup/main.py:4920
 msgid "Set to default"
 msgstr "Ange som standard"
 
@@ -1068,7 +1068,7 @@ msgstr "Redigera"
 msgid "Edit the key bindings for the selected command"
 msgstr "Redigera snabbtangenter för det markerade kommandot"
 
-#: setup/main.py:1472 setup/main.py:4921
+#: setup/main.py:1472 setup/main.py:4925
 msgid "Set default key bindings for the selected command"
 msgstr "Ställ in standardtangentbindningar för det valda kommandot"
 
@@ -1503,7 +1503,7 @@ msgstr "Filen ännu inte angiven."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2302 setup/main.py:4439
+#: setup/main.py:2302 setup/main.py:4443
 msgid "Add an autosetting"
 msgstr "Lägg till en autoinställning"
 
@@ -1571,11 +1571,11 @@ msgstr "Reguljärt utryck"
 msgid "Are you sure?"
 msgstr "Är du säker?"
 
-#: setup/main.py:2693 setup/main.py:3286 setup/main.py:3373 setup/main.py:4989
+#: setup/main.py:2693 setup/main.py:3286 setup/main.py:3373 setup/main.py:4993
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: setup/main.py:2694 setup/main.py:3287 setup/main.py:3374 setup/main.py:4990
+#: setup/main.py:2694 setup/main.py:3287 setup/main.py:3374 setup/main.py:4994
 msgid "_OK"
 msgstr "_OK"
 
@@ -1608,16 +1608,16 @@ msgstr "Lägg till indatametod"
 msgid "Variable"
 msgstr "Variabel"
 
-#: setup/main.py:4869
+#: setup/main.py:4873
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Redigera snabbtangenter för kommandot \"%s\""
 
-#: setup/main.py:4897
+#: setup/main.py:4901
 msgid "Add a key binding"
 msgstr "Lägg till en snabbtangent"
 
-#: setup/main.py:4909
+#: setup/main.py:4913
 msgid "Remove selected key binding"
 msgstr "Ta bort den valda tangentbindningen"
 
@@ -1626,7 +1626,7 @@ msgstr "Ta bort den valda tangentbindningen"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:4970
+#: setup/main.py:4974
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1634,16 +1634,16 @@ msgstr ""
 "Vill du verkligen återställa alla snabbtangenter för alla kommandon till "
 "sitt standardvärde?"
 
-#: setup/main.py:4986
+#: setup/main.py:4990
 msgid "Open File ..."
 msgstr "Öppna fil …"
 
-#: setup/main.py:5005
+#: setup/main.py:5009
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Kunde lära från filen %(filename)s."
 
-#: setup/main.py:5014
+#: setup/main.py:5018
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Misslyckades att lära från filen %(filename)s."
@@ -1658,7 +1658,7 @@ msgstr "Misslyckades att lära från filen %(filename)s."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5037
+#: setup/main.py:5041
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1666,7 +1666,7 @@ msgstr ""
 "Vill du verkligen ta bort alla språkdata, inlärd från att skriva eller läsa "
 "filer?"
 
-#: setup/main.py:6660
+#: setup/main.py:6664
 msgid "ibus is not running."
 msgstr "ibus kör inte."
 
