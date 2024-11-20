@@ -45,7 +45,15 @@ sys.path.pop(0)
 
 class ItbPangoTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        pass
+        fonts_used = itb_pango.get_fonts_used_for_text('emoji', '😇', fallback=True)
+        run, results_for_run = fonts_used[0]
+        self._fallback_font_name = results_for_run['font']
+        LOGGER.info('Fallback font name=“%s”', self._fallback_font_name)
+        # 🫩︎ U+1FAE9 FACE WITH BAGS UNDER EYES, added in Unicode 16.0
+        fonts_used = itb_pango.get_fonts_used_for_text('emoji', '🫩', fallback=True)
+        run, results_for_run = fonts_used[0]
+        self._fallback_font_name_u16 = results_for_run['font']
+        LOGGER.info('Fallback font name Unicode 16.0=“%s”', self._fallback_font_name_u16)
 
     def tearDown(self) -> None:
         pass
@@ -64,9 +72,8 @@ class ItbPangoTestCase(unittest.TestCase):
         'Skipping, fonts might be different on Fedora < 40 or other distributions.')
     def test_dejavu_sans(self) -> None:
         font_name = 'DejaVu Sans'
-        fallback_font_name = 'Noto Color Emoji'
         self.font_available_or_skip(font_name)
-        self.font_available_or_skip(fallback_font_name)
+        self.font_available_or_skip(self._fallback_font_name)
 
         text = '' # empty string
         fallback = False
@@ -141,15 +148,52 @@ class ItbPangoTestCase(unittest.TestCase):
         and distro.id() == 'fedora'
         and distro.version() >= '40',
         'Skipping, fonts might be different on Fedora < 40 or other distributions.')
-    def test_titter_color_emoji(self) -> None:
+    def test_twitter_color_emoji(self) -> None:
         font_name = 'Twitter Color Emoji'
-        fallback_font_name = 'Noto Color Emoji'
         self.font_available_or_skip(font_name)
-        self.font_available_or_skip(fallback_font_name)
+        self.font_available_or_skip(self._fallback_font_name)
 
-        text = '☺\uFE0F' # request text representation
+        text = '☺\uFE0F' # request emoji representation
         fallback = False
         # supported, fallback will not be used:
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
+        fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
+        self.assertEqual(len(fonts_used), 1)
+        run, results_for_run = fonts_used[0]
+        self.assertEqual(run, text)
+        self.assertEqual(results_for_run['font'], font_name)
+        self.assertEqual(results_for_run['glyph-count'], 2)
+        self.assertEqual(results_for_run['visible'], True)
+        self.assertEqual('glyph-available' in results_for_run, False)
+
+        text = '☺\uFE0F' # request emoji representation
+        fallback = True
+        # supported, but with fallback enabled, Pango falls back nevertheless:
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
+        fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
+        self.assertEqual(len(fonts_used), 1)
+        run, results_for_run = fonts_used[0]
+        self.assertEqual(run, text)
+        self.assertEqual(results_for_run['font'], self._fallback_font_name)
+
+        text = '☺' # unqualified
+        fallback = False
+        # supported, fallback will not be used:
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
+        fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
+        self.assertEqual(len(fonts_used), 1)
+        run, results_for_run = fonts_used[0]
+        self.assertEqual(run, text)
+        self.assertEqual(results_for_run['font'], font_name)
+        self.assertEqual(results_for_run['glyph-count'], 1)
+        self.assertEqual(results_for_run['visible'], True)
+        self.assertEqual('glyph-available' in results_for_run, True)
+        self.assertEqual(results_for_run['glyph-available'], True)
+
+        text = '☺' # unqualified
+        fallback = True
+        # supported,  and without the variation selector, Pango does not fall back:
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
@@ -167,13 +211,13 @@ class ItbPangoTestCase(unittest.TestCase):
         'Skipping, fonts might be different on Fedora < 40 or other distributions.')
     def test_symbola(self) -> None:
         font_name = 'Symbola'
-        fallback_font_name = 'Noto Color Emoji'
         self.font_available_or_skip(font_name)
-        self.font_available_or_skip(fallback_font_name)
+        self.font_available_or_skip(self._fallback_font_name)
 
         text = '☺' # Lacks Emoji_Presentation, defaults to text representation
         fallback = False
         # supported by Symbola
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
@@ -187,6 +231,7 @@ class ItbPangoTestCase(unittest.TestCase):
         text = '☺' # Lacks Emoji_Presentation, defaults to text representation
         fallback = True
         # supported by Symbola
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
@@ -200,60 +245,57 @@ class ItbPangoTestCase(unittest.TestCase):
         text = '☺\uFE0E' # request text representation
         fallback = False
         # supported by Symbola
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
         self.assertEqual(run, text)
         self.assertEqual(results_for_run['font'], font_name)
-        self.assertEqual(results_for_run['glyph-count'], 1)
+        self.assertEqual(results_for_run['glyph-count'], 2)
         self.assertEqual(results_for_run['visible'], True)
-        self.assertEqual('glyph-available' in results_for_run, True)
-        self.assertEqual(results_for_run['glyph-available'], True)
+        self.assertEqual('glyph-available' in results_for_run, False)
 
         text = '☺\uFE0E' # request text representation
         fallback = True
         # supported by Symbola, as Text representation is requested,
         # fallback to “Noto Color Emoji” does not happen:
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
         self.assertEqual(run, text)
         self.assertEqual(results_for_run['font'], font_name)
-        self.assertEqual(results_for_run['glyph-count'], 1)
+        self.assertEqual(results_for_run['glyph-count'], 2)
         self.assertEqual(results_for_run['visible'], True)
-        self.assertEqual('glyph-available' in results_for_run, True)
-        self.assertEqual(results_for_run['glyph-available'], True)
+        self.assertEqual('glyph-available' in results_for_run, False)
 
         text = '☺\uFE0F' # request emoji representation
         fallback = False
         # supported by Symbola
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
         self.assertEqual(run, text)
         self.assertEqual(results_for_run['font'], font_name)
-        self.assertEqual(results_for_run['glyph-count'], 1)
+        self.assertEqual(results_for_run['glyph-count'], 2)
         self.assertEqual(results_for_run['visible'], True)
-        self.assertEqual('glyph-available' in results_for_run, True)
-        self.assertEqual(results_for_run['glyph-available'], True)
+        self.assertEqual('glyph-available' in results_for_run, False)
 
         text = '☺\uFE0F' # request emoji representation
         fallback = True
-        # supported by Symbola but request for emoji representation triggers fallback to
-        # “Noto Color Emoji“:
+        # supported by Symbola but request for emoji representation triggers fallback:
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
         self.assertEqual(run, text)
-        self.assertEqual(results_for_run['font'], fallback_font_name)
-        self.assertEqual(results_for_run['glyph-count'], 1)
-        self.assertEqual(results_for_run['visible'], True)
-        self.assertEqual('glyph-available' in results_for_run, True)
-        self.assertEqual(results_for_run['glyph-available'], True)
+        self.assertEqual(results_for_run['font'], self._fallback_font_name)
 
-        text = '😇︎' # has Emoji_Presentation property
+        text =  '😇' # unqualified, has Emoji_Presentation property
         fallback = False
         # Symbola is used:
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
@@ -264,14 +306,28 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual('glyph-available' in results_for_run, True)
         self.assertEqual(results_for_run['glyph-available'], True)
 
-        text = '😇︎' # has Emoji_Presentation property
-        fallback = True
+        text = '😇\uFE0E' # has Emoji_Presentation property
+        fallback = False
         # Symbola is used:
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
         self.assertEqual(run, text)
         self.assertEqual(results_for_run['font'], font_name)
+        self.assertEqual(results_for_run['glyph-count'], 2)
+        self.assertEqual(results_for_run['visible'], True)
+        self.assertEqual('glyph-available' in results_for_run, False)
+
+        text = '😇' # unqualified, has Emoji_Presentation property
+        fallback = True
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
+        # Symbola is **not** used:
+        fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
+        self.assertEqual(len(fonts_used), 1)
+        run, results_for_run = fonts_used[0]
+        self.assertEqual(run, text)
+        self.assertEqual(results_for_run['font'], self._fallback_font_name)
         self.assertEqual(results_for_run['glyph-count'], 1)
         self.assertEqual(results_for_run['visible'], True)
         self.assertEqual('glyph-available' in results_for_run, True)
@@ -279,9 +335,10 @@ class ItbPangoTestCase(unittest.TestCase):
 
         # 🫩︎ U+1FAE9 FACE WITH BAGS UNDER EYES, added in Unicode 16.0,
         # has Emoji_Presentation property
-        text = '🫩︎'
+        text = '🫩' # unqualified
         fallback = False
         # Symbola has no glyph for this:
+        self.assertEqual(True, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
@@ -292,20 +349,51 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual('glyph-available' in results_for_run, True)
         self.assertEqual(results_for_run['glyph-available'], False)
 
-         # 🫩︎ U+1FAE9 FACE WITH BAGS UNDER EYES, added in Unicode 16.0,
-         # has Emoji_Presentation property
-        text = '🫩︎'
-        fallback = True
-        # fallback to “Noto Color Emoji” is used:
+        # 🫩︎ U+1FAE9 FACE WITH BAGS UNDER EYES, added in Unicode 16.0,
+        # has Emoji_Presentation property
+        text = '🫩\uFE0E'
+        fallback = False
+        # Symbola has no glyph for this:
+        self.assertEqual(True, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
         self.assertEqual(run, text)
-        self.assertEqual(results_for_run['font'], fallback_font_name)
+        self.assertEqual(results_for_run['font'], font_name)
+        self.assertEqual(results_for_run['glyph-count'], 2)
+        self.assertEqual(results_for_run['visible'], True)
+        self.assertEqual('glyph-available' in results_for_run, False)
+
+        # 🫩︎ U+1FAE9 FACE WITH BAGS UNDER EYES, added in Unicode 16.0,
+        # has Emoji_Presentation property
+        text = '🫩' # unqualified
+        fallback = True
+        # fallback is used:
+        self.assertEqual(True, itb_pango.emoji_font_fallback_needed(font_name, text))
+        fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
+        self.assertEqual(len(fonts_used), 1)
+        run, results_for_run = fonts_used[0]
+        self.assertEqual(run, text)
+        self.assertEqual(results_for_run['font'], self._fallback_font_name_u16)
         self.assertEqual(results_for_run['glyph-count'], 1)
         self.assertEqual(results_for_run['visible'], True)
         self.assertEqual('glyph-available' in results_for_run, True)
         self.assertEqual(results_for_run['glyph-available'], True)
+
+        # 🫩︎ U+1FAE9 FACE WITH BAGS UNDER EYES, added in Unicode 16.0,
+        # has Emoji_Presentation property
+        text = '🫩\uFE0E'
+        fallback = True
+        # fallback to “Noto Color Emoji” is used:
+        self.assertEqual(True, itb_pango.emoji_font_fallback_needed(font_name, text))
+        fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
+        self.assertEqual(len(fonts_used), 1)
+        run, results_for_run = fonts_used[0]
+        self.assertEqual(run, text)
+        self.assertEqual(results_for_run['font'], self._fallback_font_name_u16)
+        self.assertEqual(results_for_run['glyph-count'], 2)
+        self.assertEqual(results_for_run['visible'], True)
+        self.assertEqual('glyph-available' in results_for_run, False)
 
     @unittest.skipUnless(
         IMPORT_DISTRO_SUCCESSFUL
@@ -314,13 +402,13 @@ class ItbPangoTestCase(unittest.TestCase):
         'Skipping, fonts might be different on Fedora < 40 or other distributions.')
     def test_twemoji(self) -> None:
         font_name = 'Twemoji'
-        fallback_font_name = 'Noto Color Emoji'
         self.font_available_or_skip(font_name)
-        self.font_available_or_skip(fallback_font_name)
+        self.font_available_or_skip(self._fallback_font_name)
 
         text = '☺\uFE0F'
         fallback = False
         # supported by Twemoji
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
@@ -328,13 +416,13 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual(results_for_run['font'], font_name)
         self.assertEqual(results_for_run['glyph-count'], 1)
         self.assertEqual(results_for_run['visible'], True)
-        self.assertEqual('glyph-available' in results_for_run, True)
-        self.assertEqual(results_for_run['glyph-available'], True)
+        self.assertEqual('glyph-available' in results_for_run, False)
 
         text = '🙂‍↕️'
         fallback = False
         # twitter-twemoji-fonts-14.0.2-5.fc40.noarch
         # does not support this and does not render this as a single glyph:
+        self.assertEqual(True, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
@@ -345,11 +433,12 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual('glyph-available' in results_for_run, False)
         fallback = True
         # Falling back to “Noto Color Emoji”
+        self.assertEqual(True, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
         self.assertEqual(run, text)
-        self.assertEqual(results_for_run['font'], fallback_font_name)
+        self.assertEqual(results_for_run['font'], self._fallback_font_name)
         self.assertEqual(results_for_run['glyph-count'], 1)
         self.assertEqual(results_for_run['visible'], True)
         self.assertEqual('glyph-available' in results_for_run, False)
@@ -363,6 +452,7 @@ class ItbPangoTestCase(unittest.TestCase):
         # glyph when “Twemoji” is specified and fallback is not
         # allowed (Visually the glyph shown appears empty, there is no
         # “Tofu”):
+        self.assertEqual(True, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
@@ -372,19 +462,21 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual(results_for_run['visible'], False) # it’s empty!
         self.assertEqual('glyph-available' in results_for_run, False)
         fallback = True
-        # falling back to “Noto Color Emoji”
+        # falling back:
+        # If “OpenMoji Color” is the system default, it falls back to that
+        # even though the current “OpenMoji Color” does not yet support Unicode 16.0
+        # and renders the flag of Sark as two glyphs 🇨 U+1F1E8 🇶 U+1F1F6
+        self.assertEqual(True, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
         self.assertEqual(run, text)
-        self.assertEqual(results_for_run['font'], fallback_font_name)
-        self.assertEqual(results_for_run['glyph-count'], 1)
-        self.assertEqual(results_for_run['visible'], True)
-        self.assertEqual('glyph-available' in results_for_run, False)
+        self.assertEqual(results_for_run['font'], self._fallback_font_name)
 
         text = '🏴󠁧󠁢󠁷󠁬󠁳󠁿'
         fallback = False
         # “Twemoji” does correctly support the flag of Wales:
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
@@ -395,20 +487,23 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual('glyph-available' in results_for_run, False)
         fallback = True
         # with fallback enabled, Pango falls back to “Noto Color Emoji” nevertheless:
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
         self.assertEqual(run, text)
-        self.assertEqual(results_for_run['font'], fallback_font_name)
+        self.assertEqual(results_for_run['font'], self._fallback_font_name)
         self.assertEqual(results_for_run['glyph-count'], 1)
         self.assertEqual(results_for_run['visible'], True)
         self.assertEqual('glyph-available' in results_for_run, False)
 
+        # 🫩︎ U+1FAE9 FACE WITH BAGS UNDER EYES, added in Unicode 16.0
         text = '🫩'
         fallback = False
         # “Twemoji” does not have the glyph for this single code point
         # emoji, (visually the glyph shown when Twemoji is used is a
         # “Tofu” block with the code point inside):
+        self.assertEqual(True, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
@@ -419,12 +514,13 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual('glyph-available' in results_for_run, True)
         self.assertEqual(results_for_run['glyph-available'], False) # Tofu glyph shown
         fallback = True
-        # with fallback enabled, Pango correctly falls back to “Noto Color Emoji”:
+        # with fallback enabled, Pango correctly falls back:
+        self.assertEqual(True, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
         self.assertEqual(run, text)
-        self.assertEqual(results_for_run['font'], fallback_font_name)
+        self.assertEqual(results_for_run['font'], self._fallback_font_name_u16)
         self.assertEqual(results_for_run['glyph-count'], 1)
         self.assertEqual(results_for_run['visible'], True)
         self.assertEqual('glyph-available' in results_for_run, True)
@@ -433,6 +529,7 @@ class ItbPangoTestCase(unittest.TestCase):
         text = '🤥' # U+1F925, single code point
         fallback = False
         # “Twemoji” does correctly support it:
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
@@ -444,11 +541,12 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual(results_for_run['glyph-available'], True) # real glyph shown
         fallback = True
         # with fallback enabled, Pango falls back to “Noto Color Emoji” nevertheless:
+        self.assertEqual(False, itb_pango.emoji_font_fallback_needed(font_name, text))
         fonts_used = itb_pango.get_fonts_used_for_text(font_name, text, fallback=fallback)
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
         self.assertEqual(run, text)
-        self.assertEqual(results_for_run['font'], fallback_font_name)
+        self.assertEqual(results_for_run['font'], self._fallback_font_name)
         self.assertEqual(results_for_run['glyph-count'], 1)
         self.assertEqual(results_for_run['visible'], True)
         self.assertEqual('glyph-available' in results_for_run, True)
