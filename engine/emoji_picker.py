@@ -676,6 +676,21 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 fonts_description += f': {font_dict}'
             else:
                 fonts_description += f': {font_dict["font"]}'
+        emoji_unqualified = emoji.replace('\uFE0E', '').replace('\uFE0F', '')
+        if _ARGS.debug and emoji_unqualified != emoji:
+            for text, font_dict in itb_pango.get_fonts_used_for_text(
+                    self._font + ' ' + str(self._fontsize), emoji_unqualified,
+                    fallback=fallback):
+                fonts_description += '\n'
+                code_points = ''
+                for char in text:
+                    code_points += f' U+{ord(char):04X}'
+                fonts_description += (
+                    f'<span font="{self._font}" '
+                    f'fallback="{str(fallback).lower()}" >'
+                    + text + '</span>'
+                    + f'<span fallback="true">{code_points}</span>')
+                fonts_description += f': {font_dict}'
         descriptions.append(fonts_description)
         for language in itb_util.expand_languages(self._languages):
             names = self._emoji_matcher.names(emoji, language=language)

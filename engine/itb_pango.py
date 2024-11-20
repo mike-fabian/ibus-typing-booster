@@ -303,32 +303,15 @@ def get_fonts_used_for_text(
         ink_rect, _logical_rect = pango_layout_run_line.get_pixel_extents()
         if ink_rect.width > 0 and ink_rect.height > 0:
             visible = True
-        pango_has_char_input = ''
-        if len(run_text) == 1:
-            pango_has_char_input = run_text
-        # If it is only one character followed by a variation
-        # selector, check whether the Pango font has the character
-        # before the variation selector:
-        if (len(run_text) == 2
-            and ord('\uFE00') <= ord(run_text[1]) <= ord('\uFE0F')):
-            pango_has_char_input = run_text[0]
-            # With some fonts a 2 character sequence ending with
-            # a variation selector gets two glyphs, with some only one.
-            # For example with “Twemoji”, '☺\uFE0F' gets 1 glyph
-            # but with “Twitter Color Emoji” it gets 2 glyphs.
-            # But as the variation selector is invisible, we want to
-            # treat all 2 character texts ending with a variation selector
-            # as one glyph texts:
-            num_glyphs = 1
         results_for_run = {
             'font': run_family,
             'glyph-count': num_glyphs,
             'visible': visible}
         if (num_glyphs == 1
-            and pango_has_char_input
+            and len(run_text) == 1
             and hasattr(Pango.Font, 'has_char')):
             results_for_run['glyph-available'] = pango_font.has_char(
-                pango_has_char_input)
+                run_text)
         path = get_font_file(run_family)
         if path:
             results_for_run['file'] = path
@@ -394,6 +377,28 @@ def emoji_font_fallback_needed(font: str, text: str) -> bool:
     >>> emoji_font_fallback_needed('Twemoji', '🏴󠁧󠁢󠁷󠁬󠁳󠁿🤥')
     True
     '''
+    if not  font:
+        return True
+    for char in ('\uFE0E', '\uFE0F'):
+        # With some fonts sequences containing variations selectors
+        # get extra glyphs for the variation selectors, even though
+        # these are invisible and apparently irrelevant for whether
+        # the font supports the emoji or not.
+        #
+        # For example with “Twemoji”, '☺\uFE0F' gets 1 glyph but with
+        # “Twitter Color Emoji” it gets 2 glyphs and both fonts
+        # support that emoji.  Another example is 😶‍🌫️ U+1F636 U+200D
+        # U+1F32B U+FE0F FACE IN CLOUDS which gets two glyphs when
+        # using the black and white “Noto Emoji” font but the second
+        # glyph is for U+FE0F and irrelevant.  ❤️‍🔥 U+2764 U+FE0F
+        # U+200D U+1F525 HEART ON FIRE also gets two glyphs with “Noto
+        # Emoji” but only one if the U+FE0F is removed.
+        #
+        # Therefore, removing the variation selectors gives better results
+        # for whether a fallback font is needed:
+        text = text.replace(char, '')
+    if not text:
+        return False
     fonts_used = get_fonts_used_for_text(font, text, fallback=False)
     if len(fonts_used) > 1:
         # If there is more than one run, that means the text contained more
