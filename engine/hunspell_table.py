@@ -7466,7 +7466,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                        like 'gtk3-im:firefox', 'gtk4-im:gnome-text-editor', …
         '''
         if DEBUG_LEVEL > 1:
-            LOGGER.debug('object_path=%s client=%s\n', object_path, client)
+            LOGGER.debug(
+                'object_path=%s client=%s self.client_capabilities=%s\n',
+                object_path, client, f'{self.client_capabilities:010b}')
         self._im_client = client
         (program_name,
          window_title) = itb_active_window.get_active_window()
