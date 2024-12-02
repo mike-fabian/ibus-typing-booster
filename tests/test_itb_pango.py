@@ -22,8 +22,15 @@ This file implements test cases for itb_pango.py
 '''
 
 import sys
+import os
 import logging
 import unittest
+
+# pylint: disable=wrong-import-position
+from gi import require_version as gi_require_version # type: ignore
+gi_require_version('Gdk', '3.0')
+from gi.repository import Gdk # type: ignore
+# pylint: enable=wrong-import-position
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -43,6 +50,11 @@ sys.path.pop(0)
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring
 
+@unittest.skipUnless(
+    'XDG_SESSION_TYPE' in os.environ
+    and os.environ['XDG_SESSION_TYPE'] in ('x11', 'wayland'),
+    'XDG_SESSION_TYPE is neither "x11" nor "wayland".')
+@unittest.skipIf(Gdk.Display.open('') is None, 'Display cannot be opened.')
 class ItbPangoTestCase(unittest.TestCase):
     def setUp(self) -> None:
         fonts_used = itb_pango.get_fonts_used_for_text('emoji', '😇', fallback=True)
