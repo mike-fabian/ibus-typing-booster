@@ -155,8 +155,11 @@ class SetupUI(Gtk.Window): # type: ignore
             if key in ('dictionaryinstalltimestamp',
                        'inputmethodchangetimestamp'):
                 continue
-            if value_type == 'i':
+            if value_type in ('i', 'u', 'x', 't'):
+                # int32, uint32, int64, uint64
                 value_hint = 'int'
+            elif value_type == 'd':
+                value_hint = 'float'
             elif value_type == 'b':
                 value_hint = 'bool'
             elif value_type == 's':
@@ -4310,13 +4313,31 @@ class SetupUI(Gtk.Window): # type: ignore
             return
         if old_setting in self._allowed_autosettings:
             value_type = self._allowed_autosettings[old_setting]['value_type']
-            if value_type == 'i':
+            if value_type in ('i', 'x'): # int32, int64
                 try:
                     value_integer = int(new_edited_value)
                     new_edited_value = str(value_integer)
                 except (ValueError,) as error:
                     LOGGER.exception(
                         'Exception converting string to integer %s: %s',
+                        error.__class__.__name__, error)
+                    new_edited_value = ''
+            elif value_type in ('u', 't'): # uint32, uint64
+                try:
+                    value_integer = max(0, int(new_edited_value))
+                    new_edited_value = str(value_integer)
+                except (ValueError,) as error:
+                    LOGGER.exception(
+                        'Exception converting string to integer %s: %s',
+                        error.__class__.__name__, error)
+                    new_edited_value = ''
+            elif value_type == 'd': # double
+                try:
+                    value_float = float(new_edited_value)
+                    new_edited_value = str(value_float)
+                except (ValueError,) as error:
+                    LOGGER.exception(
+                        'Exception converting string to float %s: %s',
                         error.__class__.__name__, error)
                     new_edited_value = ''
             elif value_type == 'b':
