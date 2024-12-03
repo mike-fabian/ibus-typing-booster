@@ -49,23 +49,11 @@ class TabSqliteDb:
 
     “id”, “input_phrase”, “phrase”, “p_phrase”, “pp_phrase”, “user_freq”, “timestamp”
 
-    There are 2 databases, sysdb, userdb.
-
-    sysdb: “Database” with the suggestions from the hunspell dictionaries
-        user_freq = 0 always.
-
-        Actually there is no Sqlite3 database called “sysdb”, these
-        are the suggestions coming from hunspell_suggest, i.e. from
-        grepping the hunspell dictionaries and from pyhunspell.
-        (Historic note: ibus-typing-booster started as a fork of
-        ibus-table, in ibus-table “sysdb” is a Sqlite3 database
-        which is installed systemwide and readonly for the user)
-
-    user_db: Database on disk where the phrases learned from the user are stored
-        user_freq >= 1: The number of times the user has used this phrase
+    It is a database where the phrases learned from the user are stored.
+    user_freq >= 1: The number of times the user has used this phrase
     '''
     # pylint: enable=line-too-long
-    def __init__(self, user_db_file: str = '') -> None:
+    def __init__(self, user_db_file: str = 'user.db') -> None:
         global DEBUG_LEVEL # pylint: disable=global-statement
         try:
             DEBUG_LEVEL = int(str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
@@ -75,9 +63,10 @@ class TabSqliteDb:
             LOGGER.debug(
                 'TabSqliteDb.__init__(user_db_file = %s)', user_db_file)
         self.user_db_file = user_db_file
-        if not self.user_db_file and os.getenv('HOME'):
-            self.user_db_file = os.path.join(
-                str(os.getenv('HOME')), '.local/share/ibus-typing-booster/user.db')
+        if (self.user_db_file != ':memory:'
+            and os.path.basename(self.user_db_file) == self.user_db_file):
+            self.user_db_file = os.path.join(os.path.expanduser(
+                '~/.local/share/ibus-typing-booster'), self.user_db_file)
         if not self.user_db_file:
             LOGGER.debug('Falling back to ":memory:" for user.db')
             self.user_db_file = ':memory:'

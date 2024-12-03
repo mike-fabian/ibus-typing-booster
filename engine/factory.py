@@ -36,6 +36,7 @@ from gi.repository import IBus # type: ignore
 # pylint: enable=wrong-import-position
 import hunspell_table
 import tabsqlitedb
+import itb_util
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -67,24 +68,37 @@ class EngineFactory(IBus.Factory): # type: ignore
             LOGGER.debug(
                 'EngineFactory.do_create_engine(engine_name=%s)\n',
                 engine_name)
-        engine_base_path = "/com/redhat/IBus/engines/table/%s/engine/"
-        engine_path = engine_base_path % re.sub(
-            r'[^a-zA-Z0-9_/]', '_', engine_name)
+        engine_path = ('/com/redhat/IBus/engines/typing_booster/'
+                       f"{re.sub(r'[^a-zA-Z0-9_/]', '_', engine_name)}"
+                       '/engine/')
         try:
             if engine_name in self.database_dict:
                 self.database = self.database_dict[engine_name]
             else:
-                self.database = tabsqlitedb.TabSqliteDb()
+                user_db_file = 'user.db'
+                if engine_name != 'typing-booster':
+                    match = itb_util.M17N_ENGINE_NAME_PATTERN.search(
+                            engine_name)
+                    if not match:
+                        raise ValueError('Invalid engine name.')
+                    m17n_ime_lang = match.group('lang')
+                    m17n_ime_name = match.group('name')
+                    user_db_file = f'user-{m17n_ime_lang}-{m17n_ime_name}.db'
+                self.database = tabsqlitedb.TabSqliteDb(
+                    user_db_file=user_db_file)
                 self.database_dict[engine_name] = self.database
             if engine_name in self.enginedict:
                 engine = self.enginedict[engine_name]
             else:
                 engine = hunspell_table.TypingBoosterEngine(
-                    self.bus, engine_path + str(self.engine_id), self.database)
+                    self.bus,
+                    engine_path + str(self.engine_id),
+                    self.database,
+                    engine_name=engine_name)
                 self.enginedict[engine_name] = engine
                 self.engine_id += 1
             return engine
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Failed to create engine %s: %s: %s',
                 engine_name, error.__class__.__name__, error)

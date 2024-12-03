@@ -112,6 +112,9 @@ DOMAINNAME = 'ibus-typing-booster'
 _: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
 N_: Callable[[str], str] = lambda a: a
 
+M17N_ENGINE_NAME_PATTERN = re.compile(
+    r'^tb:(?P<lang>[a-z]{1,3}):(?P<name>[^\s:]+)$')
+
 # When matching keybindings, only the bits in the following mask are
 # considered for key.state:
 KEYBINDING_STATE_MASK = (
@@ -3351,6 +3354,8 @@ def variant_to_value(variant: GLib.Variant) -> Any:
     '''
     Convert a GLib variant to a value
     '''
+    if variant is None:
+        return None
     if not isinstance(variant, GLib.Variant):
         LOGGER.info('not a GLib.Variant')
         return variant

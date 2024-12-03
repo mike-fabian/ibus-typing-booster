@@ -104,14 +104,15 @@ class SimpleGtkTestCase(unittest.TestCase):
         cls._flag = False
         IBus.init()
         cls._gsettings = Gio.Settings(
-            schema='org.freedesktop.ibus.engine.typing-booster')
+            schema='org.freedesktop.ibus.engine.typing-booster',
+            path='/org/freedesktop/ibus/engine/typing-booster/')
         cls._orig_dictionary = cls._gsettings.get_string('dictionary')
         cls._orig_tabenable = cls._gsettings.get_boolean('tabenable')
         cls._orig_inputmode = cls._gsettings.get_boolean('inputmode')
         cls._orig_inline_completion = cls._gsettings.get_int('inlinecompletion')
         cls._orig_auto_select_candidate = cls._gsettings.get_int(
             'autoselectcandidate')
-        cls._orig_candidates_delay_milliseconds = cls._gsettings.get_int(
+        cls._orig_candidates_delay_milliseconds = cls._gsettings.get_uint(
             'candidatesdelaymilliseconds')
         signums: List[Optional[signal.Signals]] = [
             getattr(signal, s, None) for s in 'SIGINT SIGTERM SIGHUP'.split()]
@@ -130,7 +131,7 @@ class SimpleGtkTestCase(unittest.TestCase):
             cls._gsettings.set_int('inlinecompletion', cls._orig_inline_completion)
             cls._gsettings.set_int('autoselectcandidate',
                                    cls._orig_auto_select_candidate)
-            cls._gsettings.set_int('candidatesdelaymilliseconds',
+            cls._gsettings.set_uint('candidatesdelaymilliseconds',
                                    cls._orig_candidates_delay_milliseconds)
 
     @classmethod
@@ -233,7 +234,8 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__engine = hunspell_table.TypingBoosterEngine(
             self.__bus,
             object_path,
-            database)
+            database,
+            engine_name='typing-booster')
         self.__engine.connect('focus-in', self.__engine_focus_in)
         self.__engine.connect('focus-out', self.__engine_focus_out)
         self.__engine.connect_after('reset', self.__engine_after_reset)

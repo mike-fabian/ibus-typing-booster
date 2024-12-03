@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema path="/org/freedesktop/ibus/engine/typing-booster/"
-          id="org.freedesktop.ibus.engine.typing-booster">
+  <schema id="org.freedesktop.ibus.engine.typing-booster">
     <key name="colorcomposepreview" type="b">
       <default>true</default>
       <summary>Use color for compose preview</summary>

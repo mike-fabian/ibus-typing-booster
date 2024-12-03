@@ -36,6 +36,7 @@ import re
 import fnmatch
 import ast
 import time
+import copy
 import logging
 import threading
 from gettext import dgettext
@@ -105,9 +106,6 @@ EMOJI_PREDICTION_MODE_SYMBOL = '🙂'
 # 🕵 U+1F575 SLEUTH OR SPY
 OFF_THE_RECORD_MODE_SYMBOL = '🕵'
 
-INPUT_MODE_TRUE_SYMBOL = '🚀'
-INPUT_MODE_FALSE_SYMBOL = '🐌'
-
 IBUS_VERSION = (IBus.MAJOR_VERSION, IBus.MINOR_VERSION, IBus.MICRO_VERSION)
 
 class TypingBoosterEngine(IBus.Engine): # type: ignore
@@ -118,6 +116,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             bus: IBus.Bus,
             obj_path: str,
             database: Any, # tabsqlitedb.TabSqliteDb
+            engine_name: str = 'typing-booster',
             unit_test: bool = False) -> None:
         global DEBUG_LEVEL # pylint: disable=global-statement
         try:
@@ -128,8 +127,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'TypingBoosterEngine.__init__'
-                '(bus=%s, obj_path=%s, database=%s)',
-                bus, obj_path, database)
+                '(bus=%s, obj_path=%s, database=%s, '
+                'engine_name=%s, unit_test=%s)',
+                bus, obj_path, database, engine_name, unit_test)
         LOGGER.info('ibus version = %s', '.'.join(map(str, IBUS_VERSION)))
         if hasattr(IBus.Engine.props, 'has_focus_id'):
             super().__init__(
@@ -142,6 +142,44 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 connection=bus.get_connection(),
                 object_path=obj_path)
             LOGGER.info('This ibus version does *not* have focus id.')
+
+        self._engine_name = engine_name
+        self._m17n_ime_lang = ''
+        self._m17n_ime_name = ''
+        self._input_mode_true_symbol = '🚀'
+        self._input_mode_false_symbol = '🐌'
+        schema_path = '/org/freedesktop/ibus/engine/typing-booster/'
+        if self._engine_name != 'typing-booster':
+            try:
+                match = itb_util.M17N_ENGINE_NAME_PATTERN.search(
+                        self._engine_name)
+                if not match:
+                    raise ValueError('Invalid engine name.')
+                self._m17n_ime_lang = match.group('lang')
+                self._m17n_ime_name = match.group('name')
+                self._input_mode_true_symbol = self._m17n_ime_lang
+                # Not more then 2 characters allowed, '_A' works,
+                # '_hi' does not work. Invisible characters like
+                # combining characters or emoji variation selectors
+                # are counted towards this limit unfortunately.  using
+                # upper case to indicate direct input mode is kind of
+                # weird but keeps the information for which language
+                # the currently selected engine is.  Languages with 3
+                # letter codes like “mai” do not work, not even if
+                # only self._input_mode_true_symbol is 3 letters long
+                # and self._input_mode_false_symbol is only 1 or 2
+                # letters long.
+                self._input_mode_false_symbol = self._m17n_ime_lang.upper()
+                if self._m17n_ime_lang == 't':
+                    self._input_mode_true_symbol = '⌨️'
+                    self._input_mode_false_symbol = '🎯'
+                schema_path = ('/org/freedesktop/ibus/engine/tb/'
+                               f'{self._m17n_ime_lang}/{self._m17n_ime_name}/')
+            except ValueError as error:
+                LOGGER.exception(
+                    'Failed to match engine_name %s: %s: %s',
+                    engine_name, error.__class__.__name__, error)
+                raise # Re-raise the original exception
 
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         self._compose_sequences = itb_util.ComposeSequences()
@@ -158,7 +196,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.emoji_matcher: Optional[itb_emoji.EmojiMatcher] = None
         self._setup_pid = 0
         self._gsettings = Gio.Settings(
-            schema='org.freedesktop.ibus.engine.typing-booster')
+            schema='org.freedesktop.ibus.engine.typing-booster',
+            path=schema_path)
+        self._settings_dict = self._init_settings_dict()
 
         self._prop_dict: Dict[str, IBus.Property] = {}
         self._sub_props_dict: Dict[str, IBus.PropList] = {}
@@ -175,14 +215,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.preedit_ime_menu: Dict[str, Any] = {}
         self.preedit_ime_properties: Dict[str, Any] = {}
         self.preedit_ime_sub_properties_prop_list: IBus.PropList = []
-        self._setup_property: Optional[IBus.Property] = None
+        self._setup_property: Optional[IBus.Property] = None # FIXME member variable never used?
         self._im_client: str = ''
 
         self._current_imes: List[str] = []
 
         self._timeout_source_id: int = 0
-        self._candidates_delay_milliseconds: int = itb_util.variant_to_value(
-            self._gsettings.get_value('candidatesdelaymilliseconds'))
+        self._candidates_delay_milliseconds: int = self._settings_dict[
+            'candidatesdelaymilliseconds']['user']
         self._candidates_delay_milliseconds = max(
             self._candidates_delay_milliseconds, 0)
         self._candidates_delay_milliseconds = min(
@@ -193,218 +233,201 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # Between some events sent to ibus like forward_key_event(),
         # delete_surrounding_text(), commit_text(), a sleep is necessary.
         # Without the sleep, these events may be processed out of order.
-        self._ibus_event_sleep_seconds: float = itb_util.variant_to_value(
-            self._gsettings.get_value('ibuseventsleepseconds'))
+        self._ibus_event_sleep_seconds: float = self._settings_dict[
+            'ibuseventsleepseconds']['user']
         LOGGER.info('self._ibus_event_sleep_seconds=%s', self._ibus_event_sleep_seconds)
 
-        self._emoji_predictions: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('emojipredictions'))
+        self._emoji_predictions: bool = self._settings_dict[
+            'emojipredictions']['user']
 
         self.is_lookup_table_enabled_by_min_char_complete = False
-        self._min_char_complete: int = itb_util.variant_to_value(
-            self._gsettings.get_value('mincharcomplete'))
+        self._min_char_complete: int = self._settings_dict[
+            'mincharcomplete']['user']
         self._min_char_complete = max(self._min_char_complete, 0)
         self._min_char_complete = min(self._min_char_complete, 9)
 
-        self._debug_level: int = itb_util.variant_to_value(
-            self._gsettings.get_value('debuglevel'))
+        self._debug_level: int = self._settings_dict['debuglevel']['user']
         self._debug_level = max(self._debug_level, 0)
         self._debug_level = min(self._debug_level, 255)
         DEBUG_LEVEL = self._debug_level
 
-        self._page_size: int = itb_util.variant_to_value(
-            self._gsettings.get_value('pagesize'))
+        self._page_size: int = self._settings_dict['pagesize']['user']
         self._page_size = max(self._page_size, 1)
         self._page_size = min(self._page_size, 9)
 
-        self._lookup_table_orientation: int = itb_util.variant_to_value(
-            self._gsettings.get_value('lookuptableorientation'))
+        self._lookup_table_orientation: int = self._settings_dict[
+            'lookuptableorientation']['user']
 
-        self._preedit_underline: int = itb_util.variant_to_value(
-            self._gsettings.get_value('preeditunderline'))
+        self._preedit_underline: int = self._settings_dict[
+            'preeditunderline']['user']
 
-        self._preedit_style_only_when_lookup: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('preeditstyleonlywhenlookup'))
+        self._preedit_style_only_when_lookup: bool = self._settings_dict[
+            'preeditstyleonlywhenlookup']['user']
 
-        self._show_number_of_candidates: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('shownumberofcandidates'))
+        self._show_number_of_candidates: bool = self._settings_dict[
+            'shownumberofcandidates']['user']
 
-        self._show_status_info_in_auxiliary_text: bool = (
-            itb_util.variant_to_value(
-                self._gsettings.get_value('showstatusinfoinaux')))
+        self._show_status_info_in_auxiliary_text: bool = self._settings_dict[
+            'showstatusinfoinaux']['user']
 
         self._is_candidate_auto_selected = False
-        self._auto_select_candidate: int = itb_util.variant_to_value(
-            self._gsettings.get_value('autoselectcandidate'))
+        self._auto_select_candidate: int = self._settings_dict[
+            'autoselectcandidate']['user']
 
         self.is_lookup_table_enabled_by_tab = False
-        self._tab_enable: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('tabenable'))
+        self._tab_enable: bool = self._settings_dict[
+            'tabenable']['user']
 
-        self._disable_in_terminals: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('disableinterminals'))
+        self._disable_in_terminals: bool = self._settings_dict[
+            'disableinterminals']['user']
 
-        self._ascii_digits: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('asciidigits'))
+        self._ascii_digits: bool = self._settings_dict['asciidigits']['user']
 
-        self._off_the_record: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('offtherecord'))
+        self._off_the_record: bool = self._settings_dict[
+            'offtherecord']['user']
 
         self._hide_input = False
 
         self._input_mode = True
 
-        self._avoid_forward_key_event: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('avoidforwardkeyevent'))
+        self._avoid_forward_key_event: bool = self._settings_dict[
+            'avoidforwardkeyevent']['user']
 
-        self._arrow_keys_reopen_preedit: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('arrowkeysreopenpreedit'))
+        self._arrow_keys_reopen_preedit: bool = self._settings_dict[
+            'arrowkeysreopenpreedit']['user']
 
-        self._emoji_trigger_characters: str = itb_util.variant_to_value(
-            self._gsettings.get_value('emojitriggercharacters'))
+        self._emoji_trigger_characters: str = self._settings_dict[
+            'emojitriggercharacters']['user']
 
-        self._auto_commit_characters: str = itb_util.variant_to_value(
-            self._gsettings.get_value('autocommitcharacters'))
+        self._auto_commit_characters: str = self._settings_dict[
+            'autocommitcharacters']['user']
 
-        self._remember_last_used_preedit_ime: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('rememberlastusedpreeditime'))
+        self._remember_last_used_preedit_ime: bool = self._settings_dict[
+            'rememberlastusedpreeditime']['user']
 
-        self._add_space_on_commit: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('addspaceoncommit'))
+        self._add_space_on_commit: bool = self._settings_dict[
+            'addspaceoncommit']['user']
 
-        self._inline_completion: int = itb_util.variant_to_value(
-            self._gsettings.get_value('inlinecompletion'))
+        self._inline_completion: int = self._settings_dict[
+            'inlinecompletion']['user']
 
-        self._record_mode: int = itb_util.variant_to_value(
-            self._gsettings.get_value('recordmode'))
+        self._record_mode: int = self._settings_dict['recordmode']['user']
 
-        self._auto_capitalize: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('autocapitalize'))
+        self._auto_capitalize: bool = self._settings_dict[
+            'autocapitalize']['user']
 
-        self._color_preedit_spellcheck: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('colorpreeditspellcheck'))
+        self._color_preedit_spellcheck: bool = self._settings_dict[
+            'colorpreeditspellcheck']['user']
 
-        self._color_preedit_spellcheck_string: str = itb_util.variant_to_value(
-            self._gsettings.get_value('colorpreeditspellcheckstring'))
+        self._color_preedit_spellcheck_string: str = self._settings_dict[
+            'colorpreeditspellcheckstring']['user']
         self._color_preedit_spellcheck_argb = itb_util.color_string_to_argb(
             self._color_preedit_spellcheck_string)
 
-        self._color_inline_completion: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('colorinlinecompletion'))
+        self._color_inline_completion: bool = self._settings_dict[
+            'colorinlinecompletion']['user']
 
-        self._color_inline_completion_string: str = itb_util.variant_to_value(
-            self._gsettings.get_value('colorinlinecompletionstring'))
+        self._color_inline_completion_string: str = self._settings_dict[
+            'colorinlinecompletionstring']['user']
         self._color_inline_completion_argb = itb_util.color_string_to_argb(
             self._color_inline_completion_string)
 
-        self._color_compose_preview: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('colorcomposepreview'))
+        self._color_compose_preview: bool = self._settings_dict[
+            'colorcomposepreview']['user']
 
-        self._color_compose_preview_string: str = itb_util.variant_to_value(
-            self._gsettings.get_value('colorcomposepreviewstring'))
+        self._color_compose_preview_string: str = self._settings_dict[
+            'colorcomposepreviewstring']['user']
         self._color_compose_preview_argb = itb_util.color_string_to_argb(
             self._color_compose_preview_string)
 
-        self._color_userdb: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('coloruserdb'))
+        self._color_userdb: bool = self._settings_dict['coloruserdb']['user']
 
-        self._color_userdb_string: str = itb_util.variant_to_value(
-            self._gsettings.get_value('coloruserdbstring'))
+        self._color_userdb_string: str = self._settings_dict[
+            'coloruserdbstring']['user']
         self._color_userdb_argb = itb_util.color_string_to_argb(
             self._color_userdb_string)
 
-        self._color_spellcheck: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('colorspellcheck'))
+        self._color_spellcheck: bool = self._settings_dict[
+            'colorspellcheck']['user']
 
-        self._color_spellcheck_string: str = itb_util.variant_to_value(
-            self._gsettings.get_value('colorspellcheckstring'))
+        self._color_spellcheck_string: str = self._settings_dict[
+            'colorspellcheckstring']['user']
         self._color_spellcheck_argb = itb_util.color_string_to_argb(
             self._color_spellcheck_string)
 
-        self._color_dictionary: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('colordictionary'))
+        self._color_dictionary: bool = self._settings_dict[
+            'colordictionary']['user']
 
-        self._color_dictionary_string: str = itb_util.variant_to_value(
-            self._gsettings.get_value('colordictionarystring'))
+        self._color_dictionary_string: str = self._settings_dict[
+            'colordictionarystring']['user']
         self._color_dictionary_argb = itb_util.color_string_to_argb(
             self._color_dictionary_string)
 
-        self._label_userdb: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('labeluserdb'))
+        self._label_userdb: bool = self._settings_dict['labeluserdb']['user']
 
-        self._label_userdb_string: str = itb_util.variant_to_value(
-            self._gsettings.get_value('labeluserdbstring'))
+        self._label_userdb_string: str = self._settings_dict[
+            'labeluserdbstring']['user']
 
-        self._label_spellcheck: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('labelspellcheck'))
+        self._label_spellcheck: bool = self._settings_dict[
+            'labelspellcheck']['user']
 
-        self._label_spellcheck_string: str = itb_util.variant_to_value(
-            self._gsettings.get_value('labelspellcheckstring'))
+        self._label_spellcheck_string: str = self._settings_dict[
+            'labelspellcheckstring']['user']
 
-        self._label_dictionary: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('labeldictionary'))
+        self._label_dictionary: bool = self._settings_dict[
+            'labeldictionary']['user']
 
         self._label_dictionary_string: str = ''
         self._label_dictionary_dict: Dict[str, str] = {}
         self.set_label_dictionary_string(
-            itb_util.variant_to_value(
-                self._gsettings.get_value('labeldictionarystring')),
+            self._settings_dict['labeldictionarystring']['user'],
             update_gsettings=False)
 
-        self._flag_dictionary: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('flagdictionary'))
+        self._flag_dictionary: bool = self._settings_dict[
+            'flagdictionary']['user']
 
-        self._label_busy: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('labelbusy'))
+        self._label_busy: bool = self._settings_dict['labelbusy']['user']
 
-        self._label_busy_string: str = itb_util.variant_to_value(
-            self._gsettings.get_value('labelbusystring'))
+        self._label_busy_string: str = self._settings_dict[
+            'labelbusystring']['user']
 
         self._label_speech_recognition: bool = True
         self._label_speech_recognition_string: str = '🎙️'
 
-        self._google_application_credentials: str = itb_util.variant_to_value(
-            self._gsettings.get_value('googleapplicationcredentials'))
+        self._google_application_credentials: str = self._settings_dict[
+            'googleapplicationcredentials']['user']
 
         self._keybindings: Dict[str, List[str]] = {}
         self._hotkeys: Optional[itb_util.HotKeys] = None
         self._normal_digits_used_in_keybindings = False
         self._keypad_digits_used_in_keybindings = False
         self.set_keybindings(
-            itb_util.variant_to_value(
-                self._gsettings.get_value('keybindings')),
-            update_gsettings=False)
+            self._settings_dict['keybindings']['user'], update_gsettings=False)
 
         self._autosettings: List[Tuple[str, str, str]] = []
         self.set_autosettings(
-            itb_util.variant_to_value(
-                self._gsettings.get_value('autosettings')),
+            self._settings_dict['autosettings']['user'],
             update_gsettings=False)
         self._autosettings_revert: Dict[str, Any] = {}
 
-        self._remember_input_mode: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('rememberinputmode'))
+        self._remember_input_mode: bool = self._settings_dict[
+            'rememberinputmode']['user']
         if (self._keybindings['toggle_input_mode_on_off']
             and self._remember_input_mode):
-            self._input_mode = itb_util.variant_to_value(
-                self._gsettings.get_value('inputmode'))
+            self._input_mode = self._settings_dict['inputmode']['user']
         else:
             self.set_input_mode(True, update_gsettings=True)
 
-        self._sound_backend: str = itb_util.variant_to_value(
-            self._gsettings.get_value('soundbackend'))
+        self._sound_backend: str = self._settings_dict['soundbackend']['user']
         self._error_sound_object: Optional[itb_sound.SoundObject] = None
         self._error_sound_file = ''
-        self._error_sound: bool = itb_util.variant_to_value(
-            self._gsettings.get_value('errorsound'))
+        self._error_sound: bool = self._settings_dict['errorsound']['user']
         self.set_error_sound_file(
-            itb_util.variant_to_value(
-                self._gsettings.get_value('errorsoundfile')),
+            self._settings_dict['errorsoundfile']['user'],
             update_gsettings=False)
 
         self._dictionary_names: List[str] = []
-        dictionary = itb_util.variant_to_value(
-            self._gsettings.get_value('dictionary'))
+        dictionary = self._settings_dict['dictionary']['user']
         self._dictionary_names = itb_util.dictionaries_str_to_list(dictionary)
         if ','.join(self._dictionary_names) != dictionary:
             # Value changed due to normalization or getting the locale
@@ -429,8 +452,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self.emoji_matcher = None
 
         # Try to get the selected input methods from Gsettings:
-        inputmethod = itb_util.variant_to_value(
-            self._gsettings.get_value('inputmethod'))
+        inputmethod = self._settings_dict['inputmethod']['user']
         self._current_imes = itb_util.input_methods_str_to_list(inputmethod)
         if ','.join(self._current_imes) != inputmethod:
             # Value changed due to normalization or getting the locale
@@ -534,12 +556,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.input_mode_properties = {
             'InputMode.Off': {
                 'number': 0,
-                'symbol': INPUT_MODE_FALSE_SYMBOL,
+                'symbol': self._input_mode_false_symbol,
                 'label': _('Off'),
             },
             'InputMode.On': {
                 'number': 1,
-                'symbol': INPUT_MODE_TRUE_SYMBOL,
+                'symbol': self._input_mode_true_symbol,
                 'label': _('On'),
             }
         }
@@ -633,7 +655,36 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._surrounding_text_old: Optional[Tuple[IBus.Text, int, int]] = None
         self._is_context_from_surrounding_text = False
 
-        self._set_get_functions: Dict[str, Dict[str, Any]] = {
+        self._gsettings.connect('changed', self.on_gsettings_value_changed)
+
+        self._clear_input_and_update_ui()
+
+        LOGGER.info(
+            '*** ibus-typing-booster %s initialized, ready for input: ***',
+            itb_version.get_version())
+
+        cleanup_database_thread = threading.Thread(
+            target=self.database.cleanup_database)
+        cleanup_database_thread.start()
+
+    def _init_settings_dict(self) -> Dict[str, Any]:
+        '''Initialize a dictionary with the default and user settings for all
+        settings keys.
+
+        The default settings start with the defaults from the
+        gsettings schema. Some of these generic default values may be
+        overridden by more specific default settings for the specific engine.
+        After this possible modification for a specific engine we have the final default
+        settings for this specific typing booster input method.
+
+        The user settings start with a copy of these final default settings,
+        then they are possibly modified by user gsettings.
+
+        Keeping a copy of the default settings in the settings dictionary
+        makes it easy to revert some or all settings to the defaults.
+        '''
+        settings_dict: Dict[str, Any] = {}
+        set_get_functions: Dict[str, Dict[str, Any]] = {
             'inputmethod': {
                 'set': self.set_current_imes,
                 'get': self.get_current_imes},
@@ -807,17 +858,54 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 'set': self.set_google_application_credentials,
                 'get': self.get_google_application_credentials},
         }
-        self._gsettings.connect('changed', self.on_gsettings_value_changed)
-
-        self._clear_input_and_update_ui()
-
-        LOGGER.info(
-            '*** ibus-typing-booster %s initialized, ready for input: ***',
-            itb_version.get_version())
-
-        cleanup_database_thread = threading.Thread(
-            target=self.database.cleanup_database)
-        cleanup_database_thread.start()
+        schema_source: Gio.SettingsSchemaSource = (
+            Gio.SettingsSchemaSource.get_default())
+        schema: Gio.SettingsSchema = schema_source.lookup(
+            'org.freedesktop.ibus.engine.typing-booster', True)
+        special_defaults = {
+            'dictionary': 'None',  # special dummy dictionary
+            'inputmethod': f'{self._m17n_ime_lang}-{self._m17n_ime_name}',
+            'tabenable': True,
+            'offtherecord': True,
+            'preeditunderline': 0,
+        }
+        for key in schema.list_keys():
+            if key == 'keybindings': # keybindings are special!
+                default_value = itb_util.variant_to_value(
+                    self._gsettings.get_default_value('keybindings'))
+                if self._engine_name != 'typing-booster':
+                    default_value['toggle_input_mode_on_off'] = []
+                    default_value['enable_lookup'] = []
+                    default_value['commit_and_forward_key'] = ['Left']
+                # copy the updated default keybindings, i.e. the
+                # default keybindings for this specific engine, into
+                # the user keybindings:
+                user_value = copy.deepcopy(default_value)
+                user_gsettings = itb_util.variant_to_value(
+                    self._gsettings.get_user_value(key))
+                if not user_gsettings:
+                    user_gsettings = {}
+                itb_util.dict_update_existing_keys(user_value, user_gsettings)
+            else:
+                default_value = itb_util.variant_to_value(
+                    self._gsettings.get_default_value(key))
+                if self._engine_name != 'typing-booster':
+                    default_value = special_defaults.get(key, default_value)
+                user_value = itb_util.variant_to_value(
+                    self._gsettings.get_user_value(key))
+                if user_value is None:
+                    user_value = default_value
+            settings_dict[key] = {'default': default_value, 'user': user_value}
+            if key in set_get_functions:
+                if 'set' in set_get_functions[key]:
+                    settings_dict[
+                        key]['set_function'] = set_get_functions[key]['set']
+                if 'get' in set_get_functions[key]:
+                    settings_dict[
+                        key]['get_function'] = set_get_functions[key]['get']
+            else:
+                LOGGER.warning('key %s missing in set_get_functions', key)
+        return settings_dict
 
     def _get_new_lookup_table(self) -> IBus.LookupTable:
         '''Get a new lookup table'''
@@ -2161,6 +2249,28 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.dictionary_sub_properties_prop_list = []
         self.main_prop_list = IBus.PropList()
 
+        if self._engine_name != 'typing-booster':
+            m17n_db_info = itb_util.M17nDbInfo()
+            m17n_icon_property = IBus.Property(
+                key='m17n_icon',
+                label=IBus.Text.new_from_string(self._engine_name),
+                icon= m17n_db_info.get_icon(
+                    f'{self._m17n_ime_lang}-{self._m17n_ime_name}'),
+                tooltip=IBus.Text.new_from_string(self._engine_name),
+                # sensitive=True is necessary to make it clearly
+                # visible (not gray) in the floating toolbar. It is
+                # also necessary to enable the tooltip which is useful
+                # to show the full engine name if the icon is not clear.
+                sensitive=True,
+                # Even with visible=False it is still visible in the
+                # floating toolbar. It hides it only in the panel menu.
+                # So visible=False does exactly what I want here, in the
+                # panel it is useless but in the floating toolbar it shows
+                # which engine is selected.
+                visible=False
+            )
+            self.main_prop_list.append(m17n_icon_property)
+
         if self._keybindings['toggle_input_mode_on_off']:
             self._init_or_update_property_menu(
                 self.input_mode_menu,
@@ -2267,7 +2377,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._setup_pid = os.spawnl(
             os.P_NOWAIT,
             setup_cmd,
-            'ibus-setup-typing-booster')
+            'ibus-setup-typing-booster',
+            '--engine-name',
+            self._engine_name)
 
     def _clear_input_and_update_ui(self) -> None:
         '''Clear the preëdit and close the lookup table
@@ -5098,7 +5210,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 'candidatesdelaymilliseconds',
                 GLib.Variant.new_uint32(self._candidates_delay_milliseconds))
 
-    def get_candidates_delay_milliseconds(self) -> float:
+    def get_candidates_delay_milliseconds(self) -> int:
         '''Returns the current value of the candidates delay in milliseconds'''
         return self._candidates_delay_milliseconds
 
@@ -7505,14 +7617,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         autosettings_apply: Dict[str, Any] = {}
         for (setting, value, regexp) in self._autosettings:
             if (not regexp
-                or setting not in self._set_get_functions
-                or 'set' not in self._set_get_functions[setting]
-                or 'get' not in self._set_get_functions[setting]):
+                or setting not in self._settings_dict
+                or 'set_function' not in self._settings_dict[setting]
+                or 'get_function' not in self._settings_dict[setting]):
                 continue
             pattern = re.compile(regexp)
             if not pattern.search(self._im_client):
                 continue
-            current_value = self._set_get_functions[setting]['get']()
+            current_value = self._settings_dict[setting]['get_function']()
             if setting in ('inputmethod', 'dictionary'):
                 current_value = ','.join(current_value)
             if type(current_value) not in [str, int, bool]:
@@ -7544,7 +7656,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         for setting, value in autosettings_apply.items():
             LOGGER.info('Apply autosetting: %s: %s -> %s',
                         setting, self._autosettings_revert[setting], value)
-            self._set_get_functions[setting]['set'](
+            self._settings_dict[setting]['set_function'](
                 value, update_gsettings=False)
 
     def _record_in_database_and_push_context(
@@ -7675,7 +7787,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Revert automatic setting changes which were done on focus in'''
         for setting, value in self._autosettings_revert.items():
             LOGGER.info('Revert autosetting: %s: -> %s', setting, value)
-            self._set_get_functions[setting]['set'](
+            self._settings_dict[setting]['set_function'](
                 value, update_gsettings=False)
         self._autosettings_revert = {}
 
@@ -7927,9 +8039,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         value = itb_util.variant_to_value(self._gsettings.get_value(key))
         LOGGER.debug('Settings changed: key=%s value=%s\n', key, value)
-        if (key in self._set_get_functions
-            and 'set' in self._set_get_functions[key]):
-            self._set_get_functions[key]['set'](value, update_gsettings=False)
+        if (key in self._settings_dict
+            and 'set_function' in self._settings_dict[key]):
+            self._settings_dict[key]['set_function'](
+                value, update_gsettings=False)
             return
         LOGGER.warning('Unknown key\n')
         return

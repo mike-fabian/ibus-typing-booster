@@ -33,6 +33,7 @@ import html
 import signal
 import argparse
 import locale
+import copy
 import logging
 import logging.handlers
 from time import strftime
@@ -73,18 +74,12 @@ try:
 except (ImportError,):
     pass
 
-IMPORT_SIMPLEAUDIO_SUCCESSFUL = False
-try:
-    import simpleaudio # type: ignore
-    IMPORT_SIMPLEAUDIO_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_SIMPLEAUDIO_SUCCESSFUL = False
-
 # pylint: disable=import-error
 sys.path = [sys.path[0]+'/../engine'] + sys.path
 import m17n_translit
 import tabsqlitedb
 import itb_util
+import itb_sound
 import itb_emoji
 import itb_version
 # pylint: enable=import-error
@@ -107,12 +102,30 @@ def parse_args() -> Any:
     parser = argparse.ArgumentParser(
         description='ibus-typing-booster setup tool')
     parser.add_argument(
+        '-n', '--engine-name',
+        action='store',
+        type=str,
+        dest='engine_name',
+        default='typing-booster',
+        help=('Set the name of the engine, for example “typing-booster” '
+              'for the regular multilingual typing booster or '
+              '“tb:<language>:<name>” for special typing booster '
+              'engines defaulting to emulating ibus-m17n a specific '
+              'm17n input method. For example “tb:hi:itrans” would be '
+              'a special typing-booster engine emulating “m17n:hi:itrans”.'))
+    parser.add_argument(
         '-q', '--no-debug',
         action='store_true',
         default=False,
         help=('Do not write log file '
               '~/.local/share/ibus-typing-booster/setup-debug.log, '
               'default: %(default)s'))
+    engine_name = parser.parse_args().engine_name
+    if (engine_name != 'typing-booster'
+        and not itb_util.M17N_ENGINE_NAME_PATTERN.search(engine_name)):
+        print('Invalid engine name.\n')
+        parser.print_help()
+        sys.exit(1)
     return parser.parse_args()
 
 _ARGS = parse_args()
@@ -121,8 +134,30 @@ class SetupUI(Gtk.Window): # type: ignore
     '''
     User interface of the setup tool
     '''
-    def __init__(self) -> None: # pylint: disable=too-many-statements
-        Gtk.Window.__init__(self, title='🚀 ' + _('Preferences'))
+    def __init__( # pylint: disable=too-many-statements
+            self, engine_name: str = 'typing-booster') -> None:
+        self._engine_name = engine_name
+        if not self._engine_name:
+            self._engine_name = 'typing-booster'
+        title = '🚀 ' + _('Preferences for ibus-typing-booster')
+        user_db_file = 'user.db'
+        schema_path = '/org/freedesktop/ibus/engine/typing-booster/'
+        self._m17n_ime_lang = ''
+        self._m17n_ime_name = ''
+        if self._engine_name != 'typing-booster':
+            title = '🚀 ' + self._engine_name + ' ' + _('Preferences')
+            match = itb_util.M17N_ENGINE_NAME_PATTERN.search(self._engine_name)
+            if not match:
+                raise ValueError('Invalid engine name.')
+            self._m17n_ime_lang = match.group('lang')
+            self._m17n_ime_name = match.group('name')
+            user_db_file = (
+                f'user-{self._m17n_ime_lang}-{self._m17n_ime_name}.db')
+            schema_path = ('/org/freedesktop/ibus/engine/tb/'
+                           f'{self._m17n_ime_lang}/{self._m17n_ime_name}/')
+
+        Gtk.Window.__init__(self, title=title)
+        self.set_title(title)
         self.set_name('TypingBoosterPreferences')
         self.set_modal(True)
         style_provider = Gtk.CssProvider()
@@ -140,11 +175,13 @@ class SetupUI(Gtk.Window): # type: ignore
             style_provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
-        self.tabsqlitedb = tabsqlitedb.TabSqliteDb()
+        self.tabsqlitedb = tabsqlitedb.TabSqliteDb(user_db_file=user_db_file)
 
         self._gsettings = Gio.Settings(
-            schema='org.freedesktop.ibus.engine.typing-booster')
-        self._gsettings.connect('changed', self._on_gsettings_value_changed)
+            schema='org.freedesktop.ibus.engine.typing-booster',
+            path=schema_path)
+        self._settings_dict = self._init_settings_dict()
+
         self._allowed_autosettings: Dict[str, Dict[str, str]] = {}
         schema_source: Gio.SettingsSchemaSource = (
             Gio.SettingsSchemaSource.get_default())
@@ -168,8 +205,6 @@ class SetupUI(Gtk.Window): # type: ignore
                 continue
             self._allowed_autosettings[key] = {
                 'value_type': value_type, 'value_hint': value_hint}
-
-        self.set_title('🚀 ' + _('Preferences for ibus-typing-booster'))
 
         self.connect('destroy-event', self._on_destroy_event)
         self.connect('delete-event', self._on_delete_event)
@@ -363,19 +398,6 @@ class SetupUI(Gtk.Window): # type: ignore
             self._autosettings_vbox,
             self._autosettings_label)
 
-        self._keybindings = {}
-        # Don’t just use get_value(), if the user has changed the
-        # settings, get_value() will get the user settings and new
-        # keybindings might have been added by an update to the default
-        # settings. Therefore, get the default settings first and
-        # update them with the user settings:
-        self._keybindings = itb_util.variant_to_value(
-            self._gsettings.get_default_value('keybindings'))
-        itb_util.dict_update_existing_keys(
-            self._keybindings,
-            itb_util.variant_to_value(
-                self._gsettings.get_value('keybindings')))
-
         _options_grid_row = -1
 
         self._tab_enable_checkbutton = Gtk.CheckButton(
@@ -397,12 +419,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'this command is typed.'))
         self._tab_enable_checkbutton.connect(
             'clicked', self._on_tab_enable_checkbutton)
-        self._tab_enable = itb_util.variant_to_value(
-            self._gsettings.get_value('tabenable'))
-        if self._tab_enable is None:
-            self._tab_enable = False
-        if  self._tab_enable is True:
-            self._tab_enable_checkbutton.set_active(True)
+        self._tab_enable_checkbutton.set_active(
+            self._settings_dict['tabenable']['user'])
         _options_grid_row += 1
         self._options_grid.attach(
             self._tab_enable_checkbutton, 0, _options_grid_row, 2, 1)
@@ -440,12 +458,8 @@ class SetupUI(Gtk.Window): # type: ignore
             renderer_text, True)
         self._inline_completion_combobox.add_attribute(
             renderer_text, "text", 0)
-        self._inline_completion = itb_util.variant_to_value(
-            self._gsettings.get_value('inlinecompletion'))
-        if self._inline_completion is None:
-            self._inline_completion = 0
         for i, item in enumerate(self._inline_completion_store):
-            if self._inline_completion == item[1]:
+            if self._settings_dict['inlinecompletion']['user'] == item[1]:
                 self._inline_completion_combobox.set_active(i)
         self._inline_completion_combobox.connect(
             'changed', self._on_inline_completion_combobox_changed)
@@ -463,12 +477,8 @@ class SetupUI(Gtk.Window): # type: ignore
             _('Automatically capitalize after punctuation.'))
         self._auto_capitalize_checkbutton.connect(
             'clicked', self._on_auto_capitalize_checkbutton)
-        self._auto_capitalize = itb_util.variant_to_value(
-            self._gsettings.get_value('autocapitalize'))
-        if self._auto_capitalize is None:
-            self._auto_capitalize = False
-        if  self._auto_capitalize is True:
-            self._auto_capitalize_checkbutton.set_active(True)
+        self._auto_capitalize_checkbutton.set_active(
+            self._settings_dict['autocapitalize']['user'])
         _options_grid_row += 1
         self._options_grid.attach(
             self._auto_capitalize_checkbutton, 0, _options_grid_row, 2, 1)
@@ -509,12 +519,8 @@ class SetupUI(Gtk.Window): # type: ignore
             renderer_text, True)
         self._auto_select_candidate_combobox.add_attribute(
             renderer_text, "text", 0)
-        self._auto_select_candidate = itb_util.variant_to_value(
-            self._gsettings.get_value('autoselectcandidate'))
-        if self._auto_select_candidate is None:
-            self._auto_select_candidate = 0
         for i, item in enumerate(self._auto_select_candidate_store):
-            if self._auto_select_candidate == item[1]:
+            if self._settings_dict['autoselectcandidate']['user'] == item[1]:
                 self._auto_select_candidate_combobox.set_active(i)
         self._auto_select_candidate_combobox.connect(
             'changed', self._on_auto_select_candidate_combobox_changed)
@@ -535,12 +541,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'with the mouse.'))
         self._add_space_on_commit_checkbutton.connect(
             'clicked', self._on_add_space_on_commit_checkbutton)
-        self._add_space_on_commit = itb_util.variant_to_value(
-            self._gsettings.get_value('addspaceoncommit'))
-        if self._add_space_on_commit is None:
-            self._add_space_on_commit = True
-        if self._add_space_on_commit is True:
-            self._add_space_on_commit_checkbutton.set_active(True)
+        self._add_space_on_commit_checkbutton.set_active(
+            self._settings_dict['addspaceoncommit']['user'])
         _options_grid_row += 1
         self._options_grid.attach(
             self._add_space_on_commit_checkbutton, 0, _options_grid_row, 2, 1)
@@ -562,12 +564,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'remembered even if the session is restarted.'))
         self._remember_last_used_preedit_ime_checkbutton.connect(
             'clicked', self._on_remember_last_used_preedit_ime_checkbutton)
-        self._remember_last_used_preedit_ime = itb_util.variant_to_value(
-            self._gsettings.get_value('rememberlastusedpreeditime'))
-        if self._remember_last_used_preedit_ime is None:
-            self._remember_last_used_preedit_ime = False
-        if  self._remember_last_used_preedit_ime is True:
-            self._remember_last_used_preedit_ime_checkbutton.set_active(True)
+        self._remember_last_used_preedit_ime_checkbutton.set_active(
+            self._settings_dict['rememberlastusedpreeditime']['user'])
         _options_grid_row += 1
         self._options_grid.attach(
             self._remember_last_used_preedit_ime_checkbutton,
@@ -586,12 +584,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'is remembered even if the session is restarted.'))
         self._remember_input_mode_checkbutton.connect(
             'clicked', self._on_remember_input_mode_checkbutton)
-        self._remember_input_mode = itb_util.variant_to_value(
-            self._gsettings.get_value('rememberinputmode'))
-        if self._remember_input_mode is None:
-            self._remember_input_mode = False
-        if  self._remember_input_mode is True:
-            self._remember_input_mode_checkbutton.set_active(True)
+        self._remember_input_mode_checkbutton.set_active(
+            self._settings_dict['rememberinputmode']['user'])
         _options_grid_row += 1
         self._options_grid.attach(
             self._remember_input_mode_checkbutton,
@@ -616,12 +610,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'nevertheless useful symbols.'))
         self._emoji_predictions_checkbutton.connect(
             'clicked', self._on_emoji_predictions_checkbutton)
-        self._emoji_predictions = itb_util.variant_to_value(
-            self._gsettings.get_value('emojipredictions'))
-        if self._emoji_predictions is None:
-            self._emoji_predictions = False
-        if self._emoji_predictions is True:
-            self._emoji_predictions_checkbutton.set_active(True)
+        self._emoji_predictions_checkbutton.set_active(
+            self._settings_dict['emojipredictions']['user'])
         _options_grid_row += 1
         self._options_grid.attach(
             self._emoji_predictions_checkbutton, 0, _options_grid_row, 2, 1)
@@ -646,12 +636,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'option temporarily.'))
         self._off_the_record_checkbutton.connect(
             'clicked', self._on_off_the_record_checkbutton)
-        self._off_the_record = itb_util.variant_to_value(
-            self._gsettings.get_value('offtherecord'))
-        if self._off_the_record is None:
-            self._off_the_record = False
-        if self._off_the_record is True:
-            self._off_the_record_checkbutton.set_active(True)
+        self._off_the_record_checkbutton.set_active(
+            self._settings_dict['offtherecord']['user'])
         _options_grid_row += 1
         self._options_grid.attach(
             self._off_the_record_checkbutton, 0, _options_grid_row, 2, 1)
@@ -691,12 +677,9 @@ class SetupUI(Gtk.Window): # type: ignore
             renderer_text, True)
         self._record_mode_combobox.add_attribute(
             renderer_text, "text", 0)
-        self._record_mode = itb_util.variant_to_value(
-            self._gsettings.get_value('recordmode'))
-        if self._record_mode is None:
-            self._record_mode = 0
+        self._record_mode = self._settings_dict['recordmode']['user']
         for i, item in enumerate(self._record_mode_store):
-            if self._record_mode == item[1]:
+            if self._settings_dict['recordmode']['user'] == item[1]:
                 self._record_mode_combobox.set_active(i)
         self._record_mode_combobox.connect(
             'changed', self._on_record_mode_combobox_changed)
@@ -745,12 +728,8 @@ class SetupUI(Gtk.Window): # type: ignore
             % 'forward_key_event()') # pylint: disable=consider-using-f-string
         self._avoid_forward_key_event_checkbutton.connect(
             'clicked', self._on_avoid_forward_key_event_checkbutton)
-        self._avoid_forward_key_event = itb_util.variant_to_value(
-            self._gsettings.get_value('avoidforwardkeyevent'))
-        if self._avoid_forward_key_event is None:
-            self._avoid_forward_key_event = False
-        if self._avoid_forward_key_event is True:
-            self._avoid_forward_key_event_checkbutton.set_active(True)
+        self._avoid_forward_key_event_checkbutton.set_active(
+            self._settings_dict['avoidforwardkeyevent']['user'])
         _options_grid_row += 1
         self._options_grid.attach(
             self._avoid_forward_key_event_checkbutton,
@@ -769,12 +748,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'committed words.'))
         self._arrow_keys_reopen_preedit_checkbutton.connect(
             'clicked', self._on_arrow_keys_reopen_preedit_checkbutton)
-        self._arrow_keys_reopen_preedit = itb_util.variant_to_value(
-            self._gsettings.get_value('arrowkeysreopenpreedit'))
-        if self._arrow_keys_reopen_preedit is None:
-            self._arrow_keys_reopen_preedit = False
-        if self._arrow_keys_reopen_preedit is True:
-            self._arrow_keys_reopen_preedit_checkbutton.set_active(True)
+        self._arrow_keys_reopen_preedit_checkbutton.set_active(
+            self._settings_dict['arrowkeysreopenpreedit']['user'])
         _options_grid_row += 1
         self._options_grid.attach(
             self._arrow_keys_reopen_preedit_checkbutton,
@@ -788,12 +763,8 @@ class SetupUI(Gtk.Window): # type: ignore
             _('Whether ibus-typing-booster should be disabled in terminals.'))
         self._disable_in_terminals_checkbutton.connect(
             'clicked', self._on_disable_in_terminals_checkbutton)
-        self._disable_in_terminals = itb_util.variant_to_value(
-            self._gsettings.get_value('disableinterminals'))
-        if self._disable_in_terminals is None:
-            self._disable_in_terminals = False
-        if self._disable_in_terminals is True:
-            self._disable_in_terminals_checkbutton.set_active(True)
+        self._disable_in_terminals_checkbutton.set_active(
+            self._settings_dict['disableinterminals']['user'])
         _options_grid_row += 1
         self._options_grid.attach(
             self._disable_in_terminals_checkbutton,
@@ -811,12 +782,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'by input methods always to ASCII digits.'))
         self._ascii_digits_checkbutton.connect(
             'clicked', self._on_ascii_digits_checkbutton)
-        self._ascii_digits = itb_util.variant_to_value(
-            self._gsettings.get_value('asciidigits'))
-        if self._ascii_digits is None:
-            self._ascii_digits = False
-        if self._ascii_digits is True:
-            self._ascii_digits_checkbutton.set_active(True)
+        self._ascii_digits_checkbutton.set_active(
+            self._settings_dict['asciidigits']['user'])
         _options_grid_row += 1
         self._options_grid.attach(
             self._ascii_digits_checkbutton,
@@ -834,12 +801,8 @@ class SetupUI(Gtk.Window): # type: ignore
               '“Unicode symbols and emoji predictions” is off.'))
         self._emoji_trigger_characters_label.set_xalign(0)
         self._emoji_trigger_characters_entry = Gtk.Entry()
-        self._emoji_trigger_characters = itb_util.variant_to_value(
-            self._gsettings.get_value('emojitriggercharacters'))
-        if not self._emoji_trigger_characters:
-            self._emoji_trigger_characters = ''
         self._emoji_trigger_characters_entry.set_text(
-            self._emoji_trigger_characters)
+            self._settings_dict['emojitriggercharacters']['user'])
         self._emoji_trigger_characters_entry.connect(
             'notify::text', self._on_emoji_trigger_characters_entry)
         _options_grid_row += 1
@@ -880,12 +843,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'list empty (which is the default).'))
         self._auto_commit_characters_label.set_xalign(0)
         self._auto_commit_characters_entry = Gtk.Entry()
-        self._auto_commit_characters = itb_util.variant_to_value(
-            self._gsettings.get_value('autocommitcharacters'))
-        if not self._auto_commit_characters:
-            self._auto_commit_characters = ''
         self._auto_commit_characters_entry.set_text(
-            self._auto_commit_characters)
+            self._settings_dict['autocommitcharacters']['user'])
         self._auto_commit_characters_entry.connect(
             'notify::text', self._on_auto_commit_characters_entry)
         _options_grid_row += 1
@@ -908,11 +867,9 @@ class SetupUI(Gtk.Window): # type: ignore
         self._min_char_complete_adjustment.set_can_focus(True)
         self._min_char_complete_adjustment.set_increments(1.0, 1.0)
         self._min_char_complete_adjustment.set_range(0.0, 9.0)
-        self._min_char_complete = itb_util.variant_to_value(
-            self._gsettings.get_value('mincharcomplete'))
-        if self._min_char_complete is not None:
+        if self._settings_dict['mincharcomplete']['user'] is not None:
             self._min_char_complete_adjustment.set_value(
-                int(self._min_char_complete))
+                int(self._settings_dict['mincharcomplete']['user']))
         else:
             self._min_char_complete_adjustment.set_value(1)
         self._min_char_complete_adjustment.connect(
@@ -930,23 +887,18 @@ class SetupUI(Gtk.Window): # type: ignore
             label=_('Play sound file on error'))
         self._error_sound_checkbutton.set_tooltip_text(
             _('Here you can choose whether a sound file is played '
-              'if an error occurs. '
-              'If the simpleaudio module for Python3 is not installed, '
-              'this option does nothing.'))
+              'if an error occurs.'))
         self._error_sound_checkbutton.set_hexpand(False)
         self._error_sound_checkbutton.set_vexpand(False)
-        self._error_sound = itb_util.variant_to_value(
-            self._gsettings.get_value('errorsound'))
-        self._error_sound_checkbutton.set_active(self._error_sound)
+        self._error_sound_checkbutton.set_active(
+            self._settings_dict['errorsound']['user'])
         self._error_sound_checkbutton.connect(
             'clicked', self._on_error_sound_checkbutton)
         self._error_sound_file_button = Gtk.Button()
         self._error_sound_file_button_box = Gtk.Box()
         self._error_sound_file_button_label = Gtk.Label()
-        self._error_sound_file = itb_util.variant_to_value(
-            self._gsettings.get_value('errorsoundfile'))
         self._error_sound_file_button_label.set_text(
-            self._error_sound_file)
+            self._settings_dict['errorsoundfile']['user'])
         self._error_sound_file_button_label.set_use_markup(True)
         self._error_sound_file_button_label.set_max_width_chars(
             40)
@@ -980,13 +932,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._debug_level_adjustment.set_can_focus(True)
         self._debug_level_adjustment.set_increments(1.0, 1.0)
         self._debug_level_adjustment.set_range(0.0, 255.0)
-        self._debug_level = itb_util.variant_to_value(
-            self._gsettings.get_value('debuglevel'))
-        if self._debug_level:
-            self._debug_level_adjustment.set_value(
-                int(self._debug_level))
-        else:
-            self._debug_level_adjustment.set_value(0)
+        self._debug_level_adjustment.set_value(
+            int(self._settings_dict['debuglevel']['user']))
         self._debug_level_adjustment.connect(
             'value-changed',
             self._on_debug_level_adjustment_value_changed)
@@ -1112,11 +1059,16 @@ class SetupUI(Gtk.Window): # type: ignore
             _('Set to default'))
         self._dictionaries_default_button.add(
             self._dictionaries_default_button_label)
-        self._dictionaries_default_button.set_tooltip_text(
+        dictionaries_default_button_tooltip_text = (
             # Translators: Tooltip for a button used to set the list of
             # dictionaries to the default for the current locale.
             _('Set dictionaries to the default for the current locale.')
-            + f' LC_CTYPE={itb_util.get_effective_lc_ctype()}')
+            + f' (LC_CTYPE={itb_util.get_effective_lc_ctype()} '
+            f'→ {itb_util.dictionaries_str_to_list("")})')
+        if self._engine_name != 'typing-booster':
+            dictionaries_default_button_tooltip_text = '→ None'
+        self._dictionaries_default_button.set_tooltip_text(
+            dictionaries_default_button_tooltip_text)
         self._dictionaries_default_button.connect(
             'clicked', self._on_dictionaries_default_button_clicked)
         self._dictionaries_default_button.set_sensitive(True)
@@ -1131,6 +1083,14 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dictionaries_listbox_selected_dictionary_name = ''
         self._dictionaries_listbox_selected_dictionary_index = -1
         self._dictionary_names: List[str] = []
+        dictionary = self._settings_dict['dictionary']['user']
+        self._dictionary_names = itb_util.dictionaries_str_to_list(dictionary)
+        if ','.join(self._dictionary_names) != dictionary:
+            # Value changed due to normalization or getting the locale
+            # defaults, save it back to settings:
+            self._gsettings.set_value(
+                'dictionary',
+                GLib.Variant.new_string(','.join(self._dictionary_names)))
         self._dictionaries_listbox = None
         self._dictionaries_add_listbox = None
         self._dictionaries_add_listbox_dictionary_names: List[str] = []
@@ -1244,11 +1204,17 @@ class SetupUI(Gtk.Window): # type: ignore
             _('Set to default'))
         self._input_methods_default_button.add(
             self._input_methods_default_button_label)
-        self._input_methods_default_button.set_tooltip_text(
+        input_methods_default_button_tooltip_text = (
             # Translators: Tooltip for a button used to set the list of
             # input methods to the default for the current locale.
             _('Set input methods to the default for the current locale.')
-            + f' LC_CTYPE={itb_util.get_effective_lc_ctype()}')
+            + f' (LC_CTYPE={itb_util.get_effective_lc_ctype()} '
+            f'→ {itb_util.input_methods_str_to_list("")}')
+        if self._engine_name != 'typing-booster':
+            input_methods_default_button_tooltip_text = (
+                f'→ {self._m17n_ime_lang}-{self._m17n_ime_name}')
+        self._input_methods_default_button.set_tooltip_text(
+            input_methods_default_button_tooltip_text)
         self._input_methods_default_button.connect(
             'clicked', self._on_input_methods_default_button_clicked)
         self._input_methods_default_button.set_sensitive(True)
@@ -1262,6 +1228,14 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_methods_listbox_selected_ime_name = ''
         self._input_methods_listbox_selected_ime_index = -1
         self._current_imes: List[str] = []
+        inputmethod = self._settings_dict['inputmethod']['user']
+        self._current_imes = itb_util.input_methods_str_to_list(inputmethod)
+        if ','.join(self._current_imes) != inputmethod:
+            # Value changed due to normalization or getting the locale
+            # defaults, save it back to settings:
+            self._gsettings.set_value(
+                'inputmethod',
+                GLib.Variant.new_string(','.join(self._current_imes)))
         self._input_methods_listbox = None
         self._input_methods_add_listbox = None
         self._input_methods_add_listbox_imes: List[str] = []
@@ -1420,9 +1394,10 @@ class SetupUI(Gtk.Window): # type: ignore
         self._keybindings_treeview = Gtk.TreeView()
         self._keybindings_treeview_model = Gtk.ListStore(str, str)
         self._keybindings_treeview.set_model(self._keybindings_treeview_model)
-        for command in sorted(self._keybindings):
+        for command in sorted(self._settings_dict['keybindings']['user']):
             self._keybindings_treeview_model.append(
-                (command, repr(self._keybindings[command])))
+                (command,
+                 repr(self._settings_dict['keybindings']['user'][command])))
         keybindings_treeview_column_0 = Gtk.TreeViewColumn(
             # Translators: Column heading of the table listing the
             # existing key bindings
@@ -1511,12 +1486,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'one is selected on top of the list of candidates.'))
         self._show_number_of_candidates_checkbutton.connect(
             'clicked', self._on_show_number_of_candidates_checkbutton)
-        self._show_number_of_candidates = itb_util.variant_to_value(
-            self._gsettings.get_value('shownumberofcandidates'))
-        if self._show_number_of_candidates is None:
-            self._show_number_of_candidates = False
-        if  self._show_number_of_candidates is True:
-            self._show_number_of_candidates_checkbutton.set_active(True)
+        self._show_number_of_candidates_checkbutton.set_active(
+            self._settings_dict['shownumberofcandidates']['user'])
 
         self._show_status_info_in_auxiliary_text_checkbutton = Gtk.CheckButton(
             # Translators: Checkbox to choose whether to show above
@@ -1535,13 +1506,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'candidate list.'))
         self._show_status_info_in_auxiliary_text_checkbutton.connect(
             'clicked', self._on_show_status_info_in_auxiliary_text_checkbutton)
-        self._show_status_info_in_auxiliary_text = itb_util.variant_to_value(
-            self._gsettings.get_value('showstatusinfoinaux'))
-        if self._show_status_info_in_auxiliary_text is None:
-            self._show_status_info_in_auxiliary_text = False
-        if self._show_status_info_in_auxiliary_text is True:
-            self._show_status_info_in_auxiliary_text_checkbutton.set_active(
-                True)
+        self._show_status_info_in_auxiliary_text_checkbutton.set_active(
+            self._settings_dict['showstatusinfoinaux']['user'])
 
         _appearance_grid_row += 1
         self._appearance_grid.attach(
@@ -1564,12 +1530,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._page_size_adjustment.set_can_focus(True)
         self._page_size_adjustment.set_increments(1.0, 1.0)
         self._page_size_adjustment.set_range(1.0, 9.0)
-        self._page_size = itb_util.variant_to_value(
-            self._gsettings.get_value('pagesize'))
-        if self._page_size:
-            self._page_size_adjustment.set_value(int(self._page_size))
-        else:
-            self._page_size_adjustment.set_value(6)
+        self._page_size_adjustment.set_value(
+            int(self._settings_dict['pagesize']['user']))
         self._page_size_adjustment.connect(
             'value-changed', self._on_page_size_adjustment_value_changed)
         _appearance_grid_row += 1
@@ -1602,12 +1564,8 @@ class SetupUI(Gtk.Window): # type: ignore
             renderer_text, True)
         self._lookup_table_orientation_combobox.add_attribute(
             renderer_text, "text", 0)
-        self._lookup_table_orientation = itb_util.variant_to_value(
-            self._gsettings.get_value('lookuptableorientation'))
-        if self._lookup_table_orientation is None:
-            self._lookup_table_orientation = IBus.Orientation.VERTICAL
         for i, item in enumerate(self._lookup_table_orientation_store):
-            if self._lookup_table_orientation == item[1]:
+            if self._settings_dict['lookuptableorientation']['user'] == item[1]:
                 self._lookup_table_orientation_combobox.set_active(i)
         self._lookup_table_orientation_combobox.connect(
             "changed",
@@ -1639,13 +1597,8 @@ class SetupUI(Gtk.Window): # type: ignore
             10.0, 100.0)
         self._candidates_delay_milliseconds_adjustment.set_range(
             0.0, float(itb_util.UINT32_MAX))
-        self._candidates_delay_milliseconds = itb_util.variant_to_value(
-            self._gsettings.get_value('candidatesdelaymilliseconds'))
-        if self._candidates_delay_milliseconds:
-            self._candidates_delay_milliseconds_adjustment.set_value(
-                int(self._candidates_delay_milliseconds))
-        else:
-            self._candidates_delay_milliseconds_adjustment.set_value(200.0)
+        self._candidates_delay_milliseconds_adjustment.set_value(
+            int(self._settings_dict['candidatesdelaymilliseconds']['user']))
         self._candidates_delay_milliseconds_adjustment.connect(
             'value-changed',
             self._on_candidates_delay_milliseconds_adjustment_value_changed)
@@ -1690,12 +1643,8 @@ class SetupUI(Gtk.Window): # type: ignore
             renderer_text, True)
         self._preedit_underline_combobox.add_attribute(
             renderer_text, "text", 0)
-        self._preedit_underline = itb_util.variant_to_value(
-            self._gsettings.get_value('preeditunderline'))
-        if self._preedit_underline is None:
-            self._preedit_underline = IBus.AttrUnderline.SINGLE
         for i, item in enumerate(self._preedit_underline_store):
-            if self._preedit_underline == item[1]:
+            if self._settings_dict['preeditunderline']['user'] == item[1]:
                 self._preedit_underline_combobox.set_active(i)
         self._preedit_underline_combobox.connect(
             "changed",
@@ -1723,12 +1672,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'number of characters before a lookup is done.'))
         self._preedit_style_only_when_lookup_checkbutton.connect(
             'clicked', self._on_preedit_style_only_when_lookup_checkbutton)
-        self._preedit_style_only_when_lookup = itb_util.variant_to_value(
-            self._gsettings.get_value('preeditstyleonlywhenlookup'))
-        if self._preedit_style_only_when_lookup is None:
-            self._preedit_style_only_when_lookup = False
-        if self._preedit_style_only_when_lookup is True:
-            self._preedit_style_only_when_lookup_checkbutton.set_active(True)
+        self._preedit_style_only_when_lookup_checkbutton.set_active(
+            self._settings_dict['preeditstyleonlywhenlookup']['user'])
         _appearance_grid_row += 1
         self._appearance_grid.attach(
             self._preedit_style_only_when_lookup_checkbutton,
@@ -1747,12 +1692,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'a spelling error.'))
         self._color_preedit_spellcheck_checkbutton.set_hexpand(False)
         self._color_preedit_spellcheck_checkbutton.set_vexpand(False)
-        self._color_preedit_spellcheck = itb_util.variant_to_value(
-            self._gsettings.get_value('colorpreeditspellcheck'))
-        if self._color_preedit_spellcheck is None:
-            self._color_preedit_spellcheck = False
         self._color_preedit_spellcheck_checkbutton.set_active(
-            self._color_preedit_spellcheck)
+            self._settings_dict['colorpreeditspellcheck']['user'])
         self._color_preedit_spellcheck_checkbutton.connect(
             'clicked', self._on_color_preedit_spellcheck_checkbutton)
         self._color_preedit_spellcheck_rgba_colorbutton = Gtk.ColorButton()
@@ -1777,13 +1718,12 @@ class SetupUI(Gtk.Window): # type: ignore
               'the preedit when the preedit might contain a '
               'spelling error. This setting only has an '
               'effect if the preedit spellchecking is enabled.'))
-        self._color_preedit_spellcheck_string = itb_util.variant_to_value(
-            self._gsettings.get_value('colorpreeditspellcheckstring'))
         gdk_rgba = Gdk.RGBA()
-        gdk_rgba.parse(self._color_preedit_spellcheck_string)
+        gdk_rgba.parse(
+            self._settings_dict['colorpreeditspellcheckstring']['user'])
         self._color_preedit_spellcheck_rgba_colorbutton.set_rgba(gdk_rgba)
         self._color_preedit_spellcheck_rgba_colorbutton.set_sensitive(
-            self._color_preedit_spellcheck)
+            self._settings_dict['colorpreeditspellcheck']['user'])
         self._color_preedit_spellcheck_rgba_colorbutton.connect(
             'color-set', self._on_color_preedit_spellcheck_color_set)
         _appearance_grid_row += 1
@@ -1803,12 +1743,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'is used for a suggestion shown inline.'))
         self._color_inline_completion_checkbutton.set_hexpand(False)
         self._color_inline_completion_checkbutton.set_vexpand(False)
-        self._color_inline_completion = itb_util.variant_to_value(
-            self._gsettings.get_value('colorinlinecompletion'))
-        if self._color_inline_completion is None:
-            self._color_inline_completion = True
         self._color_inline_completion_checkbutton.set_active(
-            self._color_inline_completion)
+            self._settings_dict['colorinlinecompletion']['user'])
         self._color_inline_completion_checkbutton.connect(
             'clicked', self._on_color_inline_completion_checkbutton)
         self._color_inline_completion_rgba_colorbutton = Gtk.ColorButton()
@@ -1833,13 +1769,12 @@ class SetupUI(Gtk.Window): # type: ignore
               'inline completion. This setting only has an '
               'effect if the use of color for inline completion '
               'is enabled and inline completion is enabled.'))
-        self._color_inline_completion_string = itb_util.variant_to_value(
-            self._gsettings.get_value('colorinlinecompletionstring'))
         gdk_rgba = Gdk.RGBA()
-        gdk_rgba.parse(self._color_inline_completion_string)
+        gdk_rgba.parse(
+            self._settings_dict['colorinlinecompletionstring']['user'])
         self._color_inline_completion_rgba_colorbutton.set_rgba(gdk_rgba)
         self._color_inline_completion_rgba_colorbutton.set_sensitive(
-            self._color_inline_completion)
+            self._settings_dict['colorinlinecompletion']['user'])
         self._color_inline_completion_rgba_colorbutton.connect(
             'color-set', self._on_color_inline_completion_color_set)
         _appearance_grid_row += 1
@@ -1859,12 +1794,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'is used for the compose preview.'))
         self._color_compose_preview_checkbutton.set_hexpand(False)
         self._color_compose_preview_checkbutton.set_vexpand(False)
-        self._color_compose_preview = itb_util.variant_to_value(
-            self._gsettings.get_value('colorcomposepreview'))
-        if self._color_compose_preview is None:
-            self._color_compose_preview = True
         self._color_compose_preview_checkbutton.set_active(
-            self._color_compose_preview)
+            self._settings_dict['colorcomposepreview']['user'])
         self._color_compose_preview_checkbutton.connect(
             'clicked', self._on_color_compose_preview_checkbutton)
         self._color_compose_preview_rgba_colorbutton = Gtk.ColorButton()
@@ -1887,13 +1818,12 @@ class SetupUI(Gtk.Window): # type: ignore
         self._color_compose_preview_rgba_colorbutton.set_tooltip_text(
             _('Here you can specify which color to use for '
               'the compose preview.'))
-        self._color_compose_preview_string = itb_util.variant_to_value(
-            self._gsettings.get_value('colorcomposepreviewstring'))
         gdk_rgba = Gdk.RGBA()
-        gdk_rgba.parse(self._color_compose_preview_string)
+        gdk_rgba.parse(
+            self._settings_dict['colorcomposepreviewstring']['user'])
         self._color_compose_preview_rgba_colorbutton.set_rgba(gdk_rgba)
         self._color_compose_preview_rgba_colorbutton.set_sensitive(
-            self._color_compose_preview)
+            self._settings_dict['colorcomposepreview']['user'])
         self._color_compose_preview_rgba_colorbutton.connect(
             'color-set', self._on_color_compose_preview_color_set)
         _appearance_grid_row += 1
@@ -1915,11 +1845,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'from the user database.'))
         self._color_userdb_checkbutton.set_hexpand(False)
         self._color_userdb_checkbutton.set_vexpand(False)
-        self._color_userdb = itb_util.variant_to_value(
-            self._gsettings.get_value('coloruserdb'))
-        if self._color_userdb is None:
-            self._color_userdb = False
-        self._color_userdb_checkbutton.set_active(self._color_userdb)
+        self._color_userdb_checkbutton.set_active(
+            self._settings_dict['coloruserdb']['user'])
         self._color_userdb_checkbutton.connect(
             'clicked', self._on_color_userdb_checkbutton)
         self._color_userdb_rgba_colorbutton = Gtk.ColorButton()
@@ -1941,13 +1868,11 @@ class SetupUI(Gtk.Window): # type: ignore
               'from the user database. This setting only '
               'has an effect if the use of color for '
               'candidates from the user database is enabled.'))
-        self._color_userdb_string = itb_util.variant_to_value(
-            self._gsettings.get_value('coloruserdbstring'))
         gdk_rgba = Gdk.RGBA()
-        gdk_rgba.parse(self._color_userdb_string)
+        gdk_rgba.parse(self._settings_dict['coloruserdbstring']['user'])
         self._color_userdb_rgba_colorbutton.set_rgba(gdk_rgba)
         self._color_userdb_rgba_colorbutton.set_sensitive(
-            self._color_userdb)
+            self._settings_dict['coloruserdb']['user'])
         self._color_userdb_rgba_colorbutton.connect(
             'color-set', self._on_color_userdb_color_set)
         _appearance_grid_row += 1
@@ -1966,11 +1891,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'which come from spellchecking.'))
         self._color_spellcheck_checkbutton.set_hexpand(False)
         self._color_spellcheck_checkbutton.set_vexpand(False)
-        self._color_spellcheck = itb_util.variant_to_value(
-            self._gsettings.get_value('colorspellcheck'))
-        if self._color_spellcheck is None:
-            self._color_spellcheck = False
-        self._color_spellcheck_checkbutton.set_active(self._color_spellcheck)
+        self._color_spellcheck_checkbutton.set_active(
+            self._settings_dict['colorspellcheck']['user'])
         self._color_spellcheck_checkbutton.connect(
             'clicked', self._on_color_spellcheck_checkbutton)
         self._color_spellcheck_rgba_colorbutton = Gtk.ColorButton()
@@ -1992,13 +1914,11 @@ class SetupUI(Gtk.Window): # type: ignore
               'from spellchecking. This setting only has '
               'an effect if the use of color for candidates '
               'from spellchecking is enabled.'))
-        self._color_spellcheck_string = itb_util.variant_to_value(
-            self._gsettings.get_value('colorspellcheckstring'))
         gdk_rgba = Gdk.RGBA()
-        gdk_rgba.parse(self._color_spellcheck_string)
+        gdk_rgba.parse(self._settings_dict['colorspellcheckstring']['user'])
         self._color_spellcheck_rgba_colorbutton.set_rgba(gdk_rgba)
         self._color_spellcheck_rgba_colorbutton.set_sensitive(
-            self._color_spellcheck)
+            self._settings_dict['colorspellcheck']['user'])
         self._color_spellcheck_rgba_colorbutton.connect(
             'color-set', self._on_color_spellcheck_color_set)
         _appearance_grid_row += 1
@@ -2020,11 +1940,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'which come from a dictionary.'))
         self._color_dictionary_checkbutton.set_hexpand(False)
         self._color_dictionary_checkbutton.set_vexpand(False)
-        self._color_dictionary = itb_util.variant_to_value(
-            self._gsettings.get_value('colordictionary'))
-        if self._color_dictionary is None:
-            self._color_dictionary = False
-        self._color_dictionary_checkbutton.set_active(self._color_dictionary)
+        self._color_dictionary_checkbutton.set_active(
+            self._settings_dict['colordictionary']['user'])
         self._color_dictionary_checkbutton.connect(
             'clicked', self._on_color_dictionary_checkbutton)
         self._color_dictionary_rgba_colorbutton = Gtk.ColorButton()
@@ -2046,13 +1963,11 @@ class SetupUI(Gtk.Window): # type: ignore
               'from a dictionary. This setting only has '
               'an effect if the use of color for candidates '
               'from a dictionary is enabled.'))
-        self._color_dictionary_string = itb_util.variant_to_value(
-            self._gsettings.get_value('colordictionarystring'))
         gdk_rgba = Gdk.RGBA()
-        gdk_rgba.parse(self._color_dictionary_string)
+        gdk_rgba.parse(self._settings_dict['colordictionarystring']['user'])
         self._color_dictionary_rgba_colorbutton.set_rgba(gdk_rgba)
         self._color_dictionary_rgba_colorbutton.set_sensitive(
-            self._color_dictionary)
+            self._settings_dict['colordictionary']['user'])
         self._color_dictionary_rgba_colorbutton.connect(
             'color-set', self._on_color_dictionary_color_set)
         _appearance_grid_row += 1
@@ -2074,11 +1989,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'come from the user database.'))
         self._label_userdb_checkbutton.set_hexpand(False)
         self._label_userdb_checkbutton.set_vexpand(False)
-        self._label_userdb = itb_util.variant_to_value(
-            self._gsettings.get_value('labeluserdb'))
-        if self._label_userdb is None:
-            self._label_userdb = False
-        self._label_userdb_checkbutton.set_active(self._label_userdb)
+        self._label_userdb_checkbutton.set_active(
+            self._settings_dict['labeluserdb']['user'])
         self._label_userdb_checkbutton.connect(
             'clicked', self._on_label_userdb_checkbutton)
         self._label_userdb_entry = Gtk.Entry()
@@ -2086,12 +1998,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._label_userdb_entry.set_can_focus(True)
         self._label_userdb_entry.set_hexpand(False)
         self._label_userdb_entry.set_vexpand(False)
-        self._label_userdb_string = itb_util.variant_to_value(
-            self._gsettings.get_value('labeluserdbstring'))
-        if not self._label_userdb_string:
-            self._label_userdb_string = ''
         self._label_userdb_entry.set_text(
-            self._label_userdb_string)
+            self._settings_dict['labeluserdbstring']['user'])
         self._label_userdb_entry.connect(
             'notify::text', self._on_label_userdb_entry)
         _appearance_grid_row += 1
@@ -2111,11 +2019,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'come from spellchecking.'))
         self._label_spellcheck_checkbutton.set_hexpand(False)
         self._label_spellcheck_checkbutton.set_vexpand(False)
-        self._label_spellcheck = itb_util.variant_to_value(
-            self._gsettings.get_value('labelspellcheck'))
-        if self._label_spellcheck is None:
-            self._label_spellcheck = False
-        self._label_spellcheck_checkbutton.set_active(self._label_spellcheck)
+        self._label_spellcheck_checkbutton.set_active(
+            self._settings_dict['labelspellcheck']['user'])
         self._label_spellcheck_checkbutton.connect(
             'clicked', self._on_label_spellcheck_checkbutton)
         self._label_spellcheck_entry = Gtk.Entry()
@@ -2123,12 +2028,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._label_spellcheck_entry.set_can_focus(True)
         self._label_spellcheck_entry.set_hexpand(False)
         self._label_spellcheck_entry.set_vexpand(False)
-        self._label_spellcheck_string = itb_util.variant_to_value(
-            self._gsettings.get_value('labelspellcheckstring'))
-        if not self._label_spellcheck_string:
-            self._label_spellcheck_string = ''
         self._label_spellcheck_entry.set_text(
-            self._label_spellcheck_string)
+            self._settings_dict['labelspellcheckstring']['user'])
         self._label_spellcheck_entry.connect(
             'notify::text', self._on_label_spellcheck_entry)
         _appearance_grid_row += 1
@@ -2148,11 +2049,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'come from a dictionary.'))
         self._label_dictionary_checkbutton.set_hexpand(False)
         self._label_dictionary_checkbutton.set_vexpand(False)
-        self._label_dictionary = itb_util.variant_to_value(
-            self._gsettings.get_value('labeldictionary'))
-        if self._label_dictionary is None:
-            self._label_dictionary = False
-        self._label_dictionary_checkbutton.set_active(self._label_dictionary)
+        self._label_dictionary_checkbutton.set_active(
+            self._settings_dict['labeldictionary']['user'])
         self._label_dictionary_checkbutton.connect(
             'clicked', self._on_label_dictionary_checkbutton)
         self._label_dictionary_entry = Gtk.Entry()
@@ -2160,12 +2058,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._label_dictionary_entry.set_can_focus(True)
         self._label_dictionary_entry.set_hexpand(False)
         self._label_dictionary_entry.set_vexpand(False)
-        self._label_dictionary_string = itb_util.variant_to_value(
-            self._gsettings.get_value('labeldictionarystring'))
-        if not self._label_dictionary_string:
-            self._label_dictionary_string = ''
         self._label_dictionary_entry.set_text(
-            self._label_dictionary_string)
+            self._settings_dict['labeldictionarystring']['user'])
         self._label_dictionary_entry.connect(
             'notify::text', self._on_label_dictionary_entry)
         _appearance_grid_row += 1
@@ -2184,11 +2078,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'the lookup table which come from a dictionary.'))
         self._flag_dictionary_checkbutton.set_hexpand(False)
         self._flag_dictionary_checkbutton.set_vexpand(False)
-        self._flag_dictionary = itb_util.variant_to_value(
-            self._gsettings.get_value('flagdictionary'))
-        if self._flag_dictionary is None:
-            self._flag_dictionary = False
-        self._flag_dictionary_checkbutton.set_active(self._flag_dictionary)
+        self._flag_dictionary_checkbutton.set_active(
+            self._settings_dict['flagdictionary']['user'])
         self._flag_dictionary_checkbutton.connect(
             'clicked', self._on_flag_dictionary_checkbutton)
         _appearance_grid_row += 1
@@ -2204,11 +2095,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'to indicate when ibus-typing-booster is busy.'))
         self._label_busy_checkbutton.set_hexpand(False)
         self._label_busy_checkbutton.set_vexpand(False)
-        self._label_busy = itb_util.variant_to_value(
-            self._gsettings.get_value('labelbusy'))
-        if self._label_busy is None:
-            self._label_busy = True
-        self._label_busy_checkbutton.set_active(self._label_busy)
+        self._label_busy_checkbutton.set_active(
+            self._settings_dict['labelbusy']['user'])
         self._label_busy_checkbutton.connect(
             'clicked', self._on_label_busy_checkbutton)
         self._label_busy_entry = Gtk.Entry()
@@ -2216,12 +2104,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._label_busy_entry.set_can_focus(True)
         self._label_busy_entry.set_hexpand(False)
         self._label_busy_entry.set_vexpand(False)
-        self._label_busy_string = itb_util.variant_to_value(
-            self._gsettings.get_value('labelbusystring'))
-        if not self._label_busy_string:
-            self._label_busy_string = ''
         self._label_busy_entry.set_text(
-            self._label_busy_string)
+            self._settings_dict['labelbusystring']['user'])
         self._label_busy_entry.connect(
             'notify::text', self._on_label_busy_entry)
         _appearance_grid_row += 1
@@ -2239,16 +2123,14 @@ class SetupUI(Gtk.Window): # type: ignore
         self._google_application_credentials_label.set_xalign(0)
         self._speech_recognition_grid.attach(
             self._google_application_credentials_label, 0, 0, 1, 1)
-
-        self._google_application_credentials = itb_util.variant_to_value(
-            self._gsettings.get_value('googleapplicationcredentials'))
-        if not self._google_application_credentials:
-            self._google_application_credentials = _('File not yet set.')
+        if not self._settings_dict['googleapplicationcredentials']['user']:
+            self._settings_dict['googleapplicationcredentials'][
+                'user'] = _('File not yet set.')
         self._google_application_credentials_button = Gtk.Button()
         self._google_application_credentials_button_box = Gtk.Box()
         self._google_application_credentials_button_label = Gtk.Label()
         self._google_application_credentials_button_label.set_text(
-            self._google_application_credentials)
+            self._settings_dict['googleapplicationcredentials']['user'])
         self._google_application_credentials_button_label.set_use_markup(True)
         self._google_application_credentials_button_label.set_max_width_chars(
             40)
@@ -2361,7 +2243,6 @@ class SetupUI(Gtk.Window): # type: ignore
         autosettings_action_area.add(self._autosettings_up_button)
         autosettings_action_area.add(self._autosettings_down_button)
         self._autosettings_selected_index = -1
-        self._autosettings: List[Tuple[str, str, str]] = []
         self._autosettings_treeview = None
         self._autosettings_add_listbox = None
         self._autosettings_add_listbox_settings: List[str] = []
@@ -2373,8 +2254,137 @@ class SetupUI(Gtk.Window): # type: ignore
 
         self._notebook.set_current_page(0) # Has to be after show_all()
 
-        if not self._keybindings['toggle_input_mode_on_off']:
+        if not self._settings_dict[
+                'keybindings']['user']['toggle_input_mode_on_off']:
             self._remember_input_mode_checkbutton.hide()
+
+        self._gsettings.connect('changed', self._on_gsettings_value_changed)
+
+    def _init_settings_dict(self) -> Dict[str, Any]:
+        '''Initialize a dictionary with the default and user settings for all
+        settings keys.
+
+        The default settings start with the defaults from the
+        gsettings schema. Some of these generic default values may be
+        overridden by more specific default settings for the specific engine.
+        After this possible modification for a specific engine we have the final default
+        settings for this specific typing booster input method.
+
+        The user settings start with a copy of these final default settings,
+        then they are possibly modified by user gsettings.
+
+        Keeping a copy of the default settings in the settings dictionary
+        makes it easy to revert some or all settings to the defaults.
+        '''
+        settings_dict: Dict[str, Any] = {}
+        set_functions = {
+            'disableinterminals': self.set_disable_in_terminals,
+            'asciidigits': self.set_ascii_digits,
+            'avoidforwardkeyevent': self.set_avoid_forward_key_event,
+            'addspaceoncommit': self.set_add_space_on_commit,
+            'arrowkeysreopenpreedit': self.set_arrow_keys_reopen_preedit,
+            'emojipredictions': self.set_emoji_prediction_mode,
+            'offtherecord': self.set_off_the_record_mode,
+            'recordmode': self.set_record_mode,
+            'emojitriggercharacters': self.set_emoji_trigger_characters,
+            'autocommitcharacters': self.set_auto_commit_characters,
+            'googleapplicationcredentials':
+            self.set_google_application_credentials,
+            'tabenable': self.set_tab_enable,
+            'inlinecompletion': self.set_inline_completion,
+            'autocapitalize': self.set_auto_capitalize,
+            'rememberlastusedpreeditime':
+            self.set_remember_last_used_preedit_ime,
+            'rememberinputmode': self.set_remember_input_mode,
+            'pagesize': self.set_page_size,
+            'candidatesdelaymilliseconds':
+            self.set_candidates_delay_milliseconds,
+            'lookuptableorientation': self.set_lookup_table_orientation,
+            'preeditunderline': self.set_preedit_underline,
+            'preeditstyleonlywhenlookup':
+            self.set_preedit_style_only_when_lookup,
+            'mincharcomplete': self.set_min_char_complete,
+            'errorsound': self.set_error_sound,
+            'errorsoundfile': self.set_error_sound_file,
+            'soundbackend': self.set_sound_backend,
+            'debuglevel': self.set_debug_level,
+            'shownumberofcandidates': self.set_show_number_of_candidates,
+            'showstatusinfoinaux': self.set_show_status_info_in_auxiliary_text,
+            'autoselectcandidate': self.set_auto_select_candidate,
+            'colorpreeditspellcheck': self.set_color_preedit_spellcheck,
+            'colorpreeditspellcheckstring':
+            self.set_color_preedit_spellcheck_string,
+            'colorinlinecompletion': self.set_color_inline_completion,
+            'colorinlinecompletionstring':
+            self.set_color_inline_completion_string,
+            'colorcomposepreview': self.set_color_compose_preview,
+            'colorcomposepreviewstring': self.set_color_compose_preview_string,
+            'coloruserdb': self.set_color_userdb,
+            'coloruserdbstring': self.set_color_userdb_string,
+            'colorspellcheck': self.set_color_spellcheck,
+            'colorspellcheckstring': self.set_color_spellcheck_string,
+            'colordictionary': self.set_color_dictionary,
+            'colordictionarystring': self.set_color_dictionary_string,
+            'labeluserdb': self.set_label_userdb,
+            'labeluserdbstring': self.set_label_userdb_string,
+            'labelspellcheck': self.set_label_spellcheck,
+            'labelspellcheckstring': self.set_label_spellcheck_string,
+            'labeldictionary': self.set_label_dictionary,
+            'labeldictionarystring': self.set_label_dictionary_string,
+            'flagdictionary': self.set_flag_dictionary,
+            'labelbusy': self.set_label_busy,
+            'labelbusystring': self.set_label_busy_string,
+            'inputmethod': self.set_current_imes,
+            'dictionary': self.set_dictionary_names,
+            'keybindings': self.set_keybindings,
+            'dictionaryinstalltimestamp': self._reload_dictionaries,
+            'inputmethodchangetimestamp': self._reload_input_methods,
+            'autosettings': self.set_autosettings,
+        }
+
+        schema_source: Gio.SettingsSchemaSource = (
+            Gio.SettingsSchemaSource.get_default())
+        schema: Gio.SettingsSchema = schema_source.lookup(
+            'org.freedesktop.ibus.engine.typing-booster', True)
+        special_defaults = {
+            'dictionary': 'None',  # special dummy dictionary
+            'inputmethod': f'{self._m17n_ime_lang}-{self._m17n_ime_name}',
+            'tabenable': True,
+            'offtherecord': True,
+            'preeditunderline': 0,
+        }
+        for key in schema.list_keys():
+            if key == 'keybindings': # keybindings are special!
+                default_value = itb_util.variant_to_value(
+                    self._gsettings.get_default_value('keybindings'))
+                if self._engine_name != 'typing-booster':
+                    default_value['toggle_input_mode_on_off'] = []
+                    default_value['enable_lookup'] = []
+                    default_value['commit_and_forward_key'] = ['Left']
+                # copy the updated default keybindings, i.e. the
+                # default keybindings for this specific engine, into
+                # the user keybindings:
+                user_value = copy.deepcopy(default_value)
+                user_gsettings = itb_util.variant_to_value(
+                    self._gsettings.get_user_value(key))
+                if not user_gsettings:
+                    user_gsettings = {}
+                itb_util.dict_update_existing_keys(user_value, user_gsettings)
+            else:
+                default_value = itb_util.variant_to_value(
+                    self._gsettings.get_default_value(key))
+                if self._engine_name != 'typing-booster':
+                    default_value = special_defaults.get(key, default_value)
+                user_value = itb_util.variant_to_value(
+                    self._gsettings.get_user_value(key))
+                if user_value is None:
+                    user_value = default_value
+            if key in set_functions:
+                settings_dict[key] = {
+                    'default': default_value,
+                    'user': user_value,
+                    'set_function': set_functions[key]}
+        return settings_dict
 
     def _fill_dictionaries_listbox_row(self, name: str) -> Tuple[str, bool]:
         '''
@@ -2418,7 +2428,7 @@ class SetupUI(Gtk.Window): # type: ignore
         else:
             row_item += '❌'
         row += itb_util.bidi_embed(row_item)
-        if self._keybindings['speech_recognition']:
+        if self._settings_dict['keybindings']['user']['speech_recognition']:
             row_item = ' ' + _('Speech recognition') + ' '
             if name in itb_util.GOOGLE_SPEECH_TO_TEXT_LANGUAGES:
                 row_item += '✔️'
@@ -2447,16 +2457,6 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dictionaries_listbox.set_activate_on_single_click(True)
         self._dictionaries_listbox.connect(
             'row-selected', self._on_dictionary_selected)
-        self._dictionary_names = []
-        dictionary = itb_util.variant_to_value(
-            self._gsettings.get_value('dictionary'))
-        self._dictionary_names = itb_util.dictionaries_str_to_list(dictionary)
-        if ','.join(self._dictionary_names) != dictionary:
-            # Value changed due to normalization or getting the locale
-            # defaults, save it back to settings:
-            self._gsettings.set_value(
-                'dictionary',
-                GLib.Variant.new_string(','.join(self._dictionary_names)))
         missing_dictionaries = False
         if list(self._dictionary_names) != ['None']:
             for name in self._dictionary_names:
@@ -2530,16 +2530,6 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_methods_listbox.set_activate_on_single_click(True)
         self._input_methods_listbox.connect(
             'row-selected', self._on_input_method_selected)
-        self._current_imes = []
-        inputmethod = itb_util.variant_to_value(
-            self._gsettings.get_value('inputmethod'))
-        self._current_imes = itb_util.input_methods_str_to_list(inputmethod)
-        if ','.join(self._current_imes) != inputmethod:
-            # Value changed due to normalization or getting the locale
-            # defaults, save it back to settings:
-            self._gsettings.set_value(
-                'inputmethod',
-                GLib.Variant.new_string(','.join(self._current_imes)))
         for ime in self._current_imes:
             label = Gtk.Label()
             label.set_text(html.escape(
@@ -2599,10 +2589,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._autosettings_treeview.set_grid_lines(Gtk.TreeViewGridLines.BOTH)
         autosettings_treeview_model = Gtk.ListStore(str, str, str, str)
         self._autosettings_treeview.set_model(autosettings_treeview_model)
-        self._autosettings = (
-            itb_util.variant_to_value(
-                self._gsettings.get_value('autosettings')))
-        for (setting, value, regexp) in self._autosettings:
+        autosettings_user = self._settings_dict['autosettings']['user']
+        for (setting, value, regexp) in autosettings_user:
             value_hint = ''
             if (setting in self._allowed_autosettings
                 and 'value_hint' in self._allowed_autosettings[setting]):
@@ -2796,71 +2784,10 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         value = itb_util.variant_to_value(self._gsettings.get_value(key))
         LOGGER.info('Settings changed: key=%s value=%s\n', key, value)
-        set_functions = {
-            'disableinterminals': self.set_disable_in_terminals,
-            'asciidigits': self.set_ascii_digits,
-            'avoidforwardkeyevent': self.set_avoid_forward_key_event,
-            'addspaceoncommit': self.set_add_space_on_commit,
-            'arrowkeysreopenpreedit': self.set_arrow_keys_reopen_preedit,
-            'emojipredictions': self.set_emoji_prediction_mode,
-            'offtherecord': self.set_off_the_record_mode,
-            'recordmode': self.set_record_mode,
-            'emojitriggercharacters': self.set_emoji_trigger_characters,
-            'autocommitcharacters': self.set_auto_commit_characters,
-            'googleapplicationcredentials':
-            self.set_google_application_credentials,
-            'tabenable': self.set_tab_enable,
-            'inlinecompletion': self.set_inline_completion,
-            'autocapitalize': self.set_auto_capitalize,
-            'rememberlastusedpreeditime':
-            self.set_remember_last_used_preedit_ime,
-            'rememberinputmode': self.set_remember_input_mode,
-            'pagesize': self.set_page_size,
-            'candidatesdelaymilliseconds':
-            self.set_candidates_delay_milliseconds,
-            'lookuptableorientation': self.set_lookup_table_orientation,
-            'preeditunderline': self.set_preedit_underline,
-            'preeditstyleonlywhenlookup':
-            self.set_preedit_style_only_when_lookup,
-            'mincharcomplete': self.set_min_char_complete,
-            'errorsound': self.set_error_sound,
-            'errorsoundfile': self.set_error_sound_file,
-            'debuglevel': self.set_debug_level,
-            'shownumberofcandidates': self.set_show_number_of_candidates,
-            'showstatusinfoinaux': self.set_show_status_info_in_auxiliary_text,
-            'autoselectcandidate': self.set_auto_select_candidate,
-            'colorpreeditspellcheck': self.set_color_preedit_spellcheck,
-            'colorpreeditspellcheckstring':
-            self.set_color_preedit_spellcheck_string,
-            'colorinlinecompletion': self.set_color_inline_completion,
-            'colorinlinecompletionstring':
-            self.set_color_inline_completion_string,
-            'colorcomposepreview': self.set_color_compose_preview,
-            'colorcomposepreviewstring': self.set_color_compose_preview_string,
-            'coloruserdb': self.set_color_userdb,
-            'coloruserdbstring': self.set_color_userdb_string,
-            'colorspellcheck': self.set_color_spellcheck,
-            'colorspellcheckstring': self.set_color_spellcheck_string,
-            'colordictionary': self.set_color_dictionary,
-            'colordictionarystring': self.set_color_dictionary_string,
-            'labeluserdb': self.set_label_userdb,
-            'labeluserdbstring': self.set_label_userdb_string,
-            'labelspellcheck': self.set_label_spellcheck,
-            'labelspellcheckstring': self.set_label_spellcheck_string,
-            'labeldictionary': self.set_label_dictionary,
-            'labeldictionarystring': self.set_label_dictionary_string,
-            'flagdictionary': self.set_flag_dictionary,
-            'labelbusy': self.set_label_busy,
-            'labelbusystring': self.set_label_busy_string,
-            'inputmethod': self.set_current_imes,
-            'dictionary': self.set_dictionary_names,
-            'keybindings': self.set_keybindings,
-            'dictionaryinstalltimestamp': self._reload_dictionaries,
-            'inputmethodchangetimestamp': self._reload_input_methods,
-            'autosettings': self.set_autosettings,
-        }
-        if key in set_functions:
-            set_functions[key](value, update_gsettings=False)
+        if key in self._settings_dict:
+            set_function = self._settings_dict[key]['set_function']
+            if set_function:
+                set_function(value, update_gsettings=False)
             return
         LOGGER.error('Unknown key=%s', key)
         return
@@ -2887,16 +2814,18 @@ class SetupUI(Gtk.Window): # type: ignore
             _('Do you really want to restore all default settings?'))
         if response == Gtk.ResponseType.OK:
             LOGGER.info('Restoring all defaults.')
-            gsettings = Gio.Settings(
-                schema='org.freedesktop.ibus.engine.typing-booster')
-            schema = gsettings.get_property('settings-schema')
-            for key in schema.list_keys():
+            for key, value in self._settings_dict.items():
                 if key in ('googleapplicationcredentials',
+                           'inputmethodchangetimestamp',
                            'dictionaryinstalltimestamp'):
                     LOGGER.info('Skipping reset of gsettings key=%s', key)
                     continue
                 LOGGER.info('Resetting gsettings key=%s', key)
-                gsettings.reset(key)
+                value['set_function'](value['default'], update_gsettings=True)
+                # Call it again with update_gsettings=False to make
+                # sure the active state of checkbuttons etc.  is
+                # updated immediately:
+                value['set_function'](value['default'], update_gsettings=False)
         else:
             LOGGER.info('Restore all defaults cancelled.')
         self._restore_all_defaults_button.set_sensitive(True)
@@ -3376,7 +3305,7 @@ class SetupUI(Gtk.Window): # type: ignore
         chooser.add_button(_('_Cancel'), Gtk.ResponseType.CANCEL)
         chooser.add_button(_('_OK'), Gtk.ResponseType.OK)
         chooser.set_current_folder(os.path.dirname(
-            self._error_sound_file))
+            self._settings_dict['errorsoundfile']['user']))
         response = chooser.run()
         if response == Gtk.ResponseType.OK:
             filename = chooser.get_filename()
@@ -3419,7 +3348,7 @@ class SetupUI(Gtk.Window): # type: ignore
         if not setting or setting not in self._allowed_autosettings:
             return
         self.set_autosettings(
-            [(setting, '', '')] + self._autosettings,
+            [(setting, '', '')] + self._settings_dict['autosettings']['user'],
             update_gsettings=True)
         # self.set_autosettings has reset
         # self._autosettings_selected_index = -1 and reset the
@@ -3698,7 +3627,10 @@ class SetupUI(Gtk.Window): # type: ignore
         Sets the dictionaries to the default for the current locale.
 
         '''
-        self.set_dictionary_names(itb_util.dictionaries_str_to_list(''))
+        if self._engine_name == 'typing-booster':
+            self.set_dictionary_names(itb_util.dictionaries_str_to_list(''))
+            return
+        self.set_dictionary_names(self._settings_dict['dictionary']['default'])
 
     def _on_dictionary_selected(
             self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
@@ -4204,7 +4136,10 @@ class SetupUI(Gtk.Window): # type: ignore
 
         Sets the input methods to the default for the current locale.
         '''
-        self.set_current_imes(itb_util.input_methods_str_to_list(''))
+        if self._engine_name == 'typing-booster':
+            self.set_current_imes(itb_util.input_methods_str_to_list(''))
+            return
+        self.set_current_imes(self._settings_dict['inputmethod']['default'])
 
     def _on_input_method_selected(
             self, _listbox: Gtk.ListBox, listbox_row: Gtk.ListBoxRow) -> None:
@@ -4277,7 +4212,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self._autosettings_remove_button.set_sensitive(True)
             self._autosettings_up_button.set_sensitive(index > 0)
             self._autosettings_down_button.set_sensitive(
-                index < len(self._autosettings) - 1)
+                index < len(self._settings_dict['autosettings']['user']) - 1)
         else:
             self._autosettings_selected_index = -1
             self._autosettings_remove_button.set_sensitive(False)
@@ -4301,7 +4236,8 @@ class SetupUI(Gtk.Window): # type: ignore
             index = int(path)
         except (TypeError, ValueError):
             LOGGER.debug('Cannot convert path to integer, should never happen')
-        if not 0 <= index < len(self._autosettings):
+        autosettings_user = self._settings_dict['autosettings']['user']
+        if not 0 <= index < len(autosettings_user):
             LOGGER.debug('index out of range')
             return
         iterator = model.get_iter(path)
@@ -4346,7 +4282,7 @@ class SetupUI(Gtk.Window): # type: ignore
                 else:
                     new_edited_value = ''
         model.set_value(iterator, 1, new_edited_value)
-        new_autosettings = self._autosettings[:]
+        new_autosettings = autosettings_user['user'][:]
         new_autosettings[index] = (old_setting, new_edited_value, old_regexp)
         self.set_autosettings(new_autosettings)
 
@@ -4367,7 +4303,8 @@ class SetupUI(Gtk.Window): # type: ignore
             index = int(path)
         except (TypeError, ValueError):
             LOGGER.debug('Cannot convert path to integer, should never happen')
-        if not 0 <= index < len(self._autosettings):
+        autosettings_user = self._settings_dict['autosettings']['user']
+        if not 0 <= index < len(autosettings_user):
             LOGGER.debug('index out of range')
             return
         iterator = model.get_iter(path)
@@ -4378,7 +4315,7 @@ class SetupUI(Gtk.Window): # type: ignore
             LOGGER.debug('Regexp not changed')
             return
         model.set_value(iterator, 2, new_edited_regexp)
-        new_autosettings = self._autosettings[:]
+        new_autosettings = autosettings_user[:]
         new_autosettings[index] = (old_setting, old_value, new_edited_regexp)
         self.set_autosettings(new_autosettings)
 
@@ -4496,13 +4433,14 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         index = self._autosettings_selected_index
         LOGGER.debug('remove index %s', index)
-        if not 0 <= index < len(self._autosettings):
+        autosettings_user = self._settings_dict['autosettings']['user']
+        if not 0 <= index < len(autosettings_user):
             # This should not happen, one should not be able
             # to click the remove button in this case, just return:
             return
         self._autosettings_selected_index = -1
         self.set_autosettings(
-            self._autosettings[:index] + self._autosettings[index + 1:],
+            autosettings_user[:index] + autosettings_user[index + 1:],
             update_gsettings=True)
 
     def _on_autosettings_up_button_clicked(self, *_args: Any) -> None:
@@ -4511,15 +4449,16 @@ class SetupUI(Gtk.Window): # type: ignore
         an autosetting up is clicked
         '''
         index = self._autosettings_selected_index
-        if not 0 < index < len(self._autosettings):
+        autosettings_user = self._settings_dict['autosettings']['user']
+        if not 0 < index < len(autosettings_user):
             # This should not happen, one should not be able
             # to click the up button in this case, just return:
             return
         self.set_autosettings(
-            self._autosettings[:index - 1]
-            + [self._autosettings[index]]
-            + [self._autosettings[index - 1]]
-            + self._autosettings[index + 1:],
+            autosettings_user[:index - 1]
+            + [autosettings_user[index]]
+            + [autosettings_user[index - 1]]
+            + autosettings_user[index + 1:],
             update_gsettings=True)
         # self.set_autosettings has reset
         # self._autosettings_selected_index = -1 and reset the
@@ -4535,15 +4474,16 @@ class SetupUI(Gtk.Window): # type: ignore
         an autosetting down is clicked
         '''
         index = self._autosettings_selected_index
-        if not 0 <= index < len(self._autosettings) - 1:
+        autosettings_user = self._settings_dict['autosettings']['user']
+        if not 0 <= index < len(autosettings_user) - 1:
             # This should not happen, one should not be able
             # to click the down button in this case, just return:
             return
         self.set_autosettings(
-            self._autosettings[:index]
-            + [self._autosettings[index + 1]]
-            + [self._autosettings[index]]
-            + self._autosettings[index + 2:],
+            autosettings_user[:index]
+            + [autosettings_user[index + 1]]
+            + [autosettings_user[index]]
+            + autosettings_user[index + 2:],
             update_gsettings=True)
         # self.set_autosettings has reset
         # self._autosettings_selected_index = -1 and reset the
@@ -4797,10 +4737,13 @@ class SetupUI(Gtk.Window): # type: ignore
             key = itb_util.KeyEvent(keyval, 0, state)
             keybinding = itb_util.keyevent_to_keybinding(key)
             command = self._keybindings_selected_command
-            if keybinding not in self._keybindings[command]:
-                self._keybindings[command].append(keybinding)
+            if (keybinding
+                not in self._settings_dict['keybindings']['user'][command]):
+                self._settings_dict['keybindings']['user'][command].append(
+                    keybinding)
                 self._fill_keybindings_edit_popover_listbox()
-                self.set_keybindings(self._keybindings)
+                self.set_keybindings(
+                    self._settings_dict['keybindings']['user'])
 
     def _on_keybindings_edit_popover_remove_button_clicked(
             self, *_args: Any) -> None:
@@ -4811,10 +4754,12 @@ class SetupUI(Gtk.Window): # type: ignore
         keybinding = self._keybindings_edit_popover_selected_keybinding
         command = self._keybindings_selected_command
         if (keybinding and command
-                and keybinding in self._keybindings[command]):
-            self._keybindings[command].remove(keybinding)
+            and
+            keybinding in self._settings_dict['keybindings']['user'][command]):
+            self._settings_dict['keybindings']['user'][command].remove(
+                keybinding)
             self._fill_keybindings_edit_popover_listbox()
-            self.set_keybindings(self._keybindings)
+            self.set_keybindings(self._settings_dict['keybindings']['user'])
 
     def _on_keybindings_edit_popover_default_button_clicked(
             self, *_args: Any) -> None:
@@ -4822,11 +4767,10 @@ class SetupUI(Gtk.Window): # type: ignore
         Signal handler called when the “Default” button to set
         the keybindings to the default has been clicked.
         '''
-        default_keybindings = itb_util.variant_to_value(
-            self._gsettings.get_default_value('keybindings'))
+        default_keybindings = self._settings_dict['keybindings']['default']
         command = self._keybindings_selected_command
         if command and command in default_keybindings:
-            new_keybindings = self._keybindings
+            new_keybindings = self._settings_dict['keybindings']['user']
             new_keybindings[command] = default_keybindings[command]
             self._fill_keybindings_edit_popover_listbox()
             self.set_keybindings(new_keybindings)
@@ -4852,7 +4796,7 @@ class SetupUI(Gtk.Window): # type: ignore
             True)
         self._keybindings_edit_popover_listbox.connect(
             'row-selected', self._on_keybindings_edit_listbox_row_selected)
-        for keybinding in self._keybindings[
+        for keybinding in self._settings_dict['keybindings']['user'][
                 self._keybindings_selected_command]:
             label = Gtk.Label()
             label.set_text(html.escape(keybinding))
@@ -4972,11 +4916,10 @@ class SetupUI(Gtk.Window): # type: ignore
         Signal handler called when the “Set to default” button to reset the
         key bindings for a command to the default has been clicked.
         '''
-        default_keybindings = itb_util.variant_to_value(
-            self._gsettings.get_default_value('keybindings'))
+        default_keybindings = self._settings_dict['keybindings']['default']
         command = self._keybindings_selected_command
         if command and command in default_keybindings:
-            new_keybindings = self._keybindings
+            new_keybindings = self._settings_dict['keybindings']['user']
             new_keybindings[command] = default_keybindings[command]
             self.set_keybindings(new_keybindings)
 
@@ -4995,8 +4938,7 @@ class SetupUI(Gtk.Window): # type: ignore
             _('Do you really want to set the key bindings for '
               'all commands to their defaults?'))
         if response == Gtk.ResponseType.OK:
-            default_keybindings = itb_util.variant_to_value(
-                self._gsettings.get_default_value('keybindings'))
+            default_keybindings = self._settings_dict['keybindings']['default']
             self.set_keybindings(default_keybindings)
         self._keybindings_all_default_button.set_sensitive(True)
 
@@ -5080,9 +5022,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._avoid_forward_key_event:
-            return
-        self._avoid_forward_key_event = mode
+        mode = bool(mode)
+        self._settings_dict['avoidforwardkeyevent']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'avoidforwardkeyevent',
@@ -5105,9 +5046,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._arrow_keys_reopen_preedit:
-            return
-        self._arrow_keys_reopen_preedit = mode
+        mode = bool(mode)
+        self._settings_dict['arrowkeysreopenpreedit']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'arrowkeysreopenpreedit',
@@ -5130,9 +5070,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._disable_in_terminals:
-            return
-        self._disable_in_terminals = mode
+        mode = bool(mode)
+        self._settings_dict['disableinterminals']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'disableinterminals',
@@ -5156,9 +5095,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._ascii_digits:
-            return
-        self._ascii_digits = mode
+        mode = bool(mode)
+        self._settings_dict['asciidigits']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'asciidigits',
@@ -5181,9 +5119,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._emoji_predictions:
-            return
-        self._emoji_predictions = mode
+        mode = bool(mode)
+        self._settings_dict['emojipredictions']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'emojipredictions',
@@ -5207,9 +5144,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._off_the_record:
-            return
-        self._off_the_record = mode
+        mode = bool(mode)
+        self._settings_dict['offtherecord']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'offtherecord',
@@ -5234,16 +5170,17 @@ class SetupUI(Gtk.Window): # type: ignore
         LOGGER.info(
             '(%s, update_gsettings = %s)',
             emoji_trigger_characters, update_gsettings)
-        if emoji_trigger_characters == self._emoji_trigger_characters:
+        if not isinstance(emoji_trigger_characters, str):
             return
-        self._emoji_trigger_characters = emoji_trigger_characters
+        self._settings_dict[
+            'emojitriggercharacters']['user'] = emoji_trigger_characters
         if update_gsettings:
             self._gsettings.set_value(
                 'emojitriggercharacters',
                 GLib.Variant.new_string(emoji_trigger_characters))
         else:
             self._emoji_trigger_characters_entry.set_text(
-                self._emoji_trigger_characters)
+                emoji_trigger_characters)
 
     def set_auto_commit_characters(
             self,
@@ -5262,16 +5199,17 @@ class SetupUI(Gtk.Window): # type: ignore
         LOGGER.info(
             '(%s, update_gsettings = %s)',
             auto_commit_characters, update_gsettings)
-        if auto_commit_characters == self._auto_commit_characters:
+        if not isinstance(auto_commit_characters, str):
             return
-        self._auto_commit_characters = auto_commit_characters
+        self._settings_dict[
+            'autocommitcharacters']['user'] = auto_commit_characters
         if update_gsettings:
             self._gsettings.set_value(
                 'autocommitcharacters',
                 GLib.Variant.new_string(auto_commit_characters))
         else:
             self._auto_commit_characters_entry.set_text(
-                self._auto_commit_characters)
+                auto_commit_characters)
 
     def set_google_application_credentials(
             self,
@@ -5289,16 +5227,16 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', path, update_gsettings)
-        if path == self._google_application_credentials:
+        if not isinstance(path, str):
             return
-        self._google_application_credentials = path
+        self._settings_dict['googleapplicationcredentials']['user'] = path
         if update_gsettings:
             self._gsettings.set_value(
                 'googleapplicationcredentials',
-                GLib.Variant.new_string(self._google_application_credentials))
+                GLib.Variant.new_string(path))
         else:
             self._google_application_credentials_button_label.set_text(
-                self._google_application_credentials)
+                path)
 
     def set_color_preedit_spellcheck(
             self,
@@ -5315,9 +5253,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._color_preedit_spellcheck:
-            return
-        self._color_preedit_spellcheck = mode
+        mode = bool(mode)
+        self._settings_dict['colorpreeditspellcheck']['user'] = mode
         self._color_preedit_spellcheck_rgba_colorbutton.set_sensitive(mode)
         if update_gsettings:
             self._gsettings.set_value(
@@ -5346,9 +5283,10 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', color_string, update_gsettings)
-        if color_string == self._color_preedit_spellcheck_string:
+        if not isinstance(color_string, str):
             return
-        self._color_preedit_spellcheck_string = color_string
+        self._settings_dict[
+            'colorpreeditspellcheckstring']['user'] = color_string
         if update_gsettings:
             self._gsettings.set_value(
                 'colorpreeditspellcheckstring',
@@ -5373,9 +5311,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._color_inline_completion:
-            return
-        self._color_inline_completion = mode
+        mode = bool(mode)
+        self._settings_dict['colorinlinecompletion']['user'] = mode
         self._color_inline_completion_rgba_colorbutton.set_sensitive(mode)
         if update_gsettings:
             self._gsettings.set_value(
@@ -5404,9 +5341,10 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', color_string, update_gsettings)
-        if color_string == self._color_inline_completion_string:
+        if not isinstance(color_string, str):
             return
-        self._color_inline_completion_string = color_string
+        self._settings_dict[
+            'colorinlinecompletionstring']['user'] = color_string
         if update_gsettings:
             self._gsettings.set_value(
                 'colorinlinecompletionstring',
@@ -5431,9 +5369,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._color_compose_preview:
-            return
-        self._color_compose_preview = mode
+        mode = bool(mode)
+        self._settings_dict['colorcomposepreview']['user'] = mode
         self._color_compose_preview_rgba_colorbutton.set_sensitive(mode)
         if update_gsettings:
             self._gsettings.set_value(
@@ -5462,9 +5399,10 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', color_string, update_gsettings)
-        if color_string == self._color_compose_preview_string:
+        if not isinstance(color_string, str):
             return
-        self._color_compose_preview_string = color_string
+        self._settings_dict[
+            'colorcomposepreviewstring']['user'] = color_string
         if update_gsettings:
             self._gsettings.set_value(
                 'colorcomposepreviewstring',
@@ -5489,9 +5427,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._color_userdb:
-            return
-        self._color_userdb = mode
+        mode = bool(mode)
+        self._settings_dict['coloruserdb']['user'] = mode
         self._color_userdb_rgba_colorbutton.set_sensitive(mode)
         if update_gsettings:
             self._gsettings.set_value(
@@ -5520,9 +5457,9 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', color_string, update_gsettings)
-        if color_string == self._color_userdb_string:
+        if not isinstance(color_string, str):
             return
-        self._color_userdb_string = color_string
+        self._settings_dict['coloruserdbstring']['user'] = color_string
         if update_gsettings:
             self._gsettings.set_value(
                 'coloruserdbstring',
@@ -5547,9 +5484,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._color_spellcheck:
-            return
-        self._color_spellcheck = mode
+        mode = bool(mode)
+        self._settings_dict['colorspellcheck']['user'] = mode
         self._color_spellcheck_rgba_colorbutton.set_sensitive(mode)
         if update_gsettings:
             self._gsettings.set_value(
@@ -5578,9 +5514,9 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', color_string, update_gsettings)
-        if color_string == self._color_spellcheck_string:
+        if not isinstance(color_string, str):
             return
-        self._color_spellcheck_string = color_string
+        self._settings_dict['colorspellcheckstring']['user'] = color_string
         if update_gsettings:
             self._gsettings.set_value(
                 'colorspellcheckstring',
@@ -5605,9 +5541,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._color_dictionary:
-            return
-        self._color_dictionary = mode
+        mode = bool(mode)
+        self._settings_dict['colordictionary']['user'] = mode
         self._color_dictionary_rgba_colorbutton.set_sensitive(mode)
         if update_gsettings:
             self._gsettings.set_value(
@@ -5636,9 +5571,9 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', color_string, update_gsettings)
-        if color_string == self._color_dictionary_string:
+        if not isinstance(color_string, str):
             return
-        self._color_dictionary_string = color_string
+        self._settings_dict['colordictionarystring']['user'] = color_string
         if update_gsettings:
             self._gsettings.set_value(
                 'colordictionarystring',
@@ -5662,9 +5597,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._label_userdb:
-            return
-        self._label_userdb = mode
+        mode = bool(mode)
+        self._settings_dict['labeluserdb']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'labeluserdb',
@@ -5687,16 +5621,15 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', label_string, update_gsettings)
-        if label_string == self._label_userdb_string:
+        if not isinstance(label_string, str):
             return
-        self._label_userdb_string = label_string
+        self._settings_dict['labeluserdbstring']['user'] = label_string
         if update_gsettings:
             self._gsettings.set_value(
                 'labeluserdbstring',
                 GLib.Variant.new_string(label_string))
         else:
-            self._label_userdb_entry.set_text(
-                self._label_userdb_string)
+            self._label_userdb_entry.set_text(label_string)
 
     def set_label_spellcheck(
             self,
@@ -5713,9 +5646,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._label_spellcheck:
-            return
-        self._label_spellcheck = mode
+        mode = bool(mode)
+        self._settings_dict['labelspellcheck']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'labelspellcheck',
@@ -5738,16 +5670,15 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', label_string, update_gsettings)
-        if label_string == self._label_spellcheck_string:
+        if not isinstance(label_string, str):
             return
-        self._label_spellcheck_string = label_string
+        self._settings_dict['labelspellcheckstring']['user'] = label_string
         if update_gsettings:
             self._gsettings.set_value(
                 'labelspellcheckstring',
                 GLib.Variant.new_string(label_string))
         else:
-            self._label_spellcheck_entry.set_text(
-                self._label_spellcheck_string)
+            self._label_spellcheck_entry.set_text(label_string)
 
     def set_label_dictionary(
             self,
@@ -5764,9 +5695,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._label_dictionary:
-            return
-        self._label_dictionary = mode
+        mode = bool(mode)
+        self._settings_dict['labeldictionary']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'labeldictionary',
@@ -5789,16 +5719,15 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', label_string, update_gsettings)
-        if label_string == self._label_dictionary_string:
+        if not isinstance(label_string, str):
             return
-        self._label_dictionary_string = label_string
+        self._settings_dict['labeldictionarystring']['user'] = label_string
         if update_gsettings:
             self._gsettings.set_value(
                 'labeldictionarystring',
                 GLib.Variant.new_string(label_string))
         else:
-            self._label_dictionary_entry.set_text(
-                self._label_dictionary_string)
+            self._label_dictionary_entry.set_text(label_string)
 
     def set_flag_dictionary(
             self,
@@ -5815,9 +5744,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._flag_dictionary:
-            return
-        self._flag_dictionary = mode
+        mode = bool(mode)
+        self._settings_dict['flagdictionary']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'flagdictionary',
@@ -5840,9 +5768,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._label_busy:
-            return
-        self._label_busy = mode
+        mode = bool(mode)
+        self._settings_dict['labelbusy']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'labelbusy',
@@ -5865,16 +5792,15 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', label_string, update_gsettings)
-        if label_string == self._label_busy_string:
+        if not isinstance(label_string, str):
             return
-        self._label_busy_string = label_string
+        self._settings_dict['labelbusystring']['user'] = label_string
         if update_gsettings:
             self._gsettings.set_value(
                 'labelbusystring',
                 GLib.Variant.new_string(label_string))
         else:
-            self._label_busy_entry.set_text(
-                self._label_busy_string)
+            self._label_busy_entry.set_text(label_string)
 
     def set_tab_enable(
             self,
@@ -5891,9 +5817,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._tab_enable:
-            return
-        self._tab_enable = mode
+        mode = bool(mode)
+        self._settings_dict['tabenable']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'tabenable',
@@ -5917,16 +5842,15 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._inline_completion:
-            return
-        self._inline_completion = mode
+        mode = int(mode)
+        self._settings_dict['inlinecompletion']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'inlinecompletion',
                 GLib.Variant.new_int32(mode))
         else:
             for i, item in enumerate(self._inline_completion_store):
-                if self._inline_completion == item[1]:
+                if mode == item[1]:
                     self._inline_completion_combobox.set_active(i)
 
     def set_record_mode(
@@ -5948,16 +5872,15 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._record_mode:
-            return
-        self._record_mode = mode
+        mode = int(mode)
+        self._settings_dict['recordmode']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'recordmode',
                 GLib.Variant.new_int32(mode))
         else:
             for i, item in enumerate(self._record_mode_store):
-                if self._record_mode == item[1]:
+                if mode == item[1]:
                     self._record_mode_combobox.set_active(i)
 
     def set_auto_capitalize(
@@ -5975,9 +5898,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._auto_capitalize:
-            return
-        self._auto_capitalize = mode
+        mode = bool(mode)
+        self._settings_dict['autocapitalize']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'autocapitalize',
@@ -6001,9 +5923,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._remember_last_used_preedit_ime:
-            return
-        self._remember_last_used_preedit_ime = mode
+        mode = bool(mode)
+        self._settings_dict['rememberlastusedpreeditime']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'rememberlastusedpreeditime',
@@ -6026,9 +5947,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._remember_input_mode:
-            return
-        self._remember_input_mode = mode
+        mode = bool(mode)
+        self._settings_dict['rememberinputmode']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'rememberinputmode',
@@ -6052,10 +5972,9 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', page_size, update_gsettings)
-        if page_size == self._page_size:
-            return
+        page_size = int(page_size)
         if 1 <= page_size <= 9:
-            self._page_size = page_size
+            self._settings_dict['pagesize']['user'] = page_size
             if update_gsettings:
                 self._gsettings.set_value(
                     'pagesize',
@@ -6079,10 +5998,10 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', milliseconds, update_gsettings)
-        if milliseconds == self._candidates_delay_milliseconds:
-            return
+        milliseconds = int(milliseconds)
         if 0 <= milliseconds <= itb_util.UINT32_MAX:
-            self._candidates_delay_milliseconds = milliseconds
+            self._settings_dict[
+                'candidatesdelaymilliseconds']['user'] = milliseconds
             if update_gsettings:
                 self._gsettings.set_value(
                     'candidatesdelaymilliseconds',
@@ -6107,17 +6026,16 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', orientation, update_gsettings)
-        if orientation == self._lookup_table_orientation:
-            return
+        orientation = int(orientation)
         if 0 <= orientation <= 2:
-            self._lookup_table_orientation = orientation
+            self._settings_dict['lookuptableorientation']['user'] = orientation
             if update_gsettings:
                 self._gsettings.set_value(
                     'lookuptableorientation',
                     GLib.Variant.new_int32(orientation))
             else:
                 for i, item in enumerate(self._lookup_table_orientation_store):
-                    if self._lookup_table_orientation == item[1]:
+                    if orientation == item[1]:
                         self._lookup_table_orientation_combobox.set_active(i)
 
     def set_preedit_underline(
@@ -6141,17 +6059,16 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', underline_mode, update_gsettings)
-        if underline_mode == self._preedit_underline:
-            return
+        underline_mode = int(underline_mode)
         if 0 <= underline_mode < IBus.AttrUnderline.ERROR:
-            self._preedit_underline = underline_mode
+            self._settings_dict['preeditunderline']['user'] = underline_mode
             if update_gsettings:
                 self._gsettings.set_value(
                     'preeditunderline',
                     GLib.Variant.new_int32(underline_mode))
             else:
                 for i, item in enumerate(self._preedit_underline_store):
-                    if self._preedit_underline == item[1]:
+                    if underline_mode == item[1]:
                         self._preedit_underline_combobox.set_active(i)
 
     def set_min_char_complete(
@@ -6171,10 +6088,9 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', min_char_complete, update_gsettings)
-        if min_char_complete == self._min_char_complete:
-            return
+        min_char_complete = int(min_char_complete)
         if 0 <= min_char_complete <= 9:
-            self._min_char_complete = min_char_complete
+            self._settings_dict['mincharcomplete']['user'] = min_char_complete
             if update_gsettings:
                 self._gsettings.set_value(
                     'mincharcomplete',
@@ -6198,7 +6114,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', error_sound, update_gsettings)
-        self._error_sound = error_sound
+        error_sound = bool(error_sound)
+        self._settings_dict['errorsound']['user'] = error_sound
         if update_gsettings:
             self._gsettings.set_value(
                 'errorsound',
@@ -6223,38 +6140,56 @@ class SetupUI(Gtk.Window): # type: ignore
             '(%s, update_gsettings = %s)', path, update_gsettings)
         if not isinstance(path, str):
             return
-        self._error_sound_file = path
+        self._settings_dict['errorsoundfile']['user'] = path
         if update_gsettings:
             self._gsettings.set_value(
                 'errorsoundfile',
                 GLib.Variant.new_string(path))
         else:
             self._error_sound_file_button_label.set_text(path)
-        path = os.path.expanduser(path)
-        if not IMPORT_SIMPLEAUDIO_SUCCESSFUL:
-            LOGGER.info(
-                'No error sound because python3-simpleaudio is not available.')
-        else:
-            if not os.path.isfile(path):
-                LOGGER.info('Error sound file %s does not exist.', path)
-            elif not os.access(path, os.R_OK):
-                LOGGER.info('Error sound file %s not readable.', path)
-            else:
-                try:
-                    LOGGER.info(
-                        'Trying to initialize and play error sound from %s',
-                        path)
-                    dummy = (
-                        simpleaudio.WaveObject.from_wave_file(path).play())
-                    LOGGER.info('Error sound could be initialized.')
-                except (FileNotFoundError, PermissionError):
-                    LOGGER.exception(
-                        'Initializing error sound object failed.'
-                        'File not found or no read permissions.')
-                except Exception: # pylint: disable=broad-except
-                    LOGGER.exception(
-                        'Initializing error sound object failed '
-                        'for unknown reasons.')
+        error_sound_object = itb_sound.SoundObject(
+            os.path.expanduser(self._settings_dict['errorsoundfile']['user']),
+            audio_backend=self._settings_dict['soundbackend']['user'])
+        if error_sound_object:
+            try:
+                error_sound_object.play()
+                error_sound_object.wait_done()
+            except Exception as error: # pylint: disable=broad-except
+                LOGGER.exception('Playing error sound failed: %s: %s',
+                                 error.__class__.__name__, error)
+
+    def set_sound_backend(
+            self,
+            sound_backend: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the sound backend to use
+
+        :param sound_backend: The name of sound backend to use
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the dconf key changed
+                                 to avoid endless loops when the dconf
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', sound_backend, update_gsettings)
+        if not isinstance(sound_backend, str):
+            return
+        self._settings_dict['soundbackend']['user'] = sound_backend
+        if update_gsettings:
+            self._gsettings.set_value(
+                'soundbackend',
+                GLib.Variant.new_string(sound_backend))
+        error_sound_object = itb_sound.SoundObject(
+            os.path.expanduser(self._settings_dict['errorsoundfile']['user']),
+            audio_backend=self._settings_dict['soundbackend']['user'])
+        if error_sound_object:
+            try:
+                error_sound_object.play()
+                error_sound_object.wait_done()
+            except Exception as error: # pylint: disable=broad-except
+                LOGGER.exception('Playing error sound failed: %s: %s',
+                                 error.__class__.__name__, error)
 
     def set_debug_level(
             self,
@@ -6272,10 +6207,9 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', debug_level, update_gsettings)
-        if debug_level == self._debug_level:
-            return
+        debug_level = int(debug_level)
         if 0 <= debug_level <= 255:
-            self._debug_level = debug_level
+            self._settings_dict['debuglevel']['user'] = debug_level
             if update_gsettings:
                 self._gsettings.set_value(
                     'debuglevel',
@@ -6300,9 +6234,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._show_number_of_candidates:
-            return
-        self._show_number_of_candidates = mode
+        mode = bool(mode)
+        self._settings_dict['shownumberofcandidates']['user'] = mode
         self._show_number_of_candidates_checkbutton.set_active(mode)
         if update_gsettings:
             self._gsettings.set_value(
@@ -6330,9 +6263,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._show_status_info_in_auxiliary_text:
-            return
-        self._show_status_info_in_auxiliary_text = mode
+        mode = bool(mode)
+        self._settings_dict['showstatusinfoinaux']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'showstatusinfoinaux',
@@ -6357,9 +6289,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._preedit_style_only_when_lookup:
-            return
-        self._preedit_style_only_when_lookup = mode
+        mode = bool(mode)
+        self._settings_dict['preeditstyleonlywhenlookup']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'preeditstyleonlywhenlookup',
@@ -6382,16 +6313,15 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._auto_select_candidate:
-            return
-        self._auto_select_candidate = mode
+        mode = int(mode)
+        self._settings_dict['autoselectcandidate']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'autoselectcandidate',
                 GLib.Variant.new_int32(mode))
         else:
             for i, item in enumerate(self._auto_select_candidate_store):
-                if self._auto_select_candidate == item[1]:
+                if mode == item[1]:
                     self._auto_select_candidate_combobox.set_active(i)
 
     def set_add_space_on_commit(
@@ -6409,9 +6339,8 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         LOGGER.info(
             '(%s, update_gsettings = %s)', mode, update_gsettings)
-        if mode == self._add_space_on_commit:
-            return
-        self._add_space_on_commit = mode
+        mode = bool(mode)
+        self._settings_dict['addspaceoncommit']['user'] = mode
         if update_gsettings:
             self._gsettings.set_value(
                 'addspaceoncommit',
@@ -6513,7 +6442,7 @@ class SetupUI(Gtk.Window): # type: ignore
         LOGGER.debug('autosettings=%s', autosettings)
         if not isinstance(autosettings, list):
             return
-        self._autosettings = autosettings
+        self._settings_dict['autosettings']['user'] = autosettings
         if update_gsettings:
             self._fill_autosettings_treeview()
             variant_array = GLib.Variant.new_array(GLib.VariantType('as'), [
@@ -6545,36 +6474,37 @@ class SetupUI(Gtk.Window): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        new_keybindings = {}
-        # Get the default settings:
-        new_keybindings = itb_util.variant_to_value(
-            self._gsettings.get_default_value('keybindings'))
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', keybindings, update_gsettings)
+        if not isinstance(keybindings, dict):
+            return
+        keybindings = copy.deepcopy(keybindings)
+        user_keybindings = self._settings_dict['keybindings']['user']
         # Update the default settings with the possibly changed settings:
-        itb_util.dict_update_existing_keys(new_keybindings, keybindings)
-        self._keybindings = new_keybindings
+        itb_util.dict_update_existing_keys(user_keybindings, keybindings)
         # update the tree model
         model = self._keybindings_treeview_model
         iterator = model.get_iter_first()
         while iterator:
-            for command in self._keybindings:
+            for command in user_keybindings:
                 if model.get_value(iterator, 0) == command:
                     model.set_value(iterator, 1,
-                                    repr(self._keybindings[command]))
+                                    repr(user_keybindings[command]))
             iterator = model.iter_next(iterator)
         # Show the checkbutton in the options tab to choose whether to
         # remember the input mode only when there is a keybinding to
         # toggle the input mode:
-        if self._keybindings['toggle_input_mode_on_off']:
+        if user_keybindings['toggle_input_mode_on_off']:
             self._remember_input_mode_checkbutton.show()
         else:
             self._remember_input_mode_checkbutton.hide()
         if update_gsettings:
             variant_dict = GLib.VariantDict(GLib.Variant('a{sv}', {}))
-            for command in sorted(self._keybindings):
+            for command in sorted(user_keybindings):
                 variant_array = GLib.Variant.new_array(
                     GLib.VariantType('s'),
                     [GLib.Variant.new_string(x)
-                     for x in self._keybindings[command]])
+                     for x in user_keybindings[command]])
                 variant_dict.insert_value(command, variant_array)
             self._gsettings.set_value(
                 'keybindings',
@@ -6687,5 +6617,7 @@ if __name__ == '__main__':
         DIALOG.destroy()
         sys.exit(1)
     M17N_DB_INFO = itb_util.M17nDbInfo()
-    SETUP_UI = SetupUI()
+    ENGINE_NAME = _ARGS.engine_name
+    LOGGER.info('engine name “%s”', ENGINE_NAME)
+    SETUP_UI = SetupUI(engine_name=_ARGS.engine_name)
     Gtk.main()

@@ -37,6 +37,7 @@ require_version('GLib', '2.0')
 from gi.repository import GLib
 # pylint: enable=wrong-import-position
 
+import itb_util
 import itb_version
 
 LOGGER = logging.getLogger('ibus-typing-booster')
@@ -250,46 +251,93 @@ def write_xml() -> None:
     '''
     Writes the XML to describe the engine(s) to standard output.
     '''
+    m17n_db_info = itb_util.M17nDbInfo()
+    m17n_input_methods = set(m17n_db_info.get_imes())
+    m17n_input_methods_skip = set([
+        'NoIME',
+    ])
+    # Input methods offering multiple candidates are not yet supported
+    # by typing-booster:
+    m17n_input_methods_multiple_candidates = set([
+        'ja-anthy',
+        't-lsymbol',
+        'ml-swanalekha',
+        'vi-han',
+        'vi-nomtelex',
+        'vi-nomvni',
+        'vi-tcvn',
+        'vi-telex',
+        'vi-viqr',
+        'vi-vni',
+        'zh-cangjie',
+        'zh-pinyin-vi',
+        'zh-pinyin',
+        'zh-py',
+        'zh-py-b5',
+        'zh-py-gb',
+        'zh-quick',
+        'zh-tonepy',
+        'zh-tonepy-gb',
+        'zh-tonepy-b5',
+        'zh-zhuyin',
+    ])
+    supported_input_methods = sorted(
+        (m17n_input_methods - m17n_input_methods_skip)
+        - m17n_input_methods_multiple_candidates
+    ) + ['typing-booster']
+    # supported_input_methods = ['typing-booster']
     egs = Element('engines') # pylint: disable=possibly-used-before-assignment
 
-    for language in ('t',):
+    for ime in supported_input_methods:
         _engine = SubElement( # pylint: disable=possibly-used-before-assignment
             egs, 'engine')
 
+        name = 'typing-booster'
+        longname = 'Typing Booster'
+        language = 't'
+        license = 'GPL'
+        author = ('Mike FABIAN <mfabian@redhat.com>'
+                  ', Anish Patil <anish.developer@gmail.com>')
+        layout = 'default'
+        icon = os.path.join(ICON_DIR, 'ibus-typing-booster.svg')
+        description = 'A completion input method to speedup typing.'
+        symbol = '🚀'
+        setup = SETUP_TOOL
+        icon_prop_key = 'InputMode'
+        if ime != 'typing-booster':
+            m17n_lang, m17n_name = ime.split('-', maxsplit=1)
+            name = f'tb:{m17n_lang}:{m17n_name}'
+            longname = f'{ime} (Typing Booster)'
+            language = m17n_lang
+            icon =  m17n_db_info.get_icon(ime)
+            description = m17n_db_info.get_description(ime)
+            symbol = m17n_lang
+            if symbol == 't':
+                symbol = '⌨️'
+            setup = SETUP_TOOL + f' --engine-name {name}'
+
         _name = SubElement(_engine, 'name')
-        _name.text = 'typing-booster'
-
+        _name.text = name
         _longname = SubElement(_engine, 'longname')
-        _longname.text = 'Typing Booster'
-
+        _longname.text = longname
         _language = SubElement(_engine, 'language')
         _language.text = language
-
         _license = SubElement(_engine, 'license')
-        _license.text = 'GPL'
-
+        _license.text = license
         _author = SubElement(_engine, 'author')
-        _author.text = (
-            'Mike FABIAN <mfabian@redhat.com>'
-            + ', Anish Patil <anish.developer@gmail.com>')
-
+        _author.text = author
         _icon = SubElement(_engine, 'icon')
-        _icon.text = os.path.join(ICON_DIR, 'ibus-typing-booster.svg')
-
+        _icon.text = icon
         _layout = SubElement(_engine, 'layout')
-        _layout.text = 'default'
-
+        _layout.text = layout
         _desc = SubElement(_engine, 'description')
-        _desc.text = 'A completion input method to speedup typing.'
-
+        _desc.text = description
         _symbol = SubElement(_engine, 'symbol')
-        _symbol.text = '🚀'
-
+        _symbol.text = symbol
         _setup = SubElement(_engine, 'setup')
-        _setup.text = SETUP_TOOL
-
+        _setup.text = setup
         _icon_prop_key = SubElement(_engine, 'icon_prop_key')
-        _icon_prop_key.text = 'InputMode'
+        _icon_prop_key.text = icon_prop_key
 
     # now format the xmlout pretty
     indent(egs)

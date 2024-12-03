@@ -136,8 +136,9 @@ class ItbTestCase(unittest.TestCase):
         self.database = tabsqlitedb.TabSqliteDb(user_db_file=':memory:')
         self.engine = hunspell_table.TypingBoosterEngine(
             self.bus,
-            '/com/redhat/IBus/engines/table/typing_booster/engine/0',
+            '/com/redhat/IBus/engines/typing_booster/typing_booster/engine/0',
             self.database,
+            engine_name='typing-booster',
             unit_test=True)
         self.backup_original_settings()
         self.set_default_settings()
