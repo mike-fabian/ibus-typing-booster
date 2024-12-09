@@ -454,20 +454,6 @@
         list.
       </description>
     </key>
-    <key name="usedigitsasselectkeys" type="b">
-      <default>true</default>
-      <summary>Use digits as select keys</summary>
-      <description>
-        Use the regular digits 1-9 as select keys. If that option is
-        on, numbers can only by typed while no suggestions are
-        shown. Therefore, completions for numbers cannot be
-        suggested. And typing words containing numbers, like “A4” is
-        more difficult as typing “4” would select the 4th
-        suggestion. On the other hand, selecting suggestions using 1-9
-        is easier then using the always enabled select keys F1-F9 as
-        the latter keys are farther away from the fingers.
-      </description>
-    </key>
     <key name="autoselectcandidate" type="i">
       <default>0</default>
       <summary>Automatically select the best candidate</summary>

@@ -144,7 +144,6 @@ export XDG_DATA_DIRS=/tmp
 eval $(dbus-launch --sh-syntax)
 dconf dump /
 dconf write /org/freedesktop/ibus/engine/typing-booster/offtherecord false
-dconf write /org/freedesktop/ibus/engine/typing-booster/usedigitsasselectkeys true
 dconf write /org/freedesktop/ibus/engine/typing-booster/addspaceoncommit true
 dconf write /org/freedesktop/ibus/engine/typing-booster/tabenable false
 dconf write /org/freedesktop/ibus/engine/typing-booster/inputmethod "'NoIME'"
