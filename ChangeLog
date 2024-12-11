@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 16 Dez 2024 Release 2.27.0
+* Commit early like ibus-m17n does if the engine is restricted to emulate ibus-m17n
+* Hide “emoji prediction mode” and “off the record mode” property menus by default for the restricted engines emulating ibus-m17n
+* Offer additional engines which do simple ibus-m17n emulation by default (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/570)
+* Fix crash when changing the sound file with the setup tool (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/569)
+* Update emoji annotations from CLDR
+* Translation update from Weblate (de 100%, es 83.9%, fr 100%, ja 99.5%, ka 100%, kab 75.9%, nl 95.1%, pl 99.5%, pt 89.1%, pt_BR 81.5%, sv 100%, tr 100%, uk 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 02 Dez 2024 Release 2.26.12
 * Support autosettings for values of type uint32, int64, uint64, and double (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/566)
 * Improve emoji_font_fallback_needed() **always** ignore variation selectors when checking whether fallback is needed (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/565)
