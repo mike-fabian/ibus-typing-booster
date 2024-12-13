@@ -945,6 +945,29 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     'NoIME')
         self._update_transliterated_strings()
 
+    def _is_restricted_engine(self) -> bool:
+        '''Checks wether the engine is restricted
+
+        “Restricted” means the options for this engine are set
+        in a way that no lookups are possible and nothing is recorded
+        in the user database.
+
+        When an engine is restricted in this way, displaying some
+        menus like “Unicode symbols and emoji predictions” and “Off
+        the record mode” is useless and can be hidden in the panel
+        menus and in the floating toolbar.
+
+        Also, when no lookups in the user database or the dictionaries
+        are possible anyway, it is useless to keep input in the preedit
+        longer than absolutely necessary and it is better to commit as
+        early as possible, just like ibus-m17n does.
+        '''
+        return bool(self._tab_enable
+                    and self._off_the_record
+                    and len(self._current_imes) == 1
+                    and self._dictionary_names == ['None']
+                    and not self._keybindings['enable_lookup'])
+
     def is_empty(self) -> bool:
         '''Checks whether the preëdit is empty
 
@@ -2163,8 +2186,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 symbol = sub_properties_dict[prop]['symbol']
                 label = menu['label']
                 tooltip = f'{menu["tooltip"]}\n{menu["shortcut_hint"]}'
-        visible = bool(menu_key != 'InputMode'
-                       or self._keybindings['toggle_input_mode_on_off'])
+        visible = True
+        if menu_key == 'InputMode':
+            visible = bool(self._keybindings['toggle_input_mode_on_off'])
+        if menu_key in ('EmojiPredictionMode', 'OffTheRecordMode'):
+            visible = not self._is_restricted_engine()
         self._init_or_update_sub_properties(
             menu_key, sub_properties_dict, current_mode=current_mode)
         if menu_key not in self._prop_dict: # initialize property
@@ -2204,8 +2230,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._sub_props_dict[menu_key] = IBus.PropList()
         else:
             update = True
-        visible = bool(menu_key != 'InputMode'
-                       or self._keybindings['toggle_input_mode_on_off'])
+        visible = True
+        if menu_key == 'InputMode':
+            visible = bool(self._keybindings['toggle_input_mode_on_off'])
+        if menu_key in ('EmojiPredictionMode', 'OffTheRecordMode'):
+            visible = not self._is_restricted_engine()
         for mode in sorted(modes, key=lambda x: (int(modes[x]['number']))):
             if modes[mode]['number'] == int(current_mode):
                 state = IBus.PropState.CHECKED
@@ -2276,13 +2305,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self.input_mode_menu,
                 self._input_mode)
 
-        self._init_or_update_property_menu(
-            self.emoji_prediction_mode_menu,
-            self._emoji_predictions)
-
-        self._init_or_update_property_menu(
-            self.off_the_record_mode_menu,
-            self._off_the_record)
+        if not self._is_restricted_engine():
+            # These two menus are not useful for the restricted
+            # engines emulating ibus-m17n:
+            self._init_or_update_property_menu(
+                self.emoji_prediction_mode_menu,
+                self._emoji_predictions)
+            self._init_or_update_property_menu(
+                self.off_the_record_mode_menu,
+                self._off_the_record)
 
         self._init_or_update_property_menu_dictionary(
             self.dictionary_menu, current_mode=0)
