@@ -7551,6 +7551,26 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._commit_string(
                     input_phrase + ' ', input_phrase=input_phrase)
                 self._clear_input()
+            if (not self.is_empty()
+                and not self._typed_compose_sequence
+                and self._is_restricted_engine()):
+                (committed, committed_index, preedit) = self._transliterators[
+                    self.get_current_imes()[0]].transliterate_parts(
+                        self._typed_string, ascii_digits=self._ascii_digits)
+                if DEBUG_LEVEL > 1:
+                    LOGGER.debug(
+                        'Maybe commit early: '
+                        'committed=“%s” committed_index=%s preedit=%s'
+                        'self._typed_string=%s '
+                        'self._typed_string_cursor=%s',
+                        committed, committed_index, preedit,
+                        self._typed_string, self._typed_string_cursor)
+                if committed and committed_index:
+                    super().commit_text(
+                        IBus.Text.new_from_string(committed))
+                    self._typed_string = self._typed_string[committed_index:]
+                    self._typed_string_cursor = len(self._typed_string)
+                    self._update_transliterated_strings()
             self._update_ui()
             return True
 
