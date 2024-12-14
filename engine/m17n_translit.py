@@ -950,31 +950,23 @@ class Transliterator:
     'नमस्ते'
 
     >>> trans.transliterate_parts(list('n'))
-    ('', 'न्')
-
+    ('', 0, 'न्')
     >>> trans.transliterate_parts(list('n '))
-    ('न ', '')
-
+    ('न ', 2, '')
     >>> trans.transliterate_parts(list('na'))
-    ('', 'न')
-
+    ('', 0, 'न')
     >>> trans.transliterate_parts(list('nam'))
-    ('न', 'म्')
-
+    ('न', 2, 'म्')
     >>> trans.transliterate_parts(list('nama'))
-    ('न', 'म')
-
+    ('न', 2, 'म')
     >>> trans.transliterate_parts(list('namas'))
-    ('नम', 'स्')
-
+    ('नम', 4, 'स्')
     >>> trans.transliterate_parts(list('namast'))
-    ('नम', 'स्त्')
-
+    ('नम', 4, 'स्त्')
     >>> trans.transliterate_parts(list('namaste'))
-    ('नम', 'स्ते')
-
+    ('नम', 4, 'स्ते')
     >>> trans.transliterate_parts(list('namaste '))
-    ('नमस्ते ', '')
+    ('नमस्ते ', 8, '')
 
     >>> trans.transliterate(list('. '))
     '। '
@@ -1021,6 +1013,31 @@ class Transliterator:
     >>> trans.transliterate(list('vksIal kjSka '))
     'ඩනිෂ්ක නවීන් '
 
+    >>> trans = Transliterator('t-latn-post')
+    >>> trans.transliterate_parts(list('u'))
+    ('', 0, 'u')
+    >>> trans.transliterate_parts(list('u"'))
+    ('', 0, 'ü')
+    >>> trans.transliterate_parts(list('u""'))
+    ('u"', 3, '')
+    >>> trans.transliterate_parts(list('u"u'))
+    ('ü', 2, 'u')
+    >>> trans.transliterate_parts(list('üu"u'))
+    ('üü', 3, 'u')
+
+    >>> trans = Transliterator('t-rfc1345')
+    >>> trans.transliterate_parts(list('&'))
+    ('', 0, '&')
+    >>> trans.transliterate_parts(list('&C'))
+    ('', 0, '&C')
+    >>> trans.transliterate_parts(list('&Co'))
+    ('©', 3, '')
+    >>> trans.transliterate_parts(list('&f'))
+    ('', 0, '&f')
+    >>> trans.transliterate_parts(list('&ff'))
+    ('', 0, 'ﬀ')
+    >>> trans.transliterate_parts(list('&ffi'))
+    ('ﬃ', 4, '')
     '''
     def __init__(self, ime: str) -> None:
         '''Initialize the input method to use for the transliteration
@@ -1057,7 +1074,7 @@ class Transliterator:
     def transliterate_parts(
             self,
             msymbol_list: Iterable[str],
-            ascii_digits: bool = False) -> Tuple[str, str]:
+            ascii_digits: bool = False) -> Tuple[str, int, str]:
         '''Transliterate a list of Msymbol names
 
         :param msymbol_list: A list of strings which are interpreted
@@ -1072,9 +1089,10 @@ class Transliterator:
         if not isinstance(msymbol_list, list):
             raise ValueError('Argument of transliterate() must be a list.')
         if self._dummy:
-            return (''.join(msymbol_list), '')
+            return (''.join(msymbol_list), 0, '')
         libm17n__minput_reset_ic(self._ic) # type: ignore
         committed = ''
+        committed_index = 0
         preedit = ''
         for index, symbol in enumerate(msymbol_list):
             if len(symbol) == 1 and not itb_util.is_ascii(symbol):
@@ -1093,8 +1111,10 @@ class Transliterator:
                     self._ic, _symbol, ctypes.c_void_p(None), _mt)
                 if libm17n__mtext_len(_mt) > 0: # type: ignore
                     committed += mtext_to_string(_mt)
+                    committed_index = index
                 if retval:
                     committed += msymbol_list[index]
+                    committed_index = index + 1
         try:
             if (self._ic.contents.preedit_changed
                 and
@@ -1128,9 +1148,12 @@ class Transliterator:
         _symbol = libm17n__msymbol(b'nil') # type: ignore
         _retval = libm17n__minput_filter( # type: ignore
             self._ic, _symbol, ctypes.c_void_p(None))
+        if committed and not preedit:
+            committed_index = len(msymbol_list)
         if not ascii_digits:
-            return (committed, preedit)
+            return (committed, committed_index, preedit)
         return (convert_digits_to_ascii(committed),
+                committed_index,
                 convert_digits_to_ascii(preedit))
 
     def transliterate(self, msymbol_list: Iterable[str], ascii_digits: bool = False) -> str:
@@ -1145,7 +1168,8 @@ class Transliterator:
                              to ASCII digits
         :return: The transliteration in one string
         '''
-        (committed, preedit) = self.transliterate_parts(msymbol_list, ascii_digits)
+        (committed, committed_index, preedit) = self.transliterate_parts(
+            msymbol_list, ascii_digits)
         return committed + preedit
 
     def get_variables(self) -> List[Tuple[str, str, str]]:
