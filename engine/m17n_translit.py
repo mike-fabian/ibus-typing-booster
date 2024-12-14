@@ -27,12 +27,15 @@ from typing import Iterable
 from typing import Any
 import sys
 import ctypes
+import logging
 from gi import require_version # type: ignore
 # pylint: disable=wrong-import-position
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
 # pylint: enable=wrong-import-position
 import itb_util
+
+LOGGER = logging.getLogger('ibus-typing-booster')
 
 # pylint: disable=invalid-name
 # pylint: disable=too-few-public-methods
@@ -1345,6 +1348,9 @@ class Transliterator:
         return
 
 if __name__ == "__main__":
+    LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
+    LOGGER.setLevel(logging.DEBUG)
+    LOGGER.addHandler(LOG_HANDLER)
     import doctest
     (FAILED, _ATTEMPTED, *_EXTRAS) = doctest.testmod()
     sys.exit(FAILED)
