@@ -1,5 +1,5 @@
 # Marco Aurélio Krause <ouesten@me.com>, 2016. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2021, 2022.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2021, 2022, 2024.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2019, 2020, 2021.
 msgid ""
 msgstr ""
@@ -7,7 +7,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-12-13 11:32+0100\n"
-"PO-Revision-Date: 2022-02-25 18:38+0000\n"
+"PO-Revision-Date: 2024-12-14 16:41+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/pt_BR/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 5.8.4\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -871,14 +871,10 @@ msgid "Play sound file on error"
 msgstr "Reproduzir arquivo de som ao ocorrer erro"
 
 #: setup/main.py:922
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for a suggestion shown "
-#| "inline."
 msgid "Here you can choose whether a sound file is played if an error occurs."
 msgstr ""
-"Aqui você pode escolher se uma cor personalizada é usada para uma sugestão "
-"mostrada em linha."
+"Aqui você pode escolher se um arquivo de som é reproduzido se ocorrer um "
+"erro."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and

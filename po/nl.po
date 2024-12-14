@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
-# Mike FABIAN <mfabian@redhat.com>, 2019, 2021.
+# Mike FABIAN <mfabian@redhat.com>, 2019, 2021, 2024.
 # Geert Warrink <geert.warrink@onsnet.nu>, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
@@ -9,16 +9,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-12-13 11:32+0100\n"
-"PO-Revision-Date: 2023-06-29 12:18+0000\n"
-"Last-Translator: Geert Warrink <geert.warrink@onsnet.nu>\n"
-"Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/nl/>\n"
+"PO-Revision-Date: 2024-12-14 16:41+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Language-Team: Dutch <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18.1\n"
+"X-Generator: Weblate 5.8.4\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -881,14 +881,10 @@ msgid "Play sound file on error"
 msgstr "Geluidsbestand afspelen bij fout"
 
 #: setup/main.py:922
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for a suggestion shown "
-#| "inline."
 msgid "Here you can choose whether a sound file is played if an error occurs."
 msgstr ""
-"Hier kun je aangeven of je een aangepaste kleur wilt gebruiken voor "
-"automatische aanvullingen."
+"Hier kun je kiezen of er een geluidsbestand wordt afgespeeld als er een fout "
+"optreedt."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
