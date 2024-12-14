@@ -146,6 +146,8 @@ class ItbTestCase(unittest.TestCase):
     def tearDown(self) -> None:
         self.restore_original_settings()
         del self.engine
+        if self.database is not None:
+            self.database.database.close()
         # Remove the patches from the IBus stuff:
         self.engine_patcher.stop()
         self.lookup_table_patcher.stop()
