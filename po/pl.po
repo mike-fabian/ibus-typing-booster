@@ -11,17 +11,17 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-12-13 11:32+0100\n"
-"PO-Revision-Date: 2024-10-09 15:15+0000\n"
+"PO-Revision-Date: 2024-12-15 13:33+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/pl/>\n"
+"Language-Team: Polish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.7.2\n"
+"X-Generator: Weblate 5.8.4\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -103,27 +103,21 @@ msgstr "Wersja emoji:"
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
 #: engine/emoji_picker.py:730
-#, fuzzy
-#| msgid "Emoji Version:"
 msgid "Emoji properties:"
-msgstr "Wersja emoji:"
+msgstr "Właściwości emoji:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
 #: engine/emoji_picker.py:736
-#, fuzzy
-#| msgid "Unicode categories"
 msgid "Unicode category:"
-msgstr "Kategorie unikodu"
+msgstr "Kategoria unikodu:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
 #: engine/emoji_picker.py:743
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Unicode block:"
-msgstr "Wersja unikodu:"
+msgstr "Blok unikodu:"
 
 #: engine/emoji_picker.py:762 engine/emoji_picker.py:1903
 msgid "Left click to copy"
@@ -885,14 +879,9 @@ msgid "Play sound file on error"
 msgstr "Odtwarzanie pliku z dźwiękiem po błędzie"
 
 #: setup/main.py:922
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for a suggestion shown "
-#| "inline."
 msgid "Here you can choose whether a sound file is played if an error occurs."
 msgstr ""
-"Tutaj można wybrać, czy niestandardowy kolor jest używany dla sugestii "
-"wyświetlanej w wierszu."
+"Tutaj można wybrać, czy odtwarzać plik dźwiękowy w razie wystąpienia błędu."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -1159,10 +1148,8 @@ msgstr "Pionowo"
 #. the system needs to be idle after pressing a key before
 #. candidates are displayed
 #: setup/main.py:1629
-#, fuzzy
-#| msgid "Candidate window page size:"
 msgid "Candidate window delay in milliseconds:"
-msgstr "Rozmiar strony okna kandydata:"
+msgstr "Opóźnienie okna kandydata w milisekundach:"
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
@@ -1170,6 +1157,8 @@ msgstr "Rozmiar strony okna kandydata:"
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
 msgstr ""
+"Jak długo czekać po ostatnim naciśnięciu klawisza przed wyświetleniem "
+"kandydatów."
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
