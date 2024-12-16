@@ -9,16 +9,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-12-13 11:32+0100\n"
-"PO-Revision-Date: 2024-10-23 08:24+0000\n"
+"PO-Revision-Date: 2024-12-16 11:14+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
-"Language-Team: Georgian <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ka/>\n"
+"Language-Team: Georgian <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ka/>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.7.2\n"
+"X-Generator: Weblate 5.8.4\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -877,14 +877,10 @@ msgid "Play sound file on error"
 msgstr "შეცდომისას ხმოვანი ფაილის დაკვრა"
 
 #: setup/main.py:922
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for a suggestion shown "
-#| "inline."
 msgid "Here you can choose whether a sound file is played if an error occurs."
 msgstr ""
-"აქ შეგიძლიათ აირჩიოთ, იქნება ხელით მითითებული ფერი გამოყენებული შიდა "
-"დასრულებისთვის, თუ არა."
+"აქ შეგიძლიათ აირჩიოთ, მოხდება თუ არა ხმოვანი ფაილის დაკვრა შეცდომის "
+"აღმოჩენის შემთხვევაში."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
