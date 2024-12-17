@@ -88,8 +88,6 @@ __all__ = (
 _: Callable[[str], str] = lambda a: dgettext("ibus-typing-booster", a)
 N_: Callable[[str], str] = lambda a: a
 
-DEBUG_LEVEL = int(0)
-
 # ☐ U+2610 BALLOT BOX
 MODE_OFF_SYMBOL = '☐'
 # ☑ U+2611 BALLOT BOX WITH CHECK
@@ -118,18 +116,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             database: Any, # tabsqlitedb.TabSqliteDb
             engine_name: str = 'typing-booster',
             unit_test: bool = False) -> None:
-        global DEBUG_LEVEL # pylint: disable=global-statement
-        try:
-            DEBUG_LEVEL = int(str(os.getenv(
-                'IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
-        except (TypeError, ValueError):
-            DEBUG_LEVEL = int(0)
-        if DEBUG_LEVEL > 1:
-            LOGGER.debug(
-                'TypingBoosterEngine.__init__'
-                '(bus=%s, obj_path=%s, database=%s, '
-                'engine_name=%s, unit_test=%s)',
-                bus, obj_path, database, engine_name, unit_test)
+        LOGGER.info(
+            'TypingBoosterEngine.__init__'
+            '(bus=%s, obj_path=%s, database=%s, '
+            'engine_name=%s, unit_test=%s)',
+            bus, obj_path, database, engine_name, unit_test)
         LOGGER.info('ibus version = %s', '.'.join(map(str, IBUS_VERSION)))
         if hasattr(IBus.Engine.props, 'has_focus_id'):
             super().__init__(
@@ -248,8 +239,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         self._debug_level: int = self._settings_dict['debuglevel']['user']
         self._debug_level = max(self._debug_level, 0)
-        self._debug_level = min(self._debug_level, 255)
-        DEBUG_LEVEL = self._debug_level
+        LOGGER.info('self._debug_level=%s', self._debug_level)
 
         self._page_size: int = self._settings_dict['pagesize']['user']
         self._page_size = max(self._page_size, 1)
@@ -441,12 +431,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._dictionary_names)
 
         if  self._emoji_predictions:
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Instantiate EmojiMatcher(languages = %s',
                              self._dictionary_names)
             self.emoji_matcher = itb_emoji.EmojiMatcher(
                 languages=self._dictionary_names)
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('EmojiMatcher() instantiated.')
         else:
             self.emoji_matcher = None
@@ -930,7 +920,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         for ime in self._current_imes:
             # using m17n transliteration
             try:
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug(
                         'instantiating Transliterator(%(ime)s)',
                         {'ime': ime})
@@ -997,7 +987,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
     def _insert_string_at_cursor(self, string_to_insert: List[str]) -> None:
         '''Insert typed string at cursor position'''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('string_to_insert=%s', string_to_insert)
             LOGGER.debug('self._typed_string=%s', self._typed_string)
             LOGGER.debug('self._typed_string_cursor=%s',
@@ -1244,7 +1234,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # paragraphs, this uses far too much space in the lookup
         # table.
         phrase = phrase.replace('\n', '↩')
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             # Show frequency information for debugging
             phrase += ' ' + str(user_freq)
             attrs.append(IBus.attr_foreground_new(
@@ -1267,7 +1257,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Update the list of candidates and fill the lookup table with the
         candidates
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('self._typed_string=%s', self._typed_string)
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
@@ -1556,7 +1546,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         want the phrase to be suggested wich such a high priority, no
         matter whether it is a system phrase or a user defined phrase.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 'Removing candidate with index=%s from user database', index)
         if not self._set_lookup_table_cursor_pos_in_current_page(index):
@@ -1567,7 +1557,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         index = self._lookup_table.get_cursor_pos()
         if 0 <= index <= len(self._candidates_case_mode_orig):
             case_mode_orig_phrase = self._candidates_case_mode_orig[index][0]
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Removing phrase with original case mode “%s”',
                              case_mode_orig_phrase)
                 self.database.remove_phrase(
@@ -1591,7 +1581,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # database.
             stripped_phrase = itb_util.lstrip_token(phrase)
             if stripped_phrase:
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug('Removing “%s”', stripped_phrase)
                 self.database.remove_phrase(phrase=stripped_phrase,
                                             commit=True)
@@ -1601,7 +1591,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # database for whatever reason (It could be because the list
             # of prefixes to strip from tokens has changed compared to a
             # an older release of ibus-typing-booster).
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Removing “%s”', phrase)
             self.database.remove_phrase(phrase=phrase, commit=True)
         return True
@@ -1634,7 +1624,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Pushes a word on the context stack which remembers the last three
         words typed.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 'context=“%s” “%s” “%s” push=“%s”',
                 self._ppp_phrase, self._pp_phrase, self._p_phrase, phrase)
@@ -1646,7 +1636,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
     def clear_context(self) -> None:
         '''Clears the context stack which remembers the last two words typed
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 'context=“%s” “%s” “%s”',
                 self._ppp_phrase, self._pp_phrase, self._p_phrase)
@@ -1684,7 +1674,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if ime in ['ko-romaja', 'ko-han2']:
                 self._transliterated_strings[ime] = unicodedata.normalize(
                     'NFKD', self._transliterated_strings[ime])
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('self._typed_string=%s', self._typed_string)
             LOGGER.debug(
                 'self._transliterated_strings=%s',
@@ -1805,7 +1795,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 0:
+        if self._debug_level > 0:
             LOGGER.debug('autosettings=%s', autosettings)
         if not isinstance(autosettings, list):
             return
@@ -2339,7 +2329,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         Handle clicks on properties
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 'ibus_property=%s prop_state=%s', ibus_property, prop_state)
         if ibus_property == "setup":
@@ -2403,7 +2393,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         setup_cmd = os.path.join(
             str(os.getenv('IBUS_TYPING_BOOSTER_LIB_LOCATION')),
             'ibus-setup-typing-booster')
-        if DEBUG_LEVEL > 0:
+        if self._debug_level > 0:
             LOGGER.debug('Starting setup tool: "%s"\n', setup_cmd)
         self._setup_pid = os.spawnl(
             os.P_NOWAIT,
@@ -2421,7 +2411,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
     def do_destroy(self) -> None: # pylint: disable=arguments-differ
         '''Called when this input engine is destroyed
         '''
-        if DEBUG_LEVEL > 0:
+        if self._debug_level > 0:
             LOGGER.debug('entering function')
         self._clear_input_and_update_ui()
         self.do_focus_out()
@@ -2468,20 +2458,20 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
     def _update_preedit(self) -> None:
         '''Update Preedit String in UI'''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('entering function')
         # get_caret() should also use NFC!
         _str = unicodedata.normalize(
             'NFC', self._transliterated_strings[
                 self.get_current_imes()[0]])
         _str = self._case_modes[self._current_case_mode]['function'](_str)
-        if DEBUG_LEVEL > 2:
+        if self._debug_level > 2:
             LOGGER.debug('_str=“%s”', _str)
         if self._hide_input:
             _str = '*' * len(_str)
         if _str == '':
             if not self._current_preedit_text:
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug('Avoid clearing already empty preedit.')
                 return
             super().update_preedit_text_with_mode(
@@ -2550,14 +2540,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             itb_util.color_string_to_argb('SlateGray'),
             0,
             len(aux_string)))
-        if DEBUG_LEVEL > 0 and not self._unit_test:
+        if self._debug_level > 0 and not self._unit_test:
             client = f'🪟{self._im_client}'
             aux_string += client
             attrs.append(IBus.attr_foreground_new(
                 itb_util.color_string_to_argb('Purple'),
                 len(aux_string)-len(client),
                 len(aux_string)))
-        if DEBUG_LEVEL > 2:
+        if self._debug_level > 2:
             context_indicator = '🔴'
             if self._is_context_from_surrounding_text:
                 context_indicator = '🟢'
@@ -2750,7 +2740,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 IBus.Text.new_from_string(''), False)
         self._update_candidates()
         self._update_lookup_table_and_aux()
-        if DEBUG_LEVEL < 1:
+        if self._debug_level < 1:
             return
         if not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
             return
@@ -2805,7 +2795,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._lookup_table_shows_related_candidates = False
         phrase_candidates = self.database.select_words(
             '', p_phrase=self.get_p_phrase(), pp_phrase=self.get_pp_phrase())
-        if DEBUG_LEVEL > 2:
+        if self._debug_level > 2:
             LOGGER.debug('phrase_candidates=%s', phrase_candidates)
         if not phrase_candidates:
             self._update_ui_empty_input()
@@ -2846,7 +2836,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
     def _update_ui(self) -> None:
         '''Update User Interface'''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('entering function')
         if self.is_empty():
             # Hide lookup table again if preëdit became empty and
@@ -2948,7 +2938,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             != self._dictionary_names):
             self.emoji_matcher = itb_emoji.EmojiMatcher(
                 languages=self._dictionary_names)
-        if DEBUG_LEVEL > 0:
+        if self._debug_level > 0:
             related_candidates = self.emoji_matcher.similar(
                 phrase)
         else:
@@ -2969,7 +2959,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.exception(
                     'Exception when trying to use nltk: %s: %s',
                      error.__class__.__name__, error)
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 'related_candidates of “%s” = %s\n',
                 phrase, related_candidates)
@@ -3013,7 +3003,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         :return: True if something was done, False if not.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('⎆')
         if mode not in (
                 'next',
@@ -3059,11 +3049,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         for ime in self.get_current_imes():
             if self._transliterators[ime].transliterate(
                     msymbol_list) != ''.join(msymbol_list):
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug(
                         '_has_transliteration(%s) == True\n', msymbol_list)
                 return True
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '_has_transliteration(%s) == False\n', msymbol_list)
         return False
@@ -3180,7 +3170,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         May remove whitespace before the committed string if
         the committed string ended a sentence.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('commit_phrase=“%s” input_phrase=“%s”',
                          commit_phrase, input_phrase)
         # If the suggestions are only enabled by Tab key, i.e. the
@@ -3240,13 +3230,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             or self._record_mode == 3
             or self._hide_input
             or self._input_hints & itb_util.InputHints.PRIVATE):
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Privacy: NOT recording and pushing context.')
             return
         if not commit_phrase or not input_phrase:
             return
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('input_phrase=%r commit_phrase=%r '
                          'p_phrase=%r pp_phrase=%r ppp_phrase=%r '
                          'record_mode=%d '
@@ -3259,17 +3249,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if (self._record_mode == 1
             and not self.database.phrase_exists(commit_phrase)
             and not self.database.hunspell_obj.spellcheck(commit_phrase)):
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('self._record_mode=%d: Not recording: %r',
                              self._record_mode, commit_phrase)
             return
         if (self._record_mode == 2
             and not self.database.hunspell_obj.spellcheck(commit_phrase)):
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('self._record_mode=%d: Not recording: %r',
                              self._record_mode, commit_phrase)
             return
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('recording and pushing context.')
         self.database.check_phrase_and_update_frequency(
             input_phrase=input_phrase,
@@ -3290,7 +3280,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 and not self.database.phrase_exists(self.get_p_phrase())
                 and not
                 self.database.hunspell_obj.spellcheck(self.get_p_phrase())):
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug(
                         'self._record_mode=%d: Not recording multi: %r',
                         self._record_mode,
@@ -3299,13 +3289,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if (self._record_mode == 2
                 and not
                 self.database.hunspell_obj.spellcheck(self.get_p_phrase())):
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug(
                         'self._record_mode=%d: Not recording multi: %r',
                         self._record_mode,
                         self.get_p_phrase() + ' ' + stripped_commit_phrase)
                 return
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug(
                     'Recording multi: %r',
                     self.get_p_phrase() + ' ' + stripped_commit_phrase)
@@ -3351,7 +3341,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         (self._p_phrase, self._pp_phrase, self._ppp_phrase))))
                 if matched_french_spacing_dictionaries:
                     language_code = list(matched_french_spacing_dictionaries)[0]
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('language_code=%r', language_code)
         chars_dict = itb_util.FIX_WHITESPACE_CHARACTERS.get(
             language_code, itb_util.FIX_WHITESPACE_CHARACTERS['*'])
@@ -3363,7 +3353,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 text = surrounding_text[0].get_text()
                 cursor_pos = surrounding_text[1]
                 anchor_pos = surrounding_text[2]
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug(
                         'Checking for whitespace before commit_phrase %r: '
                         'surrounding_text = [%r, %s, %s]',
@@ -3395,7 +3385,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 if match:
                     nchars = len(match.group('white_space'))
                     self.delete_surrounding_text(-nchars, nchars)
-                    if DEBUG_LEVEL > 1:
+                    if self._debug_level > 1:
                         surrounding_text = self.get_surrounding_text()
                         text = surrounding_text[0].get_text()
                         cursor_pos = surrounding_text[1]
@@ -3421,21 +3411,21 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         get the word back into preëdit, return False.
 
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('KeyEvent object: %s', key)
             LOGGER.debug('self._arrow_keys_reopen_preedit=%s',
                          self._arrow_keys_reopen_preedit)
         if not self._arrow_keys_reopen_preedit:
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('self._arrow_keys_reopen_preedit not set. '
                              'Do not reopen preedit.')
             return False
         if not self.is_empty():
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('There is input already, no need to reopen.')
             return False
         if self._prev_key is not None and self._prev_key.val != key.val:
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug(
                     'Previous key not set or not equal to the just released '
                     'key. Better do not try to reopen the preedit.')
@@ -3444,7 +3434,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                             IBus.KEY_Right, IBus.KEY_KP_Right,
                             IBus.KEY_BackSpace,
                             IBus.KEY_Delete, IBus.KEY_KP_Delete)):
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug(
                     'Release key was not in list of keys allowed to '
                     'reopen a preedit. Do not try to reopen the preedit.')
@@ -3484,13 +3474,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # include key.lock (CapsLock) and key.mod2 (NumLock) but
             # check for the modifiers which cause problems
             # individually.
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug(
                     'Not reopening the preedit because a modifier is set.')
             return False
         if (not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
             or self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Surrounding text is not supported. '
                              'No way to repopen preedit.')
             return False
@@ -3498,7 +3488,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # Before the first commit or cursor movement, the
             # surrounding text is probably from the previously
             # focused window (bug!), don’t use it.
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('No commit happend yet since focus_in(). '
                              'The surrounding_text is probably wrong. '
                              'Do not try to reopen the preedit.')
@@ -3510,7 +3500,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         text_old = self._surrounding_text_old[0].get_text()
         cursor_pos_old = self._surrounding_text_old[1]
         anchor_pos_old = self._surrounding_text_old[2]
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('Old surrounding_text = [%r, %s, %s]',
                          text_old, cursor_pos_old, anchor_pos_old)
         if not text_old:
@@ -3537,7 +3527,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         text = surrounding_text[0].get_text()
         cursor_pos = surrounding_text[1]
         anchor_pos = surrounding_text[2]
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('New surrounding_text = [%r, %s, %s]',
                          text, cursor_pos, anchor_pos)
         if not text:
@@ -3557,7 +3547,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             pattern = re.compile(r'^($|[\s]+.*)')
             match = pattern.match(text[cursor_pos:])
             if not match:
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug(
                         'No whitespace or end of line or buffer '
                         'to the right of cursor.')
@@ -3565,7 +3555,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             pattern = re.compile(r'(^|.*[\s]+)(?P<token>[\S]+)$')
             match = pattern.match(text[:cursor_pos])
             if not match:
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug('Could not match token left of cursor.')
                 return False
             token = match.group('token')
@@ -3606,7 +3596,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             pattern = re.compile(r'(^|.*[\s]+)$')
             match = pattern.match(text[:cursor_pos])
             if not match:
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug(
                         'No whitespace or beginning of line or buffer '
                         'to the left of cursor.')
@@ -3614,7 +3604,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             pattern = re.compile(r'^(?P<token>[\S]+)($|[\s]+.*)')
             match = pattern.match(text[cursor_pos:])
             if not match:
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug('Could not match token right of cursor.')
                 return False
             token = match.group('token')
@@ -3653,7 +3643,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # If getting the surrounding text is not supported, leave
             # the context as it is, i.e. rely on remembering what was
             # typed last.
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Surrounding text not supported.')
             return
         surrounding_text = self.get_surrounding_text()
@@ -3664,7 +3654,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         text = surrounding_text[0].get_text()
         cursor_pos = surrounding_text[1]
         anchor_pos = surrounding_text[2]
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 'Getting context: surrounding_text = '
                 '[text = “%r”, cursor_pos = %s, anchor_pos = %s]',
@@ -3673,14 +3663,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # Before the first commit or cursor movement, the
             # surrounding text is probably from the previously
             # focused window (bug!), don’t use it.
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug(
                     'Skipping context from surrounding_text, no commit yet.')
             return
         tokens = ([
             itb_util.strip_token(token)
             for token in itb_util.tokenize(text[:cursor_pos])])[-3:]
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 'Found from surrounding text: tokens=%s', repr(tokens))
         self._p_phrase = ''
@@ -3692,7 +3682,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._pp_phrase = tokens[-2]
         if len(tokens) > 2:
             self._ppp_phrase = tokens[-3]
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 'Updated context from surrounding text=“%s” “%s” “%s”',
                 self._ppp_phrase, self._pp_phrase, self._p_phrase)
@@ -3713,7 +3703,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._add_space_on_commit:
@@ -3758,7 +3748,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._inline_completion:
@@ -3793,7 +3783,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._record_mode:
@@ -3821,7 +3811,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._auto_capitalize:
@@ -3863,7 +3853,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._avoid_forward_key_event:
@@ -3904,7 +3894,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._arrow_keys_reopen_preedit:
@@ -3973,7 +3963,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # This should not happen, we returned already above when
             # self.is_empty(), if we get here there should
             # have been something in the preëdit or the lookup table:
-            if DEBUG_LEVEL > 0:
+            if self._debug_level > 0:
                 LOGGER.error('commit string unexpectedly empty.')
             return
         # Remember whether a candidate is selected and where the
@@ -3996,7 +3986,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         :param mode: Whether to switch ibus-typing-booster on or off
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('(%s)', mode)
         if mode == self._input_mode:
             return
@@ -4037,7 +4027,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._emoji_predictions:
@@ -4089,7 +4079,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._off_the_record:
@@ -4134,7 +4124,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)',
                 emoji_trigger_characters, update_gsettings)
@@ -4164,7 +4154,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)',
                 auto_commit_characters, update_gsettings)
@@ -4193,7 +4183,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._color_preedit_spellcheck:
@@ -4227,7 +4217,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', color_string, update_gsettings)
         if color_string == self._color_preedit_spellcheck_string:
@@ -4258,7 +4248,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._color_inline_completion:
@@ -4292,7 +4282,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', color_string, update_gsettings)
         if color_string == self._color_inline_completion_string:
@@ -4322,7 +4312,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._color_compose_preview:
@@ -4356,7 +4346,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', color_string, update_gsettings)
         if color_string == self._color_compose_preview_string:
@@ -4386,7 +4376,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._color_userdb:
@@ -4420,7 +4410,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', color_string, update_gsettings)
         if color_string == self._color_userdb_string:
@@ -4450,7 +4440,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._color_spellcheck:
@@ -4484,7 +4474,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', color_string, update_gsettings)
         if color_string == self._color_spellcheck_string:
@@ -4514,7 +4504,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._color_dictionary:
@@ -4548,7 +4538,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', color_string, update_gsettings)
         if color_string == self._color_dictionary_string:
@@ -4578,7 +4568,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._label_userdb:
@@ -4606,7 +4596,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', label_string, update_gsettings)
         if label_string == self._label_userdb_string:
@@ -4634,7 +4624,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._label_spellcheck:
@@ -4662,7 +4652,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', label_string, update_gsettings)
         if label_string == self._label_spellcheck_string:
@@ -4690,7 +4680,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._label_dictionary:
@@ -4718,7 +4708,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', label_string, update_gsettings)
         if label_string == self._label_dictionary_string:
@@ -4734,7 +4724,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.exception(
                     'Cannot parse label_string as dict: %s: %s',
                     error.__class__.__name__, error)
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('self._label_dictionary_dict=%s',
                          repr(self._label_dictionary_dict))
         if update_gsettings:
@@ -4760,7 +4750,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._flag_dictionary:
@@ -4788,7 +4778,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._label_busy:
@@ -4816,7 +4806,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', label_string, update_gsettings)
         if label_string == self._label_busy_string:
@@ -4845,7 +4835,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', path, update_gsettings)
         if self._google_application_credentials == path:
@@ -4875,7 +4865,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._tab_enable:
@@ -4903,7 +4893,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._disable_in_terminals:
@@ -4932,7 +4922,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._ascii_digits:
@@ -4973,7 +4963,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._remember_last_used_preedit_ime:
@@ -5003,7 +4993,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._remember_input_mode:
@@ -5032,7 +5022,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', page_size, update_gsettings)
         if page_size == self._page_size:
@@ -5067,7 +5057,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', orientation, update_gsettings)
         if orientation == self._lookup_table_orientation:
@@ -5104,7 +5094,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)',
                 underline_mode, update_gsettings)
@@ -5136,7 +5126,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings=%s)', mode, update_gsettings)
         if mode == self._preedit_style_only_when_lookup:
@@ -5166,7 +5156,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)',
                 min_char_complete, update_gsettings)
@@ -5199,15 +5189,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        global DEBUG_LEVEL # pylint: disable=global-statement
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', debug_level, update_gsettings)
         if debug_level == self._debug_level:
             return
         if 0 <= debug_level <= 255:
             self._debug_level = debug_level
-            DEBUG_LEVEL = debug_level
             self._clear_input_and_update_ui()
             if update_gsettings:
                 self._gsettings.set_value(
@@ -5283,7 +5271,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', error_sound, update_gsettings)
         if error_sound == self._error_sound:
@@ -5312,7 +5300,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the dconf
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', path, update_gsettings)
         if not isinstance(path, str):
@@ -5347,7 +5335,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the dconf
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', sound_backend, update_gsettings)
         if not isinstance(sound_backend, str):
@@ -5383,7 +5371,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._show_number_of_candidates:
@@ -5419,7 +5407,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 '(%s, update_gsettings = %s)', mode, update_gsettings)
         if mode == self._show_status_info_in_auxiliary_text:
@@ -5450,7 +5438,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                  to avoid endless loops when the Gsettings
                                  key is changed twice in a short time.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 'set_auto_select_candidate(%s, update_gsettings = %s)',
                 mode, update_gsettings)
@@ -5474,7 +5462,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Called when a candidate in the lookup table
         is clicked with the mouse
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 'index = %s button = %s state = %s\n', index, button, state)
         if not self._set_lookup_table_cursor_pos_in_current_page(index):
@@ -5553,7 +5541,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         Listen to microphone, convert to text using Google speech-to-text
         and insert converted text.
         '''
-        if DEBUG_LEVEL:
+        if self._debug_level:
             LOGGER.debug('speech_recognition()\n')
         self._clear_input_and_update_ui()
         if not IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL:
@@ -5669,7 +5657,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         continue
                     # Display the transcription of the top alternative.
                     transcript = result.alternatives[0].transcript
-                    if DEBUG_LEVEL > 1:
+                    if self._debug_level > 1:
                         LOGGER.debug(
                             '-------------------  %s alternative(s)',
                             len(result.alternatives))
@@ -5714,7 +5702,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 cursor_pos = surrounding_text[1]
                 anchor_pos = surrounding_text[2]
                 text_left = text[:cursor_pos].strip()
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug(
                         'surrounding_text = '
                         '[text = %r, cursor_pos = %s, anchor_pos = %s]',
@@ -5797,7 +5785,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._update_preedit()
                 self._candidates = []
                 return True
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Compose sequence cancelled.')
             self._typed_compose_sequence = []
             self._update_transliterated_strings()
@@ -6105,7 +6093,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # Before the first surrounding text event happened,
             # surrounding text is probably from the previously
             # focused window (bug!), don’t use it.
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Neither a surrounding text event nor a '
                              'commit happend since focus in. '
                              'The surrounding_text might be wrong. '
@@ -6508,9 +6496,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                          *all* commands in the self._keybindings
                          dictionary.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('KeyEvent object: %s\n', key)
-        if DEBUG_LEVEL > 5:
+        if self._debug_level > 5:
             LOGGER.debug('self._hotkeys=%s\n', str(self._hotkeys))
 
         if not commands:
@@ -6523,7 +6511,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         hotkey_removed_from_compose_sequence = False
         for command in commands:
             if (self._prev_key, key, command) in self._hotkeys: # type: ignore
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug('matched command=%s', command)
                 if (self._typed_compose_sequence
                     and not hotkey_removed_from_compose_sequence):
@@ -6571,7 +6559,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         been handled completely. It should return “False” if the key
         event should be passed to the application.
         '''
-        if DEBUG_LEVEL > 0:
+        if self._debug_level > 0:
             LOGGER.info('key=%s', key)
         self._prev_key = key
         self._prev_key.time = time.time()
@@ -6669,7 +6657,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
           is is not possible either, fall back to the worst option
           “return False”.
         '''
-        if DEBUG_LEVEL > 0:
+        if self._debug_level > 0:
             LOGGER.info('key=%s', key)
         self._prev_key = key
         self._prev_key.time = time.time()
@@ -6688,7 +6676,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 IBus.KEY_BackSpace, IBus.KEY_Delete))
             and not key.state & IBus.ModifierType.RELEASE_MASK
             and not key.state & itb_util.KEYBINDING_STATE_MASK):
-            if DEBUG_LEVEL > 0:
+            if self._debug_level > 0:
                 LOGGER.info('Committing instead of forwarding or “return False”')
             super().commit_text(
                 IBus.Text.new_from_string(key.unicode))
@@ -6707,7 +6695,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             or self._im_client.startswith('gtk4-im')
             or
             (self.client_capabilities & itb_util.Capabilite.SYNC_PROCESS_KEY)):
-            if DEBUG_LEVEL > 0:
+            if self._debug_level > 0:
                 LOGGER.info('Returning False')
             return False
         if (self._im_client.startswith('gnome-shell')
@@ -6738,7 +6726,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.info('Fixed key.code = %s', key.code)
             else:
                 LOGGER.info('Could not fix key.code, still key.code == 0')
-        if DEBUG_LEVEL > 0:
+        if self._debug_level > 0:
             LOGGER.info('Forwarding key event')
         self.forward_key_event(key.val, key.code, key.state)
         return True
@@ -6755,7 +6743,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # hardcode keycodes here, calculate them correctly for the
         # current layout.
         if not self._unit_test and self._avoid_forward_key_event:
-            if DEBUG_LEVEL > 0:
+            if self._debug_level > 0:
                 LOGGER.debug(
                     'return without doing anything because '
                     'self._avoid_forward_key_event is True. '
@@ -6764,7 +6752,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         keycode = self._keyvals_to_keycodes.keycode(keyval)
         ibus_keycode = self._keyvals_to_keycodes.ibus_keycode(keyval)
         keystate = 0
-        if DEBUG_LEVEL > 0:
+        if self._debug_level > 0:
             LOGGER.debug('keyval=%s keycode=%s ibus_keycode=%s keystate=%s',
                          keyval, keycode, ibus_keycode, keystate)
         self.forward_key_event(keyval, ibus_keycode, keystate)
@@ -6783,15 +6771,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         :return: True if the key event has been handled, else False
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('KeyEvent object: %s', key)
         if key.state & IBus.ModifierType.RELEASE_MASK:
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Ignoring release event.')
             return False
         if (not self._typed_compose_sequence
             and not self._compose_sequences.is_start_key(key.val)):
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug(
                     'Not in a compose sequence and the key cannot '
                     'start a compose sequence either. '
@@ -6827,7 +6815,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # be added to the compose sequence.
             #
             # Ignoring the other modifiers seems optional ...
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Inside compose sequence, ignoring key %s',
                              IBus.keyval_name(key.val))
             return True
@@ -6836,7 +6824,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         else:
             self._typed_compose_sequence.append(key.val)
         if not self._typed_compose_sequence:
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Editing made the compose sequence empty.')
             self._lookup_table_shows_compose_completions = False
             self._update_transliterated_strings()
@@ -6844,7 +6832,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return True
         compose_result = self._compose_sequences.compose(
             self._typed_compose_sequence)
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 'Inside compose sequence.'
                 'key value names=%s '
@@ -6920,7 +6908,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._update_preedit()
             return True
         if not compose_result:
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug(
                     'Last key made compose sequence invalid, remove it.')
             self._typed_compose_sequence.pop()
@@ -6959,7 +6947,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 return False
             self._play_error_sound()
             return True
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('Compose sequence finished.')
         self._typed_compose_sequence = []
         self._update_transliterated_strings()
@@ -6971,7 +6959,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             IBus.Text.new_from_string(compose_result))
         self._commit_happened_after_focus_in = True
         if not self._current_preedit_text:
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Avoid clearing already empty preedit.')
             return True
         super().update_preedit_text_with_mode(
@@ -6987,17 +6975,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         modifier means Key Pressed
         '''
         key = itb_util.KeyEvent(keyval, keycode, state)
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('KeyEvent object: %s', key)
 
         disabled = False
         if not self._input_mode:
-            if DEBUG_LEVEL > 0:
+            if self._debug_level > 0:
                 LOGGER.debug('Direct input mode')
             disabled = True
         elif (self._disable_in_terminals
               and itb_util.detect_terminal(self._input_purpose, self._im_client)):
-            if DEBUG_LEVEL > 0:
+            if self._debug_level > 0:
                 LOGGER.debug(
                     'Terminal detected and the option '
                     'to disable in terminals is set.')
@@ -7005,7 +6993,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         elif (self.client_capabilities & itb_util.Capabilite.OSK
               and
               (self._input_purpose in [itb_util.InputPurpose.TERMINAL.value])):
-            if DEBUG_LEVEL > 0:
+            if self._debug_level > 0:
                 LOGGER.debug(
                     'OSK is visible and input purpose is TERMINAL, '
                     'disable to avoid showing passwords in the '
@@ -7014,7 +7002,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         elif (self._input_purpose
               in [itb_util.InputPurpose.PASSWORD.value,
                   itb_util.InputPurpose.PIN.value]):
-            if DEBUG_LEVEL > 0:
+            if self._debug_level > 0:
                 LOGGER.debug(
                     'Disable because of input purpose PASSWORD or PIN')
             disabled = True
@@ -7057,20 +7045,20 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # Ignore (almost all) key release events
         if key.release:
             if self._maybe_reopen_preedit(key):
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug('Preedit reopened successfully.')
             if (self._prev_key is not None
                 and self._prev_key.handled
                 and not self._prev_key.release
                 and self._prev_key.val == key.val):
-                if DEBUG_LEVEL > 0:
+                if self._debug_level > 0:
                     LOGGER.info('Press key event was handled. '
                                 'Do not pass release key event.')
                 return True
             return False
 
         if self.is_empty() and not self._lookup_table.cursor_visible:
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug(
                     'self.is_empty(): KeyEvent object: %s', key)
             # This is the first character typed since the last commit
@@ -7336,7 +7324,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     return True
             # This key does not only do a cursor movement in the preëdit,
             # it really triggers a commit.
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('_process_key_event() commit triggered.\n')
             # We need to transliterate
             # the preëdit again here, because adding the commit key to
@@ -7364,7 +7352,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         # The commit key has been absorbed by the
                         # transliteration.  Add the key to the input
                         # instead of committing:
-                        if DEBUG_LEVEL > 1:
+                        if self._debug_level > 1:
                             LOGGER.debug(
                                 'Insert instead of commit: key.msymbol=“%s”',
                                 key.msymbol)
@@ -7456,7 +7444,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # This should not happen, we returned already above when
                 # self.is_empty(), if we get here there should
                 # have been something in the preëdit or the lookup table:
-                if DEBUG_LEVEL > 0:
+                if self._debug_level > 0:
                     LOGGER.error('commit string unexpectedly empty.')
                 self._update_ui_empty_input()
                 return False
@@ -7544,7 +7532,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 and input_phrase[-1] == key.msymbol
                 and itb_util.contains_letter(input_phrase)
             ):
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug(
                         'auto committing because of key.msymbol = %s',
                         key.msymbol)
@@ -7557,7 +7545,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 (committed, committed_index, preedit) = self._transliterators[
                     self.get_current_imes()[0]].transliterate_parts(
                         self._typed_string, ascii_digits=self._ascii_digits)
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug(
                         'Maybe commit early: '
                         'committed=“%s” committed_index=%s preedit=%s'
@@ -7590,7 +7578,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         Called for ibus < 1.5.27 when a window gets focus while
         this input engine is enabled
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('entering do_focus_in()\n')
         self.do_focus_in_id('', '')
 
@@ -7628,7 +7616,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                        client is also shown after the “:”, for example
                        like 'gtk3-im:firefox', 'gtk4-im:gnome-text-editor', …
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 'object_path=%s client=%s self.client_capabilities=%s\n',
                 object_path, client, f'{self.client_capabilities:010b}')
@@ -7639,10 +7627,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._im_client += ':' + program_name + ':' + window_title
         else:
             self._im_client += ':' + window_title
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('self._im_client=%s\n', self._im_client)
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
-        if DEBUG_LEVEL > 2:
+        if self._debug_level > 2:
             for keyval in self._keyvals_to_keycodes.keyvals():
                 name = IBus.keyval_name(keyval)
                 if (name.startswith('dead_')
@@ -7659,7 +7647,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
     def _apply_autosettings(self) -> None:
         '''Apply automatic setting changes for the window which just got focus'''
-        if DEBUG_LEVEL > 0:
+        if self._debug_level > 0:
             LOGGER.debug('self._im_client=%s', self._im_client)
         if self._autosettings_revert:
             self._revert_autosettings()
@@ -7728,7 +7716,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :param input_phrase: The typed input. This parameter can be empty,
                              then the transliterated input is used.
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('commit_phrase=%r input_phrase=%r',
                          commit_phrase, input_phrase)
         if not input_phrase:
@@ -7758,10 +7746,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             or self._record_mode == 3
             or self._hide_input
             or self._input_hints & itb_util.InputHints.PRIVATE):
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Privacy: NOT recording and pushing context.')
             return
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug(
                 'stripped_input_phrase=%r stripped_commit_phrase=%r '
                 'p_phrase=%r pp_phrase=%r '
@@ -7772,24 +7760,24 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self.database.hunspell_obj.spellcheck(commit_phrase),
                 self.database.phrase_exists(commit_phrase))
         if not stripped_input_phrase or not stripped_commit_phrase:
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug(
                     'Empty input or commit: NOT recording and pushing context')
             return
         if (self._record_mode == 1
             and not self.database.phrase_exists(stripped_commit_phrase)
             and not self.database.hunspell_obj.spellcheck(stripped_commit_phrase)):
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('self._record_mode=%d: Not recording: %r',
                              self._record_mode, stripped_commit_phrase)
             return
         if (self._record_mode == 2
             and not self.database.hunspell_obj.spellcheck(stripped_commit_phrase)):
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('self._record_mode=%d: Not recording: %r',
                              self._record_mode, stripped_commit_phrase)
             return
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('recording and pushing context.')
         self.database.check_phrase_and_update_frequency(
             input_phrase=stripped_input_phrase,
@@ -7803,7 +7791,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         Called for ibus < 1.5.27 when a window loses focus while
         this input engine is enabled
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('entering do_focus_out()\n')
         self.do_focus_out_id('')
 
@@ -7816,7 +7804,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :param object_path: Example:
                             '/org/freedesktop/IBus/InputContext_23'
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('object_path=%s\n', object_path)
         # Do not do self._input_purpose = 0 here, see
         # https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/5966#note_1576732
@@ -7854,7 +7842,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         seem to call this.
 
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('self._current_preedit_text=%r '
                          'self._typed_string=%s '
                          'self._typed_compose_sequence=%s '
@@ -7865,7 +7853,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                          self._compose_sequences.preedit_representation(
                              self._typed_compose_sequence))
         if not self._current_preedit_text:
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Current preedit is empty: '
                              'do not record, clear input, update UI.')
             # If the current preedit is empty, that means that there is
@@ -7876,11 +7864,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 and
                 self._prev_key.val in (
                     IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter)):
-                if DEBUG_LEVEL > 1:
+                if self._debug_level > 1:
                     LOGGER.debug(
                         'Avoid clearing context after Return or Enter')
                 return
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('Clear context: cursor might have moved, '
                              'remembered context might be wrong')
             self.clear_context()
@@ -7918,10 +7906,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._prev_key:
             time_since_prev_key_handled = time.time() - self._prev_key.time
         if 0.0 <= time_since_prev_key_handled <= 0.1:
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('probably triggered by key')
         else:
-            if DEBUG_LEVEL > 1:
+            if self._debug_level > 1:
                 LOGGER.debug('probably triggered by mouse')
         # The preëdit, if there was any, has already been committed
         # automatically because
@@ -7930,7 +7918,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # been recorded in the user database yet. Do it now:
         if not self.is_empty():
             self._record_in_database_and_push_context()
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('Clearing context and input.')
         self.clear_context()
         self._clear_input_and_update_ui()
@@ -7941,7 +7929,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         LOGGER.debug('purpose=%s hints=%s\n', purpose, format(hints, '016b'))
         self._input_purpose = purpose
         self._input_hints = hints
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             if (self._input_purpose
                 in [int(x) for x in list(itb_util.InputPurpose)]):
                 for input_purpose in list(itb_util.InputPurpose):
@@ -7961,7 +7949,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
     def do_enable(self) -> None: # pylint: disable=arguments-differ
         '''Called when this input engine is enabled'''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('do_enable()\n')
         # Tell the input-context that the engine will utilize
         # surrounding-text:
@@ -7970,7 +7958,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
     def do_disable(self) -> None: # pylint: disable=arguments-differ
         '''Called when this input engine is disabled'''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('do_disable()\n')
         self._clear_input_and_update_ui()
 
@@ -8071,7 +8059,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # a timeout:
         self._set_surrounding_text_event.wait(timeout=0.1)
         '''
-        if DEBUG_LEVEL > 1:
+        if self._debug_level > 1:
             LOGGER.debug('text=“%r” cursor_pos=%s anchor_pos=%s',
                          text.get_text(), cursor_pos, anchor_pos)
         self._set_surrounding_text_text = text.get_text()
