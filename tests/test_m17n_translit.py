@@ -437,7 +437,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(['S-C-Return']), 'S-C-Return')
 
     def test_hi_itrans(self) -> None:
-        trans = m17n_translit.Transliterator('hi-itrans')
+        trans = self.get_transliterator_or_skip('hi-itrans')
         self.assertEqual(trans.transliterate(list('namaste')), 'नमस्ते')
         self.assertEqual(trans.transliterate(list('. ')), '। ')
         self.assertEqual(trans.transliterate(['S-C-Return']), 'S-C-Return')
@@ -454,6 +454,53 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(['a']), 'अ')
         self.assertEqual(trans.transliterate(['a', ' ']), 'अ ')
         self.assertEqual(trans.transliterate(['a', 'S-C-Return']), 'अS-C-Return')
+
+    def test_hi_itrans_parts(self) -> None:
+        trans = self.get_transliterator_or_skip('hi-itrans')
+        self.assertEqual(trans.transliterate_parts(list('n')), ('', 0, 'न्'))
+        self.assertEqual(trans.transliterate_parts(['n', 'S-C-Return']), ('न्', 2, ''))
+        self.assertEqual(trans.transliterate_parts(['n', 'S-C-Return', ' ']), ('न् ', 3, ''))
+        self.assertEqual(trans.transliterate_parts(list('n ')), ('न ', 2, ''))
+        self.assertEqual(trans.transliterate_parts(list('na')), ('', 0, 'न'))
+        self.assertEqual(trans.transliterate_parts(list('nam')), ('न', 2, 'म्'))
+        self.assertEqual(trans.transliterate_parts(list('nama')), ('न', 2, 'म'))
+        self.assertEqual(trans.transliterate_parts(list('namas')), ('नम', 4, 'स्'))
+        self.assertEqual(trans.transliterate_parts(list('namast')), ('नम', 4, 'स्त्'))
+        self.assertEqual(trans.transliterate_parts(list('namaste')), ('नम', 4, 'स्ते'))
+        self.assertEqual(trans.transliterate_parts(list('namaste ')), ('नमस्ते ', 8, ''))
+
+    def test_t_latn_post_parts(self) -> None:
+        trans = self.get_transliterator_or_skip('t-latn-post')
+        self.assertEqual(trans.transliterate_parts(list('u')), ('', 0, 'u'))
+        self.assertEqual(trans.transliterate_parts(list('u"')), ('', 0, 'ü'))
+        self.assertEqual(trans.transliterate_parts(list('u""')), ('u"', 3, ''))
+        self.assertEqual(trans.transliterate_parts(list('u"u')), ('ü', 2, 'u'))
+        self.assertEqual(trans.transliterate_parts(list('üu"u')), ('üü', 3, 'u'))
+
+    def test_t_rfc1345_parts(self) -> None:
+        trans = self.get_transliterator_or_skip('t-rfc1345')
+        self.assertEqual(trans.transliterate_parts(list('&')), ('', 0, '&'))
+        self.assertEqual(trans.transliterate_parts(list('&C')), ('', 0, '&C'))
+        self.assertEqual(trans.transliterate_parts(list('&Co')), ('©', 3, ''))
+        self.assertEqual(trans.transliterate_parts(list('&f')), ('', 0, '&f'))
+        self.assertEqual(trans.transliterate_parts(list('&ff')), ('', 0, 'ﬀ'))
+        self.assertEqual(trans.transliterate_parts(list('&ffi')), ('ﬃ', 4, ''))
+        self.assertEqual(trans.transliterate_parts(list('☺&ffi中')), ('☺ﬃ中', 6, ''))
+
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 8),
+        'Skipping because m17n-db is too old')
+    def test_t_math_latex_parts(self) -> None:
+        trans = self.get_transliterator_or_skip('t-math-latex')
+        self.assertEqual(trans.transliterate_parts(list('\\')), ('', 0, '\\'))
+        self.assertEqual(trans.transliterate_parts(list('\\i')), ('', 0, '\\i'))
+        self.assertEqual(trans.transliterate_parts(list('\\in')), ('', 0, '\\∈'))
+        self.assertEqual(trans.transliterate_parts(list('\\int')), ('', 0, '\\∫'))
+        self.assertEqual(trans.transliterate_parts(list('\\inter')), ('', 0, '\\inter'))
+        self.assertEqual(trans.transliterate_parts(list('\\inters')), ('', 0, '∩'))
+        self.assertEqual(trans.transliterate_parts(list('\\inters ')), ('∩ ', 8, ''))
+        self.assertEqual(trans.transliterate_parts(list('\\inters☺')), ('∩☺', 8, ''))
+        self.assertEqual(trans.transliterate_parts(list('☺\\int')), ('☺', 1, '\\∫'))
 
     def test_unicode(self) -> None:
         trans = self.get_transliterator_or_skip('t-unicode')
