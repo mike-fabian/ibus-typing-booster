@@ -975,7 +975,7 @@ be in the environment to make it work. Qt5 programs on Wayland need
 The video demonstrates how to use the simple additional engines of
 ibus-typing-booster to mimic the behavior of ibus-m17n.
 
-⚠️ **Nnote**: The video shows underlining in the preedit text, even
+⚠️ **Note**: The video shows underlining in the preedit text, even
 though the option to underline the preedit is off both in ibus-m17n
 and ibus-typing booster. This underlining occurs because the video was
 recorded in a GNOME Wayland session, where Wayland always underlines
