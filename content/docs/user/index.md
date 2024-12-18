@@ -972,28 +972,26 @@ be in the environment to make it work. Qt5 programs on Wayland need
 
 {{< video label="Simulating ibus-m17n (hi-itrans)" mp4="/videos/user-docs/simulating-ibus-m17n-hi-itrans.mp4" >}}
 
-The video shows how to use the simple additional engines of
-ibus-typing-booster which mimic the behaviour of ibus-m17n.
+The video demonstrates how to use the simple additional engines of
+ibus-typing-booster to mimic the behavior of ibus-m17n.
 
-⚠️ **Sidenote**: The video shows underlining in the preedit even though
-the option to underline the preedit is off both in ibus-m17n and
-ibus-typing booster. The preedit is underlined because this is in a
-Gnome Wayland session and Wayland currently **always** underlines the
-preedit. For comparing the behaviour of ibus-m17n with the Typing
-Booster engines emulating ibus-m17n, it is helpful to switch on the
-underlining though because with the underlining on one can see that
-both commit at the exact same moments.
+⚠️ **Nnote**: The video shows underlining in the preedit text, even
+though the option to underline the preedit is off both in ibus-m17n
+and ibus-typing booster. This underlining occurs because the video was
+recorded in a GNOME Wayland session, where Wayland always underlines
+the preedit text. To compare the behavior of ibus-m17n with the Typing
+Booster engines emulating it, enabling underlining is helpful, as it
+makes it easier to see that both commit text at the exact same
+moments.
 
-ibus-typing-booster can be used to emulate exactly the ibus-m17n
-engines by setting its options in a way to restrict the behaviour to
-the simple behaviour of ibus-m17n by switching off all its fancy extra
-features.
+ibus-typing-booster can fully emulate the behavior of ibus-m17n by
+configuring its settings to disable all advanced features, restricting
+it to the simpler behavior of ibus-m17n.
 
-The advantage of simulating ibus-m17n using ibus-typing-booster is
-that there are probably fewer bugs because ibus-typing-booster is more
-actively maintained.
+Using ibus-typing-booster to simulate ibus-m17n has advantages,
+including more active maintenance and likely fewer bugs.
 
-To simulate ibus-m17n with ibus-typing-booster, one could use the
+To emulate ibus-m17n with ibus-typing-booster, one could use the
 following setup options:
 
 * Dictionaries and input methods tab:
@@ -1008,38 +1006,30 @@ following setup options:
 * Appearance tab:
     * Set “Preedit underline” to “None”
 
-With these settings, no candidate lists will ever pop up because one
-would need to press a key to enable a suggestion but all such keys
-have been removed from the “enable_lookup” command. So candidate lists
-are never shown, just like in ibus-m17n.
+With these settings, no candidate lists will appear, as all key
+bindings for the “enable_lookup” command have been removed. This
+behavior matches ibus-m17n, where candidate lists are never shown.
 
-Binding the command “commit_and_forward_key” to the key “Left” also makes
-the behaviour more similar to ibus-m17n, by default “Left” does not commit
-but move the cursor left into the preedit.
+Additionally, binding the “commit_and_forward_key” command to the
+“Left” key ensures that the behavior is consistent with ibus-m17n,
+where pressing "Left" does not move the cursor but commits the preedit
+text.
 
-No user input is recorded because of enabling the option “Off the
-record mode”. Recording user input would be useless because stuff
-learned from user input is normally used to improve the quality of the
-suggestions based on previous input. But if there are never any
-suggestions, there is no need to record user input at all.
+Enabling “Off the record mode” prevents user input from being
+recorded. This is useful because recording input is typically meant to
+improve suggestions based on prior input—something unnecessary when
+suggestions are disabled.
 
-Without candidate lists, dictionaries are useless, therefore it
-doesn’t matter which dictionaries are setup in the “Dictionaries and
-input methods” tab. One can remove them all or leave them there, it
-doesn’t matter.
+Since dictionaries are also irrelevant without candidate lists, they
+can be removed entirely or left as-is—it makes no difference.
 
-The “normal” typing booster keeps text in the preedit util a word is
-finished because it tries to predict the completion of the word. But
-when the settings are restricted in the above way, there is no
-preediction possible and thus it is pointless to keep text in the
-preedit any longer than absolutely necessary to make the
-transliteration of the selected m17n input method work. Therefore,
-when typing booster is used with such restricted settings, it commits
-text as early as possible, just like ibus-m17n does.
+By default, Typing Booster retains text in the preedit until a word is
+completed to predict completions. However, with the restricted
+settings outlined above, predictions are disabled, so Typing Booster
+commits text as soon as possible, just like ibus-m17n.
 
-But as setting up typing booster in this special restricted way is a
-bit tediuos, typing booster make this easy by offering extra engines
-which are already setup by default to emulate ibus-m17n. For example:
+To simplify this setup process, Typing Booster offers preconfigured
+engines that emulate ibus-m17n out of the box. For example:
 
 ```
 $ ibus list-engine  | grep latn-post 
@@ -1051,11 +1041,12 @@ $ ibus list-engine  | grep hi-itrans
 $
 ```
 
-I.e. for each `m17n:language:name` engine, typing booster offers a
-`tb:language:name` engine which has the identical behaviour.
-
-If one uses one of these, one avoids doing the above setup and one can leave
-the “normal” typing booster engine
+For each `m17n:language:name` engine, Typing Booster provides a
+corresponding `tb:language:name` engine with identical behavior. Using
+these preconfigured engines eliminates the need to set up restrictions
+manually, allowing you to keep the “normal” Typing Booster engine
+unrestricted for advanced features like completion, spell-checking,
+predictions, and multilingual input.
 
 ```
 $ ibus list-engine  | grep booster
@@ -1065,16 +1056,15 @@ $
 
 unrestricted and still use the “normal” typing booster engine for its
 more fancy features like completion, spellchecking, predictions based
-on previous user input and multilinguaal input.
+on previous user input and multilingual input.
 
 
-⚠️ **Attention**: 
-Current limitations:
+⚠️ **Current limitations**: 
 
-- The ibus-m17n engines support **all** input methods from m17n-lib
-  and m17n-db. Typing Booster currently also supports almost all of
-  these input methods except those which offer multiple candidates. These exeptions
-  are at the moment:
+- **Input Method Compatibility**: While ibus-m17n supports all input
+  methods from m17n-lib and m17n-db, Typing Booster supports nearly
+  all, except those offering multiple candidates. The exceptions
+  are:
 
   `ja-anthy`, `t-lsymbol`, `ml-swanalekha`, `vi-han`,
   `vi-nomtelex`, `vi-nomvni`, `vi-tcvn`, `vi-telex`, `vi-viqr`,
@@ -1082,25 +1072,21 @@ Current limitations:
   `zh-py-b5`, `zh-py-gb`, `zh-quick`, `zh-tonepy`,
   `zh-tonepy-gb`, `zh-tonepy-b5`
 
-  These input methods which offer multiple candidates “sort of” work partly
-  in Typing Booster but are not well supported at the moment. Therefore,
-  Typing Booster does not offer restricted engines to simulate ibus-m17n for
-  these input methods.
+  These methods partially work but are not well supported. Typing
+  Booster does not currently offer restricted engines to emulate
+  ibus-m17n for these input methods.
 
-  There is an open
-  [issue](https://github.com/mike-fabian/ibus-typing-booster/issues/523)
-  avbout this. I’ll fix this in the long run.
+  See [this issue](https://github.com/mike-fabian/ibus-typing-booster/issues/523)
+  for updates.
 
-- The setup-tool of ibus-m17n has options to set the foreground and
-  background colour of the preedit, these are not supported by Typing
-  Booster. This will probably not change in future, I don’t think it
-  is useful to implement these.
+- **Preedit Colours**: Unlike ibus-m17n, Typing Booster does not
+    support configuring preedit text foreground and background
+    colors. This feature is unlikely to be added.
 
-- The ibus-m17n setup tool has an option `☑️ Use US keyboard layout`
-  which Typing Booster does not have.  Typing Booster currently just
-  uses the keyboard layout which was last active before switching to
-  Typing Booster. I might implement something like that in future
-  though.
+- **Keyboard Layout Option**: Typing Booster lacks the ibus-m17n setup
+  tool’s `☑️ Use US keyboard layout` option.  Currently, it uses the
+  keyboard layout active before switching to Typing Booster. This
+  feature might be implemented in the future.
 
 ###### 3
 ## Key and Mouse bindings
