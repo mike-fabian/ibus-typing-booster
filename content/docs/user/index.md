@@ -15,7 +15,6 @@ date: 2021-09-30
     * [Basic setup for your language](#2_1)
     * [More advanced options](#2_2)
         * [Enable suggestions by a key](#2_2_1)
-            * [Simulate the behaviour of ibus-m17n](#2_2_1_1)
         * [Use inline completion](#2_2_2)
             * [Inline completion is hard to use on Wayland](#2_2_2_1)
         * [Spellchecking](#2_2_3)
@@ -23,6 +22,7 @@ date: 2021-09-30
         * [Reopening preëdits](#2_2_5)
         * [Disabling in terminals](#2_2_6)
         * [Autosettings](#2_2_7)
+    * [Simulate the behaviour of ibus-m17n](#2_3)
 1. [Key and Mouse bindings](#3)
     * [The “AltGr” key](#3_1)
     * [Table of default key bindings](#3_2)
@@ -447,76 +447,6 @@ always underlined and always has the same foreground and background
 colour as normal text, no matter what options to influence the preedit
 style are chosen in the setup tool of ibus-typing-booster. That is a
 missing feature in Wayland.
-
-
-###### 2_2_1_1
-## Simulate the behaviour of ibus-m17n
-
-{{< video label="Simulating ibus-m17n (hi-itrans)" mp4="/videos/user-docs/simulating-ibus-m17n-hi-itrans.mp4" >}}
-
-This video shows how one can emulate ibus-m17n using
-ibus-typing-booster by switching off all the features
-ibus-typing-booster has in addition to ibus-m17n.
-
-The ibus-m17n engines can be used to input many languages using all
-the input methods from m17n-lib and m17n-db.
-
-ibus-typing-booster can also use the same input methods from m17n-lib
-and m17n-db. So one can input all the languages in the same way one
-can with ibus-m17n. But ibus-typing-booster has many additional
-features like completion using dictionaries, spellchecking,
-predictions based on previous user input and being able to use several
-input methods/transliterations at the same time.
-
-But what if a user doesn’t need and want all the extra features of
-ibus-typing-booster at all, just simple type one language with one
-input method without any extra bells and whistles?
-
-One can still use ibus-typing-booster in that case by disabling all of
-the extra features. Then ibus-typing-booster behaves like any
-ibus-m17n engine.
-
-The advantage of simulating ibus-m17n using ibus-typing-booster is
-that there are probably fewer bugs because ibus-typing-booster is more
-actively maintained.
-
-To simulate ibus-m17n with ibus-typing-booster, one can use the
-following setup options:
-
-* Dictionaries and input methods tab:
-    * Remove all input methods except the one you want to use
-* Options tab:
-    * Check the option “Enable suggestions by key”
-    * Check the option “Off the record mode”
-* Key bindings tab:
-    * Remove all keys bound to the command “enable_lookup”
-    * Bind the command “commit_and_forward_key” to the key “Left”
-* Appearance tab:
-    * Set “Preedit underline” to “None”
-
-With these settings, no candidate lists will ever pop up because one
-would need to press a key to enable a suggestion but all such keys
-have been removed from the “enable_lookup” command. So candidate lists
-are never shown, just like in ibus-m17n.
-
-Binding the command “commit_and_forward_key” to the key “Left” also makes
-the behaviour more similar to ibus-m17n, by default “Left” does not commit
-but move the cursor left into the preedit.
-
-No user input is recorded because of enabling the option “Off the
-record mode”. Recording user input would be useless because stuff
-learned from user input is normally used to improve the quality of the
-suggestions based on previous input. But if there are never any
-suggestions, there is no need to record user input at all.
-
-Without candidate lists, dictionaries are useless, therefore it
-doesn’t matter which dictionaries are setup in the “Dictionaries and
-input methods” tab. One can remove them all or leave them there, it
-doesn’t matter.
-
-As one can see in the video, setting the above options one after another,
-ibus-typing-booster behaves more and more similar to ibus-m17n, when
-all above options are set, the behaviour looks identical.
 
 ###### 2_2_2
 ## Use inline completion
@@ -1036,6 +966,75 @@ on Gnome Wayland **except** for the two browsers `firefox` and
 be in the environment to make it work. Qt5 programs on Wayland need
 `QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1` and Qt4 programs on Wayland need
 `QT_ACCESSIBILITY=1`.
+
+###### 2_3
+## Simulate the behaviour of ibus-m17n
+
+{{< video label="Simulating ibus-m17n (hi-itrans)" mp4="/videos/user-docs/simulating-ibus-m17n-hi-itrans.mp4" >}}
+
+This video shows how one can emulate ibus-m17n using
+ibus-typing-booster by switching off all the features
+ibus-typing-booster has in addition to ibus-m17n.
+
+The ibus-m17n engines can be used to input many languages using all
+the input methods from m17n-lib and m17n-db.
+
+ibus-typing-booster can also use the same input methods from m17n-lib
+and m17n-db. So one can input all the languages in the same way one
+can with ibus-m17n. But ibus-typing-booster has many additional
+features like completion using dictionaries, spellchecking,
+predictions based on previous user input and being able to use several
+input methods/transliterations at the same time.
+
+But what if a user doesn’t need and want all the extra features of
+ibus-typing-booster at all, just simple type one language with one
+input method without any extra bells and whistles?
+
+One can still use ibus-typing-booster in that case by disabling all of
+the extra features. Then ibus-typing-booster behaves like any
+ibus-m17n engine.
+
+The advantage of simulating ibus-m17n using ibus-typing-booster is
+that there are probably fewer bugs because ibus-typing-booster is more
+actively maintained.
+
+To simulate ibus-m17n with ibus-typing-booster, one can use the
+following setup options:
+
+* Dictionaries and input methods tab:
+    * Remove all input methods except the one you want to use
+* Options tab:
+    * Check the option “Enable suggestions by key”
+    * Check the option “Off the record mode”
+* Key bindings tab:
+    * Remove all keys bound to the command “enable_lookup”
+    * Bind the command “commit_and_forward_key” to the key “Left”
+* Appearance tab:
+    * Set “Preedit underline” to “None”
+
+With these settings, no candidate lists will ever pop up because one
+would need to press a key to enable a suggestion but all such keys
+have been removed from the “enable_lookup” command. So candidate lists
+are never shown, just like in ibus-m17n.
+
+Binding the command “commit_and_forward_key” to the key “Left” also makes
+the behaviour more similar to ibus-m17n, by default “Left” does not commit
+but move the cursor left into the preedit.
+
+No user input is recorded because of enabling the option “Off the
+record mode”. Recording user input would be useless because stuff
+learned from user input is normally used to improve the quality of the
+suggestions based on previous input. But if there are never any
+suggestions, there is no need to record user input at all.
+
+Without candidate lists, dictionaries are useless, therefore it
+doesn’t matter which dictionaries are setup in the “Dictionaries and
+input methods” tab. One can remove them all or leave them there, it
+doesn’t matter.
+
+As one can see in the video, setting the above options one after another,
+ibus-typing-booster behaves more and more similar to ibus-m17n, when
+all above options are set, the behaviour looks identical.
 
 ###### 3
 ## Key and Mouse bindings
