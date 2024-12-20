@@ -148,22 +148,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     raise ValueError('Invalid engine name.')
                 self._m17n_ime_lang = match.group('lang')
                 self._m17n_ime_name = match.group('name')
-                self._input_mode_true_symbol = self._m17n_ime_lang
-                # Not more then 2 characters allowed, '_A' works,
-                # '_hi' does not work. Invisible characters like
-                # combining characters or emoji variation selectors
-                # are counted towards this limit unfortunately.  using
-                # upper case to indicate direct input mode is kind of
-                # weird but keeps the information for which language
-                # the currently selected engine is.  Languages with 3
-                # letter codes like “mai” do not work, not even if
-                # only self._input_mode_true_symbol is 3 letters long
-                # and self._input_mode_false_symbol is only 1 or 2
-                # letters long.
-                self._input_mode_false_symbol = self._m17n_ime_lang.upper()
-                if self._m17n_ime_lang == 't':
-                    self._input_mode_true_symbol = '⌨️'
-                    self._input_mode_false_symbol = '🎯'
+                symbol = ''
+                for pattern, pattern_symbol in itb_util.M17N_IME_SYMBOLS:
+                    if re.fullmatch(pattern, self._engine_name):
+                        symbol = pattern_symbol
+                        break
+                self._input_mode_true_symbol = symbol
+                self._input_mode_false_symbol = '•' + symbol
                 schema_path = ('/org/freedesktop/ibus/engine/tb/'
                                f'{self._m17n_ime_lang}/{self._m17n_ime_name}/')
             except ValueError as error:

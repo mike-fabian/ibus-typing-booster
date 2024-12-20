@@ -390,13 +390,15 @@ def write_xml() -> None:
                     # does not haave this:
                     layout = 'default[lv3:ralt_switch]'
                     break
+            symbol = ''
+            for pattern, pattern_symbol in itb_util.M17N_IME_SYMBOLS:
+                if re.fullmatch(pattern, name):
+                    symbol = pattern_symbol
+                    break
             longname = f'{ime} (Typing Booster)'
             language = m17n_lang
             icon =  m17n_db_info.get_icon(ime)
             description = m17n_db_info.get_description(ime)
-            symbol = m17n_lang
-            if symbol == 't':
-                symbol = '⌨️'
             setup = SETUP_TOOL + f' --engine-name {name}'
 
         _name = SubElement(_engine, 'name')

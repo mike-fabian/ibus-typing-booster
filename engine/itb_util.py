@@ -276,6 +276,84 @@ ACCENT_LANGUAGES = {
     'xh': '',
 }
 
+M17N_IME_SYMBOLS = [
+    # These are to be displayed in the Gnome panel when the input method
+    # is selected. In the Panels of non-Gnome desktops, the icons are displayed
+    # instead.
+    #
+    # However, even on non-Gnome desktops, if a direct input mode is
+    # enabled these symbols are displayed instead of the icons if
+    # switching between “normal” input mode and direct input mode. To
+    # indicate direct input mode, a character is added to the
+    # symbol. As symbols longer than 2 Unicode characters to not work
+    # as indicators for input methods in the Gnome panel, make sure
+    # all of these symbols are consist of only one Unicode character
+    # so that when the character to indicate direct input mode is
+    # added, it still does not exceed 2 characters (Invisible
+    # characters count as well to this limit, do not add extra
+    # invisible characters like combining characters or variation
+    # selectors!)
+    #
+    # These symbols are chosen almost like those in ibus-m17n, except where
+    # it exceeds the one character limit.
+    (r'tb:zh:tonepy.*', '调'),
+    (r'tb:zh:quick', '簡'),
+    (r'tb:zh:py.*', '拼'),
+    (r'tb:zh:pinyin.*', 'P'), # ibus-m17n uses 'PY'
+    (r'tb:zh:cangjie.*', '倉'),
+    (r'tb:zh:bopomofo.*', 'ㄅ'),
+    (r'tb:yi:.+', 'ש'),
+    (r'tb:vi:nom.*', '喃'),
+    (r'tb:vi:han.*', '越'),
+    (r'tb:vi:.+', 'ắ'),
+    (r'tb:ur:.+', 'خ'),
+    (r'tb:th:.+', 'ท'),
+    (r'tb:tai:.+', '꫞'),
+    (r'tb:ru:.+', 'Я'),
+    (r'tb:ps:.+', 'خ'),
+    (r'tb:oj:.+', 'ᐏ'),
+    (r'tb:nsk:.+', 'ᐃ'),
+    (r'tb:lo:.+', 'ກ'),
+    (r'tb:km:.+', 'ក'),
+    (r'tb:kk:kbd', 'Қ'), # ibus-m17n uses ҚА
+    (r'tb:kk:arabic', 'ق'), # ibus-m17n uses قا
+    (r'tb:ja:.+', 'あ'),
+    (r'tb:iu:.+', 'ᐃ'),
+    (r'tb:ii:.+', 'ꆈ'),
+    (r'tb:fa:.+', 'ف'),
+    (r'tb:cr:.+', 'ᐃ'),
+    (r'tb:bo:.+', 'ཀ'),
+    (r'tb:am:.+', 'አ'),
+    (r'tb:te:.+', 'క'),
+    (r'tb:ta:.+', 'க'),
+    (r'tb:si:.+', 'සි'),
+    (r'tb:sd:.+', 'क'),
+    (r'tb:sat:.+deva', 'क'),
+    (r'tb:sat:.+olck', 'ᱚ'),
+    (r'tb:sa:.+', 'क'),
+    (r'tb:pa:.+', 'ਕ'),
+    (r'tb:or:.+', 'କ'),
+    (r'tb:ne:.+', 'क'),
+    (r'tb:mr:.+', 'क'),
+    (r'tb:mni:.+mtei', 'ꯀ'),
+    (r'tb:mni:.+beng', 'ক'),
+    (r'tb:ml:.+', 'ക'),
+    (r'tb:mai:.+', 'क'),
+    (r'tb:ks:kbd', 'خ'),
+    (r'tb:ks:.+', 'क'),
+    (r'tb:kok:.+', 'क'),
+    (r'tb:kn:.+', 'ಕ'),
+    (r'tb:hi:.+', 'क'),
+    (r'tb:gu:.+', 'ક'),
+    (r'tb:doi:.+', 'क'),
+    (r'tb:brx:.+', 'क'),
+    (r'tb:bn:.+', 'ক'),
+    (r'tb:as:.+', 'ক'),
+    # Fallback for all the rest is ⌨ U+2328 KEYBOARD.  A character to
+    # indicate direct input mode can be added to this:
+    (r'.*', '\u2328'),
+]
+
 LOCALE_DEFAULTS = {
     # Contains the default input methods and dictionaries which should
     # be used if ibus-typing-booster is started for the very first
