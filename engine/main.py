@@ -346,6 +346,11 @@ def write_xml() -> None:
         # https://bugzilla.redhat.com/show_bug.cgi?id=1076945
         (r'tb:ar:kbd', 1),
     ]
+    # Some Indic engines expect AltGr is automatically mapped
+    ralt_switch_patterns = [
+        r'tb:[^:]+:.*inscript.*',
+        r'tb:si:.+',
+    ]
 
     egs = Element('engines') # pylint: disable=possibly-used-before-assignment
 
@@ -374,6 +379,17 @@ def write_xml() -> None:
                 if re.fullmatch(pattern, name):
                     rank = pattern_rank
                     break # first matching regexp wins
+            layout = 'default'
+            for pattern in ralt_switch_patterns:
+                if re.fullmatch(pattern, name):
+                    # I do this only to match the xml output of
+                    # ibus-m17n, it does not seem to help though,
+                    # i.e. it does not automatically make the right
+                    # alt key work as ISO_Level3_Shift when switching
+                    # from a keyboard layout like “English (US)” which
+                    # does not haave this:
+                    layout = 'default[lv3:ralt_switch]'
+                    break
             longname = f'{ime} (Typing Booster)'
             language = m17n_lang
             icon =  m17n_db_info.get_icon(ime)
