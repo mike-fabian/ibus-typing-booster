@@ -285,7 +285,68 @@ def write_xml() -> None:
         (m17n_input_methods - m17n_input_methods_skip)
         - m17n_input_methods_multiple_candidates
     ) + ['typing-booster']
-    # supported_input_methods = ['typing-booster']
+
+    indic_languages = (
+        'as',
+        'bn',
+        'brx',
+        'doi',
+        'dra',
+        'dv',
+        'gu',
+        'hi',
+        'kn',
+        'ks',
+        'mai',
+        'ml',
+        'mni',
+        'mr',
+        'ne',
+        'new',
+        'or',
+        'pa',
+        'sa',
+        'sat',
+        'sd',
+        'si',
+        'ta',
+        'te',
+    )
+    rank_patterns = [ # first matching regexp wins
+        # Assign lower rank to Sinhala Samanala since it is a
+	# non-keyboard input method in Sinhala.  (Not sure whether
+	# this makes sense but ibus-m17n does it).
+        (r'tb:si:samanala', 0),
+        # Assign higher rank to all inscript2 engines since they
+        # should be preferred over the inscript engines.
+        (r'tb:[^:]+:.*inscript2.*', 3),
+        # Assign higher rank to Indic engines which represent each
+	# language.
+        (r'tb:te:inscript', 2),
+        (r'tb:ta:tamil99', 2),
+        (r'tb:si:wijesekara', 2),
+        (r'tb:sd:inscript', 2),
+        (r'tb:sa:harvard-kyoto', 2),
+        (r'tb:pa:inscript', 2),
+        (r'tb:or:inscript', 2),
+        (r'tb:ne:rom', 2),
+        (r'tb:mr:inscript', 2),
+        (r'tb:ml:inscript', 2),
+        (r'tb:mai:inscript', 2),
+        (r'tb:ks:kbd', 2),
+        (r'tb:kn:kgp', 2),
+        (r'tb:hi:inscript', 2),
+        (r'tb:gu:inscript', 2),
+        (r'tb:bn:inscript', 2),
+        (r'tb:as:inscript', 2),
+        # Indic engines should be selected by default:
+	# https://bugzilla.redhat.com/show_bug.cgi?id=640896
+        (r'tb:(' + ('|').join(indic_languages) + r'):[^:]+', 1),
+        # Arabic kbd engine should be selected by default:
+        # https://bugzilla.redhat.com/show_bug.cgi?id=1076945
+        (r'tb:ar:kbd', 1),
+    ]
+
     egs = Element('engines') # pylint: disable=possibly-used-before-assignment
 
     for ime in supported_input_methods:
@@ -304,9 +365,15 @@ def write_xml() -> None:
         symbol = '🚀'
         setup = SETUP_TOOL
         icon_prop_key = 'InputMode'
+        rank = 0
         if ime != 'typing-booster':
             m17n_lang, m17n_name = ime.split('-', maxsplit=1)
             name = f'tb:{m17n_lang}:{m17n_name}'
+            rank = 0
+            for pattern, pattern_rank in rank_patterns:
+                if re.fullmatch(pattern, name):
+                    rank = pattern_rank
+                    break # first matching regexp wins
             longname = f'{ime} (Typing Booster)'
             language = m17n_lang
             icon =  m17n_db_info.get_icon(ime)
@@ -338,6 +405,8 @@ def write_xml() -> None:
         _setup.text = setup
         _icon_prop_key = SubElement(_engine, 'icon_prop_key')
         _icon_prop_key.text = icon_prop_key
+        _rank = SubElement(_engine, 'rank')
+        _rank.text = str(rank)
 
     # now format the xmlout pretty
     indent(egs)
