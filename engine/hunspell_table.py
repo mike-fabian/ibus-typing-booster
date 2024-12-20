@@ -197,7 +197,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.preedit_ime_menu: Dict[str, Any] = {}
         self.preedit_ime_properties: Dict[str, Any] = {}
         self.preedit_ime_sub_properties_prop_list: IBus.PropList = []
-        self._setup_property: Optional[IBus.Property] = None # FIXME member variable never used?
+
         self._im_client: str = ''
 
         self._current_imes: List[str] = []
@@ -2302,7 +2302,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._init_or_update_property_menu_preedit_ime(
             self.preedit_ime_menu, current_mode=0)
 
-        self._setup_property = IBus.Property(
+        setup_property = IBus.Property(
             key='setup',
             label=IBus.Text.new_from_string(_('Setup')),
             icon='gtk-preferences',
@@ -2310,7 +2310,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 _('Preferences for ibus-typing-booster')),
             sensitive=True,
             visible=True)
-        self.main_prop_list.append(self._setup_property)
+        self.main_prop_list.append(setup_property)
         self.register_properties(self.main_prop_list)
 
     def do_property_activate( # pylint: disable=arguments-differ

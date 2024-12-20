@@ -58,12 +58,12 @@ sys.path.pop(0)
 class ItbPangoTestCase(unittest.TestCase):
     def setUp(self) -> None:
         fonts_used = itb_pango.get_fonts_used_for_text('emoji', '😇', fallback=True)
-        run, results_for_run = fonts_used[0]
+        _run, results_for_run = fonts_used[0]
         self._fallback_font_name = results_for_run['font']
         LOGGER.info('Fallback font name=“%s”', self._fallback_font_name)
         # 🫩︎ U+1FAE9 FACE WITH BAGS UNDER EYES, added in Unicode 16.0
         fonts_used = itb_pango.get_fonts_used_for_text('emoji', '🫩', fallback=True)
-        run, results_for_run = fonts_used[0]
+        _run, results_for_run = fonts_used[0]
         self._fallback_font_name_u16 = results_for_run['font']
         LOGGER.info('Fallback font name Unicode 16.0=“%s”', self._fallback_font_name_u16)
 

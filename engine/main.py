@@ -361,7 +361,7 @@ def write_xml() -> None:
         name = 'typing-booster'
         longname = 'Typing Booster'
         language = 't'
-        license = 'GPL'
+        engine_license = 'GPL'
         author = ('Mike FABIAN <mfabian@redhat.com>'
                   ', Anish Patil <anish.developer@gmail.com>')
         layout = 'default'
@@ -408,7 +408,7 @@ def write_xml() -> None:
         _language = SubElement(_engine, 'language')
         _language.text = language
         _license = SubElement(_engine, 'license')
-        _license.text = license
+        _license.text = engine_license
         _author = SubElement(_engine, 'author')
         _author.text = author
         _icon = SubElement(_engine, 'icon')

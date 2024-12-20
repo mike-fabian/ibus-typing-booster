@@ -1168,7 +1168,7 @@ class Transliterator:
                              to ASCII digits
         :return: The transliteration in one string
         '''
-        (committed, committed_index, preedit) = self.transliterate_parts(
+        (committed, _committed_index, preedit) = self.transliterate_parts(
             msymbol_list, ascii_digits)
         return committed + preedit
 

@@ -24,11 +24,12 @@ This file implements the test cases for the unit tests of ibus-typing-booster em
 
 from typing import Any
 from typing import Optional
+from typing import Dict
+from typing import List
 import os
 import sys
 import re
 import logging
-import unicodedata
 import unittest
 import importlib
 from unittest import mock
@@ -52,8 +53,6 @@ from mock_engine import MockLookupTable
 from mock_engine import MockProperty
 from mock_engine import MockPropList
 # pylint: enable=import-error
-
-import testutils # pylint: disable=import-error
 
 # pylint: disable=wrong-import-order
 sys.path.insert(0, "../engine")
@@ -89,6 +88,29 @@ class ItbM17nEmuTestCase(unittest.TestCase):
     ibus_property = IBus.Property
     ibus_prop_list = IBus.PropList
 
+    orig_disable_in_terminals = False
+    orig_ascii_digits = False
+    orig_emoji_prediction_mode = False
+    orig_off_the_record_mode = False
+    orig_record_mode = 0
+    orig_emoji_trigger_characters = '_'
+    orig_auto_commit_characters = ''
+    orig_tab_enable = False
+    orig_inline_completion = 0
+    orig_auto_capitalize = False
+    orig_auto_select_candidate = 0
+    orig_remember_last_used_preedit_ime = False
+    orig_page_size = 6
+    orig_lookup_table_orientation = 1
+    orig_min_char_complete = 1
+    orig_show_number_of_candidates = False
+    orig_show_status_info_in_auxiliary_text = False
+    orig_add_space_on_commit = True
+    orig_current_imes: List[str] = []
+    orig_dictionary_names: List[str] = []
+    orig_avoid_forward_key_event = False
+    orig_keybindings: Dict[str, List[str]] = {}
+
     def setUp(self) -> None:
         # Patch the IBus stuff with the mock classes:
         self.engine_patcher.start()
@@ -111,7 +133,6 @@ class ItbM17nEmuTestCase(unittest.TestCase):
         self.bus = IBus.Bus()
         self.database: Optional[tabsqlitedb.TabSqliteDb] = None
         self.engine: Optional[hunspell_table.TypingBoosterEngine] = None
-        #self._compose_sequences = itb_util.ComposeSequences()
 
     def tearDown(self) -> None:
         if self.engine is not None:
