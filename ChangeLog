@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 20 Dez 2024 Release 2.27.1
+* Use (almost) the same symbols in the panel as ibus-m17n for the engines emulating ibus-m17n
+* Set layout to “default[lv3:ralt_switch]” for the same m17n engines where ibus-m17n sets this
+* Add rank to xml output: use the same values as ibus-m17n
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 16 Dez 2024 Release 2.27.0
 * Commit early like ibus-m17n does if the engine is restricted to emulate ibus-m17n
 * Hide “emoji prediction mode” and “off the record mode” property menus by default for the restricted engines emulating ibus-m17n

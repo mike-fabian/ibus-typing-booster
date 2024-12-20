@@ -41,6 +41,25 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.27.1" date="2024-12-20" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.1</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Use (almost) the same symbols in the panel as ibus-m17n
+            for the engines emulating ibus-m17n
+          </li>
+          <li>
+            Set layout to “default[lv3:ralt_switch]” for the same m17n
+            engines where ibus-m17n sets this
+          </li>
+          <li>
+            Add rank to xml output: use the same values as ibus-m17n
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.27.0" date="2024-12-19" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.0</url>
       <description>
