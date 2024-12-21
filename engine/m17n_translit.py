@@ -1376,5 +1376,5 @@ if __name__ == "__main__":
     LOGGER.setLevel(logging.DEBUG)
     LOGGER.addHandler(LOG_HANDLER)
     import doctest
-    (FAILED, _ATTEMPTED, *_EXTRAS) = doctest.testmod()
+    (FAILED, _ATTEMPTED) = doctest.testmod()
     sys.exit(FAILED)

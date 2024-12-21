@@ -193,7 +193,7 @@ def main() -> None:
 
     import doctest # pylint: disable=import-outside-toplevel
     _init()
-    (failed, _attempted, *_extras) = doctest.testmod()
+    (failed, _attempted) = doctest.testmod()
 
     if BENCHMARK:
         profile.disable()

@@ -435,7 +435,7 @@ if __name__ == "__main__":
     LOGGER.setLevel(logging.DEBUG)
     LOGGER.addHandler(LOG_HANDLER)
     import doctest
-    (FAILED, _ATTEMPTED, *_EXTRAS) = doctest.testmod()
+    (FAILED, _ATTEMPTED) = doctest.testmod()
     LOGGER.info('get_font_file() cache info: %s', get_font_file.cache_info())
     LOGGER.info('get_font_version() cache info: %s', get_font_version.cache_info())
     LOGGER.info('get_font_tables() cache info: %s', get_font_tables.cache_info())

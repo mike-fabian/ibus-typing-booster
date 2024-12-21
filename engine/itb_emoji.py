@@ -2559,7 +2559,7 @@ def main() -> None:
         global DOMAINNAME # pylint: disable=global-statement
         DOMAINNAME = ''
         flags = doctest.REPORT_NDIFF #|doctest.FAIL_FAST
-        (failed, _attempted, *_extras) = doctest.testmod(optionflags=flags)
+        (failed, _attempted) = doctest.testmod(optionflags=flags)
 
     if BENCHMARK:
         profile.disable()
