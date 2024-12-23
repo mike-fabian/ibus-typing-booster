@@ -789,6 +789,22 @@ class SetupUI(Gtk.Window): # type: ignore
             self._ascii_digits_checkbutton,
             0, _options_grid_row, 2, 1)
 
+        self._use_us_layout_checkbutton = Gtk.CheckButton(
+            # Translators: Whether the use of the US keyboard layout is
+            # forced while Typing Booster is active
+            label=_('Use US keyboard layout'))
+        self._use_us_layout_checkbutton.set_tooltip_text(
+            _('Whether the use of the US keyboard layout is forced '
+              'while Typing Booster is active.'))
+        self._use_us_layout_checkbutton.connect(
+            'clicked', self._on_use_us_layout_checkbutton)
+        self._use_us_layout_checkbutton.set_active(
+            self._settings_dict['useuslayout']['user'])
+        _options_grid_row += 1
+        self._options_grid.attach(
+            self._use_us_layout_checkbutton,
+            0, _options_grid_row, 2, 1)
+
         self._emoji_trigger_characters_label = Gtk.Label()
         self._emoji_trigger_characters_label.set_text(
             # Translators: The characters in this list trigger an
@@ -2304,6 +2320,7 @@ class SetupUI(Gtk.Window): # type: ignore
             'preeditstyleonlywhenlookup':
             self.set_preedit_style_only_when_lookup,
             'mincharcomplete': self.set_min_char_complete,
+            'useuslayout': self.set_use_us_layout,
             'errorsound': self.set_error_sound,
             'errorsoundfile': self.set_error_sound_file,
             'soundbackend': self.set_sound_backend,
@@ -3185,6 +3202,15 @@ class SetupUI(Gtk.Window): # type: ignore
         digits to ASCII digits has been clicked.
         '''
         self.set_ascii_digits(
+            widget.get_active(), update_gsettings=True)
+
+    def _on_use_us_layout_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
+        '''
+        The checkbutton whether to force the use of the US
+        keyboard layout has been clicked.
+        '''
+        self.set_use_us_layout(
             widget.get_active(), update_gsettings=True)
 
     def _on_emoji_trigger_characters_entry(
@@ -6098,6 +6124,30 @@ class SetupUI(Gtk.Window): # type: ignore
             else:
                 self._min_char_complete_adjustment.set_value(
                     int(min_char_complete))
+
+    def set_use_us_layout(
+            self,
+            mode: bool,
+            update_gsettings: bool = True) -> None:
+        '''Sets whether the use of the US keyboard is forced
+
+        :param mode: True if the use of the US keyboard is forced, False if not
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
+        mode = bool(mode)
+        self._settings_dict['useuslayout']['user'] = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'useuslayout',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._use_us_layout_checkbutton.set_active(mode)
 
     def set_error_sound(
             self,

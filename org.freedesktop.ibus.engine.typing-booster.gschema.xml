@@ -399,6 +399,9 @@
         have been typed.
       </description>
     </key>
+    <key name="useuslayout" type="b">
+      <default>false</default>
+    </key>
     <key name="errorsound" type="b">
       <default>false</default>
     </key>

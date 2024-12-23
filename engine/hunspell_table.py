@@ -219,6 +219,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'ibuseventsleepseconds']['user']
         LOGGER.info('self._ibus_event_sleep_seconds=%s', self._ibus_event_sleep_seconds)
 
+        self._ibus_us_keymap = IBus.Keymap('us')
+        self._use_us_layout: bool = self._settings_dict['useuslayout']['user']
+
         self._emoji_predictions: bool = self._settings_dict[
             'emojipredictions']['user']
 
@@ -748,6 +751,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'ibuseventsleepseconds': {
                 'set': self.set_ibus_event_sleep_seconds,
                 'get': self.get_ibus_event_sleep_seconds},
+            'useuslayout': {
+                'set': self.set_use_us_layout,
+                'get': self.get_use_us_layout},
             'errorsound': {
                 'set': self.set_error_sound,
                 'get': self.get_error_sound},
@@ -5251,6 +5257,32 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Returns the current value ibus event sleep seconds '''
         return self._ibus_event_sleep_seconds
 
+    def set_use_us_layout(
+            self, mode: bool, update_gsettings: bool = True) -> None:
+        '''Sets whether the use of the US keyboard is forced
+
+        :param mode: True if the use of the US keyboard is forced, False if not
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._use_us_layout:
+            return
+        self._use_us_layout = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'useuslayout',
+                GLib.Variant.new_boolean(mode))
+
+    def get_use_us_layout(self) -> bool:
+        '''Returns whether the use of the US keyboard layout is forced'''
+        return self._use_us_layout
+
     def set_error_sound(
             self, error_sound: bool, update_gsettings: bool = True) -> None:
         '''Sets whether a sound is played on error or not
@@ -6968,6 +7000,21 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         key = itb_util.KeyEvent(keyval, keycode, state)
         if self._debug_level > 1:
             LOGGER.debug('KeyEvent object: %s', key)
+        if self._use_us_layout and key.name != 'Multi_key':
+            # Do not translate the Multi_key: If the non-US layout as
+            # a Multi_key, trying to translate it to US layout just
+            # takes it away. Skipping the translation keeps the
+            # Multi_key around which is more useful, it can still be
+            # used for Compose then.
+            key = itb_util.KeyEvent(
+                IBus.Keymap.lookup_keysym(
+                    self._ibus_us_keymap,
+                    keycode,
+                    state),
+                keycode, state)
+            if self._debug_level > 1:
+                LOGGER.debug('Forcing US layout...')
+                LOGGER.debug('KeyEvent object: %s', key)
 
         disabled = False
         if not self._input_mode:
