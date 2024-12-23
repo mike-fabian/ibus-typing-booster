@@ -6,6 +6,7 @@
 # Enrico Bella <enric@e.email>, 2020.
 # Nathan <nathan95@live.it>, 2021, 2022.
 # Salvatore Cocuzza <info@salvatorecocuzza.it>, 2024.
+# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -13,7 +14,8 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2024-12-13 11:32+0100\n"
 "PO-Revision-Date: 2024-12-23 18:31+0000\n"
-"Last-Translator: Salvatore Cocuzza <info@salvatorecocuzza.it>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Italian <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/it/>\n"
 "Language: it\n"
@@ -702,7 +704,7 @@ msgstr ""
 
 #: setup/main.py:686
 msgid "Everything"
-msgstr ""
+msgstr "Tutto"
 
 #: setup/main.py:688
 msgid "Correctly spelled or previously recorded"
