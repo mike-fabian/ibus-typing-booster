@@ -115,6 +115,8 @@ N_: Callable[[str], str] = lambda a: a
 M17N_ENGINE_NAME_PATTERN = re.compile(
     r'^tb:(?P<lang>[a-z]{1,3}):(?P<name>[^\s:]+)$')
 
+AVAILABLE_IBUS_KEYMAPS = ('in', 'jp', 'kr', 'us')
+
 # When matching keybindings, only the bits in the following mask are
 # considered for key.state:
 KEYBINDING_STATE_MASK = (
@@ -5642,6 +5644,10 @@ class KeyEvent:
         # a release key if the corresponding press key has been
         # handled.
         self.handled: bool = False
+        # Whether the key was translated to an IBus keymap. This might
+        # be useful to prefer forward_key_event() over `return False`
+        # when the key was translated to an IBus keymap.
+        self.translated: bool = False
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, KeyEvent):
@@ -5688,7 +5694,8 @@ class KeyEvent:
             f'release={self.release} '
             f'modifier={self.modifier} '
             f'time={self.time} '
-            f'handled={self.handled}')
+            f'handled={self.handled} '
+            f'translated={self.translated}')
 
 def keyevent_to_keybinding(keyevent: KeyEvent) -> str:
     # pylint: disable=line-too-long

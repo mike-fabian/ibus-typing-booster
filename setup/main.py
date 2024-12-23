@@ -789,6 +789,49 @@ class SetupUI(Gtk.Window): # type: ignore
             self._ascii_digits_checkbutton,
             0, _options_grid_row, 2, 1)
 
+        self._use_ibus_keymap_checkbutton = Gtk.CheckButton(
+            # Translators: Whether the use of an IBus keymap is
+            # forced while Typing Booster is active
+            label=_('Use IBus keymap'))
+        self._use_ibus_keymap_checkbutton.set_tooltip_text(
+            _('Whether the use of an IBus keymap is forced '
+              'while Typing Booster is active. '
+              'For most users not using an IBus keymap is recommended. '
+              'In that case, the keyboard layout which was active '
+              'before switching to typing booster is used.'))
+        self._use_ibus_keymap_checkbutton.set_halign(0)
+        self._use_ibus_keymap_checkbutton.connect(
+            'clicked', self._on_use_ibus_keymap_checkbutton)
+        self._use_ibus_keymap_checkbutton.set_active(
+            self._settings_dict['useibuskeymap']['user'])
+        self._ibus_keymap_combobox = Gtk.ComboBox()
+        self._ibus_keymap_store = Gtk.ListStore(str, str)
+        for keymap in itb_util.AVAILABLE_IBUS_KEYMAPS:
+            self._ibus_keymap_store.append(
+                # Translators: “English” is used here to indicate
+                # variants of IBus keymaps producing ASCII
+                # (i.e. “English” letters). What will be displayed
+                # is the translation of “English” followed by something
+                # like “(IN)”, “(JP)”, “(KR)”, “(US)” (untranslated)
+                # which indicates the particular variant if the IBus
+                # “English” keymap used.
+                [_('English') + f' ({keymap.upper()})', keymap])
+        self._ibus_keymap_combobox.set_model(self._ibus_keymap_store)
+        renderer_text = Gtk.CellRendererText()
+        self._ibus_keymap_combobox.pack_start(renderer_text, True)
+        self._ibus_keymap_combobox.add_attribute(renderer_text, 'text', 0)
+        self._ibus_keymap_combobox.set_active(-1)
+        for i, item in enumerate(self._ibus_keymap_store):
+            if self._settings_dict['ibuskeymap']['user'] == item[1]:
+                self._ibus_keymap_combobox.set_active(i)
+        self._ibus_keymap_combobox.connect(
+            'changed', self._on_ibus_keymap_combobox_changed)
+        _options_grid_row += 1
+        self._options_grid.attach(self._use_ibus_keymap_checkbutton,
+                                  0, _options_grid_row, 1, 1)
+        self._options_grid.attach(self._ibus_keymap_combobox,
+                                  1, _options_grid_row, 1, 1)
+
         self._emoji_trigger_characters_label = Gtk.Label()
         self._emoji_trigger_characters_label.set_text(
             # Translators: The characters in this list trigger an
@@ -2304,6 +2347,8 @@ class SetupUI(Gtk.Window): # type: ignore
             'preeditstyleonlywhenlookup':
             self.set_preedit_style_only_when_lookup,
             'mincharcomplete': self.set_min_char_complete,
+            'useibuskeymap': self.set_use_ibus_keymap,
+            'ibuskeymap': self.set_ibus_keymap,
             'errorsound': self.set_error_sound,
             'errorsoundfile': self.set_error_sound_file,
             'soundbackend': self.set_sound_backend,
@@ -3186,6 +3231,28 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         self.set_ascii_digits(
             widget.get_active(), update_gsettings=True)
+
+    def _on_use_ibus_keymap_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
+        '''
+        The checkbutton whether to force the use of the US
+        keyboard layout has been clicked.
+        '''
+        self.set_use_ibus_keymap(
+            widget.get_active(), update_gsettings=True)
+
+    def _on_ibus_keymap_combobox_changed(
+            self, widget: Gtk.ComboBox) -> None:
+        '''
+        A change of the IBus keymap has been requested
+        with the  combobox
+        '''
+        tree_iter = widget.get_active_iter()
+        if tree_iter is not None:
+            model = widget.get_model()
+            keymap = model[tree_iter][1]
+            self.set_ibus_keymap(
+                keymap, update_gsettings=True)
 
     def _on_emoji_trigger_characters_entry(
             self, widget: Gtk.Entry, _property_spec: Any) -> None:
@@ -6098,6 +6165,62 @@ class SetupUI(Gtk.Window): # type: ignore
             else:
                 self._min_char_complete_adjustment.set_value(
                     int(min_char_complete))
+
+    def set_use_ibus_keymap(
+            self,
+            mode: bool,
+            update_gsettings: bool = True) -> None:
+        '''Sets whether the use of an IBus keymap is forced
+
+        :param mode: True if the use of an IBus keymap is forced, False if not
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
+        mode = bool(mode)
+        self._settings_dict['useibuskeymap']['user'] = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'useibuskeymap',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._use_ibus_keymap_checkbutton.set_active(mode)
+
+    def set_ibus_keymap(
+            self,
+            keymap: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the  IBus keymap to use if the use of an IBus keymap is forced
+
+        :param keymap: The IBus keymap to use
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', keymap, update_gsettings)
+        if not isinstance(keymap, str):
+            return
+        if keymap not in itb_util.AVAILABLE_IBUS_KEYMAPS:
+            LOGGER.warning(
+                'keymap %s not in itb_util.AVAILABLE_IBUS_KEYMAPS=%s',
+                keymap, repr(itb_util.AVAILABLE_IBUS_KEYMAPS))
+        self._settings_dict['ibuskeymap']['user'] = keymap
+        if update_gsettings:
+            self._gsettings.set_value(
+                'ibuskeymap',
+                GLib.Variant.new_string(keymap))
+        else:
+            self._ibus_keymap_combobox.set_active(-1)
+            for i, item in enumerate(self._ibus_keymap_store):
+                if keymap == item[1]:
+                    self._ibus_keymap_combobox.set_active(i)
 
     def set_error_sound(
             self,

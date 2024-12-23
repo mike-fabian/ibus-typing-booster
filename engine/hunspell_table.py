@@ -219,6 +219,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'ibuseventsleepseconds']['user']
         LOGGER.info('self._ibus_event_sleep_seconds=%s', self._ibus_event_sleep_seconds)
 
+        self._ibus_keymap: str = self._settings_dict['ibuskeymap']['user']
+        self._ibus_keymap_object: Optional[IBus.Keymap] = (
+            self._new_ibus_keymap(self._ibus_keymap))
+        self._use_ibus_keymap: bool = self._settings_dict[
+            'useibuskeymap']['user']
+
         self._emoji_predictions: bool = self._settings_dict[
             'emojipredictions']['user']
 
@@ -446,6 +452,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._surrounding_text_event_happened_after_focus_in = False
 
         self._prev_key: Optional[itb_util.KeyEvent] = None
+        self._translated_key_state = 0
         self._typed_compose_sequence: List[int] = [] # A list of key values
         self._typed_string: List[str] = [] # A list of msymbols
         self._typed_string_cursor = 0
@@ -748,6 +755,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'ibuseventsleepseconds': {
                 'set': self.set_ibus_event_sleep_seconds,
                 'get': self.get_ibus_event_sleep_seconds},
+            'useibuskeymap': {
+                'set': self.set_use_ibus_keymap,
+                'get': self.get_use_ibus_keymap},
+            'ibuskeymap': {
+                'set': self.set_ibus_keymap,
+                'get': self.get_ibus_keymap},
             'errorsound': {
                 'set': self.set_error_sound,
                 'get': self.get_error_sound},
@@ -965,6 +978,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._current_case_mode = 'orig'
         self._typed_compose_sequence = []
         self._prev_key = None
+        self._translated_key_state = 0
         self._typed_string = []
         self._typed_string_cursor = 0
         for ime in self._current_imes:
@@ -5251,6 +5265,81 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Returns the current value ibus event sleep seconds '''
         return self._ibus_event_sleep_seconds
 
+    def set_use_ibus_keymap(
+            self, mode: bool, update_gsettings: bool = True) -> None:
+        '''Sets whether the use of an IBus keymap is forced
+
+        :param mode: True if the use of an IBus keymap is forced, False if not
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._use_ibus_keymap:
+            return
+        self._use_ibus_keymap = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'useibuskeymap',
+                GLib.Variant.new_boolean(mode))
+
+    @classmethod
+    def _new_ibus_keymap(cls, keymap: str = 'in') -> Optional[IBus.Keymap]:
+        '''Construct a new IBus.Keymap object and store it in
+        self._ibus_keymap_object
+        '''
+        if keymap not in itb_util.AVAILABLE_IBUS_KEYMAPS:
+            LOGGER.warning(
+                'keymap %s not in itb_util.AVAILABLE_IBUS_KEYMAPS=%s',
+                keymap, repr(itb_util.AVAILABLE_IBUS_KEYMAPS))
+        try:
+            return IBus.Keymap(keymap)
+        except TypeError as error:
+            LOGGER.exception(
+                'Exception in IBus.Keymap("%s"): %s: %s',
+                keymap, error.__class__.__name__, error)
+            LOGGER.error('Returning None')
+            return None
+
+    def set_ibus_keymap(
+            self,
+            keymap: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the  IBus keymap to use if the use of an IBus keymap is forced
+
+        :param keymap: The IBus keymap to use
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', keymap, update_gsettings)
+        if keymap == self._ibus_keymap:
+            return
+        self._ibus_keymap = keymap
+        self._ibus_keymap_object = self._new_ibus_keymap(keymap)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'ibuskeymap',
+                GLib.Variant.new_string(keymap))
+
+    def get_use_ibus_keymap(self) -> bool:
+        '''Returns whether the use of an IBus keymap is forced'''
+        return self._use_ibus_keymap
+
+    def get_ibus_keymap(self) -> str:
+        '''Returns the name of the IBus keymap to use if the use of an
+        IBus keymap is forced
+        '''
+        return self._ibus_keymap
+
     def set_error_sound(
             self, error_sound: bool, update_gsettings: bool = True) -> None:
         '''Sets whether a sound is played on error or not
@@ -6971,6 +7060,91 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._current_preedit_text = ''
         return True
 
+    def _translate_to_ibus_keymap(
+            self, key: itb_util.KeyEvent) -> itb_util.KeyEvent:
+        '''Translate key to the selected IBus keymap'''
+        if self._ibus_keymap_object is None:
+            return key
+        state = self._translated_key_state
+        if key.release:
+            state |= IBus.ModifierType.RELEASE_MASK
+        new_key = itb_util.KeyEvent(
+            IBus.Keymap.lookup_keysym(
+                self._ibus_keymap_object, key.code, state),
+            key.code, state)
+        new_key.translated = True
+        if (key.name in ('ISO_Level3_Shift', 'Multi_key')
+            or
+            new_key.val == IBus.KEY_VoidSymbol
+            or
+            (new_key.val == key.val
+             and
+             new_key.state & itb_util.KEYBINDING_STATE_MASK
+             == key.state & itb_util.KEYBINDING_STATE_MASK)):
+            # Do not translate 'ISO_Level3_Shift' and 'Multi_key' if
+            # these are already available in the original keyboard
+            # layout, but not in the IBus keymap translated to.
+            # Translating them just would take something useful away.
+            # Also, on some desktops, 'ISO_Level3_Shift' can be set
+            # independently of the currently selected keyboard layout
+            # in the control centre of the desktop. For example in
+            # Gnome one can set 'Alt_L', 'Alt_R', 'Super_L', 'Super_R'
+            # 'Menu', or 'Control_R' to produce 'ISO_Level3_Shift'.
+            # If 'ISO_Level3_Shift' is on any of these keys, one should
+            # just leave it alone and never translate it away.
+            # Similar for the 'Multi_key': None of the IBus keymaps
+            # contains 'Multi_key', so translating 'Multi_key' would just
+            # always take it away and destroy the Compose support.
+            #
+            # Do not translate keys either when the new value is
+            # IBus.KEY_VoidSymbol, i.e. when they cannot be found in
+            # the IBus keymap to translate to. Skipping the
+            # translation for such keys keeps them around to
+            # potentially do something useful.
+            new_key = key
+        # Peter Hutterer explained to me that the state masks are
+        # updated immediately **after** pressing a modifier key. For
+        # example when the press event of Control is checked with
+        # `xev` or here in the state supplied by ibus, the state does
+        # not have the bit IBus.ModifierType.CONTROL_MASK set (it is
+        # still 0x0 if no other modifiers are pressed). But that bit
+        # is relevant for the next key press. Therefore I keep track
+        # of the modifiers bits in `self._translated_key_state` and
+        # set them when modifiers keys are pressed and remove them
+        # when modifier keys are released. Doing that I can apply the
+        # correct state bits when translating the next key to an IBus
+        # keymap.
+        if new_key.name in ('Shift_L', 'Shift_R'):
+            if new_key.release:
+                self._translated_key_state &= ~IBus.ModifierType.SHIFT_MASK
+            else:
+                self._translated_key_state |= IBus.ModifierType.SHIFT_MASK
+        if new_key.name in ('Control_L', 'Control_R'):
+            if new_key.release:
+                self._translated_key_state &= ~IBus.ModifierType.CONTROL_MASK
+            else:
+                self._translated_key_state |= IBus.ModifierType.CONTROL_MASK
+        if new_key.name in ('Alt_L', 'Alt_R'):
+            if new_key.release:
+                self._translated_key_state &= ~IBus.ModifierType.MOD1_MASK
+            else:
+                self._translated_key_state |= IBus.ModifierType.MOD1_MASK
+        if new_key.name in ('Super_L', 'Super_R'):
+            if new_key.release:
+                self._translated_key_state &= ~IBus.ModifierType.SUPER_MASK
+            else:
+                self._translated_key_state |= IBus.ModifierType.SUPER_MASK
+        if new_key.name in ('ISO_Level3_Shift'):
+            if new_key.release:
+                self._translated_key_state &= ~IBus.ModifierType.MOD5_MASK
+            else:
+                self._translated_key_state |= IBus.ModifierType.MOD5_MASK
+        self._translated_key_state &= itb_util.KEYBINDING_STATE_MASK
+        if self._debug_level > 1:
+            LOGGER.debug('new_key: %s state for next key=%x',
+                         new_key, self._translated_key_state)
+        return new_key
+
     def do_process_key_event( # pylint: disable=arguments-differ
             self, keyval: int, keycode: int, state: int) -> bool:
         '''Process Key Events
@@ -6980,6 +7154,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         key = itb_util.KeyEvent(keyval, keycode, state)
         if self._debug_level > 1:
             LOGGER.debug('KeyEvent object: %s', key)
+        if self._use_ibus_keymap:
+            key = self._translate_to_ibus_keymap(key)
 
         disabled = False
         if not self._input_mode:
@@ -7619,6 +7795,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                        client is also shown after the “:”, for example
                        like 'gtk3-im:firefox', 'gtk4-im:gnome-text-editor', …
         '''
+        LOGGER.debug('FIXME self._translated_key_state=%s', self._translated_key_state)
         if self._debug_level > 1:
             LOGGER.debug(
                 'object_path=%s client=%s self.client_capabilities=%s\n',

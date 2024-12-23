@@ -399,6 +399,24 @@
         have been typed.
       </description>
     </key>
+    <key name="useibuskeymap" type="b">
+      <default>false</default>
+      <summary>Use an IBus keymap</summary>
+      <description>
+        Whether the use of an IBus keymap is forced while Typing
+        Booster is active. If this option is not used, the keyboard
+        layout which was active before switching to typing booster is
+        used.
+      </description>
+    </key>
+    <key name="ibuskeymap" type="s">
+      <default>'in'</default>
+      <summary>The ibus keymap to use</summary>
+      <description>
+        The ibus keymap to use when forcing an IBus keymap while
+        Typing Booster is active is enabled.
+      </description>
+    </key>
     <key name="errorsound" type="b">
       <default>false</default>
     </key>
