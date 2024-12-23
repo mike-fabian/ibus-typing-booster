@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 23 Dez 2024 Release 2.27.2
+* Add option to force the use of the US keyboard layout
+* Translation update from Weblate (it 99.5%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 20 Dez 2024 Release 2.27.1
 * Use (almost) the same symbols in the panel as ibus-m17n for the engines emulating ibus-m17n
 * Set layout to “default[lv3:ralt_switch]” for the same m17n engines where ibus-m17n sets this
