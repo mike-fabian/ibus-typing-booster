@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2024-12-20 19:58+0100\n"
+"POT-Creation-Date: 2024-12-25 11:31+0100\n"
 "PO-Revision-Date: 2024-12-14 11:38+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Japanese <https://translate.fedoraproject.org/projects/ibus-"
@@ -331,31 +331,31 @@ msgstr "地方指示子"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2815
+#: engine/itb_util.py:2820
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "その他、雑多、様々、多様"
 
-#: engine/itb_util.py:4495 engine/itb_util.py:5222
+#: engine/itb_util.py:4500 engine/itb_util.py:5227
 msgid "File not found"
 msgstr "ファイルが見つかりません"
 
-#: engine/itb_util.py:4499 engine/itb_util.py:5226
+#: engine/itb_util.py:4504 engine/itb_util.py:5231
 msgid "Permission error"
 msgstr "パーミッションエラーです"
 
-#: engine/itb_util.py:4503 engine/itb_util.py:5230
+#: engine/itb_util.py:4508 engine/itb_util.py:5235
 msgid "Unicode decoding error"
 msgstr "Unicode 解読エラー"
 
-#: engine/itb_util.py:4507 engine/itb_util.py:5234
+#: engine/itb_util.py:4512 engine/itb_util.py:5239
 msgid "Unknown error"
 msgstr "不明なエラー"
 
-#: engine/itb_util.py:5200
+#: engine/itb_util.py:5205
 msgid "Native Keyboard"
 msgstr "ネイティブキーボード"
 
-#: engine/itb_util.py:5202
+#: engine/itb_util.py:5207
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -368,11 +368,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5876
+#: engine/itb_util.py:5881
 msgid "Key input"
 msgstr "キーの入力"
 
-#: engine/itb_util.py:5882
+#: engine/itb_util.py:5887
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -380,27 +380,27 @@ msgstr "キャンセル"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5889
+#: engine/itb_util.py:5894
 msgid "Please press a key (or a key combination)"
 msgstr "キーを入力してください"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5894
+#: engine/itb_util.py:5899
 msgid "The dialog will be closed when the key is released"
 msgstr "このダイアログはキーリリース時に閉じられます"
 
-#: engine/itb_util.py:5933
+#: engine/itb_util.py:5938
 msgid "A completion input method to speedup typing."
 msgstr "入力を高速化するための補完入力方式。"
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5942
+#: engine/itb_util.py:5947
 msgid "translator-credits"
 msgstr ""
 
-#: engine/itb_util.py:5950
+#: engine/itb_util.py:5955
 msgid "Online documentation:"
 msgstr "オンラインドキュメント："
 
