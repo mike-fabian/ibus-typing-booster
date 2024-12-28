@@ -6682,8 +6682,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._unit_test:
             self.forward_key_event(key.val, key.code, key.state)
             return True
+        # forward_key_event() doesn’t work in Gtk4 and it doesn’t seem
+        # to work in SDL2 applications like supertuxkart and
+        # performous, see
+        # https://github.com/mike-fabian/ibus-typing-booster/issues/580
         if (self._avoid_forward_key_event
             or self._im_client.startswith('gtk4-im')
+            or self._im_client.startswith('SDL2_Application')
             or
             (self.client_capabilities & itb_util.Capabilite.SYNC_PROCESS_KEY)):
             if self._debug_level > 0:
