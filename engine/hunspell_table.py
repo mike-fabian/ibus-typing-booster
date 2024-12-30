@@ -6582,6 +6582,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         commit gets to application first and the applications receives
         “ word”. No amount of sleep before the “return False” can fix
         this. See: https://bugzilla.redhat.com/show_bug.cgi?id=1291238
+        This has been fixed though at least when triggering a commit
+        with space by inserting the space into the application by
+        committing it as well instead of sending it to the application.
+        I.e. when a space triggers a commit, neither `return False`
+        nor `forward_key_event()` is used.
 
         3) “return False” fails to work correctly when the key.code is
         incorrect. The on-screen-keyboard (OSK) often seems to pass
@@ -6722,10 +6727,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.info('Fixed key.code = %s', key.code)
             else:
                 LOGGER.info('Could not fix key.code, still key.code == 0')
-        if self._debug_level > 0:
             LOGGER.info('Forwarding key event')
-        self.forward_key_event(key.val, key.code, key.state)
-        return True
+            self.forward_key_event(key.val, key.code, key.state)
+            return True
+        if self._debug_level > 0:
+            LOGGER.info('Returning False')
+        return False
 
     def _forward_generated_key_event(self, keyval: int) -> None:
         '''Forward a generated key event for keyval to the application.'''
