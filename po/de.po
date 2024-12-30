@@ -14,16 +14,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-12-30 22:58+0100\n"
-"PO-Revision-Date: 2024-12-14 11:38+0000\n"
+"PO-Revision-Date: 2024-12-30 22:11+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8.4\n"
+"X-Generator: Weblate 5.9.1\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -825,7 +825,7 @@ msgstr ""
 #. forced while Typing Booster is active
 #: setup/main.py:795
 msgid "Use IBus keymap"
-msgstr ""
+msgstr "IBus-Tastaturbelegung benutzen"
 
 #: setup/main.py:797
 msgid ""
@@ -833,6 +833,10 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
+"Ob die Verwendung einer IBus-Tastaturbelegung erzwungen wird, während Typing "
+"Booster aktiv ist. Für die meisten Benutzer wird empfohlen, keine IBus-"
+"Tastaturbelegung zu verwenden. In diesem Fall wird das Tastaturlayout "
+"verwendet, das vor dem Umschalten zu Typing Booster aktiv war."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -843,7 +847,7 @@ msgstr ""
 #. “English” keymap used.
 #: setup/main.py:818
 msgid "English"
-msgstr ""
+msgstr "Englisch"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
