@@ -110,6 +110,8 @@ class ItbM17nEmuTestCase(unittest.TestCase):
     orig_dictionary_names: List[str] = []
     orig_avoid_forward_key_event = False
     orig_keybindings: Dict[str, List[str]] = {}
+    orig_use_ibus_keymap = False
+    orig_ibus_keykmap = 'in'
 
     def setUp(self) -> None:
         # Patch the IBus stuff with the mock classes:
@@ -202,6 +204,10 @@ class ItbM17nEmuTestCase(unittest.TestCase):
             self.engine.get_avoid_forward_key_event())
         self.orig_keybindings = (
             self.engine.get_keybindings())
+        self.orig_use_ibus_keymap = (
+            self.engine.get_use_ibus_keymap())
+        self.orig_ibus_keymap = (
+            self.engine.get_ibus_keymap())
 
     def restore_original_settings(self) -> None:
         if self.engine is None:
@@ -271,6 +277,12 @@ class ItbM17nEmuTestCase(unittest.TestCase):
             update_gsettings=False)
         self.engine.set_keybindings(
             self.orig_keybindings,
+            update_gsettings=False)
+        self.engine.set_use_ibus_keymap(
+            self.orig_use_ibus_keymap,
+            update_gsettings=False)
+        self.engine.set_ibus_keymap(
+            self.orig_ibus_keymap,
             update_gsettings=False)
 
     def set_default_settings(self) -> None:

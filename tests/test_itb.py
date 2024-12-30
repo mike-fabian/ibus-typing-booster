@@ -208,6 +208,10 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_avoid_forward_key_event())
         self.orig_keybindings = (
             self.engine.get_keybindings())
+        self.orig_use_ibus_keymap = (
+            self.engine.get_use_ibus_keymap())
+        self.orig_ibus_keymap = (
+            self.engine.get_ibus_keymap())
 
     def restore_original_settings(self) -> None:
         self.engine.set_disable_in_terminals(
@@ -275,6 +279,12 @@ class ItbTestCase(unittest.TestCase):
             update_gsettings=False)
         self.engine.set_keybindings(
             self.orig_keybindings,
+            update_gsettings=False)
+        self.engine.set_use_ibus_keymap(
+            self.orig_use_ibus_keymap,
+            update_gsettings=False)
+        self.engine.set_ibus_keymap(
+            self.orig_ibus_keymap,
             update_gsettings=False)
 
     def set_default_settings(self) -> None:
@@ -363,6 +373,10 @@ class ItbTestCase(unittest.TestCase):
             'toggle_input_mode_on_off': [],
             'toggle_off_the_record': ['Mod5+F9'],
         }, update_gsettings=False)
+        self.engine.set_use_ibus_keymap(
+            False, update_gsettings=False)
+        self.engine.set_ibus_keymap(
+            'in', update_gsettings=False)
 
     def get_transliterator_or_skip(self, ime: str) -> Optional[Any]:
         try:
@@ -1751,6 +1765,364 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '₹')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, '₹ ')
+
+    def test_russian_keyboard_use_ibus_keymap_false(self) -> None:
+        self.engine.set_current_imes(['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(['None'], update_gsettings=False)
+        self.engine.set_use_ibus_keymap(False, update_gsettings=False)
+        # key sequence 1: Cyrillic_en (y on US keymap)
+        self.engine.do_process_key_event(IBus.KEY_Cyrillic_en, 21, 0)
+        self.assertNotEqual(self.engine._prev_key, None)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, True) # type: ignore
+        self.assertEqual(self.engine.mock_preedit_text, 'н')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_Cyrillic_en, 21,
+                                         IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, True) # type: ignore
+        self.assertEqual(self.engine.mock_preedit_text, 'н')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # key sequence 2: Alt_R+4
+        self.engine.do_process_key_event(IBus.KEY_Alt_R, 100, 0)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine.mock_preedit_text, 'н')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_4, 5,
+                                         IBus.ModifierType.MOD1_MASK)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        # A commit is triggered and a press event of Alt_R+4 is passed
+        # through, what happens with that depends on the applications,
+        # in gedit for example nothing happens. The
+        # MockEngine.forward_key_event() inserts the Unicode value of
+        # the key, i.e. '4':
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'н4')
+        self.assertEqual(self.engine._prev_key.val, IBus.KEY_4) # type: ignore
+        self.engine.do_process_key_event(IBus.KEY_4, 5,
+                                         IBus.ModifierType.MOD1_MASK
+                                         | IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        # Another key with the Unicode value of '4' is passed through:
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'н44')
+        self.engine.do_process_key_event(IBus.KEY_Alt_R, 100,
+                                         IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'н44')
+        # key sequence 3: Shift_R+Alt_R+Cyrillic_CHE (X on US keymap)
+        self.engine.do_process_key_event(IBus.KEY_Shift_R, 54, 0)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'н44')
+        self.engine.do_process_key_event(IBus.KEY_Alt_R, 100,
+                                         IBus.ModifierType.SHIFT_MASK)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'н44')
+        self.engine.do_process_key_event(IBus.KEY_Cyrillic_CHE, 45,
+                                         IBus.ModifierType.SHIFT_MASK
+                                         | IBus.ModifierType.MOD1_MASK)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        # A commit is triggered and a press key event of
+        # Shift_R+Alt_R+Cyrillic_CHE is passed trough:
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'н44Ч')
+        self.engine.do_process_key_event(IBus.KEY_Cyrillic_CHE, 45,
+                                         IBus.ModifierType.SHIFT_MASK
+                                         | IBus.ModifierType.MOD1_MASK
+                                         | IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        # Another key with the Unicode value of 'Ч is passed through:
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'н44ЧЧ')
+        self.engine.do_process_key_event(IBus.KEY_Alt_R, 100,
+                                         IBus.ModifierType.SHIFT_MASK
+                                         | IBus.ModifierType.MOD1_MASK
+                                         | IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'н44ЧЧ')
+        self.engine.do_process_key_event(IBus.KEY_Shift_R, 54,
+                                         IBus.ModifierType.SHIFT_MASK
+                                         | IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'н44ЧЧ')
+
+    def test_russian_keyboard_use_ibus_keymap_true_keymap_in(self) -> None:
+        self.engine.set_current_imes(['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(['None'], update_gsettings=False)
+        self.engine.set_use_ibus_keymap(True, update_gsettings=False)
+        self.engine.set_ibus_keymap('in', update_gsettings=False)
+        # key sequence 1: Cyrillic_en (y on US keymap)
+        self.engine.do_process_key_event(IBus.KEY_Cyrillic_en, 21, 0)
+        self.assertNotEqual(self.engine._prev_key, None)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, True) # type: ignore
+        self.assertEqual(self.engine.mock_preedit_text, 'y')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_Cyrillic_en, 21,
+                                         IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, True) # type: ignore
+        self.assertEqual(self.engine.mock_preedit_text, 'y')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # key sequence 2: Alt_R+4
+        self.engine.do_process_key_event(IBus.KEY_Alt_R, 100, 0)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, 'ISO_Level3_Shift') # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x80)
+        self.assertEqual(self.engine.mock_preedit_text, 'y')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_4, 5,
+                                         IBus.ModifierType.MOD1_MASK)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, '4') # type: ignore
+        self.assertEqual(self.engine._prev_key.mod1, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.mod5, True) # type: ignore
+        # A commit is triggered and a press event of ISO_Level3_Shift+4 is passed
+        # through, what happens with that depends on the applications,
+        # in gedit for example nothing happens. The
+        # MockEngine.forward_key_event() inserts the Unicode value of
+        # the key, i.e. '4':
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'y4')
+        self.assertEqual(self.engine._prev_key.val, IBus.KEY_4) # type: ignore
+        # The commit of a **digit** has reset the translated key state:
+        self.assertEqual(self.engine._translated_key_state, 0)
+        self.engine.do_process_key_event(IBus.KEY_4, 5,
+                                         IBus.ModifierType.MOD1_MASK
+                                         | IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, '4') # type: ignore
+        self.assertEqual(self.engine._prev_key.mod1, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.mod5, False) # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0)
+        # Another key with the Unicode value of '4' is passed through:
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'y44')
+        self.engine.do_process_key_event(IBus.KEY_Alt_R, 100,
+                                         IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'y44')
+        # key sequence 3: Shift_R+Alt_R+Cyrillic_CHE (X on US keymap)
+        self.engine.do_process_key_event(IBus.KEY_Shift_R, 54, 0)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x1)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'y44')
+        self.engine.do_process_key_event(IBus.KEY_Alt_R, 100,
+                                         IBus.ModifierType.SHIFT_MASK)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, 'ISO_Level3_Shift') # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x81)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'y44')
+        self.engine.do_process_key_event(IBus.KEY_Cyrillic_CHE, 45,
+                                         IBus.ModifierType.SHIFT_MASK
+                                         | IBus.ModifierType.MOD1_MASK)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.mod1, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.mod5, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, 'X') # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x81)
+        # A commit is triggered and a press key event of
+        # Shift_R+Alt_R+X is passed trough:
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'y44X')
+        # This commit of a **non** digit has **not** reset the translated key state:
+        self.assertEqual(self.engine._translated_key_state, 0x81)
+        self.engine.do_process_key_event(IBus.KEY_Cyrillic_CHE, 45,
+                                         IBus.ModifierType.SHIFT_MASK
+                                         | IBus.ModifierType.MOD1_MASK
+                                         | IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, 'X') # type: ignore
+        self.assertEqual(self.engine._prev_key.mod1, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.mod5, True) # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x81)
+        # Another key with the Unicode value of 'X' is passed through:
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'y44XX')
+        self.engine.do_process_key_event(IBus.KEY_Alt_R, 100,
+                                         IBus.ModifierType.SHIFT_MASK
+                                         | IBus.ModifierType.MOD1_MASK
+                                         | IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, 'ISO_Level3_Shift') # type: ignore
+        self.assertEqual(self.engine._prev_key.mod1, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.mod5, True) # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x1)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'y44XX')
+        self.engine.do_process_key_event(IBus.KEY_Shift_R, 54,
+                                         IBus.ModifierType.SHIFT_MASK
+                                         | IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, 'Shift_R') # type: ignore
+        self.assertEqual(self.engine._prev_key.mod1, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.mod5, False) # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'y44XX')
+
+    def test_russian_keyboard_use_ibus_keymap_true_keymap_in_hi_inscript2(self) -> None:
+        dummy_trans = self.get_transliterator_or_skip('hi-inscript2')
+        self.engine.set_current_imes(['hi-inscript2'], update_gsettings=False)
+        self.engine.set_dictionary_names(['None'], update_gsettings=False)
+        self.engine.set_use_ibus_keymap(True, update_gsettings=False)
+        self.engine.set_ibus_keymap('in', update_gsettings=False)
+        # key sequence 1: Cyrillic_en (y on US keymap)
+        self.engine.do_process_key_event(IBus.KEY_Cyrillic_en, 21, 0)
+        self.assertNotEqual(self.engine._prev_key, None)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, True) # type: ignore
+        self.assertEqual(self.engine.mock_preedit_text, 'ब')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_Cyrillic_en, 21,
+                                         IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, True) # type: ignore
+        self.assertEqual(self.engine.mock_preedit_text, 'ब')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # key sequence 2: Alt_R+4
+        self.engine.do_process_key_event(IBus.KEY_Alt_R, 100, 0)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, 'ISO_Level3_Shift') # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x80)
+        self.assertEqual(self.engine.mock_preedit_text, 'ब')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_4, 5,
+                                         IBus.ModifierType.MOD1_MASK)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, '4') # type: ignore
+        self.assertEqual(self.engine._prev_key.msymbol, 'G-4') # type: ignore
+        self.assertEqual(self.engine._prev_key.mod1, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.mod5, True) # type: ignore
+        self.assertEqual(self.engine.mock_preedit_text, 'ब₹')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine._prev_key.val, IBus.KEY_4) # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x80)
+        self.engine.do_process_key_event(IBus.KEY_4, 5,
+                                         IBus.ModifierType.MOD1_MASK
+                                         | IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, '4') # type: ignore
+        self.assertEqual(self.engine._prev_key.msymbol, 'G-4') # type: ignore
+        self.assertEqual(self.engine._prev_key.mod1, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.mod5, True) # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x80)
+        self.assertEqual(self.engine.mock_preedit_text, 'ब₹')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_Alt_R, 100,
+                                         IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'ब₹')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # key sequence 3: Shift_R+Alt_R+Cyrillic_CHE (X on US keymap)
+        self.engine.do_process_key_event(IBus.KEY_Shift_R, 54, 0)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x1)
+        self.assertEqual(self.engine.mock_preedit_text, 'ब₹')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_Alt_R, 100,
+                                         IBus.ModifierType.SHIFT_MASK)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, 'ISO_Level3_Shift') # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x81)
+        self.assertEqual(self.engine.mock_preedit_text, 'ब₹')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_Cyrillic_CHE, 45,
+                                         IBus.ModifierType.SHIFT_MASK
+                                         | IBus.ModifierType.MOD1_MASK)
+        self.assertEqual(self.engine._prev_key.release, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.mod1, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.mod5, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, 'X') # type: ignore
+        self.assertEqual(self.engine._prev_key.msymbol, 'G-X') # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x81)
+        self.assertEqual(self.engine.mock_preedit_text, 'ब₹ॐ')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine._translated_key_state, 0x81)
+        self.engine.do_process_key_event(IBus.KEY_Cyrillic_CHE, 45,
+                                         IBus.ModifierType.SHIFT_MASK
+                                         | IBus.ModifierType.MOD1_MASK
+                                         | IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, 'X') # type: ignore
+        self.assertEqual(self.engine._prev_key.msymbol, 'G-X') # type: ignore
+        self.assertEqual(self.engine._prev_key.mod1, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.mod5, True) # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x81)
+        self.assertEqual(self.engine.mock_preedit_text, 'ब₹ॐ')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_Alt_R, 100,
+                                         IBus.ModifierType.SHIFT_MASK
+                                         | IBus.ModifierType.MOD1_MASK
+                                         | IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, 'ISO_Level3_Shift') # type: ignore
+        self.assertEqual(self.engine._prev_key.mod1, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.mod5, True) # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x1)
+        self.assertEqual(self.engine.mock_preedit_text, 'ब₹ॐ')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_Shift_R, 54,
+                                         IBus.ModifierType.SHIFT_MASK
+                                         | IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine._prev_key.release, True) # type: ignore
+        self.assertEqual(self.engine._prev_key.handled, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.name, 'Shift_R') # type: ignore
+        self.assertEqual(self.engine._prev_key.mod1, False) # type: ignore
+        self.assertEqual(self.engine._prev_key.mod5, False) # type: ignore
+        self.assertEqual(self.engine._translated_key_state, 0x0)
+        self.assertEqual(self.engine.mock_preedit_text, 'ब₹ॐ')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # A space with keycode 0 cannot be translated to the IBus keymap but is
+        # used as is:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine._prev_key.translated, False) # type: ignore
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'ब₹ॐ ')
+        self.engine.do_process_key_event(IBus.KEY_space, 57, 0)
+        # With the right keycode 57, the space could be translated but as
+        # the result is identical, the untranslated key is used:
+        self.assertEqual(self.engine._prev_key.translated, False) # type: ignore
+        self.assertEqual(self.engine.mock_committed_text, 'ब₹ॐ  ')
 
     def test_digits_used_in_keybindings(self) -> None:
         self.engine.set_current_imes(
