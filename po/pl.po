@@ -11,17 +11,17 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2024-12-30 22:58+0100\n"
-"PO-Revision-Date: 2024-12-15 13:33+0000\n"
+"PO-Revision-Date: 2024-12-31 13:49+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/pl/>\n"
+"Language-Team: Polish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.8.4\n"
+"X-Generator: Weblate 5.9.1\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -405,7 +405,7 @@ msgstr ""
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:5954
 msgid "translator-credits"
-msgstr "Piotr Drąg <piotrdrag@gmail.com>, 2016-2023"
+msgstr "Piotr Drąg <piotrdrag@gmail.com>, 2016-2024"
 
 #: engine/itb_util.py:5962
 msgid "Online documentation:"
@@ -701,6 +701,17 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"Wybiera, jaki rodzaj wprowadzanych słów ma być zapisywany w bazie danych "
+"użytkownika: „Wszystko” — każde wpisane słowo jest dodawane do bazy danych "
+"użytkownika lub aktualizowana jest jego częstotliwość, jeśli już w niej "
+"jest. „Poprawnie napisane lub poprzednio zapisane” — wpisane słowo jest "
+"dodawane do bazy danych użytkownika tylko, jeśli jest prawdopodobnie "
+"poprawnie napisane. Jeśli słowo jest już w bazie danych użytkownika, to jego "
+"częstotliwość jest aktualizowana bez względu na jego poprawność. „Poprawnie "
+"napisane” — wpisane słowo jest dodawane do bazy danych użytkownika lub jego "
+"częstotliwość aktualizowana tylko, jeśli jest prawdopodobnie poprawnie "
+"napisane. „Nic” — żadne wprowadzane słowa nie są aktualizowane w bazie "
+"danych użytkownika."
 
 #: setup/main.py:666
 msgid "Everything"
@@ -813,7 +824,7 @@ msgstr ""
 #. forced while Typing Booster is active
 #: setup/main.py:795
 msgid "Use IBus keymap"
-msgstr ""
+msgstr "Użycie mapy klawiszy IBus"
 
 #: setup/main.py:797
 msgid ""
@@ -821,6 +832,10 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
+"Czy użycie mapy klawiszy IBus jest wymuszane, kiedy wspieranie pisania jest "
+"aktywne. Dla większości użytkowników używanie mapy klawiszy IBus nie jest "
+"zalecane. W takim przypadku używany jest układ klawiatury, który był aktywny "
+"przed przełączeniem na wspieranie pisania."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -831,7 +846,7 @@ msgstr ""
 #. “English” keymap used.
 #: setup/main.py:818
 msgid "English"
-msgstr ""
+msgstr "angielski"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
