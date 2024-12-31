@@ -10,8 +10,7 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2024-12-30 22:58+0100\n"
 "PO-Revision-Date: 2024-12-31 08:15+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ka/>\n"
 "Language: ka\n"
@@ -809,7 +808,7 @@ msgstr ""
 #. forced while Typing Booster is active
 #: setup/main.py:795
 msgid "Use IBus keymap"
-msgstr ""
+msgstr "IBus-ის ღილაკების რუკის გამოყენება"
 
 #: setup/main.py:797
 msgid ""
@@ -817,6 +816,11 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
+"არის თუ არა IBus-ის ღილაკების რუკის გამოყენება ნაძალადევი, როცა კრეფის "
+"ამაჩქარებელი აქტიურია. რეკომენდებულია მომხმარებლების უმრავლესობისთვის, "
+"რომლებიც IBus-ის ღილაკების რუკას არ იყენებს. ამ შემთხვევაში გამოყენებული "
+"იქნება კლავიატურის განლაგება, რომელიც აქტიური იყო კრეფის ამაჩქარებლის "
+"ჩართვამდე."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
