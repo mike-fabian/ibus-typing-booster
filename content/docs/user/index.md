@@ -1067,6 +1067,10 @@ unrestricted and still use the “normal” typing booster engine for its
 more fancy features like completion, spellchecking, predictions based
 on previous user input and multilingual input.
 
+If you used the `☑️ Use US keyboard layout` option in an ibus-m17n
+engine, you want to use the `☑️ Use IBus keymap [ English (IN) ]`
+option in the ibus-typing booster engine mimicking that ibus-m17n
+engine.
 
 ⚠️ **Current limitations**: 
 
@@ -1091,11 +1095,6 @@ on previous user input and multilingual input.
 - **Preedit Colours**: Unlike ibus-m17n, Typing Booster does not
     support configuring preedit text foreground and background
     colors. This feature is unlikely to be added.
-
-- **Keyboard Layout Option**: Typing Booster lacks the ibus-m17n setup
-  tool’s `☑️ Use US keyboard layout` option.  Currently, it uses the
-  keyboard layout active before switching to Typing Booster. This
-  feature might be implemented in the future.
 
 ###### 3
 ## Key and Mouse bindings
