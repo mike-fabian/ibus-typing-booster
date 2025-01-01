@@ -1069,8 +1069,8 @@ on previous user input and multilingual input.
 
 If you used the `☑️ Use US keyboard layout` option in an ibus-m17n
 engine, you want to use the `☑️ Use IBus keymap [ English (IN) ]`
-option in the ibus-typing booster engine mimicking that ibus-m17n
-engine.
+option to [force the use of an English IBus keymap](#2_2_8) in the
+ibus-typing booster engine mimicking that ibus-m17n engine.
 
 ⚠️ **Current limitations**: 
 
