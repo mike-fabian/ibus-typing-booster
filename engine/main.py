@@ -395,7 +395,7 @@ def write_xml() -> None:
                 if re.fullmatch(pattern, name):
                     symbol = pattern_symbol
                     break
-            longname = f'{ime} (Typing Booster)'
+            longname = f'{ime} (tb)'
             language = m17n_lang
             icon =  m17n_db_info.get_icon(ime)
             description = m17n_db_info.get_description(ime)
