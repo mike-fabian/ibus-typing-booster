@@ -288,95 +288,14 @@ class ItbTestCase(unittest.TestCase):
             update_gsettings=False)
 
     def set_default_settings(self) -> None:
-        self.engine.set_disable_in_terminals(
-            False, update_gsettings=False)
-        self.engine.set_ascii_digits(
-            False, update_gsettings=False)
-        self.engine.set_emoji_prediction_mode(
-            False, update_gsettings=False)
-        self.engine.set_off_the_record_mode(
-            False, update_gsettings=False)
-        self.engine.set_record_mode(
-            0, update_gsettings=False)
-        self.engine.set_emoji_trigger_characters(
-            '_', update_gsettings=False)
-        self.engine.set_auto_commit_characters(
-            '', update_gsettings=False)
-        self.engine.set_tab_enable(
-            False, update_gsettings=False)
-        self.engine.set_inline_completion(
-            0, update_gsettings=False)
-        self.engine.set_auto_capitalize(
-            False, update_gsettings=False)
-        self.engine.set_auto_select_candidate(
-            0, update_gsettings=False)
-        self.engine.set_remember_last_used_preedit_ime(
-            False, update_gsettings=False)
-        self.engine.set_page_size(
-            6, update_gsettings=False)
-        self.engine.set_lookup_table_orientation(
-            1, update_gsettings=False)
-        self.engine.set_min_char_complete(
-            1, update_gsettings=False)
-        self.engine.set_show_number_of_candidates(
-            False, update_gsettings=False)
-        self.engine.set_add_space_on_commit(
-            True, update_gsettings=False)
-        self.engine.set_current_imes(
-            ['NoIME'], update_gsettings=False)
-        self.engine.set_dictionary_names(
-            ['en_US'], update_gsettings=False)
-        self.engine.set_avoid_forward_key_event(
-            False, update_gsettings=False)
-        self.engine.set_keybindings({
-            'cancel': ['Escape'],
-            'change_line_direction_left_to_right': [],
-            'change_line_direction_right_to_left': [],
-            'change_line_direction_toggle': [],
-            'commit': [],
-            'commit_and_forward_key': [],
-            'commit_candidate_1': [],
-            'commit_candidate_1_plus_space': ['1', 'KP_1', 'F1'],
-            'commit_candidate_2': [],
-            'commit_candidate_2_plus_space': ['2', 'KP_2', 'F2'],
-            'commit_candidate_3': [],
-            'commit_candidate_3_plus_space': ['3', 'KP_3', 'F3'],
-            'commit_candidate_4': [],
-            'commit_candidate_4_plus_space': ['4', 'KP_4', 'F4'],
-            'commit_candidate_5': [],
-            'commit_candidate_5_plus_space': ['5', 'KP_5', 'F5'],
-            'commit_candidate_6': [],
-            'commit_candidate_6_plus_space': ['6', 'KP_6', 'F6'],
-            'commit_candidate_7': [],
-            'commit_candidate_7_plus_space': ['7', 'KP_7', 'F7'],
-            'commit_candidate_8': [],
-            'commit_candidate_8_plus_space': ['8', 'KP_8', 'F8'],
-            'commit_candidate_9': [],
-            'commit_candidate_9_plus_space': ['9', 'KP_9', 'F9'],
-            'enable_lookup': ['Tab', 'ISO_Left_Tab'],
-            'lookup_related': ['Mod5+F12'],
-            'lookup_table_page_down': ['Page_Down', 'KP_Page_Down', 'KP_Next'],
-            'lookup_table_page_up': ['Page_Up', 'KP_Page_Up', 'KP_Prior'],
-            'next_case_mode': ['Shift_L'],
-            'next_dictionary': ['Mod1+Down', 'Mod1+KP_Down'],
-            'next_input_method': ['Control+Down', 'Control+KP_Down'],
-            'previous_case_mode': ['Shift_R'],
-            'previous_dictionary': ['Mod1+Up', 'Mod1+KP_Up'],
-            'previous_input_method': ['Control+Up', 'Control+KP_Up'],
-            'select_next_candidate':
-            ['Tab', 'ISO_Left_Tab', 'Down', 'KP_Down'],
-            'select_previous_candidate':
-            ['Shift+Tab', 'Shift+ISO_Left_Tab', 'Up', 'KP_Up'],
-            'setup': ['Mod5+F10'],
-            'speech_recognition': [],
-            'toggle_emoji_prediction': ['Mod5+F6'],
-            'toggle_input_mode_on_off': [],
-            'toggle_off_the_record': ['Mod5+F9'],
-        }, update_gsettings=False)
-        self.engine.set_use_ibus_keymap(
-            False, update_gsettings=False)
-        self.engine.set_ibus_keymap(
-            'in', update_gsettings=False)
+        if self.engine is None:
+            return
+        for key in self.engine._settings_dict:
+            if 'set_function' in self.engine._settings_dict[key]:
+                self.engine._settings_dict[key]['set_function'](
+                    self.engine._settings_dict[key]['default'],
+                    update_gsettings=False)
+        return
 
     def get_transliterator_or_skip(self, ime: str) -> Optional[Any]:
         try:
