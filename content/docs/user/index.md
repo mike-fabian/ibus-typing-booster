@@ -975,14 +975,14 @@ be in the environment to make it work. Qt5 programs on Wayland need
 The video demonstrates how to use the simple additional engines of
 ibus-typing-booster to mimic the behavior of ibus-m17n.
 
-⚠️ **Note**: The video shows underlining in the preedit text, even
-though the option to underline the preedit is off both in ibus-m17n
-and ibus-typing booster. This underlining occurs because the video was
-recorded in a GNOME Wayland session, where Wayland always underlines
-the preedit text. To compare the behavior of ibus-m17n with the Typing
-Booster engines emulating it, enabling underlining is helpful, as it
-makes it easier to see that both commit text at the exact same
-moments.
+⚠️ **Note**: The video shows underlining in the preedit text. That
+option is off by default in both ibus-m17n and ibus-typing-booster.
+But for this video it has been switched on because it is helpful to
+compare the behavior of ibus-m17n with the Typing Booster engines
+emulating it, it makes it easier to see that both commit text at the
+exact same moments (The video has been recorded in a Gnome X11 session,
+in a Gnome Wayland session the preedit is always underlined with a single
+underline anyway, no matter how the options in the engines are set).
 
 ibus-typing-booster can fully emulate the behavior of ibus-m17n by
 configuring its settings to disable all advanced features, restricting
@@ -1033,10 +1033,10 @@ engines that emulate ibus-m17n out of the box. For example:
 
 ```
 $ ibus list-engine  | grep latn-post 
-  tb:t:latn-post - t-latn-post (Typing Booster)
+  tb:t:latn-post - t-latn-post (tb)
   m17n:t:latn-post - t-latn-post (m17n)
 $ ibus list-engine  | grep hi-itrans
-  tb:hi:itrans - hi-itrans (Typing Booster)
+  tb:hi:itrans - hi-itrans (tb)
   m17n:hi:itrans - hi-itrans (m17n)
 $
 ```
