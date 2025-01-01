@@ -22,6 +22,7 @@ date: 2021-09-30
         * [Reopening preëdits](#2_2_5)
         * [Disabling in terminals](#2_2_6)
         * [Autosettings](#2_2_7)
+        * [Forcing an IBus keymap](#2_2_8)
     * [Simulate the behaviour of ibus-m17n](#2_3)
 1. [Key and Mouse bindings](#3)
     * [The “AltGr” key](#3_1)
@@ -966,6 +967,14 @@ on Gnome Wayland **except** for the two browsers `firefox` and
 be in the environment to make it work. Qt5 programs on Wayland need
 `QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1` and Qt4 programs on Wayland need
 `QT_ACCESSIBILITY=1`.
+
+###### 2_2_8
+## Forcing an IBus keymap
+
+{{<
+figure src="images/user-docs/setup-tool-options-tab-showing-use-ibus-keymap-option.png"
+caption="Screenshot of the Options-Tab of the Typing Booster setup tool"
+>}}
 
 ###### 2_3
 ## Simulate the behaviour of ibus-m17n
