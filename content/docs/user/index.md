@@ -972,7 +972,7 @@ be in the environment to make it work. Qt5 programs on Wayland need
 ## Forcing an IBus keymap
 
 {{<
-figure src="images/user-docs/setup-tool-options-tab-showing-use-ibus-keymap-option.png"
+figure src="/images/user-docs/setup-tool-options-tab-showing-use-ibus-keymap-option.png"
 caption="Screenshot of the Options-Tab of the Typing Booster setup tool"
 >}}
 
