@@ -976,6 +976,206 @@ figure src="/images/user-docs/setup-tool-options-tab-showing-use-ibus-keymap-opt
 caption="Screenshot of the Options-Tab of the Typing Booster setup tool"
 >}}
 
+By default, Typing Booster uses the keyboard layout which was active
+before switching to Typing Booster. That is also probably the best for
+most users.
+
+For example, if one is using an English (US) keyboard layout and then
+switches to Typing Booster, then that English (US) keyboard layout
+will continue to be used in Typing Booster. If one uses a Russian
+keyboard layout before switching to Typing Booster, than that Russian
+layout will continue to be used in Typing Booster.
+
+To change to using a different keyboard layout, one normally has to
+switch to the keyboard layout one wants to use and then back to Typing
+Booster.
+
+But there are cases when one wants to always use an English layout
+while using Typing Booster and always use other keyboard layouts while
+not using Typing Booster.
+
+If one does not need to use m17n input methods while using Typing
+Booster, i.e. uses Typing Booster only with direct keyboard
+input (“NoIME”), any keyboard layout can be used.
+Including keyboard layouts which don’t produce ASCII letters like
+Russian, Greek, and many other keyboard layouts.
+
+But most m17n input methods require a keyboard layout which can
+produce ASCII characters. Some even require the use of the
+English (US) layout or layouts which are very close variants of the
+English (US) layout like English (IN).
+
+Therefore, if one wants to use m17n input methods in Typing Booster,
+then one needs a keyboard layout which can produce ASCII characters.
+
+It doesn’t have to be a variant of the English (US) layout, many m17n
+input methods work fine with any keyboard layout which can produce
+ASCII characters, i.e. one could use a German or a French layout or
+any other layout producing ASCII characters.
+
+M17n input methods which work well with any keyboard layout producing
+ASCII characters are phonetic input methods (e.g. something like
+`hi-itrans`, `ru-translit`, …)  or postfix/prefix input methods
+(e.g. `t-latn-post`, `t-latn-pre`, …)  or some symbol input methods
+(`t-rfc1345`, `t-unicode`, …).
+
+As some of the m17n input methods make use of an `ISO_Level3_Shift`
+key, it is a good idea if such a key is available. The English (IN)
+layout has such a key on the right Alt key and is therefore usually a
+better choice than the English (US) layout. But many other keyboard
+layouts, for example the German layout or even some other variants of
+the English (US) layout, for example English (US, Euro on 5) also
+feature an `ISO_Level3_Shift` key, usually also on the right Alt key
+(on some hardware keybords “AltGr” is printed on the keycap).  And in
+some desktops, for example in the Gnome desktop, one can choose an
+“Alternate Characters Key” in the keyboard settings of the control
+centre.  In the Gnome Control Centre one can choose to have that
+“Alternate Characters Key” on “Left Alt”, “Right Alt”, “Left Super”,
+“Right Super”, “Menu Key”, or “Right Ctrl”. I.e. if using Gnome, one
+could even use the basic English (US), which does not originally have
+such a key and still have such a key because Gnome adds it.
+
+Some m17n input methods emulate keyboard layouts.  For example
+`ar-kbd`, emulates an Arabic keyboard layout, `ru-kbd` emulates a
+Russian keyboard layout, etc. …  And the Indian `*-inscript` and
+`*-inscript2` m17n input methods and several other Indian m17n input
+methods are also emulating keyboard layouts. Almost all of the m17n
+input methods emulating keyboard layouts assume that the “real”
+keyboard layout where the key events come from is based on the
+English (US) layout. On top of that, many of these m17n input methods
+also require that an `ISO_Level3_Shift` key is available, that makes
+English (IN) almost always a better choice than English (US) (Unless
+an `ISO_Level3_Shift` key is available for other reasons already, for
+example because of Gnome, then the difference between English (IN) and
+English (US) doesn’t matter).
+
+For the reasons explained above, some users may want to use an
+English (IN) keyboard layout **always** while using a particular
+Typing Booster engine but also use one or more very different keyboard
+layouts when not using that particular Typing Booster engine
+(i.e. when using just a keyboard layout, a different Typing Booster
+engine or even a completely different input method like the Japanese
+input method `ibus-anthy`).
+
+
+For such users it is helpful, if a Typing Booster engine “translates”
+all incoming key events to a variant of an English keyboard layout
+like English (IN) while that Typing booster engine is in use.
+
+The option
+
+☑️ Use IBus keymap [ English (IN) ]
+
+does just that. If that option is selected, the key events coming from
+the “real” keyboard layout are “translated” to the events which would
+have been produced by the typed key if an English (IN) keyboard layout
+had been active. I.e. the selection of the “real” keyboard layout is
+not changed, it is still the same layout which was last used before
+switching to that Typing Booster engine. But all the key events are
+“translated” to the English (IN) IBus keymap.
+
+IBus currently offers 4 such keymaps, as can be seen by looking into this
+directory:
+
+```
+$ ls /usr/share/ibus/keymaps/
+common  in  jp  kr  modifiers  us
+```
+
+I.e. IBus supports the `in` “English (IN)”, `jp` “English (JP)”, `kr`
+“English (KR)”, and `jp` “English (JP)” keymaps.
+
+The `in` IBus keymap is almost the same as the `us` IBus keymap and just
+replaces the keycode 100 (wich is the right Alt key) with
+`ISO_Level3_Shift`:
+
+```
+$ cat /usr/share/ibus/keymaps/in
+include us
+keycode 100 = ISO_Level3_Shift
+$
+```
+
+The `kr` IBus keymap is also almost the same as the `us` IBus keymap and
+just adds to keys relevant only to Korean input:
+
+```
+$ cat /usr/share/ibus/keymaps/kr
+include us
+keycode 122 = Hangul
+keycode 123 = Hangul_Hanja
+$
+```
+
+and the `jp` IBus keymap has all the alphanumeric characters on the
+same keys as the `us` IBus keymap but has many non-alphanumeric
+characters on different keys (and also adds some special keys
+(`Zenkaku_Hankaku`, `Henkan_Mode`, …)):
+
+```
+$ cat /usr/share/ibus/keymaps/jp
+include common
+    shift keycode 2 = exclam
+    shift keycode 3 = quotedbl
+    shift keycode 4 = numbersign
+    shift keycode 5 = dollar
+    shift keycode 6 = percent
+    shift keycode 7 = ampersand
+    shift keycode 8 = apostrophe
+    shift keycode 9 = parenleft
+    shift keycode 10 = parenright
+    shift keycode 11 = asciitilde
+keycode 12 = minus
+    shift keycode 12 = equal
+keycode 13 = asciicircum
+    shift keycode 13 = asciitilde
+keycode 26 = at
+    shift keycode 26 = grave
+keycode 27 = bracketleft
+    shift keycode 27 = braceleft
+keycode 39 = semicolon
+    shift keycode 39 = plus
+keycode 40 = colon
+    shift keycode 40 = asterisk
+keycode 41 = Zenkaku_Hankaku
+keycode 43 = bracketright
+    shift keycode 43 = braceright
+keycode 51 = comma
+    shift keycode 51 = less
+keycode 52 = period
+    shift keycode 52 = greater
+keycode 53 = slash
+    shift keycode 53 = question
+    shift keycode 58 = Eisu_toggle
+keycode 89 = backslash
+    shift keycode 89 = underscore
+keycode 92 = Henkan_Mode
+keycode 93 = Hiragana_Katakana
+keycode 94 = Muhenkan
+keycode 124 = yen
+    shift keycode 124 = bar
+keycode 122 = Hangul
+keycode 123 = Hangul_Hanja
+    shift keycode 84 = Execute
+keycode 112 = Katakana
+```
+
+I think for most users which may want to use the option
+
+☑️ Use IBus keymap [ English (IN) ]
+
+“English (IN)” is the best choice as it is the same as English (US) except for
+adding the important `ISO_Level3_Shift` key.
+
+But as I wrote at the very start of this chapter, this option is
+already quite special and most users probably do not need to use it at
+all and should just leave it unchecked (which is the default):
+
+☐ Use IBus keymap [ English (IN) ]
+
+Enable this only if you really need it and know what you are doing! It can
+be very confusing!
+
 ###### 2_3
 ## Simulate the behaviour of ibus-m17n
 
