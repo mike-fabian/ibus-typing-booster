@@ -983,7 +983,7 @@ most users.
 For example, if one is using an English (US) keyboard layout and then
 switches to Typing Booster, then that English (US) keyboard layout
 will continue to be used in Typing Booster. If one uses a Russian
-keyboard layout before switching to Typing Booster, than that Russian
+keyboard layout before switching to Typing Booster, then that Russian
 layout will continue to be used in Typing Booster.
 
 To change to using a different keyboard layout, one normally has to
