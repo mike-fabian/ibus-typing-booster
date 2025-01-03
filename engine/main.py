@@ -372,6 +372,10 @@ def write_xml() -> None:
         author = ('Mike FABIAN <mfabian@redhat.com>'
                   ', Anish Patil <anish.developer@gmail.com>')
         layout = 'default'
+        # For something like “setxkbmap 'us(intl)'”, layout is “us”
+        # and layout_variant is “intl”.
+        layout_variant = ''
+        layout_option = ''
         icon = os.path.join(ICON_DIR, 'ibus-typing-booster.svg')
         description = 'A completion input method to speedup typing.'
         symbol = '🚀'
@@ -395,7 +399,7 @@ def write_xml() -> None:
                     # alt key work as ISO_Level3_Shift when switching
                     # from a keyboard layout like “English (US)” which
                     # does not haave this:
-                    layout = 'default[lv3:ralt_switch]'
+                    layout_option = 'lv3:ralt_switch'
                     break
             symbol = ''
             for pattern, pattern_symbol in itb_util.M17N_IME_SYMBOLS:
@@ -422,6 +426,10 @@ def write_xml() -> None:
         _icon.text = icon
         _layout = SubElement(_engine, 'layout')
         _layout.text = layout
+        _layout_variant = SubElement(_engine, 'layout_variant')
+        _layout_variant.text = layout_variant
+        _layout_option = SubElement(_engine, 'layout_option')
+        _layout_option.text = layout_option
         _desc = SubElement(_engine, 'description')
         _desc.text = description
         _symbol = SubElement(_engine, 'symbol')
