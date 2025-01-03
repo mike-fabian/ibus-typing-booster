@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 08 Jan 2025 Release 2.27.6
+* “return False” in “emoji_font_fallback_needed()” if “get_fonts_used_for_text()” returns and empty result (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/589)
+* Add a gsettings option “prefercommit” (Related: https://github.com/mike-fabian/ibus-typing-booster/issues/580)
+* Some preparation for future support of m17n input methods offering multiple candidates (Related: https://github.com/mike-fabian/ibus-typing-booster/issues/523)
+* Use XML-tag “layout_option” for “lv3:ralt_switch”
+* Use higher ranks for the “tb” engines than for the respective “m17n” engines
+* Translation update from Weblate (sv 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 01 Jan 2025 Release 2.27.3
 * Shorten the longname of engines mimicking ibus-m17n by appending only “(tb)” instead of “(Typing Booster)”
 * Add option to force the use of an IBus keymap (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/581)

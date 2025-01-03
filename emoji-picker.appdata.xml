@@ -41,6 +41,42 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.27.6" date="2025-01-08" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.6</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            “return False” in “emoji_font_fallback_needed()” if
+            “get_fonts_used_for_text()” returns and empty result
+            (Resolves: github-issues#589)
+          </li>
+          <li>
+             Add a gsettings option “prefercommit” (Related:
+             github-issues#580)
+          </li>
+          <li>
+            Some preparation for future support of m17n input methods
+            offering multiple candidates (Related: github-issues#523)
+          </li>
+          <li>
+            Use XML-tag “layout_option” for “lv3:ralt_switch”
+          </li>
+          <li>
+            Use higher ranks for the “tb” engines than for the
+            respective “m17n” engines
+          </li>
+          <li>
+            Translation update from Weblate (sv 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/589">
+          github-issues#589
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.3" date="2025-01-01" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.3</url>
       <description>
