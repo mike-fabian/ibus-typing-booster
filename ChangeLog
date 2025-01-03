@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 03 Jan 2025 Release 2.27.4
+* Use XML-tag “layout_option” for “lv3:ralt_switch”
+* Use higher ranks for the “tb” engines than for the respective “m17n” engines
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 01 Jan 2025 Release 2.27.3
 * Shorten the longname of engines mimicking ibus-m17n by appending only “(tb)” instead of “(Typing Booster)”
 * Add option to force the use of an IBus keymap (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/581)

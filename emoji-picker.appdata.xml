@@ -41,6 +41,21 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.27.4" date="2025-01-03" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.4</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Use XML-tag “layout_option” for “lv3:ralt_switch”
+          </li>
+          <li>
+            Use higher ranks for the “tb” engines than for the
+            respective “m17n” engines
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.27.3" date="2025-01-01" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.3</url>
       <description>
