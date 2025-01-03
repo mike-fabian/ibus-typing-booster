@@ -313,38 +313,45 @@ def write_xml() -> None:
         'te',
     )
     rank_patterns = [ # first matching regexp wins
+        # Use higher ranks than ibus-m17n does for the same
+        # input methods to have the “tb” input methods appear
+        # with higher priority than the “m17n” input methods.
+        #
         # Assign lower rank to Sinhala Samanala since it is a
 	# non-keyboard input method in Sinhala.  (Not sure whether
 	# this makes sense but ibus-m17n does it).
         (r'tb:si:samanala', 0),
         # Assign higher rank to all inscript2 engines since they
         # should be preferred over the inscript engines.
-        (r'tb:[^:]+:.*inscript2.*', 3),
+        # ibus-m17n uses rank 3 for these.
+        (r'tb:[^:]+:.*inscript2.*', 4),
         # Assign higher rank to Indic engines which represent each
-	# language.
-        (r'tb:te:inscript', 2),
-        (r'tb:ta:tamil99', 2),
-        (r'tb:si:wijesekara', 2),
-        (r'tb:sd:inscript', 2),
-        (r'tb:sa:harvard-kyoto', 2),
-        (r'tb:pa:inscript', 2),
-        (r'tb:or:inscript', 2),
-        (r'tb:ne:rom', 2),
-        (r'tb:mr:inscript', 2),
-        (r'tb:ml:inscript', 2),
-        (r'tb:mai:inscript', 2),
-        (r'tb:ks:kbd', 2),
-        (r'tb:kn:kgp', 2),
-        (r'tb:hi:inscript', 2),
-        (r'tb:gu:inscript', 2),
-        (r'tb:bn:inscript', 2),
-        (r'tb:as:inscript', 2),
+	# language. ibus-m17n uses rank 2 for these.
+        (r'tb:te:inscript', 3),
+        (r'tb:ta:tamil99', 3),
+        (r'tb:si:wijesekara', 3),
+        (r'tb:sd:inscript', 3),
+        (r'tb:sa:harvard-kyoto', 3),
+        (r'tb:pa:inscript', 3),
+        (r'tb:or:inscript', 3),
+        (r'tb:ne:rom', 3),
+        (r'tb:mr:inscript', 3),
+        (r'tb:ml:inscript', 3),
+        (r'tb:mai:inscript', 3),
+        (r'tb:ks:kbd', 3),
+        (r'tb:kn:kgp', 3),
+        (r'tb:hi:inscript', 3),
+        (r'tb:gu:inscript', 3),
+        (r'tb:bn:inscript', 3),
+        (r'tb:as:inscript', 3),
         # Indic engines should be selected by default:
 	# https://bugzilla.redhat.com/show_bug.cgi?id=640896
-        (r'tb:(' + ('|').join(indic_languages) + r'):[^:]+', 1),
+        # ibus-m17n uses rank 1 for these.
+        (r'tb:(' + ('|').join(indic_languages) + r'):[^:]+', 2),
         # Arabic kbd engine should be selected by default:
         # https://bugzilla.redhat.com/show_bug.cgi?id=1076945
-        (r'tb:ar:kbd', 1),
+        # ibus-m17n uses rank 1 for the ar-kbd engine.
+        (r'tb:ar:kbd', 2),
     ]
     # Some Indic engines expect AltGr is automatically mapped
     ralt_switch_patterns = [
