@@ -7721,7 +7721,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if (not self.is_empty()
                 and not self._typed_compose_sequence
                 and self._is_restricted_engine()):
-                (committed, committed_index, preedit) = self._transliterators[
+                (committed, committed_index, preedit,
+                 _cursor_pos, _status, _candidates) = self._transliterators[
                     self.get_current_imes()[0]].transliterate_parts(
                         self._typed_string, ascii_digits=self._ascii_digits)
                 if self._debug_level > 1:

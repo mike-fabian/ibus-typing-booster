@@ -917,6 +917,7 @@ def convert_digits_to_ascii(text: str) -> str:
     return text.translate(DIGIT_TRANS_TABLE)
 
 class Transliterator:
+    # pylint: disable=line-too-long
     '''A class for transliterators using libm17n
 
     If initializing the transliterator fails, for example because a
@@ -950,23 +951,23 @@ class Transliterator:
     'नमस्ते'
 
     >>> trans.transliterate_parts(list('n'))
-    ('', 0, 'न्')
+    ('', 0, 'न्', 2, 'क', [])
     >>> trans.transliterate_parts(list('n '))
-    ('न ', 2, '')
+    ('न ', 2, '', 0, 'क', [])
     >>> trans.transliterate_parts(list('na'))
-    ('', 0, 'न')
+    ('', 0, 'न', 1, 'क', [])
     >>> trans.transliterate_parts(list('nam'))
-    ('न', 2, 'म्')
+    ('न', 2, 'म्', 2, 'क', [])
     >>> trans.transliterate_parts(list('nama'))
-    ('न', 2, 'म')
+    ('न', 2, 'म', 1, 'क', [])
     >>> trans.transliterate_parts(list('namas'))
-    ('नम', 4, 'स्')
+    ('नम', 4, 'स्', 2, 'क', [])
     >>> trans.transliterate_parts(list('namast'))
-    ('नम', 4, 'स्त्')
+    ('नम', 4, 'स्त्', 4, 'क', [])
     >>> trans.transliterate_parts(list('namaste'))
-    ('नम', 4, 'स्ते')
+    ('नम', 4, 'स्ते', 4, 'क', [])
     >>> trans.transliterate_parts(list('namaste '))
-    ('नमस्ते ', 8, '')
+    ('नमस्ते ', 8, '', 0, 'क', [])
 
     >>> trans.transliterate(list('. '))
     '। '
@@ -1015,30 +1016,47 @@ class Transliterator:
 
     >>> trans = Transliterator('t-latn-post')
     >>> trans.transliterate_parts(list('u'))
-    ('', 0, 'u')
+    ('', 0, 'u', 1, 'Latin-post', [])
     >>> trans.transliterate_parts(list('u"'))
-    ('', 0, 'ü')
+    ('', 0, 'ü', 1, 'Latin-post', [])
     >>> trans.transliterate_parts(list('u""'))
-    ('u"', 3, '')
+    ('u"', 3, '', 0, 'Latin-post', [])
     >>> trans.transliterate_parts(list('u"u'))
-    ('ü', 2, 'u')
+    ('ü', 2, 'u', 1, 'Latin-post', [])
     >>> trans.transliterate_parts(list('üu"u'))
-    ('üü', 3, 'u')
+    ('üü', 3, 'u', 1, 'Latin-post', [])
 
     >>> trans = Transliterator('t-rfc1345')
     >>> trans.transliterate_parts(list('&'))
-    ('', 0, '&')
+    ('', 0, '&', 1, 'RFC1345', [])
     >>> trans.transliterate_parts(list('&C'))
-    ('', 0, '&C')
+    ('', 0, '&C', 2, 'RFC1345', [])
     >>> trans.transliterate_parts(list('&Co'))
-    ('©', 3, '')
+    ('©', 3, '', 0, 'RFC1345', [])
     >>> trans.transliterate_parts(list('&f'))
-    ('', 0, '&f')
+    ('', 0, '&f', 2, 'RFC1345', [])
     >>> trans.transliterate_parts(list('&ff'))
-    ('', 0, 'ﬀ')
+    ('', 0, 'ﬀ', 1, 'RFC1345', [])
     >>> trans.transliterate_parts(list('&ffi'))
-    ('ﬃ', 4, '')
+    ('ﬃ', 4, '', 0, 'RFC1345', [])
+
+    >>> trans = Transliterator('t-lsymbol')
+    >>> trans.transliterate_parts(list('/:)'))
+    ('', 0, '☺️', 2, 'lsymbol', ['☺️', '😃', '😅', '😆', '😉', '😇', '😂', '😏', '😛', '😜', '😝', '😋', '😉', '💏', '💋', '😍', '😘', '😚', '😽', '😻'])
+    >>> trans.transliterate_parts(list('a'))
+    ('a', 1, '', 0, 'lsymbol', [])
+    >>> trans.transliterate_parts(list('a/'))
+    ('a', 1, '/', 1, 'lsymbol', [])
+    >>> trans.transliterate_parts(list('a/:'))
+    ('a', 1, '/:', 2, 'lsymbol', [])
+    >>> trans.transliterate_parts(list('a/:('))
+    ('a', 1, '😢', 1, 'lsymbol', ['😢', '😩', '😡', '😭', '😪', '🙈', '🙊', '🙉'])
+    >>> trans.transliterate_parts(list('a/:(b'))
+    ('a😢b', 5, '', 0, 'lsymbol', [])
+
+    For a test transliterating parts using 'ja-anthy' see 'tests/test_m17n_translit.py'.
     '''
+    # pylint: enable=line-too-long
     def __init__(self, ime: str) -> None:
         '''Initialize the input method to use for the transliteration
 
@@ -1074,7 +1092,7 @@ class Transliterator:
     def transliterate_parts(
             self,
             msymbol_list: Iterable[str],
-            ascii_digits: bool = False) -> Tuple[str, int, str]:
+            ascii_digits: bool = False) -> Tuple[str, int, str, int, str, List[str]]:
         '''Transliterate a list of Msymbol names
 
         :param msymbol_list: A list of strings which are interpreted
@@ -1084,16 +1102,40 @@ class Transliterator:
                              Msymbols is just joined to a single string.
         :param ascii_digits: If true, convert language specific digits
                              to ASCII digits
-        :return: The transliteration in two parts: (committed, preedit)
+        :return: The transliteration in several parts:
+
+        (committed, committed_index, preedit, cursor_pos, status, candidates)
+
+        committed: str        The part of the transliteration which cannot be
+                              changed anymore by adding more input, could be
+                              committed already if desired.
+        committed_index: int  The index up to which the msymbol_list input
+                              was “used up” to create the “committed” text.
+        preedit:              The transliteration of the remaining input,
+                              may still change by adding more input.
+        cursor_pos: int       The cursor position in the preedit.
+                              Counted in codepoints, not glyphs.
+                              Usually this is at the end of the preedit
+                              but an input method may move the cursor
+                              within the preedit!
+                              (I think only ja-anthy.mim actually uses this)
+        status: str           May change for some input methods to
+                              indicate a state.
+                              For example in case of ja-anthy.mim,
+                              this is 'aあ' before Henkan and changes
+                              to '漢' in Henkan mode.
+        candidates: List[str] May contain a list of candidates if the
+                              input method can produce multiple candidates.
         '''
         if not isinstance(msymbol_list, list):
             raise ValueError('Argument of transliterate() must be a list.')
         if self._dummy:
-            return (''.join(msymbol_list), 0, '')
+            return (''.join(msymbol_list), 0, '', 0, '', [])
         libm17n__minput_reset_ic(self._ic) # type: ignore
         committed = ''
         committed_index = 0
         preedit = ''
+        candidates: List[str] = []
         for index, symbol in enumerate(msymbol_list):
             if len(symbol) == 1 and not itb_util.is_ascii(symbol):
                 symbol = IBus.keyval_name(IBus.unicode_to_keyval(symbol))
@@ -1124,6 +1166,42 @@ class Transliterator:
         except Exception as error: # pylint: disable=broad-except
             # This should never happen:
             raise ValueError('Problem accessing preedit') from error
+        plist = self._ic.contents.candidate_list
+        while bool(plist):  # NULL pointers have a False boolean value
+            key = libm17n__mplist_key(plist) # type: ignore
+            if not bool(key):
+                break
+            key_name = libm17n__msymbol_name(key.contents) # type: ignore
+            if key_name == b'mtext':
+                characters = mtext_to_string(
+                    ctypes.cast(libm17n__mplist_value(plist), # type: ignore
+                        ctypes.POINTER(libm17n__MText)))
+                candidates += list(characters)
+            elif key_name == b'plist':
+                candidate_plist = ctypes.cast(
+                    libm17n__mplist_value(plist), # type: ignore
+                    ctypes.POINTER(libm17n__MPlist))
+                while True:
+                    candidate_plist_key = libm17n__mplist_key( # type: ignore
+                        candidate_plist)
+                    if not bool(candidate_plist_key):
+                        break
+                    candidate_plist_key_name = libm17n__msymbol_name( # type: ignore
+                        candidate_plist_key.contents)
+                    if candidate_plist_key_name != b'mtext':
+                        break
+                    candidate = mtext_to_string(
+                        ctypes.cast(
+                            libm17n__mplist_value(candidate_plist), # type: ignore
+                            ctypes.POINTER(libm17n__MText)))
+                    candidates.append(candidate)
+                    candidate_plist = libm17n__mplist_next( # type: ignore
+                        candidate_plist)
+            else:
+                break
+            plist = libm17n__mplist_next(plist) # type: ignore
+        cursor_pos = self._ic.contents.cursor_pos
+        status = mtext_to_string(self._ic.contents.status)
         # From the m17n-lib documentation:
         #
         # The minput_reset_ic () function resets input context $IC by
@@ -1151,10 +1229,18 @@ class Transliterator:
         if committed and not preedit:
             committed_index = len(msymbol_list)
         if not ascii_digits:
-            return (committed, committed_index, preedit)
+            return (committed,
+                    committed_index,
+                    preedit,
+                    cursor_pos,
+                    status,
+                    candidates)
         return (convert_digits_to_ascii(committed),
                 committed_index,
-                convert_digits_to_ascii(preedit))
+                convert_digits_to_ascii(preedit),
+                cursor_pos,
+                status,
+                candidates)
 
     def transliterate(self, msymbol_list: Iterable[str], ascii_digits: bool = False) -> str:
         '''Transliterate a list of Msymbol names
@@ -1168,7 +1254,12 @@ class Transliterator:
                              to ASCII digits
         :return: The transliteration in one string
         '''
-        (committed, _committed_index, preedit) = self.transliterate_parts(
+        (committed,
+         _committed_index,
+         preedit,
+         _cursor_pos,
+         _status,
+         _candidates) = self.transliterate_parts(
             msymbol_list, ascii_digits)
         return committed + preedit
 
