@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 08 Jan 2025 Release 2.27.7
+* Fix typo in setup tool in the function called when changing an existing autosetting (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/591)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 08 Jan 2025 Release 2.27.6
 * “return False” in “emoji_font_fallback_needed()” if “get_fonts_used_for_text()” returns and empty result (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/589)
 * Add a gsettings option “prefercommit” (Related: https://github.com/mike-fabian/ibus-typing-booster/issues/580)
