@@ -4349,7 +4349,7 @@ class SetupUI(Gtk.Window): # type: ignore
                 else:
                     new_edited_value = ''
         model.set_value(iterator, 1, new_edited_value)
-        new_autosettings = autosettings_user['user'][:]
+        new_autosettings = autosettings_user[:]
         new_autosettings[index] = (old_setting, new_edited_value, old_regexp)
         self.set_autosettings(new_autosettings)
 
