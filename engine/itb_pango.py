@@ -400,6 +400,8 @@ def emoji_font_fallback_needed(font: str, text: str) -> bool:
     if not text:
         return False
     fonts_used = get_fonts_used_for_text(font, text, fallback=False)
+    if not fonts_used:
+        return False
     if len(fonts_used) > 1:
         # If there is more than one run, that means the text contained more
         # then just a single emoji or a single character. A fallback
