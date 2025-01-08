@@ -198,6 +198,17 @@
         it can also cause problems, especially when XIM is used.
       </description>
     </key>
+    <key name="prefercommit" type="b">
+      <default>true</default>
+      <summary>Prefer commits over passing key events through</summary>
+      <description>
+        Instead of passing a key event through, it is often possible
+        to do a commit.  And this is usually the best way to do it. It
+        avoids several problems like wrong order of events or wrong
+        keycodes. But there are some cases where this may cause
+        problems, especially in games which expect real key events.
+      </description>
+    </key>
     <key name="arrowkeysreopenpreedit" type="b">
       <default>false</default>
       <summary>Enable reopening preedits</summary>

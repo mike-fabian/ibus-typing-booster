@@ -280,6 +280,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._avoid_forward_key_event: bool = self._settings_dict[
             'avoidforwardkeyevent']['user']
 
+        self._prefer_commit: bool = self._settings_dict[
+            'prefercommit']['user']
+
         self._arrow_keys_reopen_preedit: bool = self._settings_dict[
             'arrowkeysreopenpreedit']['user']
 
@@ -686,6 +689,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'avoidforwardkeyevent': {
                 'set': self.set_avoid_forward_key_event,
                 'get': self.get_avoid_forward_key_event},
+            'prefercommit': {
+                'set': self.set_prefer_commit,
+                'get': self.get_prefer_commit},
             'addspaceoncommit': {
                 'set': self.set_add_space_on_commit,
                 'get': self.get_add_space_on_commit},
@@ -3886,6 +3892,49 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Returns whether forward_key_event() is avoided or not'''
         return self._avoid_forward_key_event
 
+    def set_prefer_commit(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets whether to prefer commits over passing key events through
+
+        :param mode: Whether to prefer commits over passing key events through
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._prefer_commit:
+            return
+        self._prefer_commit = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'prefercommit',
+                GLib.Variant.new_boolean(mode))
+
+    def toggle_prefer_commit(
+            self, update_gsettings: bool = True) -> None:
+        '''Toggles whether to prefer commits over passing key events through
+
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        self.set_prefer_commit(
+            not self._prefer_commit, update_gsettings)
+
+    def get_prefer_commit(self) -> bool:
+        '''
+        Returns whether commits are preferred over passing key events through
+        '''
+        return self._prefer_commit
+
     def set_arrow_keys_reopen_preedit(
             self,
             mode: Union[bool, Any],
@@ -6754,7 +6803,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 'key.code=0 is not a valid keycode. Probably caused by OSK.')
         # If it is possible to commit instead of forwarding a key event
         # or doing a “return False”, prefer the commit:
-        if (key.unicode
+        if (self._prefer_commit
+            and key.unicode
             and unicodedata.category(key.unicode) not in ('Cc',)
             and (key.val not in (
                 IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter,
