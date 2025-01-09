@@ -8,22 +8,23 @@
 # Paul S <psads.g@gmail.com>, 2022.
 # Jonathan Oliveira <bho.jsoliveira@gmail.com>, 2024.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024.
+# Aquila Luiz <aquila.santos@ba.estudante.senai.br>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-01-08 11:53+0100\n"
-"PO-Revision-Date: 2024-12-14 16:41+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Portuguese <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/pt/>\n"
+"PO-Revision-Date: 2025-01-09 15:49+0000\n"
+"Last-Translator: Aquila Luiz <aquila.santos@ba.estudante.senai.br>\n"
+"Language-Team: Portuguese <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.8.4\n"
+"X-Generator: Weblate 5.9.2\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -98,36 +99,28 @@ msgid "Unicode Version:"
 msgstr "Versão de Unicode:"
 
 #: engine/emoji_picker.py:723
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji Version:"
-msgstr "Versão de Unicode:"
+msgstr "Versão do Emoji:"
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
 #: engine/emoji_picker.py:730
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji properties:"
-msgstr "Versão de Unicode:"
+msgstr "Propriedades do Emoji:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
 #: engine/emoji_picker.py:736
-#, fuzzy
-#| msgid "Unicode categories"
 msgid "Unicode category:"
-msgstr "Categorias de Unicode"
+msgstr "Categoria Unicode:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
 #: engine/emoji_picker.py:743
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Unicode block:"
-msgstr "Versão de Unicode:"
+msgstr "Bloco Unicode:"
 
 #: engine/emoji_picker.py:762 engine/emoji_picker.py:1903
 msgid "Left click to copy"
@@ -709,6 +702,17 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"Seleciona qual tipo de entrada deve ser registrado no banco de dados do "
+"usuário: “Tudo”: Cada palavra digitada é adicionada ao banco de dados do "
+"usuário ou sua frequência é atualizada se já estiver lá. “Corretamente "
+"escrito ou registrado anteriormente”: Uma palavra digitada só é adicionada "
+"ao banco de dados do usuário se for provável que esteja escrita "
+"corretamente. Se uma palavra já estiver no banco de dados do usuário, sua "
+"frequência é atualizada, não importa como esteja escrita. “Corretamente "
+"escrito”: Uma palavra digitada só é adicionada ao banco de dados ou sua "
+"frequência é atualizada no banco de dados se for provável que esteja escrita "
+"corretamente. “Nada”: Não registre nenhuma entrada no banco de dados do "
+"usuário."
 
 #: setup/main.py:666
 msgid "Everything"
@@ -716,17 +720,15 @@ msgstr "Tudo"
 
 #: setup/main.py:668
 msgid "Correctly spelled or previously recorded"
-msgstr ""
+msgstr "Escrito corretamente ou registrado anteriormente"
 
 #: setup/main.py:670
-#, fuzzy
-#| msgid "Clear recently used"
 msgid "Correctly spelled"
-msgstr "Corretamente escrito"
+msgstr "Escrito corretamente"
 
 #: setup/main.py:672
 msgid "Nothing"
-msgstr ""
+msgstr "Nada"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -782,15 +784,14 @@ msgid "Enable reopening preedits"
 msgstr "Ativar reabertura de pré-editados"
 
 #: setup/main.py:745
-#, fuzzy
 msgid ""
 "Whether it is allowed to put a word back into a preedit when the cursor "
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
-"Se é permitido colocar uma palavra de volta numa pré-edição quando o cursor "
-"se move para o final ou para o início de uma palavra. Ativar esta opção é "
-"útil para corrigir palavras já \"submetidas\"."
+"Se é permitido ou não reintegrar uma palavra a uma edição anterior quando o "
+"cursor se desloca para o início ou o final da palavra. A ativação desta "
+"opção é útil para corrigir palavras já confirmadas."
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
@@ -808,7 +809,7 @@ msgstr "Se o ibus-typing-booster deve ser desabilitado em terminais"
 #. converted to ASCII digits
 #: setup/main.py:776
 msgid "Convert language specific digits to ASCII digits"
-msgstr ""
+msgstr "Converter dígitos específicos do idioma em dígitos ASCII"
 
 #: setup/main.py:778
 msgid ""
@@ -817,12 +818,17 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"Alguns métodos de entrada produzem dígitos específicos do idioma por padrão. "
+"Se você nunca quiser usar esses dígitos específicos do idioma e preferir "
+"sempre usar dígitos ocidentais (ASCII), pode definir esta opção para "
+"converter sempre os dígitos específicos do idioma produzidos pelos métodos "
+"de entrada em dígitos ASCII."
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
 #: setup/main.py:795
 msgid "Use IBus keymap"
-msgstr ""
+msgstr "Usar mapa de teclas IBus"
 
 #: setup/main.py:797
 msgid ""
@@ -830,6 +836,10 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
+"Se o uso de um mapa de teclas IBus é forçado enquanto o Typing Booster "
+"estiver ativo. Para a maioria dos usuários, não é recomendado o uso de um "
+"mapa de teclas IBus. Nesse caso, é usado o layout de teclado que estava "
+"ativo antes de alternar para o Typing Booster."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -840,7 +850,7 @@ msgstr ""
 #. “English” keymap used.
 #: setup/main.py:818
 msgid "English"
-msgstr ""
+msgstr "Inglês"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
@@ -1044,13 +1054,8 @@ msgstr ""
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1240
-#, fuzzy
-#| msgid ""
-#| "Display some help showing how to use the input method selected above."
 msgid "Options for the input method selected above."
-msgstr ""
-"Mostrar alguma ajuda mostrando como utilizar o método de entrada "
-"seleccionado acima."
+msgstr "Opções para o método de entrada selecionado acima."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
@@ -1195,10 +1200,8 @@ msgstr "Vertical"
 #. the system needs to be idle after pressing a key before
 #. candidates are displayed
 #: setup/main.py:1629
-#, fuzzy
-#| msgid "Candidate window page size:"
 msgid "Candidate window delay in milliseconds:"
-msgstr "Tamanho da página da janela do candidato:"
+msgstr "Latência na janela de candidatos em milissegundos"
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
