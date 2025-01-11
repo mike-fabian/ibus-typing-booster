@@ -5,7 +5,7 @@
 # Mike FABIAN <mfabian@redhat.com>, 2019, 2020.
 # Enrico Bella <enric@e.email>, 2020.
 # Nathan <nathan95@live.it>, 2021, 2022.
-# Salvatore Cocuzza <info@salvatorecocuzza.it>, 2024.
+# Salvatore Cocuzza <info@salvatorecocuzza.it>, 2024, 2025.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024.
 msgid ""
 msgstr ""
@@ -13,17 +13,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-01-08 11:53+0100\n"
-"PO-Revision-Date: 2024-12-23 18:31+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
-"Language-Team: Italian <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/it/>\n"
+"PO-Revision-Date: 2025-01-11 09:29+0000\n"
+"Last-Translator: Salvatore Cocuzza <info@salvatorecocuzza.it>\n"
+"Language-Team: Italian <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9.1\n"
+"X-Generator: Weblate 5.9.2\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -814,7 +813,7 @@ msgstr ""
 #. forced while Typing Booster is active
 #: setup/main.py:795
 msgid "Use IBus keymap"
-msgstr ""
+msgstr "Utilizza la mappa dei tasti IBus"
 
 #: setup/main.py:797
 msgid ""
@@ -822,6 +821,10 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
+"Se l'uso di una mappatura dei tasti IBus è forzato mentre Typing Booster è "
+"attivo. Per la maggior parte degli utenti si consiglia di non utilizzare una "
+"mappatura dei tasti IBus. In tal caso, viene utilizzato il layout della "
+"tastiera che era attivo prima di passare al potenziamento della digitazione."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -832,7 +835,7 @@ msgstr ""
 #. “English” keymap used.
 #: setup/main.py:818
 msgid "English"
-msgstr ""
+msgstr "Inglese"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
