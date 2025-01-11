@@ -2,7 +2,7 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Alessio C. <alciregi@gmail.com>, 2019.
-# Mike FABIAN <mfabian@redhat.com>, 2019, 2020.
+# Mike FABIAN <mfabian@redhat.com>, 2019, 2020, 2025.
 # Enrico Bella <enric@e.email>, 2020.
 # Nathan <nathan95@live.it>, 2021, 2022.
 # Salvatore Cocuzza <info@salvatorecocuzza.it>, 2024, 2025.
@@ -13,8 +13,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-01-08 11:53+0100\n"
-"PO-Revision-Date: 2025-01-11 09:29+0000\n"
-"Last-Translator: Salvatore Cocuzza <info@salvatorecocuzza.it>\n"
+"PO-Revision-Date: 2025-01-11 09:37+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Italian <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/it/>\n"
 "Language: it\n"
@@ -333,7 +333,7 @@ msgstr "Regionali"
 #. are seperated by punctuation or white space.
 #: engine/itb_util.py:2822
 msgid "Others, Miscellaneous, Various, Diverse"
-msgstr ""
+msgstr "Altro, Varie, Diversi, Miscellanei"
 
 #: engine/itb_util.py:4502 engine/itb_util.py:5229
 msgid "File not found"
