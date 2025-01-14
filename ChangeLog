@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 14 Jan 2025 Release 2.27.8
+* Make code to support multiple m17n candidates better readable using a NamedTuple (Related: https://github.com/mike-fabian/ibus-typing-booster/issues/523)
+* Translation update from Weblate (it 100%, pt 94.4%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 08 Jan 2025 Release 2.27.7
 * Fix typo in setup tool in the function called when changing an existing autosetting (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/591)
 

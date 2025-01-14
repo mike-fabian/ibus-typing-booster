@@ -41,6 +41,21 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.27.8" date="2025-01-14" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.8</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Make code to support multiple m17n candidates better
+            readable using a NamedTuple (Related: github-issues#523)
+          </li>
+          <li>
+            Translation update from Weblate (it 100%, pt 94.4%)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.27.7" date="2025-01-08" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.7</url>
       <description>
