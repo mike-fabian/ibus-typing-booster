@@ -23,6 +23,7 @@
 from typing import Dict
 from typing import List
 from typing import Tuple
+from typing import NamedTuple
 from typing import Iterable
 from typing import Any
 import sys
@@ -916,145 +917,45 @@ def convert_digits_to_ascii(text: str) -> str:
     '''
     return text.translate(DIGIT_TRANS_TABLE)
 
+class TransliterationParts(NamedTuple):
+    '''
+    A named tuple containing the parts of a transliteration
+
+    committed: str        The part of the transliteration which cannot be
+                          changed anymore by adding more input, could be
+                          committed already if desired.
+    committed_index: int  The index up to which the msymbol_list input
+                          was “used up” to create the “committed” text.
+    preedit:              The transliteration of the remaining input,
+                          may still change by adding more input.
+    cursor_pos: int       The cursor position in the preedit.
+                          Counted in codepoints, not glyphs.
+                          Usually this is at the end of the preedit
+                          but an input method may move the cursor
+                          within the preedit!
+                          (I think only ja-anthy.mim actually uses this)
+    status: str           May change for some input methods to
+                          indicate a state.
+                          For example in case of ja-anthy.mim,
+                          this is 'aあ' before Henkan and changes
+                          to '漢' in Henkan mode.
+    candidates: List[str] May contain a list of candidates if the
+                          input method can produce multiple candidates.
+    '''
+    committed: str = ''
+    committed_index: int = 0
+    preedit: str = ''
+    cursor_pos: int = 0
+    status: str = ''
+    candidates: List[str] = []
+
 class Transliterator:
     # pylint: disable=line-too-long
     '''A class for transliterators using libm17n
 
     If initializing the transliterator fails, for example because a
     non-existing input method was given as the argument, a ValueError
-    is raised:
-
-    Examples:
-
-    Russian transliteration:
-
-    >>> trans = Transliterator('ru-translit')
-    >>> trans.transliterate(list('y'))
-    'ы'
-    >>> trans.transliterate(list('yo'))
-    'ё'
-    >>> trans.transliterate(list('yo y'))
-    'ё ы'
-
-    Marathi transliteration:
-
-    >>> trans = Transliterator('mr-itrans')
-    >>> trans.transliterate(list('praviN'))
-    'प्रविण्'
-    >>> trans.transliterate(list('namaste'))
-    'नमस्ते'
-
-    Hindi transliteration:
-
-    >>> trans = Transliterator('hi-itrans')
-    >>> trans.transliterate(list('namaste'))
-    'नमस्ते'
-
-    >>> trans.transliterate_parts(list('n'))
-    ('', 0, 'न्', 2, 'क', [])
-    >>> trans.transliterate_parts(list('n '))
-    ('न ', 2, '', 0, 'क', [])
-    >>> trans.transliterate_parts(list('na'))
-    ('', 0, 'न', 1, 'क', [])
-    >>> trans.transliterate_parts(list('nam'))
-    ('न', 2, 'म्', 2, 'क', [])
-    >>> trans.transliterate_parts(list('nama'))
-    ('न', 2, 'म', 1, 'क', [])
-    >>> trans.transliterate_parts(list('namas'))
-    ('नम', 4, 'स्', 2, 'क', [])
-    >>> trans.transliterate_parts(list('namast'))
-    ('नम', 4, 'स्त्', 4, 'क', [])
-    >>> trans.transliterate_parts(list('namaste'))
-    ('नम', 4, 'स्ते', 4, 'क', [])
-    >>> trans.transliterate_parts(list('namaste '))
-    ('नमस्ते ', 8, '', 0, 'क', [])
-
-    >>> trans.transliterate(list('. '))
-    '। '
-
-    Hindi-Inscript2 uses the AltGr key a lot, 'G-4' is
-    the MSymbol name for AltGr-4 and it transliterates
-    to something different than just '4':
-
-    >>> trans = Transliterator('hi-inscript2')
-    >>> trans.transliterate(['4', 'G-4'])
-    '४₹'
-
-    >>> trans = Transliterator('hi-inscript2')
-    >>> trans.transliterate(['G-p'])
-    'ज़'
-
-    AltGr-3 ('G-3') is not used though in Hindi-Inscript2.
-    Therefore, 'G-3' transliterates just as 'G-3':
-
-    >>> trans = Transliterator('hi-inscript2')
-    >>> trans.transliterate(['3', 'G-3'])
-    '३G-3'
-
-    In mr-inscript2, 'G-1' transliterates to U+200D ZERO WIDTH JOINER
-    ('\xe2\x80\x8d' in UTF-8 encoding):
-
-    >>> trans = Transliterator('mr-inscript2')
-    >>> trans.transliterate(['j', 'd', 'G-1', '/']).encode('utf-8')
-    b'\xe0\xa4\xb0\xe0\xa5\x8d\xe2\x80\x8d\xe0\xa4\xaf'
-
-    >>> trans = Transliterator('t-latn-post')
-    >>> trans.transliterate(list('gru"n'))
-    'grün'
-
-    >>> trans = Transliterator('NoIME')
-    >>> trans.transliterate(['a', 'b', 'c', 'C-c', 'G-4', 'C-α', 'G-α'])
-    'abcC-cG-4C-αG-α'
-
-    >>> trans = Transliterator('ko-romaja')
-    >>> trans.transliterate(list('annyeonghaseyo'))
-    '안녕하세요'
-
-    >>> trans = Transliterator('si-wijesekara')
-    >>> trans.transliterate(list('vksIal kjSka '))
-    'ඩනිෂ්ක නවීන් '
-
-    >>> trans = Transliterator('t-latn-post')
-    >>> trans.transliterate_parts(list('u'))
-    ('', 0, 'u', 1, 'Latin-post', [])
-    >>> trans.transliterate_parts(list('u"'))
-    ('', 0, 'ü', 1, 'Latin-post', [])
-    >>> trans.transliterate_parts(list('u""'))
-    ('u"', 3, '', 0, 'Latin-post', [])
-    >>> trans.transliterate_parts(list('u"u'))
-    ('ü', 2, 'u', 1, 'Latin-post', [])
-    >>> trans.transliterate_parts(list('üu"u'))
-    ('üü', 3, 'u', 1, 'Latin-post', [])
-
-    >>> trans = Transliterator('t-rfc1345')
-    >>> trans.transliterate_parts(list('&'))
-    ('', 0, '&', 1, 'RFC1345', [])
-    >>> trans.transliterate_parts(list('&C'))
-    ('', 0, '&C', 2, 'RFC1345', [])
-    >>> trans.transliterate_parts(list('&Co'))
-    ('©', 3, '', 0, 'RFC1345', [])
-    >>> trans.transliterate_parts(list('&f'))
-    ('', 0, '&f', 2, 'RFC1345', [])
-    >>> trans.transliterate_parts(list('&ff'))
-    ('', 0, 'ﬀ', 1, 'RFC1345', [])
-    >>> trans.transliterate_parts(list('&ffi'))
-    ('ﬃ', 4, '', 0, 'RFC1345', [])
-
-    >>> trans = Transliterator('t-lsymbol')
-    >>> trans.transliterate_parts(list('/:)'))
-    ('', 0, '☺️', 2, 'lsymbol', ['☺️', '😃', '😅', '😆', '😉', '😇', '😂', '😏', '😛', '😜', '😝', '😋', '😉', '💏', '💋', '😍', '😘', '😚', '😽', '😻'])
-    >>> trans.transliterate_parts(list('a'))
-    ('a', 1, '', 0, 'lsymbol', [])
-    >>> trans.transliterate_parts(list('a/'))
-    ('a', 1, '/', 1, 'lsymbol', [])
-    >>> trans.transliterate_parts(list('a/:'))
-    ('a', 1, '/:', 2, 'lsymbol', [])
-    >>> trans.transliterate_parts(list('a/:('))
-    ('a', 1, '😢', 1, 'lsymbol', ['😢', '😩', '😡', '😭', '😪', '🙈', '🙊', '🙉'])
-    >>> trans.transliterate_parts(list('a/:(b'))
-    ('a😢b', 5, '', 0, 'lsymbol', [])
-
-    For a test transliterating parts using 'ja-anthy' see 'tests/test_m17n_translit.py'.
+    is raised.
     '''
     # pylint: enable=line-too-long
     def __init__(self, ime: str) -> None:
@@ -1092,7 +993,7 @@ class Transliterator:
     def transliterate_parts(
             self,
             msymbol_list: Iterable[str],
-            ascii_digits: bool = False) -> Tuple[str, int, str, int, str, List[str]]:
+            ascii_digits: bool = False) -> TransliterationParts:
         '''Transliterate a list of Msymbol names
 
         :param msymbol_list: A list of strings which are interpreted
@@ -1102,35 +1003,77 @@ class Transliterator:
                              Msymbols is just joined to a single string.
         :param ascii_digits: If true, convert language specific digits
                              to ASCII digits
-        :return: The transliteration in several parts:
+        :return: The transliteration in several parts
 
-        (committed, committed_index, preedit, cursor_pos, status, candidates)
+        Examples:
 
-        committed: str        The part of the transliteration which cannot be
-                              changed anymore by adding more input, could be
-                              committed already if desired.
-        committed_index: int  The index up to which the msymbol_list input
-                              was “used up” to create the “committed” text.
-        preedit:              The transliteration of the remaining input,
-                              may still change by adding more input.
-        cursor_pos: int       The cursor position in the preedit.
-                              Counted in codepoints, not glyphs.
-                              Usually this is at the end of the preedit
-                              but an input method may move the cursor
-                              within the preedit!
-                              (I think only ja-anthy.mim actually uses this)
-        status: str           May change for some input methods to
-                              indicate a state.
-                              For example in case of ja-anthy.mim,
-                              this is 'aあ' before Henkan and changes
-                              to '漢' in Henkan mode.
-        candidates: List[str] May contain a list of candidates if the
-                              input method can produce multiple candidates.
+        >>> trans = Transliterator('hi-itrans')
+        >>> trans.transliterate_parts(list('n'))
+        TransliterationParts(committed='', committed_index=0, preedit='न्', cursor_pos=2, status='क', candidates=[])
+        >>> trans.transliterate_parts(list('n '))
+        TransliterationParts(committed='न ', committed_index=2, preedit='', cursor_pos=0, status='क', candidates=[])
+        >>> trans.transliterate_parts(list('na'))
+        TransliterationParts(committed='', committed_index=0, preedit='न', cursor_pos=1, status='क', candidates=[])
+        >>> trans.transliterate_parts(list('nam'))
+        TransliterationParts(committed='न', committed_index=2, preedit='म्', cursor_pos=2, status='क', candidates=[])
+        >>> trans.transliterate_parts(list('nama'))
+        TransliterationParts(committed='न', committed_index=2, preedit='म', cursor_pos=1, status='क', candidates=[])
+        >>> trans.transliterate_parts(list('namas'))
+        TransliterationParts(committed='नम', committed_index=4, preedit='स्', cursor_pos=2, status='क', candidates=[])
+        >>> trans.transliterate_parts(list('namast'))
+        TransliterationParts(committed='नम', committed_index=4, preedit='स्त्', cursor_pos=4, status='क', candidates=[])
+        >>> trans.transliterate_parts(list('namaste'))
+        TransliterationParts(committed='नम', committed_index=4, preedit='स्ते', cursor_pos=4, status='क', candidates=[])
+        >>> trans.transliterate_parts(list('namaste '))
+        TransliterationParts(committed='नमस्ते ', committed_index=8, preedit='', cursor_pos=0, status='क', candidates=[])
+
+        >>> trans = Transliterator('t-latn-post')
+        >>> trans.transliterate_parts(list('u'))
+        TransliterationParts(committed='', committed_index=0, preedit='u', cursor_pos=1, status='Latin-post', candidates=[])
+        >>> trans.transliterate_parts(list('u"'))
+        TransliterationParts(committed='', committed_index=0, preedit='ü', cursor_pos=1, status='Latin-post', candidates=[])
+        >>> trans.transliterate_parts(list('u""'))
+        TransliterationParts(committed='u"', committed_index=3, preedit='', cursor_pos=0, status='Latin-post', candidates=[])
+        >>> trans.transliterate_parts(list('u"u'))
+        TransliterationParts(committed='ü', committed_index=2, preedit='u', cursor_pos=1, status='Latin-post', candidates=[])
+        >>> trans.transliterate_parts(list('üu"u'))
+        TransliterationParts(committed='üü', committed_index=3, preedit='u', cursor_pos=1, status='Latin-post', candidates=[])
+
+        >>> trans = Transliterator('t-rfc1345')
+        >>> trans.transliterate_parts(list('&'))
+        TransliterationParts(committed='', committed_index=0, preedit='&', cursor_pos=1, status='RFC1345', candidates=[])
+        >>> trans.transliterate_parts(list('&C'))
+        TransliterationParts(committed='', committed_index=0, preedit='&C', cursor_pos=2, status='RFC1345', candidates=[])
+        >>> trans.transliterate_parts(list('&Co'))
+        TransliterationParts(committed='©', committed_index=3, preedit='', cursor_pos=0, status='RFC1345', candidates=[])
+        >>> trans.transliterate_parts(list('&f'))
+        TransliterationParts(committed='', committed_index=0, preedit='&f', cursor_pos=2, status='RFC1345', candidates=[])
+        >>> trans.transliterate_parts(list('&ff'))
+        TransliterationParts(committed='', committed_index=0, preedit='ﬀ', cursor_pos=1, status='RFC1345', candidates=[])
+        >>> trans.transliterate_parts(list('&ffi'))
+        TransliterationParts(committed='ﬃ', committed_index=4, preedit='', cursor_pos=0, status='RFC1345', candidates=[])
+
+        >>> trans = Transliterator('t-lsymbol')
+        >>> trans.transliterate_parts(list('/:)'))
+        TransliterationParts(committed='', committed_index=0, preedit='☺️', cursor_pos=2, status='lsymbol', candidates=['☺️', '😃', '😅', '😆', '😉', '😇', '😂', '😏', '😛', '😜', '😝', '😋', '😉', '💏', '💋', '😍', '😘', '😚', '😽', '😻'])
+        >>> trans.transliterate_parts(list('a'))
+        TransliterationParts(committed='a', committed_index=1, preedit='', cursor_pos=0, status='lsymbol', candidates=[])
+        >>> trans.transliterate_parts(list('a/'))
+        TransliterationParts(committed='a', committed_index=1, preedit='/', cursor_pos=1, status='lsymbol', candidates=[])
+        >>> trans.transliterate_parts(list('a/:'))
+        TransliterationParts(committed='a', committed_index=1, preedit='/:', cursor_pos=2, status='lsymbol', candidates=[])
+        >>> trans.transliterate_parts(list('a/:('))
+        TransliterationParts(committed='a', committed_index=1, preedit='😢', cursor_pos=1, status='lsymbol', candidates=['😢', '😩', '😡', '😭', '😪', '🙈', '🙊', '🙉'])
+        >>> trans.transliterate_parts(list('a/:(b'))
+        TransliterationParts(committed='a😢b', committed_index=5, preedit='', cursor_pos=0, status='lsymbol', candidates=[])
+
+        For a test transliterating parts using 'ja-anthy' see 'tests/test_m17n_translit.py'.
         '''
         if not isinstance(msymbol_list, list):
             raise ValueError('Argument of transliterate() must be a list.')
         if self._dummy:
-            return (''.join(msymbol_list), 0, '', 0, '', [])
+            return TransliterationParts(committed=''.join(msymbol_list),
+                                       committed_index=len(msymbol_list))
         libm17n__minput_reset_ic(self._ic) # type: ignore
         committed = ''
         committed_index = 0
@@ -1229,18 +1172,19 @@ class Transliterator:
         if committed and not preedit:
             committed_index = len(msymbol_list)
         if not ascii_digits:
-            return (committed,
-                    committed_index,
-                    preedit,
-                    cursor_pos,
-                    status,
-                    candidates)
-        return (convert_digits_to_ascii(committed),
-                committed_index,
-                convert_digits_to_ascii(preedit),
-                cursor_pos,
-                status,
-                candidates)
+            return TransliterationParts(committed=committed,
+                                       committed_index=committed_index,
+                                       preedit=preedit,
+                                       cursor_pos=cursor_pos,
+                                       status=status,
+                                       candidates=candidates)
+        return TransliterationParts(
+            committed=convert_digits_to_ascii(committed),
+            committed_index=committed_index,
+            preedit=convert_digits_to_ascii(preedit),
+            cursor_pos=cursor_pos,
+            status=status,
+            candidates=candidates)
 
     def transliterate(self, msymbol_list: Iterable[str], ascii_digits: bool = False) -> str:
         '''Transliterate a list of Msymbol names
@@ -1253,15 +1197,80 @@ class Transliterator:
         :param ascii_digits: If true, convert language specific digits
                              to ASCII digits
         :return: The transliteration in one string
+
+        Examples:
+
+        Russian transliteration:
+
+        >>> trans = Transliterator('ru-translit')
+        >>> trans.transliterate(list('y'))
+        'ы'
+        >>> trans.transliterate(list('yo'))
+        'ё'
+        >>> trans.transliterate(list('yo y'))
+        'ё ы'
+
+        Marathi transliteration:
+
+        >>> trans = Transliterator('mr-itrans')
+        >>> trans.transliterate(list('praviN'))
+        'प्रविण्'
+        >>> trans.transliterate(list('namaste'))
+        'नमस्ते'
+
+        Hindi transliteration:
+
+        >>> trans = Transliterator('hi-itrans')
+        >>> trans.transliterate(list('namaste'))
+        'नमस्ते'
+        >>> trans.transliterate(list('. '))
+        '। '
+
+        Hindi-Inscript2 uses the AltGr key a lot, 'G-4' is
+        the MSymbol name for AltGr-4 and it transliterates
+        to something different than just '4':
+
+        >>> trans = Transliterator('hi-inscript2')
+        >>> trans.transliterate(['4', 'G-4'])
+        '४₹'
+
+        >>> trans = Transliterator('hi-inscript2')
+        >>> trans.transliterate(['G-p'])
+        'ज़'
+
+        AltGr-3 ('G-3') is not used though in Hindi-Inscript2.
+        Therefore, 'G-3' transliterates just as 'G-3':
+
+        >>> trans = Transliterator('hi-inscript2')
+        >>> trans.transliterate(['3', 'G-3'])
+        '३G-3'
+
+        In mr-inscript2, 'G-1' transliterates to U+200D ZERO WIDTH JOINER
+        ('\xe2\x80\x8d' in UTF-8 encoding):
+
+        >>> trans = Transliterator('mr-inscript2')
+        >>> trans.transliterate(['j', 'd', 'G-1', '/']).encode('utf-8')
+        b'\xe0\xa4\xb0\xe0\xa5\x8d\xe2\x80\x8d\xe0\xa4\xaf'
+
+        >>> trans = Transliterator('t-latn-post')
+        >>> trans.transliterate(list('gru"n'))
+        'grün'
+
+        >>> trans = Transliterator('NoIME')
+        >>> trans.transliterate(['a', 'b', 'c', 'C-c', 'G-4', 'C-α', 'G-α'])
+        'abcC-cG-4C-αG-α'
+
+        >>> trans = Transliterator('ko-romaja')
+        >>> trans.transliterate(list('annyeonghaseyo'))
+        '안녕하세요'
+
+        >>> trans = Transliterator('si-wijesekara')
+        >>> trans.transliterate(list('vksIal kjSka '))
+        'ඩනිෂ්ක නවීන් '
         '''
-        (committed,
-         _committed_index,
-         preedit,
-         _cursor_pos,
-         _status,
-         _candidates) = self.transliterate_parts(
+        transliteration_parts = self.transliterate_parts(
             msymbol_list, ascii_digits)
-        return committed + preedit
+        return transliteration_parts.committed + transliteration_parts.preedit
 
     def get_variables(self) -> List[Tuple[str, str, str]]:
         # pylint: disable=line-too-long
